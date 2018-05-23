@@ -5851,13 +5851,6 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 					result = organization;
 
 					cacheResult(organization);
-
-					if ((organization.getCompanyId() != companyId) ||
-							(organization.getName() == null) ||
-							!organization.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
-							finderArgs, organization);
-					}
 				}
 			}
 			catch (Exception e) {

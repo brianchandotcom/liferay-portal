@@ -779,13 +779,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 					result = ddlRecordSet;
 
 					cacheResult(ddlRecordSet);
-
-					if ((ddlRecordSet.getUuid() == null) ||
-							!ddlRecordSet.getUuid().equals(uuid) ||
-							(ddlRecordSet.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, ddlRecordSet);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2942,13 +2935,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 					result = ddlRecordSet;
 
 					cacheResult(ddlRecordSet);
-
-					if ((ddlRecordSet.getGroupId() != groupId) ||
-							(ddlRecordSet.getRecordSetKey() == null) ||
-							!ddlRecordSet.getRecordSetKey().equals(recordSetKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_R,
-							finderArgs, ddlRecordSet);
-					}
 				}
 			}
 			catch (Exception e) {

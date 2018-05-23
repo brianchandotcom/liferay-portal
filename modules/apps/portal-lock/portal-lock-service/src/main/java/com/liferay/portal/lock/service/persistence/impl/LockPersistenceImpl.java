@@ -1894,14 +1894,6 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 					result = lock;
 
 					cacheResult(lock);
-
-					if ((lock.getClassName() == null) ||
-							!lock.getClassName().equals(className) ||
-							(lock.getKey() == null) ||
-							!lock.getKey().equals(key)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_K,
-							finderArgs, lock);
-					}
 				}
 			}
 			catch (Exception e) {

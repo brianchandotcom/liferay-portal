@@ -781,13 +781,6 @@ public class FriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<Friendl
 					result = friendlyURLEntry;
 
 					cacheResult(friendlyURLEntry);
-
-					if ((friendlyURLEntry.getUuid() == null) ||
-							!friendlyURLEntry.getUuid().equals(uuid) ||
-							(friendlyURLEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, friendlyURLEntry);
-					}
 				}
 			}
 			catch (Exception e) {

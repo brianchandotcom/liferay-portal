@@ -1824,11 +1824,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 					result = app;
 
 					cacheResult(app);
-
-					if ((app.getRemoteAppId() != remoteAppId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_REMOTEAPPID,
-							finderArgs, app);
-					}
 				}
 			}
 			catch (Exception e) {

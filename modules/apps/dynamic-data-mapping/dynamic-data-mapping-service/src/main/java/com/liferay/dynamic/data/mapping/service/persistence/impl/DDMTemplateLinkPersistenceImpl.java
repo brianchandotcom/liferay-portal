@@ -1229,12 +1229,6 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 					result = ddmTemplateLink;
 
 					cacheResult(ddmTemplateLink);
-
-					if ((ddmTemplateLink.getClassNameId() != classNameId) ||
-							(ddmTemplateLink.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, ddmTemplateLink);
-					}
 				}
 			}
 			catch (Exception e) {

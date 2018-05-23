@@ -2970,13 +2970,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 					result = module;
 
 					cacheResult(module);
-
-					if ((module.getAppId() != appId) ||
-							(module.getContextName() == null) ||
-							!module.getContextName().equals(contextName)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_A_CN,
-							finderArgs, module);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3271,16 +3264,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 					result = module;
 
 					cacheResult(module);
-
-					if ((module.getAppId() != appId) ||
-							(module.getBundleSymbolicName() == null) ||
-							!module.getBundleSymbolicName()
-									   .equals(bundleSymbolicName) ||
-							(module.getBundleVersion() == null) ||
-							!module.getBundleVersion().equals(bundleVersion)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_A_BSN_BV,
-							finderArgs, module);
-					}
 				}
 			}
 			catch (Exception e) {

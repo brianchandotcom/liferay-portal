@@ -1229,12 +1229,6 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 					result = message;
 
 					cacheResult(message);
-
-					if ((message.getFolderId() != folderId) ||
-							(message.getRemoteMessageId() != remoteMessageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_F_R,
-							finderArgs, message);
-					}
 				}
 			}
 			catch (Exception e) {

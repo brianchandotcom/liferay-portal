@@ -1497,17 +1497,6 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 					result = resourceBlock;
 
 					cacheResult(resourceBlock);
-
-					if ((resourceBlock.getCompanyId() != companyId) ||
-							(resourceBlock.getGroupId() != groupId) ||
-							(resourceBlock.getName() == null) ||
-							!resourceBlock.getName().equals(name) ||
-							(resourceBlock.getPermissionsHash() == null) ||
-							!resourceBlock.getPermissionsHash()
-											  .equals(permissionsHash)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_N_P,
-							finderArgs, resourceBlock);
-					}
 				}
 			}
 			catch (Exception e) {

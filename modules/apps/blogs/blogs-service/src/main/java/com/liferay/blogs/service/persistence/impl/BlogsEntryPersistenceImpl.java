@@ -790,13 +790,6 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 					result = blogsEntry;
 
 					cacheResult(blogsEntry);
-
-					if ((blogsEntry.getUuid() == null) ||
-							!blogsEntry.getUuid().equals(uuid) ||
-							(blogsEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, blogsEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2996,13 +2989,6 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 					result = blogsEntry;
 
 					cacheResult(blogsEntry);
-
-					if ((blogsEntry.getGroupId() != groupId) ||
-							(blogsEntry.getUrlTitle() == null) ||
-							!blogsEntry.getUrlTitle().equals(urlTitle)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_UT,
-							finderArgs, blogsEntry);
-					}
 				}
 			}
 			catch (Exception e) {

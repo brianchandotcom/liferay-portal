@@ -1800,13 +1800,6 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 					result = ddmStructureLink;
 
 					cacheResult(ddmStructureLink);
-
-					if ((ddmStructureLink.getClassNameId() != classNameId) ||
-							(ddmStructureLink.getClassPK() != classPK) ||
-							(ddmStructureLink.getStructureId() != structureId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_S,
-							finderArgs, ddmStructureLink);
-					}
 				}
 			}
 			catch (Exception e) {

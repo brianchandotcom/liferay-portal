@@ -774,13 +774,6 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 					result = ddmContent;
 
 					cacheResult(ddmContent);
-
-					if ((ddmContent.getUuid() == null) ||
-							!ddmContent.getUuid().equals(uuid) ||
-							(ddmContent.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, ddmContent);
-					}
 				}
 			}
 			catch (Exception e) {

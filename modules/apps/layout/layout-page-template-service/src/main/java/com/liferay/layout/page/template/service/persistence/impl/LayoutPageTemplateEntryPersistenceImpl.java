@@ -2590,13 +2590,6 @@ public class LayoutPageTemplateEntryPersistenceImpl extends BasePersistenceImpl<
 					result = layoutPageTemplateEntry;
 
 					cacheResult(layoutPageTemplateEntry);
-
-					if ((layoutPageTemplateEntry.getGroupId() != groupId) ||
-							(layoutPageTemplateEntry.getName() == null) ||
-							!layoutPageTemplateEntry.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, layoutPageTemplateEntry);
-					}
 				}
 			}
 			catch (Exception e) {

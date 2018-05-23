@@ -786,13 +786,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					result = mdrRuleGroupInstance;
 
 					cacheResult(mdrRuleGroupInstance);
-
-					if ((mdrRuleGroupInstance.getUuid() == null) ||
-							!mdrRuleGroupInstance.getUuid().equals(uuid) ||
-							(mdrRuleGroupInstance.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, mdrRuleGroupInstance);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4560,13 +4553,6 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 					result = mdrRuleGroupInstance;
 
 					cacheResult(mdrRuleGroupInstance);
-
-					if ((mdrRuleGroupInstance.getClassNameId() != classNameId) ||
-							(mdrRuleGroupInstance.getClassPK() != classPK) ||
-							(mdrRuleGroupInstance.getRuleGroupId() != ruleGroupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_R,
-							finderArgs, mdrRuleGroupInstance);
-					}
 				}
 			}
 			catch (Exception e) {

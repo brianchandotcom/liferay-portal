@@ -197,11 +197,6 @@ public class AssetDisplayPageEntryPersistenceImpl extends BasePersistenceImpl<As
 					result = assetDisplayPageEntry;
 
 					cacheResult(assetDisplayPageEntry);
-
-					if ((assetDisplayPageEntry.getAssetEntryId() != assetEntryId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_ASSETENTRYID,
-							finderArgs, assetDisplayPageEntry);
-					}
 				}
 			}
 			catch (Exception e) {

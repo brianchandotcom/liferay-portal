@@ -3959,13 +3959,6 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 					result = sapEntry;
 
 					cacheResult(sapEntry);
-
-					if ((sapEntry.getCompanyId() != companyId) ||
-							(sapEntry.getName() == null) ||
-							!sapEntry.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
-							finderArgs, sapEntry);
-					}
 				}
 			}
 			catch (Exception e) {

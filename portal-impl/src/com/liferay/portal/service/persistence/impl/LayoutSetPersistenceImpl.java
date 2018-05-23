@@ -1289,12 +1289,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 					result = layoutSet;
 
 					cacheResult(layoutSet);
-
-					if ((layoutSet.getGroupId() != groupId) ||
-							(layoutSet.isPrivateLayout() != privateLayout)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_P,
-							finderArgs, layoutSet);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1523,12 +1517,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 					result = layoutSet;
 
 					cacheResult(layoutSet);
-
-					if ((layoutSet.isPrivateLayout() != privateLayout) ||
-							(layoutSet.getLogoId() != logoId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_P_L,
-							finderArgs, layoutSet);
-					}
 				}
 			}
 			catch (Exception e) {

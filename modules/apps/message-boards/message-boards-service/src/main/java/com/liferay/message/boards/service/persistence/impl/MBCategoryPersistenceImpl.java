@@ -781,13 +781,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 					result = mbCategory;
 
 					cacheResult(mbCategory);
-
-					if ((mbCategory.getUuid() == null) ||
-							!mbCategory.getUuid().equals(uuid) ||
-							(mbCategory.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, mbCategory);
-					}
 				}
 			}
 			catch (Exception e) {

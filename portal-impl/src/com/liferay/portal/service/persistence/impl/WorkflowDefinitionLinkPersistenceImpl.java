@@ -2042,15 +2042,6 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 					result = workflowDefinitionLink;
 
 					cacheResult(workflowDefinitionLink);
-
-					if ((workflowDefinitionLink.getGroupId() != groupId) ||
-							(workflowDefinitionLink.getCompanyId() != companyId) ||
-							(workflowDefinitionLink.getClassNameId() != classNameId) ||
-							(workflowDefinitionLink.getClassPK() != classPK) ||
-							(workflowDefinitionLink.getTypePK() != typePK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T,
-							finderArgs, workflowDefinitionLink);
-					}
 				}
 			}
 			catch (Exception e) {

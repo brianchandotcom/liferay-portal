@@ -780,13 +780,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 					result = pollsQuestion;
 
 					cacheResult(pollsQuestion);
-
-					if ((pollsQuestion.getUuid() == null) ||
-							!pollsQuestion.getUuid().equals(uuid) ||
-							(pollsQuestion.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, pollsQuestion);
-					}
 				}
 			}
 			catch (Exception e) {

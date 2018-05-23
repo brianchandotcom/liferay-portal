@@ -2830,11 +2830,6 @@ public class KaleoTaskFormInstancePersistenceImpl extends BasePersistenceImpl<Ka
 					result = kaleoTaskFormInstance;
 
 					cacheResult(kaleoTaskFormInstance);
-
-					if ((kaleoTaskFormInstance.getKaleoTaskFormId() != kaleoTaskFormId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_KALEOTASKFORMID,
-							finderArgs, kaleoTaskFormInstance);
-					}
 				}
 			}
 			catch (Exception e) {

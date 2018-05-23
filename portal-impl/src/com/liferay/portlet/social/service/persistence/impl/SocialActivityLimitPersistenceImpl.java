@@ -1859,18 +1859,6 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 					result = socialActivityLimit;
 
 					cacheResult(socialActivityLimit);
-
-					if ((socialActivityLimit.getGroupId() != groupId) ||
-							(socialActivityLimit.getUserId() != userId) ||
-							(socialActivityLimit.getClassNameId() != classNameId) ||
-							(socialActivityLimit.getClassPK() != classPK) ||
-							(socialActivityLimit.getActivityType() != activityType) ||
-							(socialActivityLimit.getActivityCounterName() == null) ||
-							!socialActivityLimit.getActivityCounterName()
-													.equals(activityCounterName)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_U_C_C_A_A,
-							finderArgs, socialActivityLimit);
-					}
 				}
 			}
 			catch (Exception e) {

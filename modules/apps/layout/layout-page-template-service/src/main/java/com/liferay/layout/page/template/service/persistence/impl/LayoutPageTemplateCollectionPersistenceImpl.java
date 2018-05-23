@@ -1122,13 +1122,6 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 					result = layoutPageTemplateCollection;
 
 					cacheResult(layoutPageTemplateCollection);
-
-					if ((layoutPageTemplateCollection.getGroupId() != groupId) ||
-							(layoutPageTemplateCollection.getName() == null) ||
-							!layoutPageTemplateCollection.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, layoutPageTemplateCollection);
-					}
 				}
 			}
 			catch (Exception e) {

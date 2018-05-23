@@ -779,13 +779,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					result = ddmStructure;
 
 					cacheResult(ddmStructure);
-
-					if ((ddmStructure.getUuid() == null) ||
-							!ddmStructure.getUuid().equals(uuid) ||
-							(ddmStructure.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, ddmStructure);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -7431,14 +7424,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 					result = ddmStructure;
 
 					cacheResult(ddmStructure);
-
-					if ((ddmStructure.getGroupId() != groupId) ||
-							(ddmStructure.getClassNameId() != classNameId) ||
-							(ddmStructure.getStructureKey() == null) ||
-							!ddmStructure.getStructureKey().equals(structureKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_S,
-							finderArgs, ddmStructure);
-					}
 				}
 			}
 			catch (Exception e) {

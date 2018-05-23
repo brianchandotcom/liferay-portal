@@ -230,12 +230,6 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 					result = memberRequest;
 
 					cacheResult(memberRequest);
-
-					if ((memberRequest.getKey() == null) ||
-							!memberRequest.getKey().equals(key)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_KEY,
-							finderArgs, memberRequest);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1552,13 +1546,6 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 					result = memberRequest;
 
 					cacheResult(memberRequest);
-
-					if ((memberRequest.getGroupId() != groupId) ||
-							(memberRequest.getReceiverUserId() != receiverUserId) ||
-							(memberRequest.getStatus() != status)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_R_S,
-							finderArgs, memberRequest);
-					}
 				}
 			}
 			catch (Exception e) {

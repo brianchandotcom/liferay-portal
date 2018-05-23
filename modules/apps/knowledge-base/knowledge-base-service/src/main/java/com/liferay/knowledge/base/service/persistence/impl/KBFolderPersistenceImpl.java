@@ -776,13 +776,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 					result = kbFolder;
 
 					cacheResult(kbFolder);
-
-					if ((kbFolder.getUuid() == null) ||
-							!kbFolder.getUuid().equals(uuid) ||
-							(kbFolder.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, kbFolder);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2563,14 +2556,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 					result = kbFolder;
 
 					cacheResult(kbFolder);
-
-					if ((kbFolder.getGroupId() != groupId) ||
-							(kbFolder.getParentKBFolderId() != parentKBFolderId) ||
-							(kbFolder.getName() == null) ||
-							!kbFolder.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_N,
-							finderArgs, kbFolder);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2855,14 +2840,6 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 					result = kbFolder;
 
 					cacheResult(kbFolder);
-
-					if ((kbFolder.getGroupId() != groupId) ||
-							(kbFolder.getParentKBFolderId() != parentKBFolderId) ||
-							(kbFolder.getUrlTitle() == null) ||
-							!kbFolder.getUrlTitle().equals(urlTitle)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_UT,
-							finderArgs, kbFolder);
-					}
 				}
 			}
 			catch (Exception e) {

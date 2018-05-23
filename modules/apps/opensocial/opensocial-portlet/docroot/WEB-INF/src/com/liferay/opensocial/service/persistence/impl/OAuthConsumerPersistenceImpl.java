@@ -809,14 +809,6 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 					result = oAuthConsumer;
 
 					cacheResult(oAuthConsumer);
-
-					if ((oAuthConsumer.getGadgetKey() == null) ||
-							!oAuthConsumer.getGadgetKey().equals(gadgetKey) ||
-							(oAuthConsumer.getServiceName() == null) ||
-							!oAuthConsumer.getServiceName().equals(serviceName)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_S,
-							finderArgs, oAuthConsumer);
-					}
 				}
 			}
 			catch (Exception e) {

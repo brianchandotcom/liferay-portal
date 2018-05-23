@@ -790,17 +790,6 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 					result = userNotificationDelivery;
 
 					cacheResult(userNotificationDelivery);
-
-					if ((userNotificationDelivery.getUserId() != userId) ||
-							(userNotificationDelivery.getPortletId() == null) ||
-							!userNotificationDelivery.getPortletId()
-														 .equals(portletId) ||
-							(userNotificationDelivery.getClassNameId() != classNameId) ||
-							(userNotificationDelivery.getNotificationType() != notificationType) ||
-							(userNotificationDelivery.getDeliveryType() != deliveryType)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
-							finderArgs, userNotificationDelivery);
-					}
 				}
 			}
 			catch (Exception e) {

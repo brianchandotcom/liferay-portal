@@ -217,12 +217,6 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 					result = pushNotificationsDevice;
 
 					cacheResult(pushNotificationsDevice);
-
-					if ((pushNotificationsDevice.getToken() == null) ||
-							!pushNotificationsDevice.getToken().equals(token)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_TOKEN,
-							finderArgs, pushNotificationsDevice);
-					}
 				}
 			}
 			catch (Exception e) {

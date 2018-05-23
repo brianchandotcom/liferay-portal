@@ -777,13 +777,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 					result = socialRequest;
 
 					cacheResult(socialRequest);
-
-					if ((socialRequest.getUuid() == null) ||
-							!socialRequest.getUuid().equals(uuid) ||
-							(socialRequest.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, socialRequest);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4806,15 +4799,6 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 					result = socialRequest;
 
 					cacheResult(socialRequest);
-
-					if ((socialRequest.getUserId() != userId) ||
-							(socialRequest.getClassNameId() != classNameId) ||
-							(socialRequest.getClassPK() != classPK) ||
-							(socialRequest.getType() != type) ||
-							(socialRequest.getReceiverUserId() != receiverUserId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_C_C_T_R,
-							finderArgs, socialRequest);
-					}
 				}
 			}
 			catch (Exception e) {

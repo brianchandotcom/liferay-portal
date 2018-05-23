@@ -2395,12 +2395,6 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 					result = dlFileEntryMetadata;
 
 					cacheResult(dlFileEntryMetadata);
-
-					if ((dlFileEntryMetadata.getDDMStructureId() != DDMStructureId) ||
-							(dlFileEntryMetadata.getFileVersionId() != fileVersionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_D_F,
-							finderArgs, dlFileEntryMetadata);
-					}
 				}
 			}
 			catch (Exception e) {

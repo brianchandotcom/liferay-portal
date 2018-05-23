@@ -213,12 +213,6 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 					result = virtualHost;
 
 					cacheResult(virtualHost);
-
-					if ((virtualHost.getHostname() == null) ||
-							!virtualHost.getHostname().equals(hostname)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_HOSTNAME,
-							finderArgs, virtualHost);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -446,12 +440,6 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 					result = virtualHost;
 
 					cacheResult(virtualHost);
-
-					if ((virtualHost.getCompanyId() != companyId) ||
-							(virtualHost.getLayoutSetId() != layoutSetId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_L,
-							finderArgs, virtualHost);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -1299,14 +1299,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 					result = layoutBranch;
 
 					cacheResult(layoutBranch);
-
-					if ((layoutBranch.getLayoutSetBranchId() != layoutSetBranchId) ||
-							(layoutBranch.getPlid() != plid) ||
-							(layoutBranch.getName() == null) ||
-							!layoutBranch.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_L_P_N,
-							finderArgs, layoutBranch);
-					}
 				}
 			}
 			catch (Exception e) {

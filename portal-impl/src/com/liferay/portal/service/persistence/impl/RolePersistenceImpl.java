@@ -5736,13 +5736,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					result = role;
 
 					cacheResult(role);
-
-					if ((role.getCompanyId() != companyId) ||
-							(role.getName() == null) ||
-							!role.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
-							finderArgs, role);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -8632,13 +8625,6 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 					result = role;
 
 					cacheResult(role);
-
-					if ((role.getCompanyId() != companyId) ||
-							(role.getClassNameId() != classNameId) ||
-							(role.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C,
-							finderArgs, role);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -785,13 +785,6 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 					result = dlFileShortcut;
 
 					cacheResult(dlFileShortcut);
-
-					if ((dlFileShortcut.getUuid() == null) ||
-							!dlFileShortcut.getUuid().equals(uuid) ||
-							(dlFileShortcut.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, dlFileShortcut);
-					}
 				}
 			}
 			catch (Exception e) {

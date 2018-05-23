@@ -1366,14 +1366,6 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 					result = ddmFormInstanceRecordVersion;
 
 					cacheResult(ddmFormInstanceRecordVersion);
-
-					if ((ddmFormInstanceRecordVersion.getFormInstanceRecordId() != formInstanceRecordId) ||
-							(ddmFormInstanceRecordVersion.getVersion() == null) ||
-							!ddmFormInstanceRecordVersion.getVersion()
-															 .equals(version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_F_V,
-							finderArgs, ddmFormInstanceRecordVersion);
-					}
 				}
 			}
 			catch (Exception e) {

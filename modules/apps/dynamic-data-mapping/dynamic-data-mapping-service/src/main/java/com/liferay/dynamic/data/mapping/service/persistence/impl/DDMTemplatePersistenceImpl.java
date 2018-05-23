@@ -779,13 +779,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 					result = ddmTemplate;
 
 					cacheResult(ddmTemplate);
-
-					if ((ddmTemplate.getUuid() == null) ||
-							!ddmTemplate.getUuid().equals(uuid) ||
-							(ddmTemplate.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, ddmTemplate);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4606,11 +4599,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 					result = ddmTemplate;
 
 					cacheResult(ddmTemplate);
-
-					if ((ddmTemplate.getSmallImageId() != smallImageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_SMALLIMAGEID,
-							finderArgs, ddmTemplate);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -8717,14 +8705,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 					result = ddmTemplate;
 
 					cacheResult(ddmTemplate);
-
-					if ((ddmTemplate.getGroupId() != groupId) ||
-							(ddmTemplate.getClassNameId() != classNameId) ||
-							(ddmTemplate.getTemplateKey() == null) ||
-							!ddmTemplate.getTemplateKey().equals(templateKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_T,
-							finderArgs, ddmTemplate);
-					}
 				}
 			}
 			catch (Exception e) {

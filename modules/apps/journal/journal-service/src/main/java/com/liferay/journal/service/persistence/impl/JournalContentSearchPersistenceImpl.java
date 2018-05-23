@@ -4470,19 +4470,6 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 					result = journalContentSearch;
 
 					cacheResult(journalContentSearch);
-
-					if ((journalContentSearch.getGroupId() != groupId) ||
-							(journalContentSearch.isPrivateLayout() != privateLayout) ||
-							(journalContentSearch.getLayoutId() != layoutId) ||
-							(journalContentSearch.getPortletId() == null) ||
-							!journalContentSearch.getPortletId()
-													 .equals(portletId) ||
-							(journalContentSearch.getArticleId() == null) ||
-							!journalContentSearch.getArticleId()
-													 .equals(articleId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_L_P_A,
-							finderArgs, journalContentSearch);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -753,12 +753,6 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 					result = powwowParticipant;
 
 					cacheResult(powwowParticipant);
-
-					if ((powwowParticipant.getPowwowMeetingId() != powwowMeetingId) ||
-							(powwowParticipant.getParticipantUserId() != participantUserId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_PUI,
-							finderArgs, powwowParticipant);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -996,14 +990,6 @@ public class PowwowParticipantPersistenceImpl extends BasePersistenceImpl<Powwow
 					result = powwowParticipant;
 
 					cacheResult(powwowParticipant);
-
-					if ((powwowParticipant.getPowwowMeetingId() != powwowMeetingId) ||
-							(powwowParticipant.getEmailAddress() == null) ||
-							!powwowParticipant.getEmailAddress()
-												  .equals(emailAddress)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_PMI_EA,
-							finderArgs, powwowParticipant);
-					}
 				}
 			}
 			catch (Exception e) {

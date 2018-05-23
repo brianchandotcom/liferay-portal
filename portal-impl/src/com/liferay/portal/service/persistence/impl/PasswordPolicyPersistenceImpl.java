@@ -3062,12 +3062,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 					result = passwordPolicy;
 
 					cacheResult(passwordPolicy);
-
-					if ((passwordPolicy.getCompanyId() != companyId) ||
-							(passwordPolicy.isDefaultPolicy() != defaultPolicy)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_DP,
-							finderArgs, passwordPolicy);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3299,13 +3293,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 					result = passwordPolicy;
 
 					cacheResult(passwordPolicy);
-
-					if ((passwordPolicy.getCompanyId() != companyId) ||
-							(passwordPolicy.getName() == null) ||
-							!passwordPolicy.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
-							finderArgs, passwordPolicy);
-					}
 				}
 			}
 			catch (Exception e) {

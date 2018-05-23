@@ -446,12 +446,6 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 					result = ratingsStats;
 
 					cacheResult(ratingsStats);
-
-					if ((ratingsStats.getClassNameId() != classNameId) ||
-							(ratingsStats.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, ratingsStats);
-					}
 				}
 			}
 			catch (Exception e) {

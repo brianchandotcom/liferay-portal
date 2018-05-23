@@ -1833,10 +1833,11 @@ public class VerifyProperties extends VerifyProcess {
 		"users.image.default.use.initials", "users.image.max.height",
 		"users.image.max.size", "users.image.max.width",
 		"vaadin.resources.path", "vaadin.theme", "vaadin.widgetset",
-		"webdav.storage.class", "webdav.storage.show.edit.url",
-		"webdav.storage.show.view.url", "webdav.storage.tokens",
-		"wiki.email.page.added.signature", "wiki.email.page.updated.signature",
-		"xss.allow", "ym.login", "ym.password"
+		"value.object.finder.blocking.cache", "webdav.storage.class",
+		"webdav.storage.show.edit.url", "webdav.storage.show.view.url",
+		"webdav.storage.tokens", "wiki.email.page.added.signature",
+		"wiki.email.page.updated.signature", "xss.allow", "ym.login",
+		"ym.password"
 	};
 
 	private static final String[] _OBSOLETE_SYSTEM_KEYS = {

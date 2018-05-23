@@ -1252,12 +1252,6 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 					result = trashVersion;
 
 					cacheResult(trashVersion);
-
-					if ((trashVersion.getClassNameId() != classNameId) ||
-							(trashVersion.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, trashVersion);
-					}
 				}
 			}
 			catch (Exception e) {

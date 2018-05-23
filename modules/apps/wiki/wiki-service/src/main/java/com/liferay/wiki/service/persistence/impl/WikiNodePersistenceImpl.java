@@ -776,13 +776,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 					result = wikiNode;
 
 					cacheResult(wikiNode);
-
-					if ((wikiNode.getUuid() == null) ||
-							!wikiNode.getUuid().equals(uuid) ||
-							(wikiNode.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, wikiNode);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2974,13 +2967,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 					result = wikiNode;
 
 					cacheResult(wikiNode);
-
-					if ((wikiNode.getGroupId() != groupId) ||
-							(wikiNode.getName() == null) ||
-							!wikiNode.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, wikiNode);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -755,13 +755,6 @@ public class DDMFormInstanceVersionPersistenceImpl extends BasePersistenceImpl<D
 					result = ddmFormInstanceVersion;
 
 					cacheResult(ddmFormInstanceVersion);
-
-					if ((ddmFormInstanceVersion.getFormInstanceId() != formInstanceId) ||
-							(ddmFormInstanceVersion.getVersion() == null) ||
-							!ddmFormInstanceVersion.getVersion().equals(version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_F_V,
-							finderArgs, ddmFormInstanceVersion);
-					}
 				}
 			}
 			catch (Exception e) {

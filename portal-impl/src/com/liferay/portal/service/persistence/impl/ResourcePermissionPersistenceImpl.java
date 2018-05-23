@@ -4988,17 +4988,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 					result = resourcePermission;
 
 					cacheResult(resourcePermission);
-
-					if ((resourcePermission.getCompanyId() != companyId) ||
-							(resourcePermission.getName() == null) ||
-							!resourcePermission.getName().equals(name) ||
-							(resourcePermission.getScope() != scope) ||
-							(resourcePermission.getPrimKey() == null) ||
-							!resourcePermission.getPrimKey().equals(primKey) ||
-							(resourcePermission.getRoleId() != roleId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_S_P_R,
-							finderArgs, resourcePermission);
-					}
 				}
 			}
 			catch (Exception e) {

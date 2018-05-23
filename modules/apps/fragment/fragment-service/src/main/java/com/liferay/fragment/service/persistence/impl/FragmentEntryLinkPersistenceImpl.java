@@ -785,13 +785,6 @@ public class FragmentEntryLinkPersistenceImpl extends BasePersistenceImpl<Fragme
 					result = fragmentEntryLink;
 
 					cacheResult(fragmentEntryLink);
-
-					if ((fragmentEntryLink.getUuid() == null) ||
-							!fragmentEntryLink.getUuid().equals(uuid) ||
-							(fragmentEntryLink.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, fragmentEntryLink);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -5566,13 +5566,6 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 					result = socialRelation;
 
 					cacheResult(socialRelation);
-
-					if ((socialRelation.getUserId1() != userId1) ||
-							(socialRelation.getUserId2() != userId2) ||
-							(socialRelation.getType() != type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U1_U2_T,
-							finderArgs, socialRelation);
-					}
 				}
 			}
 			catch (Exception e) {

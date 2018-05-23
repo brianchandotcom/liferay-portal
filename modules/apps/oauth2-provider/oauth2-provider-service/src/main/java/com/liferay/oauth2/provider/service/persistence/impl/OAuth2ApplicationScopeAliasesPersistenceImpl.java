@@ -1289,14 +1289,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 					result = oAuth2ApplicationScopeAliases;
 
 					cacheResult(oAuth2ApplicationScopeAliases);
-
-					if ((oAuth2ApplicationScopeAliases.getOAuth2ApplicationId() != oAuth2ApplicationId) ||
-							(oAuth2ApplicationScopeAliases.getScopeAliases() == null) ||
-							!oAuth2ApplicationScopeAliases.getScopeAliases()
-															  .equals(scopeAliases)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_O_S,
-							finderArgs, oAuth2ApplicationScopeAliases);
-					}
 				}
 			}
 			catch (Exception e) {

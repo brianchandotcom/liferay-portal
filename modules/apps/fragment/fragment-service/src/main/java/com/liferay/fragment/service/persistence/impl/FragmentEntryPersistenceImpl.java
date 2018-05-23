@@ -2555,14 +2555,6 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 					result = fragmentEntry;
 
 					cacheResult(fragmentEntry);
-
-					if ((fragmentEntry.getGroupId() != groupId) ||
-							(fragmentEntry.getFragmentEntryKey() == null) ||
-							!fragmentEntry.getFragmentEntryKey()
-											  .equals(fragmentEntryKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_FEK,
-							finderArgs, fragmentEntry);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -1831,11 +1831,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					result = user;
 
 					cacheResult(user);
-
-					if ((user.getContactId() != contactId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CONTACTID,
-							finderArgs, user);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2593,11 +2588,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					result = user;
 
 					cacheResult(user);
-
-					if ((user.getPortraitId() != portraitId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_PORTRAITID,
-							finderArgs, user);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2808,12 +2798,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					result = user;
 
 					cacheResult(user);
-
-					if ((user.getCompanyId() != companyId) ||
-							(user.getUserId() != userId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_U,
-							finderArgs, user);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4184,12 +4168,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					result = user;
 
 					cacheResult(user);
-
-					if ((user.getCompanyId() != companyId) ||
-							(user.isDefaultUser() != defaultUser)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_DU,
-							finderArgs, user);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4421,13 +4399,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					result = user;
 
 					cacheResult(user);
-
-					if ((user.getCompanyId() != companyId) ||
-							(user.getScreenName() == null) ||
-							!user.getScreenName().equals(screenName)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_SN,
-							finderArgs, user);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4675,13 +4646,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					result = user;
 
 					cacheResult(user);
-
-					if ((user.getCompanyId() != companyId) ||
-							(user.getEmailAddress() == null) ||
-							!user.getEmailAddress().equals(emailAddress)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_EA,
-							finderArgs, user);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4926,12 +4890,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					result = user;
 
 					cacheResult(user);
-
-					if ((user.getCompanyId() != companyId) ||
-							(user.getFacebookId() != facebookId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_FID,
-							finderArgs, user);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -5174,13 +5132,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					result = user;
 
 					cacheResult(user);
-
-					if ((user.getCompanyId() != companyId) ||
-							(user.getGoogleUserId() == null) ||
-							!user.getGoogleUserId().equals(googleUserId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_GUID,
-							finderArgs, user);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -5439,13 +5390,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 					result = user;
 
 					cacheResult(user);
-
-					if ((user.getCompanyId() != companyId) ||
-							(user.getOpenId() == null) ||
-							!user.getOpenId().equals(openId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_O,
-							finderArgs, user);
-					}
 				}
 			}
 			catch (Exception e) {

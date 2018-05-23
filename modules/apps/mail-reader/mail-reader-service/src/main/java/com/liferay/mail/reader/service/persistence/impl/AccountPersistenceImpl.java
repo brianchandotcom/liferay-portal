@@ -741,13 +741,6 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 					result = account;
 
 					cacheResult(account);
-
-					if ((account.getUserId() != userId) ||
-							(account.getAddress() == null) ||
-							!account.getAddress().equals(address)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_A,
-							finderArgs, account);
-					}
 				}
 			}
 			catch (Exception e) {

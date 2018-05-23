@@ -1407,15 +1407,6 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 					result = resourceTypePermission;
 
 					cacheResult(resourceTypePermission);
-
-					if ((resourceTypePermission.getCompanyId() != companyId) ||
-							(resourceTypePermission.getGroupId() != groupId) ||
-							(resourceTypePermission.getName() == null) ||
-							!resourceTypePermission.getName().equals(name) ||
-							(resourceTypePermission.getRoleId() != roleId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_N_R,
-							finderArgs, resourceTypePermission);
-					}
 				}
 			}
 			catch (Exception e) {

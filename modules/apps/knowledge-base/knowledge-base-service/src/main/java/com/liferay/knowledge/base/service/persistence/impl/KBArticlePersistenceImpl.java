@@ -1300,13 +1300,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 					result = kbArticle;
 
 					cacheResult(kbArticle);
-
-					if ((kbArticle.getUuid() == null) ||
-							!kbArticle.getUuid().equals(uuid) ||
-							(kbArticle.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, kbArticle);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3046,12 +3039,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 					result = kbArticle;
 
 					cacheResult(kbArticle);
-
-					if ((kbArticle.getResourcePrimKey() != resourcePrimKey) ||
-							(kbArticle.getVersion() != version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_R_V,
-							finderArgs, kbArticle);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -12667,13 +12654,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 					result = kbArticle;
 
 					cacheResult(kbArticle);
-
-					if ((kbArticle.getResourcePrimKey() != resourcePrimKey) ||
-							(kbArticle.getGroupId() != groupId) ||
-							(kbArticle.getVersion() != version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_R_G_V,
-							finderArgs, kbArticle);
-					}
 				}
 			}
 			catch (Exception e) {

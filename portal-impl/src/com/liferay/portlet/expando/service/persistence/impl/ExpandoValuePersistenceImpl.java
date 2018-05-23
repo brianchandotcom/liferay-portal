@@ -3350,12 +3350,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 					result = expandoValue;
 
 					cacheResult(expandoValue);
-
-					if ((expandoValue.getColumnId() != columnId) ||
-							(expandoValue.getRowId() != rowId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_R,
-							finderArgs, expandoValue);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4133,13 +4127,6 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 					result = expandoValue;
 
 					cacheResult(expandoValue);
-
-					if ((expandoValue.getTableId() != tableId) ||
-							(expandoValue.getColumnId() != columnId) ||
-							(expandoValue.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_T_C_C,
-							finderArgs, expandoValue);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -199,11 +199,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 					result = browserTracker;
 
 					cacheResult(browserTracker);
-
-					if ((browserTracker.getUserId() != userId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_USERID,
-							finderArgs, browserTracker);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -1107,14 +1107,6 @@ public class FragmentCollectionPersistenceImpl extends BasePersistenceImpl<Fragm
 					result = fragmentCollection;
 
 					cacheResult(fragmentCollection);
-
-					if ((fragmentCollection.getGroupId() != groupId) ||
-							(fragmentCollection.getFragmentCollectionKey() == null) ||
-							!fragmentCollection.getFragmentCollectionKey()
-												   .equals(fragmentCollectionKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_FCK,
-							finderArgs, fragmentCollection);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -774,13 +774,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 					result = mdrAction;
 
 					cacheResult(mdrAction);
-
-					if ((mdrAction.getUuid() == null) ||
-							!mdrAction.getUuid().equals(uuid) ||
-							(mdrAction.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, mdrAction);
-					}
 				}
 			}
 			catch (Exception e) {

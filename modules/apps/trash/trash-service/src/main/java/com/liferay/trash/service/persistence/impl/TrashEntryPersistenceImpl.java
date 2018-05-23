@@ -2323,12 +2323,6 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 					result = trashEntry;
 
 					cacheResult(trashEntry);
-
-					if ((trashEntry.getClassNameId() != classNameId) ||
-							(trashEntry.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, trashEntry);
-					}
 				}
 			}
 			catch (Exception e) {

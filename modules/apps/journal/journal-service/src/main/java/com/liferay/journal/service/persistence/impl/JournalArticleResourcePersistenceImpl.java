@@ -783,13 +783,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 					result = journalArticleResource;
 
 					cacheResult(journalArticleResource);
-
-					if ((journalArticleResource.getUuid() == null) ||
-							!journalArticleResource.getUuid().equals(uuid) ||
-							(journalArticleResource.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, journalArticleResource);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2145,14 +2138,6 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 					result = journalArticleResource;
 
 					cacheResult(journalArticleResource);
-
-					if ((journalArticleResource.getGroupId() != groupId) ||
-							(journalArticleResource.getArticleId() == null) ||
-							!journalArticleResource.getArticleId()
-													   .equals(articleId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_A,
-							finderArgs, journalArticleResource);
-					}
 				}
 			}
 			catch (Exception e) {

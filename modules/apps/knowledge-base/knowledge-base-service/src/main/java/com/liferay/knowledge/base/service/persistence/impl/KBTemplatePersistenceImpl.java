@@ -784,13 +784,6 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 					result = kbTemplate;
 
 					cacheResult(kbTemplate);
-
-					if ((kbTemplate.getUuid() == null) ||
-							!kbTemplate.getUuid().equals(uuid) ||
-							(kbTemplate.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, kbTemplate);
-					}
 				}
 			}
 			catch (Exception e) {

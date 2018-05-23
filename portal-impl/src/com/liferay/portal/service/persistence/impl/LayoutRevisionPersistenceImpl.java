@@ -5168,13 +5168,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					result = layoutRevision;
 
 					cacheResult(layoutRevision);
-
-					if ((layoutRevision.getLayoutSetBranchId() != layoutSetBranchId) ||
-							(layoutRevision.isHead() != head) ||
-							(layoutRevision.getPlid() != plid)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_L_H_P,
-							finderArgs, layoutRevision);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -6639,14 +6632,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 					result = layoutRevision;
 
 					cacheResult(layoutRevision);
-
-					if ((layoutRevision.getLayoutSetBranchId() != layoutSetBranchId) ||
-							(layoutRevision.getLayoutBranchId() != layoutBranchId) ||
-							(layoutRevision.isHead() != head) ||
-							(layoutRevision.getPlid() != plid)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_L_L_H_P,
-							finderArgs, layoutRevision);
-					}
 				}
 			}
 			catch (Exception e) {

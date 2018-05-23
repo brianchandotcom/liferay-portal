@@ -728,13 +728,6 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 					result = userIdMapper;
 
 					cacheResult(userIdMapper);
-
-					if ((userIdMapper.getUserId() != userId) ||
-							(userIdMapper.getType() == null) ||
-							!userIdMapper.getType().equals(type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_T,
-							finderArgs, userIdMapper);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -997,15 +990,6 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 					result = userIdMapper;
 
 					cacheResult(userIdMapper);
-
-					if ((userIdMapper.getType() == null) ||
-							!userIdMapper.getType().equals(type) ||
-							(userIdMapper.getExternalUserId() == null) ||
-							!userIdMapper.getExternalUserId()
-											 .equals(externalUserId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_T_E,
-							finderArgs, userIdMapper);
-					}
 				}
 			}
 			catch (Exception e) {

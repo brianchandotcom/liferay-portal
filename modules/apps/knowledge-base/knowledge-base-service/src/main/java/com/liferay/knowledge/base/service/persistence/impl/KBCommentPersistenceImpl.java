@@ -778,13 +778,6 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 					result = kbComment;
 
 					cacheResult(kbComment);
-
-					if ((kbComment.getUuid() == null) ||
-							!kbComment.getUuid().equals(uuid) ||
-							(kbComment.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, kbComment);
-					}
 				}
 			}
 			catch (Exception e) {

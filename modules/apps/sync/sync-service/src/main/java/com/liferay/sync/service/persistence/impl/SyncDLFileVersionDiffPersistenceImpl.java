@@ -1297,13 +1297,6 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 					result = syncDLFileVersionDiff;
 
 					cacheResult(syncDLFileVersionDiff);
-
-					if ((syncDLFileVersionDiff.getFileEntryId() != fileEntryId) ||
-							(syncDLFileVersionDiff.getSourceFileVersionId() != sourceFileVersionId) ||
-							(syncDLFileVersionDiff.getTargetFileVersionId() != targetFileVersionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_F_S_T,
-							finderArgs, syncDLFileVersionDiff);
-					}
 				}
 			}
 			catch (Exception e) {

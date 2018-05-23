@@ -790,13 +790,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					result = assetVocabulary;
 
 					cacheResult(assetVocabulary);
-
-					if ((assetVocabulary.getUuid() == null) ||
-							!assetVocabulary.getUuid().equals(uuid) ||
-							(assetVocabulary.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, assetVocabulary);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3473,13 +3466,6 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 					result = assetVocabulary;
 
 					cacheResult(assetVocabulary);
-
-					if ((assetVocabulary.getGroupId() != groupId) ||
-							(assetVocabulary.getName() == null) ||
-							!assetVocabulary.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, assetVocabulary);
-					}
 				}
 			}
 			catch (Exception e) {

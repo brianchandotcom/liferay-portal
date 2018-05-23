@@ -1341,11 +1341,6 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 					result = ddmStorageLink;
 
 					cacheResult(ddmStorageLink);
-
-					if ((ddmStorageLink.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CLASSPK,
-							finderArgs, ddmStorageLink);
-					}
 				}
 			}
 			catch (Exception e) {

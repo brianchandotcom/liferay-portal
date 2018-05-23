@@ -864,20 +864,6 @@ public class OAuth2ScopeGrantPersistenceImpl extends BasePersistenceImpl<OAuth2S
 					result = oAuth2ScopeGrant;
 
 					cacheResult(oAuth2ScopeGrant);
-
-					if ((oAuth2ScopeGrant.getCompanyId() != companyId) ||
-							(oAuth2ScopeGrant.getOAuth2ApplicationScopeAliasesId() != oAuth2ApplicationScopeAliasesId) ||
-							(oAuth2ScopeGrant.getApplicationName() == null) ||
-							!oAuth2ScopeGrant.getApplicationName()
-												 .equals(applicationName) ||
-							(oAuth2ScopeGrant.getBundleSymbolicName() == null) ||
-							!oAuth2ScopeGrant.getBundleSymbolicName()
-												 .equals(bundleSymbolicName) ||
-							(oAuth2ScopeGrant.getScope() == null) ||
-							!oAuth2ScopeGrant.getScope().equals(scope)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_O_A_B_S,
-							finderArgs, oAuth2ScopeGrant);
-					}
 				}
 			}
 			catch (Exception e) {

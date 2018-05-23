@@ -782,13 +782,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 					result = journalFolder;
 
 					cacheResult(journalFolder);
-
-					if ((journalFolder.getUuid() == null) ||
-							!journalFolder.getUuid().equals(uuid) ||
-							(journalFolder.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, journalFolder);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3933,13 +3926,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 					result = journalFolder;
 
 					cacheResult(journalFolder);
-
-					if ((journalFolder.getGroupId() != groupId) ||
-							(journalFolder.getName() == null) ||
-							!journalFolder.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, journalFolder);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4735,14 +4721,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 					result = journalFolder;
 
 					cacheResult(journalFolder);
-
-					if ((journalFolder.getGroupId() != groupId) ||
-							(journalFolder.getParentFolderId() != parentFolderId) ||
-							(journalFolder.getName() == null) ||
-							!journalFolder.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_N,
-							finderArgs, journalFolder);
-					}
 				}
 			}
 			catch (Exception e) {

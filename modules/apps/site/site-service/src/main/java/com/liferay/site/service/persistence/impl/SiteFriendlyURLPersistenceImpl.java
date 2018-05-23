@@ -781,13 +781,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 					result = siteFriendlyURL;
 
 					cacheResult(siteFriendlyURL);
-
-					if ((siteFriendlyURL.getUuid() == null) ||
-							!siteFriendlyURL.getUuid().equals(uuid) ||
-							(siteFriendlyURL.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, siteFriendlyURL);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2169,13 +2162,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 					result = siteFriendlyURL;
 
 					cacheResult(siteFriendlyURL);
-
-					if ((siteFriendlyURL.getCompanyId() != companyId) ||
-							(siteFriendlyURL.getFriendlyURL() == null) ||
-							!siteFriendlyURL.getFriendlyURL().equals(friendlyURL)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_F,
-							finderArgs, siteFriendlyURL);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2444,14 +2430,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 					result = siteFriendlyURL;
 
 					cacheResult(siteFriendlyURL);
-
-					if ((siteFriendlyURL.getCompanyId() != companyId) ||
-							(siteFriendlyURL.getGroupId() != groupId) ||
-							(siteFriendlyURL.getLanguageId() == null) ||
-							!siteFriendlyURL.getLanguageId().equals(languageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_L,
-							finderArgs, siteFriendlyURL);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2743,15 +2721,6 @@ public class SiteFriendlyURLPersistenceImpl extends BasePersistenceImpl<SiteFrie
 					result = siteFriendlyURL;
 
 					cacheResult(siteFriendlyURL);
-
-					if ((siteFriendlyURL.getCompanyId() != companyId) ||
-							(siteFriendlyURL.getFriendlyURL() == null) ||
-							!siteFriendlyURL.getFriendlyURL().equals(friendlyURL) ||
-							(siteFriendlyURL.getLanguageId() == null) ||
-							!siteFriendlyURL.getLanguageId().equals(languageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_F_L,
-							finderArgs, siteFriendlyURL);
-					}
 				}
 			}
 			catch (Exception e) {

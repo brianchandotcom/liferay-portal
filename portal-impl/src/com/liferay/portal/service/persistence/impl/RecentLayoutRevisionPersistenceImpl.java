@@ -1774,13 +1774,6 @@ public class RecentLayoutRevisionPersistenceImpl extends BasePersistenceImpl<Rec
 					result = recentLayoutRevision;
 
 					cacheResult(recentLayoutRevision);
-
-					if ((recentLayoutRevision.getUserId() != userId) ||
-							(recentLayoutRevision.getLayoutSetBranchId() != layoutSetBranchId) ||
-							(recentLayoutRevision.getPlid() != plid)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_L_P,
-							finderArgs, recentLayoutRevision);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -2374,13 +2374,6 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 					result = dlFileRank;
 
 					cacheResult(dlFileRank);
-
-					if ((dlFileRank.getCompanyId() != companyId) ||
-							(dlFileRank.getUserId() != userId) ||
-							(dlFileRank.getFileEntryId() != fileEntryId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_U_F,
-							finderArgs, dlFileRank);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -211,12 +211,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 					result = company;
 
 					cacheResult(company);
-
-					if ((company.getWebId() == null) ||
-							!company.getWebId().equals(webId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_WEBID,
-							finderArgs, company);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -453,12 +447,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 					result = company;
 
 					cacheResult(company);
-
-					if ((company.getMx() == null) ||
-							!company.getMx().equals(mx)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_MX,
-							finderArgs, company);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -681,11 +669,6 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 					result = company;
 
 					cacheResult(company);
-
-					if ((company.getLogoId() != logoId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_LOGOID,
-							finderArgs, company);
-					}
 				}
 			}
 			catch (Exception e) {

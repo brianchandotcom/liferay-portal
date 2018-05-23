@@ -748,14 +748,6 @@ public class JournalArticleLocalizationPersistenceImpl
 					result = journalArticleLocalization;
 
 					cacheResult(journalArticleLocalization);
-
-					if ((journalArticleLocalization.getArticlePK() != articlePK) ||
-							(journalArticleLocalization.getLanguageId() == null) ||
-							!journalArticleLocalization.getLanguageId()
-														   .equals(languageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_A_L,
-							finderArgs, journalArticleLocalization);
-					}
 				}
 			}
 			catch (Exception e) {

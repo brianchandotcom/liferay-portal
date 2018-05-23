@@ -776,13 +776,6 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 					result = calendar;
 
 					cacheResult(calendar);
-
-					if ((calendar.getUuid() == null) ||
-							!calendar.getUuid().equals(uuid) ||
-							(calendar.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, calendar);
-					}
 				}
 			}
 			catch (Exception e) {

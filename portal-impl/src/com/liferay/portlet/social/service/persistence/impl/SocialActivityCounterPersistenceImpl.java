@@ -1986,17 +1986,6 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 					result = socialActivityCounter;
 
 					cacheResult(socialActivityCounter);
-
-					if ((socialActivityCounter.getGroupId() != groupId) ||
-							(socialActivityCounter.getClassNameId() != classNameId) ||
-							(socialActivityCounter.getClassPK() != classPK) ||
-							(socialActivityCounter.getName() == null) ||
-							!socialActivityCounter.getName().equals(name) ||
-							(socialActivityCounter.getOwnerType() != ownerType) ||
-							(socialActivityCounter.getStartPeriod() != startPeriod)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_S,
-							finderArgs, socialActivityCounter);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2343,17 +2332,6 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 					result = socialActivityCounter;
 
 					cacheResult(socialActivityCounter);
-
-					if ((socialActivityCounter.getGroupId() != groupId) ||
-							(socialActivityCounter.getClassNameId() != classNameId) ||
-							(socialActivityCounter.getClassPK() != classPK) ||
-							(socialActivityCounter.getName() == null) ||
-							!socialActivityCounter.getName().equals(name) ||
-							(socialActivityCounter.getOwnerType() != ownerType) ||
-							(socialActivityCounter.getEndPeriod() != endPeriod)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_N_O_E,
-							finderArgs, socialActivityCounter);
-					}
 				}
 			}
 			catch (Exception e) {

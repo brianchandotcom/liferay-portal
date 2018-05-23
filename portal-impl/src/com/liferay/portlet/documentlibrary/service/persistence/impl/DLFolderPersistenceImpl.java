@@ -786,13 +786,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 					result = dlFolder;
 
 					cacheResult(dlFolder);
-
-					if ((dlFolder.getUuid() == null) ||
-							!dlFolder.getUuid().equals(uuid) ||
-							(dlFolder.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, dlFolder);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4943,12 +4936,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 					result = dlFolder;
 
 					cacheResult(dlFolder);
-
-					if ((dlFolder.getRepositoryId() != repositoryId) ||
-							(dlFolder.isMountPoint() != mountPoint)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_R_M,
-							finderArgs, dlFolder);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -7311,14 +7298,6 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 					result = dlFolder;
 
 					cacheResult(dlFolder);
-
-					if ((dlFolder.getGroupId() != groupId) ||
-							(dlFolder.getParentFolderId() != parentFolderId) ||
-							(dlFolder.getName() == null) ||
-							!dlFolder.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_N,
-							finderArgs, dlFolder);
-					}
 				}
 			}
 			catch (Exception e) {

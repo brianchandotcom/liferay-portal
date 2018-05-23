@@ -739,13 +739,6 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 					result = ddmTemplateVersion;
 
 					cacheResult(ddmTemplateVersion);
-
-					if ((ddmTemplateVersion.getTemplateId() != templateId) ||
-							(ddmTemplateVersion.getVersion() == null) ||
-							!ddmTemplateVersion.getVersion().equals(version)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_T_V,
-							finderArgs, ddmTemplateVersion);
-					}
 				}
 			}
 			catch (Exception e) {

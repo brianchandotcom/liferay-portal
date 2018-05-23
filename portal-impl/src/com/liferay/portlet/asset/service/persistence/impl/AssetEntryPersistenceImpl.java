@@ -3397,13 +3397,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 					result = assetEntry;
 
 					cacheResult(assetEntry);
-
-					if ((assetEntry.getGroupId() != groupId) ||
-							(assetEntry.getClassUuid() == null) ||
-							!assetEntry.getClassUuid().equals(classUuid)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_CU,
-							finderArgs, assetEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3637,12 +3630,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 					result = assetEntry;
 
 					cacheResult(assetEntry);
-
-					if ((assetEntry.getClassNameId() != classNameId) ||
-							(assetEntry.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, assetEntry);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -5030,15 +5030,6 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 					result = portletPreferences;
 
 					cacheResult(portletPreferences);
-
-					if ((portletPreferences.getOwnerId() != ownerId) ||
-							(portletPreferences.getOwnerType() != ownerType) ||
-							(portletPreferences.getPlid() != plid) ||
-							(portletPreferences.getPortletId() == null) ||
-							!portletPreferences.getPortletId().equals(portletId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_O_O_P_P,
-							finderArgs, portletPreferences);
-					}
 				}
 			}
 			catch (Exception e) {

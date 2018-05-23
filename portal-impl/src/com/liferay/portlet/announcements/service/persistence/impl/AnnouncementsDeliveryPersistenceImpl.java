@@ -739,13 +739,6 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 					result = announcementsDelivery;
 
 					cacheResult(announcementsDelivery);
-
-					if ((announcementsDelivery.getUserId() != userId) ||
-							(announcementsDelivery.getType() == null) ||
-							!announcementsDelivery.getType().equals(type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_T,
-							finderArgs, announcementsDelivery);
-					}
 				}
 			}
 			catch (Exception e) {

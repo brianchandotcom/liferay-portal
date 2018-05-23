@@ -820,13 +820,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 					result = assetCategory;
 
 					cacheResult(assetCategory);
-
-					if ((assetCategory.getUuid() == null) ||
-							!assetCategory.getUuid().equals(uuid) ||
-							(assetCategory.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, assetCategory);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -9368,14 +9361,6 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 					result = assetCategory;
 
 					cacheResult(assetCategory);
-
-					if ((assetCategory.getParentCategoryId() != parentCategoryId) ||
-							(assetCategory.getName() == null) ||
-							!assetCategory.getName().equals(name) ||
-							(assetCategory.getVocabularyId() != vocabularyId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_P_N_V,
-							finderArgs, assetCategory);
-					}
 				}
 			}
 			catch (Exception e) {

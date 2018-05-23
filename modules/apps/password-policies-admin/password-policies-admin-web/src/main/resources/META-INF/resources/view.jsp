@@ -190,7 +190,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 	$('#<portlet:namespace />deletePasswordPolicies').on(
 		'click',
 		function() {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
 				var form = AUI.$(document.<portlet:namespace />fm);
 
 				var passwordPolicyIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');

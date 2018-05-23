@@ -77,7 +77,7 @@
 		<column name="classTypeId" type="long" />
 		<column accessor="true" name="name" type="String" />
 		<column name="type" type="int" />
-		<column name="htmlPreviewEntryId" type="long" />
+		<column name="previewFileEntryId" type="long" />
 		<column name="defaultTemplate" type="boolean" />
 		<column name="layoutPrototypeId" type="long" />
 		<column name="status" type="int" />

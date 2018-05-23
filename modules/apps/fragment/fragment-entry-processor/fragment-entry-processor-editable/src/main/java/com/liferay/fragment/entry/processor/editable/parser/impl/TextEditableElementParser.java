@@ -53,7 +53,7 @@ public class TextEditableElementParser implements EditableElementParser {
 
 		document.outputSettings(outputSettings);
 
-		element.html(document.html());
+		element.html(document.text());
 	}
 
 	private static final String _TMPL_VALIDATE_TEXT_FIELD = StringUtil.read(

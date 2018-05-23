@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * Holds information about the routes supported for a {@link
@@ -130,7 +129,7 @@ public class CollectionRoutes<T, S> {
 		 */
 		public <A, R> Builder<T, S> addCreator(
 			ThrowableBiFunction<R, A, T> throwableBiFunction, Class<A> aClass,
-			Function<Credentials, Boolean> permissionFunction,
+			ThrowableFunction<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -164,7 +163,7 @@ public class CollectionRoutes<T, S> {
 		 */
 		public <R> Builder<T, S> addCreator(
 			ThrowableFunction<R, T> throwableFunction,
-			Function<Credentials, Boolean> permissionFunction,
+			ThrowableFunction<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_collectionPermissionFunction = permissionFunction;
@@ -202,7 +201,7 @@ public class CollectionRoutes<T, S> {
 		public <A, B, C, D, R> Builder<T, S> addCreator(
 			ThrowablePentaFunction<R, A, B, C, D, T> throwablePentaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass, Class<D> dClass,
-			Function<Credentials, Boolean> permissionFunction,
+			ThrowableFunction<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -244,7 +243,7 @@ public class CollectionRoutes<T, S> {
 		public <A, B, C, R> Builder<T, S> addCreator(
 			ThrowableTetraFunction<R, A, B, C, T> throwableTetraFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
-			Function<Credentials, Boolean> permissionFunction,
+			ThrowableFunction<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -284,7 +283,7 @@ public class CollectionRoutes<T, S> {
 		public <A, B, R> Builder<T, S> addCreator(
 			ThrowableTriFunction<R, A, B, T> throwableTriFunction,
 			Class<A> aClass, Class<B> bClass,
-			Function<Credentials, Boolean> permissionFunction,
+			ThrowableFunction<Credentials, Boolean> permissionFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
 			_neededProviderConsumer.accept(aClass.getName());
@@ -472,7 +471,11 @@ public class CollectionRoutes<T, S> {
 			return Optional.ofNullable(
 				_form
 			).filter(
-				__ -> _collectionPermissionFunction.apply(credentials)
+				__ -> Try.fromFallible(
+					() -> _collectionPermissionFunction.apply(credentials)
+				).orElse(
+					false
+				)
 			).map(
 				form -> new Operation(form, POST, _name + "/create")
 			).map(
@@ -482,7 +485,8 @@ public class CollectionRoutes<T, S> {
 			);
 		}
 
-		private Function<Credentials, Boolean> _collectionPermissionFunction;
+		private ThrowableFunction<Credentials, Boolean>
+			_collectionPermissionFunction;
 		private CreateItemFunction<T> _createItemFunction;
 		private Form _form;
 		private GetPageFunction<T> _getPageFunction;

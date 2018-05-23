@@ -17,11 +17,12 @@ package com.liferay.apio.architect.routes;
 import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.alias.form.FormBuilderFunction;
 import com.liferay.apio.architect.credentials.Credentials;
+import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
+import com.liferay.apio.architect.function.throwable.ThrowableFunction;
 import com.liferay.apio.architect.pagination.Pagination;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import javax.ws.rs.NotFoundException;
@@ -36,7 +37,7 @@ public class RoutesTestUtil {
 	/**
 	 * A collection permission function that always returns {@code true}.
 	 */
-	public static final Function<Credentials, Boolean>
+	public static final ThrowableFunction<Credentials, Boolean>
 		COLLECTION_PERMISSION_FUNCTION = __ -> true;
 
 	/**
@@ -57,7 +58,7 @@ public class RoutesTestUtil {
 	/**
 	 * An item permission function that always returns {@code true}.
 	 */
-	public static final BiFunction<Credentials, Long, Boolean>
+	public static final ThrowableBiFunction<Credentials, Long, Boolean>
 		ITEM_PERMISSION_FUNCTION = (credentials, aLong) -> true;
 
 	/**
@@ -109,7 +110,7 @@ public class RoutesTestUtil {
 	 * Returns a nested collection permission function that always returns
 	 * {@code true}.
 	 */
-	public static <S> BiFunction<Credentials, S, Boolean>
+	public static <S> ThrowableBiFunction<Credentials, S, Boolean>
 		getNestedCollectionPermissionFunction() {
 
 		return (credentials, s) -> true;

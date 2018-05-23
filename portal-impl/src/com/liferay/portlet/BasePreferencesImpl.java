@@ -240,7 +240,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 			if (actualValue == null) {
 				return null;
 			}
-			else if (actualValue == _NULL_ELEMENT) {
+			else if (actualValue.equals(_NULL_ELEMENT)) {
 				return new String[] {null};
 			}
 			else {

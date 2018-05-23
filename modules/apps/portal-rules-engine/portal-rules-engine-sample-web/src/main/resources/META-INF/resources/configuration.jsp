@@ -86,14 +86,18 @@ long[] classNameIdValues = StringUtil.split(ParamUtil.getString(request, "classN
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveConfiguration',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />classNameIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentClassNameIds);
+	function <portlet:namespace />saveConfiguration() {
+		var form = document.getElementById('<portlet:namespace />fm');
 
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['liferay-util-list-fields']
-	);
+		if (form) {
+			var classNameIds = form.querySelector('#<portlet:namespace />classNameIds');
+			var currentClassNameIds = form.querySelector('#<portlet:namespace />currentClassNameIds');
+
+			if (classNameIds && currentClassNameIds) {
+				classNameIds.setAttribute('value', Liferay.Util.listSelect(currentClassNameIds));
+			}
+
+			submitForm(form);
+		}
+	}
 </aui:script>

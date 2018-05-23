@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Commerce Product Type Virtual Order API
+Bundle-SymbolicName: com.liferay.commerce.product.type.virtual.order.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.product.type.virtual.order.constants,\
+	com.liferay.commerce.product.type.virtual.order.exception,\
+	com.liferay.commerce.product.type.virtual.order.model,\
+	com.liferay.commerce.product.type.virtual.order.service,\
+	com.liferay.commerce.product.type.virtual.order.service.persistence,\
+	com.liferay.commerce.product.type.virtual.order.util.comparator

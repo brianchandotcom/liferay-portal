@@ -20,8 +20,6 @@ import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import java.io.File;
 import java.io.IOException;
 
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,7 +27,6 @@ import java.nio.file.PathMatcher;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -72,10 +69,13 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 		_tckHomeDirectory = tckHomeDirectory;
 
-		_testClassNameExcludePathMatchers = _getTestClassNamesPathMatchers(
-			"test.batch.class.names.excludes");
-		_testClassNameIncludePathMatchers = _getTestClassNamesPathMatchers(
-			"test.batch.class.names.includes");
+		excludesPathMatchers.addAll(
+			getPathMatchers(
+				"test.batch.class.names.excludes", _tckHomeDirectory));
+
+		includesPathMatchers.addAll(
+			getPathMatchers(
+				"test.batch.class.names.includes", _tckHomeDirectory));
 
 		setTestClasses();
 
@@ -107,13 +107,11 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 					}
 
 					private boolean _pathExcluded(Path path) {
-						return _pathMatches(
-							path, _testClassNameExcludePathMatchers);
+						return _pathMatches(path, excludesPathMatchers);
 					}
 
 					private boolean _pathIncluded(Path path) {
-						return _pathMatches(
-							path, _testClassNameIncludePathMatchers);
+						return _pathMatches(path, includesPathMatchers);
 					}
 
 					private boolean _pathMatches(
@@ -140,39 +138,6 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		Collections.sort(testClasses);
 	}
 
-	private List<PathMatcher> _getTestClassNamesPathMatchers(
-		String propertyName) {
-
-		String testClassNamesRelativeGlobs = getFirstPropertyValue(
-			propertyName);
-
-		if ((testClassNamesRelativeGlobs == null) ||
-			testClassNamesRelativeGlobs.isEmpty()) {
-
-			return Collections.emptyList();
-		}
-
-		List<PathMatcher> pathMatchers = new ArrayList<>();
-
-		String workingDirectoryPath = _tckHomeDirectory.getAbsolutePath();
-
-		FileSystem fileSystem = FileSystems.getDefault();
-
-		for (String testClassNamesRelativeGlob :
-				testClassNamesRelativeGlobs.split(",")) {
-
-			pathMatchers.add(
-				fileSystem.getPathMatcher(
-					JenkinsResultsParserUtil.combine(
-						"glob:", workingDirectoryPath, "/",
-						testClassNamesRelativeGlob)));
-		}
-
-		return pathMatchers;
-	}
-
 	private final File _tckHomeDirectory;
-	private final List<PathMatcher> _testClassNameExcludePathMatchers;
-	private final List<PathMatcher> _testClassNameIncludePathMatchers;
 
 }

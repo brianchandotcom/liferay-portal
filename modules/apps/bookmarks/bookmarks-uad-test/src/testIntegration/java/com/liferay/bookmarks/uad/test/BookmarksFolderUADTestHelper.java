@@ -15,12 +15,18 @@
 package com.liferay.bookmarks.uad.test;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
-import org.junit.Assume;
-
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,9 +42,14 @@ public class BookmarksFolderUADTestHelper {
 	 * </p>
 	 */
 	public BookmarksFolder addBookmarksFolder(long userId) throws Exception {
-		Assume.assumeTrue(false);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
 
-		return null;
+		return _bookmarksFolderLocalService.addFolder(
+			userId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	/**
@@ -52,9 +63,12 @@ public class BookmarksFolderUADTestHelper {
 			long userId, long statusByUserId)
 		throws Exception {
 
-		Assume.assumeTrue(false);
+		BookmarksFolder bookmarksFolder = addBookmarksFolder(userId);
 
-		return null;
+		bookmarksFolder = _bookmarksFolderLocalService.updateStatus(
+			statusByUserId, bookmarksFolder, WorkflowConstants.STATUS_APPROVED);
+
+		return bookmarksFolder;
 	}
 
 	/**
@@ -67,5 +81,8 @@ public class BookmarksFolderUADTestHelper {
 	public void cleanUpDependencies(List<BookmarksFolder> bookmarksFolders)
 		throws Exception {
 	}
+
+	@Reference
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

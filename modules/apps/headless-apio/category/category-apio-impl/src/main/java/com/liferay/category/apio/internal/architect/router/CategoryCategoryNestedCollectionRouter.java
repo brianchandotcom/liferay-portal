@@ -21,12 +21,19 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.category.apio.identifier.architect.CategoryIdentifier;
+import com.liferay.category.apio.internal.architect.form.AssetCategoryForm;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.List;
 
 /**
  * @author Eduardo Perez
@@ -41,11 +48,36 @@ public class CategoryCategoryNestedCollectionRouter implements
 		NestedCollectionRoutes.Builder<AssetCategory, Long, Long> builder) {
 
 		return builder.addGetter(
-			this::_getItems
+			this::_getPageItems
+		).addCreator(
+			(id, form) -> _addAssetCategory(id, form),
+			//this::_addAssetCategory,
+			_hasPermission.forAddingIn(CategoryIdentifier.class)::apply,
+			AssetCategoryForm::buildForm
 		).build();
 	}
 
-	private PageItems<AssetCategory> _getItems(
+	private AssetCategory _addAssetCategory(
+			Long parentCategoryId, AssetCategoryForm assetCategoryCreatorForm)
+		throws PortalException {
+
+		AssetCategory parentCategory = _assetCategoryService.getCategory(
+			parentCategoryId);
+
+		Group group = _groupLocalService.getGroup(parentCategory.getGroupId());
+
+		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		return _assetCategoryService.addCategory(
+			group.getGroupId(), parentCategoryId,
+			assetCategoryCreatorForm.getTitleMap(locale),
+			assetCategoryCreatorForm.getDescriptionMap(locale),
+			parentCategory.getVocabularyId(), null, serviceContext);
+	}
+
+	private PageItems<AssetCategory> _getPageItems(
 			Pagination pagination, Long parentCategoryId)
 		throws PortalException {
 
@@ -61,5 +93,13 @@ public class CategoryCategoryNestedCollectionRouter implements
 
 	@Reference
 	private AssetCategoryService _assetCategoryService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.asset.kernel.model.AssetCategory)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

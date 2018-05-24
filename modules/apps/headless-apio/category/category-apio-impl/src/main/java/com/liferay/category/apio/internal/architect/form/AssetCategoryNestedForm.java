@@ -23,21 +23,25 @@ import java.util.Map;
 /**
  * @author Javier Gamarra
  */
-public class AssetCategoryForm {
+public class AssetCategoryNestedForm {
 
-	public static Form<AssetCategoryForm> buildForm(
-		Form.Builder<AssetCategoryForm> builder) {
+	public static Form<AssetCategoryNestedForm> buildForm(
+		Form.Builder<AssetCategoryNestedForm> builder) {
 
 		return builder.title(
 			language -> "Category Creator Form"
 		).description(
 			language -> "Form for adding categories"
 		).constructor(
-			AssetCategoryForm::new
+			AssetCategoryNestedForm::new
+		).addOptionalLong(
+			"parentCategoryId", AssetCategoryNestedForm::setParentCategoryId
 		).addOptionalString(
-			"description", AssetCategoryForm::setDescription
+			"description", AssetCategoryNestedForm::setDescription
+		).addRequiredLong(
+			"vocabularyId", AssetCategoryNestedForm::setVocabularyId
 		).addRequiredString(
-			"name", AssetCategoryForm::setName
+			"name", AssetCategoryNestedForm::setName
 		).build();
 	}
 
@@ -45,8 +49,16 @@ public class AssetCategoryForm {
 		return Collections.singletonMap(locale, _description);
 	}
 
+	public long getParentCategoryId() {
+		return _parentCategoryId;
+	}
+
 	public Map<Locale, String> getTitleMap(Locale locale) {
 		return Collections.singletonMap(locale, _name);
+	}
+
+	public long getVocabularyId() {
+		return _vocabularyId;
 	}
 
 	public void setDescription(String description) {
@@ -57,7 +69,17 @@ public class AssetCategoryForm {
 		_name = name;
 	}
 
+	public void setParentCategoryId(long parentCategoryId) {
+		_parentCategoryId = parentCategoryId;
+	}
+
+	public void setVocabularyId(long vocabularyId) {
+		_vocabularyId = vocabularyId;
+	}
+
 	private String _description;
 	private String _name;
+	private long _parentCategoryId;
+	private long _vocabularyId;
 
 }

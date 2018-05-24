@@ -135,9 +135,6 @@ page import="org.osgi.framework.FrameworkUtil" %>
 <portlet:defineObjects />
 
 <%
-DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-String refererPortletName = ddmDisplayContext.getRefererPortletName();
 String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));
 String scopeTitle = ParamUtil.getString(request, "scopeTitle");
 boolean showAncestorScopes = ParamUtil.getBoolean(request, "showAncestorScopes");
@@ -146,15 +143,19 @@ boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates
 DDMDisplay ddmDisplay = null;
 
 boolean changeableDefaultLanguage = false;
+String refererPortletName = StringPool.BLANK;
 String scopeAvailableFields = StringPool.BLANK;
 long scopeClassNameId = 0;
 String scopeStorageType = StringPool.BLANK;
 String scopeTemplateType = StringPool.BLANK;
 
+DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 if (ddmDisplayContext != null) {
 	ddmDisplay = ddmDisplayContext.getDDMDisplay();
 
 	changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
+	refererPortletName = ddmDisplayContext.getRefererPortletName();
 	scopeAvailableFields = ddmDisplay.getAvailableFields();
 	scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 	scopeStorageType = ddmDisplay.getStorageType();

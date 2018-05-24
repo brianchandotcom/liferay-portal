@@ -16,8 +16,6 @@ const MENU_ITEM_DRAGGING_CLASSNAME = `${MENU_ITEM_CLASSNAME}--dragging`;
 
 const MENU_ITEM_DRAG_ICON_CLASSNAME = `${MENU_ITEM_CLASSNAME}__drag-icon`;
 
-const MENU_ITEM_NESTED_CLASSNAME = `${MENU_ITEM_CLASSNAME}--nested`;
-
 const MENU_ITEM_SELECTED_CLASSNAME = `${MENU_ITEM_CLASSNAME}--selected`;
 
 /**
@@ -92,36 +90,7 @@ const SiteNavigationMenuItem = {
 	 */
 
 	getParent: function(menuItem) {
-		let parentMenuItem = null;
-
-		if (SiteNavigationMenuItem.isNested(menuItem)) {
-			let previousMenuItem = menuItem;
-
-			while (previousMenuItem && SiteNavigationMenuItem.isNested(previousMenuItem)) {
-				previousMenuItem = previousMenuItem.previousElementSibling;
-			}
-
-			if (previousMenuItem && !SiteNavigationMenuItem.isNested(previousMenuItem)) {
-				parentMenuItem = previousMenuItem;
-			}
-		}
-
-		if (!parentMenuItem) {
-			const parentElement = menuItem.parentElement;
-
-			if (parentElement && hasClass(parentElement, MENU_ITEM_CLASSNAME)) {
-				parentMenuItem = parentElement;
-			}
-			else if (parentElement) {
-				parentMenuItem = closest(parentElement, `.${MENU_ITEM_CLASSNAME}`);
-			}
-		}
-
-		if (!parentMenuItem) {
-			parentMenuItem = toElement(`.${MENU_CONTAINER_CLASSNAME}`);
-		}
-
-		return parentMenuItem;
+		return menuItem.parentElement;
 	},
 
 	/**
@@ -166,16 +135,6 @@ const SiteNavigationMenuItem = {
 	},
 
 	/**
-	 * Returns true if the given menuItem element is nested, false otherwise
-	 * @param {HTMLElement} menuItem
-	 * @return {boolean}
-	 */
-
-	isNested: function(menuItem) {
-		return hasClass(menuItem, MENU_ITEM_NESTED_CLASSNAME);
-	},
-
-	/**
 	 * Returns true if the given menuItem element is selected, false otherwise
 	 * @param {HTMLElement} menuItem
 	 * @return {boolean}
@@ -197,22 +156,6 @@ const SiteNavigationMenuItem = {
 		}
 		else {
 			removeClasses(menuItem, MENU_ITEM_DRAGGING_CLASSNAME);
-		}
-	},
-
-	/**
-	 * Mutates the given menuItem element by changing it's status
-	 * to nested/unnested. A menuItem element is nested when it has
-	 * a parent menuItem element.
-	 * @param {HTMLElement} menuItem
-	 */
-
-	setNested: function(menuItem, nested = false) {
-		if (nested) {
-			addClasses(menuItem, MENU_ITEM_NESTED_CLASSNAME);
-		}
-		else {
-			removeClasses(menuItem, MENU_ITEM_NESTED_CLASSNAME);
 		}
 	},
 
@@ -242,8 +185,10 @@ const SiteNavigationMenuItem = {
 };
 
 export {
+	MENU_CONTAINER_CLASSNAME,
 	MENU_ITEM_CLASSNAME,
 	MENU_ITEM_DRAG_ICON_CLASSNAME,
+	MENU_ITEM_DRAGGING_CLASSNAME,
 	SiteNavigationMenuItem
 };
 

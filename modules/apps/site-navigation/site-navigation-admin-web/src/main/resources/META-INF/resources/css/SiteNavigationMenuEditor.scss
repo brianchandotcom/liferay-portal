@@ -4,13 +4,13 @@
 	overflow: hidden;
 	padding: 2px;
 
+	& > & {
+		padding-left: 10ch;
+	}
+
 	&--dragging .card {
 		opacity: 0.4;
 		outline: 2px dashed #65B6F0;
-	}
-
-	&--nested {
-		padding-left: 10ch;
 	}
 
 	&--selected > &__content .card {

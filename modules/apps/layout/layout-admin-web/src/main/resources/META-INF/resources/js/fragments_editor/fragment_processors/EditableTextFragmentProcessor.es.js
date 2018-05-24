@@ -104,17 +104,7 @@ function init(
 
 	_editor = AlloyEditor.editable(
 		wrapper,
-		object.mixin(
-			defaultEditorConfiguration.editorConfig || {},
-			EDITOR_CONFIGURATION,
-			{
-				title: [
-					portletNamespace,
-					'_FragmentEntryLinkEditable_',
-					fragmentEntryLinkId
-				].join('')
-			}
-		)
+		_getEditorConfiguration()
 	);
 
 	const nativeEditor = _editor.get('nativeEditor');
@@ -138,6 +128,33 @@ function init(
 			'instanceReady',
 			() => nativeEditor.focus()
 		)
+	);
+}
+
+/**
+ * Returns a configuration object for a AlloyEditor instance.
+ * @param {HTMLElement} editableElement
+ * @param {string} portletNamespace
+ * @param {string} fragmentEntryLinkId
+ * @param {object} defaultEditorConfiguration
+ */
+
+function _getEditorConfiguration(
+	editableElement,
+	portletNamespace,
+	fragmentEntryLinkId,
+	defaultEditorConfiguration
+) {
+	const title = [
+		portletNamespace,
+		'_FragmentEntryLinkEditable_',
+		fragmentEntryLinkId
+	].join('');
+
+	return object.mixin(
+		defaultEditorConfiguration.editorConfig || {},
+		EDITOR_CONFIGURATION,
+		{title}
 	);
 }
 

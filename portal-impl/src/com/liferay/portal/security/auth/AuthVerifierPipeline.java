@@ -137,6 +137,10 @@ public class AuthVerifierPipeline {
 		String[] urlsExcludes = StringUtil.split(
 			properties.getProperty("urls.excludes"));
 
+		if (!requestURI.endsWith("/")) {
+			requestURI = requestURI.concat("/");
+		}
+
 		if ((urlsExcludes.length > 0) &&
 			(Wildcard.matchOne(requestURI, urlsExcludes) > -1)) {
 

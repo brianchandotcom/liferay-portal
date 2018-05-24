@@ -99,17 +99,30 @@
 
 .control-menu-level-2 {
 	background-color: $control-menu-level-2-bg;
+	border-bottom: 1px solid #E7E7ED;
 	color: $control-menu-level-2-color;
 
-	.container-fluid-1280 {
+	a, a:focus, a:hover {
+		color: $control-menu-level-2-link-color;
+	}
+
+	.container-fluid-max-xl {
 		padding-left: 20px;
-		padding-right: 20px;
 	}
 
 	.control-menu-label {
 		@include sm() {
 			color: $control-menu-level-2-label-color;
 		}
+	}
+
+	.text-info {
+		font-size: 0.875rem;
+	}
+
+	.toggle-switch-bar .toggle-switch-handle {
+		font-size: 0.875rem;
+		text-transform: none;
 	}
 
 	padding-bottom: 7px;

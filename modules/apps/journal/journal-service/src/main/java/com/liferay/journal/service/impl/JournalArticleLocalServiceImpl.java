@@ -5555,7 +5555,7 @@ public class JournalArticleLocalServiceImpl
 		Map<String, String> urlTitleMap = _getURLTitleMap(
 			groupId, article.getResourcePrimKey(), friendlyURLMap);
 
-		String urlTitle = friendlyURLMap.get(locale);
+		String urlTitle = urlTitleMap.get(LocaleUtil.toLanguageId(locale));
 
 		if (Validator.isNull(urlTitle)) {
 			throw new ArticleFriendlyURLException();

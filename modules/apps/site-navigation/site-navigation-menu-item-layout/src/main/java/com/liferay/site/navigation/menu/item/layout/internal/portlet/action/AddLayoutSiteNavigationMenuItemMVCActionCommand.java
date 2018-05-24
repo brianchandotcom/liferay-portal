@@ -28,9 +28,12 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -75,6 +78,9 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 		List<String> layoutUUIDs = StringUtil.split(
 			typeSettingsProperties.getProperty("layoutUuid"));
 
+		Map<Long, Long> layoutSiteNavigationMenuItems = new HashMap<>();
+		Map<Long, Long> layoutParentPlids = new HashMap<>();
+
 		for (String layoutUuid : layoutUUIDs) {
 			UnicodeProperties curTypeSettingsProperties = new UnicodeProperties(
 				true);
@@ -100,9 +106,35 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 			curTypeSettingsProperties.setProperty(
 				"title", layout.getName(themeDisplay.getLocale()));
 
-			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-				themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0, type,
-				curTypeSettingsProperties.toString(), serviceContext);
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
+					type, curTypeSettingsProperties.toString(), serviceContext);
+
+			layoutSiteNavigationMenuItems.put(
+				layout.getPlid(),
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+			if (layout.getParentPlid() > 0) {
+				layoutParentPlids.put(layout.getParentPlid(), layout.getPlid());
+			}
+		}
+
+		for (Map.Entry<Long, Long> entry : layoutParentPlids.entrySet()) {
+			long parentSiteNavigationMenuItemId =
+				layoutSiteNavigationMenuItems.getOrDefault(entry.getKey(), 0L);
+
+			long siteNavigationMenuItemId =
+				layoutSiteNavigationMenuItems.getOrDefault(
+					entry.getValue(), 0L);
+
+			if ((parentSiteNavigationMenuItemId > 0) &&
+				(siteNavigationMenuItemId > 0)) {
+
+				_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
+					siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
+					0);
+			}
 		}
 	}
 

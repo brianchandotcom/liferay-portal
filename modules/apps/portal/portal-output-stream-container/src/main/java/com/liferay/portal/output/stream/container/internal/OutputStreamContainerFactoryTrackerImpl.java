@@ -180,29 +180,19 @@ public class OutputStreamContainerFactoryTrackerImpl
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setOutputStreamContainerFactory(
-		OutputStreamContainerFactory outputStreamContainerFactory) {
-
-		_outputStreamContainerFactory = outputStreamContainerFactory;
-	}
-
-	protected void unsetOutputStreamContainerFactory(
-		OutputStreamContainerFactory outputStreamContainerFactory) {
-
-		_outputStreamContainerFactory = _consoleOutputStreamContainerFactory;
-	}
-
 	private final OutputStreamContainerFactory
 		_consoleOutputStreamContainerFactory =
 			new ConsoleOutputStreamContainerFactory();
 	private org.apache.felix.utils.log.Logger _logger;
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
-	private OutputStreamContainerFactory _outputStreamContainerFactory;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile OutputStreamContainerFactory _outputStreamContainerFactory;
+
 	private WriterAppender _writerAppender;
 	private final ThreadLocal<Writer> _writerThreadLocal = new ThreadLocal<>();
 

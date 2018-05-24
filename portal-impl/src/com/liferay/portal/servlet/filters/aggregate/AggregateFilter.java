@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -376,16 +375,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		if (!contextPath.equals(StringPool.SLASH)) {
 			resourcePath = resourcePath.substring(contextPath.length());
-		}
-
-		if (resourcePath.endsWith(_CSS_EXTENSION) &&
-			PortalUtil.isRightToLeft(request)) {
-
-			int pos = resourcePath.lastIndexOf(StringPool.PERIOD);
-
-			resourcePath =
-				resourcePath.substring(0, pos) + "_rtl" +
-					resourcePath.substring(pos);
 		}
 
 		URL resourceURL = ResourceUtil.getResourceURL(

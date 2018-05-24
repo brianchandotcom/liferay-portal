@@ -285,11 +285,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MANAGEMENT_BAR_ELLIPSIS</td>
-	<td>//ul[@class='navbar-nav']//li[contains(@class,'nav-item')]//button[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PAGE_CUSTOMIZATION_ELLIPSIS</td>
 	<td>//*[@data-qa-id='controlMenu']//div[contains(@class,'icon-menu')]</td>
 	<td></td>
@@ -322,6 +317,11 @@
 <tr>
 	<td>STAGING_BAR_VERTICAL_ELLIPSIS</td>
 	<td>//li[contains(@class,'control-menu-nav-item')]//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ELLIPSIS</td>
+	<td>//ul[@class='navbar-nav']/li[contains(@class,'nav-item')]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

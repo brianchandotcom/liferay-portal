@@ -81,7 +81,7 @@
 				</execute>
 			</then>
 			<else>
-				<execute function="Click" locator1="Icon#MANAGEMENT_BAR_ELLIPSIS" />
+				<execute function="Click" locator1="Icon#TOOLBAR_ELLIPSIS" />
 				<execute function="Click" locator1="Icon#MERGE" />
 			</else>
 		</if>

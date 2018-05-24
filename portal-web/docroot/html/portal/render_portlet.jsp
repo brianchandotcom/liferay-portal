@@ -958,118 +958,112 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		<span id="p_<%= HtmlUtil.escapeAttribute(portletId) %>"></span>
 </c:if>
 
-<c:choose>
-	<c:when test="<%= !supportsMimeType %>">
-	</c:when>
-	<c:when test="<%= !portlet.isActive() && !portlet.isShowPortletInactive() || !portlet.isInclude() %>">
-	</c:when>
-	<c:otherwise>
+<c:if test="<%= supportsMimeType && (portlet.isActive() || portlet.isShowPortletInactive()) && portlet.isInclude() %>">
 
-		<%
-		boolean useDefaultTemplate = renderResponseImpl.getUseDefaultTemplate();
+	<%
+	boolean useDefaultTemplate = renderResponseImpl.getUseDefaultTemplate();
 
-		PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
+	PortletRequestProcessor portletReqProcessor = (PortletRequestProcessor)portletCtx.getAttribute(WebKeys.PORTLET_STRUTS_PROCESSOR);
 
-		boolean addNotAjaxablePortlet = !portlet.isAjaxable() && cmd.equals("add");
+	boolean addNotAjaxablePortlet = !portlet.isAjaxable() && cmd.equals("add");
 
-		if ((portletReqProcessor != null) && !addNotAjaxablePortlet) {
-			if (portletException) {
-				ActionMapping actionMapping = portletReqProcessor.processMapping(request, response, (String)portlet.getInitParams().get("view-action"));
+	if ((portletReqProcessor != null) && !addNotAjaxablePortlet) {
+		if (portletException) {
+			ActionMapping actionMapping = portletReqProcessor.processMapping(request, response, (String)portlet.getInitParams().get("view-action"));
 
-				ComponentDefinition definition = null;
+			ComponentDefinition definition = null;
 
-				if (actionMapping != null) {
+			if (actionMapping != null) {
 
-					// See action path /weather/view
+				// See action path /weather/view
 
-					String definitionName = actionMapping.getForward();
+				String definitionName = actionMapping.getForward();
 
-					if (definitionName == null) {
+				if (definitionName == null) {
 
-						// See action path /journal/view_articles
+					// See action path /journal/view_articles
 
-						String[] definitionNames = actionMapping.findForwards();
+					String[] definitionNames = actionMapping.findForwards();
 
-						for (int definitionNamesPos = 0; definitionNamesPos < definitionNames.length; definitionNamesPos++) {
-							if (definitionNames[definitionNamesPos].endsWith("view")) {
-								definitionName = definitionNames[definitionNamesPos];
+					for (int definitionNamesPos = 0; definitionNamesPos < definitionNames.length; definitionNamesPos++) {
+						if (definitionNames[definitionNamesPos].endsWith("view")) {
+							definitionName = definitionNames[definitionNamesPos];
 
-								break;
-							}
-						}
-
-						if (definitionName == null) {
-							definitionName = definitionNames[0];
+							break;
 						}
 					}
 
-					definition = TilesUtil.getDefinition(definitionName, request, application);
+					if (definitionName == null) {
+						definitionName = definitionNames[0];
+					}
 				}
 
-				String templatePath = StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp";
-
-				if (definition != null) {
-					templatePath = StrutsUtil.TEXT_HTML_DIR + definition.getPath();
-				}
-
-				request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, "/portal/portlet_error.jsp");
-		%>
-
-				<liferay-util:include page="<%= templatePath %>" />
-
-			<%
+				definition = TilesUtil.getDefinition(definitionName, request, application);
 			}
-			else {
-				if (useDefaultTemplate || !portlet.isActive()) {
-					renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
 
-					request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, StringPool.BLANK);
-			%>
+			String templatePath = StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp";
 
-					<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>' />
+			if (definition != null) {
+				templatePath = StrutsUtil.TEXT_HTML_DIR + definition.getPath();
+			}
+
+			request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, "/portal/portlet_error.jsp");
+	%>
+
+			<liferay-util:include page="<%= templatePath %>" />
 
 		<%
-				}
-				else {
-					pageContext.getOut().write(bufferCacheServletResponse.getString());
-				}
-			}
 		}
 		else {
-			renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
+			if (useDefaultTemplate || !portlet.isActive()) {
+				renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
 
-			String portletContentJSP = StringPool.BLANK;
-
-			if (!portlet.isReady()) {
-				portletContentJSP = "/portal/portlet_not_ready.jsp";
-			}
-
-			if (portletException) {
-				portletContentJSP = "/portal/portlet_error.jsp";
-			}
-
-			if (addNotAjaxablePortlet) {
-				portletContentJSP = "/portal/portlet_not_ajaxable.jsp";
-			}
-
-			request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, portletContentJSP);
+				request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, StringPool.BLANK);
 		%>
 
-			<c:choose>
-				<c:when test="<%= useDefaultTemplate || portletException || addNotAjaxablePortlet %>">
-					<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>' />
-				</c:when>
-				<c:otherwise>
-					<%= renderRequestImpl.getAttribute(WebKeys.PORTLET_CONTENT) %>
-				</c:otherwise>
-			</c:choose>
+				<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>' />
 
-		<%
+	<%
+			}
+			else {
+				pageContext.getOut().write(bufferCacheServletResponse.getString());
+			}
 		}
-		%>
+	}
+	else {
+		renderRequestImpl.setAttribute(WebKeys.PORTLET_CONTENT, bufferCacheServletResponse.getString());
 
-	</c:otherwise>
-</c:choose>
+		String portletContentJSP = StringPool.BLANK;
+
+		if (!portlet.isReady()) {
+			portletContentJSP = "/portal/portlet_not_ready.jsp";
+		}
+
+		if (portletException) {
+			portletContentJSP = "/portal/portlet_error.jsp";
+		}
+
+		if (addNotAjaxablePortlet) {
+			portletContentJSP = "/portal/portlet_not_ajaxable.jsp";
+		}
+
+		request.setAttribute(WebKeys.PORTLET_CONTENT_JSP, portletContentJSP);
+	%>
+
+		<c:choose>
+			<c:when test="<%= useDefaultTemplate || portletException || addNotAjaxablePortlet %>">
+				<liferay-util:include page='<%= StrutsUtil.TEXT_HTML_DIR + "/common/themes/portlet.jsp" %>' />
+			</c:when>
+			<c:otherwise>
+				<%= renderRequestImpl.getAttribute(WebKeys.PORTLET_CONTENT) %>
+			</c:otherwise>
+		</c:choose>
+
+	<%
+	}
+	%>
+
+</c:if>
 
 <%
 String staticVar = "yes";

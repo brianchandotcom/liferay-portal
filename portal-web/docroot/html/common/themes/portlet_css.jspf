@@ -91,8 +91,10 @@ String borderRightColorValue = borderColor.getString(_RIGHT_KEY);
 String borderBottomColorValue = borderColor.getString(_BOTTOM_KEY);
 String borderLeftColorValue = borderColor.getString(_LEFT_KEY);
 
-if (ufaBorderWidth && !_unitSet.contains(borderTopWidthValue)) {
-	finalCSS.add("border-width: " + borderTopWidthValue);
+if (ufaBorderWidth){
+	if (!_unitSet.contains(borderTopWidthValue)) {
+		finalCSS.add("border-width: " + borderTopWidthValue);
+	}
 }
 else {
 	if (!_unitSet.contains(borderTopWidthValue)) {
@@ -112,8 +114,10 @@ else {
 	}
 }
 
-if (ufaBorderStyle && !_unitSet.contains(borderTopWidthValue)) {
-	finalCSS.add("border-style: " + borderTopStyleValue);
+if (ufaBorderStyle){
+	if (!_unitSet.contains(borderTopWidthValue)) {
+		finalCSS.add("border-style: " + borderTopStyleValue);
+	}
 }
 else {
 	if (Validator.isNotNull(borderTopStyleValue)) {
@@ -178,8 +182,10 @@ String marginRightValue = marginRight.getString(_VALUE_KEY) + marginRight.getStr
 String marginBottomValue = marginBottom.getString(_VALUE_KEY) + marginBottom.getString(_UNIT_KEY);
 String marginLeftValue = marginLeft.getString(_VALUE_KEY) + marginLeft.getString(_UNIT_KEY);
 
-if (ufaMargin && !_unitSet.contains(marginTopValue)) {
-	finalCSS.add("margin: " + marginTopValue);
+if (ufaMargin){
+	if (!_unitSet.contains(marginTopValue)) {
+		finalCSS.add("margin: " + marginTopValue);
+	}
 }
 else {
 	if (!_unitSet.contains(marginTopValue)) {
@@ -211,8 +217,10 @@ String paddingRightValue = paddingRight.getString(_VALUE_KEY) + paddingRight.get
 String paddingBottomValue = paddingBottom.getString(_VALUE_KEY) + paddingBottom.getString(_UNIT_KEY);
 String paddingLeftValue = paddingLeft.getString(_VALUE_KEY) + paddingLeft.getString(_UNIT_KEY);
 
-if (ufaPadding && !_unitSet.contains(paddingTopValue)) {
-	finalCSS.add("padding: " + paddingTopValue);
+if (ufaPadding){
+	if (!_unitSet.contains(paddingTopValue)) {
+		finalCSS.add("padding: " + paddingTopValue);
+	}
 }
 else {
 	if (!_unitSet.contains(paddingTopValue)) {

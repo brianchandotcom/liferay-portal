@@ -5,6 +5,10 @@
 		</execute>
 	</command>
 
+	<command name="clickAdd">
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+	</command>
+
 	<command name="clickAddRow">
 		<execute function="Click" locator1="Button#ADD_ROW" />
 	</command>

@@ -1,0 +1,304 @@
+<definition>
+	<command name="_addItemApplication">
+		<execute function="Select" locator1="SiteNavigationMenu#APPLICATION_SELECT" value1="${applicationName}" />
+	</command>
+
+	<command name="_addItemPage">
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+
+		<execute macro="IFrame#selectConfigurationFrame" />
+
+		<if>
+			<contains string="${privacy}" substring="{privacy}" />
+			<then>
+				<var name="privacy" value="Public" />
+			</then>
+		</if>
+
+		<execute macro="Portlet#expandTree" />
+
+		<execute macro="Portlet#selectTreeNode">
+			<var name="nodeName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="_addItemSubmenu">
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${submenuName}" />
+		</execute>
+	</command>
+
+	<command name="_addItemURL">
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${urlName}" />
+		</execute>
+
+		<execute function="Type" locator1="TextInput#URL" value1="${url}" />
+	</command>
+
+	<command name="_closeMenuSidebar">
+		<if>
+			<condition function="IsVisible" locator1="SiteNavigationMenu#SIDEBAR" />
+			<then>
+				<execute function="Click" locator1="Icon#ANGLE_RIGHT" />
+			</then>
+		</if>
+
+		<execute function="AssertNotVisible" locator1="SiteNavigationMenu#SIDEBAR" />
+	</command>
+
+	<command name="_editItemPage">
+		<if>
+			<isset var="name" />
+			<then>
+				<execute function="Type" locator1="TextInput#NAME" value1="${name}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="_editItemSubmenu">
+		<if>
+			<isset var="name" />
+			<then>
+				<execute function="Type" locator1="TextInput#NAME" value1="${name}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="_editItemURL">
+		<if>
+			<isset var="name" />
+			<then>
+				<execute function="Type" locator1="TextInput#NAME" value1="${name}" />
+			</then>
+			<elseif>
+				<isset var="url" />
+				<then>
+					<execute function="Type" locator1="TextInput#URL" value1="${URL}" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="_openMenuSidebar">
+		<if>
+			<condition function="IsNotVisible" locator1="SiteNavigationMenu#SIDEBAR" />
+			<then>
+				<execute function="Click" locator1="Icon#COG" />
+			</then>
+		</if>
+
+		<execute function="AssertVisible" locator1="SiteNavigationMenu#SIDEBAR" />
+	</command>
+
+	<command name="addItem">
+		<if>
+			<condition function="IsElementNotPresent" locator1="Button#PLUS" />
+			<then>
+				<execute function="AssertClick" locator1="SiteNavigationMenu#ITEM_LINK" value1="${item}">
+					<var name="key_item" value="${item}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="LexiconEntry#gotoAddMenuItem">
+					<var name="menuItem" value="${item}" />
+				</execute>
+			</else>
+		</if>
+
+		<execute macro="IFrame#selectConfigurationFrame" />
+
+		<if>
+			<equals arg1="${item}" arg2="Page" />
+			<then>
+				<execute macro="SiteNavigationMenu#_addItemPage">
+					<var name="pageName" value="${pageName}" />
+					<var name="privacy" value="${privacy}" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${item}" arg2="Submenu" />
+				<then>
+					<execute macro="SiteNavigationMenu#_addItemSubmenu">
+						<var name="submenuName" value="${submenuName}" />
+					</execute>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${item}" arg2="URL" />
+				<then>
+					<execute macro="SiteNavigationMenu#_addItemURL">
+						<var name="url" value="${url}" />
+						<var name="urlName" value="${urlName}" />
+					</execute>
+				</then>
+			</elseif>
+		</if>
+
+		<execute function="MouseOver" locator1="Button#ADD" />
+
+		<execute macro="Button#clickAdd" />
+
+		<execute macro="IFrame#selectTopFrame" />
+	</command>
+
+	<command name="addMenu">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${menuName}" />
+		</execute>
+
+		<execute macro="Modal#submit" />
+	</command>
+
+	<command name="configureMenuFunction">
+		<execute macro="SiteNavigationMenu#_openMenuSidebar" />
+
+		<execute function="Check" locator1="SiteNavigationMenu#FUNCTION_RADIO">
+			<var name="key_function" value="${function}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="configureMenuType">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="${menuType}" />
+			<var name="rowEntry" value="${navigationMenu}" />
+		</execute>
+
+		<if>
+			<equals arg1="${menuType}" arg2="Primary Navigation" />
+			<then>
+				<execute function="Confirm" value1="Do you want to replace ${navigationMenu} for Default as primary navigation? This will affect all the pages using primary navigation." />
+			</then>
+		</if>
+	</command>
+
+	<command name="editItem">
+		<execute macro="SiteNavigationMenu#openItemSidebar">
+			<var name="itemName" value="${itemName}" />
+		</execute>
+
+		<if>
+			<equals arg1="${item}" arg2="Page" />
+			<then>
+				<execute macro="SiteNavigationMenu#_editItemPage">
+					<var name="name" value="${name}" />
+				</execute>
+			</then>
+			<elseif>
+				<equals arg1="${item}" arg2="Submenu" />
+				<then>
+					<execute macro="SiteNavigationMenu#_editItemSubmenu">
+						<var name="submenuName" value="${submenuName}" />
+					</execute>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${item}" arg2="URL" />
+				<then>
+					<execute macro="SiteNavigationMenu#_editItemURL">
+						<var name="name" value="${name}" />
+						<var name="url" value="${url" />
+					</execute>
+				</then>
+			</elseif>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
+	<command name="moveItem">
+		<if>
+			<equals arg1="${direction}" arg2="up" />
+			<then>
+				<var name="coordString" value="0,-150" />
+			</then>
+			<elseif>
+				<equals arg1="${direction}" arg2="down" />
+				<then>
+					<var name="coordString" value="0,150" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${direction}" arg2="in" />
+				<then>
+					<var name="coordString" value="100,-77" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${direction}" arg2="out" />
+				<then>
+					<var name="coordString" value="-100,-77" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute macro="ProductMenuHelper#closeProductMenu" />
+
+		<execute function="DragAndDrop#dragAndDrop" locator1="SiteNavigationMenu#ITEM_ENTRY_STICKER" value1="${coordString}|10,0|-10,0">
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+
+		<execute function="Pause" value1="3000" />
+
+		<execute function="Refresh" />
+	</command>
+
+	<command name="openItemSidebar">
+		<execute function="Refresh" />
+
+		<execute function="Click" locator1="SiteNavigationMenu#ITEM_LINK">
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="SiteNavigationMenu#SIDEBAR_ITEM_NAME" value1="${itemName}">
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="SiteNavigationMenu#SIDEBAR" />
+	</command>
+
+	<command name="viewItem">
+		<execute function="AssertElementPresent" locator1="SiteNavigationMenu#ITEM_ENTRY">
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+	</command>
+
+	<command name="viewItemNested">
+		<execute function="AssertNotAttributeValue" locator1="SiteNavigationMenu#ITEM_ENTRY" locator2="data-parent-site-navigation-menu-item-id" value1="0">
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+	</command>
+
+	<command name="viewItemNotNested">
+		<execute function="AssertAttributeValue" locator1="SiteNavigationMenu#ITEM_ENTRY" locator2="data-parent-site-navigation-menu-item-id" value1="0">
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+	</command>
+
+	<command name="viewItemOrder">
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteNavigationMenu#ITEM_ENTRY_N" value1="${itemName}">
+			<var name="key_index" value="${index}" />
+		</execute>
+	</command>
+
+	<command name="viewMenuType">
+		<execute function="AssertTextEquals" locator1="SiteNavigationMenu#MENU_MARKED_AS" value1="${menuType}">
+			<var name="key_markedAs" value="${markedAs}" />
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+	</command>
+
+	<command name="viewPrimaryFunctionMessage">
+		<execute macro="SiteNavigationMenu#_openMenuSidebar" />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="The primary menu for this site is already defined." />
+
+		<execute function="AssertNotChecked" locator1="SiteNavigationMenu#FUNCTION_RADIO">
+			<var name="key_function" value="Primary" />
+		</execute>
+	</command>
+</definition>

@@ -1,0 +1,509 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Navigation" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 1" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AddNavigationMenuEntriesAllTypes" priority="5">
+		<property name="portal.acceptance" value="pending" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addItem">
+			<var name="item" value="Page" />
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItem">
+			<var name="itemName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addItem">
+			<var name="item" value="Submenu" />
+			<var name="submenuName" value="Submenu Name" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItem">
+			<var name="itemName" value="Submenu Name" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItem">
+			<var name="itemName" value="Liferay" />
+		</execute>
+	</command>
+
+	<command ignore="true" name="AddNavigationMenuEntriesNestItems" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<for list="1,2" param="index">
+			<execute macro="SitePages#addPublicPage">
+				<var name="pageName" value="Test Page Name ${index}" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+
+		<for list="1,2" param="index">
+			<execute macro="SiteNavigationMenu#addItem">
+				<var name="item" value="Page" />
+				<var name="pageName" value="Test Page Name ${index}" />
+			</execute>
+		</for>
+
+		<for list="1,2" param="index">
+			<execute macro="SiteNavigationMenu#viewItemOrder">
+				<var name="index" value="${index}" />
+				<var name="itemName" value="Test Page Name ${index}" />
+			</execute>
+		</for>
+
+		<execute macro="SiteNavigationMenu#viewItemNotNested">
+			<var name="itemName" value="Test Page Name 2" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#moveItem">
+			<var name="direction" value="in" />
+			<var name="itemName" value="Test Page Name 2" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItemNested">
+			<var name="itemName" value="Test Page Name 2" />
+		</execute>
+	</command>
+
+	<command ignore="true" name="AddNavigationMenuEntriesSortViewOrder" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<for list="1,2,3,4" param="index">
+			<execute macro="SitePages#addPublicPage">
+				<var name="pageName" value="Test Page Name ${index}" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+
+		<for list="1,2,3,4" param="index">
+			<execute macro="SiteNavigationMenu#addItem">
+				<var name="item" value="Page" />
+				<var name="pageName" value="Test Page Name ${index}" />
+			</execute>
+		</for>
+
+		<for list="1,2,3,4" param="index">
+			<execute macro="SiteNavigationMenu#viewItemOrder">
+				<var name="index" value="${index}" />
+				<var name="itemName" value="Test Page Name ${index}" />
+			</execute>
+		</for>
+
+		<execute macro="SiteNavigationMenu#moveItem">
+			<var name="direction" value="up" />
+			<var name="itemName" value="Test Page Name 2" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItemOrder">
+			<var name="index" value="1" />
+			<var name="itemName" value="Test Page Name 2" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItemOrder">
+			<var name="index" value="2" />
+			<var name="itemName" value="Test Page Name 1" />
+		</execute>
+	</command>
+
+	<command name="AddPageToNavigationMenuUponCreation" priority="3">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addMenu">
+			<var name="menuName" value="Primary Menu Name 2" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addItem">
+			<var name="item" value="Page" />
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItem">
+			<var name="itemName" value="Test Page Name" />
+		</execute>
+	</command>
+
+	<command ignore="true" name="AddSubmenuNavigationMenu" priority="5">
+		<description message="This is a use case for LPS-75061" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Default" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addItem">
+			<var name="item" value="Submenu" />
+			<var name="submenuName" value="Test Submenu" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItem">
+			<var name="itemName" value="Test Submenu" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItem">
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#moveItem">
+			<var name="direction" value="up" />
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#moveItem">
+			<var name="direction" value="in" />
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItemNested">
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Test Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Liferay" />
+			<var name="pageName" value="Test Submenu" />
+		</execute>
+	</command>
+
+	<command name="AddURLNavigationMenu" priority="4">
+		<description message="This is a use case for LPS-75059." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Default" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItem">
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Liferay" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute function="AssertLocation" value1="https://liferay.com" />
+	</command>
+
+	<command name="ConfigurePrimaryNavigationMenu" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Primary Navigation" />
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#configureMenuType">
+			<var name="menuType" value="Primary Navigation" />
+			<var name="navigationMenu" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewMenuType">
+			<var name="menuType" value="Primary Navigation" />
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+	</command>
+
+	<command name="ConfigureSecondaryNavigationMenu" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#configureMenuType">
+			<var name="menuType" value="Secondary Navigation" />
+			<var name="navigationMenu" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewMenuType">
+			<var name="menuType" value="Secondary Navigation" />
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+	</command>
+
+	<command name="ConfigureSocialNavigationMenu" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#configureMenuType">
+			<var name="menuType" value="Social Navigation" />
+			<var name="navigationMenu" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewMenuType">
+			<var name="menuType" value="Social Navigation" />
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+	</command>
+
+	<command name="DeleteNavigationMenu" priority="5">
+		<property name="portal.acceptance" value="pending" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#delete">
+			<var name="menuItem" value="Delete" />
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+	</command>
+
+	<command name="EditNavigationMenuPageItemName" priority="5">
+		<description message="This is a usecase for LPS-76658" />
+		<property name="portal.acceptance" value="pending" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<for list="1,2" param="index">
+			<execute macro="SitePages#addPublicPage">
+				<var name="pageName" value="Site Page Name ${index}" />
+			</execute>
+		</for>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Default" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#editItem">
+			<var name="item" value="Page" />
+			<var name="itemName" value="Site Page Name 2" />
+			<var name="name" value="Site Page Name 3" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItem">
+			<var name="itemName" value="Site Page Name 3" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name 1" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name 3" />
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute function="AssertLocation" value1="${portalURL}/web/test-site-name/site-page-name-2" />
+	</command>
+
+	<command name="RenameNavigationMenu" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Rename" />
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="Primary Menu Name 1 Edit" />
+		</execute>
+
+		<execute macro="Modal#submit" />
+
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="Primary Menu Name 1 Edit" />
+		</execute>
+	</command>
+
+	<command name="ViewNavigationMenuPropertiesSidebar" priority="5">
+		<description message="This is a use case for LPS-67191." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addItem">
+			<var name="item" value="URL" />
+			<var name="url" value="https://www.liferay.com/" />
+			<var name="urlName" value="Liferay" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#viewItem">
+			<var name="itemName" value="Liferay" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#openItemSidebar">
+			<var name="itemName" value="Liferay" />
+		</execute>
+	</command>
+</definition>

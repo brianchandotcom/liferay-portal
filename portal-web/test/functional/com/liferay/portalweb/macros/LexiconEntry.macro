@@ -43,7 +43,7 @@
 	<command name="gotoAddMenuItem">
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
+		<execute function="AssertClick" locator1="MenuItem#MENU_ITEM" value1="${menuItem}">
 			<var name="key_menuItem" value="${menuItem}" />
 		</execute>
 	</command>

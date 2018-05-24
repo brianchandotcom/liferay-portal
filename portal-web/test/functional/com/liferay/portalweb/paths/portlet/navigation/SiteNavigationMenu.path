@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>SiteNavigationMenu</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SiteNavigationMenu</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ITEM_ENTRY</td>
+	<td>//div[contains(@class,'navigation-menu-item')][@data-title='${key_itemName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEM_ENTRY_N</td>
+	<td>xpath=(//div[contains(@class,'navigation-menu-item')])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEM_ENTRY_STICKER</td>
+	<td>//div[contains(@class,'navigation-menu-item')][@data-title='${key_itemName}']//span[*[name()='svg'][contains(@class,'icon')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEM_LINK</td>
+	<td>//div[contains(@class,'card')]//a[normalize-space()='${key_itemName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_SELECT</td>
+	<td>//select[contains(@id,'fullPageApplication')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR</td>
+	<td>//div[contains(@class,'sidebar')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FUNCTION_RADIO</td>
+	<td>//div[normalize-space()='${key_function}']//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_ITEM_NAME</td>
+	<td>//div[contains(@class,'sidebar-header')][contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_MARKED_AS</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_rowEntry}')]/td[contains(@class,'lfr-marked-as') and contains(.,'${key_markedAs}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

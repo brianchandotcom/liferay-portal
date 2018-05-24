@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANGLE_RIGHT</td>
+	<td>//a[span/*[contains(@class,'angle-right')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASTERISK</td>
 	<td>//span[*[name()='svg'][contains(@class,'icon-asterisk')]] | //span[contains(@class,'icon-asterisk')] | //label[*[name()='svg'][contains(@class,'icon-asterisk')] and not(contains(@class,'required-warning'))]</td>
 	<td></td>
@@ -85,7 +90,7 @@
 </tr>
 <tr>
 	<td>COG</td>
-	<td>//div[@id='main-content']//i[contains(@class,'icon-cog') and contains(@class,'lfr-icon-menu-icon')]</td>
+	<td>//a[span/*[name()='svg'][contains(@class,'icon-cog')]]</td>
 	<td></td>
 </tr>
 <tr>

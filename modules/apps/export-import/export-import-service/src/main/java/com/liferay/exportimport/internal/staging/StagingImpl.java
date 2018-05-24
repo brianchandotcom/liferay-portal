@@ -3398,10 +3398,13 @@ public class StagingImpl implements Staging {
 		throws PortalException {
 
 		if (ExportImportThreadLocal.isLayoutStagingInProcess()) {
-			LayoutRevision layoutRevision =
-				_layoutRevisionLocalService.fetchLastLayoutRevision(plid, true);
+			List<LayoutRevision> layoutRevisions =
+				_layoutRevisionLocalService.getLayoutRevisions(
+					layoutSetBranchId, plid, true);
 
-			if (layoutRevision != null) {
+			if (layoutRevisions != null) {
+				LayoutRevision layoutRevision = layoutRevisions.get(0);
+
 				return layoutRevision.getLayoutRevisionId();
 			}
 			else {

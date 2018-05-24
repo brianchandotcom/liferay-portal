@@ -10,6 +10,7 @@
 			dir=requestedLanguageDir
 			helpMessage=escape(fieldStructure.tip)
 			label=escape(label)
+			localized=localizable
 			name=namespacedFieldName
 			required=required
 			type="textarea"

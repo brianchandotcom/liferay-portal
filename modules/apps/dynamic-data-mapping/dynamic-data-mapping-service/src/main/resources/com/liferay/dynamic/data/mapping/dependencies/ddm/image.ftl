@@ -81,6 +81,7 @@
 
 		<@liferay_aui.input
 			label="image-description"
+			localized=localizable
 			name="${namespacedFieldName}Alt"
 			type="text"
 			value="${alt}"

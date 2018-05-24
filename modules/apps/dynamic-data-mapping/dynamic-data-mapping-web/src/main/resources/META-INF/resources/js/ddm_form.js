@@ -378,6 +378,14 @@ AUI.add(
 						var instance = this;
 
 						instance.get('container').remove();
+
+						var inputLocalized = Liferay.component(instance.getInputName(true));
+
+						if (instance.get('localizable') && inputLocalized) {
+							inputLocalized.destroy();
+
+							Liferay.component(instance.getInputName(true), null);
+						}
 					},
 
 					addLocaleToLocalizationMap: function(locale) {
@@ -488,7 +496,7 @@ AUI.add(
 						);
 					},
 
-					getInputName: function() {
+					getInputName: function(component) {
 						var instance = this;
 
 						var fieldsNamespace = instance.get('fieldsNamespace');
@@ -500,13 +508,27 @@ AUI.add(
 							prefix.push(fieldsNamespace);
 						}
 
-						return prefix.concat(
-							[
-								instance.get('name'),
-								INSTANCE_ID_PREFIX,
-								instance.get('instanceId')
-							]
-						).join('');
+						if (instance.get('localizable') && component) {
+							return prefix.concat(
+								[
+									instance.get('name'),
+									'_',
+									INSTANCE_ID_PREFIX,
+									'_',
+									instance.get('instanceId')
+								]
+							).join('');
+						}
+						else {
+							return prefix.concat(
+								[
+									instance.get('name'),
+									INSTANCE_ID_PREFIX,
+									instance.get('instanceId')
+								]
+							).join('');
+						}
+
 					},
 
 					getInputNode: function() {
@@ -659,12 +681,24 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						var inputNode = instance.getInputNode();
+						var localizable = instance.get('localizable');
+						var inputLocalized = Liferay.component(instance.getInputName(true));
 
-						if (Lang.isValue(value)) {
-							inputNode.val(value);
+						if (inputLocalized) {
+							var localizationMap = instance.get('localizationMap');
 
-							inputNode.set('defaultValue', value);
+							for (var languageId in localizationMap) {
+								inputLocalized.updateInputLanguage(localizationMap[languageId], languageId);
+							}
+						}
+						else {
+							var inputNode = instance.getInputNode();
+
+							if (Lang.isValue(value)) {
+								inputNode.val(value);
+
+								inputNode.set('defaultValue', value);
+							}
 						}
 					},
 
@@ -790,19 +824,41 @@ AUI.add(
 
 						var localizationMap = instance.get('localizationMap');
 
-						var value = instance.getValue();
+						var inputLocalized = Liferay.component(instance.getInputName(true));
 
-						if (Lang.isObject(localizationMap)) {
-							if (AObject.keys(localizationMap).length != 0) {
-								this.removeNotAvailableLocales(localizationMap);
-							}
-						}
+						if (inputLocalized) {
+							inputLocalized.get('items').forEach(
+								function(item) {
+									var value = inputLocalized.getValue(item);
 
-						if (instance.get('localizable')) {
-							localizationMap[locale] = value;
+									if (value.trim() !== '') {
+										localizationMap[item] = value;
+									}
+								}
+							);
 						}
 						else {
-							localizationMap = value;
+							if (Lang.isObject(localizationMap) && AObject.keys(localizationMap).length != 0) {
+								this.removeNotAvailableLocales(localizationMap);
+							}
+
+							if (instance.get('localizable')) {
+								localizationMap[locale] = value;
+							}
+							else {
+								var value = instance.getValue();
+
+								if (AObject.keys(localizationMap).length != 0) {
+									this.removeNotAvailableLocales(localizationMap);
+								}
+
+								if (instance.get('localizable')) {
+									localizationMap[locale] = value;
+								}
+								else {
+									localizationMap = value;
+								}
+							}
 						}
 
 						instance.set('localizationMap', localizationMap);
@@ -2545,7 +2601,7 @@ AUI.add(
 
 						var notEmpty = instance.isNotEmpty(parsedValue);
 
-						var altNode = A.one('#' + instance.getInputName() + 'Alt');
+						var altNode = A.one('#' + instance.getInputName(true) + 'Alt');
 
 						altNode.attr('disabled', !notEmpty);
 
@@ -2617,10 +2673,21 @@ AUI.add(
 
 						var parsedValue = instance.getParsedValue(ImageField.superclass.getValue.apply(instance, arguments));
 
-						if (instance.isNotEmpty(parsedValue)) {
-							var altNode = A.one('#' + instance.getInputName() + 'Alt');
+						var inputLocalized = Liferay.component(instance.getInputName(true) + 'Alt');
 
-							parsedValue.alt = altNode.val();
+						if (instance.isNotEmpty(parsedValue)) {
+							if (inputLocalized) {
+								inputLocalized.get('items').forEach(
+									function(languageId) {
+										parsedValue['alt_' + languageId] = inputLocalized.getValue(languageId);
+									}
+								);
+							}
+							else {
+								var altNode = A.one('#' + instance.getInputName(true) + 'Alt');
+
+								parsedValue.alt = altNode.val();
+							}
 
 							value = JSON.stringify(parsedValue);
 						}
@@ -2644,14 +2711,25 @@ AUI.add(
 
 						var parsedValue = instance.getParsedValue(value);
 
+						var inputLocalized = Liferay.component(instance.getInputName(true) + 'Alt');
+
 						if (instance.isNotEmpty(parsedValue)) {
 							if (!parsedValue.name && parsedValue.title) {
 								parsedValue.name = parsedValue.title;
 							}
 
-							var altNode = A.one('#' + instance.getInputName() + 'Alt');
+							if (inputLocalized) {
+								inputLocalized.get('items').forEach(
+									function(languageId) {
+										inputLocalized.updateInputLanguage(parsedValue['alt_' + languageId], languageId);
+									}
+								);
+							}
+							else {
+								var altNode = A.one('#' + instance.getInputName(true) + 'Alt');
 
-							altNode.val(parsedValue.alt);
+								altNode.val(parsedValue.alt);
+							}
 
 							value = JSON.stringify(parsedValue);
 						}
@@ -2795,8 +2873,6 @@ AUI.add(
 						];
 
 						instance._eventHandles = eventHandles;
-
-						instance._updateValues();
 					},
 
 					destructor: function() {
@@ -2811,38 +2887,6 @@ AUI.add(
 						return window[instance.getInputName() + 'Editor'];
 					},
 
-					getInputName: function() {
-						var instance = this;
-
-						var inputNode;
-
-						if (instance.get('localizable')) {
-							var fieldsNamespace = instance.get('fieldsNamespace');
-							var portletNamespace = instance.get('portletNamespace');
-
-							var prefix = [portletNamespace];
-
-							if (fieldsNamespace) {
-								prefix.push(fieldsNamespace);
-							}
-
-							inputNode = prefix.concat(
-								[
-									instance.get('name'),
-									'_',
-									INSTANCE_ID_PREFIX,
-									'_',
-									instance.get('instanceId')
-								]
-							).join('');
-						}
-						else {
-							inputNode = TextHTMLField.superclass.getInputName().apply(instance, arguments);
-						}
-
-						return inputNode;
-					},
-
 					getValue: function() {
 						var instance = this;
 
@@ -2854,7 +2898,7 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						var editorComponentName = instance.getInputName() + 'Editor';
+						var editorComponentName = instance.getInputName(true) + 'Editor';
 
 						Liferay.componentReady(editorComponentName).then(
 							function(editor) {
@@ -2886,28 +2930,6 @@ AUI.add(
 						instance.get('container').toggle(!readOnly);
 					},
 
-					updateTranslationsDefaultValue: function() {
-						var instance = this;
-
-						var inputLocalized = Liferay.component(instance.getInputName());
-						var localizationMap = instance.get('localizationMap');
-
-						if (inputLocalized) {
-							inputLocalized.get('items').forEach(
-								function(item) {
-									var value = inputLocalized.getValue(item);
-
-									if (value.trim() !== '') {
-										localizationMap[item] = value;
-									}
-								}
-							);
-						}
-						else {
-							TextHTMLField.superclass.updateTranslationsDefaultValue.apply(instance, arguments);
-						}
-					},
-
 					_afterRenderTextHTMLField: function() {
 						var instance = this;
 
@@ -2923,17 +2945,6 @@ AUI.add(
 						var languageId = event.item.getAttribute('data-value');
 
 						instance.set('displayLocale', languageId);
-					},
-
-					_updateValues: function() {
-						var instance = this;
-
-						var inputLocalized = Liferay.component(instance.getInputName());
-						var localizationMap = instance.get('localizationMap');
-
-						for (var languageId in localizationMap) {
-							inputLocalized.updateInputLanguage(localizationMap[languageId], languageId);
-						}
 					}
 				}
 			}

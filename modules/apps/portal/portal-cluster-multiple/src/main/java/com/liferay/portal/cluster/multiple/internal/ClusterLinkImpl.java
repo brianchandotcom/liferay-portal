@@ -264,15 +264,6 @@ public class ClusterLinkImpl implements ClusterLink {
 		_clusterChannelFactory = clusterChannelFactory;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
-	}
-
 	@Reference(unbind = "-")
 	protected void setPortalExecutorManager(
 		PortalExecutorManager portalExecutorManager) {
@@ -285,10 +276,6 @@ public class ClusterLinkImpl implements ClusterLink {
 		_props = props;
 	}
 
-	protected void unsetMessageBus(MessageBus messageBus) {
-		_messageBus = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterLinkImpl.class);
 
@@ -299,7 +286,14 @@ public class ClusterLinkImpl implements ClusterLink {
 	private boolean _enabled;
 	private ExecutorService _executorService;
 	private List<Address> _localAddresses;
-	private MessageBus _messageBus;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile MessageBus _messageBus;
+
 	private PortalExecutorManager _portalExecutorManager;
 	private Props _props;
 

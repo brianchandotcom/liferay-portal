@@ -6,6 +6,7 @@ import SiteNavigationMenu from './SiteNavigationMenu.es';
 
 import {
 	MENU_ITEM_CLASSNAME,
+	MENU_ITEM_CONTENT_CLASSNAME,
 	MENU_ITEM_DRAG_ICON_CLASSNAME,
 	SiteNavigationMenuItem
 } from './SiteNavigationMenuItem.es';
@@ -59,7 +60,7 @@ class SiteNavigationMenuEditor extends State {
 		);
 
 		dom.on(
-			`.${MENU_ITEM_CLASSNAME}`,
+			`.${MENU_ITEM_CONTENT_CLASSNAME}`,
 			'click',
 			this._handleItemClick.bind(this)
 		);
@@ -191,13 +192,12 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemClick(event) {
-		event.stopPropagation();
-
-		const menuItem = event.delegateTarget;
-
-		SiteNavigationMenuItem.setSelected(menuItem, true);
-
-		menuItem.focus();
+		SiteNavigationMenuItem.setSelected(
+			SiteNavigationMenuItem.getFromContent(
+				event.delegateTarget
+			),
+			true
+		);
 	}
 
 	/**
@@ -208,106 +208,98 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	_handleItemKeyUp(event) {
-		const menuItem = event.delegateTarget;
-		const menuItemParent = SiteNavigationMenuItem.getParent(menuItem);
-		const menuItemParentId = SiteNavigationMenuItem.getId(menuItemParent);
-		const menuItemSelected = SiteNavigationMenuItem.isSelected(menuItem);
-		const menuItemSiblings = SiteNavigationMenuItem.getSiblings(menuItem);
+		event.stopPropagation();
 
-		const menuItemIndex = menuItemSiblings.indexOf(menuItem);
+		const menuItem = event.delegateTarget;
+		const menuItemIndex = SiteNavigationMenuItem
+			.getSiblings(menuItem)
+			.indexOf(menuItem);
+
+		const menuItemParent = SiteNavigationMenuItem.getParent(menuItem);
 
 		let layoutModified = false;
 
-		if (event.key === KEYS.ENTER || event.key === KEYS.SPACEBAR) {
+		if ((event.key === KEYS.ENTER) || (event.key === KEYS.SPACEBAR)) {
 			menuItem.click();
 		}
-		else if (
-			menuItemSelected &&
-			(event.key === KEYS.ARROW_LEFT) &&
-			menuItemParentId
-		) {
-			const grandParentItem = SiteNavigationMenuItem.getParent(menuItemParent);
+		else if (event.key === KEYS.ARROW_LEFT) {
+			const menuItemParentIndex = SiteNavigationMenuItem
+				.getSiblings(menuItemParent)
+				.indexOf(menuItemParent);
 
-			grandParentItem.insertBefore(
-				menuItem,
-				SiteNavigationMenuItem.getNextSibling(menuItemParent)
+			const menuItemGrandParent = SiteNavigationMenuItem.getParent(
+				menuItemParent
 			);
 
-			const parentItems = this._getMenuItemSiblings(menuItem);
-			menuItem.dataset.order = parentItems.indexOf(menuItem).toString();
-
-			layoutModified = true;
-		}
-		else if (
-			menuItemSelected &&
-			(event.key === KEYS.ARROW_UP) &&
-			(menuItemIndex > 0)
-		) {
-			const newIndex = menuItemIndex - 1;
-
-			const menuItemSibling = menuItemSiblings[newIndex];
-
-			menuItemParent.insertBefore(
-				menuItem,
-				menuItemSibling
-			);
-
-			menuItem.dataset.order = newIndex;
-
-			layoutModified = true;
-		}
-		else if (
-			menuItemSelected &&
-			(event.key === KEYS.ARROW_RIGHT) &&
-			(menuItemIndex > 0)
-		) {
-			const newIndex = menuItemIndex - 1;
-
-			const menuItemSibling = menuItemSiblings[newIndex];
-
-			menuItemSibling.appendChild(menuItem);
-
-			const parentItems = this._getMenuItemSiblings(menuItemSibling);
-			menuItem.dataset.order = parentItems.indexOf(menuItem).toString();
-
-			layoutModified = true;
-		}
-		else if (
-			menuItemSelected &&
-			(event.key === KEYS.ARROW_DOWN) &&
-			(menuItemIndex < menuItemSiblings.length - 1)
-		) {
-			const newIndex = menuItemIndex + 1;
-
-			if (newIndex < menuItemSiblings.length - 1) {
-				const menuItemSibling = menuItemSiblings[newIndex];
-
-				menuItemParent.insertBefore(
+			if (menuItemParentIndex !== -1) {
+				SiteNavigationMenu.insertAtPosition(
+					menuItemGrandParent,
 					menuItem,
-					SiteNavigationMenuItem.getNextSibling(menuItemSibling)
+					menuItemParentIndex + 1
 				);
 			}
-			else {
-				menuItemParent.appendChild(menuItem);
-			}
+
+			layoutModified = true;
+		}
+		else if (event.key === KEYS.ARROW_UP && menuItemIndex > 0) {
+			SiteNavigationMenu.insertAtPosition(
+				menuItemParent,
+				menuItem,
+				menuItemIndex - 1
+			);
+
+			layoutModified = true;
+		}
+		else if (event.key === KEYS.ARROW_RIGHT && menuItemIndex > 0) {
+			const previousSibling = SiteNavigationMenuItem
+				.getSiblings(menuItem)[menuItemIndex - 1];
+
+			SiteNavigationMenu.insertAtPosition(
+				previousSibling,
+				menuItem,
+				Infinity
+			);
+
+			layoutModified = true;
+		}
+		else if (event.key === KEYS.ARROW_DOWN) {
+			SiteNavigationMenu.insertAtPosition(
+				menuItemParent,
+				menuItem,
+				menuItemIndex + 2
+			);
 
 			layoutModified = true;
 		}
 
 		if (layoutModified) {
-			const dragOrder = SiteNavigationMenuItem
-				.getSiblings(menuItem)
-				.indexOf(menuItem);
+			const siteNavigationMenuItemId = SiteNavigationMenuItem.getId(
+				menuItem
+			);
 
 			this._updateParentAndOrder(
 				{
-					dragOrder,
-					parentId: menuItemParentId,
-					siteNavigationMenuItemId: SiteNavigationMenuItem.getId(menuItem)
+					dragOrder: SiteNavigationMenuItem
+						.getSiblings(menuItem)
+						.indexOf(menuItem),
+
+					parentId: SiteNavigationMenuItem.getId(
+						SiteNavigationMenuItem.getParent(menuItem)
+					),
+
+					siteNavigationMenuItemId
 				}
 			);
 
-			menuItem.click();
+			requestAnimationFrame(
+				() => {
+					const modifiedMenuItem = SiteNavigationMenuItem.getFromId(
+						siteNavigationMenuItemId
+					);
+
+					modifiedMenuItem.focus();
+				}
+			);
 		}
 	}
 

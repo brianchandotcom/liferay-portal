@@ -12,6 +12,8 @@ const MENU_CONTAINER_CLASSNAME = 'site-navigation-menu-container';
 
 const MENU_ITEM_CLASSNAME = 'site-navigation-menu-item';
 
+const MENU_ITEM_CONTENT_CLASSNAME = `${MENU_ITEM_CLASSNAME}__content`;
+
 const MENU_ITEM_DRAGGING_CLASSNAME = `${MENU_ITEM_CLASSNAME}--dragging`;
 
 const MENU_ITEM_DRAG_ICON_CLASSNAME = `${MENU_ITEM_CLASSNAME}__drag-icon`;
@@ -58,7 +60,7 @@ const SiteNavigationMenuItem = {
 
 	getFromId: function(menuItemId) {
 		return document.querySelector(
-			`.${MENU_ITEM_CLASSNAME}[data-site-navigation-menu-item-id]=${menuItemId}`
+			`.${MENU_ITEM_CLASSNAME}[data-site-navigation-menu-item-id="${menuItemId}"]`
 		);
 	},
 
@@ -186,6 +188,7 @@ const SiteNavigationMenuItem = {
 
 export {
 	MENU_CONTAINER_CLASSNAME,
+	MENU_ITEM_CONTENT_CLASSNAME,
 	MENU_ITEM_CLASSNAME,
 	MENU_ITEM_DRAG_ICON_CLASSNAME,
 	MENU_ITEM_DRAGGING_CLASSNAME,

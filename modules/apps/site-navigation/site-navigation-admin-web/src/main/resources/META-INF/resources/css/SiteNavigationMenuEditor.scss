@@ -37,13 +37,14 @@
 		visibility: visible;
 	}
 
-	&:focus {
-		box-shadow: none;
+	&:focus,
+	&:focus-within {
 		outline: none;
+	}
 
-		> &__content .card {
-			box-shadow: none;
-			outline: 2px solid #65B6F0;
-		}
+	&__content:focus > .card,
+	&__content:focus-within .card,
+	&__content:hover .card {
+		box-shadow: 0 0 0 2px #8ABFFD;
 	}
 }

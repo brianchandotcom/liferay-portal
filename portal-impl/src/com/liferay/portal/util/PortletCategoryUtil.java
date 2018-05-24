@@ -134,7 +134,7 @@ public class PortletCategoryUtil {
 					companyId, portletId);
 
 				if (portlet != null) {
-					if (portlet.isSystem()) {
+					if (portlet.isSystem() || !portlet.isInclude()) {
 					}
 					else if (!portlet.isActive() ||
 							 portlet.isUndeployedPortlet()) {

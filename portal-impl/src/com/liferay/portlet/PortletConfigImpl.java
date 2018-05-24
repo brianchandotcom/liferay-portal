@@ -202,8 +202,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		Set<PublicRenderParameter> publicRenderParameters =
 			_portlet.getPublicRenderParameters();
 
-		Map<String, QName> publicRenderParameterMap = new HashMap<>(
-			publicRenderParameters.size());
+		Map<String, QName> publicRenderParameterMap = new HashMap<>();
 
 		for (PublicRenderParameter publicRenderParameter :
 				publicRenderParameters) {

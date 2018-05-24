@@ -37,14 +37,14 @@
 		<tag-class>com.liferay.commerce.taglib.servlet.taglib.PriceTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<name>commerceCurrencyId</name>
-			<required>false</required>
+			<name>CPDefinitionId</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
 			<name>CPInstanceId</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
@@ -53,6 +53,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>int</type>
+		</attribute>
+		<attribute>
+			<name>showPriceRange</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>

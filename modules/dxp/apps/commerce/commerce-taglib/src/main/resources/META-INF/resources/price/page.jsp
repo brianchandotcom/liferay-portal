@@ -17,7 +17,26 @@
 <%@ include file="/price/init.jsp" %>
 
 <%
+CPInstance cpInstance = (CPInstance)request.getAttribute("liferay-commerce:price:cpInstance");
 String formattedPrice = (String)request.getAttribute("liferay-commerce:price:formattedPrice");
+boolean showPriceRange = (boolean)request.getAttribute("liferay-commerce:price:showPriceRange");
 %>
 
-<span class="product-price"><%= formattedPrice %></span>
+<c:choose>
+	<c:when test="<%= Validator.isNull(formattedPrice) %>">
+	</c:when>
+	<c:when test="<%= cpInstance == null %>">
+		<span class="product-price">
+			<c:if test="<%= !showPriceRange %>">
+				<span class="product-price-label">
+					<liferay-ui:message key="starting-at" />
+				</span>
+			</c:if>
+
+			<%= formattedPrice %>
+		</span>
+	</c:when>
+	<c:otherwise>
+		<span class="product-price"><%= formattedPrice %></span>
+	</c:otherwise>
+</c:choose>

@@ -71,7 +71,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
-		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
+		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -160,10 +160,10 @@ public class FragmentEntryWrapper implements FragmentEntry,
 			setJs(js);
 		}
 
-		Long htmlPreviewEntryId = (Long)attributes.get("htmlPreviewEntryId");
+		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");
 
-		if (htmlPreviewEntryId != null) {
-			setHtmlPreviewEntryId(htmlPreviewEntryId);
+		if (previewFileEntryId != null) {
+			setPreviewFileEntryId(previewFileEntryId);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -291,16 +291,6 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		return _fragmentEntry.getHtml();
 	}
 
-	/**
-	* Returns the html preview entry ID of this fragment entry.
-	*
-	* @return the html preview entry ID of this fragment entry
-	*/
-	@Override
-	public long getHtmlPreviewEntryId() {
-		return _fragmentEntry.getHtmlPreviewEntryId();
-	}
-
 	@Override
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
@@ -335,6 +325,16 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	@Override
 	public String getName() {
 		return _fragmentEntry.getName();
+	}
+
+	/**
+	* Returns the preview file entry ID of this fragment entry.
+	*
+	* @return the preview file entry ID of this fragment entry
+	*/
+	@Override
+	public long getPreviewFileEntryId() {
+		return _fragmentEntry.getPreviewFileEntryId();
 	}
 
 	/**
@@ -651,16 +651,6 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	/**
-	* Sets the html preview entry ID of this fragment entry.
-	*
-	* @param htmlPreviewEntryId the html preview entry ID of this fragment entry
-	*/
-	@Override
-	public void setHtmlPreviewEntryId(long htmlPreviewEntryId) {
-		_fragmentEntry.setHtmlPreviewEntryId(htmlPreviewEntryId);
-	}
-
-	/**
 	* Sets the js of this fragment entry.
 	*
 	* @param js the js of this fragment entry
@@ -693,6 +683,16 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	@Override
 	public void setNew(boolean n) {
 		_fragmentEntry.setNew(n);
+	}
+
+	/**
+	* Sets the preview file entry ID of this fragment entry.
+	*
+	* @param previewFileEntryId the preview file entry ID of this fragment entry
+	*/
+	@Override
+	public void setPreviewFileEntryId(long previewFileEntryId) {
+		_fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 	}
 
 	/**

@@ -39,7 +39,7 @@
 		<field name="js" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="htmlPreviewEntryId" type="long" />
+		<field name="previewFileEntryId" type="long" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />

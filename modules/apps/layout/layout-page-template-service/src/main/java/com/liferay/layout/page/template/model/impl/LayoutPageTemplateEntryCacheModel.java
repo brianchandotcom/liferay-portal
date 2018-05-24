@@ -91,8 +91,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
-		sb.append(", htmlPreviewEntryId=");
-		sb.append(htmlPreviewEntryId);
+		sb.append(", previewFileEntryId=");
+		sb.append(previewFileEntryId);
 		sb.append(", defaultTemplate=");
 		sb.append(defaultTemplate);
 		sb.append(", layoutPrototypeId=");
@@ -152,7 +152,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		}
 
 		layoutPageTemplateEntryImpl.setType(type);
-		layoutPageTemplateEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntryId);
+		layoutPageTemplateEntryImpl.setPreviewFileEntryId(previewFileEntryId);
 		layoutPageTemplateEntryImpl.setDefaultTemplate(defaultTemplate);
 		layoutPageTemplateEntryImpl.setLayoutPrototypeId(layoutPrototypeId);
 		layoutPageTemplateEntryImpl.setStatus(status);
@@ -199,7 +199,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 
 		type = objectInput.readInt();
 
-		htmlPreviewEntryId = objectInput.readLong();
+		previewFileEntryId = objectInput.readLong();
 
 		defaultTemplate = objectInput.readBoolean();
 
@@ -248,7 +248,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 
 		objectOutput.writeInt(type);
 
-		objectOutput.writeLong(htmlPreviewEntryId);
+		objectOutput.writeLong(previewFileEntryId);
 
 		objectOutput.writeBoolean(defaultTemplate);
 
@@ -280,7 +280,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 	public long classTypeId;
 	public String name;
 	public int type;
-	public long htmlPreviewEntryId;
+	public long previewFileEntryId;
 	public boolean defaultTemplate;
 	public long layoutPrototypeId;
 	public int status;

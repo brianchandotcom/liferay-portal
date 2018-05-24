@@ -23,7 +23,7 @@ create table LayoutPageTemplateEntry (
 	classTypeId LONG,
 	name VARCHAR(75) null,
 	type_ INTEGER,
-	htmlPreviewEntryId LONG,
+	previewFileEntryId LONG,
 	defaultTemplate BOOLEAN,
 	layoutPrototypeId LONG,
 	status INTEGER,

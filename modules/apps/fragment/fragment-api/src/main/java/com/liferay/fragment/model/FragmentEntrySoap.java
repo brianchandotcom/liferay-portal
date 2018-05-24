@@ -47,7 +47,7 @@ public class FragmentEntrySoap implements Serializable {
 		soapModel.setCss(model.getCss());
 		soapModel.setHtml(model.getHtml());
 		soapModel.setJs(model.getJs());
-		soapModel.setHtmlPreviewEntryId(model.getHtmlPreviewEntryId());
+		soapModel.setPreviewFileEntryId(model.getPreviewFileEntryId());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
@@ -208,12 +208,12 @@ public class FragmentEntrySoap implements Serializable {
 		_js = js;
 	}
 
-	public long getHtmlPreviewEntryId() {
-		return _htmlPreviewEntryId;
+	public long getPreviewFileEntryId() {
+		return _previewFileEntryId;
 	}
 
-	public void setHtmlPreviewEntryId(long htmlPreviewEntryId) {
-		_htmlPreviewEntryId = htmlPreviewEntryId;
+	public void setPreviewFileEntryId(long previewFileEntryId) {
+		_previewFileEntryId = previewFileEntryId;
 	}
 
 	public int getStatus() {
@@ -261,7 +261,7 @@ public class FragmentEntrySoap implements Serializable {
 	private String _css;
 	private String _html;
 	private String _js;
-	private long _htmlPreviewEntryId;
+	private long _previewFileEntryId;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;

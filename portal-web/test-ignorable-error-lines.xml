@@ -176,10 +176,6 @@
 			<contains></contains>
 			<matches>.*ServerAdminPortlet\_tabs1\=resources generates exception.*NullPointerException.*</matches>
 		</ignore-error>
-		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
-			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

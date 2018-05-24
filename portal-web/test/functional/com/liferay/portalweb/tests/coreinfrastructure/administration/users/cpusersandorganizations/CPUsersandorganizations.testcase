@@ -1187,7 +1187,7 @@
 	</command>
 
 	<command name="DeleteOrganization" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
@@ -1271,7 +1271,7 @@
 	</command>
 
 	<command name="DeleteUser" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
@@ -1293,6 +1293,7 @@
 		</execute>
 
 		<execute macro="User#deactivateCP">
+			<var name="deactivateType" value="Actions" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userScreenName" value="usersn" />
 		</execute>

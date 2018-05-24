@@ -432,7 +432,7 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertTextNotPresent" value1="${orgName}" />
+		<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" />
 	</command>
 
 	<command name="editIdentificationCP">

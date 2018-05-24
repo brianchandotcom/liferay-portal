@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.portlet.PortletModeFactory;
+import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -176,7 +178,9 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 			portletModeNames.size());
 
 		for (String portletModeName : portletModeNames) {
-			portletModes.add(new PortletMode(portletModeName));
+			portletModes.add(
+				PortletModeFactory.getPortletMode(
+					portletModeName, _portletApp.getSpecMajorVersion()));
 		}
 
 		return Collections.enumeration(portletModes);
@@ -310,7 +314,9 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 			windowStateNames.size());
 
 		for (String windowStateName : windowStateNames) {
-			windowStates.add(new WindowState(windowStateName));
+			windowStates.add(
+				WindowStateFactory.getWindowState(
+					windowStateName, _portletApp.getSpecMajorVersion()));
 		}
 
 		return Collections.enumeration(windowStates);

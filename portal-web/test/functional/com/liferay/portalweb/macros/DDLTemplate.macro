@@ -24,7 +24,7 @@
 	<command name="addDisplayTemplateCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="Click" locator1="NavBar#BASIC_SEARCH_FIELD" />
+		<execute function="Click" locator1="TextInput#SEARCH" />
 
 		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="${ddlDataDefinitionName}" />

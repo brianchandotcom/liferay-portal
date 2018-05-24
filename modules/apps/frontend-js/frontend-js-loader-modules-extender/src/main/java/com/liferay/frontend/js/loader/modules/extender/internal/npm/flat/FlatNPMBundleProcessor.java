@@ -180,13 +180,27 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		moduleContent = moduleContent.substring(index);
 
-		index = moduleContent.indexOf("function");
+		index = 0;
 
-		if (index == -1) {
-			return StringPool.BLANK;
+		while (true) {
+			index = moduleContent.indexOf("function", index);
+
+			if ((index == -1) || (index >= moduleContent.length())) {
+				return StringPool.BLANK;
+			}
+
+			char nextChar = moduleContent.charAt(index + 8);
+
+			if (Character.isWhitespace(nextChar) || nextChar == '(') {
+				moduleContent = moduleContent.substring(0, index);
+
+				break;
+			}
+
+			index = index + 8;
 		}
 
-		return moduleContent.substring(0, index);
+		return moduleContent;
 	}
 
 	/**

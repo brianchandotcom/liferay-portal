@@ -14,8 +14,8 @@
 
 package com.liferay.portal.apio.permission;
 
+import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
@@ -75,7 +75,7 @@ public interface HasPermission<T> {
 	 *         false} otherwise
 	 * @review
 	 */
-	public default <S> ThrowableBiFunction<Credentials, S, Boolean> forAddingIn(
+	public default <S> HasNestedAddingPermissionFunction<S> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
 		return (credentials, s) -> false;

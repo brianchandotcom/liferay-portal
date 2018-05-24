@@ -14,8 +14,8 @@
 
 package com.liferay.folder.apio.internal.permission;
 
+import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FolderHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
-	public <S> ThrowableBiFunction<Credentials, S, Boolean> forAddingIn(
+	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(RootFolderIdentifier.class)) {

@@ -14,8 +14,8 @@
 
 package com.liferay.web.page.element.apio.internal.permission;
 
+import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.function.throwable.ThrowableBiFunction;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class JournalArticleHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
-	public <S> ThrowableBiFunction<Credentials, S, Boolean> forAddingIn(
+	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(WebSiteIdentifier.class)) {

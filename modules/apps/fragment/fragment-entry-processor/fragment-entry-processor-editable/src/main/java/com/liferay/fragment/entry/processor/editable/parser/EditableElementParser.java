@@ -25,6 +25,8 @@ import org.jsoup.nodes.Element;
  */
 public interface EditableElementParser {
 
+	public String getFieldTemplate();
+
 	public String getValue(Element element);
 
 	/**

@@ -85,11 +85,11 @@ class MBPortlet extends PortletBase {
 		let inputNode = this.one('#body');
 		inputNode.value = window[this.ns('replyMessageBody' + this.replyToMessageId)].getHTML();
 
-		let form = document.createElement('form');
+		let form = this.one(`[name="${this.ns('advancedReplyFm' + this.replyToMessageId)}"]`)
 
-		form.appendChild(inputNode.cloneNode());
-		form.setAttribute('action', this.advancedReplyUrl);
-		form.setAttribute('method', 'post');
+		let advancedReplyInputNode = form.querySelector(`[name="${this.ns('body')}"]`);
+
+		advancedReplyInputNode.value = inputNode.value;
 
 		submitForm(form);
 	}
@@ -203,17 +203,6 @@ class MBPortlet extends PortletBase {
  */
 
 MBPortlet.STATE = {
-
-	/**
-	 * Url to the advanced reply page
-	 * @instance
-	 * @memberof MBPortlet
-	 * @type {String}
-	 */
-
-	advancedReplyUrl: {
-		validator: core.isString
-	},
 
 	/**
 	 * Portlet's constants

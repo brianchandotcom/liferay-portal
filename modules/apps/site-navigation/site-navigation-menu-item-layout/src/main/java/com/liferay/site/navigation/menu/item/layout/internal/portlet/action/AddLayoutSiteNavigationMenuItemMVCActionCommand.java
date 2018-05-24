@@ -135,7 +135,8 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 
 			_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId(), 0);
+				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				layout.getPriority());
 		}
 	}
 

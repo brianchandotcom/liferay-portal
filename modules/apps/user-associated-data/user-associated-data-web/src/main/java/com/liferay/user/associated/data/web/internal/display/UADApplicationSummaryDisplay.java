@@ -31,6 +31,14 @@ public class UADApplicationSummaryDisplay {
 		return _viewURL;
 	}
 
+	public boolean hasItems() {
+		if (getCount() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public void setApplicationKey(String applicationKey) {
 		_applicationKey = applicationKey;
 	}

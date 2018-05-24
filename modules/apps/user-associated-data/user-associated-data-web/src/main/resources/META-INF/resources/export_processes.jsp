@@ -29,7 +29,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		modelVar="backgroundTask"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="autofit-col-expand"
+			cssClass="lfr-title-column"
 		>
 			<div id="<portlet:namespace />exportStatus">
 				<h5>
@@ -48,7 +48,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="autofit-col-expand"
+			cssClass="lfr-create-date-column table-cell-expand"
 		>
 			<%= LanguageUtil.get(request, "create-date") + ": " + dateFormat.format(backgroundTask.getCreateDate()) %>
 
@@ -66,7 +66,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 
 		<c:if test="<%= backgroundTask.isCompleted() %>">
 			<liferay-ui:search-container-column-text
-				cssClass="autofit-col-expand"
+				cssClass="lfr-completion-date-column table-cell-expand"
 			>
 				<%= LanguageUtil.get(request, "completion-date") + ": " + dateFormat.format(backgroundTask.getCompletionDate()) %>
 			</liferay-ui:search-container-column-text>
@@ -79,7 +79,6 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
-		displayStyle="descriptive"
 		markupView="lexicon"
 		resultRowSplitter="<%= new UADExportProcessResultRowSplitter() %>"
 	/>

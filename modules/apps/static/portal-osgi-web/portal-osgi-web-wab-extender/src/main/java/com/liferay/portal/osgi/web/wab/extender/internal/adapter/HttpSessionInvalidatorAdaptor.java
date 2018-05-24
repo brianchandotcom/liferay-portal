@@ -61,6 +61,12 @@ public class HttpSessionInvalidatorAdaptor {
 	private static class SessionInvalidatingHttpSessionListener
 		implements HttpSessionListener {
 
+		public SessionInvalidatingHttpSessionListener(
+			HttpSessionInvalidator httpSessionInvalidator) {
+
+			_httpSessionInvalidator = httpSessionInvalidator;
+		}
+
 		@Override
 		public void sessionCreated(HttpSessionEvent httpSessionEvent) {
 		}
@@ -70,12 +76,6 @@ public class HttpSessionInvalidatorAdaptor {
 			HttpSession httpSession = httpSessionEvent.getSession();
 
 			_httpSessionInvalidator.invalidate(httpSession.getId(), false);
-		}
-
-		private SessionInvalidatingHttpSessionListener(
-			HttpSessionInvalidator httpSessionInvalidator) {
-
-			_httpSessionInvalidator = httpSessionInvalidator;
 		}
 
 		private final HttpSessionInvalidator _httpSessionInvalidator;

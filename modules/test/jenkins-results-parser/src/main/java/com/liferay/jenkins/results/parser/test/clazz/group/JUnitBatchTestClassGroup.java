@@ -606,7 +606,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 			return;
 		}
 
-		List<String> testClassNamesIncludesRelativeGlobs = Arrays.asList(
+		List<String> testClassNamesIncludesRelativeGlobs = new ArrayList<>();
+
+		Collections.addAll(
+			testClassNamesIncludesRelativeGlobs,
 			testClassNamesIncludesPropertyValue.split(","));
 
 		if (testRelevantChanges) {

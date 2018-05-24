@@ -1,7 +1,7 @@
 <#include "init.ftl">
 
 <#assign
-	variableAltName = name + ".getAttribute(\"alt_\" + localeUtil.toLanguageId(locale))"
+	variableAltName = name + ".getAttribute(\"alt\")"
 	variableFieldEntryId = name + ".getAttribute(\"fileEntryId\")"
 />
 

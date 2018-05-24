@@ -126,7 +126,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			if (Objects.equals(
 					mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE)) {
 
-				value = _getMappedValue(editableValueJSONObject);
+				value = _getMappedValue(
+					editableElementParser, editableValueJSONObject);
 			}
 
 			if (Validator.isNull(value)) {
@@ -192,7 +193,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return value;
 	}
 
-	private String _getMappedValue(JSONObject jsonObject) {
+	private String _getMappedValue(
+		EditableElementParser editableElementParser, JSONObject jsonObject) {
+
 		String value = jsonObject.getString("mappedField");
 
 		if (Validator.isNull(value)) {
@@ -200,7 +203,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return StringUtil.replace(
-			_TMPL_TEXT_FIELD_TEMPLATE, "field_name", value);
+			editableElementParser.getFieldTemplate(), "field_name", value);
 	}
 
 	private void _validateAttribute(Element element, String attribute)
@@ -302,11 +305,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private static final String[] _REQUIRED_ATTRIBUTES = {"id", "type"};
-
-	private static final String _TMPL_TEXT_FIELD_TEMPLATE = StringUtil.read(
-		EditableFragmentEntryProcessor.class,
-		"/META-INF/resources/fragment/entry/processor/editable/text_field_" +
-			"template.tmpl");
 
 	private final Map<String, EditableElementParser> _editableElementParsers =
 		new HashMap<>();

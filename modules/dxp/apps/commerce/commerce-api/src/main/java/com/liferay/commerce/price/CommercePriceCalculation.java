@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
 public interface CommercePriceCalculation {
@@ -34,6 +35,14 @@ public interface CommercePriceCalculation {
 
 	public CommerceMoney getOrderSubtotal(
 			CommerceOrder commerceOrder, CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommerceMoney getUnitMaxPrice(
+			long cpDefinitionId, int quantity, CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommerceMoney getUnitMinPrice(
+			long cpDefinitionId, int quantity, CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getUnitPrice(

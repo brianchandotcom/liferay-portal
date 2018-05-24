@@ -29,7 +29,9 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
 
@@ -86,6 +88,62 @@ public class CommercePriceCalculationImpl implements CommercePriceCalculation {
 
 		return _commerceMoneyFactory.create(
 			commerceContext.getCommerceCurrency(), orderSubtotal);
+	}
+
+	@Override
+	public CommerceMoney getUnitMaxPrice(
+			long cpDefinitionId, int quantity, CommerceContext commerceContext)
+		throws PortalException {
+
+		CommerceMoney commerceMoney = null;
+		BigDecimal maxPrice = BigDecimal.ZERO;
+
+		List<CPInstance> cpInstances =
+			_cpInstanceService.getCPDefinitionInstances(
+				cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (CPInstance cpInstance : cpInstances) {
+			CommerceMoney cpInstanceCommerceMoney = getUnitPrice(
+				cpInstance.getCPInstanceId(), quantity, commerceContext);
+
+			if (maxPrice.compareTo(cpInstanceCommerceMoney.getPrice()) < 0) {
+				commerceMoney = cpInstanceCommerceMoney;
+
+				maxPrice = commerceMoney.getPrice();
+			}
+		}
+
+		return commerceMoney;
+	}
+
+	@Override
+	public CommerceMoney getUnitMinPrice(
+			long cpDefinitionId, int quantity, CommerceContext commerceContext)
+		throws PortalException {
+
+		CommerceMoney commerceMoney = null;
+		BigDecimal minPrice = BigDecimal.ZERO;
+
+		List<CPInstance> cpInstances =
+			_cpInstanceService.getCPDefinitionInstances(
+				cpDefinitionId, WorkflowConstants.STATUS_APPROVED,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (CPInstance cpInstance : cpInstances) {
+			CommerceMoney cpInstanceCommerceMoney = getUnitPrice(
+				cpInstance.getCPInstanceId(), quantity, commerceContext);
+
+			if ((commerceMoney == null) ||
+				(minPrice.compareTo(cpInstanceCommerceMoney.getPrice()) > 0)) {
+
+				commerceMoney = cpInstanceCommerceMoney;
+
+				minPrice = commerceMoney.getPrice();
+			}
+		}
+
+		return commerceMoney;
 	}
 
 	@Override

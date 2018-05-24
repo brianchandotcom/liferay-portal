@@ -14,22 +14,30 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.exception.SiteNavigationMenuItemNameException;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,18 +76,36 @@ public class AddSiteNavigationMenuItemMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 		try {
-			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-				themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0, type,
-				typeSettingsProperties.toString(), serviceContext);
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
+					type, typeSettingsProperties.toString(), serviceContext);
+
+			jsonObject.put(
+				"siteNavigationMenuItemId",
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
 		catch (SiteNavigationMenuItemNameException snmine) {
-			SessionErrors.add(actionRequest, snmine.getClass(), snmine);
+			HttpServletRequest request = _portal.getHttpServletRequest(
+				actionRequest);
 
-			actionResponse.setRenderParameter(
-				"mvcPath", "/add_site_navigation_menu_item.jsp");
+			jsonObject.put(
+				"errorMessage",
+				LanguageUtil.format(
+					request, "please-enter-a-name-with-fewer-than-x-characters",
+					ModelHintsUtil.getMaxLength(
+						SiteNavigationMenuItem.class.getName(), "name")));
 		}
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;

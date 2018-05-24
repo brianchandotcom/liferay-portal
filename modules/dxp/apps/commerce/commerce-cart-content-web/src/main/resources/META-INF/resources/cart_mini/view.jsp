@@ -50,12 +50,12 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<div class="autofit-col">
 				<liferay-commerce:order-transitions
 					commerceOrderId="<%= commerceCartContentMiniDisplayContext.getCommerceOrderId() %>"
-					cssClass="btn btn-outline-light"
+					cssClass="btn commerce-btn"
 				/>
 			</div>
 
 			<div class="autofit-col">
-				<div><a class="btn btn-outline-light" href="<%= commerceCartContentMiniDisplayContext.getCommerceCartPortletURL() %>"><liferay-ui:message key="edit-cart" /></a></div>
+				<div><a class="btn commerce-btn" href="<%= commerceCartContentMiniDisplayContext.getCommerceCartPortletURL() %>"><liferay-ui:message key="edit-cart" /></a></div>
 			</div>
 		</li>
 	</ul>

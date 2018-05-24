@@ -1,3 +1,7 @@
+%btn-outline-light {
+	@include clay-button-variant($btn-outline-light);
+}
+
 .btn-brand {
 	background-color: $brand-color-primary;
 	border-radius: 0;

@@ -43,6 +43,23 @@ $btn-light: (
 	active-box-shadow: none
 ) !default;
 
+$btn-outline-light: () !default;
+$btn-outline-light: map-merge((
+	bg: transparent,
+	border-color: #FFF,
+	color: #FFF,
+	hover-bg: darken(#FFF, 4%),
+	hover-color: #272833,
+	focus-box-shadow: 0 0 0 2px rgba(darken(#FFF, 4%), 0.5),
+	focus-color: #272833,
+	disabled-bg: transparent,
+	disabled-border-color: #FFF,
+	disabled-color: #FFF,
+	active-bg: darken(#FFF, 8%),
+	active-color: #272833,
+	active-box-shadow: none
+), $btn-outline-light);
+
 // Form
 
 $input-group-secondary-addon-border-color: lighten(saturate(adjust-hue($secondary, 3), 6.13), 46.08) !default;

@@ -1032,6 +1032,10 @@ a[type="button"] {
 		font-weight: $font-weight-normal;
 		margin-bottom: 0;
 	}
+
+	.commerce-btn {
+		@extend %btn-outline-light;
+	}
 }
 
 .commerce-order-items-body {

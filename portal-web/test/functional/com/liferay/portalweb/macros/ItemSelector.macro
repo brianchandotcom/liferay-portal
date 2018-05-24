@@ -51,8 +51,6 @@
 
 		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
 
-		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="Searched for ${imageFileName} in Blog Images" />
-
 		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
@@ -77,8 +75,6 @@
 		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${imageFileName}" />
 
 		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
-
-		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="Searched for ${imageFileName} everywhere." />
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 

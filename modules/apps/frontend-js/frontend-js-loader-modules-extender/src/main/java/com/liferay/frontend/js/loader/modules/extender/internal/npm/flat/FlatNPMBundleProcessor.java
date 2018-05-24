@@ -191,7 +191,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 			char nextChar = moduleContent.charAt(index + 8);
 
-			if (Character.isWhitespace(nextChar) || nextChar == '(') {
+			if (Character.isWhitespace(nextChar) || (nextChar == '(')) {
 				moduleContent = moduleContent.substring(0, index);
 
 				break;

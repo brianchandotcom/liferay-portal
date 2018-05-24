@@ -80,4 +80,6 @@ public class CPActionKeys {
 	public static final String VIEW_COMMERCE_PRODUCT_RULES =
 		"VIEW_COMMERCE_PRODUCT_RULES";
 
+	public static final String VIEW_PRICE = "VIEW_PRICE";
+
 }

@@ -307,6 +307,18 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public Organization fetchOrganization(long companyId, String name);
 
 	/**
+	* Returns the organization with the same externalReferenceCode.
+	*
+	* @param companyId the primary key of the organization's company
+	* @param externalReferenceCode the organization's external reference code
+	* @return the organization with the name, or <code>null</code> if no
+	organization could be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Organization fetchOrganizationByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	/**
 	* Returns the organization with the matching UUID and company.
 	*
 	* @param uuid the organization's UUID
@@ -1253,4 +1265,35 @@ public interface OrganizationLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Organization updateOrganization(Organization organization);
+
+	/**
+	* Add or update an organization.
+	*
+	* @param userId the primary key of the user
+	* @param parentOrganizationId the primary key of organization's parent
+	organization
+	* @param name the organization's name
+	* @param type the organization's type
+	* @param regionId the primary key of the organization's region
+	* @param countryId the primary key of the organization's country
+	* @param statusId the organization's workflow status
+	* @param comments the comments about the organization
+	* @param site whether the organization is to be associated with a main
+	site
+	* @param logo whether to update the ogranization's logo
+	* @param logoBytes the new logo image data
+	* @param externalReferenceCode the organization's external reference
+	code
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set asset category IDs and asset tag
+	names for the organization, and merge expando bridge
+	attributes for the organization.
+	* @return the organization
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Organization upsertOrganization(long userId,
+		long parentOrganizationId, String name, String type, long regionId,
+		long countryId, long statusId, String comments, boolean site,
+		boolean logo, byte[] logoBytes, String externalReferenceCode,
+		ServiceContext serviceContext) throws PortalException;
 }

@@ -404,6 +404,21 @@ public class UserGroupLocalServiceUtil {
 	}
 
 	/**
+	* Returns the user group with the same externalReferenceCode.
+	*
+	* @param companyId the primary key of the user group's company
+	* @param externalReferenceCode the user group's external reference code
+	* @return the user group with the externalReferenceCode, or
+	<code>null</code> if no user could be found
+	*/
+	public static com.liferay.portal.kernel.model.UserGroup fetchUserGroupByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+		return getService()
+				   .fetchUserGroupByExternalReferenceCode(companyId,
+			externalReferenceCode);
+	}
+
+	/**
 	* Returns the user group with the matching UUID and company.
 	*
 	* @param uuid the user group's UUID
@@ -946,6 +961,28 @@ public class UserGroupLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(
 		com.liferay.portal.kernel.model.UserGroup userGroup) {
 		return getService().updateUserGroup(userGroup);
+	}
+
+	/**
+	* Add or update an user group.
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the user group's company
+	* @param name the user group's name
+	* @param description the user group's description
+	* @param externalReferenceCode the user group's external reference code
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set expando bridge attributes for the
+	user group.
+	* @return the user group
+	*/
+	public static com.liferay.portal.kernel.model.UserGroup upsertUserGroup(
+		long userId, long companyId, String name, String description,
+		String externalReferenceCode, ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .upsertUserGroup(userId, companyId, name, description,
+			externalReferenceCode, serviceContext);
 	}
 
 	public static UserGroupLocalService getService() {

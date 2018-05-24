@@ -76,6 +76,7 @@ public class AssetCategoryWrapper implements AssetCategory,
 		attributes.put("description", getDescription());
 		attributes.put("vocabularyId", getVocabularyId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 
 		return attributes;
 	}
@@ -176,6 +177,13 @@ public class AssetCategoryWrapper implements AssetCategory,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 	}
 
@@ -314,6 +322,16 @@ public class AssetCategoryWrapper implements AssetCategory,
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _assetCategory.getExpandoBridge();
+	}
+
+	/**
+	* Returns the external reference code of this asset category.
+	*
+	* @return the external reference code of this asset category
+	*/
+	@Override
+	public String getExternalReferenceCode() {
+		return _assetCategory.getExternalReferenceCode();
 	}
 
 	/**
@@ -698,6 +716,16 @@ public class AssetCategoryWrapper implements AssetCategory,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_assetCategory.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the external reference code of this asset category.
+	*
+	* @param externalReferenceCode the external reference code of this asset category
+	*/
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_assetCategory.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

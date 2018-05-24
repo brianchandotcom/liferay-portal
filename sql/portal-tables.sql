@@ -96,7 +96,8 @@ create table AssetCategory (
 	title STRING null,
 	description STRING null,
 	vocabularyId LONG,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	externalReferenceCode VARCHAR(75) null
 );
 
 create table AssetEntries_AssetCategories (
@@ -182,7 +183,8 @@ create table AssetVocabulary (
 	title STRING null,
 	description STRING null,
 	settings_ STRING null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	externalReferenceCode VARCHAR(75) null
 );
 
 create table BrowserTracker (
@@ -746,7 +748,8 @@ create table Organization_ (
 	countryId LONG,
 	statusId LONG,
 	comments STRING null,
-	logoId LONG
+	logoId LONG,
+	externalReferenceCode VARCHAR(75) null
 );
 
 create table OrgGroupRole (
@@ -1301,7 +1304,8 @@ create table User_ (
 	lockoutDate DATE null,
 	agreedToTermsOfUse BOOLEAN,
 	emailAddressVerified BOOLEAN,
-	status INTEGER
+	status INTEGER,
+	externalReferenceCode VARCHAR(75) null
 );
 
 create table UserGroup (
@@ -1316,7 +1320,8 @@ create table UserGroup (
 	parentUserGroupId LONG,
 	name VARCHAR(75) null,
 	description STRING null,
-	addedByLDAPImport BOOLEAN
+	addedByLDAPImport BOOLEAN,
+	externalReferenceCode VARCHAR(75) null
 );
 
 create table UserGroupGroupRole (

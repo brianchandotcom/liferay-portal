@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -506,6 +508,22 @@ public class OrganizationLocalServiceImpl
 	@Override
 	public Organization fetchOrganization(long companyId, String name) {
 		return organizationPersistence.fetchByC_N(companyId, name);
+	}
+
+	/**
+	 * Returns the organization with the same externalReferenceCode.
+	 *
+	 * @param  companyId the primary key of the organization's company
+	 * @param  externalReferenceCode the organization's external reference code
+	 * @return the organization with the name, or <code>null</code> if no
+	 *         organization could be found
+	 */
+	@Override
+	public Organization fetchOrganizationByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return organizationPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
 	}
 
 	@Override
@@ -2050,6 +2068,70 @@ public class OrganizationLocalServiceImpl
 		return updateOrganization(
 			companyId, organizationId, parentOrganizationId, name, type,
 			regionId, countryId, statusId, comments, site, serviceContext);
+	}
+
+	/**
+	 * Add or update an organization.
+	 *
+	 * @param      userId the primary key of the user
+	 * @param      parentOrganizationId the primary key of organization's parent
+	 *             organization
+	 * @param      name the organization's name
+	 * @param      type the organization's type
+	 * @param      regionId the primary key of the organization's region
+	 * @param      countryId the primary key of the organization's country
+	 * @param      statusId the organization's workflow status
+	 * @param      comments the comments about the organization
+	 * @param      site whether the organization is to be associated with a main
+	 *             site
+	 * @param      logo whether to update the ogranization's logo
+	 * @param      logoBytes the new logo image data
+	 * @param      externalReferenceCode the organization's external reference
+	 *             code
+	 * @param      serviceContext the service context to be applied (optionally
+	 *             <code>null</code>). Can set asset category IDs and asset tag
+	 *             names for the organization, and merge expando bridge
+	 *             attributes for the organization.
+	 *
+	 * @return     the organization
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public Organization upsertOrganization(
+			long userId, long parentOrganizationId, String name, String type,
+			long regionId, long countryId, long statusId, String comments,
+			boolean site, boolean logo, byte[] logoBytes,
+			String externalReferenceCode, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		Organization organization = organizationPersistence.fetchByC_ERC(
+			user.getCompanyId(), externalReferenceCode);
+
+		if (Validator.isNull(organization)) {
+			organization = addOrganization(
+				userId, parentOrganizationId, name, type, regionId, countryId,
+				statusId, comments, site, serviceContext);
+
+			organization.setExternalReferenceCode(externalReferenceCode);
+
+			PortalUtil.updateImageId(
+				organization, logo, logoBytes, "logoId",
+				_userFileUploadsSettings.getImageMaxSize(),
+				_userFileUploadsSettings.getImageMaxHeight(),
+				_userFileUploadsSettings.getImageMaxWidth());
+
+			organization = organizationPersistence.update(organization);
+		}
+		else {
+			updateOrganization(
+				user.getCompanyId(), organization.getOrganizationId(),
+				parentOrganizationId, name, type, regionId, countryId, statusId,
+				comments, logo, logoBytes, site, serviceContext);
+		}
+
+		return organization;
 	}
 
 	protected void addSuborganizations(

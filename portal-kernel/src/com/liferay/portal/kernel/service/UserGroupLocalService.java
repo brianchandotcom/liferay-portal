@@ -315,6 +315,18 @@ public interface UserGroupLocalService extends BaseLocalService,
 	public UserGroup fetchUserGroup(long companyId, String name);
 
 	/**
+	* Returns the user group with the same externalReferenceCode.
+	*
+	* @param companyId the primary key of the user group's company
+	* @param externalReferenceCode the user group's external reference code
+	* @return the user group with the externalReferenceCode, or
+	<code>null</code> if no user could be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserGroup fetchUserGroupByExternalReferenceCode(long companyId,
+		String externalReferenceCode);
+
+	/**
 	* Returns the user group with the matching UUID and company.
 	*
 	* @param uuid the user group's UUID
@@ -755,4 +767,22 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public UserGroup updateUserGroup(UserGroup userGroup);
+
+	/**
+	* Add or update an user group.
+	*
+	* @param userId the primary key of the user
+	* @param companyId the primary key of the user group's company
+	* @param name the user group's name
+	* @param description the user group's description
+	* @param externalReferenceCode the user group's external reference code
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>). Can set expando bridge attributes for the
+	user group.
+	* @return the user group
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public UserGroup upsertUserGroup(long userId, long companyId, String name,
+		String description, String externalReferenceCode,
+		ServiceContext serviceContext) throws PortalException;
 }

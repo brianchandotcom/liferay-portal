@@ -1532,6 +1532,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public boolean isTypeNode() {
+		return _layout.isTypeNode();
+	}
+
+	@Override
 	public boolean isTypePanel() {
 		return _layout.isTypePanel();
 	}

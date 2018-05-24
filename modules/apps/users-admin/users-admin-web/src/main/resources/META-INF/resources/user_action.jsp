@@ -72,8 +72,6 @@ long userId = user2.getUserId();
 
 		<%
 		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, user2.getGroup(), Layout.class.getName(), PortletProvider.Action.EDIT);
-
-		managePagesURL.setParameter("redirect", redirect);
 		%>
 
 		<liferay-ui:icon

@@ -113,14 +113,35 @@ if (Validator.isNull(redirect)) {
 				uri: uri
 			},
 			function(event) {
-				var form = AUI.$(document.<portlet:namespace />selectContainerForm);
+				var selectContainerForm = document.getElementById('<portlet:namespace />selectContainerForm');
 
-				form.fm('className').val(event.classname);
-				form.fm('classPK').val(event.classpk);
-				form.fm('containerModelId').val(event.containermodelid);
-				form.fm('redirect').val(event.redirect);
+				if (selectContainerForm) {
+					var className = form.querySelector('#<portlet:namespace />className');
 
-				submitForm(form);
+					if (className) {
+						className.setAttribute('value', event.classname);
+					}
+
+					var classPK = form.querySelector('#<portlet:namespace />classPK');
+
+					if (classPK) {
+						classPK.setAttribute('value', event.classpk);
+					}
+
+					var containerModelId = form.querySelector('#<portlet:namespace />containerModelId');
+
+					if (containerModelId) {
+						containerModelId.setAttribute('value', event.containermodelid);
+					}
+
+					var redirect = form.querySelector('#<portlet:namespace />redirect');
+
+					if (redirect) {
+						redirect.setAttribute('value', event.redirect);
+					}
+
+					submitForm(selectContainerForm);
+				}
 			}
 		);
 	}

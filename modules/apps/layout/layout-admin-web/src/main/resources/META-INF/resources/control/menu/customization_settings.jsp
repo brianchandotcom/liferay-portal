@@ -71,7 +71,7 @@ data.put("qa-id", "customizations");
 </li>
 <li class="control-menu-nav-item" id="<%= portletNamespace %>customizationBar">
 	<div class="control-menu-level-2">
-		<div class="container-fluid-1280">
+		<div class="container-fluid container-fluid-max-xl">
 			<div class="control-menu-level-2-heading visible-xs">
 				<liferay-ui:message key="customization-options" />
 
@@ -82,26 +82,31 @@ data.put("qa-id", "customizations");
 
 			<ul class="control-menu-level-2-nav control-menu-nav">
 				<li class="control-menu-nav-item">
-					<p>
+					<span class="text-info">
+						<liferay-ui:icon
+							data="<%= data %>"
+							icon="info-circle"
+							label="<%= false %>"
+							markupView="lexicon"
+						/>
+
 						<c:choose>
 							<c:when test="<%= layoutTypePortlet.isCustomizedView() %>">
-								<liferay-ui:message key="you-can-customize-this-page" />
+								<strong>
+									<liferay-ui:message key="you-can-customize-this-page" />
+								</strong>
 
-								<span class="text-muted">
-									<liferay-ui:message key="customizable-user-help" />
-								</span>
+								<liferay-ui:message key="customizable-user-help" />
 							</c:when>
 							<c:otherwise>
 								<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
 
 								<c:if test="<%= hasUpdateLayoutPermission %>">
-									<span class="text-muted">
-										<liferay-ui:message key="customizable-admin-help" />
-									</span>
+									<liferay-ui:message key="customizable-admin-help" />
 								</c:if>
 							</c:otherwise>
 						</c:choose>
-					</p>
+					</span>
 				</li>
 
 				<c:if test="<%= hasUpdateLayoutPermission %>">

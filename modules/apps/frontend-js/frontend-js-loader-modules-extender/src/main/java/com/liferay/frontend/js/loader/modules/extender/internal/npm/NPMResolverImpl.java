@@ -20,7 +20,14 @@ import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.net.URL;
+
+import org.osgi.framework.Bundle;
 
 /**
  * @author Iván Zaera Avellón
@@ -28,10 +35,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class NPMResolverImpl implements NPMResolver {
 
 	public NPMResolverImpl(
-		String jsPackageIdentifier, NPMRegistry npmRegistry) {
+		Bundle bundle, JSONFactory jsonFactory, NPMRegistry npmRegistry) {
 
-		_jsPackageIdentifier = jsPackageIdentifier;
+		_jsonFactory = jsonFactory;
 		_npmRegistry = npmRegistry;
+
+		_jsPackageIdentifier = _resolveJSPackageIdentifier(bundle);
 	}
 
 	@Override
@@ -81,6 +90,33 @@ public class NPMResolverImpl implements NPMResolver {
 		return sb.toString();
 	}
 
+	private String _resolveJSPackageIdentifier(Bundle bundle) {
+		try {
+			URL url = bundle.getResource("META-INF/resources/package.json");
+
+			String content = StringUtil.read(url.openStream());
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(content);
+
+			String name = jsonObject.getString("name");
+			String version = jsonObject.getString("version");
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(bundle.getBundleId());
+			sb.append(StringPool.SLASH);
+			sb.append(name);
+			sb.append(StringPool.AT);
+			sb.append(version);
+
+			return sb.toString();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private final JSONFactory _jsonFactory;
 	private final String _jsPackageIdentifier;
 	private final NPMRegistry _npmRegistry;
 

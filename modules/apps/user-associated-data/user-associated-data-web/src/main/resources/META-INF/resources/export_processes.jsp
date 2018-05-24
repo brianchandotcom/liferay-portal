@@ -37,7 +37,7 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 				</h5>
 
 				<clay:label
-					label="<%= LanguageUtil.get(request, backgroundTask.getStatusLabel()) %>"
+					label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, backgroundTask.getStatusLabel()), locale) %>"
 					style="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"
 				/>
 			</div>

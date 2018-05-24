@@ -36,7 +36,9 @@ public class BNDBundleCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!absolutePath.endsWith("/app.bnd")) {
+		if (!absolutePath.endsWith("/app.bnd") ||
+			!content.matches("(?s).*Liferay-Releng-Bundle:\\s*true.*")) {
+
 			return content;
 		}
 
@@ -44,10 +46,6 @@ public class BNDBundleCheck extends BaseFileCheck {
 			if (absolutePath.endsWith(allowedFileName)) {
 				return content;
 			}
-		}
-
-		if (!content.matches("(?s).*Liferay-Releng-Bundle:\\s*true.*")) {
-			return content;
 		}
 
 		if (!content.matches(

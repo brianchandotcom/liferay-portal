@@ -378,16 +378,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			resourcePath = resourcePath.substring(contextPath.length());
 		}
 
-		if (resourcePath.endsWith(_CSS_EXTENSION) &&
-			PortalUtil.isRightToLeft(request)) {
-
-			int pos = resourcePath.lastIndexOf(StringPool.PERIOD);
-
-			resourcePath =
-				resourcePath.substring(0, pos) + "_rtl" +
-					resourcePath.substring(pos);
-		}
-
 		URL resourceURL = ResourceUtil.getResourceURL(
 			resourcePath, request.getRequestURI(), _servletContext);
 

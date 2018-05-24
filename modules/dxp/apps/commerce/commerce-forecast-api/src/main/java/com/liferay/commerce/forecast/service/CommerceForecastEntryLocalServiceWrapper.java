@@ -49,10 +49,10 @@ public class CommerceForecastEntryLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.forecast.model.CommerceForecastEntry addCommerceForecastEntry(
 		long companyId, long userId, long time, int period, int target,
-		long customerId, String sku, java.math.BigDecimal assertivity)
+		long customerId, long cpInstanceId, java.math.BigDecimal assertivity)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceForecastEntryLocalService.addCommerceForecastEntry(companyId,
-			userId, time, period, target, customerId, sku, assertivity);
+			userId, time, period, target, customerId, cpInstanceId, assertivity);
 	}
 
 	/**
@@ -202,9 +202,10 @@ public class CommerceForecastEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.forecast.model.CommerceForecastEntry fetchCommerceForecastEntry(
-		long companyId, int period, int target, long customerId, String sku) {
+		long companyId, int period, int target, long customerId,
+		long cpInstanceId) {
 		return _commerceForecastEntryLocalService.fetchCommerceForecastEntry(companyId,
-			period, target, customerId, sku);
+			period, target, customerId, cpInstanceId);
 	}
 
 	@Override

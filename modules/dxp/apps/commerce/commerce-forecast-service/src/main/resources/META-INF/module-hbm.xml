@@ -17,7 +17,7 @@
 		<property name="period" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="target" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="customerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="assertivity" type="org.hibernate.type.BigDecimalType" />
 	</class>
 	<class name="com.liferay.commerce.forecast.model.impl.CommerceForecastValueImpl" table="CommerceForecastValue">

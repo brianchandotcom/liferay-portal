@@ -235,19 +235,18 @@ public interface CommerceForecastEntryModel extends AuditedModel,
 	public void setCustomerId(long customerId);
 
 	/**
-	 * Returns the sku of this commerce forecast entry.
+	 * Returns the cp instance ID of this commerce forecast entry.
 	 *
-	 * @return the sku of this commerce forecast entry
+	 * @return the cp instance ID of this commerce forecast entry
 	 */
-	@AutoEscape
-	public String getSku();
+	public long getCPInstanceId();
 
 	/**
-	 * Sets the sku of this commerce forecast entry.
+	 * Sets the cp instance ID of this commerce forecast entry.
 	 *
-	 * @param sku the sku of this commerce forecast entry
+	 * @param CPInstanceId the cp instance ID of this commerce forecast entry
 	 */
-	public void setSku(String sku);
+	public void setCPInstanceId(long CPInstanceId);
 
 	/**
 	 * Returns the assertivity of this commerce forecast entry.

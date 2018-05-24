@@ -9,7 +9,7 @@ create table CommerceForecastEntry (
 	period INTEGER,
 	target INTEGER,
 	customerId LONG,
-	sku VARCHAR(75) null,
+	CPInstanceId LONG,
 	assertivity DECIMAL(30, 16) null
 );
 

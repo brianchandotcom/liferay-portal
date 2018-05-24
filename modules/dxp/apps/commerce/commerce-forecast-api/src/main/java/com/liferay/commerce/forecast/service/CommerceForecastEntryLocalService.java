@@ -75,7 +75,7 @@ public interface CommerceForecastEntryLocalService extends BaseLocalService,
 
 	public CommerceForecastEntry addCommerceForecastEntry(long companyId,
 		long userId, long time, int period, int target, long customerId,
-		String sku, BigDecimal assertivity) throws PortalException;
+		long cpInstanceId, BigDecimal assertivity) throws PortalException;
 
 	/**
 	* Creates a new commerce forecast entry with the primary key. Does not add the commerce forecast entry to the database.
@@ -182,7 +182,7 @@ public interface CommerceForecastEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceForecastEntry fetchCommerceForecastEntry(long companyId,
-		int period, int target, long customerId, String sku);
+		int period, int target, long customerId, long cpInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

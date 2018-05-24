@@ -89,8 +89,8 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 		sb.append(target);
 		sb.append(", customerId=");
 		sb.append(customerId);
-		sb.append(", sku=");
-		sb.append(sku);
+		sb.append(", CPInstanceId=");
+		sb.append(CPInstanceId);
 		sb.append(", assertivity=");
 		sb.append(assertivity);
 		sb.append("}");
@@ -131,14 +131,7 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 		commerceForecastEntryImpl.setPeriod(period);
 		commerceForecastEntryImpl.setTarget(target);
 		commerceForecastEntryImpl.setCustomerId(customerId);
-
-		if (sku == null) {
-			commerceForecastEntryImpl.setSku("");
-		}
-		else {
-			commerceForecastEntryImpl.setSku(sku);
-		}
-
+		commerceForecastEntryImpl.setCPInstanceId(CPInstanceId);
 		commerceForecastEntryImpl.setAssertivity(assertivity);
 
 		commerceForecastEntryImpl.resetOriginalValues();
@@ -165,7 +158,8 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 		target = objectInput.readInt();
 
 		customerId = objectInput.readLong();
-		sku = objectInput.readUTF();
+
+		CPInstanceId = objectInput.readLong();
 		assertivity = (BigDecimal)objectInput.readObject();
 	}
 
@@ -196,13 +190,7 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 
 		objectOutput.writeLong(customerId);
 
-		if (sku == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(sku);
-		}
-
+		objectOutput.writeLong(CPInstanceId);
 		objectOutput.writeObject(assertivity);
 	}
 
@@ -216,6 +204,6 @@ public class CommerceForecastEntryCacheModel implements CacheModel<CommerceForec
 	public int period;
 	public int target;
 	public long customerId;
-	public String sku;
+	public long CPInstanceId;
 	public BigDecimal assertivity;
 }

@@ -278,89 +278,93 @@ public class CommerceForecastEntryUtil {
 	}
 
 	/**
-	* Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63; or throws a {@link NoSuchForecastEntryException} if it could not be found.
+	* Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63; or throws a {@link NoSuchForecastEntryException} if it could not be found.
 	*
 	* @param companyId the company ID
 	* @param period the period
 	* @param target the target
 	* @param customerId the customer ID
-	* @param sku the sku
+	* @param CPInstanceId the cp instance ID
 	* @return the matching commerce forecast entry
 	* @throws NoSuchForecastEntryException if a matching commerce forecast entry could not be found
 	*/
-	public static CommerceForecastEntry findByC_P_T_C_S(long companyId,
-		int period, int target, long customerId, String sku)
+	public static CommerceForecastEntry findByC_P_T_C_C(long companyId,
+		int period, int target, long customerId, long CPInstanceId)
 		throws com.liferay.commerce.forecast.exception.NoSuchForecastEntryException {
 		return getPersistence()
-				   .findByC_P_T_C_S(companyId, period, target, customerId, sku);
+				   .findByC_P_T_C_C(companyId, period, target, customerId,
+			CPInstanceId);
 	}
 
 	/**
-	* Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param companyId the company ID
 	* @param period the period
 	* @param target the target
 	* @param customerId the customer ID
-	* @param sku the sku
+	* @param CPInstanceId the cp instance ID
 	* @return the matching commerce forecast entry, or <code>null</code> if a matching commerce forecast entry could not be found
 	*/
-	public static CommerceForecastEntry fetchByC_P_T_C_S(long companyId,
-		int period, int target, long customerId, String sku) {
+	public static CommerceForecastEntry fetchByC_P_T_C_C(long companyId,
+		int period, int target, long customerId, long CPInstanceId) {
 		return getPersistence()
-				   .fetchByC_P_T_C_S(companyId, period, target, customerId, sku);
+				   .fetchByC_P_T_C_C(companyId, period, target, customerId,
+			CPInstanceId);
 	}
 
 	/**
-	* Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param companyId the company ID
 	* @param period the period
 	* @param target the target
 	* @param customerId the customer ID
-	* @param sku the sku
+	* @param CPInstanceId the cp instance ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching commerce forecast entry, or <code>null</code> if a matching commerce forecast entry could not be found
 	*/
-	public static CommerceForecastEntry fetchByC_P_T_C_S(long companyId,
-		int period, int target, long customerId, String sku,
+	public static CommerceForecastEntry fetchByC_P_T_C_C(long companyId,
+		int period, int target, long customerId, long CPInstanceId,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByC_P_T_C_S(companyId, period, target, customerId,
-			sku, retrieveFromCache);
+				   .fetchByC_P_T_C_C(companyId, period, target, customerId,
+			CPInstanceId, retrieveFromCache);
 	}
 
 	/**
-	* Removes the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63; from the database.
+	* Removes the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63; from the database.
 	*
 	* @param companyId the company ID
 	* @param period the period
 	* @param target the target
 	* @param customerId the customer ID
-	* @param sku the sku
+	* @param CPInstanceId the cp instance ID
 	* @return the commerce forecast entry that was removed
 	*/
-	public static CommerceForecastEntry removeByC_P_T_C_S(long companyId,
-		int period, int target, long customerId, String sku)
+	public static CommerceForecastEntry removeByC_P_T_C_C(long companyId,
+		int period, int target, long customerId, long CPInstanceId)
 		throws com.liferay.commerce.forecast.exception.NoSuchForecastEntryException {
 		return getPersistence()
-				   .removeByC_P_T_C_S(companyId, period, target, customerId, sku);
+				   .removeByC_P_T_C_C(companyId, period, target, customerId,
+			CPInstanceId);
 	}
 
 	/**
-	* Returns the number of commerce forecast entries where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63;.
+	* Returns the number of commerce forecast entries where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param period the period
 	* @param target the target
 	* @param customerId the customer ID
-	* @param sku the sku
+	* @param CPInstanceId the cp instance ID
 	* @return the number of matching commerce forecast entries
 	*/
-	public static int countByC_P_T_C_S(long companyId, int period, int target,
-		long customerId, String sku) {
+	public static int countByC_P_T_C_C(long companyId, int period, int target,
+		long customerId, long CPInstanceId) {
 		return getPersistence()
-				   .countByC_P_T_C_S(companyId, period, target, customerId, sku);
+				   .countByC_P_T_C_C(companyId, period, target, customerId,
+			CPInstanceId);
 	}
 
 	/**

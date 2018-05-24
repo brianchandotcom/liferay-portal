@@ -46,7 +46,7 @@ public class CommerceForecastEntrySoap implements Serializable {
 		soapModel.setPeriod(model.getPeriod());
 		soapModel.setTarget(model.getTarget());
 		soapModel.setCustomerId(model.getCustomerId());
-		soapModel.setSku(model.getSku());
+		soapModel.setCPInstanceId(model.getCPInstanceId());
 		soapModel.setAssertivity(model.getAssertivity());
 
 		return soapModel;
@@ -183,12 +183,12 @@ public class CommerceForecastEntrySoap implements Serializable {
 		_customerId = customerId;
 	}
 
-	public String getSku() {
-		return _sku;
+	public long getCPInstanceId() {
+		return _CPInstanceId;
 	}
 
-	public void setSku(String sku) {
-		_sku = sku;
+	public void setCPInstanceId(long CPInstanceId) {
+		_CPInstanceId = CPInstanceId;
 	}
 
 	public BigDecimal getAssertivity() {
@@ -209,6 +209,6 @@ public class CommerceForecastEntrySoap implements Serializable {
 	private int _period;
 	private int _target;
 	private long _customerId;
-	private String _sku;
+	private long _CPInstanceId;
 	private BigDecimal _assertivity;
 }

@@ -77,7 +77,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 			{ "period", Types.INTEGER },
 			{ "target", Types.INTEGER },
 			{ "customerId", Types.BIGINT },
-			{ "sku", Types.VARCHAR },
+			{ "CPInstanceId", Types.BIGINT },
 			{ "assertivity", Types.DECIMAL }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -93,11 +93,11 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		TABLE_COLUMNS_MAP.put("period", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("target", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("customerId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assertivity", Types.DECIMAL);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceForecastEntry (commerceForecastEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,time_ LONG,period INTEGER,target INTEGER,customerId LONG,sku VARCHAR(75) null,assertivity DECIMAL(30, 16) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceForecastEntry (commerceForecastEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,time_ LONG,period INTEGER,target INTEGER,customerId LONG,CPInstanceId LONG,assertivity DECIMAL(30, 16) null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceForecastEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceForecastEntry.time ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceForecastEntry.time_ ASC";
@@ -113,10 +113,10 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.forecast.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.forecast.model.CommerceForecastEntry"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long CUSTOMERID_COLUMN_BITMASK = 2L;
-	public static final long PERIOD_COLUMN_BITMASK = 4L;
-	public static final long SKU_COLUMN_BITMASK = 8L;
+	public static final long CPINSTANCEID_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 2L;
+	public static final long CUSTOMERID_COLUMN_BITMASK = 4L;
+	public static final long PERIOD_COLUMN_BITMASK = 8L;
 	public static final long TARGET_COLUMN_BITMASK = 16L;
 	public static final long TIME_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.commerce.forecast.service.util.ServiceProps.get(
@@ -169,7 +169,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		attributes.put("period", getPeriod());
 		attributes.put("target", getTarget());
 		attributes.put("customerId", getCustomerId());
-		attributes.put("sku", getSku());
+		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("assertivity", getAssertivity());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -241,10 +241,10 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 			setCustomerId(customerId);
 		}
 
-		String sku = (String)attributes.get("sku");
+		Long CPInstanceId = (Long)attributes.get("CPInstanceId");
 
-		if (sku != null) {
-			setSku(sku);
+		if (CPInstanceId != null) {
+			setCPInstanceId(CPInstanceId);
 		}
 
 		BigDecimal assertivity = (BigDecimal)attributes.get("assertivity");
@@ -432,28 +432,25 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 	}
 
 	@Override
-	public String getSku() {
-		if (_sku == null) {
-			return "";
-		}
-		else {
-			return _sku;
-		}
+	public long getCPInstanceId() {
+		return _CPInstanceId;
 	}
 
 	@Override
-	public void setSku(String sku) {
-		_columnBitmask |= SKU_COLUMN_BITMASK;
+	public void setCPInstanceId(long CPInstanceId) {
+		_columnBitmask |= CPINSTANCEID_COLUMN_BITMASK;
 
-		if (_originalSku == null) {
-			_originalSku = _sku;
+		if (!_setOriginalCPInstanceId) {
+			_setOriginalCPInstanceId = true;
+
+			_originalCPInstanceId = _CPInstanceId;
 		}
 
-		_sku = sku;
+		_CPInstanceId = CPInstanceId;
 	}
 
-	public String getOriginalSku() {
-		return GetterUtil.getString(_originalSku);
+	public long getOriginalCPInstanceId() {
+		return _originalCPInstanceId;
 	}
 
 	@Override
@@ -507,7 +504,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		commerceForecastEntryImpl.setPeriod(getPeriod());
 		commerceForecastEntryImpl.setTarget(getTarget());
 		commerceForecastEntryImpl.setCustomerId(getCustomerId());
-		commerceForecastEntryImpl.setSku(getSku());
+		commerceForecastEntryImpl.setCPInstanceId(getCPInstanceId());
 		commerceForecastEntryImpl.setAssertivity(getAssertivity());
 
 		commerceForecastEntryImpl.resetOriginalValues();
@@ -595,7 +592,9 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 
 		commerceForecastEntryModelImpl._setOriginalCustomerId = false;
 
-		commerceForecastEntryModelImpl._originalSku = commerceForecastEntryModelImpl._sku;
+		commerceForecastEntryModelImpl._originalCPInstanceId = commerceForecastEntryModelImpl._CPInstanceId;
+
+		commerceForecastEntryModelImpl._setOriginalCPInstanceId = false;
 
 		commerceForecastEntryModelImpl._columnBitmask = 0;
 	}
@@ -644,13 +643,7 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 
 		commerceForecastEntryCacheModel.customerId = getCustomerId();
 
-		commerceForecastEntryCacheModel.sku = getSku();
-
-		String sku = commerceForecastEntryCacheModel.sku;
-
-		if ((sku != null) && (sku.length() == 0)) {
-			commerceForecastEntryCacheModel.sku = null;
-		}
+		commerceForecastEntryCacheModel.CPInstanceId = getCPInstanceId();
 
 		commerceForecastEntryCacheModel.assertivity = getAssertivity();
 
@@ -681,8 +674,8 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		sb.append(getTarget());
 		sb.append(", customerId=");
 		sb.append(getCustomerId());
-		sb.append(", sku=");
-		sb.append(getSku());
+		sb.append(", CPInstanceId=");
+		sb.append(getCPInstanceId());
 		sb.append(", assertivity=");
 		sb.append(getAssertivity());
 		sb.append("}");
@@ -739,8 +732,8 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 		sb.append(getCustomerId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>sku</column-name><column-value><![CDATA[");
-		sb.append(getSku());
+			"<column><column-name>CPInstanceId</column-name><column-value><![CDATA[");
+		sb.append(getCPInstanceId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>assertivity</column-name><column-value><![CDATA[");
@@ -775,8 +768,9 @@ public class CommerceForecastEntryModelImpl extends BaseModelImpl<CommerceForeca
 	private long _customerId;
 	private long _originalCustomerId;
 	private boolean _setOriginalCustomerId;
-	private String _sku;
-	private String _originalSku;
+	private long _CPInstanceId;
+	private long _originalCPInstanceId;
+	private boolean _setOriginalCPInstanceId;
 	private BigDecimal _assertivity;
 	private long _columnBitmask;
 	private CommerceForecastEntry _escapedModel;

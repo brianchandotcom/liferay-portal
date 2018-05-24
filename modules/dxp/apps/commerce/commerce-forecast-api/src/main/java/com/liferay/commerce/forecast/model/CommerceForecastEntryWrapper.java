@@ -71,7 +71,7 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 		attributes.put("period", getPeriod());
 		attributes.put("target", getTarget());
 		attributes.put("customerId", getCustomerId());
-		attributes.put("sku", getSku());
+		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("assertivity", getAssertivity());
 
 		return attributes;
@@ -140,10 +140,10 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 			setCustomerId(customerId);
 		}
 
-		String sku = (String)attributes.get("sku");
+		Long CPInstanceId = (Long)attributes.get("CPInstanceId");
 
-		if (sku != null) {
-			setSku(sku);
+		if (CPInstanceId != null) {
+			setCPInstanceId(CPInstanceId);
 		}
 
 		BigDecimal assertivity = (BigDecimal)attributes.get("assertivity");
@@ -191,6 +191,16 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 	@Override
 	public long getCompanyId() {
 		return _commerceForecastEntry.getCompanyId();
+	}
+
+	/**
+	* Returns the cp instance ID of this commerce forecast entry.
+	*
+	* @return the cp instance ID of this commerce forecast entry
+	*/
+	@Override
+	public long getCPInstanceId() {
+		return _commerceForecastEntry.getCPInstanceId();
 	}
 
 	/**
@@ -251,16 +261,6 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _commerceForecastEntry.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the sku of this commerce forecast entry.
-	*
-	* @return the sku of this commerce forecast entry
-	*/
-	@Override
-	public String getSku() {
-		return _commerceForecastEntry.getSku();
 	}
 
 	/**
@@ -374,6 +374,16 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 	}
 
 	/**
+	* Sets the cp instance ID of this commerce forecast entry.
+	*
+	* @param CPInstanceId the cp instance ID of this commerce forecast entry
+	*/
+	@Override
+	public void setCPInstanceId(long CPInstanceId) {
+		_commerceForecastEntry.setCPInstanceId(CPInstanceId);
+	}
+
+	/**
 	* Sets the create date of this commerce forecast entry.
 	*
 	* @param createDate the create date of this commerce forecast entry
@@ -447,16 +457,6 @@ public class CommerceForecastEntryWrapper implements CommerceForecastEntry,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commerceForecastEntry.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	/**
-	* Sets the sku of this commerce forecast entry.
-	*
-	* @param sku the sku of this commerce forecast entry
-	*/
-	@Override
-	public void setSku(String sku) {
-		_commerceForecastEntry.setSku(sku);
 	}
 
 	/**

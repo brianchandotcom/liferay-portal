@@ -54,7 +54,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -607,46 +606,46 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "commerceForecastEntry.companyId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_P_T_C_S = new FinderPath(CommerceForecastEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_P_T_C_C = new FinderPath(CommerceForecastEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceForecastEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceForecastEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_P_T_C_S",
+			"fetchByC_P_T_C_C",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Long.class.getName(),
-				String.class.getName()
+				Long.class.getName()
 			},
 			CommerceForecastEntryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CommerceForecastEntryModelImpl.PERIOD_COLUMN_BITMASK |
 			CommerceForecastEntryModelImpl.TARGET_COLUMN_BITMASK |
 			CommerceForecastEntryModelImpl.CUSTOMERID_COLUMN_BITMASK |
-			CommerceForecastEntryModelImpl.SKU_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_P_T_C_S = new FinderPath(CommerceForecastEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceForecastEntryModelImpl.CPINSTANCEID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_P_T_C_C = new FinderPath(CommerceForecastEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceForecastEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_T_C_S",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_T_C_C",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Long.class.getName(),
-				String.class.getName()
+				Long.class.getName()
 			});
 
 	/**
-	 * Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63; or throws a {@link NoSuchForecastEntryException} if it could not be found.
+	 * Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63; or throws a {@link NoSuchForecastEntryException} if it could not be found.
 	 *
 	 * @param companyId the company ID
 	 * @param period the period
 	 * @param target the target
 	 * @param customerId the customer ID
-	 * @param sku the sku
+	 * @param CPInstanceId the cp instance ID
 	 * @return the matching commerce forecast entry
 	 * @throws NoSuchForecastEntryException if a matching commerce forecast entry could not be found
 	 */
 	@Override
-	public CommerceForecastEntry findByC_P_T_C_S(long companyId, int period,
-		int target, long customerId, String sku)
+	public CommerceForecastEntry findByC_P_T_C_C(long companyId, int period,
+		int target, long customerId, long CPInstanceId)
 		throws NoSuchForecastEntryException {
-		CommerceForecastEntry commerceForecastEntry = fetchByC_P_T_C_S(companyId,
-				period, target, customerId, sku);
+		CommerceForecastEntry commerceForecastEntry = fetchByC_P_T_C_C(companyId,
+				period, target, customerId, CPInstanceId);
 
 		if (commerceForecastEntry == null) {
 			StringBundler msg = new StringBundler(12);
@@ -665,8 +664,8 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 			msg.append(", customerId=");
 			msg.append(customerId);
 
-			msg.append(", sku=");
-			msg.append(sku);
+			msg.append(", CPInstanceId=");
+			msg.append(CPInstanceId);
 
 			msg.append("}");
 
@@ -681,43 +680,45 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 	}
 
 	/**
-	 * Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param period the period
 	 * @param target the target
 	 * @param customerId the customer ID
-	 * @param sku the sku
+	 * @param CPInstanceId the cp instance ID
 	 * @return the matching commerce forecast entry, or <code>null</code> if a matching commerce forecast entry could not be found
 	 */
 	@Override
-	public CommerceForecastEntry fetchByC_P_T_C_S(long companyId, int period,
-		int target, long customerId, String sku) {
-		return fetchByC_P_T_C_S(companyId, period, target, customerId, sku, true);
+	public CommerceForecastEntry fetchByC_P_T_C_C(long companyId, int period,
+		int target, long customerId, long CPInstanceId) {
+		return fetchByC_P_T_C_C(companyId, period, target, customerId,
+			CPInstanceId, true);
 	}
 
 	/**
-	 * Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
 	 * @param period the period
 	 * @param target the target
 	 * @param customerId the customer ID
-	 * @param sku the sku
+	 * @param CPInstanceId the cp instance ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the matching commerce forecast entry, or <code>null</code> if a matching commerce forecast entry could not be found
 	 */
 	@Override
-	public CommerceForecastEntry fetchByC_P_T_C_S(long companyId, int period,
-		int target, long customerId, String sku, boolean retrieveFromCache) {
+	public CommerceForecastEntry fetchByC_P_T_C_C(long companyId, int period,
+		int target, long customerId, long CPInstanceId,
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				companyId, period, target, customerId, sku
+				companyId, period, target, customerId, CPInstanceId
 			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_P_T_C_S,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_P_T_C_C,
 					finderArgs, this);
 		}
 
@@ -728,7 +729,7 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 					(period != commerceForecastEntry.getPeriod()) ||
 					(target != commerceForecastEntry.getTarget()) ||
 					(customerId != commerceForecastEntry.getCustomerId()) ||
-					!Objects.equals(sku, commerceForecastEntry.getSku())) {
+					(CPInstanceId != commerceForecastEntry.getCPInstanceId())) {
 				result = null;
 			}
 		}
@@ -738,27 +739,15 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 
 			query.append(_SQL_SELECT_COMMERCEFORECASTENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_C_P_T_C_S_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_P_T_C_C_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_P_T_C_S_PERIOD_2);
+			query.append(_FINDER_COLUMN_C_P_T_C_C_PERIOD_2);
 
-			query.append(_FINDER_COLUMN_C_P_T_C_S_TARGET_2);
+			query.append(_FINDER_COLUMN_C_P_T_C_C_TARGET_2);
 
-			query.append(_FINDER_COLUMN_C_P_T_C_S_CUSTOMERID_2);
+			query.append(_FINDER_COLUMN_C_P_T_C_C_CUSTOMERID_2);
 
-			boolean bindSku = false;
-
-			if (sku == null) {
-				query.append(_FINDER_COLUMN_C_P_T_C_S_SKU_1);
-			}
-			else if (sku.equals("")) {
-				query.append(_FINDER_COLUMN_C_P_T_C_S_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				query.append(_FINDER_COLUMN_C_P_T_C_S_SKU_2);
-			}
+			query.append(_FINDER_COLUMN_C_P_T_C_C_CPINSTANCEID_2);
 
 			String sql = query.toString();
 
@@ -779,14 +768,12 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 
 				qPos.add(customerId);
 
-				if (bindSku) {
-					qPos.add(sku);
-				}
+				qPos.add(CPInstanceId);
 
 				List<CommerceForecastEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_C_P_T_C_S,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_P_T_C_C,
 						finderArgs, list);
 				}
 				else {
@@ -798,7 +785,7 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_P_T_C_S,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_P_T_C_C,
 					finderArgs);
 
 				throw processException(e);
@@ -817,42 +804,42 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 	}
 
 	/**
-	 * Removes the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63; from the database.
+	 * Removes the commerce forecast entry where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param period the period
 	 * @param target the target
 	 * @param customerId the customer ID
-	 * @param sku the sku
+	 * @param CPInstanceId the cp instance ID
 	 * @return the commerce forecast entry that was removed
 	 */
 	@Override
-	public CommerceForecastEntry removeByC_P_T_C_S(long companyId, int period,
-		int target, long customerId, String sku)
+	public CommerceForecastEntry removeByC_P_T_C_C(long companyId, int period,
+		int target, long customerId, long CPInstanceId)
 		throws NoSuchForecastEntryException {
-		CommerceForecastEntry commerceForecastEntry = findByC_P_T_C_S(companyId,
-				period, target, customerId, sku);
+		CommerceForecastEntry commerceForecastEntry = findByC_P_T_C_C(companyId,
+				period, target, customerId, CPInstanceId);
 
 		return remove(commerceForecastEntry);
 	}
 
 	/**
-	 * Returns the number of commerce forecast entries where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and sku = &#63;.
+	 * Returns the number of commerce forecast entries where companyId = &#63; and period = &#63; and target = &#63; and customerId = &#63; and CPInstanceId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param period the period
 	 * @param target the target
 	 * @param customerId the customer ID
-	 * @param sku the sku
+	 * @param CPInstanceId the cp instance ID
 	 * @return the number of matching commerce forecast entries
 	 */
 	@Override
-	public int countByC_P_T_C_S(long companyId, int period, int target,
-		long customerId, String sku) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_P_T_C_S;
+	public int countByC_P_T_C_C(long companyId, int period, int target,
+		long customerId, long CPInstanceId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_P_T_C_C;
 
 		Object[] finderArgs = new Object[] {
-				companyId, period, target, customerId, sku
+				companyId, period, target, customerId, CPInstanceId
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -862,27 +849,15 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 
 			query.append(_SQL_COUNT_COMMERCEFORECASTENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_C_P_T_C_S_COMPANYID_2);
+			query.append(_FINDER_COLUMN_C_P_T_C_C_COMPANYID_2);
 
-			query.append(_FINDER_COLUMN_C_P_T_C_S_PERIOD_2);
+			query.append(_FINDER_COLUMN_C_P_T_C_C_PERIOD_2);
 
-			query.append(_FINDER_COLUMN_C_P_T_C_S_TARGET_2);
+			query.append(_FINDER_COLUMN_C_P_T_C_C_TARGET_2);
 
-			query.append(_FINDER_COLUMN_C_P_T_C_S_CUSTOMERID_2);
+			query.append(_FINDER_COLUMN_C_P_T_C_C_CUSTOMERID_2);
 
-			boolean bindSku = false;
-
-			if (sku == null) {
-				query.append(_FINDER_COLUMN_C_P_T_C_S_SKU_1);
-			}
-			else if (sku.equals("")) {
-				query.append(_FINDER_COLUMN_C_P_T_C_S_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				query.append(_FINDER_COLUMN_C_P_T_C_S_SKU_2);
-			}
+			query.append(_FINDER_COLUMN_C_P_T_C_C_CPINSTANCEID_2);
 
 			String sql = query.toString();
 
@@ -903,9 +878,7 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 
 				qPos.add(customerId);
 
-				if (bindSku) {
-					qPos.add(sku);
-				}
+				qPos.add(CPInstanceId);
 
 				count = (Long)q.uniqueResult();
 
@@ -924,13 +897,11 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_P_T_C_S_COMPANYID_2 = "commerceForecastEntry.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_P_T_C_S_PERIOD_2 = "commerceForecastEntry.period = ? AND ";
-	private static final String _FINDER_COLUMN_C_P_T_C_S_TARGET_2 = "commerceForecastEntry.target = ? AND ";
-	private static final String _FINDER_COLUMN_C_P_T_C_S_CUSTOMERID_2 = "commerceForecastEntry.customerId = ? AND ";
-	private static final String _FINDER_COLUMN_C_P_T_C_S_SKU_1 = "commerceForecastEntry.sku IS NULL";
-	private static final String _FINDER_COLUMN_C_P_T_C_S_SKU_2 = "commerceForecastEntry.sku = ?";
-	private static final String _FINDER_COLUMN_C_P_T_C_S_SKU_3 = "(commerceForecastEntry.sku IS NULL OR commerceForecastEntry.sku = '')";
+	private static final String _FINDER_COLUMN_C_P_T_C_C_COMPANYID_2 = "commerceForecastEntry.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_P_T_C_C_PERIOD_2 = "commerceForecastEntry.period = ? AND ";
+	private static final String _FINDER_COLUMN_C_P_T_C_C_TARGET_2 = "commerceForecastEntry.target = ? AND ";
+	private static final String _FINDER_COLUMN_C_P_T_C_C_CUSTOMERID_2 = "commerceForecastEntry.customerId = ? AND ";
+	private static final String _FINDER_COLUMN_C_P_T_C_C_CPINSTANCEID_2 = "commerceForecastEntry.CPInstanceId = ?";
 
 	public CommerceForecastEntryPersistenceImpl() {
 		setModelClass(CommerceForecastEntry.class);
@@ -965,13 +936,13 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 			CommerceForecastEntryImpl.class,
 			commerceForecastEntry.getPrimaryKey(), commerceForecastEntry);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_P_T_C_S,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_P_T_C_C,
 			new Object[] {
 				commerceForecastEntry.getCompanyId(),
 				commerceForecastEntry.getPeriod(),
 				commerceForecastEntry.getTarget(),
 				commerceForecastEntry.getCustomerId(),
-				commerceForecastEntry.getSku()
+				commerceForecastEntry.getCPInstanceId()
 			}, commerceForecastEntry);
 
 		commerceForecastEntry.resetOriginalValues();
@@ -1055,12 +1026,12 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 				commerceForecastEntryModelImpl.getPeriod(),
 				commerceForecastEntryModelImpl.getTarget(),
 				commerceForecastEntryModelImpl.getCustomerId(),
-				commerceForecastEntryModelImpl.getSku()
+				commerceForecastEntryModelImpl.getCPInstanceId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_C_P_T_C_S, args,
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_P_T_C_C, args,
 			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_C_P_T_C_S, args,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_P_T_C_C, args,
 			commerceForecastEntryModelImpl, false);
 	}
 
@@ -1073,25 +1044,25 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 					commerceForecastEntryModelImpl.getPeriod(),
 					commerceForecastEntryModelImpl.getTarget(),
 					commerceForecastEntryModelImpl.getCustomerId(),
-					commerceForecastEntryModelImpl.getSku()
+					commerceForecastEntryModelImpl.getCPInstanceId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_P_T_C_S, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_P_T_C_S, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_P_T_C_C, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_P_T_C_C, args);
 		}
 
 		if ((commerceForecastEntryModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_P_T_C_S.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_C_P_T_C_C.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					commerceForecastEntryModelImpl.getOriginalCompanyId(),
 					commerceForecastEntryModelImpl.getOriginalPeriod(),
 					commerceForecastEntryModelImpl.getOriginalTarget(),
 					commerceForecastEntryModelImpl.getOriginalCustomerId(),
-					commerceForecastEntryModelImpl.getOriginalSku()
+					commerceForecastEntryModelImpl.getOriginalCPInstanceId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_P_T_C_S, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_P_T_C_S, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_P_T_C_C, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_P_T_C_C, args);
 		}
 	}
 

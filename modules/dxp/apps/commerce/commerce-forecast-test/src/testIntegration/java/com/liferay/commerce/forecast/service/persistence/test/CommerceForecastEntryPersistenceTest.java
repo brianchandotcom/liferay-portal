@@ -58,7 +58,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -144,7 +143,7 @@ public class CommerceForecastEntryPersistenceTest {
 
 		newCommerceForecastEntry.setCustomerId(RandomTestUtil.nextLong());
 
-		newCommerceForecastEntry.setSku(RandomTestUtil.randomString());
+		newCommerceForecastEntry.setCPInstanceId(RandomTestUtil.nextLong());
 
 		newCommerceForecastEntry.setAssertivity(new BigDecimal(
 				RandomTestUtil.nextDouble()));
@@ -176,8 +175,8 @@ public class CommerceForecastEntryPersistenceTest {
 			newCommerceForecastEntry.getTarget());
 		Assert.assertEquals(existingCommerceForecastEntry.getCustomerId(),
 			newCommerceForecastEntry.getCustomerId());
-		Assert.assertEquals(existingCommerceForecastEntry.getSku(),
-			newCommerceForecastEntry.getSku());
+		Assert.assertEquals(existingCommerceForecastEntry.getCPInstanceId(),
+			newCommerceForecastEntry.getCPInstanceId());
 		Assert.assertEquals(existingCommerceForecastEntry.getAssertivity(),
 			newCommerceForecastEntry.getAssertivity());
 	}
@@ -190,14 +189,12 @@ public class CommerceForecastEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_P_T_C_S() throws Exception {
-		_persistence.countByC_P_T_C_S(RandomTestUtil.nextLong(),
+	public void testCountByC_P_T_C_C() throws Exception {
+		_persistence.countByC_P_T_C_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt(), RandomTestUtil.nextInt(),
-			RandomTestUtil.nextLong(), "");
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_P_T_C_S(0L, 0, 0, 0L, "null");
-
-		_persistence.countByC_P_T_C_S(0L, 0, 0, 0L, (String)null);
+		_persistence.countByC_P_T_C_C(0L, 0, 0, 0L, 0L);
 	}
 
 	@Test
@@ -227,8 +224,8 @@ public class CommerceForecastEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceForecastEntry",
 			"commerceForecastEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true, "time",
-			true, "period", true, "target", true, "customerId", true, "sku",
-			true, "assertivity", true);
+			true, "period", true, "target", true, "customerId", true,
+			"CPInstanceId", true, "assertivity", true);
 	}
 
 	@Test
@@ -457,10 +454,10 @@ public class CommerceForecastEntryPersistenceTest {
 				existingCommerceForecastEntry.getCustomerId()),
 			ReflectionTestUtil.<Long>invoke(existingCommerceForecastEntry,
 				"getOriginalCustomerId", new Class<?>[0]));
-		Assert.assertTrue(Objects.equals(
-				existingCommerceForecastEntry.getSku(),
-				ReflectionTestUtil.invoke(existingCommerceForecastEntry,
-					"getOriginalSku", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingCommerceForecastEntry.getCPInstanceId()),
+			ReflectionTestUtil.<Long>invoke(existingCommerceForecastEntry,
+				"getOriginalCPInstanceId", new Class<?>[0]));
 	}
 
 	protected CommerceForecastEntry addCommerceForecastEntry()
@@ -487,7 +484,7 @@ public class CommerceForecastEntryPersistenceTest {
 
 		commerceForecastEntry.setCustomerId(RandomTestUtil.nextLong());
 
-		commerceForecastEntry.setSku(RandomTestUtil.randomString());
+		commerceForecastEntry.setCPInstanceId(RandomTestUtil.nextLong());
 
 		commerceForecastEntry.setAssertivity(new BigDecimal(
 				RandomTestUtil.nextDouble()));

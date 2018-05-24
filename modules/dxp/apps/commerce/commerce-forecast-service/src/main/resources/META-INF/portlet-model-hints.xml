@@ -12,7 +12,7 @@
 		<field name="period" type="int" />
 		<field name="target" type="int" />
 		<field name="customerId" type="long" />
-		<field name="sku" type="String" />
+		<field name="CPInstanceId" type="long" />
 		<field name="assertivity" type="BigDecimal" />
 	</model>
 	<model name="com.liferay.commerce.forecast.model.CommerceForecastValue">

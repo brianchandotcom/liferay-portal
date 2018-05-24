@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
@@ -199,25 +199,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("${");
-		sb.append(value);
-		sb.append("???then(");
-		sb.append(value);
-		sb.append("?is_sequence?then(");
-		sb.append(value);
-		sb.append("?join(\", \"), ");
-		sb.append(value);
-		sb.append("?is_date_like?then(");
-		sb.append(value);
-		sb.append("?datetime?string, ");
-		sb.append(value);
-		sb.append("???then(");
-		sb.append(value);
-		sb.append("?string, \"\"))), \"\")}");
-
-		return sb.toString();
+		return StringUtil.replace(
+			_TMPL_TEXT_FIELD_TEMPLATE, "field_name", value);
 	}
 
 	private void _validateAttribute(Element element, String attribute)
@@ -319,6 +302,11 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private static final String[] _REQUIRED_ATTRIBUTES = {"id", "type"};
+
+	private static final String _TMPL_TEXT_FIELD_TEMPLATE = StringUtil.read(
+		EditableFragmentEntryProcessor.class,
+		"/META-INF/resources/fragment/entry/processor/editable/text_field_" +
+			"template.tmpl");
 
 	private final Map<String, EditableElementParser> _editableElementParsers =
 		new HashMap<>();

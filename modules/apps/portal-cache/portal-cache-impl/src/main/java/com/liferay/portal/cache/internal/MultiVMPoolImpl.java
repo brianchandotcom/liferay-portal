@@ -155,23 +155,6 @@ public class MultiVMPoolImpl implements MultiVMPool {
 		_portalCacheManager = portalCacheManager;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setSPIPortalCacheManagerConfigurator(
-		SPIPortalCacheManagerConfigurator spiPortalCacheManagerConfigurator) {
-
-		_spiPortalCacheManagerConfigurator = spiPortalCacheManagerConfigurator;
-	}
-
-	protected void unsetSPIPortalCacheManagerConfigurator(
-		SPIPortalCacheManagerConfigurator spiPortalCacheManagerConfigurator) {
-
-		_spiPortalCacheManagerConfigurator = spiPortalCacheManagerConfigurator;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MultiVMPoolImpl.class);
 
@@ -183,7 +166,13 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	private ServiceTracker
 		<SPIPortalCacheManagerConfigurator, SPIPortalCacheManagerConfigurator>
 			_serviceTracker;
-	private SPIPortalCacheManagerConfigurator
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile SPIPortalCacheManagerConfigurator
 		_spiPortalCacheManagerConfigurator;
 
 	private class SPIPortalCacheManagerConfiguratorServiceTrackerCustomizer

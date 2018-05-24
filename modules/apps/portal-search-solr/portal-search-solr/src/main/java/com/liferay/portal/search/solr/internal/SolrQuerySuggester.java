@@ -291,15 +291,6 @@ public class SolrQuerySuggester implements QuerySuggester {
 		_solrClientManager = solrClientManager;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setStringDistance(StringDistance stringDistance) {
-		_stringDistance = stringDistance;
-	}
-
 	protected List<String> suggestKeywords(
 			SearchContext searchContext, int max, String input)
 		throws SearchException {
@@ -408,10 +399,6 @@ public class SolrQuerySuggester implements QuerySuggester {
 		}
 	}
 
-	protected void unsetStringDistance(StringDistance stringDistance) {
-		_stringDistance = new LevensteinDistance();
-	}
-
 	protected Localization localization;
 
 	private static final long _GLOBAL_GROUP_ID = 0;
@@ -426,7 +413,13 @@ public class SolrQuerySuggester implements QuerySuggester {
 	private double _distanceThreshold;
 	private NGramQueryBuilder _nGramQueryBuilder;
 	private SolrClientManager _solrClientManager;
-	private StringDistance _stringDistance = new LevensteinDistance();
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile StringDistance _stringDistance = new LevensteinDistance();
 
 	private static class Suggestion {
 

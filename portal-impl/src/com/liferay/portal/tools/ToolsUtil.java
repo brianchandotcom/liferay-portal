@@ -371,11 +371,31 @@ public class ToolsUtil {
 		throws IOException {
 
 		writeFile(
-			file, content, author, jalopySettings, modifiedFileNames, null);
+			file, content, null, author, jalopySettings, modifiedFileNames,
+			null);
 	}
 
 	public static void writeFile(
 			File file, String content, String author,
+			Map<String, Object> jalopySettings, Set<String> modifiedFileNames,
+			String packagePath)
+		throws IOException {
+
+		writeFile(
+			file, content, null, author, jalopySettings, modifiedFileNames,
+			packagePath);
+	}
+
+	public static void writeFile(
+			File file, String content, String author,
+			Set<String> modifiedFileNames)
+		throws IOException {
+
+		writeFile(file, content, author, null, modifiedFileNames);
+	}
+
+	public static void writeFile(
+			File file, String content, String header, String author,
 			Map<String, Object> jalopySettings, Set<String> modifiedFileNames,
 			String packagePath)
 		throws IOException {
@@ -458,6 +478,10 @@ public class ToolsUtil {
 
 		Convention convention = Convention.getInstance();
 
+		if (Validator.isNotNull(header)) {
+			convention.put(ConventionKeys.HEADER_TEXT, header);
+		}
+
 		String classMask = "/**\n * @author $author$\n*/";
 
 		convention.put(
@@ -500,14 +524,6 @@ public class ToolsUtil {
 		if (failOnFormatError && !formatSuccess) {
 			throw new IOException("Unable to beautify " + file);
 		}
-	}
-
-	public static void writeFile(
-			File file, String content, String author,
-			Set<String> modifiedFileNames)
-		throws IOException {
-
-		writeFile(file, content, author, null, modifiedFileNames);
 	}
 
 	public static void writeFileRaw(

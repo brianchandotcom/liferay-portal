@@ -58,6 +58,8 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 
 	public static final String FIELD_OPTION_VALUE_NAME = "optionValueName";
 
+	public static final String FIELD_DDM_FORM_FIELD_TYPE_NAME = "DDMFormFieldTypeName";
+
 	public CPOptionIndexer() {
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
@@ -155,6 +157,8 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 				LocalizationUtil.getLocalizedName(
 					FIELD_OPTION_VALUE_NAME, languageId),
 				cpOptionValueNames);
+
+			document.addText(FIELD_DDM_FORM_FIELD_TYPE_NAME, cpOption.getDDMFormFieldTypeName());
 		}
 
 		if (_log.isDebugEnabled()) {

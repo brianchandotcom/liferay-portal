@@ -10,6 +10,6 @@ Liferay-Releng-Marketplace: true
 Liferay-Releng-Portal-Required: false
 Liferay-Releng-Public: ${liferay.releng.public}
 Liferay-Releng-Restart-Required: true
-Liferay-Releng-Suite: web-experience
+Liferay-Releng-Suite: collaboration
 Liferay-Releng-Support-Url: http://www.liferay.com
 Liferay-Releng-Supported: ${liferay.releng.supported}

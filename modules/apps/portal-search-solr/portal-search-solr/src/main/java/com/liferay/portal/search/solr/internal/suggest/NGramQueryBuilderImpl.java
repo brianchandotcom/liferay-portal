@@ -151,23 +151,6 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 		sb.append(value);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setNGramHolderBuilder(
-		NGramHolderBuilder nGramHolderBuilder) {
-
-		_nGramHolderBuilder = nGramHolderBuilder;
-	}
-
-	protected void unsetNGramHolderBuilder(
-		NGramHolderBuilder nGramHolderBuilder) {
-
-		_nGramHolderBuilder = null;
-	}
-
 	private String _defuseUpperCaseLuceneBooleanOperators(String value) {
 		return StringUtil.toLowerCase(value);
 	}
@@ -182,6 +165,11 @@ public class NGramQueryBuilderImpl implements NGramQueryBuilder {
 
 	private static final String _OR_QUERY_SEPARATOR = " OR ";
 
-	private NGramHolderBuilder _nGramHolderBuilder;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile NGramHolderBuilder _nGramHolderBuilder;
 
 }

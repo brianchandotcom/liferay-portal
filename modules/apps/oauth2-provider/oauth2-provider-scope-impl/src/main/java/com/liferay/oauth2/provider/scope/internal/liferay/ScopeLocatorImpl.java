@@ -287,28 +287,6 @@ public class ScopeLocatorImpl implements ScopeLocator {
 		return scopeMatcher.match(scope);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(osgi.jaxrs.name=Default)"
-	)
-	protected void setDefaultPrefixHandlerFactory(
-		PrefixHandlerFactory defaultPrefixHandlerFactory) {
-
-		_defaultPrefixHandlerFactory = defaultPrefixHandlerFactory;
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(osgi.jaxrs.name=Default)"
-	)
-	protected void setDefaultScopeMapper(ScopeMapper defaultScopeMapper) {
-		_defaultScopeMapper = defaultScopeMapper;
-	}
-
 	@Reference(name = "default", unbind = "-")
 	protected void setDefaultScopeMatcherFactory(
 		ScopeMatcherFactory defaultScopeMatcherFactory) {
@@ -358,19 +336,24 @@ public class ScopeLocatorImpl implements ScopeLocator {
 			scopeFinderByNameServiceTrackerMap;
 	}
 
-	protected void unsetDefaultPrefixHandlerFactory(
-		PrefixHandlerFactory defaultPrefixHandlerFactory) {
-
-		_defaultPrefixHandlerFactory = null;
-	}
-
-	protected void unsetDefaultScopeMapper(ScopeMapper defaultScopeMapper) {
-		_defaultScopeMapper = null;
-	}
-
 	private BundleContext _bundleContext;
-	private PrefixHandlerFactory _defaultPrefixHandlerFactory;
-	private ScopeMapper _defaultScopeMapper;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(osgi.jaxrs.name=Default)"
+	)
+	private volatile PrefixHandlerFactory _defaultPrefixHandlerFactory;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(osgi.jaxrs.name=Default)"
+	)
+	private volatile ScopeMapper _defaultScopeMapper;
+
 	private ScopeMatcherFactory _defaultScopeMatcherFactory;
 	private ScopedServiceTrackerMap<PrefixHandlerFactory>
 		_scopedPrefixHandlerFactories;

@@ -119,17 +119,6 @@ public class KBAttachmentItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void setDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
-	}
-
 	@Reference(unbind = "-")
 	public void setItemSelectorReturnTypeResolverHandler(
 		ItemSelectorReturnTypeResolverHandler
@@ -145,12 +134,6 @@ public class KBAttachmentItemSelectorView
 	)
 	public void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
-	}
-
-	public void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = null;
 	}
 
 	@Reference(
@@ -172,7 +155,13 @@ public class KBAttachmentItemSelectorView
 					new URLItemSelectorReturnType()
 				}));
 
-	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private ResourceBundleLoader _resourceBundleLoader;

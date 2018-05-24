@@ -186,25 +186,15 @@ public class SoapExtender {
 		activate(bundleContext, properties);
 	}
 
+	private org.apache.felix.dm.Component _component;
+	private DependencyManager _dependencyManager;
+
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected void setSoapDescriptorBuilder(
-		SoapDescriptorBuilder soapDescriptorBuilder) {
+	private volatile SoapDescriptorBuilder _soapDescriptorBuilder;
 
-		_soapDescriptorBuilder = soapDescriptorBuilder;
-	}
-
-	protected void unsetSoapDescriptorBuilder(
-		SoapDescriptorBuilder soapDescriptorBuilder) {
-
-		_soapDescriptorBuilder = null;
-	}
-
-	private org.apache.felix.dm.Component _component;
-	private DependencyManager _dependencyManager;
-	private SoapDescriptorBuilder _soapDescriptorBuilder;
 	private SoapExtenderConfiguration _soapExtenderConfiguration;
 
 }

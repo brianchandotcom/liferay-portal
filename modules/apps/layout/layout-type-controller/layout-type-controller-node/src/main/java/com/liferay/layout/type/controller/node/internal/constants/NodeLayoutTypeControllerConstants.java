@@ -16,7 +16,9 @@ package com.liferay.layout.type.controller.node.internal.constants;
 
 /**
  * @author Juergen Kappler
+ * @deprecated As of 3.0.0, replaced by {@link com.liferay.portal.kernel.model.LayoutConstants}
  */
+@Deprecated
 public class NodeLayoutTypeControllerConstants {
 
 	public static final String LAYOUT_TYPE_NODE = "node";

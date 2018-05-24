@@ -26,8 +26,8 @@ import com.liferay.apio.architect.form.Form;
 public class TierPriceEntryForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code TierPriceEntryForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates {@code TierPriceEntryForm} depending
+	 * on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
 	 * @return a tier price entry form

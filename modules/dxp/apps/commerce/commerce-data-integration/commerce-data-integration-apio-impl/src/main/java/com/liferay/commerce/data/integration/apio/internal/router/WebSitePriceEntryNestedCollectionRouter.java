@@ -29,12 +29,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose a
- * {@link CommercePriceEntry} resources
- * contained inside a <a
- * href="http://schema.org/WebSite">WebSite</a> through a web API. The resources
- * are mapped from the internal model
- * {@link CommercePriceEntry}.
+ * Provides the information necessary to expose a {@link CommercePriceEntry}
+ * resources contained inside a <a href="http://schema.org/WebSite">WebSite</a>
+ * through a web API. The resources are mapped from the internal model {@link
+ * CommercePriceEntry}.
  *
  * @author Zoltán Takács
  * @review

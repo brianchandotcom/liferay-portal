@@ -401,7 +401,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		String cookieName = _getCookieName(themeDisplay.getScopeGroupId());
 
 		String commerceOrderUuid = CookieKeys.getCookie(
-			themeDisplay.getRequest(), cookieName, false);
+			themeDisplay.getRequest(), cookieName, true);
 
 		if (Validator.isNotNull(commerceOrderUuid)) {
 			commerceOrder = _commerceOrderService.fetchCommerceOrder(

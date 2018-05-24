@@ -52,6 +52,12 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 												<a class="add-layout-action-option" data-type="<%= primaryType %>" href="javascript:;"><%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + primaryType) %></a>
 											</span>
 										</h3>
+
+										<p class="card-subtitle">
+											<span class="text-truncate-inline">
+												<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + primaryType + ".description") %>
+											</span>
+										</p>
 									</section>
 								</div>
 							</div>

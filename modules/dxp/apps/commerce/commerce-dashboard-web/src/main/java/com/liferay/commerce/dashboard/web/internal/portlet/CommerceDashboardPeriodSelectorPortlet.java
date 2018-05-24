@@ -15,7 +15,8 @@
 package com.liferay.commerce.dashboard.web.internal.portlet;
 
 import com.liferay.commerce.dashboard.web.internal.constants.CommerceDashboardPortletKeys;
-import com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardPeriodSelectorDisplayContext;
+import com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardDisplayContext;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -27,6 +28,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -61,14 +63,13 @@ public class CommerceDashboardPeriodSelectorPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			CommerceDashboardPeriodSelectorDisplayContext
-				commerceDashboardPeriodSelectorDisplayContext =
-					new CommerceDashboardPeriodSelectorDisplayContext(
-						renderRequest);
+			CommerceDashboardDisplayContext commerceDashboardDisplayContext =
+				new CommerceDashboardDisplayContext(
+					_configurationProvider, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceDashboardPeriodSelectorDisplayContext);
+				commerceDashboardDisplayContext);
 
 			super.render(renderRequest, renderResponse);
 		}
@@ -76,5 +77,8 @@ public class CommerceDashboardPeriodSelectorPortlet extends MVCPortlet {
 			throw new PortletException(e);
 		}
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

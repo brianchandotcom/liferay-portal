@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceDashboardPeriodSelectorDisplayContext commerceDashboardPeriodSelectorDisplayContext = (CommerceDashboardPeriodSelectorDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceDashboardDisplayContext commerceDashboardDisplayContext = (CommerceDashboardDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <portlet:actionURL name="editCommerceDashboardPeriod" var="editCommerceDashboardPeriodURL" />
@@ -32,7 +32,7 @@ CommerceDashboardPeriodSelectorDisplayContext commerceDashboardPeriodSelectorDis
 		%>
 
 			<clay:button
-				elementClasses='<%= period == commerceDashboardPeriodSelectorDisplayContext.getPeriod() ? "active" : StringPool.BLANK %>'
+				elementClasses='<%= period == commerceDashboardDisplayContext.getPeriod() ? "active" : StringPool.BLANK %>'
 				label="<%= LanguageUtil.get(request, CommerceForecastEntryConstants.getPeriodLabel(period)) %>"
 				name='<%= renderResponse.getNamespace() + "period" %>'
 				style="secondary"

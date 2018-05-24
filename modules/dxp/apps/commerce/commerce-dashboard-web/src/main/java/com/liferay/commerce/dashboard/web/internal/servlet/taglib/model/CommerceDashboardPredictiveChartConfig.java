@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.commerce.dashboard.web.internal.display.context;
+package com.liferay.commerce.dashboard.web.internal.servlet.taglib.model;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.frontend.taglib.chart.model.predictive.PredictiveChartConfig;
 
-import javax.portlet.RenderRequest;
+import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceDashboardDateRangeSelectorDisplayContext
-	extends BaseCommerceDashboardDisplayContext {
+public class CommerceDashboardPredictiveChartConfig
+	extends PredictiveChartConfig {
 
-	public CommerceDashboardDateRangeSelectorDisplayContext(
-			RenderRequest renderRequest)
-		throws PortalException {
+	public Map<String, String> getColors() {
+		return get("colors", Map.class);
+	}
 
-		super(renderRequest);
+	public void setColors(Map<String, String> colors) {
+		set("colors", colors);
 	}
 
 }

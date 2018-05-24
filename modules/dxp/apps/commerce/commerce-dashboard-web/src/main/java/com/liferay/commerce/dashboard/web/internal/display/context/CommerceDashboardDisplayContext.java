@@ -16,12 +16,14 @@ package com.liferay.commerce.dashboard.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardCompanyConfiguration;
 import com.liferay.commerce.dashboard.web.internal.display.context.util.CommerceDashboardRequestHelper;
 import com.liferay.commerce.dashboard.web.internal.util.CommerceDashboardUtil;
 import com.liferay.commerce.forecast.model.CommerceForecastEntryConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
 import java.util.Calendar;
@@ -32,9 +34,11 @@ import javax.portlet.RenderRequest;
 /**
  * @author Andrea Di Giorgi
  */
-public abstract class BaseCommerceDashboardDisplayContext {
+public class CommerceDashboardDisplayContext {
 
-	public BaseCommerceDashboardDisplayContext(RenderRequest renderRequest)
+	public CommerceDashboardDisplayContext(
+			ConfigurationProvider configurationProvider,
+			RenderRequest renderRequest)
 		throws PortalException {
 
 		commerceDashboardRequestHelper = new CommerceDashboardRequestHelper(
@@ -90,6 +94,11 @@ public abstract class BaseCommerceDashboardDisplayContext {
 			CommerceForecastEntryConstants.PERIOD_MONTHLY);
 		_cpInstanceIds = CommerceDashboardUtil.getSessionMap(
 			renderRequest, "cpInstanceIds");
+
+		commerceDashboardCompanyConfiguration =
+			configurationProvider.getCompanyConfiguration(
+				CommerceDashboardCompanyConfiguration.class,
+				commerceDashboardRequestHelper.getCompanyId());
 	}
 
 	public Map<Long, Boolean> getCPInstanceIds() {
@@ -132,6 +141,8 @@ public abstract class BaseCommerceDashboardDisplayContext {
 		return _startDateYear;
 	}
 
+	protected final CommerceDashboardCompanyConfiguration
+		commerceDashboardCompanyConfiguration;
 	protected final CommerceDashboardRequestHelper
 		commerceDashboardRequestHelper;
 

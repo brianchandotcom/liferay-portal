@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceDashboardDateRangeSelectorDisplayContext commerceDashboardDateRangeSelectorDisplayContext = (CommerceDashboardDateRangeSelectorDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceDashboardDisplayContext commerceDashboardDisplayContext = (CommerceDashboardDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <portlet:actionURL name="editCommerceDashboardDateRange" var="editCommerceDashboardDateRangeURL" />
@@ -28,25 +28,25 @@ CommerceDashboardDateRangeSelectorDisplayContext commerceDashboardDateRangeSelec
 	<liferay-ui:input-date
 		cssClass="form-group-item"
 		dayParam="startDateDay"
-		dayValue="<%= commerceDashboardDateRangeSelectorDisplayContext.getStartDateDay() %>"
-		firstDayOfWeek="<%= commerceDashboardDateRangeSelectorDisplayContext.getFirstDayOfWeek() - 1 %>"
+		dayValue="<%= commerceDashboardDisplayContext.getStartDateDay() %>"
+		firstDayOfWeek="<%= commerceDashboardDisplayContext.getFirstDayOfWeek() - 1 %>"
 		monthParam="startDateMonth"
-		monthValue="<%= commerceDashboardDateRangeSelectorDisplayContext.getStartDateMonth() %>"
+		monthValue="<%= commerceDashboardDisplayContext.getStartDateMonth() %>"
 		name="startDate"
 		yearParam="startDateYear"
-		yearValue="<%= commerceDashboardDateRangeSelectorDisplayContext.getStartDateYear() %>"
+		yearValue="<%= commerceDashboardDisplayContext.getStartDateYear() %>"
 	/>
 
 	<liferay-ui:input-date
 		cssClass="form-group-item"
 		dayParam="endDateDay"
-		dayValue="<%= commerceDashboardDateRangeSelectorDisplayContext.getEndDateDay() %>"
-		firstDayOfWeek="<%= commerceDashboardDateRangeSelectorDisplayContext.getFirstDayOfWeek() - 1 %>"
+		dayValue="<%= commerceDashboardDisplayContext.getEndDateDay() %>"
+		firstDayOfWeek="<%= commerceDashboardDisplayContext.getFirstDayOfWeek() - 1 %>"
 		monthParam="endDateMonth"
-		monthValue="<%= commerceDashboardDateRangeSelectorDisplayContext.getEndDateMonth() %>"
+		monthValue="<%= commerceDashboardDisplayContext.getEndDateMonth() %>"
 		name="endDate"
 		yearParam="endDateYear"
-		yearValue="<%= commerceDashboardDateRangeSelectorDisplayContext.getEndDateYear() %>"
+		yearValue="<%= commerceDashboardDisplayContext.getEndDateYear() %>"
 	/>
 
 	<aui:button type="submit" value="refresh" />

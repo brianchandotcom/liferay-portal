@@ -15,6 +15,7 @@
 package com.liferay.commerce.dashboard.web.internal.display.context;
 
 import com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardForecastsChartPortletInstanceConfiguration;
+import com.liferay.commerce.dashboard.web.internal.servlet.taglib.model.CommerceDashboardPredictiveChartConfig;
 import com.liferay.commerce.dashboard.web.internal.util.CommerceDashboardUtil;
 import com.liferay.commerce.forecast.model.CommerceForecastEntry;
 import com.liferay.commerce.forecast.model.CommerceForecastEntryConstants;
@@ -31,9 +32,11 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -65,16 +68,17 @@ import javax.portlet.RenderRequest;
  * @author Andrea Di Giorgi
  */
 public class CommerceDashboardForecastsChartDisplayContext
-	extends BaseCommerceDashboardDisplayContext {
+	extends CommerceDashboardDisplayContext {
 
 	public CommerceDashboardForecastsChartDisplayContext(
 			CommerceForecastEntryLocalService commerceForecastEntryLocalService,
 			CommerceForecastValueLocalService commerceForecastValueLocalService,
-			CompanyService companyService, GroupService groupService,
-			RenderRequest renderRequest)
+			CompanyService companyService,
+			ConfigurationProvider configurationProvider,
+			GroupService groupService, RenderRequest renderRequest)
 		throws PortalException {
 
-		super(renderRequest);
+		super(configurationProvider, renderRequest);
 
 		_commerceForecastEntryLocalService = commerceForecastEntryLocalService;
 		_commerceForecastValueLocalService = commerceForecastValueLocalService;
@@ -154,26 +158,43 @@ public class CommerceDashboardForecastsChartDisplayContext
 			}
 		}
 
-		PredictiveChartConfig predictiveChartConfig =
-			new PredictiveChartConfig();
+		CommerceDashboardPredictiveChartConfig
+			commerceDashboardPredictiveChartConfig =
+				new CommerceDashboardPredictiveChartConfig();
 
+		String[] chartColors =
+			commerceDashboardCompanyConfiguration.chartColors();
 		List<Date> timeseriesDatesList = ListUtil.fromCollection(
 			timeseriesDates);
+
+		Map<String, String> colors = new HashMap<>();
 
 		for (Map.Entry<CommerceForecastEntry, List<CommerceForecastValue>>
 				entry : commerceForecastEntryValuesMap.entrySet()) {
 
+			String id = _getMixedDataColumnId(entry.getKey());
+
 			MixedDataColumn mixedDataColumn = new MixedDataColumn(
-				_getMixedDataColumnId(entry.getKey()),
+				id,
 				_getMixedDataColumnValues(
 					entry.getValue(), timeseriesDatesList));
 
-			predictiveChartConfig.addDataColumn(mixedDataColumn);
+			commerceDashboardPredictiveChartConfig.addDataColumn(
+				mixedDataColumn);
+
+			if (ArrayUtil.isNotEmpty(chartColors)) {
+				colors.put(id, chartColors[colors.size() % chartColors.length]);
+			}
 		}
 
-		predictiveChartConfig.setAxisXTickFormat(_getAxisXTickFormat());
+		commerceDashboardPredictiveChartConfig.setAxisXTickFormat(
+			_getAxisXTickFormat());
 
-		predictiveChartConfig.setPredictionDate(
+		if (!colors.isEmpty()) {
+			commerceDashboardPredictiveChartConfig.setColors(colors);
+		}
+
+		commerceDashboardPredictiveChartConfig.setPredictionDate(
 			_dateFormat.format(predictionDate));
 
 		List<String> timeseries = new ArrayList<>(timeseriesDates.size());
@@ -182,9 +203,9 @@ public class CommerceDashboardForecastsChartDisplayContext
 			timeseries.add(_dateFormat.format(date));
 		}
 
-		predictiveChartConfig.setTimeseries(timeseries);
+		commerceDashboardPredictiveChartConfig.setTimeseries(timeseries);
 
-		return predictiveChartConfig;
+		return commerceDashboardPredictiveChartConfig;
 	}
 
 	private String _getAxisXTickFormat() {

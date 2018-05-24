@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.commerce.dashboard.web.internal.display.context;
+package com.liferay.commerce.dashboard.web.internal.configuration.definition;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardCompanyConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
-import javax.portlet.RenderRequest;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceDashboardPeriodSelectorDisplayContext
-	extends BaseCommerceDashboardDisplayContext {
+@Component
+public class
+	CommerceDashboardCompanyConfigurationBeanDeclaration
+		implements ConfigurationBeanDeclaration {
 
-	public CommerceDashboardPeriodSelectorDisplayContext(
-			RenderRequest renderRequest)
-		throws PortalException {
-
-		super(renderRequest);
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return CommerceDashboardCompanyConfiguration.class;
 	}
 
 }

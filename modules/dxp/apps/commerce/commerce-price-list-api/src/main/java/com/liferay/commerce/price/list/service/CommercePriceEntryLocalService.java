@@ -203,6 +203,10 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 		String externalReferenceCode);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePriceEntry> fetchCommercePriceEntries(long groupId,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommercePriceEntry fetchCommercePriceEntry(long commercePriceEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

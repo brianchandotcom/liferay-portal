@@ -223,6 +223,13 @@ public class CommercePriceEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> fetchCommercePriceEntries(
+		long groupId, int start, int end) {
+		return _commercePriceEntryLocalService.fetchCommercePriceEntries(groupId,
+			start, end);
+	}
+
+	@Override
 	public com.liferay.commerce.price.list.model.CommercePriceEntry fetchCommercePriceEntry(
 		long commercePriceEntryId) {
 		return _commercePriceEntryLocalService.fetchCommercePriceEntry(commercePriceEntryId);

@@ -147,6 +147,22 @@ public class CommercePriceEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap[] fetchCommercePriceEntries(
+		long groupId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> returnValue =
+				CommercePriceEntryServiceUtil.fetchCommercePriceEntries(groupId,
+					start, end);
+
+			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap[] getCommercePriceEntries(
 		long commercePriceListId, int start, int end) throws RemoteException {
 		try {

@@ -215,6 +215,11 @@ public class CommercePriceEntryLocalServiceUtil {
 		return getService().fetchByExternalReferenceCode(externalReferenceCode);
 	}
 
+	public static java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> fetchCommercePriceEntries(
+		long groupId, int start, int end) {
+		return getService().fetchCommercePriceEntries(groupId, start, end);
+	}
+
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry fetchCommercePriceEntry(
 		long commercePriceEntryId) {
 		return getService().fetchCommercePriceEntry(commercePriceEntryId);

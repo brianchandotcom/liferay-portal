@@ -111,6 +111,14 @@ public class CommercePriceEntryServiceImpl
 	}
 
 	@Override
+	public List<CommercePriceEntry> fetchCommercePriceEntries(
+		long groupId, int start, int end) {
+
+		return commercePriceEntryLocalService.fetchCommercePriceEntries(
+			groupId, start, end);
+	}
+
+	@Override
 	public List<CommercePriceEntry> getCommercePriceEntries(
 		long commercePriceListId, int start, int end) {
 

@@ -219,13 +219,41 @@ public class CommercePriceEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> fetchCommercePriceEntries(
+		HttpPrincipal httpPrincipal, long groupId, int start, int end) {
+		try {
+			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
+					"fetchCommercePriceEntries",
+					_fetchCommercePriceEntriesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> getCommercePriceEntries(
 		HttpPrincipal httpPrincipal, long commercePriceListId, int start,
 		int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"getCommercePriceEntries",
-					_getCommercePriceEntriesParameterTypes5);
+					_getCommercePriceEntriesParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commercePriceListId, start, end);
@@ -255,7 +283,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"getCommercePriceEntries",
-					_getCommercePriceEntriesParameterTypes6);
+					_getCommercePriceEntriesParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commercePriceListId, start, end, orderByComparator);
@@ -283,7 +311,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"getCommercePriceEntriesCount",
-					_getCommercePriceEntriesCountParameterTypes7);
+					_getCommercePriceEntriesCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commercePriceListId);
@@ -311,7 +339,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"getInstanceCommercePriceEntries",
-					_getInstanceCommercePriceEntriesParameterTypes8);
+					_getInstanceCommercePriceEntriesParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId, start, end);
@@ -340,7 +368,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"getInstanceCommercePriceEntries",
-					_getInstanceCommercePriceEntriesParameterTypes9);
+					_getInstanceCommercePriceEntriesParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId, start, end, orderByComparator);
@@ -368,7 +396,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"getInstanceCommercePriceEntriesCount",
-					_getInstanceCommercePriceEntriesCountParameterTypes10);
+					_getInstanceCommercePriceEntriesCountParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId);
@@ -396,7 +424,7 @@ public class CommercePriceEntryServiceHttp {
 		com.liferay.portal.kernel.search.SearchContext searchContext) {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
-					"search", _searchParameterTypes11);
+					"search", _searchParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					searchContext);
@@ -427,7 +455,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"searchCommercePriceEntries",
-					_searchCommercePriceEntriesParameterTypes12);
+					_searchCommercePriceEntriesParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, commercePriceListId, keywords, start,
@@ -463,7 +491,7 @@ public class CommercePriceEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
 					"updateCommercePriceEntry",
-					_updateCommercePriceEntryParameterTypes13);
+					_updateCommercePriceEntryParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commercePriceEntryId, price, promoPrice, serviceContext);
@@ -509,32 +537,35 @@ public class CommercePriceEntryServiceHttp {
 	private static final Class<?>[] _fetchCommercePriceEntryParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommercePriceEntriesParameterTypes5 = new Class[] {
+	private static final Class<?>[] _fetchCommercePriceEntriesParameterTypes5 = new Class[] {
 			long.class, int.class, int.class
 		};
 	private static final Class<?>[] _getCommercePriceEntriesParameterTypes6 = new Class[] {
+			long.class, int.class, int.class
+		};
+	private static final Class<?>[] _getCommercePriceEntriesParameterTypes7 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommercePriceEntriesCountParameterTypes7 =
+	private static final Class<?>[] _getCommercePriceEntriesCountParameterTypes8 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getInstanceCommercePriceEntriesParameterTypes8 =
-		new Class[] { long.class, int.class, int.class };
 	private static final Class<?>[] _getInstanceCommercePriceEntriesParameterTypes9 =
+		new Class[] { long.class, int.class, int.class };
+	private static final Class<?>[] _getInstanceCommercePriceEntriesParameterTypes10 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getInstanceCommercePriceEntriesCountParameterTypes10 =
+	private static final Class<?>[] _getInstanceCommercePriceEntriesCountParameterTypes11 =
 		new Class[] { long.class };
-	private static final Class<?>[] _searchParameterTypes11 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes12 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
-	private static final Class<?>[] _searchCommercePriceEntriesParameterTypes12 = new Class[] {
+	private static final Class<?>[] _searchCommercePriceEntriesParameterTypes13 = new Class[] {
 			long.class, long.class, long.class, String.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateCommercePriceEntryParameterTypes13 = new Class[] {
+	private static final Class<?>[] _updateCommercePriceEntryParameterTypes14 = new Class[] {
 			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

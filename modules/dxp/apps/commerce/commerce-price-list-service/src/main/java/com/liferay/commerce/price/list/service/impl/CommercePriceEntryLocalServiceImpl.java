@@ -181,6 +181,14 @@ public class CommercePriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommercePriceEntry> fetchCommercePriceEntries(
+		long groupId, int start, int end) {
+
+		return commercePriceEntryPersistence.findByGroupId(groupId, start, end);
+
+	}
+
+	@Override
 	public List<CommercePriceEntry> getCommercePriceEntries(
 		long commercePriceListId, int start, int end) {
 

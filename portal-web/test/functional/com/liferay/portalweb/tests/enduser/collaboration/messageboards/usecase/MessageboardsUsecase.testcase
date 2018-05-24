@@ -44,14 +44,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -194,14 +194,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page Name" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -339,14 +339,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -394,14 +394,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -478,14 +478,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -543,14 +543,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -569,14 +569,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page 2" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page 2" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -607,14 +607,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page 3" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page 3" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1202,14 +1202,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page Name" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -1352,14 +1352,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1477,14 +1477,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1666,14 +1666,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1743,14 +1743,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1864,14 +1864,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1912,14 +1912,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -1955,14 +1955,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2080,14 +2080,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2171,14 +2171,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Message Boards Page" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Message Boards Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

@@ -35,7 +35,7 @@
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${sitePageType}" arg2="Layout" />
+				<equals arg1="${sitePageType}" arg2="Widget Page" />
 				<then>
 					<var name="key_columnName" value="${columnName}" />
 
@@ -43,7 +43,7 @@
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${sitePageType}" arg2="Content" />
+				<equals arg1="${sitePageType}" arg2="Content Page" />
 				<then>
 					<execute function="Select" locator1="SitePagesEditPage#LAYOUT_PAGE_TEMPLATE_SELECT" value1="${layoutPageTemplateName}" />
 				</then>
@@ -63,7 +63,7 @@
 		<if>
 			<contains string="${sitePageType}" substring="{sitePageType}" />
 			<then>
-				<var name="sitePageType" value="Layout" />
+				<var name="sitePageType" value="Widget Page" />
 			</then>
 		</if>
 

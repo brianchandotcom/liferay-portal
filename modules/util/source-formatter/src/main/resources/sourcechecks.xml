@@ -6,6 +6,9 @@
 		<check name="ReturnCharacterCheck" />
 	</source-processor>
 	<source-processor name="BNDSourceProcessor">
+		<check name="BNDBundleCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="BNDCapabilityCheck" />
 		<check name="BNDDefinitionKeysCheck" />
 		<check name="BNDImportsCheck" />

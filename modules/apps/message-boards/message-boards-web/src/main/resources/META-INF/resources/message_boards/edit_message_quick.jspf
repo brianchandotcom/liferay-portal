@@ -201,24 +201,27 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 						<aui:button onClick="<%= taglibCancelReply %>" type="cancel" />
 					</aui:button-row>
 				</aui:form>
+
+				<portlet:renderURL var="advancedReplyURL">
+					<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
+					<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
+					<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
+					<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
+				</portlet:renderURL>
+
+				<aui:form action="<%= advancedReplyURL %>" cssClass="hide" method="post" name='<%= "advancedReplyFm" + replyToMessageId %>'>
+					<aui:input name="body" type="hidden" />
+				</aui:form>
 			</div>
 		</div>
 	</div>
 </div>
 
-<portlet:renderURL var="advancedReplyURL">
-	<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="mbCategoryId" value="<%= String.valueOf(message.getCategoryId()) %>" />
-	<portlet:param name="threadId" value="<%= String.valueOf(message.getThreadId()) %>" />
-	<portlet:param name="parentMessageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-	<portlet:param name="priority" value="<%= String.valueOf(message.getPriority()) %>" />
-</portlet:renderURL>
-
 <aui:script require="message-boards-web/message_boards/js/MBPortlet.es">
 	new messageBoardsWebMessage_boardsJsMBPortletEs.default(
 		{
-			advancedReplyUrl: '<%= advancedReplyURL.toString() %>',
 			constants: {
 				'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
 				'CMD': '<%= Constants.CMD %>'

@@ -30,7 +30,7 @@
 	%>
 
 	<liferay-ui:icon
-		message="publish"
+		message="publish-to-live"
 		url="<%= portletURL.toString() %>"
 	/>
 </c:if>

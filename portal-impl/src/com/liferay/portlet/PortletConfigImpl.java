@@ -199,13 +199,10 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 	@Override
 	public Map<String, QName> getPublicRenderParameterDefinitions() {
-		Set<PublicRenderParameter> publicRenderParameters =
-			_portlet.getPublicRenderParameters();
-
 		Map<String, QName> publicRenderParameterMap = new HashMap<>();
 
 		for (PublicRenderParameter publicRenderParameter :
-				publicRenderParameters) {
+				_portlet.getPublicRenderParameters()) {
 
 			com.liferay.portal.kernel.xml.QName qName =
 				publicRenderParameter.getQName();

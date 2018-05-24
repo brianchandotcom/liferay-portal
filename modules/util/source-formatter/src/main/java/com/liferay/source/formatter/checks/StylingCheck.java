@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.List;
@@ -61,31 +62,35 @@ public abstract class StylingCheck extends BaseFileCheck {
 	private String _fixBooleanStatement(String content) {
 		Matcher matcher = _booleanPattern.matcher(content);
 
-		if (!matcher.find()) {
-			return content;
-		}
+		while (matcher.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
+				continue;
+			}
 
-		boolean booleanValue = true;
+			boolean booleanValue = true;
 
-		if (matcher.group(1) != null) {
-			booleanValue = !booleanValue;
-		}
+			if (matcher.group(1) != null) {
+				booleanValue = !booleanValue;
+			}
 
-		if (Objects.equals(matcher.group(3), "!=")) {
-			booleanValue = !booleanValue;
-		}
+			if (Objects.equals(matcher.group(3), "!=")) {
+				booleanValue = !booleanValue;
+			}
 
-		if (Objects.equals(matcher.group(4), "false")) {
-			booleanValue = !booleanValue;
-		}
+			if (Objects.equals(matcher.group(4), "false")) {
+				booleanValue = !booleanValue;
+			}
 
-		if (booleanValue) {
+			if (booleanValue) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(), "(" + matcher.group(2) + ")");
+			}
+
 			return StringUtil.replaceFirst(
-				content, matcher.group(), "(" + matcher.group(2) + ")");
+				content, matcher.group(), "(!" + matcher.group(2) + ")");
 		}
 
-		return StringUtil.replaceFirst(
-			content, matcher.group(), "(!" + matcher.group(2) + ")");
+		return content;
 	}
 
 	private String _formatStyling(

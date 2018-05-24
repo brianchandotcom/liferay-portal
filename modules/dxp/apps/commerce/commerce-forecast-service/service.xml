@@ -24,7 +24,7 @@
 		<column name="period" type="int" />
 		<column name="target" type="int" />
 		<column name="customerId" type="long" />
-		<column name="sku" type="String" />
+		<column name="CPInstanceId" type="long" />
 		<column name="assertivity" type="BigDecimal" />
 
 		<!-- Order -->
@@ -38,12 +38,12 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="C_P_T_C_S" return-type="CommerceForecastEntry" unique="true">
+		<finder name="C_P_T_C_C" return-type="CommerceForecastEntry" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="period" />
 			<finder-column name="target" />
 			<finder-column name="customerId" />
-			<finder-column name="sku" />
+			<finder-column name="CPInstanceId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceForecastValue" remote-service="false">

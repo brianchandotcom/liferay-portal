@@ -227,7 +227,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 		String periodString = jsonObject.getString("period");
 		String targetString = jsonObject.getString("target");
 		long customerId = jsonObject.getLong("customerId");
-		String sku = jsonObject.getString("sku");
+		long cpInstanceId = jsonObject.getLong("sku");
 		BigDecimal assertivity = _getBigDecimal(jsonObject, "assertivity");
 
 		long userId = getCompanyAdminUserId(companyId);
@@ -239,8 +239,8 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 
 		CommerceForecastEntry commerceForecastEntry =
 			_commerceForecastEntryLocalService.addCommerceForecastEntry(
-				companyId, userId, time, period, target, customerId, sku,
-				assertivity);
+				companyId, userId, time, period, target, customerId,
+				cpInstanceId, assertivity);
 
 		JSONArray valuesJSONArray = jsonObject.getJSONArray("values");
 
@@ -432,7 +432,7 @@ public class CommerceCloudClientImpl implements CommerceCloudClient {
 			orderItemJSONObject.put("price", unitPrice.toString());
 
 			orderItemJSONObject.put("quantity", quantity);
-			orderItemJSONObject.put("sku", commerceOrderItem.getSku());
+			orderItemJSONObject.put("sku", commerceOrderItem.getCPInstanceId());
 
 			orderItemsJSONArray.put(orderItemJSONObject);
 		}

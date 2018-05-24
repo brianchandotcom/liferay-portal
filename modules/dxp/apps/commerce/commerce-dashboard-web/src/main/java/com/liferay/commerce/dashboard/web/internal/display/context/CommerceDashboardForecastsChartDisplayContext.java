@@ -271,15 +271,20 @@ public class CommerceDashboardForecastsChartDisplayContext
 		if (_commerceDashboardForecastsChartPortletInstanceConfiguration.
 				filterBySKU()) {
 
-			String[] skus = getSKUs();
+			Map<Long, Boolean> cpInstanceIds = getCPInstanceIds();
 
-			commerceForecastEntries = new ArrayList<>(skus.length);
+			commerceForecastEntries = new ArrayList<>(cpInstanceIds.size());
 
-			for (String sku : skus) {
+			for (Map.Entry<Long, Boolean> entry : cpInstanceIds.entrySet()) {
+				if (!entry.getValue()) {
+					continue;
+				}
+
 				CommerceForecastEntry commerceForecastEntry =
 					_commerceForecastEntryLocalService.
 						fetchCommerceForecastEntry(
-							companyId, period, target, customerId, sku);
+							companyId, period, target, customerId,
+							entry.getKey());
 
 				if (commerceForecastEntry != null) {
 					commerceForecastEntries.add(commerceForecastEntry);
@@ -289,7 +294,7 @@ public class CommerceDashboardForecastsChartDisplayContext
 		else {
 			CommerceForecastEntry commerceForecastEntry =
 				_commerceForecastEntryLocalService.fetchCommerceForecastEntry(
-					companyId, period, target, customerId, null);
+					companyId, period, target, customerId, 0);
 
 			if (commerceForecastEntry != null) {
 				commerceForecastEntries = Collections.singletonList(
@@ -307,7 +312,7 @@ public class CommerceDashboardForecastsChartDisplayContext
 			CommerceForecastEntry commerceForecastEntry)
 		throws PortalException {
 
-		String id = commerceForecastEntry.getSku();
+		String id = String.valueOf(commerceForecastEntry.getCPInstanceId());
 
 		if (Validator.isNull(id)) {
 			long customerId = commerceForecastEntry.getCustomerId();

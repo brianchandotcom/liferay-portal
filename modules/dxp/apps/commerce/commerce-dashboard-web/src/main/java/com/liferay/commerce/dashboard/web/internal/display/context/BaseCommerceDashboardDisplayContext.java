@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 
 import java.util.Calendar;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 
@@ -87,7 +88,12 @@ public abstract class BaseCommerceDashboardDisplayContext {
 		_period = CommerceDashboardUtil.getSessionValue(
 			renderRequest, "period",
 			CommerceForecastEntryConstants.PERIOD_MONTHLY);
-		_skus = CommerceDashboardUtil.getSessionValues(renderRequest, "skus");
+		_cpInstanceIds = CommerceDashboardUtil.getSessionMap(
+			renderRequest, "cpInstanceIds");
+	}
+
+	public Map<Long, Boolean> getCPInstanceIds() {
+		return _cpInstanceIds;
 	}
 
 	public long getCustomerId() {
@@ -114,10 +120,6 @@ public abstract class BaseCommerceDashboardDisplayContext {
 		return _period;
 	}
 
-	public String[] getSKUs() {
-		return _skus;
-	}
-
 	public int getStartDateDay() {
 		return _startDateDay;
 	}
@@ -133,13 +135,13 @@ public abstract class BaseCommerceDashboardDisplayContext {
 	protected final CommerceDashboardRequestHelper
 		commerceDashboardRequestHelper;
 
+	private final Map<Long, Boolean> _cpInstanceIds;
 	private final long _customerId;
 	private final int _endDateDay;
 	private final int _endDateMonth;
 	private final int _endDateYear;
 	private final int _firstDayOfWeek;
 	private final int _period;
-	private final String[] _skus;
 	private final int _startDateDay;
 	private final int _startDateMonth;
 	private final int _startDateYear;

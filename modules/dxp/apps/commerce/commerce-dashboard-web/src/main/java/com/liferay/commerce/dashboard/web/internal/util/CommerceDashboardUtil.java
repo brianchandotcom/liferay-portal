@@ -17,7 +17,9 @@ package com.liferay.commerce.dashboard.web.internal.util;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -33,6 +35,18 @@ public class CommerceDashboardUtil {
 		return iterator.next();
 	}
 
+	public static <K, V> Map<K, V> getSessionMap(
+		PortletRequest portletRequest, String name) {
+
+		Map<K, V> map = (Map<K, V>)_getSessionValue(portletRequest, name);
+
+		if (map == null) {
+			map = Collections.emptyMap();
+		}
+
+		return map;
+	}
+
 	public static int getSessionValue(
 		PortletRequest portletRequest, String name, int defaultValue) {
 
@@ -45,13 +59,6 @@ public class CommerceDashboardUtil {
 
 		return GetterUtil.getLong(
 			_getSessionValue(portletRequest, name), defaultValue);
-	}
-
-	public static String[] getSessionValues(
-		PortletRequest portletRequest, String name) {
-
-		return GetterUtil.getStringValues(
-			_getSessionValue(portletRequest, name));
 	}
 
 	public static void setSessionInteger(

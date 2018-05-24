@@ -32,14 +32,14 @@ public class CommerceForecastEntryLocalServiceImpl
 	@Override
 	public CommerceForecastEntry addCommerceForecastEntry(
 			long companyId, long userId, long time, int period, int target,
-			long customerId, String sku, BigDecimal assertivity)
+			long customerId, long cpInstanceId, BigDecimal assertivity)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
 		CommerceForecastEntry commerceForecastEntry =
-			commerceForecastEntryPersistence.fetchByC_P_T_C_S(
-				companyId, period, target, customerId, sku);
+			commerceForecastEntryPersistence.fetchByC_P_T_C_C(
+				companyId, period, target, customerId, cpInstanceId);
 
 		if (commerceForecastEntry == null) {
 			long commerceForecastEntryId = counterLocalService.increment();
@@ -53,7 +53,7 @@ public class CommerceForecastEntryLocalServiceImpl
 			commerceForecastEntry.setPeriod(period);
 			commerceForecastEntry.setTarget(target);
 			commerceForecastEntry.setCustomerId(customerId);
-			commerceForecastEntry.setSku(sku);
+			commerceForecastEntry.setCPInstanceId(cpInstanceId);
 		}
 		else {
 			commerceForecastValueLocalService.deleteCommerceForecastValues(
@@ -110,10 +110,11 @@ public class CommerceForecastEntryLocalServiceImpl
 
 	@Override
 	public CommerceForecastEntry fetchCommerceForecastEntry(
-		long companyId, int period, int target, long customerId, String sku) {
+		long companyId, int period, int target, long customerId,
+		long cpInstanceId) {
 
-		return commerceForecastEntryPersistence.fetchByC_P_T_C_S(
-			companyId, period, target, customerId, sku);
+		return commerceForecastEntryPersistence.fetchByC_P_T_C_C(
+			companyId, period, target, customerId, cpInstanceId);
 	}
 
 }

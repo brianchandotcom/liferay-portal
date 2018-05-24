@@ -166,16 +166,6 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	}
 
 	@Override
-	public List<SiteNavigationMenuItem> getChildSiteNavigationMenuItems(
-		long parentSiteNavigationMenuItemId) {
-
-		return siteNavigationMenuItemPersistence.
-			findByParentSiteNavigationMenuItemId(
-				parentSiteNavigationMenuItemId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new SiteNavigationMenuItemOrderComparator());
-	}
-
-	@Override
 	public List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
 		long siteNavigationMenuId) {
 

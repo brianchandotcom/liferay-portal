@@ -38,6 +38,46 @@ import java.util.Optional;
  */
 public class CommercePriceListTestUtil {
 
+	public static void addOrganizationSegmentToPriceList(
+			CommercePriceList commercePriceList, long... organizationIds)
+		throws Exception {
+
+		long groupId = commercePriceList.getGroupId();
+
+		CommerceUserSegmentEntry commerceUserSegmentEntry =
+			CommerceUserSegmentTestUtil.addOrganizationCommerceUserSegmentEntry(
+				groupId, organizationIds);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommercePriceListUserSegmentEntryRelServiceUtil.
+			addCommercePriceListUserSegmentEntryRel(
+				commercePriceList.getCommercePriceListId(),
+				commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+				RandomTestUtil.randomInt(), serviceContext);
+	}
+
+	public static void addRoleSegmentToPriceList(
+			CommercePriceList commercePriceList, long... roleIds)
+		throws Exception {
+
+		long groupId = commercePriceList.getGroupId();
+
+		CommerceUserSegmentEntry commerceUserSegmentEntry =
+			CommerceUserSegmentTestUtil.addRoleCommerceUserSegmentEntry(
+				groupId, roleIds);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommercePriceListUserSegmentEntryRelServiceUtil.
+			addCommercePriceListUserSegmentEntryRel(
+				commercePriceList.getCommercePriceListId(),
+				commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+				RandomTestUtil.randomInt(), serviceContext);
+	}
+
 	public static CommercePriceList addUserPriceList(
 			long groupId, double priority, long userId)
 		throws Exception {

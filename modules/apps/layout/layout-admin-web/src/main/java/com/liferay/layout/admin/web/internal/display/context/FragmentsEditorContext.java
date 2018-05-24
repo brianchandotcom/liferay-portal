@@ -202,10 +202,10 @@ public class FragmentsEditorContext {
 			(layoutPageTemplateEntry.getStatus() !=
 				WorkflowConstants.STATUS_APPROVED)) {
 
-			soyContext.put(
-				"status",
-				WorkflowConstants.getStatusLabel(
-					layoutPageTemplateEntry.getStatus()));
+			String statusLabel = WorkflowConstants.getStatusLabel(
+				layoutPageTemplateEntry.getStatus());
+
+			soyContext.put("status", LanguageUtil.get(_request, statusLabel));
 		}
 
 		soyContext.put(

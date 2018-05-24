@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.adaptive.media.journal.web.internal.upgrade.v1_0_0;
+package com.liferay.adaptive.media.web.internal.upgrade.v1_0_0;
 
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.journal.model.JournalArticle;

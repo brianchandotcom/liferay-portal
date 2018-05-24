@@ -126,9 +126,17 @@ if (!dlFileEntries.isEmpty()) {
 </c:choose>
 
 <aui:script>
-	function <portlet:namespace />convertDocumentLibraryExtraSettings(options) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'convert';
+	function <portlet:namespace />convertDocumentLibraryExtraSettings() {
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		submitForm(document.<portlet:namespace />fm);
+		if (form) {
+			var cmd = form.querySelector('#<portlet:namespace /><%= Constants.CMD %>');
+
+			if (cmd) {
+				cmd.setAttribute('value', 'convert');
+			}
+
+			submitForm(form);
+		}
 	}
 </aui:script>

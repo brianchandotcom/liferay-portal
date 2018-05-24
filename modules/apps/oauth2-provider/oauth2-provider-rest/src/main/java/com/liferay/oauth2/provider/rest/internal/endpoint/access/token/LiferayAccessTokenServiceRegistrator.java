@@ -60,6 +60,8 @@ public class LiferayAccessTokenServiceRegistrator {
 		_bundleContext = bundleContext;
 
 		_updateLiferayAccessTokenService(bundleContext);
+
+		_activated = true;
 	}
 
 	@Reference(
@@ -77,6 +79,12 @@ public class LiferayAccessTokenServiceRegistrator {
 
 	@Deactivate
 	protected void deactivate() {
+		if (!_activated) {
+			return;
+		}
+
+		_activated = false;
+
 		if (_serviceRegistration != null) {
 			_serviceRegistration.unregister();
 		}
@@ -122,6 +130,7 @@ public class LiferayAccessTokenServiceRegistrator {
 
 	private final List<AccessTokenGrantHandler> _accessTokenGrantHandlers =
 		new ArrayList<>();
+	private volatile boolean _activated;
 	private boolean _blockUnsecureRequests;
 	private BundleContext _bundleContext;
 	private boolean _canSupportPublicClients;

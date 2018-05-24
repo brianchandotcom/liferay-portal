@@ -1,7 +1,7 @@
 <#if !entries?has_content>
 	<#if themeDisplay.isSignedIn()>
 		<div class="alert alert-info">
-			<@liferay.language key="there-are-no-pages-to-display-for-the-current-page-level" />
+			<@liferay.language key="_there-are-no-menu-items-to-display" />
 		</div>
 	</#if>
 <#else>

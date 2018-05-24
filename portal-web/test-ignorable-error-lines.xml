@@ -168,10 +168,6 @@
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-66736, temporary workaround as the issue does not always occur">
-			<contains></contains>
-			<matches>.*Unable to process message.*product-app-theme.*</matches>
-		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>

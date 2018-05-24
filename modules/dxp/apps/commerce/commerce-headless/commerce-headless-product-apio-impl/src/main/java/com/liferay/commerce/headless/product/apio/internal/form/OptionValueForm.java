@@ -25,43 +25,43 @@ import java.util.Map;
  */
 public class OptionValueForm {
 
-    public static Form<OptionValueForm> buildForm(
-            Form.Builder<OptionValueForm> formBuilder) {
+	public static Form<OptionValueForm> buildForm(
+		Form.Builder<OptionValueForm> formBuilder) {
 
-        return formBuilder.title(
-                __ -> "The option value form"
-        ).description(
-                __ -> "This form can be used to create a option value"
-        ).constructor(
-                OptionValueForm::new
-        ).addRequiredString(
-                "name", OptionValueForm::_setName
-        ).addRequiredString(
-                "key", OptionValueForm::_setKey
-        ).build();
-    }
+		return formBuilder.title(
+			__ -> "The option value form"
+		).description(
+			__ -> "This form can be used to create a option value"
+		).constructor(
+			OptionValueForm::new
+		).addRequiredString(
+			"name", OptionValueForm::_setName
+		).addRequiredString(
+			"key", OptionValueForm::_setKey
+		).build();
+	}
 
-    public String getName() {
-        return _name;
-    }
+	public String getKey() {
+		return _key;
+	}
 
-    public Map<Locale, String> getNameMap() {
-        return Collections.singletonMap(Locale.getDefault(), _name);
-    }
+	public String getName() {
+		return _name;
+	}
 
-    public String getKey() {
-        return _key;
-    }
+	public Map<Locale, String> getNameMap() {
+		return Collections.singletonMap(Locale.getDefault(), _name);
+	}
 
-    private void _setName(String name) {
-        _name = name;
-    }
+	private void _setKey(String key) {
+		_key = key;
+	}
 
-    private void _setKey(String key) {
-        _key = key;
-    }
+	private void _setName(String name) {
+		_name = name;
+	}
 
-    private String _name;
-    private String _key;
+	private String _key;
+	private String _name;
 
 }

@@ -25,69 +25,69 @@ import java.util.Map;
  */
 public class OptionForm {
 
-    public static Form<OptionForm> buildForm(
-            Form.Builder<OptionForm> formBuilder) {
+	public static Form<OptionForm> buildForm(
+		Form.Builder<OptionForm> formBuilder) {
 
-        return formBuilder.title(
-                __ -> "The option form"
-        ).description(
-                __ -> "This form can be used to create a option"
-        ).constructor(
-                OptionForm::new
-        ).addRequiredString(
-                "name", OptionForm::_setName
-        ).addOptionalString(
-                "description", OptionForm::_setDescription
-        ).addRequiredString(
-                "fieldType", OptionForm::_setFieldType
-        ).addRequiredString(
-                "key", OptionForm::_setKey
-        ).build();
-    }
+		return formBuilder.title(
+			__ -> "The option form"
+		).description(
+			__ -> "This form can be used to create a option"
+		).constructor(
+			OptionForm::new
+		).addRequiredString(
+			"name", OptionForm::_setName
+		).addOptionalString(
+			"description", OptionForm::_setDescription
+		).addRequiredString(
+			"fieldType", OptionForm::_setFieldType
+		).addRequiredString(
+			"key", OptionForm::_setKey
+		).build();
+	}
 
-    public String getName() {
-        return _name;
-    }
+	public Map<Locale, String> getDescriptionMap() {
+		return Collections.singletonMap(Locale.getDefault(), _descritpion);
+	}
 
-    public Map<Locale, String> getNameMap() {
-        return Collections.singletonMap(Locale.getDefault(), _name);
-    }
+	public String getDescritpion() {
+		return _descritpion;
+	}
 
-    public String getDescritpion() {
-        return _descritpion;
-    }
+	public String getFieldType() {
+		return _fieldType;
+	}
 
-    public Map<Locale, String> getDescriptionMap() {
-        return Collections.singletonMap(Locale.getDefault(), _descritpion);
-    }
+	public String getKey() {
+		return _key;
+	}
 
-    public String getFieldType() {
-        return _fieldType;
-    }
+	public String getName() {
+		return _name;
+	}
 
-    public String getKey() {
-        return _key;
-    }
+	public Map<Locale, String> getNameMap() {
+		return Collections.singletonMap(Locale.getDefault(), _name);
+	}
 
-    private void _setName(String name) {
-        _name = name;
-    }
+	private void _setDescription(String descritpion) {
+		_descritpion = descritpion;
+	}
 
-    private void _setDescription(String descritpion) {
-        _descritpion = descritpion;
-    }
+	private void _setFieldType(String fieldType) {
+		_fieldType = fieldType;
+	}
 
-    private void _setFieldType(String fieldType) {
-        _fieldType = fieldType;
-    }
+	private void _setKey(String key) {
+		_key = key;
+	}
 
-    private void _setKey(String key) {
-        _key = key;
-    }
+	private void _setName(String name) {
+		_name = name;
+	}
 
-    private String _name;
-    private String _descritpion;
-    private String _fieldType;
-    private String _key;
+	private String _descritpion;
+	private String _fieldType;
+	private String _key;
+	private String _name;
 
 }

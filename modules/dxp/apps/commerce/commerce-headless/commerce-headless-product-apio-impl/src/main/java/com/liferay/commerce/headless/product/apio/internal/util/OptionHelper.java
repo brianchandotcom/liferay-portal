@@ -29,128 +29,141 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
- * @author Rodrigo Guedes de Souza 
+ * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true, service = OptionHelper.class)
 public class OptionHelper {
 
-    public CPOption createCPOption(Long webSiteId, Map<Locale, String> nameMap,
-                   Map<Locale, String> descriptionMap, String fieldType, String key) throws PortalException {
+	public SearchContext buildSearchContext(
+		String entryClassPK, String keywords, int start, int end, Sort sort,
+		ServiceContext serviceContext) {
 
-        ServiceContext serviceContext = _getServiceContext(webSiteId);
+		SearchContext searchContext = new SearchContext();
 
-        return _cpOptionService.addCPOption(nameMap, descriptionMap, fieldType,
-                false, false, false, key, serviceContext);
-    }
+		Map<String, Serializable> attributes = new HashMap<>();
 
-    public SearchContext buildSearchContext(
-            String entryClassPK, String keywords, int start, int end, Sort sort,
-            ServiceContext serviceContext) {
+		if (Validator.isNotNull(entryClassPK)) {
+			attributes.put(Field.ENTRY_CLASS_PK, entryClassPK);
+		}
 
-        SearchContext searchContext = new SearchContext();
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
 
-        Map<String, Serializable> attributes = new HashMap<>();
+		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 
-        if (Validator.isNotNull(entryClassPK)) {
-            attributes.put(Field.ENTRY_CLASS_PK, entryClassPK);
-        }
+		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-        if (Validator.isNotNull(keywords)) {
-            searchContext.setKeywords(keywords);
-        }
+		params.put("keywords", keywords);
 
-        attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
+		attributes.put("params", params);
 
-        LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+		searchContext.setAttributes(attributes);
 
-        params.put("keywords", keywords);
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+		searchContext.setCompanyId(serviceContext.getCompanyId());
 
-        attributes.put("params", params);
+		long groupId = serviceContext.getScopeGroupId();
 
-        searchContext.setAttributes(attributes);
+		if (groupId != 0) {
+			searchContext.setGroupIds(new long[] {groupId});
+		}
 
-        searchContext.setStart(start);
-        searchContext.setEnd(end);
-        searchContext.setCompanyId(serviceContext.getCompanyId());
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-        long groupId = serviceContext.getScopeGroupId();
+		queryConfig.addSelectedFieldNames(
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
+			Field.SCOPE_GROUP_ID, Field.UID, CPOptionIndexer.FIELD_KEY,
+			CPOptionIndexer.FIELD_OPTION_VALUE_NAME,
+			CPOptionIndexer.FIELD_DDM_FORM_FIELD_TYPE_NAME);
 
-        if (groupId != 0) {
-            searchContext.setGroupIds(new long[] {groupId});
-        }
+		queryConfig.setLocale(serviceContext.getLocale());
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
 
-        QueryConfig queryConfig = searchContext.getQueryConfig();
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
 
-        queryConfig.addSelectedFieldNames(
-                Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
-                Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
-                Field.SCOPE_GROUP_ID, Field.UID, CPOptionIndexer.FIELD_KEY,
-                CPOptionIndexer.FIELD_OPTION_VALUE_NAME,
-                CPOptionIndexer.FIELD_DDM_FORM_FIELD_TYPE_NAME);
+		return searchContext;
+	}
 
-        queryConfig.setLocale(serviceContext.getLocale());
-        queryConfig.setHighlightEnabled(false);
-        queryConfig.setScoreEnabled(false);
+	public CPOption createCPOption(
+			Long webSiteId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String fieldType, String key)
+		throws PortalException {
 
-        if (sort != null) {
-            searchContext.setSorts(sort);
-        }
+		ServiceContext serviceContext = _getServiceContext(webSiteId);
 
-        return searchContext;
-    }
+		return _cpOptionService.addCPOption(
+			nameMap, descriptionMap, fieldType, false, false, false, key,
+			serviceContext);
+	}
 
-    public CPOption updateCPOption(Long cpOptionId, Map<Locale, String> nameMap,
-           Map<Locale, String> descriptionMap,
-           String fieldType, String key) throws PortalException {
+	public CPOption updateCPOption(
+			Long cpOptionId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String fieldType, String key)
+		throws PortalException {
 
-        CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
-        cpOption.setNameMap(nameMap);
-        cpOption.setDescriptionMap(descriptionMap);
-        cpOption.setDDMFormFieldTypeName(fieldType);
-        cpOption.setKey(key);
+		CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
 
-        ServiceContext serviceContext = _getServiceContext(cpOption.getGroupId());
+		cpOption.setNameMap(nameMap);
+		cpOption.setDescriptionMap(descriptionMap);
+		cpOption.setDDMFormFieldTypeName(fieldType);
+		cpOption.setKey(key);
 
-        return _cpOptionService.updateCPOption(cpOptionId, cpOption.getNameMap(), cpOption.getDescriptionMap(), cpOption.getDDMFormFieldTypeName(),
-                cpOption.getFacetable(), cpOption.getRequired(), cpOption.getSkuContributor(), cpOption.getKey(), serviceContext);
-    }
+		ServiceContext serviceContext = _getServiceContext(
+			cpOption.getGroupId());
 
-    private ServiceContext _getServiceContext(Long groupId) throws PortalException {
-        User user = _userLocalService.getUserById(
-                PrincipalThreadLocal.getUserId());
+		return _cpOptionService.updateCPOption(
+			cpOptionId, cpOption.getNameMap(), cpOption.getDescriptionMap(),
+			cpOption.getDDMFormFieldTypeName(), cpOption.getFacetable(),
+			cpOption.getRequired(), cpOption.getSkuContributor(),
+			cpOption.getKey(), serviceContext);
+	}
 
-        ServiceContext serviceContext = new ServiceContext();
+	private ServiceContext _getServiceContext(Long groupId)
+		throws PortalException {
 
-        serviceContext.setAddGroupPermissions(true);
-        serviceContext.setAddGuestPermissions(true);
-        serviceContext.setCompanyId(user.getCompanyId());
-        serviceContext.setTimeZone(user.getTimeZone());
-        serviceContext.setUserId(user.getUserId());
-        serviceContext.setScopeGroupId(groupId);
+		User user = _userLocalService.getUserById(
+			PrincipalThreadLocal.getUserId());
 
-        return serviceContext;
-    }
+		ServiceContext serviceContext = new ServiceContext();
 
-    @Reference
-    private CPDefinitionService _cpDefinitionService;
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setTimeZone(user.getTimeZone());
+		serviceContext.setUserId(user.getUserId());
+		serviceContext.setScopeGroupId(groupId);
 
-    @Reference
-    private ProductIndexerHelper _productIndexerHelper;
+		return serviceContext;
+	}
 
-    @Reference
-    private CPOptionService _cpOptionService;
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
-    @Reference
-    private UserLocalService _userLocalService;
+	@Reference
+	private CPOptionService _cpOptionService;
+
+	@Reference
+	private ProductIndexerHelper _productIndexerHelper;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

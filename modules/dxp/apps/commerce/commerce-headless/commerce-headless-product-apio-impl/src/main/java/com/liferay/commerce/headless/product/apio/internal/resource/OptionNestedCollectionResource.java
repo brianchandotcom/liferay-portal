@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -45,205 +44,205 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.site.apio.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-import javax.xml.ws.Service;
-import java.util.Collections;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Rodrigo Guedes de Souza 
+ * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true)
 public class OptionNestedCollectionResource
-        implements
-        NestedCollectionResource<Document, Long,
-                OptionIdentifier, Long, WebSiteIdentifier> {
+	implements
+		NestedCollectionResource<Document, Long, OptionIdentifier, Long,
+			WebSiteIdentifier> {
 
-    @Override
-    public NestedCollectionRoutes<Document, Long> collectionRoutes(
-            NestedCollectionRoutes.Builder<Document, Long> builder) {
+	@Override
+	public NestedCollectionRoutes<Document, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Document, Long> builder) {
 
-        return builder.addGetter(
-            this::_getPageItems
-        ).addCreator(
-            this::_addCPOption,
-            _hasPermission.forAddingEntries(CPOption.class),
-            OptionForm::buildForm
-        ).build();
+		return builder.addGetter(
+			this::_getPageItems
+		).addCreator(
+			this::_addCPOption, _hasPermission.forAddingEntries(CPOption.class),
+			OptionForm::buildForm
+		).build();
+	}
 
-    }
+	@Override
+	public String getName() {
+		return "options";
+	}
 
-    @Override
-    public String getName() {
-        return "options";
-    }
+	@Override
+	public ItemRoutes<Document, Long> itemRoutes(
+		ItemRoutes.Builder<Document, Long> builder) {
 
-    @Override
-    public ItemRoutes<Document, Long> itemRoutes(
-            ItemRoutes.Builder<Document, Long> builder) {
+		return builder.addGetter(
+			this::_getOption
+		).addRemover(
+			idempotent(_cpOptionService::deleteCPOption),
+			_hasPermission.forDeleting(CPOption.class)
+		).addUpdater(
+			this::_updateCPOption, _hasPermission.forUpdating(CPOption.class),
+			OptionForm::buildForm
+		).build();
+	}
 
-        return builder.addGetter(
-            this::_getOption
-        ).addRemover(
-            idempotent(_cpOptionService::deleteCPOption),
-            _hasPermission.forDeleting(CPOption.class)
-        ).addUpdater(
-            this::_updateCPOption,
-            _hasPermission.forUpdating(CPOption.class),
-            OptionForm::buildForm
-        ).build();
+	@Override
+	public Representor<Document, Long> representor(
+		Representor.Builder<Document, Long> builder) {
 
-    }
+		return builder.types(
+			"Option"
+		).identifier(
+			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
+		).addBidirectionalModel(
+			"webSite", "options", WebSiteIdentifier.class,
+			document -> GetterUtil.getLong(document.get(Field.GROUP_ID))
+		).addString(
+			"name", document -> document.get(Field.NAME)
+		).addString(
+			"fieldType",
+			document ->
+				document.get(CPOptionIndexer.FIELD_DDM_FORM_FIELD_TYPE_NAME)
+		).addString(
+			"key", document -> document.get(CPOptionIndexer.FIELD_KEY)
+		).build();
+	}
 
-    @Override
-    public Representor<Document, Long> representor(Representor.Builder<Document, Long> builder) {
-        return builder.types(
-            "Option"
-        ).identifier(
-            document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
-        ).addBidirectionalModel(
-            "webSite", "options", WebSiteIdentifier.class,
-            document -> GetterUtil.getLong(document.get(Field.GROUP_ID))
-        ).addString(
-            "name", document -> document.get(Field.NAME)
-        ).addString(
-            "fieldType", document -> document.get(CPOptionIndexer.FIELD_DDM_FORM_FIELD_TYPE_NAME)
-        ).addString(
-                "key", document -> document.get(CPOptionIndexer.FIELD_KEY)
-        ).build();
-    }
+	private Document _addCPOption(Long webSiteId, OptionForm optionForm) {
+		try {
+			CPOption cpOption = _optionHelper.createCPOption(
+				webSiteId, optionForm.getNameMap(),
+				optionForm.getDescriptionMap(), optionForm.getFieldType(),
+				optionForm.getKey());
 
-    private PageItems<Document> _getPageItems(
-            Pagination pagination, Long webSiteId) {
+			Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
+				CPOption.class);
 
-        try {
-            ServiceContext serviceContext =
-                    _productIndexerHelper.getServiceContext(webSiteId, new long[0]);
+			return indexer.getDocument(cpOption);
+		}
+		catch (CPOptionKeyException cpoke) {
+			throw new BadRequestException(
+				String.format(
+					"CPOption key '%s' already been defined",
+					optionForm.getKey()),
+				cpoke);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-            SearchContext searchContext =
-                    _optionHelper.buildSearchContext(
-                            null, null, pagination.getStartPosition(),
-                            pagination.getEndPosition(), null, serviceContext);
+	private Document _getOption(Long cpOptionId) {
+		try {
+			ServiceContext serviceContext =
+				_productIndexerHelper.getServiceContext();
 
-            Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-                    CPOption.class);
+			SearchContext searchContext = _optionHelper.buildSearchContext(
+				String.valueOf(cpOptionId), String.valueOf(cpOptionId),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null, serviceContext);
 
-            Hits hits = indexer.search(searchContext);
+			Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
+				CPOption.class);
 
-            List<Document> documents = Collections.<Document>emptyList();
+			Hits hits = indexer.search(searchContext);
 
-            if (hits.getLength() > 0) {
-                documents = hits.toList();
-            }
+			if (hits.getLength() == 0) {
+				throw new NotFoundException(
+					"Unable to find option with ID " + cpOptionId);
+			}
 
-            return new PageItems<>(documents, hits.getLength());
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			if (hits.getLength() > 1) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"More than one option found with ID " + cpOptionId);
+				}
 
-    private Document _getOption(Long cpOptionId) {
-        try {
-            ServiceContext serviceContext =
-                _productIndexerHelper.getServiceContext();
+				CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
 
-            SearchContext searchContext =
-                _optionHelper.buildSearchContext(
-                    String.valueOf(cpOptionId), String.valueOf(cpOptionId),
-                    QueryUtil.ALL_POS, QueryUtil.ALL_POS, null, serviceContext);
+				return indexer.getDocument(cpOption);
+			}
 
-            Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-                    CPOption.class);
+			List<Document> documents = hits.toList();
 
-            Hits hits = indexer.search(searchContext);
+			return documents.get(0);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-            if (hits.getLength() == 0) {
-                throw new NotFoundException(
-                    "Unable to find option with ID " + cpOptionId);
-            }
+	private PageItems<Document> _getPageItems(
+		Pagination pagination, Long webSiteId) {
 
-            if (hits.getLength() > 1) {
-                if (_log.isWarnEnabled()) {
-                    _log.warn(
-                        "More than one option found with ID " +
-                            cpOptionId);
-                }
+		try {
+			ServiceContext serviceContext =
+				_productIndexerHelper.getServiceContext(webSiteId, new long[0]);
 
-                CPOption cpOption = _cpOptionService.getCPOption(
-                        cpOptionId);
+			SearchContext searchContext = _optionHelper.buildSearchContext(
+				null, null, pagination.getStartPosition(),
+				pagination.getEndPosition(), null, serviceContext);
 
-                return indexer.getDocument(cpOption);
-            }
+			Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
+				CPOption.class);
 
-            List<Document> documents = hits.toList();
+			Hits hits = indexer.search(searchContext);
 
-            return documents.get(0);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			List<Document> documents = Collections.<Document>emptyList();
 
-    private Document _updateCPOption(Long cpOptionId, OptionForm optionForm) {
-        try {
+			if (hits.getLength() > 0) {
+				documents = hits.toList();
+			}
 
-            CPOption cpOption = _optionHelper.updateCPOption(cpOptionId, optionForm.getNameMap(),
-                    optionForm.getDescriptionMap(), optionForm.getFieldType(),
-                    optionForm.getKey());
+			return new PageItems<>(documents, hits.getLength());
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-            Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-                    CPOption.class);
+	private Document _updateCPOption(Long cpOptionId, OptionForm optionForm) {
+		try {
+			CPOption cpOption = _optionHelper.updateCPOption(
+				cpOptionId, optionForm.getNameMap(),
+				optionForm.getDescriptionMap(), optionForm.getFieldType(),
+				optionForm.getKey());
 
-            return indexer.getDocument(cpOption);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
+				CPOption.class);
 
-    private Document _addCPOption(Long webSiteId, OptionForm optionForm) {
-        try {
+			return indexer.getDocument(cpOption);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-            CPOption cpOption = _optionHelper.createCPOption(webSiteId, optionForm.getNameMap(),
-                    optionForm.getDescriptionMap(), optionForm.getFieldType(),
-                    optionForm.getKey());
+	private static final Log _log = LogFactoryUtil.getLog(
+		OptionNestedCollectionResource.class);
 
-            Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-                    CPOption.class);
+	@Reference
+	private CPOptionService _cpOptionService;
 
-            return indexer.getDocument(cpOption);
-        }
-        catch (CPOptionKeyException cpke) {
-            throw new BadRequestException(
-                String.format("CPOption key '%s' already been defined", optionForm.getKey()), cpke);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+	@Reference
+	private HasPermission _hasPermission;
 
-    private static final Log _log = LogFactoryUtil.getLog(
-            OptionNestedCollectionResource.class);
+	@Reference
+	private OptionHelper _optionHelper;
 
-    @Reference
-    private HasPermission _hasPermission;
+	@Reference
+	private ProductDefinitionHelper _productDefinitionHelper;
 
-    @Reference
-    private CPOptionService _cpOptionService;
-
-    @Reference
-    private ProductDefinitionHelper _productDefinitionHelper;
-
-    @Reference
-    private ProductIndexerHelper _productIndexerHelper;
-
-    @Reference
-    private OptionHelper _optionHelper;
+	@Reference
+	private ProductIndexerHelper _productIndexerHelper;
 
 }

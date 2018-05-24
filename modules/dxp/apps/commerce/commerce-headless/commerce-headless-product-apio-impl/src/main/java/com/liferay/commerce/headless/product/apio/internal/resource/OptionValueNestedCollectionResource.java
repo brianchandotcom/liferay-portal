@@ -45,199 +45,214 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-import java.util.Collections;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true)
 public class OptionValueNestedCollectionResource
-        implements
-        NestedCollectionResource<Document, Long,
-                OptionValueIdentifier, Long, OptionIdentifier> {
+	implements
+		NestedCollectionResource<Document, Long, OptionValueIdentifier, Long,
+			OptionIdentifier> {
 
-    @Override
-    public NestedCollectionRoutes<Document, Long> collectionRoutes(NestedCollectionRoutes.Builder<Document, Long> builder) {
-        return builder.addGetter(
-            this::_getPageItems
-        ).addCreator(
-            this::_addCPOptionValue,
-            _hasPermission.forAddingEntries(CPOptionValue.class),
-            OptionValueForm::buildForm
-        ).build();
-    }
+	@Override
+	public NestedCollectionRoutes<Document, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<Document, Long> builder) {
 
-    @Override
-    public String getName() {
-        return "option-values";
-    }
+		return builder.addGetter(
+			this::_getPageItems
+		).addCreator(
+			this::_addCPOptionValue,
+			_hasPermission.forAddingEntries(CPOptionValue.class),
+			OptionValueForm::buildForm
+		).build();
+	}
 
-    @Override
-    public ItemRoutes<Document, Long> itemRoutes(ItemRoutes.Builder<Document, Long> builder) {
+	@Override
+	public String getName() {
+		return "option-values";
+	}
 
-        return builder.addGetter(
-            this::_getOptionValue
-        ).addRemover(
-            idempotent(_cpOptionValueService::deleteCPOptionValue),
-            _hasPermission.forDeleting(CPOptionValue.class)
-        ).addUpdater(
-            this::_updateCPOptionValue,
-            _hasPermission.forUpdating(CPOptionValue.class),
-            OptionValueForm::buildForm
-        ).build();
+	@Override
+	public ItemRoutes<Document, Long> itemRoutes(
+		ItemRoutes.Builder<Document, Long> builder) {
 
-    }
+		return builder.addGetter(
+			this::_getOptionValue
+		).addRemover(
+			idempotent(_cpOptionValueService::deleteCPOptionValue),
+			_hasPermission.forDeleting(CPOptionValue.class)
+		).addUpdater(
+			this::_updateCPOptionValue,
+			_hasPermission.forUpdating(CPOptionValue.class),
+			OptionValueForm::buildForm
+		).build();
+	}
 
-    @Override
-    public Representor<Document, Long> representor(Representor.Builder<Document, Long> builder) {
-        return builder.types(
-            "OptionValue"
-        ).identifier(
-            document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
-        ).addBidirectionalModel(
-            "option", "values", OptionIdentifier.class,
-            document -> GetterUtil.getLong(document.get(CPOptionValueIndexer.FIELD_CP_OPTION_ID))
-        ).addString(
-            "name", document -> document.get(Field.NAME)
-        ).addString(
-            "key", document -> document.get(CPOptionValueIndexer.FIELD_KEY)
-        ).build();
-    }
+	@Override
+	public Representor<Document, Long> representor(
+		Representor.Builder<Document, Long> builder) {
 
-    private PageItems<Document> _getPageItems(
-            Pagination pagination, Long cpOptionId) {
+		return builder.types(
+			"OptionValue"
+		).identifier(
+			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
+		).addBidirectionalModel(
+			"option", "values", OptionIdentifier.class,
+			document -> GetterUtil.getLong(
+				document.get(CPOptionValueIndexer.FIELD_CP_OPTION_ID))
+		).addString(
+			"name", document -> document.get(Field.NAME)
+		).addString(
+			"key", document -> document.get(CPOptionValueIndexer.FIELD_KEY)
+		).build();
+	}
 
-        try {
+	private Document _addCPOptionValue(
+		Long cpOptionId, OptionValueForm optionValueForm) {
 
-            CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
+		try {
+			CPOptionValue cpOptionValue =
+				_optionValueHelper.createCPOptionValue(
+					cpOptionId, optionValueForm.getNameMap(),
+					optionValueForm.getKey());
 
-            ServiceContext serviceContext =
-                _productIndexerHelper.getServiceContext(cpOption.getGroupId(), new long[0]);
+			Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
+				CPOptionValue.class);
 
-            SearchContext searchContext =
-                _optionValueHelper.buildSearchContext(
-                    null, String.valueOf(cpOptionId), null, pagination.getStartPosition(),
-                    pagination.getEndPosition(), null, serviceContext);
+			return indexer.getDocument(cpOptionValue);
+		}
+		catch (CPOptionValueKeyException cpovke) {
+			throw new BadRequestException(
+				String.format(
+					"CPOptionValue key '%s' already been defined",
+					optionValueForm.getKey()),
+				cpovke);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-            Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-                    CPOptionValue.class);
+	private Document _getOptionValue(Long cpOptionValueId) {
+		try {
+			ServiceContext serviceContext =
+				_productIndexerHelper.getServiceContext();
 
-            Hits hits = indexer.search(searchContext);
+			SearchContext searchContext = _optionValueHelper.buildSearchContext(
+				String.valueOf(cpOptionValueId), null, null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null, serviceContext);
 
-            List<Document> documents = Collections.<Document>emptyList();
+			Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
+				CPOptionValue.class);
 
-            if (hits.getLength() > 0) {
-                documents = hits.toList();
-            }
+			Hits hits = indexer.search(searchContext);
 
-            return new PageItems<>(documents, hits.getLength());
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			if (hits.getLength() == 0) {
+				throw new NotFoundException(
+					"Unable to find option value with ID " + cpOptionValueId);
+			}
 
-    private Document _getOptionValue(Long cpOptionValueId) {
-        try {
-            ServiceContext serviceContext =
-                    _productIndexerHelper.getServiceContext();
+			if (hits.getLength() > 1) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"More than one option value found with ID " +
+							cpOptionValueId);
+				}
 
-            SearchContext searchContext =
-                    _optionValueHelper.buildSearchContext(
-                            String.valueOf(cpOptionValueId), null, null,
-                            QueryUtil.ALL_POS, QueryUtil.ALL_POS, null, serviceContext);
+				CPOptionValue cpOptionValue =
+					_cpOptionValueService.getCPOptionValue(cpOptionValueId);
 
-            Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-                    CPOptionValue.class);
+				return indexer.getDocument(cpOptionValue);
+			}
 
-            Hits hits = indexer.search(searchContext);
+			List<Document> documents = hits.toList();
 
-            if (hits.getLength() == 0) {
-                throw new NotFoundException(
-                        "Unable to find option value with ID " + cpOptionValueId);
-            }
+			return documents.get(0);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-            if (hits.getLength() > 1) {
-                if (_log.isWarnEnabled()) {
-                    _log.warn(
-                            "More than one option value found with ID " +
-                                    cpOptionValueId);
-                }
+	private PageItems<Document> _getPageItems(
+		Pagination pagination, Long cpOptionId) {
 
-                CPOptionValue cpOptionValue = _cpOptionValueService.getCPOptionValue(
-                        cpOptionValueId);
+		try {
+			CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
 
-                return indexer.getDocument(cpOptionValue);
-            }
+			ServiceContext serviceContext =
+				_productIndexerHelper.getServiceContext(
+					cpOption.getGroupId(), new long[0]);
 
-            List<Document> documents = hits.toList();
+			SearchContext searchContext = _optionValueHelper.buildSearchContext(
+				null, String.valueOf(cpOptionId), null,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				null, serviceContext);
 
-            return documents.get(0);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
+				CPOptionValue.class);
 
-    private Document _addCPOptionValue(Long cpOptionId, OptionValueForm optionValueForm) {
-        try {
+			Hits hits = indexer.search(searchContext);
 
-            CPOptionValue cpOptionValue = _optionValueHelper.createCPOptionValue(cpOptionId, optionValueForm.getNameMap(),
-                    optionValueForm.getKey());
+			List<Document> documents = Collections.<Document>emptyList();
 
-            Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-                    CPOptionValue.class);
+			if (hits.getLength() > 0) {
+				documents = hits.toList();
+			}
 
-            return indexer.getDocument(cpOptionValue);
-        }
-        catch (CPOptionValueKeyException cpke) {
-            throw new BadRequestException(
-                    String.format("CPOptionValue key '%s' already been defined", optionValueForm.getKey()), cpke);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			return new PageItems<>(documents, hits.getLength());
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-    private Document _updateCPOptionValue(Long cpOptionValueId, OptionValueForm optionValueForm) {
-        try {
+	private Document _updateCPOptionValue(
+		Long cpOptionValueId, OptionValueForm optionValueForm) {
 
-            CPOptionValue cpOptionValue = _optionValueHelper.updateCPOptionValue(cpOptionValueId, optionValueForm.getNameMap(),
-                    optionValueForm.getKey());
+		try {
+			CPOptionValue cpOptionValue =
+				_optionValueHelper.updateCPOptionValue(
+					cpOptionValueId, optionValueForm.getNameMap(),
+					optionValueForm.getKey());
 
-            Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-                    CPOptionValue.class);
+			Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
+				CPOptionValue.class);
 
-            return indexer.getDocument(cpOptionValue);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+			return indexer.getDocument(cpOptionValue);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-    private static final Log _log = LogFactoryUtil.getLog(
-            OptionValueNestedCollectionResource.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		OptionValueNestedCollectionResource.class);
 
-    @Reference
-    private HasPermission _hasPermission;
+	@Reference
+	private CPOptionService _cpOptionService;
 
-    @Reference
-    private ProductIndexerHelper _productIndexerHelper;
+	@Reference
+	private CPOptionValueService _cpOptionValueService;
 
-    @Reference
-    private CPOptionService _cpOptionService;
+	@Reference
+	private HasPermission _hasPermission;
 
-    @Reference
-    private CPOptionValueService _cpOptionValueService;
+	@Reference
+	private OptionValueHelper _optionValueHelper;
 
-    @Reference
-    private OptionValueHelper _optionValueHelper;
+	@Reference
+	private ProductIndexerHelper _productIndexerHelper;
 
 }

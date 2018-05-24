@@ -102,6 +102,10 @@ public class CommercePriceEntryServiceUtil {
 		return getService().getCommercePriceEntriesCount(commercePriceListId);
 	}
 
+	public static int getCommercePriceEntriesCountByGroupId(long groupId) {
+		return getService().getCommercePriceEntriesCountByGroupId(groupId);
+	}
+
 	public static java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> getInstanceCommercePriceEntries(
 		long cpInstanceId, int start, int end) {
 		return getService()

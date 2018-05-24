@@ -287,6 +287,9 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommercePriceEntriesCount(long commercePriceListId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePriceEntriesCountByGroupId(long groupId);
+
 	/**
 	* Returns the commerce price entry with the primary key.
 	*

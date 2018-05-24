@@ -132,21 +132,6 @@ public class CommercePriceEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap fetchCommercePriceEntry(
-		long commercePriceEntryId) throws RemoteException {
-		try {
-			com.liferay.commerce.price.list.model.CommercePriceEntry returnValue =
-				CommercePriceEntryServiceUtil.fetchCommercePriceEntry(commercePriceEntryId);
-
-			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap[] fetchCommercePriceEntries(
 		long groupId, int start, int end) throws RemoteException {
 		try {
@@ -155,6 +140,21 @@ public class CommercePriceEntryServiceSoap {
 					start, end);
 
 			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap fetchCommercePriceEntry(
+		long commercePriceEntryId) throws RemoteException {
+		try {
+			com.liferay.commerce.price.list.model.CommercePriceEntry returnValue =
+				CommercePriceEntryServiceUtil.fetchCommercePriceEntry(commercePriceEntryId);
+
+			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -201,6 +201,20 @@ public class CommercePriceEntryServiceSoap {
 		throws RemoteException {
 		try {
 			int returnValue = CommercePriceEntryServiceUtil.getCommercePriceEntriesCount(commercePriceListId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommercePriceEntriesCountByGroupId(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = CommercePriceEntryServiceUtil.getCommercePriceEntriesCountByGroupId(groupId);
 
 			return returnValue;
 		}

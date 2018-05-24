@@ -98,6 +98,9 @@ public interface CommercePriceEntryService extends BaseService {
 	public int getCommercePriceEntriesCount(long commercePriceListId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePriceEntriesCountByGroupId(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceEntry> getInstanceCommercePriceEntries(
 		long cpInstanceId, int start, int end);
 

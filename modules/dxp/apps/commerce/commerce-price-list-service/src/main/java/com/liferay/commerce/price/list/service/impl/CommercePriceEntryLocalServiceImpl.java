@@ -173,19 +173,18 @@ public class CommercePriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommercePriceEntry> fetchCommercePriceEntries(
+		long groupId, int start, int end) {
+
+		return commercePriceEntryPersistence.findByGroupId(groupId, start, end);
+	}
+
+	@Override
 	public CommercePriceEntry fetchCommercePriceEntry(
 		long cpInstanceId, long commercePriceListId) {
 
 		return commercePriceEntryPersistence.fetchByC_C(
 			cpInstanceId, commercePriceListId);
-	}
-
-	@Override
-	public List<CommercePriceEntry> fetchCommercePriceEntries(
-		long groupId, int start, int end) {
-
-		return commercePriceEntryPersistence.findByGroupId(groupId, start, end);
-
 	}
 
 	@Override
@@ -209,6 +208,11 @@ public class CommercePriceEntryLocalServiceImpl
 	public int getCommercePriceEntriesCount(long commercePriceListId) {
 		return commercePriceEntryPersistence.countByCommercePriceListId(
 			commercePriceListId);
+	}
+
+	@Override
+	public int getCommercePriceEntriesCountByGroupId(long groupId) {
+		return commercePriceEntryPersistence.countByGroupId(groupId);
 	}
 
 	@Override

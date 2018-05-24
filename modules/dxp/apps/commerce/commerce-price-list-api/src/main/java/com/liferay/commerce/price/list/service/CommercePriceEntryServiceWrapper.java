@@ -103,6 +103,11 @@ public class CommercePriceEntryServiceWrapper
 	}
 
 	@Override
+	public int getCommercePriceEntriesCountByGroupId(long groupId) {
+		return _commercePriceEntryService.getCommercePriceEntriesCountByGroupId(groupId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.commerce.price.list.model.CommercePriceEntry> getInstanceCommercePriceEntries(
 		long cpInstanceId, int start, int end) {
 		return _commercePriceEntryService.getInstanceCommercePriceEntries(cpInstanceId,

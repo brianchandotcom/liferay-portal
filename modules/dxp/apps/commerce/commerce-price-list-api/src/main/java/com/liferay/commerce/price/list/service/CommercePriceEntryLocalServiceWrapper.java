@@ -341,6 +341,11 @@ public class CommercePriceEntryLocalServiceWrapper
 		return _commercePriceEntryLocalService.getCommercePriceEntriesCount(commercePriceListId);
 	}
 
+	@Override
+	public int getCommercePriceEntriesCountByGroupId(long groupId) {
+		return _commercePriceEntryLocalService.getCommercePriceEntriesCountByGroupId(groupId);
+	}
+
 	/**
 	* Returns the commerce price entry with the primary key.
 	*

@@ -103,19 +103,19 @@ public class CommercePriceEntryServiceImpl
 	}
 
 	@Override
-	public CommercePriceEntry fetchCommercePriceEntry(
-		long commercePriceEntryId) {
-
-		return commercePriceEntryLocalService.fetchCommercePriceEntry(
-			commercePriceEntryId);
-	}
-
-	@Override
 	public List<CommercePriceEntry> fetchCommercePriceEntries(
 		long groupId, int start, int end) {
 
 		return commercePriceEntryLocalService.fetchCommercePriceEntries(
 			groupId, start, end);
+	}
+
+	@Override
+	public CommercePriceEntry fetchCommercePriceEntry(
+		long commercePriceEntryId) {
+
+		return commercePriceEntryLocalService.fetchCommercePriceEntry(
+			commercePriceEntryId);
 	}
 
 	@Override
@@ -139,6 +139,12 @@ public class CommercePriceEntryServiceImpl
 	public int getCommercePriceEntriesCount(long commercePriceListId) {
 		return commercePriceEntryLocalService.getCommercePriceEntriesCount(
 			commercePriceListId);
+	}
+
+	@Override
+	public int getCommercePriceEntriesCountByGroupId(long groupId) {
+		return commercePriceEntryLocalService.
+			getCommercePriceEntriesCountByGroupId(groupId);
 	}
 
 	@Override

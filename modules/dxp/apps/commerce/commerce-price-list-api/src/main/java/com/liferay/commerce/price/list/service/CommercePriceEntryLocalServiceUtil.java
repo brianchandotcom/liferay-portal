@@ -322,6 +322,10 @@ public class CommercePriceEntryLocalServiceUtil {
 		return getService().getCommercePriceEntriesCount(commercePriceListId);
 	}
 
+	public static int getCommercePriceEntriesCountByGroupId(long groupId) {
+		return getService().getCommercePriceEntriesCountByGroupId(groupId);
+	}
+
 	/**
 	* Returns the commerce price entry with the primary key.
 	*

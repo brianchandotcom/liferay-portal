@@ -348,28 +348,28 @@ if (!roles.isEmpty()) {
 			var selectedScopeGroupIds = <portlet:namespace />form.querySelector('#<portlet:namespace />selectedScopeGroupIds');
 
 			if (currentScopeGroupIds && selectedScopeGroupIds) {
-				selectedScopeGroupIds.setAttribute('value', Liferay.Util.listSelect(currentScopeGroupIds);
+				selectedScopeGroupIds.setAttribute('value', Liferay.Util.listSelect(currentScopeGroupIds));
 			}
 
 			var currentScopeOrganizationIds = <portlet:namespace />form.querySelector('#<portlet:namespace />currentScopeOrganizationIds');
 			var selectedScopeOrganizationIds = <portlet:namespace />form.querySelector('#<portlet:namespace />selectedScopeOrganizationIds');
 
 			if (currentScopeOrganizationIds && selectedScopeOrganizationIds) {
-				selectedScopeOrganizationIds.setAttribute('value', Liferay.Util.listSelect(currentScopeOrganizationIds);
+				selectedScopeOrganizationIds.setAttribute('value', Liferay.Util.listSelect(currentScopeOrganizationIds));
 			}
 
 			var currentScopeRoleIds = <portlet:namespace />form.querySelector('#<portlet:namespace />currentScopeRoleIds');
 			var selectedScopeRoleIds = <portlet:namespace />form.querySelector('#<portlet:namespace />selectedScopeRoleIds');
 
 			if (currentScopeRoleIds && selectedScopeRoleIds) {
-				selectedScopeRoleIds.setAttribute('value', Liferay.Util.listSelect(currentScopeRoleIds);
+				selectedScopeRoleIds.setAttribute('value', Liferay.Util.listSelect(currentScopeRoleIds));
 			}
 
 			var currentScopeUserGroupIds = <portlet:namespace />form.querySelector('#<portlet:namespace />selectedScopeUserGroupIds');
 			var selectedScopeUserGroupIds =<portlet:namespace />form.querySelector('#<portlet:namespace />currentScopeUserGroupIds');
 
 			if (currentScopeUserGroupIds && selectedScopeUserGroupIds) {
-				selectedScopeUserGroupIds.setAttribute('value', Liferay.Util.listSelect(currentScopeUserGroupIds);
+				selectedScopeUserGroupIds.setAttribute('value', Liferay.Util.listSelect(currentScopeUserGroupIds));
 			}
 
 			submitForm(<portlet:namespace />form);

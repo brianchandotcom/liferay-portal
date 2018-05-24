@@ -743,14 +743,6 @@ public class CommerceShippingMethodPersistenceImpl extends BasePersistenceImpl<C
 					result = commerceShippingMethod;
 
 					cacheResult(commerceShippingMethod);
-
-					if ((commerceShippingMethod.getGroupId() != groupId) ||
-							(commerceShippingMethod.getEngineKey() == null) ||
-							!commerceShippingMethod.getEngineKey()
-													   .equals(engineKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_E,
-							finderArgs, commerceShippingMethod);
-					}
 				}
 			}
 			catch (Exception e) {

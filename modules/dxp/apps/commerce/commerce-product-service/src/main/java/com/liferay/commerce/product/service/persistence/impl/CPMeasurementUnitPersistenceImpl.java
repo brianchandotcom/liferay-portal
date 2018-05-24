@@ -784,13 +784,6 @@ public class CPMeasurementUnitPersistenceImpl extends BasePersistenceImpl<CPMeas
 					result = cpMeasurementUnit;
 
 					cacheResult(cpMeasurementUnit);
-
-					if ((cpMeasurementUnit.getUuid() == null) ||
-							!cpMeasurementUnit.getUuid().equals(uuid) ||
-							(cpMeasurementUnit.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpMeasurementUnit);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2700,14 +2693,6 @@ public class CPMeasurementUnitPersistenceImpl extends BasePersistenceImpl<CPMeas
 					result = cpMeasurementUnit;
 
 					cacheResult(cpMeasurementUnit);
-
-					if ((cpMeasurementUnit.getGroupId() != groupId) ||
-							(cpMeasurementUnit.getKey() == null) ||
-							!cpMeasurementUnit.getKey().equals(key) ||
-							(cpMeasurementUnit.getType() != type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_K_T,
-							finderArgs, cpMeasurementUnit);
-					}
 				}
 			}
 			catch (Exception e) {

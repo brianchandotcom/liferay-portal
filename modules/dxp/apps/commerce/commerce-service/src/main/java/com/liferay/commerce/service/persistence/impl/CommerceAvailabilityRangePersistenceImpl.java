@@ -792,13 +792,6 @@ public class CommerceAvailabilityRangePersistenceImpl
 					result = commerceAvailabilityRange;
 
 					cacheResult(commerceAvailabilityRange);
-
-					if ((commerceAvailabilityRange.getUuid() == null) ||
-							!commerceAvailabilityRange.getUuid().equals(uuid) ||
-							(commerceAvailabilityRange.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceAvailabilityRange);
-					}
 				}
 			}
 			catch (Exception e) {

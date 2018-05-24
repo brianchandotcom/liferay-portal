@@ -787,13 +787,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					result = cpFriendlyURLEntry;
 
 					cacheResult(cpFriendlyURLEntry);
-
-					if ((cpFriendlyURLEntry.getUuid() == null) ||
-							!cpFriendlyURLEntry.getUuid().equals(uuid) ||
-							(cpFriendlyURLEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpFriendlyURLEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3551,17 +3544,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					result = cpFriendlyURLEntry;
 
 					cacheResult(cpFriendlyURLEntry);
-
-					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
-							(cpFriendlyURLEntry.getClassNameId() != classNameId) ||
-							(cpFriendlyURLEntry.getLanguageId() == null) ||
-							!cpFriendlyURLEntry.getLanguageId()
-												   .equals(languageId) ||
-							(cpFriendlyURLEntry.getUrlTitle() == null) ||
-							!cpFriendlyURLEntry.getUrlTitle().equals(urlTitle)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_L_U,
-							finderArgs, cpFriendlyURLEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3921,18 +3903,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					result = cpFriendlyURLEntry;
 
 					cacheResult(cpFriendlyURLEntry);
-
-					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
-							(cpFriendlyURLEntry.getClassNameId() != classNameId) ||
-							(cpFriendlyURLEntry.getClassPK() != classPK) ||
-							(cpFriendlyURLEntry.getLanguageId() == null) ||
-							!cpFriendlyURLEntry.getLanguageId()
-												   .equals(languageId) ||
-							(cpFriendlyURLEntry.getUrlTitle() == null) ||
-							!cpFriendlyURLEntry.getUrlTitle().equals(urlTitle)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_L_U,
-							finderArgs, cpFriendlyURLEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4284,17 +4254,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					result = cpFriendlyURLEntry;
 
 					cacheResult(cpFriendlyURLEntry);
-
-					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
-							(cpFriendlyURLEntry.getClassNameId() != classNameId) ||
-							(cpFriendlyURLEntry.getClassPK() != classPK) ||
-							(cpFriendlyURLEntry.getLanguageId() == null) ||
-							!cpFriendlyURLEntry.getLanguageId()
-												   .equals(languageId) ||
-							(cpFriendlyURLEntry.isMain() != main)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_L_M,
-							finderArgs, cpFriendlyURLEntry);
-					}
 				}
 			}
 			catch (Exception e) {

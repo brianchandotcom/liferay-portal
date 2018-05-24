@@ -1112,13 +1112,6 @@ public class CommerceUserSegmentEntryPersistenceImpl extends BasePersistenceImpl
 					result = commerceUserSegmentEntry;
 
 					cacheResult(commerceUserSegmentEntry);
-
-					if ((commerceUserSegmentEntry.getGroupId() != groupId) ||
-							(commerceUserSegmentEntry.getKey() == null) ||
-							!commerceUserSegmentEntry.getKey().equals(key)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_K,
-							finderArgs, commerceUserSegmentEntry);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -1323,13 +1323,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 					result = commerceAddressRestriction;
 
 					cacheResult(commerceAddressRestriction);
-
-					if ((commerceAddressRestriction.getClassNameId() != classNameId) ||
-							(commerceAddressRestriction.getClassPK() != classPK) ||
-							(commerceAddressRestriction.getCommerceCountryId() != commerceCountryId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_C,
-							finderArgs, commerceAddressRestriction);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -795,16 +795,6 @@ public class CommerceForecastEntryPersistenceImpl extends BasePersistenceImpl<Co
 					result = commerceForecastEntry;
 
 					cacheResult(commerceForecastEntry);
-
-					if ((commerceForecastEntry.getCompanyId() != companyId) ||
-							(commerceForecastEntry.getPeriod() != period) ||
-							(commerceForecastEntry.getTarget() != target) ||
-							(commerceForecastEntry.getCustomerId() != customerId) ||
-							(commerceForecastEntry.getSku() == null) ||
-							!commerceForecastEntry.getSku().equals(sku)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_P_T_C_S,
-							finderArgs, commerceForecastEntry);
-					}
 				}
 			}
 			catch (Exception e) {

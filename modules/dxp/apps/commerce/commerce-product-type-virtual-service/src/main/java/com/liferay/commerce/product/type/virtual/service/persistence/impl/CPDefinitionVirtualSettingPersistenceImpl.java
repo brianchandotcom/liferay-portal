@@ -792,13 +792,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 					result = cpDefinitionVirtualSetting;
 
 					cacheResult(cpDefinitionVirtualSetting);
-
-					if ((cpDefinitionVirtualSetting.getUuid() == null) ||
-							!cpDefinitionVirtualSetting.getUuid().equals(uuid) ||
-							(cpDefinitionVirtualSetting.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpDefinitionVirtualSetting);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1622,11 +1615,6 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 					result = cpDefinitionVirtualSetting;
 
 					cacheResult(cpDefinitionVirtualSetting);
-
-					if ((cpDefinitionVirtualSetting.getCPDefinitionId() != CPDefinitionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID,
-							finderArgs, cpDefinitionVirtualSetting);
-					}
 				}
 			}
 			catch (Exception e) {

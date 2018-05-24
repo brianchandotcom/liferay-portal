@@ -1310,13 +1310,6 @@ public class CommerceNotificationTemplateUserSegmentRelPersistenceImpl
 					result = commerceNotificationTemplateUserSegmentRel;
 
 					cacheResult(commerceNotificationTemplateUserSegmentRel);
-
-					if ((commerceNotificationTemplateUserSegmentRel.getCommerceNotificationTemplateId() != commerceNotificationTemplateId) ||
-							(commerceNotificationTemplateUserSegmentRel.getCommerceUserSegmentEntryId() != commerceUserSegmentEntryId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs,
-							commerceNotificationTemplateUserSegmentRel);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -751,12 +751,6 @@ public class CommerceForecastValuePersistenceImpl extends BasePersistenceImpl<Co
 					result = commerceForecastValue;
 
 					cacheResult(commerceForecastValue);
-
-					if ((commerceForecastValue.getCommerceForecastEntryId() != commerceForecastEntryId) ||
-							(commerceForecastValue.getTime() != time)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_T,
-							finderArgs, commerceForecastValue);
-					}
 				}
 			}
 			catch (Exception e) {

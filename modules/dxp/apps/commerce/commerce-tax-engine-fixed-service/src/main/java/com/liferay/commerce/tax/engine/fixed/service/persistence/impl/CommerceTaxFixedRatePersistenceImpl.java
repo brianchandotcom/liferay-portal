@@ -1272,12 +1272,6 @@ public class CommerceTaxFixedRatePersistenceImpl extends BasePersistenceImpl<Com
 					result = commerceTaxFixedRate;
 
 					cacheResult(commerceTaxFixedRate);
-
-					if ((commerceTaxFixedRate.getCPTaxCategoryId() != CPTaxCategoryId) ||
-							(commerceTaxFixedRate.getCommerceTaxMethodId() != commerceTaxMethodId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, commerceTaxFixedRate);
-					}
 				}
 			}
 			catch (Exception e) {

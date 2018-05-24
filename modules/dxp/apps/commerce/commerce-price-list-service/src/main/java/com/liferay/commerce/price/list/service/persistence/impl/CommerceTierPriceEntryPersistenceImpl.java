@@ -787,13 +787,6 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 					result = commerceTierPriceEntry;
 
 					cacheResult(commerceTierPriceEntry);
-
-					if ((commerceTierPriceEntry.getUuid() == null) ||
-							!commerceTierPriceEntry.getUuid().equals(uuid) ||
-							(commerceTierPriceEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceTierPriceEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3180,12 +3173,6 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 					result = commerceTierPriceEntry;
 
 					cacheResult(commerceTierPriceEntry);
-
-					if ((commerceTierPriceEntry.getCommercePriceEntryId() != commercePriceEntryId) ||
-							(commerceTierPriceEntry.getMinQuantity() != minQuantity)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_M,
-							finderArgs, commerceTierPriceEntry);
-					}
 				}
 			}
 			catch (Exception e) {

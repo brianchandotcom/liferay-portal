@@ -786,13 +786,6 @@ public class CommerceDiscountPersistenceImpl extends BasePersistenceImpl<Commerc
 					result = commerceDiscount;
 
 					cacheResult(commerceDiscount);
-
-					if ((commerceDiscount.getUuid() == null) ||
-							!commerceDiscount.getUuid().equals(uuid) ||
-							(commerceDiscount.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceDiscount);
-					}
 				}
 			}
 			catch (Exception e) {

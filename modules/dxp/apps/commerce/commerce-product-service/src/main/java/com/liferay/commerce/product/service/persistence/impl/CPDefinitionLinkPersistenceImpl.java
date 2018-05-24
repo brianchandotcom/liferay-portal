@@ -782,13 +782,6 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 					result = cpDefinitionLink;
 
 					cacheResult(cpDefinitionLink);
-
-					if ((cpDefinitionLink.getUuid() == null) ||
-							!cpDefinitionLink.getUuid().equals(uuid) ||
-							(cpDefinitionLink.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpDefinitionLink);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3871,14 +3864,6 @@ public class CPDefinitionLinkPersistenceImpl extends BasePersistenceImpl<CPDefin
 					result = cpDefinitionLink;
 
 					cacheResult(cpDefinitionLink);
-
-					if ((cpDefinitionLink.getCPDefinitionId1() != CPDefinitionId1) ||
-							(cpDefinitionLink.getCPDefinitionId2() != CPDefinitionId2) ||
-							(cpDefinitionLink.getType() == null) ||
-							!cpDefinitionLink.getType().equals(type)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C1_C2_T,
-							finderArgs, cpDefinitionLink);
-					}
 				}
 			}
 			catch (Exception e) {

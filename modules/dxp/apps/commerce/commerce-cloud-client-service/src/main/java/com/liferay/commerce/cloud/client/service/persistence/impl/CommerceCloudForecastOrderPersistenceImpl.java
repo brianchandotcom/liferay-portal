@@ -206,11 +206,6 @@ public class CommerceCloudForecastOrderPersistenceImpl
 					result = commerceCloudForecastOrder;
 
 					cacheResult(commerceCloudForecastOrder);
-
-					if ((commerceCloudForecastOrder.getCommerceOrderId() != commerceOrderId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_COMMERCEORDERID,
-							finderArgs, commerceCloudForecastOrder);
-					}
 				}
 			}
 			catch (Exception e) {

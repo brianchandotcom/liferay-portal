@@ -785,13 +785,6 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 					result = cpOptionCategory;
 
 					cacheResult(cpOptionCategory);
-
-					if ((cpOptionCategory.getUuid() == null) ||
-							!cpOptionCategory.getUuid().equals(uuid) ||
-							(cpOptionCategory.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpOptionCategory);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3010,13 +3003,6 @@ public class CPOptionCategoryPersistenceImpl extends BasePersistenceImpl<CPOptio
 					result = cpOptionCategory;
 
 					cacheResult(cpOptionCategory);
-
-					if ((cpOptionCategory.getGroupId() != groupId) ||
-							(cpOptionCategory.getKey() == null) ||
-							!cpOptionCategory.getKey().equals(key)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_K,
-							finderArgs, cpOptionCategory);
-					}
 				}
 			}
 			catch (Exception e) {

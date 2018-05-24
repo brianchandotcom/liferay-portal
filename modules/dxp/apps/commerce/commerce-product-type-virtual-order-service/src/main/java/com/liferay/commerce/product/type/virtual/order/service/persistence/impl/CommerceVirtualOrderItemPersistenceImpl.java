@@ -787,13 +787,6 @@ public class CommerceVirtualOrderItemPersistenceImpl extends BasePersistenceImpl
 					result = commerceVirtualOrderItem;
 
 					cacheResult(commerceVirtualOrderItem);
-
-					if ((commerceVirtualOrderItem.getUuid() == null) ||
-							!commerceVirtualOrderItem.getUuid().equals(uuid) ||
-							(commerceVirtualOrderItem.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceVirtualOrderItem);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1618,11 +1611,6 @@ public class CommerceVirtualOrderItemPersistenceImpl extends BasePersistenceImpl
 					result = commerceVirtualOrderItem;
 
 					cacheResult(commerceVirtualOrderItem);
-
-					if ((commerceVirtualOrderItem.getCommerceOrderItemId() != commerceOrderItemId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_COMMERCEORDERITEMID,
-							finderArgs, commerceVirtualOrderItem);
-					}
 				}
 			}
 			catch (Exception e) {

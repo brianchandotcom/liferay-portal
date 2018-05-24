@@ -782,13 +782,6 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 					result = commerceCountry;
 
 					cacheResult(commerceCountry);
-
-					if ((commerceCountry.getUuid() == null) ||
-							!commerceCountry.getUuid().equals(uuid) ||
-							(commerceCountry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceCountry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2118,12 +2111,6 @@ public class CommerceCountryPersistenceImpl extends BasePersistenceImpl<Commerce
 					result = commerceCountry;
 
 					cacheResult(commerceCountry);
-
-					if ((commerceCountry.getGroupId() != groupId) ||
-							(commerceCountry.getNumericISOCode() != numericISOCode)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_N,
-							finderArgs, commerceCountry);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -780,13 +780,6 @@ public class CPDefinitionPersistenceImpl extends BasePersistenceImpl<CPDefinitio
 					result = cpDefinition;
 
 					cacheResult(cpDefinition);
-
-					if ((cpDefinition.getUuid() == null) ||
-							!cpDefinition.getUuid().equals(uuid) ||
-							(cpDefinition.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpDefinition);
-					}
 				}
 			}
 			catch (Exception e) {

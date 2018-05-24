@@ -784,13 +784,6 @@ public class CommerceWishListPersistenceImpl extends BasePersistenceImpl<Commerc
 					result = commerceWishList;
 
 					cacheResult(commerceWishList);
-
-					if ((commerceWishList.getUuid() == null) ||
-							!commerceWishList.getUuid().equals(uuid) ||
-							(commerceWishList.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceWishList);
-					}
 				}
 			}
 			catch (Exception e) {

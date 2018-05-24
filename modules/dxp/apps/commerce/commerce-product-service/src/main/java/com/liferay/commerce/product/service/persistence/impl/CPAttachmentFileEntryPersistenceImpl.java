@@ -789,13 +789,6 @@ public class CPAttachmentFileEntryPersistenceImpl extends BasePersistenceImpl<CP
 					result = cpAttachmentFileEntry;
 
 					cacheResult(cpAttachmentFileEntry);
-
-					if ((cpAttachmentFileEntry.getUuid() == null) ||
-							!cpAttachmentFileEntry.getUuid().equals(uuid) ||
-							(cpAttachmentFileEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpAttachmentFileEntry);
-					}
 				}
 			}
 			catch (Exception e) {

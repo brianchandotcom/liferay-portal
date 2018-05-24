@@ -743,14 +743,6 @@ public class CommercePaymentMethodPersistenceImpl extends BasePersistenceImpl<Co
 					result = commercePaymentMethod;
 
 					cacheResult(commercePaymentMethod);
-
-					if ((commercePaymentMethod.getGroupId() != groupId) ||
-							(commercePaymentMethod.getEngineKey() == null) ||
-							!commercePaymentMethod.getEngineKey()
-													  .equals(engineKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_E,
-							finderArgs, commercePaymentMethod);
-					}
 				}
 			}
 			catch (Exception e) {

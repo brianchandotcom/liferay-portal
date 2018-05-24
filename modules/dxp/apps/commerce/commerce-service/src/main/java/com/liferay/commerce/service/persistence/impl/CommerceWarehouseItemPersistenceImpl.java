@@ -1263,12 +1263,6 @@ public class CommerceWarehouseItemPersistenceImpl extends BasePersistenceImpl<Co
 					result = commerceWarehouseItem;
 
 					cacheResult(commerceWarehouseItem);
-
-					if ((commerceWarehouseItem.getCommerceWarehouseId() != commerceWarehouseId) ||
-							(commerceWarehouseItem.getCPInstanceId() != CPInstanceId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, commerceWarehouseItem);
-					}
 				}
 			}
 			catch (Exception e) {

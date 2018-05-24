@@ -778,13 +778,6 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 					result = cpInstance;
 
 					cacheResult(cpInstance);
-
-					if ((cpInstance.getUuid() == null) ||
-							!cpInstance.getUuid().equals(uuid) ||
-							(cpInstance.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpInstance);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4208,13 +4201,6 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 					result = cpInstance;
 
 					cacheResult(cpInstance);
-
-					if ((cpInstance.getCPDefinitionId() != CPDefinitionId) ||
-							(cpInstance.getSku() == null) ||
-							!cpInstance.getSku().equals(sku)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_S,
-							finderArgs, cpInstance);
-					}
 				}
 			}
 			catch (Exception e) {

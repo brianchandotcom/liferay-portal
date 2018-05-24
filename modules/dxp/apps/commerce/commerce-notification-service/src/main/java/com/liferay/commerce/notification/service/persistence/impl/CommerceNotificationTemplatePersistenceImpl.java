@@ -796,13 +796,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 					result = commerceNotificationTemplate;
 
 					cacheResult(commerceNotificationTemplate);
-
-					if ((commerceNotificationTemplate.getUuid() == null) ||
-							!commerceNotificationTemplate.getUuid().equals(uuid) ||
-							(commerceNotificationTemplate.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceNotificationTemplate);
-					}
 				}
 			}
 			catch (Exception e) {

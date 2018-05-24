@@ -787,13 +787,6 @@ public class CPDefinitionOptionRelPersistenceImpl extends BasePersistenceImpl<CP
 					result = cpDefinitionOptionRel;
 
 					cacheResult(cpDefinitionOptionRel);
-
-					if ((cpDefinitionOptionRel.getUuid() == null) ||
-							!cpDefinitionOptionRel.getUuid().equals(uuid) ||
-							(cpDefinitionOptionRel.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpDefinitionOptionRel);
-					}
 				}
 			}
 			catch (Exception e) {

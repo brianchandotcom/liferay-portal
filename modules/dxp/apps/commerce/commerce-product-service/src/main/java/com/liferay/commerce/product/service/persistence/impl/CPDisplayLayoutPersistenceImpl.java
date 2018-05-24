@@ -781,13 +781,6 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 					result = cpDisplayLayout;
 
 					cacheResult(cpDisplayLayout);
-
-					if ((cpDisplayLayout.getUuid() == null) ||
-							!cpDisplayLayout.getUuid().equals(uuid) ||
-							(cpDisplayLayout.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpDisplayLayout);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1610,12 +1603,6 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 					result = cpDisplayLayout;
 
 					cacheResult(cpDisplayLayout);
-
-					if ((cpDisplayLayout.getClassNameId() != classNameId) ||
-							(cpDisplayLayout.getClassPK() != classPK)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, cpDisplayLayout);
-					}
 				}
 			}
 			catch (Exception e) {

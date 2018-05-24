@@ -781,13 +781,6 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 					result = commerceRegion;
 
 					cacheResult(commerceRegion);
-
-					if ((commerceRegion.getUuid() == null) ||
-							!commerceRegion.getUuid().equals(uuid) ||
-							(commerceRegion.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceRegion);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2146,13 +2139,6 @@ public class CommerceRegionPersistenceImpl extends BasePersistenceImpl<CommerceR
 					result = commerceRegion;
 
 					cacheResult(commerceRegion);
-
-					if ((commerceRegion.getCommerceCountryId() != commerceCountryId) ||
-							(commerceRegion.getCode() == null) ||
-							!commerceRegion.getCode().equals(code)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, commerceRegion);
-					}
 				}
 			}
 			catch (Exception e) {

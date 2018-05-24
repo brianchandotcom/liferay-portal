@@ -740,13 +740,6 @@ public class CommerceTaxMethodPersistenceImpl extends BasePersistenceImpl<Commer
 					result = commerceTaxMethod;
 
 					cacheResult(commerceTaxMethod);
-
-					if ((commerceTaxMethod.getGroupId() != groupId) ||
-							(commerceTaxMethod.getEngineKey() == null) ||
-							!commerceTaxMethod.getEngineKey().equals(engineKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_E,
-							finderArgs, commerceTaxMethod);
-					}
 				}
 			}
 			catch (Exception e) {

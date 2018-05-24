@@ -759,14 +759,6 @@ public class CPDefinitionLocalizationPersistenceImpl extends BasePersistenceImpl
 					result = cpDefinitionLocalization;
 
 					cacheResult(cpDefinitionLocalization);
-
-					if ((cpDefinitionLocalization.getCPDefinitionId() != CPDefinitionId) ||
-							(cpDefinitionLocalization.getLanguageId() == null) ||
-							!cpDefinitionLocalization.getLanguageId()
-														 .equals(languageId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID_LANGUAGEID,
-							finderArgs, cpDefinitionLocalization);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -795,13 +795,6 @@ public class CPDefinitionAvailabilityRangePersistenceImpl
 					result = cpDefinitionAvailabilityRange;
 
 					cacheResult(cpDefinitionAvailabilityRange);
-
-					if ((cpDefinitionAvailabilityRange.getUuid() == null) ||
-							!cpDefinitionAvailabilityRange.getUuid().equals(uuid) ||
-							(cpDefinitionAvailabilityRange.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpDefinitionAvailabilityRange);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1628,11 +1621,6 @@ public class CPDefinitionAvailabilityRangePersistenceImpl
 					result = cpDefinitionAvailabilityRange;
 
 					cacheResult(cpDefinitionAvailabilityRange);
-
-					if ((cpDefinitionAvailabilityRange.getCPDefinitionId() != CPDefinitionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID,
-							finderArgs, cpDefinitionAvailabilityRange);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -780,13 +780,6 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 					result = commerceOrder;
 
 					cacheResult(commerceOrder);
-
-					if ((commerceOrder.getUuid() == null) ||
-							!commerceOrder.getUuid().equals(uuid) ||
-							(commerceOrder.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceOrder);
-					}
 				}
 			}
 			catch (Exception e) {

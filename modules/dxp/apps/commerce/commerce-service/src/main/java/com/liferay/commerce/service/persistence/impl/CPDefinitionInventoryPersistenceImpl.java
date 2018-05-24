@@ -786,13 +786,6 @@ public class CPDefinitionInventoryPersistenceImpl extends BasePersistenceImpl<CP
 					result = cpDefinitionInventory;
 
 					cacheResult(cpDefinitionInventory);
-
-					if ((cpDefinitionInventory.getUuid() == null) ||
-							!cpDefinitionInventory.getUuid().equals(uuid) ||
-							(cpDefinitionInventory.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpDefinitionInventory);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1609,11 +1602,6 @@ public class CPDefinitionInventoryPersistenceImpl extends BasePersistenceImpl<CP
 					result = cpDefinitionInventory;
 
 					cacheResult(cpDefinitionInventory);
-
-					if ((cpDefinitionInventory.getCPDefinitionId() != CPDefinitionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CPDEFINITIONID,
-							finderArgs, cpDefinitionInventory);
-					}
 				}
 			}
 			catch (Exception e) {

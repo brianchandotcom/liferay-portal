@@ -784,13 +784,6 @@ public class CommercePriceEntryPersistenceImpl extends BasePersistenceImpl<Comme
 					result = commercePriceEntry;
 
 					cacheResult(commercePriceEntry);
-
-					if ((commercePriceEntry.getUuid() == null) ||
-							!commercePriceEntry.getUuid().equals(uuid) ||
-							(commercePriceEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commercePriceEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3689,13 +3682,6 @@ public class CommercePriceEntryPersistenceImpl extends BasePersistenceImpl<Comme
 					result = commercePriceEntry;
 
 					cacheResult(commercePriceEntry);
-
-					if ((commercePriceEntry.getExternalReferenceCode() == null) ||
-							!commercePriceEntry.getExternalReferenceCode()
-												   .equals(externalReferenceCode)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_EXTERNALREFERENCECODE,
-							finderArgs, commercePriceEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3929,12 +3915,6 @@ public class CommercePriceEntryPersistenceImpl extends BasePersistenceImpl<Comme
 					result = commercePriceEntry;
 
 					cacheResult(commercePriceEntry);
-
-					if ((commercePriceEntry.getCPInstanceId() != CPInstanceId) ||
-							(commercePriceEntry.getCommercePriceListId() != commercePriceListId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
-							finderArgs, commercePriceEntry);
-					}
 				}
 			}
 			catch (Exception e) {

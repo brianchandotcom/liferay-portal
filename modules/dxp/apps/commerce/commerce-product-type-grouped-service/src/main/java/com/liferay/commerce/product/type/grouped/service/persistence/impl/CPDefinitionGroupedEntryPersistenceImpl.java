@@ -787,13 +787,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl extends BasePersistenceImpl
 					result = cpDefinitionGroupedEntry;
 
 					cacheResult(cpDefinitionGroupedEntry);
-
-					if ((cpDefinitionGroupedEntry.getUuid() == null) ||
-							!cpDefinitionGroupedEntry.getUuid().equals(uuid) ||
-							(cpDefinitionGroupedEntry.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpDefinitionGroupedEntry);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2158,12 +2151,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl extends BasePersistenceImpl
 					result = cpDefinitionGroupedEntry;
 
 					cacheResult(cpDefinitionGroupedEntry);
-
-					if ((cpDefinitionGroupedEntry.getCPDefinitionId() != CPDefinitionId) ||
-							(cpDefinitionGroupedEntry.getEntryCPDefinitionId() != entryCPDefinitionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_E,
-							finderArgs, cpDefinitionGroupedEntry);
-					}
 				}
 			}
 			catch (Exception e) {

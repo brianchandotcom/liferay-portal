@@ -782,13 +782,6 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 					result = commerceCurrency;
 
 					cacheResult(commerceCurrency);
-
-					if ((commerceCurrency.getUuid() == null) ||
-							!commerceCurrency.getUuid().equals(uuid) ||
-							(commerceCurrency.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, commerceCurrency);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2134,13 +2127,6 @@ public class CommerceCurrencyPersistenceImpl extends BasePersistenceImpl<Commerc
 					result = commerceCurrency;
 
 					cacheResult(commerceCurrency);
-
-					if ((commerceCurrency.getGroupId() != groupId) ||
-							(commerceCurrency.getCode() == null) ||
-							!commerceCurrency.getCode().equals(code)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C,
-							finderArgs, commerceCurrency);
-					}
 				}
 			}
 			catch (Exception e) {

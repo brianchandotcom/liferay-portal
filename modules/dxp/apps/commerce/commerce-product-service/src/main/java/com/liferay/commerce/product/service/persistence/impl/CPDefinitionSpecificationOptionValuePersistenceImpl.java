@@ -803,14 +803,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 					result = cpDefinitionSpecificationOptionValue;
 
 					cacheResult(cpDefinitionSpecificationOptionValue);
-
-					if ((cpDefinitionSpecificationOptionValue.getUuid() == null) ||
-							!cpDefinitionSpecificationOptionValue.getUuid()
-																	 .equals(uuid) ||
-							(cpDefinitionSpecificationOptionValue.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, cpDefinitionSpecificationOptionValue);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -3777,12 +3769,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 					result = cpDefinitionSpecificationOptionValue;
 
 					cacheResult(cpDefinitionSpecificationOptionValue);
-
-					if ((cpDefinitionSpecificationOptionValue.getCPDefinitionId() != CPDefinitionId) ||
-							(cpDefinitionSpecificationOptionValue.getCPSpecificationOptionId() != CPSpecificationOptionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_CSO,
-							finderArgs, cpDefinitionSpecificationOptionValue);
-					}
 				}
 			}
 			catch (Exception e) {

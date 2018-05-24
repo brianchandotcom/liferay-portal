@@ -51,38 +51,37 @@ public class BNDBundleCheck extends BaseFileCheck {
 		if (!content.matches(
 				"(?s).*Liferay-Releng-Fix-Delivery-Method:\\s*core.*")) {
 
-			String message = StringBundler.concat(
-				"If the 'app.bnd' file contains 'Liferay-Releng-Bundle: ",
-				"true', it must have 'Liferay-Releng-Fix-Delivery-Method: ",
-				"core'");
-
-			addMessage(fileName, message);
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"If the 'app.bnd' file contains 'Liferay-Releng-Bundle: ",
+					"true', it must have 'Liferay-Releng-Fix-Delivery-Method: ",
+					"core'"));
 		}
 
 		if (!content.matches("(?s).*Liferay-Releng-Marketplace:\\s*true.*")) {
-			String message = StringBundler.concat(
-				"If the 'app.bnd' file contains 'Liferay-Releng-Bundle: ",
-				"true', it must have 'Liferay-Releng-Marketplace: true'");
-
-			addMessage(fileName, message);
+			addMessage(
+				fileName,
+				"If the 'app.bnd' file contains 'Liferay-Releng-Bundle: " +
+					"true', it must have 'Liferay-Releng-Marketplace: true'");
 		}
 
 		if (!content.matches(
 				"(?s).*Liferay-Releng-Portal-Required:\\s*true.*")) {
 
-			String message = StringBundler.concat(
-				"If the 'app.bnd' file contains 'Liferay-Releng-Bundle: ",
-				"true', it must have 'Liferay-Releng-Portal-Required: true'");
-
-			addMessage(fileName, message);
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"If the 'app.bnd' file contains 'Liferay-Releng-Bundle: ",
+					"true', it must have 'Liferay-Releng-Portal-Required: ",
+					"true'"));
 		}
 
 		if (!content.matches("(?s).*Liferay-Releng-Suite:[^\\S\\n]*\\S+.*")) {
-			String message = StringBundler.concat(
-				"If the 'app.bnd' file contains 'Liferay-Releng-Bundle: ",
-				"true', it must define a 'Liferay-Releng-Suite'");
-
-			addMessage(fileName, message);
+			addMessage(
+				fileName,
+				"If the 'app.bnd' file contains 'Liferay-Releng-Bundle: " +
+					"true', it must define a 'Liferay-Releng-Suite'");
 		}
 
 		return content;

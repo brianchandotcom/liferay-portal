@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
 
@@ -103,6 +104,9 @@ public class PriceEntryNestedCollectionResource
 		).addBidirectionalModel(
 			"priceList", "priceEntries", PriceListIdentifier.class,
 			CommercePriceEntry::getCommercePriceListId
+		).addBidirectionalModel(
+			"webSite", "priceEntries", WebSiteIdentifier.class,
+			CommercePriceEntry::getGroupId
 		).addBoolean(
 			"hasTierPrice", CommercePriceEntry::isHasTierPrice
 		).addDate(

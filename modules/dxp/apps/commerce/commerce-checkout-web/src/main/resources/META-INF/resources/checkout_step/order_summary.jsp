@@ -140,7 +140,12 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultMap = 
 
 						<liferay-ui:search-container-column-text>
 							<div class="value-section">
-								<span class="commerce-value"><%= orderSummaryCheckoutStepDisplayContext.getFormattedPrice(commerceOrderItem) %></span>
+								<span class="commerce-value">
+									<liferay-commerce:format-price
+										price="<%= commerceOrderItem.getPrice() %>"
+										quantity="<%= commerceOrderItem.getQuantity() %>"
+									/>
+								</span>
 							</div>
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>

@@ -60,14 +60,7 @@
 
 						<div class="product-footer">
 							<div class="product-price">
-								<#if isIgnoreSKUCombinations>
-									<span class="commerce-price"><@liferay_commerce["price"] CPInstanceId= cpInstanceId /></span>
-								<#else>
-									<span class="commerce-prefix"><@liferay_ui["message"] key="starting-at" /></span>
-									<span class="commerce-price">$1,250.00</span>
-								</#if>
-
-								<span class="commerce-suffix">/<@liferay_ui["message"] key="ea" /></span>
+								<@liferay_commerce["price"] CPDefinitionId=cpDefinitionId />
 							</div>
 
 							<div class="product-actions">

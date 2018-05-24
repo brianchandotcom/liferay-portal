@@ -118,9 +118,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text>
-					<div class="value-section">
-						<span class="commerce-value"><%= commerceCartContentMiniDisplayContext.getFormattedFinalPrice(commerceOrderItem) %></span>
-					</div>
+					<liferay-commerce:format-price
+						price="<%= commerceOrderItem.getPrice() %>"
+						quantity="<%= 1 %>"
+					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 

@@ -330,8 +330,12 @@ List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList
 
 		<liferay-ui:search-container-column-text
 			name="price"
-			value="<%= commerceOrganizationOrderDisplayContext.getCommerceOrderItemPrice(commerceOrderItem) %>"
-		/>
+		>
+			<liferay-commerce:format-price
+				price="<%= commerceOrderItem.getPrice() %>"
+				quantity="<%= commerceOrderItem.getQuantity() %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= commerceOrganizationOrderDisplayContext.hasPermission(commerceOrder, ActionKeys.UPDATE) && commerceOrder.isOpen() %>">
 			<liferay-ui:search-container-column-text>

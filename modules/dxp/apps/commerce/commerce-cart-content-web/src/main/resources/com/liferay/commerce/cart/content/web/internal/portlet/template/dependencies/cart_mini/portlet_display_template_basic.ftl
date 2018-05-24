@@ -17,8 +17,6 @@
 				productURL = commerceCartContentMiniDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay)
 
 				name = cpDefinition.getName(themeDisplay.getLanguageId())
-
-				price = commerceCartContentMiniDisplayContext.getFormattedUnitPrice(curCommerceOrderItem)
 			/>
 
 			<div class="col-md-6">
@@ -33,7 +31,10 @@
 				</div>
 
 				<div class="row">
-					${price}
+					<@liferay_commerce["format-price"]
+						price=curCommerceOrderItem.getPrice()
+						quantity=1
+					/>
 				</div>
 			</div>
 

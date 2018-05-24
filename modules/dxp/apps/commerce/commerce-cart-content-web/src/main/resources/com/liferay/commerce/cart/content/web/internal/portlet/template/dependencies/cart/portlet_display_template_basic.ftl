@@ -19,8 +19,6 @@
 
 				name = cpDefinition.getName(themeDisplay.getLanguageId())
 
-				price = commerceCartContentDisplayContext.getFormattedFinalPrice(curCommerceOrderItem)
-
 				deleteURL = commerceCartContentDisplayContext.getDeleteURL(curCommerceOrderItem)
 				/>
 
@@ -35,7 +33,12 @@
 							<strong>${name}</strong>
 						</a>
 					</td>
-					<td>${price}</td>
+					<td>
+						<@liferay_commerce["format-price"]
+							price=curCommerceOrderItem.getPrice()
+							quantity=curCommerceOrderItem.getQuantity()
+						/>
+					</td>
 					<td>${curCommerceOrderItem.getQuantity()}</td>
 					<td>
 						<a href="${deleteURL}">

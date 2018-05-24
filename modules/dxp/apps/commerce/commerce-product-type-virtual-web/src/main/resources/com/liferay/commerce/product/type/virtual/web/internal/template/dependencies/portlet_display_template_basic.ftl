@@ -39,7 +39,12 @@
 				<#if cpInstance??>
 					<h4 class="sku">${cpInstance.getSku()}</h4>
 
-					<div class="price">${cpInstance.getPrice()}</div>
+					<div class="price">
+						<@liferay_commerce["price"]
+							CPDefinitionId=cpDefinition.getCPDefinitionId()
+							CPInstanceId=cpInstance.getCPInstanceId()
+						/>
+					</div>
 
 					<div class="availability">${virtualCPTypeDisplayContext.getAvailabilityLabel()}</div>
 

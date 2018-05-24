@@ -73,11 +73,7 @@
 
 							<div class="autofit-col">
 								<div class="product-price">
-									<#if isIgnoreSKUCombinations>
-										<span class="commerce-price"><@liferay_commerce["price"] CPInstanceId= cpInstanceId /></span>
-									<#else>
-										<span>Price</span>
-									</#if>
+									<@liferay_commerce["price"] CPDefinitionId=cpDefinitionId />
 
 									<span class="commerce-suffix">/<@liferay_ui["message"] key="ea" /></span>
 								</div>

@@ -119,8 +119,12 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="price"
-				value="<%= commerceOrderEditDisplayContext.getCommerceOrderItemPrice(commerceOrderItem) %>"
-			/>
+			>
+				<liferay-commerce:format-price
+					price="<%= commerceOrderItem.getPrice() %>"
+					quantity="<%= commerceOrderItem.getQuantity() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"

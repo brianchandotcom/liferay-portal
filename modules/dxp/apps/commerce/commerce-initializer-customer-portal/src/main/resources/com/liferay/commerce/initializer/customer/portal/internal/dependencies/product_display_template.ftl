@@ -110,7 +110,7 @@
 		<div class="product-detail-info">
 			<div class="autofit-float autofit-row product-detail-info-header">
 				<div class="autofit-col autofit-col-expand">
-					<h2 class="commerce-price" data-text-cp-instance-price><#if cpInstance??><@liferay_commerce["price"] CPInstanceId= cpInstanceId /></#if></h2>
+					<h2 class="commerce-price" data-text-cp-instance-price><#if cpInstance??><@liferay_commerce["price"] CPDefinitionId=cpDefinitionId CPInstanceId=cpInstanceId /></#if></h2>
 				</div>
 
 				<#if cpInstance??>
@@ -118,7 +118,10 @@
 						<div class="autofit-section">
 							was
 							<strong data-text-cp-instance-price>
-								<@liferay_commerce["price"] CPInstanceId=cpInstanceId />
+								<@liferay_commerce["price"]
+									CPDefinitionId=cpDefinitionId
+									CPInstanceId=cpInstanceId
+								/>
 							</strong>
 						</div>
 					</div>

@@ -32,8 +32,6 @@
 
 						title = cpDefinition.getName()
 
-						price = commerceCartContentDisplayContext.getFormattedPrice(curCommerceOrderItem)
-
 						deleteURL = commerceCartContentDisplayContext.getDeleteURL(curCommerceOrderItem)
 						/>
 
@@ -60,7 +58,13 @@
 								<input class="custom-number custom-number-monospaced form-control" type="number" value="${curCommerceOrderItem.getQuantity()}">
 							</td>
 							<td class="subtotal-column table-cell-expand">
-								<div class="commerce-cart-content-value subtotal-value">${price}</div>
+								<div class="commerce-cart-content-value subtotal-value">
+									<@liferay_commerce["format-price"]
+										price=curCommerceOrderItem.getPrice()
+										quantity=curCommerceOrderItem.getQuantity()
+									/>
+								</div>
+
 								<a class="commerce-cart-content-remove" href="${deleteURL}" role="button">
 									${languageUtil.get(request, "remove")}
 								</a>

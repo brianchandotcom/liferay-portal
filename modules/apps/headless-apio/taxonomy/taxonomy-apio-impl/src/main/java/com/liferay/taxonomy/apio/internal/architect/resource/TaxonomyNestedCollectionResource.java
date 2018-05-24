@@ -14,6 +14,8 @@
 
 package com.liferay.taxonomy.apio.internal.architect.resource;
 
+import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
+
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -23,13 +25,18 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.taxonomy.apio.identifier.architect.TaxonomyIdentifier;
-import com.liferay.taxonomy.apio.internal.architect.form.AssetTaxonomyForm;
+import com.liferay.taxonomy.apio.internal.architect.form.TaxonomyForm;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,8 +56,9 @@ public class TaxonomyNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addAssetVocabulary, (credentials, assetVocabularyId) -> true,
-			AssetTaxonomyForm::buildForm
+			this::_addAssetVocabulary,
+			_hasPermission.forAddingIn(WebSiteIdentifier.class)::apply,
+			TaxonomyForm::buildForm
 		).build();
 	}
 
@@ -67,12 +75,11 @@ public class TaxonomyNestedCollectionResource
 			assetVocabularyId -> _assetVocabularyService.getVocabulary(
 				assetVocabularyId)
 		).addUpdater(
-			this::_updateAssetVocabulary,
-			(credentials, assetVocabularyId) -> true,
-			AssetTaxonomyForm::buildForm
+			this::_updateAssetVocabulary, _hasPermission::forUpdating,
+			TaxonomyForm::buildForm
 		).addRemover(
-			this::_deleteAssetVocabulary,
-			(credentials, assetVocabularyId) -> true
+			idempotent(this::_deleteAssetVocabulary),
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -107,15 +114,18 @@ public class TaxonomyNestedCollectionResource
 	}
 
 	private AssetVocabulary _addAssetVocabulary(
-			Long groupId, AssetTaxonomyForm assetVocabularyForm)
+			Long groupId, TaxonomyForm creatorForm)
 		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		return _assetVocabularyService.addVocabulary(
-			groupId, assetVocabularyForm.getTitle(),
-			assetVocabularyForm.getTitleMap(),
-			assetVocabularyForm.getDescriptionMap(), null, serviceContext);
+			groupId, null, creatorForm.getTitleMap(locale),
+			creatorForm.getDescriptionMap(locale), null, serviceContext);
 	}
 
 	private void _deleteAssetVocabulary(Long assetVocabularyId)
@@ -137,18 +147,32 @@ public class TaxonomyNestedCollectionResource
 	}
 
 	private AssetVocabulary _updateAssetVocabulary(
-			Long vocabularyId, AssetTaxonomyForm assetVocabularyForm)
+			Long vocabularyId, TaxonomyForm updaterForm)
 		throws PortalException {
+
+		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
+			vocabularyId);
+
+		Group group = _groupLocalService.getGroup(vocabulary.getGroupId());
+
+		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		return _assetVocabularyService.updateVocabulary(
-			vocabularyId, assetVocabularyForm.getTitle(),
-			assetVocabularyForm.getTitleMap(),
-			assetVocabularyForm.getDescriptionMap(), null, serviceContext);
+			vocabularyId, null, updaterForm.getTitleMap(locale),
+			updaterForm.getDescriptionMap(locale), null, serviceContext);
 	}
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.asset.kernel.model.AssetVocabulary)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

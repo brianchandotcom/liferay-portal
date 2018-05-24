@@ -23,23 +23,21 @@ import java.util.Map;
 /**
  * @author Javier Gamarra
  */
-public class AssetTaxonomyForm {
+public class TaxonomyForm {
 
-	public static Form<AssetTaxonomyForm> buildForm(
-		Form.Builder<AssetTaxonomyForm> builder) {
+	public static Form<TaxonomyForm> buildForm(
+		Form.Builder<TaxonomyForm> builder) {
 
 		return builder.title(
 			language -> "Title"
 		).description(
 			language -> "Description"
 		).constructor(
-			AssetTaxonomyForm::new
+			TaxonomyForm::new
+		).addOptionalString(
+			"description", TaxonomyForm::setDescription
 		).addRequiredString(
-			"description", AssetTaxonomyForm::setDescription
-		).addRequiredString(
-			"name", AssetTaxonomyForm::setName
-		).addRequiredString(
-			"title", AssetTaxonomyForm::setTitle
+			"name", TaxonomyForm::setName
 		).build();
 	}
 
@@ -47,20 +45,16 @@ public class AssetTaxonomyForm {
 		return _description;
 	}
 
-	public Map<Locale, String> getDescriptionMap() {
-		return Collections.singletonMap(Locale.getDefault(), _description);
+	public Map<Locale, String> getDescriptionMap(Locale locale) {
+		return Collections.singletonMap(locale, _description);
 	}
 
 	public String getName() {
 		return _name;
 	}
 
-	public String getTitle() {
-		return _title;
-	}
-
-	public Map<Locale, String> getTitleMap() {
-		return Collections.singletonMap(Locale.getDefault(), _name);
+	public Map<Locale, String> getTitleMap(Locale locale) {
+		return Collections.singletonMap(locale, _name);
 	}
 
 	public void setDescription(String description) {
@@ -71,12 +65,7 @@ public class AssetTaxonomyForm {
 		_name = name;
 	}
 
-	public void setTitle(String title) {
-		_title = title;
-	}
-
 	private String _description;
 	private String _name;
-	private String _title;
 
 }

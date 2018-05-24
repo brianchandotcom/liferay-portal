@@ -30,19 +30,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
-import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.FilterVisitor;
-import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
-import com.liferay.portal.kernel.search.filter.GeoDistanceFilter;
-import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
-import com.liferay.portal.kernel.search.filter.GeoPolygonFilter;
-import com.liferay.portal.kernel.search.filter.MissingFilter;
-import com.liferay.portal.kernel.search.filter.PrefixFilter;
-import com.liferay.portal.kernel.search.filter.QueryFilter;
-import com.liferay.portal.kernel.search.filter.RangeTermFilter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -58,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.test.internal.util.BaseTestFilterVisitor;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.After;
@@ -318,7 +307,7 @@ public class SearchPermissionCheckerTest {
 	@DeleteAfterTestRun
 	private User _user;
 
-	private static class TestFilterVisitor implements FilterVisitor<Void> {
+	private static class TestFilterVisitor extends BaseTestFilterVisitor<Void> {
 
 		public TestFilterVisitor(boolean expected, String field, String value) {
 			_expected = expected;
@@ -348,61 +337,6 @@ public class SearchPermissionCheckerTest {
 				filter.accept(this);
 			}
 
-			return null;
-		}
-
-		@Override
-		public Void visit(DateRangeTermFilter dateRangeTermFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(ExistsFilter existsFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(GeoBoundingBoxFilter geoBoundingBoxFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(GeoDistanceFilter geoDistanceFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(GeoDistanceRangeFilter geoDistanceRangeFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(GeoPolygonFilter geoPolygonFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(MissingFilter missingFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(PrefixFilter prefixFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(QueryFilter queryFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(RangeTermFilter rangeTermFilter) {
-			return null;
-		}
-
-		@Override
-		public Void visit(TermFilter termFilter) {
 			return null;
 		}
 

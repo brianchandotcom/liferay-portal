@@ -500,6 +500,21 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the external reference code of this asset category.
+	 *
+	 * @return the external reference code of this asset category
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this asset category.
+	 *
+	 * @param externalReferenceCode the external reference code of this asset category
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
 	@Override
 	public boolean isNew();
 

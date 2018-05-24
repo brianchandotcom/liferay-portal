@@ -95,6 +95,7 @@
 		</field>
 		<field name="vocabularyId" type="long" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="externalReferenceCode" type="String" />
 	</model>
 	<model name="com.liferay.asset.kernel.model.AssetCategoryProperty">
 		<field name="categoryPropertyId" type="long" />
@@ -198,6 +199,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="lastPublishDate" type="Date" />
+		<field name="externalReferenceCode" type="String" />
 	</model>
 	<model name="com.liferay.counter.kernel.model.Counter">
 		<field name="name" type="String">
@@ -929,6 +931,7 @@
 			<hint name="display-width">400</hint>
 		</field>
 		<field name="logoId" type="long" />
+		<field name="externalReferenceCode" type="String" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.OrgGroupRole">
 		<field name="mvccVersion" type="long" />
@@ -1420,6 +1423,7 @@
 		<field name="agreedToTermsOfUse" type="boolean" />
 		<field name="emailAddressVerified" type="boolean" />
 		<field name="status" type="int" />
+		<field name="externalReferenceCode" type="String" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroup">
 		<field name="mvccVersion" type="long" />
@@ -1439,6 +1443,7 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="addedByLDAPImport" type="boolean" />
+		<field name="externalReferenceCode" type="String" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.UserGroupGroupRole">
 		<field name="mvccVersion" type="long" />

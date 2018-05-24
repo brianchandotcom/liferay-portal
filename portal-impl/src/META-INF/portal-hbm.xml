@@ -507,6 +507,7 @@
 		<property name="statusId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="logoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.OrgGroupRoleImpl" table="OrgGroupRole">
 		<composite-id class="com.liferay.portal.kernel.service.persistence.OrgGroupRolePK" name="primaryKey">
@@ -918,6 +919,7 @@
 		<property name="agreedToTermsOfUse" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="emailAddressVerified" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.UserGroupImpl" table="UserGroup">
 		<id name="userGroupId" type="long">
@@ -934,6 +936,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="addedByLDAPImport" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.model.impl.UserGroupGroupRoleImpl" table="UserGroupGroupRole">
 		<composite-id class="com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePK" name="primaryKey">
@@ -1149,6 +1152,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="vocabularyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.asset.model.impl.AssetEntryImpl" table="AssetEntry">
 		<id name="entryId" type="long">
@@ -1225,6 +1229,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="externalReferenceCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl" table="DLFileEntry">
 		<id name="fileEntryId" type="long">

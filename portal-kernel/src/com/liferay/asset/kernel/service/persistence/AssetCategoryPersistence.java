@@ -1168,6 +1168,57 @@ public interface AssetCategoryPersistence extends BasePersistence<AssetCategory>
 	public int filterCountByG_V(long groupId, long[] vocabularyIds);
 
 	/**
+	* Returns the asset category where companyId = &#63; and externalReferenceCode = &#63; or throws a {@link NoSuchCategoryException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the matching asset category
+	* @throws NoSuchCategoryException if a matching asset category could not be found
+	*/
+	public AssetCategory findByC_ERC(long companyId,
+		String externalReferenceCode) throws NoSuchCategoryException;
+
+	/**
+	* Returns the asset category where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the matching asset category, or <code>null</code> if a matching asset category could not be found
+	*/
+	public AssetCategory fetchByC_ERC(long companyId,
+		String externalReferenceCode);
+
+	/**
+	* Returns the asset category where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching asset category, or <code>null</code> if a matching asset category could not be found
+	*/
+	public AssetCategory fetchByC_ERC(long companyId,
+		String externalReferenceCode, boolean retrieveFromCache);
+
+	/**
+	* Removes the asset category where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the asset category that was removed
+	*/
+	public AssetCategory removeByC_ERC(long companyId,
+		String externalReferenceCode) throws NoSuchCategoryException;
+
+	/**
+	* Returns the number of asset categories where companyId = &#63; and externalReferenceCode = &#63;.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching asset categories
+	*/
+	public int countByC_ERC(long companyId, String externalReferenceCode);
+
+	/**
 	* Returns all the asset categories where parentCategoryId = &#63; and name = &#63;.
 	*
 	* @param parentCategoryId the parent category ID

@@ -1214,6 +1214,18 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public boolean isTypeNode() {
+		if (Objects.equals(getType(), LayoutConstants.TYPE_NODE) ||
+			Objects.equals(
+				_getLayoutTypeControllerType(), LayoutConstants.TYPE_NODE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isTypePanel() {
 		if (Objects.equals(getType(), LayoutConstants.TYPE_PANEL) ||
 			Objects.equals(

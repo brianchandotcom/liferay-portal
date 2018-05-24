@@ -673,7 +673,9 @@ public class LayoutRevisionLocalServiceImpl
 	protected boolean isWorkflowEnabled(long plid) throws PortalException {
 		Layout layout = layoutLocalService.getLayout(plid);
 
-		if (layout.isTypeLinkToLayout() || layout.isTypeURL()) {
+		if (layout.isTypeLinkToLayout() || layout.isTypeURL() ||
+			layout.isTypeNode()) {
+
 			return false;
 		}
 

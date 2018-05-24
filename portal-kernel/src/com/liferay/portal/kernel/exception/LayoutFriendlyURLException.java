@@ -26,6 +26,8 @@ public class LayoutFriendlyURLException extends PortalException {
 
 	public static final int DUPLICATE = 6;
 
+	public static final int ENDS_WITH_DASH = 11;
+
 	public static final int ENDS_WITH_SLASH = 2;
 
 	public static final int INVALID_CHARACTERS = 5;

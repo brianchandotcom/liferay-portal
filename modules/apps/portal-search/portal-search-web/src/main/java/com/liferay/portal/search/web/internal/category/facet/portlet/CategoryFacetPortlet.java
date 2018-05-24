@@ -26,12 +26,11 @@ import com.liferay.portal.search.web.internal.category.facet.constants.CategoryF
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoriesSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetCategoryPermissionCheckerImpl;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetCategoriesSearchFacetDisplayContext;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.io.IOException;
-
-import java.util.Optional;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -142,11 +141,9 @@ public class CategoryFacetPortlet extends MVCPortlet {
 		assetCategoriesSearchFacetDisplayBuilder.setParameterName(
 			parameterName);
 
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchResponse.getParameterValues(
-				parameterName, renderRequest);
-
-		parameterValuesOptional.ifPresent(
+		SearchOptionalUtil.copy(
+			() -> portletSharedSearchResponse.getParameterValues(
+				parameterName, renderRequest),
 			assetCategoriesSearchFacetDisplayBuilder::setParameterValues);
 
 		return assetCategoriesSearchFacetDisplayBuilder.build();

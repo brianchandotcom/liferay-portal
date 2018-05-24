@@ -173,11 +173,11 @@ public class SiteFacetPortlet extends MVCPortlet {
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Optional<String[]> parameterValuesOptional =
+		Optional<String[]> optional =
 			portletSharedSearchResponse.getParameterValues(
 				parameterName, renderRequest);
 
-		return parameterValuesOptional.map(Arrays::asList);
+		return optional.map(Arrays::asList);
 	}
 
 	@Reference

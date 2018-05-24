@@ -23,6 +23,7 @@ import com.liferay.portal.search.web.internal.display.context.SearchScopePrefere
 import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -104,11 +105,10 @@ public class SearchBarPortletSharedSearchContributor
 			return searchScopePreference.getSearchScope();
 		}
 
-		Optional<String> parameterValueOptional =
-			portletSharedSearchSettings.getParameter(
-				searchBarPortletPreferences.getScopeParameterName());
+		Optional<String> optional = portletSharedSearchSettings.getParameter(
+			searchBarPortletPreferences.getScopeParameterName());
 
-		return parameterValueOptional.map(
+		return optional.map(
 			SearchScope::getSearchScope
 		).orElseGet(
 			this::getDefaultSearchScope
@@ -132,10 +132,13 @@ public class SearchBarPortletSharedSearchContributor
 		SearchBarPortletPreferences searchBarPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		Optional<String> optional = portletSharedSearchSettings.getParameter(
-			searchBarPortletPreferences.getKeywordsParameterName());
+		String parameterName =
+			searchBarPortletPreferences.getKeywordsParameterName();
 
-		optional.ifPresent(
+		portletSharedSearchSettings.setKeywordsParameterName(parameterName);
+
+		SearchOptionalUtil.copy(
+			() -> portletSharedSearchSettings.getParameter(parameterName),
 			value -> {
 				Keywords keywords = new Keywords(value);
 
@@ -145,9 +148,6 @@ public class SearchBarPortletSharedSearchContributor
 					setLuceneSyntax(portletSharedSearchSettings);
 				}
 			});
-
-		portletSharedSearchSettings.setKeywordsParameterName(
-			searchBarPortletPreferences.getKeywordsParameterName());
 	}
 
 	protected void setLuceneSyntax(

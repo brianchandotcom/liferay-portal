@@ -23,12 +23,11 @@ import com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSea
 import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetConfiguration;
 import com.liferay.portal.search.web.internal.tag.facet.builder.AssetTagsFacetConfigurationImpl;
 import com.liferay.portal.search.web.internal.tag.facet.constants.TagFacetPortletKeys;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.io.IOException;
-
-import java.util.Optional;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -122,11 +121,9 @@ public class TagFacetPortlet extends MVCPortlet {
 
 		assetTagsSearchFacetDisplayBuilder.setParameterName(parameterName);
 
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchResponse.getParameterValues(
-				parameterName, renderRequest);
-
-		parameterValuesOptional.ifPresent(
+		SearchOptionalUtil.copy(
+			() -> portletSharedSearchResponse.getParameterValues(
+				parameterName, renderRequest),
 			assetTagsSearchFacetDisplayBuilder::setParameterValues);
 
 		return assetTagsSearchFacetDisplayBuilder.build();

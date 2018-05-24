@@ -24,12 +24,11 @@ import com.liferay.portal.search.web.internal.facet.display.context.FolderSearch
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookupImpl;
 import com.liferay.portal.search.web.internal.folder.facet.constants.FolderFacetPortletKeys;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
 import java.io.IOException;
-
-import java.util.Optional;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -124,11 +123,9 @@ public class FolderFacetPortlet extends MVCPortlet {
 
 		folderSearchFacetDisplayBuilder.setParameterName(parameterName);
 
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchResponse.getParameterValues(
-				parameterName, renderRequest);
-
-		parameterValuesOptional.ifPresent(
+		SearchOptionalUtil.copy(
+			() -> portletSharedSearchResponse.getParameterValues(
+				parameterName, renderRequest),
 			folderSearchFacetDisplayBuilder::setParameterValues);
 
 		return folderSearchFacetDisplayBuilder.build();

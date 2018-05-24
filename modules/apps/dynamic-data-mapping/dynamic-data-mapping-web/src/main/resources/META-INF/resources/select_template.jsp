@@ -17,17 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "templates");
-
 long templateId = ParamUtil.getLong(request, "templateId");
 
-long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
-long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 String eventName = ParamUtil.getString(request, "eventName", "selectTemplate");
-
-String mode = ParamUtil.getString(request, "mode", DDMTemplateConstants.TEMPLATE_MODE_CREATE);
 
 DDMStructure structure = null;
 
@@ -37,62 +31,30 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 	structure = DDMStructureLocalServiceUtil.getStructure(classPK);
 }
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-SearchContainer templateSearch = new TemplateSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
-
-OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByComparator(ddmDisplayContext.getOrderByCol(), ddmDisplayContext.getOrderByType());
-
-templateSearch.setOrderByCol(ddmDisplayContext.getOrderByCol());
-templateSearch.setOrderByComparator(orderByComparator);
-templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
+SearchContainer<DDMTemplate> templateSearch = ddmDisplayContext.getTemplateSearch();
 %>
 
-<portlet:actionURL var="selectURL">
-	<portlet:param name="mvcPath" value="/select_template.jsp" />
-</portlet:actionURL>
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="mvcPath" value="/select_template.jsp" />
-	<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
-	<liferay-util:param name="templateId" value="<%= String.valueOf(templateId) %>" />
-	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-	<liferay-util:param name="eventName" value="<%= eventName %>" />
-</liferay-util:include>
+<clay:management-toolbar
+	clearResultsURL="<%= ddmDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= ddmDisplayContext.getTemplateCreationMenu() %>"
+	disabled="<%= ddmDisplayContext.isDisabledManagementBar(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
+	filterDropdownItems="<%= ddmDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= ddmDisplayContext.getTotalItems(DDMWebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE) %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= ddmDisplayContext.getSelectTemplateSearchActionURL() %>"
+	searchFormName="searchForm"
+	selectable="false"
+	sortingOrder="<%= ddmDisplayContext.getOrderByType() %>"
+	sortingURL="<%= ddmDisplayContext.getSortingURL() %>"
+/>
 
-<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="mvcPath" value="/select_template.jsp" />
-	<liferay-util:param name="redirect" value="<%= currentURL %>" />
-	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	<liferay-util:param name="eventName" value="<%= eventName %>" />
-	<liferay-util:param name="includeCheckBox" value="<%= Boolean.FALSE.toString() %>" />
-	<liferay-util:param name="orderByCol" value="<%= ddmDisplayContext.getOrderByCol() %>" />
-	<liferay-util:param name="orderByType" value="<%= ddmDisplayContext.getOrderByType() %>" />
-</liferay-util:include>
-
-<aui:form action="<%= selectURL.toString() %>" method="post" name="selectTemplateFm">
-	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />
-	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
-	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
-	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
-	<aui:input name="eventName" type="hidden" value="<%= eventName %>" />
-
-	<%
-	request.setAttribute(WebKeys.SEARCH_CONTAINER, templateSearch);
-	%>
-
+<aui:form action="<%= ddmDisplayContext.getSelectTemplateSearchActionURL() %>" method="post" name="selectTemplateFm">
 	<div class="container-fluid-1280">
 		<liferay-ui:search-container
 			searchContainer="<%= templateSearch %>"
 		>
-			<liferay-ui:search-container-results>
-				<%@ include file="/template_search_results.jspf" %>
-			</liferay-ui:search-container-results>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 				keyProperty="templateId"
@@ -111,7 +73,7 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 						<c:when test="<%= template.getTemplateId() != templateId %>">
 
 							<%
-							Map<String, Object> data = new HashMap<String, Object>();
+							Map<String, Object> data = new HashMap<>();
 
 							if (ddmDisplay.isShowConfirmSelectTemplate()) {
 								data.put("confirm-selection", Boolean.TRUE.toString());

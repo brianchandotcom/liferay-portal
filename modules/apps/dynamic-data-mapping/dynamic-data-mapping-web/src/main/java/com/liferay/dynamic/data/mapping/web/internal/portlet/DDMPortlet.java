@@ -30,8 +30,11 @@ import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageNameExceptio
 import com.liferay.dynamic.data.mapping.exception.TemplateSmallImageSizeException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.dynamic.data.mapping.util.DDMTemplateHelper;
@@ -177,7 +180,7 @@ public class DDMPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			setDDMDisplayContextRequestAttribute(renderRequest);
+			setDDMDisplayContextRequestAttribute(renderRequest, renderResponse);
 
 			setDDMTemplateRequestAttribute(renderRequest);
 
@@ -216,12 +219,14 @@ public class DDMPortlet extends MVCPortlet {
 	}
 
 	protected void setDDMDisplayContextRequestAttribute(
-			RenderRequest renderRequest)
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
 		DDMDisplayContext ddmDisplayContext = new DDMDisplayContext(
-			renderRequest, _ddmDisplayRegistry, _ddmTemplateHelper,
-			ddmWebConfiguration, _storageAdapterRegistry);
+			renderRequest, renderResponse, _ddmDisplayRegistry,
+			ddmStructureLinkLocalService, ddmStructureService,
+			_ddmTemplateHelper, ddmTemplateService, ddmWebConfiguration,
+			_storageAdapterRegistry);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddmDisplayContext);
@@ -232,6 +237,13 @@ public class DDMPortlet extends MVCPortlet {
 		DDMDisplayRegistry ddmDisplayRegistry) {
 
 		_ddmDisplayRegistry = ddmDisplayRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDDMStructureLinkLocalService(
+		DDMStructureLinkLocalService ddmStructureLinkLocalService) {
+
+		this.ddmStructureLinkLocalService = ddmStructureLinkLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -263,6 +275,13 @@ public class DDMPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		this.ddmStructureService = ddmStructureService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMTemplateHelper(DDMTemplateHelper ddmTemplateHelper) {
 		_ddmTemplateHelper = ddmTemplateHelper;
 	}
@@ -289,14 +308,25 @@ public class DDMPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMTemplateService(
+		DDMTemplateService ddmTemplateService) {
+
+		this.ddmTemplateService = ddmTemplateService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setStorageAdapterRegistry(
 		StorageAdapterRegistry storageAdapterRegistry) {
 
 		_storageAdapterRegistry = storageAdapterRegistry;
 	}
 
+	protected volatile DDMStructureLinkLocalService
+		ddmStructureLinkLocalService;
 	protected volatile DDMStructureLocalService ddmStructureLocalService;
+	protected volatile DDMStructureService ddmStructureService;
 	protected volatile DDMTemplateLocalService ddmTemplateLocalService;
+	protected volatile DDMTemplateService ddmTemplateService;
 	protected volatile DDMWebConfiguration ddmWebConfiguration;
 
 	@Reference

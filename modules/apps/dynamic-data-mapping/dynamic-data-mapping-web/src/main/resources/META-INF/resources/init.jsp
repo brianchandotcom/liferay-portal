@@ -49,7 +49,6 @@ page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMTemplateConstants" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMTemplateVersion" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureVersionServiceUtil" %><%@
@@ -67,15 +66,10 @@ page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurat
 page import="com.liferay.dynamic.data.mapping.web.internal.display.context.DDMDisplayContext" %><%@
 page import="com.liferay.dynamic.data.mapping.web.internal.search.DDMStructureRowChecker" %><%@
 page import="com.liferay.dynamic.data.mapping.web.internal.search.DDMTemplateRowChecker" %><%@
-page import="com.liferay.dynamic.data.mapping.web.internal.search.StructureDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.mapping.web.internal.search.StructureSearch" %><%@
-page import="com.liferay.dynamic.data.mapping.web.internal.search.StructureSearchTerms" %><%@
-page import="com.liferay.dynamic.data.mapping.web.internal.search.TemplateDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.mapping.web.internal.search.TemplateSearch" %><%@
-page import="com.liferay.dynamic.data.mapping.web.internal.search.TemplateSearchTerms" %><%@
 page import="com.liferay.dynamic.data.mapping.web.internal.security.permission.resource.DDMStructurePermission" %><%@
 page import="com.liferay.dynamic.data.mapping.web.internal.security.permission.resource.DDMTemplatePermission" %><%@
-page import="com.liferay.dynamic.data.mapping.web.internal.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -99,17 +93,13 @@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.template.TemplateConstants" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.template.TemplateVariableDefinition" %><%@
 page import="com.liferay.portal.kernel.template.TemplateVariableGroup" %><%@
-page import="com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
-page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.ResourceBundleLoader" %><%@
@@ -121,13 +111,9 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.template.TemplateContextHelper" %><%@
-page import="com.liferay.portlet.display.template.PortletDisplayTemplate" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.HashMap" %><%@
-page import="java.util.Iterator" %><%@
-page import="java.util.List" %><%@
+<%@ page import="java.util.HashMap" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Objects" %><%@
@@ -149,13 +135,13 @@ page import="org.osgi.framework.FrameworkUtil" %>
 <portlet:defineObjects />
 
 <%
-String refererPortletName = ParamUtil.getString(request, "refererPortletName", portletName);
+DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+String refererPortletName = ddmDisplayContext.getRefererPortletName();
 String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));
 String scopeTitle = ParamUtil.getString(request, "scopeTitle");
 boolean showAncestorScopes = ParamUtil.getBoolean(request, "showAncestorScopes");
 boolean showManageTemplates = ParamUtil.getBoolean(request, "showManageTemplates", true);
-
-DDMDisplayContext ddmDisplayContext = (DDMDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 DDMDisplay ddmDisplay = null;
 
@@ -166,7 +152,7 @@ String scopeStorageType = StringPool.BLANK;
 String scopeTemplateType = StringPool.BLANK;
 
 if (ddmDisplayContext != null) {
-	ddmDisplay = ddmDisplayContext.getDDMDisplay(refererPortletName);
+	ddmDisplay = ddmDisplayContext.getDDMDisplay();
 
 	changeableDefaultLanguage = ddmDisplayContext.changeableDefaultLanguage();
 	scopeAvailableFields = ddmDisplay.getAvailableFields();

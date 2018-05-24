@@ -17,23 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "structures");
-
-String redirect = ParamUtil.getString(request, "redirect");
-
-long groupId = ParamUtil.getLong(request, "groupId", PortalUtil.getScopeGroupId(request, refererPortletName, true));
-
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
-
-PortletURL iteratorURL = renderResponse.createRenderURL();
-
-StructureSearch structureSearch = new StructureSearch(renderRequest, iteratorURL);
-
-OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByComparator(ddmDisplayContext.getOrderByCol(), ddmDisplayContext.getOrderByType());
-
-structureSearch.setOrderByCol(ddmDisplayContext.getOrderByCol());
-structureSearch.setOrderByComparator(orderByComparator);
-structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 
 if (ddmDisplay.getDescription(locale) != null) {
 	portletDisplay.setDescription(ddmDisplay.getDescription(locale));
@@ -59,35 +43,20 @@ if (ddmDisplay.getTitle(locale) != null) {
 
 <liferay-ui:success embed="<%= false %>" key='<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING + "requestProcessed" %>' message="your-request-completed-successfully" />
 
-<portlet:renderURL var="portletURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="tabs1" value="<%= tabs1 %>" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-</portlet:renderURL>
-
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<liferay-util:param name="orderByCol" value="<%= ddmDisplayContext.getOrderByCol() %>" />
-	<liferay-util:param name="orderByType" value="<%= ddmDisplayContext.getOrderByType() %>" />
-	<liferay-util:param name="searchContainerId" value="ddmStructures" />
-</liferay-util:include>
+<liferay-util:include page="/management_bar.jsp" servletContext="<%= application %>" />
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+<aui:form action="<%= ddmDisplayContext.getStructureSearchActionURL() %>" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= ddmDisplayContext.getStructureSearchActionURL() %>" />
 	<aui:input name="deleteStructureIds" type="hidden" />
 
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="ddmStructures"
 			rowChecker="<%= new DDMStructureRowChecker(renderResponse) %>"
-			searchContainer="<%= structureSearch %>"
+			searchContainer="<%= ddmDisplayContext.getStructureSearch() %>"
 		>
-			<liferay-ui:search-container-results>
-				<%@ include file="/structure_search_results.jspf" %>
-			</liferay-ui:search-container-results>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMStructure"
 				keyProperty="structureId"

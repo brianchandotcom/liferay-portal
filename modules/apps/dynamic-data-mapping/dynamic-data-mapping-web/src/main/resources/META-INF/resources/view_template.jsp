@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "templates");
-
-long groupId = ParamUtil.getLong(request, "groupId", PortalUtil.getScopeGroupId(request, refererPortletName, true));
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 
@@ -31,12 +28,6 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 	structure = DDMStructureServiceUtil.getStructure(classPK);
 }
 
-long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
-
-if (resourceClassNameId == 0) {
-	resourceClassNameId = PortalUtil.getClassNameId(PortletDisplayTemplate.class);
-}
-
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 
 boolean controlPanel = false;
@@ -46,23 +37,6 @@ if (layout != null) {
 
 	controlPanel = group.isControlPanel();
 }
-
-PortletURL iteratorURL = renderResponse.createRenderURL();
-
-iteratorURL.setParameter("mvcPath", "/view_template.jsp");
-iteratorURL.setParameter("groupId", String.valueOf(groupId));
-iteratorURL.setParameter("classNameId", String.valueOf(classNameId));
-iteratorURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
-
-TemplateSearch templateSearch = new TemplateSearch(renderRequest, iteratorURL);
-
-OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByComparator(ddmDisplayContext.getOrderByCol(), ddmDisplayContext.getOrderByType());
-
-templateSearch.setOrderByCol(ddmDisplayContext.getOrderByCol());
-templateSearch.setOrderByComparator(orderByComparator);
-templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
-
-TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.getSearchTerms();
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
@@ -72,12 +46,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 </portlet:renderURL>
 
 <liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
-
-<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="<%= tabs1 %>" />
-	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<liferay-util:param name="searchContainerId" value="ddmTemplates" />
-</liferay-util:include>
+<liferay-util:include page="/template_management_bar.jsp" servletContext="<%= application %>" />
 
 <c:if test="<%= showHeader %>">
 	<c:choose>
@@ -87,7 +56,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 			portletDisplay.setShowBackIcon(true);
 			portletDisplay.setURLBack(PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)));
 
-			renderResponse.setTitle(ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale));
+			renderResponse.setTitle(ddmDisplay.getViewTemplatesTitle(structure, controlPanel, ddmDisplayContext.isSearch(), locale));
 			%>
 
 		</c:when>
@@ -95,30 +64,22 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 			<liferay-ui:header
 				backURL="<%= PortalUtil.escapeRedirect(ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK)) %>"
 				cssClass="container-fluid-1280"
-				title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale) %>"
+				title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, ddmDisplayContext.isSearch(), locale) %>"
 			/>
 		</c:otherwise>
 	</c:choose>
 </c:if>
 
 <aui:form action="<%= viewTemplateURL.toString() %>" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
-	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
-	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
-	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(resourceClassNameId) %>" />
+	<aui:input name="redirect" type="hidden" value="<%= ddmDisplayContext.getTemplateSearchActionURL() %>" />
 	<aui:input name="deleteTemplateIds" type="hidden" />
 
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
-			id="ddmTemplates"
+			id="<%= ddmDisplayContext.getTemplateSearchContainerId() %>"
 			rowChecker="<%= new DDMTemplateRowChecker(renderResponse) %>"
-			searchContainer="<%= templateSearch %>"
+			searchContainer="<%= ddmDisplayContext.getTemplateSearch() %>"
 		>
-			<liferay-ui:search-container-results>
-				<%@ include file="/template_search_results.jspf" %>
-			</liferay-ui:search-container-results>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 				keyProperty="templateId"

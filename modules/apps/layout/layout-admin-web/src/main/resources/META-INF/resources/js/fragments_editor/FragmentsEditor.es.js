@@ -594,30 +594,28 @@ class FragmentsEditor extends Component {
 	 */
 
 	_handlePublishButtonClick() {
-		const formData = new FormData();
+		const form = document.querySelector('#hrefFm');
 
-		formData.append(
-			`${this.portletNamespace}classPK`,
-			this.classPK
-		);
+		form.setAttribute('action', this.publishLayoutPageTemplateEntryURL);
+		form.setAttribute('method', 'POST');
 
-		fetch(
-			this.publishLayoutPageTemplateEntryURL,
-			{
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
-			}
-		).then(
-			() => {
-				if (Liferay.SPA) {
-					Liferay.SPA.app.navigate(this.redirectURL);
-				}
-				else {
-					location.href = this.redirectURL;
-				}
-			}
-		);
+		const classPKNode = document.createElement('input');
+
+		classPKNode.setAttribute('type', 'hidden');
+		classPKNode.setAttribute('name', `${this.portletNamespace}classPK`)
+		classPKNode.setAttribute('value', this.classPK);
+
+		form.appendChild(classPKNode)
+
+		const redirectNode = document.createElement('input');
+
+		redirectNode.setAttribute('type', 'hidden');
+		redirectNode.setAttribute('name', `${this.portletNamespace}redirect`)
+		redirectNode.setAttribute('value', this.redirectURL);
+
+		form.appendChild(redirectNode);ect
+
+		form.submit();
 	}
 
 	/**

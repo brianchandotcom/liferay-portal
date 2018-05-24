@@ -70,7 +70,12 @@
 			<var name="key_id" value="${id}" />
 		</execute>
 
-		<execute macro="Button#clickEditIfPresent" />
+		<if>
+			<condition function="IsElementPresent" locator1="Button#EDIT" />
+			<then>
+				<execute macro="Button#clickEdit" />
+			</then>
+		</if>
 
 		<execute function="Type#typeEditor" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT_CK_EDITOR" value1="${text}">
 			<var name="key_fragmentName" value="${fragmentName}" />

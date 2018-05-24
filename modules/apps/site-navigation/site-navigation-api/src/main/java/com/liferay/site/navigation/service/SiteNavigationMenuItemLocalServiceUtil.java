@@ -122,8 +122,7 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 		return getService().deleteSiteNavigationMenuItem(siteNavigationMenuItem);
 	}
 
-	public static void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void deleteSiteNavigationMenuItems(long siteNavigationMenuId) {
 		getService().deleteSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
@@ -212,12 +211,6 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
-	}
-
-	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getChildSiteNavigationMenuItems(
-		long parentSiteNavigationMenuItemId) {
-		return getService()
-				   .getChildSiteNavigationMenuItems(parentSiteNavigationMenuItemId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

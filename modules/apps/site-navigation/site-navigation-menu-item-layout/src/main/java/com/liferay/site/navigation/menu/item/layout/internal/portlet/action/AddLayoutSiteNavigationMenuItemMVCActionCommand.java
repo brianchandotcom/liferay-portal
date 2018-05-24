@@ -28,9 +28,12 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -75,6 +78,9 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 		List<String> layoutUUIDs = StringUtil.split(
 			typeSettingsProperties.getProperty("layoutUuid"));
 
+		Map<Long, SiteNavigationMenuItem> layoutSiteNavigationMenuItemMap =
+			new HashMap<>();
+
 		for (String layoutUuid : layoutUUIDs) {
 			UnicodeProperties curTypeSettingsProperties = new UnicodeProperties(
 				true);
@@ -100,9 +106,37 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 			curTypeSettingsProperties.setProperty(
 				"title", layout.getName(themeDisplay.getLocale()));
 
-			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-				themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0, type,
-				curTypeSettingsProperties.toString(), serviceContext);
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
+					type, curTypeSettingsProperties.toString(), serviceContext);
+
+			layoutSiteNavigationMenuItemMap.put(
+				layout.getPlid(), siteNavigationMenuItem);
+		}
+
+		for (Map.Entry<Long, SiteNavigationMenuItem> entry :
+				layoutSiteNavigationMenuItemMap.entrySet()) {
+
+			Layout layout = _layoutLocalService.fetchLayout(entry.getKey());
+
+			if (layout.getParentPlid() <= 0) {
+				continue;
+			}
+
+			SiteNavigationMenuItem parentSiteNavigationMenuItem =
+				layoutSiteNavigationMenuItemMap.get(layout.getParentPlid());
+
+			if (parentSiteNavigationMenuItem == null) {
+				continue;
+			}
+
+			SiteNavigationMenuItem siteNavigationMenuItem = entry.getValue();
+
+			_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				layout.getPriority());
 		}
 	}
 

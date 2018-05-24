@@ -68,6 +68,51 @@ public class SiteNavigationMenuItemServiceTest {
 				serviceContext);
 	}
 
+	@Test
+	public void testDeleteSiteNavigationMenuItemsAndMerge()
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+			SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+			serviceContext);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItem childSiteNavigationMenuItem1 =
+			SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+				serviceContext);
+
+		SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+			SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+			serviceContext);
+
+		SiteNavigationMenuItemLocalServiceUtil.deleteSiteNavigationMenuItem(
+			siteNavigationMenuItem.getSiteNavigationMenuItemId());
+
+		childSiteNavigationMenuItem1 =
+			SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(
+				childSiteNavigationMenuItem1.getSiteNavigationMenuItemId());
+
+		Assert.assertEquals(1, childSiteNavigationMenuItem1.getOrder());
+	}
+
 	@Test(expected = InvalidSiteNavigationMenuItemOrderException.class)
 	public void testInvalidParentSiteNavigationMenuItem()
 		throws PortalException {

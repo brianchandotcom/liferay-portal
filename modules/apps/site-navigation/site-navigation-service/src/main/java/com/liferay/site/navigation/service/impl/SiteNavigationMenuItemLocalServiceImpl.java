@@ -91,9 +91,8 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		throws PortalException {
 
 		int siteNavigationMenuItemCount =
-			siteNavigationMenuItemPersistence.
-				countByParentSiteNavigationMenuItemId(
-					parentSiteNavigationMenuItemId);
+			siteNavigationMenuItemPersistence.countByS_P(
+				siteNavigationMenuId, parentSiteNavigationMenuItemId);
 
 		return addSiteNavigationMenuItem(
 			userId, groupId, siteNavigationMenuId,
@@ -109,14 +108,46 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			getSiteNavigationMenuItem(siteNavigationMenuItemId);
 
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			getChildSiteNavigationMenuItems(siteNavigationMenuItemId);
+		long parentSiteNavigationMenuItemId =
+			siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
 
-		for (SiteNavigationMenuItem childSiteNavigationMenuItem :
-				siteNavigationMenuItems) {
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			getSiteNavigationMenuItems(
+				siteNavigationMenuItem.getSiteNavigationMenuId(),
+				siteNavigationMenuItemId);
+
+		if (!siteNavigationMenuItems.isEmpty()) {
+			List<SiteNavigationMenuItem> siblingsSiteNavigationMenuItems =
+				getSiteNavigationMenuItems(
+					siteNavigationMenuItem.getSiteNavigationMenuId(),
+					parentSiteNavigationMenuItemId);
+
+			for (SiteNavigationMenuItem siblingSiteNavigationMenuItem :
+					siblingsSiteNavigationMenuItems) {
+
+				if (siblingSiteNavigationMenuItem.getOrder() <=
+						siteNavigationMenuItem.getOrder()) {
+
+					continue;
+				}
+
+				siblingSiteNavigationMenuItem.setOrder(
+					siteNavigationMenuItems.size() +
+						siteNavigationMenuItem.getOrder());
+
+				siteNavigationMenuItemPersistence.update(
+					siblingSiteNavigationMenuItem);
+			}
+		}
+
+		for (int i = 0; i < siteNavigationMenuItems.size(); i++) {
+			SiteNavigationMenuItem childSiteNavigationMenuItem =
+				siteNavigationMenuItems.get(i);
 
 			childSiteNavigationMenuItem.setParentSiteNavigationMenuItemId(
 				siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
+			childSiteNavigationMenuItem.setOrder(
+				siteNavigationMenuItem.getOrder() + i);
 
 			siteNavigationMenuItemPersistence.update(
 				childSiteNavigationMenuItem);
@@ -127,21 +158,9 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	}
 
 	@Override
-	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
-		throws PortalException {
-
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId) {
 		siteNavigationMenuItemPersistence.removeBySiteNavigationMenuId(
 			siteNavigationMenuId);
-	}
-
-	@Override
-	public List<SiteNavigationMenuItem> getChildSiteNavigationMenuItems(
-		long parentSiteNavigationMenuItemId) {
-
-		return siteNavigationMenuItemPersistence.
-			findByParentSiteNavigationMenuItemId(
-				parentSiteNavigationMenuItemId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new SiteNavigationMenuItemOrderComparator());
 	}
 
 	@Override
@@ -170,11 +189,13 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		// Site navigation menu item
 
-		validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
-
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			siteNavigationMenuItemPersistence.fetchByPrimaryKey(
 				siteNavigationMenuItemId);
+
+		validate(
+			siteNavigationMenuItem.getSiteNavigationMenuId(),
+			siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 
 		long oldParentSiteNavigationMenuItemId =
 			siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
@@ -269,11 +290,13 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	}
 
 	protected void validate(
-			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId)
+			long siteNavigationMenuId, long siteNavigationMenuItemId,
+			long parentSiteNavigationMenuItemId)
 		throws PortalException {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			getChildSiteNavigationMenuItems(siteNavigationMenuItemId);
+			getSiteNavigationMenuItems(
+				siteNavigationMenuId, siteNavigationMenuItemId);
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {
@@ -285,7 +308,9 @@ public class SiteNavigationMenuItemLocalServiceImpl
 				throw new InvalidSiteNavigationMenuItemOrderException();
 			}
 
-			validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
+			validate(
+				siteNavigationMenuId, siteNavigationMenuItemId,
+				parentSiteNavigationMenuItemId);
 		}
 	}
 

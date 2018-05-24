@@ -120,8 +120,7 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	public SiteNavigationMenuItem deleteSiteNavigationMenuItem(
 		SiteNavigationMenuItem siteNavigationMenuItem);
 
-	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
-		throws PortalException;
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId);
 
 	public DynamicQuery dynamicQuery();
 
@@ -188,10 +187,6 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<SiteNavigationMenuItem> getChildSiteNavigationMenuItems(
-		long parentSiteNavigationMenuItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

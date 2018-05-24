@@ -22,7 +22,6 @@ import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -67,6 +66,9 @@ public class CommerceUserSegmentHelperTest {
 		_userGroup = UserGroupTestUtil.addUserGroup(_group1.getGroupId());
 
 		_user = UserTestUtil.addUser();
+
+		_role = _roleLocalService.addRole(
+			_user.getUserId(), null, 0, "Foo", null, null, 0, null, null);
 	}
 
 	@Test
@@ -154,21 +156,18 @@ public class CommerceUserSegmentHelperTest {
 			"A list of user segment IDs should be retrieved"
 		);
 
-		Role role = _roleLocalService.getRole(
-			_group1.getCompanyId(), RoleConstants.ORGANIZATION_ADMINISTRATOR);
-
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+		_userLocalService.addRoleUser(_role.getRoleId(), _user);
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
 			CommerceUserSegmentTestUtil.addRoleCommerceUserSegmentEntry(
-				_group1.getGroupId(), role.getRoleId());
+				_group1.getGroupId(), _role.getRoleId());
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
 				_group1.getGroupId(), 0, _user.getUserId());
 
 		Assert.assertEquals(
-			false,
+			true,
 			ArrayUtil.contains(
 				commerceUserSegmentIDs,
 				commerceUserSegmentEntry.getCommerceUserSegmentEntryId()));
@@ -298,6 +297,9 @@ public class CommerceUserSegmentHelperTest {
 
 	@DeleteAfterTestRun
 	private Organization _organization;
+
+	@DeleteAfterTestRun
+	private Role _role;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

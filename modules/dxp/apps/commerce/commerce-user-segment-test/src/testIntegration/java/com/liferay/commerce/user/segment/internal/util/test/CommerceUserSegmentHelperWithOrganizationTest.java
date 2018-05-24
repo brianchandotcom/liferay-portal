@@ -21,10 +21,11 @@ import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
@@ -65,6 +68,9 @@ public class CommerceUserSegmentHelperWithOrganizationTest {
 		_userGroup = UserGroupTestUtil.addUserGroup(_group.getGroupId());
 
 		_user = UserTestUtil.addUser();
+
+		_role = _roleLocalService.addRole(
+			_user.getUserId(), null, 0, "Foo", null, null, 0, null, null);
 	}
 
 	@Test
@@ -129,14 +135,16 @@ public class CommerceUserSegmentHelperWithOrganizationTest {
 		_userLocalService.addOrganizationUser(
 			_organization.getOrganizationId(), _user);
 
-		Role role = _roleLocalService.getRole(
-			_group.getCompanyId(), RoleConstants.ORGANIZATION_ADMINISTRATOR);
+		List<UserGroupRole> userGroupRoles =
+			_userGroupRoleLocalService.addUserGroupRoles(
+				_user.getUserId(), _organization.getGroupId(),
+				new long[] {_role.getRoleId()});
 
-		_userLocalService.addRoleUser(role.getRoleId(), _user);
+		_userLocalService.addRoleUser(userGroupRoles.get(0).getRoleId(), _user);
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
 			CommerceUserSegmentTestUtil.addRoleCommerceUserSegmentEntry(
-				_group.getGroupId(), role.getRoleId());
+				_group.getGroupId(), _role.getRoleId());
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -239,6 +247,9 @@ public class CommerceUserSegmentHelperWithOrganizationTest {
 	@DeleteAfterTestRun
 	private Organization _organization;
 
+	@DeleteAfterTestRun
+	private Role _role;
+
 	@Inject
 	private RoleLocalService _roleLocalService;
 
@@ -246,6 +257,9 @@ public class CommerceUserSegmentHelperWithOrganizationTest {
 	private User _user;
 
 	private UserGroup _userGroup;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

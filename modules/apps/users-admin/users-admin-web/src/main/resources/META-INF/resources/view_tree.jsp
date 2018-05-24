@@ -78,6 +78,7 @@ if (organization != null) {
 		<clay:management-toolbar
 			actionDropdownItems="<%= viewTreeManagementToolbarDisplayContext.getActionDropdownItems() %>"
 			clearResultsURL="<%= viewTreeManagementToolbarDisplayContext.getClearResultsURL() %>"
+			componentId="viewTreeManagementToolbar"
 			creationMenu="<%= viewTreeManagementToolbarDisplayContext.getCreationMenu() %>"
 			filterDropdownItems="<%= viewTreeManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 			itemsTotal="<%= searchContainer.getTotal() %>"
@@ -180,7 +181,7 @@ if (organization != null) {
 	</c:otherwise>
 </c:choose>
 
-<aui:script>
+<aui:script sandbox="<%= true %>">
 	function <portlet:namespace />delete() {
 		<portlet:namespace />deleteOrganizations();
 	}
@@ -195,10 +196,26 @@ if (organization != null) {
 		submitForm(form, '<portlet:actionURL name="/users_admin/delete_organizations_and_users" />');
 	};
 
-	AUI.$('#<portlet:namespace />assignUsers').on(
-		'click',
-		function(event) {
-			<portlet:namespace />openSelectUsersDialog('<%= organizationId %>');
+	var selectUsers = function(organizationId) {
+		<portlet:namespace />openSelectUsersDialog(organizationId);
+	}
+
+	var ACTIONS = {
+		'selectUsers': selectUsers
+	};
+
+	Liferay.componentReady('viewTreeManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'creationMenuItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action](itemData.organizationId);
+					}
+				}
+			);
 		}
 	);
 </aui:script>

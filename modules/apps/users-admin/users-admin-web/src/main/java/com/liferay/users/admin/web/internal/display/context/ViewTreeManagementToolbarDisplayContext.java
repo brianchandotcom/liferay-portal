@@ -163,14 +163,11 @@ public class ViewTreeManagementToolbarDisplayContext {
 
 					addDropdownItem(
 						dropdownItem -> {
-							dropdownItem.setHref(
-								StringBundler.concat(
-									"javascript:",
-									_renderResponse.getNamespace(),
-									"openSelectUsersDialog(",
-									String.valueOf(
-										_organization.getOrganizationId()),
-									");"));
+							dropdownItem.putData("action", "selectUsers");
+							dropdownItem.putData(
+								"organizationId",
+								String.valueOf(
+									_organization.getOrganizationId()));
 							dropdownItem.setLabel(
 								LanguageUtil.get(_request, "assign-users"));
 							dropdownItem.setQuickAction(true);

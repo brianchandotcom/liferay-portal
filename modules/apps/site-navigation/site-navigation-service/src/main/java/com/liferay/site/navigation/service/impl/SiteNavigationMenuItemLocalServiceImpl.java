@@ -91,9 +91,8 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		throws PortalException {
 
 		int siteNavigationMenuItemCount =
-			siteNavigationMenuItemPersistence.
-				countByParentSiteNavigationMenuItemId(
-					parentSiteNavigationMenuItemId);
+			siteNavigationMenuItemPersistence.countByS_P(
+				siteNavigationMenuId, parentSiteNavigationMenuItemId);
 
 		return addSiteNavigationMenuItem(
 			userId, groupId, siteNavigationMenuId,
@@ -119,7 +118,9 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		if (!siteNavigationMenuItems.isEmpty()) {
 			List<SiteNavigationMenuItem> siblingsSiteNavigationMenuItems =
-				getChildSiteNavigationMenuItems(parentSiteNavigationMenuItemId);
+				getSiteNavigationMenuItems(
+					siteNavigationMenuItem.getSiteNavigationMenuId(),
+					parentSiteNavigationMenuItemId);
 
 			for (SiteNavigationMenuItem siblingSiteNavigationMenuItem :
 					siblingsSiteNavigationMenuItems) {
@@ -200,11 +201,13 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		// Site navigation menu item
 
-		validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
-
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			siteNavigationMenuItemPersistence.fetchByPrimaryKey(
 				siteNavigationMenuItemId);
+
+		validate(
+			siteNavigationMenuItem.getSiteNavigationMenuId(),
+			siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 
 		long oldParentSiteNavigationMenuItemId =
 			siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
@@ -299,11 +302,13 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	}
 
 	protected void validate(
-			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId)
+			long siteNavigationMenuId, long siteNavigationMenuItemId,
+			long parentSiteNavigationMenuItemId)
 		throws PortalException {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			getChildSiteNavigationMenuItems(siteNavigationMenuItemId);
+			getSiteNavigationMenuItems(
+				siteNavigationMenuId, siteNavigationMenuItemId);
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {
@@ -315,7 +320,9 @@ public class SiteNavigationMenuItemLocalServiceImpl
 				throw new InvalidSiteNavigationMenuItemOrderException();
 			}
 
-			validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
+			validate(
+				siteNavigationMenuId, siteNavigationMenuItemId,
+				parentSiteNavigationMenuItemId);
 		}
 	}
 

@@ -61,7 +61,7 @@ request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", s
 	</div>
 
 	<%
-	List<SiteNavigationMenuItem> children = SiteNavigationMenuItemLocalServiceUtil.getChildSiteNavigationMenuItems(siteNavigationMenuItemId);
+	List<SiteNavigationMenuItem> children = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationMenuItem.getSiteNavigationMenuId(), siteNavigationMenuItemId);
 
 	for (SiteNavigationMenuItem childSiteNavigationMenuItem : children) {
 	%>

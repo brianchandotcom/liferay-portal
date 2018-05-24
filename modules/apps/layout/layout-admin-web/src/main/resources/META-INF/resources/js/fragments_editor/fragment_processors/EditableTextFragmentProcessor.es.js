@@ -104,7 +104,12 @@ function init(
 
 	_editor = AlloyEditor.editable(
 		wrapper,
-		_getEditorConfiguration()
+		_getEditorConfiguration(
+			editableElement,
+			portletNamespace,
+			fragmentEntryLinkId,
+			defaultEditorConfiguration
+		)
 	);
 
 	const nativeEditor = _editor.get('nativeEditor');
@@ -145,16 +150,24 @@ function _getEditorConfiguration(
 	fragmentEntryLinkId,
 	defaultEditorConfiguration
 ) {
-	const title = [
+	const configuration = {};
+
+	configuration.title = [
 		portletNamespace,
 		'_FragmentEntryLinkEditable_',
 		fragmentEntryLinkId
 	].join('');
 
+	if (editableElement.getAttribute('type') === 'text') {
+		configuration.allowedContent = 'br div p';
+		configuration.disallowedContent = 'br div p';
+		configuration.toolbars = {};
+	}
+
 	return object.mixin(
 		defaultEditorConfiguration.editorConfig || {},
 		EDITOR_CONFIGURATION,
-		{title}
+		configuration
 	);
 }
 

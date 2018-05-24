@@ -1642,6 +1642,14 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
 		<execute macro="WebContent#expireCP">
 			<var name="webContentTitleList" value="WC WebContent Title" />
 		</execute>

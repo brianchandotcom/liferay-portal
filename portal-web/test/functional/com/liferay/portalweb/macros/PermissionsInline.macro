@@ -118,7 +118,7 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute function="Click" locator1="Button#INFO" />
+		<execute function="Click" locator1="Icon#INFO" />
 
 		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
 			<var name="menuItem" value="Permissions" />

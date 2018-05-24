@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>EXPIRE</td>
-	<td>//a[*[name()='svg'][contains(@class,'icon-time')]]</td>
+	<td>//button[*[name()='svg'][contains(@class,'icon-time')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,7 +190,7 @@
 </tr>
 <tr>
 	<td>MERGE</td>
-	<td>//*[@data-qa-id='mergeButton'] | //a[contains(@id,'merge')]//span[contains(@class,'icon-random')]</td>
+	<td>//a[contains(.,'Merge')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -317,6 +317,11 @@
 <tr>
 	<td>STAGING_BAR_VERTICAL_ELLIPSIS</td>
 	<td>//li[contains(@class,'control-menu-nav-item')]//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_ELLIPSIS</td>
+	<td>//ul[@class='navbar-nav']/li[contains(@class,'nav-item')]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

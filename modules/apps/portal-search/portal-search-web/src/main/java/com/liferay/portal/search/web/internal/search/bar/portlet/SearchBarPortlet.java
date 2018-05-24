@@ -15,14 +15,18 @@
 package com.liferay.portal.search.web.internal.search.bar.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.web.internal.search.bar.constants.SearchBarPortletKeys;
 import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.io.IOException;
 
@@ -131,7 +135,26 @@ public class SearchBarPortlet extends MVCPortlet {
 		searchBarPortletDisplayBuilder.setThemeDisplay(
 			portletSharedSearchResponse.getThemeDisplay(renderRequest));
 
+		SearchSettings searchSettings =
+			portletSharedSearchResponse.getSearchSettings();
+
+		searchBarPortletDisplayBuilder.setEmptySearchEnabled(
+			isEmptySearchEnabled(searchSettings));
+
 		return searchBarPortletDisplayBuilder.build();
+	}
+
+	protected boolean isEmptySearchEnabled(SearchSettings searchSettings) {
+		SearchContext searchContext = searchSettings.getSearchContext();
+
+		if (GetterUtil.getBoolean(
+				searchContext.getAttribute(
+					SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH))) {
+
+			return true;
+		};
+
+		return false;
 	}
 
 	@Reference

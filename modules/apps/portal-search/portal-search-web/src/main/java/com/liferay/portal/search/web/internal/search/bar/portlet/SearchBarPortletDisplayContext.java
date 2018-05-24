@@ -55,6 +55,10 @@ public class SearchBarPortletDisplayContext {
 		return _destinationUnreachable;
 	}
 
+	public boolean isEmptySearchEnabled() {
+		return _emptySearchEnabled;
+	}
+
 	public boolean isLetTheUserChooseTheSearchScope() {
 		return _letTheUserChooseTheSearchScope;
 	}
@@ -82,6 +86,10 @@ public class SearchBarPortletDisplayContext {
 
 	public void setDestinationUnreachable(boolean destinationUnreachable) {
 		_destinationUnreachable = destinationUnreachable;
+	}
+
+	public void setEmptySearchEnabled(boolean emptySearchEnabled) {
+		_emptySearchEnabled = emptySearchEnabled;
 	}
 
 	public void setEverythingSearchScopeParameterString(
@@ -132,6 +140,7 @@ public class SearchBarPortletDisplayContext {
 	private boolean _availableEverythingSearchScope;
 	private String _currentSiteSearchScopeParameterString;
 	private boolean _destinationUnreachable;
+	private boolean _emptySearchEnabled;
 	private String _everythingSearchScopeParameterString;
 	private String _keywords;
 	private String _keywordsParameterName;

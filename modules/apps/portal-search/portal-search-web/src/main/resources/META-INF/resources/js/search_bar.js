@@ -10,6 +10,19 @@ AUI.add(
 
 			instance.form.on('submit', A.bind(instance._onSubmit, instance));
 
+			var emptySearchInput = instance.form.one('.search-bar-empty-search-input');
+
+			if (emptySearchInput.val() === 'true') {
+				instance.emptySearchEnabled = true;
+			}
+			else {
+				instance.emptySearchEnabled = false;
+			}
+
+			instance.keywordsInput = instance.form.one('.search-bar-keywords-input');
+
+			instance.scopeSelect = instance.form.one('.search-bar-scope-select');
+
 			var searchButton = instance.form.one('.search-bar-search-button');
 
 			searchButton.on('click', A.bind(instance._onClick, instance));
@@ -18,46 +31,60 @@ AUI.add(
 		A.mix(
 			SearchBar.prototype,
 			{
+				getKeywords: function() {
+					var instance = this;
+
+					var keywords = instance.keywordsInput.val();
+
+					return keywords.replace(/^\s+|\s+$/, '');
+				},
+
+				isSubmitEnabled: function() {
+					var instance = this;
+
+					return (instance.getKeywords() !== '') || instance.emptySearchEnabled;
+				},
+
 				search: function() {
 					var instance = this;
 
-					var keywordsInput = instance.form.one('.search-bar-keywords-input');
-
-					var keywords = keywordsInput.val();
-
-					keywords = keywords.replace(/^\s+|\s+$/, '');
-
-					if (keywords !== '') {
-						var keywordsParameterName = keywordsInput.get('name');
-
+					if (instance.isSubmitEnabled()) {
 						var searchURL = instance.form.get('action');
 
-						var queryString = document.location.search;
-
-						var hasQuestionMark = false;
-
-						if (queryString[0] === '?') {
-							hasQuestionMark = true;
-						}
-
-						queryString = FacetUtil.updateQueryString(keywordsParameterName, [keywords], queryString);
-
-						var scopeSelect = instance.form.one('.search-bar-scope-select');
-
-						if (scopeSelect) {
-							var scope = scopeSelect.val();
-
-							var scopeParameterName = scopeSelect.get('name');
-
-							queryString = FacetUtil.updateQueryString(scopeParameterName, [scope], queryString);
-						}
-
-						if (!hasQuestionMark) {
-							queryString = '?' + queryString;
-						}
+						var queryString = instance.updateQueryString(document.location.search);
 
 						document.location.href = searchURL + queryString;
 					}
+				},
+
+				updateQueryString: function(queryString) {
+					var instance = this;
+
+					var hasQuestionMark = false;
+
+					if (queryString[0] === '?') {
+						hasQuestionMark = true;
+					}
+
+					queryString = FacetUtil.updateQueryString(
+						instance.keywordsInput.get('name'),
+						[instance.getKeywords()],
+						queryString
+					);
+
+					if (instance.scopeSelect) {
+						queryString = FacetUtil.updateQueryString(
+							instance.scopeSelect.get('name'),
+							[instance.scopeSelect.val()],
+							queryString
+						);
+					}
+
+					if (!hasQuestionMark) {
+						queryString = '?' + queryString;
+					}
+
+					return queryString;
 				},
 
 				_onClick: function(event) {

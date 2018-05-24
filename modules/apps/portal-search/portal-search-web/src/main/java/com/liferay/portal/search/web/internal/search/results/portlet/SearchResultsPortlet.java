@@ -23,12 +23,15 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactoryImpl;
@@ -43,6 +46,7 @@ import com.liferay.portal.search.web.internal.result.display.context.SearchResul
 import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.search.web.search.result.SearchResultImageContributor;
 
 import java.io.IOException;
@@ -150,13 +154,8 @@ public class SearchResultsPortlet extends MVCPortlet {
 		searchResultsPortletDisplayContext.setKeywords(
 			keywordsOptional.orElse(StringPool.BLANK));
 
-		boolean renderNothing = false;
-
-		if (!keywordsOptional.isPresent()) {
-			renderNothing = true;
-		}
-
-		searchResultsPortletDisplayContext.setRenderNothing(renderNothing);
+		searchResultsPortletDisplayContext.setRenderNothing(
+			isRenderNothing(portletSharedSearchResponse));
 
 		SearchResultsPortletPreferences searchResultsPortletPreferences =
 			new SearchResultsPortletPreferencesImpl(
@@ -373,6 +372,32 @@ public class SearchResultsPortlet extends MVCPortlet {
 			urlString, paginationStartParameterName);
 
 		return urlString;
+	}
+
+	protected boolean isRenderNothing(
+		PortletSharedSearchResponse portletSharedSearchResponse) {
+
+		Optional<String> keywordsOptional =
+			portletSharedSearchResponse.getKeywordsOptional();
+
+		if (keywordsOptional.isPresent()) {
+			return false;
+		}
+
+		SearchSettings searchSettings =
+			portletSharedSearchResponse.getSearchSettings();
+
+		SearchContext searchContext = searchSettings.getSearchContext();
+
+		boolean emptySearchEnabled = GetterUtil.getBoolean(
+			searchContext.getAttribute(
+				SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH));
+
+		if (emptySearchEnabled) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected void removeSearchResultImageContributor(

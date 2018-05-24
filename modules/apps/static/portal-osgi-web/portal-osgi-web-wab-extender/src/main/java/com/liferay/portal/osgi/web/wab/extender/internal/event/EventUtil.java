@@ -145,7 +145,7 @@ public class EventUtil
 				sb.append("/7.0.0/service.http.whiteboard.html");
 				sb.append("#service.http.whiteboard.servletcontext");
 
-				_logger.log(Logger.LOG_ERROR, sb.toString());
+				_logger.log(Logger.LOG_WARNING, sb.toString());
 			}
 		}
 

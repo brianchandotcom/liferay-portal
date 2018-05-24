@@ -21,7 +21,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Collection#addCollection">
@@ -56,7 +56,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -103,7 +103,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -141,7 +141,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -155,7 +155,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -177,7 +177,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Collection#viewNotPresent">
@@ -197,7 +197,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -218,7 +218,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -285,7 +285,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -346,7 +346,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Fragments" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">

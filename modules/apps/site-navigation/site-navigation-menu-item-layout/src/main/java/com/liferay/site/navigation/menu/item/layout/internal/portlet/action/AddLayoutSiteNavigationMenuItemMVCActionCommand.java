@@ -78,8 +78,8 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 		List<String> layoutUUIDs = StringUtil.split(
 			typeSettingsProperties.getProperty("layoutUuid"));
 
-		Map<Long, Long> layoutSiteNavigationMenuItems = new HashMap<>();
-		Map<Long, Long> layoutParentPlids = new HashMap<>();
+		Map<Long, SiteNavigationMenuItem> layoutSiteNavigationMenuItemMap =
+			new HashMap<>();
 
 		for (String layoutUuid : layoutUUIDs) {
 			UnicodeProperties curTypeSettingsProperties = new UnicodeProperties(
@@ -111,30 +111,31 @@ public class AddLayoutSiteNavigationMenuItemMVCActionCommand
 					themeDisplay.getScopeGroupId(), siteNavigationMenuId, 0,
 					type, curTypeSettingsProperties.toString(), serviceContext);
 
-			layoutSiteNavigationMenuItems.put(
-				layout.getPlid(),
-				siteNavigationMenuItem.getSiteNavigationMenuItemId());
-
-			if (layout.getParentPlid() > 0) {
-				layoutParentPlids.put(layout.getParentPlid(), layout.getPlid());
-			}
+			layoutSiteNavigationMenuItemMap.put(
+				layout.getPlid(), siteNavigationMenuItem);
 		}
 
-		for (Map.Entry<Long, Long> entry : layoutParentPlids.entrySet()) {
-			long parentSiteNavigationMenuItemId =
-				layoutSiteNavigationMenuItems.getOrDefault(entry.getKey(), 0L);
+		for (Map.Entry<Long, SiteNavigationMenuItem> entry :
+				layoutSiteNavigationMenuItemMap.entrySet()) {
 
-			long siteNavigationMenuItemId =
-				layoutSiteNavigationMenuItems.getOrDefault(
-					entry.getValue(), 0L);
+			Layout layout = _layoutLocalService.fetchLayout(entry.getKey());
 
-			if ((parentSiteNavigationMenuItemId > 0) &&
-				(siteNavigationMenuItemId > 0)) {
-
-				_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
-					siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-					0);
+			if (layout.getParentPlid() <= 0) {
+				continue;
 			}
+
+			SiteNavigationMenuItem parentSiteNavigationMenuItem =
+				layoutSiteNavigationMenuItemMap.get(layout.getParentPlid());
+
+			if (parentSiteNavigationMenuItem == null) {
+				continue;
+			}
+
+			SiteNavigationMenuItem siteNavigationMenuItem = entry.getValue();
+
+			_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId(), 0);
 		}
 	}
 

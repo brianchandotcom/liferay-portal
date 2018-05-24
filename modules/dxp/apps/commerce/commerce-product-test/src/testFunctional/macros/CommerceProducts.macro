@@ -8,8 +8,8 @@
 
 		<execute macro="CommerceEntry#addProductsEntry">
 			<var name="productFullDescription" value="${productFullDescription}" />
-			<var name="productShortDescription" value="${productShortDescription}" />
 			<var name="productName" value="${productName}" />
+			<var name="productShortDescription" value="${productShortDescription}" />
 		</execute>
 	</command>
 

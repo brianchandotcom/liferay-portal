@@ -51,12 +51,12 @@
 		</execute>
 	</command>
 
-	<command name="editEntryShortDescription">
-		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${newEntryShortDescription}" />
-	</command>
-
 	<command name="editEntryName">
 		<execute function="Type" locator1="CommerceEntry#NAME_FIELD" value1="${newEntryName}" />
+	</command>
+
+	<command name="editEntryShortDescription">
+		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${newEntryShortDescription}" />
 	</command>
 
 	<command name="gotoBreadcrumb">

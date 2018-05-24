@@ -16,8 +16,8 @@
 			</if>
 
 			<execute macro="CommerceEntry#addOptionValue">
-				<var name="valuePriority" value="${valuePriority}" />
 				<var name="valueName" value="${optionValues}" />
+				<var name="valuePriority" value="${valuePriority}" />
 			</execute>
 
 			<execute function="Click" locator1="CommerceEntry#MODAL_SAVE" />
@@ -88,8 +88,8 @@
 	<command name="newProductsEntry">
 		<execute macro="CommerceProducts#addEntry">
 			<var name="productFullDescription" value="${productName} Full Description" />
-			<var name="productShortDescription" value="${productName} Short Description" />
 			<var name="productName" value="${productName}" />
+			<var name="productShortDescription" value="${productName} Short Description" />
 			<var name="productType" value="${productType}" />
 		</execute>
 

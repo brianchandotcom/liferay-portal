@@ -27,8 +27,8 @@
 		</if>
 
 		<execute macro="CommerceEntry#addOptionValue">
-			<var name="valuePriority" value="${optionValuePriority}" />
 			<var name="valueName" value="${optionValueName}" />
+			<var name="valuePriority" value="${optionValuePriority}" />
 		</execute>
 
 		<execute macro="CommerceEntry#saveEntry" />

@@ -122,17 +122,6 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		_classNameLocalService = classNameLocalService;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void setDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
-	}
-
 	@Reference(unbind = "-")
 	public void setItemSelectorReturnTypeResolverHandler(
 		ItemSelectorReturnTypeResolverHandler
@@ -150,19 +139,20 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		_servletContext = servletContext;
 	}
 
-	public void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = null;
-	}
-
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
 
 	private AssetVocabularyService _assetVocabularyService;
 	private ClassNameLocalService _classNameLocalService;
-	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private ServletContext _servletContext;

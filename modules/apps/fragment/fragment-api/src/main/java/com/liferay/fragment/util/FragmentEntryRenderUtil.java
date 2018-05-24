@@ -141,6 +141,8 @@ public class FragmentEntryRenderUtil {
 			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException {
 
+		html = "[#ftl]\n" + html;
+
 		TemplateResource templateResource = new StringTemplateResource(
 			"template_id", html);
 

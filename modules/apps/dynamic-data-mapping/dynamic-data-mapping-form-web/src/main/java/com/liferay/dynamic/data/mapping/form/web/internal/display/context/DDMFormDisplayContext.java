@@ -297,8 +297,21 @@ public class DDMFormDisplayContext {
 		return ParamUtil.getBoolean(_renderRequest, "shared");
 	}
 
-	public boolean isPreview() {
-		return ParamUtil.getBoolean(_renderRequest, "preview");
+	public boolean isPreview() throws PortalException {
+		if (ParamUtil.getBoolean(_renderRequest, "preview")) {
+			return true;
+		}
+
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		if (DDMFormInstancePermission.contains(
+				themeDisplay.getPermissionChecker(), getFormInstanceId(),
+				ActionKeys.UPDATE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowConfigurationIcon() throws PortalException {

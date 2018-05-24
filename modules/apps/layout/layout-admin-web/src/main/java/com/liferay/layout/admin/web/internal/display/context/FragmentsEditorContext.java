@@ -434,31 +434,41 @@ public class FragmentsEditorContext {
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
 				_themeDisplay.getScopeGroupId(), _classNameId, _classPK);
 
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			FragmentEntry fragmentEntry =
-				FragmentEntryServiceUtil.fetchFragmentEntry(
-					fragmentEntryLink.getFragmentEntryId());
+		boolean isolated = _themeDisplay.isIsolated();
 
-			SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
+		_themeDisplay.setIsolated(true);
 
-			soyContext.putHTML(
-				"content",
-				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink, _request,
-					PortalUtil.getHttpServletResponse(_renderResponse)));
-			soyContext.put(
-				"editableValues",
-				JSONFactoryUtil.createJSONObject(
-					fragmentEntryLink.getEditableValues()));
-			soyContext.put(
-				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
-			soyContext.put(
-				"fragmentEntryLinkId",
-				fragmentEntryLink.getFragmentEntryLinkId());
-			soyContext.put("name", fragmentEntry.getName());
-			soyContext.put("position", fragmentEntryLink.getPosition());
+		try {
+			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+				FragmentEntry fragmentEntry =
+					FragmentEntryServiceUtil.fetchFragmentEntry(
+						fragmentEntryLink.getFragmentEntryId());
 
-			soyContexts.add(soyContext);
+				SoyContext soyContext =
+					SoyContextFactoryUtil.createSoyContext();
+
+				soyContext.putHTML(
+					"content",
+					FragmentEntryRenderUtil.renderFragmentEntryLink(
+						fragmentEntryLink, _request,
+						PortalUtil.getHttpServletResponse(_renderResponse)));
+				soyContext.put(
+					"editableValues",
+					JSONFactoryUtil.createJSONObject(
+						fragmentEntryLink.getEditableValues()));
+				soyContext.put(
+					"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+				soyContext.put(
+					"fragmentEntryLinkId",
+					fragmentEntryLink.getFragmentEntryLinkId());
+				soyContext.put("name", fragmentEntry.getName());
+				soyContext.put("position", fragmentEntryLink.getPosition());
+
+				soyContexts.add(soyContext);
+			}
+		}
+		finally {
+			_themeDisplay.setIsolated(isolated);
 		}
 
 		return soyContexts;

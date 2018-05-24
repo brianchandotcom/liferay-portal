@@ -109,14 +109,44 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			getSiteNavigationMenuItem(siteNavigationMenuItemId);
 
-		List<SiteNavigationMenuItem> siteNavigationMenuItems =
-			getChildSiteNavigationMenuItems(siteNavigationMenuItemId);
+		long parentSiteNavigationMenuItemId =
+			siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
 
-		for (SiteNavigationMenuItem childSiteNavigationMenuItem :
-				siteNavigationMenuItems) {
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			getSiteNavigationMenuItems(
+				siteNavigationMenuItem.getSiteNavigationMenuId(),
+				siteNavigationMenuItemId);
+
+		if (!siteNavigationMenuItems.isEmpty()) {
+			List<SiteNavigationMenuItem> siblingsSiteNavigationMenuItems =
+				getChildSiteNavigationMenuItems(parentSiteNavigationMenuItemId);
+
+			for (SiteNavigationMenuItem siblingSiteNavigationMenuItem :
+					siblingsSiteNavigationMenuItems) {
+
+				if (siblingSiteNavigationMenuItem.getOrder() <=
+						siteNavigationMenuItem.getOrder()) {
+
+					continue;
+				}
+
+				siblingSiteNavigationMenuItem.setOrder(
+					siteNavigationMenuItems.size() +
+						siteNavigationMenuItem.getOrder());
+
+				siteNavigationMenuItemPersistence.update(
+					siblingSiteNavigationMenuItem);
+			}
+		}
+
+		for (int i = 0; i < siteNavigationMenuItems.size(); i++) {
+			SiteNavigationMenuItem childSiteNavigationMenuItem =
+				siteNavigationMenuItems.get(i);
 
 			childSiteNavigationMenuItem.setParentSiteNavigationMenuItemId(
 				siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
+			childSiteNavigationMenuItem.setOrder(
+				siteNavigationMenuItem.getOrder() + i);
 
 			siteNavigationMenuItemPersistence.update(
 				childSiteNavigationMenuItem);

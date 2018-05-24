@@ -147,7 +147,7 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 		if (form) {
 			form.setAttribute('method', 'post');
 
-			var subscriptionIds = form.queryString('#<portlet:namespace />subscriptionIds');
+			var subscriptionIds = document.getElementById('<portlet:namespace />subscriptionIds');
 
 			if (subscriptionIds) {
 				subscriptionIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));

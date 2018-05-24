@@ -49,6 +49,9 @@ public class WikiPageFinderImpl
 	public static final String COUNT_BY_CREATE_DATE =
 		WikiPageFinder.class.getName() + ".countByCreateDate";
 
+	public static final String COUNT_BY_MODIFIED_DATE =
+		WikiPageFinder.class.getName() + ".countByModifiedDate";
+
 	public static final String COUNT_BY_G_N_H_S =
 		WikiPageFinder.class.getName() + ".countByG_N_H_S";
 
@@ -57,6 +60,9 @@ public class WikiPageFinderImpl
 
 	public static final String FIND_BY_CREATE_DATE =
 		WikiPageFinder.class.getName() + ".findByCreateDate";
+
+	public static final String FIND_BY_MODIFIED_DATE =
+		WikiPageFinder.class.getName() + ".findByModifiedDate";
 
 	public static final String FIND_BY_NO_ASSETS =
 		WikiPageFinder.class.getName() + ".findByNoAssets";
@@ -80,6 +86,23 @@ public class WikiPageFinderImpl
 	}
 
 	@Override
+	public int countByModifiedDate(
+		long groupId, long nodeId, Date modifiedDate, boolean before) {
+
+		return doCountByModifiedDate(
+			groupId, nodeId, new Timestamp(modifiedDate.getTime()), before,
+			false);
+	}
+
+	@Override
+	public int countByModifiedDate(
+		long groupId, long nodeId, Timestamp modifiedDate, boolean before) {
+
+		return doCountByModifiedDate(
+			groupId, nodeId, modifiedDate, before, false);
+	}
+
+	@Override
 	public int countByG_N_H_S(
 		long groupId, long nodeId, boolean head,
 		QueryDefinition<WikiPage> queryDefinition) {
@@ -97,9 +120,25 @@ public class WikiPageFinderImpl
 
 	@Override
 	public int filterCountByCreateDate(
+		long groupId, long nodeId, Timestamp modifiedDate, boolean before) {
+
+		return doCountByCreateDate(groupId, nodeId, modifiedDate, before, true);
+	}
+
+	@Override
+	public int filterCountByModifiedDate(
+		long groupId, long nodeId, Date modifiedDate, boolean before) {
+
+		return doCountByModifiedDate(
+			groupId, nodeId, new Timestamp(modifiedDate.getTime()), before,
+			true);
+	}
+
+	@Override
+	public int filterCountByModifiedDate(
 		long groupId, long nodeId, Timestamp createDate, boolean before) {
 
-		return doCountByCreateDate(groupId, nodeId, createDate, before, true);
+		return doCountByModifiedDate(groupId, nodeId, createDate, before, true);
 	}
 
 	@Override
@@ -127,6 +166,25 @@ public class WikiPageFinderImpl
 
 		return doFindByCreateDate(
 			groupId, nodeId, createDate, before, start, end, true);
+	}
+
+	@Override
+	public List<WikiPage> filterFindByModifiedDate(
+		long groupId, long nodeId, Date modifiedDate, boolean before, int start,
+		int end) {
+
+		return doFindByCreateDate(
+			groupId, nodeId, new Timestamp(modifiedDate.getTime()), before,
+			start, end, true);
+	}
+
+	@Override
+	public List<WikiPage> filterFindByModifiedDate(
+		long groupId, long nodeId, Timestamp modifiedDate, boolean before,
+		int start, int end) {
+
+		return doFindByCreateDate(
+			groupId, nodeId, modifiedDate, before, start, end, true);
 	}
 
 	@Override
@@ -202,6 +260,25 @@ public class WikiPageFinderImpl
 	 */
 	@Deprecated
 	@Override
+	public List<WikiPage> findByModifiedDate(
+		long groupId, long nodeId, Date modifiedDate, boolean before, int start,
+		int end) {
+
+		return doFindByModifiedDate(
+			groupId, nodeId, new Timestamp(modifiedDate.getTime()), before,
+			start, end, false);
+	}
+
+	@Override
+	public List<WikiPage> findByModifiedDate(
+		long groupId, long nodeId, Timestamp modifiedDate, boolean before,
+		int start, int end) {
+
+		return doFindByModifiedDate(
+			groupId, nodeId, modifiedDate, before, start, end, false);
+	}
+
+	@Override
 	public List<WikiPage> findByNoAssets() {
 		Session session = null;
 
@@ -271,6 +348,64 @@ public class WikiPageFinderImpl
 			qPos.add(groupId);
 			qPos.add(nodeId);
 			qPos.add(createDate);
+			qPos.add(true);
+			qPos.add(WorkflowConstants.STATUS_APPROVED);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected int doCountByModifiedDate(
+		long groupId, long nodeId, Timestamp modifiedDate, boolean before,
+		boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), COUNT_BY_MODIFIED_DATE);
+
+			String modifiedDateComparator = StringPool.GREATER_THAN;
+
+			if (before) {
+				modifiedDateComparator = StringPool.LESS_THAN;
+			}
+
+			sql = StringUtil.replace(
+				sql, "[$MODIFIED_DATE_COMPARATOR$]", modifiedDateComparator);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, WikiPage.class.getName(), "WikiPage.resourcePrimKey",
+					groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(nodeId);
+			qPos.add(modifiedDate);
 			qPos.add(true);
 			qPos.add(WorkflowConstants.STATUS_APPROVED);
 
@@ -387,6 +522,54 @@ public class WikiPageFinderImpl
 			qPos.add(groupId);
 			qPos.add(nodeId);
 			qPos.add(createDate);
+			qPos.add(true);
+			qPos.add(WorkflowConstants.STATUS_APPROVED);
+
+			return (List<WikiPage>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<WikiPage> doFindByModifiedDate(
+		long groupId, long nodeId, Timestamp modifiedDate, boolean before,
+		int start, int end, boolean inlineSQLHelper) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(getClass(), FIND_BY_MODIFIED_DATE);
+
+			String modifiedDateComparator = StringPool.GREATER_THAN;
+
+			if (before) {
+				modifiedDateComparator = StringPool.LESS_THAN;
+			}
+
+			sql = StringUtil.replace(
+				sql, "[$MODIFIED_DATE_COMPARATOR$]", modifiedDateComparator);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, WikiPage.class.getName(), "WikiPage.resourcePrimKey",
+					groupId);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("WikiPage", WikiPageImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(nodeId);
+			qPos.add(modifiedDate);
 			qPos.add(true);
 			qPos.add(WorkflowConstants.STATUS_APPROVED);
 

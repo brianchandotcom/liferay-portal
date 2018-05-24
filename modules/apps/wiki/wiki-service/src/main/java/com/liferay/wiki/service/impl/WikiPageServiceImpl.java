@@ -622,7 +622,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		calendar.add(Calendar.WEEK_OF_YEAR, -1);
 
-		return wikiPageFinder.filterFindByCreateDate(
+		return wikiPageFinder.findByModifiedDate(
 			groupId, nodeId, calendar.getTime(), false, start, end);
 	}
 
@@ -637,7 +637,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		calendar.add(Calendar.WEEK_OF_YEAR, -1);
 
-		return wikiPageFinder.filterCountByCreateDate(
+		return wikiPageFinder.countByModifiedDate(
 			groupId, nodeId, calendar.getTime(), false);
 	}
 

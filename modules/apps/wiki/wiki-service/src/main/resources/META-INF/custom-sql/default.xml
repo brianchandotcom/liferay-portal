@@ -15,6 +15,20 @@
 				(status = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.countByModifiedDate">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				WikiPage
+			WHERE
+				(groupId = ?) AND
+				(nodeId = ?) AND
+				(modifiedDate [$MODIFIED_DATE_COMPARATOR$] ?) AND
+				(head = ?) AND
+				(status = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.countByG_N_H_S">
 		<![CDATA[
 			SELECT
@@ -53,6 +67,22 @@
 				(status = ?)
 			ORDER BY
 				createDate DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByModifiedDate">
+		<![CDATA[
+			SELECT
+				{WikiPage.*}
+			FROM
+				WikiPage
+			WHERE
+				(groupId = ?) AND
+				(nodeId = ?) AND
+				(modifiedDate [$MODIFIED_DATE_COMPARATOR$] ?) AND
+				(head = ?) AND
+				(status = ?)
+			ORDER BY
+				modifiedDate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByNoAssets">

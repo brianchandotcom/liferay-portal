@@ -1521,7 +1521,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		cal.add(Calendar.WEEK_OF_YEAR, -1);
 
-		return wikiPageFinder.findByCreateDate(
+		return wikiPageFinder.findByModifiedDate(
 			groupId, nodeId, cal.getTime(), false, start, end);
 	}
 
@@ -1531,7 +1531,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		cal.add(Calendar.WEEK_OF_YEAR, -1);
 
-		return wikiPageFinder.countByCreateDate(
+		return wikiPageFinder.countByModifiedDate(
 			groupId, nodeId, cal.getTime(), false);
 	}
 

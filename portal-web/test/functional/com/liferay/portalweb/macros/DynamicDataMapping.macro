@@ -112,6 +112,8 @@
 	<command name="addFieldViaJSON">
 		<execute function="Click" locator1="NavTab#SOURCE" value1="Source" />
 
+		<var method="JSONUtil#formatJSONString('${sourceJSON}')" name="sourceJSON" />
+
 		<execute function="Type#typeNotVisibleNoMouseOver" locator1="DDMEditStructure#SOURCE_EDITOR_CONTENT" value1="${sourceJSON} " />
 	</command>
 

@@ -118,8 +118,7 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId) {
 		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItems(siteNavigationMenuId);
 	}
 
@@ -218,12 +217,6 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _siteNavigationMenuItemLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getChildSiteNavigationMenuItems(
-		long parentSiteNavigationMenuItemId) {
-		return _siteNavigationMenuItemLocalService.getChildSiteNavigationMenuItems(parentSiteNavigationMenuItemId);
 	}
 
 	@Override

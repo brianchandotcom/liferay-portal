@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.xml.Document;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -62,6 +64,15 @@ public class LocalizationUtil {
 
 		return getLocalization().getDefaultImportLocale(
 			className, classPK, contentDefaultLocale, contentAvailableLocales);
+	}
+
+	public static Locale getDefaultImportLocale(
+		String className, Serializable primaryKey, Locale contentDefaultLocale,
+		Locale[] contentAvailableLocales) {
+
+		return getLocalization().getDefaultImportLocale(
+			className, primaryKey, contentDefaultLocale,
+			contentAvailableLocales);
 	}
 
 	public static String getDefaultLanguageId(Document document) {

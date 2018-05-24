@@ -65,7 +65,7 @@ describe(
 						it(
 							'should add a missing parameter.',
 							function(done) {
-								var url  = Liferay.Search.FacetUtil.setURLParameter('http://example.com/', 'q', 'test');
+								var url = Liferay.Search.FacetUtil.setURLParameter('http://example.com/', 'q', 'test');
 
 								assert.equal('http://example.com/?q=test', url);
 
@@ -76,7 +76,7 @@ describe(
 						it(
 							'should update an existing parameter.',
 							function(done) {
-								var url  = Liferay.Search.FacetUtil.setURLParameter('http://example.com/?q=example', 'q', 'test');
+								var url = Liferay.Search.FacetUtil.setURLParameter('http://example.com/?q=example', 'q', 'test');
 
 								assert.equal('http://example.com/?q=test', url);
 
@@ -87,7 +87,7 @@ describe(
 						it(
 							'should add a missing parameter with path.',
 							function(done) {
-								var url  = Liferay.Search.FacetUtil.setURLParameter('http://example.com/path', 'q', 'test');
+								var url = Liferay.Search.FacetUtil.setURLParameter('http://example.com/path', 'q', 'test');
 
 								assert.equal('http://example.com/path?q=test', url);
 
@@ -98,7 +98,7 @@ describe(
 						it(
 							'should update an existing parameter.',
 							function(done) {
-								var url  = Liferay.Search.FacetUtil.setURLParameter('http://example.com/path?q=example', 'q', 'test');
+								var url = Liferay.Search.FacetUtil.setURLParameter('http://example.com/path?q=example', 'q', 'test');
 
 								assert.equal('http://example.com/path?q=test', url);
 

@@ -25,9 +25,6 @@ import com.liferay.user.groups.admin.uad.constants.UserGroupsAdminUADConstants;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the user group UAD anonymizer.
  *
@@ -56,11 +53,6 @@ public abstract class BaseUserGroupUADAnonymizer
 	@Override
 	public void delete(UserGroup userGroup) throws PortalException {
 		userGroupLocalService.deleteUserGroup(userGroup);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override

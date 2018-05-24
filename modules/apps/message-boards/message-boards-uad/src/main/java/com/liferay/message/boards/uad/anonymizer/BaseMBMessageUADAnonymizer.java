@@ -26,9 +26,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the message-boards message UAD anonymizer.
  *
@@ -62,11 +59,6 @@ public abstract class BaseMBMessageUADAnonymizer
 	@Override
 	public void delete(MBMessage mbMessage) throws PortalException {
 		mbMessageLocalService.deleteMessage(mbMessage);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList("subject", "body");
 	}
 
 	@Override

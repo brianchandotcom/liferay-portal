@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -62,11 +59,6 @@ public abstract class BaseBookmarksEntryUADAnonymizer
 	@Override
 	public void delete(BookmarksEntry bookmarksEntry) throws PortalException {
 		bookmarksEntryLocalService.deleteEntry(bookmarksEntry);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList("description", "name", "url");
 	}
 
 	@Override

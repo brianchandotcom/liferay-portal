@@ -26,9 +26,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the password policy UAD anonymizer.
  *
@@ -57,11 +54,6 @@ public abstract class BasePasswordPolicyUADAnonymizer
 	@Override
 	public void delete(PasswordPolicy passwordPolicy) throws PortalException {
 		passwordPolicyLocalService.deletePasswordPolicy(passwordPolicy);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override

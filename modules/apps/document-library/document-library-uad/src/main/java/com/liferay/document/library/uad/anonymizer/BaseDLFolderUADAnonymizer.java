@@ -26,9 +26,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the document library folder UAD anonymizer.
  *
@@ -62,11 +59,6 @@ public abstract class BaseDLFolderUADAnonymizer
 	@Override
 	public void delete(DLFolder dlFolder) throws PortalException {
 		dlFolderLocalService.deleteFolder(dlFolder);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList("name", "description");
 	}
 
 	@Override

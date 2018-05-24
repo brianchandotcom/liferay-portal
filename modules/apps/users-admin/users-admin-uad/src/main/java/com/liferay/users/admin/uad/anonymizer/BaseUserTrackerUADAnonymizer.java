@@ -26,9 +26,6 @@ import com.liferay.users.admin.uad.constants.UsersAdminUADConstants;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the user tracker UAD anonymizer.
  *
@@ -54,11 +51,6 @@ public abstract class BaseUserTrackerUADAnonymizer
 	@Override
 	public void delete(UserTracker userTracker) throws PortalException {
 		userTrackerLocalService.deleteUserTracker(userTracker);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override

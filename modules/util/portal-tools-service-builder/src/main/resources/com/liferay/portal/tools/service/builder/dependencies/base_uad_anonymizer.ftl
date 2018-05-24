@@ -9,9 +9,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -52,11 +49,6 @@ public abstract class Base${entity.name}UADAnonymizer extends DynamicQueryUADAno
 	@Override
 	public void delete(${entity.name} ${entity.varName}) throws PortalException {
 		${entity.varName}LocalService.${deleteUADEntityMethodName}(${entity.varName});
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList(<#list entity.UADNonanonymizableEntityColumns as uadNonanonymizableEntityColumn>"${uadNonanonymizableEntityColumn.name}"<#sep>, </#sep></#list>);
 	}
 
 	@Override

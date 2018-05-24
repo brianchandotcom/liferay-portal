@@ -26,9 +26,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the user notification event UAD anonymizer.
  *
@@ -55,11 +52,6 @@ public abstract class BaseUserNotificationEventUADAnonymizer
 	public void delete(UserNotificationEvent userNotificationEvent)
 		throws PortalException {
 		userNotificationEventLocalService.deleteUserNotificationEvent(userNotificationEvent);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override

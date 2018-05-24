@@ -25,9 +25,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the repository UAD anonymizer.
  *
@@ -56,11 +53,6 @@ public abstract class BaseRepositoryUADAnonymizer
 	@Override
 	public void delete(Repository repository) throws PortalException {
 		repositoryLocalService.deleteRepository(repository);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override

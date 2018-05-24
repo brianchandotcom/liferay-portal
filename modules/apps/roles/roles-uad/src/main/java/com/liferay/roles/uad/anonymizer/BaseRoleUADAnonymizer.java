@@ -26,9 +26,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the role UAD anonymizer.
  *
@@ -56,11 +53,6 @@ public abstract class BaseRoleUADAnonymizer extends DynamicQueryUADAnonymizer<Ro
 	@Override
 	public void delete(Role role) throws PortalException {
 		roleLocalService.deleteRole(role);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override

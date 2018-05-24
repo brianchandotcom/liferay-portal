@@ -26,9 +26,6 @@ import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
 import org.osgi.service.component.annotations.Reference;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Provides the base implementation for the layout branch UAD anonymizer.
  *
@@ -57,11 +54,6 @@ public abstract class BaseLayoutBranchUADAnonymizer
 	@Override
 	public void delete(LayoutBranch layoutBranch) throws PortalException {
 		layoutBranchLocalService.deleteLayoutBranch(layoutBranch);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Arrays.asList();
 	}
 
 	@Override

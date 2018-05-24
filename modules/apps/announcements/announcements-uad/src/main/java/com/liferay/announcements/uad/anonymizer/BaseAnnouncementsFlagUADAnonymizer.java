@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.anonymizer.DynamicQueryUADAnonymizer;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -56,11 +53,6 @@ public abstract class BaseAnnouncementsFlagUADAnonymizer
 	@Override
 	public void delete(AnnouncementsFlag announcementsFlag) {
 		announcementsFlagLocalService.deleteFlag(announcementsFlag);
-	}
-
-	@Override
-	public List<String> getNonanonymizableFieldNames() {
-		return Collections.emptyList();
 	}
 
 	@Override

@@ -63,6 +63,11 @@ public class TestClassGroupFactory {
 				batchName, portalGitWorkingDirectory, testSuiteName);
 		}
 
+		if (batchName.startsWith("semantic-versioning-")) {
+			return new BaselineBatchTestClassGroup(
+				batchName, portalGitWorkingDirectory, testSuiteName);
+		}
+
 		if (batchName.startsWith("tck-")) {
 			return new TCKJunitBatchTestClassGroup(
 				batchName, portalGitWorkingDirectory, testSuiteName);

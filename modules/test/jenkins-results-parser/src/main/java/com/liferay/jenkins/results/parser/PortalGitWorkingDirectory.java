@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -54,11 +55,21 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	}
 
 	public List<File> getModifiedModuleDirsList() throws IOException {
+		return getModifiedModuleDirsList(null, null);
+	}
+
+	public List<File> getModifiedModuleDirsList(
+			List<PathMatcher> excludesPathMatchers,
+			List<PathMatcher> includesPathMatchers)
+		throws IOException {
+
 		List<File> modifiedModuleDirsList = new ArrayList<>();
 
 		List<File> modifiedFilesList = getModifiedFilesList();
 
-		for (File moduleDir : getModuleDirsList()) {
+		for (File moduleDir :
+				getModuleDirsList(excludesPathMatchers, includesPathMatchers)) {
+
 			for (File modifiedFile : modifiedFilesList) {
 				if (JenkinsResultsParserUtil.isFileInDirectory(
 						moduleDir, modifiedFile)) {
@@ -86,11 +97,24 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 	}
 
 	public List<File> getModuleDirsList() throws IOException {
+		return getModuleDirsList(null, null);
+	}
+
+	public List<File> getModuleDirsList(
+			List<PathMatcher> excludesPathMatchers,
+			List<PathMatcher> includesPathMatchers)
+		throws IOException {
+
 		final File modulesDir = new File(getWorkingDirectory(), "modules");
 
 		if (!modulesDir.exists()) {
 			return new ArrayList<>();
 		}
+
+		final List<PathMatcher> excludedModulesPathMatchers =
+			excludesPathMatchers;
+		final List<PathMatcher> includedModulesPathMatchers =
+			includesPathMatchers;
 
 		final List<File> moduleDirsList = new ArrayList<>();
 
@@ -127,6 +151,10 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 				public FileVisitResult preVisitDirectory(
 					Path filePath, BasicFileAttributes attrs) {
 
+					if (_pathExcluded(filePath) || !_pathIncluded(filePath)) {
+						return FileVisitResult.CONTINUE;
+					}
+
 					Module currentModule = Module.getModule(filePath);
 
 					if (currentModule == null) {
@@ -146,6 +174,38 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 					}
 
 					return FileVisitResult.CONTINUE;
+				}
+
+				private boolean _pathExcluded(Path path) {
+					if ((excludedModulesPathMatchers == null) ||
+						excludedModulesPathMatchers.isEmpty()) {
+
+						return false;
+					}
+
+					return _pathMatches(path, excludedModulesPathMatchers);
+				}
+
+				private boolean _pathIncluded(Path path) {
+					if ((includedModulesPathMatchers == null) ||
+						includedModulesPathMatchers.isEmpty()) {
+
+						return true;
+					}
+
+					return _pathMatches(path, includedModulesPathMatchers);
+				}
+
+				private boolean _pathMatches(
+					Path path, List<PathMatcher> pathMatchers) {
+
+					for (PathMatcher pathMatcher : pathMatchers) {
+						if (pathMatcher.matches(path)) {
+							return true;
+						}
+					}
+
+					return false;
 				}
 
 				private Module _module;

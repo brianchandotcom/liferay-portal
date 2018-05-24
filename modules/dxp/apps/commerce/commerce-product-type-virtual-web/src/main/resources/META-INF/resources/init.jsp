@@ -26,7 +26,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
+<%@ page import="com.liferay.commerce.model.CommerceOrder" %><%@
+page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue" %><%@
@@ -44,8 +45,13 @@ page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVir
 page import="com.liferay.commerce.product.type.virtual.exception.CPDefinitionVirtualSettingUrlException" %><%@
 page import="com.liferay.commerce.product.type.virtual.exception.NoSuchCPDefinitionVirtualSettingException" %><%@
 page import="com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting" %><%@
+page import="com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemException" %><%@
+page import="com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemFileEntryIdException" %><%@
+page import="com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemUrlException" %><%@
+page import="com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.VirtualCPType" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext" %><%@
+page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.CommerceVirtualOrderItemEditDisplayContext" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.VirtualCPTypeDisplayContext" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib.ui.CPDefinitionVirtualSettingFormNavigatorConstants" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@

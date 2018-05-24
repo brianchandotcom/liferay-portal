@@ -172,7 +172,8 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 		Set<String> portletModeNames = portletModeMap.get(mimeType);
 
-		List<PortletMode> portletModes = new ArrayList(portletModeNames.size());
+		List<PortletMode> portletModes = new ArrayList<>(
+			portletModeNames.size());
 
 		for (String portletModeName : portletModeNames) {
 			portletModes.add(new PortletMode(portletModeName));
@@ -305,7 +306,8 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 		Set<String> windowStateNames = windowStateMap.get(mimeType);
 
-		List<WindowState> windowStates = new ArrayList(windowStateNames.size());
+		List<WindowState> windowStates = new ArrayList<>(
+			windowStateNames.size());
 
 		for (String windowStateName : windowStateNames) {
 			windowStates.add(new WindowState(windowStateName));

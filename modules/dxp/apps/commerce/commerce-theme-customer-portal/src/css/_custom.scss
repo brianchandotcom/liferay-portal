@@ -701,7 +701,7 @@ a[type="button"] {
 			position: absolute;
 			right: $input-border-right-width;
 			transition: none;
-			z-index: $zindex-dropdown;
+			z-index: 950;
 		}
 
 		.panel-body {

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 CommerceDashboardPeriodSelectorDisplayContext commerceDashboardPeriodSelectorDisplayContext = (CommerceDashboardPeriodSelectorDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);

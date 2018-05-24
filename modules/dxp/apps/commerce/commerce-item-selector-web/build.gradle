@@ -17,4 +17,5 @@ dependencies {
 	compileOnly project(":private:apps:commerce:commerce-item-selector-api")
 	compileOnly project(":private:apps:commerce:commerce-price-list-api")
 	compileOnly project(":private:apps:commerce:commerce-product-service")
+	compileOnly project(":private:apps:commerce:commerce-taglib")
 }

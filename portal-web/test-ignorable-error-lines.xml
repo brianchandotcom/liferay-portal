@@ -116,10 +116,6 @@
 			<contains>[net.sf.jasperreports.engine.fonts.FontUtil$1]</contains>
 			<matches>.*The web application \[/jasperreports-web\] created a ThreadLocal with key of type.*</matches>
 		</ignore-error>
-		<ignore-error description="LPS-52346">
-			<contains>[org.apache.jasper.runtime.JspWriterImpl.CharBufferThreadLocalPool]</contains>
-			<matches>.*The web application \[\] created a ThreadLocal with key of type.*</matches>
-		</ignore-error>
 		<ignore-error description="LPS-52699">
 			<contains></contains>
 			<matches>.*The web application \[/saml-portlet\] created a ThreadLocal with key of type.*\[org.apache.xml.security.algorithms.MessageDigestAlgorithm\$[0-9]+\].*</matches>
@@ -168,32 +164,12 @@
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-66736, temporary workaround as the issue does not always occur">
-			<contains></contains>
-			<matches>.*Unable to process message.*product-app-theme.*</matches>
-		</ignore-error>
-		<ignore-error description="LPS-68366">
-			<contains></contains>
-			<matches>.*ServerAdminPortlet\_tabs1\=resources generates exception.*NullPointerException.*</matches>
-		</ignore-error>
-		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
-			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LRQA-24859">
 			<contains>No binary licenses found</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LRQA-26173, temporary workaround until Peter Yoo fixes it">
-			<contains>Unable to add folder menu item</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="LRQA-34199, temporarily ignore SAMLBootstrap error">
 			<contains>The activate method has thrown an exception</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="LRQA-34927, temporarily ignore until COMMERCE-210 is fixed">
-			<contains>Invocation to listener threw exception</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="WCM-202">

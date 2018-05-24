@@ -82,7 +82,7 @@ public abstract class BaseCommentNestedCollectionRouter
 	}
 
 	private PageItems<Comment> _getPageItems(
-			Pagination pagination, Long classPK,
+			Pagination pagination, long classPK,
 			PermissionChecker permissionChecker)
 		throws PortalException {
 

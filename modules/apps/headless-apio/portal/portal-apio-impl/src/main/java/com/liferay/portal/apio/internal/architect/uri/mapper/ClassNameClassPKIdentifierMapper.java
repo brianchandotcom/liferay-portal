@@ -56,7 +56,7 @@ public class ClassNameClassPKIdentifierMapper
 		}
 
 		long classNameId = _getAsLong(components[0]);
-		Long classPK = _getAsLong(components[1]);
+		long classPK = _getAsLong(components[1]);
 
 		String className = Optional.ofNullable(
 			_classNameLocalService.fetchByClassNameId(classNameId)
@@ -81,7 +81,7 @@ public class ClassNameClassPKIdentifierMapper
 		return new Path(name, id);
 	}
 
-	private Long _getAsLong(String string) {
+	private long _getAsLong(String string) {
 		return Try.fromFallible(
 			() -> GetterUtil.getLong(string)
 		).orElseThrow(

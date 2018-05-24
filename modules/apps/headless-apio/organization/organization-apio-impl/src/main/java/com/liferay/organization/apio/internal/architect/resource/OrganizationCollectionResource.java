@@ -63,7 +63,7 @@ public class OrganizationCollectionResource
 
 	@Override
 	public String getName() {
-		return "organizations";
+		return "organization";
 	}
 
 	@Override

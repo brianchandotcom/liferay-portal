@@ -53,12 +53,12 @@ public class FolderNestedCollectionRouter
 			this::_getPageItems
 		).addCreator(
 			this::_addFolder,
-			_hasPermission.forAddingIn(FolderIdentifier.class)::apply,
+			_hasPermission.forAddingIn(FolderIdentifier.class),
 			FolderForm::buildForm
 		).build();
 	}
 
-	private Folder _addFolder(Long parentFolderId, FolderForm folderForm)
+	private Folder _addFolder(long parentFolderId, FolderForm folderForm)
 		throws PortalException {
 
 		Folder folder = _dlAppLocalService.getFolder(parentFolderId);
@@ -69,7 +69,7 @@ public class FolderNestedCollectionRouter
 	}
 
 	private PageItems<Folder> _getPageItems(
-			Pagination pagination, Long parentFolderId)
+			Pagination pagination, long parentFolderId)
 		throws PortalException {
 
 		Folder parentFolder = _dlAppService.getFolder(parentFolderId);

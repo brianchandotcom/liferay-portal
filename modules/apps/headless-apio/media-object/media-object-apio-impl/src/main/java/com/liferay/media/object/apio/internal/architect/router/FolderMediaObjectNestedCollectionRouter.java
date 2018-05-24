@@ -20,7 +20,7 @@ import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
-import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.media.object.apio.internal.architect.form.MediaObjectCreatorForm;
 import com.liferay.media.object.apio.internal.helper.MediaObjectHelper;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class FolderMediaObjectNestedCollectionRouter
 	implements NestedCollectionRouter
-		<FileEntry, Long, FileEntryIdentifier, Long, FolderIdentifier> {
+		<FileEntry, Long, MediaObjectIdentifier, Long, FolderIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<FileEntry, Long, Long> collectionRoutes(
@@ -54,13 +54,13 @@ public class FolderMediaObjectNestedCollectionRouter
 			this::_getPageItems
 		).addCreator(
 			this::_getFileEntry,
-			_hasPermission.forAddingIn(FolderIdentifier.class)::apply,
+			_hasPermission.forAddingIn(FolderIdentifier.class),
 			MediaObjectCreatorForm::buildForm
 		).build();
 	}
 
 	private FileEntry _getFileEntry(
-			Long folderId, MediaObjectCreatorForm mediaObjectCreatorForm)
+			long folderId, MediaObjectCreatorForm mediaObjectCreatorForm)
 		throws Exception {
 
 		Folder folder = _dlAppService.getFolder(folderId);
@@ -70,7 +70,7 @@ public class FolderMediaObjectNestedCollectionRouter
 	}
 
 	private PageItems<FileEntry> _getPageItems(
-			Pagination pagination, Long folderId)
+			Pagination pagination, long folderId)
 		throws PortalException {
 
 		Folder folder = _dlAppService.getFolder(folderId);

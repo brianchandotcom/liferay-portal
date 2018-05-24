@@ -82,7 +82,7 @@ public class PersonCollectionResource
 
 	@Override
 	public String getName() {
-		return "people";
+		return "person";
 	}
 
 	@Override

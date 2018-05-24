@@ -59,7 +59,7 @@ public class WebSiteCollectionResource
 
 	@Override
 	public String getName() {
-		return "web-sites";
+		return "web-site";
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class WebSiteCollectionResource
 	}
 
 	private GroupWrapper _getGroupWrapper(
-			Long groupId, ThemeDisplay themeDisplay)
+			long groupId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		return new GroupWrapper(_groupService.getGroup(groupId), themeDisplay);

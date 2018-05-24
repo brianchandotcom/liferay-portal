@@ -40,7 +40,7 @@ public class AggregateRatingItemResource
 
 	@Override
 	public String getName() {
-		return "aggregate-ratings";
+		return "aggregate-rating";
 	}
 
 	@Override

@@ -153,7 +153,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No sites were found." />
+		<execute function="AssertTextEquals" locator1="Message#INFO_2" value1="No sites were found." />
 
 		<execute macro="SitesDirectory#configureSetupPG">
 			<var name="directoryDisplayStyle" value="List Hierarchy" />

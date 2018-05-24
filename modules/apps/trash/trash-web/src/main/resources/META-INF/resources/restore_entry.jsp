@@ -69,16 +69,27 @@ renderResponse.setTitle(oldName);
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base">
-	var rename = A.one('#<portlet:namespace />rename');
-	var newName = A.one('#<portlet:namespace />newName');
+<aui:script>
+	var <portlet:namespace />form = document.getElementById('<portlet:namespace />fm');
 
-	rename.on('click', A.fn('focusFormField', Liferay.Util, newName));
+	if (<portlet:namespace />form) {
+		var rename = <portlet:namespace />form.querySelector('#<portlet:namespace />rename');
+		var newName = <portlet:namespace />form.querySelector('#<portlet:namespace />newName');
 
-	newName.on(
-		'focus',
-		function(event) {
-			rename.attr('checked', true);
+		if (rename && newName) {
+			rename.addEventListener(
+				'click',
+				function(event) {
+					Liferay.Util.focusFormField(newName);
+				}
+			);
+
+			newName.addEventListener(
+				'focus',
+				function(event) {
+					rename.checked = true;
+				}
+			);
 		}
-	);
+	}
 </aui:script>

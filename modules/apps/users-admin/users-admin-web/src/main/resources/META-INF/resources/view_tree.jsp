@@ -20,19 +20,10 @@
 String backURL = GetterUtil.getString(request.getAttribute("view.jsp-backURL"));
 Organization organization = (Organization)request.getAttribute("view.jsp-organization");
 long organizationId = GetterUtil.getLong(request.getAttribute("view.jsp-organizationId"));
-PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 String toolbarItem = GetterUtil.getString(request.getAttribute("view.jsp-toolbarItem"));
 String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
 
-portletURL.setParameter("mvcRenderCommandName", "/users_admin/view");
-portletURL.setParameter("organizationId", String.valueOf(organizationId));
-portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("usersListView", usersListView);
-
 String displayStyle = ParamUtil.getString(request, "displayStyle");
-String keywords = ParamUtil.getString(request, "keywords");
-String navigation = ParamUtil.getString(request, "navigation", "all");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 if (Validator.isNull(displayStyle)) {
 	displayStyle = portalPreferences.getValue(UsersAdminPortletKeys.USERS_ADMIN, "display-style", "list");
@@ -42,10 +33,6 @@ else {
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
-
-portletURL.setParameter("displayStyle", displayStyle);
-portletURL.setParameter("keywords", keywords);
-portletURL.setParameter("navigation", navigation);
 
 List<Organization> organizations = new ArrayList<Organization>();
 
@@ -80,61 +67,35 @@ if (organization != null) {
 
 <c:choose>
 	<c:when test="<%= showList %>">
-		<liferay-frontend:management-bar
-			includeCheckBox="<%= true %>"
+
+		<%
+		ViewTreeManagementToolbarDisplayContext
+			viewTreeManagementToolbarDisplayContext = new ViewTreeManagementToolbarDisplayContext(request, renderRequest, renderResponse, organization, displayStyle);
+
+		SearchContainer searchContainer = viewTreeManagementToolbarDisplayContext.getSearchContainer();
+		%>
+
+		<clay:management-toolbar
+			actionDropdownItems="<%= viewTreeManagementToolbarDisplayContext.getActionDropdownItems() %>"
+			clearResultsURL="<%= viewTreeManagementToolbarDisplayContext.getClearResultsURL() %>"
+			creationMenu="<%= viewTreeManagementToolbarDisplayContext.getCreationMenu() %>"
+			filterDropdownItems="<%= viewTreeManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+			itemsTotal="<%= searchContainer.getTotal() %>"
+			searchActionURL="<%= viewTreeManagementToolbarDisplayContext.getSearchActionURL() %>"
 			searchContainerId="organizationUsers"
-		>
-			<liferay-frontend:management-bar-filters>
-				<liferay-frontend:management-bar-navigation
-					navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
-					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-				/>
+			searchFormName="searchFm"
+			selectable="<%= true %>"
+			showCreationMenu="<%= viewTreeManagementToolbarDisplayContext.showCreationMenu() %>"
+			showSearch="<%= true %>"
+			sortingOrder="<%= searchContainer.getOrderByType() %>"
+			sortingURL="<%= viewTreeManagementToolbarDisplayContext.getSortingURL() %>"
+			viewTypeItems="<%= viewTreeManagementToolbarDisplayContext.getViewTypeItems() %>"
+		/>
 
-				<liferay-frontend:management-bar-sort
-					orderByCol='<%= "name" %>'
-					orderByType="<%= orderByType %>"
-					orderColumns='<%= new String[] {"name"} %>'
-					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-				/>
-
-				<li>
-					<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-						<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-						<aui:input name="mvcRenderCommandName" type="hidden" value='<%= "/users_admin/view" %>' />
-						<aui:input name="organizationId" type="hidden" value="<%= organizationId %>" />
-
-						<liferay-ui:input-search
-							markupView="lexicon"
-						/>
-					</aui:form>
-				</li>
-			</liferay-frontend:management-bar-filters>
-
-			<liferay-frontend:management-bar-buttons>
-				<liferay-frontend:management-bar-display-buttons
-					displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-					selectedDisplayStyle="<%= displayStyle %>"
-				/>
-
-				<%@ include file="/add_menu.jspf" %>
-			</liferay-frontend:management-bar-buttons>
-
-			<liferay-frontend:management-bar-action-buttons>
-				<liferay-frontend:management-bar-button
-					href='<%= "javascript:" + renderResponse.getNamespace() + "delete();" %>'
-					icon="trash"
-					id="deleteOrganizations"
-					label="delete"
-				/>
-			</liferay-frontend:management-bar-action-buttons>
-		</liferay-frontend:management-bar>
-
-		<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
-			<liferay-portlet:renderURLParams varImpl="portletURL" />
+		<aui:form cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />
 			<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
-			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+			<aui:input name="redirect" type="hidden" value="<%= viewTreeManagementToolbarDisplayContext.getPortletURL().toString() %>" />
 			<aui:input name="deleteOrganizationIds" type="hidden" />
 			<aui:input name="deleteUserIds" type="hidden" />
 
@@ -180,60 +141,10 @@ if (organization != null) {
 			</c:if>
 
 			<liferay-ui:search-container
-				emptyResultsMessage="no-results-were-found"
-				headerNames="name,type,status"
 				id="organizationUsers"
-				iteratorURL="<%= currentURLObj %>"
-				orderByComparator='<%= new OrganizationUserNameComparator(orderByType.equals("asc")) %>'
-				orderByType="<%= orderByType %>"
-				rowChecker="<%= new OrganizationUserChecker(renderResponse) %>"
+				searchContainer="<%= searchContainer %>"
+				var="organizationUserSearchContainer"
 			>
-				<liferay-ui:search-container-results>
-
-					<%
-					int status = WorkflowConstants.STATUS_ANY;
-
-					if (navigation.equals("active")) {
-						status = WorkflowConstants.STATUS_APPROVED;
-					}
-					else if (navigation.equals("inactive")) {
-						status = WorkflowConstants.STATUS_INACTIVE;
-					}
-
-					if (Validator.isNotNull(keywords)) {
-						total = OrganizationLocalServiceUtil.searchOrganizationsAndUsersCount(company.getCompanyId(), organizationId, keywords, status, null);
-
-						Sort[] sorts = {new Sort("name", orderByType.equals("desc")), new Sort("lastName", orderByType.equals("desc"))};
-
-						Hits hits = OrganizationLocalServiceUtil.searchOrganizationsAndUsers(company.getCompanyId(), organizationId, keywords, status, null, searchContainer.getStart(), searchContainer.getEnd(), sorts);
-
-						results = new ArrayList<>(hits.getLength());
-
-						List<SearchResult> searchResults = SearchResultUtil.getSearchResults(hits, locale);
-
-						for (SearchResult searchResult : searchResults) {
-							String className = searchResult.getClassName();
-
-							if (className.equals(Organization.class.getName())) {
-								results.add(OrganizationLocalServiceUtil.fetchOrganization(searchResult.getClassPK()));
-							}
-							else if (className.equals(User.class.getName())) {
-								results.add(UserLocalServiceUtil.fetchUser(searchResult.getClassPK()));
-							}
-						}
-					}
-					else {
-						total = OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(company.getCompanyId(), organizationId, status);
-
-						results = OrganizationLocalServiceUtil.getOrganizationsAndUsers(company.getCompanyId(), organizationId, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-					}
-
-					searchContainer.setTotal(total);
-					searchContainer.setResults(results);
-					%>
-
-				</liferay-ui:search-container-results>
-
 				<liferay-ui:search-container-row
 					className="Object"
 					modelVar="result"
@@ -258,7 +169,6 @@ if (organization != null) {
 					displayStyle="<%= displayStyle %>"
 					markupView="lexicon"
 					resultRowSplitter="<%= new OrganizationResultRowSplitter() %>"
-					searchContainer="<%= searchContainer %>"
 				/>
 			</liferay-ui:search-container>
 		</aui:form>

@@ -72,21 +72,10 @@ String borderRightWidthValue = StringPool.BLANK;
 String borderBottomWidthValue = StringPool.BLANK;
 String borderLeftWidthValue = StringPool.BLANK;
 
-if (Validator.isNotNull(borderWidthTop.getString(_VALUE_KEY))) {
-	borderTopWidthValue = borderWidthTop.getString(_VALUE_KEY) + borderWidthTop.getString(_UNIT_KEY);
-}
-
-if (Validator.isNotNull(borderWidthRight.getString(_VALUE_KEY))) {
-	borderRightWidthValue = borderWidthRight.getString(_VALUE_KEY) + borderWidthRight.getString(_UNIT_KEY);
-}
-
-if (Validator.isNotNull(borderWidthBottom.getString(_VALUE_KEY))) {
-	borderBottomWidthValue = borderWidthBottom.getString(_VALUE_KEY) + borderWidthBottom.getString(_UNIT_KEY);
-}
-
-if (Validator.isNotNull(borderWidthLeft.getString(_VALUE_KEY))) {
-	borderLeftWidthValue = borderWidthLeft.getString(_VALUE_KEY) + borderWidthLeft.getString(_UNIT_KEY);
-}
+borderTopWidthValue = borderWidthTop.getString(_VALUE_KEY) + borderWidthTop.getString(_UNIT_KEY);
+borderRightWidthValue = borderWidthRight.getString(_VALUE_KEY) + borderWidthRight.getString(_UNIT_KEY);
+borderBottomWidthValue = borderWidthBottom.getString(_VALUE_KEY) + borderWidthBottom.getString(_UNIT_KEY);
+borderLeftWidthValue = borderWidthLeft.getString(_VALUE_KEY) + borderWidthLeft.getString(_UNIT_KEY);
 
 // Style
 

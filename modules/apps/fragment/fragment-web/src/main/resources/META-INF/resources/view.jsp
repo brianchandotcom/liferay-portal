@@ -110,7 +110,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 			%>
 
 			<c:if test="<%= fragmentCollection != null %>">
-				<h3 class="sheet">
+				<div class="sheet">
 					<h3 class="sheet-title">
 						<div class="align-items-center autofit-row">
 							<div class="autofit-col">

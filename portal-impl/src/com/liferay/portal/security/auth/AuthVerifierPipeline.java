@@ -110,6 +110,10 @@ public class AuthVerifierPipeline {
 
 		String requestURI = request.getRequestURI();
 
+		if (!requestURI.endsWith("/")) {
+			requestURI = requestURI.concat("/");
+		}
+
 		String contextPath = request.getContextPath();
 
 		requestURI = requestURI.substring(contextPath.length());

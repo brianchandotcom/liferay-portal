@@ -260,7 +260,7 @@
 </tr>
 <tr>
 	<td>CLOSE_SUCCESS_MESSAGE</td>
-	<td>//button[contains(@class,'close')]</td>
+	<td>//button[@aria-label='Close']</td>
 	<td></td>
 </tr>
 <tr>

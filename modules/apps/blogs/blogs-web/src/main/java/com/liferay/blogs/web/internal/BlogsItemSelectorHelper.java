@@ -109,14 +109,6 @@ public class BlogsItemSelectorHelper {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	public void setItemSelector(ItemSelector itemSelector) {
-		_itemSelector = itemSelector;
-	}
-
-	public void unsetItemSelector(ItemSelector itemSelector) {
-		_itemSelector = null;
-	}
-
-	private ItemSelector _itemSelector;
+	private volatile ItemSelector _itemSelector;
 
 }

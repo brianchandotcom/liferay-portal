@@ -1306,14 +1306,6 @@ public class SamlIdpSpSessionPersistenceImpl extends BasePersistenceImpl<SamlIdp
 					result = samlIdpSpSession;
 
 					cacheResult(samlIdpSpSession);
-
-					if ((samlIdpSpSession.getSamlIdpSsoSessionId() != samlIdpSsoSessionId) ||
-							(samlIdpSpSession.getSamlSpEntityId() == null) ||
-							!samlIdpSpSession.getSamlSpEntityId()
-												 .equals(samlSpEntityId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_SISSI_SSEI,
-							finderArgs, samlIdpSpSession);
-					}
 				}
 			}
 			catch (Exception e) {

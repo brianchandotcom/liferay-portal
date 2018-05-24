@@ -795,16 +795,6 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 					result = samlSpMessage;
 
 					cacheResult(samlSpMessage);
-
-					if ((samlSpMessage.getSamlIdpEntityId() == null) ||
-							!samlSpMessage.getSamlIdpEntityId()
-											  .equals(samlIdpEntityId) ||
-							(samlSpMessage.getSamlIdpResponseKey() == null) ||
-							!samlSpMessage.getSamlIdpResponseKey()
-											  .equals(samlIdpResponseKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_SIEI_SIRK,
-							finderArgs, samlSpMessage);
-					}
 				}
 			}
 			catch (Exception e) {

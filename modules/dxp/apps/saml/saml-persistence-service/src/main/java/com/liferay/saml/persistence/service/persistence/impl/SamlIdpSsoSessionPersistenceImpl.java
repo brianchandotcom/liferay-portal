@@ -769,13 +769,6 @@ public class SamlIdpSsoSessionPersistenceImpl extends BasePersistenceImpl<SamlId
 					result = samlIdpSsoSession;
 
 					cacheResult(samlIdpSsoSession);
-
-					if ((samlIdpSsoSession.getSamlIdpSsoSessionKey() == null) ||
-							!samlIdpSsoSession.getSamlIdpSsoSessionKey()
-												  .equals(samlIdpSsoSessionKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_SAMLIDPSSOSESSIONKEY,
-							finderArgs, samlIdpSsoSession);
-					}
 				}
 			}
 			catch (Exception e) {

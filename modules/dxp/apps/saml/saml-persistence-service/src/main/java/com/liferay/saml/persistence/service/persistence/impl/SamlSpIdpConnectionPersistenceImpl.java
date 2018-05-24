@@ -755,14 +755,6 @@ public class SamlSpIdpConnectionPersistenceImpl extends BasePersistenceImpl<Saml
 					result = samlSpIdpConnection;
 
 					cacheResult(samlSpIdpConnection);
-
-					if ((samlSpIdpConnection.getCompanyId() != companyId) ||
-							(samlSpIdpConnection.getSamlIdpEntityId() == null) ||
-							!samlSpIdpConnection.getSamlIdpEntityId()
-													.equals(samlIdpEntityId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_SIEI,
-							finderArgs, samlSpIdpConnection);
-					}
 				}
 			}
 			catch (Exception e) {

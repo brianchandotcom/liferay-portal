@@ -776,13 +776,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 					result = kaleoProcess;
 
 					cacheResult(kaleoProcess);
-
-					if ((kaleoProcess.getUuid() == null) ||
-							!kaleoProcess.getUuid().equals(uuid) ||
-							(kaleoProcess.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, kaleoProcess);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2462,11 +2455,6 @@ public class KaleoProcessPersistenceImpl extends BasePersistenceImpl<KaleoProces
 					result = kaleoProcess;
 
 					cacheResult(kaleoProcess);
-
-					if ((kaleoProcess.getDDLRecordSetId() != DDLRecordSetId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_DDLRECORDSETID,
-							finderArgs, kaleoProcess);
-					}
 				}
 			}
 			catch (Exception e) {

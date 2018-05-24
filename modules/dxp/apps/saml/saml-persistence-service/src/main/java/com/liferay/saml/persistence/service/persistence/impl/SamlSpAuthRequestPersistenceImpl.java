@@ -794,16 +794,6 @@ public class SamlSpAuthRequestPersistenceImpl extends BasePersistenceImpl<SamlSp
 					result = samlSpAuthRequest;
 
 					cacheResult(samlSpAuthRequest);
-
-					if ((samlSpAuthRequest.getSamlIdpEntityId() == null) ||
-							!samlSpAuthRequest.getSamlIdpEntityId()
-												  .equals(samlIdpEntityId) ||
-							(samlSpAuthRequest.getSamlSpAuthRequestKey() == null) ||
-							!samlSpAuthRequest.getSamlSpAuthRequestKey()
-												  .equals(samlSpAuthRequestKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_SIEI_SSARK,
-							finderArgs, samlSpAuthRequest);
-					}
 				}
 			}
 			catch (Exception e) {

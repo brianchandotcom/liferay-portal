@@ -1233,13 +1233,6 @@ public class OAuthApplicationPersistenceImpl extends BasePersistenceImpl<OAuthAp
 					result = oAuthApplication;
 
 					cacheResult(oAuthApplication);
-
-					if ((oAuthApplication.getConsumerKey() == null) ||
-							!oAuthApplication.getConsumerKey()
-												 .equals(consumerKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CONSUMERKEY,
-							finderArgs, oAuthApplication);
-					}
 				}
 			}
 			catch (Exception e) {

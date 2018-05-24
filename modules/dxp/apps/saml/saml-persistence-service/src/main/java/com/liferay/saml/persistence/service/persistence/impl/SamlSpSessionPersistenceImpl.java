@@ -221,13 +221,6 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 					result = samlSpSession;
 
 					cacheResult(samlSpSession);
-
-					if ((samlSpSession.getSamlSpSessionKey() == null) ||
-							!samlSpSession.getSamlSpSessionKey()
-											  .equals(samlSpSessionKey)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_SAMLSPSESSIONKEY,
-							finderArgs, samlSpSession);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -471,12 +464,6 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 					result = samlSpSession;
 
 					cacheResult(samlSpSession);
-
-					if ((samlSpSession.getJSessionId() == null) ||
-							!samlSpSession.getJSessionId().equals(jSessionId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_JSESSIONID,
-							finderArgs, samlSpSession);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1270,12 +1257,6 @@ public class SamlSpSessionPersistenceImpl extends BasePersistenceImpl<SamlSpSess
 					result = samlSpSession;
 
 					cacheResult(samlSpSession);
-
-					if ((samlSpSession.getSessionIndex() == null) ||
-							!samlSpSession.getSessionIndex().equals(sessionIndex)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_SESSIONINDEX,
-							finderArgs, samlSpSession);
-					}
 				}
 			}
 			catch (Exception e) {

@@ -744,14 +744,6 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 					result = kaleoProcessLink;
 
 					cacheResult(kaleoProcessLink);
-
-					if ((kaleoProcessLink.getKaleoProcessId() != kaleoProcessId) ||
-							(kaleoProcessLink.getWorkflowTaskName() == null) ||
-							!kaleoProcessLink.getWorkflowTaskName()
-												 .equals(workflowTaskName)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_KPI_WTN,
-							finderArgs, kaleoProcessLink);
-					}
 				}
 			}
 			catch (Exception e) {

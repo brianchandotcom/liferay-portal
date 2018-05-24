@@ -773,13 +773,6 @@ public class SourcePersistenceImpl extends BasePersistenceImpl<Source>
 					result = source;
 
 					cacheResult(source);
-
-					if ((source.getUuid() == null) ||
-							!source.getUuid().equals(uuid) ||
-							(source.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, source);
-					}
 				}
 			}
 			catch (Exception e) {

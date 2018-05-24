@@ -231,14 +231,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 					result = sharepointOAuth2TokenEntry;
 
 					cacheResult(sharepointOAuth2TokenEntry);
-
-					if ((sharepointOAuth2TokenEntry.getUserId() != userId) ||
-							(sharepointOAuth2TokenEntry.getConfigurationPid() == null) ||
-							!sharepointOAuth2TokenEntry.getConfigurationPid()
-														   .equals(configurationPid)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_C,
-							finderArgs, sharepointOAuth2TokenEntry);
-					}
 				}
 			}
 			catch (Exception e) {

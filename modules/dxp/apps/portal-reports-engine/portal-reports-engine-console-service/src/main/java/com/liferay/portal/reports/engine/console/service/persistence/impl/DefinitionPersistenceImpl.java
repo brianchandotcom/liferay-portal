@@ -776,13 +776,6 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 					result = definition;
 
 					cacheResult(definition);
-
-					if ((definition.getUuid() == null) ||
-							!definition.getUuid().equals(uuid) ||
-							(definition.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, definition);
-					}
 				}
 			}
 			catch (Exception e) {

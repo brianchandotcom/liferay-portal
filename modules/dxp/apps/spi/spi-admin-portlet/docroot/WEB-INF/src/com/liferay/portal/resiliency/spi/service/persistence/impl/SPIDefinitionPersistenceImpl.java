@@ -1113,13 +1113,6 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 					result = spiDefinition;
 
 					cacheResult(spiDefinition);
-
-					if ((spiDefinition.getCompanyId() != companyId) ||
-							(spiDefinition.getName() == null) ||
-							!spiDefinition.getName().equals(name)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
-							finderArgs, spiDefinition);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -2800,14 +2793,6 @@ public class SPIDefinitionPersistenceImpl extends BasePersistenceImpl<SPIDefinit
 					result = spiDefinition;
 
 					cacheResult(spiDefinition);
-
-					if ((spiDefinition.getConnectorAddress() == null) ||
-							!spiDefinition.getConnectorAddress()
-											  .equals(connectorAddress) ||
-							(spiDefinition.getConnectorPort() != connectorPort)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CA_CP,
-							finderArgs, spiDefinition);
-					}
 				}
 			}
 			catch (Exception e) {

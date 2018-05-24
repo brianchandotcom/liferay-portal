@@ -1227,12 +1227,6 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 					result = oAuthUser;
 
 					cacheResult(oAuthUser);
-
-					if ((oAuthUser.getAccessToken() == null) ||
-							!oAuthUser.getAccessToken().equals(accessToken)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_ACCESSTOKEN,
-							finderArgs, oAuthUser);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -1460,12 +1454,6 @@ public class OAuthUserPersistenceImpl extends BasePersistenceImpl<OAuthUser>
 					result = oAuthUser;
 
 					cacheResult(oAuthUser);
-
-					if ((oAuthUser.getUserId() != userId) ||
-							(oAuthUser.getOAuthApplicationId() != oAuthApplicationId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_U_OAI,
-							finderArgs, oAuthUser);
-					}
 				}
 			}
 			catch (Exception e) {

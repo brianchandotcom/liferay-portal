@@ -1,8 +1,8 @@
 'use strict';
 
-import core from 'metal/src/core';
-import dom from 'metal-dom/src/dom';
-import Surface from 'senna/src/surface/Surface';
+import core from 'metal/lib/core';
+import dom from 'metal-dom/lib/dom';
+import Surface from 'senna/lib/surface/Surface';
 
 /**
  * LiferaySurface

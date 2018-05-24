@@ -1,26 +1,25 @@
 {
 	"dependencies": {
-		"assert": "^1.4.1",
-		"buffer": "^5.0.6",
-		"console-browserify": "^1.1.0",
-		"domain-browser": "^1.1.7",
-		"events": "^1.1.1",
-		"os-browserify": "^0.3.0",
+		"assert": "1.4.1",
+		"buffer": "5.0.7",
+		"console-browserify": "1.1.0",
+		"domain-browser": "1.1.7",
+		"events": "1.1.1",
+		"os-browserify": "0.3.0",
 		"path-browserify": "0.0.0",
-		"process": "^0.11.10",
-		"punycode": "^2.1.0",
-		"querystring-es3": "^0.2.1",
-		"setimmediate": "^1.0.5",
-		"string_decoder": "^1.0.1",
-		"timers-browserify": "^2.0.2",
+		"process": "0.11.10",
+		"punycode": "2.1.0",
+		"querystring-es3": "0.2.1",
+		"setimmediate": "1.0.5",
+		"string_decoder": "1.0.3",
+		"timers-browserify": "2.0.4",
 		"tty-browserify": "0.0.0",
-		"url": "^0.11.0",
-		"util": "^0.10.3",
+		"url": "0.11.0",
+		"util": "0.10.3",
 		"vm-browserify": "0.0.4"
 	},
 	"devDependencies": {
-		"liferay-npm-bundler": "^1.1.0",
-		"liferay-npm-bundler-preset-standard": "^1.1.0"
+		"liferay-npm-bundler": "2.0.0-rc.2"
 	},
 	"name": "frontend-js-node-shims",
 	"scripts": {

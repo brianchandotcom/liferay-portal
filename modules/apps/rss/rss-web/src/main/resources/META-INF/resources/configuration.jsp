@@ -162,7 +162,7 @@
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script use="aui-base,liferay-auto-fields">
+<aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields(
 		{
 			contentBox: '#<portlet:namespace />subscriptions',

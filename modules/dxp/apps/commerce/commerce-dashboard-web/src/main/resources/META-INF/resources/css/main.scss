@@ -3,3 +3,62 @@
 		max-width: 10em;
 	}
 }
+
+.portlet-commerce-dashboard-product-instance-selector {
+	.product-instances-list {
+		font-size: 0.8rem;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+
+		.color-dot {
+			border-radius: 10rem;
+			float: left;
+			height: 0.5rem;
+			margin: 0.4rem 0 0 0.4rem;
+			width: 0.5rem;
+		}
+
+		.product-instance, .product-instance-selected {
+			margin-left: 2rem;
+		}
+
+		.product-instance-selected {
+			display: none;
+
+			div {
+				display: inline-block;
+			}
+
+			.hide-show-link, .remove-link {
+				line-height: 3rem;
+			}
+		}
+
+		.product-instance-sku {
+			font-size: 0.7rem;
+		}
+
+		.product-instance-title {
+			font-size: 0.8rem;
+			font-weight: bold;
+			margin-bottom: 0;
+		}
+
+		li {
+			height: 3rem;
+
+			&:hover {
+				background-color: #EEE;
+
+				.product-instance {
+					display: none;
+				}
+
+				.product-instance-selected {
+					display: block;
+				}
+			}
+		}
+	}
+}

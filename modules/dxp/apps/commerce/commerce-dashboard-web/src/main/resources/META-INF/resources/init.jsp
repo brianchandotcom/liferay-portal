@@ -27,17 +27,25 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardForecastsChartPortletInstanceConfiguration" %><%@
-page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardDateRangeSelectorDisplayContext" %><%@
+page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardDisplayContext" %><%@
 page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardForecastsChartDisplayContext" %><%@
-page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardPeriodSelectorDisplayContext" %><%@
+page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardProductInstanceSelectorDisplayContext" %><%@
 page import="com.liferay.commerce.forecast.model.CommerceForecastEntryConstants" %><%@
+page import="com.liferay.commerce.product.model.CPDefinition" %><%@
+page import="com.liferay.commerce.product.model.CPInstance" %><%@
 page import="com.liferay.frontend.taglib.chart.model.predictive.PredictiveChartConfig" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.configuration.metatype.util.ParameterMapUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />
 

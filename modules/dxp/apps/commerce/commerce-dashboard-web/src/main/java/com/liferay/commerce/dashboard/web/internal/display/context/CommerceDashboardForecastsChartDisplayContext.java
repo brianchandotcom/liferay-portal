@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -162,8 +161,6 @@ public class CommerceDashboardForecastsChartDisplayContext
 			commerceDashboardPredictiveChartConfig =
 				new CommerceDashboardPredictiveChartConfig();
 
-		String[] chartColors =
-			commerceDashboardCompanyConfiguration.chartColors();
 		List<Date> timeseriesDatesList = ListUtil.fromCollection(
 			timeseriesDates);
 
@@ -182,9 +179,7 @@ public class CommerceDashboardForecastsChartDisplayContext
 			commerceDashboardPredictiveChartConfig.addDataColumn(
 				mixedDataColumn);
 
-			if (ArrayUtil.isNotEmpty(chartColors)) {
-				colors.put(id, chartColors[colors.size() % chartColors.length]);
-			}
+			colors.put(id, getChartColor(colors.size()));
 		}
 
 		commerceDashboardPredictiveChartConfig.setAxisXTickFormat(

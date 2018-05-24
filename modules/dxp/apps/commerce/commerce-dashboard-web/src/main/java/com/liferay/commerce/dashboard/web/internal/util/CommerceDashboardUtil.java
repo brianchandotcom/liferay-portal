@@ -66,6 +66,12 @@ public class CommerceDashboardUtil {
 
 		int value = ParamUtil.getInteger(portletRequest, name);
 
+		setSessionValue(portletRequest, name, value);
+	}
+
+	public static void setSessionValue(
+		PortletRequest portletRequest, String name, Object value) {
+
 		PortletSession portletSession = portletRequest.getPortletSession();
 
 		portletSession.setAttribute(

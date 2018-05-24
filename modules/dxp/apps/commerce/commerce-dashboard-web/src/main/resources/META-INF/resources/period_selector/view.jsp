@@ -22,7 +22,7 @@ CommerceDashboardDisplayContext commerceDashboardDisplayContext = (CommerceDashb
 
 <portlet:actionURL name="editCommerceDashboardPeriod" var="editCommerceDashboardPeriodURL" />
 
-<aui:form action="<%= editCommerceDashboardPeriodURL %>" cssClass="form-group-autofit" method="post" name="fm">
+<aui:form action="<%= editCommerceDashboardPeriodURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<div class="btn-group">

@@ -95,10 +95,17 @@ public class CommerceDashboardDisplayContext {
 		_cpInstanceIds = CommerceDashboardUtil.getSessionMap(
 			renderRequest, "cpInstanceIds");
 
-		commerceDashboardCompanyConfiguration =
+		_commerceDashboardCompanyConfiguration =
 			configurationProvider.getCompanyConfiguration(
 				CommerceDashboardCompanyConfiguration.class,
 				commerceDashboardRequestHelper.getCompanyId());
+	}
+
+	public String getChartColor(int index) {
+		String[] chartColors =
+			_commerceDashboardCompanyConfiguration.chartColors();
+
+		return chartColors[index % chartColors.length];
 	}
 
 	public Map<Long, Boolean> getCPInstanceIds() {
@@ -141,11 +148,11 @@ public class CommerceDashboardDisplayContext {
 		return _startDateYear;
 	}
 
-	protected final CommerceDashboardCompanyConfiguration
-		commerceDashboardCompanyConfiguration;
 	protected final CommerceDashboardRequestHelper
 		commerceDashboardRequestHelper;
 
+	private final CommerceDashboardCompanyConfiguration
+		_commerceDashboardCompanyConfiguration;
 	private final Map<Long, Boolean> _cpInstanceIds;
 	private final long _customerId;
 	private final int _endDateDay;

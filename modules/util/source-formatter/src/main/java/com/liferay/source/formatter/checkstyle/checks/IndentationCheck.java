@@ -583,6 +583,18 @@ public class IndentationCheck extends BaseCheck {
 	}
 
 	private int _getExpectedTabCount(DetailAST detailAST) {
+		DetailAST previousSiblingAST = detailAST.getPreviousSibling();
+
+		if ((previousSiblingAST != null) &&
+			(previousSiblingAST.getType() == TokenTypes.COMMA)) {
+
+			previousSiblingAST = previousSiblingAST.getPreviousSibling();
+
+			if (_isAtLineStart(previousSiblingAST)) {
+				return _getExpectedTabCount(previousSiblingAST);
+			}
+		}
+
 		int expectedTabCount =
 			_getLevel(detailAST) + _getLineBreakTabs(detailAST);
 

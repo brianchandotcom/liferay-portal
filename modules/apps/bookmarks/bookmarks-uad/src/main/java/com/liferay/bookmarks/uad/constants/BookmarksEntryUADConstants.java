@@ -15,11 +15,11 @@
 package com.liferay.bookmarks.uad.constants;
 
 /**
- * @author Brian Wing Shun Chan
- * @generated
+ * @author Drew Brokke
  */
-public class BookmarksUADConstants {
-	public static final String[] USER_ID_FIELD_NAMES_BOOKMARKS_FOLDER = {
-			"userId", "statusByUserId"
-		};
+public class BookmarksEntryUADConstants {
+
+	public static final String[] USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY =
+		{"userId", "statusByUserId"};
+
 }

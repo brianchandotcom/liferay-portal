@@ -16,7 +16,7 @@ package com.liferay.bookmarks.uad.exporter;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
-import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
+import com.liferay.bookmarks.uad.constants.BookmarksEntryUADConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.user.associated.data.exporter.DynamicQueryUADExporter;
@@ -49,7 +49,7 @@ public abstract class BaseBookmarksEntryUADExporter
 
 	@Override
 	protected String[] doGetUserIdFieldNames() {
-		return BookmarksUADConstants.USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY;
+		return BookmarksEntryUADConstants.USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY;
 	}
 
 	@Override

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.currency.internal.configuration;
+package com.liferay.commerce.currency.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -27,7 +27,7 @@ import java.math.RoundingMode;
 	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.currency.internal.configuration.RoundingTypeConfiguration",
+	id = "com.liferay.commerce.currency.configuration.RoundingTypeConfiguration",
 	localization = "content/Language", name = "rounding-type-configuration-name"
 )
 public interface RoundingTypeConfiguration {

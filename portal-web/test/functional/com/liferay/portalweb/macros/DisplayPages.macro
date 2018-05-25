@@ -4,7 +4,9 @@
 			<var name="tabName" value="Mapping" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Button#SELECT" />
+		<execute macro="Button#viewNotPresent">
+			<var name="button" value="Select" />
+		</execute>
 	</command>
 
 	<command name="mapEditableTextToAsset">

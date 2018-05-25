@@ -14,17 +14,16 @@
 
 package com.liferay.commerce.currency.internal.util;
 
-import com.liferay.commerce.currency.internal.configuration.RoundingTypeConfiguration;
+import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.commerce.currency.util.RoundingType;
-import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.text.DecimalFormat;
 
@@ -42,39 +41,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	configurationPid = "com.liferay.commerce.currency.internal.configuration.RoundingTypeConfiguration",
+	configurationPid = "com.liferay.commerce.currency.configuration.RoundingTypeConfiguration",
 	immediate = true, service = CommercePriceFormatter.class
 )
 public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Override
 	public String format(BigDecimal price) {
-		DecimalFormat decimalFormat = getDefaultDecimalFormat();
+		DecimalFormat decimalFormat = getDecimalFormat(null);
 
 		return decimalFormat.format(price);
 	}
 
 	@Override
 	public String format(CommerceCurrency commerceCurrency, BigDecimal price) {
-		String roundingTypeName = null;
+		DecimalFormat decimalFormat = getDecimalFormat(commerceCurrency);
 
-		if (commerceCurrency != null) {
-			roundingTypeName = commerceCurrency.getRoundingType();
-		}
-
-		String value = null;
-
-		RoundingType roundingType =
-			_roundingTypeServicesTracker.getRoundingType(roundingTypeName);
-
-		if (roundingType != null) {
-			value = roundingType.round(price);
-		}
-		else {
-			DecimalFormat decimalFormat = getDefaultDecimalFormat();
-
-			value = decimalFormat.format(price);
-		}
+		String value = decimalFormat.format(price);
 
 		if (commerceCurrency == null) {
 			return value;
@@ -105,16 +88,29 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 		_roundingTypeConfiguration = null;
 	}
 
-	protected DecimalFormat getDefaultDecimalFormat() {
-		DecimalFormat decimalFormat = new DecimalFormat(
-			_roundingTypeConfiguration.formatPattern());
+	protected DecimalFormat getDecimalFormat(
+		CommerceCurrency commerceCurrency) {
 
-		decimalFormat.setMaximumFractionDigits(
-			_roundingTypeConfiguration.maximumFractionDigits());
-		decimalFormat.setMinimumFractionDigits(
-			_roundingTypeConfiguration.minimumFractionDigits());
-		decimalFormat.setRoundingMode(
-			_roundingTypeConfiguration.roundingMode());
+		String formatPattern = _roundingTypeConfiguration.formatPattern();
+		int maxFractionDigits =
+			_roundingTypeConfiguration.maximumFractionDigits();
+		int minFractionDigits =
+			_roundingTypeConfiguration.minimumFractionDigits();
+		RoundingMode roundingMode = _roundingTypeConfiguration.roundingMode();
+
+		if (commerceCurrency != null) {
+			formatPattern = commerceCurrency.getFormatPattern();
+			maxFractionDigits = commerceCurrency.getMaxFractionDigits();
+			minFractionDigits = commerceCurrency.getMinFractionDigits();
+			roundingMode = RoundingMode.valueOf(
+				commerceCurrency.getRoundingMode());
+		}
+
+		DecimalFormat decimalFormat = new DecimalFormat(formatPattern);
+
+		decimalFormat.setMaximumFractionDigits(maxFractionDigits);
+		decimalFormat.setMinimumFractionDigits(minFractionDigits);
+		decimalFormat.setRoundingMode(roundingMode);
 
 		return decimalFormat;
 	}
@@ -123,8 +119,5 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	private CommerceCurrencyService _commerceCurrencyService;
 
 	private volatile RoundingTypeConfiguration _roundingTypeConfiguration;
-
-	@Reference
-	private RoundingTypeServicesTracker _roundingTypeServicesTracker;
 
 }

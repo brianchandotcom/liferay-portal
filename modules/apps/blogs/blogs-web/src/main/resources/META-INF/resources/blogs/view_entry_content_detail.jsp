@@ -47,7 +47,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 				classPK="<%= entry.getEntryId() %>"
 			>
 				<div class="row">
-					<div class="col-md-8 mx-auto widget-metadata">
+					<div class="categories col-md-8 mx-auto widget-metadata">
 						<liferay-asset:asset-categories-summary
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entry.getEntryId() %>"

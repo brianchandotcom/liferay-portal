@@ -12,21 +12,14 @@
  * details.
  */
 
-package com.liferay.commerce.currency.util;
-
-import aQute.bnd.annotation.ProviderType;
-
-import java.util.List;
+package com.liferay.commerce.currency.constants;
 
 /**
- * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
  */
-@ProviderType
-public interface RoundingTypeServicesTracker {
+public class RoundingTypeConstants {
 
-	public RoundingType getRoundingType(String name);
-
-	public List<RoundingType> getRoundingTypes();
+	public static final String SERVICE_NAME =
+		"com.liferay.commerce.currency.rounding.type";
 
 }

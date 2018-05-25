@@ -15,13 +15,13 @@
 package com.liferay.commerce.currency.web.internal.display.context;
 
 import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
+import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
+import com.liferay.commerce.currency.constants.RoundingTypeConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
-import com.liferay.commerce.currency.util.RoundingType;
-import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.currency.web.internal.admin.CurrenciesCommerceAdminModule;
 import com.liferay.commerce.currency.web.internal.util.CommerceCurrencyUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -31,12 +31,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.List;
 
@@ -56,14 +58,12 @@ public class CommerceCurrenciesDisplayContext {
 		CommercePriceFormatter commercePriceFormatter,
 		ConfigurationProvider configurationProvider,
 		ExchangeRateProviderRegistry exchangeRateProviderRegistry,
-		RoundingTypeServicesTracker roundingTypeServicesTracker,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commerceCurrencyService = commerceCurrencyService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_configurationProvider = configurationProvider;
 		_exchangeRateProviderRegistry = exchangeRateProviderRegistry;
-		_roundingTypeServicesTracker = roundingTypeServicesTracker;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -86,6 +86,36 @@ public class CommerceCurrenciesDisplayContext {
 		}
 
 		return _commerceCurrency;
+	}
+
+	public String getDefaultFormatPattern() throws ConfigurationException {
+		RoundingTypeConfiguration roundingTypeConfiguration =
+			getRoundingTypeConfiguration();
+
+		return roundingTypeConfiguration.formatPattern();
+	}
+
+	public int getDefaultMaxFractionDigits() throws ConfigurationException {
+		RoundingTypeConfiguration roundingTypeConfiguration =
+			getRoundingTypeConfiguration();
+
+		return roundingTypeConfiguration.maximumFractionDigits();
+	}
+
+	public int getDefaultMinFractionDigits() throws ConfigurationException {
+		RoundingTypeConfiguration roundingTypeConfiguration =
+			getRoundingTypeConfiguration();
+
+		return roundingTypeConfiguration.minimumFractionDigits();
+	}
+
+	public String getDefaultRoundingMode() throws ConfigurationException {
+		RoundingTypeConfiguration roundingTypeConfiguration =
+			getRoundingTypeConfiguration();
+
+		RoundingMode roundingMode = roundingTypeConfiguration.roundingMode();
+
+		return roundingMode.name();
 	}
 
 	public ExchangeRateProviderGroupServiceConfiguration
@@ -142,10 +172,6 @@ public class CommerceCurrenciesDisplayContext {
 				themeDisplay.getScopeGroupId());
 
 		return _primaryCommerceCurrency;
-	}
-
-	public List<RoundingType> getRoundingTypes() {
-		return _roundingTypeServicesTracker.getRoundingTypes();
 	}
 
 	public SearchContainer<CommerceCurrency> getSearchContainer() {
@@ -214,6 +240,14 @@ public class CommerceCurrenciesDisplayContext {
 		return ParamUtil.getString(_renderRequest, "navigation");
 	}
 
+	protected RoundingTypeConfiguration getRoundingTypeConfiguration()
+		throws ConfigurationException {
+
+		return _configurationProvider.getConfiguration(
+			RoundingTypeConfiguration.class,
+			new SystemSettingsLocator(RoundingTypeConstants.SERVICE_NAME));
+	}
+
 	protected RowChecker getRowChecker() {
 		if (_rowChecker == null) {
 			_rowChecker = new EmptyOnClickRowChecker(_renderResponse);
@@ -230,7 +264,6 @@ public class CommerceCurrenciesDisplayContext {
 	private CommerceCurrency _primaryCommerceCurrency;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final RoundingTypeServicesTracker _roundingTypeServicesTracker;
 	private RowChecker _rowChecker;
 	private SearchContainer<CommerceCurrency> _searchContainer;
 

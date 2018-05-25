@@ -1,5 +1,9 @@
 .sidebar-default {
 	.sidebar-header {
+		h4 {
+			padding-top: 8px;
+		}
+
 		.text-default {
 			color: $secondary;
 			font-size: 0.875rem;

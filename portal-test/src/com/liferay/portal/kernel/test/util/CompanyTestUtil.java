@@ -77,6 +77,9 @@ public class CompanyTestUtil {
 		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
 			companyId);
 
+		preferences.setValue(
+			PropsKeys.COMPANY_DEFAULT_LOCALE, defaultLanguageId);
+
 		preferences.setValue(PropsKeys.LOCALES, languageIds);
 
 		preferences.store();

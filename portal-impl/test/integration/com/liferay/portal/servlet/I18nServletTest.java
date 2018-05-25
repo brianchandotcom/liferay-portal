@@ -59,7 +59,8 @@ public class I18nServletTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_availableLocales = LanguageUtil.getAvailableLocales();
-		_defaultLocale = LocaleUtil.getDefault();
+		_defaultLocale = LocaleUtil.fromLanguageId(
+			PropsValues.COMPANY_DEFAULT_LOCALE);
 		_localesEnabled = PropsValues.LOCALES_ENABLED;
 
 		LanguageUtil.init();
@@ -150,7 +151,8 @@ public class I18nServletTest {
 	public void testI18nNotUseDefaultExistentLocale() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 
-		Locale expectedLocale = LocaleUtil.getDefault();
+		Locale expectedLocale = LocaleUtil.fromLanguageId(
+			PropsValues.COMPANY_DEFAULT_LOCALE);
 
 		testGetI18nData(expectedLocale, getI18nData(expectedLocale));
 	}
@@ -177,7 +179,8 @@ public class I18nServletTest {
 	public void testI18nUseDefault() throws Exception {
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
 
-		Locale expectedLocale = LocaleUtil.getDefault();
+		Locale expectedLocale = LocaleUtil.fromLanguageId(
+			PropsValues.COMPANY_DEFAULT_LOCALE);
 
 		testGetI18nData(expectedLocale, getI18nData(expectedLocale));
 	}
@@ -188,7 +191,8 @@ public class I18nServletTest {
 
 		Locale invalidLocale = LocaleUtil.CHINA;
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			PropsValues.COMPANY_DEFAULT_LOCALE);
 
 		testGetI18nData(invalidLocale, getI18nData(defaultLocale));
 	}
@@ -312,7 +316,8 @@ public class I18nServletTest {
 			return PortalUtil.getSiteDefaultLocale(group);
 		}
 		else {
-			return LocaleUtil.getDefault();
+			return LocaleUtil.fromLanguageId(
+				PropsValues.COMPANY_DEFAULT_LOCALE);
 		}
 	}
 

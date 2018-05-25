@@ -72,7 +72,7 @@ public class ExportConfigurationMVCResourceCommand
 		throws PortletException {
 
 		if (!(resourceResponse instanceof MimeResponse)) {
-			return false;
+			return true;
 		}
 
 		String pid = ParamUtil.getString(resourceRequest, "pid");
@@ -93,7 +93,7 @@ public class ExportConfigurationMVCResourceCommand
 			throw new PortletException(e);
 		}
 
-		return true;
+		return false;
 	}
 
 	protected void exportAll(

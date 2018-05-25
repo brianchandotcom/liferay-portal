@@ -376,12 +376,9 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="SitePages#togglePrivacy">
-			<var name="privacy" value="Private" />
-		</execute>
-
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="pageName" value="Site Page" />
+			<var name="privacy" value="Private" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -429,12 +426,9 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="SitePages#togglePrivacy">
-			<var name="privacy" value="Private" />
-		</execute>
-
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="pageName" value="Site Page" />
+			<var name="privacy" value="Private" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">

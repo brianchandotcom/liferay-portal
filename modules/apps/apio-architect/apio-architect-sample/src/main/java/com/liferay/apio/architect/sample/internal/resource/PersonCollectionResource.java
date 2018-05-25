@@ -106,14 +106,14 @@ public class PersonCollectionResource
 			).addString(
 				"streetAddress", PostalAddressModel::getStreetAddress
 			).build()
+		).addRelativeURL(
+			"image", PersonModel::getAvatarRelativeURL
 		).addString(
 			"email", PersonModel::getEmail
 		).addString(
 			"familyName", PersonModel::getLastName
 		).addString(
 			"givenName", PersonModel::getFirstName
-		).addString(
-			"image", PersonModel::getAvatar
 		).addStringList(
 			"jobTitle", PersonModel::getJobTitles
 		).addString(

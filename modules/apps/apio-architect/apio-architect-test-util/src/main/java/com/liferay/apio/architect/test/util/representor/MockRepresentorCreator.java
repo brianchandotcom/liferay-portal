@@ -141,6 +141,12 @@ public class MockRepresentorCreator {
 				"numberList1", __ -> asList(1, 2, 3, 4, 5)
 			).addNumberList(
 				"numberList2", __ -> asList(6, 7, 8, 9, 10)
+			).addRelativeURL(
+				"relativeURL1", __ -> "/first"
+			).addRelativeURL(
+				"relativeURL2", __ -> "/second"
+			).addRelativeURL(
+				"relativeURL3", __ -> null
 			).addRelatedCollection(
 				"relatedCollection1", FirstEmbeddedId.class
 			).addRelatedCollection(

@@ -44,7 +44,7 @@
 	</tear-down>
 
 	<command name="AddNavigationMenuEntriesAllTypes" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
@@ -387,7 +387,7 @@
 	</command>
 
 	<command name="DeleteNavigationMenu" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
@@ -407,7 +407,7 @@
 
 	<command name="EditNavigationMenuPageItemName" priority="5">
 		<description message="This is a usecase for LPS-76658" />
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

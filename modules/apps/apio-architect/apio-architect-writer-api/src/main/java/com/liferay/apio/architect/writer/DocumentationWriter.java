@@ -21,7 +21,7 @@ import static com.liferay.apio.architect.operation.Method.PUT;
 
 import com.google.gson.JsonObject;
 
-import com.liferay.apio.architect.alias.RequestFunction;
+import com.liferay.apio.architect.consumer.TriConsumer;
 import com.liferay.apio.architect.documentation.Documentation;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.FormField;
@@ -29,18 +29,26 @@ import com.liferay.apio.architect.message.json.DocumentationMessageMapper;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.operation.Method;
 import com.liferay.apio.architect.operation.Operation;
+import com.liferay.apio.architect.related.RelatedCollection;
+import com.liferay.apio.architect.related.RelatedModel;
+import com.liferay.apio.architect.representor.BaseRepresentor;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.representor.function.FieldFunction;
+import com.liferay.apio.architect.representor.function.NestedFieldFunction;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
@@ -78,53 +86,54 @@ public class DocumentationWriter {
 	public String write() {
 		JSONObjectBuilder jsonObjectBuilder = new JSONObjectBuilder();
 
-		RequestFunction<Optional<String>> apiTitleRequestFunction =
-			_documentation.getAPITitleRequestFunction();
-
-		apiTitleRequestFunction.apply(
-			_requestInfo.getHttpServletRequest()
-		).ifPresent(
-			title -> _documentationMessageMapper.mapTitle(
-				jsonObjectBuilder, title)
-		);
-
-		RequestFunction<Optional<String>> apiDescriptionRequestFunction =
-			_documentation.getAPIDescriptionRequestFunction();
-
-		apiDescriptionRequestFunction.apply(
-			_requestInfo.getHttpServletRequest()
-		).ifPresent(
-			description -> _documentationMessageMapper.mapDescription(
-				jsonObjectBuilder, description)
-		);
-
 		_documentationMessageMapper.onStart(
 			jsonObjectBuilder, _documentation, _requestInfo.getHttpHeaders());
 
-		Supplier<Map<String, Representor>> representorMapSupplier =
-			_documentation.getRepresentorMapSupplier();
+		_writeDocumentationMetadata(jsonObjectBuilder);
 
-		Map<String, Representor> representorMap = representorMapSupplier.get();
+		Map<String, Representor> representors =
+			_documentation.getRepresentors();
 
-		Supplier<Map<String, CollectionRoutes>> routesMapSupplier =
-			_documentation.getRoutesMapSupplier();
-
-		Map<String, CollectionRoutes> routesMap = routesMapSupplier.get();
-
-		routesMap.forEach(
-			(name, collectionRoutes) -> _writeRoute(
-				jsonObjectBuilder, representorMap, routesMap, name,
-				this::_writePageOperations));
-
-		Supplier<Map<String, ItemRoutes>> itemRoutesMapSupplier =
-			_documentation.getItemRoutesMapSupplier();
-
-		Map<String, ItemRoutes> itemRoutesMap = itemRoutesMapSupplier.get();
+		Map<String, ItemRoutes> itemRoutesMap = _documentation.getItemRoutes();
 
 		itemRoutesMap.forEach(
 			(name, itemRoutes) -> _writeRoute(
-				jsonObjectBuilder, representorMap, routesMap, name,
-				this::_writeItemOperations));
+				jsonObjectBuilder, name, representors.get(name),
+				_documentationMessageMapper::mapResource,
+				this::_writeItemOperations,
+				resourceJsonObjectBuilder -> _writeAllFields(
+					representors.get(name), resourceJsonObjectBuilder,
+					itemRoutes.getFormOptional())));
+
+		Map<String, NestedCollectionRoutes> nestedCollectionRoutesMap =
+			_documentation.getNestedCollectionRoutes();
+
+		Map<String, CollectionRoutes> collectionRoutes =
+			_documentation.getCollectionRoutes();
+
+		Set<String> collectionResources = new HashSet<>(
+			collectionRoutes.keySet());
+
+		Set<String> nestedRoutes = new HashSet<>(itemRoutesMap.keySet());
+
+		nestedRoutes.addAll(collectionRoutes.keySet());
+
+		nestedRoutes.forEach(
+			name -> {
+				Optional<String> nestedCollectionRoute =
+					_getNestedCollectionRouteOptional(
+						representors, nestedCollectionRoutesMap, name);
+
+				nestedCollectionRoute.ifPresent(collectionResources::add);
+			});
+
+		collectionResources.forEach(
+			name -> _writeRoute(
+				jsonObjectBuilder, name, representors.get(name),
+				_documentationMessageMapper::mapResourceCollection,
+				this::_writePageOperations,
+				__ -> {
+				}));
 
 		_documentationMessageMapper.onFinish(
 			jsonObjectBuilder, _documentation, _requestInfo.getHttpHeaders());
@@ -210,6 +219,55 @@ public class DocumentationWriter {
 
 	}
 
+	private Stream<String> _calculateNestableFieldNames(
+		BaseRepresentor representor) {
+
+		List<FieldFunction> fieldFunctions = new ArrayList<>();
+
+		fieldFunctions.addAll(representor.getBinaryFunctions());
+		fieldFunctions.addAll(representor.getBooleanFunctions());
+		fieldFunctions.addAll(representor.getBooleanListFunctions());
+		fieldFunctions.addAll(representor.getLinkFunctions());
+		fieldFunctions.addAll(representor.getLocalizedStringFunctions());
+		fieldFunctions.addAll(representor.getNestedFieldFunctions());
+		fieldFunctions.addAll(representor.getNumberFunctions());
+		fieldFunctions.addAll(representor.getNumberListFunctions());
+		fieldFunctions.addAll(representor.getStringFunctions());
+		fieldFunctions.addAll(representor.getStringListFunctions());
+
+		Stream<FieldFunction> fieldFunctionStream = fieldFunctions.stream();
+
+		Stream<String> fieldNamesStream = fieldFunctionStream.map(
+			fieldFunction -> fieldFunction.key);
+
+		List<RelatedModel> relatedModels = representor.getRelatedModels();
+
+		Stream<RelatedModel> relatedModelStream = relatedModels.stream();
+
+		Stream<String> relatedModelNamesStream = relatedModelStream.map(
+			RelatedModel::getKey);
+
+		fieldNamesStream = Stream.concat(
+			fieldNamesStream, relatedModelNamesStream);
+
+		List<NestedFieldFunction> nestedFieldFunctions =
+			representor.getNestedFieldFunctions();
+
+		Stream<NestedFieldFunction> nestedFieldFunctionStream =
+			nestedFieldFunctions.stream();
+
+		Stream<String> nestedFieldNamesStream = nestedFieldFunctionStream.map(
+			nestedFieldFunction -> _calculateNestableFieldNames(
+				nestedFieldFunction.nestedRepresentor)
+		).reduce(
+			Stream::concat
+		).orElseGet(
+			Stream::empty
+		);
+
+		return Stream.concat(fieldNamesStream, nestedFieldNamesStream);
+	}
+
 	private Optional<FormField> _getFormField(
 		String fieldName, Form<FormField> formFieldForm) {
 
@@ -219,6 +277,26 @@ public class DocumentationWriter {
 
 		return stream.filter(
 			formField -> formField.name.equals(fieldName)
+		).findFirst();
+	}
+
+	private Optional<String> _getNestedCollectionRouteOptional(
+		Map<String, Representor> representorMap, Map<String, ?> nestedRoutesMap,
+		String name) {
+
+		Set<String> nestedRoutes = nestedRoutesMap.keySet();
+
+		Stream<String> nestedRoutesStream = nestedRoutes.stream();
+
+		return nestedRoutesStream.map(
+			nestedRoute -> nestedRoute.split(name + "-")
+		).filter(
+			routes ->
+				routes.length == 2 && !routes[0].equals("") &&
+				!routes[0].equals(routes[1]) &&
+				representorMap.containsKey(routes[1])
+		).map(
+			routes -> routes[1]
 		).findFirst();
 	}
 
@@ -232,91 +310,83 @@ public class DocumentationWriter {
 		);
 	}
 
-	private void _writeFields(
-		List<FieldFunction> functionMap,
-		JSONObjectBuilder resourceJsonObjectBuilder,
+	private void _writeAllFields(
+		Representor representor, JSONObjectBuilder resourceJsonObjectBuilder,
 		Optional<Form<FormField>> formOptional) {
 
-		functionMap.forEach(
-			fieldFunction -> formOptional.ifPresent(
-				formFieldForm -> {
-					Optional<FormField> field = _getFormField(
-						fieldFunction.key, formFieldForm);
+		Stream<String> fieldNamesStream = _calculateNestableFieldNames(
+			representor);
 
-					field.ifPresent(
-						formField -> _writeFormField(
-							resourceJsonObjectBuilder, formField));
-				}));
+		Stream<RelatedCollection> relatedCollections =
+			representor.getRelatedCollections();
+
+		Stream<String> relatedCollectionsNamesStream = relatedCollections.map(
+			RelatedCollection::getKey);
+
+		fieldNamesStream = Stream.concat(
+			fieldNamesStream, relatedCollectionsNamesStream);
+
+		_writeFields(fieldNamesStream, resourceJsonObjectBuilder, formOptional);
+	}
+
+	private void _writeDocumentationMetadata(
+		JSONObjectBuilder jsonObjectBuilder) {
+
+		Optional<String> apiTitleOptional =
+			_documentation.getAPITitleOptional();
+
+		apiTitleOptional.ifPresent(
+			title -> _documentationMessageMapper.mapTitle(
+				jsonObjectBuilder, title));
+
+		Optional<String> apiDescriptionOptional =
+			_documentation.getAPIDescriptionOptional();
+
+		apiDescriptionOptional.ifPresent(
+			description -> _documentationMessageMapper.mapDescription(
+				jsonObjectBuilder, description));
 	}
 
 	private void _writeFields(
-		Representor representor, JSONObjectBuilder resourceJsonObjectBuilder,
-		Optional<CollectionRoutes> collectionRoutesOptional) {
+		Stream<String> fields, JSONObjectBuilder resourceJsonObjectBuilder,
+		Optional<Form<FormField>> formOptional) {
 
-		Optional<Form<FormField>> formOptional = collectionRoutesOptional.map(
-			collectionRoutes -> collectionRoutes.getFormOptional()
-		).orElse(
-			Optional.empty()
-		);
+		fields.distinct().forEach(
+			field -> {
+				Optional<FormField> formFieldOptional = formOptional.flatMap(
+					formFieldForm -> _getFormField(field, formFieldForm));
 
-		_writeFields(
-			representor.getBooleanFunctions(), resourceJsonObjectBuilder,
-			formOptional);
-
-		_writeFields(
-			representor.getBooleanListFunctions(), resourceJsonObjectBuilder,
-			formOptional);
-
-		_writeFields(
-			representor.getStringFunctions(), resourceJsonObjectBuilder,
-			formOptional);
-
-		_writeFields(
-			representor.getStringListFunctions(), resourceJsonObjectBuilder,
-			formOptional);
-
-		_writeFields(
-			representor.getNumberFunctions(), resourceJsonObjectBuilder,
-			formOptional);
-
-		_writeFields(
-			representor.getNumberListFunctions(), resourceJsonObjectBuilder,
-			formOptional);
-
-		_writeFields(
-			representor.getNestedFieldFunctions(), resourceJsonObjectBuilder,
-			formOptional);
-
-		_writeFields(
-			representor.getBinaryFunctions(), resourceJsonObjectBuilder,
-			formOptional);
-
-		_writeFields(
-			representor.getLinkFunctions(), resourceJsonObjectBuilder,
-			formOptional);
+				_writeFormField(
+					resourceJsonObjectBuilder, field, formFieldOptional);
+			});
 	}
 
 	private void _writeFormField(
-		JSONObjectBuilder resourceJsonObjectBuilder, FormField formField) {
+		JSONObjectBuilder resourceJsonObjectBuilder, String fieldName,
+		Optional<FormField> formField) {
 
 		JSONObjectBuilder jsonObjectBuilder = new JSONObjectBuilder();
 
 		_documentationMessageMapper.onStartProperty(
-			resourceJsonObjectBuilder, jsonObjectBuilder, formField);
+			resourceJsonObjectBuilder, jsonObjectBuilder, fieldName);
 
-		_documentationMessageMapper.mapProperty(jsonObjectBuilder, formField);
+		boolean required = formField.map(
+			field -> field.required
+		).orElse(
+			false
+		);
+
+		_documentationMessageMapper.mapProperty(
+			jsonObjectBuilder, fieldName, required);
 
 		_documentationMessageMapper.onFinishProperty(
-			resourceJsonObjectBuilder, jsonObjectBuilder, formField);
+			resourceJsonObjectBuilder, jsonObjectBuilder, fieldName);
 	}
 
 	private void _writeItemOperations(
-		String name, JSONObjectBuilder resourceJsonObjectBuilder) {
+		String name, String type, JSONObjectBuilder resourceJsonObjectBuilder) {
 
-		Supplier<Map<String, ItemRoutes>> itemRoutesMapSupplier =
-			_documentation.getItemRoutesMapSupplier();
-
-		Map<String, ItemRoutes> itemRoutesMap = itemRoutesMapSupplier.get();
+		Map<String, ItemRoutes> itemRoutesMap = _documentation.getItemRoutes();
 
 		Optional.ofNullable(
 			itemRoutesMap.getOrDefault(name, null)
@@ -324,9 +394,11 @@ public class DocumentationWriter {
 			itemRoutes -> {
 				String getOperationName = name + "/retrieve";
 
-				Operation getOperation = new Operation(GET, getOperationName);
+				Operation getOperation = new Operation(
+					GET, getOperationName, false);
 
-				_writeOperation(getOperation, resourceJsonObjectBuilder, name);
+				_writeOperation(
+					getOperation, resourceJsonObjectBuilder, name, type);
 
 				String updateOperationName = name + "/update";
 
@@ -334,7 +406,7 @@ public class DocumentationWriter {
 					updateOperationName, itemRoutes.getFormOptional(), PUT);
 
 				_writeOperation(
-					updateOperation, resourceJsonObjectBuilder, name);
+					updateOperation, resourceJsonObjectBuilder, name, type);
 
 				String deleteOperationName = name + "/delete";
 
@@ -342,14 +414,14 @@ public class DocumentationWriter {
 					DELETE, deleteOperationName);
 
 				_writeOperation(
-					deleteOperation, resourceJsonObjectBuilder, name);
+					deleteOperation, resourceJsonObjectBuilder, name, type);
 			}
 		);
 	}
 
 	private void _writeOperation(
 		Operation operation, JSONObjectBuilder jsonObjectBuilder,
-		String resourceName) {
+		String resourceName, String type) {
 
 		JSONObjectBuilder operationJsonObjectBuilder = new JSONObjectBuilder();
 
@@ -357,28 +429,26 @@ public class DocumentationWriter {
 			jsonObjectBuilder, operationJsonObjectBuilder, operation);
 
 		_documentationMessageMapper.mapOperation(
-			operationJsonObjectBuilder, resourceName, operation);
+			operationJsonObjectBuilder, resourceName, type, operation);
 
 		_documentationMessageMapper.onFinishOperation(
 			jsonObjectBuilder, operationJsonObjectBuilder, operation);
 	}
 
 	private void _writePageOperations(
-		String resource, JSONObjectBuilder resourceJsonObjectBuilder) {
-
-		Supplier<Map<String, CollectionRoutes>> routesMapSupplier =
-			_documentation.getRoutesMapSupplier();
+		String resource, String type,
+		JSONObjectBuilder resourceJsonObjectBuilder) {
 
 		Map<String, CollectionRoutes> collectionRoutesMap =
-			routesMapSupplier.get();
+			_documentation.getCollectionRoutes();
 
 		Optional.ofNullable(
 			collectionRoutesMap.getOrDefault(resource, null)
 		).ifPresent(
 			collectionRoutes -> {
 				_writeOperation(
-					new Operation(GET, resource), resourceJsonObjectBuilder,
-					resource);
+					new Operation(GET, resource, true),
+					resourceJsonObjectBuilder, resource, type);
 
 				String operationName = resource + "/create";
 
@@ -386,37 +456,39 @@ public class DocumentationWriter {
 					operationName, collectionRoutes.getFormOptional(), POST);
 
 				_writeOperation(
-					createOperation, resourceJsonObjectBuilder, resource);
+					createOperation, resourceJsonObjectBuilder, resource, type);
 			}
 		);
 	}
 
 	private void _writeRoute(
-		JSONObjectBuilder jsonObjectBuilder,
-		Map<String, Representor> representorMap,
-		Map<String, CollectionRoutes> collectionRoutesMap, String name,
-		BiConsumer<String, JSONObjectBuilder> writeOperationsBiConsumer) {
+		JSONObjectBuilder jsonObjectBuilder, String name,
+		Representor representor,
+		BiConsumer<JSONObjectBuilder, String> writeResourceBiConsumer,
+		TriConsumer<String, String, JSONObjectBuilder>
+			writeOperationsTriConsumer,
+		Consumer<JSONObjectBuilder> writeFieldsRepresentor) {
 
-		JSONObjectBuilder resourceJsonObjectBuilder = new JSONObjectBuilder();
+		List<String> types = representor.getTypes();
 
-		_documentationMessageMapper.onStartResource(
-			jsonObjectBuilder, resourceJsonObjectBuilder);
+		types.forEach(
+			type -> {
+				JSONObjectBuilder resourceJsonObjectBuilder =
+					new JSONObjectBuilder();
 
-		_documentationMessageMapper.mapResource(
-			resourceJsonObjectBuilder, name);
+				_documentationMessageMapper.onStartResource(
+					jsonObjectBuilder, resourceJsonObjectBuilder, type);
 
-		writeOperationsBiConsumer.accept(name, resourceJsonObjectBuilder);
+				writeResourceBiConsumer.accept(resourceJsonObjectBuilder, type);
 
-		Representor representor = representorMap.get(name);
+				writeOperationsTriConsumer.accept(
+					name, type, resourceJsonObjectBuilder);
 
-		Optional<CollectionRoutes> collectionRoutesOptional =
-			Optional.ofNullable(collectionRoutesMap.getOrDefault(name, null));
+				writeFieldsRepresentor.accept(resourceJsonObjectBuilder);
 
-		_writeFields(
-			representor, resourceJsonObjectBuilder, collectionRoutesOptional);
-
-		_documentationMessageMapper.onFinishResource(
-			jsonObjectBuilder, resourceJsonObjectBuilder);
+				_documentationMessageMapper.onFinishResource(
+					jsonObjectBuilder, resourceJsonObjectBuilder, type);
+			});
 	}
 
 	private final Documentation _documentation;

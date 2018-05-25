@@ -17,9 +17,12 @@ package com.liferay.apio.architect.message.json.ld.internal;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_CONTEXT;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_DESCRIPTION;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_ID;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_MEMBER;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_NUMBER_OF_ITEMS;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_PROPERTY;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_REQUIRED;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_TITLE;
+import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_TOTAL_ITEMS;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.FIELD_NAME_TYPE;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.MEDIA_TYPE;
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.TYPE_API_DOCUMENTATION;
@@ -29,11 +32,13 @@ import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstant
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDConstants.URL_HYDRA_PROFILE;
 
 import com.liferay.apio.architect.documentation.Documentation;
-import com.liferay.apio.architect.form.FormField;
 import com.liferay.apio.architect.message.json.DocumentationMessageMapper;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.operation.Method;
 import com.liferay.apio.architect.operation.Operation;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 import javax.ws.rs.core.HttpHeaders;
 
@@ -71,7 +76,7 @@ public class JSONLDDocumentationMessageMapper
 
 	@Override
 	public void mapOperation(
-		JSONObjectBuilder jsonObjectBuilder, String resourceName,
+		JSONObjectBuilder jsonObjectBuilder, String resourceName, String type,
 		Operation operation) {
 
 		jsonObjectBuilder.field(
@@ -92,7 +97,7 @@ public class JSONLDDocumentationMessageMapper
 			operation.method.toString()
 		);
 
-		String returnValue = _getReturnValue(resourceName, operation);
+		String returnValue = _getReturnValue(type, operation);
 
 		jsonObjectBuilder.field(
 			"returns"
@@ -103,15 +108,14 @@ public class JSONLDDocumentationMessageMapper
 
 	@Override
 	public void mapProperty(
-		JSONObjectBuilder jsonObjectBuilder, FormField formField) {
+		JSONObjectBuilder jsonObjectBuilder, String fieldName,
+		boolean required) {
 
 		jsonObjectBuilder.field(
 			FIELD_NAME_TITLE
 		).stringValue(
-			formField.name
+			fieldName
 		);
-
-		Boolean required = formField.required;
 
 		jsonObjectBuilder.field(
 			FIELD_NAME_REQUIRED
@@ -134,12 +138,12 @@ public class JSONLDDocumentationMessageMapper
 
 	@Override
 	public void mapResource(
-		JSONObjectBuilder jsonObjectBuilder, String resourceName) {
+		JSONObjectBuilder jsonObjectBuilder, String resourceType) {
 
 		jsonObjectBuilder.field(
 			FIELD_NAME_ID
 		).stringValue(
-			"http://schema.org/" + resourceName
+			"http://schema.org/" + resourceType
 		);
 		jsonObjectBuilder.field(
 			FIELD_NAME_TYPE
@@ -149,8 +153,70 @@ public class JSONLDDocumentationMessageMapper
 		jsonObjectBuilder.field(
 			FIELD_NAME_TITLE
 		).stringValue(
-			resourceName
+			resourceType
 		);
+	}
+
+	@Override
+	public void mapResourceCollection(
+		JSONObjectBuilder jsonObjectBuilder, String resourceType) {
+
+		jsonObjectBuilder.field(
+			FIELD_NAME_ID
+		).stringValue(
+			"vocab:" + resourceType + "Collection"
+		);
+		jsonObjectBuilder.field(
+			FIELD_NAME_TYPE
+		).stringValue(
+			TYPE_CLASS
+		);
+
+		jsonObjectBuilder.field(
+			FIELD_NAME_TYPE
+		).stringValue(
+			TYPE_CLASS
+		);
+
+		jsonObjectBuilder.field(
+			"subClassOf"
+		).stringValue(
+			"http://www.w3.org/ns/hydra/core#Collection"
+		);
+
+		jsonObjectBuilder.field(
+			"description"
+		).stringValue(
+			"A collection of " + resourceType
+		);
+
+		jsonObjectBuilder.field(
+			FIELD_NAME_TITLE
+		).stringValue(
+			resourceType + "Collection"
+		);
+
+		String[] collectionProperties = {
+			FIELD_NAME_TOTAL_ITEMS, FIELD_NAME_MEMBER,
+			FIELD_NAME_NUMBER_OF_ITEMS
+		};
+
+		Stream<String> collectionStream = Arrays.stream(collectionProperties);
+
+		collectionStream.forEach(
+			fieldName -> {
+				JSONObjectBuilder propertyJsonObjectBuilder =
+					new JSONObjectBuilder();
+
+				onStartProperty(
+					jsonObjectBuilder, propertyJsonObjectBuilder, fieldName);
+
+				mapProperty(propertyJsonObjectBuilder, fieldName, false);
+
+				onFinishProperty(
+					jsonObjectBuilder, propertyJsonObjectBuilder, fieldName);
+
+			});
 	}
 
 	@Override
@@ -178,7 +244,7 @@ public class JSONLDDocumentationMessageMapper
 	@Override
 	public void onFinishProperty(
 		JSONObjectBuilder documentationJsonObjectBuilder,
-		JSONObjectBuilder propertyJsonObjectBuilder, FormField formField) {
+		JSONObjectBuilder propertyJsonObjectBuilder, String formField) {
 
 		documentationJsonObjectBuilder.field(
 			"supportedProperty"
@@ -191,7 +257,7 @@ public class JSONLDDocumentationMessageMapper
 	@Override
 	public void onFinishResource(
 		JSONObjectBuilder documentationJsonObjectBuilder,
-		JSONObjectBuilder resourceJsonObjectBuilder) {
+		JSONObjectBuilder resourceJsonObjectBuilder, String type) {
 
 		documentationJsonObjectBuilder.field(
 			"supportedClass"
@@ -285,12 +351,12 @@ public class JSONLDDocumentationMessageMapper
 		);
 
 		JSONObjectBuilder.FieldStep expectBuilder = contextBuilder.nestedField(
-			"expect");
+			"expects");
 
 		expectBuilder.field(
 			FIELD_NAME_ID
 		).stringValue(
-			"hydra:expect"
+			"hydra:expects"
 		);
 
 		expectBuilder.field(
@@ -333,7 +399,7 @@ public class JSONLDDocumentationMessageMapper
 		if (Method.DELETE.equals(operation.method)) {
 			value = "http://www.w3.org/2002/07/owl#Nothing";
 		}
-		else if (operation.method.equals(Method.GET)) {
+		else if (operation.collection && operation.method.equals(Method.GET)) {
 			value = URL_HYDRA_PROFILE + TYPE_COLLECTION;
 		}
 		else {

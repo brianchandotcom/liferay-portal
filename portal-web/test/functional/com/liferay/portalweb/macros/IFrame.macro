@@ -45,10 +45,6 @@
 
 	<command name="selectPermissionsFrame">
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Permissions" />
-		</execute>
 	</command>
 
 	<command name="selectTopFrame">

@@ -215,6 +215,15 @@ public class PersonModel {
 	}
 
 	/**
+	 * Returns the person's avatar relative URL.
+	 *
+	 * @return the person's avatar relative URL
+	 */
+	public String getAvatarRelativeURL() {
+		return "/images/" + getId();
+	}
+
+	/**
 	 * Returns the person's birth date.
 	 *
 	 * @return the person's birth date

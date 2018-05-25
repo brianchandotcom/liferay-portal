@@ -7,28 +7,28 @@ import com.liferay.apio.architect.form.Form;
  */
 public class ProductOptionForm {
 
-    public static Form<ProductOptionForm> buildForm(
-            Form.Builder<ProductOptionForm> formBuilder) {
+	public static Form<ProductOptionForm> buildForm(
+		Form.Builder<ProductOptionForm> formBuilder) {
 
-        return formBuilder.title(
-            __ -> "The product option creator form"
-        ).description(
-            __ -> "This form can be used to create a product option"
-        ).constructor(
-                ProductOptionForm::new
-        ).addRequiredLong(
-                "optionId", ProductOptionForm::_setOptionId
-        ).build();
-    }
+		return formBuilder.title(
+			__ -> "The product option creator form"
+		).description(
+			__ -> "This form can be used to create a product option"
+		).constructor(
+			ProductOptionForm::new
+		).addRequiredLong(
+			"optionId", ProductOptionForm::_setOptionId
+		).build();
+	}
 
-    public Long getOptionId() {
-        return _optionId;
-    }
+	public Long getOptionId() {
+		return _optionId;
+	}
 
-    private void _setOptionId(long optionId) {
-        _optionId = optionId;
-    }
+	private void _setOptionId(long optionId) {
+		_optionId = optionId;
+	}
 
-    private long _optionId;
+	private long _optionId;
 
 }

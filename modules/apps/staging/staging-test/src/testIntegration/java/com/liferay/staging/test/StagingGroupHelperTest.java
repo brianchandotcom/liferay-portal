@@ -114,7 +114,6 @@ public class StagingGroupHelperTest {
 		}
 	}
 
-	@Test
 	public void testFetchLiveGroup() throws Exception {
 		Assert.assertEquals(
 			_localLiveGroup,
@@ -141,7 +140,6 @@ public class StagingGroupHelperTest {
 		Assert.assertNull(_stagingGroupHelper.fetchLiveGroup(_regularGroup));
 	}
 
-	@Test
 	public void testFetchLocalLiveGroup() throws Exception {
 		Assert.assertEquals(
 			_localLiveGroup,
@@ -169,7 +167,6 @@ public class StagingGroupHelperTest {
 			_stagingGroupHelper.fetchLocalLiveGroup(_regularGroup));
 	}
 
-	@Test
 	public void testFetchLocalStagingGroup() throws Exception {
 		Assert.assertNull(
 			_stagingGroupHelper.fetchLocalStagingGroup(_localStagingGroup));
@@ -199,7 +196,6 @@ public class StagingGroupHelperTest {
 			_stagingGroupHelper.fetchLocalStagingGroup(_regularGroup));
 	}
 
-	@Test
 	public void testFetchRemoteLiveGroup() throws Exception {
 		Assert.assertNull(
 			_stagingGroupHelper.fetchRemoteLiveGroup(_localStagingGroup));
@@ -227,7 +223,6 @@ public class StagingGroupHelperTest {
 			_stagingGroupHelper.fetchRemoteLiveGroup(_regularGroup));
 	}
 
-	@Test
 	public void testIsLiveGroup() {
 		Assert.assertFalse(_stagingGroupHelper.isLiveGroup(_localStagingGroup));
 		Assert.assertFalse(
@@ -249,7 +244,6 @@ public class StagingGroupHelperTest {
 		Assert.assertFalse(_stagingGroupHelper.isLiveGroup(_regularGroup));
 	}
 
-	@Test
 	public void testIsLocalLiveGroup() {
 		Assert.assertFalse(
 			_stagingGroupHelper.isLocalLiveGroup(_localStagingGroup));
@@ -274,7 +268,6 @@ public class StagingGroupHelperTest {
 		Assert.assertFalse(_stagingGroupHelper.isLocalLiveGroup(_regularGroup));
 	}
 
-	@Test
 	public void testIsLocalStagingGroup() {
 		Assert.assertTrue(
 			_stagingGroupHelper.isLocalStagingGroup(_localStagingGroup));
@@ -300,7 +293,6 @@ public class StagingGroupHelperTest {
 			_stagingGroupHelper.isLocalStagingGroup(_regularGroup));
 	}
 
-	@Test
 	public void testIsLocalStagingOrLocalLiveGroup() {
 		Assert.assertTrue(
 			_stagingGroupHelper.isLocalStagingOrLocalLiveGroup(
@@ -334,7 +326,6 @@ public class StagingGroupHelperTest {
 			_stagingGroupHelper.isLocalStagingOrLocalLiveGroup(_regularGroup));
 	}
 
-	@Test
 	public void testIsRemoteLiveGroup() {
 		Assert.assertFalse(
 			_stagingGroupHelper.isRemoteLiveGroup(_localStagingGroup));
@@ -360,7 +351,6 @@ public class StagingGroupHelperTest {
 			_stagingGroupHelper.isRemoteLiveGroup(_regularGroup));
 	}
 
-	@Test
 	public void testIsRemoteStagingGroup() {
 		Assert.assertFalse(
 			_stagingGroupHelper.isRemoteStagingGroup(_localStagingGroup));
@@ -386,7 +376,6 @@ public class StagingGroupHelperTest {
 			_stagingGroupHelper.isRemoteStagingGroup(_regularGroup));
 	}
 
-	@Test
 	public void testIsRemoteStagingOrRemoteLiveGroup() {
 		Assert.assertFalse(
 			_stagingGroupHelper.isRemoteStagingOrRemoteLiveGroup(
@@ -421,7 +410,6 @@ public class StagingGroupHelperTest {
 				_regularGroup));
 	}
 
-	@Test
 	public void testIsStagedPortlet() {
 		Assert.assertTrue(
 			_stagingGroupHelper.isStagedPortlet(
@@ -488,7 +476,6 @@ public class StagingGroupHelperTest {
 				_regularGroup, _PORTLET_ID_BLOGS));
 	}
 
-	@Test
 	public void testIsStagingGroup() {
 		Assert.assertTrue(
 			_stagingGroupHelper.isStagingGroup(_localStagingGroup));
@@ -512,7 +499,6 @@ public class StagingGroupHelperTest {
 		Assert.assertFalse(_stagingGroupHelper.isStagingGroup(_regularGroup));
 	}
 
-	@Test
 	public void testIsStagingOrLiveGroup() {
 		Assert.assertTrue(
 			_stagingGroupHelper.isStagingOrLiveGroup(_localStagingGroup));

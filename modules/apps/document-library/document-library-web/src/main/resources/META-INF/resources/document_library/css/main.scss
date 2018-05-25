@@ -343,6 +343,22 @@
 			left: 5px;
 		}
 	}
+
+	.sidebar-header {
+		.label-info, .workflow-status .label {
+			text-transform: uppercase;
+		}
+	}
+
+	.sidebar-body {
+		.thumbnail {
+			margin-bottom: 1.5rem;
+		}
+
+		.username.component-title {
+			margin: 0;
+		}
+	}
 }
 
 .portlet-document-library, .portlet-document-library-display, .portlet-trash {

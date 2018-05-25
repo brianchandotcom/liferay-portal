@@ -74,8 +74,7 @@ public class AMManagementToolbarDisplayContext {
 							dropdownGroupItem.setDropdownItems(
 								_getFilterNavigationDropdownItems());
 							dropdownGroupItem.setLabel(
-								LanguageUtil.get(
-									_request, "filter-by-navigation"));
+								LanguageUtil.get(_request, "filter-by-state"));
 						}));
 			}
 		};

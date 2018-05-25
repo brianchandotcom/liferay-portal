@@ -58,7 +58,7 @@
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="vocabularyId" />
 		</finder>
-		<finder name="C_ERC" return-type="AssetCategory" unique="true">
+		<finder name="C_ERC" return-type="AssetCategory">
 			<finder-column name="companyId" />
 			<finder-column name="externalReferenceCode" />
 		</finder>
@@ -456,7 +456,7 @@
 			<finder-column name="groupId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
-		<finder name="C_ERC" return-type="AssetVocabulary" unique="true">
+		<finder name="C_ERC" return-type="AssetVocabulary">
 			<finder-column name="companyId" />
 			<finder-column name="externalReferenceCode" />
 		</finder>

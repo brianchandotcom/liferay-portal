@@ -1298,7 +1298,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>
-		<finder name="C_ERC" return-type="Organization" unique="true">
+		<finder name="C_ERC" return-type="Organization">
 			<finder-column name="companyId" />
 			<finder-column name="externalReferenceCode" />
 		</finder>
@@ -2766,7 +2766,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="openId" />
 		</finder>
-		<finder name="C_ERC" return-type="User" unique="true">
+		<finder name="C_ERC" return-type="User">
 			<finder-column name="companyId" />
 			<finder-column name="externalReferenceCode" />
 		</finder>
@@ -2866,7 +2866,7 @@
 			<finder-column name="companyId" />
 			<finder-column case-sensitive="false" name="name" />
 		</finder>
-		<finder name="C_ERC" return-type="UserGroup" unique="true">
+		<finder name="C_ERC" return-type="UserGroup">
 			<finder-column name="companyId" />
 			<finder-column name="externalReferenceCode" />
 		</finder>

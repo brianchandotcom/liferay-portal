@@ -174,9 +174,7 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 		function(event) {
 			var target = event.target;
 
-			var message = target.getAttribute('data-message');
-
-			Liferay.Portal.ToolTip.show(target, currentTarget.data('message'));
+			Liferay.Portal.ToolTip.show(target, target.getAttribute('data-message'));
 		}
 	);
 </aui:script>

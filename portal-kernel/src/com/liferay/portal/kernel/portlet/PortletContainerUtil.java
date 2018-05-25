@@ -45,6 +45,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Shuyang Zhou
  * @author Raymond Augé
+ * @author Neil Griffin
  */
 public class PortletContainerUtil {
 
@@ -170,6 +171,14 @@ public class PortletContainerUtil {
 		throws PortletContainerException {
 
 		getPortletContainer().render(request, response, portlet);
+	}
+
+	public static void renderHeaders(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet)
+		throws PortletContainerException {
+
+		getPortletContainer().renderHeaders(request, response, portlet);
 	}
 
 	public static void serveResource(

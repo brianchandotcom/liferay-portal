@@ -48,6 +48,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.lang.reflect.Method;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -56,6 +58,9 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -71,6 +76,7 @@ import javax.portlet.UnavailableException;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.HeaderFilter;
 import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
@@ -88,6 +94,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim
  * @author Raymond Augé
+ * @author Neil Griffin
  */
 public class InvokerPortletImpl
 	implements InvokerFilterContainer, InvokerPortlet {
@@ -145,6 +152,14 @@ public class InvokerPortletImpl
 			((PortletSessionImpl)portletSession).getHttpSession());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #InvokerPortletImpl(com.liferay.portal.kernel.model.Portlet,
+	 *             Portlet, PortletConfig, PortletContext,
+	 *             InvokerFilterContainer, boolean, boolean, boolean, boolean,
+	 *             boolean)}
+	 */
+	@Deprecated
 	public InvokerPortletImpl(
 		com.liferay.portal.kernel.model.Portlet portletModel, Portlet portlet,
 		PortletConfig portletConfig, PortletContext portletContext,
@@ -154,8 +169,21 @@ public class InvokerPortletImpl
 
 		_initialize(
 			portletModel, portlet, portletConfig, portletContext,
-			invokerFilterContainer, checkAuthToken, facesPortlet, strutsPortlet,
-			strutsBridgePortlet);
+			invokerFilterContainer, checkAuthToken, facesPortlet, false,
+			strutsPortlet, strutsBridgePortlet);
+	}
+
+	public InvokerPortletImpl(
+		com.liferay.portal.kernel.model.Portlet portletModel, Portlet portlet,
+		PortletConfig portletConfig, PortletContext portletContext,
+		InvokerFilterContainer invokerFilterContainer, boolean checkAuthToken,
+		boolean facesPortlet, boolean headerPortlet, boolean strutsPortlet,
+		boolean strutsBridgePortlet) {
+
+		_initialize(
+			portletModel, portlet, portletConfig, portletContext,
+			invokerFilterContainer, checkAuthToken, facesPortlet, headerPortlet,
+			strutsPortlet, strutsBridgePortlet);
 	}
 
 	public InvokerPortletImpl(
@@ -170,22 +198,45 @@ public class InvokerPortletImpl
 
 		boolean facesPortlet = false;
 
-		if (ClassUtil.isSubclass(
-				portlet.getClass(), PortletDeployer.JSF_STANDARD)) {
+		Class<? extends Portlet> portletClass = portlet.getClass();
 
+		if (ClassUtil.isSubclass(portletClass, PortletDeployer.JSF_STANDARD)) {
 			facesPortlet = true;
 		}
 
+		boolean headerPortlet = false;
+
+		if (ClassUtil.isSubclass(portletClass, HeaderPortlet.class)) {
+			headerPortlet = true;
+
+			try {
+				Method renderHeadersMethod = portletClass.getMethod(
+					"renderHeaders", HeaderRequest.class, HeaderResponse.class);
+
+				Class<?> declaringClass =
+					renderHeadersMethod.getDeclaringClass();
+
+				if ("javax.portlet.GenericPortlet".equals(
+						declaringClass.getName())) {
+
+					headerPortlet = false;
+				}
+			}
+			catch (NoSuchMethodException nsme) {
+				_log.error(nsme, nsme);
+			}
+		}
+
 		boolean strutsPortlet = ClassUtil.isSubclass(
-			portlet.getClass(), StrutsPortlet.class);
+			portletClass, StrutsPortlet.class);
 
 		boolean strutsBridgePortlet = ClassUtil.isSubclass(
-			portlet.getClass(),
-			"org.apache.portals.bridges.struts.StrutsPortlet");
+			portletClass, "org.apache.portals.bridges.struts.StrutsPortlet");
 
 		_initialize(
 			portletModel, portlet, null, portletContext, invokerFilterContainer,
-			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
+			checkAuthToken, facesPortlet, headerPortlet, strutsPortlet,
+			strutsBridgePortlet);
 	}
 
 	@Override
@@ -235,6 +286,11 @@ public class InvokerPortletImpl
 	@Override
 	public Integer getExpCache() {
 		return _expCache;
+	}
+
+	@Override
+	public List<HeaderFilter> getHeaderFilters() {
+		return _invokerFilterContainer.getHeaderFilters();
 	}
 
 	@Override
@@ -311,6 +367,11 @@ public class InvokerPortletImpl
 	@Override
 	public boolean isFacesPortlet() {
 		return _facesPortlet;
+	}
+
+	@Override
+	public boolean isHeaderPortlet() {
+		return _headerPortlet;
 	}
 
 	@Override
@@ -460,6 +521,83 @@ public class InvokerPortletImpl
 	}
 
 	@Override
+	public void renderHeaders(
+			HeaderRequest headerRequest, HeaderResponse headerResponse)
+		throws IOException, PortletException {
+
+		PortletException portletException =
+			(PortletException)headerRequest.getAttribute(
+				_portletId + PortletException.class.getName());
+
+		if (portletException != null) {
+			throw portletException;
+		}
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		String remoteUser = headerRequest.getRemoteUser();
+
+		if ((remoteUser == null) || (_expCache == null) ||
+			(_expCache.intValue() == 0)) {
+
+			invokeHeader(headerRequest, headerResponse);
+		}
+		else {
+			HeaderResponseImpl headerResponseImpl =
+				(HeaderResponseImpl)headerResponse;
+
+			BufferCacheServletResponse bufferCacheServletResponse =
+				(BufferCacheServletResponse)
+					headerResponseImpl.getHttpServletResponse();
+
+			PortletSession portletSession = headerRequest.getPortletSession();
+
+			long now = System.currentTimeMillis();
+
+			Layout layout = (Layout)headerRequest.getAttribute(WebKeys.LAYOUT);
+
+			Map<String, InvokerPortletResponse> sessionResponses = getResponses(
+				portletSession);
+
+			String sessionResponseId = encodeResponseKey(
+				layout.getPlid(), _portletId,
+				LanguageUtil.getLanguageId(headerRequest));
+
+			InvokerPortletResponse response = sessionResponses.get(
+				sessionResponseId);
+
+			if (response == null) {
+				invokeHeader(headerRequest, headerResponse);
+			}
+			else if ((response.getTime() < now) && (_expCache.intValue() > 0)) {
+				invokeHeader(headerRequest, headerResponse);
+				response.setContent(bufferCacheServletResponse.getString());
+			}
+			else {
+				headerResponseImpl.setTitle(response.getTitle());
+
+				PrintWriter printWriter =
+					bufferCacheServletResponse.getWriter();
+
+				printWriter.print(response.getContent());
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			StringBundler sb = new StringBundler("header for");
+
+			sb.append(_portletId);
+			sb.append(" takes ");
+			sb.append(stopWatch.getTime());
+			sb.append(" ms");
+
+			_log.debug(sb.toString());
+		}
+	}
+
+	@Override
 	public void serveResource(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
@@ -593,6 +731,27 @@ public class InvokerPortletImpl
 			_invokerFilterContainer.getEventFilters());
 	}
 
+	protected void invokeHeader(
+			HeaderRequest headerRequest, HeaderResponse headerResponse)
+		throws IOException, PortletException {
+
+		LiferayPortletRequest portletRequest =
+			PortalUtil.getLiferayPortletRequest(headerRequest);
+		LiferayPortletResponse portletResponse =
+			PortalUtil.getLiferayPortletResponse(headerResponse);
+
+		try {
+			invoke(
+				portletRequest, portletResponse, PortletRequest.HEADER_PHASE,
+				_invokerFilterContainer.getHeaderFilters());
+		}
+		catch (Exception e) {
+			processException(e, headerRequest, headerResponse);
+
+			throw e;
+		}
+	}
+
 	protected String invokeRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -684,7 +843,7 @@ public class InvokerPortletImpl
 		com.liferay.portal.kernel.model.Portlet portletModel, Portlet portlet,
 		PortletConfig portletConfig, PortletContext portletContext,
 		InvokerFilterContainer invokerFilterContainer, boolean checkAuthToken,
-		boolean facesPortlet, boolean strutsPortlet,
+		boolean facesPortlet, boolean headerPortlet, boolean strutsPortlet,
 		boolean strutsBridgePortlet) {
 
 		_portletModel = portletModel;
@@ -695,6 +854,7 @@ public class InvokerPortletImpl
 		_invokerFilterContainer = invokerFilterContainer;
 		_checkAuthToken = checkAuthToken;
 		_facesPortlet = facesPortlet;
+		_headerPortlet = headerPortlet;
 		_strutsPortlet = strutsPortlet;
 		_strutsBridgePortlet = strutsBridgePortlet;
 		_expCache = portletModel.getExpCache();
@@ -715,6 +875,7 @@ public class InvokerPortletImpl
 	private boolean _checkAuthToken;
 	private Integer _expCache;
 	private boolean _facesPortlet;
+	private boolean _headerPortlet;
 	private InvokerFilterContainer _invokerFilterContainer;
 	private LiferayPortletConfig _liferayPortletConfig;
 	private LiferayPortletContext _liferayPortletContext;

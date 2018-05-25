@@ -26,10 +26,13 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.HeaderFilterChain;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +42,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
 public class PortletServlet extends HttpServlet {
 
@@ -105,8 +109,20 @@ public class PortletServlet extends HttpServlet {
 		portletSession.setHttpSession(session);
 
 		try {
-			PortletFilterUtil.doFilter(
-				portletRequest, portletResponse, lifecycle, filterChain);
+			if ((portletRequest instanceof HeaderRequest) &&
+				(portletResponse instanceof HeaderResponse)) {
+
+				if (filterChain instanceof HeaderFilterChain) {
+					PortletFilterUtil.doFilter(
+						(HeaderRequest)portletRequest,
+						(HeaderResponse)portletResponse,
+						(HeaderFilterChain)filterChain);
+				}
+			}
+			else {
+				PortletFilterUtil.doFilter(
+					portletRequest, portletResponse, lifecycle, filterChain);
+			}
 		}
 		catch (PortletException pe) {
 			_log.error(pe, pe);

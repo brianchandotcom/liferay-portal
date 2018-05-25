@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -47,13 +49,16 @@ import javax.portlet.PortletRequest;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.FilterConfig;
+import javax.portlet.filter.HeaderFilter;
 import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
 /**
  * @author Raymond Augé
+ * @author Neil Griffin
  */
+@ProviderType
 public class InvokerFilterContainerImpl
 	implements Closeable, InvokerFilterContainer {
 
@@ -167,6 +172,7 @@ public class InvokerFilterContainerImpl
 
 		_actionFilters.clear();
 		_eventFilters.clear();
+		_headerFilters.clear();
 		_renderFilters.clear();
 		_resourceFilters.clear();
 	}
@@ -179,6 +185,11 @@ public class InvokerFilterContainerImpl
 	@Override
 	public List<EventFilter> getEventFilters() {
 		return _eventFilters;
+	}
+
+	@Override
+	public List<HeaderFilter> getHeaderFilters() {
+		return _headerFilters;
 	}
 
 	@Override
@@ -197,6 +208,8 @@ public class InvokerFilterContainerImpl
 	private final List<ActionFilter> _actionFilters =
 		new CopyOnWriteArrayList<>();
 	private final List<EventFilter> _eventFilters =
+		new CopyOnWriteArrayList<>();
+	private final List<HeaderFilter> _headerFilters =
 		new CopyOnWriteArrayList<>();
 	private final List<RenderFilter> _renderFilters =
 		new CopyOnWriteArrayList<>();
@@ -220,6 +233,11 @@ public class InvokerFilterContainerImpl
 
 		@Override
 		public List<EventFilter> getEventFilters() {
+			return Collections.emptyList();
+		}
+
+		@Override
+		public List<HeaderFilter> getHeaderFilters() {
 			return Collections.emptyList();
 		}
 
@@ -329,6 +347,12 @@ public class InvokerFilterContainerImpl
 				_eventFilters.add((EventFilter)portletFilter);
 			}
 
+			if ((portletFilter instanceof HeaderFilter) &&
+				_isDeclaredLifecycle(PortletRequest.HEADER_PHASE, lifecycles)) {
+
+				_headerFilters.add((HeaderFilter)portletFilter);
+			}
+
 			if ((portletFilter instanceof RenderFilter) &&
 				_isDeclaredLifecycle(PortletRequest.RENDER_PHASE, lifecycles)) {
 
@@ -362,6 +386,7 @@ public class InvokerFilterContainerImpl
 
 			_actionFilters.remove(portletFilter);
 			_eventFilters.remove(portletFilter);
+			_headerFilters.remove(portletFilter);
 			_renderFilters.remove(portletFilter);
 			_resourceFilters.remove(portletFilter);
 

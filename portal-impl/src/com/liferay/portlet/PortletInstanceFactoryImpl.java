@@ -46,6 +46,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Neil Griffin
  */
 @DoPrivileged
 public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
@@ -212,6 +213,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 		boolean checkAuthToken = rootInvokerPortletInstance.isCheckAuthToken();
 		boolean facesPortlet = rootInvokerPortletInstance.isFacesPortlet();
+		boolean headerPortlet = rootInvokerPortletInstance.isHeaderPortlet();
 		boolean strutsPortlet = rootInvokerPortletInstance.isStrutsPortlet();
 		boolean strutsBridgePortlet =
 			rootInvokerPortletInstance.isStrutsBridgePortlet();
@@ -220,7 +222,7 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 			_invokerPortletFactory.create(
 				portlet, portletInstance, portletConfig, portletContext,
 				(InvokerFilterContainer)rootInvokerPortletInstance,
-				checkAuthToken, facesPortlet, strutsPortlet,
+				checkAuthToken, facesPortlet, headerPortlet, strutsPortlet,
 				strutsBridgePortlet);
 
 		if (deployed) {

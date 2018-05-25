@@ -91,7 +91,7 @@ public class RenderRequestPortletContainerTest
 				captureAppender.getLoggingEvents();
 
 			Assert.assertEquals(
-				loggingEvents.toString(), 1, loggingEvents.size());
+				loggingEvents.toString(), 2, loggingEvents.size());
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 

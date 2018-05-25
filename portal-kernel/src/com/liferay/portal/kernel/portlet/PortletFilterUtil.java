@@ -20,6 +20,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -28,11 +30,21 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.HeaderFilterChain;
 
 /**
  * @author Michael Young
+ * @author Neil Griffin
  */
 public class PortletFilterUtil {
+
+	public static void doFilter(
+			HeaderRequest headerRequest, HeaderResponse headerResponse,
+			HeaderFilterChain headerFilterChain)
+		throws IOException, PortletException {
+
+		headerFilterChain.doFilter(headerRequest, headerResponse);
+	}
 
 	public static void doFilter(
 			PortletRequest portletRequest, PortletResponse portletResponse,

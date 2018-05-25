@@ -67,26 +67,10 @@ JSONObject borderWidthRight = borderWidth.getJSONObject(_RIGHT_KEY);
 JSONObject borderWidthBottom = borderWidth.getJSONObject(_BOTTOM_KEY);
 JSONObject borderWidthLeft = borderWidth.getJSONObject(_LEFT_KEY);
 
-String borderTopWidthValue = StringPool.BLANK;
-String borderRightWidthValue = StringPool.BLANK;
-String borderBottomWidthValue = StringPool.BLANK;
-String borderLeftWidthValue = StringPool.BLANK;
-
-if (Validator.isNotNull(borderWidthTop.getString(_VALUE_KEY))) {
-	borderTopWidthValue = borderWidthTop.getString(_VALUE_KEY) + borderWidthTop.getString(_UNIT_KEY);
-}
-
-if (Validator.isNotNull(borderWidthRight.getString(_VALUE_KEY))) {
-	borderRightWidthValue = borderWidthRight.getString(_VALUE_KEY) + borderWidthRight.getString(_UNIT_KEY);
-}
-
-if (Validator.isNotNull(borderWidthBottom.getString(_VALUE_KEY))) {
-	borderBottomWidthValue = borderWidthBottom.getString(_VALUE_KEY) + borderWidthBottom.getString(_UNIT_KEY);
-}
-
-if (Validator.isNotNull(borderWidthLeft.getString(_VALUE_KEY))) {
-	borderLeftWidthValue = borderWidthLeft.getString(_VALUE_KEY) + borderWidthLeft.getString(_UNIT_KEY);
-}
+String borderTopWidthValue = borderWidthTop.getString(_VALUE_KEY) + borderWidthTop.getString(_UNIT_KEY);
+String borderRightWidthValue = borderWidthRight.getString(_VALUE_KEY) + borderWidthRight.getString(_UNIT_KEY);
+String borderBottomWidthValue = borderWidthBottom.getString(_VALUE_KEY) + borderWidthBottom.getString(_UNIT_KEY);
+String borderLeftWidthValue = borderWidthLeft.getString(_VALUE_KEY) + borderWidthLeft.getString(_UNIT_KEY);
 
 // Style
 
@@ -102,8 +86,10 @@ String borderRightColorValue = borderColor.getString(_RIGHT_KEY);
 String borderBottomColorValue = borderColor.getString(_BOTTOM_KEY);
 String borderLeftColorValue = borderColor.getString(_LEFT_KEY);
 
-if (ufaBorderWidth && !_unitSet.contains(borderTopWidthValue)) {
-	finalCSS.add("border-width: " + borderTopWidthValue);
+if (ufaBorderWidth) {
+	if (!_unitSet.contains(borderTopWidthValue)) {
+		finalCSS.add("border-width: " + borderTopWidthValue);
+	}
 }
 else {
 	if (!_unitSet.contains(borderTopWidthValue)) {
@@ -123,8 +109,10 @@ else {
 	}
 }
 
-if (ufaBorderStyle && !_unitSet.contains(borderTopWidthValue)) {
-	finalCSS.add("border-style: " + borderTopStyleValue);
+if (ufaBorderStyle) {
+	if (!_unitSet.contains(borderTopStyleValue)) {
+		finalCSS.add("border-style: " + borderTopStyleValue);
+	}
 }
 else {
 	if (Validator.isNotNull(borderTopStyleValue)) {
@@ -189,8 +177,10 @@ String marginRightValue = marginRight.getString(_VALUE_KEY) + marginRight.getStr
 String marginBottomValue = marginBottom.getString(_VALUE_KEY) + marginBottom.getString(_UNIT_KEY);
 String marginLeftValue = marginLeft.getString(_VALUE_KEY) + marginLeft.getString(_UNIT_KEY);
 
-if (ufaMargin && !_unitSet.contains(marginTopValue)) {
-	finalCSS.add("margin: " + marginTopValue);
+if (ufaMargin) {
+	if (!_unitSet.contains(marginTopValue)) {
+		finalCSS.add("margin: " + marginTopValue);
+	}
 }
 else {
 	if (!_unitSet.contains(marginTopValue)) {
@@ -222,8 +212,10 @@ String paddingRightValue = paddingRight.getString(_VALUE_KEY) + paddingRight.get
 String paddingBottomValue = paddingBottom.getString(_VALUE_KEY) + paddingBottom.getString(_UNIT_KEY);
 String paddingLeftValue = paddingLeft.getString(_VALUE_KEY) + paddingLeft.getString(_UNIT_KEY);
 
-if (ufaPadding && !_unitSet.contains(paddingTopValue)) {
-	finalCSS.add("padding: " + paddingTopValue);
+if (ufaPadding) {
+	if (!_unitSet.contains(paddingTopValue)) {
+		finalCSS.add("padding: " + paddingTopValue);
+	}
 }
 else {
 	if (!_unitSet.contains(paddingTopValue)) {

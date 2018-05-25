@@ -1,8 +1,8 @@
 'use strict';
 
-import HtmlScreen from 'senna/src/screen/HtmlScreen';
-import globals from 'senna/src/globals/globals';
-import {CancellablePromise} from 'metal-promise/src/promise/Promise';
+import HtmlScreen from 'senna/lib/screen/HtmlScreen';
+import globals from 'senna/lib/globals/globals';
+import {CancellablePromise} from 'metal-promise/lib/promise/Promise';
 
 /**
  * EventScreen

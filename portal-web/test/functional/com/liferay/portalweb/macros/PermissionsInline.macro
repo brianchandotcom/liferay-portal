@@ -206,8 +206,9 @@
 	</command>
 
 	<command name="gotoSitepageCP">
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Permissions" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />

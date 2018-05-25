@@ -2039,7 +2039,8 @@ public class ProjectTemplatesTest {
 
 		String content = "sass_binary_site=" + _NODEJS_NPM_CI_SASS_BINARY_SITE;
 
-		Files.write(npmrcFile.toPath(), content.getBytes());
+		Files.write(
+			npmrcFile.toPath(), content.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static void _buildProjects(
@@ -2310,7 +2311,8 @@ public class ProjectTemplatesTest {
 		String executeNpmTaskScript = stringBuilder.toString();
 
 		Files.write(
-			buildFilePath, executeNpmTaskScript.getBytes(),
+			buildFilePath,
+			executeNpmTaskScript.getBytes(StandardCharsets.UTF_8),
 			StandardOpenOption.APPEND);
 	}
 

@@ -63,11 +63,16 @@ $btn-monospaced-size-sm: 2.5rem !default;
 // Button Variants
 
 $btn-primary: (
+	bg: $primary,
+	border-color: $primary,
+	color: #FFF,
 	hover-bg: #1E7342,
 	hover-border-color: transparent,
+	hover-color: #FFF,
 	focus-box-shadow: 0 0 0 2px rgba(darken($primary, 5.10), 0.5),
 	disabled-bg: $primary,
 	active-bg: darken(#1E7342, 5%),
+	active-color: #FFF,
 	active-border-color: transparent,
 	active-box-shadow: none
 ) !default;
@@ -138,10 +143,13 @@ $btn-dark: (
 
 $btn-outline-primary: (
 	bg: #FFF,
+	border-color: $primary,
+	color: $primary,
 	hover-bg: #FFF,
 	hover-border-color: #246442,
 	hover-color: #246442,
 	focus-bg: #FFF,
+	focus-border-color: #246442,
 	focus-box-shadow: 0 0 0 2px rgba($primary, 0.25),
 	focus-color: #246442,
 	disabled-bg: #FFF,

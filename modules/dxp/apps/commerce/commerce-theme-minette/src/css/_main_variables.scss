@@ -122,17 +122,63 @@ $minette-commerce-cart-content-table-text: map-merge((
 	font-weight: $font-weight-light
 ), $minette-commerce-cart-content-table-text);
 
+// Cart Content Mini
+
+$commerce-order-items-header-bg: null !default;
+$commerce-order-items-header-color: null !default;
+
+$commerce-order-items-body-bg: null !default;
+$commerce-order-items-body-color: null !default;
+
+$commerce-order-items-body-list-group-text: () !default;
+$commerce-order-items-body-list-group-text: map-merge((
+	color: inherit,
+	font-size: 0.8125rem,
+	font-weight: $font-weight-light,
+	margin-top: -0.25rem
+), $commerce-order-items-body-list-group-text);
+
+$commerce-order-items-body-list-group-title: () !default;
+$commerce-order-items-body-list-group-title: map-merge((
+	color: $commerce-order-items-body-color,
+	font-size: 1.125rem,
+	font-weight: $font-weight-normal,
+	margin-bottom: 0.125rem,
+	margin-top: -0.125rem,
+	clay-link: (
+		color: $commerce-order-items-body-color,
+		hover-color: $commerce-order-items-body-color
+	)
+), $commerce-order-items-body-list-group-title);
+
+$commerce-order-items-body-list-group-subtitle: () !default;
+$commerce-order-items-body-list-group-subtitle: map-merge((
+	color: inherit,
+	font-size: 0.75rem
+), $commerce-order-items-body-list-group-subtitle);
+
+$commerce-order-items-footer-bg: null !default;
+$commerce-order-items-footer-color: null !default;
+
 // Commerce Product Detail
 
-$product-detail-image-widget-width: 250px !default;
+$product-detail-image-widget-width: 350px !default;
 
 $product-detail-image-widget-height: calc(#{$product-detail-image-widget-width} * 0.84) !default;
 
-$product-detail-image-widget-width-lg: 300px !default;
+$product-detail-image-widget-width-sm: null !default;
+
+$product-detail-image-widget-height-sm: null !default;
+
+$product-detail-image-widget-width-md: null !default;
+
+$product-detail-image-widget-height-md: null !default;
+
+$product-detail-image-widget-width-lg: 400px !default;
 
 $product-detail-image-widget-height-lg: calc(#{$product-detail-image-widget-width-lg} * 0.84) !default;
 
-$product-detail-image-widget-width-xl: 450px !default;
+$product-detail-image-widget-width-xl: 550px !default;
 
 $product-detail-image-widget-height-xl: calc(#{$product-detail-image-widget-width-xl} * 0.84) !default;
 

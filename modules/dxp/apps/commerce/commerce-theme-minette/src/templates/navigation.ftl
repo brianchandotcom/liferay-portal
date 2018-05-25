@@ -60,9 +60,9 @@
 							</li>
 						</#if>
 
-						<li class="dropdown dropdown-wide nav-item">
-							<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="javascript:;" role="button">
-								<span class="commerce-navigation-icon inline-item inline-item-before"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-suitcase" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#suitcase" /></svg></span><span class="rounded-circle sticker sticker-dark sticker-lg sticker-success">${orderItemsQuantity}</span>
+						<li class="dropdown dropdown-wide nav-item" id="b2b-mini-cart">
+							<a aria-expanded="false" aria-haspopup="true" class="animate dropdown-toggle nav-link" data-toggle="dropdown" href="javascript:;" role="button">
+								<span class="commerce-navigation-icon inline-item inline-item-before"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-suitcase" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#suitcase" /></svg></span><span class="rounded-circle sticker sticker-dark sticker-lg sticker-success" id="b2b-mini-cart-items-count">${orderItemsQuantity}</span>
 							</a>
 
 							<div class="dropdown-menu dropdown-menu-right portlet-flush">

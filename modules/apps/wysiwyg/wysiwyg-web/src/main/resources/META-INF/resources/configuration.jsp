@@ -40,10 +40,18 @@
 
 <aui:script>
 	function <portlet:namespace />saveMessage() {
-		var message = window.<portlet:namespace />editor.getHTML();
+		var editorVal = window.<portlet:namespace />editor.getHTML();
 
-		document.<portlet:namespace />fm.<portlet:namespace />message.value = message;
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		submitForm(document.<portlet:namespace />fm);
+		if (form) {
+			var message = form.querySelector('#<portlet:namespace />message');
+
+			if (message) {
+				message.value = editorVal;
+			}
+
+			submitForm(form);
+		}
 	}
 </aui:script>

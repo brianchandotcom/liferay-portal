@@ -517,6 +517,7 @@ public class OrganizationLocalServiceImpl
 	 * @param  externalReferenceCode the organization's external reference code
 	 * @return the organization with the name, or <code>null</code> if no
 	 *         organization could be found
+	 * @review
 	 */
 	@Override
 	public Organization fetchOrganizationByExternalReferenceCode(
@@ -2094,6 +2095,7 @@ public class OrganizationLocalServiceImpl
 	 *             attributes for the organization.
 	 *
 	 * @return     the organization
+	 * @review
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override

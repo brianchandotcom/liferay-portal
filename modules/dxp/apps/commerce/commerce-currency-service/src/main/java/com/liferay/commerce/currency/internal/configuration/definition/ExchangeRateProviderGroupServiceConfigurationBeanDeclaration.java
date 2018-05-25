@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.currency.configuration.definition;
+package com.liferay.commerce.currency.internal.configuration.definition;
 
 import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

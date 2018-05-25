@@ -4702,6 +4702,17 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 						finderArgs, list);
 				}
 				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"AssetVocabularyPersistenceImpl.fetchByC_ERC(long, String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
 					AssetVocabulary assetVocabulary = list.get(0);
 
 					result = assetVocabulary;

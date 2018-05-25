@@ -2792,19 +2792,30 @@ public class ProjectTemplatesTest {
 		String classPath = "com.liferay.gradle.plugins";
 		String applyPlugin = "com.liferay.plugin";
 
-		File buildFile = _testContains(
+		File buildGradleFile = _testContains(
 			projectDir, "build.gradle", classPath, applyPlugin);
 
-		Path buildFilePath = buildFile.toPath();
+		Path buildFilePath = buildGradleFile.toPath();
+
+		StringBuilder stringBuilder = new StringBuilder();
 
 		String lineSeparator = System.lineSeparator();
 
-		String executeNpmTaskScript =
-			lineSeparator +
-				"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask" +
-					lineSeparator +
-						"tasks.withType(ExecuteNpmTask) {registry = '" +
-							_NODEJS_NPM_CI_REGISTRY + "'}" + lineSeparator;
+		stringBuilder.append(lineSeparator);
+
+		stringBuilder.append(
+			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask");
+		stringBuilder.append(lineSeparator);
+
+		stringBuilder.append("tasks.withType(ExecuteNpmTask) {");
+		stringBuilder.append(lineSeparator);
+
+		stringBuilder.append("\tregistry = '" + _NODEJS_NPM_CI_REGISTRY + "'");
+		stringBuilder.append(lineSeparator);
+
+		stringBuilder.append("}");
+
+		String executeNpmTaskScript = stringBuilder.toString();
 
 		Files.write(
 			buildFilePath, executeNpmTaskScript.getBytes(),
@@ -2820,39 +2831,38 @@ public class ProjectTemplatesTest {
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();
 
-		File pomXml = new File(projectDir, "pom.xml");
+		File pomXmlFile = new File(projectDir, "pom.xml");
 
-		Document document = documentBuilder.parse(pomXml);
-
+		Document document = documentBuilder.parse(pomXmlFile);
 
 		NodeList nodeList = (NodeList)_xPathExpression.evaluate(
 			document, XPathConstants.NODESET);
 
-		Node execution = nodeList.item(0);
+		Node executionNode = nodeList.item(0);
 
-		Element configuration = document.createElement("configuration");
+		Element configurationElement = document.createElement("configuration");
 
-		execution.appendChild(configuration);
+		executionNode.appendChild(configurationElement);
 
-		Element arguments = document.createElement("arguments");
+		Element argumentsElement = document.createElement("arguments");
 
-		configuration.appendChild(arguments);
+		configurationElement.appendChild(argumentsElement);
 
 		Text text = document.createTextNode(
 			"install --registry=" + _NODEJS_NPM_CI_REGISTRY);
 
-		arguments.appendChild(text);
+		argumentsElement.appendChild(text);
 
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
 
 		Transformer transformer = transformerFactory.newTransformer();
 
-		DOMSource source = new DOMSource(document);
+		DOMSource domSource = new DOMSource(document);
 
-		StreamResult result = new StreamResult(pomXml);
+		StreamResult streamResult = new StreamResult(pomXmlFile);
 
-		transformer.transform(source, result);
+		transformer.transform(domSource, streamResult);
 	}
 
 	private static void _writeServiceClass(File projectDir) throws IOException {

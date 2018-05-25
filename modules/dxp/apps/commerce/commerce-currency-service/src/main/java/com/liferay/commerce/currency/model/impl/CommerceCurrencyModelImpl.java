@@ -93,7 +93,10 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 			{ "code_", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "rate", Types.DECIMAL },
-			{ "roundingType", Types.VARCHAR },
+			{ "formatPattern", Types.VARCHAR },
+			{ "maxFractionDigits", Types.INTEGER },
+			{ "minFractionDigits", Types.INTEGER },
+			{ "roundingMode", Types.VARCHAR },
 			{ "primary_", Types.BOOLEAN },
 			{ "priority", Types.DOUBLE },
 			{ "active_", Types.BOOLEAN },
@@ -113,14 +116,17 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		TABLE_COLUMNS_MAP.put("code_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("rate", Types.DECIMAL);
-		TABLE_COLUMNS_MAP.put("roundingType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("formatPattern", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("maxFractionDigits", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("minFractionDigits", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("roundingMode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,rate DECIMAL(30, 16) null,roundingType VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,rate DECIMAL(30, 16) null,formatPattern VARCHAR(75) null,maxFractionDigits INTEGER,minFractionDigits INTEGER,roundingMode VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCurrency";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCurrency.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCurrency.priority ASC";
@@ -168,7 +174,10 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		model.setCode(soapModel.getCode());
 		model.setName(soapModel.getName());
 		model.setRate(soapModel.getRate());
-		model.setRoundingType(soapModel.getRoundingType());
+		model.setFormatPattern(soapModel.getFormatPattern());
+		model.setMaxFractionDigits(soapModel.getMaxFractionDigits());
+		model.setMinFractionDigits(soapModel.getMinFractionDigits());
+		model.setRoundingMode(soapModel.getRoundingMode());
 		model.setPrimary(soapModel.isPrimary());
 		model.setPriority(soapModel.getPriority());
 		model.setActive(soapModel.isActive());
@@ -249,7 +258,10 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		attributes.put("code", getCode());
 		attributes.put("name", getName());
 		attributes.put("rate", getRate());
-		attributes.put("roundingType", getRoundingType());
+		attributes.put("formatPattern", getFormatPattern());
+		attributes.put("maxFractionDigits", getMaxFractionDigits());
+		attributes.put("minFractionDigits", getMinFractionDigits());
+		attributes.put("roundingMode", getRoundingMode());
 		attributes.put("primary", isPrimary());
 		attributes.put("priority", getPriority());
 		attributes.put("active", isActive());
@@ -329,10 +341,28 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 			setRate(rate);
 		}
 
-		String roundingType = (String)attributes.get("roundingType");
+		String formatPattern = (String)attributes.get("formatPattern");
 
-		if (roundingType != null) {
-			setRoundingType(roundingType);
+		if (formatPattern != null) {
+			setFormatPattern(formatPattern);
+		}
+
+		Integer maxFractionDigits = (Integer)attributes.get("maxFractionDigits");
+
+		if (maxFractionDigits != null) {
+			setMaxFractionDigits(maxFractionDigits);
+		}
+
+		Integer minFractionDigits = (Integer)attributes.get("minFractionDigits");
+
+		if (minFractionDigits != null) {
+			setMinFractionDigits(minFractionDigits);
+		}
+
+		String roundingMode = (String)attributes.get("roundingMode");
+
+		if (roundingMode != null) {
+			setRoundingMode(roundingMode);
 		}
 
 		Boolean primary = (Boolean)attributes.get("primary");
@@ -650,18 +680,56 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 
 	@JSON
 	@Override
-	public String getRoundingType() {
-		if (_roundingType == null) {
+	public String getFormatPattern() {
+		if (_formatPattern == null) {
 			return "";
 		}
 		else {
-			return _roundingType;
+			return _formatPattern;
 		}
 	}
 
 	@Override
-	public void setRoundingType(String roundingType) {
-		_roundingType = roundingType;
+	public void setFormatPattern(String formatPattern) {
+		_formatPattern = formatPattern;
+	}
+
+	@JSON
+	@Override
+	public int getMaxFractionDigits() {
+		return _maxFractionDigits;
+	}
+
+	@Override
+	public void setMaxFractionDigits(int maxFractionDigits) {
+		_maxFractionDigits = maxFractionDigits;
+	}
+
+	@JSON
+	@Override
+	public int getMinFractionDigits() {
+		return _minFractionDigits;
+	}
+
+	@Override
+	public void setMinFractionDigits(int minFractionDigits) {
+		_minFractionDigits = minFractionDigits;
+	}
+
+	@JSON
+	@Override
+	public String getRoundingMode() {
+		if (_roundingMode == null) {
+			return "";
+		}
+		else {
+			return _roundingMode;
+		}
+	}
+
+	@Override
+	public void setRoundingMode(String roundingMode) {
+		_roundingMode = roundingMode;
 	}
 
 	@JSON
@@ -855,7 +923,10 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		commerceCurrencyImpl.setCode(getCode());
 		commerceCurrencyImpl.setName(getName());
 		commerceCurrencyImpl.setRate(getRate());
-		commerceCurrencyImpl.setRoundingType(getRoundingType());
+		commerceCurrencyImpl.setFormatPattern(getFormatPattern());
+		commerceCurrencyImpl.setMaxFractionDigits(getMaxFractionDigits());
+		commerceCurrencyImpl.setMinFractionDigits(getMinFractionDigits());
+		commerceCurrencyImpl.setRoundingMode(getRoundingMode());
 		commerceCurrencyImpl.setPrimary(isPrimary());
 		commerceCurrencyImpl.setPriority(getPriority());
 		commerceCurrencyImpl.setActive(isActive());
@@ -1017,12 +1088,24 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 
 		commerceCurrencyCacheModel.rate = getRate();
 
-		commerceCurrencyCacheModel.roundingType = getRoundingType();
+		commerceCurrencyCacheModel.formatPattern = getFormatPattern();
 
-		String roundingType = commerceCurrencyCacheModel.roundingType;
+		String formatPattern = commerceCurrencyCacheModel.formatPattern;
 
-		if ((roundingType != null) && (roundingType.length() == 0)) {
-			commerceCurrencyCacheModel.roundingType = null;
+		if ((formatPattern != null) && (formatPattern.length() == 0)) {
+			commerceCurrencyCacheModel.formatPattern = null;
+		}
+
+		commerceCurrencyCacheModel.maxFractionDigits = getMaxFractionDigits();
+
+		commerceCurrencyCacheModel.minFractionDigits = getMinFractionDigits();
+
+		commerceCurrencyCacheModel.roundingMode = getRoundingMode();
+
+		String roundingMode = commerceCurrencyCacheModel.roundingMode;
+
+		if ((roundingMode != null) && (roundingMode.length() == 0)) {
+			commerceCurrencyCacheModel.roundingMode = null;
 		}
 
 		commerceCurrencyCacheModel.primary = isPrimary();
@@ -1045,7 +1128,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1069,8 +1152,14 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		sb.append(getName());
 		sb.append(", rate=");
 		sb.append(getRate());
-		sb.append(", roundingType=");
-		sb.append(getRoundingType());
+		sb.append(", formatPattern=");
+		sb.append(getFormatPattern());
+		sb.append(", maxFractionDigits=");
+		sb.append(getMaxFractionDigits());
+		sb.append(", minFractionDigits=");
+		sb.append(getMinFractionDigits());
+		sb.append(", roundingMode=");
+		sb.append(getRoundingMode());
 		sb.append(", primary=");
 		sb.append(isPrimary());
 		sb.append(", priority=");
@@ -1086,7 +1175,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.currency.model.CommerceCurrency");
@@ -1137,8 +1226,20 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		sb.append(getRate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>roundingType</column-name><column-value><![CDATA[");
-		sb.append(getRoundingType());
+			"<column><column-name>formatPattern</column-name><column-value><![CDATA[");
+		sb.append(getFormatPattern());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>maxFractionDigits</column-name><column-value><![CDATA[");
+		sb.append(getMaxFractionDigits());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>minFractionDigits</column-name><column-value><![CDATA[");
+		sb.append(getMinFractionDigits());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>roundingMode</column-name><column-value><![CDATA[");
+		sb.append(getRoundingMode());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>primary</column-name><column-value><![CDATA[");
@@ -1185,7 +1286,10 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private BigDecimal _rate;
-	private String _roundingType;
+	private String _formatPattern;
+	private int _maxFractionDigits;
+	private int _minFractionDigits;
+	private String _roundingMode;
 	private boolean _primary;
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;

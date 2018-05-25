@@ -44,13 +44,15 @@ public class CommerceCurrencyServiceUtil {
 	 */
 	public static com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
 		String code, java.util.Map<java.util.Locale, String> nameMap,
-		java.math.BigDecimal rate, String roundingType, boolean primary,
+		java.math.BigDecimal rate, String formatPattern, int maxFractionDigits,
+		int minFractionDigits, String roundingMode, boolean primary,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceCurrency(code, nameMap, rate, roundingType,
-			primary, priority, active, serviceContext);
+				   .addCommerceCurrency(code, nameMap, rate, formatPattern,
+			maxFractionDigits, minFractionDigits, roundingMode, primary,
+			priority, active, serviceContext);
 	}
 
 	public static void deleteCommerceCurrency(long commerceCurrencyId)
@@ -122,13 +124,15 @@ public class CommerceCurrencyServiceUtil {
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
 		long commerceCurrencyId, String code,
 		java.util.Map<java.util.Locale, String> nameMap,
-		java.math.BigDecimal rate, String roundingType, boolean primary,
+		java.math.BigDecimal rate, String formatPattern, int maxFractionDigits,
+		int minFractionDigits, String roundingMode, boolean primary,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceCurrency(commerceCurrencyId, code, nameMap,
-			rate, roundingType, primary, priority, active, serviceContext);
+			rate, formatPattern, maxFractionDigits, minFractionDigits,
+			roundingMode, primary, priority, active, serviceContext);
 	}
 
 	public static void updateExchangeRate(long commerceCurrencyId,

@@ -344,19 +344,62 @@ public interface CommerceCurrencyModel extends BaseModel<CommerceCurrency>,
 	public void setRate(BigDecimal rate);
 
 	/**
-	 * Returns the rounding type of this commerce currency.
+	 * Returns the format pattern of this commerce currency.
 	 *
-	 * @return the rounding type of this commerce currency
+	 * @return the format pattern of this commerce currency
 	 */
 	@AutoEscape
-	public String getRoundingType();
+	public String getFormatPattern();
 
 	/**
-	 * Sets the rounding type of this commerce currency.
+	 * Sets the format pattern of this commerce currency.
 	 *
-	 * @param roundingType the rounding type of this commerce currency
+	 * @param formatPattern the format pattern of this commerce currency
 	 */
-	public void setRoundingType(String roundingType);
+	public void setFormatPattern(String formatPattern);
+
+	/**
+	 * Returns the max fraction digits of this commerce currency.
+	 *
+	 * @return the max fraction digits of this commerce currency
+	 */
+	public int getMaxFractionDigits();
+
+	/**
+	 * Sets the max fraction digits of this commerce currency.
+	 *
+	 * @param maxFractionDigits the max fraction digits of this commerce currency
+	 */
+	public void setMaxFractionDigits(int maxFractionDigits);
+
+	/**
+	 * Returns the min fraction digits of this commerce currency.
+	 *
+	 * @return the min fraction digits of this commerce currency
+	 */
+	public int getMinFractionDigits();
+
+	/**
+	 * Sets the min fraction digits of this commerce currency.
+	 *
+	 * @param minFractionDigits the min fraction digits of this commerce currency
+	 */
+	public void setMinFractionDigits(int minFractionDigits);
+
+	/**
+	 * Returns the rounding mode of this commerce currency.
+	 *
+	 * @return the rounding mode of this commerce currency
+	 */
+	@AutoEscape
+	public String getRoundingMode();
+
+	/**
+	 * Sets the rounding mode of this commerce currency.
+	 *
+	 * @param roundingMode the rounding mode of this commerce currency
+	 */
+	public void setRoundingMode(String roundingMode);
 
 	/**
 	 * Returns the primary of this commerce currency.

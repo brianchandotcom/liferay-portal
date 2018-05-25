@@ -47,7 +47,10 @@ public class CommerceCurrencySoap implements Serializable {
 		soapModel.setCode(model.getCode());
 		soapModel.setName(model.getName());
 		soapModel.setRate(model.getRate());
-		soapModel.setRoundingType(model.getRoundingType());
+		soapModel.setFormatPattern(model.getFormatPattern());
+		soapModel.setMaxFractionDigits(model.getMaxFractionDigits());
+		soapModel.setMinFractionDigits(model.getMinFractionDigits());
+		soapModel.setRoundingMode(model.getRoundingMode());
 		soapModel.setPrimary(model.isPrimary());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setActive(model.isActive());
@@ -194,12 +197,36 @@ public class CommerceCurrencySoap implements Serializable {
 		_rate = rate;
 	}
 
-	public String getRoundingType() {
-		return _roundingType;
+	public String getFormatPattern() {
+		return _formatPattern;
 	}
 
-	public void setRoundingType(String roundingType) {
-		_roundingType = roundingType;
+	public void setFormatPattern(String formatPattern) {
+		_formatPattern = formatPattern;
+	}
+
+	public int getMaxFractionDigits() {
+		return _maxFractionDigits;
+	}
+
+	public void setMaxFractionDigits(int maxFractionDigits) {
+		_maxFractionDigits = maxFractionDigits;
+	}
+
+	public int getMinFractionDigits() {
+		return _minFractionDigits;
+	}
+
+	public void setMinFractionDigits(int minFractionDigits) {
+		_minFractionDigits = minFractionDigits;
+	}
+
+	public String getRoundingMode() {
+		return _roundingMode;
+	}
+
+	public void setRoundingMode(String roundingMode) {
+		_roundingMode = roundingMode;
 	}
 
 	public boolean getPrimary() {
@@ -253,7 +280,10 @@ public class CommerceCurrencySoap implements Serializable {
 	private String _code;
 	private String _name;
 	private BigDecimal _rate;
-	private String _roundingType;
+	private String _formatPattern;
+	private int _maxFractionDigits;
+	private int _minFractionDigits;
+	private String _roundingMode;
 	private boolean _primary;
 	private double _priority;
 	private boolean _active;

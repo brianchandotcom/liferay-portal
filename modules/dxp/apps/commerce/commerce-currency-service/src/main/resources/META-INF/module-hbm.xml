@@ -17,7 +17,10 @@
 		<property column="code_" name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="rate" type="org.hibernate.type.BigDecimalType" />
-		<property name="roundingType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="formatPattern" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="maxFractionDigits" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="minFractionDigits" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="roundingMode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="primary_" name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />

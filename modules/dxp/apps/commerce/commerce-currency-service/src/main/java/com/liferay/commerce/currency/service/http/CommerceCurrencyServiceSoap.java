@@ -71,7 +71,8 @@ import java.util.Map;
 public class CommerceCurrencyServiceSoap {
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap addCommerceCurrency(
 		String code, String[] nameMapLanguageIds, String[] nameMapValues,
-		java.math.BigDecimal rate, String roundingType, boolean primary,
+		java.math.BigDecimal rate, String formatPattern, int maxFractionDigits,
+		int minFractionDigits, String roundingMode, boolean primary,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -80,7 +81,8 @@ public class CommerceCurrencyServiceSoap {
 					nameMapValues);
 
 			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.addCommerceCurrency(code,
-					nameMap, rate, roundingType, primary, priority, active,
+					nameMap, rate, formatPattern, maxFractionDigits,
+					minFractionDigits, roundingMode, primary, priority, active,
 					serviceContext);
 
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);
@@ -244,8 +246,9 @@ public class CommerceCurrencyServiceSoap {
 
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap updateCommerceCurrency(
 		long commerceCurrencyId, String code, String[] nameMapLanguageIds,
-		String[] nameMapValues, java.math.BigDecimal rate, String roundingType,
-		boolean primary, double priority, boolean active,
+		String[] nameMapValues, java.math.BigDecimal rate,
+		String formatPattern, int maxFractionDigits, int minFractionDigits,
+		String roundingMode, boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -253,8 +256,9 @@ public class CommerceCurrencyServiceSoap {
 					nameMapValues);
 
 			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.updateCommerceCurrency(commerceCurrencyId,
-					code, nameMap, rate, roundingType, primary, priority,
-					active, serviceContext);
+					code, nameMap, rate, formatPattern, maxFractionDigits,
+					minFractionDigits, roundingMode, primary, priority, active,
+					serviceContext);
 
 			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);
 		}

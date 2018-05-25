@@ -147,7 +147,13 @@ public class CommerceCurrencyPersistenceTest {
 
 		newCommerceCurrency.setRate(new BigDecimal(RandomTestUtil.nextDouble()));
 
-		newCommerceCurrency.setRoundingType(RandomTestUtil.randomString());
+		newCommerceCurrency.setFormatPattern(RandomTestUtil.randomString());
+
+		newCommerceCurrency.setMaxFractionDigits(RandomTestUtil.nextInt());
+
+		newCommerceCurrency.setMinFractionDigits(RandomTestUtil.nextInt());
+
+		newCommerceCurrency.setRoundingMode(RandomTestUtil.randomString());
 
 		newCommerceCurrency.setPrimary(RandomTestUtil.randomBoolean());
 
@@ -185,8 +191,14 @@ public class CommerceCurrencyPersistenceTest {
 			newCommerceCurrency.getName());
 		Assert.assertEquals(existingCommerceCurrency.getRate(),
 			newCommerceCurrency.getRate());
-		Assert.assertEquals(existingCommerceCurrency.getRoundingType(),
-			newCommerceCurrency.getRoundingType());
+		Assert.assertEquals(existingCommerceCurrency.getFormatPattern(),
+			newCommerceCurrency.getFormatPattern());
+		Assert.assertEquals(existingCommerceCurrency.getMaxFractionDigits(),
+			newCommerceCurrency.getMaxFractionDigits());
+		Assert.assertEquals(existingCommerceCurrency.getMinFractionDigits(),
+			newCommerceCurrency.getMinFractionDigits());
+		Assert.assertEquals(existingCommerceCurrency.getRoundingMode(),
+			newCommerceCurrency.getRoundingMode());
 		Assert.assertEquals(existingCommerceCurrency.isPrimary(),
 			newCommerceCurrency.isPrimary());
 		AssertUtils.assertEquals(existingCommerceCurrency.getPriority(),
@@ -293,8 +305,9 @@ public class CommerceCurrencyPersistenceTest {
 			true, "commerceCurrencyId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "code", true, "name", true, "rate", true,
-			"roundingType", true, "primary", true, "priority", true, "active",
-			true, "lastPublishDate", true);
+			"formatPattern", true, "maxFractionDigits", true,
+			"minFractionDigits", true, "roundingMode", true, "primary", true,
+			"priority", true, "active", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -539,7 +552,13 @@ public class CommerceCurrencyPersistenceTest {
 
 		commerceCurrency.setRate(new BigDecimal(RandomTestUtil.nextDouble()));
 
-		commerceCurrency.setRoundingType(RandomTestUtil.randomString());
+		commerceCurrency.setFormatPattern(RandomTestUtil.randomString());
+
+		commerceCurrency.setMaxFractionDigits(RandomTestUtil.nextInt());
+
+		commerceCurrency.setMinFractionDigits(RandomTestUtil.nextInt());
+
+		commerceCurrency.setRoundingMode(RandomTestUtil.randomString());
 
 		commerceCurrency.setPrimary(RandomTestUtil.randomBoolean());
 

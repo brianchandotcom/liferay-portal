@@ -73,7 +73,10 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 		attributes.put("code", getCode());
 		attributes.put("name", getName());
 		attributes.put("rate", getRate());
-		attributes.put("roundingType", getRoundingType());
+		attributes.put("formatPattern", getFormatPattern());
+		attributes.put("maxFractionDigits", getMaxFractionDigits());
+		attributes.put("minFractionDigits", getMinFractionDigits());
+		attributes.put("roundingMode", getRoundingMode());
 		attributes.put("primary", isPrimary());
 		attributes.put("priority", getPriority());
 		attributes.put("active", isActive());
@@ -150,10 +153,28 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 			setRate(rate);
 		}
 
-		String roundingType = (String)attributes.get("roundingType");
+		String formatPattern = (String)attributes.get("formatPattern");
 
-		if (roundingType != null) {
-			setRoundingType(roundingType);
+		if (formatPattern != null) {
+			setFormatPattern(formatPattern);
+		}
+
+		Integer maxFractionDigits = (Integer)attributes.get("maxFractionDigits");
+
+		if (maxFractionDigits != null) {
+			setMaxFractionDigits(maxFractionDigits);
+		}
+
+		Integer minFractionDigits = (Integer)attributes.get("minFractionDigits");
+
+		if (minFractionDigits != null) {
+			setMinFractionDigits(minFractionDigits);
+		}
+
+		String roundingMode = (String)attributes.get("roundingMode");
+
+		if (roundingMode != null) {
+			setRoundingMode(roundingMode);
 		}
 
 		Boolean primary = (Boolean)attributes.get("primary");
@@ -257,6 +278,16 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	/**
+	* Returns the format pattern of this commerce currency.
+	*
+	* @return the format pattern of this commerce currency
+	*/
+	@Override
+	public String getFormatPattern() {
+		return _commerceCurrency.getFormatPattern();
+	}
+
+	/**
 	* Returns the group ID of this commerce currency.
 	*
 	* @return the group ID of this commerce currency
@@ -274,6 +305,26 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	@Override
 	public Date getLastPublishDate() {
 		return _commerceCurrency.getLastPublishDate();
+	}
+
+	/**
+	* Returns the max fraction digits of this commerce currency.
+	*
+	* @return the max fraction digits of this commerce currency
+	*/
+	@Override
+	public int getMaxFractionDigits() {
+		return _commerceCurrency.getMaxFractionDigits();
+	}
+
+	/**
+	* Returns the min fraction digits of this commerce currency.
+	*
+	* @return the min fraction digits of this commerce currency
+	*/
+	@Override
+	public int getMinFractionDigits() {
+		return _commerceCurrency.getMinFractionDigits();
 	}
 
 	/**
@@ -408,13 +459,13 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	/**
-	* Returns the rounding type of this commerce currency.
+	* Returns the rounding mode of this commerce currency.
 	*
-	* @return the rounding type of this commerce currency
+	* @return the rounding mode of this commerce currency
 	*/
 	@Override
-	public String getRoundingType() {
-		return _commerceCurrency.getRoundingType();
+	public String getRoundingMode() {
+		return _commerceCurrency.getRoundingMode();
 	}
 
 	/**
@@ -592,6 +643,16 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	/**
+	* Sets the format pattern of this commerce currency.
+	*
+	* @param formatPattern the format pattern of this commerce currency
+	*/
+	@Override
+	public void setFormatPattern(String formatPattern) {
+		_commerceCurrency.setFormatPattern(formatPattern);
+	}
+
+	/**
 	* Sets the group ID of this commerce currency.
 	*
 	* @param groupId the group ID of this commerce currency
@@ -609,6 +670,26 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		_commerceCurrency.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	* Sets the max fraction digits of this commerce currency.
+	*
+	* @param maxFractionDigits the max fraction digits of this commerce currency
+	*/
+	@Override
+	public void setMaxFractionDigits(int maxFractionDigits) {
+		_commerceCurrency.setMaxFractionDigits(maxFractionDigits);
+	}
+
+	/**
+	* Sets the min fraction digits of this commerce currency.
+	*
+	* @param minFractionDigits the min fraction digits of this commerce currency
+	*/
+	@Override
+	public void setMinFractionDigits(int minFractionDigits) {
+		_commerceCurrency.setMinFractionDigits(minFractionDigits);
 	}
 
 	/**
@@ -733,13 +814,13 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	/**
-	* Sets the rounding type of this commerce currency.
+	* Sets the rounding mode of this commerce currency.
 	*
-	* @param roundingType the rounding type of this commerce currency
+	* @param roundingMode the rounding mode of this commerce currency
 	*/
 	@Override
-	public void setRoundingType(String roundingType) {
-		_commerceCurrency.setRoundingType(roundingType);
+	public void setRoundingMode(String roundingMode) {
+		_commerceCurrency.setRoundingMode(roundingMode);
 	}
 
 	/**

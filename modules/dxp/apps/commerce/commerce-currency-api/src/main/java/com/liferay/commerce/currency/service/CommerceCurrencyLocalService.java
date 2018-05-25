@@ -83,7 +83,8 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 		CommerceCurrency commerceCurrency);
 
 	public CommerceCurrency addCommerceCurrency(String code,
-		Map<Locale, String> nameMap, BigDecimal rate, String roundingType,
+		Map<Locale, String> nameMap, BigDecimal rate, String formatPattern,
+		int maxFractionDigits, int minFractionDigits, String roundingMode,
 		boolean primary, double priority, boolean active,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -341,7 +342,8 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 
 	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
 		String code, Map<Locale, String> nameMap, BigDecimal rate,
-		String roundingType, boolean primary, double priority, boolean active,
+		String formatPattern, int maxFractionDigits, int minFractionDigits,
+		String roundingMode, boolean primary, double priority, boolean active,
 		ServiceContext serviceContext) throws PortalException;
 
 	public CommerceCurrency updateCommerceCurrencyRate(

@@ -67,7 +67,7 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -91,8 +91,14 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		sb.append(name);
 		sb.append(", rate=");
 		sb.append(rate);
-		sb.append(", roundingType=");
-		sb.append(roundingType);
+		sb.append(", formatPattern=");
+		sb.append(formatPattern);
+		sb.append(", maxFractionDigits=");
+		sb.append(maxFractionDigits);
+		sb.append(", minFractionDigits=");
+		sb.append(minFractionDigits);
+		sb.append(", roundingMode=");
+		sb.append(roundingMode);
 		sb.append(", primary=");
 		sb.append(primary);
 		sb.append(", priority=");
@@ -159,11 +165,21 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 
 		commerceCurrencyImpl.setRate(rate);
 
-		if (roundingType == null) {
-			commerceCurrencyImpl.setRoundingType("");
+		if (formatPattern == null) {
+			commerceCurrencyImpl.setFormatPattern("");
 		}
 		else {
-			commerceCurrencyImpl.setRoundingType(roundingType);
+			commerceCurrencyImpl.setFormatPattern(formatPattern);
+		}
+
+		commerceCurrencyImpl.setMaxFractionDigits(maxFractionDigits);
+		commerceCurrencyImpl.setMinFractionDigits(minFractionDigits);
+
+		if (roundingMode == null) {
+			commerceCurrencyImpl.setRoundingMode("");
+		}
+		else {
+			commerceCurrencyImpl.setRoundingMode(roundingMode);
 		}
 
 		commerceCurrencyImpl.setPrimary(primary);
@@ -200,7 +216,12 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 		code = objectInput.readUTF();
 		name = objectInput.readUTF();
 		rate = (BigDecimal)objectInput.readObject();
-		roundingType = objectInput.readUTF();
+		formatPattern = objectInput.readUTF();
+
+		maxFractionDigits = objectInput.readInt();
+
+		minFractionDigits = objectInput.readInt();
+		roundingMode = objectInput.readUTF();
 
 		primary = objectInput.readBoolean();
 
@@ -254,11 +275,22 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 
 		objectOutput.writeObject(rate);
 
-		if (roundingType == null) {
+		if (formatPattern == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(roundingType);
+			objectOutput.writeUTF(formatPattern);
+		}
+
+		objectOutput.writeInt(maxFractionDigits);
+
+		objectOutput.writeInt(minFractionDigits);
+
+		if (roundingMode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(roundingMode);
 		}
 
 		objectOutput.writeBoolean(primary);
@@ -280,7 +312,10 @@ public class CommerceCurrencyCacheModel implements CacheModel<CommerceCurrency>,
 	public String code;
 	public String name;
 	public BigDecimal rate;
-	public String roundingType;
+	public String formatPattern;
+	public int maxFractionDigits;
+	public int minFractionDigits;
+	public String roundingMode;
 	public boolean primary;
 	public double priority;
 	public boolean active;

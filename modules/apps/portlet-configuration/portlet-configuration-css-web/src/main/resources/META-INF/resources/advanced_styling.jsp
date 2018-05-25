@@ -53,7 +53,7 @@
 
 			var newVal = customCSSVal + value + ' {\n\t\n}\n';
 
-			customCSS.value  = newVal;
+			customCSS.value = newVal;
 
 			Liferay.Util.setCursorPosition(customCSS, newVal.length - 3);
 		}

@@ -82,8 +82,7 @@ public class UpgradeImageContent extends UpgradeProcess {
 				catch (PortalException pe) {
 					_log.error(
 						StringBundler.concat(
-							"Unable to get file entry with group ID ",
-							String.valueOf(groupId), ", and file entry id ",
+							"Unable to get file entry with file entry id ",
 							String.valueOf(fileEntryId)),
 						pe);
 				}

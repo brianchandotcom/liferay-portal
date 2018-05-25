@@ -81,23 +81,28 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 				var emailAddressVal = emailAddress.val();
 
 				if (emailAddressVal) {
-					emailAddressVal = A.Lang.String.escapeHTML(emailAddressVal);
+					emailAddressVal = A.Lang.String.escapeHTML(emailAddressVal).split(',');
 
-					var content =
-						'<span class="label label-dismissible label-secondary label-user-mail-address">' +
-						emailAddressVal +
-						'<a class="modify-link" data-emailAddress="' +
-							emailAddressVal +
-							'" href="javascript:;">' +
-								'<%= UnicodeFormatter.toString(removeUserEmailAddressIcon) %>' +
-						'</a>' +
-					'</span>';
+					A.Array.each(
+						emailAddressVal,
+						function(item, index, emailAddressVal) {
+							var content =
+								'<span class="label label-dismissible label-secondary label-user-mail-address">' +
+								item +
+								'<a class="modify-link" data-emailAddress="' +
+									item +
+									'" href="javascript:;">' +
+										'<%= UnicodeFormatter.toString(removeUserEmailAddressIcon) %>' +
+								'</a>' +
+							'</span>';
 
-					var userInvitationContent = A.one('#<portlet:namespace />userInvitationContent');
+							var userInvitationContent = A.one('#<portlet:namespace />userInvitationContent');
 
-					if (userInvitationContent) {
-						userInvitationContent.append(content);
-					}
+							if (userInvitationContent) {
+								userInvitationContent.append(content);
+							}
+						}
+					);
 
 					emailAddress.val('');
 				}

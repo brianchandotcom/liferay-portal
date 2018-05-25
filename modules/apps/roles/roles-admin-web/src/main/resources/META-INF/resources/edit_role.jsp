@@ -62,6 +62,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	<portlet:param name="mvcPath" value="/edit_role.jsp" />
 	<portlet:param name="tabs1" value="details" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
+	<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
 	<portlet:param name="type" value="<%= String.valueOf(type) %>" />
 </portlet:renderURL>
 

@@ -2290,25 +2290,25 @@ public class ProjectTemplatesTest {
 
 		Path buildFilePath = buildGradleFile.toPath();
 
-		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 
 		String lineSeparator = System.lineSeparator();
 
-		stringBuilder.append(lineSeparator);
+		sb.append(lineSeparator);
 
-		stringBuilder.append(
+		sb.append(
 			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask");
-		stringBuilder.append(lineSeparator);
+		sb.append(lineSeparator);
 
-		stringBuilder.append("tasks.withType(ExecuteNpmTask) {");
-		stringBuilder.append(lineSeparator);
+		sb.append("tasks.withType(ExecuteNpmTask) {");
+		sb.append(lineSeparator);
 
-		stringBuilder.append("\tregistry = '" + _NODEJS_NPM_CI_REGISTRY + "'");
-		stringBuilder.append(lineSeparator);
+		sb.append("\tregistry = '" + _NODEJS_NPM_CI_REGISTRY + "'");
+		sb.append(lineSeparator);
 
-		stringBuilder.append("}");
+		sb.append("}");
 
-		String executeNpmTaskScript = stringBuilder.toString();
+		String executeNpmTaskScript = sb.toString();
 
 		Files.write(
 			buildFilePath,

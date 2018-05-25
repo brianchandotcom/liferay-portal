@@ -125,11 +125,20 @@ public class FacebookConnectAction extends BaseStrutsAction {
 
 		HttpSession session = request.getSession();
 
+		String nonce = (String)session.getAttribute("nonce");
+
 		String state = ParamUtil.getString(request, "state");
 
 		JSONObject stateJSONObject = JSONFactoryUtil.createJSONObject(state);
 
 		String redirect = stateJSONObject.getString("redirect");
+
+		String stateNonce = stateJSONObject.getString("stateNonce");
+
+		if (!stateNonce.equals(nonce)) {
+			throw new PrincipalException.MustBeAuthenticated(
+				_portal.getUserId(request));
+		}
 
 		redirect = _portal.escapeRedirect(redirect);
 

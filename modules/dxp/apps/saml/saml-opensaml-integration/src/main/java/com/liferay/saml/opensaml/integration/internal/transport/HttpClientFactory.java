@@ -138,7 +138,7 @@ public class HttpClientFactory {
 				_log.debug(
 					StringBundler.concat(
 						getClass().getName(), " is waiting on ",
-						String.valueOf(availableConnections), " connections"));
+						availableConnections, " connections"));
 			}
 
 			_poolingClientConnectionManager.closeIdleConnections(

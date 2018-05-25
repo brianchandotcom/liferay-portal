@@ -154,13 +154,20 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 		<div class="container widget-mode-detail-header" id="<portlet:namespace /><%= entry.getEntryId() %>">
 			<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
-				<div class="row">
-					<div class="col-md-8 mx-auto">
-						<div class="cover-image-caption">
-							<small><%= entry.getCoverImageCaption() %></small>
+
+				<%
+				String coverImageCaption = entry.getCoverImageCaption();
+				%>
+
+				<c:if test="<%= Validator.isNotNull(coverImageCaption) %>">
+					<div class="row">
+						<div class="col-md-8 mx-auto">
+							<div class="cover-image-caption">
+								<small><%= entry.getCoverImageCaption() %></small>
+							</div>
 						</div>
 					</div>
-				</div>
+				</c:if>
 			</c:if>
 
 			<div class="row">

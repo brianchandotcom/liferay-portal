@@ -204,9 +204,9 @@ if (liveLayout != null) {
 
 										<c:choose>
 											<c:when test="<%= branchingEnabled %>">
-												<c:if test="<%= !layoutRevision.isIncomplete() %>">
-													<liferay-util:include page="/view_layout_set_branch_details.jsp" servletContext="<%= application %>" />
+												<liferay-util:include page="/view_layout_set_branch_details.jsp" servletContext="<%= application %>" />
 
+												<c:if test="<%= !layoutRevision.isIncomplete() %>">
 													<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
 												</c:if>
 

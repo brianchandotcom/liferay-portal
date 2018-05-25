@@ -83,7 +83,7 @@ public class DownloadEntriesMVCResourceCommand implements MVCResourceCommand {
 				downloadFileEntries(resourceRequest, resourceResponse);
 			}
 
-			return true;
+			return false;
 		}
 		catch (Exception e) {
 			throw new PortletException(e);

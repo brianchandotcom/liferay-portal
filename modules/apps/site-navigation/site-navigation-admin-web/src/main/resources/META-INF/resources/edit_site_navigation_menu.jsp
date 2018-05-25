@@ -120,13 +120,19 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		}
 	);
 
-	function handleDestroyPortlet() {
-		addMenuItemClickHandler.removeListener();
+	function destroyAddMenuItemClickHandler() {
+		if (addMenuItemClickHandler) {
+			addMenuItemClickHandler.removeListener();
 
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+			addMenuItemClickHandler = null;
+		}
+
+		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', destroyAddMenuItemClickHandler);
+		Liferay.detach('destroyPortlet', destroyAddMenuItemClickHandler);
 	}
 
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
+	Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', destroyAddMenuItemClickHandler);
+	Liferay.on('destroyPortlet', destroyAddMenuItemClickHandler);
 </aui:script>
 
 <aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule">
@@ -137,17 +143,19 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 		}
 	);
 
-	function handlePortletDestroy() {
+	function destroySiteNavigationMenuEditor() {
 		if (siteNavigationMenuEditor) {
 			siteNavigationMenuEditor.dispose();
 
 			siteNavigationMenuEditor = null;
 		}
 
-		Liferay.detach('destroyPortlet', handlePortletDestroy);
+		Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', destroySiteNavigationMenuEditor);
+		Liferay.detach('destroyPortlet', destroySiteNavigationMenuEditor);
 	}
 
-	Liferay.on('destroyPortlet', handlePortletDestroy);
+	Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', destroySiteNavigationMenuEditor);
+	Liferay.on('destroyPortlet', destroySiteNavigationMenuEditor);
 </aui:script>
 
 <aui:script use="aui-base,aui-parse-content">
@@ -294,13 +302,19 @@ renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuN
 				}
 			);
 
-			function handleDestroyPortlet() {
-				sidebar.dispose();
+			function destroySidebar() {
+				if (sidebar) {
+					sidebar.dispose();
 
-				Liferay.detach('destroyPortlet', handleDestroyPortlet);
+					sidebar = null;
+				}
+
+				Liferay.detach('<%= portletDisplay.getId() %>:portletRefreshed', destroySidebar);
+				Liferay.detach('destroyPortlet', destroySidebar);
 			}
 
-			Liferay.on('destroyPortlet', handleDestroyPortlet);
+			Liferay.on('<%= portletDisplay.getId() %>:portletRefreshed', destroySidebar);
+			Liferay.on('destroyPortlet', destroySidebar);
 		}
 	);
 </aui:script>

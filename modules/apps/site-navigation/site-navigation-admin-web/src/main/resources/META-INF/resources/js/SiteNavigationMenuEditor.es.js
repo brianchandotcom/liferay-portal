@@ -59,13 +59,13 @@ class SiteNavigationMenuEditor extends State {
 			this._handleDropItem.bind(this)
 		);
 
-		dom.on(
+		this._itemClickHandler = dom.on(
 			`.${MENU_ITEM_CONTENT_CLASSNAME}`,
 			'click',
 			this._handleItemClick.bind(this)
 		);
 
-		dom.on(
+		this._itemKeyUpHandler = dom.on(
 			`.${MENU_ITEM_CLASSNAME}`,
 			'keyup',
 			this._handleItemKeyUp.bind(this)
@@ -77,7 +77,20 @@ class SiteNavigationMenuEditor extends State {
 	 */
 
 	dispose(...args) {
-		this._dragDrop.dispose();
+		if (this._dragDrop) {
+			this._dragDrop.dispose();
+			this._dragDrop = null;
+		}
+
+		if (this._itemClickHandler) {
+			this._itemClickHandler.removeListener();
+			this._itemClickHandler = null;
+		}
+
+		if (this._itemKeyUpHandler) {
+			this._itemKeyUpHandler.removeListener();
+			this._itemKeyUpHandler = null;
+		}
 
 		super.dispose(...args);
 	}

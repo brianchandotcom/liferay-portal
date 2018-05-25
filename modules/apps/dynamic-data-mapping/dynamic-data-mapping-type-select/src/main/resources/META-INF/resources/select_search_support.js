@@ -108,6 +108,7 @@ AUI.add(
 
 				var template = instance._getTemplate(
 					{
+						fixedOptions: instance.get('fixedOptions'),
 						multiple: instance.get('multiple'),
 						options: options,
 						showPlaceholderOption: showPlaceholderOption,

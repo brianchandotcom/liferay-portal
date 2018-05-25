@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"metal-component": "^2.14.0",
+		"metal-position": "^2.1.1",
 		"metal-soy": "^2.14.0"
 	},
 	"devDependencies": {

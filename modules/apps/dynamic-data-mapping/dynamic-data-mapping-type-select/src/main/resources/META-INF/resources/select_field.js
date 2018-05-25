@@ -118,6 +118,30 @@ AUI.add(
 						}
 					},
 
+					alignPosition: function(selectInputNode, dropdownMenuNode, dropdownMenu) {
+						var Align = DDMSelect.Align;
+
+						var dropdownHeight = dropdownMenuNode.clientHeight;
+
+						var scrollHeight = document.querySelector('body').scrollHeight;
+
+						Align.align(
+							dropdownMenuNode,
+							selectInputNode,
+							Align.Bottom
+						);
+
+						if (document.querySelector('body').scrollHeight < scrollHeight) {
+							Align.align(
+								dropdownMenuNode,
+								selectInputNode,
+								Align.Top,
+								false
+							);
+							dropdownMenu.setStyle('height', dropdownHeight);
+						}
+					},
+
 					cleanSelect: function() {
 						var instance = this;
 
@@ -260,14 +284,30 @@ AUI.add(
 						inputGroup.insert(container.one('.' + CSS_HELP_BLOCK), 'after');
 					},
 
-					toggleList: function() {
+					toggleList: function(event) {
 						var instance = this;
+
+						var container = instance.get('container');
+
+						var selectTrigger = container.one('.select-field-trigger');
 
 						if (instance._isListOpen()) {
 							instance.closeList();
 						}
-						else {
+						else if (!selectTrigger.hasAttribute('disabled')) {
 							instance.openList();
+
+							var userView = container.ancestor('.ddm-user-view-content');
+
+							if (userView) {
+								var selectInputNode = event.currentTarget.one('.input-select-wrapper')._node;
+
+								var dropdownMenu = event.currentTarget.one('.dropdown-menu');
+
+								var dropdownMenuNode = dropdownMenu._node;
+
+								instance.alignPosition(selectInputNode, dropdownMenuNode, dropdownMenu);
+							}
 						}
 					},
 
@@ -396,7 +436,7 @@ AUI.add(
 								return;
 							}
 
-							instance.toggleList();
+							instance.toggleList(event);
 						}
 					},
 

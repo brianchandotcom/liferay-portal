@@ -1,5 +1,6 @@
 import Component from 'metal-component';
 import Soy from 'metal-soy';
+import {Align} from 'metal-position';
 
 import templates from './select.soy';
 
@@ -25,5 +26,7 @@ for (let template in templates) {
 		window.DDMSelect[template] = C;
 	}
 }
+
+window.DDMSelect.Align = Align;
 
 export default SelectTemplates;

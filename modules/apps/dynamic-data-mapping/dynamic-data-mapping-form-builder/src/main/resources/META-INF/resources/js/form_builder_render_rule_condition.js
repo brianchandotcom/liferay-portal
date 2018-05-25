@@ -100,6 +100,18 @@ AUI.add(
 				delete instance._conditions[index + '-condition-second-operand-input'];
 			},
 
+			_disableOperatorField: function(index, value) {
+				var instance = this;
+
+				if (value.length == 0) {
+					var operator = instance._getOperator(index);
+					var operatorContainer = operator.get('container');
+					var operatorTrigger = operatorContainer.one('.select-field-trigger');
+
+					operatorTrigger.attr('disabled', true);
+				}
+			},
+
 			_getConditions: function() {
 				var instance = this;
 
@@ -237,6 +249,8 @@ AUI.add(
 				var firstOperand = instance._getFirstOperand(index);
 
 				var value = firstOperand.getValue();
+
+				instance._disableOperatorField(index, value);
 
 				return value[0] || '';
 			},

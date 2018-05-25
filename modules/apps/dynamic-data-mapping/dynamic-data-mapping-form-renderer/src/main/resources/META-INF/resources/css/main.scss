@@ -258,6 +258,7 @@ body .ddm-user-view-content {
 		display: block;
 		max-width: initial;
 		min-width: 0;
+		overflow: hidden;
 		width: 100%;
 
 		.dropdown-section, .dropdown-item, .no-results-list {
@@ -331,7 +332,6 @@ body .ddm-user-view-content {
 
 		.results-chosen {
 			margin: 0;
-			max-height: 438px;
 			min-width: 100%;
 			overflow-x: hidden;
 			overflow-y: auto;

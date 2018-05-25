@@ -26,11 +26,11 @@ import com.liferay.commerce.data.integration.apio.identifiers.PriceEntryIdentifi
 import com.liferay.commerce.data.integration.apio.identifiers.TierPriceEntryIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
 import com.liferay.commerce.data.integration.apio.internal.form.TierPriceEntryForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.TierPriceEntryPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.TierPriceEntryHelper;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,7 +65,7 @@ public class TierPriceEntryNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommerceTierPriceEntry,
-			_tierPriceEntryPermissionChecker.forAdding()::apply,
+			_hasPermission.forAddingIn(TierPriceEntryIdentifier.class),
 			TierPriceEntryForm::buildForm
 		).build();
 	}
@@ -82,13 +82,12 @@ public class TierPriceEntryNestedCollectionResource
 		return builder.addGetter(
 			_tierPriceEntryHelper::getCommerceTierPriceEntry
 		).addUpdater(
-			this::_updateCommercePriceEntry,
-			_tierPriceEntryPermissionChecker.forUpdating()::apply,
+			this::_updateCommercePriceEntry, _hasPermission::forUpdating,
 			TierPriceEntryForm::buildForm
 		).addRemover(
 			idempotent(
 				_commerceTierPriceEntryService::deleteCommerceTierPriceEntry),
-			_tierPriceEntryPermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -179,10 +178,12 @@ public class TierPriceEntryNestedCollectionResource
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
 
-	@Reference
-	private TierPriceEntryHelper _tierPriceEntryHelper;
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.price.list.model.CommerceTierPriceEntry)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 	@Reference
-	private TierPriceEntryPermissionChecker _tierPriceEntryPermissionChecker;
+	private TierPriceEntryHelper _tierPriceEntryHelper;
 
 }

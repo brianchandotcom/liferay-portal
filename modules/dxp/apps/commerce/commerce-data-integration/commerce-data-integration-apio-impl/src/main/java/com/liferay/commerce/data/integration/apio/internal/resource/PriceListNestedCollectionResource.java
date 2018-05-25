@@ -25,10 +25,10 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceListPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceListHelper;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -65,7 +65,7 @@ public class PriceListNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommercePriceList,
-			_priceListPermissionChecker.forAdding()::apply,
+			_hasPermission.forAddingIn(PriceListIdentifier.class),
 			PriceListForm::buildForm
 		).build();
 	}
@@ -82,12 +82,11 @@ public class PriceListNestedCollectionResource
 		return builder.addGetter(
 			_priceListHelper::getCommercePriceList
 		).addUpdater(
-			this::_updateCommercePriceList,
-			_priceListPermissionChecker.forUpdating()::apply,
+			this::_updateCommercePriceList, _hasPermission::forUpdating,
 			PriceListForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceListService::deleteCommercePriceList),
-			_priceListPermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -193,10 +192,12 @@ public class PriceListNestedCollectionResource
 	@Reference
 	private CommercePriceListService _commercePriceListService;
 
-	@Reference
-	private PriceListHelper _priceListHelper;
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 	@Reference
-	private PriceListPermissionChecker _priceListPermissionChecker;
+	private PriceListHelper _priceListHelper;
 
 }

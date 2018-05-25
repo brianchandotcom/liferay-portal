@@ -18,6 +18,7 @@ import static java.util.Collections.emptyList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
 
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -51,6 +52,20 @@ public class URLCreatorTest {
 		catch (InvocationTargetException ite) {
 			throw ite.getTargetException();
 		}
+	}
+
+	@Test
+	public void testCreateAbsoluteURL() {
+		String url = URLCreator.createAbsoluteURL(_serverURL, "/relative/url");
+
+		assertThat(url, is("www.liferay.com/relative/url"));
+	}
+
+	@Test
+	public void testCreateAbsoluteURLWithNullReturnsNull() {
+		String url = URLCreator.createAbsoluteURL(_serverURL, null);
+
+		assertThat(url, is(nullValue()));
 	}
 
 	@Test

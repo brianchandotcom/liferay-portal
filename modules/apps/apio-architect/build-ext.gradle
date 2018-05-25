@@ -141,7 +141,7 @@ docker {
 
 task checkDocker() {
 	doLast {
-		def url = "http://localhost:8080"
+		def url = "http://localhost:9000"
 
 		println("Trying to reach " + url)
 
@@ -194,7 +194,7 @@ task runDocker(type: Exec) {
 	'-e', "LIFERAY_APIO_AUTH=${System.getenv('LIFERAY_APIO_AUTH')}",
 	'-e', "ROOT_DIR=${rootDir}",
 	'-p', '5005:5005',
-	'-p', '8080:8080',
+	'-p', '9000:8080',
 	'-p', '8099:8099',
 	'-p', '6666:6666',
 	'-v', "${rootDir}/build/jacoco:/jacoco",

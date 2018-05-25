@@ -129,6 +129,10 @@ public class SingleModelWriter<T> {
 			(field, value) -> _singleModelMessageMapper.mapNumberListField(
 				_jsonObjectBuilder, field, value));
 
+		fieldsWriter.writeRelativeURLFields(
+			(field, value) -> _singleModelMessageMapper.mapStringField(
+				_jsonObjectBuilder, field, value));
+
 		fieldsWriter.writeStringFields(
 			(field, value) -> _singleModelMessageMapper.mapStringField(
 				_jsonObjectBuilder, field, value));
@@ -271,6 +275,11 @@ public class SingleModelWriter<T> {
 		fieldsWriter.writeNumberListFields(
 			(field, value) ->
 				_singleModelMessageMapper.mapEmbeddedResourceNumberListField(
+					_jsonObjectBuilder, embeddedPathElements, field, value));
+
+		fieldsWriter.writeRelativeURLFields(
+			(field, value) ->
+				_singleModelMessageMapper.mapEmbeddedResourceStringField(
 					_jsonObjectBuilder, embeddedPathElements, field, value));
 
 		fieldsWriter.writeStringFields(

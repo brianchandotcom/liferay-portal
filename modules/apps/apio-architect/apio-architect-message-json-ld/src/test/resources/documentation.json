@@ -2,8 +2,8 @@
 	"@context": {
 		"ApiDocumentation": "hydra:ApiDocumentation",
 		"code": "hydra:statusCodes",
-		"expect": {
-			"@id": "hydra:expect",
+		"expects": {
+			"@id": "hydra:expects",
 			"@type": "@id"
 		},
 		"hydra": "https://www.w3.org/ns/hydra/core#",
@@ -28,8 +28,424 @@
 	"description": "Description",
 	"supportedClass": [
 		{
-			"@id": "http://schema.org/root",
+			"@id": "http://schema.org/Type 1",
 			"@type": "Class",
+			"supportedOperation": [
+				{
+					"@id": "_:root/retrieve",
+					"@type": "Operation",
+					"method": "GET",
+					"returns": "http://schema.org/Type 1"
+				},
+				{
+					"@id": "_:root/update",
+					"@type": "Operation",
+					"method": "PUT",
+					"returns": "http://schema.org/Type 1"
+				},
+				{
+					"@id": "_:root/delete",
+					"@type": "Operation",
+					"method": "DELETE",
+					"returns": "http://www.w3.org/2002/07/owl#Nothing"
+				}
+			],
+			"supportedProperty": [
+				{
+					"readonly": false,
+					"required": false,
+					"title": "binary1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "binary2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "boolean1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "boolean2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "booleanList1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "booleanList2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "link1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "link2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "localizedString1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "localizedString2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "nested1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "nested2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "number1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "number2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "numberList1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "numberList2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "date1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "date2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "string1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "string2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "stringList1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "stringList2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "embedded1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "embedded2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "linked1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "linked2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "nested3",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "linked3",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "relatedCollection1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "relatedCollection2",
+					"writeonly": false
+				}
+			],
+			"title": "Type 1"
+		},
+		{
+			"@id": "http://schema.org/Type 2",
+			"@type": "Class",
+			"supportedOperation": [
+				{
+					"@id": "_:root/retrieve",
+					"@type": "Operation",
+					"method": "GET",
+					"returns": "http://schema.org/Type 2"
+				},
+				{
+					"@id": "_:root/update",
+					"@type": "Operation",
+					"method": "PUT",
+					"returns": "http://schema.org/Type 2"
+				},
+				{
+					"@id": "_:root/delete",
+					"@type": "Operation",
+					"method": "DELETE",
+					"returns": "http://www.w3.org/2002/07/owl#Nothing"
+				}
+			],
+			"supportedProperty": [
+				{
+					"readonly": false,
+					"required": false,
+					"title": "binary1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "binary2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "boolean1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "boolean2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "booleanList1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "booleanList2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "link1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "link2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "localizedString1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "localizedString2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "nested1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "nested2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "number1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "number2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "numberList1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "numberList2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "date1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "date2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "string1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "string2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "stringList1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "stringList2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "embedded1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "embedded2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "linked1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "linked2",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "nested3",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "linked3",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "relatedCollection1",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "relatedCollection2",
+					"writeonly": false
+				}
+			],
+			"title": "Type 2"
+		},
+		{
+			"@id": "vocab:Type 1Collection",
+			"@type": "Class",
+			"description": "A collection of Type 1",
+			"subClassOf": "http://www.w3.org/ns/hydra/core#Collection",
 			"supportedOperation": [
 				{
 					"@id": "_:root",
@@ -41,35 +457,71 @@
 					"@id": "_:root/create",
 					"@type": "Operation",
 					"method": "POST",
-					"returns": "http://schema.org/root"
+					"returns": "http://schema.org/Type 1"
 				}
 			],
-			"title": "root"
+			"supportedProperty": [
+				{
+					"readonly": false,
+					"required": false,
+					"title": "totalItems",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "member",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "numberOfItems",
+					"writeonly": false
+				}
+			],
+			"title": "Type 1Collection"
 		},
 		{
-			"@id": "http://schema.org/root",
+			"@id": "vocab:Type 2Collection",
 			"@type": "Class",
+			"description": "A collection of Type 2",
+			"subClassOf": "http://www.w3.org/ns/hydra/core#Collection",
 			"supportedOperation": [
 				{
-					"@id": "_:root/retrieve",
+					"@id": "_:root",
 					"@type": "Operation",
 					"method": "GET",
 					"returns": "https://www.w3.org/ns/hydra/core#Collection"
 				},
 				{
-					"@id": "_:root/update",
+					"@id": "_:root/create",
 					"@type": "Operation",
-					"method": "PUT",
-					"returns": "http://schema.org/root"
-				},
-				{
-					"@id": "_:root/delete",
-					"@type": "Operation",
-					"method": "DELETE",
-					"returns": "http://www.w3.org/2002/07/owl#Nothing"
+					"method": "POST",
+					"returns": "http://schema.org/Type 2"
 				}
 			],
-			"title": "root"
+			"supportedProperty": [
+				{
+					"readonly": false,
+					"required": false,
+					"title": "totalItems",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "member",
+					"writeonly": false
+				},
+				{
+					"readonly": false,
+					"required": false,
+					"title": "numberOfItems",
+					"writeonly": false
+				}
+			],
+			"title": "Type 2Collection"
 		}
 	],
 	"title": "Title"

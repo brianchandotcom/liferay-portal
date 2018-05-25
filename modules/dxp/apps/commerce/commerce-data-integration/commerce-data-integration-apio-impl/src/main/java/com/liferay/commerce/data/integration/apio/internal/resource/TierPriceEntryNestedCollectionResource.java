@@ -27,7 +27,7 @@ import com.liferay.commerce.data.integration.apio.identifiers.TierPriceEntryIden
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
 import com.liferay.commerce.data.integration.apio.internal.form.TierPriceEntryForm;
 import com.liferay.commerce.data.integration.apio.internal.util.TierPriceEntryHelper;
-import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
+import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -127,15 +127,13 @@ public class TierPriceEntryNestedCollectionResource
 				tierPriceEntryForm.getPrice(),
 				tierPriceEntryForm.getPromoPrice());
 		}
-		catch (DuplicateCommercePriceEntryException dcpee) {
+		catch (DuplicateCommerceTierPriceEntryException dctpee) {
 			Response.Status status = Response.Status.CONFLICT;
-
-			// TODO: We will have to check DupCommerceTierPriceEntryException
 
 			throw new ConflictException(
 				"Minimum quantity already exists: " +
 					tierPriceEntryForm.getMinQuantity(),
-				status.getStatusCode(), dcpee);
+				status.getStatusCode(), dctpee);
 		}
 	}
 

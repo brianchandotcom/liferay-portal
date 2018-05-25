@@ -71,8 +71,8 @@ public class TierPriceEntryHasPermissionImpl implements HasPermission<Long> {
 
 		return (credentials, entryId) -> {
 			CommerceTierPriceEntry commercePriceEntry =
-				_commerceTierPriceEntryService.
-					fetchCommerceTierPriceEntry(entryId);
+				_commerceTierPriceEntryService.fetchCommerceTierPriceEntry(
+					entryId);
 
 			return _portletResourcePermission.contains(
 				(PermissionChecker)credentials.get(),

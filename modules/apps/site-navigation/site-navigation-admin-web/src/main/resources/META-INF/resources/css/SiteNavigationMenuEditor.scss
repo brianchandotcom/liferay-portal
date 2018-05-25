@@ -1,51 +1,50 @@
-.site-navigation-menu-container {
-	.container-item {
-		box-sizing: border-box;
-		max-width: 100%;
-		overflow: hidden;
-		padding: 2px;
+.site-navigation-menu-item {
+	box-sizing: border-box;
+	max-width: 100%;
+	overflow: hidden;
+	padding: 2px;
 
-		.selected .card {
-			background-color: #F0F5FF;
-		}
-
-		&:focus {
-			box-shadow: none;
-			outline: none;
-
-			& > .site-navigation-menu-item > .card {
-				box-shadow: none;
-				outline: 2px solid #65B6F0;
-			}
-		}
-
-		&:focus > .site-navigation-menu-item > .drag-icon,
-		& > .site-navigation-menu-item:hover > .drag-icon {
-			visibility: visible;
-		}
-	}
-
-	.container-item--nested {
+	& > & {
 		padding-left: 10ch;
 	}
 
-	.item-dragging .card {
+	&--dragging .card {
 		opacity: 0.4;
 		outline: 2px dashed #65B6F0;
 	}
-}
 
-.site-navigation-menu-item {
-	max-width: 100%;
-	position: relative;
-	width: 40ch;
+	&--selected > &__content .card {
+		background-color: #F0F5FF;
+	}
 
-	.drag-icon {
+	&__content {
+		max-width: 100%;
+		position: relative;
+		width: 40ch;
+	}
+
+	&__drag-icon {
 		cursor: move;
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
 		visibility: hidden;
 		z-index: 1;
+	}
+
+	&:focus > &__content &__drag-icon,
+	&__content:hover &__drag-icon {
+		visibility: visible;
+	}
+
+	&:focus,
+	&:focus-within {
+		outline: none;
+	}
+
+	&__content:focus > .card,
+	&__content:focus-within .card,
+	&__content:hover .card {
+		box-shadow: 0 0 0 2px #8ABFFD;
 	}
 }

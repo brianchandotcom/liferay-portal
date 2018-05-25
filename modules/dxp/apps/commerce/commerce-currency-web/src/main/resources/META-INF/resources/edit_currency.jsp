@@ -25,9 +25,8 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 
 CommerceCurrency commerceCurrency = commerceCurrenciesDisplayContext.getCommerceCurrency();
 CommerceCurrency primaryCommerceCurrency = commerceCurrenciesDisplayContext.getPrimaryCommerceCurrency();
-List<RoundingType> roundingTypes = commerceCurrenciesDisplayContext.getRoundingTypes();
 
-String roundingTypeName = BeanParamUtil.getString(commerceCurrency, request, "roundingType");
+String roundingMode = BeanParamUtil.getString(commerceCurrency, request, "roundingMode", commerceCurrenciesDisplayContext.getDefaultRoundingMode());
 
 boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary");
 
@@ -72,14 +71,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 
 				<aui:input name="code" />
 
-				<aui:select name="roundingType">
+				<aui:input name="formatPattern" value="<%= commerceCurrenciesDisplayContext.getDefaultFormatPattern() %>" />
+
+				<aui:input label="maximum-fraction-digits" name="maxFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMaxFractionDigits()) %>" />
+
+				<aui:input name="minimum-fraction-digits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMinFractionDigits()) %>" />
+
+				<aui:select name="roundingMode">
 
 					<%
-					for (RoundingType roundingType : roundingTypes) {
-						String curRoundingTypeName = roundingType.getName();
+					for (RoundingMode curRoundingMode : RoundingMode.values()) {
 					%>
 
-						<aui:option label="<%= roundingType.getLabel(locale) %>" selected="<%= curRoundingTypeName.equals(roundingTypeName) %>" value="<%= curRoundingTypeName %>" />
+						<aui:option label="<%= curRoundingMode.name() %>" selected="<%= roundingMode.equals(curRoundingMode.name()) %>" value="<%= curRoundingMode.name() %>" />
 
 					<%
 					}

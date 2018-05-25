@@ -31,7 +31,6 @@ page import="com.liferay.commerce.currency.exception.CommerceCurrencyCodeExcepti
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyNameException" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
 page import="com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission" %><%@
-page import="com.liferay.commerce.currency.util.RoundingType" %><%@
 page import="com.liferay.commerce.currency.web.internal.admin.CurrenciesCommerceAdminModule" %><%@
 page import="com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext" %><%@
 page import="com.liferay.commerce.currency.web.internal.servlet.taglib.ui.CommerceCurrencyScreenNavigationConstants" %><%@
@@ -46,10 +45,10 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.math.BigDecimal" %><%@
+page import="java.math.RoundingMode" %>
 
 <%@ page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>

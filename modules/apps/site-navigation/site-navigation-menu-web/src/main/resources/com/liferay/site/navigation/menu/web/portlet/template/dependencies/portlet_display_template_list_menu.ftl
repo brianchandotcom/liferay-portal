@@ -3,7 +3,7 @@
 <#if !entries?has_content>
 	<#if themeDisplay.isSignedIn()>
 		<div class="alert alert-info">
-			<@liferay.language key="_there-are-no-menu-items-to-display" />
+			<@liferay.language key="there-are-no-menu-items-to-display" />
 		</div>
 	</#if>
 <#else>

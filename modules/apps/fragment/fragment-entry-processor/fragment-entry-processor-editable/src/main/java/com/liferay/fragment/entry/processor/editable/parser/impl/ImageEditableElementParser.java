@@ -78,7 +78,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 	private static final String _TMPL_IMAGE_FIELD_TEMPLATE = StringUtil.read(
 		EditableFragmentEntryProcessor.class,
-		"/META-INF/resources/fragment/entry/processor/editable/" +
-			"image_field_template.tmpl");
+		"/META-INF/resources/fragment/entry/processor/editable" +
+			"/image_field_template.tmpl");
 
 }

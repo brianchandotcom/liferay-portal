@@ -58,7 +58,7 @@ public class TextEditableElementParser implements EditableElementParser {
 
 	private static final String _TMPL_VALIDATE_TEXT_FIELD = StringUtil.read(
 		EditableFragmentEntryProcessor.class,
-		"/META-INF/resources/fragment/entry/processor/editable/" +
-			"text_field_template.tmpl");
+		"/META-INF/resources/fragment/entry/processor/editable" +
+			"/text_field_template.tmpl");
 
 }

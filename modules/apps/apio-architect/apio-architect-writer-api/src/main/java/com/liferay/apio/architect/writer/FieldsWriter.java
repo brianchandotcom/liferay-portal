@@ -32,6 +32,7 @@ import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.unsafe.Unsafe;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.writer.alias.SingleModelFunction;
+import com.liferay.apio.architect.writer.url.URLCreator;
 
 import java.util.List;
 import java.util.Optional;
@@ -472,6 +473,22 @@ public class FieldsWriter<T> {
 			relatedModel -> writeRelatedModel(
 				relatedModel, pathFunction, modelBiConsumer,
 				linkedURLBiConsumer, embeddedURLBiConsumer));
+	}
+
+	/**
+	 * Writes the model's relative URL fields. This method uses a consumer so
+	 * each {@code javax.ws.rs.ext.MessageBodyWriter} can write each field
+	 * differently.
+	 *
+	 * @param biConsumer the consumer that writes each field
+	 */
+	public void writeRelativeURLFields(BiConsumer<String, String> biConsumer) {
+		writeFields(
+			BaseRepresentor::getRelativeURLFunctions,
+			writeField(
+				relativeURL -> URLCreator.createAbsoluteURL(
+					_requestInfo.getServerURL(), relativeURL),
+				biConsumer));
 	}
 
 	/**

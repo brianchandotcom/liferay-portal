@@ -14,10 +14,10 @@
 
 package com.liferay.apio.architect.documentation;
 
-import com.liferay.apio.architect.alias.RequestFunction;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 
 import java.util.Map;
 import java.util.Optional;
@@ -31,66 +31,98 @@ import java.util.function.Supplier;
 public class Documentation {
 
 	public Documentation(
-		RequestFunction<Optional<APITitle>> apiTitleRequestFunction,
-		RequestFunction<Optional<APIDescription>> apiDescriptionRequestFunction,
+		Supplier<Optional<APITitle>> apiTitleSupplier,
+		Supplier<Optional<APIDescription>> apiDescriptionSupplier,
 		Supplier<Map<String, Representor>> representorMapSupplier,
 		Supplier<Map<String, CollectionRoutes>> collectionRoutesMapSupplier,
-		Supplier<Map<String, ItemRoutes>> itemRoutesMapSupplier) {
+		Supplier<Map<String, ItemRoutes>> itemRoutesMapSupplier,
+		Supplier<Map<String, NestedCollectionRoutes>>
+			nestedCollectionRoutesMapSupplier) {
 
-		_apiTitleRequestFunction = apiTitleRequestFunction;
-		_apiDescriptionRequestFunction = apiDescriptionRequestFunction;
+		_apiTitleSupplier = apiTitleSupplier;
+		_apiDescriptionSupplier = apiDescriptionSupplier;
 		_representorMapSupplier = representorMapSupplier;
 		_routesMapSupplier = collectionRoutesMapSupplier;
 		_itemRoutesMapSupplier = itemRoutesMapSupplier;
+		_nestedCollectionRoutesMapSupplier = nestedCollectionRoutesMapSupplier;
 	}
 
 	/**
-	 * Returns the function that calculates the API's description, if present.
-	 * Returns {@code Optional#empty()} otherwise.
+	 * Returns the API's description, if present. Returns {@code
+	 * Optional#empty()} otherwise.
 	 *
 	 * @return the API's description, if present; {@code Optional#empty()}
 	 *         otherwise
+	 * @review
 	 */
-	public RequestFunction<Optional<String>>
-		getAPIDescriptionRequestFunction() {
+	public Optional<String> getAPIDescriptionOptional() {
+		Optional<APIDescription> optional = _apiDescriptionSupplier.get();
 
-		return httpServletRequest -> _apiDescriptionRequestFunction.apply(
-			httpServletRequest
-		).map(
-			APIDescription::get
-		);
+		return optional.map(APIDescription::get);
 	}
 
 	/**
-	 * Returns the function that calculates the API's description, if present.
-	 * Returns {@code Optional#empty()} otherwise.
+	 * Returns the API's title, if present. Returns {@code Optional#empty()}
+	 * otherwise.
 	 *
 	 * @return the API's title, if present; {@code Optional#empty()} otherwise
+	 * @review
 	 */
-	public RequestFunction<Optional<String>> getAPITitleRequestFunction() {
-		return httpServletRequest -> _apiTitleRequestFunction.apply(
-			httpServletRequest
-		).map(
-			APITitle::get
-		);
+	public Optional<String> getAPITitleOptional() {
+		Optional<APITitle> optional = _apiTitleSupplier.get();
+
+		return optional.map(APITitle::get);
 	}
 
-	public Supplier<Map<String, ItemRoutes>> getItemRoutesMapSupplier() {
-		return _itemRoutesMapSupplier;
+	/**
+	 * Returns a map containing the resources names as keys, and their {@link
+	 * CollectionRoutes} as values.
+	 *
+	 * @return a map with the item routes
+	 * @review
+	 */
+	public Map<String, CollectionRoutes> getCollectionRoutes() {
+		return _routesMapSupplier.get();
 	}
 
-	public Supplier<Map<String, Representor>> getRepresentorMapSupplier() {
-		return _representorMapSupplier;
+	/**
+	 * Returns a map containing the resources names as keys, and their {@link
+	 * ItemRoutes} as values.
+	 *
+	 * @return a map with the item routes
+	 * @review
+	 */
+	public Map<String, ItemRoutes> getItemRoutes() {
+		return _itemRoutesMapSupplier.get();
 	}
 
-	public Supplier<Map<String, CollectionRoutes>> getRoutesMapSupplier() {
-		return _routesMapSupplier;
+	/**
+	 * Returns a map containing the resources names as keys, and their {@link
+	 * NestedCollectionRoutes} as values.
+	 *
+	 * @return a map with the item routes
+	 * @review
+	 */
+	public Map<String, NestedCollectionRoutes> getNestedCollectionRoutes() {
+		return _nestedCollectionRoutesMapSupplier.get();
 	}
 
-	private final RequestFunction<Optional<APIDescription>>
-		_apiDescriptionRequestFunction;
-	private final RequestFunction<Optional<APITitle>> _apiTitleRequestFunction;
+	/**
+	 * Returns a map containing the resources names as keys, and their {@link
+	 * Representor} as values.
+	 *
+	 * @return a map with the item routes
+	 * @review
+	 */
+	public Map<String, Representor> getRepresentors() {
+		return _representorMapSupplier.get();
+	}
+
+	private final Supplier<Optional<APIDescription>> _apiDescriptionSupplier;
+	private final Supplier<Optional<APITitle>> _apiTitleSupplier;
 	private final Supplier<Map<String, ItemRoutes>> _itemRoutesMapSupplier;
+	private final Supplier<Map<String, NestedCollectionRoutes>>
+		_nestedCollectionRoutesMapSupplier;
 	private final Supplier<Map<String, Representor>> _representorMapSupplier;
 	private final Supplier<Map<String, CollectionRoutes>> _routesMapSupplier;
 

@@ -118,6 +118,12 @@ public class RepresentorTest {
 			"relatedCollection", IntegerIdentifier.class
 		).addRelatedCollection(
 			"relatedCollection", IntegerIdentifier.class
+		).addRelativeURL(
+			"nullRelativeURL", __ -> null
+		).addRelativeURL(
+			"relativeURL1", Dummy::getRelativeURL1
+		).addRelativeURL(
+			"relativeURL2", Dummy::getRelativeURL2
 		).addString(
 			"string1", Dummy::getString1
 		).addString(
@@ -186,6 +192,11 @@ public class RepresentorTest {
 			asList(
 				"2016-06-15T09:00Z", "2017-04-03T18:36Z", null, "String 1",
 				"String 2"));
+
+		testFields(
+			_dummy, _representor.getRelativeURLFunctions(),
+			asList("nullRelativeURL", "relativeURL1", "relativeURL2"),
+			asList(null, "/first", "/second"));
 	}
 
 	@Test

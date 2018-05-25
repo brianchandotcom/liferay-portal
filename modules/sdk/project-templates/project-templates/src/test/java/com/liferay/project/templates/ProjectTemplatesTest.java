@@ -79,7 +79,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -951,7 +950,6 @@ public class ProjectTemplatesTest {
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateServiceBuilder() throws Exception {
 		String name = "guestbook";
@@ -964,7 +962,6 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, gradleProjectDir, name, packageName, "");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateServiceBuilderNestedPath() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
@@ -988,7 +985,6 @@ public class ProjectTemplatesTest {
 			":modules:nested:path:sample");
 	}
 
-	@Ignore
 	@Test
 	public void testBuildTemplateServiceBuilderWithDashes() throws Exception {
 		String name = "backend-integration";

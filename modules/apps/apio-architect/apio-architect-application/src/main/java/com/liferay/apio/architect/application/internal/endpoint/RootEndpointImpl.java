@@ -18,7 +18,6 @@ import static com.liferay.apio.architect.endpoint.ExceptionSupplierUtil.notFound
 
 import com.google.gson.JsonObject;
 
-import com.liferay.apio.architect.alias.RequestFunction;
 import com.liferay.apio.architect.documentation.APIDescription;
 import com.liferay.apio.architect.documentation.APITitle;
 import com.liferay.apio.architect.documentation.Documentation;
@@ -61,20 +60,13 @@ public class RootEndpointImpl implements RootEndpoint {
 
 	@Activate
 	public void activate() {
-		RequestFunction<Optional<APITitle>> apiTitleRequestFunction =
-			httpServletRequest -> _providerManager.provideOptional(
-				httpServletRequest, APITitle.class);
-
-		RequestFunction<Optional<APIDescription>>
-			apiDescriptionRequestFunction =
-				httpServletRequest -> _providerManager.provideOptional(
-					httpServletRequest, APIDescription.class);
-
 		_documentation = new Documentation(
-			apiTitleRequestFunction, apiDescriptionRequestFunction,
+			() -> _provide(APITitle.class),
+			() -> _provide(APIDescription.class),
 			() -> _representableManager.getRepresentors(),
 			() -> _collectionRouterManager.getCollectionRoutes(),
-			() -> _itemRouterManager.getItemRoutes());
+			() -> _itemRouterManager.getItemRoutes(),
+			() -> _nestedCollectionRouterManager.getNestedCollectionRoutes());
 	}
 
 	@Override
@@ -160,6 +152,10 @@ public class RootEndpointImpl implements RootEndpoint {
 					new Path(name, id))
 			)
 		);
+	}
+
+	private <T> Optional<T> _provide(Class<T> clazz) {
+		return _providerManager.provideOptional(_httpServletRequest, clazz);
 	}
 
 	@Reference

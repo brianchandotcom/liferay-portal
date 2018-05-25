@@ -61,6 +61,8 @@
 	"numberList2": [6, 7, 8, 9, 10],
 	"relatedCollection1": "localhost/p/model/first/models",
 	"relatedCollection2": "localhost/p/model/first/models",
+	"relativeURL1": "localhost/first",
+	"relativeURL2": "localhost/second",
 	"self": "localhost/p/model/first",
 	"string1": "Live long and prosper",
 	"string2": "Hypermedia",

@@ -372,6 +372,10 @@ public class PageWriter<T> {
 			(field, value) -> _pageMessageMapper.mapItemNumberListField(
 				_jsonObjectBuilder, itemJsonObjectBuilder, field, value));
 
+		fieldsWriter.writeRelativeURLFields(
+			(field, value) -> _pageMessageMapper.mapItemStringField(
+				_jsonObjectBuilder, itemJsonObjectBuilder, field, value));
+
 		fieldsWriter.writeStringFields(
 			(field, value) -> _pageMessageMapper.mapItemStringField(
 				_jsonObjectBuilder, itemJsonObjectBuilder, field, value));
@@ -489,6 +493,12 @@ public class PageWriter<T> {
 		fieldsWriter.writeNumberListFields(
 			(field, value) ->
 				_pageMessageMapper.mapItemEmbeddedResourceNumberListField(
+					_jsonObjectBuilder, itemJsonObjectBuilder,
+					embeddedPathElements, field, value));
+
+		fieldsWriter.writeRelativeURLFields(
+			(field, value) ->
+				_pageMessageMapper.mapItemEmbeddedResourceStringField(
 					_jsonObjectBuilder, itemJsonObjectBuilder,
 					embeddedPathElements, field, value));
 

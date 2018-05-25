@@ -26,14 +26,25 @@ import java.util.Optional;
 public class Operation {
 
 	public Operation(Form form, Method method, String name) {
+		this(form, method, name, false);
+	}
+
+	public Operation(
+		Form form, Method method, String name, boolean collection) {
+
 		_form = form;
 
 		this.method = method;
 		this.name = name;
+		this.collection = collection;
 	}
 
 	public Operation(Method method, String name) {
-		this(null, method, name);
+		this(null, method, name, false);
+	}
+
+	public Operation(Method method, String name, boolean collection) {
+		this(null, method, name, collection);
 	}
 
 	/**
@@ -46,6 +57,8 @@ public class Operation {
 	public Optional<Form> getFormOptional() {
 		return Optional.ofNullable(_form);
 	}
+
+	public final boolean collection;
 
 	/**
 	 * The operation's method.

@@ -34,6 +34,7 @@ import com.liferay.apio.architect.wiring.osgi.manager.router.NestedCollectionRou
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper.Emitter;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -52,6 +53,11 @@ public class NestedCollectionRouterManagerImpl
 
 	public NestedCollectionRouterManagerImpl() {
 		super(NestedCollectionRouter.class, 2);
+	}
+
+	public Map<String, NestedCollectionRoutes> getNestedCollectionRoutes() {
+		return INSTANCE.getNestedCollectionRoutesMap(
+			this::_computeNestedCollectionRoutes);
 	}
 
 	@Override

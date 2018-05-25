@@ -20,6 +20,8 @@ import com.liferay.apio.architect.pagination.PageType;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.url.ServerURL;
 
+import java.net.URI;
+
 import javax.ws.rs.core.UriBuilder;
 
 /**
@@ -32,6 +34,30 @@ import javax.ws.rs.core.UriBuilder;
  * @author Alejandro Hernández
  */
 public final class URLCreator {
+
+	/**
+	 * Returns the absolute version of a relative URL
+	 *
+	 * @param  serverURL the server URL
+	 * @param  relativeURL the relative URL
+	 * @return the absolute URL
+	 * @review
+	 */
+	public static String createAbsoluteURL(
+		ServerURL serverURL, String relativeURL) {
+
+		if ((relativeURL == null) || relativeURL.isEmpty()) {
+			return null;
+		}
+
+		URI uri = UriBuilder.fromUri(
+			serverURL.get()
+		).path(
+			relativeURL
+		).build();
+
+		return uri.toString();
+	}
 
 	/**
 	 * Returns the URL for a binary resource.

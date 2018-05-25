@@ -14,41 +14,17 @@
 
 package com.liferay.apio.architect.jaxrs.json.internal.writer;
 
-import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
-
 import com.liferay.apio.architect.documentation.Documentation;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.jaxrs.json.internal.writer.base.BaseMessageBodyWriter;
 import com.liferay.apio.architect.message.json.DocumentationMessageMapper;
 import com.liferay.apio.architect.request.RequestInfo;
-import com.liferay.apio.architect.response.control.Embedded;
-import com.liferay.apio.architect.response.control.Fields;
-import com.liferay.apio.architect.url.ServerURL;
-import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
 import com.liferay.apio.architect.wiring.osgi.manager.message.json.DocumentationMessageMapperManager;
 import com.liferay.apio.architect.writer.DocumentationWriter;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import java.nio.charset.StandardCharsets;
-
-import java.util.Collections;
-import java.util.Locale;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-
-import javax.ws.rs.NotSupportedException;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
@@ -57,30 +33,26 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Writes the API documentation by using the {@link DocumentationMessageMapper}
+ * that corresponds to the media type.
+ *
  * @author Alejandro Hernández
+ * @review
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(liferay.apio.architect.application=true)",
 		"osgi.jaxrs.extension=true"
-	}
+	},
+	service = MessageBodyWriter.class
 )
 @Provider
 public class DocumentationMessageBodyWriter
-	implements MessageBodyWriter<Documentation> {
+	extends BaseMessageBodyWriter<Documentation, DocumentationMessageMapper> {
 
-	public long getSize(
-		Documentation documentation, Class<?> aClass, Type type,
-		Annotation[] annotations, MediaType mediaType) {
-
-		return -1;
-	}
-
-	public boolean isWriteable(
-		Class<?> aClass, Type genericType, Annotation[] annotations,
-		MediaType mediaType) {
-
-		if (aClass == Documentation.class) {
+	@Override
+	public boolean canWrite(Class<?> clazz, Type genericType) {
+		if (clazz == Documentation.class) {
 			return true;
 		}
 
@@ -88,52 +60,18 @@ public class DocumentationMessageBodyWriter
 	}
 
 	@Override
-	public void writeTo(
-			Documentation documentation, Class<?> aClass, Type type,
-			Annotation[] annotations, MediaType mediaType,
-			MultivaluedMap<String, Object> httpHeaders,
-			OutputStream outputStream)
-		throws IOException, WebApplicationException {
+	public Optional<DocumentationMessageMapper> getMessageMapperOptional(
+		Request request) {
 
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-			outputStream, StandardCharsets.UTF_8);
+		return _documentationMessageMapperManager.
+			getDocumentationMessageMapperOptional(request);
+	}
 
-		PrintWriter printWriter = new PrintWriter(outputStreamWriter, true);
-
-		Optional<DocumentationMessageMapper> optional =
-			_documentationMessageMapperManager.
-				getDocumentationMessageMapperOptional(_request);
-
-		DocumentationMessageMapper documentationMessageMapper =
-			optional.orElseThrow(NotSupportedException::new);
-
-		RequestInfo requestInfo = RequestInfo.create(
-			builder -> builder.httpHeaders(
-				_httpHeaders
-			).httpServletRequest(
-				_httpServletRequest
-			).serverURL(
-				_providerManager.provideMandatory(
-					_httpServletRequest, ServerURL.class)
-			).embedded(
-				_providerManager.provideOptional(
-					_httpServletRequest, Embedded.class
-				).orElse(
-					__ -> false
-				)
-			).fields(
-				_providerManager.provideOptional(
-					_httpServletRequest, Fields.class
-				).orElse(
-					__ -> string -> true
-				)
-			).language(
-				_providerManager.provideOptional(
-					_httpServletRequest, Language.class
-				).orElse(
-					Locale::getDefault
-				)
-			).build());
+	@Override
+	protected String write(
+		Documentation documentation,
+		DocumentationMessageMapper documentationMessageMapper,
+		RequestInfo requestInfo) {
 
 		DocumentationWriter documentationWriter = DocumentationWriter.create(
 			builder -> builder.documentation(
@@ -144,30 +82,11 @@ public class DocumentationMessageBodyWriter
 				requestInfo
 			).build());
 
-		httpHeaders.put(
-			CONTENT_TYPE,
-			Collections.singletonList(
-				documentationMessageMapper.getMediaType()));
-
-		printWriter.println(documentationWriter.write());
-
-		printWriter.close();
+		return documentationWriter.write();
 	}
 
 	@Reference
 	private DocumentationMessageMapperManager
 		_documentationMessageMapperManager;
-
-	@Context
-	private HttpHeaders _httpHeaders;
-
-	@Context
-	private HttpServletRequest _httpServletRequest;
-
-	@Reference
-	private ProviderManager _providerManager;
-
-	@Context
-	private Request _request;
 
 }

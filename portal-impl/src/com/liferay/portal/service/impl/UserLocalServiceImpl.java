@@ -2062,6 +2062,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param  externalReferenceCode the user's external reference code
 	 * @return the user with the externalReferenceCode, or <code>null</code> if
 	 *         no user could be found
+	 * @review
 	 */
 	@Override
 	public User fetchUserByExternalReferenceCode(
@@ -5704,6 +5705,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *         user.
 	 *
 	 * @return the user
+	 * @review
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override

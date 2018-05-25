@@ -444,6 +444,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @param  externalReferenceCode the user group's external reference code
 	 * @return the user group with the externalReferenceCode, or
 	 *         <code>null</code> if no user could be found
+	 * @review
 	 */
 	@Override
 	public UserGroup fetchUserGroupByExternalReferenceCode(
@@ -1043,6 +1044,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *         <code>null</code>). Can set expando bridge attributes for the
 	 *         user group.
 	 * @return the user group
+	 * @review
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override

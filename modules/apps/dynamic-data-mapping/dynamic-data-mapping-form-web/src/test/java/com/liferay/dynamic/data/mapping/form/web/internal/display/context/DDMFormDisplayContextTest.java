@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -152,7 +153,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			mock(DDMFormInstanceService.class),
 			mock(DDMFormInstanceVersionLocalService.class),
 			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
-			mock(DDMFormValuesMerger.class),
+			mock(DDMFormValuesMerger.class), mock(GroupLocalService.class),
 			mock(WorkflowDefinitionLinkLocalService.class));
 	}
 

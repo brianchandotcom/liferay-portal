@@ -78,7 +78,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -104,6 +104,8 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		sb.append(description);
 		sb.append(", addedByLDAPImport=");
 		sb.append(addedByLDAPImport);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -165,6 +167,13 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 
 		userGroupImpl.setAddedByLDAPImport(addedByLDAPImport);
 
+		if (externalReferenceCode == null) {
+			userGroupImpl.setExternalReferenceCode("");
+		}
+		else {
+			userGroupImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		userGroupImpl.resetOriginalValues();
 
 		return userGroupImpl;
@@ -189,6 +198,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		description = objectInput.readUTF();
 
 		addedByLDAPImport = objectInput.readBoolean();
+		externalReferenceCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -236,6 +246,13 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		}
 
 		objectOutput.writeBoolean(addedByLDAPImport);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 	}
 
 	public long mvccVersion;
@@ -250,4 +267,5 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	public String name;
 	public String description;
 	public boolean addedByLDAPImport;
+	public String externalReferenceCode;
 }

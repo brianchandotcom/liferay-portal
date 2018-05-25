@@ -46,7 +46,7 @@ public class RuleGroupInstancesMVCResourceCommand
 
 	@Override
 	protected void doServeResource(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		RequestDispatcher requestDispatcher =

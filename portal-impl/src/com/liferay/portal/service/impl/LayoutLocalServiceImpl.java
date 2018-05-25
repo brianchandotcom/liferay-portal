@@ -1632,7 +1632,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	/**
 	 * Returns all the layouts whose friendly URLs are <code>null</code>
 	 *
-	 * @return all the layouts whose friendly URLs are <code>null</code>
+	 * @return     all the layouts whose friendly URLs are <code>null</code>
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated

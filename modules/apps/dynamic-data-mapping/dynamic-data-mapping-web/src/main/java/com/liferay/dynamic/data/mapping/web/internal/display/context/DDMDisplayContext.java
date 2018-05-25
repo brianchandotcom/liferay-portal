@@ -531,7 +531,7 @@ public class DDMDisplayContext {
 							"type", DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
 
 						if (Validator.isNull(getTemplateTypeValue())) {
-							message = "add-form-template";
+							message = "add-display-template";
 						}
 
 						addPrimaryDropdownItem(

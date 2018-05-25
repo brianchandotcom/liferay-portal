@@ -21,6 +21,7 @@ import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValue
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,8 +54,9 @@ public class CPCompareContentConfigurationAction
 				new CPCompareContentDisplayContext(
 					_cpDefinitionHelper, _cpDefinitionService,
 					_cpDefinitionSpecificationOptionValueService,
-					_cpMeasurementUnitService, _cpOptionCategoryService,
-					_ddmFormFieldTypeServicesTracker, httpServletRequest);
+					_cpInstanceHelper, _cpMeasurementUnitService,
+					_cpOptionCategoryService, _ddmFormFieldTypeServicesTracker,
+					httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -88,6 +90,9 @@ public class CPCompareContentConfigurationAction
 	@Reference
 	private CPDefinitionSpecificationOptionValueService
 		_cpDefinitionSpecificationOptionValueService;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private CPMeasurementUnitService _cpMeasurementUnitService;

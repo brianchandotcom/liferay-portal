@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.model.CPOptionCategory;
@@ -30,6 +31,7 @@ import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.util.CPCompareUtil;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -64,6 +66,7 @@ public class CPCompareContentDisplayContext {
 			CPDefinitionService cpDefinitionService,
 			CPDefinitionSpecificationOptionValueService
 				cpDefinitionSpecificationOptionValueService,
+			CPInstanceHelper cpInstanceHelper,
 			CPMeasurementUnitService cpMeasurementUnitService,
 			CPOptionCategoryService cpOptionCategoryService,
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
@@ -74,6 +77,7 @@ public class CPCompareContentDisplayContext {
 		_cpDefinitionService = cpDefinitionService;
 		_cpDefinitionSpecificationOptionValueService =
 			cpDefinitionSpecificationOptionValueService;
+		_cpInstanceHelper = cpInstanceHelper;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
 		_cpOptionCategoryService = cpOptionCategoryService;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
@@ -219,6 +223,13 @@ public class CPCompareContentDisplayContext {
 		}
 
 		return cpSpecificationOptions;
+	}
+
+	public CPInstance getDefaultCPInstance(CPDefinition cpDefinition)
+		throws Exception {
+
+		return _cpInstanceHelper.getCPInstance(
+			cpDefinition.getCPDefinitionId(), null);
 	}
 
 	public String getDeleteCompareProductURL(long cpDefinitionId) {
@@ -380,6 +391,7 @@ public class CPCompareContentDisplayContext {
 	private final CPDefinitionService _cpDefinitionService;
 	private final CPDefinitionSpecificationOptionValueService
 		_cpDefinitionSpecificationOptionValueService;
+	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 	private final CPOptionCategoryService _cpOptionCategoryService;
 	private final DDMFormFieldTypeServicesTracker

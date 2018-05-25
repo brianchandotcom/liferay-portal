@@ -47,6 +47,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 
 					<%
 					for (CPDefinition cpDefinition : cpDefinitions) {
+						CPInstance cpInstance = cpCompareContentDisplayContext.getDefaultCPInstance(cpDefinition);
 					%>
 
 						<td>
@@ -74,35 +75,52 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 								</a>
 
 								<div class="card-section-expand">
-									<div class="card-subtitle">Brand</div>
 									<div class="card-title">
 										<a href="<%= HtmlUtil.escape(cpCompareContentDisplayContext.getProductFriendlyURL(cpDefinition.getCPDefinitionId())) %>">
 											<%= HtmlUtil.escape(cpDefinition.getName(languageId)) %>
 										</a>
 									</div>
+
+									<c:if test="<%= cpInstance != null %>">
+										<div class="card-subtitle">
+											<liferay-ui:message arguments="<%= StringPool.BLANK %> " key="sku-x" />
+
+											<%= cpInstance.getSku() %>
+										</div>
+									</c:if>
 								</div>
 
-								<div class="card-subtitle">SKU: 123456</div>
 								<div class="autofit-float autofit-row autofit-row-end product-price-section">
-									<div class="autofit-col autofit-col-expand">
-										<div class="card-subtitle">Item: #888888</div>
-									</div>
-
 									<div class="autofit-col">
-										<span class="product-price">$87.00 / ea</span>
+										<span class="product-price">
+											<liferay-commerce:price
+												CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>"
+											/>
+										</span>
 									</div>
 								</div>
+
+								<%
+								String quantityInputId = cpDefinition.getCPDefinitionId() + "_quantity";
+								%>
 
 								<div class="product-footer">
-									<div class="autofit-row product-actions">
-										<div class="autofit-col autofit-col-expand">
-											<input class="form-control form-control-sm" type="number">
-										</div>
+									<c:if test="<%= cpInstance != null %>">
+										<div class="autofit-row product-actions">
+											<div class="autofit-col autofit-col-expand">
+												<liferay-commerce:quantity-input CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" name="<%= quantityInputId %>" useSelect="<%= false %>" />
+											</div>
 
-										<div class="autofit-col">
-											<button class="btn btn-primary btn-sm" type="button">Add to Cart</button>
+											<div class="autofit-col">
+												<liferay-commerce-cart:add-to-cart
+													CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>"
+													CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
+													elementClasses="btn-block btn-primary text-truncate"
+													taglibQuantityInputId='<%= renderResponse.getNamespace() + quantityInputId %>'
+												/>
+											</div>
 										</div>
-									</div>
+									</c:if>
 
 									<div class="product-subactions">
 										<a href="#placeholder">Add to list +</a>

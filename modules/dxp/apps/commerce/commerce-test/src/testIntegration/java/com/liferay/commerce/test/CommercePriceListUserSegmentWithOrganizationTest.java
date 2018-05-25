@@ -20,15 +20,16 @@ import com.liferay.commerce.test.util.CommercePriceListTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -66,10 +67,8 @@ public class CommercePriceListUserSegmentWithOrganizationTest {
 
 		_user = UserTestUtil.addUser();
 
-		_role1 = _roleLocalService.addRole(
-			_user.getUserId(), null, 0, "Foo", null, null, 0, null, null);
-		_role2 = _roleLocalService.addRole(
-			_user.getUserId(), null, 0, "Bar", null, null, 0, null, null);
+		_role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		_role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 	}
 
 	@Test
@@ -390,9 +389,6 @@ public class CommercePriceListUserSegmentWithOrganizationTest {
 
 	@DeleteAfterTestRun
 	private Role _role2;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

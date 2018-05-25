@@ -22,6 +22,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.scr.reference.dynamic.greedy.test.ComponentController;
 import com.liferay.scr.reference.dynamic.greedy.test.DynamicGreedyComponent;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
@@ -58,18 +59,14 @@ public class SCRReferenceDynamicGreedyTest {
 			"com.liferay.scr.reference.dynamic.greedy.test.internal." +
 				"DynamicGreedyAtLeastOneComponent",
 			"at_least_one",
-			dynamicGreedyOptionalComponent -> {
-				List<String> bindingCalls =
-					dynamicGreedyOptionalComponent.getBindingCalls();
-
+			bindingCalls -> {
 				Assert.assertEquals(
-					bindingCalls.toString(), 2, bindingCalls.size());
-				Assert.assertEquals(
-					"bindAtLeastOneDependency-" + _service1,
-					bindingCalls.get(0));
-				Assert.assertEquals(
-					"bindAtLeastOneDependency-" + _service2,
-					bindingCalls.get(1));
+					bindingCalls,
+					Arrays.asList(
+						"bindAtLeastOneDependency-" + _service1, "step1",
+						"bindAtLeastOneDependency-" + _service2, "step2",
+						"unbindAtLeastOneDependency-" + _service1, "step3",
+						"unbindAtLeastOneDependency-" + _service2));
 			});
 	}
 
@@ -79,21 +76,14 @@ public class SCRReferenceDynamicGreedyTest {
 			"com.liferay.scr.reference.dynamic.greedy.test.internal." +
 				"DynamicGreedyMandatoryComponent",
 			"mandatory",
-			dynamicGreedyOptionalComponent -> {
-				List<String> bindingCalls =
-					dynamicGreedyOptionalComponent.getBindingCalls();
-
+			bindingCalls -> {
 				Assert.assertEquals(
-					bindingCalls.toString(), 3, bindingCalls.size());
-				Assert.assertEquals(
-					"bindMandatoryDependency-" + _service1,
-					bindingCalls.get(0));
-				Assert.assertEquals(
-					"bindMandatoryDependency-" + _service2,
-					bindingCalls.get(1));
-				Assert.assertEquals(
-					"unbindMandatoryDependency-" + _service1,
-					bindingCalls.get(2));
+					bindingCalls,
+					Arrays.asList(
+						"bindMandatoryDependency-" + _service1, "step1",
+						"bindMandatoryDependency-" + _service2,
+						"unbindMandatoryDependency-" + _service1, "step2",
+						"step3", "unbindMandatoryDependency-" + _service2));
 			});
 	}
 
@@ -103,16 +93,14 @@ public class SCRReferenceDynamicGreedyTest {
 			"com.liferay.scr.reference.dynamic.greedy.test.internal." +
 				"DynamicGreedyMultipleComponent",
 			"multiple",
-			dynamicGreedyOptionalComponent -> {
-				List<String> bindingCalls =
-					dynamicGreedyOptionalComponent.getBindingCalls();
-
+			bindingCalls -> {
 				Assert.assertEquals(
-					bindingCalls.toString(), 2, bindingCalls.size());
-				Assert.assertEquals(
-					"bindMultipleDependency-" + _service1, bindingCalls.get(0));
-				Assert.assertEquals(
-					"bindMultipleDependency-" + _service2, bindingCalls.get(1));
+					bindingCalls,
+					Arrays.asList(
+						"bindMultipleDependency-" + _service1, "step1",
+						"bindMultipleDependency-" + _service2, "step2",
+						"unbindMultipleDependency-" + _service1, "step3",
+						"unbindMultipleDependency-" + _service2));
 			});
 	}
 
@@ -122,25 +110,20 @@ public class SCRReferenceDynamicGreedyTest {
 			"com.liferay.scr.reference.dynamic.greedy.test.internal." +
 				"DynamicGreedyOptionalComponent",
 			"optional",
-			dynamicGreedyOptionalComponent -> {
-				List<String> bindingCalls =
-					dynamicGreedyOptionalComponent.getBindingCalls();
-
+			bindingCalls -> {
 				Assert.assertEquals(
-					bindingCalls.toString(), 3, bindingCalls.size());
-				Assert.assertEquals(
-					"bindOptionalDependency-" + _service1, bindingCalls.get(0));
-				Assert.assertEquals(
-					"bindOptionalDependency-" + _service2, bindingCalls.get(1));
-				Assert.assertEquals(
-					"unbindOptionalDependency-" + _service1,
-					bindingCalls.get(2));
+					bindingCalls,
+					Arrays.asList(
+						"bindOptionalDependency-" + _service1, "step1",
+						"bindOptionalDependency-" + _service2,
+						"unbindOptionalDependency-" + _service1, "step2",
+						"step3", "unbindOptionalDependency-" + _service2));
 			});
 	}
 
 	private void _testDynamicGreedyComponent(
 			String name, String referenceCardinality,
-			Consumer<DynamicGreedyComponent> componentAssertion)
+			Consumer<List<String>> bindingCallsConsumer)
 		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(DynamicGreedyComponent.class);
@@ -157,6 +140,8 @@ public class SCRReferenceDynamicGreedyTest {
 			bundleContext.registerService(Object.class, _service1, properties);
 
 		ServiceRegistration<?> serviceRegistration2 = null;
+
+		List<String> bindingCalls = null;
 
 		try {
 			Collection<ServiceReference<DynamicGreedyComponent>>
@@ -179,19 +164,29 @@ public class SCRReferenceDynamicGreedyTest {
 			DynamicGreedyComponent dynamicGreedyComponent =
 				bundleContext.getService(serviceReference);
 
+			bindingCalls = dynamicGreedyComponent.getBindingCalls();
+
+			bundleContext.ungetService(serviceReference);
+
+			bindingCalls.add("step1");
+
 			properties.put("service.ranking", 1);
 
 			serviceRegistration2 = bundleContext.registerService(
 				Object.class, _service2, properties);
 
-			componentAssertion.accept(dynamicGreedyComponent);
+			bindingCalls.add("step2");
 		}
 		finally {
 			serviceRegistration.unregister();
 
+			bindingCalls.add("step3");
+
 			if (serviceRegistration2 != null) {
 				serviceRegistration2.unregister();
 			}
+
+			bindingCallsConsumer.accept(bindingCalls);
 
 			_componentController.disableComponent(name);
 		}

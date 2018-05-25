@@ -20,10 +20,6 @@
 SelectTeamDisplayContext selectTeamDisplayContext = new SelectTeamDisplayContext(renderRequest, renderResponse, request);
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= selectTeamDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= selectTeamDisplayContext.getClearResultsURL() %>"
 	componentId="selectTeamWebManagementToolbar"

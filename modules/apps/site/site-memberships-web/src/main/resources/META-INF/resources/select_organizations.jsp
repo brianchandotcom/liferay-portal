@@ -20,10 +20,6 @@
 SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = new SelectOrganizationsDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= selectOrganizationsDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= selectOrganizationsDisplayContext.getClearResultsURL() %>"
 	componentId="organizationsManagementToolbar"

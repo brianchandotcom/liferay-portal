@@ -30,10 +30,6 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 
 	<aui:form action="<%= deleteArchivedSetupsURL %>" name="fm">
 		<div class="portlet-configuration-body-content">
-			<clay:navigation-bar
-				navigationItems="<%= portletConfigurationTemplatesDisplayContext.getNavigationItems() %>"
-			/>
-
 			<clay:management-toolbar
 				actionDropdownItems="<%= portletConfigurationTemplatesDisplayContext.getActionDropdownItems() %>"
 				componentId="archivedSettingsManagementToolbar"

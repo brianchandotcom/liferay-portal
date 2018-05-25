@@ -20,10 +20,6 @@
 SelectSiteRolesDisplayContext selectSiteRolesDisplayContext = new SelectSiteRolesDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= selectSiteRolesDisplayContext.getClearResultsURL() %>"
 	componentId="siteRolesManagementToolbar"

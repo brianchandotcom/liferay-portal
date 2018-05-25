@@ -20,11 +20,6 @@
 String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= siteNavigationAdminDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	actionDropdownItems="<%= siteNavigationAdminDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= siteNavigationAdminDisplayContext.getClearResultsURL() %>"

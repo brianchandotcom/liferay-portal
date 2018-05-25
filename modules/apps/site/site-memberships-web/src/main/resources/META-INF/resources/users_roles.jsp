@@ -20,10 +20,6 @@
 UserRolesDisplayContext userRolesDisplayContext = new UserRolesDisplayContext(request, renderRequest, renderResponse);
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= siteMembershipsDisplayContext.getSiteRolesNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= userRolesDisplayContext.getClearResultsURL() %>"
 	componentId="userGroupRoleRoleManagementToolbar"

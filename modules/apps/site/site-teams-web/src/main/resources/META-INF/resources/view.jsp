@@ -20,11 +20,6 @@
 SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(renderRequest, renderResponse, request);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= siteTeamsDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	actionDropdownItems="<%= siteTeamsDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= siteTeamsDisplayContext.getClearResultsURL() %>"

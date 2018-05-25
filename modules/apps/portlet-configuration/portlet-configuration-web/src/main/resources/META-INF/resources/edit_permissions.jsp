@@ -30,10 +30,6 @@ if (Validator.isNotNull(portletConfigurationPermissionsDisplayContext.getModelRe
 
 <div class="edit-permissions portlet-configuration-edit-permissions">
 	<div class="portlet-configuration-body-content">
-		<clay:navigation-bar
-			navigationItems="<%= portletConfigurationPermissionsDisplayContext.getNavigationItems() %>"
-		/>
-
 		<clay:management-toolbar
 			clearResultsURL="<%= portletConfigurationPermissionsDisplayContext.getClearResultsURL() %>"
 			itemsTotal="<%= roleSearchContainer.getTotal() %>"

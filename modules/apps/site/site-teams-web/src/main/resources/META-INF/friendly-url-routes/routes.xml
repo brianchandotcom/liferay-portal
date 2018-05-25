@@ -30,11 +30,13 @@
 	<route>
 		<pattern>/teams</pattern>
 		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="p_v_l_s_g_id" />
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern></pattern>
 		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="p_v_l_s_g_id" />
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 </routes>

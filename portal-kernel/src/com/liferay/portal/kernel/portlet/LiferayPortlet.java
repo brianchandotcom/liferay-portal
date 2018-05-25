@@ -150,7 +150,12 @@ public class LiferayPortlet extends GenericPortlet {
 			return;
 		}
 
-		super.serveResource(resourceRequest, resourceResponse);
+		boolean autoForward = GetterUtil.getBoolean(
+			getInitParameter("javax.portlet.automaticResourceDispatching"));
+
+		if (autoForward) {
+			super.serveResource(resourceRequest, resourceResponse);
+		}
 	}
 
 	protected void addSuccessMessage(

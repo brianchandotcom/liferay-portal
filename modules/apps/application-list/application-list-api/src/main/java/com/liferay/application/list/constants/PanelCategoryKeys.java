@@ -45,10 +45,10 @@ public interface PanelCategoryKeys {
 	public static final String SITE_ADMINISTRATION = "site_administration";
 
 	public static final String SITE_ADMINISTRATION_BUILD =
-		"sites_administration.build";
+		"site_administration.build";
 
 	public static final String SITE_ADMINISTRATION_CATEGORIZATION =
-		"sites_administration.categorization";
+		"site_administration.categorization";
 
 	public static final String SITE_ADMINISTRATION_CONFIGURATION =
 		PortletCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION;
@@ -66,10 +66,10 @@ public interface PanelCategoryKeys {
 		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING;
 
 	public static final String SITE_ADMINISTRATION_RECYCLE_BIN =
-		"sites_administration.recycle_bin";
+		"site_administration.recycle_bin";
 
 	public static final String SITES_ADMINISTRATION_MY_SITES =
-		"sites_administration.my_sites";
+		"site_administration.my_sites";
 
 	public static final String USER = "user";
 

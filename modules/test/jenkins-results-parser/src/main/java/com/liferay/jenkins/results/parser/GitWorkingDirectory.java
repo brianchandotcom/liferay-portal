@@ -302,7 +302,9 @@ public class GitWorkingDirectory {
 		Branch tempBranch = null;
 
 		try {
-			if (branchName.equals(currentBranch.getName())) {
+			if ((currentBranch == null) ||
+				branchName.equals(currentBranch.getName())) {
+
 				String tempBranchName = "temp-" + System.currentTimeMillis();
 
 				tempBranch = createLocalBranch(tempBranchName);
@@ -810,13 +812,18 @@ public class GitWorkingDirectory {
 	public Branch getLocalRebasedPullRequestBranch(PullRequest pullRequest) {
 		Branch currentBranch = getCurrentBranch();
 
-		String currentBranchName = currentBranch.getName();
+		String currentBranchName = null;
+
+		if (currentBranch != null) {
+			currentBranchName = currentBranch.getName();
+		}
 
 		Branch tempBranch = null;
 		Remote senderTempRemote = null;
 
 		try {
-			if (currentBranchName.equals(
+			if ((currentBranchName == null) ||
+				currentBranchName.equals(
 					pullRequest.getLocalSenderBranchName())) {
 
 				tempBranch = createLocalBranch(
@@ -878,6 +885,11 @@ public class GitWorkingDirectory {
 		List<File> modifiedFiles = new ArrayList<>();
 
 		Branch currentBranch = getCurrentBranch();
+
+		if (currentBranch == null) {
+			throw new RuntimeException(
+				"Unable to determine the current branch");
+		}
 
 		String bashCommand = JenkinsResultsParserUtil.combine(
 			"git diff --diff-filter=AM --name-only ",
@@ -1158,6 +1170,13 @@ public class GitWorkingDirectory {
 
 	public boolean pushToRemote(boolean force, Remote remote) {
 		Branch currentBranch = getCurrentBranch();
+
+		if (currentBranch == null) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to push current branch to remote branch ",
+					"because the current branch is invalid"));
+		}
 
 		return pushToRemote(
 			force, currentBranch, currentBranch.getName(), remote);

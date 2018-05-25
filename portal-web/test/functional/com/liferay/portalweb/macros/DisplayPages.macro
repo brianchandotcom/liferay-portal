@@ -79,8 +79,13 @@
 	</command>
 
 	<command name="viewPGViaFriendlyURL">
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="${siteName}/-/${friendlyURL}" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="StringUtil#toLowerCase('${siteName}')" name="siteNameURL" />
+
+		<var method="StringUtil#replace('${siteNameURL}', ' ', '-')" name="siteNameURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/${siteNameURL}/-/${friendlyURL}" />
 		</execute>
 
 		<for list="${contentList}" param="content">

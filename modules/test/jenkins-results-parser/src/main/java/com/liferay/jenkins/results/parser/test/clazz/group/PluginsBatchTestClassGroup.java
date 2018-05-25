@@ -15,8 +15,8 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PluginsGitWorkingDirectory;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,11 +53,8 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 	}
 
-	protected PluginsBatchTestClassGroup(
-		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
-		String testSuiteName) {
-
-		super(batchName, portalGitWorkingDirectory, testSuiteName);
+	protected PluginsBatchTestClassGroup(String batchName, Job job) {
+		super(batchName, job);
 
 		Properties portalReleaseProperties =
 			JenkinsResultsParserUtil.getProperties(

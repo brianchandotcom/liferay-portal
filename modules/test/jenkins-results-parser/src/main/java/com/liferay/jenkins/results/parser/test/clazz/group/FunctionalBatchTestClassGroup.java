@@ -15,7 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.Job;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,11 +41,8 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 		return _relevantTestBatchRunPropertyQuery;
 	}
 
-	protected FunctionalBatchTestClassGroup(
-		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
-		String testSuiteName) {
-
-		super(batchName, portalGitWorkingDirectory, testSuiteName);
+	protected FunctionalBatchTestClassGroup(String batchName, Job job) {
+		super(batchName, job);
 
 		axisTestClassGroups.put(0, new AxisTestClassGroup(this, 0));
 

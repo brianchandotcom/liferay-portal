@@ -15,7 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.Job;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,11 +28,8 @@ import java.util.List;
  */
 public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 
-	protected ModulesJUnitBatchTestClassGroup(
-		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
-		String testSuiteName) {
-
-		super(batchName, portalGitWorkingDirectory, testSuiteName);
+	protected ModulesJUnitBatchTestClassGroup(String batchName, Job job) {
+		super(batchName, job);
 	}
 
 	@Override

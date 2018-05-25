@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.headless.product.apio.internal.resource;
 
+import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
+
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -23,31 +25,36 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.headless.product.apio.identifier.ProductDefinitionIdentifier;
 import com.liferay.commerce.headless.product.apio.identifier.ProductOptionIdentifier;
+import com.liferay.commerce.headless.product.apio.internal.form.ProductOptionForm;
 import com.liferay.commerce.headless.product.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.headless.product.apio.internal.util.ProductOptionHelper;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.search.CPDefinitionOptionRelIndexer;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.util.Collections;
-import java.util.List;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Zoltán Takács
@@ -64,6 +71,10 @@ public class ProductOptionNestedCollectionResource
 
 		return builder.addGetter(
 			this::_getPageItems
+		).addCreator(
+            this::_addCPDefinitionOptionRel,
+			_hasPermission.forAddingEntries(CPDefinitionOptionRel.class),
+            ProductOptionForm::buildForm
 		).build();
 	}
 
@@ -78,6 +89,9 @@ public class ProductOptionNestedCollectionResource
 
 		return builder.addGetter(
 			this::_getCPDefinitionOptionRel
+		).addRemover(
+			idempotent(_cpDefinitionOptionRelService::deleteCPDefinitionOptionRel),
+			_hasPermission.forDeleting(CPDefinitionOptionRel.class)
 		).build();
 	}
 
@@ -187,6 +201,34 @@ public class ProductOptionNestedCollectionResource
 		}
 	}
 
+	private Document _addCPDefinitionOptionRel(Long cpDefinitionId, ProductOptionForm productOptionForm) {
+		try {
+
+			User user = _userLocalService.getUserById(
+					PrincipalThreadLocal.getUserId());
+			CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(cpDefinitionId);
+
+			ServiceContext serviceContext = new ServiceContext();
+			serviceContext.setAddGroupPermissions(true);
+			serviceContext.setAddGuestPermissions(true);
+			serviceContext.setCompanyId(user.getCompanyId());
+			serviceContext.setTimeZone(user.getTimeZone());
+			serviceContext.setUserId(user.getUserId());
+			serviceContext.setScopeGroupId(cpDefinition.getGroupId());
+
+			CPDefinitionOptionRel cpDefinitionOptionRel = _cpDefinitionOptionRelService.addCPDefinitionOptionRel(cpDefinitionId, productOptionForm.getOptionId(),
+					serviceContext);
+
+			Indexer<CPDefinitionOptionRel> indexer = _productIndexerHelper.getIndexer(
+					CPDefinitionOptionRel.class);
+
+			return indexer.getDocument(cpDefinitionOptionRel);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+    }
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductOptionNestedCollectionResource.class);
 
@@ -195,5 +237,14 @@ public class ProductOptionNestedCollectionResource
 
 	@Reference
 	private ProductIndexerHelper _productIndexerHelper;
+
+	@Reference
+	private HasPermission _hasPermission;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

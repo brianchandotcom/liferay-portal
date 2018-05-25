@@ -15,7 +15,9 @@
 package com.liferay.commerce.currency.service.impl;
 
 import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
+import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
+import com.liferay.commerce.currency.constants.RoundingTypeConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
@@ -24,7 +26,6 @@ import com.liferay.commerce.currency.service.base.CommerceCurrencyLocalServiceBa
 import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.comparator.CommerceCurrencyPriorityComparator;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -45,6 +47,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,7 +65,8 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public CommerceCurrency addCommerceCurrency(
 			String code, Map<Locale, String> nameMap, BigDecimal rate,
-			String roundingType, boolean primary, double priority,
+			String formatPattern, int maxFractionDigits, int minFractionDigits,
+			String roundingMode, boolean primary, double priority,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -74,6 +78,22 @@ public class CommerceCurrencyLocalServiceImpl
 		}
 
 		validate(0, groupId, code, nameMap, primary);
+
+		RoundingTypeConfiguration roundingTypeConfiguration =
+			_configurationProvider.getConfiguration(
+				RoundingTypeConfiguration.class,
+				new SystemSettingsLocator(RoundingTypeConstants.SERVICE_NAME));
+
+		if (Validator.isNull(formatPattern)) {
+			formatPattern = roundingTypeConfiguration.formatPattern();
+		}
+
+		if (Validator.isNull(roundingMode)) {
+			RoundingMode roundingModeEnum =
+				roundingTypeConfiguration.roundingMode();
+
+			roundingMode = roundingModeEnum.name();
+		}
 
 		long commerceCurrencyId = counterLocalService.increment();
 
@@ -88,7 +108,10 @@ public class CommerceCurrencyLocalServiceImpl
 		commerceCurrency.setCode(code);
 		commerceCurrency.setNameMap(nameMap);
 		commerceCurrency.setRate(rate);
-		commerceCurrency.setRoundingType(roundingType);
+		commerceCurrency.setFormatPattern(formatPattern);
+		commerceCurrency.setMaxFractionDigits(maxFractionDigits);
+		commerceCurrency.setMinFractionDigits(minFractionDigits);
+		commerceCurrency.setRoundingMode(roundingMode);
 		commerceCurrency.setPrimary(primary);
 		commerceCurrency.setPriority(priority);
 		commerceCurrency.setActive(active);
@@ -197,9 +220,21 @@ public class CommerceCurrencyLocalServiceImpl
 
 			nameMap.put(serviceContext.getLocale(), name);
 
-			addCommerceCurrency(
-				code, nameMap, BigDecimal.ONE, StringPool.BLANK, primary,
-				priority, true, serviceContext);
+			RoundingTypeConfiguration roundingTypeConfiguration =
+				_configurationProvider.getConfiguration(
+					RoundingTypeConfiguration.class,
+					new SystemSettingsLocator(
+						RoundingTypeConstants.SERVICE_NAME));
+
+			RoundingMode roundingMode =
+				roundingTypeConfiguration.roundingMode();
+
+			commerceCurrencyLocalService.addCommerceCurrency(
+				code, nameMap, BigDecimal.ONE,
+				roundingTypeConfiguration.formatPattern(),
+				roundingTypeConfiguration.maximumFractionDigits(),
+				roundingTypeConfiguration.minimumFractionDigits(),
+				roundingMode.name(), primary, priority, true, serviceContext);
 		}
 
 		for (String exchangeRateProviderKey :
@@ -247,7 +282,8 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
 			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
-			BigDecimal rate, String roundingType, boolean primary,
+			BigDecimal rate, String formatPattern, int maxFractionDigits,
+			int minFractionDigits, String roundingMode, boolean primary,
 			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -262,10 +298,29 @@ public class CommerceCurrencyLocalServiceImpl
 			commerceCurrency.getCommerceCurrencyId(),
 			commerceCurrency.getGroupId(), code, nameMap, primary);
 
+		RoundingTypeConfiguration roundingTypeConfiguration =
+			_configurationProvider.getConfiguration(
+				RoundingTypeConfiguration.class,
+				new SystemSettingsLocator(RoundingTypeConstants.SERVICE_NAME));
+
+		if (Validator.isNull(formatPattern)) {
+			formatPattern = roundingTypeConfiguration.formatPattern();
+		}
+
+		if (Validator.isNull(roundingMode)) {
+			RoundingMode roundingModeEnum =
+				roundingTypeConfiguration.roundingMode();
+
+			roundingMode = roundingModeEnum.name();
+		}
+
 		commerceCurrency.setCode(code);
 		commerceCurrency.setNameMap(nameMap);
 		commerceCurrency.setRate(rate);
-		commerceCurrency.setRoundingType(roundingType);
+		commerceCurrency.setFormatPattern(formatPattern);
+		commerceCurrency.setMaxFractionDigits(maxFractionDigits);
+		commerceCurrency.setMinFractionDigits(minFractionDigits);
+		commerceCurrency.setRoundingMode(roundingMode);
 		commerceCurrency.setPrimary(primary);
 		commerceCurrency.setPriority(priority);
 		commerceCurrency.setActive(active);

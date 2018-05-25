@@ -27,11 +27,11 @@ import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifie
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryCreatorForm;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpdaterForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.PriceEntryPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceEntryHelper;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,7 +67,7 @@ public class PriceEntryNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommercePriceEntry,
-			_priceEntryPermissionChecker.forAdding()::apply,
+			_hasPermission.forAddingIn(PriceEntryIdentifier.class),
 			PriceEntryCreatorForm::buildForm
 		).build();
 	}
@@ -84,12 +84,11 @@ public class PriceEntryNestedCollectionResource
 		return builder.addGetter(
 			_priceEntryHelper::getCommercePriceEntry
 		).addUpdater(
-			this::_updateCommercePriceEntry,
-			_priceEntryPermissionChecker.forUpdating()::apply,
+			this::_updateCommercePriceEntry, _hasPermission::forUpdating,
 			PriceEntryUpdaterForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceEntryService::deleteCommercePriceEntry),
-			_priceEntryPermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -184,10 +183,12 @@ public class PriceEntryNestedCollectionResource
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
 
-	@Reference
-	private PriceEntryHelper _priceEntryHelper;
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceEntry)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 	@Reference
-	private PriceEntryPermissionChecker _priceEntryPermissionChecker;
+	private PriceEntryHelper _priceEntryHelper;
 
 }

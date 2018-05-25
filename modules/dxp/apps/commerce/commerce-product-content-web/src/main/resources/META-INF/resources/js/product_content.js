@@ -247,21 +247,47 @@ AUI.add(
 						var gtins = productContent.all('[data-text-cp-instance-gtin]');
 						var manufacturerPartNumbers = productContent.all('[data-text-cp-instance-manufacturer-part-number]');
 
-						skus.setHTML(cpInstance.sku);
-						prices.setHTML(cpInstance.price);
-						gtins.setHTML(cpInstance.gtin);
-						manufacturerPartNumbers.setHTML(cpInstance.manufacturerPartNumber);
+						var skusShow = productContent.all('[data-text-cp-instance-sku-show]');
+						var pricesShow = productContent.all('[data-text-cp-instance-price-show]');
+						var availabilitiesShow = productContent.all('[data-text-cp-instance-availability-show]');
+						var availabilityRangesShow = productContent.all('[data-text-cp-instance-availability-range-show]');
+						var stockQuantitiesShow = productContent.all('[data-text-cp-instance-stock-quantity-show]');
+						var gtinsShow = productContent.all('[data-text-cp-instance-gtin-show]');
+						var manufacturerPartNumbersShow = productContent.all('[data-text-cp-instance-manufacturer-part-number-show]');
+
+						if (cpInstance.sku) {
+							skus.setHTML(cpInstance.sku);
+							skusShow.show();
+						}
+
+						if (cpInstance.price) {
+							prices.setHTML(cpInstance.price);
+							pricesShow.show();
+						}
+
+						if (cpInstance.gtin) {
+							gtins.setHTML(cpInstance.gtin);
+							gtinsShow.show();
+						}
+
+						if (cpInstance.manufacturerPartNumber) {
+							manufacturerPartNumbers.setHTML(cpInstance.manufacturerPartNumber);
+							manufacturerPartNumbersShow.show();
+						}
 
 						if (cpInstance.availability) {
 							availabilities.setHTML(cpInstance.availability);
+							availabilitiesShow.show();
 						}
 
 						if (cpInstance.availabilityRange) {
 							availabilityRanges.setHTML(cpInstance.availabilityRange);
+							availabilityRangesShow.show();
 						}
 
 						if (cpInstance.stockQuantity) {
 							stockQuantities.setHTML(cpInstance.stockQuantity);
+							stockQuantitiesShow.show();
 						}
 
 						productContent.all('[data-cp-instance-id]').each(

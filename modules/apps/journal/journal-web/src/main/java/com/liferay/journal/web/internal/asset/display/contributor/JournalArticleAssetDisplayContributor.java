@@ -151,15 +151,11 @@ public class JournalArticleAssetDisplayContributor
 			FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
 				uuid, groupId);
 
-			String previewURL = DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, true);
-
-			return previewURL;
+			return DLUtil.getImagePreviewURL(fileEntry, null);
 		}
-		catch (PortalException pe) {
+		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
+				_log.debug(e, e);
 			}
 		}
 

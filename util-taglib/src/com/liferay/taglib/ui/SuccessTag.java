@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -102,11 +103,12 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 
 		Map<String, String> values = new HashMap<>();
 
-		values.put("message", message);
 		values.put("pathThemeImages", themeDisplay.getPathThemeImages());
 		values.put("title", LanguageUtil.get(resourceBundle, "success"));
 
 		if (_embed) {
+			values.put("message", HtmlUtil.escape(message));
+
 			String result = StringUtil.replace(
 				_CONTENT_EMBED_TMPL, StringPool.DOLLAR, StringPool.DOLLAR,
 				values);
@@ -116,6 +118,8 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 			jspWriter.write(result);
 		}
 		else {
+			values.put("message", HtmlUtil.escapeJS(message));
+
 			String result = StringUtil.replace(
 				_CONTENT_TOAST_TMPL, StringPool.DOLLAR, StringPool.DOLLAR,
 				values);

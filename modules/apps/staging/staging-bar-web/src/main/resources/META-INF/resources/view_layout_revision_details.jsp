@@ -24,13 +24,12 @@ if ((layoutRevision == null) && (layout != null)) {
 }
 
 LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute(StagingProcessesWebKeys.LAYOUT_SET_BRANCH);
+List<LayoutSetBranch> layoutSetBranches = (List<LayoutSetBranch>)request.getAttribute(StagingProcessesWebKeys.LAYOUT_SET_BRANCHES);
+String stagingURL = (String)request.getAttribute(StagingProcessesWebKeys.STAGING_URL);
 
 if (layoutSetBranch == null) {
 	layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutRevision.getLayoutSetBranchId());
 }
-
-List<LayoutSetBranch> layoutSetBranches = (List<LayoutSetBranch>)request.getAttribute(StagingProcessesWebKeys.LAYOUT_SET_BRANCHES);
-String stagingURL = (String)request.getAttribute(StagingProcessesWebKeys.STAGING_URL);
 
 boolean workflowEnabled = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, LayoutRevision.class.getName());
 

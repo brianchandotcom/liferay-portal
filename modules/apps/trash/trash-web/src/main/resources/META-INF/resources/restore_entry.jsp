@@ -35,15 +35,18 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(oldName);
 %>
 
-<liferay-ui:error exception="<%= RestoreEntryException.class %>" message='<%= LanguageUtil.format(request, "an-entry-with-name-x-already-exists", HtmlUtil.escape(oldName)) %>' translateMessage="<%= false %>" />
-
 <liferay-portlet:actionURL name="restoreEntry" varImpl="restoreURL" />
 
-<liferay-frontend:edit-form action="<%= restoreURL %>" name="fm">
+<liferay-frontend:edit-form
+	action="<%= restoreURL %>"
+	name="fm"
+>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="trashEntryId" type="hidden" value="<%= trashEntryId %>" />
 	<aui:input name="duplicateEntryId" type="hidden" value="<%= duplicateEntryId %>" />
 	<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
+
+	<liferay-ui:error exception="<%= RestoreEntryException.class %>" message='<%= LanguageUtil.format(request, "an-entry-with-name-x-already-exists", HtmlUtil.escape(oldName)) %>' translateMessage="<%= false %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>

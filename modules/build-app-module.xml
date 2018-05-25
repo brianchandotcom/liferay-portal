@@ -62,13 +62,6 @@
 		<available file=".lfrbuild-deploy-wsdd" />
 	</condition>
 
-	<condition property="replace.artifact.sources.license.text">
-		<and>
-			<istrue value="${current.branch.private}" />
-			<istrue value="${download.artifact.sources}" />
-		</and>
-	</condition>
-
 	<target if="artifact.hotfix" name="copy-hotfix-artifact">
 		<copy
 			todir="${dist.dir}"
@@ -159,22 +152,35 @@
 		<mkdir dir="${dist.dir}/sources" />
 
 		<if>
-			<contains string="${basedir}" substring="private${file.separator}" />
+			<isset property="artifact.sources.url" />
 			<then>
-				<get
-					dest="${dist.dir}/sources"
-					password="${build.repository.private.password}"
-					src="${artifact.sources.url}"
-					username="${build.repository.private.username}"
-				/>
+				<if>
+					<contains string="${basedir}" substring="private${file.separator}" />
+					<then>
+						<get
+							dest="${dist.dir}/sources"
+							password="${build.repository.private.password}"
+							src="${artifact.sources.url}"
+							username="${build.repository.private.username}"
+						/>
+					</then>
+					<else>
+						<get
+							dest="${dist.dir}/sources"
+							src="${artifact.sources.url}"
+						/>
+					</else>
+				</if>
 			</then>
-			<else>
-				<get
-					dest="${dist.dir}/sources"
-					src="${artifact.sources.url}"
-				/>
-			</else>
 		</if>
+
+		<condition property="replace.artifact.sources.license.text">
+			<and>
+				<isset property="artifact.sources.url" />
+				<istrue value="${current.branch.private}" />
+				<istrue value="${download.artifact.sources}" />
+			</and>
+		</condition>
 	</target>
 
 	<target depends="get-artifact-properties" if="download.artifact.wsdd" name="download-artifact-wsdd" unless="artifact.exclude">
@@ -510,7 +516,12 @@
 		<echo append="true" file="${dist.dir}/ticket.list.tmp">${artifact.change.log.ticket.list} </echo>
 	</target>
 
-	<target depends="download-artifact-sources" if="replace.artifact.sources.license.text" name="replace-artifact-sources-license-text">
+	<target
+		depends="download-artifact-sources"
+		if="replace.artifact.sources.license.text"
+		name="replace-artifact-sources-license-text"
+		unless="artifact.exclude"
+	>
 		<delete dir="tmp" />
 
 		<mkdir dir="tmp" />

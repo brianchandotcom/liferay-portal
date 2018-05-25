@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
@@ -126,7 +126,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			if (Objects.equals(
 					mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE)) {
 
-				value = _getMappedValue(editableValueJSONObject);
+				value = _getMappedValue(
+					editableElementParser, editableValueJSONObject);
 			}
 
 			if (Validator.isNull(value)) {
@@ -192,32 +193,17 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return value;
 	}
 
-	private String _getMappedValue(JSONObject jsonObject) {
+	private String _getMappedValue(
+		EditableElementParser editableElementParser, JSONObject jsonObject) {
+
 		String value = jsonObject.getString("mappedField");
 
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(15);
-
-		sb.append("${");
-		sb.append(value);
-		sb.append("???then(");
-		sb.append(value);
-		sb.append("?is_sequence?then(");
-		sb.append(value);
-		sb.append("?join(\", \"), ");
-		sb.append(value);
-		sb.append("?is_date_like?then(");
-		sb.append(value);
-		sb.append("?datetime?string, ");
-		sb.append(value);
-		sb.append("???then(");
-		sb.append(value);
-		sb.append("?string, \"\"))), \"\")}");
-
-		return sb.toString();
+		return StringUtil.replace(
+			editableElementParser.getFieldTemplate(), "field_name", value);
 	}
 
 	private void _validateAttribute(Element element, String attribute)

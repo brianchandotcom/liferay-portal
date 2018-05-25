@@ -16,6 +16,8 @@ package com.liferay.journal.web.internal.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
@@ -26,16 +28,21 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,7 +96,13 @@ public class JournalArticleAssetDisplayContributor
 
 				Value value = ddmFormFieldValue0.getValue();
 
-				classTypeValues.put(entry.getKey(), value.getString(locale));
+				String fieldValue = value.getString(locale);
+
+				if (Objects.equals(ddmFormFieldValue0.getType(), "ddm-image")) {
+					fieldValue = _transformFileEntryURL(fieldValue);
+				}
+
+				classTypeValues.put(entry.getKey(), fieldValue);
 			}
 		}
 		catch (PortalException pe) {
@@ -120,8 +133,36 @@ public class JournalArticleAssetDisplayContributor
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
+	private String _transformFileEntryURL(String data) {
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
+
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
+
+			if (Validator.isNull(uuid) && (groupId == 0)) {
+				return StringPool.BLANK;
+			}
+
+			FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
+				uuid, groupId);
+
+			return DLUtil.getImagePreviewURL(fileEntry, null);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleAssetDisplayContributor.class);
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	@Reference
 	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;

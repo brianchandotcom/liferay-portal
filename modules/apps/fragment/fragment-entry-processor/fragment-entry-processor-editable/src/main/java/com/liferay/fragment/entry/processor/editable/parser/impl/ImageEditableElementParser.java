@@ -14,10 +14,12 @@
 
 package com.liferay.fragment.entry.processor.editable.parser.impl;
 
+import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,6 +36,11 @@ import org.osgi.service.component.annotations.Component;
 	service = EditableElementParser.class
 )
 public class ImageEditableElementParser implements EditableElementParser {
+
+	@Override
+	public String getFieldTemplate() {
+		return _TMPL_IMAGE_FIELD_TEMPLATE;
+	}
 
 	@Override
 	public String getValue(Element element) {
@@ -68,5 +75,10 @@ public class ImageEditableElementParser implements EditableElementParser {
 					new Object[] {"<em>", "</em>"}, false));
 		}
 	}
+
+	private static final String _TMPL_IMAGE_FIELD_TEMPLATE = StringUtil.read(
+		EditableFragmentEntryProcessor.class,
+		"/META-INF/resources/fragment/entry/processor/editable" +
+			"/image_field_template.tmpl");
 
 }

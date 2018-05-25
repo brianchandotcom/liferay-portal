@@ -25,7 +25,7 @@
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Wiki Test Page" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -132,7 +132,7 @@
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Child Site Page" />
 			<var name="privacy" value="Private" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Page#view">

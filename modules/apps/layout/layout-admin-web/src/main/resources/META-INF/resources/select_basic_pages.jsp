@@ -39,9 +39,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 					<div class="card card-type-asset">
 						<div class="aspect-ratio">
 							<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid layout-type-img">
-								<svg class="lexicon-icon">
-									<use xlink:href="<%= PortalUtil.getPathContext(request) %>/images/<%= primaryType %>.svg#<%= primaryType %>-page" />
-								</svg>
+								<img src="<%= PortalUtil.getPathContext(request) %>/images/<%= primaryType %>.svg" />
 							</div>
 						</div>
 
@@ -54,6 +52,12 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 												<a class="add-layout-action-option" data-type="<%= primaryType %>" href="javascript:;"><%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + primaryType) %></a>
 											</span>
 										</h3>
+
+										<p class="card-subtitle">
+											<span class="text-truncate-inline">
+												<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + primaryType + ".description") %>
+											</span>
+										</p>
 									</section>
 								</div>
 							</div>

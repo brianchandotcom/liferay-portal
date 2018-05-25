@@ -44,7 +44,7 @@
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Company Picnic" />
 			<var name="privacy" value="Public" />
-			<var name="sitePageType" value="Layout" />
+			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

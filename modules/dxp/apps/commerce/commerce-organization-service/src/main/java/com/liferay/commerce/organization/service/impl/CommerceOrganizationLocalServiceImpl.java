@@ -334,11 +334,12 @@ public class CommerceOrganizationLocalServiceImpl
 
 		updateEmailAddress(
 			emailAddressId, Organization.class.getName(), organizationId,
-			address, serviceContext);
+			address, organization.getStatusId(), serviceContext);
 
 		updateAddress(
 			addressId, Organization.class.getName(), organizationId, street1,
-			street2, street3, city, zip, regionId, countryId, serviceContext);
+			street2, street3, city, zip, regionId, countryId,
+			organization.getStatusId(), serviceContext);
 
 		return organizationLocalService.updateOrganization(
 			organization.getCompanyId(), organizationId,
@@ -467,7 +468,8 @@ public class CommerceOrganizationLocalServiceImpl
 	protected void updateAddress(
 			long addressId, String className, long classPK, String street1,
 			String street2, String street3, String city, String zip,
-			long regionId, long countryId, ServiceContext serviceContext)
+			long regionId, long countryId, long statusId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (addressId > 0) {
@@ -481,13 +483,13 @@ public class CommerceOrganizationLocalServiceImpl
 
 		addressLocalService.addAddress(
 			serviceContext.getUserId(), className, classPK, street1, street2,
-			street3, city, zip, regionId, countryId, 0L, false, true,
+			street3, city, zip, regionId, countryId, statusId, false, true,
 			serviceContext);
 	}
 
 	protected void updateEmailAddress(
 			long emailAddressId, String className, long classPK, String address,
-			ServiceContext serviceContext)
+			long statusId, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (emailAddressId > 0) {
@@ -500,8 +502,8 @@ public class CommerceOrganizationLocalServiceImpl
 		}
 
 		emailAddressLocalService.addEmailAddress(
-			serviceContext.getUserId(), className, classPK, address, 0L, true,
-			serviceContext);
+			serviceContext.getUserId(), className, classPK, address, statusId,
+			true, serviceContext);
 	}
 
 	private String _getUniqueName(long companyId, String name, int count) {

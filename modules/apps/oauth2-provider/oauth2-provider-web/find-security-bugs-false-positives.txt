@@ -1,0 +1,1 @@
+com/liferay/document/library/kernel/util/DLUtil.getThumbnailSrc(Lcom/liferay/portal/kernel/repository/model/FileEntry;Lcom/liferay/portal/kernel/theme/ThemeDisplay;)Ljava/lang/String;:SAFE

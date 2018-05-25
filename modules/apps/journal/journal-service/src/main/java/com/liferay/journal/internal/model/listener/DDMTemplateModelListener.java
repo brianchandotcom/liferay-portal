@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.model.listener.internal;
+package com.liferay.journal.internal.model.listener;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.util.JournalContent;

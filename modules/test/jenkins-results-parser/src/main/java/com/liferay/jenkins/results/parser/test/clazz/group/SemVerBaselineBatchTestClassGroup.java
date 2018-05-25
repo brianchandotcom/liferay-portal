@@ -25,17 +25,19 @@ import java.util.List;
 /**
  * @author Leslie Wong
  */
-public class BaselineBatchTestClassGroup extends BatchTestClassGroup {
+public class SemVerBaselineBatchTestClassGroup extends BatchTestClassGroup {
 
-	public static class BaselineBatchTestClass extends BaseTestClass {
+	public static class SemVerBaselineBatchTestClass extends BaseTestClass {
 
-		protected static BaselineBatchTestClass getInstance(
+		protected static SemVerBaselineBatchTestClass getInstance(
 			String batchName, File moduleBaseDir) {
 
-			return new BaselineBatchTestClass(batchName, moduleBaseDir);
+			return new SemVerBaselineBatchTestClass(batchName, moduleBaseDir);
 		}
 
-		protected BaselineBatchTestClass(String batchName, File moduleBaseDir) {
+		protected SemVerBaselineBatchTestClass(
+			String batchName, File moduleBaseDir) {
+
 			super(moduleBaseDir);
 
 			addTestMethod(batchName);
@@ -43,7 +45,7 @@ public class BaselineBatchTestClassGroup extends BatchTestClassGroup {
 
 	}
 
-	protected BaselineBatchTestClassGroup(
+	protected SemVerBaselineBatchTestClassGroup(
 		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
 		String testSuiteName) {
 
@@ -86,21 +88,17 @@ public class BaselineBatchTestClassGroup extends BatchTestClassGroup {
 			File portalModulesBaseDir = new File(
 				portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
-			List<File> semanticVersioningMarkerFiles =
-				JenkinsResultsParserUtil.findFiles(
-					portalModulesBaseDir, "\\.lfrbuild-semantic-versioning");
+			List<File> semVerMarkerFiles = JenkinsResultsParserUtil.findFiles(
+				portalModulesBaseDir, "\\.lfrbuild-semantic-versioning");
 
-			for (File semanticVersioningMarkerFile :
-					semanticVersioningMarkerFiles) {
-
-				moduleDirsList.add(
-					semanticVersioningMarkerFile.getParentFile());
+			for (File semVerMarkerFile : semVerMarkerFiles) {
+				moduleDirsList.add(semVerMarkerFile.getParentFile());
 			}
 		}
 
 		for (File moduleDir : moduleDirsList) {
 			testClasses.add(
-				BaselineBatchTestClass.getInstance(batchName, moduleDir));
+				SemVerBaselineBatchTestClass.getInstance(batchName, moduleDir));
 		}
 	}
 

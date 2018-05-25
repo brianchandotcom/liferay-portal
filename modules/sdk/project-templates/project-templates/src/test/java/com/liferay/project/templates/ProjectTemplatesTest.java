@@ -2303,7 +2303,9 @@ public class ProjectTemplatesTest {
 		sb.append("tasks.withType(ExecuteNpmTask) {");
 		sb.append(lineSeparator);
 
-		sb.append("\tregistry = '" + _NODEJS_NPM_CI_REGISTRY + "'");
+		sb.append("\tregistry = '");
+		sb.append(_NODEJS_NPM_CI_REGISTRY);
+		sb.append('\'');
 		sb.append(lineSeparator);
 
 		sb.append('}');

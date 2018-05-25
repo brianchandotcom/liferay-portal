@@ -19,7 +19,6 @@ import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
-import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -66,8 +65,7 @@ public class EditCommerceCurrencyMVCRenderCommand implements MVCRenderCommand {
 				new CommerceCurrenciesDisplayContext(
 					_commerceCurrencyService, _commercePriceFormatter,
 					_configurationProvider, _exchangeRateProviderRegistry,
-					_roundingTypeServicesTracker, renderRequest,
-					renderResponse);
+					renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -111,9 +109,6 @@ public class EditCommerceCurrencyMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private RoundingTypeServicesTracker _roundingTypeServicesTracker;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.currency.web)"

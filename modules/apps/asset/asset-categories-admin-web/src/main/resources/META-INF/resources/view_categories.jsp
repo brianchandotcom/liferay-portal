@@ -109,33 +109,6 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 						path="/category_action.jsp"
 					/>
 				</c:when>
-				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
-					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							actionJsp="/category_action.jsp"
-							actionJspServletContext="<%= application %>"
-							icon="categories"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							subtitle="<%= curCategory.getDescription(locale) %>"
-							title="<%= curCategory.getName() %>"
-							url="<%= rowURL != null ? rowURL.toString() : null %>"
-						>
-							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - curCategory.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-							</liferay-frontend:vertical-card-header>
-
-							<liferay-frontend:vertical-card-footer>
-								<liferay-ui:message arguments="<%= subcategoriesCount %>" key="x-subcategories" />
-							</liferay-frontend:vertical-card-footer>
-						</liferay-frontend:icon-vertical-card>
-					</liferay-ui:search-container-column-text>
-				</c:when>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
 					<c:choose>
 						<c:when test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">

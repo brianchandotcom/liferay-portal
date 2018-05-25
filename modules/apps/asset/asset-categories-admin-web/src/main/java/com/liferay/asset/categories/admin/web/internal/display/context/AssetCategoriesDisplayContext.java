@@ -508,7 +508,6 @@ public class AssetCategoriesDisplayContext {
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
 				if (!isFlattenedNavigationAllowed()) {
-					addCardViewTypeItem();
 					addListViewTypeItem();
 				}
 
@@ -839,7 +838,6 @@ public class AssetCategoriesDisplayContext {
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
-				addCardViewTypeItem();
 				addListViewTypeItem();
 				addTableViewTypeItem();
 			}

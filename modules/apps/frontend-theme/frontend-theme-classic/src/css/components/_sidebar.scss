@@ -23,7 +23,7 @@
 		border-bottom: 1px solid #CDCED9;
 	}
 
-	.navigation-bar-light {
+	.navigation-bar-light, .sidebar-block > .list-group-item {
 		@include sm {
 			background-color: transparent;
 		}

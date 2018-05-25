@@ -183,7 +183,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				_log.info(
 					StringBundler.concat(
 						"Searching ", query.toString(), " took ",
-						String.valueOf(stopWatch.getTime()), " ms"));
+						stopWatch.getTime(), " ms"));
 			}
 		}
 	}
@@ -217,7 +217,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				_log.info(
 					StringBundler.concat(
 						"Searching ", query.toString(), " took ",
-						String.valueOf(stopWatch.getTime()), " ms"));
+						stopWatch.getTime(), " ms"));
 			}
 		}
 	}
@@ -528,7 +528,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			_log.info(
 				StringBundler.concat(
 					"The search engine processed ", searchRequestBuilderString,
-					" in ", String.valueOf(searchResponse.getTook())));
+					" in ", searchResponse.getTook()));
 		}
 
 		return searchResponse;

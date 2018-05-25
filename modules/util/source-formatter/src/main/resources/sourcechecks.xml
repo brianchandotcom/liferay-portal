@@ -135,6 +135,7 @@
 		<check name="JavaStaticBlockCheck" />
 		<check name="JavaStaticImportsCheck" />
 		<check name="JavaStopWatchCheck" />
+		<check name="JavaStringBundlerConcatCheck" />
 		<check name="JavaStylingCheck" />
 		<check name="JavaSystemExceptionCheck" />
 		<check name="JavaTermDividersCheck" />

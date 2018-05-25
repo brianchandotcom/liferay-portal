@@ -43,8 +43,8 @@ public class ArticleTitleException extends PortalException {
 		public MustNotExceedMaximumLength(String title, int titleMaxLength) {
 			super(
 				StringBundler.concat(
-					"Title ", title, " must have fewer than ",
-					String.valueOf(titleMaxLength), " characters"));
+					"Title ", title, " must have fewer than ", titleMaxLength,
+					" characters"));
 		}
 
 	}

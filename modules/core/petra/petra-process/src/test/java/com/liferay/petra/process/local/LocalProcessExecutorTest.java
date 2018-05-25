@@ -1181,8 +1181,7 @@ public class LocalProcessExecutorTest {
 
 		Assert.assertFalse(
 			StringBundler.concat(
-				"After waited ", String.valueOf(time), " ",
-				String.valueOf(timeUnit), ". ", message),
+				"After waited ", time, " ", timeUnit, ". ", message),
 			supplier.get());
 	}
 

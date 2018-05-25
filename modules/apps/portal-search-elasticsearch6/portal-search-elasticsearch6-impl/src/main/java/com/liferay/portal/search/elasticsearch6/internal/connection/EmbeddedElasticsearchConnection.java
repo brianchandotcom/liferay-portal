@@ -86,7 +86,7 @@ public class EmbeddedElasticsearchConnection
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to preload ", String.valueOf(ByteBufUtil.class),
+						"Unable to preload ", ByteBufUtil.class,
 						" to prevent Netty shutdown concurrent class loading ",
 						"interruption issue"),
 					cnfe);
@@ -345,7 +345,7 @@ public class EmbeddedElasticsearchConnection
 				StringBundler.concat(
 					"Finished starting ",
 					elasticsearchConfiguration.clusterName(), " in ",
-					String.valueOf(stopWatch.getTime()), " ms"));
+					stopWatch.getTime(), " ms"));
 		}
 
 		return client;
@@ -460,8 +460,8 @@ public class EmbeddedElasticsearchConnection
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Discarded ", String.valueOf(runnable), " on ",
-							String.valueOf(threadPoolExecutor)));
+							"Discarded ", runnable, " on ",
+							threadPoolExecutor));
 				}
 			}
 

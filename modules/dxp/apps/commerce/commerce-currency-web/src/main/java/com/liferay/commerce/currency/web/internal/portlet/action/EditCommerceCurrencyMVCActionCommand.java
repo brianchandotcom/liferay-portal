@@ -167,8 +167,14 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		String rate = ParamUtil.getString(actionRequest, "rate");
-		String roundingType = ParamUtil.getString(
-			actionRequest, "roundingType");
+		String formatPattern = ParamUtil.getString(
+			actionRequest, "formatPattern");
+		int maxFractionDigits = ParamUtil.getInteger(
+			actionRequest, "maxFractionDigits");
+		int minFractionDigits = ParamUtil.getInteger(
+			actionRequest, "minFractionDigits");
+		String roundingMode = ParamUtil.getString(
+			actionRequest, "roundingMode");
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
@@ -180,13 +186,15 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 		if (commerceCurrencyId <= 0) {
 			commerceCurrency = _commerceCurrencyService.addCommerceCurrency(
-				code, nameMap, new BigDecimal(rate), roundingType, primary,
+				code, nameMap, new BigDecimal(rate), formatPattern,
+				maxFractionDigits, minFractionDigits, roundingMode, primary,
 				priority, active, serviceContext);
 		}
 		else {
 			commerceCurrency = _commerceCurrencyService.updateCommerceCurrency(
 				commerceCurrencyId, code, nameMap, new BigDecimal(rate),
-				roundingType, primary, priority, active, serviceContext);
+				formatPattern, maxFractionDigits, minFractionDigits,
+				roundingMode, primary, priority, active, serviceContext);
 		}
 
 		return commerceCurrency;

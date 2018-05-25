@@ -394,6 +394,7 @@ AUI.add(
 
 						return dialog;
 					},
+
 					preventCopyAndPaste: function(e, textLimit) {
 						var instance = this;
 						var node = e.currentTarget._node;
@@ -410,6 +411,7 @@ AUI.add(
 							sel.addRange(range);
 						}
 					},
+
 					submitForm: function() {
 						var instance = this;
 

@@ -1,7 +1,7 @@
 <#assign
 	cpDefinition = simpleCPTypeDisplayContext.getCPDefinition()
 
-	cpDefinitionId = cpDefinition.getCPDefinitionId()
+	cpDefinitionId = simpleCPTypeDisplayContext.getCPDefinitionId()
 
 	cpInstanceId = 0
 
@@ -13,55 +13,82 @@
 
 	gtin = ""
 
-	modelNumber = ""
+	gtinCssClass = "hide"
+
+	manufacturerPartNumber = ""
+
+	manufacturerPartNumberCssClass = "hide"
 
 	sku = "select-a-valid-product"
 
+	skuCssClass = "hide"
+
 	categories = simpleCPTypeDisplayContext.getAssetCategories()
 />
+
 <#if isIgnoreSKUCombinations>
 	<#if simpleCPTypeDisplayContext.getDefaultCPInstance()??>
 		<#assign
-			cpInstance =  simpleCPTypeDisplayContext.getDefaultCPInstance()
+			cpInstance = simpleCPTypeDisplayContext.getDefaultCPInstance()
 		/>
 		<#if cpInstance??>
 			<#assign
-				cpInstanceId =  cpInstance.getCPInstanceId()
+				cpInstanceId = cpInstance.getCPInstanceId()
 				gtin = cpInstance.getGtin()
-				modelNumber = cpInstance.getManufacturerPartNumber()
+				manufacturerPartNumber = cpInstance.getManufacturerPartNumber()
 				sku = cpInstance.getSku()
 			/>
+
+			<#if gtin?has_content>
+				<#assign
+					gtinCssClass = ""
+				/>
+			</#if>
+
+			<#if manufacturerPartNumber?has_content>
+				<#assign
+					manufacturerPartNumberCssClass = ""
+				/>
+			</#if>
+
+			<#if sku?has_content>
+				<#assign
+					skuCssClass = ""
+				/>
+			</#if>
 		</#if>
 	</#if>
 </#if>
 
 <div class="product-detail" id="<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent">
 	<div class="product-detail-header">
-		<div class="commerce-brand-name">Brand Name</div>
-		<h2 class="commerce-title">${cpDefinition.getName()}</h2>
+		<h2 class="commerce-title">${cpDefinition.getName(locale)}</h2>
 
 		<div class="autofit-float autofit-row product-detail-secondary-info">
 			<div class="autofit-col">
-				<div class="commerce-model-number">
-					Model #<span data-text-cp-instance-manufacturer-part-number>${modelNumber}</span>
+				<div class="commerce-sku">
+					<span class="${skuCssClass}" data-text-cp-instance-sku-show>${languageUtil.format(request, "sku-x", "")}</span>
+
+					<span data-text-cp-instance-sku>${sku}</span>
+				</div>
+			</div>
+
+			<div class="autofit-col">
+				<div class="commerce-manufacturer-part-number">
+					<span class="${manufacturerPartNumberCssClass}" data-text-cp-instance-manufacturer-part-number-show>${languageUtil.format(request, "manufacturer-part-number-x", "")}</span>
+
+					<span data-text-cp-instance-manufacturer-part-number>${manufacturerPartNumber}</span>
 				</div>
 			</div>
 
 			<div class="autofit-col">
 				<div class="commerce-gtin">
-					GTIN #<span data-text-cp-instance-gtin>${gtin}</span>
-				</div>
-			</div>
+					<span class="${gtinCssClass}" data-text-cp-instance-gtin-show>${languageUtil.format(request, "gtin-x", "")}</span>
 
-			<div class="autofit-col">
-				<div class="commerce-sku">
-					SKU:
-					<span data-text-cp-instance-sku>${sku}</span>
+					<span data-text-cp-instance-gtin>${gtin}</span>
 				</div>
 			</div>
 		</div>
-
-		<a class="single-link" href="#placeholder">View Product Family</a>
 	</div>
 
 	<div class="product-detail-body">
@@ -322,7 +349,7 @@
 <@liferay_aui.script use="liferay-commerce-product-content">
 	var productContent = new Liferay.Portlet.ProductContent(
 		{
-			cpDefinitionId: ${simpleCPTypeDisplayContext.getCPDefinitionId()},
+			cpDefinitionId: ${cpDefinitionId},
 			fullImageSelector : '#<@portlet.namespace />full-image',
 			namespace: '<@portlet.namespace />',
 			productContentSelector: '#<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent',

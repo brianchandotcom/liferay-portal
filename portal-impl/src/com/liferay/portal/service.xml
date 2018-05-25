@@ -2766,13 +2766,13 @@
 			<finder-column name="companyId" />
 			<finder-column name="openId" />
 		</finder>
-		<finder name="C_S" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="status" />
-		</finder>
 		<finder name="C_ERC" return-type="User" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="externalReferenceCode" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" />
 		</finder>
 		<finder name="C_CD_MD" return-type="Collection">
 			<finder-column name="companyId" />

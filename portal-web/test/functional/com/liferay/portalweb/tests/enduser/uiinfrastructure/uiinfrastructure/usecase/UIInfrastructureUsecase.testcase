@@ -169,6 +169,10 @@
 			<execute macro="Portlet#deletePG">
 				<var name="portletName" value="Hello World" />
 			</execute>
+
+			<execute macro="Portlet#viewNoSpecificPG">
+				<var name="portletName" value="Hello World" />
+			</execute>
 		</task>
 	</command>
 

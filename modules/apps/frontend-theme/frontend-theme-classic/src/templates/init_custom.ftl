@@ -6,7 +6,7 @@
 />
 
 <#if wrap_content>
-	<#assign wrap_content_class = "container" />
+	<#assign portal_content_css_class = "container" />
 <#else>
-	<#assign wrap_content_class = "" />
+	<#assign portal_content_css_class = "" />
 </#if>

@@ -53,7 +53,7 @@
 		</header>
 	</#if>
 
-	<section class="${wrap_content_class}" id="content">
+	<section class="${portal_content_css_class}" id="content">
 		<h1 class="sr-only">${the_title}</h1>
 
 		<#if selectable>
@@ -69,7 +69,7 @@
 		</#if>
 	</section>
 
-	<#if show_header>
+	<#if show_footer>
 		<footer id="footer" role="contentinfo">
 			<div class="container">
 				<div class="row">

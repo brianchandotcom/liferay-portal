@@ -330,12 +330,20 @@
 	}
 
 	.edit-entry {
-		h3 {
-			color: #2B4259;
+		.cover-image-caption .alloy-editor {
+			color: #A7A9BC;
 		}
 
-		.cover-image-caption .alloy-editor {
-			color: #868889;
+		.entry-title, .entry-content {
+			.alloy-editor-placeholder {
+				color: #272833;
+			}
+		}
+
+		.entry-subtitle {
+			.alloy-editor-placeholder {
+				color: #A7A9BC;
+			}
 		}
 	}
 
@@ -357,10 +365,6 @@
 		}
 
 		h2 {
-			.alloy-editor-placeholder {
-				color: #32A8E6;
-			}
-
 			& > a {
 				color: inherit;
 				font-weight: bold;

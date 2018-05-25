@@ -15,20 +15,18 @@
 package com.liferay.portal.upgrade.v7_1_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.upgrade.v7_1_x.util.AssetCategoryTable;
 
 /**
- * @author Adolfo Pérez
+ * @author Michael C. Han
  */
-public class UpgradeSchema extends UpgradeProcess {
+public class UpgradeAssetCategory extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(new UpgradeMVCCVersion());
-		upgrade(new UpgradeAssetCategory());
-		upgrade(new UpgradeAssetVocabulary());
-		upgrade(new UpgradeOrganization());
-		upgrade(new UpgradeUser());
-		upgrade(new UpgradeUserGroup());
+		alter(
+			AssetCategoryTable.class,
+			new AlterTableAddColumn("externalReferenceCode VARCHAR(75) null"));
 	}
 
 }

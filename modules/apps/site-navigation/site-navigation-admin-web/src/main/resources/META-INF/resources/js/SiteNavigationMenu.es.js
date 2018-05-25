@@ -9,6 +9,13 @@ import {
 } from './SiteNavigationMenuItem.es';
 
 /**
+ * Constant indicating how much a menuItem element should be moved
+ * to the right in order to consider it nested to it's parent.
+ */
+
+const NEST_THRESHOLD = 100;
+
+/**
  * Set of static functions for managing site navigation menu
  * querying and mutation.
  * @type {Object}
@@ -149,7 +156,7 @@ const SiteNavigationMenu = {
 			const parentMenuItemRegion = position.getRegion(parentMenuItem);
 
 			const nestedInParent = menuItemRegion.left >
-				(parentMenuItemRegion.left + 100);
+				(parentMenuItemRegion.left + NEST_THRESHOLD);
 
 			const parentWithChildren = SiteNavigationMenuItem
 				.getChildren(parentMenuItem)

@@ -27,7 +27,10 @@
 		<column name="code" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="rate" type="BigDecimal" />
-		<column name="roundingType" type="String" />
+		<column name="formatPattern" type="String" />
+		<column name="maxFractionDigits" type="int" />
+		<column name="minFractionDigits" type="int" />
+		<column name="roundingMode" type="String" />
 		<column name="primary" type="boolean" />
 		<column name="priority" type="double" />
 		<column name="active" type="boolean" />

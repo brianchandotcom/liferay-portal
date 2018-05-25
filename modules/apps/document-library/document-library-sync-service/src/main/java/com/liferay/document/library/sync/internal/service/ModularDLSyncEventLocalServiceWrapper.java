@@ -203,6 +203,11 @@ public class ModularDLSyncEventLocalServiceWrapper
 	}
 
 	@Override
+	public String getOSGiServiceIdentifier() {
+		return _dlSyncEventLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 

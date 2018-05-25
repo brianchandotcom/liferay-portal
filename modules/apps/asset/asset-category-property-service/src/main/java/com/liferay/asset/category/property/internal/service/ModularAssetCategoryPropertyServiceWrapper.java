@@ -81,6 +81,11 @@ public class ModularAssetCategoryPropertyServiceWrapper
 	}
 
 	@Override
+	public String getOSGiServiceIdentifier() {
+		return _assetCategoryPropertyService.getOSGiServiceIdentifier();
+	}
+
+	@Override
 	public AssetCategoryProperty updateCategoryProperty(
 			long userId, long categoryPropertyId, String key, String value)
 		throws PortalException {

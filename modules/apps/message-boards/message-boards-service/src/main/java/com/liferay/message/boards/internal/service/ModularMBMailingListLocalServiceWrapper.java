@@ -298,6 +298,11 @@ public class ModularMBMailingListLocalServiceWrapper
 	}
 
 	@Override
+	public String getOSGiServiceIdentifier() {
+		return _mbMailingListLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 

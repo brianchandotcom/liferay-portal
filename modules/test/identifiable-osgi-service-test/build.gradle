@@ -1,0 +1,7 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

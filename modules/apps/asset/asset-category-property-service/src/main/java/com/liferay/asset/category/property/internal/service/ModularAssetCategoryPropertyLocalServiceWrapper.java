@@ -123,6 +123,11 @@ public class ModularAssetCategoryPropertyLocalServiceWrapper
 	}
 
 	@Override
+	public String getOSGiServiceIdentifier() {
+		return _assetCategoryPropertyLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
 	public AssetCategoryProperty updateCategoryProperty(
 			long userId, long categoryPropertyId, String key, String value)
 		throws PortalException {

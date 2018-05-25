@@ -75,6 +75,11 @@ public class ModularAssetTagStatsLocalServiceWrapper
 	}
 
 	@Override
+	public String getOSGiServiceIdentifier() {
+		return _assetTagStatsLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
 	public List<AssetTagStats> getTagStats(
 		long classNameId, int start, int end) {
 

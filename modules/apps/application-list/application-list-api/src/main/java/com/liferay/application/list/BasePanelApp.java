@@ -93,9 +93,14 @@ public abstract class BasePanelApp implements PanelApp {
 	public PortletURL getPortletURL(HttpServletRequest request)
 		throws PortalException {
 
-		return PortalUtil.getControlPanelPortletURL(
+		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			request, getGroup(request), getPortletId(), 0, 0,
 			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"p_v_l_s_g_id", String.valueOf(groupProvider.getGroup(request)));
+
+		return portletURL;
 	}
 
 	@Override

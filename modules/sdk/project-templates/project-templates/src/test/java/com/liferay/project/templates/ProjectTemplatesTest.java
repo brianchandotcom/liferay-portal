@@ -2306,7 +2306,7 @@ public class ProjectTemplatesTest {
 		sb.append("\tregistry = '" + _NODEJS_NPM_CI_REGISTRY + "'");
 		sb.append(lineSeparator);
 
-		sb.append("}");
+		sb.append('}');
 
 		String executeNpmTaskScript = sb.toString();
 

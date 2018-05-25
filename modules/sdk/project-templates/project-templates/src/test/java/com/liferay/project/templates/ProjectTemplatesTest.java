@@ -1253,6 +1253,8 @@ public class ProjectTemplatesTest {
 			mavenPackageJSON.getBytes(StandardCharsets.UTF_8));
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			_addNpmrc(gradleProjectDir);
+			_addNpmrc(mavenProjectDir);
 			_configureExecuteNpmTask(gradleProjectDir);
 			_configurePomNpmConfiguration(mavenProjectDir);
 		}
@@ -1345,6 +1347,8 @@ public class ProjectTemplatesTest {
 			mavenPackageJSON.getBytes(StandardCharsets.UTF_8));
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			_addNpmrc(gradleProjectDir);
+			_addNpmrc(mavenProjectDir);
 			_configureExecuteNpmTask(gradleProjectDir);
 			_configurePomNpmConfiguration(mavenProjectDir);
 		}
@@ -2029,6 +2033,14 @@ public class ProjectTemplatesTest {
 
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	private static void _addNpmrc(File projectDir) throws IOException {
+		File npmrcFile = new File(projectDir, ".npmrc");
+
+		String content = "sass_binary_site=" + _NODEJS_NPM_CI_SASS_BINARY_SITE;
+
+		Files.write(npmrcFile.toPath(), content.getBytes());
+	}
 
 	private static void _buildProjects(
 			File gradleProjectDir, File mavenProjectDir)
@@ -3023,6 +3035,8 @@ public class ProjectTemplatesTest {
 				"WebKeys.java");
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
+			_addNpmrc(gradleProjectDir);
+			_addNpmrc(mavenProjectDir);
 			_configureExecuteNpmTask(gradleProjectDir);
 			_configurePomNpmConfiguration(mavenProjectDir);
 		}
@@ -3420,6 +3434,9 @@ public class ProjectTemplatesTest {
 
 	private static final String _NODEJS_NPM_CI_REGISTRY = System.getProperty(
 		"nodejs.npm.ci.registry");
+
+	private static final String _NODEJS_NPM_CI_SASS_BINARY_SITE =
+		System.getProperty("nodejs.npm.ci.sass.binary.site");
 
 	private static final String _OUTPUT_FILENAME_GLOB_REGEX = "*.{jar,war}";
 

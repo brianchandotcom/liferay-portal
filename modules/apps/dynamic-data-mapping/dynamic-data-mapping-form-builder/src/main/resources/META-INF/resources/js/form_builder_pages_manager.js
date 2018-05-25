@@ -1045,7 +1045,7 @@ AUI.add(
 
 						controlsTriggerNodeList.on('clickoutside', popover.hide, popover);
 
-						instance._setCharacterLimitToPageTitle(100);
+						instance._setCharacterLimitToPageTitle(120);
 						instance._setCharacterLimitToPageDescription(120);
 					},
 

@@ -266,10 +266,13 @@ public class DDMFormDisplayContext {
 
 		DDMFormInstance formInstance = getFormInstance();
 
-		Group group = _groupLocalService.getGroup(formInstance.getGroupId());
+		if (formInstance != null) {
+			Group group = _groupLocalService.getGroup(
+				formInstance.getGroupId());
 
-		if ((group != null) && group.isStagingGroup()) {
-			return false;
+			if ((group != null) && group.isStagingGroup()) {
+				return false;
+			}
 		}
 
 		if (isSharedURL()) {
@@ -298,13 +301,10 @@ public class DDMFormDisplayContext {
 	}
 
 	public boolean isPreview() throws PortalException {
-		if (ParamUtil.getBoolean(_renderRequest, "preview")) {
-			return true;
-		}
-
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
-		if (DDMFormInstancePermission.contains(
+		if (ParamUtil.getBoolean(_renderRequest, "preview") &&
+			DDMFormInstancePermission.contains(
 				themeDisplay.getPermissionChecker(), getFormInstanceId(),
 				ActionKeys.UPDATE)) {
 

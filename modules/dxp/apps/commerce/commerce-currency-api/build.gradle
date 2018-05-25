@@ -2,6 +2,7 @@ dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "3.0.0-20180316.221954-1"
 	compileOnly group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype.api", version: "1.0.0-20180522.210835-1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0-20180518.171544-8"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }

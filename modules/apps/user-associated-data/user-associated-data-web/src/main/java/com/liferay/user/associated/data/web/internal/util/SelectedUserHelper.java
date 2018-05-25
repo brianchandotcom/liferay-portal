@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Objects;
+
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,6 +35,12 @@ public class SelectedUserHelper {
 		throws PortalException {
 
 		User selectedUser = portal.getSelectedUser(portletRequest);
+		User user = portal.getUser(portletRequest);
+
+		if (Objects.equals(user, selectedUser)) {
+			throw new PortalException(
+				"The selected user cannot be the logged in user");
+		}
 
 		if (uadAnonymizerHelper.isAnonymousUser(selectedUser)) {
 			throw new PortalException(

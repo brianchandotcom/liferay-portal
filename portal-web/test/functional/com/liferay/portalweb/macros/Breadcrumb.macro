@@ -61,9 +61,7 @@
 	</command>
 
 	<command name="viewActiveEntry">
-		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY" value1="${breadcrumbNameUppercase}">
-			<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
-		</execute>
+		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY" value1="${breadcrumbName}" />
 	</command>
 
 	<command name="viewADTApplied">
@@ -143,9 +141,7 @@
 				<for list="${breadcrumbListVisible}" param="breadcrumbName">
 					<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
-					<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
-
-					<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
+					<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbName}" />
 				</for>
 			</then>
 		</if>

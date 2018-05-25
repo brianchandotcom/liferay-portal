@@ -39,35 +39,37 @@ renderResponse.setTitle(oldName);
 
 <liferay-portlet:actionURL name="restoreEntry" varImpl="restoreURL" />
 
-<aui:form action="<%= restoreURL %>" cssClass="container-fluid-1280" name="fm">
+<liferay-frontend:edit-form action="<%= restoreURL %>" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="trashEntryId" type="hidden" value="<%= trashEntryId %>" />
 	<aui:input name="duplicateEntryId" type="hidden" value="<%= duplicateEntryId %>" />
 	<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
 
-	<aui:fieldset-group markupview="lexicon">
-		<aui:fieldset>
-			<c:choose>
-				<c:when test="<%= overridable %>">
-					<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:fieldset-group>
+			<liferay-frontend:fieldset>
+				<c:choose>
+					<c:when test="<%= overridable %>">
+						<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
 
-					<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
-				</c:when>
-				<c:otherwise>
-					<aui:input id="rename" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.RENAME %>" />
-				</c:otherwise>
-			</c:choose>
+						<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+					</c:when>
+					<c:otherwise>
+						<aui:input id="rename" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.RENAME %>" />
+					</c:otherwise>
+				</c:choose>
 
-			<aui:input label='<%= overridable ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" value="<%= trashHelper.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), oldName) %>" />
-		</aui:fieldset>
-	</aui:fieldset-group>
+				<aui:input label='<%= overridable ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" value="<%= trashHelper.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), oldName) %>" />
+			</liferay-frontend:fieldset>
+		</liferay-frontend:fieldset-group>
+	</liferay-frontend:edit-form-body>
 
-	<aui:button-row>
+	<liferay-frontend:edit-form-footer>
 		<aui:button type="submit" />
 
 		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
-</aui:form>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
 <aui:script>
 	var <portlet:namespace />form = document.getElementById('<portlet:namespace />fm');

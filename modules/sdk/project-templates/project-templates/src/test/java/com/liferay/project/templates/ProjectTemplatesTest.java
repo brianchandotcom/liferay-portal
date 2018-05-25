@@ -132,7 +132,7 @@ public class ProjectTemplatesTest {
 
 		XPath xPath = xPathFactory.newXPath();
 
-		_xPathExpression = xPath.compile(
+		_pomXmlNpmInstallXPathExpression = xPath.compile(
 			"//id[contains(text(),'npm-install')]/parent::*");
 	}
 
@@ -2329,7 +2329,7 @@ public class ProjectTemplatesTest {
 
 		Document document = documentBuilder.parse(pomXmlFile);
 
-		NodeList nodeList = (NodeList)_xPathExpression.evaluate(
+		NodeList nodeList = (NodeList)_pomXmlNpmInstallXPathExpression.evaluate(
 			document, XPathConstants.NODESET);
 
 		Node executionNode = nodeList.item(0);
@@ -3457,7 +3457,7 @@ public class ProjectTemplatesTest {
 		"test.debug.bundle.diffs");
 
 	private static URI _gradleDistribution;
+	private static XPathExpression _pomXmlNpmInstallXPathExpression;
 	private static Properties _projectTemplateVersions;
-	private static XPathExpression _xPathExpression;
 
 }

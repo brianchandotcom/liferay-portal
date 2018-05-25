@@ -1253,8 +1253,8 @@ public class ProjectTemplatesTest {
 			mavenPackageJSON.getBytes(StandardCharsets.UTF_8));
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			_updateExecuteNpmTask(gradleProjectDir);
-			_updateNpmConfiguration(mavenProjectDir);
+			_configureExecuteNpmTask(gradleProjectDir);
+			_configurePomNpmConfiguration(mavenProjectDir);
 		}
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
@@ -1345,8 +1345,8 @@ public class ProjectTemplatesTest {
 			mavenPackageJSON.getBytes(StandardCharsets.UTF_8));
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			_updateExecuteNpmTask(gradleProjectDir);
-			_updateNpmConfiguration(mavenProjectDir);
+			_configureExecuteNpmTask(gradleProjectDir);
+			_configurePomNpmConfiguration(mavenProjectDir);
 		}
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
@@ -2266,6 +2266,85 @@ public class ProjectTemplatesTest {
 		return projectDir;
 	}
 
+	private static void _configureExecuteNpmTask(File projectDir)
+		throws Exception {
+
+		String classPath = "com.liferay.gradle.plugins";
+		String applyPlugin = "com.liferay.plugin";
+
+		File buildGradleFile = _testContains(
+			projectDir, "build.gradle", classPath, applyPlugin);
+
+		Path buildFilePath = buildGradleFile.toPath();
+
+		StringBuilder stringBuilder = new StringBuilder();
+
+		String lineSeparator = System.lineSeparator();
+
+		stringBuilder.append(lineSeparator);
+
+		stringBuilder.append(
+			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask");
+		stringBuilder.append(lineSeparator);
+
+		stringBuilder.append("tasks.withType(ExecuteNpmTask) {");
+		stringBuilder.append(lineSeparator);
+
+		stringBuilder.append("\tregistry = '" + _NODEJS_NPM_CI_REGISTRY + "'");
+		stringBuilder.append(lineSeparator);
+
+		stringBuilder.append("}");
+
+		String executeNpmTaskScript = stringBuilder.toString();
+
+		Files.write(
+			buildFilePath, executeNpmTaskScript.getBytes(),
+			StandardOpenOption.APPEND);
+	}
+
+	private static void _configurePomNpmConfiguration(File projectDir)
+		throws Exception {
+
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
+		File pomXmlFile = new File(projectDir, "pom.xml");
+
+		Document document = documentBuilder.parse(pomXmlFile);
+
+		NodeList nodeList = (NodeList)_xPathExpression.evaluate(
+			document, XPathConstants.NODESET);
+
+		Node executionNode = nodeList.item(0);
+
+		Element configurationElement = document.createElement("configuration");
+
+		executionNode.appendChild(configurationElement);
+
+		Element argumentsElement = document.createElement("arguments");
+
+		configurationElement.appendChild(argumentsElement);
+
+		Text text = document.createTextNode(
+			"install --registry=" + _NODEJS_NPM_CI_REGISTRY);
+
+		argumentsElement.appendChild(text);
+
+		TransformerFactory transformerFactory =
+			TransformerFactory.newInstance();
+
+		Transformer transformer = transformerFactory.newTransformer();
+
+		DOMSource domSource = new DOMSource(document);
+
+		StreamResult streamResult = new StreamResult(pomXmlFile);
+
+		transformer.transform(domSource, streamResult);
+	}
+
 	private static void _createNewFiles(String fileName, File... dirs)
 		throws IOException {
 
@@ -2791,85 +2870,6 @@ public class ProjectTemplatesTest {
 		Assert.assertFalse(message.toString(), realChange);
 	}
 
-	private static void _updateExecuteNpmTask(File projectDir)
-		throws Exception {
-
-		String classPath = "com.liferay.gradle.plugins";
-		String applyPlugin = "com.liferay.plugin";
-
-		File buildGradleFile = _testContains(
-			projectDir, "build.gradle", classPath, applyPlugin);
-
-		Path buildFilePath = buildGradleFile.toPath();
-
-		StringBuilder stringBuilder = new StringBuilder();
-
-		String lineSeparator = System.lineSeparator();
-
-		stringBuilder.append(lineSeparator);
-
-		stringBuilder.append(
-			"import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask");
-		stringBuilder.append(lineSeparator);
-
-		stringBuilder.append("tasks.withType(ExecuteNpmTask) {");
-		stringBuilder.append(lineSeparator);
-
-		stringBuilder.append("\tregistry = '" + _NODEJS_NPM_CI_REGISTRY + "'");
-		stringBuilder.append(lineSeparator);
-
-		stringBuilder.append("}");
-
-		String executeNpmTaskScript = stringBuilder.toString();
-
-		Files.write(
-			buildFilePath, executeNpmTaskScript.getBytes(),
-			StandardOpenOption.APPEND);
-	}
-
-	private static void _updateNpmConfiguration(File projectDir)
-		throws Exception {
-
-		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
-
-		DocumentBuilder documentBuilder =
-			documentBuilderFactory.newDocumentBuilder();
-
-		File pomXmlFile = new File(projectDir, "pom.xml");
-
-		Document document = documentBuilder.parse(pomXmlFile);
-
-		NodeList nodeList = (NodeList)_xPathExpression.evaluate(
-			document, XPathConstants.NODESET);
-
-		Node executionNode = nodeList.item(0);
-
-		Element configurationElement = document.createElement("configuration");
-
-		executionNode.appendChild(configurationElement);
-
-		Element argumentsElement = document.createElement("arguments");
-
-		configurationElement.appendChild(argumentsElement);
-
-		Text text = document.createTextNode(
-			"install --registry=" + _NODEJS_NPM_CI_REGISTRY);
-
-		argumentsElement.appendChild(text);
-
-		TransformerFactory transformerFactory =
-			TransformerFactory.newInstance();
-
-		Transformer transformer = transformerFactory.newTransformer();
-
-		DOMSource domSource = new DOMSource(document);
-
-		StreamResult streamResult = new StreamResult(pomXmlFile);
-
-		transformer.transform(domSource, streamResult);
-	}
-
 	private static void _writeServiceClass(File projectDir) throws IOException {
 		String importLine =
 			"import com.liferay.portal.kernel.events.LifecycleAction;";
@@ -3023,8 +3023,8 @@ public class ProjectTemplatesTest {
 				"WebKeys.java");
 
 		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			_updateExecuteNpmTask(gradleProjectDir);
-			_updateNpmConfiguration(mavenProjectDir);
+			_configureExecuteNpmTask(gradleProjectDir);
+			_configurePomNpmConfiguration(mavenProjectDir);
 		}
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);

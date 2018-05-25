@@ -23,7 +23,8 @@ import java.util.TreeSet;
 /**
  * @author Michael Hashimoto
  */
-public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
+public class PortalAcceptancePullRequestJob
+	extends PortalRepositoryJob implements PortalTestClassJob, TestSuiteJob {
 
 	public PortalAcceptancePullRequestJob(String url) {
 		this(url, "default");
@@ -116,6 +117,7 @@ public class PortalAcceptancePullRequestJob extends PortalRepositoryJob {
 		return null;
 	}
 
+	@Override
 	public String getTestSuiteName() {
 		return _testSuiteName;
 	}

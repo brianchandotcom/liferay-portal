@@ -67,6 +67,16 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		return gitWorkingDirectory;
 	}
 
+	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
+			throw new RuntimeException("Invalid portal Git working directory");
+		}
+
+		return (PortalGitWorkingDirectory)gitWorkingDirectory;
+	}
+
 	public String getPoshiQuery(String testBatchName) {
 		String propertyName = JenkinsResultsParserUtil.combine(
 			"test.batch.run.property.query[", testBatchName, "]");

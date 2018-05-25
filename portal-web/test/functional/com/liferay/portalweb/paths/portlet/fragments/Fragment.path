@@ -132,7 +132,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LFR_EDITABLE</td>
+	<td>EDITABLE_FIELD_CONTENT</td>
 	<td>//lfr-editable[contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>

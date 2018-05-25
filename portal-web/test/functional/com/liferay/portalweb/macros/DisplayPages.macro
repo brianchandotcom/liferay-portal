@@ -72,7 +72,7 @@
 		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
 
 		<for list="${contentList}" param="content">
-			<execute function="AssertElementPresent" locator1="Fragment#LFR_EDITABLE">
+			<execute function="AssertElementPresent" locator1="Fragment#EDITABLE_FIELD_CONTENT">
 				<var name="key_text" value="${content}" />
 			</execute>
 		</for>
@@ -89,7 +89,7 @@
 		</execute>
 
 		<for list="${contentList}" param="content">
-			<execute function="AssertElementPresent" locator1="Fragment#LFR_EDITABLE">
+			<execute function="AssertElementPresent" locator1="Fragment#EDITABLE_FIELD_CONTENT">
 				<var name="key_text" value="${content}" />
 			</execute>
 		</for>

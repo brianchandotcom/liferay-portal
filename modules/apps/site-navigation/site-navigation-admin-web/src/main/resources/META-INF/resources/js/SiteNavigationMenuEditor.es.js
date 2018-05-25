@@ -193,7 +193,7 @@ class SiteNavigationMenuEditor extends State {
 
 	_handleItemClick(event) {
 		SiteNavigationMenuItem.setSelected(
-			SiteNavigationMenuItem.getFromContent(
+			SiteNavigationMenuItem.getFromContentElement(
 				event.delegateTarget
 			),
 			true

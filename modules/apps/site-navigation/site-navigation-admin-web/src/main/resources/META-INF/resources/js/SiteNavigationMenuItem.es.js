@@ -48,7 +48,7 @@ const SiteNavigationMenuItem = {
 	 * @review
 	 */
 
-	getFromContent: function(menuItemContent) {
+	getFromContentElement: function(menuItemContent) {
 		return closest(menuItemContent, `.${MENU_ITEM_CLASSNAME}`);
 	},
 

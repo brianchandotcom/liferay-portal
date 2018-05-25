@@ -1,10 +1,40 @@
 Bundle-Name: Liferay Frontend JS Metal Web
 Bundle-SymbolicName: com.liferay.frontend.js.metal.web
 Bundle-Version: 2.0.0
-Liferay-JS-Submodules-Export:\
-	html2incdom,\
-	incremental-dom*,\
-	metal*
+Liferay-JS-Submodules-Bridge:\
+	incremental-dom,\
+	incremental-dom-string,\
+	metal,\
+	metal-affix,\
+	metal-ajax,\
+	metal-anim,\
+	metal-aop,\
+	metal-assertions,\
+	metal-clipboard,\
+	metal-component,\
+	metal-debounce,\
+	metal-dom,\
+	metal-drag-drop,\
+	metal-events,\
+	metal-incremental-dom,\
+	metal-jsx,\
+	metal-key,\
+	metal-keyboard-focus,\
+	metal-multimap,\
+	metal-pagination,\
+	metal-path-parser,\
+	metal-position,\
+	metal-promise,\
+	metal-router,\
+	metal-scrollspy,\
+	metal-soy,\
+	metal-soy-bundle,\
+	metal-state,\
+	metal-storage,\
+	metal-structs,\
+	metal-toggler,\
+	metal-uri,\
+	metal-useragent
 Provide-Capability:\
 	soy;\
 		type="metal";\

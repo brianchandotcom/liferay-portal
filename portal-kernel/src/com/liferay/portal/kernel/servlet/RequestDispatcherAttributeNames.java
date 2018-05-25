@@ -54,7 +54,7 @@ public class RequestDispatcherAttributeNames {
 					_log.warn(
 						StringBundler.concat(
 							"Current JDK HashMap's hash(Object) method: \"",
-							String.valueOf(hashMethod),
+							hashMethod,
 							"\" is not returning int. Fallback to regular ",
 							"HashSet creation."));
 				}

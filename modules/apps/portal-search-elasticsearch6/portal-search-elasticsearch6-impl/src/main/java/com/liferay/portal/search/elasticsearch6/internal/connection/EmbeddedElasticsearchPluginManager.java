@@ -83,7 +83,7 @@ public class EmbeddedElasticsearchPluginManager {
 		return _pluginZipFactory.createPluginZip(
 			StringBundler.concat(
 				"/plugins/", getPluginZipFileName(_pluginName), "-",
-				String.valueOf(Version.CURRENT), ".zip"));
+				Version.CURRENT, ".zip"));
 	}
 
 	protected void downloadAndExtract(PluginZip pluginZip) throws Exception {

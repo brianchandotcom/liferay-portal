@@ -51,7 +51,7 @@ public final class AMAsyncProcessorImpl<M, T>
 				StringBundler.concat(
 					"Cleaned queue for model ID ", modelId,
 					" and adaptive media processor command ",
-					String.valueOf(amProcessorCommand)));
+					amProcessorCommand));
 		}
 	}
 

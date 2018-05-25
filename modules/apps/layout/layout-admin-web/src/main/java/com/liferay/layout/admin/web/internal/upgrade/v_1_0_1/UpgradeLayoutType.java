@@ -113,9 +113,8 @@ public class UpgradeLayoutType extends UpgradeProcess {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to locate journal article ",
-						String.valueOf(journalArticleId), " in group ",
-						String.valueOf(groupId)));
+						"Unable to locate journal article ", journalArticleId,
+						" in group ", groupId));
 			}
 		}
 		else {

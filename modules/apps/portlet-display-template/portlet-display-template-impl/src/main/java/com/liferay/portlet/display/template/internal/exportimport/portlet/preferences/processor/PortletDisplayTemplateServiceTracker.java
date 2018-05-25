@@ -132,8 +132,8 @@ public class PortletDisplayTemplateServiceTracker {
 				try {
 					_log.error(
 						StringBundler.concat(
-							"Unknow type = ", String.valueOf(type), " from ",
-							String.valueOf(portletDisplayTemplateRegister)));
+							"Unknow type = ", type, " from ",
+							portletDisplayTemplateRegister));
 				}
 				finally {
 					bundleContext.ungetService(serviceReference);

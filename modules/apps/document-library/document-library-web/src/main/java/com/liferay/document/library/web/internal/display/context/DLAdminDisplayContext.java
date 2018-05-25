@@ -282,8 +282,7 @@ public class DLAdminDisplayContext {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"Unable to get folder ",
-								String.valueOf(_folderId)),
+								"Unable to get folder ", _folderId),
 							nsfe);
 					}
 				}
@@ -318,8 +317,8 @@ public class DLAdminDisplayContext {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Could not find folder {folderId=",
-							String.valueOf(_rootFolderId), "}"),
+							"Could not find folder {folderId=", _rootFolderId,
+							"}"),
 						nsfe);
 				}
 			}
@@ -468,8 +467,7 @@ public class DLAdminDisplayContext {
 						_log.warn(
 							StringBundler.concat(
 								"Documents and Media search index is stale ",
-								"and contains file entry {",
-								String.valueOf(fileEntryId), "}"));
+								"and contains file entry {", fileEntryId, "}"));
 					}
 
 					continue;

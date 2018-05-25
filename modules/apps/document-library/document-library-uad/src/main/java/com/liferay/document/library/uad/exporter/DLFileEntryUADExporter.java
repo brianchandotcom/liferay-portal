@@ -33,8 +33,7 @@ public class DLFileEntryUADExporter extends BaseDLFileEntryUADExporter {
 		throws Exception {
 
 		String dlFileEntryFileName = StringBundler.concat(
-			String.valueOf(dlFileEntry.getPrimaryKeyObj()), ".",
-			dlFileEntry.getExtension());
+			dlFileEntry.getPrimaryKeyObj(), ".", dlFileEntry.getExtension());
 
 		zipWriter.addEntry(dlFileEntryFileName, dlFileEntry.getContentStream());
 

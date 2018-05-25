@@ -1398,8 +1398,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 	private static final String _FINDER_COLUMN_O_S_OAUTH2APPLICATIONID_2 = "oAuth2ApplicationScopeAliases.oAuth2ApplicationId = ? AND ";
 	private static final String _FINDER_COLUMN_O_S_SCOPEALIASES_1 = "oAuth2ApplicationScopeAliases.scopeAliases IS NULL";
-	private static final String _FINDER_COLUMN_O_S_SCOPEALIASES_2 = "CAST_CLOB_TEXT(oAuth2ApplicationScopeAliases.scopeAliases) = ?";
-	private static final String _FINDER_COLUMN_O_S_SCOPEALIASES_3 = "(oAuth2ApplicationScopeAliases.scopeAliases IS NULL OR CAST_CLOB_TEXT(oAuth2ApplicationScopeAliases.scopeAliases) = '')";
+	private static final String _FINDER_COLUMN_O_S_SCOPEALIASES_2 = "oAuth2ApplicationScopeAliases.scopeAliases = ?";
+	private static final String _FINDER_COLUMN_O_S_SCOPEALIASES_3 = "(oAuth2ApplicationScopeAliases.scopeAliases IS NULL OR oAuth2ApplicationScopeAliases.scopeAliases = '')";
 
 	public OAuth2ApplicationScopeAliasesPersistenceImpl() {
 		setModelClass(OAuth2ApplicationScopeAliases.class);

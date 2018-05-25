@@ -2282,13 +2282,9 @@ public class ProjectTemplatesTest {
 	private static void _configureExecuteNpmTask(File projectDir)
 		throws Exception {
 
-		String classPath = "com.liferay.gradle.plugins";
-		String applyPlugin = "com.liferay.plugin";
-
 		File buildGradleFile = _testContains(
-			projectDir, "build.gradle", classPath, applyPlugin);
-
-		Path buildFilePath = buildGradleFile.toPath();
+			projectDir, "build.gradle", "com.liferay.gradle.plugins",
+			"com.liferay.plugin");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -2313,7 +2309,7 @@ public class ProjectTemplatesTest {
 		String executeNpmTaskScript = sb.toString();
 
 		Files.write(
-			buildFilePath,
+			buildGradleFile.toPath(),
 			executeNpmTaskScript.getBytes(StandardCharsets.UTF_8),
 			StandardOpenOption.APPEND);
 	}

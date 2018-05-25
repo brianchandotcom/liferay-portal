@@ -206,6 +206,10 @@
 	</command>
 
 	<command name="gotoSitepageCP">
+		<execute macro="SitePages#togglePrivacy">
+			<var name="privacy" value="${privacy}" />
+		</execute>
+
 		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Permissions" />
 			<var name="pageName" value="${pageName}" />

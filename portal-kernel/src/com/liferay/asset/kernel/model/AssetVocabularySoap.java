@@ -47,6 +47,7 @@ public class AssetVocabularySoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setSettings(model.getSettings());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 
 		return soapModel;
 	}
@@ -205,6 +206,14 @@ public class AssetVocabularySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	private String _uuid;
 	private long _vocabularyId;
 	private long _groupId;
@@ -218,4 +227,5 @@ public class AssetVocabularySoap implements Serializable {
 	private String _description;
 	private String _settings;
 	private Date _lastPublishDate;
+	private String _externalReferenceCode;
 }

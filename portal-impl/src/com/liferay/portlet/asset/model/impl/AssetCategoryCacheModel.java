@@ -65,7 +65,7 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -99,6 +99,8 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 		sb.append(vocabularyId);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -175,6 +177,13 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 			assetCategoryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		if (externalReferenceCode == null) {
+			assetCategoryImpl.setExternalReferenceCode("");
+		}
+		else {
+			assetCategoryImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		assetCategoryImpl.resetOriginalValues();
 
 		return assetCategoryImpl;
@@ -206,6 +215,7 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 
 		vocabularyId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -265,6 +275,13 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 
 		objectOutput.writeLong(vocabularyId);
 		objectOutput.writeLong(lastPublishDate);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 	}
 
 	public String uuid;
@@ -283,4 +300,5 @@ public class AssetCategoryCacheModel implements CacheModel<AssetCategory>,
 	public String description;
 	public long vocabularyId;
 	public long lastPublishDate;
+	public String externalReferenceCode;
 }

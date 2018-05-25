@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Frontend JS Web
 Bundle-SymbolicName: com.liferay.frontend.js.web
 Bundle-Version: 2.0.0
-Liferay-JS-Submodules-Bridge: frontend-js-web
 Liferay-JS-Resources-Top-Head-Authenticated:\
 	/aui/async-queue/async-queue.js,\
 	/aui/base-build/base-build.js,\
@@ -159,6 +158,7 @@ Liferay-JS-Resources-Top-Head:\
 	/liferay/menu.js,\
 	/liferay/notice.js,\
 	/liferay/poller.js
+Liferay-JS-Submodules-Bridge: frontend-js-web
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="liferay.js";\

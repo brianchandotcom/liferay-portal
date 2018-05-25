@@ -35,7 +35,7 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		if (_hasError) {
+		if (_hasError && _isShowAlert()) {
 			return super.doEndTag();
 		}
 
@@ -53,6 +53,8 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 			return SKIP_BODY;
 		}
 
+		_hasError = true;
+
 		if (!SessionErrors.contains(portletRequest, _key)) {
 			return SKIP_BODY;
 		}
@@ -60,12 +62,6 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 		Object value = getException(portletRequest);
 
 		if (value == null) {
-			return SKIP_BODY;
-		}
-
-		_hasError = true;
-
-		if (!_isShowAlert()) {
 			return SKIP_BODY;
 		}
 

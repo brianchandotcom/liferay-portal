@@ -301,7 +301,11 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 <aui:script>
 	var deleteSelectedEntries = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
+			var form = document.getElementById('<portlet:namespace />fm');
+
+			if (form) {
+				submitForm(form);
+			}
 		}
 	}
 

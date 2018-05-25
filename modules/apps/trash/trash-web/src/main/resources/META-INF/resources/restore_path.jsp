@@ -16,16 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNull(redirect)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	redirect = portletURL.toString();
-}
-%>
-
 <c:if test="<%= SessionMessages.contains(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA) %>">
 	<liferay-util:buffer
 		var="alertMessage"
@@ -113,14 +103,35 @@ if (Validator.isNull(redirect)) {
 				uri: uri
 			},
 			function(event) {
-				var form = AUI.$(document.<portlet:namespace />selectContainerForm);
+				var selectContainerForm = document.getElementById('<portlet:namespace />selectContainerForm');
 
-				form.fm('className').val(event.classname);
-				form.fm('classPK').val(event.classpk);
-				form.fm('containerModelId').val(event.containermodelid);
-				form.fm('redirect').val(event.redirect);
+				if (selectContainerForm) {
+					var className = selectContainerForm.querySelector('#<portlet:namespace />className');
 
-				submitForm(form);
+					if (className) {
+						className.setAttribute('value', event.classname);
+					}
+
+					var classPK = selectContainerForm.querySelector('#<portlet:namespace />classPK');
+
+					if (classPK) {
+						classPK.setAttribute('value', event.classpk);
+					}
+
+					var containerModelId = selectContainerForm.querySelector('#<portlet:namespace />containerModelId');
+
+					if (containerModelId) {
+						containerModelId.setAttribute('value', event.containermodelid);
+					}
+
+					var redirect = selectContainerForm.querySelector('#<portlet:namespace />redirect');
+
+					if (redirect) {
+						redirect.setAttribute('value', event.redirect);
+					}
+
+					submitForm(selectContainerForm);
+				}
 			}
 		);
 	}

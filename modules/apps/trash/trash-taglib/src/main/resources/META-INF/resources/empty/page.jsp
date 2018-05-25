@@ -42,12 +42,20 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:emp
 </c:if>
 
 <aui:script>
-	AUI.$('#<%= namespace %>empty').on(
-		'click',
-		function(event) {
-			if (confirm('<%= UnicodeLanguageUtil.get(request, confirmMessage) %>')) {
-				submitForm(document.<portlet:namespace />emptyForm);
+	var <%= namespace %>empty = document.getElementById('<%= namespace %>empty');
+
+	if (<%= namespace %>empty) {
+		<%= namespace %>empty.addEventListener(
+			'click',
+			function(event) {
+				if (confirm('<%= UnicodeLanguageUtil.get(request, confirmMessage) %>')) {
+					var form = document.getElementById('<portlet:namespace />fm');
+
+					if (form) {
+						submitForm(form);
+					}
+				}
 			}
-		}
-	);
+		);
+	}
 </aui:script>

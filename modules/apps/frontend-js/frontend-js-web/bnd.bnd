@@ -1,7 +1,7 @@
 Bundle-Name: Liferay Frontend JS Web
 Bundle-SymbolicName: com.liferay.frontend.js.web
 Bundle-Version: 2.0.0
-Liferay-Top-Head-Authenticated-JS-Resources:\
+Liferay-JS-Resources-Top-Head-Authenticated:\
 	/aui/async-queue/async-queue.js,\
 	/aui/base-build/base-build.js,\
 	/aui/cookie/cookie.js,\
@@ -29,7 +29,7 @@ Liferay-Top-Head-Authenticated-JS-Resources:\
 	/liferay/session.js,\
 	\
 	/liferay/deprecated.js
-Liferay-Top-Head-JS-Resources:\
+Liferay-JS-Resources-Top-Head:\
 	/jquery/jquery.js,\
 	\
 	/clay/popper.js,\
@@ -158,6 +158,7 @@ Liferay-Top-Head-JS-Resources:\
 	/liferay/menu.js,\
 	/liferay/notice.js,\
 	/liferay/poller.js
+Liferay-JS-Submodules-Bridge: frontend-js-web
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="liferay.js";\

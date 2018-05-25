@@ -274,6 +274,16 @@ public class ManagerCache {
 		return Optional.ofNullable(_names);
 	}
 
+	public Map<String, NestedCollectionRoutes> getNestedCollectionRoutesMap(
+		EmptyFunction computeEmptyFunction) {
+
+		if (_nestedCollectionRoutes == null) {
+			computeEmptyFunction.invoke();
+		}
+
+		return _nestedCollectionRoutes;
+	}
+
 	/**
 	 * Returns the nested collection routes for the nested collection resource's
 	 * name.

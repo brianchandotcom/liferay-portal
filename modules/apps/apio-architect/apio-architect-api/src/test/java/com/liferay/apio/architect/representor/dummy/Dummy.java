@@ -49,6 +49,14 @@ public class Dummy {
 		return locale.getLanguage() + "2";
 	}
 
+	public String getRelativeURL1() {
+		return "/first";
+	}
+
+	public String getRelativeURL2() {
+		return "/second";
+	}
+
 	public String getString1() {
 		return "String 1";
 	}

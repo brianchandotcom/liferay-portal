@@ -200,6 +200,22 @@ public abstract class BaseRepresentor<T> {
 	}
 
 	/**
+	 * Returns the list containing the relative URL field names and the
+	 * functions to get those fields.
+	 *
+	 * @return the list containing the relative URL field names and functions
+	 */
+	public List<FieldFunction<T, String>> getRelativeURLFunctions() {
+		return Optional.ofNullable(
+			fieldFunctions.get("RELATIVE_URL")
+		).<List<FieldFunction<T, String>>>map(
+			Unsafe::unsafeCast
+		).orElseGet(
+			Collections::emptyList
+		);
+	}
+
+	/**
 	 * Returns the list containing the string field names and the functions to
 	 * get those fields.
 	 *
@@ -387,6 +403,19 @@ public abstract class BaseRepresentor<T> {
 			key, identifierClass, identifierFunction);
 
 		relatedModels.add(relatedModel);
+	}
+
+	/**
+	 * Adds a relative URL function to the {@code Representor}.
+	 *
+	 * @param  key the field's name
+	 * @param  function the function used to get the URL
+	 * @review
+	 */
+	protected void addRelativeURLFunction(
+		String key, Function<T, String> function) {
+
+		_addFieldFunction(key, function, "RELATIVE_URL");
 	}
 
 	/**
@@ -624,6 +653,22 @@ public abstract class BaseRepresentor<T> {
 				String key, Function<T, List<Number>> function) {
 
 				baseRepresentor.addNumberListFunction(key, function);
+
+				return _this;
+			}
+
+			/**
+			 * Adds information about a resource's relative URL field. This
+			 * field's value will be represented as an absolute URI, by
+			 * prefixing it with the value from {@link
+			 * com.liferay.apio.architect.url.ServerURL}.
+			 *
+			 * @param  key the field's name
+			 * @param  function the function used to get the url
+			 * @return the builder's step
+			 */
+			public U addRelativeURL(String key, Function<T, String> function) {
+				baseRepresentor.addRelativeURLFunction(key, function);
 
 				return _this;
 			}

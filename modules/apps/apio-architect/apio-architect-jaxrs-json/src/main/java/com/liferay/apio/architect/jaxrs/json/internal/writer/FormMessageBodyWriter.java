@@ -14,44 +14,20 @@
 
 package com.liferay.apio.architect.jaxrs.json.internal.writer;
 
-import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
-
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.functional.Try.Success;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.jaxrs.json.internal.writer.base.BaseMessageBodyWriter;
 import com.liferay.apio.architect.message.json.FormMessageMapper;
 import com.liferay.apio.architect.request.RequestInfo;
-import com.liferay.apio.architect.response.control.Embedded;
-import com.liferay.apio.architect.response.control.Fields;
-import com.liferay.apio.architect.url.ServerURL;
-import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
 import com.liferay.apio.architect.wiring.osgi.manager.message.json.FormMessageMapperManager;
 import com.liferay.apio.architect.wiring.osgi.util.GenericUtil;
 import com.liferay.apio.architect.writer.FormWriter;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import java.nio.charset.StandardCharsets;
-
-import java.util.Collections;
-import java.util.Locale;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-
-import javax.ws.rs.NotSupportedException;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.ext.MessageBodyWriter;
 import javax.ws.rs.ext.Provider;
@@ -60,28 +36,24 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Writes form by using the {@link FormMessageMapper} that corresponds to the
+ * media type.
+ *
  * @author Alejandro Hernández
  */
 @Component(
 	property = {
 		"osgi.jaxrs.application.select=(liferay.apio.architect.application=true)",
 		"osgi.jaxrs.extension=true"
-	}
+	},
+	service = MessageBodyWriter.class
 )
 @Provider
-public class FormMessageBodyWriter implements MessageBodyWriter<Success<Form>> {
+public class FormMessageBodyWriter
+	extends BaseMessageBodyWriter<Success<Form>, FormMessageMapper> {
 
-	public long getSize(
-		Success<Form> success, Class<?> aClass, Type type,
-		Annotation[] annotations, MediaType mediaType) {
-
-		return -1;
-	}
-
-	public boolean isWriteable(
-		Class<?> aClass, Type genericType, Annotation[] annotations,
-		MediaType mediaType) {
-
+	@Override
+	public boolean canWrite(Class<?> clazz, Type genericType) {
 		Try<Class<Object>> classTry =
 			GenericUtil.getFirstGenericTypeArgumentFromTypeTry(
 				genericType, Try.class);
@@ -92,85 +64,30 @@ public class FormMessageBodyWriter implements MessageBodyWriter<Success<Form>> {
 	}
 
 	@Override
-	public void writeTo(
-			Success<Form> success, Class<?> aClass, Type type,
-			Annotation[] annotations, MediaType mediaType,
-			MultivaluedMap<String, Object> httpHeaders,
-			OutputStream outputStream)
-		throws IOException, WebApplicationException {
+	public Optional<FormMessageMapper> getMessageMapperOptional(
+		Request request) {
 
-		OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-			outputStream, StandardCharsets.UTF_8);
+		return _formMessageMapperManager.getFormMessageMapperOptional(request);
+	}
 
-		PrintWriter printWriter = new PrintWriter(outputStreamWriter, true);
-
-		Form form = success.getValue();
-
-		Optional<FormMessageMapper> optional =
-			_formMessageMapperManager.getFormMessageMapperOptional(_request);
-
-		FormMessageMapper formMessageMapper = optional.orElseThrow(
-			NotSupportedException::new);
-
-		RequestInfo requestInfo = RequestInfo.create(
-			builder -> builder.httpHeaders(
-				_httpHeaders
-			).httpServletRequest(
-				_httpServletRequest
-			).serverURL(
-				_providerManager.provideMandatory(
-					_httpServletRequest, ServerURL.class)
-			).embedded(
-				_providerManager.provideOptional(
-					_httpServletRequest, Embedded.class
-				).orElse(
-					__ -> false
-				)
-			).fields(
-				_providerManager.provideOptional(
-					_httpServletRequest, Fields.class
-				).orElse(
-					__ -> string -> true
-				)
-			).language(
-				_providerManager.provideOptional(
-					_httpServletRequest, Language.class
-				).orElse(
-					Locale::getDefault
-				)
-			).build());
+	@Override
+	protected String write(
+		Success<Form> success, FormMessageMapper formMessageMapper,
+		RequestInfo requestInfo) {
 
 		FormWriter formWriter = FormWriter.create(
 			builder -> builder.form(
-				form
+				success.getValue()
 			).formMessageMapper(
 				formMessageMapper
 			).requestInfo(
 				requestInfo
 			).build());
 
-		httpHeaders.put(
-			CONTENT_TYPE,
-			Collections.singletonList(formMessageMapper.getMediaType()));
-
-		printWriter.println(formWriter.write());
-
-		printWriter.close();
+		return formWriter.write();
 	}
 
 	@Reference
 	private FormMessageMapperManager _formMessageMapperManager;
-
-	@Context
-	private HttpHeaders _httpHeaders;
-
-	@Context
-	private HttpServletRequest _httpServletRequest;
-
-	@Reference
-	private ProviderManager _providerManager;
-
-	@Context
-	private Request _request;
 
 }

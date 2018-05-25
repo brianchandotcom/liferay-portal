@@ -76,6 +76,8 @@
 	"number2": 42,
 	"numberList1": [1, 2, 3, 4, 5],
 	"numberList2": [6, 7, 8, 9, 10],
+	"relativeURL1": "localhost/first",
+	"relativeURL2": "localhost/second",
 	"string1": "Live long and prosper",
 	"string2": "Hypermedia",
 	"stringList1": ["a", "b", "c", "d", "e"],

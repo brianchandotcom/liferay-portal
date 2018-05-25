@@ -82,27 +82,6 @@
 						/>
 					</c:if>
 				</c:when>
-				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "icon") %>'>
-
-					<%
-					row.setCssClass("entry-card lfr-asset-item");
-					%>
-
-					<liferay-ui:search-container-column-text>
-						<liferay-frontend:icon-vertical-card
-							actionJsp='<%= assetTagsDisplayContext.isShowTagsActionMenu() ? "/tag_action.jsp" : StringPool.BLANK %>'
-							actionJspServletContext="<%= application %>"
-							icon="tag"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
-							title="<%= tag.getName() %>"
-						>
-							<liferay-frontend:vertical-card-footer>
-								<strong><liferay-ui:message key="usages" /></strong>: <span><%= String.valueOf(fullTagsCount) %></span>
-							</liferay-frontend:vertical-card-footer>
-						</liferay-frontend:icon-vertical-card>
-					</liferay-ui:search-container-column-text>
-				</c:when>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"

@@ -410,7 +410,6 @@ public class AssetTagsDisplayContext {
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
-				addCardViewTypeItem();
 				addListViewTypeItem();
 				addTableViewTypeItem();
 			}

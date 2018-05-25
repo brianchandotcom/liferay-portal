@@ -75,11 +75,11 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 			{ "createDate", Types.TIMESTAMP },
 			{ "oAuth2ApplicationId", Types.BIGINT },
 			{ "oA2AScopeAliasesId", Types.BIGINT },
-			{ "accessTokenContent", Types.CLOB },
+			{ "accessTokenContent", Types.VARCHAR },
 			{ "accessTokenCreateDate", Types.TIMESTAMP },
 			{ "accessTokenExpirationDate", Types.TIMESTAMP },
 			{ "remoteIPInfo", Types.VARCHAR },
-			{ "refreshTokenContent", Types.CLOB },
+			{ "refreshTokenContent", Types.VARCHAR },
 			{ "refreshTokenCreateDate", Types.TIMESTAMP },
 			{ "refreshTokenExpirationDate", Types.TIMESTAMP }
 		};
@@ -93,11 +93,11 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("oA2AScopeAliasesId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("accessTokenContent", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("accessTokenContent", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("accessTokenCreateDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("accessTokenExpirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("remoteIPInfo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("refreshTokenContent", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("refreshTokenContent", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("refreshTokenCreateDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("refreshTokenExpirationDate", Types.TIMESTAMP);
 	}

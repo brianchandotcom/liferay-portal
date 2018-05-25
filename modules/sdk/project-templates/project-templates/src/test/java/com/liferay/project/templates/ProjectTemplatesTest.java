@@ -114,7 +114,7 @@ public class ProjectTemplatesTest {
 		new TemporaryFolder();
 
 	@BeforeClass
-	public static void setUpClass() throws IOException {
+	public static void setUpClass() throws Exception {
 		String gradleDistribution = System.getProperty("gradle.distribution");
 
 		if (Validator.isNull(gradleDistribution)) {
@@ -128,6 +128,13 @@ public class ProjectTemplatesTest {
 
 		_projectTemplateVersions = FileUtil.readProperties(
 			Paths.get("build", "project-template-versions.properties"));
+
+		XPathFactory xPathFactory = XPathFactory.newInstance();
+
+		XPath xPath = xPathFactory.newXPath();
+
+		_xPathExpression = xPath.compile(
+			"//id[contains(text(),'npm-install')]/parent::*");
 	}
 
 	@Test
@@ -2817,14 +2824,8 @@ public class ProjectTemplatesTest {
 
 		Document document = documentBuilder.parse(pomXml);
 
-		XPathFactory xPathFactory = XPathFactory.newInstance();
 
-		XPath xPath = xPathFactory.newXPath();
-
-		XPathExpression xPathExpression = xPath.compile(
-			"//id[contains(text(),'npm-install')]/parent::*");
-
-		NodeList nodeList = (NodeList)xPathExpression.evaluate(
+		NodeList nodeList = (NodeList)_xPathExpression.evaluate(
 			document, XPathConstants.NODESET);
 
 		Node execution = nodeList.item(0);
@@ -3423,5 +3424,6 @@ public class ProjectTemplatesTest {
 
 	private static URI _gradleDistribution;
 	private static Properties _projectTemplateVersions;
+	private static XPathExpression _xPathExpression;
 
 }

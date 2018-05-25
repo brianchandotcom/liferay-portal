@@ -151,7 +151,11 @@ PortletConfigurationTemplatesDisplayContext portletConfigurationTemplatesDisplay
 <aui:script sandbox="<%= true %>">
 	var deleteArchivedSettings = function() {
 		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-			submitForm($(document.<portlet:namespace />fm));
+			var form = document.getElementById('<portlet:namespace />fm');
+
+			if (form) {
+				submitForm(form);
+			}
 		}
 	}
 

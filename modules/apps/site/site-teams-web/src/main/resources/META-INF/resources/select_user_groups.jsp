@@ -20,10 +20,6 @@
 SelectUserGroupsDisplayContext selectUserGroupsDisplayContext = new SelectUserGroupsDisplayContext(renderRequest, renderResponse, request);
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= selectUserGroupsDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	clearResultsURL="<%= selectUserGroupsDisplayContext.getClearResultsURL() %>"
 	componentId="selectUserGroupsWebManagementToolbar"

@@ -20,10 +20,6 @@
 SelectThemeDisplayContext selectThemeDisplayContext = new SelectThemeDisplayContext(request, liferayPortletRequest, liferayPortletResponse);
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= selectThemeDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	componentId="siteAdminWebManagementToolbar"
 	filterDropdownItems="<%= selectThemeDisplayContext.getFilterDropdownItems() %>"

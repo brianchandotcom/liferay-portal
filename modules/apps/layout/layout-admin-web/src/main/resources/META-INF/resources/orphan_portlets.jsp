@@ -30,10 +30,6 @@ portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
 renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= orphanPortletsDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	actionDropdownItems="<%= orphanPortletsDisplayContext.getActionDropdownItems() %>"
 	componentId="portletsManagementToolbar"

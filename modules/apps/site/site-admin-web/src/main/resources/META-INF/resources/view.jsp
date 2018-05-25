@@ -50,11 +50,6 @@ if (group != null) {
 }
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= siteAdminDisplayContext.getNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	actionDropdownItems="<%= siteAdminDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= siteAdminDisplayContext.getClearResultsURL() %>"

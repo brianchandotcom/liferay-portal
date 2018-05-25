@@ -141,23 +141,6 @@ public class SiteMembershipsDisplayContext {
 		return _selUser;
 	}
 
-	public List<NavigationItem> getSiteRolesNavigationItems() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new NavigationItemList() {
-			{
-				add(
-					navigationItem -> {
-						navigationItem.setActive(true);
-						navigationItem.setHref(themeDisplay.getURLCurrent());
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "site-roles"));
-					});
-			}
-		};
-	}
-
 	public String getTabs1() {
 		if (_tabs1 != null) {
 			return _tabs1;

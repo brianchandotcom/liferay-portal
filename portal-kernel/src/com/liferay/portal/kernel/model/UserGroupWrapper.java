@@ -70,6 +70,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("addedByLDAPImport", isAddedByLDAPImport());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 
 		return attributes;
 	}
@@ -147,6 +148,13 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 		if (addedByLDAPImport != null) {
 			setAddedByLDAPImport(addedByLDAPImport);
 		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
+		}
 	}
 
 	@Override
@@ -202,6 +210,16 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _userGroup.getExpandoBridge();
+	}
+
+	/**
+	* Returns the external reference code of this user group.
+	*
+	* @return the external reference code of this user group
+	*/
+	@Override
+	public String getExternalReferenceCode() {
+		return _userGroup.getExternalReferenceCode();
 	}
 
 	@Override
@@ -438,6 +456,16 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_userGroup.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the external reference code of this user group.
+	*
+	* @param externalReferenceCode the external reference code of this user group
+	*/
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_userGroup.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

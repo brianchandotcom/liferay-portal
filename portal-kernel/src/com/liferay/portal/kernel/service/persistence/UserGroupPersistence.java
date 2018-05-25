@@ -899,6 +899,56 @@ public interface UserGroupPersistence extends BasePersistence<UserGroup> {
 	public int countByC_N(long companyId, String name);
 
 	/**
+	* Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or throws a {@link NoSuchUserGroupException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the matching user group
+	* @throws NoSuchUserGroupException if a matching user group could not be found
+	*/
+	public UserGroup findByC_ERC(long companyId, String externalReferenceCode)
+		throws NoSuchUserGroupException;
+
+	/**
+	* Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the matching user group, or <code>null</code> if a matching user group could not be found
+	*/
+	public UserGroup fetchByC_ERC(long companyId, String externalReferenceCode);
+
+	/**
+	* Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching user group, or <code>null</code> if a matching user group could not be found
+	*/
+	public UserGroup fetchByC_ERC(long companyId, String externalReferenceCode,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the user group where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the user group that was removed
+	*/
+	public UserGroup removeByC_ERC(long companyId, String externalReferenceCode)
+		throws NoSuchUserGroupException;
+
+	/**
+	* Returns the number of user groups where companyId = &#63; and externalReferenceCode = &#63;.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching user groups
+	*/
+	public int countByC_ERC(long companyId, String externalReferenceCode);
+
+	/**
 	* Caches the user group in the entity cache if it is enabled.
 	*
 	* @param userGroup the user group

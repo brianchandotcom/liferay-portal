@@ -352,6 +352,13 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.asset.kernel.model.AssetCategory fetchCategoryByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+		return _assetCategoryLocalService.fetchCategoryByExternalReferenceCode(companyId,
+			externalReferenceCode);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _assetCategoryLocalService.getActionableDynamicQuery();
 	}
@@ -753,6 +760,20 @@ public class AssetCategoryLocalServiceWrapper
 		return _assetCategoryLocalService.updateCategory(userId, categoryId,
 			parentCategoryId, titleMap, descriptionMap, vocabularyId,
 			categoryProperties, serviceContext);
+	}
+
+	@Override
+	public com.liferay.asset.kernel.model.AssetCategory upsertCategory(
+		long userId, long groupId, long parentCategoryId,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		long vocabularyId, String[] categoryProperties,
+		String externalReferenceCode,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryLocalService.upsertCategory(userId, groupId,
+			parentCategoryId, titleMap, descriptionMap, vocabularyId,
+			categoryProperties, externalReferenceCode, serviceContext);
 	}
 
 	@Override

@@ -224,6 +224,10 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	public AssetVocabulary fetchGroupVocabulary(long groupId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetVocabulary fetchVocaublaryByExternalReferenceCode(
+		long companyId, String externalReferenceCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -388,5 +392,12 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	public AssetVocabulary updateVocabulary(long vocabularyId, String title,
 		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 		String settings, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AssetVocabulary upsertVocabulary(long userId, long groupId,
+		String title, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String settings,
+		String externalReferenceId, ServiceContext serviceContext)
 		throws PortalException;
 }

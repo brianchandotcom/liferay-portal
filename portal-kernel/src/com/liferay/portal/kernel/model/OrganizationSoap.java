@@ -52,6 +52,7 @@ public class OrganizationSoap implements Serializable {
 		soapModel.setStatusId(model.getStatusId());
 		soapModel.setComments(model.getComments());
 		soapModel.setLogoId(model.getLogoId());
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 
 		return soapModel;
 	}
@@ -252,6 +253,14 @@ public class OrganizationSoap implements Serializable {
 		_logoId = logoId;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _organizationId;
@@ -270,4 +279,5 @@ public class OrganizationSoap implements Serializable {
 	private long _statusId;
 	private String _comments;
 	private long _logoId;
+	private String _externalReferenceCode;
 }

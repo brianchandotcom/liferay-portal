@@ -89,7 +89,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			{ "countryId", Types.BIGINT },
 			{ "statusId", Types.BIGINT },
 			{ "comments", Types.VARCHAR },
-			{ "logoId", Types.BIGINT }
+			{ "logoId", Types.BIGINT },
+			{ "externalReferenceCode", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -112,9 +113,10 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		TABLE_COLUMNS_MAP.put("statusId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Organization_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId LONG,comments STRING null,logoId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table Organization_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,organizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentOrganizationId LONG,treePath STRING null,name VARCHAR(100) null,type_ VARCHAR(75) null,recursable BOOLEAN,regionId LONG,countryId LONG,statusId LONG,comments STRING null,logoId LONG,externalReferenceCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 	public static final String ORDER_BY_JPQL = " ORDER BY organization.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Organization_.name ASC";
@@ -131,11 +133,12 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 				"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Organization"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long NAME_COLUMN_BITMASK = 2L;
-	public static final long ORGANIZATIONID_COLUMN_BITMASK = 4L;
-	public static final long PARENTORGANIZATIONID_COLUMN_BITMASK = 8L;
-	public static final long TREEPATH_COLUMN_BITMASK = 16L;
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long ORGANIZATIONID_COLUMN_BITMASK = 8L;
+	public static final long PARENTORGANIZATIONID_COLUMN_BITMASK = 16L;
+	public static final long TREEPATH_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -168,6 +171,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		model.setStatusId(soapModel.getStatusId());
 		model.setComments(soapModel.getComments());
 		model.setLogoId(soapModel.getLogoId());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 
 		return model;
 	}
@@ -268,6 +272,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		attributes.put("statusId", getStatusId());
 		attributes.put("comments", getComments());
 		attributes.put("logoId", getLogoId());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -383,6 +388,13 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		if (logoId != null) {
 			setLogoId(logoId);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 	}
 
@@ -706,6 +718,32 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_logoId = logoId;
 	}
 
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
+
+		if (_originalExternalReferenceCode == null) {
+			_originalExternalReferenceCode = _externalReferenceCode;
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	public String getOriginalExternalReferenceCode() {
+		return GetterUtil.getString(_originalExternalReferenceCode);
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -761,6 +799,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		organizationImpl.setStatusId(getStatusId());
 		organizationImpl.setComments(getComments());
 		organizationImpl.setLogoId(getLogoId());
+		organizationImpl.setExternalReferenceCode(getExternalReferenceCode());
 
 		organizationImpl.resetOriginalValues();
 
@@ -840,6 +879,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		organizationModelImpl._originalTreePath = organizationModelImpl._treePath;
 
 		organizationModelImpl._originalName = organizationModelImpl._name;
+
+		organizationModelImpl._originalExternalReferenceCode = organizationModelImpl._externalReferenceCode;
 
 		organizationModelImpl._columnBitmask = 0;
 	}
@@ -934,12 +975,21 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		organizationCacheModel.logoId = getLogoId();
 
+		organizationCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = organizationCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+				(externalReferenceCode.length() == 0)) {
+			organizationCacheModel.externalReferenceCode = null;
+		}
+
 		return organizationCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -977,6 +1027,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		sb.append(getComments());
 		sb.append(", logoId=");
 		sb.append(getLogoId());
+		sb.append(", externalReferenceCode=");
+		sb.append(getExternalReferenceCode());
 		sb.append("}");
 
 		return sb.toString();
@@ -984,7 +1036,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.kernel.model.Organization");
@@ -1062,6 +1114,10 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 			"<column><column-name>logoId</column-name><column-value><![CDATA[");
 		sb.append(getLogoId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>externalReferenceCode</column-name><column-value><![CDATA[");
+		sb.append(getExternalReferenceCode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1100,6 +1156,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private long _statusId;
 	private String _comments;
 	private long _logoId;
+	private String _externalReferenceCode;
+	private String _originalExternalReferenceCode;
 	private long _columnBitmask;
 	private Organization _escapedModel;
 }

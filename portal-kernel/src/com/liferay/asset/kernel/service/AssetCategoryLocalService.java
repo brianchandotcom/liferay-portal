@@ -259,6 +259,10 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 		String name, long vocabularyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategory fetchCategoryByExternalReferenceCode(long companyId,
+		String externalReferenceCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -509,4 +513,11 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 		Map<Locale, String> descriptionMap, long vocabularyId,
 		String[] categoryProperties, ServiceContext serviceContext)
 		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AssetCategory upsertCategory(long userId, long groupId,
+		long parentCategoryId, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, long vocabularyId,
+		String[] categoryProperties, String externalReferenceCode,
+		ServiceContext serviceContext) throws PortalException;
 }

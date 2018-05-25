@@ -505,7 +505,7 @@ http://www.w3.org/TR/html401/struct/global.html
 
 	<tag-rules>
 		<tag name="picture" action="validate">
-			<attribute name="data-fileEntryId" onInvalid="removeAttribute">
+			<attribute name="data-fileentryid" onInvalid="removeAttribute">
 				<regexp-list>
 					<regexp name="positiveInteger" />
 				</regexp-list>
@@ -670,7 +670,7 @@ http://www.w3.org/TR/html401/struct/global.html
 		<!-- Image & image related tags -->
 
 		<tag name="img" action="validate">
-			<attribute name="data-fileEntryId" onInvalid="removeAttribute">
+			<attribute name="data-fileentryid" onInvalid="removeAttribute">
 				<regexp-list>
 					<regexp name="positiveInteger"/>
 				</regexp-list>

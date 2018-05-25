@@ -516,12 +516,7 @@
 		<echo append="true" file="${dist.dir}/ticket.list.tmp">${artifact.change.log.ticket.list} </echo>
 	</target>
 
-	<target
-		depends="download-artifact-sources"
-		if="replace.artifact.sources.license.text"
-		name="replace-artifact-sources-license-text"
-		unless="artifact.exclude"
-	>
+	<target depends="download-artifact-sources" if="replace.artifact.sources.license.text" name="replace-artifact-sources-license-text" unless="artifact.exclude">
 		<delete dir="tmp" />
 
 		<mkdir dir="tmp" />

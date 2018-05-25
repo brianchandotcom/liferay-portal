@@ -44,7 +44,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 	showSearch="<%= assetCategoriesDisplayContext.isShowCategoriesSearch() %>"
 	sortingOrder="<%= assetCategoriesDisplayContext.getOrderByType() %>"
 	sortingURL="<%= assetCategoriesDisplayContext.getCategoriesSortingURL() %>"
-	viewTypeItems="<%= assetCategoriesDisplayContext.getCategoriesViewTypeItems() %>"
+	viewTypeItems="<%= !assetCategoriesDisplayContext.isFlattenedNavigationAllowed() ? assetCategoriesDisplayContext.getCategoriesViewTypeItems() : null %>"
 />
 
 <portlet:actionURL name="deleteCategory" var="deleteCategoryURL">

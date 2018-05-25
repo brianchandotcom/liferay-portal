@@ -507,10 +507,7 @@ public class AssetCategoriesDisplayContext {
 
 		return new ViewTypeItemList(portletURL, getDisplayStyle()) {
 			{
-				if (!isFlattenedNavigationAllowed()) {
-					addListViewTypeItem();
-				}
-
+				addListViewTypeItem();
 				addTableViewTypeItem();
 			}
 		};

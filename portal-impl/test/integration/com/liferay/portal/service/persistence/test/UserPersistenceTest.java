@@ -408,20 +408,20 @@ public class UserPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_S(0L, 0);
-	}
-
-	@Test
 	public void testCountByC_ERC() throws Exception {
 		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
 
 		_persistence.countByC_ERC(0L, "null");
 
 		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test

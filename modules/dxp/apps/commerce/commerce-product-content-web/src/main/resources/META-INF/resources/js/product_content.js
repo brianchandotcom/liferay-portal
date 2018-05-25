@@ -14,7 +14,7 @@ AUI.add(
 					},
 					fullImageSelector: {
 					},
-					productContentSelector:{
+					productContentSelector: {
 					},
 					thumbsContainerSelector: {
 					},
@@ -105,13 +105,14 @@ AUI.add(
 
 								fieldValue.key = field.get('fieldName');
 
-								var value  =  field.getValue();
+								var value = field.getValue();
 
 								var arrValue = [];
 
 								if (value instanceof Array) {
 									arrValue = value;
-								} else {
+								}
+								else {
 									arrValue.push(value);
 								}
 
@@ -277,7 +278,7 @@ AUI.add(
 
 						productContent.all('[data-cp-definition-id]').each(
 							function(node) {
-								node.setAttribute('data-cp-definition-id', instance.get('cpDefinitionId'))
+								node.setAttribute('data-cp-definition-id', instance.get('cpDefinitionId'));
 							}
 						);
 					}

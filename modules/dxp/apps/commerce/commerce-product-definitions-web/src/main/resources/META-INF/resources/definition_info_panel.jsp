@@ -71,7 +71,7 @@ if (cpDefinitions == null) {
 										%>
 
 										<c:if test="<%= Validator.isNotNull(defaultImageThumbnailSrc) %>">
-											<div class="default-image" style="background-image: url(<%= defaultImageThumbnailSrc %>); height: 300px; background-size: cover;"></div>
+											<div class="default-image" style="background-image: url(<%= defaultImageThumbnailSrc %>); background-size: cover; height: 300px;"></div>
 										</c:if>
 
 										<%

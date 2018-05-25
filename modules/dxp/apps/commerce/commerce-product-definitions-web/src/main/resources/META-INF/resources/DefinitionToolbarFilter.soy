@@ -17,10 +17,10 @@
 
 	<div class="definition-toolbar-filter" id="{$id}">
 		<div class="container-fluid-1280">
-			<div class="form-group form-inline filter-selector">
+			<div class="filter-selector form-group form-inline">
 				<div class="form-group">
 					<div class=" form-group input-group-item input-group-item-shrink input-group-prepend">
-						<select class="form-control filter-selector-select" onChange="_handleFilterChange">
+						<select class="filter-selector-select form-control" onChange="_handleFilterChange">
 							<option value="">{msg desc=""}select-filter{/msg}</option>
 							<option value="productTypeName">{msg desc=""}product-type{/msg}</option>
 							<option value="optionsNames">{msg desc=""}option{/msg}</option>
@@ -58,7 +58,7 @@
 
 					<div class=" form-group input-group-item input-group-item-shrink">
 						{if $_currentSelection != 'assetCategoryIds' }
-							<button class="btn btn-secondary add-filter-button" onclick="{$_handleAddFilter}" type="button">{msg desc=""}add-filter{/msg}</button>
+							<button class="add-filter-button btn btn-secondary" onclick="{$_handleAddFilter}" type="button">{msg desc=""}add-filter{/msg}</button>
 						{/if}
 					</div>
 				</div>
@@ -81,7 +81,7 @@
 	{@param? handleOptionChange: any}
 
 	<label>{msg desc=""}is{/msg}</label>
-	<select class="form-control filter-select" id="optionsNames" onChange="{$handleOptionChange}">
+	<select class="filter-select form-control" id="optionsNames" onChange="{$handleOptionChange}">
 		<option value="">{msg desc=""}select-option{/msg}</option>
 		{if $terms}
 			{foreach $term in $terms}
@@ -99,7 +99,7 @@
 
 	<label>{msg desc=""}is{/msg}</label>
 
-	<select class="form-control filter-select" id="optionValues">
+	<select class="filter-select form-control" id="optionValues">
 		{if $optionValues}
 			{foreach $optionValue in $optionValues}
 				<option data-label="{$optionValue.label}" value="{$optionValue.term}">{$optionValue.label} ({$optionValue.frequency})</option>
@@ -115,7 +115,7 @@
 	{@param? terms: ?}
 
 	<label>{msg desc=""}is{/msg}</label>
-	<select class="form-control filter-select" id="status">
+	<select class="filter-select form-control" id="status">
 		{if $terms}
 			{foreach $term in $terms}
 				<option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
@@ -131,7 +131,7 @@
 	{@param? terms: ?}
 
 	<label>{msg desc=""}is{/msg}</label>
-	<select class="form-control filter-select" id="productTypeName">
+	<select class="filter-select form-control" id="productTypeName">
 		{if $terms}
 			{foreach $term in $terms}
 				<option data-label="{$term.label}" value="{$term.term}">{$term.label} ({$term.frequency})</option>
@@ -147,7 +147,7 @@
 	<div id="assetCategoriesSelector">
 	</div>
 
-	<input name="categoryIds" id="categoryIds" ref="hiddenInput" type="hidden" />
+	<input id="categoryIds" name="categoryIds" ref="hiddenInput" type="hidden" />
 {/template}
 
 /**
@@ -164,7 +164,7 @@
 				{foreach $filter in $filters}
 					<span class="label label-dismissible label-lg label-secondary">
 						{$filter.label}
-						<button aria-label="Close" class="btn close btn-unstyled" data-index="{index($filter)}" onClick="{$_handlerRemoveFilter}" type="button">
+						<button aria-label="Close" class="btn btn-unstyled close" data-index="{index($filter)}" onClick="{$_handlerRemoveFilter}" type="button">
 							<svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
 								<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
 							</svg>

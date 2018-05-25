@@ -40,7 +40,7 @@ public abstract class BaseRSSMVCResourceCommand implements MVCResourceCommand {
 			catch (Exception e) {
 			}
 
-			return false;
+			return true;
 		}
 
 		try {
@@ -53,7 +53,7 @@ public abstract class BaseRSSMVCResourceCommand implements MVCResourceCommand {
 			throw new PortletException(e);
 		}
 
-		return true;
+		return false;
 	}
 
 	protected abstract byte[] getRSS(

@@ -308,8 +308,8 @@ public class JSLoaderModule {
 					_log.warn(
 						StringBundler.concat(
 							"Liferay-JS-Submodules-Export is deprecated as of ",
-								"Liferay Portal 7.1. Please, replace its use ",
-								"by Liferay-JS-Submodules-Bridge instead."));
+							"Liferay Portal 7.1. Please, replace its use by ",
+							"Liferay-JS-Submodules-Bridge instead."));
 				}
 			}
 		}

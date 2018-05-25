@@ -111,7 +111,7 @@ public class BNDSourceUtil {
 		"Liferay-Configuration-Path", "Liferay-JS-Config",
 		"Liferay-JS-Resources-Top-Head-Authenticated",
 		"Liferay-JS-Resources-Top-Head", "Liferay-JS-Submodules-Bridge",
-		"Liferay-JS-Submodules-Export",  "Liferay-Modules-Compat-Adapters",
+		"Liferay-JS-Submodules-Export", "Liferay-Modules-Compat-Adapters",
 		"Liferay-Releng-App-Description",
 		"Liferay-Releng-Module-Group-Description",
 		"Liferay-Releng-Module-Group-Title", "Liferay-Require-SchemaVersion",

@@ -80,7 +80,7 @@
 
 	<command name="viewPGViaFriendlyURL">
 		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="${siteName}/~/${friendlyURL}" />
+			<var name="siteName" value="${siteName}/-/${friendlyURL}" />
 		</execute>
 
 		<for list="${contentList}" param="content">

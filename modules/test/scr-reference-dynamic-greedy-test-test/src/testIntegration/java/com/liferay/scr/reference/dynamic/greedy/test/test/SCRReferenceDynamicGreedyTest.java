@@ -126,7 +126,8 @@ public class SCRReferenceDynamicGreedyTest {
 			Consumer<List<String>> bindingCallsConsumer)
 		throws Exception {
 
-		Bundle bundle = FrameworkUtil.getBundle(DynamicGreedyComponent.class);
+		Bundle bundle = FrameworkUtil.getBundle(
+			SCRReferenceDynamicGreedyTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

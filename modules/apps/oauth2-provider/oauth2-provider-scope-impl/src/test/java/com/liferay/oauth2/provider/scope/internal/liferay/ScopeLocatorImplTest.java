@@ -31,6 +31,8 @@ import com.liferay.oauth2.provider.scope.spi.scope.matcher.ScopeMatcherFactory;
 import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 
+import java.lang.reflect.Field;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -339,6 +341,21 @@ public class ScopeLocatorImplTest extends PowerMockito {
 	protected final Set<String> scopesSet1 = new HashSet<>(
 		Arrays.asList(new String[] {"everything", "everything.readonly"}));
 
+	private static void _set(Object object, String fieldName, Object value) {
+		Class<?> clazz = object.getClass();
+
+		try {
+			Field field = clazz.getDeclaredField(fieldName);
+
+			field.setAccessible(true);
+
+			field.set(object, value);
+		}
+		catch (Exception e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
 	private Set<String> _getScopes(
 		Collection<LiferayOAuth2Scope> liferayOAuth2Scopes) {
 
@@ -400,7 +417,8 @@ public class ScopeLocatorImplTest extends PowerMockito {
 					_prepareScopeServiceTrackerMapMock(
 						defaultPrefixHandlerFactory, configurator);
 
-			_scopeLocatorImpl.setDefaultPrefixHandlerFactory(
+			_set(
+				_scopeLocatorImpl, "_defaultPrefixHandlerFactory",
 				defaultPrefixHandlerFactory);
 
 			_scopeLocatorImpl.setScopedPrefixHandlerFactories(
@@ -462,7 +480,7 @@ public class ScopeLocatorImplTest extends PowerMockito {
 				_prepareScopeServiceTrackerMapMock(
 					defaultScopeMapper, configurator);
 
-			_scopeLocatorImpl.setDefaultScopeMapper(defaultScopeMapper);
+			_set(_scopeLocatorImpl, "_defaultScopeMapper", defaultScopeMapper);
 
 			_scopeLocatorImpl.setScopedScopeMapper(scopedScopeMapper);
 

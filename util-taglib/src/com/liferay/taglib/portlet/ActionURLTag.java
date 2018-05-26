@@ -38,6 +38,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.MimeResponse;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
@@ -69,7 +71,7 @@ public class ActionURLTag
 		}
 
 		LiferayPortletURL liferayPortletURL = _getLiferayPortletURL(
-			request, plid, portletName, lifecycle);
+			request, plid, portletName, lifecycle, copyCurrentRenderParameters);
 
 		if (liferayPortletURL == null) {
 			_log.error(
@@ -322,7 +324,7 @@ public class ActionURLTag
 
 	private static LiferayPortletURL _getLiferayPortletURL(
 		HttpServletRequest request, long plid, String portletName,
-		String lifecycle) {
+		String lifecycle, Boolean copyCurrentRenderParameters) {
 
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -336,6 +338,22 @@ public class ActionURLTag
 
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(portletResponse);
+
+		LiferayPortletConfig liferayPortletConfig =
+			(LiferayPortletConfig)request.getAttribute(
+				JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		PortletContext portletContext =
+			liferayPortletConfig.getPortletContext();
+
+		if ((portletContext.getEffectiveMajorVersion() == 3) &&
+			(((copyCurrentRenderParameters != null) &&
+			  copyCurrentRenderParameters) ||
+			 lifecycle.equals(PortletRequest.RESOURCE_PHASE))) {
+
+			return liferayPortletResponse.createLiferayPortletURL(
+				plid, portletName, lifecycle, MimeResponse.Copy.ALL);
+		}
 
 		return liferayPortletResponse.createLiferayPortletURL(
 			plid, portletName, lifecycle);

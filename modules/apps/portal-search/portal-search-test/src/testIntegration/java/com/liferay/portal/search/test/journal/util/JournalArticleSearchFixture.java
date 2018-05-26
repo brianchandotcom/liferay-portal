@@ -77,7 +77,9 @@ public class JournalArticleSearchFixture {
 		journalArticle = JournalArticleLocalServiceUtil.updateArticle(
 			journalArticle.getUserId(), journalArticle.getGroupId(),
 			journalArticle.getFolderId(), journalArticle.getArticleId(),
-			journalArticle.getVersion(), journalArticle.getContent(),
+			journalArticle.getVersion(), journalArticle.getTitleMap(),
+			journalArticle.getDescriptionMap(), journalArticle.getContent(),
+			journalArticle.getLayoutUuid(),
 			ServiceContextTestUtil.getServiceContext(
 				journalArticle.getGroupId()));
 

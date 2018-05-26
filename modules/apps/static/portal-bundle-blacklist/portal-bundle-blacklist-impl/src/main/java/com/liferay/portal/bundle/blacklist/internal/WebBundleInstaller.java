@@ -20,7 +20,6 @@ import com.liferay.portal.osgi.web.wab.generator.WabGenerator;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
@@ -58,8 +57,8 @@ public class WebBundleInstaller extends ServiceTracker<WabGenerator, Void> {
 			BundleStartLevelUtil.setStartLevelAndStart(
 				bundle, _startLevel, context);
 		}
-		catch (BundleException be) {
-			ReflectionUtil.throwException(be);
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
 		}
 		finally {
 			context.ungetService(serviceReference);

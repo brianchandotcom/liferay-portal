@@ -17,7 +17,6 @@ package com.liferay.apio.architect.message.json;
 import aQute.bnd.annotation.ConsumerType;
 
 import com.liferay.apio.architect.documentation.Documentation;
-import com.liferay.apio.architect.form.FormField;
 import com.liferay.apio.architect.operation.Operation;
 
 /**
@@ -53,15 +52,20 @@ public interface DocumentationMessageMapper
 	}
 
 	public default void mapOperation(
-		JSONObjectBuilder jsonObjectBuilder, String resourceName,
+		JSONObjectBuilder jsonObjectBuilder, String resourceName, String type,
 		Operation operation) {
 	}
 
 	public default void mapProperty(
-		JSONObjectBuilder jsonObjectBuilder, FormField formField) {
+		JSONObjectBuilder jsonObjectBuilder, String fieldName,
+		boolean required) {
 	}
 
 	public default void mapResource(
+		JSONObjectBuilder jsonObjectBuilder, String resourceName) {
+	}
+
+	public default void mapResourceCollection(
 		JSONObjectBuilder jsonObjectBuilder, String resourceName) {
 	}
 
@@ -82,12 +86,12 @@ public interface DocumentationMessageMapper
 
 	public default void onFinishProperty(
 		JSONObjectBuilder documentationJsonObjectBuilder,
-		JSONObjectBuilder propertyJsonObjectBuilder, FormField formField) {
+		JSONObjectBuilder propertyJsonObjectBuilder, String formField) {
 	}
 
 	public default void onFinishResource(
 		JSONObjectBuilder documentationJsonObjectBuilder,
-		JSONObjectBuilder resourceJsonObjectBuilder) {
+		JSONObjectBuilder resourceJsonObjectBuilder, String type) {
 	}
 
 	public default void onStartOperation(
@@ -97,12 +101,12 @@ public interface DocumentationMessageMapper
 
 	public default void onStartProperty(
 		JSONObjectBuilder documentationJsonObjectBuilder,
-		JSONObjectBuilder propertyJsonObjectBuilder, FormField formField) {
+		JSONObjectBuilder propertyJsonObjectBuilder, String formField) {
 	}
 
 	public default void onStartResource(
 		JSONObjectBuilder documentationJsonObjectBuilder,
-		JSONObjectBuilder resourceJsonObjectBuilder) {
+		JSONObjectBuilder resourceJsonObjectBuilder, String type) {
 	}
 
 }

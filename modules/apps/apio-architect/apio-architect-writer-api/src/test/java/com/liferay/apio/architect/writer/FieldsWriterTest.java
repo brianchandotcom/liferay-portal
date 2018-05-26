@@ -623,6 +623,45 @@ public class FieldsWriterTest {
 				aFunctionalListThat(contains("first", "relatedCollection2"))));
 	}
 
+	@Test
+	public void testWriteRelativeURLFields() {
+		Mockito.when(
+			_requestInfo.getServerURL()
+		).thenReturn(
+			() -> "localhost"
+		);
+
+		Map<String, String> strings = new HashMap<>();
+
+		_fieldsWriter.writeRelativeURLFields(strings::put);
+
+		assertThat(strings, is(aMapWithSize(2)));
+		assertThat(strings, hasEntry("relativeURL1", "localhost/first"));
+		assertThat(strings, hasEntry("relativeURL2", "localhost/second"));
+	}
+
+	@Test
+	public void testWriteRelativeURLFieldsWithFilter() {
+		Mockito.when(
+			_requestInfo.getServerURL()
+		).thenReturn(
+			() -> "localhost"
+		);
+
+		Mockito.when(
+			_requestInfo.getFields()
+		).thenReturn(
+			list -> "relativeURL2"::equals
+		);
+
+		Map<String, String> strings = new HashMap<>();
+
+		_fieldsWriter.writeRelativeURLFields(strings::put);
+
+		assertThat(strings, is(aMapWithSize(1)));
+		assertThat(strings, hasEntry("relativeURL2", "localhost/second"));
+	}
+
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testWriteSingleURL() {

@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -26,5 +27,7 @@ public interface Job {
 	public Set<String> getDistTypes();
 
 	public String getJobName();
+
+	public Properties getJobProperties();
 
 }

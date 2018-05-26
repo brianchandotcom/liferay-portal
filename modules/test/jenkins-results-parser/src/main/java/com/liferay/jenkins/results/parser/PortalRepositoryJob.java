@@ -32,7 +32,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 	@Override
 	public Set<String> getBatchNames() {
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			getPortalTestProperties(), "test.batch.names");
+			jobProperties, "test.batch.names");
 
 		return getSetFromString(testBatchNames);
 	}
@@ -40,7 +40,7 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 	@Override
 	public Set<String> getDistTypes() {
 		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-			getPortalTestProperties(), "test.batch.dist.app.servers");
+			jobProperties, "test.batch.dist.app.servers");
 
 		return getSetFromString(testBatchDistAppServers);
 	}
@@ -81,11 +81,9 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		String propertyName = JenkinsResultsParserUtil.combine(
 			"test.batch.run.property.query[", testBatchName, "]");
 
-		Properties portalTestProperties = getPortalTestProperties();
-
-		if (portalTestProperties.containsKey(propertyName)) {
+		if (jobProperties.containsKey(propertyName)) {
 			String propertyValue = JenkinsResultsParserUtil.getProperty(
-				portalTestProperties, propertyName);
+				jobProperties, propertyName);
 
 			if ((propertyValue != null) && !propertyValue.isEmpty()) {
 				return propertyValue;
@@ -103,19 +101,11 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		super(jobName);
 
 		_findRepositoryDir();
-	}
-
-	protected Properties getPortalTestProperties() {
-		if (portalTestProperties != null) {
-			return portalTestProperties;
-		}
 
 		checkRepositoryDir();
 
-		portalTestProperties = JenkinsResultsParserUtil.getProperties(
+		jobProperties = JenkinsResultsParserUtil.getProperties(
 			new File(repositoryDir, "test.properties"));
-
-		return portalTestProperties;
 	}
 
 	protected Set<String> getSetFromString(String string) {
@@ -135,8 +125,6 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 		return set;
 	}
-
-	protected Properties portalTestProperties;
 
 	private void _findRepositoryDir() {
 		String branchName = getBranchName();

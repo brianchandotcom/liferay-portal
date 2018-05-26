@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
-import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -38,14 +37,12 @@ public class PortalAcceptancePullRequestJob
 
 	@Override
 	public Set<String> getBatchNames() {
-		Properties portalTestProperties = getPortalTestProperties();
-
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			portalTestProperties, "test.batch.names[" + _testSuiteName + "]");
+			jobProperties, "test.batch.names[" + _testSuiteName + "]");
 
 		if (testBatchNames == null) {
 			testBatchNames = JenkinsResultsParserUtil.getProperty(
-				portalTestProperties, "test.batch.names");
+				jobProperties, "test.batch.names");
 		}
 
 		Set<String> testBatchNamesSet = getSetFromString(testBatchNames);
@@ -76,15 +73,13 @@ public class PortalAcceptancePullRequestJob
 
 	@Override
 	public Set<String> getDistTypes() {
-		Properties portalTestProperties = getPortalTestProperties();
-
 		String testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-			portalTestProperties,
+			jobProperties,
 			"test.batch.dist.app.servers[" + _testSuiteName + "]");
 
 		if (testBatchDistAppServers == null) {
 			testBatchDistAppServers = JenkinsResultsParserUtil.getProperty(
-				portalTestProperties, "test.batch.dist.app.servers");
+				jobProperties, "test.batch.dist.app.servers");
 		}
 
 		return getSetFromString(testBatchDistAppServers);
@@ -101,12 +96,10 @@ public class PortalAcceptancePullRequestJob
 				"test.batch.run.property.query[", testBatchName, "]")
 		};
 
-		Properties portalTestProperties = getPortalTestProperties();
-
 		for (String propertyName : propertyNames) {
-			if (portalTestProperties.containsKey(propertyName)) {
+			if (jobProperties.containsKey(propertyName)) {
 				String propertyValue = JenkinsResultsParserUtil.getProperty(
-					portalTestProperties, propertyName);
+					jobProperties, propertyName);
 
 				if ((propertyValue != null) && !propertyValue.isEmpty()) {
 					return propertyValue;

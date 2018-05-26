@@ -77,10 +77,6 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return portalGitWorkingDirectory;
 	}
 
-	public Properties getPortalTestProperties() {
-		return portalTestProperties;
-	}
-
 	public static class BatchTestClass extends BaseTestClass {
 
 		protected static BatchTestClass getInstance(
@@ -124,10 +120,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			testSuiteName = null;
 		}
 
-		portalTestProperties = JenkinsResultsParserUtil.getProperties(
-			new File(
-				this.portalGitWorkingDirectory.getWorkingDirectory(),
-				"test.properties"));
+		jobProperties = job.getJobProperties();
 
 		_setTestRelevantChanges();
 	}
@@ -191,7 +184,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 			propertyNames.add(
 				getFirstMatchingPropertyName(
-					basePropertyName, portalTestProperties, testSuiteName));
+					basePropertyName, jobProperties, testSuiteName));
 
 			propertyNames.add(
 				JenkinsResultsParserUtil.combine(
@@ -203,8 +196,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				basePropertyName, "[", batchName, "]"));
 
 		propertyNames.add(
-			getFirstMatchingPropertyName(
-				basePropertyName, portalTestProperties));
+			getFirstMatchingPropertyName(basePropertyName, jobProperties));
 
 		propertyNames.add(basePropertyName);
 
@@ -213,9 +205,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 				continue;
 			}
 
-			if (portalTestProperties.containsKey(propertyName)) {
+			if (jobProperties.containsKey(propertyName)) {
 				String propertyValue = JenkinsResultsParserUtil.getProperty(
-					portalTestProperties, propertyName);
+					jobProperties, propertyName);
 
 				if ((propertyValue != null) && !propertyValue.isEmpty()) {
 					return propertyValue;
@@ -288,8 +280,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final String batchName;
 	protected final List<PathMatcher> excludesPathMatchers = new ArrayList<>();
 	protected final List<PathMatcher> includesPathMatchers = new ArrayList<>();
+	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
-	protected final Properties portalTestProperties;
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;
 

@@ -36,6 +36,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.io.StringWriter;
 
 import java.net.URI;
 
@@ -56,6 +57,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.jar.JarFile;
@@ -1965,6 +1967,94 @@ public class ProjectTemplatesTest {
 			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.1.0-.*");
 	}
 
+	@Ignore
+	@Test
+	public void testGradlePluginVersions() throws Exception {
+		String template = "mvc-portlet";
+
+		String name = "foo";
+
+		File gradleProjectDir = _buildTemplateWithGradle(template, name);
+
+		File workspaceDir = _buildWorkspace();
+
+		File modulesDir = new File(workspaceDir, "modules");
+
+		_buildTemplateWithGradle(modulesDir, template, name);
+
+		String result = _executeGradleDebug(
+			gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		Scanner scanner = new Scanner(result);
+
+		String standaloneGradlePluginVersion = null;
+
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+
+			if ((standaloneGradlePluginVersion == null) &&
+				line.contains("com.liferay.gradle.plugins:")) {
+
+				int lastIndex = line.lastIndexOf("com.liferay.gradle.plugins:");
+
+				String lineFixed = line.substring(lastIndex);
+
+				if (lineFixed.indexOf("(") > -1) {
+					lineFixed = lineFixed.substring(0, lineFixed.indexOf("("));
+				}
+
+				standaloneGradlePluginVersion = lineFixed.split(":")[1];
+
+				break;
+			}
+		}
+
+		scanner.close();
+
+		result = _executeGradleDebug(
+			workspaceDir, ":modules:" + name + ":clean");
+
+		scanner = new Scanner(result);
+
+		String workspaceGradlePluginVersion = null;
+
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+
+			if ((workspaceGradlePluginVersion == null) &&
+				line.contains("com.liferay.gradle.plugins:")) {
+
+				int lastIndex = line.lastIndexOf("com.liferay.gradle.plugins:");
+
+				String lineFixed = line.substring(lastIndex);
+
+				if (lineFixed.indexOf("(") > -1) {
+					lineFixed = lineFixed.substring(0, lineFixed.indexOf("("));
+				}
+
+				workspaceGradlePluginVersion = lineFixed.split(":")[1];
+
+				break;
+			}
+		}
+
+		scanner.close();
+		boolean versionCheck = standaloneGradlePluginVersion.equals(
+			workspaceGradlePluginVersion);
+
+		if (!versionCheck) {
+			String message =
+				"com.liferay.gradle.plugins versions must match (standalone: " +
+					"%s, workspace: %s)";
+
+			message = String.format(
+				message, standaloneGradlePluginVersion,
+				workspaceGradlePluginVersion);
+
+			Assert.assertTrue(message, versionCheck);
+		}
+	}
+
 	@Test
 	public void testListTemplates() throws Exception {
 		final Map<String, String> expectedTemplates = new TreeMap<>();
@@ -2444,6 +2534,85 @@ public class ProjectTemplatesTest {
 				"Unexpected outcome for task \"" + buildTask.getPath() + "\"",
 				TaskOutcome.SUCCESS, buildTask.getOutcome());
 		}
+	}
+
+	private static String _executeGradleDebug(
+			File projectDir, String... taskPaths)
+		throws IOException {
+
+		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
+
+		if (Validator.isNotNull(repositoryUrl)) {
+			Files.walkFileTree(
+				projectDir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						String fileName = String.valueOf(path.getFileName());
+
+						if (fileName.equals("build.gradle") ||
+							fileName.equals("settings.gradle")) {
+
+							String content = FileUtil.read(path);
+
+							content = content.replace(
+								"\"" + _REPOSITORY_CDN_URL + "\"",
+								"\"" + repositoryUrl + "\"");
+
+							Files.write(
+								path, content.getBytes(StandardCharsets.UTF_8));
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+
+		StringWriter writer = new StringWriter();
+
+		GradleRunner gradleRunner = GradleRunner.create();
+
+		List<String> arguments = new ArrayList<>(taskPaths.length + 3);
+
+		arguments.add("--debug");
+
+		String httpProxyHost = mavenExecutor.getHttpProxyHost();
+		int httpProxyPort = mavenExecutor.getHttpProxyPort();
+
+		if (Validator.isNotNull(httpProxyHost) && (httpProxyPort > 0)) {
+			arguments.add("-Dhttp.proxyHost=" + httpProxyHost);
+			arguments.add("-Dhttp.proxyPort=" + httpProxyPort);
+		}
+
+		for (String taskPath : taskPaths) {
+			arguments.add(taskPath);
+		}
+
+		gradleRunner.withArguments(arguments);
+
+		gradleRunner.withGradleDistribution(_gradleDistribution);
+		gradleRunner.withProjectDir(projectDir);
+		gradleRunner.forwardStdOutput(writer);
+
+		BuildResult buildResult = gradleRunner.build();
+
+		for (String taskPath : taskPaths) {
+			BuildTask buildTask = buildResult.task(taskPath);
+
+			Assert.assertNotNull(
+				"Build task \"" + taskPath + "\" not found", buildTask);
+
+			Assert.assertEquals(
+				"Unexpected outcome for task \"" + buildTask.getPath() + "\"",
+				TaskOutcome.SUCCESS, buildTask.getOutcome());
+		}
+
+		return writer.toString();
 	}
 
 	private static void _executeMaven(File projectDir, String... args)

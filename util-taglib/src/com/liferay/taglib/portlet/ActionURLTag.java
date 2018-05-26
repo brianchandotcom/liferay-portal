@@ -23,12 +23,14 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryConstants;
+import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.WindowStateFactory;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
+import com.liferay.taglib.util.TypedParamAccessorTag;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -45,8 +47,10 @@ import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
-public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
+public class ActionURLTag
+	extends ParamAndPropertyAncestorTagImpl implements TypedParamAccessorTag {
 
 	public static PortletURL doTag(
 			String lifecycle, String windowState, String portletMode,
@@ -181,6 +185,15 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 		liferayPortletURL.setRemovedParameterNames(removedParameterNames);
 
 		return liferayPortletURL;
+	}
+
+	@Override
+	public void addParam(String name, String type, String value) {
+		if ("render".equals(type) && Validator.isNotNull(name)) {
+			name = PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE + name;
+		}
+
+		super.addParam(name, value);
 	}
 
 	@Override

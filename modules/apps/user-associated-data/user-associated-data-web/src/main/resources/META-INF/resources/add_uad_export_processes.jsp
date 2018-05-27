@@ -125,10 +125,19 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 
 <aui:script>
 	function <portlet:namespace />exportApplicationData() {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		var form = document.getElementById('<portlet:namespace />fm');
 
-		form.fm('applicationKeys').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds'));
+		if (form) {
+			var applicationKeys = form.querySelector('#<portlet:namespace />applicationKeys');
 
-		submitForm(form, '<portlet:actionURL name="/export_application_data" />');
+			if (applicationKeys) {
+				applicationKeys.setAttribute(
+					'value',
+					Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIds')
+				);
+			}
+
+			submitForm(form, '<portlet:actionURL name="/export_application_data" />');
+		}
 	}
 </aui:script>

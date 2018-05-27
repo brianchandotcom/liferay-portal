@@ -678,7 +678,8 @@ public class SearchResultSummaryDisplayBuilder {
 			return _DATE_STRING_FIELD_DATE_FORMAT.parse(dateStringFieldValue);
 		}
 		catch (ParseException pe) {
-			throw new RuntimeException(pe);
+			throw new IllegalArgumentException(
+				"Unable to parse date string: " + dateStringFieldValue, pe);
 		}
 	}
 

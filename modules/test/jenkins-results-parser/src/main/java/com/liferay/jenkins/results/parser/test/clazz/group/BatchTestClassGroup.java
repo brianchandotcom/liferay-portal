@@ -21,6 +21,10 @@ import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.PathMatcher;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -205,6 +209,34 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return null;
 	}
 
+	protected List<PathMatcher> getPathMatchers(
+		String propertyName, File workingDirectory) {
+
+		String pluginNamesRelativeGlobs = getFirstPropertyValue(propertyName);
+
+		if ((pluginNamesRelativeGlobs == null) ||
+			pluginNamesRelativeGlobs.isEmpty()) {
+
+			return new ArrayList<>();
+		}
+
+		List<PathMatcher> pathMatchers = new ArrayList<>();
+
+		for (String pluginNamesRelativeGlob :
+				pluginNamesRelativeGlobs.split(",")) {
+
+			FileSystem fileSystem = FileSystems.getDefault();
+
+			pathMatchers.add(
+				fileSystem.getPathMatcher(
+					JenkinsResultsParserUtil.combine(
+						"glob:", workingDirectory.getAbsolutePath(), "/",
+						pluginNamesRelativeGlob)));
+		}
+
+		return pathMatchers;
+	}
+
 	protected void setAxisTestClassGroups() {
 		int testClassCount = testClasses.size();
 
@@ -237,6 +269,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final Map<Integer, AxisTestClassGroup> axisTestClassGroups =
 		new HashMap<>();
 	protected final String batchName;
+	protected final List<PathMatcher> excludesPathMatchers = new ArrayList<>();
+	protected final List<PathMatcher> includesPathMatchers = new ArrayList<>();
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final Properties portalTestProperties;
 	protected boolean testRelevantChanges;

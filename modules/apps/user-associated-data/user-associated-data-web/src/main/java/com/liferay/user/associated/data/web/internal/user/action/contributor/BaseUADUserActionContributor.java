@@ -23,6 +23,8 @@ import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.web.internal.util.UADAnonymizerHelper;
 import com.liferay.users.admin.user.action.contributor.BaseUserActionContributor;
 
+import java.util.Objects;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -61,13 +63,14 @@ public abstract class BaseUADUserActionContributor
 	public boolean isShow(
 		PortletRequest portletRequest, User user, User selectedUser) {
 
-		if (omniadmin.isOmniadmin(selectedUser) ||
+		if (Objects.equals(user, selectedUser) ||
+			!omniadmin.isOmniadmin(user) ||
 			uadAnonymizerHelper.isAnonymousUser(selectedUser)) {
 
 			return false;
 		}
 
-		return omniadmin.isOmniadmin(user);
+		return true;
 	}
 
 	protected abstract String getKey();

@@ -2383,16 +2383,25 @@ ${tomcat-gc-log}
 
 	<macrodef name="record-test-class-file-names">
 		<sequential>
+			<fail message="Please set the property ${test.batch.name}." unless="test.batch.name" />
+
+			<local name="top.level.job.name" />
+
+			<condition else="test-portal-acceptance-upstream(${git.working.branch.name})" property="top.level.job.name" value="${env.TOP_LEVEL_JOB_NAME}">
+				<isset property="env.TOP_LEVEL_JOB_NAME" />
+			</condition>
+
 			<beanshell>
 				<![CDATA[
-					import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+					import com.liferay.jenkins.results.parser.Job;
+					import com.liferay.jenkins.results.parser.JobFactory;
 					import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
 
-					PortalGitWorkingDirectory portalGitWorkingDirectory = new PortalGitWorkingDirectory(project.getProperty("git.working.branch.name"), project.getProperty("project.dir"));
+					Job job = JobFactory.newJob(project.getProperty("top.level.job.name"),  project.getProperty("env.CI_TEST_SUITE"));
 
-					BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), portalGitWorkingDirectory, project.getProperty("env.CI_TEST_SUITE"));
+					BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
 					int axisCount = batchTestClassGroup.getAxisCount();
 
@@ -9075,16 +9084,23 @@ if (ppstate.equals("normal")) {
 			<isset property="test.batch.name" />
 		</condition>
 
+		<local name="top.level.job.name" />
+
+		<condition else="test-portal-acceptance-upstream(${git.working.branch.name})" property="top.level.job.name" value="${env.TOP_LEVEL_JOB_NAME}">
+			<isset property="env.TOP_LEVEL_JOB_NAME" />
+		</condition>
+
 		<beanshell>
 			<![CDATA[
-				import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+				import com.liferay.jenkins.results.parser.Job;
+				import com.liferay.jenkins.results.parser.JobFactory;
 				import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 				import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 				import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
 
-				PortalGitWorkingDirectory portalGitWorkingDirectory = new PortalGitWorkingDirectory(project.getProperty("git.working.branch.name"), project.getProperty("project.dir"));
+				Job job = JobFactory.newJob(project.getProperty("top.level.job.name"),  project.getProperty("env.CI_TEST_SUITE"));
 
-				BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), portalGitWorkingDirectory, project.getProperty("env.CI_TEST_SUITE"));
+				BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
 				int axisCount = batchTestClassGroup.getAxisCount();
 

@@ -18,25 +18,21 @@
 
 <%
 String p_u_i_d = ParamUtil.getString(request, "p_u_i_d");
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectOrganization");
-String target = ParamUtil.getString(request, "target");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
-PortletURL portletURL = renderResponse.createRenderURL();
+SelectOrganizationManagementToolbarDisplayContext SelectOrganizationManagementToolbarDisplayContext = new SelectOrganizationManagementToolbarDisplayContext(request, renderRequest, renderResponse);
 
-portletURL.setParameter("mvcPath", "/select_organization.jsp");
+PortletURL portletURL = SelectOrganizationManagementToolbarDisplayContext.getPortletURL();
 
-if (selUser != null) {
-	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
+LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
+
+if (filterManageableOrganizations) {
+	organizationParams.put("organizationsTree", user.getOrganizations());
 }
 
-portletURL.setParameter("eventName", eventName);
-
-if (Validator.isNotNull(target)) {
-	portletURL.setParameter("target", target);
-}
+SearchContainer searchContainer = SelectOrganizationManagementToolbarDisplayContext.getSearchContainer(organizationParams);
 
 renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 %>
@@ -45,52 +41,21 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 	navigationItems='<%= userDisplayContext.getNavigationItems("organizations") %>'
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<li>
-				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= SelectOrganizationManagementToolbarDisplayContext.getClearResultsURL() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= SelectOrganizationManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= true %>"
+	viewTypeItems="<%= SelectOrganizationManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectOrganizationFm">
 	<liferay-ui:search-container
-		searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= searchContainer %>"
 		var="organizationSearchContainer"
 	>
-
-		<%
-		long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-
-		LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
-		if (filterManageableOrganizations) {
-			organizationParams.put("organizationsTree", user.getOrganizations());
-		}
-		%>
-
-		<liferay-ui:organization-search-container-results
-			organizationParams="<%= organizationParams %>"
-			parentOrganizationId="<%= parentOrganizationId %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Organization"
 			escapedModel="<%= true %>"

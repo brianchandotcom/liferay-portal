@@ -34,14 +34,11 @@ else {
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUsers");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+SelectOrganizationUsersManagementToolbarDisplayContext selectOrganizationUsersManagementToolbarDisplayContext = new SelectOrganizationUsersManagementToolbarDisplayContext(request, renderRequest, renderResponse, organization, displayStyle);
 
-portletURL.setParameter("mvcPath", "/select_organization_users.jsp");
-portletURL.setParameter("organizationId", String.valueOf(organization.getOrganizationId()));
-portletURL.setParameter("displayStyle", displayStyle);
-portletURL.setParameter("eventName", eventName);
+PortletURL portletURL = selectOrganizationUsersManagementToolbarDisplayContext.getPortletURL();
 
-SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
+SearchContainer userSearchContainer = selectOrganizationUsersManagementToolbarDisplayContext.getSearchContainer();
 %>
 
 <liferay-ui:membership-policy-error />
@@ -50,60 +47,25 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 	navigationItems='<%= userDisplayContext.getNavigationItems("users") %>'
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	clearResultsURL="<%= selectOrganizationUsersManagementToolbarDisplayContext.getClearResultsURL() %>"
+	filterDropdownItems="<%= selectOrganizationUsersManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= userSearchContainer.getTotal() %>"
+	searchActionURL="<%= selectOrganizationUsersManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="users"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= userSearchContainer.getOrderByCol() %>"
-			orderByType="<%= userSearchContainer.getOrderByType() %>"
-			orderColumns='<%= new String[] {"first-name", "last-name", "screen-name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	selectable="<%= true %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= userSearchContainer.getOrderByType() %>"
+	sortingURL="<%= selectOrganizationUsersManagementToolbarDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= selectOrganizationUsersManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
 		id="users"
-		rowChecker="<%= new AddUserOrganizationChecker(renderResponse, organization) %>"
 		searchContainer="<%= userSearchContainer %>"
 	>
-
-		<%
-		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-		if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT && !permissionChecker.isCompanyAdmin() && !permissionChecker.hasPermission(themeDisplay.getScopeGroup(), User.class.getName(), User.class.getName(), ActionKeys.VIEW)) {
-			userParams.put("usersOrgsTree", user.getOrganizations(true));
-		}
-		%>
-
-		<liferay-ui:user-search-container-results
-			userParams="<%= userParams %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
 			escapedModel="<%= true %>"

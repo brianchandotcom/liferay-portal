@@ -22,82 +22,33 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 User selUser = PortalUtil.getSelectedUser(request);
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/select_user_group.jsp");
-
-if (selUser != null) {
-	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
-}
-
-portletURL.setParameter("eventName", eventName);
-
 renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
+
+SelectUserGroupManagementToolbarDisplayContext SelectUserGroupManagementToolbarDisplayContext = new SelectUserGroupManagementToolbarDisplayContext(request, renderRequest, renderResponse);
+
+PortletURL portletURL = SelectUserGroupManagementToolbarDisplayContext.getPortletURL();
+
+SearchContainer userGroupSearch = SelectUserGroupManagementToolbarDisplayContext.getSearchContainer(filterManageableUserGroups);
 %>
 
 <clay:navigation-bar
 	navigationItems='<%= userDisplayContext.getNavigationItems("user-groups") %>'
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<li>
-				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= SelectUserGroupManagementToolbarDisplayContext.getClearResultsURL() %>"
+	itemsTotal="<%= userGroupSearch.getTotal() %>"
+	searchActionURL="<%= SelectUserGroupManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= true %>"
+	viewTypeItems="<%= SelectUserGroupManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectUserGroupFm">
 	<liferay-ui:search-container
-		searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= userGroupSearch %>"
 	>
-
-		<%
-		UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
-		%>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			if (filterManageableUserGroups) {
-				List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
-
-				userGroups = UsersAdminUtil.filterUserGroups(permissionChecker, userGroups);
-
-				searchContainer.setTotal(userGroups.size());
-
-				results = ListUtil.subList(userGroups, searchContainer.getStart(), searchContainer.getEnd());
-			}
-			else {
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), null);
-
-				searchContainer.setTotal(total);
-
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
-
-			searchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.UserGroup"
 			escapedModel="<%= false %>"

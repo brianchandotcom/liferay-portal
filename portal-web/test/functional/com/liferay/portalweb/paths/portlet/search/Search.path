@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SEARCH_INFO</td>
-	<td>//div[contains(@class,'search-info')]/span</td>
+	<td>//span[contains(@class,'text-truncate')]/span</td>
 	<td></td>
 </tr>
 <tr>

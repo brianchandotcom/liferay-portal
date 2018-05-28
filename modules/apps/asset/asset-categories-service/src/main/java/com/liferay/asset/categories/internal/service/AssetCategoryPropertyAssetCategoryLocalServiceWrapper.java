@@ -73,22 +73,22 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 
 		// Properties
 
-		for (int i = 0; i < categoryProperties.length; i++) {
-			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i],
+		for (String categoryProperty : categoryProperties) {
+			String[] categoryPropertyArray = StringUtil.split(
+				categoryProperty,
 				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR);
 
-			if (categoryProperty.length <= 1) {
-				categoryProperty = StringUtil.split(
-					categoryProperties[i], CharPool.COLON);
+			if (categoryPropertyArray.length <= 1) {
+				categoryPropertyArray = StringUtil.split(
+					categoryProperty, CharPool.COLON);
 			}
 
 			String key = StringPool.BLANK;
 			String value = StringPool.BLANK;
 
-			if (categoryProperty.length > 1) {
-				key = GetterUtil.getString(categoryProperty[0]);
-				value = GetterUtil.getString(categoryProperty[1]);
+			if (categoryPropertyArray.length > 1) {
+				key = GetterUtil.getString(categoryPropertyArray[0]);
+				value = GetterUtil.getString(categoryPropertyArray[1]);
 			}
 
 			if (Validator.isNotNull(key)) {
@@ -150,26 +150,26 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 		oldCategoryProperties = ListUtil.copy(oldCategoryProperties);
 
 		if (categoryProperties != null) {
-			for (int i = 0; i < categoryProperties.length; i++) {
-				String[] categoryProperty = StringUtil.split(
-					categoryProperties[i],
+			for (String categoryProperty : categoryProperties) {
+				String[] categoryPropertyArray = StringUtil.split(
+					categoryProperty,
 					AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR);
 
-				if (categoryProperty.length <= 1) {
-					categoryProperty = StringUtil.split(
-						categoryProperties[i], CharPool.COLON);
+				if (categoryPropertyArray.length <= 1) {
+					categoryPropertyArray = StringUtil.split(
+						categoryProperty, CharPool.COLON);
 				}
 
 				String key = StringPool.BLANK;
 
-				if (categoryProperty.length > 0) {
-					key = GetterUtil.getString(categoryProperty[0]);
+				if (categoryPropertyArray.length > 0) {
+					key = GetterUtil.getString(categoryPropertyArray[0]);
 				}
 
 				String value = StringPool.BLANK;
 
-				if (categoryProperty.length > 1) {
-					value = GetterUtil.getString(categoryProperty[1]);
+				if (categoryPropertyArray.length > 1) {
+					value = GetterUtil.getString(categoryPropertyArray[1]);
 				}
 
 				if (Validator.isNotNull(key)) {

@@ -544,12 +544,12 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		else {
 			long[] newAnyCategoryIds = new long[0];
 
-			for (int i = 0; i < originalAnyCategoryIds.length; i++) {
+			for (long originalAnyCategoryId : originalAnyCategoryIds) {
 				if (ArrayUtil.contains(
-						vocabularyCategoryIds, originalAnyCategoryIds[i])) {
+						vocabularyCategoryIds, originalAnyCategoryId)) {
 
 					newAnyCategoryIds = ArrayUtil.append(
-						newAnyCategoryIds, originalAnyCategoryIds[i]);
+						newAnyCategoryIds, originalAnyCategoryId);
 				}
 			}
 

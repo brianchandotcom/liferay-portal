@@ -1011,6 +1011,7 @@
 
 	<command name="ConfigureXugglerVideoPreviewSizePG" priority="3">
 		<property name="custom.properties" value="xuggler.enabled=true${line.separator}dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0" />
+		<property name="dummy.socket.proxy.disabled" value="true" /> 
 		<property name="test.name.skip.portal.instance" value="DocumentsadministrationUsecase#ConfigureXugglerVideoPreviewSizePG" />
 
 		<execute macro="ProductMenu#gotoPortlet">

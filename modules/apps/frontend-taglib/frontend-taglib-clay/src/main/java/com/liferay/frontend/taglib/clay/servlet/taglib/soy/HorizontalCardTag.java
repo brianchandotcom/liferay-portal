@@ -21,8 +21,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
  */
 public class HorizontalCardTag extends BaseClayCardTag {
 
-	public HorizontalCardTag() {
-		super("ClayHorizontalCard");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayHorizontalCard");
+
+		return super.doStartTag();
 	}
 
 	public void setIcon(String icon) {

@@ -21,8 +21,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
  */
 public class IconTag extends BaseClayTag {
 
-	public IconTag() {
-		super("icon", "ClayIcon");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayIcon");
+		super.setModuleBaseName("icon");
+
+		return super.doStartTag();
 	}
 
 	public void setMonospaced(Boolean monospaced) {

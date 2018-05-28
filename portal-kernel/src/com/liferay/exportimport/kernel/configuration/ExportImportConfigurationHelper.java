@@ -148,7 +148,7 @@ public class ExportImportConfigurationHelper {
 		String description = ParamUtil.getString(portletRequest, "description");
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+			ExportImportConfigurationSettingsMapFactoryUtil.buildSettingsMap(
 				portletRequest, groupId, type);
 
 		Map<String, String[]> parameterMap =
@@ -184,7 +184,7 @@ public class ExportImportConfigurationHelper {
 		String description = ParamUtil.getString(portletRequest, "description");
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+			ExportImportConfigurationSettingsMapFactoryUtil.buildSettingsMap(
 				portletRequest, groupId, type);
 
 		return ExportImportConfigurationLocalServiceUtil.

@@ -94,7 +94,7 @@ public class EditExportConfigurationMVCActionCommand
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+			exportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				actionRequest, groupId,
 				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT);
 
@@ -298,6 +298,10 @@ public class EditExportConfigurationMVCActionCommand
 
 	protected ExportImportConfigurationLocalService
 		exportImportConfigurationLocalService;
+
+	@Reference
+	protected ExportImportConfigurationSettingsMapFactory
+		exportImportConfigurationSettingsMapFactory;
 
 	@Reference
 	protected ExportImportHelper exportImportHelper;

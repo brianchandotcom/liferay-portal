@@ -79,7 +79,7 @@ public class ExportImportConfigurationFactory {
 		throws PortalException {
 
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildPublishLayoutLocalSettingsMap(
 					user, sourceGroupId, targetGroupId, privateLayout,
 					ExportImportHelperUtil.getAllLayoutIds(
@@ -216,7 +216,7 @@ public class ExportImportConfigurationFactory {
 		throws PortalException {
 
 		Map<String, Serializable> publishLayoutRemoteSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildPublishLayoutRemoteSettingsMap(
 					user.getUserId(), sourceGroupId, privateLayout,
 					ExportImportHelperUtil.getAllLayoutIdsMap(

@@ -136,7 +136,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			long[] layoutIds = getLayoutIds(actionRequest);
 
 			exportLayoutSettingsMap =
-				ExportImportConfigurationSettingsMapFactory.
+				_exportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
 						themeDisplay.getUserId(), groupId, privateLayout,
 						layoutIds, actionRequest.getParameterMap(),
@@ -216,6 +216,10 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportConfigurationSettingsMapFactory
+		_exportImportConfigurationSettingsMapFactory;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

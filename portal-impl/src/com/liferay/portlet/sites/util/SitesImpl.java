@@ -131,6 +131,8 @@ import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Raymond Augé
  * @author Ryan Park
@@ -338,7 +340,7 @@ public class SitesImpl implements Sites {
 			new String[] {Boolean.FALSE.toString()});
 
 		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			_exportImportConfigurationSettingsMapFactory.
 				buildExportLayoutSettingsMap(
 					user, sourceLayout.getGroupId(),
 					sourceLayout.isPrivateLayout(),
@@ -356,7 +358,7 @@ public class SitesImpl implements Sites {
 
 		try {
 			Map<String, Serializable> importLayoutSettingsMap =
-				ExportImportConfigurationSettingsMapFactory.
+				_exportImportConfigurationSettingsMapFactory.
 					buildImportLayoutSettingsMap(
 						userId, targetLayout.getGroupId(),
 						targetLayout.isPrivateLayout(), null, parameterMap,
@@ -652,7 +654,7 @@ public class SitesImpl implements Sites {
 			new String[] {Boolean.FALSE.toString()});
 
 		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			_exportImportConfigurationSettingsMapFactory.
 				buildExportLayoutSettingsMap(
 					user, layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 					ExportImportHelperUtil.getLayoutIds(
@@ -919,7 +921,7 @@ public class SitesImpl implements Sites {
 		}
 
 		Map<String, Serializable> importLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			_exportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
 					user.getUserId(), layoutSet.getGroupId(),
 					layoutSet.isPrivateLayout(), null, parameterMap,
@@ -1912,7 +1914,7 @@ public class SitesImpl implements Sites {
 					layoutSetPrototype.getGroupId(), true);
 
 			Map<String, Serializable> exportLayoutSettingsMap =
-				ExportImportConfigurationSettingsMapFactory.
+				_exportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
 						user, layoutSetPrototype.getGroupId(), true,
 						ExportImportHelperUtil.getLayoutIds(
@@ -1933,7 +1935,7 @@ public class SitesImpl implements Sites {
 		}
 
 		Map<String, Serializable> importLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			_exportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
 					user.getUserId(), groupId, privateLayout, null,
 					parameterMap, user.getLocale(), user.getTimeZone());
@@ -2068,5 +2070,9 @@ public class SitesImpl implements Sites {
 			"/liferay/layout_set_prototype/";
 
 	private static final Log _log = LogFactoryUtil.getLog(SitesImpl.class);
+
+	@Reference
+	private ExportImportConfigurationSettingsMapFactory
+		_exportImportConfigurationSettingsMapFactory;
 
 }

@@ -84,7 +84,13 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				if (throwable instanceof PrincipalException ||
 					throwable instanceof SecurityException) {
 
-					status = HttpServletResponse.SC_FORBIDDEN;
+					if (_log.isDebugEnabled()) {
+						_log.debug(getThrowableMessage(throwable), throwable);
+					}
+
+					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+					return JSONFactoryUtil.serializeThrowable(throwable);
 				}
 				else {
 					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
@@ -108,7 +114,13 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 			else if (e instanceof PrincipalException ||
 					 e instanceof SecurityException) {
 
-				status = HttpServletResponse.SC_FORBIDDEN;
+				if (_log.isDebugEnabled()) {
+					_log.debug(getThrowableMessage(e), e);
+				}
+
+				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+				return JSONFactoryUtil.serializeThrowable(e);
 			}
 			else {
 				status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;

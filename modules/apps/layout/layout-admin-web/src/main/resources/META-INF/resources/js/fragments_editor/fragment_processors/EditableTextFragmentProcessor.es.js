@@ -159,12 +159,13 @@ function _getEditorConfiguration(
 	].join('');
 
 	if (editableElement.getAttribute('type') === 'text') {
-		configuration.allowedContent = 'br div p';
-		configuration.disallowedContent = 'br div p';
+		configuration.allowedContent = '';
+		configuration.disallowedContent = 'br';
 		configuration.toolbars = {};
 	}
 
 	return object.mixin(
+		{},
 		defaultEditorConfiguration.editorConfig || {},
 		EDITOR_CONFIGURATION,
 		configuration

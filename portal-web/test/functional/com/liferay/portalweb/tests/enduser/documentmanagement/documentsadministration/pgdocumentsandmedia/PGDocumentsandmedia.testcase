@@ -1980,11 +1980,13 @@
 		<property name="portal.acceptance" value="false" />
 		<property name="test.name.skip.portal.instance" value="PGDocumentsandmedia#ViewSearchResultsForChildObjectRespectsParentFolderPermissions" />
 		<property name="testray.component.names" value="Training" />
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
+		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;true&quot;" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Server Administration" />
+			<var name="portlet" value="Search" />
 		</execute>
 
 		<execute function="Pause" locator1="5000" />

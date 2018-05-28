@@ -20,7 +20,6 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
-	{@param publishLayoutPageTemplateEntryURL: string}
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
@@ -62,6 +61,7 @@
 	{@param? getAssetDisplayContributorsURL: any}
 	{@param? id: string}
 	{@param? mappingFieldsURL: string}
+	{@param? publishLayoutPageTemplateEntryURL: string}
 	{@param? selectedMappingTypes: [
 		subtype: [
 			id: string,
@@ -273,13 +273,13 @@
 	{@param defaultLanguageId: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
-	{@param publishLayoutPageTemplateEntryURL: string}
 	{@param redirectURL: string}
 	{@param spritemap: string}
 	{@param? dirty: bool}
 	{@param? handleToggleContextualSidebarButtonClick: any}
 	{@param? handleTranslationLanguageChange: any}
 	{@param? lastSaveDate: string}
+	{@param? publishLayoutPageTemplateEntryURL: string}
 	{@param? status: string}
 	{@param? translationStatus: [
 		languageValues: list<[languageId: string, values: list<string>]>,
@@ -316,25 +316,27 @@
 						<span class="label label-secondary">{$status}</span>
 					</li>
 				{/if}
-				<li class="nav-item">
-					<form action="{$publishLayoutPageTemplateEntryURL}" method="POST">
-						<input
-							name="{$portletNamespace}classPK"
-							type="hidden"
-							value="{$classPK}"
-						/>
+				{if $publishLayoutPageTemplateEntryURL}
+					<li class="nav-item">
+						<form action="{$publishLayoutPageTemplateEntryURL}" method="POST">
+							<input
+								name="{$portletNamespace}classPK"
+								type="hidden"
+								value="{$classPK}"
+							/>
 
-						<input
-							name="{$portletNamespace}redirect"
-							type="hidden"
-							value="{$redirectURL}"
-						/>
+							<input
+								name="{$portletNamespace}redirect"
+								type="hidden"
+								value="{$redirectURL}"
+							/>
 
-						<button class="btn btn-primary nav-btn" type="submit">
-							{msg desc=""}publish{/msg}
-						</button>
-					</form>
-				</li>
+							<button class="btn btn-primary nav-btn" type="submit">
+								{msg desc=""}publish{/msg}
+							</button>
+						</form>
+					</li>
+				{/if}
 				<li class="nav-item">
 					<button class="btn btn-secondary nav-btn" data-onclick="{$handleToggleContextualSidebarButtonClick}">
 						<svg class="icon-monospaced lexicon-icon">

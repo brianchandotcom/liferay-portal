@@ -154,19 +154,21 @@
 				{/call}
 			{/if}
 
-			{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
-				{param classPK: $classPK /}
-				{param events: [
-					'mappingTypeSelected': $_handleMappingTypeSelected,
-					'visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged
-				] /}
-				{param getAssetClassTypesURL: $getAssetClassTypesURL /}
-				{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
-				{param portletNamespace: $portletNamespace /}
-				{param spritemap: $spritemap /}
-				{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
-				{param visible: $_selectMappingTypeDialogVisible ?: false /}
-			{/call}
+			{if $getAssetClassTypesURL and $getAssetDisplayContributorsURL and $updateLayoutPageTemplateEntryAssetTypeURL}
+				{call com.liferay.layout.admin.web.SelectMappingTypeDialog.render}
+					{param classPK: $classPK /}
+					{param events: [
+						'mappingTypeSelected': $_handleMappingTypeSelected,
+						'visibleChanged': $_handleSelectMappingTypeDialogVisibleChanged
+					] /}
+					{param getAssetClassTypesURL: $getAssetClassTypesURL /}
+					{param getAssetDisplayContributorsURL: $getAssetDisplayContributorsURL /}
+					{param portletNamespace: $portletNamespace /}
+					{param spritemap: $spritemap /}
+					{param updateLayoutPageTemplateEntryAssetTypeURL: $updateLayoutPageTemplateEntryAssetTypeURL /}
+					{param visible: $_selectMappingTypeDialogVisible ?: false /}
+				{/call}
+			{/if}
 
 			{call liferay.frontend.ContextualSidebar.render}
 				{param body kind="html"}

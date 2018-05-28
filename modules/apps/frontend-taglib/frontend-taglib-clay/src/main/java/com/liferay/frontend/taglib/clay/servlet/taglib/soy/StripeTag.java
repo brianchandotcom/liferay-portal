@@ -19,8 +19,41 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
  */
 public class StripeTag extends AlertTag {
 
-	public StripeTag() {
-		super("ClayStripe");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayStripe");
+		super.setModuleBaseName("alert");
+		super.setHydrate(true);
+
+		return super.doStartTag();
+	}
+
+	public void setAutoclose(Boolean autoClose) {
+		putValue("autoClose", autoClose);
+	}
+
+	public void setCloseable(Boolean closeable) {
+		putValue("closeable", closeable);
+	}
+
+	public void setDestroyOnHide(Boolean destroyOnHide) {
+		putValue("destroyOnHide", destroyOnHide);
+	}
+
+	public void setMessage(String message) {
+		putValue("message", message);
+	}
+
+	public void setStyle(String style) {
+		putValue("style", style);
+	}
+
+	public void setTitle(String title) {
+		putValue("title", title);
+	}
+
+	public void setType(String type) {
+		putValue("type", type);
 	}
 
 }

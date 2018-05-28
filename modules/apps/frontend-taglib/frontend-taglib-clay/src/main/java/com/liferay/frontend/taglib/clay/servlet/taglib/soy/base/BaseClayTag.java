@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -32,18 +33,6 @@ import javax.portlet.PortletResponse;
  * @author Chema Balsas
  */
 public abstract class BaseClayTag extends TemplateRendererTag {
-
-	public BaseClayTag(String moduleBaseName, String componentBaseName) {
-		this(moduleBaseName, componentBaseName, false);
-	}
-
-	public BaseClayTag(
-		String moduleBaseName, String componentBaseName, boolean hydrate) {
-
-		_moduleBaseName = moduleBaseName;
-		_componentBaseName = componentBaseName;
-		_hydrate = hydrate;
-	}
 
 	@Override
 	public int doStartTag() {
@@ -67,17 +56,6 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 
 				putValue(parameterName, namespace + parameterValue);
 			}
-		}
-
-		super.setComponentId(_componentId);
-
-		if (_hydrate || Validator.isNotNull(_componentId) ||
-			Validator.isNotNull(context.get("data"))) {
-
-			setHydrate(true);
-		}
-		else {
-			setHydrate(false);
 		}
 
 		setTemplateNamespace(_componentBaseName + ".render");
@@ -113,9 +91,8 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		return _namespace;
 	}
 
-	@Override
-	public void setComponentId(String componentId) {
-		_componentId = componentId;
+	public void setComponentBaseName(String componentBaseName) {
+		_componentBaseName = componentBaseName;
 	}
 
 	public void setData(Map<String, String> data) {
@@ -130,6 +107,10 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		putValue("id", id);
 	}
 
+	public void setModuleBaseName(String moduleBaseName) {
+		_moduleBaseName = moduleBaseName;
+	}
+
 	public void setNamespace(String namespace) {
 		_namespace = namespace;
 	}
@@ -138,14 +119,25 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		putValue("spritemap", spritemap);
 	}
 
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		if (!ServerDetector.isResin()) {
+			_componentBaseName = null;
+			_moduleBaseName = null;
+			_namespace = null;
+		}
+
+		super.cleanUp();
+	}
+
 	protected String[] getNamespacedParams() {
 		return null;
 	}
 
-	private final String _componentBaseName;
-	private String _componentId;
-	private final boolean _hydrate;
-	private final String _moduleBaseName;
+	private String _componentBaseName;
+	private String _moduleBaseName;
 	private String _namespace;
 
 }

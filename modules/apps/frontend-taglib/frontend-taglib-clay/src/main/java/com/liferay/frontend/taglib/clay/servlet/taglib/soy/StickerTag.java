@@ -21,8 +21,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
  */
 public class StickerTag extends BaseClayTag {
 
-	public StickerTag() {
-		super("sticker", "ClaySticker");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClaySticker");
+		super.setModuleBaseName("sticker");
+
+		return super.doStartTag();
 	}
 
 	public void setIcon(String icon) {

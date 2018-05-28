@@ -21,8 +21,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
  */
 public class RadioTag extends BaseClayTag {
 
-	public RadioTag() {
-		super("radio", "ClayRadio");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayRadio");
+		super.setModuleBaseName("radio");
+
+		return super.doStartTag();
 	}
 
 	public void setChecked(Boolean checked) {

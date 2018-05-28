@@ -24,8 +24,12 @@ import java.util.List;
  */
 public class NavigationBarTag extends BaseClayTag {
 
-	public NavigationBarTag() {
-		super("navigation-bar", "ClayNavigationBar");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayNavigationBar");
+		super.setModuleBaseName("navigation-bar");
+
+		return super.doStartTag();
 	}
 
 	public void setInverted(Boolean inverted) {

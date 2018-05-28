@@ -25,8 +25,11 @@ import java.util.Map;
  */
 public class FileCardTag extends BaseClayCardTag {
 
-	public FileCardTag() {
-		super("ClayFileCard");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayFileCard");
+
+		return super.doStartTag();
 	}
 
 	public void setIcon(String icon) {

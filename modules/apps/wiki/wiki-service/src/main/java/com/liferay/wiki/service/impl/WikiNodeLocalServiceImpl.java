@@ -625,6 +625,10 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 			throw new NodeNameException();
 		}
 
+		if (Validator.isNumber(name)) {
+			throw new NodeNameException("Node name cannot be a number");
+		}
+
 		WikiNode node = wikiNodePersistence.fetchByG_N(groupId, name);
 
 		if ((node != null) && (node.getNodeId() != nodeId)) {

@@ -38,6 +38,6 @@ Import-Package:\
 	!org.jgroups.*,\
 	\
 	*
-Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Require-SchemaVersion: 1.1.0
 Liferay-Service: true
 -includeresource: @biz.aQute.bndlib-[0-9]*.jar!/aQute/bnd/annotation/metatype/*

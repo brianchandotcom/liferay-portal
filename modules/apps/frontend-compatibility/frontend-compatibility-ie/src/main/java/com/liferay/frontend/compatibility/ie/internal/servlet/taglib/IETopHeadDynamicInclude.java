@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -52,9 +53,10 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					request);
 
-			for (String url :
-					Arrays.asList("array.find.js", "object-assign-auto.js", "fetch.js")) {
+			List<String> urls = Arrays.asList(
+				"array.find.js", "fetch.js", "object.assign.js");
 
+			for (String url : urls) {
 				printWriter.print(
 					"<script data-senna-track=\"permanent\" src=\"");
 

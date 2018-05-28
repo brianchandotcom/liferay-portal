@@ -197,6 +197,13 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 			return vocabularies;
 		}
 
+		int count = assetVocabularyLocalService.getGroupVocabulariesCount(
+			new long[] {groupId});
+
+		if (count > 0) {
+			return vocabularies;
+		}
+
 		vocabularies = new ArrayList<>();
 
 		AssetVocabulary vocabulary =

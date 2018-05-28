@@ -31,7 +31,9 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -270,7 +272,8 @@ public class DLPortletInstanceSettingsHelper {
 				new KeyValuePair(
 					displayView,
 					LanguageUtil.get(
-						_dlRequestHelper.getLocale(), displayView)));
+						_dlRequestHelper.getLocale(),
+						_displayViews.get(displayView))));
 		}
 
 		Arrays.sort(displayViews);
@@ -286,7 +289,8 @@ public class DLPortletInstanceSettingsHelper {
 					new KeyValuePair(
 						displayView,
 						LanguageUtil.get(
-							_dlRequestHelper.getLocale(), displayView)));
+							_dlRequestHelper.getLocale(),
+							_displayViews.get(displayView))));
 			}
 		}
 
@@ -439,6 +443,14 @@ public class DLPortletInstanceSettingsHelper {
 						LanguageUtil.get(themeDisplay.getLocale(), mimeType)));
 			}
 		}
+	}
+
+	private static final Map<String, String> _displayViews = new HashMap();
+
+	static {
+		_displayViews.put("icon", "cards");
+		_displayViews.put("descriptive", "list");
+		_displayViews.put("list", "table");
 	}
 
 	private List<KeyValuePair> _availableDisplayViews;

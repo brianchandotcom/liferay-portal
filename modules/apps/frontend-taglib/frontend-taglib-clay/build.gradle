@@ -12,3 +12,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
 	compileOnly project(":core:petra:petra-string")
 }
+
+replaceSoyTranslation {
+	dependsOn npmRunBuild
+}

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.io.IOException;
 
@@ -95,7 +96,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 			new DLItemSelectorViewDisplayContext(
 				t, this, _itemSelectorReturnTypeResolverHandler,
 				itemSelectedEventName, search, portletURL,
-				_assetVocabularyService, _classNameLocalService);
+				_assetVocabularyService, _classNameLocalService,
+				stagingGroupHelper);
 
 		request.setAttribute(
 			DLItemSelectorWebKeys.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
@@ -159,6 +161,9 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
+
+	@Reference
+	protected StagingGroupHelper stagingGroupHelper;
 
 	private AssetVocabularyService _assetVocabularyService;
 	private ClassNameLocalService _classNameLocalService;

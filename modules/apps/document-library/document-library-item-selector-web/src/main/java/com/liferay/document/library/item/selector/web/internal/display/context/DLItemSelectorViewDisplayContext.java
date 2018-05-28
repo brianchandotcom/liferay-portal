@@ -16,6 +16,7 @@ package com.liferay.document.library.item.selector.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.item.selector.web.internal.DLItemSelectorView;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -24,6 +25,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.util.List;
 import java.util.Locale;
@@ -53,7 +56,8 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL,
 		AssetVocabularyService assetVocabularyService,
-		ClassNameLocalService classNameLocalService) {
+		ClassNameLocalService classNameLocalService,
+		StagingGroupHelper stagingGroupHelper) {
 
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_dlItemSelectorView = dlItemSelectorView;
@@ -64,6 +68,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_portletURL = portletURL;
 		_assetVocabularyService = assetVocabularyService;
 		_classNameLocalService = classNameLocalService;
+		_stagingGroupHelper = stagingGroupHelper;
 	}
 
 	public String[] getExtensions() {
@@ -109,6 +114,23 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		return portletURL;
 	}
 
+	public long getStagingAwareGroupId(long scopeGroupId) {
+		long groupId = scopeGroupId;
+
+		if (_stagingGroupHelper.isStagingGroup(scopeGroupId) &&
+			!_stagingGroupHelper.isStagedPortlet(
+				scopeGroupId, DLPortletKeys.DOCUMENT_LIBRARY)) {
+
+			Group group = _stagingGroupHelper.fetchLiveGroup(scopeGroupId);
+
+			if (group != null) {
+				groupId = group.getGroupId();
+			}
+		}
+
+		return groupId;
+	}
+
 	public String getTitle(Locale locale) {
 		return _dlItemSelectorView.getTitle(locale);
 	}
@@ -123,7 +145,7 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
-				themeDisplay.getScopeGroupId());
+				getStagingAwareGroupId(themeDisplay.getScopeGroupId()));
 
 		if (!assetVocabularies.isEmpty()) {
 			long classNameId = _classNameLocalService.getClassNameId(
@@ -164,5 +186,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
+	private final StagingGroupHelper _stagingGroupHelper;
 
 }

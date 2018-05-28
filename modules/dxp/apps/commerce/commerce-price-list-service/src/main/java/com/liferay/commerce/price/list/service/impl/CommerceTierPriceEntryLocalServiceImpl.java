@@ -16,9 +16,12 @@ package com.liferay.commerce.price.list.service.impl;
 
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.base.CommerceTierPriceEntryLocalServiceBaseImpl;
+import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -278,6 +281,81 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		return commerceTierPriceEntryPersistence.update(commerceTierPriceEntry);
 	}
 
+	/**
+	 * This method is used to insert a new CommerceTierPriceEntry or update an
+	 * existing one
+	 *
+	 * @param  commerceTierPriceEntryId - <b>Only</b> used when updating an
+	 *         entity; the matching one will be updated
+	 * @param  commercePriceEntryId - <b>Only</b> used when adding a new entity
+	 * @param  externalReferenceCode - The external identifier code from a 3rd
+	 *         party system to be able to locate the same entity in the portal
+	 * @param  price
+	 * @param  promoPrice
+	 * @param  minQuantity
+	 * @param  priceEntryExternalReferenceCode - <b>Only</b> used when adding a
+	 *         new entity, similar as <code>commercePriceEntryId</code> but the
+	 *         external identifier code from a 3rd party system. If
+	 *         commercePriceEntryId is used, it doesn't have any effect,
+	 *         otherwise it tries to fetch the CommercePriceEntry against the
+	 *         external code reference
+	 * @param  serviceContext
+	 * @return CommerceTierPriceEntry
+	 * @throws PortalException
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+			long commerceTierPriceEntryId, long commercePriceEntryId,
+			String externalReferenceCode, BigDecimal price,
+			BigDecimal promoPrice, int minQuantity,
+			String priceEntryExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Update
+
+		if (commerceTierPriceEntryId > 0) {
+			return updateCommerceTierPriceEntry(
+				commerceTierPriceEntryId, externalReferenceCode, price,
+				promoPrice, minQuantity, serviceContext);
+		}
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			CommerceTierPriceEntry commerceTierPriceEntry =
+				commerceTierPriceEntryPersistence.fetchByExternalReferenceCode(
+					externalReferenceCode);
+
+			return updateCommerceTierPriceEntry(
+				commerceTierPriceEntry.getCommerceTierPriceEntryId(), price,
+				promoPrice, minQuantity, serviceContext);
+		}
+
+		// Insert
+
+		if (commercePriceEntryId > 0) {
+			validate(commercePriceEntryId, minQuantity);
+
+			CommercePriceEntry commercePriceEntry =
+				_commercePriceEntryPersistence.fetchByPrimaryKey(
+					commercePriceEntryId);
+
+			return addCommerceTierPriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
+				minQuantity, serviceContext);
+		}
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryPersistence.fetchByExternalReferenceCode(
+				priceEntryExternalReferenceCode);
+
+		validate(commercePriceEntry.getCommercePriceEntryId(), minQuantity);
+
+		return addCommerceTierPriceEntry(
+			commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
+			minQuantity, serviceContext);
+	}
+
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, long commercePriceEntryId,
 		String keywords, int start, int end, Sort sort) {
@@ -382,9 +460,13 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			int minQuantity)
 		throws PortalException {
 
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryPersistence.fetchByPrimaryKey(
+				commercePriceEntryId);
+
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			commerceTierPriceEntryPersistence.fetchByC_M(
-				commercePriceEntryId, minQuantity);
+				commercePriceEntry.getCommercePriceEntryId(), minQuantity);
 
 		if ((commerceTierPriceEntry != null) &&
 			!(commerceTierPriceEntry.getCommerceTierPriceEntryId() ==
@@ -396,5 +478,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
+
+	@BeanReference(type = CommercePriceEntryPersistence.class)
+	private CommercePriceEntryPersistence _commercePriceEntryPersistence;
 
 }

@@ -505,6 +505,54 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceList;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommercePriceList upsertCommercePriceList(
+			long commercePriceListId, long commerceCurrencyId, String name,
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, String externalReferenceCode,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Update
+
+		if (commercePriceListId > 0) {
+			return updateCommercePriceList(
+				commercePriceListId, commerceCurrencyId, name, priority,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, externalReferenceCode, neverExpire,
+				serviceContext);
+		}
+
+		CommercePriceList commercePriceList =
+			commercePriceListPersistence.fetchByExternalReferenceCode(
+				externalReferenceCode);
+
+		if (Validator.isNotNull(commercePriceList)) {
+			return updateCommercePriceList(
+				commercePriceList.getCommercePriceListId(), commerceCurrencyId,
+				name, priority, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
+		}
+
+		// Insert
+
+		return addCommercePriceList(
+			commerceCurrencyId, name, priority, displayDateMonth,
+			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, externalReferenceCode,
+			neverExpire, serviceContext);
+	}
+
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, long[] commerceUserSegmentEntryIds) {
 

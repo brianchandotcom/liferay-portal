@@ -162,6 +162,25 @@ public class CommerceTierPriceEntryServiceImpl
 			minQuantity, serviceContext);
 	}
 
+	@Override
+	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+			long commerceTierPriceEntryId, long commercePriceEntryId,
+			String externalReferenceCode, BigDecimal price,
+			BigDecimal promoPrice, int minQuantity,
+			String priceEntryExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+
+		return commerceTierPriceEntryLocalService.upsertCommerceTierPriceEntry(
+			commerceTierPriceEntryId, commercePriceEntryId,
+			externalReferenceCode, price, promoPrice, minQuantity,
+			priceEntryExternalReferenceCode, serviceContext);
+	}
+
 	private static volatile PortletResourcePermission
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(

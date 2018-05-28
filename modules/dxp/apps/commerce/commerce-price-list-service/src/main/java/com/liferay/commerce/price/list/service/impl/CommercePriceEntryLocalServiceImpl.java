@@ -17,6 +17,8 @@ package com.liferay.commerce.price.list.service.impl;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -310,6 +313,80 @@ public class CommercePriceEntryLocalServiceImpl
 		return commercePriceEntryPersistence.update(commercePriceEntry);
 	}
 
+	/**
+	 * This method is used to insert a new CommercePriceEntry or update an
+	 * existing one
+	 *
+	 * @param  commercePriceEntryId - <b>Only</b> used when updating an entity
+	 *         the matching one will be updated
+	 * @param  cpInstanceId - <b>Only</b> used when adding a new entity
+	 * @param  commercePriceListId - <b>Only</b> used when adding a new entity
+	 *         to a price list
+	 * @param  externalReferenceCode - The external identifier code from a 3rd
+	 *         party system to be able to locate the same entity in the portal
+	 * @param  price
+	 * @param  promoPrice
+	 * @param  skuExternalReferenceCode - <b>Only</b> used when adding a new
+	 *         entity, similar as <code>cpInstanceId</code> but the external
+	 *         identifier code from a 3rd party system. If cpInstanceId is used,
+	 *         it doesn't have any effect, otherwise it tries to fetch the
+	 *         CPInstance against the external code reference
+	 * @param  serviceContext
+	 * @return CommercePriceEntry
+	 * @throws PortalException
+	 * @review
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommercePriceEntry upsertCommercePriceEntry(
+			long commercePriceEntryId, long cpInstanceId,
+			long commercePriceListId, String externalReferenceCode,
+			BigDecimal price, BigDecimal promoPrice,
+			String skuExternalReferenceCode, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Update
+
+		if (commercePriceEntryId > 0) {
+			return updateCommercePriceEntry(
+				commercePriceEntryId, externalReferenceCode, price, promoPrice,
+				serviceContext);
+		}
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryPersistence.fetchByExternalReferenceCode(
+				externalReferenceCode);
+
+		if (Validator.isNotNull(commercePriceEntry)) {
+			return updateCommercePriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
+				serviceContext);
+		}
+
+		// Insert
+
+		if (cpInstanceId > 0) {
+			validate(cpInstanceId, commercePriceListId);
+
+			CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
+				cpInstanceId);
+
+			return addCommercePriceEntry(
+				cpInstance.getCPInstanceId(), commercePriceListId,
+				externalReferenceCode, price, promoPrice, serviceContext);
+		}
+
+		CPInstance cpInstance =
+			_cpInstancePersistence.findByExternalReferenceCode(
+				skuExternalReferenceCode);
+
+		validate(cpInstance.getCPInstanceId(), commercePriceListId);
+
+		return addCommercePriceEntry(
+			cpInstance.getCPInstanceId(), commercePriceListId,
+			externalReferenceCode, price, promoPrice, serviceContext);
+	}
+
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, long commercePriceListId, String keywords,
 		int start, int end, Sort sort) {
@@ -409,9 +486,12 @@ public class CommercePriceEntryLocalServiceImpl
 	protected void validate(long cpInstanceId, long commercePriceListId)
 		throws PortalException {
 
+		CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
+			cpInstanceId);
+
 		CommercePriceEntry commercePriceEntry =
 			commercePriceEntryPersistence.fetchByC_C(
-				cpInstanceId, commercePriceListId);
+				cpInstance.getCPInstanceId(), commercePriceListId);
 
 		if (commercePriceEntry != null) {
 			throw new DuplicateCommercePriceEntryException();
@@ -420,5 +500,8 @@ public class CommercePriceEntryLocalServiceImpl
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
+
+	@ServiceReference(type = CPInstancePersistence.class)
+	private CPInstancePersistence _cpInstancePersistence;
 
 }

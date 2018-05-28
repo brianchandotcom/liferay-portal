@@ -214,6 +214,24 @@ public class CommercePriceEntryServiceImpl
 			serviceContext);
 	}
 
+	@Override
+	public CommercePriceEntry upsertCommercePriceEntry(
+			long commercePriceEntryId, long cpInstanceId,
+			long commercePriceListId, String externalReferenceCode,
+			BigDecimal price, BigDecimal promoPrice,
+			String skuExternalReferenceCode, ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+
+		return commercePriceEntryLocalService.upsertCommercePriceEntry(
+			commercePriceEntryId, cpInstanceId, commercePriceListId,
+			externalReferenceCode, price, promoPrice, skuExternalReferenceCode,
+			serviceContext);
+	}
+
 	private static volatile PortletResourcePermission
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(

@@ -75,11 +75,11 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				return JSONFactoryUtil.getNullJSON();
 			}
 		}
-		catch (Exception e) {
+		catch (Throwable throwable) {
 			int status = 0;
 
-			if (e instanceof InvocationTargetException) {
-				Throwable throwable = e.getCause();
+			if (throwable instanceof InvocationTargetException) {
+				throwable = throwable.getCause();
 
 				if (throwable instanceof PrincipalException ||
 					throwable instanceof SecurityException) {
@@ -108,34 +108,34 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				return JSONFactoryUtil.serializeThrowable(throwable);
 			}
 
-			if (e instanceof NoSuchJSONWebServiceException) {
+			if (throwable instanceof NoSuchJSONWebServiceException) {
 				status = HttpServletResponse.SC_NOT_FOUND;
 			}
-			else if (e instanceof PrincipalException ||
-					 e instanceof SecurityException) {
+			else if (throwable instanceof PrincipalException ||
+					 throwable instanceof SecurityException) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(getThrowableMessage(e), e);
+					_log.debug(getThrowableMessage(throwable), throwable);
 				}
 
 				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
-				return JSONFactoryUtil.serializeThrowable(e);
+				return JSONFactoryUtil.serializeThrowable(throwable);
 			}
 			else {
 				status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(getThrowableMessage(e), e);
+				_log.debug(getThrowableMessage(throwable), throwable);
 			}
 			else {
-				_log.error(getThrowableMessage(e));
+				_log.error(getThrowableMessage(throwable));
 			}
 
 			response.setStatus(status);
 
-			return JSONFactoryUtil.serializeThrowable(e);
+			return JSONFactoryUtil.serializeThrowable(throwable);
 		}
 	}
 

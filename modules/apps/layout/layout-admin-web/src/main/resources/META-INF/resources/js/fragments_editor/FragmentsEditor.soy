@@ -20,6 +20,7 @@
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
 	{@param portletNamespace: string}
+	{@param publishLayoutPageTemplateEntryURL: string}
 	{@param redirectURL: string}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
@@ -33,7 +34,6 @@
 	{@param? _handleMappeableFieldClicked: any}
 	{@param? _handleMappeableFieldSelected: any}
 	{@param? _handleMappingTypeSelected: any}
-	{@param? _handlePublishButtonClick: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _handleSelectAssetTypeButtonClick: any}
 	{@param? _handleSelectMappingDialogVisibleChanged: any}
@@ -78,15 +78,17 @@
 	<div id="{$id}">
 		{call .managementBar}
 			{param availableLanguages: $availableLanguages /}
+			{param classPK: $classPK /}
 			{param defaultLanguageId: $defaultLanguageId /}
-			{param languageId: $languageId /}
-			{param redirectURL: $redirectURL /}
-			{param spritemap: $spritemap /}
 			{param dirty: $_dirty /}
-			{param handlePublishButtonClick: $_handlePublishButtonClick /}
 			{param handleToggleContextualSidebarButtonClick: $_handleToggleContextualSidebarButtonClick /}
 			{param handleTranslationLanguageChange: $_handleTranslationLanguageChange /}
+			{param languageId: $languageId /}
 			{param lastSaveDate: $_lastSaveDate /}
+			{param portletNamespace: $portletNamespace /}
+			{param publishLayoutPageTemplateEntryURL: $publishLayoutPageTemplateEntryURL /}
+			{param redirectURL: $redirectURL /}
+			{param spritemap: $spritemap /}
 			{param status: $status /}
 			{param translationStatus: $_translationStatus /}
 		{/call}
@@ -267,11 +269,14 @@
  */
 {template .managementBar}
 	{@param availableLanguages: ?}
+	{@param classPK: ?}
 	{@param defaultLanguageId: string}
 	{@param languageId: string}
+	{@param portletNamespace: string}
+	{@param publishLayoutPageTemplateEntryURL: string}
+	{@param redirectURL: string}
 	{@param spritemap: string}
 	{@param? dirty: bool}
-	{@param? handlePublishButtonClick: any}
 	{@param? handleToggleContextualSidebarButtonClick: any}
 	{@param? handleTranslationLanguageChange: any}
 	{@param? lastSaveDate: string}
@@ -312,9 +317,23 @@
 					</li>
 				{/if}
 				<li class="nav-item">
-					<button class="btn btn-primary nav-btn" data-onclick="{$handlePublishButtonClick}">
-						{msg desc=""}publish{/msg}
-					</button>
+					<form action="{$publishLayoutPageTemplateEntryURL}" method="POST">
+						<input
+							name="{$portletNamespace}classPK"
+							type="hidden"
+							value="{$classPK}"
+						/>
+
+						<input
+							name="{$portletNamespace}redirect"
+							type="hidden"
+							value="{$redirectURL}"
+						/>
+
+						<button class="btn btn-primary nav-btn" type="submit">
+							{msg desc=""}publish{/msg}
+						</button>
+					</form>
 				</li>
 				<li class="nav-item">
 					<button class="btn btn-secondary nav-btn" data-onclick="{$handleToggleContextualSidebarButtonClick}">

@@ -588,37 +588,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Callback executed when the publish button is clicked
-	 * @private
-	 * @review
-	 */
-
-	_handlePublishButtonClick() {
-		const form = document.querySelector('#hrefFm');
-
-		form.setAttribute('action', this.publishLayoutPageTemplateEntryURL);
-		form.setAttribute('method', 'POST');
-
-		const classPKNode = document.createElement('input');
-
-		classPKNode.setAttribute('type', 'hidden');
-		classPKNode.setAttribute('name', `${this.portletNamespace}classPK`)
-		classPKNode.setAttribute('value', this.classPK);
-
-		form.appendChild(classPKNode)
-
-		const redirectNode = document.createElement('input');
-
-		redirectNode.setAttribute('type', 'hidden');
-		redirectNode.setAttribute('name', `${this.portletNamespace}redirect`)
-		redirectNode.setAttribute('value', this.redirectURL);
-
-		form.appendChild(redirectNode);ect
-
-		form.submit();
-	}
-
-	/**
 	 * Callback executed when the sidebar visible state should be toggled
 	 * @private
 	 * @review

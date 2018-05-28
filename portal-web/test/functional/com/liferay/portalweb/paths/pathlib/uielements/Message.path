@@ -230,7 +230,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_3</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]/div</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]/span</td>
 	<td></td>
 </tr>
 <tr>

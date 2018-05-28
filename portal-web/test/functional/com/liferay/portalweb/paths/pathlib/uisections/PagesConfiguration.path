@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
-	<td>//label[contains(.,'${key_contentName}')]/input</td>
+	<td>//label[contains(.,'${key_contentName}')]/span</td>
 	<td></td>
 </tr>
 <tr>

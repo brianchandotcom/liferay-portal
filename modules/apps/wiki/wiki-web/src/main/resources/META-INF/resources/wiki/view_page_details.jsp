@@ -317,7 +317,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						/>
 					</c:if>
 
-					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
+					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
 
 						<%
 						PortletURL movePageURL = PortletURLUtil.clone(viewPageURL, renderResponse);

@@ -110,7 +110,6 @@ public class CommerceUserSegmentHelperImpl
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setStart(start);
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[] {groupId});
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

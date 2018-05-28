@@ -1,4 +1,0 @@
-Bundle-Name: Liferay IP Geocoder API
-Bundle-SymbolicName: com.liferay.ip.geocoder.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.ip.geocoder

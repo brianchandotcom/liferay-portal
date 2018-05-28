@@ -1,3 +1,0 @@
-dependencies {
-	compileOnly group: "com.maxmind.geoip", name: "geoip-api", version: "1.2.14"
-}

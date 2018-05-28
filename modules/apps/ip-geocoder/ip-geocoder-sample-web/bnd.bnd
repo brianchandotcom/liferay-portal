@@ -1,4 +1,0 @@
-Bundle-Name: Liferay IP Geocoder Sample Web
-Bundle-SymbolicName: com.liferay.ip.geocoder.sample.web
-Bundle-Version: 3.0.0
-Web-ContextPath: /ip-geocoder-sample-web

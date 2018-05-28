@@ -16,6 +16,7 @@ package com.liferay.layout.type.controller.content.internal.controller;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -80,6 +81,11 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			request.setAttribute(
 				ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
 				fragmentEntryLinks);
+		}
+		else {
+			request.setAttribute(
+				ContentLayoutTypeControllerWebKeys.ITEM_SELECTOR,
+				_itemSelector);
 		}
 
 		String page = getViewPage();
@@ -197,6 +203,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

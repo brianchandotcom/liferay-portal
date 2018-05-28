@@ -42,11 +42,18 @@ public class PriceEntryUpdaterForm {
 			__ -> "This form can be used to update a price entry"
 		).constructor(
 			PriceEntryUpdaterForm::new
+		).addOptionalString(
+			"externalReferenceCode",
+			PriceEntryUpdaterForm::_setExternalReferenceCode
 		).addRequiredDouble(
 			"price", PriceEntryUpdaterForm::_setPrice
 		).addRequiredDouble(
 			"promoPrice", PriceEntryUpdaterForm::_setPromoPrice
 		).build();
+	}
+
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
 	}
 
 	public Double getPrice() {
@@ -57,6 +64,10 @@ public class PriceEntryUpdaterForm {
 		return _promoPrice;
 	}
 
+	private void _setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	private void _setPrice(Double price) {
 		_price = price;
 	}
@@ -65,6 +76,7 @@ public class PriceEntryUpdaterForm {
 		_promoPrice = promoPrice;
 	}
 
+	private String _externalReferenceCode;
 	private Double _price;
 	private Double _promoPrice;
 

@@ -42,6 +42,9 @@ public class TierPriceEntryForm {
 			__ -> "This form can be used to create or update a tier price entry"
 		).constructor(
 			TierPriceEntryForm::new
+		).addOptionalString(
+			"externalReferenceCode",
+			TierPriceEntryForm::_setExternalReferenceCode
 		).addRequiredLong(
 			"minQuantity", TierPriceEntryForm::_setMinQuantity
 		).addRequiredDouble(
@@ -49,6 +52,10 @@ public class TierPriceEntryForm {
 		).addRequiredDouble(
 			"promoPrice", TierPriceEntryForm::_setPromoPrice
 		).build();
+	}
+
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
 	}
 
 	public Long getMinQuantity() {
@@ -63,6 +70,10 @@ public class TierPriceEntryForm {
 		return _promoPrice;
 	}
 
+	private void _setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	private void _setMinQuantity(Long minQuantity) {
 		_minQuantity = minQuantity;
 	}
@@ -75,6 +86,7 @@ public class TierPriceEntryForm {
 		_promoPrice = promoPrice;
 	}
 
+	private String _externalReferenceCode;
 	private Long _minQuantity;
 	private Double _price;
 	private Double _promoPrice;

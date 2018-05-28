@@ -42,6 +42,9 @@ public class PriceEntryCreatorForm {
 			__ -> "This form can be used to create a price entry"
 		).constructor(
 			PriceEntryCreatorForm::new
+		).addOptionalString(
+			"skuExternalReferenceCode",
+			PriceEntryCreatorForm::_setSkuExternalReferenceCode
 		).addRequiredDouble(
 			"price", PriceEntryCreatorForm::_setPrice
 		).addRequiredDouble(
@@ -51,9 +54,6 @@ public class PriceEntryCreatorForm {
 		).addOptionalString(
 			"externalReferenceCode",
 			PriceEntryCreatorForm::_setExternalReferenceCode
-		).addOptionalString(
-			"skuExternalReferenceCode",
-			PriceEntryCreatorForm::_setSkuExternalReferenceCode
 		).build();
 	}
 

@@ -111,6 +111,8 @@ page import="com.liferay.portal.kernel.util.Tuple" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.staging.StagingGroupHelper" %><%@
+page import="com.liferay.staging.StagingGroupHelperUtil" %><%@
 page import="com.liferay.staging.constants.StagingProcessesWebKeys" %><%@
 page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
 
@@ -147,6 +149,8 @@ page import="javax.portlet.PortletURL" %>
 PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
 
 PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
 
 if ((portletRequest == null) || (portletResponse == null)) {
 	currentURL = PortalUtil.getCurrentURL(request);

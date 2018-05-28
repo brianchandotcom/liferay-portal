@@ -20,10 +20,10 @@ package com.liferay.source.formatter.parser;
 public class JavaVariable extends BaseJavaTerm {
 
 	public JavaVariable(
-		String name, String content, String accessModifier, boolean isAbstract,
-		boolean isStatic) {
+		String name, String content, String accessModifier, int lineNumber,
+		boolean isAbstract, boolean isStatic) {
 
-		super(name, content, accessModifier, isAbstract, isStatic);
+		super(name, content, accessModifier, lineNumber, isAbstract, isStatic);
 	}
 
 }

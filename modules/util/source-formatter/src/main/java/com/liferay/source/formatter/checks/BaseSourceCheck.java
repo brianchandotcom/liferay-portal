@@ -372,7 +372,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected int getLineCount(String content, int pos) {
-		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
+		return SourceUtil.getLineNumber(content, pos);
 	}
 
 	protected int getLineStartPos(String content, int lineCount) {

@@ -26,12 +26,13 @@ import java.util.regex.Pattern;
 public abstract class BaseJavaTerm implements JavaTerm {
 
 	public BaseJavaTerm(
-		String name, String content, String accessModifier, boolean isAbstract,
-		boolean isStatic) {
+		String name, String content, String accessModifier, int lineNumber,
+		boolean isAbstract, boolean isStatic) {
 
 		_name = name;
 		_content = content;
 		_accessModifier = accessModifier;
+		_lineNumber = lineNumber;
 		_isAbstract = isAbstract;
 		_isStatic = isStatic;
 	}
@@ -44,6 +45,11 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	@Override
 	public String getContent() {
 		return _content;
+	}
+
+	@Override
+	public int getLineNumber() {
+		return _lineNumber;
 	}
 
 	@Override
@@ -137,6 +143,7 @@ public abstract class BaseJavaTerm implements JavaTerm {
 	private final String _content;
 	private final boolean _isAbstract;
 	private final boolean _isStatic;
+	private final int _lineNumber;
 	private final String _name;
 	private JavaClass _parentJavaClass;
 

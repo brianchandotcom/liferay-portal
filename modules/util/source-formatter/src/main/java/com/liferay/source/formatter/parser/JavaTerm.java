@@ -34,6 +34,8 @@ public interface JavaTerm {
 
 	public String getContent();
 
+	public int getLineNumber();
+
 	public String getName();
 
 	public JavaClass getParentJavaClass();

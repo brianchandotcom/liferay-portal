@@ -106,6 +106,10 @@ public class SourceUtil {
 		return level;
 	}
 
+	public static int getLineNumber(String content, int pos) {
+		return StringUtil.count(content, 0, pos, CharPool.NEW_LINE) + 1;
+	}
+
 	public static String getTitleCase(String s, String[] exceptions) {
 		String[] words = s.split("\\s+");
 

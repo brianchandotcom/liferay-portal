@@ -301,14 +301,14 @@ public class IndentationCheck extends BaseCheck {
 	}
 
 	private Set<Integer> _addTabsForArithmeticOperators(
-		Set<Integer> lineNumbers, int lineCount, DetailAST detailAST) {
+		Set<Integer> lineNumbers, int lineNumber, DetailAST detailAST) {
 
 		DetailAST firstChild = detailAST;
 
 		while (true) {
 			int lineNo = firstChild.getLineNo();
 
-			if (lineNo < lineCount) {
+			if (lineNo < lineNumber) {
 				lineNumbers.add(lineNo);
 			}
 
@@ -325,7 +325,7 @@ public class IndentationCheck extends BaseCheck {
 	}
 
 	private Set<Integer> _addTabsForDot(
-		Set<Integer> lineNumbers, int lineCount, DetailAST detailAST) {
+		Set<Integer> lineNumbers, int lineNumber, DetailAST detailAST) {
 
 		if (detailAST == null) {
 			return lineNumbers;
@@ -340,7 +340,7 @@ public class IndentationCheck extends BaseCheck {
 
 			int lineNo = firstChild.getLineNo();
 
-			if (lineNo < lineCount) {
+			if (lineNo < lineNumber) {
 				lineNumbers.add(lineNo);
 			}
 
@@ -351,7 +351,7 @@ public class IndentationCheck extends BaseCheck {
 	}
 
 	private Set<Integer> _addTabsForGenerics(
-		Set<Integer> lineNumbers, int lineCount, DetailAST detailAST) {
+		Set<Integer> lineNumbers, int lineNumber, DetailAST detailAST) {
 
 		if (detailAST == null) {
 			return lineNumbers;
@@ -363,7 +363,7 @@ public class IndentationCheck extends BaseCheck {
 		for (DetailAST genericAST : genericASTList) {
 			int lineNo = genericAST.getLineNo();
 
-			if (lineNo < lineCount) {
+			if (lineNo < lineNumber) {
 				lineNumbers.add(lineNo);
 			}
 		}
@@ -372,7 +372,7 @@ public class IndentationCheck extends BaseCheck {
 	}
 
 	private Set<Integer> _addTabsForTypecast(
-		Set<Integer> lineNumbers, int lineCount, DetailAST detailAST) {
+		Set<Integer> lineNumbers, int lineNumber, DetailAST detailAST) {
 
 		DetailAST previousSibling = detailAST.getPreviousSibling();
 
@@ -384,7 +384,7 @@ public class IndentationCheck extends BaseCheck {
 
 		int lineNo = previousSibling.getLineNo();
 
-		if (lineNo < lineCount) {
+		if (lineNo < lineNumber) {
 			lineNumbers.add(lineNo);
 		}
 
@@ -399,7 +399,7 @@ public class IndentationCheck extends BaseCheck {
 
 	private int _adjustTabCountForChains(int tabCount, DetailAST detailAST) {
 		boolean checkChaining = false;
-		int methodCallLineCount = -1;
+		int methodCallLineNumber = -1;
 
 		DetailAST parentAST = detailAST;
 
@@ -417,7 +417,7 @@ public class IndentationCheck extends BaseCheck {
 					getLine(parentAST.getLineNo() - 1));
 
 				if (line.endsWith("(") &&
-					(parentAST.getLineNo() < methodCallLineCount)) {
+					(parentAST.getLineNo() < methodCallLineNumber)) {
 
 					DetailAST rparenAST = null;
 
@@ -467,7 +467,7 @@ public class IndentationCheck extends BaseCheck {
 					(parentAST.getLineNo() < detailAST.getLineNo())) {
 
 					checkChaining = true;
-					methodCallLineCount = parentAST.getLineNo();
+					methodCallLineNumber = parentAST.getLineNo();
 				}
 			}
 

@@ -60,11 +60,12 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 
 				addMessage(
 					fileName, "Incorrect " + type + " statement",
-					getLineCount(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 			}
 			else {
 				String newIfClause = _formatIfClause(
-					ifClause, fileName, getLineCount(content, matcher.start()));
+					ifClause, fileName,
+					getLineNumber(content, matcher.start()));
 
 				if (!ifClause.equals(newIfClause)) {
 					return StringUtil.replace(content, ifClause, newIfClause);
@@ -292,7 +293,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 	}
 
 	private String _formatIfClause(
-			String ifClause, String fileName, int lineCount)
+			String ifClause, String fileName, int lineNumber)
 		throws Exception {
 
 		String ifClauseSingleLine = StringUtil.replace(
@@ -307,7 +308,7 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 				StringPool.SPACE
 			});
 
-		checkIfClauseParentheses(ifClauseSingleLine, fileName, lineCount);
+		checkIfClauseParentheses(ifClauseSingleLine, fileName, lineNumber);
 
 		return _formatIfClause(ifClause);
 	}

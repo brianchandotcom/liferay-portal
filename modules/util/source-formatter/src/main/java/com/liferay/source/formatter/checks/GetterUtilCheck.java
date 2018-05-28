@@ -84,7 +84,7 @@ public class GetterUtilCheck extends BaseFileCheck {
 					fileName,
 					"No need to pass default value '" + parametersList.get(1) +
 						"'",
-					getLineCount(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 			}
 		}
 	}

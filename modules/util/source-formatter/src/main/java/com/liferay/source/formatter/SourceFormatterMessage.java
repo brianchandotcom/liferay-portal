@@ -31,27 +31,27 @@ public class SourceFormatterMessage
 
 	public SourceFormatterMessage(
 		String fileName, String message, CheckType checkType, String checkName,
-		String markdownFileName, int lineCount) {
+		String markdownFileName, int lineNumber) {
 
 		_fileName = fileName;
 		_message = message;
 		_checkType = checkType;
 		_checkName = checkName;
 		_markdownFileName = markdownFileName;
-		_lineCount = lineCount;
+		_lineNumber = lineNumber;
 	}
 
 	public SourceFormatterMessage(
-		String fileName, String message, int lineCount) {
+		String fileName, String message, int lineNumber) {
 
-		this(fileName, message, null, lineCount);
+		this(fileName, message, null, lineNumber);
 	}
 
 	public SourceFormatterMessage(
 		String fileName, String message, String markdownFileName,
-		int lineCount) {
+		int lineNumber) {
 
-		this(fileName, message, null, null, markdownFileName, -1);
+		this(fileName, message, null, null, markdownFileName, lineNumber);
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class SourceFormatterMessage
 			return _fileName.compareTo(sourceFormatterMessage.getFileName());
 		}
 
-		if (_lineCount != sourceFormatterMessage.getLineCount()) {
-			return _lineCount - sourceFormatterMessage.getLineCount();
+		if (_lineNumber != sourceFormatterMessage.getLineNumber()) {
+			return _lineNumber - sourceFormatterMessage.getLineNumber();
 		}
 
 		return _message.compareTo(sourceFormatterMessage.getMessage());
@@ -79,8 +79,8 @@ public class SourceFormatterMessage
 		return _fileName;
 	}
 
-	public int getLineCount() {
-		return _lineCount;
+	public int getLineNumber() {
+		return _lineNumber;
 	}
 
 	public String getMarkdownFilePath() {
@@ -110,9 +110,9 @@ public class SourceFormatterMessage
 		sb.append(": ");
 		sb.append(_fileName);
 
-		if (_lineCount > -1) {
+		if (_lineNumber > -1) {
 			sb.append(StringPool.SPACE);
-			sb.append(_lineCount);
+			sb.append(_lineNumber);
 		}
 
 		if (_checkName != null) {
@@ -138,7 +138,7 @@ public class SourceFormatterMessage
 	private final String _checkName;
 	private final CheckType _checkType;
 	private final String _fileName;
-	private final int _lineCount;
+	private final int _lineNumber;
 	private final String _markdownFileName;
 	private final String _message;
 

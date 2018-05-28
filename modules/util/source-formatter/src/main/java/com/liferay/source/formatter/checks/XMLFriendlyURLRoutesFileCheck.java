@@ -60,7 +60,7 @@ public class XMLFriendlyURLRoutesFileCheck extends BaseFileCheck {
 				fileName,
 				"Major version for dtd should be '" + mainMajorReleaseVersion +
 					"'",
-				getLineCount(content, matcher.start()));
+				getLineNumber(content, matcher.start()));
 		}
 	}
 

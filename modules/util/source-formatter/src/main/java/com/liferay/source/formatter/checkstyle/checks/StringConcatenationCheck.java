@@ -26,11 +26,11 @@ public abstract class StringConcatenationCheck extends BaseCheck {
 	}
 
 	protected void checkLiteralStringStartAndEndCharacter(
-		String literalString1, String literalString2, int lineCount) {
+		String literalString1, String literalString2, int lineNumber) {
 
 		if (literalString1.endsWith(StringPool.SLASH)) {
 			log(
-				lineCount, _MSG_INVALID_END_CHARACTER,
+				lineNumber, _MSG_INVALID_END_CHARACTER,
 				literalString1.charAt(literalString1.length() - 1));
 		}
 
@@ -39,7 +39,7 @@ public abstract class StringConcatenationCheck extends BaseCheck {
 			 literalString2.matches("^[-:;.].*"))) {
 
 			log(
-				lineCount + 1, _MSG_INVALID_START_CHARACTER,
+				lineNumber + 1, _MSG_INVALID_START_CHARACTER,
 				literalString2.charAt(0));
 		}
 	}

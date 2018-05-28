@@ -42,7 +42,7 @@ public class TLDTypeCheck extends BaseFileCheck {
 			if (typeName.matches("[A-Z]\\w*")) {
 				addMessage(
 					fileName, "Use fully qualified class name, see LPS-61841",
-					getLineCount(content, matcher.start(1)));
+					getLineNumber(content, matcher.start(1)));
 			}
 			else if (typeName.equals("java.lang.String")) {
 				return StringUtil.replaceFirst(content, matcher.group(), "\n");

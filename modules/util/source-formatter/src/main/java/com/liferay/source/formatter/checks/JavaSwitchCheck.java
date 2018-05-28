@@ -37,7 +37,7 @@ public class JavaSwitchCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			addMessage(
 				fileName, "Use 'if/else' statement instead of 'switch'",
-				getLineCount(content, matcher.start()));
+				getLineNumber(content, matcher.start()));
 		}
 
 		return content;

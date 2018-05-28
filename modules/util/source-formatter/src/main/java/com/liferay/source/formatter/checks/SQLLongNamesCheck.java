@@ -34,7 +34,7 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 	}
 
 	private void _checkColumns(
-		String fileName, String tableContent, int startLineCount) {
+		String fileName, String tableContent, int startLineNumber) {
 
 		Matcher matcher = _columnPattern.matcher(tableContent);
 
@@ -48,8 +48,8 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 						"Column name '", columnName, "' should not exceed ",
 						String.valueOf(_MAX_NAME_LENGTH), " characters"),
 					"oracle_naming_rules.markdown",
-					startLineCount +
-						getLineCount(tableContent, matcher.start()));
+					startLineNumber +
+						getLineNumber(tableContent, matcher.start()));
 			}
 		}
 	}
@@ -67,7 +67,7 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 						"Table name '", tableName, "' should not exceed ",
 						String.valueOf(_MAX_NAME_LENGTH), " characters"),
 					"oracle_naming_rules.markdown",
-					getLineCount(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 			}
 
 			int x = matcher.end();
@@ -84,7 +84,7 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 				if (getLevel(tableContent) == 0) {
 					_checkColumns(
 						fileName, tableContent,
-						getLineCount(content, matcher.end()));
+						getLineNumber(content, matcher.end()));
 
 					break;
 				}

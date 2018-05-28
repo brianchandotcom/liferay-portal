@@ -65,15 +65,15 @@ public class JavaLogLevelCheck extends BaseFileCheck {
 					"Enabled()";
 
 			if (codeBlock.contains(s) ^ !s.equals("_log.isErrorEnabled()")) {
-				int lineCount = getLineCount(content, matcher.start(1));
+				int lineNumber = getLineNumber(content, matcher.start(1));
 
 				if (codeBlock.contains(s)) {
 					addMessage(
 						fileName, "Do not use _log.isErrorEnabled()",
-						lineCount);
+						lineNumber);
 				}
 				else {
-					addMessage(fileName, "Use " + s, lineCount);
+					addMessage(fileName, "Use " + s, lineNumber);
 				}
 			}
 		}

@@ -136,7 +136,7 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 				StringBundler.concat(
 					"SQL '", replaceSQLValue,
 					"' does not exist in the custom-sql file"),
-				getLineCount(fileContent, pos));
+				getLineNumber(fileContent, pos));
 		}
 	}
 
@@ -175,7 +175,7 @@ public class JavaFinderImplCustomSQLCheck extends BaseJavaTermCheck {
 		addMessage(
 			fileName,
 			"'" + variableName + "' points to non-existing custom query",
-			getLineCount(fileContent, pos));
+			getLineNumber(fileContent, pos));
 	}
 
 	private String _getReplaceSQLValue(String content, String parameterValue) {

@@ -44,16 +44,16 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			String line = null;
 			String previousLine = StringPool.BLANK;
 
-			int lineCount = 0;
+			int lineNumber = 0;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
+				lineNumber++;
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (trimmedLine.startsWith(StringPool.SEMICOLON)) {
 					addMessage(
-						fileName, "Line should not start with ';'", lineCount);
+						fileName, "Line should not start with ';'", lineNumber);
 				}
 
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
@@ -61,7 +61,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					trimmedLine.startsWith(StringPool.PERIOD)) {
 
 					addMessage(
-						fileName, "Line should not start with '.'", lineCount);
+						fileName, "Line should not start with '.'", lineNumber);
 				}
 
 				int lineLength = getLineLength(line);
@@ -71,7 +71,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					!trimmedLine.startsWith(StringPool.STAR) &&
 					(lineLength <= getMaxLineLength())) {
 
-					_checkLineBreaks(line, previousLine, fileName, lineCount);
+					_checkLineBreaks(line, previousLine, fileName, lineNumber);
 				}
 
 				previousLine = line;
@@ -98,7 +98,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	}
 
 	private void _checkLambdaLineBreaks(
-		String line, String fileName, int lineCount) {
+		String line, String fileName, int lineNumber) {
 
 		if (!line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
 			(getLevel(line) <= 0)) {
@@ -120,7 +120,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			if (getLevel(s) > 0) {
 				addMessage(
 					fileName, "There should be a line break after '" + s + "'",
-					lineCount);
+					lineNumber);
 
 				return;
 			}
@@ -130,9 +130,9 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	}
 
 	private void _checkLineBreaks(
-		String line, String previousLine, String fileName, int lineCount) {
+		String line, String previousLine, String fileName, int lineNumber) {
 
-		checkLineBreaks(line, previousLine, fileName, lineCount);
+		checkLineBreaks(line, previousLine, fileName, lineNumber);
 
 		String trimmedLine = StringUtil.trimLeading(line);
 
@@ -142,11 +142,11 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			return;
 		}
 
-		_checkLambdaLineBreaks(trimmedLine, fileName, lineCount);
+		_checkLambdaLineBreaks(trimmedLine, fileName, lineNumber);
 
 		if (trimmedLine.endsWith("( {")) {
 			addMessage(
-				fileName, "There should be a line before ' {'", lineCount);
+				fileName, "There should be a line before ' {'", lineNumber);
 		}
 
 		for (int x = 0;;) {
@@ -163,7 +163,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					fileName,
 					"There should be a line break after '" +
 						trimmedLine.substring(0, x) + "'",
-					lineCount);
+					lineNumber);
 			}
 		}
 
@@ -175,7 +175,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				(trimmedLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
 				 (trimmedLine.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS))) {
 
-				addMessage(fileName, "Incorrect line break", lineCount);
+				addMessage(fileName, "Incorrect line break", lineNumber);
 			}
 		}
 
@@ -192,7 +192,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					fileName,
 					"There should be a line break after '" +
 						line.substring(z + 1, z + 3) + "'",
-					lineCount);
+					lineNumber);
 			}
 
 			int pos = strippedQuotesLine.indexOf(" + ");
@@ -205,7 +205,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 					addMessage(
 						fileName, "There should be a line break after '+'",
-						lineCount);
+						lineNumber);
 				}
 			}
 		}
@@ -236,7 +236,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 						fileName,
 						"There should be a line break after '" +
 							trimmedLine.substring(0, x + 1) + "'",
-						lineCount);
+						lineNumber);
 
 					break;
 				}
@@ -245,7 +245,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		if (trimmedLine.matches("^[^(].*\\+$") && (getLevel(trimmedLine) > 0)) {
 			addMessage(
-				fileName, "There should be a line break after '('", lineCount);
+				fileName, "There should be a line break after '('", lineNumber);
 		}
 
 		if (!trimmedLine.contains("\t//") && !line.endsWith("{") &&
@@ -253,7 +253,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			!strippedQuotesLine.contains("}")) {
 
 			addMessage(
-				fileName, "There should be a line break after '{'", lineCount);
+				fileName, "There should be a line break after '{'", lineNumber);
 		}
 
 		if (line.endsWith(" throws") ||
@@ -265,19 +265,19 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 			addMessage(
 				fileName, "There should be a line break before 'throws'",
-				lineCount);
+				lineNumber);
 		}
 
 		if (line.endsWith(StringPool.PERIOD) &&
 			line.contains(StringPool.EQUAL)) {
 
 			addMessage(
-				fileName, "There should be a line break after '='", lineCount);
+				fileName, "There should be a line break after '='", lineNumber);
 		}
 
 		if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 			addMessage(
-				fileName, "There should be a line break after '}'", lineCount);
+				fileName, "There should be a line break after '}'", lineNumber);
 		}
 
 		Matcher matcher = _incorrectLineBreakPattern6.matcher(trimmedLine);
@@ -290,7 +290,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			addMessage(
 				fileName,
 				"There should be a line break after '" + linePart + "'",
-				lineCount);
+				lineNumber);
 		}
 
 		if (trimmedLine.matches("for \\(.*[^;{]")) {
@@ -308,7 +308,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 						fileName,
 						"There should be a line break after '" +
 							trimmedLine.substring(0, x + 1) + "'",
-						lineCount);
+						lineNumber);
 				}
 			}
 		}
@@ -550,7 +550,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					fileName,
 					"For better readability, create new var for the array in " +
 						"the 'for' statement",
-					getLineCount(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 
 				continue;
 			}
@@ -570,13 +570,13 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		while (matcher.find()) {
 			if (getLevel(matcher.group()) == 0) {
-				int lineCount = getLineCount(content, matcher.start());
+				int lineNumber = getLineNumber(content, matcher.start());
 
 				addMessage(
 					fileName,
 					"There should be a line break before '" + matcher.group(1) +
 						"'",
-					lineCount);
+					lineNumber);
 			}
 		}
 
@@ -632,7 +632,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 				addMessage(
 					fileName, "There should be a line break after '" + s + "'",
-					getLineCount(content, x));
+					getLineNumber(content, x));
 
 				break;
 			}
@@ -650,7 +650,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 						"Chaining on method '" + methodName +
 							"' is allowed, but incorrect styling",
 						"chaining.markdown",
-						getLineCount(content, matcher.end(1)));
+						getLineNumber(content, matcher.end(1)));
 				}
 			}
 		}
@@ -665,7 +665,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					fileName,
 					"There should be a line break after '" + matcher.group(1) +
 						"'",
-					getLineCount(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 			}
 		}
 
@@ -684,7 +684,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			if (lastCharacterPreviousLine.equals(StringPool.OPEN_PARENTHESIS)) {
 				addMessage(
 					fileName, "Line should not start with ')'",
-					getLineCount(content, matcher.start(1)));
+					getLineNumber(content, matcher.start(1)));
 
 				return content;
 			}
@@ -703,7 +703,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				}
 
 				String trimmedLine = StringUtil.trimLeading(
-					getLine(content, getLineCount(content, y)));
+					getLine(content, getLineNumber(content, y)));
 
 				if (trimmedLine.startsWith(").") ||
 					trimmedLine.startsWith("@")) {

@@ -57,14 +57,14 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-			int lineCount = 0;
+			int lineNumber = 0;
 
 			String line = null;
 
 			int previousPos = -1;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
+				lineNumber++;
 
 				int pos = line.indexOf(CharPool.EQUAL);
 
@@ -85,7 +85,7 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 					addMessage(
 						fileName,
 						"Follow order as in portal-impl/src/portal.properties",
-						lineCount);
+						lineNumber);
 				}
 
 				previousPos = pos;

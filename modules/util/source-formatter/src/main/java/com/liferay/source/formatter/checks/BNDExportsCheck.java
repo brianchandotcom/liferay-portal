@@ -232,7 +232,7 @@ public class BNDExportsCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, sb.toString(),
-				getLineCount(content, matcher.start(2)) + i);
+				getLineNumber(content, matcher.start(2)) + i);
 		}
 	}
 

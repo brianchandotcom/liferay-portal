@@ -32,7 +32,7 @@ public class FTLIfStatementCheck extends IfStatementCheck {
 			String ifClause = "if (" + matcher.group(2) + ") {";
 
 			checkIfClauseParentheses(
-				ifClause, fileName, getLineCount(content, matcher.start(2)));
+				ifClause, fileName, getLineNumber(content, matcher.start(2)));
 		}
 
 		return content;

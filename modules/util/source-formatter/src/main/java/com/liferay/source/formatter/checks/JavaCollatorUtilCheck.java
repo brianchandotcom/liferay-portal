@@ -44,7 +44,7 @@ public class JavaCollatorUtilCheck extends BaseFileCheck {
 			if (!ToolsUtil.isInsideQuotes(content, index)) {
 				addMessage(
 					fileName, "Use CollatorUtil.getInstance(Locale)",
-					"collator.markdown", getLineCount(content, index));
+					"collator.markdown", getLineNumber(content, index));
 			}
 
 			index = content.indexOf("Collator.getInstance(", index + 1);

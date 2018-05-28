@@ -86,7 +86,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			addMessage(
 				fileName, "Incorrect line break after ','",
-				getLineCount(content, matcher.start()));
+				getLineNumber(content, matcher.start()));
 		}
 	}
 
@@ -100,7 +100,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 				fileName,
 				"There should be a line break after '" +
 					StringUtil.trim(matcher.group(1)),
-				getLineCount(content, matcher.end()));
+				getLineNumber(content, matcher.end()));
 		}
 	}
 
@@ -132,21 +132,21 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, "Missing parentheses",
-				getLineCount(content, matcher.start()));
+				getLineNumber(content, matcher.start()));
 		}
 
 		matcher = _missingParenthesesPattern2.matcher(content);
 
 		while (matcher.find()) {
 			String nextLine = getLine(
-				content, getLineCount(content, matcher.end()));
+				content, getLineNumber(content, matcher.end()));
 
 			if (!nextLine.endsWith(" IN") && !nextLine.endsWith("EXISTS") &&
 				!nextLine.matches(".*\\s+BETWEEN\\s+\\?\\s+AND\\s+\\?.*")) {
 
 				addMessage(
 					fileName, "Missing parentheses",
-					getLineCount(content, matcher.end()));
+					getLineNumber(content, matcher.end()));
 			}
 		}
 	}
@@ -163,7 +163,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 			int endPos = _getCloseParenthesisPos(content, startPos);
 
-			int endLineCount = getLineCount(content, endPos);
+			int endLineNumber = getLineNumber(content, endPos);
 			int endLineStartPos = content.lastIndexOf("\n", endPos);
 
 			char c = content.charAt(endPos - 1);
@@ -174,7 +174,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 					"There should be a line break after '" +
 						StringUtil.trim(
 							content.substring(endLineStartPos, endPos)),
-					endLineCount);
+					endLineNumber);
 
 				continue;
 			}
@@ -192,7 +192,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 				addMessage(
 					fileName, "redundant parentheses",
-					getLineCount(content, startPos));
+					getLineNumber(content, startPos));
 			}
 
 			int endLineTabCount = endPos - endLineStartPos - 1;
@@ -208,7 +208,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 						"Line starts with '", String.valueOf(endLineTabCount),
 						"' tabs, but '", String.valueOf(startLineTabCount),
 						"' tabs are expected"),
-					endLineCount);
+					endLineNumber);
 			}
 		}
 	}
@@ -313,13 +313,13 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 			int startPos = matcher.end(1);
 
-			int startLineCount = getLineCount(content, startPos);
+			int startLineNumber = getLineNumber(content, startPos);
 
 			int endPos = _getCloseParenthesisPos(content, startPos);
 
-			int endLineCount = getLineCount(content, endPos);
+			int endLineNumber = getLineNumber(content, endPos);
 
-			content = _addTabs(content, startLineCount + 1, endLineCount - 1);
+			content = _addTabs(content, startLineNumber + 1, endLineNumber - 1);
 
 			return StringUtil.replaceFirst(
 				content, "\t(", "\t(\n\t" + matcher.group(1), matcher.start());
@@ -338,13 +338,13 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 
 		int startPos = matcher.end() - 2;
 
-		int startLineCount = getLineCount(content, startPos);
+		int startLineNumber = getLineNumber(content, startPos);
 
 		int endPos = _getCloseParenthesisPos(content, startPos);
 
-		int endLineCount = getLineCount(content, endPos);
+		int endLineNumber = getLineNumber(content, endPos);
 
-		content = _addTabs(content, startLineCount + 1, endLineCount);
+		content = _addTabs(content, startLineNumber + 1, endLineNumber);
 
 		return StringUtil.replaceFirst(
 			content, "(\n", "\n\t" + matcher.group(1) + "(\n", matcher.start());
@@ -411,10 +411,10 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 					content, match, sb.toString(), matcher.start());
 			}
 
-			int lineCount = getLineCount(content, matcher.start(3));
+			int lineNumber = getLineNumber(content, matcher.start(3));
 
 			if ((getLevel(match) != 0) || !match.startsWith("(")) {
-				addMessage(fileName, "One SQL predicate per line", lineCount);
+				addMessage(fileName, "One SQL predicate per line", lineNumber);
 
 				continue;
 			}
@@ -422,7 +422,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			int beforeOperatorlevel = getLevel(beforeOperator);
 
 			if ((beforeOperatorlevel < 0) || (beforeOperatorlevel > 1)) {
-				addMessage(fileName, "One SQL predicate per line", lineCount);
+				addMessage(fileName, "One SQL predicate per line", lineNumber);
 
 				continue;
 			}
@@ -471,7 +471,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			if (!beforeUnionChar.equals(StringPool.CLOSE_PARENTHESIS)) {
 				addMessage(
 					fileName, "Missing parentheses around SELECT statement",
-					getLineCount(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 
 				continue;
 			}
@@ -485,7 +485,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			if (!s.startsWith("SELECT")) {
 				addMessage(
 					fileName, "Missing parentheses around SELECT statement",
-					getLineCount(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 
 				continue;
 			}
@@ -495,7 +495,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 			if (!afterUnionChar.equals(StringPool.OPEN_PARENTHESIS)) {
 				addMessage(
 					fileName, "Missing parentheses around SELECT statement",
-					getLineCount(content, matcher.start(3)));
+					getLineNumber(content, matcher.start(3)));
 
 				continue;
 			}

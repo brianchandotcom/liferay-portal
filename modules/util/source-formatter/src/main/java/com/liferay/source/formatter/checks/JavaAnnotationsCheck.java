@@ -68,7 +68,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 
 		addMessage(
 			fileName, sb.toString(), "meta_annotations.markdown",
-			getLineCount(content, content.indexOf(matcher.group())));
+			getLineNumber(content, content.indexOf(matcher.group())));
 	}
 
 	private void _checkMetaAnnotationKeys(
@@ -335,11 +335,11 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		Matcher matcher = _modifierPattern.matcher(content);
 
 		while (matcher.find()) {
-			int lineCount = getLineCount(content, matcher.end());
+			int lineNumber = getLineNumber(content, matcher.end());
 
 			String annotationsBlock = StringPool.BLANK;
 
-			for (int i = lineCount - 1;; i--) {
+			for (int i = lineNumber - 1;; i--) {
 				String line = getLine(content, i);
 
 				if (Validator.isNull(line) ||

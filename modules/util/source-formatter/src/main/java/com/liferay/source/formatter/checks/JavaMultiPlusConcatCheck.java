@@ -52,8 +52,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		_checkConcat(
-			fileName, absolutePath, javaTerm.getContent(), fileContent);
+		_checkConcat(fileName, absolutePath, javaTerm, fileContent);
 
 		return javaTerm.getContent();
 	}
@@ -64,9 +63,11 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 	}
 
 	private void _checkConcat(
-			String fileName, String absolutePath, String javaTermContent,
+			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
 		throws Exception {
+
+		String javaTermContent = javaTerm.getContent();
 
 		int x = -1;
 
@@ -92,7 +93,7 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 			}
 
 			String line = StringUtil.trim(
-				getLine(javaTermContent, getLineCount(javaTermContent, x)));
+				getLine(javaTermContent, getLineNumber(javaTermContent, x)));
 
 			if (line.startsWith("//") || line.startsWith("*")) {
 				continue;
@@ -124,13 +125,13 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 					return;
 				}
 
-				int pos = fileContent.indexOf(plusStatement);
+				int pos = getLineNumber(javaTermContent, startPos);
 
 				addMessage(
 					fileName,
 					"Use method 'StringBundler.concat' when concatenating " +
 						"more than 3 strings",
-					"concat.markdown", getLineCount(fileContent, pos));
+					"concat.markdown", javaTerm.getLineNumber() + pos - 1);
 			}
 
 			x = endPos;
@@ -287,9 +288,9 @@ public class JavaMultiPlusConcatCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			int lineCount = getLineCount(content, start);
+			int lineNumber = getLineNumber(content, start);
 
-			String line = getLine(content, lineCount);
+			String line = getLine(content, lineNumber);
 
 			if (!line.contains(StringPool.OPEN_PARENTHESIS)) {
 				return false;

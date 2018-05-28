@@ -63,7 +63,7 @@ public class JavaConfigurationAdminCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, sb.toString(), "configuration_admin.markdown",
-				getLineCount(content, matcher.start()));
+				getLineNumber(content, matcher.start()));
 		}
 
 		return content;

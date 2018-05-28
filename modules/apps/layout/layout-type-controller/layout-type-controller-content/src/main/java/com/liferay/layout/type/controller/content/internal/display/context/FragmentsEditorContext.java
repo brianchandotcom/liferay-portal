@@ -85,7 +85,8 @@ public class FragmentsEditorContext {
 
 		soyContext.put(
 			"addFragmentEntryLinkURL",
-			_getFragmentEntryActionURL("/layout/add_fragment_entry_link"));
+			_getFragmentEntryActionURL(
+				"/content_layout/add_fragment_entry_link"));
 
 		SoyContext availableLanguagesSoyContext =
 			SoyContextFactoryUtil.createSoyContext();
@@ -129,10 +130,12 @@ public class FragmentsEditorContext {
 		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
 		soyContext.put(
 			"deleteFragmentEntryLinkURL",
-			_getFragmentEntryActionURL("/layout/delete_fragment_entry_link"));
+			_getFragmentEntryActionURL(
+				"/content_layout/delete_fragment_entry_link"));
 		soyContext.put(
 			"editFragmentEntryLinkURL",
-			_getFragmentEntryActionURL("/layout/edit_fragment_entry_link"));
+			_getFragmentEntryActionURL(
+				"/content_layout/edit_fragment_entry_link"));
 		soyContext.put(
 			"fragmentCollections", _getSoyContextFragmentCollections());
 		soyContext.put(
@@ -149,7 +152,8 @@ public class FragmentsEditorContext {
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"renderFragmentEntryURL",
-			_getFragmentEntryActionURL("/layout/render_fragment_entry"));
+			_getFragmentEntryActionURL(
+				"/content_layout/render_fragment_entry"));
 		soyContext.put("sidebarTabs", _getSidebarTabs());
 
 		String redirect = ParamUtil.getString(_request, "redirect");
@@ -161,7 +165,8 @@ public class FragmentsEditorContext {
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 		soyContext.put(
 			"updateFragmentEntryLinksURL",
-			_getFragmentEntryActionURL("/layout/update_fragment_entry_links"));
+			_getFragmentEntryActionURL(
+				"/content_layout/update_fragment_entry_links"));
 
 		return soyContext;
 	}

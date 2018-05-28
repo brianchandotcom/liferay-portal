@@ -33,8 +33,7 @@ public interface CommerceUserSegmentHelper {
 	public long[] getCommerceUserSegmentIds(
 			long groupId, long organizationId, long userId)
 		throws PortalException;
-
-	@Override
+	
 	public long[] getUserIds(
 			long groupId, long organizationId,
 			long[] commerceUserSegmentEntryIds, int start, int end)

@@ -263,6 +263,10 @@ public interface PortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException;
 
+	public default boolean isConfigurationEnabled() {
+		return true;
+	}
+
 	public boolean isDataAlwaysStaged();
 
 	public boolean isDataLocalized();

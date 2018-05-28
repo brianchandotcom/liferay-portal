@@ -146,7 +146,9 @@ public class StagingPortletConfigurationIcon
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if (portletDataHandler == null) {
+		if ((portletDataHandler == null) ||
+			!portletDataHandler.isConfigurationEnabled()) {
+
 			return false;
 		}
 

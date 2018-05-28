@@ -105,6 +105,10 @@
 			for (Portlet curPortlet : dataSiteLevelPortlets) {
 				PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
 
+				if (!portletDataHandler.isConfigurationEnabled()) {
+					continue;
+				}
+
 				Class<?> portletDataHandlerClass = portletDataHandler.getClass();
 
 				String portletDataHandlerClassName = portletDataHandlerClass.getName();

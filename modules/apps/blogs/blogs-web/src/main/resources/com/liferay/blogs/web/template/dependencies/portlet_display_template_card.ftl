@@ -117,6 +117,10 @@
 										<div>
 											${dateUtil.getDate(curBlogEntry.getStatusDate(), "dd MMM", locale)}
 
+											<#if blogsPortletInstanceConfiguration.enableReadingTime()>
+												- <@liferay_reading_time["reading-time"] displayStyle="simple" model=curBlogEntry />
+											</#if>
+
 											<#if serviceLocator??>
 												<#assign
 													assetEntryLocalService = serviceLocator.findService("com.liferay.asset.kernel.service.AssetEntryLocalService")

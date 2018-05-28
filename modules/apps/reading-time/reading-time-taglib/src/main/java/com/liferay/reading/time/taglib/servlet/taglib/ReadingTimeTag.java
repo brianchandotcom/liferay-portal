@@ -35,11 +35,12 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Alejandro Tardín
  */
-public class ReadingTimeTag extends AttributesTagSupport {
+public class ReadingTimeTag extends AttributesTagSupport implements BodyTag {
 
 	@Override
 	public int doEndTag() throws JspException {

@@ -37,6 +37,14 @@ const EDITOR_CONFIGURATION = {
 	].join(',')
 };
 
+/**
+ * Enter key keycode
+ * @review
+ * @type {number}
+ */
+
+const KEY_ENTER = 13;
+
 let _editableElement;
 let _editor;
 let _editorEventHandler;
@@ -116,6 +124,13 @@ function init(
 
 	_editorEventHandler.add(
 		nativeEditor.on(
+			'key',
+			_handleNativeEditorKey
+		)
+	);
+
+	_editorEventHandler.add(
+		nativeEditor.on(
 			'change',
 			() => callback(nativeEditor.getData())
 		)
@@ -170,6 +185,24 @@ function _getEditorConfiguration(
 		EDITOR_CONFIGURATION,
 		configuration
 	);
+}
+
+/**
+ * Handle native editor key presses.
+ * It avoids including line breaks on text editors.
+ * @param {Event} event
+ * @private
+ * @review
+ */
+
+function _handleNativeEditorKey(event) {
+	if (
+		event.data.keyCode === KEY_ENTER &&
+		_editableElement &&
+		_editableElement.getAttribute('type') === 'text'
+	) {
+		event.cancel();
+	}
 }
 
 export {destroy, getActiveEditableElement, init};

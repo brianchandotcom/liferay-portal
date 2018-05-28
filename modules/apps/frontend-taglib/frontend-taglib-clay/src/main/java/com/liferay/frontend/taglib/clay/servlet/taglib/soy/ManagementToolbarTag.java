@@ -34,20 +34,13 @@ import java.util.Map;
  */
 public class ManagementToolbarTag extends BaseClayTag {
 
-	public ManagementToolbarTag() {
-		this(
-			"management-toolbar",
-			"com.liferay.frontend.taglib.clay.ManagementToolbar", true);
-	}
-
-	public ManagementToolbarTag(
-		String moduleBaseName, String componentBaseName, boolean hydrate) {
-
-		super(moduleBaseName, componentBaseName, hydrate);
-	}
-
 	@Override
 	public int doStartTag() {
+		super.setComponentBaseName(
+			"com.liferay.frontend.taglib.clay.ManagementToolbar");
+		super.setModuleBaseName("management-toolbar");
+		super.setHydrate(true);
+
 		Map<String, Object> context = getContext();
 
 		String searchInputName = (String)context.get("searchInputName");

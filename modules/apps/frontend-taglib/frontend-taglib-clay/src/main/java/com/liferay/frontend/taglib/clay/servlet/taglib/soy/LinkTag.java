@@ -21,8 +21,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
  */
 public class LinkTag extends BaseClayTag {
 
-	public LinkTag() {
-		super("link", "ClayLink");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayLink");
+		super.setModuleBaseName("link");
+
+		return super.doStartTag();
 	}
 
 	public void setAriaLabel(String ariaLabel) {

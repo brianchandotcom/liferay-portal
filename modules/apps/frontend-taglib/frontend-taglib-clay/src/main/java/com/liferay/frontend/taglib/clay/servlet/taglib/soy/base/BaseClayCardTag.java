@@ -27,12 +27,11 @@ import java.util.Map;
  */
 public class BaseClayCardTag extends BaseClayTag {
 
-	public BaseClayCardTag(String componentBaseName) {
-		super("card", componentBaseName, true);
-	}
-
 	@Override
 	public int doStartTag() {
+		super.setModuleBaseName("card");
+		super.setHydrate(true);
+
 		Map<String, Object> context = getContext();
 
 		if (Validator.isNotNull(_rowChecker)) {

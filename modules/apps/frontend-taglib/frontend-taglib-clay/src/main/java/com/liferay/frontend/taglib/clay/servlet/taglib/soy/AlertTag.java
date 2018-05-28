@@ -21,12 +21,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
  */
 public class AlertTag extends BaseClayTag {
 
-	public AlertTag() {
-		this("ClayAlert");
-	}
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayAlert");
+		super.setModuleBaseName("alert");
+		super.setHydrate(true);
 
-	public AlertTag(String template) {
-		super("alert", template, true);
+		return super.doStartTag();
 	}
 
 	public void setAutoclose(Boolean autoClose) {

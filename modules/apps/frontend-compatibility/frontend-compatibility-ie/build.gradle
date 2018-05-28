@@ -1,12 +1,30 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
+	arrayFind
 	fetch
 	objectAssign
 }
 
+task buildArrayFind(type: Copy)
 task buildFetch(type: Copy)
 task buildObjectAssign(type: Copy)
+
+buildArrayFind {
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.arrayFind.singleFile)
+	}
+
+	include "META-INF/resources/webjars/Array.prototype.find/1.0.0/index.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+
+	rename { String fileName ->
+		fileName.replace("index", "array.find")
+	}
+}
 
 buildFetch {
 	eachFile new StripPathSegmentsAction(5)
@@ -30,14 +48,21 @@ buildObjectAssign {
 	include "META-INF/resources/webjars/es6-object-assign/1.1.0/dist/object-assign-auto.js"
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
+
+	rename { String fileName ->
+		fileName.replace("object-assign-auto", "object.assign")
+	}
 }
 
 classes {
+	dependsOn buildArrayFind
 	dependsOn buildFetch
 	dependsOn buildObjectAssign
 }
 
 dependencies {
+	arrayFind group: "org.webjars.bower", name: "Array.prototype.find", transitive: false, version: "1.0.0"
+
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"

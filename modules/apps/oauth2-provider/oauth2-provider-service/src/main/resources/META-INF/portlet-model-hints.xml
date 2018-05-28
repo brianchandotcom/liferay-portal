@@ -39,7 +39,7 @@
 		<field name="createDate" type="Date" />
 		<field name="oAuth2ApplicationId" type="long" />
 		<field name="scopeAliases" type="String">
-			<hint-collection name="CLOB" />
+			<hint name="max-length">4096</hint>
 		</field>
 	</model>
 	<model name="com.liferay.oauth2.provider.model.OAuth2Authorization">
@@ -51,13 +51,13 @@
 		<field name="oAuth2ApplicationId" type="long" />
 		<field name="oAuth2ApplicationScopeAliasesId" type="long" />
 		<field name="accessTokenContent" type="String">
-			<hint-collection name="CLOB" />
+			<hint name="max-length">4096</hint>
 		</field>
 		<field name="accessTokenCreateDate" type="Date" />
 		<field name="accessTokenExpirationDate" type="Date" />
 		<field name="remoteIPInfo" type="String" />
 		<field name="refreshTokenContent" type="String">
-			<hint-collection name="CLOB" />
+			<hint name="max-length">4096</hint>
 		</field>
 		<field name="refreshTokenCreateDate" type="Date" />
 		<field name="refreshTokenExpirationDate" type="Date" />

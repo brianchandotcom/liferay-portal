@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.JSONServiceAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceDiscoverAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
@@ -75,55 +76,50 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 				return JSONFactoryUtil.getNullJSON();
 			}
 		}
-		catch (Exception e) {
+		catch (Throwable throwable) {
 			int status = 0;
 
-			if (e instanceof InvocationTargetException) {
-				Throwable throwable = e.getCause();
+			if (throwable instanceof InvocationTargetException) {
+				throwable = throwable.getCause();
+			}
 
-				if (throwable instanceof PrincipalException ||
-					throwable instanceof SecurityException) {
+			if (throwable instanceof NoSuchJSONWebServiceException) {
+				status = HttpServletResponse.SC_NOT_FOUND;
+			}
+			else if (throwable instanceof NoSuchModelException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(getThrowableMessage(throwable), throwable);
+				}
 
-					status = HttpServletResponse.SC_FORBIDDEN;
-				}
-				else {
-					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-				}
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+				return JSONFactoryUtil.serializeThrowable(throwable);
+			}
+			else if (throwable instanceof PrincipalException ||
+					 throwable instanceof SecurityException) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(getThrowableMessage(throwable), throwable);
 				}
-				else {
-					_log.error(getThrowableMessage(throwable));
-				}
 
-				response.setStatus(status);
+				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
 				return JSONFactoryUtil.serializeThrowable(throwable);
-			}
-
-			if (e instanceof NoSuchJSONWebServiceException) {
-				status = HttpServletResponse.SC_NOT_FOUND;
-			}
-			else if (e instanceof PrincipalException ||
-					 e instanceof SecurityException) {
-
-				status = HttpServletResponse.SC_FORBIDDEN;
 			}
 			else {
 				status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(getThrowableMessage(e), e);
+				_log.debug(getThrowableMessage(throwable), throwable);
 			}
 			else {
-				_log.error(getThrowableMessage(e));
+				_log.error(getThrowableMessage(throwable));
 			}
 
 			response.setStatus(status);
 
-			return JSONFactoryUtil.serializeThrowable(e);
+			return JSONFactoryUtil.serializeThrowable(throwable);
 		}
 	}
 

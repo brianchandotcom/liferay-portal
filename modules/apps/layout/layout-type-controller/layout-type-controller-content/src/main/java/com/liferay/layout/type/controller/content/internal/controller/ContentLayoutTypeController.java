@@ -67,18 +67,20 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			Layout layout)
 		throws Exception {
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				layout.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid());
-
-		request.setAttribute(
-			ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
-			fragmentEntryLinks);
-
 		String layoutMode = ParamUtil.getString(
 			request, "p_l_mode", Constants.VIEW);
+
+		if (layoutMode.equals(Constants.VIEW)) {
+			List<FragmentEntryLink> fragmentEntryLinks =
+				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+					layout.getGroupId(),
+					_portal.getClassNameId(Layout.class.getName()),
+					layout.getPlid());
+
+			request.setAttribute(
+				ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
+				fragmentEntryLinks);
+		}
 
 		String page = getViewPage();
 

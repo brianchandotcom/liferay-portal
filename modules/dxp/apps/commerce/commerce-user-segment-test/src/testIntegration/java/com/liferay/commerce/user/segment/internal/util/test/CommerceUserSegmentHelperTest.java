@@ -19,22 +19,30 @@ import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
 import com.liferay.commerce.user.segment.test.util.CommerceUserSegmentTestUtil;
 import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
@@ -63,12 +71,15 @@ public class CommerceUserSegmentHelperTest {
 
 		_organization = OrganizationTestUtil.addOrganization();
 
-		_userGroup = UserGroupTestUtil.addUserGroup(_group1.getGroupId());
+		_userGroup1 = UserGroupTestUtil.addUserGroup();
+		_userGroup2 = UserGroupTestUtil.addUserGroup();
 
 		_user = UserTestUtil.addUser();
 
-		_role = _roleLocalService.addRole(
-			_user.getUserId(), null, 0, "Foo", null, null, 0, null, null);
+		_users = new User[10];
+
+		_role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		_role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 	}
 
 	@Test
@@ -156,11 +167,11 @@ public class CommerceUserSegmentHelperTest {
 			"A list of user segment IDs should be retrieved"
 		);
 
-		_userLocalService.addRoleUser(_role.getRoleId(), _user);
+		_userLocalService.addRoleUser(_role1.getRoleId(), _user);
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
 			CommerceUserSegmentTestUtil.addRoleCommerceUserSegmentEntry(
-				_group1.getGroupId(), _role.getRoleId());
+				_group1.getGroupId(), _role1.getRoleId());
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -190,11 +201,11 @@ public class CommerceUserSegmentHelperTest {
 		);
 
 		_userLocalService.setUserGroupUsers(
-			_userGroup.getUserGroupId(), new long[] {_user.getUserId()});
+			_userGroup1.getUserGroupId(), new long[] {_user.getUserId()});
 
 		CommerceUserSegmentEntry commerceUserSegmentEntry =
 			CommerceUserSegmentTestUtil.addUserGroupCommerceUserSegmentEntry(
-				_group1.getGroupId(), _userGroup.getUserGroupId());
+				_group1.getGroupId(), _userGroup1.getUserGroupId());
 
 		long[] commerceUserSegmentIDs =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
@@ -236,6 +247,182 @@ public class CommerceUserSegmentHelperTest {
 			ArrayUtil.contains(
 				commerceUserSegmentIDs,
 				commerceUserSegmentEntry.getCommerceUserSegmentEntryId()));
+	}
+
+	@Test
+	public void testGetUsersFromUserGroupAndUserAndRoleUserSegment()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Get all User IDs related to a user segment"
+		).given(
+			"Some users associated to different user segments"
+		).and(
+			"3 types of user segments: user, role and user group"
+		).when(
+			"I try to get all users IDs associated to a user group segment"
+		).then(
+			"Only IDs of users associated to that specific user segment are " +
+				"retrieved"
+		);
+
+		for (int i = 0; i < 5; i++) {
+			User user = UserTestUtil.addUser();
+
+			_users[i] = user;
+		}
+
+		_userLocalService.setRoleUsers(
+			_role1.getRoleId(),
+			new long[] {_users[1].getUserId(), _users[2].getUserId()});
+
+		_userLocalService.setRoleUsers(
+			_role2.getRoleId(),
+			new long[] {_users[2].getUserId(), _users[3].getUserId()});
+
+		_userLocalService.setUserGroupUsers(
+			_userGroup1.getUserGroupId(),
+			new long[] {_users[3].getUserId()});
+
+		_userLocalService.setUserGroupUsers(
+			_userGroup2.getUserGroupId(),
+			new long[] {_users[4].getUserId()});
+
+		CommerceUserSegmentEntry userCommerceUserSegmentEntry =
+			CommerceUserSegmentTestUtil.addUserCommerceUserSegmentEntry(
+				_group1.getGroupId(),
+				new long[] {
+					_users[0].getUserId(), _users[1].getUserId()
+				});
+
+		CommerceUserSegmentEntry roleCommerceUserSegmentEntry =
+			CommerceUserSegmentTestUtil.addRoleCommerceUserSegmentEntry(
+				_group1.getGroupId(), new long[] {_role2.getRoleId()});
+
+		CommerceUserSegmentEntry userGroupCommerceUserSegmentEntry =
+			CommerceUserSegmentTestUtil.addUserGroupCommerceUserSegmentEntry(
+				_group1.getGroupId(),
+				new long[] {_userGroup1.getUserGroupId()});
+
+		long[] userIds = _commerceUserSegmentHelper.getUserIds(
+			_group1.getGroupId(), 0,
+			new long[] {
+				userCommerceUserSegmentEntry.getCommerceUserSegmentEntryId()
+			},
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			true, ArrayUtil.contains(userIds, _users[0].getUserId()));
+
+		Assert.assertEquals(
+			true, ArrayUtil.contains(userIds, _users[1].getUserId()));
+
+		userIds = _commerceUserSegmentHelper.getUserIds(
+			_group1.getGroupId(), 0,
+			new long[] {
+				roleCommerceUserSegmentEntry.getCommerceUserSegmentEntryId()
+			},
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			false, ArrayUtil.contains(userIds, _users[1].getUserId()));
+
+		Assert.assertEquals(
+			true, ArrayUtil.contains(userIds, _users[2].getUserId()));
+
+		Assert.assertEquals(
+			true, ArrayUtil.contains(userIds, _users[3].getUserId()));
+
+		userIds = _commerceUserSegmentHelper.getUserIds(
+			_group1.getGroupId(), 0,
+			new long[] {
+				userGroupCommerceUserSegmentEntry.
+					getCommerceUserSegmentEntryId()
+			},
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			true, ArrayUtil.contains(userIds, _users[3].getUserId()));
+
+		Assert.assertEquals(
+			false, ArrayUtil.contains(userIds, _users[4].getUserId()));
+	}
+
+	@Test
+	public void testGetUsersFromUserGroupUserSegments() throws Exception {
+		frutillaRule.scenario(
+			"Get all User IDs related to a user segment"
+		).given(
+			"A number of users"
+		).and(
+			"Some of them associated to a user group"
+		).and(
+			"Some other associated to a different user group"
+		).and(
+			"A user group segment for each user group"
+		).when(
+			"I try to get all users IDs associated to a user group segment"
+		).then(
+			"Only IDs of users associated to that specific user group " +
+				"segment are retrieved"
+		);
+
+		List<Long> userGroup1UserIds = new ArrayList<>();
+
+		List<Long> userGroup2UserIds = new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			User user = UserTestUtil.addUser();
+
+			_users[i] = user;
+
+			if (RandomTestUtil.randomBoolean()) {
+				userGroup1UserIds.add(user.getUserId());
+
+				_userGroupLocalService.setUserUserGroups(
+					user.getUserId(),
+					new long[] {_userGroup1.getUserGroupId()});
+			}
+			else {
+				userGroup2UserIds.add(user.getUserId());
+
+				_userGroupLocalService.setUserUserGroups(
+					user.getUserId(),
+					new long[] {_userGroup2.getUserGroupId()});
+			}
+		}
+
+		CommerceUserSegmentEntry userGroup1UserSegmentEntry =
+			CommerceUserSegmentTestUtil.addUserGroupCommerceUserSegmentEntry(
+				_group1.getGroupId(), _userGroup1.getUserGroupId());
+
+		CommerceUserSegmentEntry userGroup2UserSegmentEntry =
+			CommerceUserSegmentTestUtil.addUserGroupCommerceUserSegmentEntry(
+				_group1.getGroupId(), _userGroup2.getUserGroupId());
+
+		long[] userIds = _commerceUserSegmentHelper.getUserIds(
+			_group1.getGroupId(), 0,
+			new long[] {
+				userGroup1UserSegmentEntry.getCommerceUserSegmentEntryId()
+			},
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			true,
+			ArrayUtil.containsAll(
+				userIds, ArrayUtil.toLongArray(userGroup1UserIds)));
+
+		userIds = _commerceUserSegmentHelper.getUserIds(
+			_group1.getGroupId(), 0,
+			new long[] {
+				userGroup2UserSegmentEntry.getCommerceUserSegmentEntryId()
+			},
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			true,
+			ArrayUtil.containsAll(
+				userIds, ArrayUtil.toLongArray(userGroup2UserIds)));
 	}
 
 	@Test
@@ -299,7 +486,10 @@ public class CommerceUserSegmentHelperTest {
 	private Organization _organization;
 
 	@DeleteAfterTestRun
-	private Role _role;
+	private Role _role1;
+
+	@DeleteAfterTestRun
+	private Role _role2;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
@@ -307,9 +497,19 @@ public class CommerceUserSegmentHelperTest {
 	@DeleteAfterTestRun
 	private User _user;
 
-	private UserGroup _userGroup;
+	@DeleteAfterTestRun
+	private UserGroup _userGroup1;
+
+	@DeleteAfterTestRun
+	private UserGroup _userGroup2;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	@DeleteAfterTestRun
+	private User[] _users;
 
 }

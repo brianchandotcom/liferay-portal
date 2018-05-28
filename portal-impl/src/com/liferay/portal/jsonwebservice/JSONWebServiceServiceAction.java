@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.action.JSONServiceAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceDiscoverAction;
 import com.liferay.portal.jsonwebservice.action.JSONWebServiceInvokerAction;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
@@ -84,6 +85,15 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 			if (throwable instanceof NoSuchJSONWebServiceException) {
 				status = HttpServletResponse.SC_NOT_FOUND;
+			}
+			else if (throwable instanceof NoSuchModelException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(getThrowableMessage(throwable), throwable);
+				}
+
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+				return JSONFactoryUtil.serializeThrowable(throwable);
 			}
 			else if (throwable instanceof PrincipalException ||
 					 throwable instanceof SecurityException) {

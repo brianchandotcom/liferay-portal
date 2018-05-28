@@ -18,10 +18,27 @@ import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
 import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,12 +89,57 @@ public class CommerceUserSegmentHelperImpl
 			getCommerceUserSegmentEntryIds(groupId, organizationId, userId);
 	}
 
+	@Override
+	public long[] getUserIds(
+			long groupId, long organizationId,
+			long[] commerceUserSegmentEntryIds, int start, int end)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<>();
+
+		attributes.put(
+			"commerceUserSegmentEntryIds", commerceUserSegmentEntryIds);
+		attributes.put("organizationId", organizationId);
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(group.getCompanyId());
+		searchContext.setStart(start);
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			User.class);
+
+		Hits hits = indexer.search(searchContext, Field.ENTRY_CLASS_PK);
+
+		List<Document> documents = hits.toList();
+
+		Stream<Document> stream = documents.stream();
+
+		return stream.mapToLong(
+			field -> GetterUtil.getLong(field.get(Field.ENTRY_CLASS_PK))).
+				toArray();
+	}
+
 	@Reference
 	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
 	private CommerceUserSegmentEntryLocalService
 		_commerceUserSegmentEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

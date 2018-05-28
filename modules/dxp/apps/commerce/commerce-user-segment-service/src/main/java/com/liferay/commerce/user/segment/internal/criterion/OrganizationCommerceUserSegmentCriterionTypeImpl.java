@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -114,6 +115,57 @@ public class OrganizationCommerceUserSegmentCriterionTypeImpl
 	}
 
 	@Override
+	public void userPostProcessContextBooleanFilter(
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion,
+		BooleanFilter contextBooleanFilter, SearchContext searchContext) {
+
+		String[] organizationIds = StringUtil.split(
+			commerceUserSegmentCriterion.getTypeSettings());
+
+		long organizationId = GetterUtil.getLong(
+			searchContext.getAttribute("organizationId"));
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (organizationId > 0) {
+			TermFilter organizationTermFilter = new TermFilter(
+				"organizationIds", String.valueOf(organizationId));
+
+			TermFilter ancestorTermFilter = new TermFilter(
+				"ancestorOrganizationIds", String.valueOf(organizationId));
+
+			booleanFilter.add(
+				organizationTermFilter, BooleanClauseOccur.SHOULD);
+			booleanFilter.add(ancestorTermFilter, BooleanClauseOccur.SHOULD);
+		}
+		else {
+			BooleanFilter organizationBooleanFilter = new BooleanFilter();
+			BooleanFilter ancestorBooleanFilter = new BooleanFilter();
+
+			for (String curOrganizationId : organizationIds) {
+				TermFilter organizationTermFilter = new TermFilter(
+					"organizationIds", String.valueOf(curOrganizationId));
+
+				TermFilter ancestorTermFilter = new TermFilter(
+					"ancestorOrganizationIds",
+					String.valueOf(curOrganizationId));
+
+				organizationBooleanFilter.add(
+					organizationTermFilter, BooleanClauseOccur.MUST);
+				ancestorBooleanFilter.add(
+					ancestorTermFilter, BooleanClauseOccur.MUST);
+
+				booleanFilter.add(
+					organizationBooleanFilter, BooleanClauseOccur.SHOULD);
+				booleanFilter.add(
+					ancestorBooleanFilter, BooleanClauseOccur.SHOULD);
+			}
+		}
+
+		contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
+	}
+
+	@Override
 	protected long[] getUserClassPKs(User user) throws PortalException {
 		List<Long> userClassPKsList = new ArrayList<>();
 
@@ -166,5 +218,8 @@ public class OrganizationCommerceUserSegmentCriterionTypeImpl
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

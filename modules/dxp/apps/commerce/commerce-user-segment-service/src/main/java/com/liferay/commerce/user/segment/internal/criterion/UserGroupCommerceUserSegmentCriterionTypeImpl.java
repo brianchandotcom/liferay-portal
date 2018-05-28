@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -83,6 +87,25 @@ public class UserGroupCommerceUserSegmentCriterionTypeImpl
 			userGroupNames, StringPool.COMMA_AND_SPACE);
 
 		return StringUtil.shorten(preview, length, StringPool.TRIPLE_PERIOD);
+	}
+
+	@Override
+	public void userPostProcessContextBooleanFilter(
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion,
+		BooleanFilter contextBooleanFilter, SearchContext searchContext) {
+
+		String[] userGroupIds = StringUtil.split(
+			commerceUserSegmentCriterion.getTypeSettings());
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		for (String userGroupId : userGroupIds) {
+			TermFilter termFilter = new TermFilter("userGroupIds", userGroupId);
+
+			booleanFilter.add(termFilter, BooleanClauseOccur.MUST);
+		}
+
+		contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
 	}
 
 	@Override

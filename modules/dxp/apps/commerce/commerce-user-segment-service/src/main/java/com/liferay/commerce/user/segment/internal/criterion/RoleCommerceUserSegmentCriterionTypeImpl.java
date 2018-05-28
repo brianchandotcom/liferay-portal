@@ -138,6 +138,42 @@ public class RoleCommerceUserSegmentCriterionTypeImpl
 	}
 
 	@Override
+	public void userPostProcessContextBooleanFilter(
+			CommerceUserSegmentCriterion commerceUserSegmentCriterion,
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws PortalException {
+
+		long organizationId = GetterUtil.getLong(
+			searchContext.getAttribute("organizationId"));
+
+		long[] roleIds = StringUtil.split(
+			commerceUserSegmentCriterion.getTypeSettings(), 0L);
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		for (long roleId : roleIds) {
+			Role role = _roleLocalService.getRole(roleId);
+
+			TermFilter roleFilter;
+
+			if ((organizationId > 0) &&
+				(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
+
+				roleFilter = new TermFilter(
+					"organization_" + organizationId + "_roleIds",
+					String.valueOf(roleId));
+			}
+			else {
+				roleFilter = new TermFilter("roleIds", String.valueOf(roleId));
+			}
+
+			booleanFilter.add(roleFilter, BooleanClauseOccur.MUST);
+		}
+
+		contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
+	}
+
+	@Override
 	protected long[] getUserClassPKs(User user) throws PortalException {
 		return null;
 	}

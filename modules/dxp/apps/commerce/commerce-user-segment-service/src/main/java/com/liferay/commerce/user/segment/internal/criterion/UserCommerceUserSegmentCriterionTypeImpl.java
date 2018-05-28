@@ -21,7 +21,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -81,6 +86,21 @@ public class UserCommerceUserSegmentCriterionTypeImpl
 			userNames, StringPool.COMMA_AND_SPACE);
 
 		return StringUtil.shorten(preview, length, StringPool.TRIPLE_PERIOD);
+	}
+
+	@Override
+	public void userPostProcessContextBooleanFilter(
+		CommerceUserSegmentCriterion commerceUserSegmentCriterion,
+		BooleanFilter contextBooleanFilter, SearchContext searchContext) {
+
+		String[] userIds = StringUtil.split(
+			commerceUserSegmentCriterion.getTypeSettings());
+
+		TermsFilter userFilter = new TermsFilter("entryClassPK");
+
+		userFilter.addValues(ArrayUtil.toStringArray(userIds));
+
+		contextBooleanFilter.add(userFilter, BooleanClauseOccur.MUST);
 	}
 
 	@Override

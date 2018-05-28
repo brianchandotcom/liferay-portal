@@ -52,4 +52,9 @@ public interface CommerceUserSegmentCriterionType {
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws PortalException;
 
+	public void userPostProcessContextBooleanFilter(
+			CommerceUserSegmentCriterion commerceUserSegmentCriterion,
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws PortalException;
+
 }

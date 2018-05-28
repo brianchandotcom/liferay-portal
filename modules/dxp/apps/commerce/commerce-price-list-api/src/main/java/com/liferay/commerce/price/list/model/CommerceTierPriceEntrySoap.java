@@ -46,6 +46,7 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommercePriceEntryId(model.getCommercePriceEntryId());
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setPrice(model.getPrice());
 		soapModel.setPromoPrice(model.getPromoPrice());
 		soapModel.setMinQuantity(model.getMinQuantity());
@@ -177,6 +178,14 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 		_commercePriceEntryId = commercePriceEntryId;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public BigDecimal getPrice() {
 		return _price;
 	}
@@ -218,6 +227,7 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _commercePriceEntryId;
+	private String _externalReferenceCode;
 	private BigDecimal _price;
 	private BigDecimal _promoPrice;
 	private int _minQuantity;

@@ -166,11 +166,12 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
 	public static final long DISPLAYDATE_COLUMN_BITMASK = 4L;
-	public static final long GROUPID_COLUMN_BITMASK = 8L;
-	public static final long SKU_COLUMN_BITMASK = 16L;
-	public static final long STATUS_COLUMN_BITMASK = 32L;
-	public static final long UUID_COLUMN_BITMASK = 64L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 8L;
+	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long SKU_COLUMN_BITMASK = 32L;
+	public static final long STATUS_COLUMN_BITMASK = 64L;
+	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -876,7 +877,17 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@Override
 	public void setExternalReferenceCode(String externalReferenceCode) {
+		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
+
+		if (_originalExternalReferenceCode == null) {
+			_originalExternalReferenceCode = _externalReferenceCode;
+		}
+
 		_externalReferenceCode = externalReferenceCode;
+	}
+
+	public String getOriginalExternalReferenceCode() {
+		return GetterUtil.getString(_originalExternalReferenceCode);
 	}
 
 	@JSON
@@ -1365,6 +1376,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 		cpInstanceModelImpl._originalSku = cpInstanceModelImpl._sku;
 
+		cpInstanceModelImpl._originalExternalReferenceCode = cpInstanceModelImpl._externalReferenceCode;
+
 		cpInstanceModelImpl._originalDisplayDate = cpInstanceModelImpl._displayDate;
 
 		cpInstanceModelImpl._originalStatus = cpInstanceModelImpl._status;
@@ -1772,6 +1785,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	private BigDecimal _cost;
 	private boolean _published;
 	private String _externalReferenceCode;
+	private String _originalExternalReferenceCode;
 	private Date _displayDate;
 	private Date _originalDisplayDate;
 	private Date _expirationDate;

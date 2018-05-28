@@ -316,6 +316,15 @@ public class CPDefinitionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByExternalReferenceCode() throws Exception {
+		_persistence.countByExternalReferenceCode("");
+
+		_persistence.countByExternalReferenceCode("null");
+
+		_persistence.countByExternalReferenceCode((String)null);
+	}
+
+	@Test
 	public void testCountByG_S() throws Exception {
 		_persistence.countByG_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
@@ -590,6 +599,11 @@ public class CPDefinitionPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingCPDefinition.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingCPDefinition,
 				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertTrue(Objects.equals(
+				existingCPDefinition.getExternalReferenceCode(),
+				ReflectionTestUtil.invoke(existingCPDefinition,
+					"getOriginalExternalReferenceCode", new Class<?>[0])));
 	}
 
 	protected CPDefinition addCPDefinition() throws Exception {

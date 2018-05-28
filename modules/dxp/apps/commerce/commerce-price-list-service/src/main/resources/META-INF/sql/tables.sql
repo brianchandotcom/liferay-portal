@@ -64,6 +64,7 @@ create table CommerceTierPriceEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commercePriceEntryId LONG,
+	externalReferenceCode VARCHAR(75) null,
 	price DECIMAL(30, 16) null,
 	promoPrice DECIMAL(30, 16) null,
 	minQuantity INTEGER,

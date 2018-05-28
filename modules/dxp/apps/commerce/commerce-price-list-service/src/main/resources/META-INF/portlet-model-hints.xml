@@ -70,6 +70,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commercePriceEntryId" type="long" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="price" type="BigDecimal" />
 		<field name="promoPrice" type="BigDecimal" />
 		<field name="minQuantity" type="int" />

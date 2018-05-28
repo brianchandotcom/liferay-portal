@@ -67,7 +67,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -87,6 +87,8 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 		sb.append(modifiedDate);
 		sb.append(", commercePriceEntryId=");
 		sb.append(commercePriceEntryId);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", price=");
 		sb.append(price);
 		sb.append(", promoPrice=");
@@ -138,6 +140,14 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 		}
 
 		commerceTierPriceEntryImpl.setCommercePriceEntryId(commercePriceEntryId);
+
+		if (externalReferenceCode == null) {
+			commerceTierPriceEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			commerceTierPriceEntryImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		commerceTierPriceEntryImpl.setPrice(price);
 		commerceTierPriceEntryImpl.setPromoPrice(promoPrice);
 		commerceTierPriceEntryImpl.setMinQuantity(minQuantity);
@@ -172,6 +182,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 		modifiedDate = objectInput.readLong();
 
 		commercePriceEntryId = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 		price = (BigDecimal)objectInput.readObject();
 		promoPrice = (BigDecimal)objectInput.readObject();
 
@@ -208,6 +219,14 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(commercePriceEntryId);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeObject(price);
 		objectOutput.writeObject(promoPrice);
 
@@ -224,6 +243,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 	public long createDate;
 	public long modifiedDate;
 	public long commercePriceEntryId;
+	public String externalReferenceCode;
 	public BigDecimal price;
 	public BigDecimal promoPrice;
 	public int minQuantity;

@@ -226,6 +226,21 @@ public interface CommerceTierPriceEntryModel extends BaseModel<CommerceTierPrice
 	public void setCommercePriceEntryId(long commercePriceEntryId);
 
 	/**
+	 * Returns the external reference code of this commerce tier price entry.
+	 *
+	 * @return the external reference code of this commerce tier price entry
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this commerce tier price entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this commerce tier price entry
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the price of this commerce tier price entry.
 	 *
 	 * @return the price of this commerce tier price entry

@@ -978,6 +978,70 @@ public class CPInstanceUtil {
 	}
 
 	/**
+	* Returns the cp instance where externalReferenceCode = &#63; or throws a {@link NoSuchCPInstanceException} if it could not be found.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching cp instance
+	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	*/
+	public static CPInstance findByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .findByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the cp instance where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public static CPInstance fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return getPersistence()
+				   .fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the cp instance where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public static CPInstance fetchByExternalReferenceCode(
+		String externalReferenceCode, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByExternalReferenceCode(externalReferenceCode,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp instance where externalReferenceCode = &#63; from the database.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the cp instance that was removed
+	*/
+	public static CPInstance removeByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.commerce.product.exception.NoSuchCPInstanceException {
+		return getPersistence()
+				   .removeByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the number of cp instances where externalReferenceCode = &#63;.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching cp instances
+	*/
+	public static int countByExternalReferenceCode(String externalReferenceCode) {
+		return getPersistence()
+				   .countByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
 	* Returns all the cp instances where groupId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID

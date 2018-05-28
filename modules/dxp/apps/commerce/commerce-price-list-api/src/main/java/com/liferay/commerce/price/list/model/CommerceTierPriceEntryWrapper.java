@@ -72,6 +72,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commercePriceEntryId", getCommercePriceEntryId());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("price", getPrice());
 		attributes.put("promoPrice", getPromoPrice());
 		attributes.put("minQuantity", getMinQuantity());
@@ -135,6 +136,13 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 
 		if (commercePriceEntryId != null) {
 			setCommercePriceEntryId(commercePriceEntryId);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		BigDecimal price = (BigDecimal)attributes.get("price");
@@ -221,6 +229,16 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceTierPriceEntry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the external reference code of this commerce tier price entry.
+	*
+	* @return the external reference code of this commerce tier price entry
+	*/
+	@Override
+	public String getExternalReferenceCode() {
+		return _commerceTierPriceEntry.getExternalReferenceCode();
 	}
 
 	/**
@@ -436,6 +454,16 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the external reference code of this commerce tier price entry.
+	*
+	* @param externalReferenceCode the external reference code of this commerce tier price entry
+	*/
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_commerceTierPriceEntry.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

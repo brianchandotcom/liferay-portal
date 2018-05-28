@@ -828,6 +828,52 @@ public interface CPDefinitionPersistence extends BasePersistence<CPDefinition> {
 	public int countByCPTaxCategoryId(long CPTaxCategoryId);
 
 	/**
+	* Returns the cp definition where externalReferenceCode = &#63; or throws a {@link NoSuchCPDefinitionException} if it could not be found.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching cp definition
+	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
+	*/
+	public CPDefinition findByExternalReferenceCode(
+		String externalReferenceCode) throws NoSuchCPDefinitionException;
+
+	/**
+	* Returns the cp definition where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	*/
+	public CPDefinition fetchByExternalReferenceCode(
+		String externalReferenceCode);
+
+	/**
+	* Returns the cp definition where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	*/
+	public CPDefinition fetchByExternalReferenceCode(
+		String externalReferenceCode, boolean retrieveFromCache);
+
+	/**
+	* Removes the cp definition where externalReferenceCode = &#63; from the database.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the cp definition that was removed
+	*/
+	public CPDefinition removeByExternalReferenceCode(
+		String externalReferenceCode) throws NoSuchCPDefinitionException;
+
+	/**
+	* Returns the number of cp definitions where externalReferenceCode = &#63;.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching cp definitions
+	*/
+	public int countByExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	* Returns all the cp definitions where groupId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID

@@ -763,6 +763,51 @@ public interface CPInstancePersistence extends BasePersistence<CPInstance> {
 	public int countByCPDefinitionId(long CPDefinitionId);
 
 	/**
+	* Returns the cp instance where externalReferenceCode = &#63; or throws a {@link NoSuchCPInstanceException} if it could not be found.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching cp instance
+	* @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	*/
+	public CPInstance findByExternalReferenceCode(String externalReferenceCode)
+		throws NoSuchCPInstanceException;
+
+	/**
+	* Returns the cp instance where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public CPInstance fetchByExternalReferenceCode(String externalReferenceCode);
+
+	/**
+	* Returns the cp instance where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	*/
+	public CPInstance fetchByExternalReferenceCode(
+		String externalReferenceCode, boolean retrieveFromCache);
+
+	/**
+	* Removes the cp instance where externalReferenceCode = &#63; from the database.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the cp instance that was removed
+	*/
+	public CPInstance removeByExternalReferenceCode(
+		String externalReferenceCode) throws NoSuchCPInstanceException;
+
+	/**
+	* Returns the number of cp instances where externalReferenceCode = &#63;.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching cp instances
+	*/
+	public int countByExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	* Returns all the cp instances where groupId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID

@@ -1061,6 +1061,70 @@ public class CPDefinitionUtil {
 	}
 
 	/**
+	* Returns the cp definition where externalReferenceCode = &#63; or throws a {@link NoSuchCPDefinitionException} if it could not be found.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching cp definition
+	* @throws NoSuchCPDefinitionException if a matching cp definition could not be found
+	*/
+	public static CPDefinition findByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
+		return getPersistence()
+				   .findByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the cp definition where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	*/
+	public static CPDefinition fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return getPersistence()
+				   .fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the cp definition where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
+	*/
+	public static CPDefinition fetchByExternalReferenceCode(
+		String externalReferenceCode, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByExternalReferenceCode(externalReferenceCode,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp definition where externalReferenceCode = &#63; from the database.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the cp definition that was removed
+	*/
+	public static CPDefinition removeByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.commerce.product.exception.NoSuchCPDefinitionException {
+		return getPersistence()
+				   .removeByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the number of cp definitions where externalReferenceCode = &#63;.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching cp definitions
+	*/
+	public static int countByExternalReferenceCode(String externalReferenceCode) {
+		return getPersistence()
+				   .countByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
 	* Returns all the cp definitions where groupId = &#63; and status = &#63;.
 	*
 	* @param groupId the group ID

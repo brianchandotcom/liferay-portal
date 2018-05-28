@@ -21,8 +21,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
  */
 public class LabelTag extends BaseClayTag {
 
-	public LabelTag() {
-		super("label", "ClayLabel");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayLabel");
+		super.setModuleBaseName("label");
+
+		return super.doStartTag();
 	}
 
 	public void setCloseable(Boolean closeable) {

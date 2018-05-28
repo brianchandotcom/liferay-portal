@@ -21,8 +21,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
  */
 public class BadgeTag extends BaseClayTag {
 
-	public BadgeTag() {
-		super("badge", "ClayBadge");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayBadge");
+		super.setModuleBaseName("badge");
+
+		return super.doStartTag();
 	}
 
 	public void setLabel(String label) {

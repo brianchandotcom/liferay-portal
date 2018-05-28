@@ -24,8 +24,12 @@ import java.util.List;
  */
 public class SelectTag extends BaseClayTag {
 
-	public SelectTag() {
-		super("select", "ClaySelect");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClaySelect");
+		super.setModuleBaseName("select");
+
+		return super.doStartTag();
 	}
 
 	public void setDisabled(Boolean disabled) {

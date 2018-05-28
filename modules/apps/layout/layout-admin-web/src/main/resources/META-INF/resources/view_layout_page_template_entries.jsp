@@ -24,6 +24,7 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 	actionDropdownItems="<%= layoutPageTemplateDisplayContext.geLayoutPageTemplateEntriesActionDropdownItems() %>"
 	clearResultsURL="<%= layoutPageTemplateDisplayContext.getClearResultsURL() %>"
 	componentId="layoutPageTemplateEntriesManagementToolbar"
+	creationMenu="<%= layoutPageTemplateDisplayContext.getCreationMenu() %>"
 	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateEntriesManagementBar() %>"
 	filterDropdownItems="<%= layoutPageTemplateDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= layoutPageTemplateDisplayContext.getTotalItems() %>"
@@ -146,7 +147,7 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 </portlet:actionURL>
 
 <aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-	function handleAddLayoutPageTemplateEntryMenuItemClick(event) {
+	function addLayoutPageTemplateEntry(event) {
 		event.preventDefault();
 
 		modalCommands.openSimpleInputModal(
@@ -195,20 +196,19 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 	}
 
 	var ACTIONS = {
+		'addLayoutPageTemplateEntry': addLayoutPageTemplateEntry,
 		'deleteLayoutPageTemplateEntries': deleteLayoutPageTemplateEntries
 	};
 
 	Liferay.componentReady('layoutPageTemplateEntriesManagementToolbar').then(
 		(managementToolbar) => {
-			managementToolbar.on('creationButtonClicked', handleAddLayoutPageTemplateEntryMenuItemClick);
-
 			managementToolbar.on(
-				['actionItemClicked', 'filterItemClicked'],
+				['actionItemClicked', 'creationMenuItemClicked', 'filterItemClicked'],
 				function(event) {
 					var itemData = event.data.item.data;
 
 					if (itemData && itemData.action && ACTIONS[itemData.action]) {
-						ACTIONS[itemData.action]();
+						ACTIONS[itemData.action](event);
 					}
 				}
 			);

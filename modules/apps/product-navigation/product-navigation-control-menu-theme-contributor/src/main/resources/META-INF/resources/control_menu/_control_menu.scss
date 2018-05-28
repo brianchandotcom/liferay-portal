@@ -54,20 +54,18 @@
 
 .control-menu-icon {
 	display: inline-block;
-	padding: 0 20px;
+	padding: 0 2px;
 }
 
 .control-menu-level-1 {
 	background-color: $control-menu-level-1-bg;
 	color: $control-menu-level-1-color;
 
-	> .container-fluid-1280 {
-		padding: 6px 16px 7px 5px;
+	> .container-fluid {
+		padding: 6px 1rem 7px 1rem;
 
 		@include sm() {
-			padding-bottom: 14px;
-			padding-right: 17px;
-			padding-top: 15px;
+			padding: 15px 1.25rem 14px 1.25rem;
 		}
 	}
 

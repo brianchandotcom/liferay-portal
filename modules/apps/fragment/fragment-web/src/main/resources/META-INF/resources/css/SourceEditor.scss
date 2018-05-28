@@ -38,8 +38,7 @@
 			margin-right: 0.55rem;
 
 			&__tooltip {
-				bottom: 0;
-				right: 0;
+				pointer-events: none;
 			}
 		}
 	}

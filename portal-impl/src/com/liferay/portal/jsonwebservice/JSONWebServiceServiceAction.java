@@ -80,32 +80,6 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 
 			if (throwable instanceof InvocationTargetException) {
 				throwable = throwable.getCause();
-
-				if (throwable instanceof PrincipalException ||
-					throwable instanceof SecurityException) {
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(getThrowableMessage(throwable), throwable);
-					}
-
-					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-
-					return JSONFactoryUtil.serializeThrowable(throwable);
-				}
-				else {
-					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-				}
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(getThrowableMessage(throwable), throwable);
-				}
-				else {
-					_log.error(getThrowableMessage(throwable));
-				}
-
-				response.setStatus(status);
-
-				return JSONFactoryUtil.serializeThrowable(throwable);
 			}
 
 			if (throwable instanceof NoSuchJSONWebServiceException) {

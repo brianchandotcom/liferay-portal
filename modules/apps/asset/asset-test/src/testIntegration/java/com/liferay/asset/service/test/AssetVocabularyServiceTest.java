@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
@@ -120,6 +121,100 @@ public class AssetVocabularyServiceTest {
 		Assert.assertNull(
 			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
 				vocabulary.getVocabularyId()));
+	}
+
+	@Test
+	public void testGetGroupVocabulariesPaginatedWithNoViewableVocabularies()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
+		AssetVocabularyLocalServiceUtil.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
+
+			List<AssetVocabulary> vocabularies =
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					_group.getGroupId(), false, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+		}
+		finally {
+			UserLocalServiceUtil.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetGroupVocabulariesPaginatedWithNoViewableVocabulariesDoesNotCreateDefaultVocabulary()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
+		AssetVocabularyLocalServiceUtil.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
+
+			List<AssetVocabulary> vocabularies =
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					_group.getGroupId(), true, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+		}
+		finally {
+			UserLocalServiceUtil.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetGroupVocabulariesPaginatedWithNoVocabularies()
+		throws Exception {
+
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				_group.getGroupId(), false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+	}
+
+	@Test
+	public void testGetGroupVocabulariesPaginatedWithNoVocabulariesCreatesDefaultVocabulary()
+		throws Exception {
+
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				_group.getGroupId(), true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
+
+		Assert.assertEquals(vocabularies.toString(), 1, vocabularies.size());
 	}
 
 	@Test

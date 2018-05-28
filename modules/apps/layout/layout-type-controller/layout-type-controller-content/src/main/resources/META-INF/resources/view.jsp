@@ -14,14 +14,18 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ include file="/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/editor" prefix="liferay-editor" %><%@
-taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse);
+%>
 
-<%@ page import="com.liferay.layout.type.controller.content.internal.display.context.FragmentsEditorContext" %>
+<liferay-editor:resources
+	editorName="alloyeditor"
+/>
 
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
+<soy:template-renderer
+	context="<%= fragmentsEditorContext.getEditorContext() %>"
+	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
+	templateNamespace="com.liferay.layout.admin.web.FragmentsEditor.render"
+/>

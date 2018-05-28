@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
@@ -100,6 +101,22 @@ public class LayoutPageTemplateDisplayContext {
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
 
 		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData(
+							"action", "addLayoutPageTemplateEntry");
+						dropdownItem.setHref("#");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_request, "content-page-template"));
+					});
+			}
+		};
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

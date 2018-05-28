@@ -53,6 +53,7 @@ import java.util.Map;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  */
 public class CommercePriceEntryLocalServiceImpl
 	extends CommercePriceEntryLocalServiceBaseImpl {
@@ -279,10 +280,21 @@ public class CommercePriceEntryLocalServiceImpl
 		return commercePriceEntryPersistence.update(commercePriceEntry);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateCommercePriceEntry(
+			commercePriceEntryId, null, price, promoPrice, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommercePriceEntry updateCommercePriceEntry(
+			long commercePriceEntryId, String externalReferenceCode,
+			BigDecimal price, BigDecimal promoPrice,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -290,9 +302,10 @@ public class CommercePriceEntryLocalServiceImpl
 			commercePriceEntryPersistence.findByPrimaryKey(
 				commercePriceEntryId);
 
+		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
+		commercePriceEntry.setExternalReferenceCode(externalReferenceCode);
 		commercePriceEntry.setPrice(price);
 		commercePriceEntry.setPromoPrice(promoPrice);
-		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		return commercePriceEntryPersistence.update(commercePriceEntry);
 	}

@@ -34,6 +34,7 @@ import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  */
 public class CommerceTierPriceEntryServiceImpl
 	extends CommerceTierPriceEntryServiceBaseImpl {
@@ -44,13 +45,25 @@ public class CommerceTierPriceEntryServiceImpl
 			int minQuantity, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addCommerceTierPriceEntry(
+			commercePriceEntryId, null, price, promoPrice, minQuantity,
+			serviceContext);
+	}
+
+	@Override
+	public CommerceTierPriceEntry addCommerceTierPriceEntry(
+			long commercePriceEntryId, String externalReferenceCode,
+			BigDecimal price, BigDecimal promoPrice, int minQuantity,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
-			commercePriceEntryId, price, promoPrice, minQuantity,
-			serviceContext);
+			commercePriceEntryId, externalReferenceCode, price, promoPrice,
+			minQuantity, serviceContext);
 	}
 
 	@Override
@@ -128,13 +141,25 @@ public class CommerceTierPriceEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateCommerceTierPriceEntry(
+			commerceTierPriceEntryId, null, price, promoPrice, minQuantity,
+			serviceContext);
+	}
+
+	@Override
+	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
+			long commerceTierPriceEntryId, String externalReferenceCode,
+			BigDecimal price, BigDecimal promoPrice, int minQuantity,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
-			commerceTierPriceEntryId, price, promoPrice, minQuantity,
-			serviceContext);
+			commerceTierPriceEntryId, externalReferenceCode, price, promoPrice,
+			minQuantity, serviceContext);
 	}
 
 	private static volatile PortletResourcePermission

@@ -35,6 +35,7 @@ import java.util.List;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  */
 public class CommercePriceEntryServiceImpl
 	extends CommercePriceEntryServiceBaseImpl {
@@ -193,12 +194,24 @@ public class CommercePriceEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateCommercePriceEntry(
+			commercePriceEntryId, null, price, promoPrice, serviceContext);
+	}
+
+	@Override
+	public CommercePriceEntry updateCommercePriceEntry(
+			long commercePriceEntryId, String externalReferenceCode,
+			BigDecimal price, BigDecimal promoPrice,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commercePriceEntryLocalService.updateCommercePriceEntry(
-			commercePriceEntryId, price, promoPrice, serviceContext);
+			commercePriceEntryId, externalReferenceCode, price, promoPrice,
+			serviceContext);
 	}
 
 	private static volatile PortletResourcePermission

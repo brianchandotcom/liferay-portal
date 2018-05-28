@@ -32,6 +32,7 @@ import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  */
 public class CommercePriceListServiceImpl
 	extends CommercePriceListServiceBaseImpl {
@@ -195,6 +196,25 @@ public class CommercePriceListServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateCommercePriceList(
+			commercePriceListId, commerceCurrencyId, name, priority,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, null,
+			neverExpire, serviceContext);
+	}
+
+	@Override
+	public CommercePriceList updateCommercePriceList(
+			long commercePriceListId, long commerceCurrencyId, String name,
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, String externalReferenceCode,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException {
+
 		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
@@ -204,7 +224,7 @@ public class CommercePriceListServiceImpl
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			externalReferenceCode, neverExpire, serviceContext);
 	}
 
 	private static volatile PortletResourcePermission

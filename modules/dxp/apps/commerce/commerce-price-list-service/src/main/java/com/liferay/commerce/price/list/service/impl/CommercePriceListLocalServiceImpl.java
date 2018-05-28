@@ -70,6 +70,7 @@ import java.util.Optional;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  */
 public class CommercePriceListLocalServiceImpl
 	extends CommercePriceListLocalServiceBaseImpl {
@@ -351,7 +352,6 @@ public class CommercePriceListLocalServiceImpl
 		return searchCommercePriceLists(searchContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceList updateCommercePriceList(
 			long commercePriceListId, long commerceCurrencyId, String name,
@@ -361,6 +361,26 @@ public class CommercePriceListLocalServiceImpl
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateCommercePriceList(
+			commercePriceListId, commerceCurrencyId, name, priority,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute, null,
+			neverExpire, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommercePriceList updateCommercePriceList(
+			long commercePriceListId, long commerceCurrencyId, String name,
+			double priority, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, String externalReferenceCode,
+			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce price list
@@ -392,6 +412,7 @@ public class CommercePriceListLocalServiceImpl
 		commercePriceList.setPriority(priority);
 		commercePriceList.setDisplayDate(displayDate);
 		commercePriceList.setExpirationDate(expirationDate);
+		commercePriceList.setExternalReferenceCode(externalReferenceCode);
 
 		if ((expirationDate == null) || expirationDate.after(now)) {
 			commercePriceList.setStatus(WorkflowConstants.STATUS_DRAFT);

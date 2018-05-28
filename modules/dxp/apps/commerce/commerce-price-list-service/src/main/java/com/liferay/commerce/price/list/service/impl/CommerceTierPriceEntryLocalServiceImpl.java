@@ -54,15 +54,28 @@ import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Zoltán Takács
  */
 public class CommerceTierPriceEntryLocalServiceImpl
 	extends CommerceTierPriceEntryLocalServiceBaseImpl {
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
 			int minQuantity, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addCommerceTierPriceEntry(
+			commercePriceEntryId, null, price, promoPrice, minQuantity,
+			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceTierPriceEntry addCommerceTierPriceEntry(
+			long commercePriceEntryId, String externalReferenceCode,
+			BigDecimal price, BigDecimal promoPrice, int minQuantity,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce tier price entry
@@ -87,6 +100,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		commerceTierPriceEntry.setPromoPrice(promoPrice);
 		commerceTierPriceEntry.setMinQuantity(minQuantity);
 		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
+		commerceTierPriceEntry.setExternalReferenceCode(externalReferenceCode);
 
 		commerceTierPriceEntryPersistence.update(commerceTierPriceEntry);
 
@@ -227,11 +241,23 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		return searchCommerceTierPriceEntries(searchContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, BigDecimal price,
 			BigDecimal promoPrice, int minQuantity,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateCommerceTierPriceEntry(
+			commerceTierPriceEntryId, null, price, promoPrice, minQuantity,
+			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
+			long commerceTierPriceEntryId, String externalReferenceCode,
+			BigDecimal price, BigDecimal promoPrice, int minQuantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -247,6 +273,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		commerceTierPriceEntry.setPromoPrice(promoPrice);
 		commerceTierPriceEntry.setMinQuantity(minQuantity);
 		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
+		commerceTierPriceEntry.setExternalReferenceCode(externalReferenceCode);
 
 		return commerceTierPriceEntryPersistence.update(commerceTierPriceEntry);
 	}

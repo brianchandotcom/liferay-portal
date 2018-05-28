@@ -221,9 +221,6 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ExternalReferenceCode" return-type="CommerceTierPriceEntry" unique="true">
-			<finder-column name="externalReferenceCode" />
-		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
@@ -232,6 +229,9 @@
 		</finder>
 		<finder name="CommercePriceEntryId" return-type="Collection">
 			<finder-column name="commercePriceEntryId" />
+		</finder>
+		<finder name="ExternalReferenceCode" return-type="CommerceTierPriceEntry" unique="true">
+			<finder-column name="externalReferenceCode" />
 		</finder>
 		<finder name="C_M" return-type="CommerceTierPriceEntry" unique="true">
 			<finder-column name="commercePriceEntryId" />

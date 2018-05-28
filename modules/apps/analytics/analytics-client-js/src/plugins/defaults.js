@@ -7,4 +7,12 @@ import timing from './timing';
 import webContents from './web-contents';
 
 export {blogs, documents, forms, resolution, scrolling, timing, webContents};
-export default [blogs, documents, forms, resolution, scrolling, timing, webContents];
+export default [
+	blogs,
+	documents,
+	forms,
+	resolution,
+	scrolling,
+	timing,
+	webContents,
+];

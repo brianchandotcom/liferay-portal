@@ -2,6 +2,8 @@ import AnalyticsClient from '../../src/analytics';
 import dom from 'metal-dom';
 import {assert, expect} from 'chai';
 
+const applicationId = 'Blogs';
+
 const googleUrl = 'http://google.com/';
 
 let Analytics;
@@ -45,7 +47,7 @@ describe('Blogs Plugin', () => {
 			expect(events.length).to.be.at.least(1, 'At least one event should have been fired');
 
 			events[0].should.deep.include({
-				applicationId: 'blogs',
+				applicationId: applicationId,
 				eventId: 'blogViewed'
 			});
 			expect(events[0].properties.entryId).to.equal('assetId');
@@ -66,7 +68,7 @@ describe('Blogs Plugin', () => {
 			expect(Analytics.events.length).to.equal(1);
 
 			Analytics.events[0].should.deep.include({
-				applicationId: 'blogs',
+				applicationId: applicationId,
 				eventId: 'blogClicked'
 			});
 
@@ -92,7 +94,7 @@ describe('Blogs Plugin', () => {
 			expect(Analytics.events.length).to.equal(1);
 
 			Analytics.events[0].should.deep.include({
-				applicationId: 'blogs',
+				applicationId: applicationId,
 				eventId: 'blogClicked'
 			});
 
@@ -118,7 +120,7 @@ describe('Blogs Plugin', () => {
 			expect(Analytics.events.length).to.equal(1);
 
 			Analytics.events[0].should.deep.include({
-				applicationId: 'blogs',
+				applicationId: applicationId,
 				eventId: 'blogClicked'
 			});
 

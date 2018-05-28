@@ -36,6 +36,10 @@
 
 		&__help {
 			margin-right: 0.55rem;
+
+			&__tooltip {
+				pointer-events: none;
+			}
 		}
 	}
 }

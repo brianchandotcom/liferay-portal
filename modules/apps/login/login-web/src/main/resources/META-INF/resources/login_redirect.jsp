@@ -44,8 +44,26 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 	</div>
 </c:if>
 
-<aui:script>
-	var <portlet:namespace />activateAccount = Liferay.lazyLoad(
+<aui:script sandbox="<%= true %>">
+	var showStatusMessage = Liferay.lazyLoad(
+		'metal-dom/src/dom',
+		function(dom, type, message) {
+			var messageContainer = document.getElementById('<portlet:namespace />login-status-messages');
+
+			if (messageContainer) {
+				dom.removeClasses(messageContainer, 'alert-danger');
+				dom.removeClasses(messageContainer, 'alert-success');
+
+				dom.addClasses(messageContainer, 'alert alert-' + type);
+
+				messageContainer.innerHTML(message);
+
+				dom.removeClasses(messageContainer, 'hide');
+			}
+		}
+	);
+
+	window.<portlet:namespace />activateAccount = Liferay.lazyLoad(
 		'metal-dom/src/dom',
 		function(dom) {
 			var form = document.getElementById('<portlet:namespace />fm');
@@ -53,7 +71,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 			function onError() {
 				var message = '<liferay-ui:message key="your-request-failed-to-complete" />';
 
-				<portlet:namespace />showStatusMessage('danger', message);
+				showStatusMessage('danger', message);
 
 				var anonymousAccount = form.querySelector('.anonymous-account');
 
@@ -96,7 +114,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 										message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
 									}
 
-									<portlet:namespace />showStatusMessage('success', message);
+									showStatusMessage('success', message);
 
 									var anonymousAccount = document.querySelector('.anonymous-account');
 
@@ -117,7 +135,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		}
 	);
 
-	function <portlet:namespace />closeDialog() {
+	window.<portlet:namespace />closeDialog() {
 		var namespace = window.parent.namespace;
 
 		Liferay.fire(
@@ -127,24 +145,6 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 			}
 		);
 	}
-
-	var <portlet:namespace />showStatusMessage = Liferay.lazyLoad(
-		'metal-dom/src/dom',
-		function(dom, type, message) {
-			var messageContainer = document.getElementById('<portlet:namespace />login-status-messages');
-
-			if (messageContainer) {
-				dom.removeClasses(messageContainer, 'alert-danger');
-				dom.removeClasses(messageContainer, 'alert-success');
-
-				dom.addClasses(messageContainer, 'alert alert-' + type);
-
-				messageContainer.innerHTML(message);
-
-				dom.removeClasses(messageContainer, 'hide');
-			}
-		}
-	);
 
 	<c:if test="<%= !company.isStrangers() && (user == null) %>">
 		<portlet:namespace />closeDialog();

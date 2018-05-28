@@ -101,7 +101,7 @@ String jobTitle = BeanParamUtil.getString(selUser, request, "jobTitle");
 </div>
 
 <aui:script>
-	function <portlet:namespace />resetUser() {
+	window.<portlet:namespace />resetUser() {
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
@@ -115,7 +115,7 @@ String jobTitle = BeanParamUtil.getString(selUser, request, "jobTitle");
 		}
 	}
 
-	function <portlet:namespace />updateUser() {
+	window.<portlet:namespace />updateUser() {
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {

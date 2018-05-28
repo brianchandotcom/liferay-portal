@@ -40,54 +40,51 @@
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
-	var <portlet:namespace />onSendPushNotification = Liferay.lazyLoad(
-		'metal-dom/src/dom',
-		function(dom, result) {
-			var success = document.getElementById('<portlet:namespace />success');
+<aui:script require="metal-dom/src/all/dom as dom">
+	var onSendPushNotification = function(result) {
+		var success = document.getElementById('<portlet:namespace />success');
 
-			if (success) {
+		if (success) {
+			dom.addClasses(success, 'hide');
+
+			dom.removeClasses(success, 'show');
+
+			var error = document.getElementById('<portlet:namespace />error');
+
+			if (error) {
 				dom.addClasses(success, 'hide');
 
 				dom.removeClasses(success, 'show');
+			}
 
-				var error = document.getElementById('<portlet:namespace />error');
+			if (AUI().Object.isEmpty(result)) {
+				dom.addClasses(success, 'show');
 
-				if (error) {
-					dom.addClasses(success, 'hide');
+				dom.removeClasses(success, 'hide');
+			}
+			else {
+				var paragraph = error.querySelector('p');
 
-					dom.removeClasses(success, 'show');
+				if (paragraph) {
+					paragraph.textContent = result;
 				}
 
-				if (AUI().Object.isEmpty(result)) {
-					dom.addClasses(success, 'show');
+				dom.addClasses(error, 'show');
 
-					dom.removeClasses(success, 'hide');
-				}
-				else {
-					var paragraph = error.querySelector('p');
-
-					if (paragraph) {
-						paragraph.textContent = result;
-					}
-
-					dom.addClasses(error, 'show');
-
-					dom.removeClasses(error, 'hide');
-				}
+				dom.removeClasses(error, 'hide');
 			}
 		}
-	);
+	};
 
-	var <portlet:namespace />form = document.getElementById('<portlet:namespace />fm');
+	var form = document.getElementById('<portlet:namespace />fm');
 
-	if (<portlet:namespace />form) {
-		<portlet:namespace />form.addEventListener(
+	if (form) {
+		form.addEventListener(
 			'submit',
 			function(event) {
 				event.preventDefault();
 
-				var message = <portlet:namespace />form.querySelector('#<portlet:namespace />message');
+				var message = form.querySelector('#<portlet:namespace />message');
 
 				if (message) {
 					Liferay.Service(
@@ -96,7 +93,7 @@
 							payload: message.value,
 							toUserIds: []
 						},
-						<portlet:namespace />onSendPushNotification
+						onSendPushNotification
 					);
 				}
 			}

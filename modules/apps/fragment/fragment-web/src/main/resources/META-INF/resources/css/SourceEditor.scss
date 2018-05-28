@@ -36,11 +36,11 @@
 
 		&__help {
 			margin-right: 0.55rem;
-		}
-	}
 
-	.help-tooltip {
-		bottom: 0;
-		right: 0;
+			&__tooltip {
+				bottom: 0;
+				right: 0;
+			}
+		}
 	}
 }

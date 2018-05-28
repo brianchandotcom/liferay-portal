@@ -499,9 +499,15 @@ class FragmentsEditor extends Component {
 	 */
 
 	_handleMappeableFieldClicked(event) {
-		this._selectMappingDialogVisible = true;
 		this._selectMappingDialogFragmentEntryLinkId = event.fragmentEntryLinkId;
 		this._selectMappingDialogEditableId = event.editableId;
+
+		if (this.selectedMappingTypes && this.selectedMappingTypes.type) {
+			this._selectMappingDialogVisible = true;
+		}
+		else {
+			this._handleSelectAssetTypeButtonClick();
+		}
 	}
 
 	/**
@@ -543,6 +549,12 @@ class FragmentsEditor extends Component {
 
 	_handleMappingTypeSelected(event) {
 		this.selectedMappingTypes = event.mappingTypes;
+
+		if (this._selectMappingDialogFragmentEntryLinkId &&
+			this._selectMappingDialogEditableId) {
+
+			this._selectMappingDialogVisible = true;
+		}
 	}
 
 	/**

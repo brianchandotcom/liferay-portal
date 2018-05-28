@@ -119,14 +119,13 @@ public class PriceEntryNestedCollectionResource
 		).addNumber(
 			"promoPrice", CommercePriceEntry::getPromoPrice
 		).addString(
+			"externalReferenceCode",
+			CommercePriceEntry::getExternalReferenceCode
+		).addString(
 			"sku", PriceEntryHelper::getSKU
 		).addString(
 			"skuExternalReferenceCode",
 			PriceEntryHelper::getSKUExternalReferenceCode
-		)
-		.addString(
-			"externalReferenceCode",
-			CommercePriceEntry::getExternalReferenceCode
 		).build();
 	}
 

@@ -51,12 +51,10 @@ public class PriceEntryCreatorForm {
 		).addOptionalString(
 			"externalReferenceCode",
 			PriceEntryCreatorForm::_setExternalReferenceCode
-		)
-		.addOptionalString(
+		).addOptionalString(
 			"skuExternalReferenceCode",
 			PriceEntryCreatorForm::_setSkuExternalReferenceCode
-		)
-		.build();
+		).build();
 	}
 
 	public String getExternalReferenceCode() {
@@ -69,6 +67,10 @@ public class PriceEntryCreatorForm {
 
 	public Double getPromoPrice() {
 		return _promoPrice;
+	}
+
+	public String getSkuExternalReferenceCode() {
+		return _skuExternalReferenceCode;
 	}
 
 	public Long getSkuId() {
@@ -87,23 +89,18 @@ public class PriceEntryCreatorForm {
 		_promoPrice = promoPrice;
 	}
 
+	private void _setSkuExternalReferenceCode(String skuExternalReferenceCode) {
+		_skuExternalReferenceCode = skuExternalReferenceCode;
+	}
+
 	private void _setSkuId(Long skuId) {
 		_skuId = skuId;
 	}
 
 	private String _externalReferenceCode;
-
-	public String getSkuExternalReferenceCode() {
-		return _skuExternalReferenceCode;
-	}
-
-	private void _setSkuExternalReferenceCode(String skuExternalReferenceCode) {
-		this._skuExternalReferenceCode = skuExternalReferenceCode;
-	}
-
-	private String _skuExternalReferenceCode;
 	private Double _price;
 	private Double _promoPrice;
+	private String _skuExternalReferenceCode;
 	private Long _skuId;
 
 }

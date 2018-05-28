@@ -14,10 +14,13 @@
 
 package com.liferay.portal.kernel.exception;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Sergio González
  */
+@ProviderType
 public class LayoutFriendlyURLException extends PortalException {
 
 	public static final int ADJACENT_SLASHES = 4;

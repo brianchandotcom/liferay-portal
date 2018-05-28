@@ -411,6 +411,45 @@ public class CommerceTierPriceEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+		HttpPrincipal httpPrincipal, long commerceTierPriceEntryId,
+		long commercePriceEntryId, String externalReferenceCode,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		int minQuantity, String priceEntryExternalReferenceCode,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceTierPriceEntryServiceUtil.class,
+					"upsertCommerceTierPriceEntry",
+					_upsertCommerceTierPriceEntryParameterTypes11);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceTierPriceEntryId, commercePriceEntryId,
+					externalReferenceCode, price, promoPrice, minQuantity,
+					priceEntryExternalReferenceCode, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.price.list.model.CommerceTierPriceEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceTierPriceEntryServiceHttp.class);
 	private static final Class<?>[] _addCommerceTierPriceEntryParameterTypes0 = new Class[] {
 			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,
@@ -452,6 +491,12 @@ public class CommerceTierPriceEntryServiceHttp {
 		new Class[] {
 			long.class, String.class, java.math.BigDecimal.class,
 			java.math.BigDecimal.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _upsertCommerceTierPriceEntryParameterTypes11 =
+		new Class[] {
+			long.class, long.class, String.class, java.math.BigDecimal.class,
+			java.math.BigDecimal.class, int.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

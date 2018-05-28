@@ -131,4 +131,13 @@ public interface CommercePriceListService extends BaseService {
 		int expirationDateMinute, String externalReferenceCode,
 		boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
+
+	public CommercePriceList upsertCommercePriceList(long commercePriceListId,
+		long commerceCurrencyId, String name, double priority,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, String externalReferenceCode,
+		boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException;
 }

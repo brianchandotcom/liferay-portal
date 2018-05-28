@@ -376,4 +376,34 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 		long commercePriceEntryId, String externalReferenceCode,
 		BigDecimal price, BigDecimal promoPrice, ServiceContext serviceContext)
 		throws PortalException;
+
+	/**
+	* This method is used to insert a new CommercePriceEntry or update an
+	* existing one
+	*
+	* @param commercePriceEntryId - <b>Only</b> used when updating an entity
+	the matching one will be updated
+	* @param cpInstanceId - <b>Only</b> used when adding a new entity
+	* @param commercePriceListId - <b>Only</b> used when adding a new entity
+	to a price list
+	* @param externalReferenceCode - The external identifier code from a 3rd
+	party system to be able to locate the same entity in the portal
+	* @param price
+	* @param promoPrice
+	* @param skuExternalReferenceCode - <b>Only</b> used when adding a new
+	entity, similar as <code>cpInstanceId</code> but the external
+	identifier code from a 3rd party system. If cpInstanceId is used,
+	it doesn't have any effect, otherwise it tries to fetch the
+	CPInstance against the external code reference
+	* @param serviceContext
+	* @return CommercePriceEntry
+	* @throws PortalException
+	* @review
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CommercePriceEntry upsertCommercePriceEntry(
+		long commercePriceEntryId, long cpInstanceId, long commercePriceListId,
+		String externalReferenceCode, BigDecimal price, BigDecimal promoPrice,
+		String skuExternalReferenceCode, ServiceContext serviceContext)
+		throws PortalException;
 }

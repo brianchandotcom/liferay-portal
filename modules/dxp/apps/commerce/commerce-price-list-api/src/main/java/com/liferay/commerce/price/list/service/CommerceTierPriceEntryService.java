@@ -116,4 +116,10 @@ public interface CommerceTierPriceEntryService extends BaseService {
 		long commerceTierPriceEntryId, String externalReferenceCode,
 		BigDecimal price, BigDecimal promoPrice, int minQuantity,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+		long commerceTierPriceEntryId, long commercePriceEntryId,
+		String externalReferenceCode, BigDecimal price, BigDecimal promoPrice,
+		int minQuantity, String priceEntryExternalReferenceCode,
+		ServiceContext serviceContext) throws PortalException;
 }

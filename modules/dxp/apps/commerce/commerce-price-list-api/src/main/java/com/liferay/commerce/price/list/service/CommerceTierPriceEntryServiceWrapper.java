@@ -137,6 +137,19 @@ public class CommerceTierPriceEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+		long commerceTierPriceEntryId, long commercePriceEntryId,
+		String externalReferenceCode, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice, int minQuantity,
+		String priceEntryExternalReferenceCode,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTierPriceEntryService.upsertCommerceTierPriceEntry(commerceTierPriceEntryId,
+			commercePriceEntryId, externalReferenceCode, price, promoPrice,
+			minQuantity, priceEntryExternalReferenceCode, serviceContext);
+	}
+
+	@Override
 	public CommerceTierPriceEntryService getWrappedService() {
 		return _commerceTierPriceEntryService;
 	}

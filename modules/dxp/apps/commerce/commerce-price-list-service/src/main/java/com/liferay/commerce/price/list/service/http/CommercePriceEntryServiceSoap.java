@@ -311,5 +311,26 @@ public class CommercePriceEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap upsertCommercePriceEntry(
+		long commercePriceEntryId, long cpInstanceId, long commercePriceListId,
+		String externalReferenceCode, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice, String skuExternalReferenceCode,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.price.list.model.CommercePriceEntry returnValue =
+				CommercePriceEntryServiceUtil.upsertCommercePriceEntry(commercePriceEntryId,
+					cpInstanceId, commercePriceListId, externalReferenceCode,
+					price, promoPrice, skuExternalReferenceCode, serviceContext);
+
+			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommercePriceEntryServiceSoap.class);
 }

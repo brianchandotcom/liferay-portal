@@ -374,4 +374,14 @@ public interface CommercePriceListLocalService extends BaseLocalService,
 	public CommercePriceList updateStatus(long userId,
 		long commercePriceListId, int status, ServiceContext serviceContext,
 		Map<String, Serializable> workflowContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommercePriceList upsertCommercePriceList(long commercePriceListId,
+		long commerceCurrencyId, String name, double priority,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
+		int expirationDateMinute, String externalReferenceCode,
+		boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException;
 }

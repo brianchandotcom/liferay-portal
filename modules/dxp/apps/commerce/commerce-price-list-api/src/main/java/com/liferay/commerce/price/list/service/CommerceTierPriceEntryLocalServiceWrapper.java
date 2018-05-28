@@ -430,6 +430,41 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	* This method is used to insert a new CommerceTierPriceEntry or update an
+	* existing one
+	*
+	* @param commerceTierPriceEntryId - <b>Only</b> used when updating an
+	entity; the matching one will be updated
+	* @param commercePriceEntryId - <b>Only</b> used when adding a new entity
+	* @param externalReferenceCode - The external identifier code from a 3rd
+	party system to be able to locate the same entity in the portal
+	* @param price
+	* @param promoPrice
+	* @param minQuantity
+	* @param priceEntryExternalReferenceCode - <b>Only</b> used when adding a
+	new entity, similar as <code>commercePriceEntryId</code> but the
+	external identifier code from a 3rd party system. If
+	commercePriceEntryId is used, it doesn't have any effect,
+	otherwise it tries to fetch the CommercePriceEntry against the
+	external code reference
+	* @param serviceContext
+	* @return CommerceTierPriceEntry
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+		long commerceTierPriceEntryId, long commercePriceEntryId,
+		String externalReferenceCode, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice, int minQuantity,
+		String priceEntryExternalReferenceCode,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTierPriceEntryLocalService.upsertCommerceTierPriceEntry(commerceTierPriceEntryId,
+			commercePriceEntryId, externalReferenceCode, price, promoPrice,
+			minQuantity, priceEntryExternalReferenceCode, serviceContext);
+	}
+
 	@Override
 	public CommerceTierPriceEntryLocalService getWrappedService() {
 		return _commerceTierPriceEntryLocalService;

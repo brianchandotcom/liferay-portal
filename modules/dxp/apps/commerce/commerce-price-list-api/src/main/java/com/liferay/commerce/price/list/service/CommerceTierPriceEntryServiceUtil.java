@@ -141,6 +141,19 @@ public class CommerceTierPriceEntryServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+		long commerceTierPriceEntryId, long commercePriceEntryId,
+		String externalReferenceCode, java.math.BigDecimal price,
+		java.math.BigDecimal promoPrice, int minQuantity,
+		String priceEntryExternalReferenceCode,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .upsertCommerceTierPriceEntry(commerceTierPriceEntryId,
+			commercePriceEntryId, externalReferenceCode, price, promoPrice,
+			minQuantity, priceEntryExternalReferenceCode, serviceContext);
+	}
+
 	public static CommerceTierPriceEntryService getService() {
 		return _serviceTracker.getService();
 	}

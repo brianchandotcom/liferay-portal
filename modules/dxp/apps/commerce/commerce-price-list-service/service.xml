@@ -207,6 +207,7 @@
 		<!-- Other fields -->
 
 		<column name="commercePriceEntryId" type="long" />
+		<column name="externalReferenceCode" type="String" />
 		<column name="price" type="BigDecimal" />
 		<column name="promoPrice" type="BigDecimal" />
 		<column name="minQuantity" type="int" />
@@ -220,6 +221,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ExternalReferenceCode" return-type="CommerceTierPriceEntry" unique="true">
+			<finder-column name="externalReferenceCode" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>

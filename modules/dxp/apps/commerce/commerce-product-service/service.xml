@@ -153,6 +153,9 @@
 		<finder name="CPTaxCategoryId" return-type="Collection">
 			<finder-column name="CPTaxCategoryId" />
 		</finder>
+		<finder name="ExternalReferenceCode" return-type="CPDefinition" unique="true">
+			<finder-column name="externalReferenceCode" />
+		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="status" />
@@ -567,6 +570,9 @@
 		</finder>
 		<finder name="CPDefinitionId" return-type="Collection">
 			<finder-column name="CPDefinitionId" />
+		</finder>
+		<finder name="ExternalReferenceCode" return-type="CPInstance" unique="true">
+			<finder-column name="externalReferenceCode" />
 		</finder>
 		<finder name="G_ST" return-type="Collection">
 			<finder-column name="groupId" />

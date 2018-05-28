@@ -110,10 +110,6 @@ public class AuthVerifierPipeline {
 
 		String requestURI = request.getRequestURI();
 
-		if (!requestURI.endsWith("/")) {
-			requestURI = requestURI.concat("/");
-		}
-
 		String contextPath = request.getContextPath();
 
 		requestURI = requestURI.substring(contextPath.length());
@@ -140,6 +136,10 @@ public class AuthVerifierPipeline {
 
 		String[] urlsExcludes = StringUtil.split(
 			properties.getProperty("urls.excludes"));
+
+		if (!requestURI.endsWith("/")) {
+			requestURI = requestURI.concat("/");
+		}
 
 		if ((urlsExcludes.length > 0) &&
 			(Wildcard.matchOne(requestURI, urlsExcludes) > -1)) {

@@ -86,6 +86,7 @@ $translatedColor: #3DC513;
 
 .fragments-editor__fragment-entry-links .lfr-editable-wrapper {
 	display: inline-block;
+	min-width: 1rem;
 	position: relative;
 
 	> .tooltip {

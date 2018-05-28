@@ -437,6 +437,16 @@ public class CommercePriceEntryLocalServiceUtil {
 			promoPrice, serviceContext);
 	}
 
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry updateCommercePriceEntry(
+		long commercePriceEntryId, String externalReferenceCode,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommercePriceEntry(commercePriceEntryId,
+			externalReferenceCode, price, promoPrice, serviceContext);
+	}
+
 	public static CommercePriceEntryLocalService getService() {
 		return _serviceTracker.getService();
 	}

@@ -45,6 +45,18 @@ public class CommerceTierPriceEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry addCommerceTierPriceEntry(
+		long commercePriceEntryId, String externalReferenceCode,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		int minQuantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTierPriceEntryService.addCommerceTierPriceEntry(commercePriceEntryId,
+			externalReferenceCode, price, promoPrice, minQuantity,
+			serviceContext);
+	}
+
+	@Override
 	public void deleteCommerceTierPriceEntry(long commerceTierPriceEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceTierPriceEntryService.deleteCommerceTierPriceEntry(commerceTierPriceEntryId);
@@ -110,6 +122,18 @@ public class CommerceTierPriceEntryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTierPriceEntryService.updateCommerceTierPriceEntry(commerceTierPriceEntryId,
 			price, promoPrice, minQuantity, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
+		long commerceTierPriceEntryId, String externalReferenceCode,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		int minQuantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTierPriceEntryService.updateCommerceTierPriceEntry(commerceTierPriceEntryId,
+			externalReferenceCode, price, promoPrice, minQuantity,
+			serviceContext);
 	}
 
 	@Override

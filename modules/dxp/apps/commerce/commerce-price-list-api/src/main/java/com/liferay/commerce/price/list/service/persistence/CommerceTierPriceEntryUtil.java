@@ -513,70 +513,6 @@ public class CommerceTierPriceEntryUtil {
 	}
 
 	/**
-	* Returns the commerce tier price entry where externalReferenceCode = &#63; or throws a {@link NoSuchTierPriceEntryException} if it could not be found.
-	*
-	* @param externalReferenceCode the external reference code
-	* @return the matching commerce tier price entry
-	* @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
-	*/
-	public static CommerceTierPriceEntry findByExternalReferenceCode(
-		String externalReferenceCode)
-		throws com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException {
-		return getPersistence()
-				   .findByExternalReferenceCode(externalReferenceCode);
-	}
-
-	/**
-	* Returns the commerce tier price entry where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param externalReferenceCode the external reference code
-	* @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	*/
-	public static CommerceTierPriceEntry fetchByExternalReferenceCode(
-		String externalReferenceCode) {
-		return getPersistence()
-				   .fetchByExternalReferenceCode(externalReferenceCode);
-	}
-
-	/**
-	* Returns the commerce tier price entry where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param externalReferenceCode the external reference code
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
-	*/
-	public static CommerceTierPriceEntry fetchByExternalReferenceCode(
-		String externalReferenceCode, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByExternalReferenceCode(externalReferenceCode,
-			retrieveFromCache);
-	}
-
-	/**
-	* Removes the commerce tier price entry where externalReferenceCode = &#63; from the database.
-	*
-	* @param externalReferenceCode the external reference code
-	* @return the commerce tier price entry that was removed
-	*/
-	public static CommerceTierPriceEntry removeByExternalReferenceCode(
-		String externalReferenceCode)
-		throws com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException {
-		return getPersistence()
-				   .removeByExternalReferenceCode(externalReferenceCode);
-	}
-
-	/**
-	* Returns the number of commerce tier price entries where externalReferenceCode = &#63;.
-	*
-	* @param externalReferenceCode the external reference code
-	* @return the number of matching commerce tier price entries
-	*/
-	public static int countByExternalReferenceCode(String externalReferenceCode) {
-		return getPersistence()
-				   .countByExternalReferenceCode(externalReferenceCode);
-	}
-
-	/**
 	* Returns all the commerce tier price entries where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -1071,6 +1007,70 @@ public class CommerceTierPriceEntryUtil {
 	*/
 	public static int countByCommercePriceEntryId(long commercePriceEntryId) {
 		return getPersistence().countByCommercePriceEntryId(commercePriceEntryId);
+	}
+
+	/**
+	* Returns the commerce tier price entry where externalReferenceCode = &#63; or throws a {@link NoSuchTierPriceEntryException} if it could not be found.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching commerce tier price entry
+	* @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry findByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException {
+		return getPersistence()
+				   .findByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the commerce tier price entry where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return getPersistence()
+				   .fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the commerce tier price entry where externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
+	*/
+	public static CommerceTierPriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByExternalReferenceCode(externalReferenceCode,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the commerce tier price entry where externalReferenceCode = &#63; from the database.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the commerce tier price entry that was removed
+	*/
+	public static CommerceTierPriceEntry removeByExternalReferenceCode(
+		String externalReferenceCode)
+		throws com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException {
+		return getPersistence()
+				   .removeByExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
+	* Returns the number of commerce tier price entries where externalReferenceCode = &#63;.
+	*
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching commerce tier price entries
+	*/
+	public static int countByExternalReferenceCode(String externalReferenceCode) {
+		return getPersistence()
+				   .countByExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

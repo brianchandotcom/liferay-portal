@@ -56,6 +56,18 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 			price, promoPrice, minQuantity, serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry addCommerceTierPriceEntry(
+		long commercePriceEntryId, String externalReferenceCode,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		int minQuantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(commercePriceEntryId,
+			externalReferenceCode, price, promoPrice, minQuantity,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
 	*
@@ -404,6 +416,18 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(commerceTierPriceEntryId,
 			price, promoPrice, minQuantity, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
+		long commerceTierPriceEntryId, String externalReferenceCode,
+		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
+		int minQuantity,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(commerceTierPriceEntryId,
+			externalReferenceCode, price, promoPrice, minQuantity,
+			serviceContext);
 	}
 
 	@Override

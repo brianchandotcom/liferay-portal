@@ -131,4 +131,9 @@ public interface CommercePriceEntryService extends BaseService {
 	public CommercePriceEntry updateCommercePriceEntry(
 		long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
 		ServiceContext serviceContext) throws PortalException;
+
+	public CommercePriceEntry updateCommercePriceEntry(
+		long commercePriceEntryId, String externalReferenceCode,
+		BigDecimal price, BigDecimal promoPrice, ServiceContext serviceContext)
+		throws PortalException;
 }

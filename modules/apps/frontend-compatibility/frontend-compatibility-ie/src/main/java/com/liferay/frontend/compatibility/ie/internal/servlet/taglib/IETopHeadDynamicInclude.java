@@ -53,7 +53,7 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 					request);
 
 			for (String url :
-					Arrays.asList("object-assign-auto.js", "fetch.js")) {
+					Arrays.asList("array.find.js", "object-assign-auto.js", "fetch.js")) {
 
 				printWriter.print(
 					"<script data-senna-track=\"permanent\" src=\"");

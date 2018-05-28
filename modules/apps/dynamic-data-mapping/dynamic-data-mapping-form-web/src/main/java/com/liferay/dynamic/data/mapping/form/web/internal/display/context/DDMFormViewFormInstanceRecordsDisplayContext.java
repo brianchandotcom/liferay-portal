@@ -522,8 +522,8 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		List<DDMFormField> formFields = getNontransientFormFields(
 			structure.getDDMForm());
 
-		for (int i = 0; i < formFields.size(); i++) {
-			_ddmFormFields.add(formFields.get(i));
+		for (DDMFormField formField : formFields) {
+			_ddmFormFields.add(formField);
 		}
 	}
 

@@ -840,14 +840,14 @@ public class AssetEntryQueryTest {
 		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
 			2012, 1, 1);
 
-		for (int i = 0; i < scores.length; i++) {
+		for (double score : scores) {
 			BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), displayDateCalendar.getTime(),
 				serviceContext);
 
 			RatingsEntryServiceUtil.updateEntry(
-				BlogsEntry.class.getName(), blogsEntry.getEntryId(), scores[i]);
+				BlogsEntry.class.getName(), blogsEntry.getEntryId(), score);
 		}
 
 		threadLocalCache.removeAll();
@@ -889,7 +889,7 @@ public class AssetEntryQueryTest {
 		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
 			2012, 1, 1);
 
-		for (int i = 0; i < viewCounts.length; i++) {
+		for (int viewCount : viewCounts) {
 			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), displayDateCalendar.getTime(),
@@ -898,7 +898,7 @@ public class AssetEntryQueryTest {
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 				BlogsEntry.class.getName(), entry.getEntryId());
 
-			assetEntry.setViewCount(viewCounts[i]);
+			assetEntry.setViewCount(viewCount);
 
 			AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
 		}

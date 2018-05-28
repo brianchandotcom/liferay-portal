@@ -216,9 +216,8 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				companyId);
 
-		for (int i = 0; i < assetRendererFactories.size(); i++) {
-			AssetRendererFactory<?> assetRendererFactory =
-				assetRendererFactories.get(i);
+		for (AssetRendererFactory<?> assetRendererFactory :
+				assetRendererFactories) {
 
 			if (!assetRendererFactory.isSearchable()) {
 				continue;

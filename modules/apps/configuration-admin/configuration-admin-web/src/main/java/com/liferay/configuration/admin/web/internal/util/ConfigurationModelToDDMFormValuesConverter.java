@@ -108,8 +108,8 @@ public class ConfigurationModelToDDMFormValuesConverter {
 	protected void addDDMFormFieldValues(
 		String name, String[] values, DDMFormValues ddmFormValues) {
 
-		for (int i = 0; i < values.length; i++) {
-			addDDMFormFieldValue(name, values[i], ddmFormValues);
+		for (String value : values) {
+			addDDMFormFieldValue(name, value, ddmFormValues);
 		}
 	}
 

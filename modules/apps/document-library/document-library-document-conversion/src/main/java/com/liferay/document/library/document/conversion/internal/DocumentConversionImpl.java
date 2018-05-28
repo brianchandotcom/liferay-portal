@@ -197,9 +197,9 @@ public class DocumentConversionImpl implements DocumentConversion {
 
 		String periodAndExtension = StringPool.PERIOD.concat(extension);
 
-		for (int i = 0; i < _COMPARABLE_FILE_EXTENSIONS.length; i++) {
-			if (StringPool.STAR.equals(_COMPARABLE_FILE_EXTENSIONS[i]) ||
-				periodAndExtension.equals(_COMPARABLE_FILE_EXTENSIONS[i])) {
+		for (String comparableFileExtension : _COMPARABLE_FILE_EXTENSIONS) {
+			if (StringPool.STAR.equals(comparableFileExtension) ||
+				periodAndExtension.equals(comparableFileExtension)) {
 
 				enabled = true;
 
@@ -236,10 +236,8 @@ public class DocumentConversionImpl implements DocumentConversion {
 			return false;
 		}
 
-		String[] conversions = getConversions(extension);
-
-		for (int i = 0; i < conversions.length; i++) {
-			if (conversions[i].equals("txt")) {
+		for (String conversion : getConversions(extension)) {
+			if (conversion.equals("txt")) {
 				return true;
 			}
 		}

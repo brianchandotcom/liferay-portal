@@ -324,18 +324,18 @@ public class DDMFormInstanceFactoryTest {
 		String[][] expectedParameters =
 			{{"Parameter 1", "Value 1"}, {"Parameter 2", "Value 2"}};
 
-		for (int i = 0; i < expectedParameters.length; i++) {
+		for (String[] expectedParameter : expectedParameters) {
 			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 			ddmFormFieldValue.setName("parameters");
 
 			ddmFormFieldValue.addNestedDDMFormFieldValue(
 				DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-					"name", expectedParameters[i][0]));
+					"name", expectedParameter[0]));
 
 			ddmFormFieldValue.addNestedDDMFormFieldValue(
 				DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-					"value", expectedParameters[i][1]));
+					"value", expectedParameter[1]));
 
 			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}

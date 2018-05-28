@@ -174,7 +174,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 								}
 								%>
 
-								<div class="active progress progress-striped progress-xs">
+								<div class="active progress progress-xs">
 									<div class="progress-bar" style="width: <%= percentage %>%;">
 										<c:if test="<%= allProgressBarCountersTotal > 0 %>">
 											<%= percentage + StringPool.PERCENT %>

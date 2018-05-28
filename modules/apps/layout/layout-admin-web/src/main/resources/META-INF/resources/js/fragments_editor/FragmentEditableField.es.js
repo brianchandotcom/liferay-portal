@@ -57,6 +57,7 @@ class FragmentEditableField extends Component {
 			this._windowResizeHandler = null;
 		}
 
+		this._clearTooltip();
 		this._destroyProcessors();
 	}
 
@@ -126,12 +127,35 @@ class FragmentEditableField extends Component {
 	 */
 
 	_alignTooltip() {
+		this._clearTooltip();
+
 		if (this.refs.editable && this.refs.tooltip) {
-			Align.align(
-				this.refs.tooltip,
-				this.refs.editable,
-				Align.Top
+			this._tooltipElement = this.refs.tooltip;
+			document.body.appendChild(this.refs.tooltip);
+
+			requestAnimationFrame(
+				() => {
+					Align.align(
+						this.refs.tooltip,
+						this.refs.editable,
+						Align.Top
+					);
+				}
 			);
+		}
+	}
+
+	/**
+	 * Clears an existing tooltip element if any
+	 * and resets _tooltipElement property.
+	 * @private
+	 * @review
+	 */
+
+	_clearTooltip() {
+		if (this._tooltipElement) {
+			document.body.removeChild(this._tooltipElement);
+			this._tooltipElement = null;
 		}
 	}
 
@@ -393,7 +417,20 @@ FragmentEditableField.STATE = {
 	 * @type {boolean}
 	 */
 
-	_showTooltip: Config.internal().bool().value(false)
+	_showTooltip: Config.internal().bool().value(false),
+
+	/**
+	 * Internal tooltip variable using for manage tooltip element
+	 * outside of the component
+	 * @default null
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @private
+	 * @review
+	 * @type {object|null}
+	 */
+
+	_tooltipElement: Config.internal().object().value(null)
 };
 
 Soy.register(FragmentEditableField, templates);

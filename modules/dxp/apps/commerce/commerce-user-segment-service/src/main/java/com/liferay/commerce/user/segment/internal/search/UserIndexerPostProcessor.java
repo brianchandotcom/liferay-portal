@@ -56,6 +56,10 @@ public class UserIndexerPostProcessor extends BaseIndexerPostProcessor {
 		long[] commerceUserSegmentEntryIds = GetterUtil.getLongValues(
 			searchContext.getAttribute("commerceUserSegmentEntryIds"), null);
 
+		if(commerceUserSegmentEntryIds == null){
+			return;
+		}
+
 		for (long commerceUserSegmentEntryId : commerceUserSegmentEntryIds) {
 			List<CommerceUserSegmentCriterion> commerceUserSegmentCriteria =
 				_commerceUserSegmentCriterionLocalService.

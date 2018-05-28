@@ -128,9 +128,9 @@ public class AssertEqualsCheck extends BaseCheck {
 			return null;
 		}
 
-		DetailAST firstChild = detailAST.getFirstChild();
+		DetailAST firstChildAST = detailAST.getFirstChild();
 
-		return _getVariableNameForCall(firstChild, methodName);
+		return _getVariableNameForCall(firstChildAST, methodName);
 	}
 
 	private boolean _isHits(DetailAST detailAST) {

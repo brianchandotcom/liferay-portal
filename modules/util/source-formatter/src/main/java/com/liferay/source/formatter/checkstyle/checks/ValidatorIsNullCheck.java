@@ -49,9 +49,9 @@ public class ValidatorIsNullCheck extends BaseCheck {
 
 			DetailAST expressionAST = elistAST.findFirstToken(TokenTypes.EXPR);
 
-			DetailAST child = expressionAST.getFirstChild();
+			DetailAST childAST = expressionAST.getFirstChild();
 
-			if (child.getType() == TokenTypes.NUM_INT) {
+			if (childAST.getType() == TokenTypes.NUM_INT) {
 				log(
 					methodCallAST.getLineNo(), _MSG_METHOD_INVALID_NAME,
 					StringBundler.concat(className, ".", methodName, "(long)"));
@@ -59,21 +59,21 @@ public class ValidatorIsNullCheck extends BaseCheck {
 				continue;
 			}
 
-			if (child.getType() != TokenTypes.IDENT) {
+			if (childAST.getType() != TokenTypes.IDENT) {
 				continue;
 			}
 
 			DetailAST typeAST = DetailASTUtil.getVariableTypeAST(
-				methodCallAST, child.getText());
+				methodCallAST, childAST.getText());
 
 			if (typeAST == null) {
 				continue;
 			}
 
-			child = typeAST.getFirstChild();
+			childAST = typeAST.getFirstChild();
 
-			if ((child.getType() == TokenTypes.LITERAL_INT) ||
-				(child.getType() == TokenTypes.LITERAL_LONG)) {
+			if ((childAST.getType() == TokenTypes.LITERAL_INT) ||
+				(childAST.getType() == TokenTypes.LITERAL_LONG)) {
 
 				log(
 					methodCallAST.getLineNo(), _MSG_METHOD_INVALID_NAME,

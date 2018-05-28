@@ -69,10 +69,10 @@ public class InstanceofOrderCheck extends BaseCheck {
 	}
 
 	private DetailAST _getNextConditionAST(DetailAST detailAST) {
-		DetailAST nextSibling = detailAST.getNextSibling();
+		DetailAST nextSiblingAST = detailAST.getNextSibling();
 
-		if (nextSibling != null) {
-			return nextSibling;
+		if (nextSiblingAST != null) {
+			return nextSiblingAST;
 		}
 
 		DetailAST parentAST = detailAST.getParent();

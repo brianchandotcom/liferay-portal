@@ -50,9 +50,9 @@ public class PersistenceCallCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST parent = detailAST.getParent();
+		DetailAST parentAST = detailAST.getParent();
 
-		if (parent != null) {
+		if (parentAST != null) {
 			return;
 		}
 

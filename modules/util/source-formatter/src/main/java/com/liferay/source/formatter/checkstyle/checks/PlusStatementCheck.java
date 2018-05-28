@@ -46,25 +46,25 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 			return;
 		}
 
-		DetailAST firstChild = detailAST.getFirstChild();
+		DetailAST firstChildAST = detailAST.getFirstChild();
 
-		String literalString1 = _getLiteralString(firstChild);
+		String literalString1 = _getLiteralString(firstChildAST);
 
 		if (literalString1 == null) {
 			return;
 		}
 
-		DetailAST lastChild = detailAST.getLastChild();
+		DetailAST lastChildAST = detailAST.getLastChild();
 
-		String literalString2 = _getLiteralString(lastChild);
+		String literalString2 = _getLiteralString(lastChildAST);
 
 		if (literalString2 == null) {
 			return;
 		}
 
-		if (firstChild.getLineNo() == lastChild.getLineNo()) {
+		if (firstChildAST.getLineNo() == lastChildAST.getLineNo()) {
 			log(
-				firstChild.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				firstChildAST.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
 				literalString1, literalString2);
 
 			return;
@@ -77,8 +77,8 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 		checkLiteralStringStartAndEndCharacter(
 			literalString1, literalString2, detailAST.getLineNo());
 
-		String line1 = getLine(lastChild.getLineNo() - 2);
-		String line2 = getLine(lastChild.getLineNo() - 1);
+		String line1 = getLine(lastChildAST.getLineNo() - 2);
+		String line2 = getLine(lastChildAST.getLineNo() - 1);
 
 		if (_getLeadingTabCount(line1) == _getLeadingTabCount(line2)) {
 			return;
@@ -91,7 +91,7 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 
 		if ((lineLength1 + trimmedLine2.length() - 4) <= maxLineLength) {
 			log(
-				lastChild.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				lastChildAST.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
 				literalString1, literalString2);
 
 			return;
@@ -114,7 +114,7 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 
 		if (pos != -1) {
 			log(
-				lastChild.getLineNo(), MSG_MOVE_LITERAL_STRING,
+				lastChildAST.getLineNo(), MSG_MOVE_LITERAL_STRING,
 				literalString2.substring(0, pos + 1));
 		}
 	}

@@ -319,10 +319,10 @@ public class ChainingCheck extends BaseCheck {
 
 		DetailAST nameAST = null;
 
-		DetailAST firstChild = dotAST.getFirstChild();
+		DetailAST firstChildAST = dotAST.getFirstChild();
 
-		if (firstChild.getType() == TokenTypes.LITERAL_NEW) {
-			nameAST = firstChild.findFirstToken(TokenTypes.IDENT);
+		if (firstChildAST.getType() == TokenTypes.LITERAL_NEW) {
+			nameAST = firstChildAST.findFirstToken(TokenTypes.IDENT);
 		}
 		else {
 			nameAST = dotAST.findFirstToken(TokenTypes.IDENT);

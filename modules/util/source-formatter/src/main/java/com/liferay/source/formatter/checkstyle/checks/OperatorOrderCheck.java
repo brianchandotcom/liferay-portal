@@ -34,18 +34,22 @@ public class OperatorOrderCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST firstChild = detailAST.getFirstChild();
+		DetailAST firstChildAST = detailAST.getFirstChild();
 
-		if (!ArrayUtil.contains(_LITERAL_OR_NUM_TYPES, firstChild.getType())) {
+		if (!ArrayUtil.contains(
+				_LITERAL_OR_NUM_TYPES, firstChildAST.getType())) {
+
 			return;
 		}
 
-		DetailAST secondChild = firstChild.getNextSibling();
+		DetailAST secondChildAST = firstChildAST.getNextSibling();
 
-		if (!ArrayUtil.contains(_LITERAL_OR_NUM_TYPES, secondChild.getType())) {
+		if (!ArrayUtil.contains(
+				_LITERAL_OR_NUM_TYPES, secondChildAST.getType())) {
+
 			log(
-				firstChild.getLineNo(), _MSG_LITERAL_OR_NUM_LEFT_ARGUMENT,
-				firstChild.getText());
+				firstChildAST.getLineNo(), _MSG_LITERAL_OR_NUM_LEFT_ARGUMENT,
+				firstChildAST.getText());
 		}
 	}
 

@@ -45,15 +45,15 @@ public class SizeIsZeroCheck extends BaseCheck {
 	private void _checkMethodCall(
 		DetailAST detailAST, DetailAST methodCallAST) {
 
-		DetailAST nextSibling = methodCallAST.getNextSibling();
+		DetailAST nextSiblingAST = methodCallAST.getNextSibling();
 
-		if ((nextSibling == null) ||
-			(nextSibling.getType() != TokenTypes.NUM_INT)) {
+		if ((nextSiblingAST == null) ||
+			(nextSiblingAST.getType() != TokenTypes.NUM_INT)) {
 
 			return;
 		}
 
-		int compareCount = GetterUtil.getInteger(nextSibling.getText());
+		int compareCount = GetterUtil.getInteger(nextSiblingAST.getText());
 
 		DetailAST parentAST = methodCallAST.getParent();
 

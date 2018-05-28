@@ -126,10 +126,10 @@ public class IndentationCheck extends BaseCheck {
 			if ((grandParentAST.getType() == TokenTypes.EXTENDS_CLAUSE) ||
 				(grandParentAST.getType() == TokenTypes.IMPLEMENTS_CLAUSE)) {
 
-				DetailAST previousSibling = parentAST.getPreviousSibling();
+				DetailAST previousSiblingAST = parentAST.getPreviousSibling();
 
-				if ((previousSibling == null) ||
-					(previousSibling.getType() != TokenTypes.COMMA)) {
+				if ((previousSiblingAST == null) ||
+					(previousSiblingAST.getType() != TokenTypes.COMMA)) {
 
 					return expectedTabCount;
 				}
@@ -231,9 +231,9 @@ public class IndentationCheck extends BaseCheck {
 			}
 
 			if (parentAST.getType() == TokenTypes.RESOURCE) {
-				DetailAST previousSibling = parentAST.getPreviousSibling();
+				DetailAST previousSiblingAST = parentAST.getPreviousSibling();
 
-				if (previousSibling != null) {
+				if (previousSiblingAST != null) {
 					return expectedTabCount;
 				}
 			}
@@ -303,22 +303,22 @@ public class IndentationCheck extends BaseCheck {
 	private Set<Integer> _addTabsForArithmeticOperators(
 		Set<Integer> lineNumbers, int lineNumber, DetailAST detailAST) {
 
-		DetailAST firstChild = detailAST;
+		DetailAST firstChildAST = detailAST;
 
 		while (true) {
-			int lineNo = firstChild.getLineNo();
+			int lineNo = firstChildAST.getLineNo();
 
 			if (lineNo < lineNumber) {
 				lineNumbers.add(lineNo);
 			}
 
 			if (!ArrayUtil.contains(
-					_ARITHMETIC_OPERATORS, firstChild.getType())) {
+					_ARITHMETIC_OPERATORS, firstChildAST.getType())) {
 
 				break;
 			}
 
-			firstChild = firstChild.getFirstChild();
+			firstChildAST = firstChildAST.getFirstChild();
 		}
 
 		return lineNumbers;
@@ -331,20 +331,20 @@ public class IndentationCheck extends BaseCheck {
 			return lineNumbers;
 		}
 
-		DetailAST firstChild = detailAST;
+		DetailAST firstChildAST = detailAST;
 
 		while (true) {
-			if (firstChild.getType() != TokenTypes.DOT) {
+			if (firstChildAST.getType() != TokenTypes.DOT) {
 				break;
 			}
 
-			int lineNo = firstChild.getLineNo();
+			int lineNo = firstChildAST.getLineNo();
 
 			if (lineNo < lineNumber) {
 				lineNumbers.add(lineNo);
 			}
 
-			firstChild = firstChild.getFirstChild();
+			firstChildAST = firstChildAST.getFirstChild();
 		}
 
 		return lineNumbers;
@@ -374,15 +374,15 @@ public class IndentationCheck extends BaseCheck {
 	private Set<Integer> _addTabsForTypecast(
 		Set<Integer> lineNumbers, int lineNumber, DetailAST detailAST) {
 
-		DetailAST previousSibling = detailAST.getPreviousSibling();
+		DetailAST previousSiblingAST = detailAST.getPreviousSibling();
 
-		if ((previousSibling == null) ||
-			(previousSibling.getType() != TokenTypes.TYPECAST)) {
+		if ((previousSiblingAST == null) ||
+			(previousSiblingAST.getType() != TokenTypes.TYPECAST)) {
 
 			return lineNumbers;
 		}
 
-		int lineNo = previousSibling.getLineNo();
+		int lineNo = previousSiblingAST.getLineNo();
 
 		if (lineNo < lineNumber) {
 			lineNumbers.add(lineNo);
@@ -434,18 +434,19 @@ public class IndentationCheck extends BaseCheck {
 							parentAST, parentAST.getLineNo(),
 							TokenTypes.LPAREN);
 
-						DetailAST nextSibling = lparenAST.getNextSibling();
+						DetailAST nextSiblingAST = lparenAST.getNextSibling();
 
 						while (true) {
-							if ((nextSibling == null) ||
-								(nextSibling.getType() == TokenTypes.RPAREN)) {
+							if ((nextSiblingAST == null) ||
+								(nextSiblingAST.getType() ==
+									TokenTypes.RPAREN)) {
 
-								rparenAST = nextSibling;
+								rparenAST = nextSiblingAST;
 
 								break;
 							}
 
-							nextSibling = nextSibling.getNextSibling();
+							nextSiblingAST = nextSiblingAST.getNextSibling();
 						}
 					}
 
@@ -901,19 +902,23 @@ public class IndentationCheck extends BaseCheck {
 			return false;
 		}
 
-		DetailAST firstChild = detailAST.getFirstChild();
+		DetailAST firstChildAST = detailAST.getFirstChild();
 
-		if ((firstChild == null) || (firstChild.getType() != TokenTypes.DOT)) {
+		if ((firstChildAST == null) ||
+			(firstChildAST.getType() != TokenTypes.DOT)) {
+
 			return false;
 		}
 
-		DetailAST lastChild = firstChild.getLastChild();
+		DetailAST lastChildAST = firstChildAST.getLastChild();
 
-		if ((lastChild == null) || (lastChild.getType() != TokenTypes.IDENT)) {
+		if ((lastChildAST == null) ||
+			(lastChildAST.getType() != TokenTypes.IDENT)) {
+
 			return false;
 		}
 
-		String name = lastChild.getText();
+		String name = lastChildAST.getText();
 
 		if (name.equals("concat")) {
 			return true;
@@ -956,11 +961,11 @@ public class IndentationCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST firstChild = parentAST.getFirstChild();
+			DetailAST firstChildAST = parentAST.getFirstChild();
 
-			firstChild = firstChild.getFirstChild();
+			firstChildAST = firstChildAST.getFirstChild();
 
-			if (_isConcatMethod(firstChild)) {
+			if (_isConcatMethod(firstChildAST)) {
 				return true;
 			}
 

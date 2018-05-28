@@ -15,7 +15,19 @@
 	{@param pathThemeImages: string}
 	{@param portletNamespace: string}
 
-	<ul class="border col-lg-4 col-md-6 layout-column mb-0 p-0 show-quick-actions-on-hover" ref="layoutItemsWrapper">
+	{let $layoutColumnClasses kind="text"}
+		col-11
+		{sp}col-lg-4
+		{sp}col-md-6
+		{sp}layout-column
+		{sp}show-quick-actions-on-hover
+
+		{if length($layoutColumn) == 0}
+			{sp}layout-column--placeholder
+		{/if}
+	{/let}
+
+	<ul class="{$layoutColumnClasses}" ref="layoutItemsWrapper">
 		{foreach $layoutColumnItem in $layoutColumn}
 			{call .layoutColumnItem}
 				{param layoutColumnItem: $layoutColumnItem /}

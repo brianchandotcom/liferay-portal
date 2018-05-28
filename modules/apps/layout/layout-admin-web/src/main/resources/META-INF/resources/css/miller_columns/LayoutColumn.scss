@@ -1,16 +1,38 @@
 @import "mixins";
 
-.layout-column .quick-action-menu {
-	position: static;
-}
+.layout-column {
+	margin: 0;
+	padding: 0;
 
-@include sm {
-	.layout-column {
+	& + & {
+		border-left: solid #CCC thin;
+	}
+
+	&--placeholder {
+		display: none;
+	}
+
+	.active-item {
+		background-color: #F0F5FF;
+	}
+
+	.list-group-item {
+		border-left: none;
+		border-right: none;
+	}
+
+	.quick-action-menu {
+		position: static;
+	}
+
+	@include md {
 		height: calc(100vh - 384px);
+		min-height: 10rem;
 		overflow-y: scroll;
 
-		.active-item {
-			background-color: #F0F5FF;
+		&--placeholder {
+			display: block;
+			opacity: 0.5;
 		}
 	}
 }

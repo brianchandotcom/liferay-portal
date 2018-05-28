@@ -40,7 +40,7 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 		<%= rowBreak %>
 	</c:when>
 	<c:otherwise>
-		<aui:script require="metal-dom/src/all/dom as dom,clay-alert@2.0.2/lib/ClayToast as ClayToast">
+		<aui:script require="metal-dom/src/all/dom as dom,clay-alert@2.1.4/lib/ClayToast as ClayToast">
 			let alertContainer = document.getElementById('alertContainer');
 
 			if (!alertContainer) {

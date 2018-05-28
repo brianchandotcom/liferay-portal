@@ -398,6 +398,16 @@ public class LayoutPageTemplateEntryServiceImpl
 	}
 
 	@Override
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntriesByType(
+		long groupId, long layoutPageTemplateCollectionId, int type, int start,
+		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
+
+		return layoutPageTemplateEntryPersistence.filterFindByG_L_T(
+			groupId, layoutPageTemplateCollectionId, type, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public int getLayoutPageTemplateEntriesCount(long groupId, int type) {
 		return getLayoutPageTemplateEntriesCount(
 			groupId, type, WorkflowConstants.STATUS_ANY);
@@ -533,6 +543,14 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntryPersistence.filterCountByG_T_LikeN_S(
 			groupId, _customSQL.keywords(name, WildcardMode.SURROUND)[0], type,
 			status);
+	}
+
+	@Override
+	public int getLayoutPageTemplateEntriesCountByType(
+		long groupId, long layoutPageTemplateCollectionId, int type) {
+
+		return layoutPageTemplateEntryPersistence.filterCountByG_L_T(
+			groupId, layoutPageTemplateCollectionId, type);
 	}
 
 	@Override

@@ -88,27 +88,27 @@ $translatedColor: #3DC513;
 	display: inline-block;
 	min-width: 1rem;
 	position: relative;
+}
 
-	> .tooltip {
-		font-size: 0.8rem;
-		max-width: 100vw;
-		position: absolute;
+.lfr-editable-wrapper__tooltip.tooltip {
+	font-size: 0.8rem;
+	max-width: 100vw;
+	position: absolute;
 
-		.tooltip-inner {
-			max-width: 100%;
-		}
+	.tooltip-inner {
+		max-width: 100%;
+	}
 
-		.lfr-editable-wrapper__tooltip-btn-group {
-			display: flex;
-			flex-flow: nowrap;
-		}
+	.lfr-editable-wrapper__tooltip-btn-group {
+		display: flex;
+		flex-flow: nowrap;
+	}
 
-		.btn {
-			font-size: 1em;
-		}
+	.btn {
+		font-size: 1em;
+	}
 
-		.btn + .btn {
-			margin-left: 1em;
-		}
+	.btn + .btn {
+		margin-left: 1em;
 	}
 }

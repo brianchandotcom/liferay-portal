@@ -19,15 +19,21 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -35,6 +41,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -42,6 +50,7 @@ import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -111,6 +120,94 @@ public class AssetVocabularyServiceTest {
 		Assert.assertNull(
 			AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
 				vocabulary.getVocabularyId()));
+	}
+
+	@Test
+	public void testGetGroupVocabulariesWithNoViewableVocabularies()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
+		AssetVocabularyLocalServiceUtil.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
+
+			List<AssetVocabulary> vocabularies =
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					_group.getGroupId(), false);
+
+			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+		}
+		finally {
+			UserLocalServiceUtil.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetGroupVocabulariesWithNoViewableVocabulariesDoesNotCreateDefaultVocabulary()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
+		AssetVocabularyLocalServiceUtil.addVocabulary(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try (ContextUserReplace contextUserReplace =
+				new ContextUserReplace(user, permissionChecker)) {
+
+			List<AssetVocabulary> vocabularies =
+				AssetVocabularyServiceUtil.getGroupVocabularies(
+					_group.getGroupId(), true);
+
+			Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+		}
+		finally {
+			UserLocalServiceUtil.deleteUser(user);
+		}
+	}
+
+	@Test
+	public void testGetGroupVocabulariesWithNoVocabularies() throws Exception {
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				_group.getGroupId(), false);
+
+		Assert.assertTrue(ListUtil.isEmpty(vocabularies));
+	}
+
+	@Test
+	public void testGetGroupVocabulariesWithNoVocabulariesCreatesDefaultVocabulary()
+		throws Exception {
+
+		List<AssetVocabulary> vocabularies =
+			AssetVocabularyServiceUtil.getGroupVocabularies(
+				_group.getGroupId(), true);
+
+		Assert.assertEquals(vocabularies.toString(), 1, vocabularies.size());
 	}
 
 	@Test

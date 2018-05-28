@@ -145,7 +145,7 @@
 	</command>
 
 	<command name="viewWorkflowStatus">
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_WORKFLOW_STATUS" value1="${workflowStatus}">
+		<execute function="AssertTextEquals" locator1="Card#GENERIC_SMALL_TEXT" value1="${workflowStatus}">
 			<var name="key_rowEntry" value="${rowEntry}" />
 		</execute>
 	</command>

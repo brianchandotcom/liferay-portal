@@ -1,3 +1,5 @@
+const applicationId = 'Timing';
+
 /**
  * Sends page load information on the window load event
  * @param {object} analytics The Analytics client
@@ -10,7 +12,7 @@ function onload(analytics) {
 		pageLoadTime,
 	};
 
-	analytics.send('load', 'timing', props);
+	analytics.send('load', applicationId, props);
 }
 
 /**
@@ -25,7 +27,7 @@ function unload(analytics) {
 		viewDuration,
 	};
 
-	analytics.send('unload', 'timing', props);
+	analytics.send('unload', applicationId, props);
 }
 
 /**

@@ -474,7 +474,6 @@ if (Validator.isNull(liferayAnalyticsKey)) {
 						Analytics.dispose();
 
 						Analytics.create(config);
-
 						Analytics.send('view', 'Layout', {'page': event.path});
 					}
 				);

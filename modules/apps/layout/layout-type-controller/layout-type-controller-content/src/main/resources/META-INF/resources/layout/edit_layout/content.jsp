@@ -14,4 +14,10 @@
  */
 --%>
 
-<%@ include file="/layout/view/init.jsp" %>
+<%@ include file="/layout/edit_layout/init.jsp" %>
+
+<liferay-portlet:runtime
+	portletName="<%= ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET %>"
+/>
+
+<liferay-ui:layout-common />

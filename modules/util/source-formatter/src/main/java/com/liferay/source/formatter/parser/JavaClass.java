@@ -25,10 +25,10 @@ import java.util.List;
 public class JavaClass extends BaseJavaTerm {
 
 	public JavaClass(
-		String name, String content, String accessModifier, boolean isAbstract,
-		boolean isStatic, boolean anonymous) {
+		String name, String content, String accessModifier, int lineNumber,
+		boolean isAbstract, boolean isStatic, boolean anonymous) {
 
-		super(name, content, accessModifier, isAbstract, isStatic);
+		super(name, content, accessModifier, lineNumber, isAbstract, isStatic);
 
 		_anonymous = anonymous;
 	}

@@ -1,8 +1,35 @@
 {
+	"config": {
+		"imports": {
+			"frontend-js-metal-web": {
+				"metal": "^2.16.0",
+				"metal-component": "^2.16.5",
+				"metal-dom": "^2.16.0",
+				"metal-events": "^2.16.5",
+				"metal-position": "^2.0.0",
+				"metal-soy": "^2.16.0",
+				"metal-state": "^2.16.0",
+				"metal-web-component": "^2.16.0"
+			}
+		}
+	},
     "exclude": {
         "*": [
             "src/__tests__/**/*"
-        ]
+        ],
+        "incremental-dom": true,
+        "incremental-dom-string": true,
+        "metal": true,
+        "metal-anim": true,
+        "metal-component": true,
+        "metal-dom": true,
+        "metal-events": true,
+        "metal-incremental-dom": true,
+        "metal-position": true,
+        "metal-soy": true,
+        "metal-soy-bundle": true,
+        "metal-state": true,
+        "metal-web-component": true
     },
     "output": "classes/META-INF/resources/",
     "preset": "liferay-npm-bundler-preset-standard"

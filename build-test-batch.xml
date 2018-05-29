@@ -2814,6 +2814,142 @@ app.server.type=@{app.server.type}]]></echo>
 		</run-batch-test>
 	</target>
 
+	<target name="jsf-jdk8">
+		<run-batch-test>
+			<test-action>
+				<database-test-run-test database.type="mysql" database.version="${database.version}" stop.app.server="true">
+					<test-action>
+						<get-database-property property.name="database.version" />
+
+						<antcall target="prepare-portal-ext-properties" />
+
+						<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties"><![CDATA[
+							admin.email.from.address=${admin.email.from.address}
+							admin.email.from.name=${admin.email.from.name}
+							browser.launcher.url=
+							setup.wizard.enabled=false
+							terms.of.use.required=false
+							users.reminder.queries.enabled=false
+							users.reminder.queries.custom.question.enabled=false
+							layout.parallel.render.enable=false]]></echo>
+
+						<local name="portal.ext.properties" />
+
+						<loadfile
+							property="portal.ext.properties"
+							srcFile="${app.server.classes.portal.dir}/portal-ext.properties"
+						>
+							<filterchain>
+								<tokenfilter>
+									<replacestring from="captcha.max.challenges=-1" to="" />
+								</tokenfilter>
+								<trim />
+								<ignoreblank />
+							</filterchain>
+						</loadfile>
+
+						<echo file="${app.server.classes.portal.dir}/portal-ext.properties">${portal.ext.properties}</echo>
+
+						<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
+
+						<mirrors-get
+							dest="${project.dir}"
+							src="${faces.war.url}"
+						/>
+
+						<local name="faces.war.file.name" />
+
+						<basename file="${faces.war.url}" property="faces.war.file.name" />
+
+						<unzip
+							dest="${liferay.home}/deploy/"
+							src="${project.dir}/${faces.war.file.name}"
+						>
+							<patternset
+								excludes="com.liferay.faces.test.setup.hook*.war"
+								includes="*.war"
+							/>
+						</unzip>
+
+						<antcall target="start-app-server" />
+
+						<unzip
+							dest="${liferay.home}/deploy/"
+							src="${project.dir}/${faces.war.file.name}"
+						>
+							<patternset
+								includes="com.liferay.faces.test.setup.hook*.war"
+							/>
+						</unzip>
+
+						<wait-for-app-server-log-message log.message="Hook for com.liferay.faces.test.setup.hook is available for use" />
+
+						<execute dir="${liferay.faces.showcase.dir}/jsf-showcase-webapp">
+							mvn clean install --quiet -P selenium -Dit.test=none -DfailIfNoTests=false
+						</execute>
+
+						<execute dir="${liferay.faces.alloy.dir}/demo/alloy-showcase-webapp">
+							mvn clean install --quiet -P selenium -Dit.test=none -DfailIfNoTests=false
+						</execute>
+
+						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration">
+							mvn clean install --quiet
+						</execute>
+
+						<execute dir="${liferay.faces.portal.dir}/test/integration">
+							mvn clean install --quiet
+						</execute>
+
+						<execute dir="${liferay.faces.bridge.impl.dir}/tck/">
+							mvn clean install --quiet
+						</execute>
+
+						<execute dir="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet" failonerror="false">
+							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
+						</execute>
+
+						<execute dir="${liferay.faces.bridge.impl.dir}/test/integration" failonerror="false">
+							mvn verify -P selenium,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
+						</execute>
+
+						<execute dir="${liferay.faces.portal.dir}/test/integration" failonerror="false">
+							mvn verify -P selenium,firefox -Dwebdriver.firefox.bine=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
+						</execute>
+
+						<execute dir="${liferay.faces.portal.dir}/test/integration" failonerror="false">
+							mvn verify -P selenium-portal-showcase,firefox -Dwebdriver.firefox.bin=${browser.firefox.bin.file} -Dintegration.browser.driver.wait.time.out=300
+						</execute>
+					</test-action>
+				</database-test-run-test>
+			</test-action>
+
+			<test-set-up>
+				<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
+
+				<antcall inheritAll="false" target="prepare-test-bundle">
+					<param name="app.server.type" value="${app.server.type}" />
+					<param name="test.app.server.bin.dir" value="${test.app.server.bin.dir}" />
+					<param name="test.build.bundle.zip.url" value="${test.portal.bundle.zip.url}" />
+					<param name="test.build.fix.pack.zip.url" value="${test.build.fix.pack.zip.url}" />
+					<param name="test.build.portal.dependencies.zip.url" value="${test.portal.bundle.dependencies.zip.url}" />
+					<param name="test.build.portal.osgi.zip.url" value="${test.portal.bundle.osgi.zip.url}" />
+					<param name="test.build.portal.war.url" value="${test.portal.bundle.war.url}" />
+					<param name="test.fix.pack.base.url" value="${test.fix.pack.base.url}" />
+				</antcall>
+
+				<antcall target="deploy-license-xml">
+					<param name="test.build.license.xml.zip.url" value="${test.license.xml.url}" />
+				</antcall>
+
+				<antcall target="deploy-sql-zip">
+					<param name="test.sql.zip.url" value="${test.sql.zip.url}" />
+				</antcall>
+
+				<antcall inheritAll="false" target="setup-sdk" />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="legacy-functional-bundle-tomcat-db2">
 		<run-legacy-database-dump database.type="db2" />
 	</target>

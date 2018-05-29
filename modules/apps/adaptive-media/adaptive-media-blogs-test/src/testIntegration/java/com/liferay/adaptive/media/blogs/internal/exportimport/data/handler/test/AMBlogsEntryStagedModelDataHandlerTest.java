@@ -272,7 +272,7 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 
 	private String _getImgTag(long fileEntryId) throws Exception {
 		return String.format(
-			"<img alt=\"alt\" class=\"a class\" data-fileEntryId=\"%s\" " +
+			"<img alt=\"alt\" class=\"a class\" data-fileentryid=\"%s\" " +
 				"src=\"theURL\" />",
 			fileEntryId);
 	}
@@ -280,7 +280,7 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 	private String _getPictureTag(FileEntry fileEntry) throws Exception {
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("<picture data-fileEntryId=\"");
+		sb.append("<picture data-fileentryid=\"");
 		sb.append(fileEntry.getFileEntryId());
 		sb.append("\">");
 		sb.append("<source></source>");

@@ -16,19 +16,26 @@ package com.liferay.site.initializer;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.List;
+import com.liferay.site.exception.InitializationException;
+
+import java.util.Locale;
 
 /**
  * @author Marco Leo
  */
 @ProviderType
-public interface GroupInitializerRegistry {
+public interface SiteInitializer {
 
-	public GroupInitializer getGroupInitializer(String key);
+	public String getDescription(Locale locale);
 
-	public List<GroupInitializer> getGroupInitializers(long companyId);
+	public String getKey();
 
-	public List<GroupInitializer> getGroupInitializers(
-		long companyId, boolean active);
+	public String getName(Locale locale);
+
+	public String getThumbnailSrc();
+
+	public void initialize(long groupId) throws InitializationException;
+
+	public boolean isActive(long companyId);
 
 }

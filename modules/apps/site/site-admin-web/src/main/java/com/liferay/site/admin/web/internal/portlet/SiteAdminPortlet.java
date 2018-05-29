@@ -100,8 +100,8 @@ import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.handler.GroupExceptionRequestHandler;
 import com.liferay.site.constants.SiteWebKeys;
-import com.liferay.site.initializer.GroupInitializer;
-import com.liferay.site.initializer.GroupInitializerRegistry;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.sites.kernel.util.Sites;
@@ -379,13 +379,13 @@ public class SiteAdminPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			SiteWebKeys.GROUP_INITIALIZER_REGISTRY, groupInitializerRegistry);
-
-		renderRequest.setAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER, groupSearchProvider);
 
 		renderRequest.setAttribute(
 			SiteWebKeys.GROUP_URL_PROVIDER, groupURLProvider);
+
+		renderRequest.setAttribute(
+			SiteWebKeys.SITE_INITIALIZER_REGISTRY, siteInitializerRegistry);
 
 		if (SessionErrors.contains(
 				renderRequest, NoSuchBackgroundTaskException.class.getName()) ||
@@ -1030,20 +1030,19 @@ public class SiteAdminPortlet extends MVCPortlet {
 		else if (creationType.equals(
 					SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
 
-			String groupInitializerKey = ParamUtil.getString(
-				actionRequest, "groupInitializerKey");
+			String siteInitializerKey = ParamUtil.getString(
+				actionRequest, "siteInitializerKey");
 
-			GroupInitializer groupInitializer =
-				groupInitializerRegistry.getGroupInitializer(
-					groupInitializerKey);
+			SiteInitializer siteInitializer =
+				siteInitializerRegistry.getSiteInitializer(siteInitializerKey);
 
 			if (!liveGroup.isStaged() || liveGroup.isStagedRemotely()) {
-				groupInitializer.initialize(liveGroup.getGroupId());
+				siteInitializer.initialize(liveGroup.getGroupId());
 			}
 			else {
 				Group stagingGroup = liveGroup.getStagingGroup();
 
-				groupInitializer.initialize(stagingGroup.getGroupId());
+				siteInitializer.initialize(stagingGroup.getGroupId());
 			}
 		}
 
@@ -1057,9 +1056,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 	@Reference
 	protected GroupExceptionRequestHandler groupExceptionRequestHandler;
-
-	@Reference
-	protected GroupInitializerRegistry groupInitializerRegistry;
 
 	protected GroupLocalService groupLocalService;
 	protected GroupSearchProvider groupSearchProvider;
@@ -1080,6 +1076,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected Portal portal;
 
 	protected RoleLocalService roleLocalService;
+
+	@Reference
+	protected SiteInitializerRegistry siteInitializerRegistry;
 
 	@Reference
 	protected Staging staging;

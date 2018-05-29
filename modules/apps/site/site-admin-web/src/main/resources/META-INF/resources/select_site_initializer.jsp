@@ -67,8 +67,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 
 					addLayoutData.put("creation-type", siteInitializerType);
 
-					addLayoutData.put("group-initializer-key", siteInitializerItem.getGroupInitializerKey());
 					addLayoutData.put("layout-set-prototype-id", siteInitializerItem.getLayoutSetPrototypeId());
+					addLayoutData.put("site-initializer-key", siteInitializerItem.getSiteInitializerKey());
 
 					if (siteInitializerType.equals(SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE) || Validator.isBlank(siteInitializerItem.getIcon())) {
 					%>
@@ -139,7 +139,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					var portletURL = new Liferay.PortletURL.createURL('<%= addSiteURL %>');
 
 					portletURL.setParameter('creationType', creationType);
-					portletURL.setParameter('groupInitializerKey', actionElement.dataset.groupInitializerKey);
+					portletURL.setParameter('siteInitializerKey', actionElement.dataset.siteInitializerKey);
 
 					portletURL.setPortletId('<%= SiteAdminPortletKeys.SITE_ADMIN %>');
 

@@ -17,7 +17,7 @@ package com.liferay.site.admin.web.internal.initializer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.site.exception.InitializationException;
-import com.liferay.site.initializer.GroupInitializer;
+import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.Locale;
 
@@ -28,11 +28,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "group.initializer.key=" + BlankSiteGroupInitializer.KEY
+	property = "site.initializer.key=" + BlankSiteInitializer.KEY
 )
-public class BlankSiteGroupInitializer implements GroupInitializer {
+public class BlankSiteInitializer implements SiteInitializer {
 
-	public static final String KEY = "blank-site-group-initializer";
+	public static final String KEY = "blank-site-initializer";
 
 	@Override
 	public String getDescription(Locale locale) {

@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.site.initializer.GroupInitializer;
-import com.liferay.site.initializer.GroupInitializerRegistry;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,19 +38,19 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Alessio Antonio Rendina
  */
 @Component(immediate = true)
-public class GroupInitializerRegistryImpl implements GroupInitializerRegistry {
+public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 
-	public GroupInitializer getGroupInitializer(String key) {
+	public SiteInitializer getSiteInitializer(String key) {
 		if (Validator.isNull(key)) {
 			return null;
 		}
 
-		ServiceWrapper<GroupInitializer> serviceWrapper =
+		ServiceWrapper<SiteInitializer> serviceWrapper =
 			_serviceTrackerMap.getService(key);
 
 		if (serviceWrapper == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No group initializer registered with key " + key);
+				_log.debug("No site initializer registered with key " + key);
 			}
 
 			return null;
@@ -59,36 +59,36 @@ public class GroupInitializerRegistryImpl implements GroupInitializerRegistry {
 		return serviceWrapper.getService();
 	}
 
-	public List<GroupInitializer> getGroupInitializers(long companyId) {
-		return getGroupInitializers(companyId, false);
+	public List<SiteInitializer> getSiteInitializers(long companyId) {
+		return getSiteInitializers(companyId, false);
 	}
 
-	public List<GroupInitializer> getGroupInitializers(
+	public List<SiteInitializer> getSiteInitializers(
 		long companyId, boolean active) {
 
-		List<GroupInitializer> groupInitializers = new ArrayList<>();
+		List<SiteInitializer> siteInitializers = new ArrayList<>();
 
-		List<ServiceWrapper<GroupInitializer>> serviceWrappers =
+		List<ServiceWrapper<SiteInitializer>> serviceWrappers =
 			ListUtil.fromCollection(_serviceTrackerMap.values());
 
-		for (ServiceWrapper<GroupInitializer> serviceWrapper :
+		for (ServiceWrapper<SiteInitializer> serviceWrapper :
 				serviceWrappers) {
 
-			GroupInitializer groupInitializer = serviceWrapper.getService();
+			SiteInitializer siteInitializer = serviceWrapper.getService();
 
-			if (!active || (active && groupInitializer.isActive(companyId))) {
-				groupInitializers.add(groupInitializer);
+			if (!active || (active && siteInitializer.isActive(companyId))) {
+				siteInitializers.add(siteInitializer);
 			}
 		}
 
-		return Collections.unmodifiableList(groupInitializers);
+		return Collections.unmodifiableList(siteInitializers);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, GroupInitializer.class, "group.initializer.key",
-			ServiceTrackerCustomizerFactory.<GroupInitializer>serviceWrapper(
+			bundleContext, SiteInitializer.class, "group.initializer.key",
+			ServiceTrackerCustomizerFactory.<SiteInitializer>serviceWrapper(
 				bundleContext));
 	}
 
@@ -98,9 +98,9 @@ public class GroupInitializerRegistryImpl implements GroupInitializerRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GroupInitializerRegistryImpl.class);
+		SiteInitializerRegistryImpl.class);
 
-	private ServiceTrackerMap<String, ServiceWrapper<GroupInitializer>>
+	private ServiceTrackerMap<String, ServiceWrapper<SiteInitializer>>
 		_serviceTrackerMap;
 
 }

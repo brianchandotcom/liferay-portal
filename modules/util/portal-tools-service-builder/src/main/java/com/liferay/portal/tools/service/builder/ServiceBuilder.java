@@ -589,6 +589,8 @@ public class ServiceBuilder {
 			_badAliasNames = _readLines(_tplBadAliasNames);
 			_badColumnNames = _readLines(_tplBadColumnNames);
 
+			_commercialPlugin = _isCommercialPlugin(Paths.get("."));
+
 			SAXReader saxReader = _getSAXReader();
 
 			Document document = saxReader.read(
@@ -5251,6 +5253,48 @@ public class ServiceBuilder {
 		return false;
 	}
 
+	private boolean _isCommercialPlugin(Path pluginPath) throws IOException {
+		if (pluginPath == null) {
+			return false;
+		}
+
+		Path absolutePath = pluginPath.toAbsolutePath();
+
+		absolutePath = absolutePath.normalize();
+
+		String absoluteFileName = _normalize(absolutePath.toString());
+
+		if (absoluteFileName.contains("/modules/private/apps/")) {
+			return true;
+		}
+
+		File dir = absolutePath.toFile();
+
+		while (dir != null) {
+			File file = new File(dir, "gradle.properties");
+
+			if (file.exists()) {
+				Properties properties = new Properties();
+
+				properties.load(new FileInputStream(file));
+
+				if (properties.containsKey("project.path.prefix")) {
+					String s = properties.getProperty("project.path.prefix");
+
+					if (s.startsWith(":private:apps")) {
+						return true;
+					}
+
+					return false;
+				}
+			}
+
+			dir = dir.getParentFile();
+		}
+
+		return false;
+	}
+
 	private boolean _isStringLocaleMap(JavaParameter javaParameter) {
 		JavaType type = javaParameter.getType();
 
@@ -6971,6 +7015,7 @@ public class ServiceBuilder {
 	private boolean _build;
 	private long _buildNumber;
 	private boolean _buildNumberIncrement;
+	private boolean _commercialPlugin;
 	private String _currentTplName;
 	private int _databaseNameMaxLength = 30;
 	private List<Entity> _entities;

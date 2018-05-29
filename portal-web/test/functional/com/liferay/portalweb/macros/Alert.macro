@@ -56,6 +56,8 @@
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="Click" locator1="Button#CLOSE_SUCCESS_MESSAGE" />
 	</command>
 
 	<command name="viewSuccessMessageText">

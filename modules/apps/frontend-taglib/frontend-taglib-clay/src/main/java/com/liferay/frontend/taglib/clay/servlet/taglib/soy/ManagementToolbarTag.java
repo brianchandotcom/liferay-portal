@@ -70,10 +70,11 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		String searchActionURL = (String)context.get("searchActionURL");
 
-		if (searchFormMethod.equals("GET") && Validator.isNotNull(
-			searchActionURL)) {
-			Map<String, Object> searchData =
-				getSearchDataFromURL(searchActionURL);
+		if (searchFormMethod.equals("GET") &&
+			Validator.isNotNull(searchActionURL)) {
+
+			Map<String, Object> searchData = _getSearchDataFromURL(
+				searchActionURL);
 
 			putValue("searchData", searchData);
 
@@ -128,35 +129,6 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		return npmResolver.resolveModuleName(
 			"frontend-taglib-clay/management_toolbar/ManagementToolbar.es");
-	}
-
-	private Map<String, Object> getSearchDataFromURL(String searchActionURL) {
-		String queryString = HttpUtil.getQueryString(searchActionURL);
-
-		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
-
-		Map<String, Object> searchData = new HashMap<>();
-
-		for (String parameter : parameters) {
-			if (parameter.length() > 0) {
-				String[] kvp = StringUtil.split(parameter, CharPool.EQUAL);
-
-				if (ArrayUtil.isNotEmpty(kvp)) {
-					String key = kvp[0];
-					String value = StringPool.BLANK;
-
-					if (kvp.length > 1) {
-						value = kvp[1];
-					}
-
-					value = HttpUtil.decodeURL(value);
-
-					searchData.put(key, value);
-				}
-			}
-		}
-
-		return searchData;
 	}
 
 	public void setActionDropdownItems(List<DropdownItem> actionDropdownItems) {
@@ -258,6 +230,35 @@ public class ManagementToolbarTag extends BaseClayTag {
 	@Override
 	protected String[] getNamespacedParams() {
 		return _NAMESPACED_PARAMS;
+	}
+
+	private Map<String, Object> _getSearchDataFromURL(String searchActionURL) {
+		String queryString = HttpUtil.getQueryString(searchActionURL);
+
+		String[] parameters = StringUtil.split(queryString, CharPool.AMPERSAND);
+
+		Map<String, Object> searchData = new HashMap<>();
+
+		for (String parameter : parameters) {
+			if (parameter.length() > 0) {
+				String[] kvp = StringUtil.split(parameter, CharPool.EQUAL);
+
+				if (ArrayUtil.isNotEmpty(kvp)) {
+					String key = kvp[0];
+					String value = StringPool.BLANK;
+
+					if (kvp.length > 1) {
+						value = kvp[1];
+					}
+
+					value = HttpUtil.decodeURL(value);
+
+					searchData.put(key, value);
+				}
+			}
+		}
+
+		return searchData;
 	}
 
 	private static final String[] _NAMESPACED_PARAMS = {

@@ -45,6 +45,9 @@ public class TierPriceEntryForm {
 		).addOptionalString(
 			"externalReferenceCode",
 			TierPriceEntryForm::_setExternalReferenceCode
+		).addOptionalString(
+			"priceEntryExternalReferenceCode",
+			TierPriceEntryForm::_setPriceEntryExternalReferenceCode
 		).addRequiredLong(
 			"minQuantity", TierPriceEntryForm::_setMinQuantity
 		).addRequiredDouble(
@@ -66,6 +69,10 @@ public class TierPriceEntryForm {
 		return _price;
 	}
 
+	public String getPriceEntryExternalReferenceCode() {
+		return _priceEntryExternalReferenceCode;
+	}
+
 	public Double getPromoPrice() {
 		return _promoPrice;
 	}
@@ -82,6 +89,12 @@ public class TierPriceEntryForm {
 		_price = price;
 	}
 
+	private void _setPriceEntryExternalReferenceCode(
+		String priceEntryExternalReferenceCode) {
+
+		_priceEntryExternalReferenceCode = priceEntryExternalReferenceCode;
+	}
+
 	private void _setPromoPrice(Double promoPrice) {
 		_promoPrice = promoPrice;
 	}
@@ -89,6 +102,7 @@ public class TierPriceEntryForm {
 	private String _externalReferenceCode;
 	private Long _minQuantity;
 	private Double _price;
+	private String _priceEntryExternalReferenceCode;
 	private Double _promoPrice;
 
 }

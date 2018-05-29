@@ -275,7 +275,7 @@
 </tr>
 <tr>
 	<td>PERSONAL_SITE_MY_DASHBOARD</td>
-	<td>//div[contains(@id,'Content')]//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
+	<td>//div[contains(@class,'form-group')]//select[contains(@id,'privateLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 <tr>

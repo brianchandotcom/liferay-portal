@@ -24,11 +24,11 @@ import java.util.List;
 @ProviderType
 public interface SiteInitializerRegistry {
 
-	public SiteInitializer getGroupInitializer(String key);
+	public SiteInitializer getSiteInitializer(String key);
 
-	public List<SiteInitializer> getGroupInitializers(long companyId);
+	public List<SiteInitializer> getSiteInitializers(long companyId);
 
-	public List<SiteInitializer> getGroupInitializers(
+	public List<SiteInitializer> getSiteInitializers(
 		long companyId, boolean active);
 
 }

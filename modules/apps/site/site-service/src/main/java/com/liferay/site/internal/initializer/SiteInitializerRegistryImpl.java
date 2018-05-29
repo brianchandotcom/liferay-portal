@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true)
 public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 
-	public SiteInitializer getGroupInitializer(String key) {
+	public SiteInitializer getSiteInitializer(String key) {
 		if (Validator.isNull(key)) {
 			return null;
 		}
@@ -50,7 +50,7 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 
 		if (serviceWrapper == null) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("No group initializer registered with key " + key);
+				_log.debug("No site initializer registered with key " + key);
 			}
 
 			return null;
@@ -59,14 +59,14 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 		return serviceWrapper.getService();
 	}
 
-	public List<SiteInitializer> getGroupInitializers(long companyId) {
-		return getGroupInitializers(companyId, false);
+	public List<SiteInitializer> getSiteInitializers(long companyId) {
+		return getSiteInitializers(companyId, false);
 	}
 
-	public List<SiteInitializer> getGroupInitializers(
+	public List<SiteInitializer> getSiteInitializers(
 		long companyId, boolean active) {
 
-		List<SiteInitializer> groupInitializers = new ArrayList<>();
+		List<SiteInitializer> siteInitializers = new ArrayList<>();
 
 		List<ServiceWrapper<SiteInitializer>> serviceWrappers =
 			ListUtil.fromCollection(_serviceTrackerMap.values());
@@ -74,14 +74,14 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 		for (ServiceWrapper<SiteInitializer> serviceWrapper :
 				serviceWrappers) {
 
-			SiteInitializer groupInitializer = serviceWrapper.getService();
+			SiteInitializer siteInitializer = serviceWrapper.getService();
 
-			if (!active || (active && groupInitializer.isActive(companyId))) {
-				groupInitializers.add(groupInitializer);
+			if (!active || (active && siteInitializer.isActive(companyId))) {
+				siteInitializers.add(siteInitializer);
 			}
 		}
 
-		return Collections.unmodifiableList(groupInitializers);
+		return Collections.unmodifiableList(siteInitializers);
 	}
 
 	@Activate

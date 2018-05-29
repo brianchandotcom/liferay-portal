@@ -27,27 +27,23 @@ import java.util.Locale;
 public class SiteInitializerItemDisplayContext {
 
 	public SiteInitializerItemDisplayContext(
-		SiteInitializer groupInitializer, Locale locale) {
-
-		_groupInitializerKey = groupInitializer.getKey();
-		_icon = groupInitializer.getThumbnailSrc();
-		_layoutSetPrototypeId = 0;
-		_name = groupInitializer.getName(locale);
-		_type = SiteAdminConstants.CREATION_TYPE_INITIALIZER;
-	}
-
-	public SiteInitializerItemDisplayContext(
 		LayoutSetPrototype layoutSetPrototype, Locale locale) {
 
-		_groupInitializerKey = StringPool.BLANK;
+		_siteInitializerKey = StringPool.BLANK;
 		_icon = StringPool.BLANK;
 		_layoutSetPrototypeId = layoutSetPrototype.getLayoutSetPrototypeId();
 		_name = layoutSetPrototype.getName(locale);
 		_type = SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE;
 	}
 
-	public String getGroupInitializerKey() {
-		return _groupInitializerKey;
+	public SiteInitializerItemDisplayContext(
+		SiteInitializer siteInitializer, Locale locale) {
+
+		_siteInitializerKey = siteInitializer.getKey();
+		_icon = siteInitializer.getThumbnailSrc();
+		_layoutSetPrototypeId = 0;
+		_name = siteInitializer.getName(locale);
+		_type = SiteAdminConstants.CREATION_TYPE_INITIALIZER;
 	}
 
 	public String getIcon() {
@@ -56,7 +52,7 @@ public class SiteInitializerItemDisplayContext {
 
 	public String getKey() {
 		if (isCreationTypeInitializer()) {
-			return _groupInitializerKey;
+			return _siteInitializerKey;
 		}
 
 		return String.valueOf(_layoutSetPrototypeId);
@@ -68,6 +64,10 @@ public class SiteInitializerItemDisplayContext {
 
 	public String getName() {
 		return _name;
+	}
+
+	public String getSiteInitializerKey() {
+		return _siteInitializerKey;
 	}
 
 	public String getType() {
@@ -86,10 +86,10 @@ public class SiteInitializerItemDisplayContext {
 		return !isCreationTypeInitializer();
 	}
 
-	private final String _groupInitializerKey;
 	private final String _icon;
 	private final long _layoutSetPrototypeId;
 	private final String _name;
+	private final String _siteInitializerKey;
 	private final String _type;
 
 }

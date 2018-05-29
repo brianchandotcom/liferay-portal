@@ -28,11 +28,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "group.initializer.key=" + BlankSiteGroupInitializer.KEY
+	property = "site.initializer.key=" + BlankSiteInitializer.KEY
 )
-public class BlankSiteGroupInitializer implements SiteInitializer {
+public class BlankSiteInitializer implements SiteInitializer {
 
-	public static final String KEY = "blank-site-group-initializer";
+	public static final String KEY = "blank-site-initializer";
 
 	@Override
 	public String getDescription(Locale locale) {

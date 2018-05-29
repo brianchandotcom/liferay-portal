@@ -85,9 +85,9 @@ public class SiteAdminDisplayContext {
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
-		_groupInitializerRegistry =
+		_siteInitializerRegistry =
 			(SiteInitializerRegistry)request.getAttribute(
-				SiteWebKeys.GROUP_INITIALIZER_REGISTRY);
+				SiteWebKeys.SITE_INITIALIZER_REGISTRY);
 
 		_groupSearchProvider = (GroupSearchProvider)request.getAttribute(
 			SiteWebKeys.GROUP_SEARCH_PROVIDER);
@@ -290,15 +290,15 @@ public class SiteAdminDisplayContext {
 					layoutSetPrototype, themeDisplay.getLocale()));
 		}
 
-		List<SiteInitializer> groupInitializers =
-			_groupInitializerRegistry.getGroupInitializers(
+		List<SiteInitializer> siteInitializers =
+			_siteInitializerRegistry.getSiteInitializers(
 				themeDisplay.getCompanyId());
 
-		for (SiteInitializer groupInitializer : groupInitializers) {
+		for (SiteInitializer siteInitializer : siteInitializers) {
 			SiteInitializerItemDisplayContext
 				siteInitializerItemDisplayContext =
 					new SiteInitializerItemDisplayContext(
-						groupInitializer, themeDisplay.getLocale());
+						siteInitializer, themeDisplay.getLocale());
 
 			siteInitializerItemDisplayContexts.add(
 				siteInitializerItemDisplayContext);
@@ -492,7 +492,6 @@ public class SiteAdminDisplayContext {
 	private String _displayStyle;
 	private Group _group;
 	private long _groupId;
-	private final SiteInitializerRegistry _groupInitializerRegistry;
 	private final GroupSearchProvider _groupSearchProvider;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
@@ -500,5 +499,6 @@ public class SiteAdminDisplayContext {
 	private String _orderByCol;
 	private String _orderByType;
 	private final HttpServletRequest _request;
+	private final SiteInitializerRegistry _siteInitializerRegistry;
 
 }

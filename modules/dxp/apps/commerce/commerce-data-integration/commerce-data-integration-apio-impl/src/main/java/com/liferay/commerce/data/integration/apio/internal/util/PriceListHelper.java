@@ -55,7 +55,7 @@ public class PriceListHelper {
 	public CommercePriceList updateCommercePriceList(
 			long commercePriceListId, String currency, String name,
 			Double priority, Boolean neverExpire, Date displayDate,
-			Date expirationDate, String externalReferenceCode)
+			Date expirationDate)
 		throws PortalException {
 
 		CommercePriceList commercePriceList = getCommercePriceList(
@@ -119,7 +119,7 @@ public class PriceListHelper {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			externalReferenceCode, neverExpire, serviceContext);
+			neverExpire, serviceContext);
 	}
 
 	public CommercePriceList upsertCommercePriceList(

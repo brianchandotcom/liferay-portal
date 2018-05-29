@@ -25,41 +25,43 @@ import java.util.Date;
  * @author Zoltán Takács
  * @review
  */
-public class PriceListForm {
+public class PriceListUpserterForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code PriceListForm} depending on
-	 * the HTTP body.
+	 * Builds a {@code Form} that generates {@code PriceListUpserterForm}
+	 * depending on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a product form
+	 * @return a product upserter form
 	 * @review
 	 */
-	public static Form<PriceListForm> buildForm(
-		Form.Builder<PriceListForm> formBuilder) {
+	public static Form<PriceListUpserterForm> buildForm(
+		Form.Builder<PriceListUpserterForm> formBuilder) {
 
 		return formBuilder.title(
 			__ -> "The price list form"
 		).description(
 			__ -> "This form can be used to create or update a price list"
 		).constructor(
-			PriceListForm::new
+			PriceListUpserterForm::new
 		).addOptionalDate(
-			"displayDate", PriceListForm::_setDisplayDate
+			"displayDate", PriceListUpserterForm::_setDisplayDate
 		).addOptionalDate(
-			"expirationDate", PriceListForm::_setExpirationDate
+			"expirationDate", PriceListUpserterForm::_setExpirationDate
 		).addOptionalLong(
-			"commercePriceListId", PriceListForm::_setCommercePriceListId
+			"commercePriceListId",
+			PriceListUpserterForm::_setCommercePriceListId
 		).addOptionalString(
-			"externalReferenceCode", PriceListForm::_setExternalReferenceCode
+			"externalReferenceCode",
+			PriceListUpserterForm::_setExternalReferenceCode
 		).addRequiredBoolean(
-			"neverExpire", PriceListForm::_setNeverExpire
+			"neverExpire", PriceListUpserterForm::_setNeverExpire
 		).addRequiredDouble(
-			"priority", PriceListForm::_setPriority
+			"priority", PriceListUpserterForm::_setPriority
 		).addRequiredString(
-			"currency", PriceListForm::_setCurrency
+			"currency", PriceListUpserterForm::_setCurrency
 		).addRequiredString(
-			"name", PriceListForm::_setName
+			"name", PriceListUpserterForm::_setName
 		).build();
 	}
 

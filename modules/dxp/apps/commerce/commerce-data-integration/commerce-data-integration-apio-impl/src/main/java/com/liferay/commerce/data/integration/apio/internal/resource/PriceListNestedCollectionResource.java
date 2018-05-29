@@ -24,7 +24,8 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
-import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
+import com.liferay.commerce.data.integration.apio.internal.form.PriceListUpdaterForm;
+import com.liferay.commerce.data.integration.apio.internal.form.PriceListUpserterForm;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceListHelper;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -67,7 +68,7 @@ public class PriceListNestedCollectionResource
 		).addCreator(
 			this::_upsertCommercePriceList,
 			_hasPermission.forAddingIn(PriceListIdentifier.class),
-			PriceListForm::buildForm
+			PriceListUpserterForm::buildForm
 		).build();
 	}
 
@@ -84,7 +85,7 @@ public class PriceListNestedCollectionResource
 			_priceListHelper::getCommercePriceList
 		).addUpdater(
 			this::_updateCommercePriceList, _hasPermission::forUpdating,
-			PriceListForm::buildForm
+			PriceListUpdaterForm::buildForm
 		).addRemover(
 			idempotent(_commercePriceListService::deleteCommercePriceList),
 			_hasPermission::forDeleting
@@ -147,39 +148,42 @@ public class PriceListNestedCollectionResource
 	}
 
 	private CommercePriceList _updateCommercePriceList(
-			Long commercePriceListId, PriceListForm priceListForm)
+			Long commercePriceListId, PriceListUpdaterForm priceListUpdaterForm)
 		throws NotFoundException, PortalException {
 
 		try {
 			return _priceListHelper.updateCommercePriceList(
-				commercePriceListId, priceListForm.getCurrency(),
-				priceListForm.getName(), priceListForm.getPriority(),
-				priceListForm.isNeverExpire(), priceListForm.getDisplayDate(),
-				priceListForm.getExpirationDate(),
-				priceListForm.getExternalReferenceCode());
+				commercePriceListId, priceListUpdaterForm.getCurrency(),
+				priceListUpdaterForm.getName(),
+				priceListUpdaterForm.getPriority(),
+				priceListUpdaterForm.isNeverExpire(),
+				priceListUpdaterForm.getDisplayDate(),
+				priceListUpdaterForm.getExpirationDate());
 		}
 		catch (NoSuchCurrencyException nsce) {
 			throw new NotFoundException(
 				String.format(
 					"Unable to find currency with code: %s. Currency code " +
 						"should be expressed with 3-letter ISO 4217 format",
-					priceListForm.getCurrency()),
+					priceListUpdaterForm.getCurrency()),
 				nsce);
 		}
 	}
 
 	private CommercePriceList _upsertCommercePriceList(
-			Long groupId, PriceListForm priceListForm)
+			Long groupId, PriceListUpserterForm priceListUpserterForm)
 		throws PortalException {
 
 		try {
 			return _priceListHelper.upsertCommercePriceList(
-				groupId, priceListForm.getCommercePriceListId(),
-				priceListForm.getCurrency(), priceListForm.getName(),
-				priceListForm.getPriority(), priceListForm.isNeverExpire(),
-				priceListForm.getDisplayDate(),
-				priceListForm.getExpirationDate(),
-				priceListForm.getExternalReferenceCode());
+				groupId, priceListUpserterForm.getCommercePriceListId(),
+				priceListUpserterForm.getCurrency(),
+				priceListUpserterForm.getName(),
+				priceListUpserterForm.getPriority(),
+				priceListUpserterForm.isNeverExpire(),
+				priceListUpserterForm.getDisplayDate(),
+				priceListUpserterForm.getExpirationDate(),
+				priceListUpserterForm.getExternalReferenceCode());
 		}
 		catch (NoSuchPriceListException nsple) {
 			throw new NotFoundException(
@@ -193,7 +197,7 @@ public class PriceListNestedCollectionResource
 				String.format(
 					"Unable to find currency with code: %s. Currency code " +
 						"should be expressed with 3-letter ISO 4217 format",
-					priceListForm.getCurrency()),
+					priceListUpserterForm.getCurrency()),
 				nsce);
 		}
 	}

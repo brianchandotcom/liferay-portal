@@ -58,7 +58,7 @@ public class CommerceDashboardDisplayContext {
 			Organization organization = commerceContext.getOrganization();
 
 			if (organization != null) {
-				_customerId = organization.getGroupId();
+				_customerId = organization.getOrganizationId();
 			}
 			else {
 				_customerId = commerceDashboardRequestHelper.getUserId();

@@ -17,7 +17,7 @@ package com.liferay.site.admin.web.internal.display.context;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
-import com.liferay.site.initializer.GroupInitializer;
+import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.Locale;
 
@@ -27,7 +27,7 @@ import java.util.Locale;
 public class SiteInitializerItemDisplayContext {
 
 	public SiteInitializerItemDisplayContext(
-		GroupInitializer groupInitializer, Locale locale) {
+		SiteInitializer groupInitializer, Locale locale) {
 
 		_groupInitializerKey = groupInitializer.getKey();
 		_icon = groupInitializer.getThumbnailSrc();

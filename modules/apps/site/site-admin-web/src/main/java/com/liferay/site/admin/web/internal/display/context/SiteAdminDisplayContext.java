@@ -57,8 +57,8 @@ import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.display.context.comparator.SiteInitializerNameComparator;
 import com.liferay.site.constants.SiteWebKeys;
-import com.liferay.site.initializer.GroupInitializer;
-import com.liferay.site.initializer.GroupInitializerRegistry;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
 
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class SiteAdminDisplayContext {
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_groupInitializerRegistry =
-			(GroupInitializerRegistry)request.getAttribute(
+			(SiteInitializerRegistry)request.getAttribute(
 				SiteWebKeys.GROUP_INITIALIZER_REGISTRY);
 
 		_groupSearchProvider = (GroupSearchProvider)request.getAttribute(
@@ -290,11 +290,11 @@ public class SiteAdminDisplayContext {
 					layoutSetPrototype, themeDisplay.getLocale()));
 		}
 
-		List<GroupInitializer> groupInitializers =
+		List<SiteInitializer> groupInitializers =
 			_groupInitializerRegistry.getGroupInitializers(
 				themeDisplay.getCompanyId());
 
-		for (GroupInitializer groupInitializer : groupInitializers) {
+		for (SiteInitializer groupInitializer : groupInitializers) {
 			SiteInitializerItemDisplayContext
 				siteInitializerItemDisplayContext =
 					new SiteInitializerItemDisplayContext(
@@ -492,7 +492,7 @@ public class SiteAdminDisplayContext {
 	private String _displayStyle;
 	private Group _group;
 	private long _groupId;
-	private final GroupInitializerRegistry _groupInitializerRegistry;
+	private final SiteInitializerRegistry _groupInitializerRegistry;
 	private final GroupSearchProvider _groupSearchProvider;
 	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;

@@ -100,8 +100,8 @@ import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.admin.web.internal.handler.GroupExceptionRequestHandler;
 import com.liferay.site.constants.SiteWebKeys;
-import com.liferay.site.initializer.GroupInitializer;
-import com.liferay.site.initializer.GroupInitializerRegistry;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.sites.kernel.util.Sites;
@@ -1033,7 +1033,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			String groupInitializerKey = ParamUtil.getString(
 				actionRequest, "groupInitializerKey");
 
-			GroupInitializer groupInitializer =
+			SiteInitializer groupInitializer =
 				groupInitializerRegistry.getGroupInitializer(
 					groupInitializerKey);
 
@@ -1059,7 +1059,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected GroupExceptionRequestHandler groupExceptionRequestHandler;
 
 	@Reference
-	protected GroupInitializerRegistry groupInitializerRegistry;
+	protected SiteInitializerRegistry groupInitializerRegistry;
 
 	protected GroupLocalService groupLocalService;
 	protected GroupSearchProvider groupSearchProvider;

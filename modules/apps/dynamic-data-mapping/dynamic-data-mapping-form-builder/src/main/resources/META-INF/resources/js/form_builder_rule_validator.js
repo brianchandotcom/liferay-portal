@@ -4,9 +4,14 @@ AUI.add(
 		var AObject = A.Object;
 
 		var CONDITIONS_OPERATOR = {
+			'belongs-to': 'binary',
 			'contains': 'binary',
 			'equals-to': 'binary',
+			'greater-than': 'binary',
+			'greater-than-equals': 'binary',
 			'is-empty': 'unary',
+			'less-than': 'binary',
+			'less-than-equals': 'binary',
 			'not-contains': 'binary',
 			'not-equals-to': 'binary',
 			'not-is-empty': 'unary'

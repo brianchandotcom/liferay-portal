@@ -17,19 +17,19 @@
         "*": [
             "src/__tests__/**/*"
         ],
-		"metal": true,
-		"metal-anim": true,
-		"metal-component": true,
-		"metal-dom": true,
-		"metal-events": true,
-		"metal-incremental-dom": true,
-		"metal-position": true,
-		"metal-soy": true,
-		"metal-soy-bundle": true,
-		"metal-state": true,
-		"metal-web-component": true,
-		"incremental-dom": true,
-		"incremental-dom-string": true
+        "incremental-dom": true,
+        "incremental-dom-string": true,
+        "metal": true,
+        "metal-anim": true,
+        "metal-component": true,
+        "metal-dom": true,
+        "metal-events": true,
+        "metal-incremental-dom": true,
+        "metal-position": true,
+        "metal-soy": true,
+        "metal-soy-bundle": true,
+        "metal-state": true,
+        "metal-web-component": true
     },
     "output": "classes/META-INF/resources/",
     "preset": "liferay-npm-bundler-preset-standard"

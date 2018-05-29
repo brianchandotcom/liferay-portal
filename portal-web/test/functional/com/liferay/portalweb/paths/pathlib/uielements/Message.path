@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>ERROR_REQUEST_FAILED_TO_COMPLETE</td>
-	<td>//div[contains(@class,'alert-danger') and contains(.,'Your request failed to complete')]</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'You cannot delete site templates that are used by a site.')]</td>
 	<td></td>
 </tr>
 <tr>

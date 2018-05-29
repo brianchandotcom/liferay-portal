@@ -116,8 +116,6 @@
 			<equals arg1="${associatedToSite}" arg2="true" />
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
-
-				<execute macro="Alert#viewFailedSiteTemplateDeletionMessage" />
 			</then>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />

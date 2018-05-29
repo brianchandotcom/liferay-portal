@@ -140,20 +140,16 @@ LayoutPageTemplateDisplayContext layoutPageTemplateDisplayContext = new LayoutPa
 	</liferay-ui:search-container>
 </aui:form>
 
-<portlet:actionURL name="/layout/add_layout_page_template_entry" var="addLayoutPageTemplateEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="/layout/edit_layout_page_template_entry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
-</portlet:actionURL>
-
 <aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 	function addLayoutPageTemplateEntry(event) {
 		event.preventDefault();
 
+		var itemData = event.data.item.data
+
 		modalCommands.openSimpleInputModal(
 			{
 				dialogTitle: '<liferay-ui:message key="add-page-template" />',
-				formSubmitURL: '<%= addLayoutPageTemplateEntryURL %>',
+				formSubmitURL: itemData.submitURL,
 				mainFieldLabel: '<liferay-ui:message key="name" />',
 				mainFieldName: 'name',
 				mainFieldPlaceholder: '<liferay-ui:message key="name" />',

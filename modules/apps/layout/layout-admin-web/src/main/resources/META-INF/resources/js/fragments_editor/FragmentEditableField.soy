@@ -6,12 +6,16 @@
 {template .render}
 	{@param content: html}
 	{@param editableId: string}
-	{@param showMapping: bool}
 	{@param type: string}
 	{@param? _handleEditableClick: any}
-	{@param? _handleEditButtonClick: any}
-	{@param? _handleMapButtonClick: any}
+	{@param? _handleOutsideTooltipClick: any}
+	{@param? _handleTooltipButtonClick: any}
 	{@param? _showTooltip: bool}
+	{@param? _tooltipAlignElement: ?}
+	{@param? _tooltipButtons: list<[
+		id: string,
+		label: string
+	]>}
 
 	<div class="lfr-editable-wrapper">
 		<lfr-editable
@@ -23,39 +27,16 @@
 			{$content}
 		</lfr-editable>
 
-		{if $_showTooltip}
-			<div
-				class="clay-tooltip-top lfr-editable-wrapper__tooltip show tooltip"
-				ref="tooltip"
-				role="tooltip"
-			>
-				<div class="arrow"></div>
-				<div class="tooltip-inner">
-					<div class="lfr-editable-wrapper__tooltip-btn-group">
-						{if $showMapping}
-							<button
-								class="btn btn-outline-light"
-								data-onclick="{$_handleMapButtonClick}"
-								type="button"
-							>
-								{msg desc=""}map-to{/msg}...
-							</button>
-						{/if}
-
-						<button
-							class="btn btn-outline-light"
-							data-onclick="{$_handleEditButtonClick}"
-							type="button"
-						>
-							{if $type == 'image'}
-								{msg desc=""}select-image{/msg}
-							{else}
-								{msg desc=""}edit{/msg}
-							{/if}
-						</button>
-					</div>
-				</div>
-			</div>
+		{if $_showTooltip and $_tooltipAlignElement and $_tooltipButtons}
+			{call com.liferay.layout.admin.web.FragmentEditableFieldTooltip.render}
+				{param alignElement: $_tooltipAlignElement /}
+				{param buttons: $_tooltipButtons /}
+				{param events: [
+					'buttonClick': $_handleTooltipButtonClick,
+					'outsideTooltipClick': $_handleOutsideTooltipClick
+				] /}
+				{param portalElement: 'body' /}
+			{/call}
 		{/if}
 	</div>
 {/template}

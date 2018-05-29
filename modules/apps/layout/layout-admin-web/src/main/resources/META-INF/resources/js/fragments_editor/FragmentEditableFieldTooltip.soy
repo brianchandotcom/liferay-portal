@@ -1,0 +1,31 @@
+{namespace com.liferay.layout.admin.web.FragmentEditableFieldTooltip}
+
+/**
+ * FragmentEditableFieldTooltip
+ */
+{template .render}
+	{@param buttons: list<[id: string, label: string]>}
+	{@param? _handleButtonClick: any}
+
+	<div
+		class="clay-tooltip-top lfr-editable-wrapper__tooltip show tooltip"
+		ref="tooltip"
+		role="tooltip"
+	>
+		<div class="arrow"></div>
+		<div class="tooltip-inner">
+			<div class="lfr-editable-wrapper__tooltip-btn-group">
+				{foreach $button in $buttons}
+					<button
+						class="btn btn-outline-light"
+						data-onclick="{$_handleButtonClick}"
+						data-tooltip-button-id="{$button.id}"
+						type="button"
+					>
+						{$button.label}
+					</button>
+				{/foreach}
+			</div>
+		</div>
+	</div>
+{/template}

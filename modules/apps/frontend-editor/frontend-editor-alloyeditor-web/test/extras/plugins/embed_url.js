@@ -98,7 +98,7 @@ describe(
 
 				// We need to require the plugin after mocking the CKEDITOR and Liferay APIs
 
-				require('../../../src/main/resources/META-INF/resources/js/extras/plugins/embed_url');
+				require('../../../src/main/resources/META-INF/resources/js/extras/plugins/embed_url/plugin.js');
 			}
 		);
 

@@ -14,7 +14,9 @@
 
 package com.liferay.gradle.plugins.target.platform.extensions;
 
+import com.liferay.gradle.plugins.target.platform.TargetPlatformPlugin;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformPluginUtil;
 
 import groovy.lang.Closure;
 
@@ -23,6 +25,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
 import org.gradle.util.GUtil;
@@ -33,7 +36,29 @@ import org.gradle.util.GUtil;
 public class TargetPlatformExtension {
 
 	public TargetPlatformExtension(Project project) {
+		_project = project;
+
 		_subprojects.addAll(project.getSubprojects());
+	}
+
+	public TargetPlatformExtension applyToConfiguration(
+		Iterable<?> configurationNames) {
+
+		Configuration targetPlatformBomsConfiguration =
+			GradleUtil.getConfiguration(
+				_project,
+				TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
+
+		TargetPlatformPluginUtil.configureDependencyManagement(
+			_project, targetPlatformBomsConfiguration, configurationNames);
+
+		return this;
+	}
+
+	public TargetPlatformExtension applyToConfiguration(
+		Object... configurationNames) {
+
+		return applyToConfiguration(Arrays.asList(configurationNames));
 	}
 
 	public Spec<Project> getOnlyIf() {
@@ -126,6 +151,7 @@ public class TargetPlatformExtension {
 
 	private Object _ignoreResolveFailures;
 	private AndSpec<Project> _onlyIfSpec = new AndSpec<>();
+	private final Project _project;
 	private AndSpec<Project> _resolveOnlyIfSpec = new AndSpec<>();
 	private final Set<Project> _subprojects = new LinkedHashSet<>();
 

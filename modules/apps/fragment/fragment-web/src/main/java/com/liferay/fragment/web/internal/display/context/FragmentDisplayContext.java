@@ -44,6 +44,7 @@ import java.util.Objects;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -93,6 +94,19 @@ public class FragmentDisplayContext {
 	public List<DropdownItem> getCollectionsDropdownItems() {
 		return new DropdownItemList() {
 			{
+				ResourceURL exportAllFragmentCollectionsURL =
+					_renderResponse.createResourceURL();
+
+				exportAllFragmentCollectionsURL.setResourceID(
+					"/fragment/export_all_fragment_collections");
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(exportAllFragmentCollectionsURL);
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "export"));
+					});
+
 				add(
 					dropdownItem -> {
 						dropdownItem.setHref(

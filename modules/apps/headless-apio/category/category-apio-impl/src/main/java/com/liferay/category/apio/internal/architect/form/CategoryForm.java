@@ -21,40 +21,35 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Instances of this class represent the values extracted from an asset category
- * nested form.
+ * Instances of this class represent the values extracted from a category form.
  *
  * @author Eduardo Perez
  * @author Javier Gamarra
  * @review
  */
-public class AssetCategoryNestedForm {
+public class CategoryForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code AssetCategoryNestedForm}
-	 * depending on the HTTP body.
+	 * Builds a {@code Form} that generates {@code CategoryForm} depending on
+	 * the HTTP body.
 	 *
 	 * @param  builder the {@code Form} builder
-	 * @return an asset category nested form
+	 * @return a category form
 	 * @review
 	 */
-	public static Form<AssetCategoryNestedForm> buildForm(
-		Form.Builder<AssetCategoryNestedForm> builder) {
+	public static Form<CategoryForm> buildForm(
+		Form.Builder<CategoryForm> builder) {
 
 		return builder.title(
-			language -> "Category Creator Form"
+			language -> "Category creator form"
 		).description(
-			language -> "Form for adding categories"
+			language -> "This form can be used to create a category"
 		).constructor(
-			AssetCategoryNestedForm::new
-		).addOptionalLong(
-			"parentCategoryId", AssetCategoryNestedForm::setParentCategoryId
+			CategoryForm::new
 		).addOptionalString(
-			"description", AssetCategoryNestedForm::setDescription
-		).addRequiredLong(
-			"vocabularyId", AssetCategoryNestedForm::setVocabularyId
+			"description", CategoryForm::setDescription
 		).addRequiredString(
-			"name", AssetCategoryNestedForm::setName
+			"name", CategoryForm::setName
 		).build();
 	}
 
@@ -69,16 +64,6 @@ public class AssetCategoryNestedForm {
 	}
 
 	/**
-	 * Returns the asset category's parent category ID.
-	 *
-	 * @return the asset category's parent category ID
-	 * @review
-	 */
-	public long getParentCategoryId() {
-		return _parentCategoryId;
-	}
-
-	/**
 	 * Returns the asset category's title map.
 	 *
 	 * @return the asset category's title map
@@ -86,16 +71,6 @@ public class AssetCategoryNestedForm {
 	 */
 	public Map<Locale, String> getTitleMap(Locale locale) {
 		return Collections.singletonMap(locale, _name);
-	}
-
-	/**
-	 * Returns the asset category's vocabulary ID.
-	 *
-	 * @return the asset category's vocabulary ID
-	 * @review
-	 */
-	public long getVocabularyId() {
-		return _vocabularyId;
 	}
 
 	public void setDescription(String description) {
@@ -106,17 +81,7 @@ public class AssetCategoryNestedForm {
 		_name = name;
 	}
 
-	public void setParentCategoryId(long parentCategoryId) {
-		_parentCategoryId = parentCategoryId;
-	}
-
-	public void setVocabularyId(long vocabularyId) {
-		_vocabularyId = vocabularyId;
-	}
-
 	private String _description;
 	private String _name;
-	private long _parentCategoryId;
-	private long _vocabularyId;
 
 }

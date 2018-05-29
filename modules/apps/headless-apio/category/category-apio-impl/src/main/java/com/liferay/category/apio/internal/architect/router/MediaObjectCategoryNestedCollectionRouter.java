@@ -22,7 +22,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
-import com.liferay.category.apio.internal.architect.form.AssetCategoryNestedForm;
+import com.liferay.category.apio.internal.architect.form.NestedCategoryForm;
 import com.liferay.category.apio.internal.architect.router.base.BaseCategoryNestedCollectionRouter;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
@@ -57,7 +57,7 @@ public class MediaObjectCategoryNestedCollectionRouter extends
 		).addCreator(
 			this::addAssetCategory,
 			_hasPermission.forAddingIn(MediaObjectIdentifier.class),
-			AssetCategoryNestedForm::buildForm
+			NestedCategoryForm::buildForm
 		).build();
 	}
 

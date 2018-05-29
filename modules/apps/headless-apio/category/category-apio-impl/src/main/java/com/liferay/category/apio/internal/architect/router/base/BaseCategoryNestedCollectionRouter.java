@@ -27,7 +27,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
-import com.liferay.category.apio.internal.architect.form.AssetCategoryNestedForm;
+import com.liferay.category.apio.internal.architect.form.NestedCategoryForm;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Base class for {@code AssetCategory} {@code NestedCollectionRouters}.
+ * Base class for {@code AssetCategory} {@code NestedCollectionRouter}.
  *
  * @author Eduardo Perez
  * @review
@@ -63,16 +63,16 @@ public abstract class BaseCategoryNestedCollectionRouter
 	 * identified by the provided ID.
 	 *
 	 * @param  id the {@link AssetEntry} ID
-	 * @param  assetCategoryNestedForm the form containing the new category data
+	 * @param  nestedCategoryForm the form containing the new category data
 	 * @return the newly created {@link AssetCategory}
 	 */
 	protected AssetCategory addAssetCategory(
-			long id, AssetCategoryNestedForm assetCategoryNestedForm)
+			long id, NestedCategoryForm nestedCategoryForm)
 		throws PortalException {
 
 		AssetVocabulary vocabulary = getAssetVocabularyService().getVocabulary(
-			assetCategoryNestedForm.getVocabularyId());
-		long parentCategoryId = assetCategoryNestedForm.getParentCategoryId();
+			nestedCategoryForm.getVocabularyId());
+		long parentCategoryId = nestedCategoryForm.getParentCategoryId();
 
 		Group group = getGroupLocalService().getGroup(vocabulary.getGroupId());
 
@@ -82,8 +82,8 @@ public abstract class BaseCategoryNestedCollectionRouter
 
 		AssetCategory assetCategory = getAssetCategoryService().addCategory(
 			group.getGroupId(), parentCategoryId,
-			assetCategoryNestedForm.getTitleMap(locale),
-			assetCategoryNestedForm.getDescriptionMap(locale),
+			nestedCategoryForm.getTitleMap(locale),
+			nestedCategoryForm.getDescriptionMap(locale),
 			vocabulary.getVocabularyId(), null, serviceContext);
 
 		AssetEntry assetEntry = getAssetEntryLocalService().getEntry(

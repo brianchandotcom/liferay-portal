@@ -24,7 +24,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
-import com.liferay.category.apio.internal.architect.form.AssetCategoryNestedForm;
+import com.liferay.category.apio.internal.architect.form.NestedCategoryForm;
 import com.liferay.category.apio.internal.architect.router.base.BaseCategoryNestedCollectionRouter;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -57,7 +57,7 @@ public class BlogPostingCategoryNestedCollectionRouter extends
 		).addCreator(
 			this::addAssetCategory,
 			_hasPermission.forAddingIn(BlogPostingIdentifier.class),
-			AssetCategoryNestedForm::buildForm
+			NestedCategoryForm::buildForm
 		).build();
 	}
 

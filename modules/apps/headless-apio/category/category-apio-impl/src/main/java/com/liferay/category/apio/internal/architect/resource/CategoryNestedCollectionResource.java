@@ -27,7 +27,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
-import com.liferay.category.apio.internal.architect.form.AssetCategoryForm;
+import com.liferay.category.apio.internal.architect.form.CategoryForm;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,7 +66,7 @@ public class CategoryNestedCollectionResource
 		).addCreator(
 			this::_addAssetCategory,
 			_hasPermission.forAddingIn(TaxonomyIdentifier.class),
-			AssetCategoryForm::buildForm
+			CategoryForm::buildForm
 		).build();
 	}
 
@@ -83,7 +83,7 @@ public class CategoryNestedCollectionResource
 			this::_getAssetCategory
 		).addUpdater(
 			this::_updateAssetCategory, _hasPermission::forUpdating,
-			AssetCategoryForm::buildForm
+			CategoryForm::buildForm
 		).addRemover(
 			idempotent(this::_removeAssetCategory), _hasPermission::forDeleting
 		).build();
@@ -123,7 +123,7 @@ public class CategoryNestedCollectionResource
 	}
 
 	private AssetCategory _addAssetCategory(
-			long vocabularyId, AssetCategoryForm assetCategoryCreatorForm)
+			long vocabularyId, CategoryForm assetCategoryCreatorForm)
 		throws PortalException {
 
 		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
@@ -173,7 +173,7 @@ public class CategoryNestedCollectionResource
 	}
 
 	private AssetCategory _updateAssetCategory(
-			long categoryId, AssetCategoryForm assetCategoryCreatorForm)
+			long categoryId, CategoryForm assetCategoryCreatorForm)
 		throws PortalException {
 
 		AssetCategory category = _assetCategoryService.getCategory(categoryId);

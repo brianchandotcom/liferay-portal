@@ -177,7 +177,7 @@ name = HtmlUtil.escapeJS(name);
 
 		editorConfig = A.merge(
 			{
-				title: '<%= LanguageUtil.get(resourceBundle, "rich-text-editor") %>'
+				title: false
 			},
 			editorConfig
 		);

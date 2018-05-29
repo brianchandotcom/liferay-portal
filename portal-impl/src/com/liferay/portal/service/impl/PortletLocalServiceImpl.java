@@ -2418,6 +2418,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				values.toArray(new String[values.size()]));
 		}
 
+		portletModel.setAsyncSupported(
+			GetterUtil.getBoolean(
+				portletElement.elementText("async-supported")));
+
 		Element multipartConfigElement = portletElement.element(
 			"multipart-config");
 

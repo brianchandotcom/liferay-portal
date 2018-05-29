@@ -1923,6 +1923,18 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		return _portlet.isAjaxable();
 	}
 
+	/**
+	* Returns <code>true</code> if the portlet supports asynchronous processing
+	* in resource requests.
+	*
+	* @return <code>true</code> if the portlet supports asynchrounous
+	processing in resource requests
+	*/
+	@Override
+	public boolean isAsyncSupported() {
+		return _portlet.isAsyncSupported();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _portlet.isCachedModel();
@@ -2311,6 +2323,18 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	public void setAssetRendererFactoryClasses(
 		java.util.List<String> assetRendererFactoryClasses) {
 		_portlet.setAssetRendererFactoryClasses(assetRendererFactoryClasses);
+	}
+
+	/**
+	* Set to <code>true</code> if the portlet supports asynchronous processing
+	* in resource requests.
+	*
+	* @param asyncSupported boolean value for whether the portlet supports
+	asynchronous processing in resource requests
+	*/
+	@Override
+	public void setAsyncSupported(boolean asyncSupported) {
+		_portlet.setAsyncSupported(asyncSupported);
 	}
 
 	/**

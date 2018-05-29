@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.internal.PortletAsyncContextImpl;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,7 +46,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
+@ProviderType
 public class ResourceRequestImpl
 	extends ClientDataRequestImpl implements ResourceRequest {
 
@@ -69,7 +74,7 @@ public class ResourceRequestImpl
 
 	@Override
 	public PortletAsyncContext getPortletAsyncContext() {
-		throw new UnsupportedOperationException();
+		return _portletAsyncContext;
 	}
 
 	@Override
@@ -124,14 +129,24 @@ public class ResourceRequestImpl
 
 	@Override
 	public boolean isAsyncSupported() {
-		throw new UnsupportedOperationException();
+		Portlet portlet = getPortlet();
+
+		return portlet.isAsyncSupported();
 	}
 
 	@Override
 	public PortletAsyncContext startPortletAsync()
 		throws IllegalStateException {
 
-		throw new UnsupportedOperationException();
+		if (!isAsyncSupported()) {
+			throw new IllegalStateException();
+		}
+
+		// TODO
+
+		_portletAsyncContext = new PortletAsyncContextImpl();
+
+		return _portletAsyncContext;
 	}
 
 	@Override
@@ -139,7 +154,15 @@ public class ResourceRequestImpl
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IllegalStateException {
 
-		throw new UnsupportedOperationException();
+		if (!isAsyncSupported()) {
+			throw new IllegalStateException();
+		}
+
+		// TODO
+
+		_portletAsyncContext = new PortletAsyncContextImpl();
+
+		return _portletAsyncContext;
 	}
 
 	@Override
@@ -172,6 +195,7 @@ public class ResourceRequestImpl
 	}
 
 	private String _cacheablity;
+	private PortletAsyncContext _portletAsyncContext;
 	private String _resourceID;
 
 }

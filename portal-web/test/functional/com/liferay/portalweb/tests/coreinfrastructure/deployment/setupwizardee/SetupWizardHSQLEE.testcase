@@ -4,8 +4,8 @@
 	<property name="portal.upstream" value="true" />
 	<property name="setup.wizard.enabled" value="true" />
 	<property name="test.prepare.bundle.properties" value="false" />
-	<property name="testray.component.names" value="Training" />
 	<property name="test.run.environment" value="EE" />
+	<property name="testray.component.names" value="Training" />
 	<property name="testray.main.component.name" value="Setup Wizard" />
 
 	<command name="HSQLtoDB2" priority="4">

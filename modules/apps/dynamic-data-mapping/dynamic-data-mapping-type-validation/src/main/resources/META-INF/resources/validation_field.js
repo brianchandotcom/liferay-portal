@@ -10,6 +10,10 @@ AUI.add(
 		var ValidationField = A.Component.create(
 			{
 				ATTRS: {
+					dataType: {
+						value: ''
+					},
+
 					errorMessageValue: {
 						value: ''
 					},
@@ -59,12 +63,60 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandlers.push(
+							instance.after('render', instance._loadValidationFieldType, instance),
+							instance.after('validationChange', A.bind('_loadValidationFieldType', instance)),
 							instance.after('valueChange', A.bind('_afterValueChange', instance)),
 							instance.bindContainerEvent('change', A.bind('_setErrorMessage', instance), '.message-input'),
-							instance.bindContainerEvent('change', A.bind('_setParameterValue', instance), '.parameter-input'),
 							instance.bindContainerEvent('change', A.bind('_syncValidationUI', instance), '.enable-validation'),
 							instance.bindContainerEvent('change', A.bind('_syncValidationUI', instance), 'select')
 						);
+					},
+
+					createDecimalField: function(context) {
+						var instance = this;
+
+						var config = A.merge(
+							context,
+							{
+								bubbleTargets: [instance],
+								context: A.clone(context),
+								cssClass: 'validation-input',
+								dataType: 'double'
+							}
+						);
+
+						return new Liferay.DDM.Field.Numeric(config);
+					},
+
+					createIntegerField: function(context) {
+						var instance = this;
+
+						var config = A.merge(
+							context,
+							{
+
+								bubbleTargets: [instance],
+								context: A.clone(context),
+								cssClass: 'validation-input'
+							}
+						);
+
+						return new Liferay.DDM.Field.Numeric(config);
+					},
+
+					createTextField: function(context) {
+						var instance = this;
+
+						var config = A.merge(
+							context,
+							{
+								bubbleTargets: [instance],
+								context: A.clone(context),
+								cssClass: 'validation-input'
+							}
+						);
+
+						return new Liferay.DDM.Field.Text(config);
 					},
 
 					extractParameterValue: function(regex, expression) {
@@ -75,6 +127,12 @@ AUI.add(
 						var matches = regex.exec(expression);
 
 						return matches && matches[2] || '';
+					},
+
+					getEvaluationContext: function(context) {
+						return {
+							validation: context.validation
+						};
 					},
 
 					getTemplateContext: function() {
@@ -138,6 +196,45 @@ AUI.add(
 						instance.evaluate();
 					},
 
+					_createField: function(dataType) {
+						var instance = this;
+
+						var parameterMessage = '';
+
+						var selectedValidation = instance.get('selectedValidation');
+
+						if (selectedValidation) {
+							parameterMessage = selectedValidation.parameterMessage;
+						}
+
+						var fieldConfig = {
+							fieldName: '',
+							options: [],
+							placeholder: parameterMessage,
+							readOnly: false,
+							showLabel: false,
+							strings: {},
+							value: instance.get('parameterValue'),
+							visible: true
+						};
+
+						var field;
+
+						if (dataType == 'double') {
+							field = instance.createDecimalField(fieldConfig);
+						}
+						else if (dataType == 'integer') {
+							field = instance.createIntegerField(fieldConfig);
+						}
+						else {
+							field = instance.createTextField(fieldConfig);
+						}
+
+						field.after('blur', A.bind('_setParameterValue', instance));
+
+						return field;
+					},
+
 					_getEnableValidationValue: function() {
 						var instance = this;
 
@@ -163,7 +260,7 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var parameterNode = container.one('.parameter-input');
+						var parameterNode = container.one('.validation-input input');
 
 						return parameterNode.val();
 					},
@@ -217,6 +314,28 @@ AUI.add(
 						);
 					},
 
+					_loadValidationFieldType: function(event) {
+						var instance = this;
+
+						var validationContainer = A.one('.lfr-ddm-form-field-validation');
+
+						var validationFieldContainer = validationContainer.one('.lfr-ddm-form-field-container');
+
+						if (validationFieldContainer) {
+							validationFieldContainer.remove();
+						}
+
+						var context = instance.get('context');
+
+						var validation = context.validation;
+
+						var dataType = validation.dataType;
+
+						instance._validationField = instance._createField(dataType);
+
+						instance._validationField.render(validationContainer.one('.validation-input'));
+					},
+
 					_setErrorMessage: function(event) {
 						var instance = this;
 
@@ -231,7 +350,7 @@ AUI.add(
 
 						var input = event.target;
 
-						instance.set('parameterValue', input.val());
+						instance.set('parameterValue', input.get('value'));
 						instance.set('value', instance.getValue());
 					},
 

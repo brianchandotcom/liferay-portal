@@ -58,6 +58,66 @@ public class DDMFormValuesValidatorTest extends PowerMockito {
 		setUpDDMFormValuesValidator();
 	}
 
+	@Test(expected = MustSetValidValue.class)
+	public void testNumericValidationWithWrongValueForDoubleTypeExpression()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("Height", "numeric");
+
+		ddmFormField.setDataType("double");
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setExpression("Height <= 3.5");
+		ddmFormFieldValidation.setErrorMessage("maximum height allowed 3.5.");
+
+		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"Height", new UnlocalizedValue("4.3")));
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
+	@Test(expected = MustSetValidValue.class)
+	public void testNumericValidationWithWrongValueForIntegerTypeExpression()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("Age", "numeric");
+
+		ddmFormField.setDataType("integer");
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setExpression("Age > 18");
+		ddmFormFieldValidation.setErrorMessage("Age must be greater than 18.");
+
+		ddmFormField.setDDMFormFieldValidation(ddmFormFieldValidation);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"Age", new UnlocalizedValue("14")));
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
 	@Test
 	public void testValidationWithAutocompleteText() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();

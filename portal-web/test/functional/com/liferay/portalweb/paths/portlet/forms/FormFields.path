@@ -387,7 +387,7 @@
 </tr>
 <tr>
 	<td>VALIDATION_INPUT</td>
-	<td>//input[contains(@class,'parameter-input')]</td>
+	<td>//div[contains(@class,'validation-input')]//input</td>
 	<td></td>
 </tr>
 <tr>

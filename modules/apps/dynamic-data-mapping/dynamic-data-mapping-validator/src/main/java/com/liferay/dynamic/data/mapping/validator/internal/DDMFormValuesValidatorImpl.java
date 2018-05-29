@@ -117,6 +117,10 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				ddmExpression.setIntegerVariableValue(
 					ddmFormFieldName, GetterUtil.getInteger(valueString));
 			}
+			else if (dataType.equals(FieldConstants.DOUBLE)) {
+				ddmExpression.setDoubleVariableValue(
+					ddmFormFieldName, GetterUtil.getDouble(valueString));
+			}
 			else if (dataType.equals(FieldConstants.BOOLEAN)) {
 				ddmExpression.setBooleanVariableValue(
 					ddmFormFieldName, GetterUtil.getBoolean(valueString));

@@ -453,6 +453,10 @@ public class DDMFormEvaluatorHelper {
 			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "required"));
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
+			"setValidationDataType",
+			new SetPropertyFunction(
+				_ddmFormFieldEvaluationResultsMap, "validationDataType"));
+		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"setValue",
 			new SetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "value"));

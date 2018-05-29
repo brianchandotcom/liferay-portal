@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		@DDMFormRule(
 			actions = {
 				"setDataType('predefinedValue', getValue('dataType'))",
+				"setValidationDataType('validation', getValue('dataType'))",
 				"setVisible('tooltip', false)"
 			},
 			condition = "TRUE"

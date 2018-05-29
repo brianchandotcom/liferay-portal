@@ -182,7 +182,7 @@ public class DDMFormFieldTemplateContextFactory {
 		setDDMFormFieldTemplateContextValueLocalizableValue(
 			ddmFormFieldTemplateContext, ddmFormFieldValue);
 		setDDMFormFieldTemplateContextValidation(
-			ddmFormFieldTemplateContext,
+			ddmFormFieldTemplateContext, ddmFormFieldEvaluationResult,
 			ddmFormField.getDDMFormFieldValidation());
 		setDDMFormFieldTemplateContextVisibilityExpression(
 			ddmFormFieldTemplateContext,
@@ -548,6 +548,7 @@ public class DDMFormFieldTemplateContextFactory {
 
 	protected void setDDMFormFieldTemplateContextValidation(
 		Map<String, Object> ddmFormFieldTemplateContext,
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
 		DDMFormFieldValidation ddmFormFieldValidation) {
 
 		if (ddmFormFieldValidation == null) {
@@ -556,6 +557,11 @@ public class DDMFormFieldTemplateContextFactory {
 
 		Map<String, String> validation = new HashMap<>();
 
+		validation.put(
+			"dataType",
+			GetterUtil.getString(
+				ddmFormFieldEvaluationResult.getProperty("validationDataType"),
+				ddmFormFieldEvaluationResult.getProperty("dataType")));
 		validation.put(
 			"errorMessage",
 			GetterUtil.getString(ddmFormFieldValidation.getErrorMessage()));

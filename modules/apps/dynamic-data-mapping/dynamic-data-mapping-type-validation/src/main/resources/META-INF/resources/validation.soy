@@ -25,7 +25,6 @@
 	{@param? enableValidationValue: bool}
 	{@param? errorMessageValue: string}
 	{@param? parameterMessagePlaceholder: string}
-	{@param? parameterValue: string}
 	{@param? strings: [email: string, errorMessage: string, ifInput: string, showErrorMessage: string, theValue: string, url: string, validationMessage: string]}
 	{@param? validationsOptions: list<[label: string, status: string, value: string]>}
 
@@ -59,15 +58,8 @@
 				</select>
 			</div>
 
-			<div class="form-group {$parameterMessagePlaceholder ? '' : 'hide'}">
+			<div class="form-group validation-input {$parameterMessagePlaceholder ? '' : 'hide'}">
 				<label for="{$name}_parameter">{$strings?.theValue}</label>
-				<input
-					class="field form-control parameter-input"
-					name="{$name}_parameter"
-					placeholder="{$parameterMessagePlaceholder}"
-					type="text"
-					value="{$parameterValue}"
-				/>
 			</div>
 
 			<div class="form-group">

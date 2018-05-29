@@ -90,6 +90,21 @@ public class FragmentDisplayContext {
 		};
 	}
 
+	public List<DropdownItem> getCollectionsDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"openImportView();");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "import"));
+					});
+			}
+		};
+	}
+
 	public String getCssContent() {
 		if (Validator.isNotNull(_cssContent)) {
 			return _cssContent;

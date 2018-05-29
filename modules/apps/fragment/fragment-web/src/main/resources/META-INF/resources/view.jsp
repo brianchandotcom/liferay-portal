@@ -41,14 +41,23 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 									</div>
 
 									<div class="autofit-col autofit-col-end">
-										<c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
-											<liferay-ui:icon
-												icon="plus"
-												iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
-												markupView="lexicon"
-												url="<%= editFragmentCollectionURL %>"
-											/>
-										</c:if>
+										<ul class="navbar-nav">
+											<li>
+												<c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
+													<liferay-ui:icon
+														icon="plus"
+														iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+														markupView="lexicon"
+														url="<%= editFragmentCollectionURL %>"
+													/>
+												</c:if>
+											</li>
+											<li>
+												<clay:dropdown-actions
+													dropdownItems="<%= fragmentDisplayContext.getCollectionsDropdownItems() %>"
+												/>
+											</li>
+										</ul>
 									</div>
 								</div>
 

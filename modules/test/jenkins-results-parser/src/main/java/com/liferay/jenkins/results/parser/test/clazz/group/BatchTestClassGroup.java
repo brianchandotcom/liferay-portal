@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.google.common.collect.Lists;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.TestSuiteJob;
@@ -98,21 +97,16 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	}
 
-	protected BatchTestClassGroup(String batchName, Job job) {
+	protected BatchTestClassGroup(
+		String batchName, PortalTestClassJob portalTestClassJob) {
+
 		this.batchName = batchName;
 
-		if (job instanceof PortalTestClassJob) {
-			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+		portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
 
-			portalGitWorkingDirectory =
-				portalTestClassJob.getPortalGitWorkingDirectory();
-		}
-		else {
-			throw new RuntimeException("Must use a PortalTestClassJob");
-		}
-
-		if (job instanceof TestSuiteJob) {
-			TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+		if (portalTestClassJob instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)portalTestClassJob;
 
 			testSuiteName = testSuiteJob.getTestSuiteName();
 		}
@@ -120,7 +114,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			testSuiteName = null;
 		}
 
-		jobProperties = job.getJobProperties();
+		jobProperties = portalTestClassJob.getJobProperties();
 
 		_setTestRelevantChanges();
 	}

@@ -14,7 +14,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,8 +57,10 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 
 	}
 
-	protected NPMTestBatchTestClassGroup(String batchName, Job job) {
-		super(batchName, job);
+	protected NPMTestBatchTestClassGroup(
+		String batchName, PortalTestClassJob portalTestClassJob) {
+
+		super(batchName, portalTestClassJob);
 
 		List<File> moduleDirs;
 

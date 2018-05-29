@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 /**
  * @author Michael Hashimoto
@@ -24,39 +25,53 @@ public class TestClassGroupFactory {
 	public static BatchTestClassGroup newBatchTestClassGroup(
 		String batchName, Job job) {
 
-		if (batchName.contains("functional-")) {
-			return new FunctionalBatchTestClassGroup(batchName, job);
+		if (job instanceof PortalTestClassJob) {
+			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+
+			if (batchName.contains("functional-")) {
+				return new FunctionalBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("integration-") ||
+				batchName.startsWith("unit-")) {
+
+				return new JUnitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("modules-integration-") ||
+				batchName.startsWith("modules-unit-")) {
+
+				return new ModulesJUnitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("plugins-compile-")) {
+				return new PluginsBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("portal-frontend-js-")) {
+				return new NPMTestBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("semantic-versioning-")) {
+				return new SemVerBaselineBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("tck-")) {
+				return new TCKJunitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			return new DefaultBatchTestClassGroup(
+				batchName, portalTestClassJob);
 		}
 
-		if (batchName.startsWith("integration-") ||
-			batchName.startsWith("unit-")) {
-
-			return new JUnitBatchTestClassGroup(batchName, job);
-		}
-
-		if (batchName.startsWith("modules-integration-") ||
-			batchName.startsWith("modules-unit-")) {
-
-			return new ModulesJUnitBatchTestClassGroup(batchName, job);
-		}
-
-		if (batchName.startsWith("plugins-compile-")) {
-			return new PluginsBatchTestClassGroup(batchName, job);
-		}
-
-		if (batchName.startsWith("portal-frontend-js-")) {
-			return new NPMTestBatchTestClassGroup(batchName, job);
-		}
-
-		if (batchName.startsWith("semantic-versioning-")) {
-			return new SemVerBaselineBatchTestClassGroup(batchName, job);
-		}
-
-		if (batchName.startsWith("tck-")) {
-			return new TCKJunitBatchTestClassGroup(batchName, job);
-		}
-
-		return new DefaultBatchTestClassGroup(batchName, job);
+		throw new IllegalArgumentException("Unknown test class group");
 	}
 
 }

@@ -18,7 +18,7 @@ import com.google.common.collect.Lists;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.io.File;
 import java.io.IOException;
@@ -278,8 +278,10 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	}
 
-	protected JUnitBatchTestClassGroup(String batchName, Job job) {
-		super(batchName, job);
+	protected JUnitBatchTestClassGroup(
+		String batchName, PortalTestClassJob portalTestClassJob) {
+
+		super(batchName, portalTestClassJob);
 
 		_setAutoBalanceTestFiles();
 

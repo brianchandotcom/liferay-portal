@@ -357,7 +357,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			long remoteGroupId, ServiceContext serviceContext)
 		throws PortalException {
 
-		StagingUtil.validateRemote(
+		groupLocalService.validateRemote(
 			stagingGroup.getGroupId(), remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId);
 

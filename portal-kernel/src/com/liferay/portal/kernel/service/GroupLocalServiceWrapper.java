@@ -2703,6 +2703,15 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	@Override
+	public void validateRemote(long groupId, String remoteAddress,
+		int remotePort, String remotePathContext, boolean secureConnection,
+		long remoteGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_groupLocalService.validateRemote(groupId, remoteAddress, remotePort,
+			remotePathContext, secureConnection, remoteGroupId);
+	}
+
+	@Override
 	public GroupLocalService getWrappedService() {
 		return _groupLocalService;
 	}

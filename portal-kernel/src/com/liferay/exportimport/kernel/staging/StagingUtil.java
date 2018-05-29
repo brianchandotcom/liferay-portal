@@ -755,6 +755,12 @@ public class StagingUtil {
 		_staging.updateStaging(portletRequest, liveGroup);
 	}
 
+	/**
+	 * @deprecated As of 5.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.service.GroupLocalService#validateRemote(
+	 *             long, String, int, String, boolean, long)}
+	 */
+	@Deprecated
 	public static void validateRemote(
 			long groupId, String remoteAddress, int remotePort,
 			String remotePathContext, boolean secureConnection,

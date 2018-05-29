@@ -15,7 +15,7 @@
 package com.liferay.exportimport.resources.importer.internal.util;
 
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
@@ -68,7 +68,7 @@ public class LARImporter extends BaseImporter {
 			groupId, privateLayout);
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildImportLayoutSettingsMap(
 					userId, groupId, privateLayout, layoutIds,
 					getParameterMap(), user.getLocale(), user.getTimeZone());

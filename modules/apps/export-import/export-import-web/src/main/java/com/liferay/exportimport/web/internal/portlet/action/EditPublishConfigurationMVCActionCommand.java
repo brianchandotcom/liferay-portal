@@ -17,7 +17,6 @@ package com.liferay.exportimport.web.internal.portlet.action;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -95,7 +94,7 @@ public class EditPublishConfigurationMVCActionCommand
 		}
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+			exportImportConfigurationSettingsMapFactory.buildSettingsMap(
 				actionRequest, groupId, exportImportConfigurationType);
 
 		SessionMessages.add(

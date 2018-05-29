@@ -318,7 +318,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "privateLayout");
 
 		Map<String, Serializable> importLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			_exportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
 					themeDisplay.getUserId(), groupId, privateLayout, null,
 					actionRequest.getParameterMap(), themeDisplay.getLocale(),
@@ -417,7 +417,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "privateLayout");
 
 		Map<String, Serializable> importLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			_exportImportConfigurationSettingsMapFactory.
 				buildImportLayoutSettingsMap(
 					themeDisplay.getUserId(), groupId, privateLayout, null,
 					actionRequest.getParameterMap(), themeDisplay.getLocale(),
@@ -440,6 +440,10 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportConfigurationSettingsMapFactory
+		_exportImportConfigurationSettingsMapFactory;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

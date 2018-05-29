@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -397,7 +397,7 @@ public abstract class BasePortletExportImportTestCase
 		MapUtil.merge(getExportParameterMap(), exportParameterMap);
 
 		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportPortletSettingsMap(
 					user, layout.getPlid(), layout.getGroupId(), portletId,
 					exportParameterMap, StringPool.BLANK);
@@ -430,7 +430,7 @@ public abstract class BasePortletExportImportTestCase
 			MapUtil.merge(getImportParameterMap(), importParameterMap);
 
 			settingsMap =
-				ExportImportConfigurationSettingsMapFactory.
+				ExportImportConfigurationSettingsMapFactoryUtil.
 					buildImportPortletSettingsMap(
 						user, importedLayout.getPlid(),
 						importedGroup.getGroupId(), portletId,

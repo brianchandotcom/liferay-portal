@@ -15,7 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -1482,7 +1482,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(getUserId());
 
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildPublishLayoutLocalSettingsMap(
 					user, sourceGroupId, targetGroupId, privateLayout,
 					layoutIds, parameterMap);
@@ -1596,7 +1596,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		User user = userPersistence.findByPrimaryKey(getUserId());
 
 		Map<String, Serializable> publishLayoutRemoteSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildPublishLayoutRemoteSettingsMap(
 					getUserId(), sourceGroupId, privateLayout, layoutIdMap,
 					parameterMap, remoteAddress, remotePort, remotePathContext,

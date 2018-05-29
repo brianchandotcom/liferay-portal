@@ -204,7 +204,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "exportFileName");
 
 			Map<String, Serializable> exportPortletSettingsMap =
-				ExportImportConfigurationSettingsMapFactory.
+				_exportImportConfigurationSettingsMapFactory.
 					buildExportPortletSettingsMap(
 						themeDisplay.getUserId(), plid, groupId,
 						portlet.getPortletId(), actionRequest.getParameterMap(),
@@ -247,7 +247,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		Portlet portlet = ActionUtil.getPortlet(actionRequest);
 
 		Map<String, Serializable> importPortletSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			_exportImportConfigurationSettingsMapFactory.
 				buildImportPortletSettingsMap(
 					themeDisplay.getUserId(), plid, groupId,
 					portlet.getPortletId(), actionRequest.getParameterMap(),
@@ -370,7 +370,7 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 		Portlet portlet = ActionUtil.getPortlet(actionRequest);
 
 		Map<String, Serializable> importPortletSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			_exportImportConfigurationSettingsMapFactory.
 				buildImportPortletSettingsMap(
 					themeDisplay.getUserId(), plid, groupId,
 					portlet.getPortletId(), actionRequest.getParameterMap(),
@@ -393,6 +393,10 @@ public class ExportImportMVCActionCommand extends BaseMVCActionCommand {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Reference
+	private ExportImportConfigurationSettingsMapFactory
+		_exportImportConfigurationSettingsMapFactory;
 
 	@Reference
 	private ExportImportHelper _exportImportHelper;

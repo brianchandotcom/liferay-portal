@@ -2553,6 +2553,15 @@ public class GroupLocalServiceUtil {
 		return getService().updateSite(groupId, site);
 	}
 
+	public static void validateRemote(long groupId, String remoteAddress,
+		int remotePort, String remotePathContext, boolean secureConnection,
+		long remoteGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.validateRemote(groupId, remoteAddress, remotePort,
+			remotePathContext, secureConnection, remoteGroupId);
+	}
+
 	public static GroupLocalService getService() {
 		if (_service == null) {
 			_service = (GroupLocalService)PortalBeanLocatorUtil.locate(GroupLocalService.class.getName());

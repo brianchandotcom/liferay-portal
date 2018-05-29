@@ -2144,4 +2144,8 @@ public interface GroupLocalService extends BaseLocalService,
 	*/
 	public Group updateSite(long groupId, boolean site)
 		throws PortalException;
+
+	public void validateRemote(long groupId, String remoteAddress,
+		int remotePort, String remotePathContext, boolean secureConnection,
+		long remoteGroupId) throws PortalException;
 }

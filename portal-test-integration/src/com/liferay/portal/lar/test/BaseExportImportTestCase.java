@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -64,7 +64,7 @@ public abstract class BaseExportImportTestCase {
 		User user = TestPropsValues.getUser();
 
 		Map<String, Serializable> importLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildImportLayoutSettingsMap(
 					user, importedGroup.getGroupId(), false, null,
 					parameterMap);
@@ -164,7 +164,7 @@ public abstract class BaseExportImportTestCase {
 		User user = TestPropsValues.getUser();
 
 		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactory.
+			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildExportLayoutSettingsMap(
 					user, group.getGroupId(), false, layoutIds, parameterMap);
 

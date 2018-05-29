@@ -724,33 +724,23 @@ AUI.add(
 			_renderSecondOperandInput: function(index, condition, container) {
 				var instance = this;
 
-				var value = '';
-
 				var firstOperand = instance._getFirstOperand(index);
 
 				var secondOperandTypeValue = instance._getSecondOperandTypeValue(index);
 
-				var visible = instance._isConstant(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
+				var type = instance._getFieldType(instance._getFirstOperandValue(index));
 
-				if (condition && instance._isBinaryCondition(index) && visible) {
-					value = condition.operands[1].value;
-				}
+				var config = {
+					options: [],
+					placeholder: '',
+					showLabel: false,
+					strings: {}
+				};
 
-				var field = instance.createTextField(
-					{
-						fieldName: index + '-condition-second-operand-input',
-						options: [],
-						placeholder: '',
-						showLabel: false,
-						strings: {},
-						value: value,
-						visible: visible
-					}
-				);
-
-				field.render(container);
-
-				instance._conditions[index + '-condition-second-operand-input'] = field;
+				instance._createDateField(index, condition, config, container, firstOperand, type);
+				instance._createTextField(index, condition, config, container, firstOperand, type);
+				instance._createIntegerField(index, condition, config, container, firstOperand, secondOperandTypeValue);
+				instance._createDecimalField(index, condition, config, container, firstOperand, secondOperandTypeValue);
 			},
 
 			_renderSecondOperandSelectField: function(index, condition, container) {

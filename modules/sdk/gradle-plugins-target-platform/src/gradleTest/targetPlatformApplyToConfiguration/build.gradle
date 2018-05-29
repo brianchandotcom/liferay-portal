@@ -4,11 +4,11 @@ apply plugin: "java"
 task runGradleTest
 
 configurations {
-	kernel
+	portalKernel
 }
 
 dependencies {
-	kernel group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	portalKernel group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 
 	targetPlatformBoms group: "com.liferay", name: "com.liferay.ce.portal.bom", version: "7.0.4"
 }
@@ -21,14 +21,14 @@ repositories {
 
 runGradleTest {
 	doLast {
-		ResolvedArtifact kernelResolvedArtifact = configurations.kernel.resolvedConfiguration.resolvedArtifacts.find {
+		ResolvedArtifact portalKernelResolvedArtifact = configurations.portalKernel.resolvedConfiguration.resolvedArtifacts.find {
 			it.name.contains("kernel")
 		}
 
-		assert kernelResolvedArtifact.file.name.contains("2.61.1")
+		assert portalKernelResolvedArtifact.file.name.contains("2.61.1")
 	}
 }
 
 targetPlatform {
-	applyToConfiguration "kernel"
+	applyToConfiguration "portalKernel"
 }

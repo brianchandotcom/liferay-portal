@@ -35,7 +35,7 @@ import org.gradle.api.artifacts.DependencySet;
 /**
  * @author Gregory Amerson
  */
-public class TargetPlatformUtil {
+public class TargetPlatformPluginUtil {
 
 	public static void configureDependencyManagement(
 		final Project project,

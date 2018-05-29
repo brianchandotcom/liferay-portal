@@ -16,7 +16,7 @@ package com.liferay.gradle.plugins.target.platform.extensions;
 
 import com.liferay.gradle.plugins.target.platform.TargetPlatformPlugin;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformUtil;
+import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformPluginUtil;
 
 import groovy.lang.Closure;
 
@@ -50,7 +50,7 @@ public class TargetPlatformExtension {
 				_project,
 				TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
 
-		TargetPlatformUtil.configureDependencyManagement(
+		TargetPlatformPluginUtil.configureDependencyManagement(
 			_project, targetPlatformBomsConfiguration, _applyToConfiguration);
 
 		return this;

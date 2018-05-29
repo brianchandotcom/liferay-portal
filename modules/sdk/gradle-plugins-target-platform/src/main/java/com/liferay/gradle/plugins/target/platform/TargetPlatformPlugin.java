@@ -17,7 +17,7 @@ package com.liferay.gradle.plugins.target.platform;
 import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExtension;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.target.platform.internal.util.SkipIfExecutingParentTaskSpec;
-import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformUtil;
+import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformPluginUtil;
 import com.liferay.gradle.plugins.target.platform.tasks.ResolveTask;
 
 import groovy.lang.Closure;
@@ -107,10 +107,11 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 						targetPlatformRequirementsConfiguration);
 
 					Set<Object> configurationNames = new HashSet<>();
+
 					Collections.addAll(
 						configurationNames, _CONFIGURATION_NAMES);
 
-					TargetPlatformUtil.configureDependencyManagement(
+					TargetPlatformPluginUtil.configureDependencyManagement(
 						project, targetPlatformBomsConfiguration,
 						configurationNames);
 				}
@@ -286,7 +287,7 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		Collections.addAll(configurationNames, _CONFIGURATION_NAMES);
 
-		TargetPlatformUtil.configureDependencyManagement(
+		TargetPlatformPluginUtil.configureDependencyManagement(
 			subproject, targetPlatformBomsConfiguration, configurationNames);
 
 		spec = targetPlatformExtension.getResolveOnlyIf();

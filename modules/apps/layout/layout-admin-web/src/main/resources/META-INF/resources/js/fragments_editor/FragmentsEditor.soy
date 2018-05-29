@@ -73,11 +73,11 @@
 	{@param? status: string}
 	{@param? updateLayoutPageTemplateEntryAssetTypeURL: any}
 
-	<div id="{$id}">
+	<div class="fragments-editor" id="{$id}">
 		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
 			{param classPK: $classPK /}
 			{param events: [
-				'toggleSidebarButtonClick': $_handleToggleContextualSidebarButtonClick,
+				'toggleContextualSidebarButtonClick': $_handleToggleContextualSidebarButtonClick,
 				'translationLanguageChange': $_handleTranslationLanguageChange
 			] /}
 			{param lastSaveDate: $_lastSaveDate ?: '' /}

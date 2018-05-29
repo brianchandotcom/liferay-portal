@@ -1,5 +1,10 @@
-.fragments-editor-sidebar {
+$controlMenuHeight: 49px;
+$managementBarHeight: 48px;
+
+.fragments-editor .contextual-sidebar.fragments-editor-sidebar {
+	height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});
 	margin-top: 1px;
+	top: $controlMenuHeight + $managementBarHeight;
 
 	button.component-action {
 		cursor: pointer;
@@ -11,5 +16,15 @@
 
 	.sidebar-body > .sidebar-section:first-child {
 		border-bottom: solid thin #CDCED9;
+	}
+
+	@media (min-width: 768px) {
+		$controlMenuHeight: 64px;
+		$managementBarHeight: 48px;
+
+		& {
+			height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});
+			top: $controlMenuHeight + $managementBarHeight;
+		}
 	}
 }

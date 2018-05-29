@@ -586,6 +586,12 @@ AUI.add(
 				return operandTypeValue === 'double' || operandTypeValue === 'integer' || operandTypeValue === 'string';
 			},
 
+			_isDate: function(operandTypeValue) {
+				var instance = this;
+
+				return operandTypeValue === 'date';
+			},
+
 			_isEmpty: function(operator) {
 				return operator === '';
 			},
@@ -596,6 +602,16 @@ AUI.add(
 				var value = field.getValue()[0] || '';
 
 				return instance._getFieldOptions(value).length > 0 && instance._getFieldType(value) !== 'text';
+			},
+
+			_isNumeric: function(operandTypeValue) {
+				return operandTypeValue === 'double' || operandTypeValue === 'integer';
+			},
+
+			_isText: function(operandTypeValue) {
+				var instance = this;
+
+				return operandTypeValue === 'text';
 			},
 
 			_isUnaryCondition: function(index) {

@@ -17,8 +17,8 @@ package com.liferay.commerce.notification.web.internal.portlet.action;
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateException;
-import com.liferay.commerce.notification.service.CommerceNotificationQueueService;
-import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationQueuesDisplayContext;
+import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
+import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationQueueEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -45,11 +45,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=viewCommerceNotificationQueues"
+		"mvc.command.name=viewCommerceNotificationQueueEntries"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewCommerceNotificationQueuesMVCRenderCommand
+public class ViewCommerceNotificationQueueEntriesMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -59,7 +59,7 @@ public class ViewCommerceNotificationQueuesMVCRenderCommand
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/view_notification_queues.jsp");
+				"/view_notification_queue_entries.jsp");
 
 		try {
 			HttpServletRequest httpServletRequest =
@@ -67,15 +67,15 @@ public class ViewCommerceNotificationQueuesMVCRenderCommand
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(renderResponse);
 
-			CommerceNotificationQueuesDisplayContext
-				commerceNotificationQueuesDisplayContext =
-					new CommerceNotificationQueuesDisplayContext(
-						_commerceNotificationQueueService, httpServletRequest,
-						_portletResourcePermission);
+			CommerceNotificationQueueEntriesDisplayContext
+				commerceNotificationQueueEntriesDisplayContext =
+					new CommerceNotificationQueueEntriesDisplayContext(
+						_commerceNotificationQueueEntryService,
+						httpServletRequest, _portletResourcePermission);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceNotificationQueuesDisplayContext);
+				commerceNotificationQueueEntriesDisplayContext);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -89,7 +89,7 @@ public class ViewCommerceNotificationQueuesMVCRenderCommand
 			}
 			else {
 				throw new PortletException(
-					"Unable to include view_notification_queues.jsp", e);
+					"Unable to include view_notification_queue_entries.jsp", e);
 			}
 		}
 
@@ -97,7 +97,8 @@ public class ViewCommerceNotificationQueuesMVCRenderCommand
 	}
 
 	@Reference
-	private CommerceNotificationQueueService _commerceNotificationQueueService;
+	private CommerceNotificationQueueEntryService
+		_commerceNotificationQueueEntryService;
 
 	@Reference
 	private Portal _portal;

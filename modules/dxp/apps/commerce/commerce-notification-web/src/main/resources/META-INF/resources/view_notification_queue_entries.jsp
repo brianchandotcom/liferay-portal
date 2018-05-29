@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String notificationNavigationItem = ParamUtil.getString(request, "notificationNavigationItem", "view-all-notification-queues");
+String notificationNavigationItem = ParamUtil.getString(request, "notificationNavigationItem", "view-all-notification-queue-entries");
 
 ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
 
-CommerceNotificationQueuesDisplayContext commerceNotificationQueuesDisplayContext = (CommerceNotificationQueuesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceNotificationQueueEntriesDisplayContext commerceNotificationQueueEntriesDisplayContext = (CommerceNotificationQueueEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-PortletURL portletURL = commerceNotificationQueuesDisplayContext.getPortletURL();
+PortletURL portletURL = commerceNotificationQueueEntriesDisplayContext.getPortletURL();
 
 portletURL.setParameter("notificationNavigationItem", notificationNavigationItem);
 %>
@@ -35,7 +35,7 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 <%@ include file="/navbar.jspf" %>
 
 <liferay-frontend:management-bar
-	searchContainerId="commerceNotificationQueues"
+	searchContainerId="commerceNotificationQueueEntries"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
@@ -44,8 +44,8 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceNotificationQueuesDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceNotificationQueuesDisplayContext.getOrderByType() %>"
+			orderByCol="<%= commerceNotificationQueueEntriesDisplayContext.getOrderByCol() %>"
+			orderByType="<%= commerceNotificationQueueEntriesDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"priority"} %>'
 			portletURL="<%= portletURL %>"
 		/>
@@ -62,13 +62,13 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		id="commerceNotificationQueues"
-		searchContainer="<%= commerceNotificationQueuesDisplayContext.getSearchContainer() %>"
+		id="commerceNotificationQueueEntries"
+		searchContainer="<%= commerceNotificationQueueEntriesDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.notification.model.CommerceNotificationQueue"
-			keyProperty="commerceNotificationQueueId"
-			modelVar="commerceNotificationQueue"
+			className="com.liferay.commerce.notification.model.CommerceNotificationQueueEntry"
+			keyProperty="commerceNotificationQueueEntryId"
+			modelVar="commerceNotificationQueueEntry"
 		>
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
@@ -84,8 +84,13 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
+				property="type"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="sent"
-				value='<%= LanguageUtil.get(request, commerceNotificationQueue.isSent() ? "yes" : "no") %>'
+				value='<%= LanguageUtil.get(request, commerceNotificationQueueEntry.isSent() ? "yes" : "no") %>'
 			/>
 
 			<liferay-ui:search-container-column-text
@@ -95,7 +100,7 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"
-				path="/notification_queue_action.jsp"
+				path="/notification_queue_entry_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

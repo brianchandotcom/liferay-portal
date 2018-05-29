@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.notification.web.internal.display.context;
 
-import com.liferay.commerce.notification.model.CommerceNotificationQueue;
-import com.liferay.commerce.notification.service.CommerceNotificationQueueService;
+import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
+import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
 import com.liferay.commerce.notification.web.internal.admin.NotificationsCommerceAdminModule;
 import com.liferay.commerce.notification.web.internal.display.context.util.CommerceNotificationsRequestHelper;
 import com.liferay.commerce.notification.web.internal.util.CommerceNotificationsUtil;
@@ -36,14 +36,16 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceNotificationQueuesDisplayContext {
+public class CommerceNotificationQueueEntriesDisplayContext {
 
-	public CommerceNotificationQueuesDisplayContext(
-		CommerceNotificationQueueService commerceNotificationQueueService,
+	public CommerceNotificationQueueEntriesDisplayContext(
+		CommerceNotificationQueueEntryService
+			commerceNotificationQueueEntryService,
 		HttpServletRequest httpServletRequest,
 		PortletResourcePermission portletResourcePermission) {
 
-		_commerceNotificationQueueService = commerceNotificationQueueService;
+		_commerceNotificationQueueEntryService =
+			commerceNotificationQueueEntryService;
 		_portletResourcePermission = portletResourcePermission;
 
 		_commerceNotificationsRequestHelper =
@@ -84,7 +86,7 @@ public class CommerceNotificationQueuesDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer<CommerceNotificationQueue> getSearchContainer()
+	public SearchContainer<CommerceNotificationQueueEntry> getSearchContainer()
 		throws PortalException {
 
 		if (_searchContainer != null) {
@@ -93,14 +95,14 @@ public class CommerceNotificationQueuesDisplayContext {
 
 		_searchContainer = new SearchContainer<>(
 			_commerceNotificationsRequestHelper.getLiferayPortletRequest(),
-			getPortletURL(), null, "there-are-no-notification-queues");
+			getPortletURL(), null, "there-are-no-notification-queue-entries");
 
 		String orderByCol = getOrderByCol();
 		String orderByType = getOrderByType();
 
-		OrderByComparator<CommerceNotificationQueue> orderByComparator =
+		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator =
 			CommerceNotificationsUtil.
-				getCommerceNotificationQueueOrderByComparator(
+				getCommerceNotificationQueueEntryOrderByComparator(
 					orderByCol, orderByType);
 
 		_searchContainer.setOrderByCol(orderByCol);
@@ -108,14 +110,15 @@ public class CommerceNotificationQueuesDisplayContext {
 		_searchContainer.setOrderByType(orderByType);
 
 		int total =
-			_commerceNotificationQueueService.
-				getCommerceNotificationQueuesCount(
+			_commerceNotificationQueueEntryService.
+				getCommerceNotificationQueueEntriesCount(
 					_commerceNotificationsRequestHelper.getScopeGroupId());
-		List<CommerceNotificationQueue> results =
-			_commerceNotificationQueueService.getCommerceNotificationQueues(
-				_commerceNotificationsRequestHelper.getScopeGroupId(),
-				_searchContainer.getStart(), _searchContainer.getEnd(),
-				orderByComparator);
+		List<CommerceNotificationQueueEntry> results =
+			_commerceNotificationQueueEntryService.
+				getCommerceNotificationQueueEntries(
+					_commerceNotificationsRequestHelper.getScopeGroupId(),
+					_searchContainer.getStart(), _searchContainer.getEnd(),
+					orderByComparator);
 
 		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
@@ -129,11 +132,11 @@ public class CommerceNotificationQueuesDisplayContext {
 			_commerceNotificationsRequestHelper.getScopeGroupId(), actionId);
 	}
 
-	private final CommerceNotificationQueueService
-		_commerceNotificationQueueService;
+	private final CommerceNotificationQueueEntryService
+		_commerceNotificationQueueEntryService;
 	private final CommerceNotificationsRequestHelper
 		_commerceNotificationsRequestHelper;
 	private final PortletResourcePermission _portletResourcePermission;
-	private SearchContainer<CommerceNotificationQueue> _searchContainer;
+	private SearchContainer<CommerceNotificationQueueEntry> _searchContainer;
 
 }

@@ -15,15 +15,12 @@
 package com.liferay.commerce.notification.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.notification.exception.NoSuchNotificationQueueException;
-import com.liferay.commerce.notification.model.CommerceNotificationQueue;
-import com.liferay.commerce.notification.service.CommerceNotificationQueueService;
+import com.liferay.commerce.notification.exception.NoSuchNotificationQueueEntryException;
+import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -42,37 +39,38 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=editCommerceNotificationQueue"
+		"mvc.command.name=editCommerceNotificationQueueEntry"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceNotificationQueueMVCActionCommand
+public class EditCommerceNotificationQueueEntryMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	protected void deleteCommerceNotificationQueues(ActionRequest actionRequest)
 		throws PortalException {
 
-		long[] deleteCommerceNotificationQueueIds = null;
+		long[] deleteCommerceNotificationQueueEntryIds = null;
 
-		long commerceNotificationQueueId = ParamUtil.getLong(
-			actionRequest, "commerceNotificationQueueId");
+		long commerceNotificationQueueEntryId = ParamUtil.getLong(
+			actionRequest, "commerceNotificationQueueEntryId");
 
-		if (commerceNotificationQueueId > 0) {
-			deleteCommerceNotificationQueueIds =
-				new long[] {commerceNotificationQueueId};
+		if (commerceNotificationQueueEntryId > 0) {
+			deleteCommerceNotificationQueueEntryIds =
+				new long[] {commerceNotificationQueueEntryId};
 		}
 		else {
-			deleteCommerceNotificationQueueIds = StringUtil.split(
+			deleteCommerceNotificationQueueEntryIds = StringUtil.split(
 				ParamUtil.getString(
-					actionRequest, "deleteCommerceNotificationQueueIds"),
+					actionRequest, "deleteCommerceNotificationQueueEntryIds"),
 				0L);
 		}
 
-		for (long deleteCommerceNotificationQueueId :
-				deleteCommerceNotificationQueueIds) {
+		for (long deleteCommerceNotificationQueueEntryId :
+				deleteCommerceNotificationQueueEntryIds) {
 
-			_commerceNotificationQueueService.deleteCommerceNotificationQueue(
-				deleteCommerceNotificationQueueId);
+			_commerceNotificationQueueEntryService.
+				deleteCommerceNotificationQueueEntry(
+					deleteCommerceNotificationQueueEntryId);
 		}
 	}
 
@@ -88,11 +86,11 @@ public class EditCommerceNotificationQueueMVCActionCommand
 				deleteCommerceNotificationQueues(actionRequest);
 			}
 			else if (cmd.equals("resend")) {
-				resendCommerceNotificationQueue(actionRequest);
+				resendCommerceNotificationQueueEntry(actionRequest);
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchNotificationQueueException ||
+			if (e instanceof NoSuchNotificationQueueEntryException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -105,20 +103,20 @@ public class EditCommerceNotificationQueueMVCActionCommand
 		}
 	}
 
-	protected void resendCommerceNotificationQueue(ActionRequest actionRequest)
+	protected void resendCommerceNotificationQueueEntry(
+			ActionRequest actionRequest)
 		throws PortalException {
 
-		long commerceNotificationQueueId = ParamUtil.getLong(
-			actionRequest, "commerceNotificationQueueId");
+		long commerceNotificationQueueEntryId = ParamUtil.getLong(
+			actionRequest, "commerceNotificationQueueEntryId");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceNotificationQueue.class.getName(), actionRequest);
-
-		_commerceNotificationQueueService.resendCommerceNotificationQueue(
-			commerceNotificationQueueId, false, serviceContext);
+		_commerceNotificationQueueEntryService.
+			resendCommerceNotificationQueueEntry(
+				commerceNotificationQueueEntryId);
 	}
 
 	@Reference
-	private CommerceNotificationQueueService _commerceNotificationQueueService;
+	private CommerceNotificationQueueEntryService
+		_commerceNotificationQueueEntryService;
 
 }

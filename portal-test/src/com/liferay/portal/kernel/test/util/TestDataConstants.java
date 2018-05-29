@@ -24,4 +24,24 @@ public class TestDataConstants {
 		(byte)-91, (byte)127
 	};
 
+	public static byte[] repeatByteArray(int i) {
+		if (i < 1) {
+			throw new IllegalArgumentException("Input must be greater than 0");
+		}
+
+		if (i == 1) {
+			return TEST_BYTE_ARRAY;
+		}
+
+		int length = TEST_BYTE_ARRAY.length;
+
+		byte[] result = new byte[length * i];
+
+		for (int n = 0; n < result.length; n +=length) {
+			System.arraycopy(TEST_BYTE_ARRAY, 0, result, n, length);
+		}
+
+		return result;
+	}
+
 }

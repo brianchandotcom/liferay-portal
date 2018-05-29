@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -55,9 +57,11 @@ public class LayoutExceptionRequestHandler {
 		String errorMessage = null;
 
 		if (pe instanceof LayoutNameException) {
-			errorMessage = LanguageUtil.get(
+			errorMessage = LanguageUtil.format(
 				themeDisplay.getRequest(),
-				"please-enter-a-valid-name-for-the-page");
+				"page-name-cannot-be-empty-null-or-exceed-x-characters",
+				ModelHintsUtil.getMaxLength(
+					Layout.class.getName(), "friendlyURL"));
 		}
 		else if (pe instanceof LayoutTypeException) {
 			LayoutTypeException lte = (LayoutTypeException)pe;

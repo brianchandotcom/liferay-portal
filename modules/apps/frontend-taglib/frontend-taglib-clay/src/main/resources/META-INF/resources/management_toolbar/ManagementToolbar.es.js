@@ -271,6 +271,16 @@ ManagementToolbar.STATE = {
 	searchActionURL: Config.string(),
 
 	/**
+	 * Map of properties that will be rendered as hidden inputs in the search
+	 * form.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?object}
+	 */
+	searchData: Config.object(),
+
+	/**
 	 * Method of the search form.
 	 * @default GET
 	 * @instance

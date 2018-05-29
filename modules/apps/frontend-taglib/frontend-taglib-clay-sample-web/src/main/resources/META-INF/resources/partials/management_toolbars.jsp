@@ -23,7 +23,7 @@
 <clay:management-toolbar
 	creationMenu="<%= managementToolbarsDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= managementToolbarsDisplayContext.getFilterDropdownItems() %>"
-	searchActionURL="mySearchActionURL"
+	searchActionURL="mySearchActionURL?key1=val1&key2=val2&key3=val3"
 	searchFormName="mySearchName"
 	searchInputName="mySearchInputName"
 	selectable="<%= true %>"

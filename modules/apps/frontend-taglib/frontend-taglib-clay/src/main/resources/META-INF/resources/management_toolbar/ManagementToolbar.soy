@@ -62,6 +62,7 @@
 	]>}
 	{@param? id: string}
 	{@param? searchActionURL: string}
+	{@param? searchData: ?}
 	{@param? searchFormMethod: string}
 	{@param? searchFormName: string}
 	{@param? searchInputName: string}
@@ -89,6 +90,9 @@
 		{param clearResultsURL: $clearResultsURL /}
 		{param contentRenderer: $contentRenderer /}
 		{param creationMenu: $creationMenu /}
+		{param customData: [
+			'searchData': $searchData
+		] /}
 		{param disabled: $disabled /}
 		{param elementClasses: $elementClasses /}
 		{param events: [
@@ -119,3 +123,55 @@
 		{param viewTypes: $viewTypes /}
 	{/call}
 {/template}
+
+/**
+ * This renders the search form.
+ */
+{deltemplate ClayManagementToolbar.SearchForm variant="'hiddenInputsForm'"}
+	{@param spritemap: string}
+	{@param? _handleCloseMobileSearchClick: any}
+	{@param? _handleSearchSearchClick: any}
+	{@param? customData: ?}
+	{@param? disabled: bool}
+	{@param? onlySearch: bool}
+	{@param? searchActionURL: string}
+	{@param? searchFormMethod: string}
+	{@param? searchFormName: string}
+	{@param? searchInput: html}
+	{@param? searchInputName: string}
+	{@param? searchValue: string}
+
+	{let $searchFormContent kind="html"}
+		{let $searchFormAttributes kind="attributes"}
+			{if $searchActionURL}
+				action="{$searchActionURL}"
+			{/if}
+
+			method="{$searchFormMethod ?: 'GET'}"
+
+			{if $searchFormName}
+				name="{$searchFormName}"
+			{/if}
+
+			role="search"
+		{/let}
+
+		<form {$searchFormAttributes}>
+			{$searchInput}
+
+			{let $searchData: $customData.searchData /}
+
+			{foreach $key in keys($searchData)}
+				<input name="{$key}" type="hidden" value="{$searchData[$key]}" />
+			{/foreach}
+		</form>
+	{/let}
+
+	{if $onlySearch}
+		{$searchFormContent}
+	{else}
+		<div class="container-fluid container-fluid-max-xl">
+			{$searchFormContent}
+		</div>
+	{/if}
+{/deltemplate}

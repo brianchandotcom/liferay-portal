@@ -21,8 +21,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayCardTag;
  */
 public class UserCardTag extends BaseClayCardTag {
 
-	public UserCardTag() {
-		super("ClayUserCard");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayUserCard");
+
+		return super.doStartTag();
 	}
 
 	public void setImageAlt(String imageAlt) {

@@ -92,7 +92,19 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	public boolean getHydrate() {
-		return _hydrate;
+		if (_hydrate != null) {
+			return _hydrate;
+		}
+
+		Map<String, Object> context = getContext();
+
+		if (Validator.isNotNull(_componentId) ||
+			Validator.isNotNull(context.get("data"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getModule() {
@@ -149,7 +161,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			_componentId = null;
 			_context = null;
 			_dependencies = null;
-			_hydrate = true;
+			_hydrate = null;
 			_module = null;
 			_templateNamespace = null;
 		}
@@ -241,7 +253,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	private String _componentId;
 	private Map<String, Object> _context;
 	private Set<String> _dependencies;
-	private boolean _hydrate = true;
+	private Boolean _hydrate;
 	private String _module;
 	private Template _template;
 	private String _templateNamespace;

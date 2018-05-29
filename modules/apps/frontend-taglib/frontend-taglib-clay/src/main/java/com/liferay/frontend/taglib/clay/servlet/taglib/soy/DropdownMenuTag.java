@@ -27,12 +27,12 @@ import java.util.Map;
  */
 public class DropdownMenuTag extends BaseClayTag {
 
-	public DropdownMenuTag() {
-		super("dropdown", "ClayDropdown", true);
-	}
-
 	@Override
 	public int doStartTag() {
+		super.setComponentBaseName("ClayDropdown");
+		super.setModuleBaseName("dropdown");
+		super.setHydrate(true);
+
 		Map<String, Object> context = getContext();
 
 		if (Validator.isNotNull(context.get("buttonLabel"))) {

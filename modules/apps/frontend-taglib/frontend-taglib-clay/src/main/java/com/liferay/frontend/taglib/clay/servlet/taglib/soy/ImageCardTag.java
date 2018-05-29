@@ -25,8 +25,11 @@ import java.util.Map;
  */
 public class ImageCardTag extends BaseClayCardTag {
 
-	public ImageCardTag() {
-		super("ClayImageCard");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayImageCard");
+
+		return super.doStartTag();
 	}
 
 	public void setIcon(String icon) {

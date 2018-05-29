@@ -21,8 +21,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
  */
 public class CheckboxTag extends BaseClayTag {
 
-	public CheckboxTag() {
-		super("checkbox", "ClayCheckbox");
+	@Override
+	public int doStartTag() {
+		super.setComponentBaseName("ClayCheckbox");
+		super.setModuleBaseName("checkbox");
+
+		return super.doStartTag();
 	}
 
 	public void setChecked(Boolean checked) {

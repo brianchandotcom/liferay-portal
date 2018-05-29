@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_VERSION</td>
-	<td>//div[contains(@class,'sidebar-body')]/dl/dt[contains(.,'Version')]/following-sibling::dd</td>
+	<td>//div[@class='sidebar-header']//span[contains(@class,'label-item') and contains(.,'Version')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -208,7 +208,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_VERSION</td>
-	<td>//div[contains(@class,'sidebar-body')]//span[contains(.,'Version')]/../../..//dd[contains(.,'${key_dmDocumentVersionNumber}')]</td>
+	<td>//div[@class='sidebar-header']//span[contains(@class,'label-item') and contains(.,'Version') and contains(.,'${key_dmDocumentVersionNumber}')]</td>
 	<td></td>
 </tr>
 <tr>

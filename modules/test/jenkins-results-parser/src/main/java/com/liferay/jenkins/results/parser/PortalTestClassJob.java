@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public interface PortalTestClassJob {
+public interface PortalTestClassJob extends Job {
 
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory();
 

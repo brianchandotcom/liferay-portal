@@ -17,7 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public interface TestSuiteJob {
+public interface TestSuiteJob extends Job {
 
 	public String getTestSuiteName();
 

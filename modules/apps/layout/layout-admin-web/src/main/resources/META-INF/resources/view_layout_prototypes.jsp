@@ -45,17 +45,21 @@
 		searchContainer="<%= layoutPrototypeDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.LayoutPrototype"
+			className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
 			cssClass="selectable"
 			escapedModel="<%= true %>"
-			keyProperty="layoutPrototypeId"
-			modelVar="layoutPrototype"
+			keyProperty="layoutPageTemplateEntryId"
+			modelVar="layoutPageTemplateEntry"
 		>
 
 			<%
+			LayoutPrototype layoutPrototype = LayoutPrototypeServiceUtil.getLayoutPrototype(layoutPageTemplateEntry.getLayoutPrototypeId());
+
 			Group layoutPrototypeGroup = layoutPrototype.getGroup();
 
 			row.setCssClass("entry-card lfr-asset-item");
+
+			request.setAttribute(LayoutAdminWebKeys.LAYOUT_PROTOTYPE, layoutPrototype);
 			%>
 
 			<liferay-ui:search-container-column-text>

@@ -173,8 +173,7 @@ public class AssetCategoryFinderImpl
 	public List<AssetCategory> filterFindByC_C(
 		long classNameId, long classPK, int start, int end) {
 
-		return doFindByC_C(
-			classNameId, classPK, start, end, true);
+		return doFindByC_C(classNameId, classPK, start, end, true);
 	}
 
 	@Override
@@ -323,7 +322,7 @@ public class AssetCategoryFinderImpl
 
 	protected List<AssetCategory> doFindByC_C(
 		long classNameId, long classPK, int start, int end,
-			boolean inlineSQLHelper) {
+		boolean inlineSQLHelper) {
 
 		Session session = null;
 
@@ -347,7 +346,7 @@ public class AssetCategoryFinderImpl
 			qPos.add(classNameId);
 			qPos.add(classPK);
 
-			return  (List<AssetCategory>)QueryUtil.list(
+			return (List<AssetCategory>)QueryUtil.list(
 				q, getDialect(), start, end);
 		}
 		catch (Exception e) {
@@ -356,7 +355,6 @@ public class AssetCategoryFinderImpl
 		finally {
 			closeSession(session);
 		}
-
 	}
 
 	protected String getJoin(String[] categoryProperties) {

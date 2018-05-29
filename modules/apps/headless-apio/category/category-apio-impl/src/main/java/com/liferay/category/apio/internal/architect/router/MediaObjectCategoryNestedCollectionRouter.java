@@ -23,8 +23,8 @@ import com.liferay.category.apio.internal.architect.form.NestedCategoryForm;
 import com.liferay.category.apio.internal.architect.router.base.BaseCategoryNestedCollectionRouter;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
-
 import com.liferay.portal.kernel.repository.model.FileEntry;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

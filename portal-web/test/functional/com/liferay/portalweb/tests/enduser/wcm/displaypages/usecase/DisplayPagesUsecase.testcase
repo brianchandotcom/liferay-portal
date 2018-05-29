@@ -107,11 +107,6 @@
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="Collection#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Fragment Collection Name" />
-		</execute>
-
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Fragment Collection Name" />
 		</execute>
@@ -172,11 +167,6 @@
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="Collection#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Fragment Collection Name" />
-		</execute>
-
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Fragment Collection Name" />
 		</execute>
@@ -226,11 +216,6 @@
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Fragments" />
-		</execute>
-
-		<execute macro="Collection#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Fragment Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -342,11 +327,6 @@
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="Collection#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Fragment Collection Name" />
-		</execute>
-
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Fragment Collection Name" />
 		</execute>
@@ -431,11 +411,6 @@
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Fragments" />
-		</execute>
-
-		<execute macro="Collection#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Fragment Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">

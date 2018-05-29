@@ -37,24 +37,24 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 
 	@Before
 	public void setUp() throws Exception {
-		_anonymousUser = UserTestUtil.addUser();
-		_uadAnonymizer = getUADAnonymizer();
-		_user = UserTestUtil.addUser();
+		anonymousUser = UserTestUtil.addUser();
+		uadAnonymizer = getUADAnonymizer();
+		user = UserTestUtil.addUser();
 	}
 
 	@Test
 	public void testAutoAnonymize() throws Exception {
-		T baseModel = addBaseModel(_user.getUserId());
+		T baseModel = addBaseModel(user.getUserId());
 
-		_testAutoAnonymize(baseModel);
+		testAutoAnonymize(baseModel);
 	}
 
 	@Test
 	public void testAutoAnonymizeAll() throws Exception {
 		T baseModel = addBaseModel(TestPropsValues.getUserId());
-		T autoAnonymizedBaseModel = addBaseModel(_user.getUserId());
+		T autoAnonymizedBaseModel = addBaseModel(user.getUserId());
 
-		_uadAnonymizer.autoAnonymizeAll(_user.getUserId(), _anonymousUser);
+		uadAnonymizer.autoAnonymizeAll(user.getUserId(), anonymousUser);
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
@@ -65,12 +65,12 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 			autoAnonymizedBaseModel);
 
 		Assert.assertTrue(
-			isBaseModelAutoAnonymized(autoAnonymizedBaseModelPK, _user));
+			isBaseModelAutoAnonymized(autoAnonymizedBaseModelPK, user));
 	}
 
 	@Test
 	public void testAutoAnonymizeAllWithNoBaseModel() throws Exception {
-		_uadAnonymizer.autoAnonymizeAll(_user.getUserId(), _anonymousUser);
+		uadAnonymizer.autoAnonymizeAll(user.getUserId(), anonymousUser);
 	}
 
 	@Test
@@ -81,9 +81,9 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 			(WhenHasStatusByUserIdField)this;
 
 		T baseModel = whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
-			TestPropsValues.getUserId(), _user.getUserId());
+			TestPropsValues.getUserId(), user.getUserId());
 
-		_testAutoAnonymize(baseModel);
+		testAutoAnonymize(baseModel);
 	}
 
 	@Test
@@ -94,16 +94,16 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 			(WhenHasStatusByUserIdField)this;
 
 		T baseModel = whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
-			_user.getUserId(), TestPropsValues.getUserId());
+			user.getUserId(), TestPropsValues.getUserId());
 
-		_testAutoAnonymize(baseModel);
+		testAutoAnonymize(baseModel);
 	}
 
 	@Test
 	public void testDelete() throws Exception {
-		T baseModel = addBaseModel(_user.getUserId(), false);
+		T baseModel = addBaseModel(user.getUserId(), false);
 
-		_uadAnonymizer.delete(baseModel);
+		uadAnonymizer.delete(baseModel);
 
 		deleteBaseModels(Arrays.asList(baseModel));
 
@@ -115,9 +115,9 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 	@Test
 	public void testDeleteAll() throws Exception {
 		T baseModel = addBaseModel(TestPropsValues.getUserId());
-		T deletedBaseModel = addBaseModel(_user.getUserId(), false);
+		T deletedBaseModel = addBaseModel(user.getUserId(), false);
 
-		_uadAnonymizer.deleteAll(_user.getUserId());
+		uadAnonymizer.deleteAll(user.getUserId());
 
 		List<T> baseModels = new ArrayList<>();
 
@@ -136,7 +136,7 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 
 	@Test
 	public void testDeleteAllWithNoBaseModel() throws Exception {
-		_uadAnonymizer.deleteAll(_user.getUserId());
+		uadAnonymizer.deleteAll(user.getUserId());
 	}
 
 	protected abstract T addBaseModel(long userId) throws Exception;
@@ -159,27 +159,27 @@ public abstract class BaseUADAnonymizerTestCase<T extends BaseModel> {
 
 	protected abstract boolean isBaseModelDeleted(long baseModelPK);
 
-	private void _testAutoAnonymize(T baseModel) throws Exception {
-		long userId = _user.getUserId();
+	protected void testAutoAnonymize(T baseModel) throws Exception {
+		long userId = user.getUserId();
 
-		Assert.assertEquals(1, _uadAnonymizer.count(userId));
+		Assert.assertEquals(1, uadAnonymizer.count(userId));
 
-		_uadAnonymizer.autoAnonymize(
-			(T)baseModel.clone(), _user.getUserId(), _anonymousUser);
+		uadAnonymizer.autoAnonymize(
+			(T)baseModel.clone(), user.getUserId(), anonymousUser);
 
 		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
-		Assert.assertEquals(0, _uadAnonymizer.count(userId));
+		Assert.assertEquals(0, uadAnonymizer.count(userId));
 
-		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
+		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, user));
 	}
 
 	@DeleteAfterTestRun
-	private User _anonymousUser;
+	protected User anonymousUser;
 
-	private UADAnonymizer<T> _uadAnonymizer;
+	protected UADAnonymizer<T> uadAnonymizer;
 
 	@DeleteAfterTestRun
-	private User _user;
+	protected User user;
 
 }

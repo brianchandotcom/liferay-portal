@@ -253,10 +253,12 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="UserNavigator#gotoProfileAndPrivateArea" />
+		<execute macro="UserNavigator#gotoProfileAndDashboard" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_MY_DASHBOARD_LABEL" value1="My Dashboard" />
-
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_MY_DASHBOARD_LABEL" value1="DASHBOARD">
+			<var name="key_subtitle" value="Dashboard" />
+		</execute>
+		
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_MY_DASHBOARD" value1="${siteTemplateName}" />
 
 		<execute macro="PortletEntry#save" />

@@ -48,12 +48,14 @@
 		</execute>
 	</command>
 
-	<command name="gotoProfileAndPrivateArea">
+	<command name="gotoProfileAndDashboard">
 		<execute macro="UserNavigator#gotoGeneral" />
 
 		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Profile and Private Area" />
+			<var name="navNested" value="Profile and Dashboard" />
 		</execute>
+
+		<execute function="Pause" locator1="3000" />
 	</command>
 
 	<command name="gotoRoles">

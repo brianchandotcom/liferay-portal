@@ -184,12 +184,19 @@ AUI.add(
 				instance._conditions[index + '-condition-second-operand-type'].destroy();
 				instance._conditions[index + '-condition-second-operand-select'].destroy();
 				instance._conditions[index + '-condition-second-operand-input'].destroy();
+				instance._conditions[index + '-condition-second-operand-input-date'].destroy();
+				instance._conditions[index + '-condition-second-operand-input-decimal'].destroy();
+				instance._conditions[index + '-condition-second-operand-input-integer'].destroy();
+				instance._conditions[index + '-condition-second-operand-input-text'].destroy();
 
 				delete instance._conditions[index + '-condition-first-operand'];
 				delete instance._conditions[index + '-condition-operator'];
 				delete instance._conditions[index + '-condition-second-operand-type'];
 				delete instance._conditions[index + '-condition-second-operand-select'];
-				delete instance._conditions[index + '-condition-second-operand-input'];
+				delete instance._conditions[index + '-condition-second-operand-input-date'];
+				delete instance._conditions[index + '-condition-second-operand-input-decimal'];
+				delete instance._conditions[index + '-condition-second-operand-input-integer'];
+				delete instance._conditions[index + '-condition-second-operand-input-text'];
 			},
 
 			_disableOperatorField: function(index, value) {

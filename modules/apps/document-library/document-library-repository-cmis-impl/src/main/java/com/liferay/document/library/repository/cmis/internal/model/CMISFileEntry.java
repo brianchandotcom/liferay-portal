@@ -154,6 +154,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 			_log.error(e, e);
 		}
 
+		if (contentStream == null) {
+			return null;
+		}
+
 		return contentStream.getStream();
 	}
 
@@ -173,6 +177,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 				}
 				catch (Exception e) {
 					_log.error(e, e);
+				}
+
+				if (contentStream == null) {
+					return null;
 				}
 
 				return contentStream.getStream();

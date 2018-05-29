@@ -283,7 +283,7 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 
 	@Override
 	public String getStatusByUserName() {
-		return null;
+		return _document.getLastModifiedBy();
 	}
 
 	@Override

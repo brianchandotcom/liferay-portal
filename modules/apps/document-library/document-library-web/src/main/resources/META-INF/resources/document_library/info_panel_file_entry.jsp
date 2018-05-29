@@ -249,16 +249,18 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 					</dd>
 				</liferay-asset:asset-tags-available>
 
-				<dt class="sidebar-dt">
-					<liferay-ui:message key="ratings" />
-				</dt>
-				<dd class="sidebar-dd">
-					<liferay-ui:ratings
-						className="<%= DLFileEntryConstants.getClassName() %>"
-						classPK="<%= fileEntry.getFileEntryId() %>"
-						inTrash="<%= fileEntry.isInTrash() %>"
-					/>
-				</dd>
+				<c:if test="<%= dlPortletInstanceSettings.isEnableRatings() && fileEntry.isSupportsSocial() %>">
+					<dt class="sidebar-dt">
+						<liferay-ui:message key="ratings" />
+					</dt>
+					<dd class="sidebar-dd">
+						<liferay-ui:ratings
+							className="<%= DLFileEntryConstants.getClassName() %>"
+							classPK="<%= fileEntry.getFileEntryId() %>"
+							inTrash="<%= fileEntry.isInTrash() %>"
+						/>
+					</dd>
+				</c:if>
 
 				<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
 					<dt class="sidebar-dt">

@@ -1448,6 +1448,44 @@ public class ArrayUtil {
 		}
 	}
 
+	public static Object split(Object array, int splitSize) {
+		int length = Array.getLength(array);
+
+		int pageCount = length / splitSize;
+
+		if ((length % splitSize) > 0) {
+			pageCount++;
+		}
+
+		Class<?> clazz = array.getClass();
+
+		Class<?> componentType = clazz.getComponentType();
+
+		Object newArray = Array.newInstance(
+			componentType, pageCount, splitSize);
+
+		if (pageCount == 1) {
+			Array.set(newArray, 0, array);
+
+			return newArray;
+		}
+
+		for (int i = 0; i < pageCount; i++) {
+			int end = Math.min(length, splitSize * (i + 1));
+			int start = splitSize * i;
+
+			int elementLength = end - start;
+
+			Object element = Array.newInstance(componentType, elementLength);
+
+			System.arraycopy(array, start, element, 0, elementLength);
+
+			Array.set(newArray, i, element);
+		}
+
+		return newArray;
+	}
+
 	public static boolean[] subset(boolean[] array, int start, int end) {
 		if ((start < 0) || (end < 0) || ((end - start) < 0)) {
 			return array;

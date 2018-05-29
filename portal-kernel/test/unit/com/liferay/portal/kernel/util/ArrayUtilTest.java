@@ -862,6 +862,52 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testSplitEmptyArray() {
+		int[] array = new int[0];
+
+		int[][] arraySplit = (int[][])ArrayUtil.split(array, 2);
+
+		Assert.assertEquals(Arrays.toString(arraySplit), 0, arraySplit.length);
+	}
+
+	@Test
+	public void testSplitEqualToSplitSize() {
+		int[] array = {1, 2};
+
+		int[][] arraySplit = (int[][])ArrayUtil.split(array, 2);
+
+		Assert.assertEquals(Arrays.toString(arraySplit), 1, arraySplit.length);
+
+		Assert.assertSame(array, arraySplit[0]);
+	}
+
+	@Test
+	public void testSplitGreaterThanSplitSize() {
+		int[] array = {1, 2};
+
+		int[][] expected = {{1}, {2}};
+
+		int[][] arraySplit = (int[][])ArrayUtil.split(array, 1);
+
+		Assert.assertEquals(Arrays.toString(arraySplit), 2, arraySplit.length);
+
+		for (int i = 0; i < arraySplit.length; i++) {
+			Assert.assertArrayEquals(expected[i], arraySplit[i]);
+		}
+	}
+
+	@Test
+	public void testSplitLessThanSplitSize() {
+		int[] array = {0, 1, 2, 3};
+
+		int[][] arraySplit = (int[][])ArrayUtil.split(array, 5);
+
+		Assert.assertEquals(Arrays.toString(arraySplit), 1, arraySplit.length);
+
+		Assert.assertSame(array, arraySplit[0]);
+	}
+
+	@Test
 	public void testSubset() {
 		Assert.assertArrayEquals(
 			new boolean[] {true, false},

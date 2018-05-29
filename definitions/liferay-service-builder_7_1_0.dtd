@@ -524,12 +524,16 @@ instead of a single value. Every value in this array will be compared with the
 column using the comparator, and the conditions will be combined with either an
 AND or OR operator. For example, a finder column with the = comparator and an
 arrayable-operator of OR will act like an IN clause.
+
+The attribute arrayable-pagination is a boolean value and is used to signal if
+the entity column could be paginated.
 -->
 <!ATTLIST finder-column
 	name CDATA #REQUIRED
 	case-sensitive CDATA #IMPLIED
 	comparator CDATA #IMPLIED
 	arrayable-operator CDATA #IMPLIED
+	arrayable-pagination CDATA #IMPLIED
 >
 
 <!--

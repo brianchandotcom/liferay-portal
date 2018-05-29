@@ -70,6 +70,98 @@ AUI.add(
 				operator.render();
 			},
 
+			_createDateField: function(index, condition, config, container, firstOperand, secondOperandTypeValue) {
+				var instance = this;
+
+				var value = '';
+
+				var visible = instance._isDate(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
+
+				if (condition && instance._isBinaryCondition(index) && visible) {
+					value = condition.operands[1].value;
+				}
+
+				config.fieldName = index + '-condition-second-operand-input-date';
+				config.label = '';
+				config.readOnly = false;
+				config.value = value;
+				config.visible = visible;
+
+				var fieldDate = instance.createDateField(
+					config
+				);
+
+				instance._renderField(index, container, config, fieldDate);
+			},
+
+			_createDecimalField: function(index, condition, config, container, firstOperand, secondOperandTypeValue) {
+				var instance = this;
+
+				var value = '';
+
+				var visible = instance._isNumeric(secondOperandTypeValue) && secondOperandTypeValue == 'double' && !instance._isFieldList(firstOperand);
+
+				if (condition && instance._isBinaryCondition(index) && secondOperandTypeValue == 'double' && visible) {
+					value = condition.operands[1].value;
+				}
+
+				config.fieldName = index + '-condition-second-operand-input-decimal';
+				config.readOnly = false;
+				config.value = value;
+				config.visible = visible;
+
+				var fieldDouble = instance.createDecimalField(
+					config
+				);
+
+				instance._renderField(index, container, config, fieldDouble);
+			},
+
+			_createIntegerField: function(index, condition, config, container, firstOperand, secondOperandTypeValue) {
+				var instance = this;
+
+				var value = '';
+
+				var visible = instance._isNumeric(secondOperandTypeValue) && secondOperandTypeValue == 'integer' && !instance._isFieldList(firstOperand);
+
+				if (condition && instance._isBinaryCondition(index) && secondOperandTypeValue == 'integer' && visible) {
+					value = condition.operands[1].value;
+				}
+
+				config.fieldName = index + '-condition-second-operand-input-integer';
+				config.readOnly = false;
+				config.value = value;
+				config.visible = visible;
+
+				var fieldInteger = instance.createIntegerField(
+					config
+				);
+
+				instance._renderField(index, container, config, fieldInteger);
+			},
+
+			_createTextField: function(index, condition, config, container, firstOperand, type) {
+				var instance = this;
+
+				var value = '';
+
+				var visible = instance._isText(type) && !instance._isFieldList(firstOperand);
+
+				if (condition && condition.operands[1] && instance._isBinaryCondition(index) && condition.operands[1].type == 'string' && visible) {
+					value = condition.operands[1].value;
+				}
+
+				config.fieldName = index + '-condition-second-operand-input-text';
+				config.value = value;
+				config.visible = visible;
+
+				var fieldText = instance.createTextField(
+					config
+				);
+
+				instance._renderField(index, container, config, fieldText);
+			},
+
 			_deleteCondition: function(index) {
 				var instance = this;
 

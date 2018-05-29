@@ -18,43 +18,50 @@ import com.liferay.apio.architect.form.Form;
 
 /**
  * Instances of this class represent the values extracted from a price entry
- * creator form.
+ * upserter form.
  *
  * @author Zoltán Takács
  * @review
  */
-public class PriceEntryCreatorForm {
+public class PriceEntryUpserterForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code PriceEntryCreatorForm}
+	 * Builds a {@code Form} that generates {@code PriceEntryUpserterForm}
 	 * depending on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a product creator form
+	 * @return a product upserter form
 	 * @review
 	 */
-	public static Form<PriceEntryCreatorForm> buildForm(
-		Form.Builder<PriceEntryCreatorForm> formBuilder) {
+	public static Form<PriceEntryUpserterForm> buildForm(
+		Form.Builder<PriceEntryUpserterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The price entry creator form"
+			__ -> "The price entry upserter form"
 		).description(
-			__ -> "This form can be used to create a price entry"
+			__ -> "This form can be used to upsert a price entry"
 		).constructor(
-			PriceEntryCreatorForm::new
-		).addOptionalString(
-			"skuExternalReferenceCode",
-			PriceEntryCreatorForm::_setSkuExternalReferenceCode
-		).addRequiredDouble(
-			"price", PriceEntryCreatorForm::_setPrice
-		).addRequiredDouble(
-			"promoPrice", PriceEntryCreatorForm::_setPromoPrice
+			PriceEntryUpserterForm::new
 		).addOptionalLong(
-			"skuId", PriceEntryCreatorForm::_setSkuId
+			"commercePriceEntryId",
+			PriceEntryUpserterForm::_setCommercePriceEntryId
+		).addOptionalLong(
+			"skuId", PriceEntryUpserterForm::_setSkuId
 		).addOptionalString(
 			"externalReferenceCode",
-			PriceEntryCreatorForm::_setExternalReferenceCode
+			PriceEntryUpserterForm::_setExternalReferenceCode
+		).addOptionalString(
+			"skuExternalReferenceCode",
+			PriceEntryUpserterForm::_setSkuExternalReferenceCode
+		).addRequiredDouble(
+			"price", PriceEntryUpserterForm::_setPrice
+		).addRequiredDouble(
+			"promoPrice", PriceEntryUpserterForm::_setPromoPrice
 		).build();
+	}
+
+	public Long getCommercePriceEntryId() {
+		return _commercePriceEntryId;
 	}
 
 	public String getExternalReferenceCode() {
@@ -77,6 +84,10 @@ public class PriceEntryCreatorForm {
 		return _skuId;
 	}
 
+	private void _setCommercePriceEntryId(Long commercePriceEntryId) {
+		_commercePriceEntryId = commercePriceEntryId;
+	}
+
 	private void _setExternalReferenceCode(String externalReferenceCode) {
 		_externalReferenceCode = externalReferenceCode;
 	}
@@ -97,6 +108,7 @@ public class PriceEntryCreatorForm {
 		_skuId = skuId;
 	}
 
+	private Long _commercePriceEntryId;
 	private String _externalReferenceCode;
 	private Double _price;
 	private Double _promoPrice;

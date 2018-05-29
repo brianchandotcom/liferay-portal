@@ -25,12 +25,14 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceEntryIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
-import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryCreatorForm;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpdaterForm;
+import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpserterForm;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceEntryHelper;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
+import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -40,6 +42,7 @@ import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,9 +69,9 @@ public class PriceEntryNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addCommercePriceEntry,
+			this::_upsertCommercePriceEntry,
 			_hasPermission.forAddingIn(PriceEntryIdentifier.class),
-			PriceEntryCreatorForm::buildForm
+			PriceEntryUpserterForm::buildForm
 		).build();
 	}
 
@@ -129,28 +132,6 @@ public class PriceEntryNestedCollectionResource
 		).build();
 	}
 
-	private CommercePriceEntry _addCommercePriceEntry(
-			Long commercePriceListId,
-			PriceEntryCreatorForm priceEntryCreatorForm)
-		throws PortalException {
-
-		try {
-			return _priceEntryHelper.upsertCommercePriceEntry(
-				priceEntryCreatorForm.getSkuId(), commercePriceListId,
-				priceEntryCreatorForm.getExternalReferenceCode(),
-				priceEntryCreatorForm.getPrice(),
-				priceEntryCreatorForm.getPromoPrice());
-		}
-		catch (DuplicateCommercePriceEntryException dcpee) {
-			Response.Status status = Response.Status.CONFLICT;
-
-			throw new ConflictException(
-				"Duplicate Product Instance with ID " +
-					priceEntryCreatorForm.getSkuId(),
-				status.getStatusCode(), dcpee);
-		}
-	}
-
 	private PageItems<CommercePriceEntry> _getPageItems(
 		Pagination pagination, Long commercePriceListId) {
 
@@ -181,6 +162,44 @@ public class PriceEntryNestedCollectionResource
 		return _priceEntryHelper.updateCommercePriceEntry(
 			commercePriceEntryId, priceEntryUpdaterForm.getPrice(),
 			priceEntryUpdaterForm.getPromoPrice());
+	}
+
+	private CommercePriceEntry _upsertCommercePriceEntry(
+			Long commercePriceListId,
+			PriceEntryUpserterForm priceEntryUpserterForm)
+		throws PortalException {
+
+		try {
+			return _priceEntryHelper.upsertCommercePriceEntry(
+				priceEntryUpserterForm.getCommercePriceEntryId(),
+				priceEntryUpserterForm.getSkuId(), commercePriceListId,
+				priceEntryUpserterForm.getExternalReferenceCode(),
+				priceEntryUpserterForm.getSkuExternalReferenceCode(),
+				priceEntryUpserterForm.getPrice(),
+				priceEntryUpserterForm.getPromoPrice());
+		}
+		catch (NoSuchPriceEntryException nspee) {
+			throw new NotFoundException(
+				String.format(
+					"Unable to update price entry: " +
+						nspee.getLocalizedMessage()),
+				nspee);
+		}
+		catch (NoSuchCPInstanceException nscpie) {
+			throw new NotFoundException(
+				String.format(
+					"Unable to find SKU: " +
+						nscpie.getLocalizedMessage()),
+				nscpie);
+		}
+		catch (DuplicateCommercePriceEntryException dcpee) {
+			Response.Status status = Response.Status.CONFLICT;
+
+			throw new ConflictException(
+				"Duplicate Product Instance with ID " +
+					priceEntryUpserterForm.getSkuId(),
+				status.getStatusCode(), dcpee);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

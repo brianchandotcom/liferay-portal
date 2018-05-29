@@ -23,38 +23,45 @@ import com.liferay.apio.architect.form.Form;
  * @author Zoltán Takács
  * @review
  */
-public class TierPriceEntryForm {
+public class TierPriceEntryUpserterForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code TierPriceEntryForm} depending
-	 * on the HTTP body.
+	 * Builds a {@code Form} that generates {@code TierPriceEntryUpserterForm}
+	 * depending on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a tier price entry form
+	 * @return a tier price entry upserter form
 	 * @review
 	 */
-	public static Form<TierPriceEntryForm> buildForm(
-		Form.Builder<TierPriceEntryForm> formBuilder) {
+	public static Form<TierPriceEntryUpserterForm> buildForm(
+		Form.Builder<TierPriceEntryUpserterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The tier price entry form"
+			__ -> "The tier price entry upserter form"
 		).description(
-			__ -> "This form can be used to create or update a tier price entry"
+			__ -> "This form can be used to upsert a tier price entry"
 		).constructor(
-			TierPriceEntryForm::new
+			TierPriceEntryUpserterForm::new
+		).addOptionalLong(
+			"commerceTierPriceEntryId",
+			TierPriceEntryUpserterForm::_setCommerceTierPriceEntryId
 		).addOptionalString(
 			"externalReferenceCode",
-			TierPriceEntryForm::_setExternalReferenceCode
+			TierPriceEntryUpserterForm::_setExternalReferenceCode
 		).addOptionalString(
 			"priceEntryExternalReferenceCode",
-			TierPriceEntryForm::_setPriceEntryExternalReferenceCode
+			TierPriceEntryUpserterForm::_setPriceEntryExternalReferenceCode
 		).addRequiredLong(
-			"minQuantity", TierPriceEntryForm::_setMinQuantity
+			"minQuantity", TierPriceEntryUpserterForm::_setMinQuantity
 		).addRequiredDouble(
-			"price", TierPriceEntryForm::_setPrice
+			"price", TierPriceEntryUpserterForm::_setPrice
 		).addRequiredDouble(
-			"promoPrice", TierPriceEntryForm::_setPromoPrice
+			"promoPrice", TierPriceEntryUpserterForm::_setPromoPrice
 		).build();
+	}
+
+	public Long getCommerceTierPriceEntryId() {
+		return _commerceTierPriceEntryId;
 	}
 
 	public String getExternalReferenceCode() {
@@ -75,6 +82,10 @@ public class TierPriceEntryForm {
 
 	public Double getPromoPrice() {
 		return _promoPrice;
+	}
+
+	private void _setCommerceTierPriceEntryId(Long commerceTierPriceEntryId) {
+		_commerceTierPriceEntryId = commerceTierPriceEntryId;
 	}
 
 	private void _setExternalReferenceCode(String externalReferenceCode) {
@@ -99,6 +110,7 @@ public class TierPriceEntryForm {
 		_promoPrice = promoPrice;
 	}
 
+	private Long _commerceTierPriceEntryId;
 	private String _externalReferenceCode;
 	private Long _minQuantity;
 	private Double _price;

@@ -25,9 +25,12 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceEntryIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.TierPriceEntryIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
-import com.liferay.commerce.data.integration.apio.internal.form.TierPriceEntryForm;
+import com.liferay.commerce.data.integration.apio.internal.form.TierPriceEntryUpdaterForm;
+import com.liferay.commerce.data.integration.apio.internal.form.TierPriceEntryUpserterForm;
 import com.liferay.commerce.data.integration.apio.internal.util.TierPriceEntryHelper;
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
+import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
+import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -38,6 +41,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,9 +68,9 @@ public class TierPriceEntryNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addCommerceTierPriceEntry,
+			this::_upsertCommerceTierPriceEntry,
 			_hasPermission.forAddingIn(TierPriceEntryIdentifier.class),
-			TierPriceEntryForm::buildForm
+			TierPriceEntryUpserterForm::buildForm
 		).build();
 	}
 
@@ -83,7 +87,7 @@ public class TierPriceEntryNestedCollectionResource
 			_tierPriceEntryHelper::getCommerceTierPriceEntry
 		).addUpdater(
 			this::_updateCommercePriceEntry, _hasPermission::forUpdating,
-			TierPriceEntryForm::buildForm
+			TierPriceEntryUpdaterForm::buildForm
 		).addRemover(
 			idempotent(
 				_commerceTierPriceEntryService::deleteCommerceTierPriceEntry),
@@ -120,26 +124,6 @@ public class TierPriceEntryNestedCollectionResource
 		).build();
 	}
 
-	private CommerceTierPriceEntry _addCommerceTierPriceEntry(
-			Long commercePriceEntryId, TierPriceEntryForm tierPriceEntryForm)
-		throws PortalException {
-
-		try {
-			return _tierPriceEntryHelper.addCommerceTierPriceEntry(
-				commercePriceEntryId, tierPriceEntryForm.getMinQuantity(),
-				tierPriceEntryForm.getPrice(),
-				tierPriceEntryForm.getPromoPrice());
-		}
-		catch (DuplicateCommerceTierPriceEntryException dctpee) {
-			Response.Status status = Response.Status.CONFLICT;
-
-			throw new ConflictException(
-				"Minimum quantity already exists: " +
-					tierPriceEntryForm.getMinQuantity(),
-				status.getStatusCode(), dctpee);
-		}
-	}
-
 	private PageItems<CommerceTierPriceEntry> _getPageItems(
 		Pagination pagination, Long commercePriceEntryId) {
 
@@ -165,12 +149,64 @@ public class TierPriceEntryNestedCollectionResource
 
 	private CommerceTierPriceEntry _updateCommercePriceEntry(
 			Long commerceTierPriceEntryId,
-			TierPriceEntryForm tierPriceEntryForm)
+			TierPriceEntryUpdaterForm tierPriceEntryUpdaterForm)
 		throws PortalException {
 
-		return _tierPriceEntryHelper.updateCommerceTierPriceEntry(
-			commerceTierPriceEntryId, tierPriceEntryForm.getMinQuantity(),
-			tierPriceEntryForm.getPrice(), tierPriceEntryForm.getPromoPrice());
+		try {
+			return _tierPriceEntryHelper.updateCommerceTierPriceEntry(
+				commerceTierPriceEntryId,
+				tierPriceEntryUpdaterForm.getMinQuantity(),
+				tierPriceEntryUpdaterForm.getPrice(),
+				tierPriceEntryUpdaterForm.getPromoPrice());
+		}
+		catch (DuplicateCommerceTierPriceEntryException dctpee) {
+			Response.Status status = Response.Status.CONFLICT;
+
+			throw new ConflictException(
+				"Minimum quantity already exists for this price entry: " +
+					tierPriceEntryUpdaterForm.getMinQuantity(),
+				status.getStatusCode(), dctpee);
+		}
+	}
+
+	private CommerceTierPriceEntry _upsertCommerceTierPriceEntry(
+			Long commercePriceEntryId,
+			TierPriceEntryUpserterForm tierPriceEntryUpserterForm)
+		throws PortalException {
+
+		try {
+			return _tierPriceEntryHelper.upsertCommerceTierPriceEntry(
+				tierPriceEntryUpserterForm.getCommerceTierPriceEntryId(),
+				commercePriceEntryId,
+				tierPriceEntryUpserterForm.getMinQuantity(),
+				tierPriceEntryUpserterForm.getPrice(),
+				tierPriceEntryUpserterForm.getPromoPrice(),
+				tierPriceEntryUpserterForm.getExternalReferenceCode(),
+				tierPriceEntryUpserterForm.
+					getPriceEntryExternalReferenceCode());
+		}
+		catch (NoSuchTierPriceEntryException nstpee) {
+			throw new NotFoundException(
+				String.format(
+					"Unable to update tier price entry: " +
+						nstpee.getLocalizedMessage()),
+				nstpee);
+		}
+		catch (NoSuchPriceEntryException nspee) {
+			throw new NotFoundException(
+				String.format(
+					"Unable to find price entry: " +
+						nspee.getLocalizedMessage()),
+				nspee);
+		}
+		catch (DuplicateCommerceTierPriceEntryException dctpee) {
+			Response.Status status = Response.Status.CONFLICT;
+
+			throw new ConflictException(
+				"Minimum quantity already exists for this price entry: " +
+					tierPriceEntryUpserterForm.getMinQuantity(),
+				status.getStatusCode(), dctpee);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

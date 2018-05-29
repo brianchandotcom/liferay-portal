@@ -17,36 +17,42 @@ package com.liferay.commerce.data.integration.apio.internal.form;
 import com.liferay.apio.architect.form.Form;
 
 /**
- * Instances of this class represent the values extracted from a price entry
- * updater form.
+ * Instances of this class represent the values extracted from a tier price
+ * entry form.
  *
  * @author Zoltán Takács
  * @review
  */
-public class PriceEntryUpdaterForm {
+public class TierPriceEntryUpdaterForm {
 
 	/**
-	 * Builds a {@code Form} that generates {@code PriceEntryUpdaterForm}
+	 * Builds a {@code Form} that generates {@code TierPriceEntryUpdaterForm}
 	 * depending on the HTTP body.
 	 *
 	 * @param  formBuilder the {@code Form} builder
-	 * @return a product updater form
+	 * @return a tier price entry updater form
 	 * @review
 	 */
-	public static Form<PriceEntryUpdaterForm> buildForm(
-		Form.Builder<PriceEntryUpdaterForm> formBuilder) {
+	public static Form<TierPriceEntryUpdaterForm> buildForm(
+		Form.Builder<TierPriceEntryUpdaterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The price entry updater form"
+			__ -> "The tier price entry updater form"
 		).description(
-			__ -> "This form can be used to update a price entry"
+			__ -> "This form can be used to update a tier price entry"
 		).constructor(
-			PriceEntryUpdaterForm::new
+			TierPriceEntryUpdaterForm::new
+		).addRequiredLong(
+			"minQuantity", TierPriceEntryUpdaterForm::_setMinQuantity
 		).addRequiredDouble(
-			"price", PriceEntryUpdaterForm::_setPrice
+			"price", TierPriceEntryUpdaterForm::_setPrice
 		).addRequiredDouble(
-			"promoPrice", PriceEntryUpdaterForm::_setPromoPrice
+			"promoPrice", TierPriceEntryUpdaterForm::_setPromoPrice
 		).build();
+	}
+
+	public Long getMinQuantity() {
+		return _minQuantity;
 	}
 
 	public Double getPrice() {
@@ -57,6 +63,10 @@ public class PriceEntryUpdaterForm {
 		return _promoPrice;
 	}
 
+	private void _setMinQuantity(Long minQuantity) {
+		_minQuantity = minQuantity;
+	}
+
 	private void _setPrice(Double price) {
 		_price = price;
 	}
@@ -65,6 +75,7 @@ public class PriceEntryUpdaterForm {
 		_promoPrice = promoPrice;
 	}
 
+	private Long _minQuantity;
 	private Double _price;
 	private Double _promoPrice;
 

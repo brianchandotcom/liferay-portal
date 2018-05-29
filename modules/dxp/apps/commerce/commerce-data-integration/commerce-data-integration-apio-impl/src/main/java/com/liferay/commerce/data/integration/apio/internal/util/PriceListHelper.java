@@ -45,7 +45,7 @@ public class PriceListHelper {
 		);
 	}
 
-	public CommercePriceList getCommercePriceList(Long commercePriceListId)
+	public CommercePriceList getCommercePriceList(long commercePriceListId)
 		throws PortalException {
 
 		return _commercePriceListService.fetchCommercePriceList(

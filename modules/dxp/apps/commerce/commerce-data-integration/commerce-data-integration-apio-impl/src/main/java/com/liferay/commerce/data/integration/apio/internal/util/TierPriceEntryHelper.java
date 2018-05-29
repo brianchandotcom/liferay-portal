@@ -33,25 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = TierPriceEntryHelper.class)
 public class TierPriceEntryHelper {
 
-	public CommerceTierPriceEntry addCommerceTierPriceEntry(
-			Long commercePriceEntryId, Long minQuantity, Double price,
-			Double promoPrice)
-		throws PortalException {
-
-		CommercePriceEntry commercePriceEntry =
-			_priceEntryHelper.getCommercePriceEntry(commercePriceEntryId);
-
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			commercePriceEntry.getGroupId());
-
-		return _commerceTierPriceEntryService.addCommerceTierPriceEntry(
-			commercePriceEntryId, BigDecimal.valueOf(price),
-			BigDecimal.valueOf(promoPrice), minQuantity.intValue(),
-			serviceContext);
-	}
-
 	public CommerceTierPriceEntry getCommerceTierPriceEntry(
-		Long commerceTierPriceEntryId) {
+		long commerceTierPriceEntryId) {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			_commerceTierPriceEntryService.fetchCommerceTierPriceEntry(
@@ -67,8 +50,8 @@ public class TierPriceEntryHelper {
 	}
 
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-			Long commerceTierPriceEntryId, Long minQuantity, Double price,
-			Double promoPrice)
+			long commerceTierPriceEntryId, Long minQuantity, double price,
+			double promoPrice)
 		throws PortalException {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
@@ -81,6 +64,26 @@ public class TierPriceEntryHelper {
 			commerceTierPriceEntryId, BigDecimal.valueOf(price),
 			BigDecimal.valueOf(promoPrice), minQuantity.intValue(),
 			serviceContext);
+	}
+
+	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
+			long commerceTierPriceEntryId, long commercePriceEntryId,
+			Long minQuantity, double price, double promoPrice,
+			String externalReferenceCode,
+			String priceEntryExternalReferenceCode)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry =
+			_priceEntryHelper.getCommercePriceEntry(commercePriceEntryId);
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			commercePriceEntry.getGroupId());
+
+		return _commerceTierPriceEntryService.upsertCommerceTierPriceEntry(
+			commerceTierPriceEntryId, commercePriceEntryId,
+			externalReferenceCode, BigDecimal.valueOf(price),
+			BigDecimal.valueOf(promoPrice), minQuantity.intValue(),
+			priceEntryExternalReferenceCode, serviceContext);
 	}
 
 	@Reference

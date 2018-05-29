@@ -39,7 +39,7 @@ public class PriceListUpdaterForm {
 		Form.Builder<PriceListUpdaterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The price list form"
+			__ -> "The price list updater form"
 		).description(
 			__ -> "This form can be used to update a price list"
 		).constructor(

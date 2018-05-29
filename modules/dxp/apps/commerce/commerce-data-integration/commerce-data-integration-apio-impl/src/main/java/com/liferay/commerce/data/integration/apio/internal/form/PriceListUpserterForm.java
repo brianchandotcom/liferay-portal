@@ -39,9 +39,9 @@ public class PriceListUpserterForm {
 		Form.Builder<PriceListUpserterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The price list form"
+			__ -> "The price list upserter form"
 		).description(
-			__ -> "This form can be used to create or update a price list"
+			__ -> "This form can be used to upsert a price list"
 		).constructor(
 			PriceListUpserterForm::new
 		).addOptionalDate(

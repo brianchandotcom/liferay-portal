@@ -20,7 +20,6 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -59,7 +58,7 @@ public class PriceEntryHelper {
 		);
 	}
 
-	public CommercePriceEntry getCommercePriceEntry(Long commercePriceEntryId) {
+	public CommercePriceEntry getCommercePriceEntry(long commercePriceEntryId) {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.fetchCommercePriceEntry(
 				commercePriceEntryId);
@@ -73,7 +72,7 @@ public class PriceEntryHelper {
 	}
 
 	public CommercePriceEntry updateCommercePriceEntry(
-			Long commercePriceEntryId, Double price, Double promoPrice)
+			long commercePriceEntryId, double price, double promoPrice)
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry(
@@ -88,8 +87,9 @@ public class PriceEntryHelper {
 	}
 
 	public CommercePriceEntry upsertCommercePriceEntry(
-			Long skuId, Long commercePriceListId, String externalReferenceCode,
-			Double price, Double promoPrice)
+			long commercePriceEntryId, long skuId, long commercePriceListId,
+			String externalReferenceCode, String skuExternalReferenceCode,
+			double price, double promoPrice)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
@@ -98,27 +98,10 @@ public class PriceEntryHelper {
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commercePriceList.getGroupId());
 
-		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(skuId);
-
-		if (cpInstance == null) {
-			throw new NotFoundException(
-				"Unable to find Product Instance with ID: " + skuId);
-		}
-
-		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryService.fetchByExternalReferenceCode(
-				externalReferenceCode);
-
-		if (commercePriceEntry != null) {
-			return _commercePriceEntryService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(),
-				BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
-				serviceContext);
-		}
-
-		return _commercePriceEntryService.addCommercePriceEntry(
-			skuId, commercePriceListId, externalReferenceCode,
-			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
+		return _commercePriceEntryService.upsertCommercePriceEntry(
+			commercePriceEntryId, skuId, commercePriceListId,
+			externalReferenceCode, BigDecimal.valueOf(price),
+			BigDecimal.valueOf(promoPrice), skuExternalReferenceCode,
 			serviceContext);
 	}
 
@@ -145,9 +128,6 @@ public class PriceEntryHelper {
 
 	@Reference
 	private CommercePriceListService _commercePriceListService;
-
-	@Reference
-	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private PriceListHelper _priceListHelper;

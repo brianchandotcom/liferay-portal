@@ -61,10 +61,6 @@ public class AMJournalEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put(
-			"adaptiveMediaFileEntryAttributeName",
-			AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME);
-
 		String allowedContent = jsonObject.getString("allowedContent");
 
 		if (Validator.isNotNull(allowedContent) &&
@@ -116,6 +112,10 @@ public class AMJournalEditorConfigContributor
 		}
 
 		jsonObject.put("extraPlugins", extraPlugins);
+
+		jsonObject.put(
+			"adaptiveMediaFileEntryAttributeName",
+			AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME);
 
 		String itemSelectedEventName = _itemSelector.getItemSelectedEventName(
 			itemSelectorURL);

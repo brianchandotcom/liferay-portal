@@ -11,15 +11,6 @@ import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 
 /**
- * Tab that will show fragmentEntryLinks added to the editor
- * @review
- * @type {!{
- *   id: !string,
- *   label: !string
- * }}
- */
-
-/**
  * FragmentsEditor
  * @review
  */

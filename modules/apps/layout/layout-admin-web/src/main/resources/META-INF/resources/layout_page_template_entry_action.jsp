@@ -39,23 +39,9 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 	</c:if>
 
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
-		<portlet:actionURL name="/layout/update_layout_page_template_entry" var="updateLayoutPageTemplateEntryURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()) %>" />
-			<portlet:param name="layoutPageTemplateEntryId" value="<%= String.valueOf(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()) %>" />
-		</portlet:actionURL>
-
-		<%
-		Map<String, Object> updateLayoutPageTemplateEntryData = new HashMap<String, Object>();
-
-		updateLayoutPageTemplateEntryData.put("form-submit-url", updateLayoutPageTemplateEntryURL.toString());
-		updateLayoutPageTemplateEntryData.put("id-field-value", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-		updateLayoutPageTemplateEntryData.put("main-field-value", layoutPageTemplateEntry.getName());
-		%>
-
 		<liferay-ui:icon
 			cssClass='<%= renderResponse.getNamespace() + "update-layout-page-template-action-option" %>'
-			data="<%= updateLayoutPageTemplateEntryData %>"
+			data="<%= layoutPageTemplateDisplayContext.getUpdateLayoutPageTemplateEntryData(layoutPageTemplateEntry) %>"
 			message="rename"
 			url="javascript:;"
 		/>

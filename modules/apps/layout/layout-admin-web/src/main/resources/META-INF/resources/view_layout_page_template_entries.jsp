@@ -174,7 +174,7 @@ request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, la
 				{
 					dialogTitle: '<liferay-ui:message key="rename-layout-page-template" />',
 					formSubmitURL: data.formSubmitUrl,
-					idFieldName: 'layoutPageTemplateEntryId',
+					idFieldName: data.idFieldName,
 					idFieldValue: data.idFieldValue,
 					mainFieldLabel: '<liferay-ui:message key="name" />',
 					mainFieldName: 'name',

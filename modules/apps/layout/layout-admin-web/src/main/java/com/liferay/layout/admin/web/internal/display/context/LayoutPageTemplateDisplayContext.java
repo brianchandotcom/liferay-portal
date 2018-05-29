@@ -39,7 +39,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -460,6 +462,49 @@ public class LayoutPageTemplateDisplayContext {
 		return layoutPageTemplateEntriesSearchContainer.getTotal();
 	}
 
+	public Map<String, Object> getUpdateLayoutPageTemplateEntryData(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
+
+		String formSubmitURL = null;
+		String idFieldName = null;
+		String idFieldValue = null;
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
+
+			LayoutPrototype layoutPrototype = getLayoutPrototype(
+				layoutPageTemplateEntry);
+
+			if (layoutPrototype == null) {
+				return null;
+			}
+
+			formSubmitURL = _getUpdateLayoutPrototypeURL(layoutPrototype);
+			idFieldName = "layoutPrototypeId";
+			idFieldValue = String.valueOf(
+				layoutPrototype.getLayoutPrototypeId());
+		}
+		else {
+			formSubmitURL = _getUpdateLayoutPageTemplateEntryURL(
+				layoutPageTemplateEntry);
+			idFieldName = "layoutPageTemplateEntryId";
+			idFieldValue = String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		}
+
+		Map<String, Object> updateLayoutPageTemplateEntryData = new HashMap<>();
+
+		updateLayoutPageTemplateEntryData.put("form-submit-url", formSubmitURL);
+		updateLayoutPageTemplateEntryData.put("id-field-name", idFieldName);
+		updateLayoutPageTemplateEntryData.put("id-field-value", idFieldValue);
+		updateLayoutPageTemplateEntryData.put(
+			"main-field-value", layoutPageTemplateEntry.getName());
+
+		return updateLayoutPageTemplateEntryData;
+	}
+
 	public boolean isDisabledLayoutPageTemplateEntriesManagementBar() {
 		if (_hasLayoutPageTemplateEntriesResults()) {
 			return false;
@@ -581,6 +626,43 @@ public class LayoutPageTemplateDisplayContext {
 					});
 			}
 		};
+	}
+
+	private String _getUpdateLayoutPageTemplateEntryURL(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		PortletURL actionURL = _renderResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout/update_layout_page_template_entry");
+		actionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		actionURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
+		actionURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		return actionURL.toString();
+	}
+
+	private String _getUpdateLayoutPrototypeURL(
+		LayoutPrototype layoutPrototype) {
+
+		PortletURL actionURL = _renderResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_prototype/update_layout_prototype");
+		actionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		actionURL.setParameter(
+			"layoutPrototypeId",
+			String.valueOf(layoutPrototype.getLayoutPrototypeId()));
+
+		return actionURL.toString();
 	}
 
 	private boolean _hasLayoutPageTemplateEntriesResults() {

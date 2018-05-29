@@ -270,7 +270,7 @@
 </tr>
 <tr>
 	<td>PERSONAL_SITE_MY_DASHBOARD_LABEL</td>
-	<td>//div[contains(@id,'Content')]//label[contains(@for,'privateLayoutSetPrototypeId')]</td>
+	<td>//div[contains(@class,'sheet-section')]//h3[contains(.,'${key_subtitle}')]</td>
 	<td></td>
 </tr>
 <tr>

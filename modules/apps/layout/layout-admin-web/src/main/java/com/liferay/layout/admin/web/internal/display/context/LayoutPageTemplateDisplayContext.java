@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -110,6 +111,8 @@ public class LayoutPageTemplateDisplayContext {
 					dropdownItem -> {
 						dropdownItem.putData(
 							"action", "addLayoutPageTemplateEntry");
+						dropdownItem.putData(
+							"submitURL", _getAddLayoutPageTemplateEntryURL());
 						dropdownItem.setHref("#");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
@@ -446,6 +449,23 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return false;
+	}
+
+	private String _getAddLayoutPageTemplateEntryURL() {
+		PortletURL actionURL = _renderResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout/add_layout_page_template_entry");
+		actionURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
+		actionURL.setParameter(
+			"redirect", String.valueOf(_renderResponse.createRenderURL()));
+		actionURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(getLayoutPageTemplateCollectionId()));
+
+		return actionURL.toString();
 	}
 
 	private List<DropdownItem> _getFilterNavigationDropdownItems() {

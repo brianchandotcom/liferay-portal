@@ -17,18 +17,15 @@ package com.liferay.gradle.plugins.target.platform;
 import com.liferay.gradle.plugins.target.platform.extensions.TargetPlatformExtension;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.target.platform.internal.util.SkipIfExecutingParentTaskSpec;
+import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformUtil;
 import com.liferay.gradle.plugins.target.platform.tasks.ResolveTask;
 
 import groovy.lang.Closure;
-import groovy.lang.GroovyObjectSupport;
 
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
-import io.spring.gradle.dependencymanagement.dsl.DependencyManagementConfigurer;
-import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
-import io.spring.gradle.dependencymanagement.dsl.ImportsHandler;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -37,9 +34,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.invocation.Gradle;
@@ -110,8 +105,14 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 						project.getDependencies(),
 						targetPlatformBundlesConfiguration,
 						targetPlatformRequirementsConfiguration);
-					_configureDependencyManagement(
-						project, targetPlatformBomsConfiguration);
+
+					Set<Object> configurationNames = new HashSet<>();
+					Collections.addAll(
+						configurationNames, _CONFIGURATION_NAMES);
+
+					TargetPlatformUtil.configureDependencyManagement(
+						project, targetPlatformBomsConfiguration,
+						configurationNames);
 				}
 
 			});
@@ -247,82 +248,6 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 		return resolveTask;
 	}
 
-	private void _configureDependencyManagement(
-		final Project project,
-		final Configuration targetPlatformBomsConfiguration) {
-
-		final DependencyManagementExtension dependencyManagementExtension =
-			GradleUtil.getExtension(
-				project, DependencyManagementExtension.class);
-
-		GroovyObjectSupport groovyObjectSupport =
-			(GroovyObjectSupport)dependencyManagementExtension;
-
-		List<Object> args = new ArrayList<>(_CONFIGURATION_NAMES.length + 1);
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		for (String configurationName : _CONFIGURATION_NAMES) {
-			Configuration configuration = configurationContainer.findByName(
-				configurationName);
-
-			if (configuration != null) {
-				args.add(configuration);
-			}
-		}
-
-		Closure<Void> closure = new Closure<Void>(project) {
-
-			@SuppressWarnings("unused")
-			public void doCall() {
-				DependencySet dependencySet =
-					targetPlatformBomsConfiguration.getAllDependencies();
-
-				dependencySet.all(
-					new Action<Dependency>() {
-
-						@Override
-						public void execute(final Dependency dependency) {
-							_configureDependencyManagementImportsHandler(
-								(DependencyManagementConfigurer)getDelegate(),
-								dependency);
-						}
-
-					});
-			}
-
-		};
-
-		args.add(closure);
-
-		groovyObjectSupport.invokeMethod(
-			"configurations", args.toArray(new Object[0]));
-	}
-
-	private void _configureDependencyManagementImportsHandler(
-		DependencyManagementConfigurer dependencyManagementConfigurer,
-		final Dependency dependency) {
-
-		dependencyManagementConfigurer.imports(
-			new Action<ImportsHandler>() {
-
-				@Override
-				public void execute(ImportsHandler importsHandler) {
-					StringBuilder sb = new StringBuilder();
-
-					sb.append(dependency.getGroup());
-					sb.append(':');
-					sb.append(dependency.getName());
-					sb.append(':');
-					sb.append(dependency.getVersion());
-
-					importsHandler.mavenBom(sb.toString());
-				}
-
-			});
-	}
-
 	private void _configureSubproject(
 		Project subproject, DependencyHandler dependencyHandler, Logger logger,
 		Configuration targetPlatformBomsConfiguration,
@@ -357,8 +282,12 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(subproject, DependencyManagementPlugin.class);
 
-		_configureDependencyManagement(
-			subproject, targetPlatformBomsConfiguration);
+		Set<Object> configurationNames = new HashSet<>();
+
+		Collections.addAll(configurationNames, _CONFIGURATION_NAMES);
+
+		TargetPlatformUtil.configureDependencyManagement(
+			subproject, targetPlatformBomsConfiguration, configurationNames);
 
 		spec = targetPlatformExtension.getResolveOnlyIf();
 

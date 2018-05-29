@@ -54,7 +54,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 	 * @return {String} The alignment value
 	 */
 
-	const getEmbedAlignment = embed => {
+	const getEmbedAlignment = function(embed) {
 		let embedAlignment = embed.getStyle('float');
 
 		if (!embedAlignment || embedAlignment === 'inherit' || embedAlignment === 'none') {
@@ -89,7 +89,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 	 * @param {String} embedAlignment The embed alignment value to be removed
 	 */
 
-	const removeEmbedAlignment = (embed, embedAlignment) => {
+	const removeEmbedAlignment = function(embed, embedAlignment) {
 		if (embedAlignment === EMBED_ALIGNMENT.LEFT || embedAlignment === EMBED_ALIGNMENT.RIGHT) {
 			embed.removeStyle('float');
 
@@ -119,7 +119,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 	 * @param {String} embedAlignment The embed alignment value to be set
 	 */
 
-	const setEmbedAlignment = (embed, embedAlignment) => {
+	const setEmbedAlignment = function(embed, embedAlignment) {
 		removeEmbedAlignment(
 			embed,
 			getEmbedAlignment(embed)
@@ -143,11 +143,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 		}
 	};
 
-	let currentAlignment = null;
-	let currentElement = null;
-	let resizer = null;
-
-	const getSelectedElement = editor => {
+	const getSelectedElement = function(editor) {
 		const result = {
 			alignement: null,
 			element: null
@@ -163,7 +159,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 		return result;
 	};
 
-	const resizeElement = (el, width, height) => {
+	const resizeElement = function(el, width, height) {
 		const wrapperElement = el.parentElement;
 
 		if (wrapperElement) {
@@ -174,7 +170,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 			const widgetElement = wrapperElement.querySelector('[data-widget="embedurl"]');
 
 			if (widgetElement) {
-				let styles = JSON.parse(widgetElement.getAttribute('data-styles'));
+				let styles = JSON.parse(widgetElement.getAttribute('data-styles')) || {};
 
 				styles.width = `${width}px`;
 				styles.height = `${height}px`;
@@ -190,6 +186,10 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 			}
 		}
 	};
+
+	let currentAlignment = null;
+	let currentElement = null;
+	let resizer = null;
 
 	/**
 	 * CKEditor plugin which adds the infrastructure to embed urls as media objects
@@ -265,7 +265,9 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 					setTimeout(
 						() => {
 							editor.getSelection().removeAllRanges();
+
 							editor.focus();
+
 							resizer.hide();
 						},
 						0
@@ -417,6 +419,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 								}
 
 								const imageElement = element.findOne('img.cke_widget_mask');
+
 								if (imageElement) {
 									resizer.show(imageElement.$);
 								}
@@ -467,7 +470,6 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 				resizer = new Resizer(
 					editor,
 					{
-						imageScaleResize: editor.config.imageScaleResize || 'scale',
 						onComplete(element, width, height) {
 							resizeElement(element, width, height);
 

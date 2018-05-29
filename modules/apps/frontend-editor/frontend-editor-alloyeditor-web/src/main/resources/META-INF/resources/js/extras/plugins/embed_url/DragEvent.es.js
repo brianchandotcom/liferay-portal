@@ -1,7 +1,8 @@
 class DragEvent {
 	constructor(window, document) {
-		this.window = window;
 		this.document = document;
+		this.window = window;
+
 		this.events = {
 			keydown: this.keydown.bind(this),
 			mousemove: this.mousemove.bind(this),
@@ -14,6 +15,7 @@ class DragEvent {
 		event.stopPropagation();
 
 		this.target = event.target;
+
 		this.className = this.target.className;
 
 		this.startPos = {
@@ -23,11 +25,12 @@ class DragEvent {
 
 		this.update(event);
 
-		this.document.addEventListener('mousemove', this.events.mousemove, false);
 		this.document.addEventListener('keydown', this.events.keydown, false);
+		this.document.addEventListener('mousemove', this.events.mousemove, false);
 		this.document.addEventListener('mouseup', this.events.mouseup, false);
 
 		this.document.body.classList.add(`dragging-${this.className}`);
+
 		if (typeof this.onStart === 'function') {
 			this.onStart();
 		}
@@ -59,9 +62,6 @@ class DragEvent {
 		}
 
 		if (event.which === 0) {
-
-			// Mouse button released outside window; mouseup wasn't fired (Chrome)
-
 			this.mouseup(event);
 		}
 	}
@@ -74,6 +74,7 @@ class DragEvent {
 
 	mouseup(event) {
 		this.update(event);
+
 		this.release();
 
 		if (typeof this.onComplete === 'function') {
@@ -84,8 +85,8 @@ class DragEvent {
 	release() {
 		this.document.body.classList.remove(`dragging-${this.className}`);
 
-		this.document.removeEventListener('mousemove', this.events.mousemove, false);
 		this.document.removeEventListener('keydown', this.events.keydown, false);
+		this.document.removeEventListener('mousemove', this.events.mousemove, false);
 		this.document.removeEventListener('mouseup', this.events.mouseup, false);
 
 		if (typeof this.onRelease === 'function') {

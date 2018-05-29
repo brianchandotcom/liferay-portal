@@ -49,8 +49,7 @@ public class TestClassGroupFactory {
 		}
 
 		if (batchName.startsWith("semantic-versioning-")) {
-			return new SemVerBaselineBatchTestClassGroup(
-				batchName, portalGitWorkingDirectory, testSuiteName);
+			return new SemVerBaselineBatchTestClassGroup(batchName, job);
 		}
 
 		if (batchName.startsWith("tck-")) {

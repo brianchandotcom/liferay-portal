@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 
 import java.io.File;
@@ -45,11 +46,8 @@ public class SemVerBaselineBatchTestClassGroup extends BatchTestClassGroup {
 
 	}
 
-	protected SemVerBaselineBatchTestClassGroup(
-		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
-		String testSuiteName) {
-
-		super(batchName, portalGitWorkingDirectory, testSuiteName);
+	protected SemVerBaselineBatchTestClassGroup(String batchName, Job job) {
+		super(batchName, job);
 
 		try {
 			excludesPathMatchers.addAll(

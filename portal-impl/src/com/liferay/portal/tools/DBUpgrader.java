@@ -102,6 +102,9 @@ public class DBUpgrader {
 			StartupHelperUtil.printPatchLevel();
 
 			upgrade();
+
+			_initializeResources();
+
 			verify();
 
 			_registerModuleServiceLifecycle("database.initialized");
@@ -188,22 +191,6 @@ public class DBUpgrader {
 
 			_updateCompanyKey();
 		}
-
-		// Check class names
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Check class names");
-		}
-
-		ClassNameLocalServiceUtil.checkClassNames();
-
-		// Check resource actions
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Check resource actions");
-		}
-
-		ResourceActionLocalServiceUtil.checkResourceActions();
 
 		// Clear the caches only if the upgrade process was run
 
@@ -404,6 +391,20 @@ public class DBUpgrader {
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
+	}
+
+	private static void _initializeResources() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Check class names");
+		}
+
+		ClassNameLocalServiceUtil.checkClassNames();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Check resource actions");
+		}
+
+		ResourceActionLocalServiceUtil.checkResourceActions();
 	}
 
 	private static void _registerModuleServiceLifecycle(

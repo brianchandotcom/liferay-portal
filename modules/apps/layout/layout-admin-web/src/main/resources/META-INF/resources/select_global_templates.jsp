@@ -21,15 +21,15 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 %>
 
 <liferay-ui:search-container
-	total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypesCount() %>"
+	total="<%= selectLayoutPageTemplateEntryDisplayContext.getGlobalLayoutPageTemplateEntriesCount() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypes() %>"
+		results="<%= selectLayoutPageTemplateEntryDisplayContext.getGlobalLayoutPageTemplateEntries() %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.LayoutPrototype"
-		modelVar="layoutPrototype"
+		className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
+		modelVar="layoutPageTemplateEntry"
 	>
 
 		<%
@@ -41,7 +41,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 			<%
 			Map<String, Object> addLayoutPrototypeData = new HashMap<>();
 
-			addLayoutPrototypeData.put("layout-prototype-id", layoutPrototype.getLayoutPrototypeId());
+			addLayoutPrototypeData.put("layout-prototype-id", layoutPageTemplateEntry.getLayoutPrototypeId());
 			%>
 
 			<liferay-frontend:icon-vertical-card
@@ -51,7 +51,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 				icon="page-set"
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
-				title="<%= HtmlUtil.escape(layoutPrototype.getName(locale)) %>"
+				title="<%= HtmlUtil.escape(layoutPageTemplateEntry.getName()) %>"
 				url="javascript:;"
 			/>
 		</liferay-ui:search-container-column-text>

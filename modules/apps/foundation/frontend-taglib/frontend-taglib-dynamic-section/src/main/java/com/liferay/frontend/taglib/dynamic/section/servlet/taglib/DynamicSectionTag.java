@@ -34,10 +34,8 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 		try {
 			JspWriter jspWriter = pageContext.getOut();
 
-			String content = StringPool.BLANK;
-
 			if (_hasReplace) {
-				content = DynamicSectionUtil.replace(_name, pageContext);
+				jspWriter.write(DynamicSectionUtil.replace(_name, pageContext));
 			}
 			else if (_hasServices) {
 				ServletRequest servletRequest = pageContext.getRequest();
@@ -59,10 +57,8 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 					servletRequest.removeAttribute(key);
 				}
 
-				content = sb.toString();
+				sb.writeTo(jspWriter);
 			}
-
-			jspWriter.write(content);
 
 			return EVAL_PAGE;
 		}

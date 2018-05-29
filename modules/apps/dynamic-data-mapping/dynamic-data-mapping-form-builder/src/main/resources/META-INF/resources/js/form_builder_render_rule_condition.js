@@ -946,6 +946,7 @@ AUI.add(
 					}
 					else if (instance._isConstant(secondOperandTypeValue)) {
 						var options = instance._getFieldOptions(instance._getFirstOperandValue(index));
+						var secondOperand = '';
 
 						if ((options.length > 0) && instance._getFieldType(instance._getFirstOperandValue(index)) !== 'text') {
 							secondOperandOptions.set('options', options);
@@ -953,11 +954,39 @@ AUI.add(
 
 							secondOperandFields.cleanSelect();
 						}
+						else if (instance._getFieldType(instance._getFirstOperandValue(index)) == 'date') {
+							secondOperand = instance._getSecondOperand(index, 'input-date');
+
+							secondOperand.set('visible', true);
+							secondOperandFields.cleanSelect();
+							secondOperandOptions.cleanSelect();
+						}
 						else {
-							var secondOperand = instance._getSecondOperand(index, 'input');
+							var type = instance._getFieldDataType(instance._getFirstOperandValue(index));
+
+							if (type == 'integer') {
+								secondOperand = instance._getSecondOperand(index, 'input-integer');
+							}
+							else if (type == 'double') {
+								secondOperand = instance._getSecondOperand(index, 'input-decimal');
+							}
+							else {
+								secondOperand = instance._getSecondOperand(index, 'input-text');
+							}
 
 							if (secondOperand) {
-								secondOperand.set('visible', true);
+								if (instance._isNumeric(type)) {
+									var container = secondOperand.get('container');
+									var numeric = container.one('.liferay-ddm-form-field-numeric');
+
+									container.removeClass('hide');
+									numeric.removeClass('hide');
+									numeric.setStyle('');
+								}
+								else {
+									secondOperand.set('visible', true);
+								}
+
 								secondOperandFields.cleanSelect();
 								secondOperandOptions.cleanSelect();
 							}

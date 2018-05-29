@@ -65,17 +65,16 @@ public class UploadServletRequestImpl
 	}
 
 	public static File getTempDir(String configuredTempDir) {
+		if (Validator.isNotNull(configuredTempDir)) {
+			return new File(configuredTempDir);
+		}
+
 		if (_tempDir == null) {
 			_tempDir = new File(
 				UploadServletRequestConfigurationHelperUtil.getTempDir());
 		}
 
-		if (Validator.isNull(configuredTempDir)) {
-			return _tempDir;
-		}
-		else {
-			return new File(configuredTempDir);
-		}
+		return _tempDir;
 	}
 
 	public static void setTempDir(File tempDir) {

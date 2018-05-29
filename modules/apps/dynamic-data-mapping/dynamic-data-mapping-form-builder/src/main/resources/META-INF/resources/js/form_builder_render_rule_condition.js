@@ -183,7 +183,6 @@ AUI.add(
 				instance._conditions[index + '-condition-operator'].destroy();
 				instance._conditions[index + '-condition-second-operand-type'].destroy();
 				instance._conditions[index + '-condition-second-operand-select'].destroy();
-				instance._conditions[index + '-condition-second-operand-input'].destroy();
 				instance._conditions[index + '-condition-second-operand-input-date'].destroy();
 				instance._conditions[index + '-condition-second-operand-input-decimal'].destroy();
 				instance._conditions[index + '-condition-second-operand-input-integer'].destroy();
@@ -245,11 +244,9 @@ AUI.add(
 							);
 						}
 						else if (instance._isConstant(secondOperandTypeValue)) {
-							if (instance._getSecondOperandValue(index, 'input')) {
 								condition.operands.push(
 									{
 										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
-										value: instance._getSecondOperandValue(index, 'input')
 									}
 								);
 							}
@@ -379,7 +376,6 @@ AUI.add(
 				case 'options':
 					return instance._conditions[index + '-condition-second-operand-options-select'];
 				default:
-					return instance._conditions[index + '-condition-second-operand-input'];
 				}
 			},
 
@@ -506,15 +502,12 @@ AUI.add(
 
 				var secondOperandFields = instance._getSecondOperand(index, 'fields');
 				var secondOperandOptions = instance._getSecondOperand(index, 'options');
-				var secondOperandsInput = instance._getSecondOperand(index, 'input');
 
 				instance._setVisibleToOperandField(secondOperandFields, false);
 				instance._setVisibleToOperandField(secondOperandOptions, false);
-				instance._setVisibleToOperandField(secondOperandsInput, false);
 
 				secondOperandFields.set('value', '');
 				secondOperandOptions.set('value', '');
-				secondOperandsInput.set('value', '');
 			},
 
 			_hideSecondOperandTypeField: function(index) {

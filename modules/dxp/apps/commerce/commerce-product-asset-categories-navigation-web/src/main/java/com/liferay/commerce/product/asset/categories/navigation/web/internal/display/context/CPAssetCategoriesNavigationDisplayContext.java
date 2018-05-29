@@ -234,7 +234,22 @@ public class CPAssetCategoriesNavigationDisplayContext {
 				true);
 
 		if (cpFriendlyURLEntry == null) {
-			return StringPool.BLANK;
+			String defaultLanguageId = LanguageUtil.getLanguageId(
+				themeDisplay.getSiteDefaultLocale());
+
+			if (languageId.equals(defaultLanguageId)) {
+				return StringPool.BLANK;
+			}
+			else {
+				cpFriendlyURLEntry =
+					_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
+						assetCategory.getGroupId(), classNameId, categoryId,
+						defaultLanguageId, true);
+
+				if (cpFriendlyURLEntry == null) {
+					return StringPool.BLANK;
+				}
+			}
 		}
 
 		LayoutSet layoutSet = themeDisplay.getLayoutSet();

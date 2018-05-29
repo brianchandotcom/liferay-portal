@@ -10,6 +10,27 @@ import templates from './FragmentsEditorToolbar.soy';
  */
 
 class FragmentsEditorToolbar extends Component {
+
+	/**
+	 * @private
+	 * @review
+	 */
+
+	_handleToggleContextualSidebarButtonClick() {
+		this.emit('toggleContextualSidebarButtonClick');
+	}
+
+	/**
+	 * @param {{languageId: string}} event
+	 * @private
+	 * @review
+	 */
+
+	_handleTranslationLanguageChange(event) {
+		const {languageId} = event;
+
+		this.emit('translationLanguageChange', {languageId});
+	}
 }
 
 /**

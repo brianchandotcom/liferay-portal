@@ -77,19 +77,21 @@
 
 	<div id="{$id}">
 		{call com.liferay.layout.admin.web.FragmentsEditorToolbar.render}
-			{param availableLanguages: $availableLanguages /}
 			{param classPK: $classPK /}
-			{param defaultLanguageId: $defaultLanguageId /}
-			{param dirty: $_dirty /}
-			{param handleToggleContextualSidebarButtonClick: $_handleToggleContextualSidebarButtonClick /}
-			{param handleTranslationLanguageChange: $_handleTranslationLanguageChange /}
-			{param languageId: $languageId /}
-			{param lastSaveDate: $_lastSaveDate /}
-			{param portletNamespace: $portletNamespace /}
+			{param events: [
+				'toggleSidebarButtonClick': $_handleToggleContextualSidebarButtonClick,
+				'translationLanguageChange': $_handleTranslationLanguageChange
+			] /}
+			{param lastSaveDate: $_lastSaveDate ?: '' /}
 			{param publishLayoutPageTemplateEntryURL: $publishLayoutPageTemplateEntryURL /}
-			{param redirectURL: $redirectURL /}
+			{param publishRedirectURL: $redirectURL /}
+			{param publishStatus: $status /}
+			{param portletNamespace: $portletNamespace /}
+			{param savingChanges: $_dirty ?: false /}
 			{param spritemap: $spritemap /}
-			{param status: $status /}
+			{param translationAvailableLanguages: $availableLanguages /}
+			{param translationDefaultLanguageId: $defaultLanguageId /}
+			{param translationLanguageId: $languageId /}
 			{param translationStatus: $_translationStatus /}
 		{/call}
 

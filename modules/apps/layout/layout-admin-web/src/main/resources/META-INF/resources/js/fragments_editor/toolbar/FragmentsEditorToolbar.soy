@@ -4,21 +4,24 @@
  * FragmentsEditorToolbar
  */
 {template .render}
-	{@param availableLanguages: ?}
 	{@param classPK: ?}
-	{@param defaultLanguageId: string}
-	{@param languageId: string}
+	{@param lastSaveDate: string}
 	{@param portletNamespace: string}
-	{@param redirectURL: string}
+	{@param savingChanges: bool}
 	{@param spritemap: string}
-	{@param? dirty: bool}
-	{@param? handleToggleContextualSidebarButtonClick: any}
-	{@param? handleTranslationLanguageChange: any}
-	{@param? lastSaveDate: string}
+	{@param translationAvailableLanguages: ?}
+	{@param translationDefaultLanguageId: string}
+	{@param translationLanguageId: string}
+	{@param? _handleToggleContextualSidebarButtonClick: any}
+	{@param? _handleTranslationLanguageChange: any}
 	{@param? publishLayoutPageTemplateEntryURL: string}
-	{@param? status: string}
+	{@param? publishRedirectURL: string}
+	{@param? publishStatus: string}
 	{@param? translationStatus: [
-		languageValues: list<[languageId: string, values: list<string>]>,
+		languageValues: list<[
+			languageId: string,
+			values: list<string>
+		]>,
 		translationKeys: list<string>
 	]}
 
@@ -27,17 +30,17 @@
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					{call com.liferay.layout.admin.web.TranslationStatus.render}
-						{param availableLanguages: $availableLanguages /}
-						{param defaultLanguageId: $defaultLanguageId /}
-						{param events: ['languageChange': $handleTranslationLanguageChange] /}
-						{param languageId: $languageId /}
+						{param availableLanguages: $translationAvailableLanguages /}
+						{param defaultLanguageId: $translationDefaultLanguageId /}
+						{param events: ['languageChange': $_handleTranslationLanguageChange] /}
+						{param languageId: $translationLanguageId /}
 						{param spritemap: $spritemap /}
 						{param translationStatus: $translationStatus /}
 					{/call}
 				</li>
 				<li class="nav-item">
 					<span class="navbar-text">
-						{if $dirty}
+						{if $savingChanges}
 							{msg desc=""}saving-changes{/msg}
 						{elseif $lastSaveDate}
 							{msg desc=""}changes-saved-at-{$lastSaveDate}{/msg}
@@ -47,9 +50,9 @@
 			</ul>
 
 			<ul class="navbar-nav">
-				{if $status}
+				{if $publishStatus}
 					<li class="nav-item">
-						<span class="label label-secondary">{$status}</span>
+						<span class="label label-secondary">{$publishStatus}</span>
 					</li>
 				{/if}
 				{if $publishLayoutPageTemplateEntryURL}
@@ -64,7 +67,7 @@
 							<input
 								name="{$portletNamespace}redirect"
 								type="hidden"
-								value="{$redirectURL}"
+								value="{$publishRedirectURL}"
 							/>
 
 							<button class="btn btn-primary nav-btn" type="submit">
@@ -74,7 +77,10 @@
 					</li>
 				{/if}
 				<li class="nav-item">
-					<button class="btn btn-secondary nav-btn" data-onclick="{$handleToggleContextualSidebarButtonClick}">
+					<button
+						class="btn btn-secondary nav-btn"
+						data-onclick="{$_handleToggleContextualSidebarButtonClick}"
+					>
 						<svg class="icon-monospaced lexicon-icon">
 							<use xlink:href="{$spritemap}#cards"></use>
 						</svg>

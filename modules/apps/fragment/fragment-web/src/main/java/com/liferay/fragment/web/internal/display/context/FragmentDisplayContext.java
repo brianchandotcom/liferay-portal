@@ -75,7 +75,7 @@ public class FragmentDisplayContext {
 							"/fragment/edit_fragment_collection", "redirect",
 							themeDisplay.getURLCurrent());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "new"));
+							LanguageUtil.get(_request, "collection"));
 					});
 
 				add(

@@ -483,8 +483,9 @@ AUI.add(
 					var index = fieldName.split('-')[0];
 
 					if (fieldName.match('-condition-first-operand')) {
+						var dataType = instance._getDataType(field.getValue(), options);
+
 						var operatorSelected = instance._getOperator(index);
-						var type = instance._getDataType(field.getValue(), options);
 
 						operatorSelected.cleanSelect();
 
@@ -494,7 +495,7 @@ AUI.add(
 
 						instance._clearOperatorField(index);
 
-						instance._updateOperatorList(type, index);
+						instance._updateOperatorList(dataType, index);
 					}
 					else if (fieldName.match('-condition-operator')) {
 						var operator = event.newVal[0];

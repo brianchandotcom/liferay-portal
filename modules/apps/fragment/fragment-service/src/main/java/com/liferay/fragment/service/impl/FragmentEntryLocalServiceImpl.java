@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -458,20 +457,6 @@ public class FragmentEntryLocalServiceImpl
 
 			curFragmentEntryKey = fragmentEntryKey + CharPool.DASH + count++;
 		}
-	}
-
-	private String _getContent(FragmentEntry fragmentEntry) {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("<html><head><style>");
-		sb.append(fragmentEntry.getCss());
-		sb.append("</style><script>");
-		sb.append(fragmentEntry.getJs());
-		sb.append("</script></head><body>");
-		sb.append(fragmentEntry.getHtml());
-		sb.append("</body></html>");
-
-		return sb.toString();
 	}
 
 	private String _getFragmentEntryKey(String fragmentEntryKey) {

@@ -525,11 +525,9 @@ public class WatchTask extends DefaultTask {
 		while (iterator.hasNext()) {
 			Map.Entry<Object, Object> entry = iterator.next();
 
-			Object key = entry.getKey();
+			String key = String.valueOf(entry.getKey());
 
-			String keyName = key.toString();
-
-			if (_ignoredManifestKeys.contains(keyName)) {
+			if (_ignoredManifestKeys.contains(key)) {
 				iterator.remove();
 			}
 		}

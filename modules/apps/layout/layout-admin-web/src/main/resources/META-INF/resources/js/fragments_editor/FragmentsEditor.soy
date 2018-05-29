@@ -170,84 +170,22 @@
 				{/call}
 			{/if}
 
-			{call liferay.frontend.ContextualSidebar.render}
-				{param body kind="html"}
-					<div class="sidebar-section">
-						<nav class="navbar navbar-expand-md navbar-underline">
-							<ul class="navbar-nav">
-								{if $sidebarTabs}
-									{foreach $sidebarTab in $sidebarTabs}
-										{if $sidebarTab.enabled}
-											{call .sidebarTab}
-												{param active: $sidebarTab.id == $_sidebarSelectedTab /}
-												{param id: $sidebarTab.id /}
-												{param key: $sidebarTab.id /}
-												{param handleTabClick: $_handleSidebarTabClick /}
-												{param label: $sidebarTab.label /}
-											{/call}
-										{/if}
-									{/foreach}
-								{/if}
-							</ul>
-						</nav>
-					</div>
-
-					{if $_sidebarSelectedTab == 'available'}
-						{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
-							{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
-							{param fragmentCollections: $fragmentCollections /}
-							{param spritemap: $spritemap /}
-						{/call}
-					{elseif $_sidebarSelectedTab == 'added'}
-						{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
-							{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
-							{param fragmentEntryLinks: $fragmentEntryLinks /}
-							{param spritemap: $spritemap /}
-						{/call}
-					{elseif $_sidebarSelectedTab == 'mapping'}
-						{call com.liferay.layout.admin.web.SidebarMapping.render}
-							{param events: [
-								'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
-								'toggleHighlightMapping': $_handleToggleHighlightMapping
-							] /}
-							{param highlightMapping: $_highlightMapping ?: false /}
-							{param selectedMappingTypes: $selectedMappingTypes /}
-							{param spritemap: $spritemap /}
-						{/call}
-					{/if}
-				{/param}
-
-				{param elementClasses: 'fragments-editor-sidebar' /}
-
-				{param events: [
-					'hide': $_handleHideContextualSidebar
-				]/}
-
-				{param header kind="html"}
-					<div class="autofit-row sidebar-section">
-						<div class="autofit-col autofit-col-expand">
-							<h4 class="component-title">
-								<span class="text-truncate-inline">
-									Fragments
-								</span>
-							</h4>
-						</div>
-
-						<div class="autofit-col">
-							<button
-								class="component-action"
-								data-onclick="{$_handleToggleContextualSidebarButtonClick}"
-								type="button"
-							>
-								<svg class="icon-monospaced lexicon-icon">
-									<use xlink:href="{$spritemap}#times"></use>
-								</svg>
-							</button>
-						</div>
-					</div>
-				{/param}
-
-				{param visible: $_contextualSidebarVisible ?: true /}
+			{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
+				{param fragmentCollections: $fragmentCollections /}
+				{param fragmentEntryLinks: $fragmentEntryLinks /}
+				{param selectedMappingTypes: $selectedMappingTypes /}
+				{param sidebarTabs: $sidebarTabs /}
+				{param spritemap: $spritemap /}
+				{param _contextualSidebarVisible: $_contextualSidebarVisible /}
+				{param _handleFragmentRemove: $_handleFragmentRemove /}
+				{param _handleFragmentCollectionEntryClick: $_handleFragmentCollectionEntryClick /}
+				{param _handleHideContextualSidebar: $_handleHideContextualSidebar /}
+				{param _handleSelectAssetTypeButtonClick: $_handleSelectAssetTypeButtonClick /}
+				{param _handleSidebarTabClick: $_handleSidebarTabClick /}
+				{param _handleToggleHighlightMapping: $_handleToggleHighlightMapping /}
+				{param _handleToggleContextualSidebarButtonClick: $_handleToggleContextualSidebarButtonClick /}
+				{param _highlightMapping: $_highlightMapping /}
+				{param _sidebarSelectedTab: $_sidebarSelectedTab /}
 			{/call}
 		</div>
 	</div>
@@ -264,34 +202,4 @@
 			{msg desc=""}the-fragment-editor-is-empty{/msg}
 		</div>
 	</div>
-{/template}
-
-/**
- * Sidebar tab
- */
-{template .sidebarTab}
-	{@param id: string}
-	{@param handleTabClick: any}
-	{@param active: bool}
-	{@param label: string}
-
-	<li class="nav-item">
-		{let $navLinkClasses kind="text"}
-			nav-link
-			{if $active}
-				{sp}active
-			{/if}
-		{/let}
-
-		<a
-			class="{$navLinkClasses}"
-			data-onclick="{$handleTabClick}"
-			data-tab-name="{$id}"
-			href="javascript:;"
-		>
-			<span class="text-truncate">
-				{$label}
-			</span>
-		</a>
-	</li>
 {/template}

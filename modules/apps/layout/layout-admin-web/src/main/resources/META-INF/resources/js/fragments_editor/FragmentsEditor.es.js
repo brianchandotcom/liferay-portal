@@ -1,4 +1,3 @@
-import 'frontend-taglib/contextual_sidebar/ContextualSidebar.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
@@ -6,9 +5,7 @@ import {object} from 'metal';
 
 import './dialogs/SelectMappingDialog.es';
 import './dialogs/SelectMappingTypeDialog.es';
-import './sidebar/SidebarAddedFragments.es';
-import './sidebar/SidebarAvailableFragments.es';
-import './sidebar/SidebarMapping.es';
+import './sidebar/FragmentsEditorSidebar.es';
 import './toolbar/FragmentsEditorToolbar.es';
 import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';

@@ -48,11 +48,11 @@ public class NestedCategoryForm {
 		).constructor(
 			NestedCategoryForm::new
 		).addOptionalLong(
-			"category", NestedCategoryForm::_setParentCategoryId
+			"parentCategoryId", NestedCategoryForm::_setParentCategoryId
 		).addOptionalString(
 			"description", NestedCategoryForm::_setDescription
 		).addRequiredLong(
-			"taxonomy", NestedCategoryForm::_setVocabularyId
+			"vocabularyId", NestedCategoryForm::_setVocabularyId
 		).addRequiredString(
 			"name", NestedCategoryForm::_setName
 		).build();

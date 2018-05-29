@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -131,6 +134,46 @@ public class LayoutPageTemplateDisplayContext {
 					});
 			}
 		};
+	}
+
+	public String getEditLayoutPageTemplateEntryURL(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE)) {
+
+			LayoutPrototype layoutPrototype = getLayoutPrototype(
+				layoutPageTemplateEntry);
+
+			if (layoutPrototype == null) {
+				return null;
+			}
+
+			Group layoutPrototypeGroup = layoutPrototype.getGroup();
+
+			return layoutPrototypeGroup.getDisplayURL(themeDisplay, true);
+		}
+
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		portletURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
+
+		return portletURL.toString();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -326,6 +369,14 @@ public class LayoutPageTemplateDisplayContext {
 		}
 
 		return layoutPageTemplateEntry.getName();
+	}
+
+	public LayoutPrototype getLayoutPrototype(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
+
+		return LayoutPrototypeServiceUtil.fetchLayoutPrototype(
+			layoutPageTemplateEntry.getLayoutPrototypeId());
 	}
 
 	public String getOrderByCol() {

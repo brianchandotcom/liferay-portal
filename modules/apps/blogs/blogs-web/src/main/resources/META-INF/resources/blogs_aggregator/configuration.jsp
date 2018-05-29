@@ -72,6 +72,7 @@ if (organizationId > 0) {
 									{
 										dialog: {
 											constrain: true,
+											destroyOnHide: true,
 											modal: true
 										},
 
@@ -95,7 +96,7 @@ if (organizationId > 0) {
 										var form = document.getElementById('<portlet:namespace />fm');
 
 										if (form) {
-											var organizationId = form.querySelector('#<portlet:namespace />preferences--organizationId--');
+											var organizationId = form.querySelector('#<portlet:namespace />organizationId');
 
 											if (organizationId) {
 												organizationId.setAttribute('value', event.entityid);

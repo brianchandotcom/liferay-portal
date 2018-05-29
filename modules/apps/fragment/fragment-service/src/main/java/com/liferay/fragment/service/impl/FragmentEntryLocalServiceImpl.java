@@ -21,6 +21,7 @@ import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -94,14 +95,14 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
+		validate(name);
+
 		if (Validator.isNull(fragmentEntryKey)) {
-			fragmentEntryKey = String.valueOf(counterLocalService.increment());
-		}
-		else {
-			fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+			fragmentEntryKey = _generateFragmentEntryKey(groupId, name);
 		}
 
-		validate(name);
+		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+
 		validateFragmentEntryKey(groupId, fragmentEntryKey);
 
 		long fragmentEntryId = counterLocalService.increment();
@@ -434,6 +435,28 @@ public class FragmentEntryLocalServiceImpl
 
 		if (fragmentEntry != null) {
 			throw new DuplicateFragmentEntryKeyException();
+		}
+	}
+
+	private String _generateFragmentEntryKey(long groupId, String name) {
+		String fragmentEntryKey = _getFragmentEntryKey(name);
+
+		fragmentEntryKey = StringUtil.replace(
+			fragmentEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		String curFragmentEntryKey = fragmentEntryKey;
+
+		int count = 0;
+
+		while (true) {
+			FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FEK(
+				groupId, curFragmentEntryKey);
+
+			if (fragmentEntry == null) {
+				return curFragmentEntryKey;
+			}
+
+			curFragmentEntryKey = fragmentEntryKey + CharPool.DASH + count++;
 		}
 	}
 

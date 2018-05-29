@@ -21,6 +21,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.v1_0_1.UpgradeKaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,6 +52,9 @@ public class KaleoDesignerWebUpgrade implements UpgradeStepRegistrator {
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
+
+	@Reference
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

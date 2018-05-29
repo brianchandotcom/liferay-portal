@@ -91,7 +91,7 @@ AUI.add(
 					config
 				);
 
-				instance._renderField(index, container, config, fieldDate);
+				instance._renderField(index, config, container, fieldDate);
 			},
 
 			_createDecimalField: function(index, condition, config, container, firstOperand, secondOperandTypeValue) {
@@ -114,7 +114,7 @@ AUI.add(
 					config
 				);
 
-				instance._renderField(index, container, config, fieldDouble);
+				instance._renderField(index, config, container, fieldDouble);
 			},
 
 			_createIntegerField: function(index, condition, config, container, firstOperand, secondOperandTypeValue) {
@@ -137,7 +137,7 @@ AUI.add(
 					config
 				);
 
-				instance._renderField(index, container, config, fieldInteger);
+				instance._renderField(index, config, container, fieldInteger);
 			},
 
 			_createTextField: function(index, condition, config, container, firstOperand, type) {
@@ -159,7 +159,7 @@ AUI.add(
 					config
 				);
 
-				instance._renderField(index, container, config, fieldText);
+				instance._renderField(index, config, container, fieldText);
 			},
 
 			_deleteCondition: function(index) {
@@ -652,6 +652,14 @@ AUI.add(
 				if (instance._conditionsIndexes.length === 0) {
 					instance._addCondition(0);
 				}
+			},
+
+			_renderField: function(index, config, container, field) {
+				var instance = this;
+
+				field.render(container);
+
+				instance._conditions[config.fieldName] = field;
 			},
 
 			_renderFirstOperand: function(index, condition, container) {

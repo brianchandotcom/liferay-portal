@@ -157,14 +157,6 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return category;
 	}
 
-	@Override
-	public List<AssetCategory> getCategories(String className, long classPK)
-		throws PortalException {
-
-		return filterCategories(
-			assetCategoryLocalService.getCategories(className, classPK));
-	}
-
 	/**
 	 * Returns a range of assetCategories related to an AssetEntry with the given
 	 * "classNameId-classPK".
@@ -181,6 +173,14 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 		return assetCategoryFinder.filterFindByC_C(
 			classNameId, classPK, start, end);
+	}
+
+	@Override
+	public List<AssetCategory> getCategories(String className, long classPK)
+		throws PortalException {
+
+		return filterCategories(
+			assetCategoryLocalService.getCategories(className, classPK));
 	}
 
 	/**
@@ -273,6 +273,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 					parent.getGroupId(), parentCategoryId);
 			}
 		}
+
 		return assetCategoryPersistence.countByParentCategoryId(
 			parentCategoryId);
 	}

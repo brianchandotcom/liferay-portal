@@ -445,7 +445,7 @@ public class CommerceOrderListDisplayContext {
 
 		portletURL.setParameter("tabs1", name);
 
-		navigationItem.setHref(portletURL.toString());
+		navigationItem.setHref(portletURL);
 
 		String label = LanguageUtil.get(
 			_commerceOrderRequestHelper.getRequest(), name);

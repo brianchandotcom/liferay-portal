@@ -14,7 +14,7 @@
 
 package com.liferay.osgi.util.bundle;
 
-import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.concurrent.DefaultNoticeableFuture;
 
 import java.util.Collections;
 import java.util.Dictionary;

@@ -10,7 +10,7 @@ import ItemSelectorVideo from './buttons/item_selector/item_selector_video.jsx';
 import LinkBrowse from './buttons/link_browse/link_browse.jsx';
 import LinkEditBrowse from './buttons/link_browse/link_edit_browse.jsx';
 
-import './plugins/embed_url.js';
+import './plugins/embed_url/plugin.js';
 
 import embedUrlSelectionTest from './selections/embed_url_selection_test.js';
 import headingTextSelectionTest from './selections/heading_selection_test.js';

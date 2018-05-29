@@ -54,3 +54,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }
+
+transpileJS {
+	enabled = false
+}

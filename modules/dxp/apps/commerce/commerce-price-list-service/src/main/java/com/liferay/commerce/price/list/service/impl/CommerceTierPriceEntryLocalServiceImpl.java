@@ -321,11 +321,11 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				promoPrice, minQuantity, serviceContext);
 		}
 
-		if (Validator.isNotNull(externalReferenceCode)) {
-			CommerceTierPriceEntry commerceTierPriceEntry =
-				commerceTierPriceEntryPersistence.fetchByExternalReferenceCode(
-					externalReferenceCode);
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			commerceTierPriceEntryPersistence.fetchByExternalReferenceCode(
+				externalReferenceCode);
 
+		if (Validator.isNotNull(commerceTierPriceEntry)) {
 			return updateCommerceTierPriceEntry(
 				commerceTierPriceEntry.getCommerceTierPriceEntryId(), price,
 				promoPrice, minQuantity, serviceContext);
@@ -337,7 +337,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			validate(commercePriceEntryId, minQuantity);
 
 			CommercePriceEntry commercePriceEntry =
-				_commercePriceEntryPersistence.fetchByPrimaryKey(
+				_commercePriceEntryPersistence.findByPrimaryKey(
 					commercePriceEntryId);
 
 			return addCommerceTierPriceEntry(
@@ -346,7 +346,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		}
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryPersistence.fetchByExternalReferenceCode(
+			_commercePriceEntryPersistence.findByExternalReferenceCode(
 				priceEntryExternalReferenceCode);
 
 		validate(commercePriceEntry.getCommercePriceEntryId(), minQuantity);

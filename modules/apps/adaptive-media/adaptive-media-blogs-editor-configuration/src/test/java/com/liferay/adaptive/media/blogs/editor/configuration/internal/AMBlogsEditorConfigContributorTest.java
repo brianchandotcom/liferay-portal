@@ -72,6 +72,62 @@ public class AMBlogsEditorConfigContributorTest extends PowerMockito {
 	}
 
 	@Test
+	public void testAdaptiveMediaFileEntryAttributeNameIsAdded()
+		throws Exception {
+
+		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+
+		when(
+			itemSelectorPortletURL.toString()
+		).thenReturn(
+			"itemSelectorPortletURL"
+		);
+
+		when(
+			_itemSelector.getItemSelectorURL(
+				Mockito.any(RequestBackedPortletURLFactory.class),
+				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
+		).thenReturn(
+			itemSelectorPortletURL
+		);
+
+		when(
+			_itemSelector.getItemSelectedEventName(Mockito.anyString())
+		).thenReturn(
+			"selectedEventName"
+		);
+
+		when(
+			_itemSelector.getItemSelectorCriteria(
+				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
+		).thenReturn(
+			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
+		);
+
+		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
+
+		originalJSONObject.put(
+			"filebrowserImageBrowseLinkUrl",
+			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
+
+		AMBlogsEditorConfigContributor amBlogsEditorConfigContributor =
+			new AMBlogsEditorConfigContributor();
+
+		amBlogsEditorConfigContributor.setItemSelector(_itemSelector);
+
+		amBlogsEditorConfigContributor.populateConfigJSONObject(
+			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+			_requestBackedPortletURLFactory);
+
+		Assert.assertEquals(
+			"data-fileentryid",
+			jsonObject.get("adaptiveMediaFileEntryAttributeName"));
+	}
+
+	@Test
 	public void testAdaptiveMediaIsAddedToExtraPlugins() throws Exception {
 		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
 

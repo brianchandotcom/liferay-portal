@@ -235,17 +235,23 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${page}" />
-		</execute>
-
 		<if>
-			<condition function="IsElementPresent" locator1="SitePagesEditPage#PAGE_TYPE_LAYOUT" />
+			<isset var="page" />
 			<then>
-				<execute function="AssertClick" locator1="SitePages#DETAILS_NAVIGATION_ADVANCED" value1="Advanced" />
+				<execute macro="SitePages#gotoPageMenuItem">
+					<var name="menuItem" value="Configure" />
+					<var name="pageName" value="${page}" />
+				</execute>
+
+				<execute macro="Navigator#gotoNavTab">
+					<var name="navTab" value="Advanced" />
+				</execute>
 			</then>
 			<else>
+				<execute macro="LexiconEntry#gotoHeaderMenuItem">
+					<var name="menuItem" value="Configure" />
+				</execute>
+
 				<execute macro="Panel#expandPanel">
 					<var name="panel" value="Logo" />
 				</execute>

@@ -886,7 +886,7 @@ FragmentsEditor.STATE = {
 	 * @type {!string}
 	 */
 
-	getAssetClassTypesURL: Config.string().required(),
+	getAssetClassTypesURL: Config.string(),
 
 	/**
 	 * URL for obtaining the asset types for which asset display pages can be
@@ -898,7 +898,7 @@ FragmentsEditor.STATE = {
 	 * @type {!string}
 	 */
 
-	getAssetDisplayContributorsURL: Config.string().required(),
+	getAssetDisplayContributorsURL: Config.string(),
 
 	/**
 	 * Optional ID provided by the template system.
@@ -996,7 +996,7 @@ FragmentsEditor.STATE = {
 	 * @type {!string}
 	 */
 
-	publishLayoutPageTemplateEntryURL: Config.string().required(),
+	publishLayoutPageTemplateEntryURL: Config.string(),
 
 	/**
 	 * URL for redirect.
@@ -1110,7 +1110,7 @@ FragmentsEditor.STATE = {
 	 * @type {!string}
 	 */
 
-	updateLayoutPageTemplateEntryAssetTypeURL: Config.string().required(),
+	updateLayoutPageTemplateEntryAssetTypeURL: Config.string(),
 
 	/**
 	 * Allow opening/closing contextual sidebar

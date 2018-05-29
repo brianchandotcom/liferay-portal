@@ -15,12 +15,14 @@
 package com.liferay.frontend.taglib.dynamic.section;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -39,7 +41,10 @@ public abstract class BaseJSPDynamicSectionReplace
 			servletContext.getRequestDispatcher(getJspPath());
 
 		requestDispatcher.include(
-			pageContext.getRequest(), pageContext.getResponse());
+			pageContext.getRequest(),
+			new PipingServletResponse(
+				(HttpServletResponse)pageContext.getResponse(),
+				pageContext.getOut()));
 
 		return StringPool.BLANK;
 	}

@@ -505,6 +505,11 @@ AUI.add(
 					}
 					else if (fieldName.match('-condition-second-operand-type')) {
 						instance._updateSecondOperandFieldVisibility(index);
+
+						instance._conditions[index + '-condition-second-operand-input-integer'].setValue('');
+						instance._conditions[index + '-condition-second-operand-input-text'].setValue('');
+						instance._conditions[index + '-condition-second-operand-input-decimal'].setValue('');
+						instance._conditions[index + '-condition-second-operand-input-date'].setValue('');
 					}
 				}
 			},

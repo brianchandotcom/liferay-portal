@@ -1444,9 +1444,7 @@ public class CalendarPortlet extends MVCPortlet {
 			long layoutSetPrototypeClassNameId = _portal.getClassNameId(
 				LayoutSetPrototype.class);
 
-			if (group.getClassNameId() ==
-					layoutSetPrototypeClassNameId) {
-
+			if (group.getClassNameId() == layoutSetPrototypeClassNameId) {
 				continue;
 			}
 

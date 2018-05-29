@@ -285,7 +285,7 @@
 	</command>
 
 	<command name="SitesPrivatePagesPermissions" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="false" />
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#SitesPrivatePagesPermissions" />
 		<property name="testray.component.names" value="Permissions,Roles,Site Pages Administration,Training" />
 

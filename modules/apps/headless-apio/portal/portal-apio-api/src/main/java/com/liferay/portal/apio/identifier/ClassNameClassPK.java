@@ -28,12 +28,12 @@ import com.liferay.portal.kernel.model.ClassedModel;
 public interface ClassNameClassPK {
 
 	/**
-	 * Creates and returns a new aggregate rating identifier from a class name
-	 * and class PK.
+	 * Creates and returns a new {@code ClassNameClassPK} from a class name and
+	 * class PK.
 	 *
 	 * @param  className the class name
 	 * @param  classPK the class PK
-	 * @return the new aggregate rating identifier
+	 * @return the new {@code ClassNameClassPK}
 	 */
 	public static ClassNameClassPK create(String className, long classPK) {
 		return new ClassNameClassPK() {
@@ -52,27 +52,27 @@ public interface ClassNameClassPK {
 	}
 
 	/**
-	 * Creates and returns a new aggregate rating identifier from a {@code
+	 * Creates and returns a new {@code ClassNameClassPK} from a {@code
 	 * ClassedModel}.
 	 *
 	 * @param  t the {@code ClassedModel}
-	 * @return the new aggregate rating identifier
+	 * @return the new {@code ClassNameClassPK}
 	 */
 	public static <T extends ClassedModel> ClassNameClassPK create(T t) {
 		return create(t.getModelClassName(), (long)t.getPrimaryKeyObj());
 	}
 
 	/**
-	 * Returns the aggregate rating identifier's class name.
+	 * Returns the class name.
 	 *
-	 * @return the aggregate rating identifier's class name
+	 * @return the class name
 	 */
 	public String getClassName();
 
 	/**
-	 * Returns the aggregate rating identifier's class PK.
+	 * Returns the class PK.
 	 *
-	 * @return the aggregate rating identifier's class PK
+	 * @return the class PK
 	 */
 	public long getClassPK();
 

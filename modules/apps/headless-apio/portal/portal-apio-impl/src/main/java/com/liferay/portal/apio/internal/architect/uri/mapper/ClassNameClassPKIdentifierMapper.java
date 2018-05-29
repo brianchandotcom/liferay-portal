@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Reference;
  * Converts a {@link Path} to a {@link ClassNameClassPK}, and vice versa.
  *
  * <p>
- * The {@code AggregateRatingPathIdentifierMapper} can then be used as the
- * identifier of a resource.
+ * The {@code ClassNameClassPK} can then be used as the identifier of a
+ * resource.
  * </p>
  *
  * @author Alejandro Hernández

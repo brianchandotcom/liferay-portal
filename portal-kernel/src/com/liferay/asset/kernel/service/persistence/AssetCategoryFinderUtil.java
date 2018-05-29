@@ -34,6 +34,15 @@ public class AssetCategoryFinderUtil {
 		return getFinder().countByG_N_P(groupId, name, categoryProperties);
 	}
 
+	public static int filterCountByC_C(long classNameId, long classPK) {
+		return getFinder().filterCountByC_C(classNameId, classPK);
+	}
+
+	public static java.util.List<com.liferay.asset.kernel.model.AssetCategory> filterFindByC_C(
+		long classNameId, long classPK, int start, int end) {
+		return getFinder().filterFindByC_C(classNameId, classPK, start, end);
+	}
+
 	public static com.liferay.asset.kernel.model.AssetCategory findByG_N(
 		long groupId, String name)
 		throws com.liferay.asset.kernel.exception.NoSuchCategoryException {

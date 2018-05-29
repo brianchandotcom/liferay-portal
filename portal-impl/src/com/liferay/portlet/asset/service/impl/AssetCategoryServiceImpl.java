@@ -157,12 +157,43 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return category;
 	}
 
+	/**
+	 * Returns a range of assetCategories related to an AssetEntry with the given
+	 * "classNameId-classPK".
+	 *
+	 * @param classNameId the className of the asset
+	 * @param classPK the classPK of the asset
+	 * @param start the lower bound of the range of results
+	 * @param end the upper bound of the range of results (not inclusive)
+	 * @return the matching assetCategories
+	 */
+	@Override
+	public List<AssetCategory> getCategories(
+		long classNameId, long classPK, int start, int end) {
+
+		return assetCategoryFinder.filterFindByC_C(
+			classNameId, classPK, start, end);
+	}
+
 	@Override
 	public List<AssetCategory> getCategories(String className, long classPK)
 		throws PortalException {
 
 		return filterCategories(
 			assetCategoryLocalService.getCategories(className, classPK));
+	}
+
+	/**
+	 * Returns the number of assetCategories related to an AssetEntry with the
+	 * given "classNameId-classPK".
+	 *
+	 * @param classNameId the className of the asset
+	 * @param classPK the classPK of the asset
+	 * @return the number of matching assetCategories
+	 */
+	@Override
+	public int getCategoriesCount(long classNameId, long classPK) {
+		return assetCategoryFinder.filterCountByC_C(classNameId, classPK);
 	}
 
 	@Override
@@ -191,15 +222,60 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			assetCategoryLocalService.getChildCategories(parentCategoryId));
 	}
 
+	/**
+	 * eturns a range of child assetCategories.
+	 *
+	 * @param parentCategoryId the parent category id
+	 * @param start the lower bound of the range of results
+	 * @param end the upper bound of the range of results (not inclusive)
+	 * @param obc the comparator
+	 * @return the matching categories
+	 * @throws PortalException
+	 */
 	@Override
 	public List<AssetCategory> getChildCategories(
 			long parentCategoryId, int start, int end,
 			OrderByComparator<AssetCategory> obc)
 		throws PortalException {
 
+		if (parentCategoryId != 0) {
+			AssetCategory parent = assetCategoryLocalService.fetchAssetCategory(
+				parentCategoryId);
+
+			if (parent != null) {
+				return assetCategoryPersistence.filterFindByG_P(
+					parent.getGroupId(), parentCategoryId, start, end, obc);
+			}
+		}
+
 		return filterCategories(
 			assetCategoryLocalService.getChildCategories(
 				parentCategoryId, start, end, obc));
+	}
+
+	/**
+	 * Returns the number of child categories
+	 *
+	 * @param parentCategoryId the parent category id
+	 * @return the number of child categories
+	 * @throws PortalException
+	 */
+	@Override
+	public int getChildCategoriesCount(long parentCategoryId)
+		throws PortalException {
+
+		if (parentCategoryId != 0) {
+			AssetCategory parent = assetCategoryLocalService.fetchAssetCategory(
+				parentCategoryId);
+
+			if (parent != null) {
+				return assetCategoryPersistence.filterCountByG_P(
+					parent.getGroupId(), parentCategoryId);
+			}
+		}
+
+		return assetCategoryPersistence.countByParentCategoryId(
+			parentCategoryId);
 	}
 
 	@Override

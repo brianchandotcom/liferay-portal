@@ -75,7 +75,7 @@ public class IconDeleteTag extends IconTag {
 
 		if (Validator.isNull(getMessage())) {
 			if (_trash) {
-				setMessage("move-to-the-recycle-bin");
+				setMessage("move-to-recycle-bin");
 			}
 			else {
 				setMessage("delete");

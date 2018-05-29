@@ -72,7 +72,7 @@ public class DeleteFolderPortletConfigurationIcon
 		if (isTrashEnabled(
 				themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
-			key = "move-to-the-recycle-bin";
+			key = "move-to-recycle-bin";
 		}
 
 		return LanguageUtil.get(

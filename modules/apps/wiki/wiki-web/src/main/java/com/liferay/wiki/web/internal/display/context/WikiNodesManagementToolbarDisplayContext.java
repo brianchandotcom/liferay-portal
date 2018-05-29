@@ -79,7 +79,7 @@ public class WikiNodesManagementToolbarDisplayContext {
 								dropdownItem.setIcon("trash");
 								dropdownItem.setLabel(
 									LanguageUtil.get(
-										_request, "move-to-the-recycle-bin"));
+										_request, "move-to-recycle-bin"));
 							}
 							else {
 								dropdownItem.setIcon("times");

@@ -110,7 +110,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 
 				rowColumns.push(event.name);
 				rowColumns.push(uploader.formatStorage(event.size));
-				rowColumns.push('<a href="' + deleteURL + '"><%= trashHelper.isTrashEnabled(scopeGroupId) ? UnicodeLanguageUtil.get(resourceBundle, "move-to-the-recycle-bin") : UnicodeFormatter.toString(removeAttachmentIcon) %></a>');
+				rowColumns.push('<a href="' + deleteURL + '"><%= trashHelper.isTrashEnabled(scopeGroupId) ? UnicodeLanguageUtil.get(resourceBundle, "move-to-recycle-bin") : UnicodeFormatter.toString(removeAttachmentIcon) %></a>');
 
 				searchContainer.addRow(rowColumns, event.id);
 

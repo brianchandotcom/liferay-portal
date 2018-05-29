@@ -60,7 +60,7 @@ public class DeleteCategoryPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		if (isTrashEnabled(themeDisplay.getScopeGroupId())) {
-			key = "move-to-the-recycle-bin";
+			key = "move-to-recycle-bin";
 		}
 
 		return LanguageUtil.get(

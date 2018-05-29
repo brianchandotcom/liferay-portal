@@ -66,7 +66,7 @@ public class DeleteFileEntryPortletConfigurationIcon
 					themeDisplay.getScopeGroupId(),
 					fileEntry.getRepositoryId())) {
 
-				key = "move-to-the-recycle-bin";
+				key = "move-to-recycle-bin";
 			}
 
 			return LanguageUtil.get(

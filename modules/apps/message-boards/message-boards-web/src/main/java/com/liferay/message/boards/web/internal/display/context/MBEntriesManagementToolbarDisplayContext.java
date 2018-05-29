@@ -94,7 +94,7 @@ public class MBEntriesManagementToolbarDisplayContext {
 							String label = "delete";
 
 							if (trashEnabled) {
-								label = "move-to-the-recycle-bin";
+								label = "move-to-recycle-bin";
 							}
 
 							dropdownItem.setLabel(

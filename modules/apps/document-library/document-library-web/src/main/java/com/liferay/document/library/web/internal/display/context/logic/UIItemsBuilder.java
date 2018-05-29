@@ -634,7 +634,7 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems,
 			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN,
-			LanguageUtil.get(_resourceBundle, "move-to-the-recycle-bin"),
+			LanguageUtil.get(_resourceBundle, "move-to-recycle-bin"),
 			getSubmitFormJavaScript(
 				Constants.MOVE_TO_TRASH, portletURL.toString()));
 	}

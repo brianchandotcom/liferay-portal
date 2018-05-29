@@ -16,19 +16,14 @@ package com.liferay.category.apio.internal.architect.router;
 
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.service.AssetCategoryService;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.asset.kernel.service.AssetEntryService;
-import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.category.apio.internal.architect.form.NestedCategoryForm;
 import com.liferay.category.apio.internal.architect.router.base.BaseCategoryNestedCollectionRouter;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,7 +45,7 @@ public class BlogPostingCategoryNestedCollectionRouter extends
 
 	@Override
 	public NestedCollectionRoutes<AssetCategory, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<AssetCategory, Long, Long> builder) {
+		Builder<AssetCategory, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::getPageItems
@@ -62,57 +57,9 @@ public class BlogPostingCategoryNestedCollectionRouter extends
 	}
 
 	@Override
-	protected AssetCategoryService getAssetCategoryService() {
-		return _assetCategoryService;
-	}
-
-	@Override
-	protected AssetEntryLocalService getAssetEntryLocalService() {
-		return _assetEntryLocalService;
-	}
-
-	@Override
-	protected AssetEntryService getAssetEntryService() {
-		return _assetEntryService;
-	}
-
-	@Override
-	protected AssetVocabularyService getAssetVocabularyService() {
-		return _assetVocabularyService;
-	}
-
-	@Override
 	protected String getClassName() {
 		return BlogsEntry.class.getName();
 	}
-
-	@Override
-	protected long getClassNameId() {
-		return _classNameLocalService.getClassNameId(getClassName());
-	}
-
-	@Override
-	protected GroupLocalService getGroupLocalService() {
-		return _groupLocalService;
-	}
-
-	@Reference
-	private AssetCategoryService _assetCategoryService;
-
-	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
-	private AssetEntryService _assetEntryService;
-
-	@Reference
-	private AssetVocabularyService _assetVocabularyService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.asset.kernel.model.AssetCategory)"

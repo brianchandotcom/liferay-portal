@@ -85,7 +85,8 @@ public class CategoryNestedCollectionResource
 			this::_updateAssetCategory, _hasPermission::forUpdating,
 			CategoryForm::buildForm
 		).addRemover(
-			idempotent(this::_removeAssetCategory), _hasPermission::forDeleting
+			idempotent(_assetCategoryService::deleteCategory),
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -163,12 +164,6 @@ public class CategoryNestedCollectionResource
 			assetVocabulary.getGroupId(), assetVocabularyId);
 
 		return new PageItems<>(categories, count);
-	}
-
-	private void _removeAssetCategory(long assetCategoryId)
-		throws PortalException {
-
-		_assetCategoryService.deleteCategory(assetCategoryId);
 	}
 
 	private AssetCategory _updateAssetCategory(

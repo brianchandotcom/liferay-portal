@@ -47,14 +47,10 @@ public class TaxonomyForm {
 		).constructor(
 			TaxonomyForm::new
 		).addOptionalString(
-			"description", TaxonomyForm::setDescription
+			"description", TaxonomyForm::_setDescription
 		).addRequiredString(
-			"name", TaxonomyForm::setName
+			"name", TaxonomyForm::_setName
 		).build();
-	}
-
-	public String getDescription() {
-		return _description;
 	}
 
 	/**
@@ -67,10 +63,6 @@ public class TaxonomyForm {
 		return Collections.singletonMap(locale, _description);
 	}
 
-	public String getName() {
-		return _name;
-	}
-
 	/**
 	 * Returns the taxonomy's description map.
 	 *
@@ -81,11 +73,11 @@ public class TaxonomyForm {
 		return Collections.singletonMap(locale, _name);
 	}
 
-	public void setDescription(String description) {
+	private void _setDescription(String description) {
 		_description = description;
 	}
 
-	public void setName(String name) {
+	private void _setName(String name) {
 		_name = name;
 	}
 

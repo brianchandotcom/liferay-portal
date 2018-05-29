@@ -18,7 +18,6 @@ import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
-import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -30,6 +29,7 @@ import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.category.apio.internal.architect.form.NestedCategoryForm;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Base class for {@code AssetCategory} {@code NestedCollectionRouter}.
@@ -48,15 +50,6 @@ public abstract class BaseCategoryNestedCollectionRouter
 	<T extends Identifier<Long>> implements
 		NestedCollectionRouter
 			<AssetCategory, Long, CategoryIdentifier, Long, T> {
-
-	@Override
-	public NestedCollectionRoutes<AssetCategory, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<AssetCategory, Long, Long> builder) {
-
-		return builder.addGetter(
-			this::getPageItems
-		).build();
-	}
 
 	/**
 	 * Creates a new {@link AssetCategory} and links it to {@link AssetEntry}
@@ -70,31 +63,28 @@ public abstract class BaseCategoryNestedCollectionRouter
 			long classPK, NestedCategoryForm nestedCategoryForm)
 		throws PortalException {
 
-		AssetVocabulary assetVocabulary =
-			getAssetVocabularyService().getVocabulary(
-				nestedCategoryForm.getVocabularyId());
-		long parentCategoryId = nestedCategoryForm.getParentCategoryId();
+		AssetVocabulary assetVocabulary = assetVocabularyService.getVocabulary(
+			nestedCategoryForm.getVocabularyId());
 
-		Group group =
-			getGroupLocalService().getGroup(assetVocabulary.getGroupId());
+		Group group = groupLocalService.getGroup(assetVocabulary.getGroupId());
 
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
-		ServiceContext serviceContext = new ServiceContext();
+		long parentCategoryId = nestedCategoryForm.getParentCategoryId();
 
-		AssetCategory assetCategory = getAssetCategoryService().addCategory(
+		AssetCategory assetCategory = assetCategoryService.addCategory(
 			group.getGroupId(), parentCategoryId,
 			nestedCategoryForm.getTitles(locale),
 			nestedCategoryForm.getDescriptions(locale),
-			assetVocabulary.getVocabularyId(), null, serviceContext);
+			assetVocabulary.getVocabularyId(), null, new ServiceContext());
 
-		AssetEntry assetEntry = getAssetEntryLocalService().getEntry(
+		AssetEntry assetEntry = assetEntryLocalService.getEntry(
 			getClassName(), classPK);
 
 		long[] categoryIds = ArrayUtil.append(
 			assetEntry.getCategoryIds(), assetCategory.getCategoryId());
 
-		getAssetEntryService().updateEntry(
+		assetEntryService.updateEntry(
 			assetEntry.getGroupId(), assetEntry.getCreateDate(), null,
 			assetEntry.getClassName(), assetEntry.getClassPK(),
 			assetEntry.getClassUuid(), assetEntry.getClassTypeId(), categoryIds,
@@ -110,34 +100,39 @@ public abstract class BaseCategoryNestedCollectionRouter
 		return assetCategory;
 	}
 
-	protected abstract AssetCategoryService getAssetCategoryService();
-
-	protected abstract AssetEntryLocalService getAssetEntryLocalService();
-
-	protected abstract AssetEntryService getAssetEntryService();
-
-	protected abstract AssetVocabularyService getAssetVocabularyService();
-
 	protected abstract String getClassName();
 
-	protected abstract long getClassNameId();
-
-	protected abstract GroupLocalService getGroupLocalService();
-
 	protected PageItems<AssetCategory> getPageItems(
-			Pagination pagination, long classPK)
-		throws PortalException {
+		Pagination pagination, long classPK) {
 
-		long classNameId = getClassNameId();
+		long classNameId = classNameLocalService.getClassNameId(getClassName());
 
 		List<AssetCategory> assetCategories =
-			getAssetCategoryService().getCategories(
+			assetCategoryService.getCategories(
 				classNameId, classPK, pagination.getStartPosition(),
 				pagination.getEndPosition());
-		int count = getAssetCategoryService().getCategoriesCount(
+		int count = assetCategoryService.getCategoriesCount(
 			classNameId, classPK);
 
 		return new PageItems<>(assetCategories, count);
 	}
+
+	@Reference
+	protected AssetCategoryService assetCategoryService;
+
+	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
+
+	@Reference
+	protected AssetEntryService assetEntryService;
+
+	@Reference
+	protected AssetVocabularyService assetVocabularyService;
+
+	@Reference
+	protected ClassNameLocalService classNameLocalService;
+
+	@Reference
+	protected GroupLocalService groupLocalService;
 
 }

@@ -78,13 +78,12 @@ public class TaxonomyNestedCollectionResource
 		ItemRoutes.Builder<AssetVocabulary, Long> builder) {
 
 		return builder.addGetter(
-			assetVocabularyId -> _assetVocabularyService.getVocabulary(
-				assetVocabularyId)
+			_assetVocabularyService::getVocabulary
 		).addUpdater(
 			this::_updateAssetVocabulary, _hasPermission::forUpdating,
 			TaxonomyForm::buildForm
 		).addRemover(
-			idempotent(this::_deleteAssetVocabulary),
+			idempotent(_assetVocabularyService::deleteVocabulary),
 			_hasPermission::forDeleting
 		).build();
 	}
@@ -134,12 +133,6 @@ public class TaxonomyNestedCollectionResource
 			taxonomyForm.getDescriptions(locale), null, serviceContext);
 	}
 
-	private void _deleteAssetVocabulary(long assetVocabularyId)
-		throws PortalException {
-
-		_assetVocabularyService.deleteVocabulary(assetVocabularyId);
-	}
-
 	private PageItems<AssetVocabulary> _getPageItems(
 		Pagination pagination, long groupId) {
 
@@ -163,11 +156,9 @@ public class TaxonomyNestedCollectionResource
 
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		return _assetVocabularyService.updateVocabulary(
 			vocabularyId, null, taxonomyForm.getTitles(locale),
-			taxonomyForm.getDescriptions(locale), null, serviceContext);
+			taxonomyForm.getDescriptions(locale), null, new ServiceContext());
 	}
 
 	@Reference

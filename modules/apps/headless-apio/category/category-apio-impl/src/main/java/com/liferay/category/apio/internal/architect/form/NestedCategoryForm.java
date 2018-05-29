@@ -15,6 +15,7 @@
 package com.liferay.category.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.apio.architect.form.Form.Builder;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -39,7 +40,7 @@ public class NestedCategoryForm {
 	 * @review
 	 */
 	public static Form<NestedCategoryForm> buildForm(
-		Form.Builder<NestedCategoryForm> builder) {
+		Builder<NestedCategoryForm> builder) {
 
 		return builder.title(
 			__ -> "Category form"

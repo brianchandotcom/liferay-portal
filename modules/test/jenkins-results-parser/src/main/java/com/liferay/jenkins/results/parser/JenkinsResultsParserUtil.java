@@ -75,7 +75,6 @@ import javax.net.ssl.SSLContext;
 import org.apache.commons.codec.binary.Base64;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -1568,16 +1567,6 @@ public class JenkinsResultsParserUtil {
 						httpURLConnection.setRequestMethod("POST");
 
 						httpURLConnection.setDoOutput(true);
-
-						try {
-							new JSONObject(postContent);
-
-							httpURLConnection.setRequestProperty(
-								"Content-Type",
-								"application/json; charset=UTF-8");
-						}
-						catch (JSONException jsone) {
-						}
 
 						try (OutputStream outputStream =
 								httpURLConnection.getOutputStream()) {

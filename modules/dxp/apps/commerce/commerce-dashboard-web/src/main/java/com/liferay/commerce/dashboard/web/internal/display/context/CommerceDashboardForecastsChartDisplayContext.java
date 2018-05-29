@@ -96,52 +96,19 @@ public class CommerceDashboardForecastsChartDisplayContext
 	public PredictiveChartConfig getPredictiveChartConfig()
 		throws PortalException {
 
-		List<CommerceForecastEntry> commerceForecastEntries =
-			_getCommerceForecastEntries();
+		List<ForecastChartEntry> forecastChartEntries =
+			_getForecastChartEntries();
 
-		if (commerceForecastEntries.isEmpty()) {
+		if (forecastChartEntries.isEmpty()) {
 			return null;
 		}
 
-		Calendar startCalendar = CalendarFactoryUtil.getCalendar(
-			getStartDateYear(), getStartDateMonth(), getStartDateDay(), 0, 0, 0,
-			0, commerceDashboardRequestHelper.getTimeZone());
-		Calendar endCalendar = CalendarFactoryUtil.getCalendar(
-			getEndDateYear(), getEndDateMonth(), getEndDateDay(), 23, 59, 59,
-			990, commerceDashboardRequestHelper.getTimeZone());
-
-		if (startCalendar.after(endCalendar)) {
-			return null;
-		}
-
-		Date startDate = CalendarUtil.getGTDate(startCalendar);
-		Date endDate = CalendarUtil.getLTDate(endCalendar);
-
-		long startTime = startDate.getTime();
-		long endTime = endDate.getTime();
-
-		Map<CommerceForecastEntry, List<CommerceForecastValue>>
-			commerceForecastEntryValuesMap = new HashMap<>();
 		Date predictionDate = null;
 		Set<Date> timeseriesDates = new TreeSet<>();
 
-		for (CommerceForecastEntry commerceForecastEntry :
-				commerceForecastEntries) {
-
-			List<CommerceForecastValue> commerceForecastValues =
-				_commerceForecastValueLocalService.getCommerceForecastValues(
-					commerceForecastEntry.getCommerceForecastEntryId(),
-					startTime, endTime);
-
-			if (commerceForecastValues.isEmpty()) {
-				continue;
-			}
-
-			commerceForecastEntryValuesMap.put(
-				commerceForecastEntry, commerceForecastValues);
-
+		for (ForecastChartEntry forecastChartEntry : forecastChartEntries) {
 			for (CommerceForecastValue commerceForecastValue :
-					commerceForecastValues) {
+					forecastChartEntry.commerceForecastValues) {
 
 				timeseriesDates.add(_getTimeseriesDate(commerceForecastValue));
 
@@ -164,43 +131,21 @@ public class CommerceDashboardForecastsChartDisplayContext
 		List<Date> timeseriesDatesList = ListUtil.fromCollection(
 			timeseriesDates);
 
-		Map<String, String> colors = new HashMap<>();
-
-		for (Map.Entry<CommerceForecastEntry, List<CommerceForecastValue>>
-				entry : commerceForecastEntryValuesMap.entrySet()) {
-
-			String id = _getMixedDataColumnId(entry.getKey());
-
-			MixedDataColumn mixedDataColumn = new MixedDataColumn(
-				id,
-				_getMixedDataColumnValues(
-					entry.getValue(), timeseriesDatesList));
-
+		for (ForecastChartEntry forecastChartEntry : forecastChartEntries) {
 			commerceDashboardPredictiveChartConfig.addDataColumn(
-				mixedDataColumn);
-
-			colors.put(id, getChartColor(colors.size()));
+				forecastChartEntry.getMixedDataColumn(timeseriesDatesList));
 		}
 
 		commerceDashboardPredictiveChartConfig.setAxisXTickFormat(
 			_getAxisXTickFormat());
-
-		if (!colors.isEmpty()) {
-			commerceDashboardPredictiveChartConfig.setColors(colors);
-		}
-
+		commerceDashboardPredictiveChartConfig.setColors(
+			_getColors(forecastChartEntries));
 		commerceDashboardPredictiveChartConfig.setLegend(
 			Collections.singletonMap("show", false));
 		commerceDashboardPredictiveChartConfig.setPredictionDate(
 			_dateFormat.format(predictionDate));
-
-		List<String> timeseries = new ArrayList<>(timeseriesDates.size());
-
-		for (Date date : timeseriesDates) {
-			timeseries.add(_dateFormat.format(date));
-		}
-
-		commerceDashboardPredictiveChartConfig.setTimeseries(timeseries);
+		commerceDashboardPredictiveChartConfig.setTimeseries(
+			_getTimeseries(timeseriesDatesList));
 
 		return commerceDashboardPredictiveChartConfig;
 	}
@@ -279,8 +224,33 @@ public class CommerceDashboardForecastsChartDisplayContext
 		return sb.toString();
 	}
 
-	private List<CommerceForecastEntry> _getCommerceForecastEntries() {
+	private Map<String, String> _getColors(
+		List<ForecastChartEntry> forecastChartEntries) {
+
+		Map<String, String> colors = new HashMap<>();
+
+		for (ForecastChartEntry forecastChartEntry : forecastChartEntries) {
+			colors.put(forecastChartEntry.id, forecastChartEntry.color);
+		}
+
+		return colors;
+	}
+
+	private List<ForecastChartEntry> _getForecastChartEntries()
+		throws PortalException {
+
 		List<CommerceForecastEntry> commerceForecastEntries = null;
+
+		Calendar startCalendar = CalendarFactoryUtil.getCalendar(
+			getStartDateYear(), getStartDateMonth(), getStartDateDay(), 0, 0, 0,
+			0, commerceDashboardRequestHelper.getTimeZone());
+		Calendar endCalendar = CalendarFactoryUtil.getCalendar(
+			getEndDateYear(), getEndDateMonth(), getEndDateDay(), 23, 59, 59,
+			990, commerceDashboardRequestHelper.getTimeZone());
+
+		if (startCalendar.after(endCalendar)) {
+			return Collections.emptyList();
+		}
 
 		long companyId = commerceDashboardRequestHelper.getCompanyId();
 		int period = getPeriod();
@@ -297,19 +267,17 @@ public class CommerceDashboardForecastsChartDisplayContext
 			commerceForecastEntries = new ArrayList<>(cpInstanceIds.size());
 
 			for (Map.Entry<Long, Boolean> entry : cpInstanceIds.entrySet()) {
-				if (!entry.getValue()) {
-					continue;
+				CommerceForecastEntry commerceForecastEntry = null;
+
+				if (entry.getValue()) {
+					commerceForecastEntry =
+						_commerceForecastEntryLocalService.
+							fetchCommerceForecastEntry(
+								companyId, period, target, customerId,
+								entry.getKey());
 				}
 
-				CommerceForecastEntry commerceForecastEntry =
-					_commerceForecastEntryLocalService.
-						fetchCommerceForecastEntry(
-							companyId, period, target, customerId,
-							entry.getKey());
-
-				if (commerceForecastEntry != null) {
-					commerceForecastEntries.add(commerceForecastEntry);
-				}
+				commerceForecastEntries.add(commerceForecastEntry);
 			}
 		}
 		else {
@@ -317,82 +285,54 @@ public class CommerceDashboardForecastsChartDisplayContext
 				_commerceForecastEntryLocalService.fetchCommerceForecastEntry(
 					companyId, period, target, customerId, 0);
 
-			if (commerceForecastEntry != null) {
-				commerceForecastEntries = Collections.singletonList(
-					commerceForecastEntry);
-			}
-			else {
-				commerceForecastEntries = Collections.emptyList();
-			}
+			commerceForecastEntries = Collections.singletonList(
+				commerceForecastEntry);
 		}
 
-		return commerceForecastEntries;
+		List<ForecastChartEntry> forecastChartEntries = new ArrayList<>(
+			commerceForecastEntries.size());
+
+		Date startDate = CalendarUtil.getGTDate(startCalendar);
+		Date endDate = CalendarUtil.getLTDate(endCalendar);
+
+		long startTime = startDate.getTime();
+		long endTime = endDate.getTime();
+
+		for (int i = 0; i < commerceForecastEntries.size(); i++) {
+			CommerceForecastEntry commerceForecastEntry =
+				commerceForecastEntries.get(i);
+
+			if (commerceForecastEntry == null) {
+				continue;
+			}
+
+			List<CommerceForecastValue> commerceForecastValues =
+				_commerceForecastValueLocalService.getCommerceForecastValues(
+					commerceForecastEntry.getCommerceForecastEntryId(),
+					startTime, endTime);
+
+			if (commerceForecastValues.isEmpty()) {
+				continue;
+			}
+
+			String color = getChartColor(i);
+
+			forecastChartEntries.add(
+				new ForecastChartEntry(
+					commerceForecastEntry, commerceForecastValues, color));
+		}
+
+		return forecastChartEntries;
 	}
 
-	private String _getMixedDataColumnId(
-			CommerceForecastEntry commerceForecastEntry)
-		throws PortalException {
-
-		String id = String.valueOf(commerceForecastEntry.getCPInstanceId());
-
-		if (Validator.isNull(id)) {
-			long customerId = commerceForecastEntry.getCustomerId();
-
-			if (customerId > 0) {
-				try {
-					Group group = _groupService.getGroup(customerId);
-
-					id = group.getDescriptiveName(
-						commerceDashboardRequestHelper.getLocale());
-				}
-				catch (NoSuchGroupException nsge) {
-					id = String.valueOf(customerId);
-				}
-			}
-		}
-
-		if (Validator.isNull(id)) {
-			long companyId = commerceForecastEntry.getCompanyId();
-
-			try {
-				Company company = _companyService.getCompanyById(companyId);
-
-				id = company.getName();
-			}
-			catch (NoSuchCompanyException nsce) {
-				id = String.valueOf(companyId);
-			}
-		}
-
-		return id;
-	}
-
-	private Collection<Object> _getMixedDataColumnValues(
-		List<CommerceForecastValue> commerceForecastValues,
-		List<Date> timeseriesDates) {
-
-		Map<Date, Object> map = new TreeMap<>();
+	private List<String> _getTimeseries(List<Date> timeseriesDates) {
+		List<String> timeseries = new ArrayList<>(timeseriesDates.size());
 
 		for (Date date : timeseriesDates) {
-			map.put(date, BigDecimal.ZERO);
+			timeseries.add(_dateFormat.format(date));
 		}
 
-		for (CommerceForecastValue commerceForecastValue :
-				commerceForecastValues) {
-
-			Object value = commerceForecastValue.getValue();
-
-			if (commerceForecastValue.isForecast()) {
-				value = Arrays.asList(
-					commerceForecastValue.getLowerValue(),
-					commerceForecastValue.getValue(),
-					commerceForecastValue.getUpperValue());
-			}
-
-			map.put(_getTimeseriesDate(commerceForecastValue), value);
-		}
-
-		return map.values();
+		return timeseries;
 	}
 
 	private Date _getTimeseriesDate(
@@ -424,5 +364,97 @@ public class CommerceDashboardForecastsChartDisplayContext
 		_commerceForecastValueLocalService;
 	private final CompanyService _companyService;
 	private final GroupService _groupService;
+
+	private class ForecastChartEntry {
+
+		public ForecastChartEntry(
+				CommerceForecastEntry commerceForecastEntry,
+				List<CommerceForecastValue> commerceForecastValues,
+				String color)
+			throws PortalException {
+
+			this.commerceForecastValues = commerceForecastValues;
+			this.color = color;
+
+			id = _getId(commerceForecastEntry);
+		}
+
+		public MixedDataColumn getMixedDataColumn(List<Date> timeseriesDates) {
+			return new MixedDataColumn(
+				id,
+				_getMixedDataColumnValues(
+					commerceForecastValues, timeseriesDates));
+		}
+
+		public final String color;
+		public final List<CommerceForecastValue> commerceForecastValues;
+		public final String id;
+
+		private String _getId(CommerceForecastEntry commerceForecastEntry)
+			throws PortalException {
+
+			String id = String.valueOf(commerceForecastEntry.getCPInstanceId());
+
+			if (Validator.isNull(id)) {
+				long customerId = commerceForecastEntry.getCustomerId();
+
+				if (customerId > 0) {
+					try {
+						Group group = _groupService.getGroup(customerId);
+
+						id = group.getDescriptiveName(
+							commerceDashboardRequestHelper.getLocale());
+					}
+					catch (NoSuchGroupException nsge) {
+						id = String.valueOf(customerId);
+					}
+				}
+			}
+
+			if (Validator.isNull(id)) {
+				long companyId = commerceForecastEntry.getCompanyId();
+
+				try {
+					Company company = _companyService.getCompanyById(companyId);
+
+					id = company.getName();
+				}
+				catch (NoSuchCompanyException nsce) {
+					id = String.valueOf(companyId);
+				}
+			}
+
+			return id;
+		}
+
+		private Collection<Object> _getMixedDataColumnValues(
+			List<CommerceForecastValue> commerceForecastValues,
+			List<Date> timeseriesDates) {
+
+			Map<Date, Object> map = new TreeMap<>();
+
+			for (Date date : timeseriesDates) {
+				map.put(date, BigDecimal.ZERO);
+			}
+
+			for (CommerceForecastValue commerceForecastValue :
+					commerceForecastValues) {
+
+				Object value = commerceForecastValue.getValue();
+
+				if (commerceForecastValue.isForecast()) {
+					value = Arrays.asList(
+						commerceForecastValue.getLowerValue(),
+						commerceForecastValue.getValue(),
+						commerceForecastValue.getUpperValue());
+				}
+
+				map.put(_getTimeseriesDate(commerceForecastValue), value);
+			}
+
+			return map.values();
+		}
+
+	}
 
 }

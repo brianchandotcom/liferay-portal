@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>CUSTOM_EXPORT_BUTTON</td>
-	<td>//a[contains(@data-original-title,'Custom Export')]</td>
+	<td>//a[contains(@aria-label,'Custom Export')]</td>
 	<td></td>
 </tr>
 <tr>

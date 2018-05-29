@@ -14,17 +14,17 @@
 
 package com.liferay.taxonomy.apio.internal.permission;
 
+import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-
-import java.util.function.BiFunction;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,54 +37,32 @@ import org.osgi.service.component.annotations.Component;
 public class TaxonomyHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
-	public <S> BiFunction<Credentials, S, Boolean> forAddingIn(
+	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(WebSiteIdentifier.class)) {
-			return (credentials, groupId) -> Try.fromFallible(
-				() -> {
-					AssetCategoriesPermission.check(
-						(PermissionChecker)credentials.get(), (Long)groupId,
-						ActionKeys.ADD_VOCABULARY);
-
-					return true;
-				}
-			).orElse(
-				false
-			);
+			return (credentials, groupId) -> AssetCategoriesPermission.contains(
+				(PermissionChecker)credentials.get(), (long)groupId,
+				ActionKeys.ADD_VOCABULARY);
 		}
 
 		return (credentials, s) -> false;
 	}
 
 	@Override
-	public Boolean forDeleting(Credentials credentials, Long entryId) {
-		return Try.fromFallible(
-			() -> {
-				AssetVocabularyPermission.check(
-					(PermissionChecker)credentials.get(), entryId,
-					ActionKeys.DELETE);
+	public Boolean forDeleting(Credentials credentials, Long entryId)
+		throws PortalException {
 
-				return true;
-			}
-		).orElse(
-			false
-		);
+		return AssetVocabularyPermission.contains(
+			(PermissionChecker)credentials.get(), entryId, ActionKeys.DELETE);
 	}
 
 	@Override
-	public Boolean forUpdating(Credentials credentials, Long entryId) {
-		return Try.fromFallible(
-			() -> {
-				AssetVocabularyPermission.check(
-					(PermissionChecker)credentials.get(), entryId,
-					ActionKeys.UPDATE);
+	public Boolean forUpdating(Credentials credentials, Long entryId)
+		throws PortalException {
 
-				return true;
-			}
-		).orElse(
-			false
-		);
+		return AssetVocabularyPermission.contains(
+			(PermissionChecker)credentials.get(), entryId, ActionKeys.UPDATE);
 	}
 
 }

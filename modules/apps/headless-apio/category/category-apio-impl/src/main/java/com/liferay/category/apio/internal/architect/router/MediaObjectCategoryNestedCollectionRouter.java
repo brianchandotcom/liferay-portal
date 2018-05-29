@@ -25,7 +25,7 @@ import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.category.apio.internal.architect.form.AssetCategoryNestedForm;
 import com.liferay.category.apio.internal.architect.router.base.BaseCategoryNestedCollectionRouter;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -44,9 +44,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class MediaObjectCategoryNestedCollectionRouter extends
-	BaseCategoryNestedCollectionRouter<FileEntryIdentifier>
+	BaseCategoryNestedCollectionRouter<MediaObjectIdentifier>
 	implements NestedCollectionRouter
-		<AssetCategory, Long, CategoryIdentifier, Long, FileEntryIdentifier> {
+		<AssetCategory, Long, CategoryIdentifier, Long, MediaObjectIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<AssetCategory, Long, Long> collectionRoutes(
@@ -56,7 +56,7 @@ public class MediaObjectCategoryNestedCollectionRouter extends
 			this::getPageItems
 		).addCreator(
 			this::addAssetCategory,
-			_hasPermission.forAddingIn(FileEntryIdentifier.class)::apply,
+			_hasPermission.forAddingIn(MediaObjectIdentifier.class),
 			AssetCategoryNestedForm::buildForm
 		).build();
 	}

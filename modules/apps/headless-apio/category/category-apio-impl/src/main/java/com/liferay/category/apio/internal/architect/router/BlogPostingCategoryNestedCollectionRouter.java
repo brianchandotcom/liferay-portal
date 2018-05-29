@@ -56,7 +56,7 @@ public class BlogPostingCategoryNestedCollectionRouter extends
 			this::getPageItems
 		).addCreator(
 			this::addAssetCategory,
-			_hasPermission.forAddingIn(BlogPostingIdentifier.class)::apply,
+			_hasPermission.forAddingIn(BlogPostingIdentifier.class),
 			AssetCategoryNestedForm::buildForm
 		).build();
 	}

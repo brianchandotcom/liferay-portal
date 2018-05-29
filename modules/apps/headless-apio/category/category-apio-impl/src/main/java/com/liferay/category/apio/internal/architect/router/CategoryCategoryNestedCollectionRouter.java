@@ -55,15 +55,14 @@ public class CategoryCategoryNestedCollectionRouter implements
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			(id, form) -> _addAssetCategory(id, form),
-			//this::_addAssetCategory,
-			_hasPermission.forAddingIn(CategoryIdentifier.class)::apply,
+			this::_addAssetCategory,
+			_hasPermission.forAddingIn(CategoryIdentifier.class),
 			AssetCategoryForm::buildForm
 		).build();
 	}
 
 	private AssetCategory _addAssetCategory(
-			Long parentCategoryId, AssetCategoryForm assetCategoryCreatorForm)
+			long parentCategoryId, AssetCategoryForm assetCategoryCreatorForm)
 		throws PortalException {
 
 		AssetCategory parentCategory = _assetCategoryService.getCategory(
@@ -83,7 +82,7 @@ public class CategoryCategoryNestedCollectionRouter implements
 	}
 
 	private PageItems<AssetCategory> _getPageItems(
-			Pagination pagination, Long parentCategoryId)
+			Pagination pagination, long parentCategoryId)
 		throws PortalException {
 
 		List<AssetCategory> childCategories =

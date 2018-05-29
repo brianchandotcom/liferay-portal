@@ -65,7 +65,7 @@ public class CategoryNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addAssetCategory,
-			_hasPermission.forAddingIn(TaxonomyIdentifier.class)::apply,
+			_hasPermission.forAddingIn(TaxonomyIdentifier.class),
 			AssetCategoryForm::buildForm
 		).build();
 	}
@@ -123,7 +123,7 @@ public class CategoryNestedCollectionResource
 	}
 
 	private AssetCategory _addAssetCategory(
-			Long vocabularyId, AssetCategoryForm assetCategoryCreatorForm)
+			long vocabularyId, AssetCategoryForm assetCategoryCreatorForm)
 		throws PortalException {
 
 		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
@@ -142,14 +142,14 @@ public class CategoryNestedCollectionResource
 			null, serviceContext);
 	}
 
-	private AssetCategory _getAssetCategory(Long assetCategoryId)
+	private AssetCategory _getAssetCategory(long assetCategoryId)
 		throws PortalException {
 
 		return _assetCategoryService.getCategory(assetCategoryId);
 	}
 
 	private PageItems<AssetCategory> _getPageItems(
-			Pagination pagination, Long vocabularyId)
+			Pagination pagination, long vocabularyId)
 		throws PortalException {
 
 		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
@@ -166,14 +166,14 @@ public class CategoryNestedCollectionResource
 		return new PageItems<>(assetCategories, count);
 	}
 
-	private void _removeAssetCategory(Long assetCategoryId)
+	private void _removeAssetCategory(long assetCategoryId)
 		throws PortalException {
 
 		_assetCategoryService.deleteCategory(assetCategoryId);
 	}
 
 	private AssetCategory _updateAssetCategory(
-			Long categoryId, AssetCategoryForm assetCategoryCreatorForm)
+			long categoryId, AssetCategoryForm assetCategoryCreatorForm)
 		throws PortalException {
 
 		AssetCategory category = _assetCategoryService.getCategory(categoryId);

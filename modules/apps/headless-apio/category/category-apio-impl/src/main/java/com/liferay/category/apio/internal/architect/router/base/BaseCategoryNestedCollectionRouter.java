@@ -67,7 +67,7 @@ public abstract class BaseCategoryNestedCollectionRouter
 	 * @return the newly created {@link AssetCategory}
 	 */
 	protected AssetCategory addAssetCategory(
-			Long id, AssetCategoryNestedForm assetCategoryNestedForm)
+			long id, AssetCategoryNestedForm assetCategoryNestedForm)
 		throws PortalException {
 
 		AssetVocabulary vocabulary = getAssetVocabularyService().getVocabulary(
@@ -123,7 +123,7 @@ public abstract class BaseCategoryNestedCollectionRouter
 	protected abstract GroupLocalService getGroupLocalService();
 
 	protected PageItems<AssetCategory> getPageItems(
-			Pagination pagination, Long id)
+			Pagination pagination, long id)
 		throws PortalException {
 
 		long classNameId = getClassNameId();

@@ -63,7 +63,7 @@ public class TaxonomyNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addAssetVocabulary,
-			_hasPermission.forAddingIn(WebSiteIdentifier.class)::apply,
+			_hasPermission.forAddingIn(WebSiteIdentifier.class),
 			TaxonomyForm::buildForm
 		).build();
 	}
@@ -120,7 +120,7 @@ public class TaxonomyNestedCollectionResource
 	}
 
 	private AssetVocabulary _addAssetVocabulary(
-			Long groupId, TaxonomyForm creatorForm)
+			long groupId, TaxonomyForm creatorForm)
 		throws PortalException {
 
 		Group group = _groupLocalService.getGroup(groupId);
@@ -134,14 +134,14 @@ public class TaxonomyNestedCollectionResource
 			creatorForm.getDescriptionMap(locale), null, serviceContext);
 	}
 
-	private void _deleteAssetVocabulary(Long assetVocabularyId)
+	private void _deleteAssetVocabulary(long assetVocabularyId)
 		throws PortalException {
 
 		_assetVocabularyService.deleteVocabulary(assetVocabularyId);
 	}
 
 	private PageItems<AssetVocabulary> _getPageItems(
-		Pagination pagination, Long groupId) {
+		Pagination pagination, long groupId) {
 
 		List<AssetVocabulary> assetVocabularies =
 			_assetVocabularyService.getGroupVocabularies(
@@ -153,7 +153,7 @@ public class TaxonomyNestedCollectionResource
 	}
 
 	private AssetVocabulary _updateAssetVocabulary(
-			Long vocabularyId, TaxonomyForm updaterForm)
+			long vocabularyId, TaxonomyForm updaterForm)
 		throws PortalException {
 
 		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(

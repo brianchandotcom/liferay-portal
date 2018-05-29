@@ -14,8 +14,8 @@
 
 package com.liferay.category.apio.internal.permission;
 
+import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -24,15 +24,14 @@ import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
-import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
+import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.taxonomy.apio.architect.identifier.TaxonomyIdentifier;
-
-import java.util.function.BiFunction;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,106 +46,64 @@ import org.osgi.service.component.annotations.Reference;
 public class CategoryHasPermissionImpl implements HasPermission<Long> {
 
 	@Override
-	public <S> BiFunction<Credentials, S, Boolean> forAddingIn(
+	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(
 		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(TaxonomyIdentifier.class)) {
-			return (credentials, vocabularyId) -> Try.fromFallible(
-				() -> {
-					AssetVocabulary vocabulary =
-						_assetVocabularyService.getVocabulary(
-							(Long)vocabularyId);
+			return (credentials, vocabularyId) -> {
+				AssetVocabulary vocabulary =
+					_assetVocabularyService.getVocabulary((Long)vocabularyId);
 
-					AssetCategoryPermission.check(
-						(PermissionChecker)credentials.get(),
-						vocabulary.getGroupId(),
-						AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-						ActionKeys.ADD_CATEGORY);
-
-					return true;
-				}
-			).orElse(
-				false
-			);
+				return AssetCategoryPermission.contains(
+					(PermissionChecker)credentials.get(),
+					vocabulary.getGroupId(),
+					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+					ActionKeys.ADD_CATEGORY);
+			};
 		}
 
 		if (identifierClass.equals(CategoryIdentifier.class)) {
-			return (credentials, parentCategoryId) -> Try.fromFallible(
-				() -> {
-					AssetCategory category = _assetCategoryService.getCategory(
-						(Long)parentCategoryId);
+			return (credentials, parentCategoryId) -> {
+				AssetCategory category = _assetCategoryService.getCategory(
+					(Long)parentCategoryId);
 
-					AssetCategoryPermission.check(
-						(PermissionChecker)credentials.get(),
-						category.getGroupId(), (Long)parentCategoryId,
-						ActionKeys.ADD_CATEGORY);
-
-					return true;
-				}
-			).orElse(
-				false
-			);
+				return AssetCategoryPermission.contains(
+					(PermissionChecker)credentials.get(), category.getGroupId(),
+					(Long)parentCategoryId, ActionKeys.ADD_CATEGORY);
+			};
 		}
 
 		if (identifierClass.equals(BlogPostingIdentifier.class)) {
-			return (credentials, blogsEntryId) -> Try.fromFallible(
-				() -> {
-					_blogsEntryModelResourcePermission.check(
-						(PermissionChecker)credentials.get(),
-						(Long)blogsEntryId, ActionKeys.UPDATE);
-
-					return true;
-				}
-			).orElse(
-				false
-			);
+			return (credentials, blogsEntryId) ->
+				_blogsEntryModelResourcePermission.contains(
+					(PermissionChecker)credentials.get(), (Long)blogsEntryId,
+					ActionKeys.UPDATE);
 		}
 
-		if (identifierClass.equals(FileEntryIdentifier.class)) {
-			return (credentials, fileEntryId) -> Try.fromFallible(
-				() -> {
-					_fileEntryModelResourcePermission.check(
-						(PermissionChecker)credentials.get(), (Long)fileEntryId,
-						ActionKeys.UPDATE);
-
-					return true;
-				}
-			).orElse(
-				false
-			);
+		if (identifierClass.equals(MediaObjectIdentifier.class)) {
+			return (credentials, fileEntryId) ->
+				_fileEntryModelResourcePermission.contains(
+					(PermissionChecker)credentials.get(), (Long)fileEntryId,
+					ActionKeys.UPDATE);
 		}
 
 		return (credentials, s) -> false;
 	}
 
 	@Override
-	public Boolean forDeleting(Credentials credentials, Long entryId) {
-		return Try.fromFallible(
-			() -> {
-				AssetCategoryPermission.check(
-					(PermissionChecker)credentials.get(), entryId,
-					ActionKeys.DELETE);
+	public Boolean forDeleting(Credentials credentials, Long entryId)
+		throws PortalException {
 
-				return true;
-			}
-		).orElse(
-			false
-		);
+		return AssetCategoryPermission.contains(
+			(PermissionChecker)credentials.get(), entryId, ActionKeys.DELETE);
 	}
 
 	@Override
-	public Boolean forUpdating(Credentials credentials, Long entryId) {
-		return Try.fromFallible(
-			() -> {
-				AssetCategoryPermission.check(
-					(PermissionChecker)credentials.get(), entryId,
-					ActionKeys.UPDATE);
+	public Boolean forUpdating(Credentials credentials, Long entryId)
+		throws PortalException {
 
-				return true;
-			}
-		).orElse(
-			false
-		);
+		return AssetCategoryPermission.contains(
+			(PermissionChecker)credentials.get(), entryId, ActionKeys.UPDATE);
 	}
 
 	@Reference

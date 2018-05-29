@@ -9,7 +9,7 @@ import './dialogs/SelectMappingTypeDialog.es';
 import './sidebar/SidebarAddedFragments.es';
 import './sidebar/SidebarAvailableFragments.es';
 import './sidebar/SidebarMapping.es';
-import './translation/TranslationStatus.es';
+import './toolbar/FragmentsEditorToolbar.es';
 import FragmentEntryLink from './FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 

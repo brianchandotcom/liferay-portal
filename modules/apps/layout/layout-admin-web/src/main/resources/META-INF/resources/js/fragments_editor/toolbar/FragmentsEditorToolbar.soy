@@ -1,0 +1,86 @@
+{namespace com.liferay.layout.admin.web.FragmentsEditorToolbar}
+
+/**
+ * FragmentsEditorToolbar
+ */
+{template .render}
+	{@param availableLanguages: ?}
+	{@param classPK: ?}
+	{@param defaultLanguageId: string}
+	{@param languageId: string}
+	{@param portletNamespace: string}
+	{@param redirectURL: string}
+	{@param spritemap: string}
+	{@param? dirty: bool}
+	{@param? handleToggleContextualSidebarButtonClick: any}
+	{@param? handleTranslationLanguageChange: any}
+	{@param? lastSaveDate: string}
+	{@param? publishLayoutPageTemplateEntryURL: string}
+	{@param? status: string}
+	{@param? translationStatus: [
+		languageValues: list<[languageId: string, values: list<string>]>,
+		translationKeys: list<string>
+	]}
+
+	<div class="management-bar management-bar-light navbar navbar-expand-md">
+		<div class="container">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					{call com.liferay.layout.admin.web.TranslationStatus.render}
+						{param availableLanguages: $availableLanguages /}
+						{param defaultLanguageId: $defaultLanguageId /}
+						{param events: ['languageChange': $handleTranslationLanguageChange] /}
+						{param languageId: $languageId /}
+						{param spritemap: $spritemap /}
+						{param translationStatus: $translationStatus /}
+					{/call}
+				</li>
+				<li class="nav-item">
+					<span class="navbar-text">
+						{if $dirty}
+							{msg desc=""}saving-changes{/msg}
+						{elseif $lastSaveDate}
+							{msg desc=""}changes-saved-at-{$lastSaveDate}{/msg}
+						{/if}
+					</span>
+				</li>
+			</ul>
+
+			<ul class="navbar-nav">
+				{if $status}
+					<li class="nav-item">
+						<span class="label label-secondary">{$status}</span>
+					</li>
+				{/if}
+				{if $publishLayoutPageTemplateEntryURL}
+					<li class="nav-item">
+						<form action="{$publishLayoutPageTemplateEntryURL}" method="POST">
+							<input
+								name="{$portletNamespace}classPK"
+								type="hidden"
+								value="{$classPK}"
+							/>
+
+							<input
+								name="{$portletNamespace}redirect"
+								type="hidden"
+								value="{$redirectURL}"
+							/>
+
+							<button class="btn btn-primary nav-btn" type="submit">
+								{msg desc=""}publish{/msg}
+							</button>
+						</form>
+					</li>
+				{/if}
+				<li class="nav-item">
+					<button class="btn btn-secondary nav-btn" data-onclick="{$handleToggleContextualSidebarButtonClick}">
+						<svg class="icon-monospaced lexicon-icon">
+							<use xlink:href="{$spritemap}#cards"></use>
+						</svg>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+{/template}

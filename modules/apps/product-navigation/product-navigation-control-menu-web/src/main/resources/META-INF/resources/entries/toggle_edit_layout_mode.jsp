@@ -34,7 +34,11 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
 <%
 String mode = ParamUtil.getString(request, "p_l_mode", Constants.VIEW);
 
-String redirect = HttpUtil.setParameter(themeDisplay.getURLCurrent(), "p_l_mode", Objects.equals(mode, Constants.EDIT) ? Constants.VIEW : Constants.EDIT);
+String redirect = themeDisplay.getURLCurrent();
+
+if (Objects.equals(mode, Constants.EDIT)) {
+	redirect = HttpUtil.setParameter(redirect, "p_l_mode", Constants.EDIT);
+}
 %>
 
 <label class="align-text-top toggle-switch">

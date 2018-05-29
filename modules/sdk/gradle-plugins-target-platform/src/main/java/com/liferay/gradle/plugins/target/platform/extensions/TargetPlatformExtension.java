@@ -110,14 +110,6 @@ public class TargetPlatformExtension {
 		return this;
 	}
 
-	public void setApplyToConfiguration(Iterable<?> applyToConfiguration) {
-		applyToConfiguration(applyToConfiguration);
-	}
-
-	public void setApplyToConfiguration(Object... applyToConfiguration) {
-		setApplyToConfiguration(Arrays.asList(applyToConfiguration));
-	}
-
 	public void setIgnoreResolveFailures(Object ignoreResolveFailures) {
 		_ignoreResolveFailures = ignoreResolveFailures;
 	}

@@ -5768,6 +5768,24 @@ go]]></replacevalue>
 				>
 					<include name="**/TEST-*.xml" />
 				</fileset>
+				<fileset
+					dir="${liferay.faces.bridge.impl.dir}/tck/bridge-tck-main-portlet"
+					erroronmissingdir="false"
+				>
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset
+					dir="${liferay.faces.bridge.impl.dir}/test/integration"
+					erroronmissingdir="false"
+				>
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset
+					dir="${liferay.faces.portal.dir}/test/integration"
+					erroronmissingdir="false"
+				>
+					<include name="**/TEST-*.xml" />
+				</fileset>
 				<report format="frames" todir="test-results/html" />
 			</junitreport>
 		</parallel>

@@ -61,20 +61,7 @@ public class UploadServletRequestImpl
 	extends HttpServletRequestWrapper implements UploadServletRequest {
 
 	public static File getTempDir() {
-		return getTempDir(null);
-	}
-
-	public static File getTempDir(String configuredTempDir) {
-		if (Validator.isNotNull(configuredTempDir)) {
-			return new File(configuredTempDir);
-		}
-
-		if (_tempDir == null) {
-			_tempDir = new File(
-				UploadServletRequestConfigurationHelperUtil.getTempDir());
-		}
-
-		return _tempDir;
+		return _getTempDir(null);
 	}
 
 	public static void setTempDir(File tempDir) {
@@ -106,7 +93,7 @@ public class UploadServletRequestImpl
 			if (fileSizeThreshold > 0) {
 				servletFileUpload = new ServletFileUpload(
 					new LiferayFileItemFactory(
-						getTempDir(location), fileSizeThreshold));
+						_getTempDir(location), fileSizeThreshold));
 			}
 			else {
 				servletFileUpload = new ServletFileUpload(
@@ -645,6 +632,19 @@ public class UploadServletRequestImpl
 		}
 
 		return sortedFileItems;
+	}
+
+	private static File _getTempDir(String configuredTempDir) {
+		if (Validator.isNotNull(configuredTempDir)) {
+			return new File(configuredTempDir);
+		}
+
+		if (_tempDir == null) {
+			_tempDir = new File(
+				UploadServletRequestConfigurationHelperUtil.getTempDir());
+		}
+
+		return _tempDir;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

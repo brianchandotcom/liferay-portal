@@ -270,7 +270,7 @@ public class GitUtil {
 
 		unsyncBufferedReader = getGitCommandReader(
 			StringBundler.concat(
-				"git diff --diff-filter=AM --name-only ", commitId, " ",
+				"git diff --diff-filter=AMR --name-only ", commitId, " ",
 				latestCommitId));
 
 		String line = null;

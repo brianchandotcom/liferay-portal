@@ -21,10 +21,23 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * Instances of this class represent the values extracted from an asset category
+ * form.
+ *
+ * @author Eduardo Perez
  * @author Javier Gamarra
+ * @review
  */
 public class AssetCategoryForm {
 
+	/**
+	 * Builds a {@code Form} that generates {@code AssetCategoryForm} depending
+	 * on the HTTP body.
+	 *
+	 * @param  builder the {@code Form} builder
+	 * @return an asset category form
+	 * @review
+	 */
 	public static Form<AssetCategoryForm> buildForm(
 		Form.Builder<AssetCategoryForm> builder) {
 
@@ -41,10 +54,22 @@ public class AssetCategoryForm {
 		).build();
 	}
 
+	/**
+	 * Returns the asset category's description map.
+	 *
+	 * @return the asset category's description map
+	 * @review
+	 */
 	public Map<Locale, String> getDescriptionMap(Locale locale) {
 		return Collections.singletonMap(locale, _description);
 	}
 
+	/**
+	 * Returns the asset category's title map.
+	 *
+	 * @return the asset category's title map
+	 * @review
+	 */
 	public Map<Locale, String> getTitleMap(Locale locale) {
 		return Collections.singletonMap(locale, _name);
 	}

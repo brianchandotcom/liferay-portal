@@ -21,10 +21,22 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * Instances of this class represent the values extracted from a taxonomy form.
+ *
+ * @author Eduardo Perez
  * @author Javier Gamarra
+ * @review
  */
 public class TaxonomyForm {
 
+	/**
+	 * Builds a {@code Form} that generates {@code TaxonomyForm} depending on
+	 * the HTTP body.
+	 *
+	 * @param  builder the {@code Form} builder
+	 * @return a taxonomy form
+	 * @review
+	 */
 	public static Form<TaxonomyForm> buildForm(
 		Form.Builder<TaxonomyForm> builder) {
 
@@ -45,6 +57,12 @@ public class TaxonomyForm {
 		return _description;
 	}
 
+	/**
+	 * Returns the taxonomy's description map.
+	 *
+	 * @return the taxonomy's description map
+	 * @review
+	 */
 	public Map<Locale, String> getDescriptionMap(Locale locale) {
 		return Collections.singletonMap(locale, _description);
 	}
@@ -53,6 +71,12 @@ public class TaxonomyForm {
 		return _name;
 	}
 
+	/**
+	 * Returns the taxonomy's description map.
+	 *
+	 * @return the taxonomy's description map
+	 * @review
+	 */
 	public Map<Locale, String> getTitleMap(Locale locale) {
 		return Collections.singletonMap(locale, _name);
 	}

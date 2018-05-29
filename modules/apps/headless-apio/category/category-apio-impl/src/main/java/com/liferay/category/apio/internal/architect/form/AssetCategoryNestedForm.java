@@ -21,10 +21,23 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
+ * Instances of this class represent the values extracted from an asset category
+ * nested form.
+ *
+ * @author Eduardo Perez
  * @author Javier Gamarra
+ * @review
  */
 public class AssetCategoryNestedForm {
 
+	/**
+	 * Builds a {@code Form} that generates {@code AssetCategoryNestedForm}
+	 * depending on the HTTP body.
+	 *
+	 * @param  builder the {@code Form} builder
+	 * @return an asset category nested form
+	 * @review
+	 */
 	public static Form<AssetCategoryNestedForm> buildForm(
 		Form.Builder<AssetCategoryNestedForm> builder) {
 
@@ -45,18 +58,42 @@ public class AssetCategoryNestedForm {
 		).build();
 	}
 
+	/**
+	 * Returns the asset category's description map.
+	 *
+	 * @return the asset category's description map
+	 * @review
+	 */
 	public Map<Locale, String> getDescriptionMap(Locale locale) {
 		return Collections.singletonMap(locale, _description);
 	}
 
+	/**
+	 * Returns the asset category's parent category ID.
+	 *
+	 * @return the asset category's parent category ID
+	 * @review
+	 */
 	public long getParentCategoryId() {
 		return _parentCategoryId;
 	}
 
+	/**
+	 * Returns the asset category's title map.
+	 *
+	 * @return the asset category's title map
+	 * @review
+	 */
 	public Map<Locale, String> getTitleMap(Locale locale) {
 		return Collections.singletonMap(locale, _name);
 	}
 
+	/**
+	 * Returns the asset category's vocabulary ID.
+	 *
+	 * @return the asset category's vocabulary ID
+	 * @review
+	 */
 	public long getVocabularyId() {
 		return _vocabularyId;
 	}

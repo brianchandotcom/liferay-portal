@@ -44,7 +44,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides the information necessary to expose {@code Category} resources
+ * through a web API. The resources are mapped from the internal model {@code
+ * AssetCategory}.
+ *
  * @author Javier Gamarra
+ * @author Eduardo Pérez
+ * @review
  */
 @Component(immediate = true)
 public class CategoryNestedCollectionResource

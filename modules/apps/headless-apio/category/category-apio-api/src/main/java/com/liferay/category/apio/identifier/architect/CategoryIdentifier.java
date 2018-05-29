@@ -17,8 +17,8 @@ package com.liferay.category.apio.identifier.architect;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code AssetCategory} identifier. It's identified
- * by the internal {@code AssetCategory#getId()}.
+ * Holds information about a {@code Category} identifier. It's identified by the
+ * internal {@code AssetCategory#getId()}.
  *
  * @author Javier Gamarra
  * @review

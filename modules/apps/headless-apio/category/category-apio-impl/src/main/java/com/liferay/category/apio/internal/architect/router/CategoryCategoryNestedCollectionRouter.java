@@ -36,7 +36,12 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides the information necessary to expose the {@code Category} resources
+ * contained inside another {@code Category} through a web API. The resources
+ * are mapped from the internal model {@link AssetCategory}.
+ *
  * @author Eduardo Perez
+ * @review
  */
 @Component(immediate = true)
 public class CategoryCategoryNestedCollectionRouter implements

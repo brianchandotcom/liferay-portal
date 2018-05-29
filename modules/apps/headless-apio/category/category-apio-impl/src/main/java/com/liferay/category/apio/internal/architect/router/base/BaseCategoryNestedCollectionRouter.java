@@ -39,7 +39,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
+ * Base class for {@code AssetCategory} {@code NestedCollectionRouters}.
+ *
  * @author Eduardo Perez
+ * @review
  */
 public abstract class BaseCategoryNestedCollectionRouter
 	<T extends Identifier<Long>> implements
@@ -55,6 +58,14 @@ public abstract class BaseCategoryNestedCollectionRouter
 		).build();
 	}
 
+	/**
+	 * Creates a new {@link AssetCategory} and links it to {@link AssetEntry}
+	 * identified by the provided ID.
+	 *
+	 * @param  id the {@link AssetEntry} ID
+	 * @param  assetCategoryNestedForm the form containing the new category data
+	 * @return the newly created {@link AssetCategory}
+	 */
 	protected AssetCategory addAssetCategory(
 			Long id, AssetCategoryNestedForm assetCategoryNestedForm)
 		throws PortalException {

@@ -17,9 +17,10 @@ package com.liferay.taxonomy.apio.identifier.architect;
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about a {@code AssetVocabulary} identifier. It's identified
- * by the internal {@code AssetVocabulary#getId()}.
+ * Holds information about a {@code Taxonomy} identifier. It's identified by the
+ * internal {@code AssetVocabulary#getId()}.
  *
+ * @author Eduardo Pérez
  * @author Javier Gamarra
  * @review
  */

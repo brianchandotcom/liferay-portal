@@ -134,10 +134,9 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 				<liferay-ui:icon
 					cssClass="modify-link select-metadata"
-					iconCssClass="icon-search"
 					label="<%= true %>"
 					linkCssClass="btn btn-default"
-					message="select-metadata-set"
+					message="select"
 					url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 				/>
 			</aui:fieldset>

@@ -18,6 +18,8 @@ import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateException;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
+import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
 import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationQueueEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
@@ -71,7 +73,9 @@ public class ViewCommerceNotificationQueueEntriesMVCRenderCommand
 				commerceNotificationQueueEntriesDisplayContext =
 					new CommerceNotificationQueueEntriesDisplayContext(
 						_commerceNotificationQueueEntryService,
-						httpServletRequest, _portletResourcePermission);
+						_commerceNotificationTemplateService,
+						_commerceNotificationTypeRegistry, httpServletRequest,
+						_portletResourcePermission);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -99,6 +103,13 @@ public class ViewCommerceNotificationQueueEntriesMVCRenderCommand
 	@Reference
 	private CommerceNotificationQueueEntryService
 		_commerceNotificationQueueEntryService;
+
+	@Reference
+	private CommerceNotificationTemplateService
+		_commerceNotificationTemplateService;
+
+	@Reference
+	private CommerceNotificationTypeRegistry _commerceNotificationTypeRegistry;
 
 	@Reference
 	private Portal _portal;

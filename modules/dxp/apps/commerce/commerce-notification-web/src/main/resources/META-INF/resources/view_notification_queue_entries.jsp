@@ -84,7 +84,8 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				property="type"
+				name="type"
+				value="<%= HtmlUtil.escape(commerceNotificationQueueEntriesDisplayContext.getCommerceNotificationType(commerceNotificationQueueEntry.getCommerceNotificationTemplateId())) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

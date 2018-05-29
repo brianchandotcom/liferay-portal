@@ -15,7 +15,11 @@
 package com.liferay.commerce.notification.web.internal.display.context;
 
 import com.liferay.commerce.notification.model.CommerceNotificationQueueEntry;
+import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
+import com.liferay.commerce.notification.type.CommerceNotificationType;
+import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
 import com.liferay.commerce.notification.web.internal.admin.NotificationsCommerceAdminModule;
 import com.liferay.commerce.notification.web.internal.display.context.util.CommerceNotificationsRequestHelper;
 import com.liferay.commerce.notification.web.internal.util.CommerceNotificationsUtil;
@@ -41,15 +45,36 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 	public CommerceNotificationQueueEntriesDisplayContext(
 		CommerceNotificationQueueEntryService
 			commerceNotificationQueueEntryService,
+		CommerceNotificationTemplateService commerceNotificationTemplateService,
+		CommerceNotificationTypeRegistry commerceNotificationTypeRegistry,
 		HttpServletRequest httpServletRequest,
 		PortletResourcePermission portletResourcePermission) {
 
 		_commerceNotificationQueueEntryService =
 			commerceNotificationQueueEntryService;
+		_commerceNotificationTemplateService =
+			commerceNotificationTemplateService;
+		_commerceNotificationTypeRegistry = commerceNotificationTypeRegistry;
 		_portletResourcePermission = portletResourcePermission;
 
 		_commerceNotificationsRequestHelper =
 			new CommerceNotificationsRequestHelper(httpServletRequest);
+	}
+
+	public String getCommerceNotificationType(
+			long commerceNotificationTemplateId)
+		throws PortalException {
+
+		CommerceNotificationTemplate commerceNotificationTemplate =
+			_commerceNotificationTemplateService.
+				getCommerceNotificationTemplate(commerceNotificationTemplateId);
+
+		CommerceNotificationType commerceNotificationType =
+			_commerceNotificationTypeRegistry.getCommerceNotificationType(
+				commerceNotificationTemplate.getType());
+
+		return commerceNotificationType.getLabel(
+			_commerceNotificationsRequestHelper.getLocale());
 	}
 
 	public String getOrderByCol() {
@@ -136,6 +161,10 @@ public class CommerceNotificationQueueEntriesDisplayContext {
 		_commerceNotificationQueueEntryService;
 	private final CommerceNotificationsRequestHelper
 		_commerceNotificationsRequestHelper;
+	private final CommerceNotificationTemplateService
+		_commerceNotificationTemplateService;
+	private final CommerceNotificationTypeRegistry
+		_commerceNotificationTypeRegistry;
 	private final PortletResourcePermission _portletResourcePermission;
 	private SearchContainer<CommerceNotificationQueueEntry> _searchContainer;
 

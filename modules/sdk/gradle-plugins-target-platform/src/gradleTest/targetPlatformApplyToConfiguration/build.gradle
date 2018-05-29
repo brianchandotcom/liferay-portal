@@ -22,7 +22,7 @@ repositories {
 runGradleTest {
 	doLast {
 		ResolvedArtifact portalKernelResolvedArtifact = configurations.portalKernel.resolvedConfiguration.resolvedArtifacts.find {
-			it.name.contains("kernel")
+			it.name.contains "kernel"
 		}
 
 		assert portalKernelResolvedArtifact.file.name.contains("2.61.1")

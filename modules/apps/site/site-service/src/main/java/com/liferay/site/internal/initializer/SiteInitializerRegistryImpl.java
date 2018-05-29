@@ -71,9 +71,7 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 		List<ServiceWrapper<SiteInitializer>> serviceWrappers =
 			ListUtil.fromCollection(_serviceTrackerMap.values());
 
-		for (ServiceWrapper<SiteInitializer> serviceWrapper :
-				serviceWrappers) {
-
+		for (ServiceWrapper<SiteInitializer> serviceWrapper : serviceWrappers) {
 			SiteInitializer siteInitializer = serviceWrapper.getService();
 
 			if (!active || (active && siteInitializer.isActive(companyId))) {

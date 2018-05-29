@@ -84,7 +84,9 @@ if (forcePost && (portletURL != null)) {
 	<div class="pagination-bar" data-qa-id="paginator" id="<%= namespace + id %>">
 		<c:if test="<%= deltaConfigurable %>">
 			<div class="dropdown pagination-items-per-page">
-				<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;" type="button"><liferay-ui:message arguments="<%= delta %>" key="x-entries" /><span class="icon-sort"></span></a>
+				<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button"><liferay-ui:message arguments="<%= delta %>" key="x-entries" />
+					<aui:icon image="caret-double-l" markupView="lexicon" />
+				</a>
 
 				<ul class="dropdown-menu dropdown-menu-top">
 

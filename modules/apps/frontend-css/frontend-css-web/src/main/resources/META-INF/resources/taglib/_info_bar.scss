@@ -12,15 +12,8 @@
 	}
 
 	.info-bar-default {
-		.btn-default {
-			background-color: transparent;
-			border-color: #E4E9EC;
-			color: #869CAD;
+		.btn {
 			margin: 7px 0 7px 15px;
-
-			&.active {
-				background-color: #E4E9EC;
-			}
 
 			@include sm() {
 				margin: 13px 0 13px 15px;

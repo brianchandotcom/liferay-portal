@@ -125,6 +125,26 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 	</div>
 </div>
 
+<aui:script>
+	window.<portlet:namespace />openImportView = function() {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					after: {
+						destroy: function(event) {
+							window.location.reload();
+						}
+					},
+					destroyOnHide: true
+				},
+				id: '<portlet:namespace />openImportView',
+				title: '<liferay-ui:message key="import-collections" />',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import_fragment_collections" /></portlet:renderURL>'
+			}
+		);
+	}
+</aui:script>
+
 <aui:script require="metal-dom/src/all/dom as dom">
 	window.<portlet:namespace />exportSelectedFragmentCollections = function() {
 		submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_collections" />');

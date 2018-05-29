@@ -77,6 +77,15 @@ public class FragmentDisplayContext {
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "new"));
 					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"openImportView();");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "import"));
+					});
 			}
 		};
 	}

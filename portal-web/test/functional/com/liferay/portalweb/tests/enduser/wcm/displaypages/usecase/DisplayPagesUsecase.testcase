@@ -29,6 +29,20 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
 	<command name="ChangeEditableTextDisplayPage" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

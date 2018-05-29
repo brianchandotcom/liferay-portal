@@ -244,9 +244,37 @@ AUI.add(
 							);
 						}
 						else if (instance._isConstant(secondOperandTypeValue)) {
+							var fieldType = instance._getFieldType(instance._getFirstOperandValue(index));
+
+							if (fieldType == 'date' && instance._getSecondOperandValue(index, 'input-date')) {
 								condition.operands.push(
 									{
 										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
+										value: instance._getSecondOperandValue(index, 'input-date')
+									}
+								);
+							}
+							else if (instance._getSecondOperandValue(index, 'input-decimal')) {
+								condition.operands.push(
+									{
+										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
+										value: instance._getSecondOperandValue(index, 'input-decimal')
+									}
+								);
+							}
+							else if (instance._getSecondOperandValue(index, 'input-integer')) {
+								condition.operands.push(
+									{
+										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
+										value: instance._getSecondOperandValue(index, 'input-integer')
+									}
+								);
+							}
+							else if (instance._getSecondOperandValue(index, 'input-text')) {
+								condition.operands.push(
+									{
+										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
+										value: instance._getSecondOperandValue(index, 'input-text')
 									}
 								);
 							}

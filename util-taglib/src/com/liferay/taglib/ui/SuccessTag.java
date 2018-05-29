@@ -126,7 +126,7 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 
 			ScriptTag.doTag(
 				null,
-				"metal-dom/src/all/dom as dom,clay-alert@2.0.2/lib/ClayToast " +
+				"metal-dom/src/all/dom as dom,clay-alert@2.1.4/lib/ClayToast " +
 					"as ClayToast",
 				null, result, getBodyContent(), pageContext);
 		}

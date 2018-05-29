@@ -98,7 +98,7 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 		_name = name;
 	}
 
-	public void setuseOriginalBody(boolean useOriginalBody) {
+	public void setUseOriginalBody(boolean useOriginalBody) {
 		_useOriginalBody = useOriginalBody;
 	}
 

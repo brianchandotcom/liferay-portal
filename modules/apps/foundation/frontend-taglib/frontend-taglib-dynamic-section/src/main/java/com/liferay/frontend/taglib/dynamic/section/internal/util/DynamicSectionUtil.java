@@ -39,14 +39,7 @@ import org.osgi.service.component.annotations.Component;
 public class DynamicSectionUtil {
 
 	public static boolean hasReplace(String name) {
-		DynamicSectionReplace dynamicSectionReplace =
-			_dynamicSectionReplaceServiceTrackerMap.getService(name);
-
-		if (dynamicSectionReplace == null) {
-			return false;
-		}
-
-		return true;
+		return _dynamicSectionReplaceServiceTrackerMap.containsKey(name);
 	}
 
 	public static boolean hasServices(String name) {
@@ -84,14 +77,14 @@ public class DynamicSectionUtil {
 		DynamicSectionReplace dynamicSectionReplace =
 			_dynamicSectionReplaceServiceTrackerMap.getService(name);
 
-		if (dynamicSectionReplace != null) {
-			return dynamicSectionReplace.replace(pageContext);
+		if (dynamicSectionReplace == null) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"No ", DynamicSectionReplace.class.getName(),
+					" found for name ", name));
 		}
 
-		throw new IllegalArgumentException(
-			StringBundler.concat(
-				"No ", DynamicSectionReplace.class.getName(),
-				" found for name ", name));
+		return dynamicSectionReplace.replace(pageContext);
 	}
 
 	@Activate

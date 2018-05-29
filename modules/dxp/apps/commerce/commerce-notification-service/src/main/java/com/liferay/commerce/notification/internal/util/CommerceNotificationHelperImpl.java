@@ -27,7 +27,6 @@ import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -53,26 +52,24 @@ public class CommerceNotificationHelperImpl
 	implements CommerceNotificationHelper {
 
 	@Override
-	public void sendNotifications(String key, Object object)
+	public void sendNotifications(long groupId, String key, Object object)
 		throws PortalException {
 
-		sendNotifications(key, object, null);
+		sendNotifications(groupId, key, object, null);
 	}
 
 	@Override
-	public void sendNotifications(String key, Object object, long[] userIds)
+	public void sendNotifications(
+			long groupId, String key, Object object, long[] userIds)
 		throws PortalException {
 
 		CommerceNotificationType commerceNotificationType =
 			_commerceNotificationTypeRegistry.getCommerceNotificationType(key);
 
-		GroupedModel groupedModel = (GroupedModel)object;
-
 		List<CommerceNotificationTemplate> commerceNotificationTemplates =
 			_commerceNotificationTemplateLocalService.
 				getCommerceNotificationTemplates(
-					groupedModel.getGroupId(),
-					commerceNotificationType.getKey(), true);
+					groupId, commerceNotificationType.getKey(), true);
 
 		for (CommerceNotificationTemplate commerceNotificationTemplate :
 				commerceNotificationTemplates) {

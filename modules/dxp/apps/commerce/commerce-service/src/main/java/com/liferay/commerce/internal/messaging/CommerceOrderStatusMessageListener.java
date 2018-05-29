@@ -48,6 +48,7 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 				_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
 			_commerceNotificationHelper.sendNotifications(
+				commerceOrder.getSiteGroupId(),
 				OrderPlacedCommerceNotificationTypeImpl.KEY, commerceOrder);
 		}
 	}

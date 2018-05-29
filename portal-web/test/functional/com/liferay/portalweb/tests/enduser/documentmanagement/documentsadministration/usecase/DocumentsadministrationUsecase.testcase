@@ -1819,6 +1819,8 @@
 			<var name="specificNameFolder" value="true" />
 		</execute>
 
+		<execute function="Refresh" />
+
 		<execute macro="DMDocument#addCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.txt" />
@@ -1857,6 +1859,8 @@
 		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
@@ -1946,6 +1950,8 @@
 		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />

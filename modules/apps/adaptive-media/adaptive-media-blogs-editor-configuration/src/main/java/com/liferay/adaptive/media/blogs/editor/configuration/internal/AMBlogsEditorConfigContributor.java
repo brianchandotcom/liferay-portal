@@ -14,6 +14,7 @@
 
 package com.liferay.adaptive.media.blogs.editor.configuration.internal;
 
+import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.adaptive.media.image.item.selector.AMImageFileEntryItemSelectorReturnType;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
@@ -113,6 +114,10 @@ public class AMBlogsEditorConfigContributor
 		}
 
 		jsonObject.put("extraPlugins", extraPlugins);
+
+		jsonObject.put(
+			"adaptiveMediaFileEntryAttributeName",
+			AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME);
 
 		String itemSelectedEventName = _itemSelector.getItemSelectedEventName(
 			itemSelectorURL);

@@ -67,6 +67,62 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 	}
 
 	@Test
+	public void testAdaptiveMediaFileEntryAttributeNameIsAdded()
+		throws Exception {
+
+		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+
+		when(
+			itemSelectorPortletURL.toString()
+		).thenReturn(
+			"itemSelectorPortletURL"
+		);
+
+		when(
+			_itemSelector.getItemSelectorURL(
+				Mockito.any(RequestBackedPortletURLFactory.class),
+				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
+		).thenReturn(
+			itemSelectorPortletURL
+		);
+
+		when(
+			_itemSelector.getItemSelectedEventName(Mockito.anyString())
+		).thenReturn(
+			"selectedEventName"
+		);
+
+		when(
+			_itemSelector.getItemSelectorCriteria(
+				"journalItemSelectorCriterionFileEntryItemSelectorReturnType")
+		).thenReturn(
+			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
+		);
+
+		JSONObject originalJSONObject = JSONFactoryUtil.createJSONObject();
+
+		originalJSONObject.put(
+			"filebrowserImageBrowseLinkUrl",
+			"journalItemSelectorCriterionFileEntryItemSelectorReturnType");
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			originalJSONObject.toJSONString());
+
+		AMJournalEditorConfigContributor amBlogsEditorConfigContributor =
+			new AMJournalEditorConfigContributor();
+
+		amBlogsEditorConfigContributor.setItemSelector(_itemSelector);
+
+		amBlogsEditorConfigContributor.populateConfigJSONObject(
+			jsonObject, _inputEditorTaglibAttributes, _themeDisplay,
+			_requestBackedPortletURLFactory);
+
+		Assert.assertEquals(
+			"data-fileentryid",
+			jsonObject.get("adaptiveMediaFileEntryAttributeName"));
+	}
+
+	@Test
 	public void testAdaptiveMediaIsAddedToExtraPlugins() throws Exception {
 		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
 
@@ -92,7 +148,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 
 		when(
 			_itemSelector.getItemSelectorCriteria(
-				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
+				"journalItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
 			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
@@ -101,7 +157,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 
 		originalJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
+			"journalItemSelectorCriterionFileEntryItemSelectorReturnType");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -145,7 +201,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 
 		when(
 			_itemSelector.getItemSelectorCriteria(
-				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
+				"journalItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
 			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
@@ -156,7 +212,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
 		originalJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
+			"journalItemSelectorCriterionFileEntryItemSelectorReturnType");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -182,19 +238,19 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 		AMJournalEditorConfigContributor amJournalEditorConfigContributor =
 			new AMJournalEditorConfigContributor();
 
-		JournalItemSelectorCriterion blogsItemSelectorCriterion =
+		JournalItemSelectorCriterion journalItemSelectorCriterion =
 			new JournalItemSelectorCriterion();
 
-		blogsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		journalItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.<ItemSelectorReturnType>singletonList(
 				new FileEntryItemSelectorReturnType()));
 
 		amJournalEditorConfigContributor.
 			addAMImageFileEntryItemSelectorReturnType(
-				blogsItemSelectorCriterion);
+				journalItemSelectorCriterion);
 
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+			journalItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
 		Assert.assertEquals(
 			desiredItemSelectorReturnTypes.toString(), 2,
@@ -391,7 +447,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 
 		when(
 			_itemSelector.getItemSelectorCriteria(
-				"blogsItemSelectorCriterionFileEntryItemSelectorReturnType")
+				"journalItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
 			_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType()
 		);
@@ -400,7 +456,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 
 		originalJSONObject.put(
 			"filebrowserImageBrowseLinkUrl",
-			"blogsItemSelectorCriterionFileEntryItemSelectorReturnType");
+			"journalItemSelectorCriterionFileEntryItemSelectorReturnType");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
@@ -501,16 +557,16 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 	private List<ItemSelectorCriterion>
 		_getBlogsItemSelectorCriterionFileEntryItemSelectorReturnType() {
 
-		JournalItemSelectorCriterion blogsItemSelectorCriterion =
+		JournalItemSelectorCriterion journalItemSelectorCriterion =
 			new JournalItemSelectorCriterion();
 
-		blogsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		journalItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.<ItemSelectorReturnType>singletonList(
 				new FileEntryItemSelectorReturnType()));
 
 		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
 
-		itemSelectorCriteria.add(blogsItemSelectorCriterion);
+		itemSelectorCriteria.add(journalItemSelectorCriterion);
 
 		return itemSelectorCriteria;
 	}

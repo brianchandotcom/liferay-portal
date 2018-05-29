@@ -91,18 +91,18 @@ public class AMImageContentTransformerTest {
 		FileEntry fileEntry = _addImageFileEntry(serviceContext);
 
 		String rawHTML = String.format(
-			"<img data-fileEntryId=\"%s\" src=\"%s\" />",
+			"<img data-fileentryid=\"%s\" src=\"%s\" />",
 			fileEntry.getFileEntryId(),
 			DLUtil.getPreviewURL(
 				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
 				false, false));
 
 		String regex =
-			"<picture data-fileEntryId=\".+\">" +
+			"<picture data-fileentryid=\".+\">" +
 				"<source media=\"\\(max-width:.+px\\)\" srcset=\".+\" \\/>" +
 					"<source media=\"\\(max-width:.+px\\) and " +
 						"\\(min-width:.+px\\)\" srcset=\".+\" \\/>" +
-							"<img data-fileEntryId=\".+\" src=\".+\" \\/>" +
+							"<img data-fileentryid=\".+\" src=\".+\" \\/>" +
 								"<\\/picture>";
 
 		String transformedHTML = _contentTransformerHandler.transform(

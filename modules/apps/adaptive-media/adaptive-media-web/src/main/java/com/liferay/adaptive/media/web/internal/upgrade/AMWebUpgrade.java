@@ -15,6 +15,10 @@
 package com.liferay.adaptive.media.web.internal.upgrade;
 
 import com.liferay.adaptive.media.web.internal.configuration.AMConfiguration;
+import com.liferay.adaptive.media.web.internal.upgrade.v1_0_0.UpgradeBlogsEntryDataFileEntryId;
+import com.liferay.adaptive.media.web.internal.upgrade.v1_0_0.UpgradeJournalArticleDataFileEntryId;
+import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -30,7 +34,7 @@ public class AMWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.2", new DummyUpgradeStep());
 
 		registry.register(
 			"1.0.0", "1.0.1",
@@ -38,9 +42,21 @@ public class AMWebUpgrade implements UpgradeStepRegistrator {
 				"com.liferay.adaptive.media.internal.configuration." +
 					"AMConfiguration",
 				AMConfiguration.class.getName()));
+
+		registry.register(
+			"1.0.1", "1.0.2",
+			new UpgradeBlogsEntryDataFileEntryId(_blogsEntryLocalService),
+			new UpgradeJournalArticleDataFileEntryId(
+				_journalArticleLocalService));
 	}
 
 	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
 	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

@@ -60,7 +60,7 @@ public class HtmlContentTransformerImplTest {
 
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
-				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>",
+				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
@@ -75,7 +75,7 @@ public class HtmlContentTransformerImplTest {
 		StringBundler originalSB = new StringBundler(4);
 
 		originalSB.append("<div><div>");
-		originalSB.append("<img data-fileEntryId=\"1989\" ");
+		originalSB.append("<img data-fileentryid=\"1989\" ");
 		originalSB.append("src=\"adaptable\"/>");
 		originalSB.append("</div></div><br/>");
 
@@ -98,7 +98,7 @@ public class HtmlContentTransformerImplTest {
 
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
-				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>",
+				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
@@ -108,7 +108,7 @@ public class HtmlContentTransformerImplTest {
 			"<img src=\"not-adaptable\"/><whatever></whatever>",
 			_htmlContentTransformer.transform(
 				"<img src=\"not-adaptable\"/>" +
-					"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>"));
+					"<img data-fileentryid=\"1989\" src=\"adaptable\"/>"));
 	}
 
 	@Test
@@ -117,7 +117,7 @@ public class HtmlContentTransformerImplTest {
 
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
-				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>",
+				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
@@ -126,14 +126,14 @@ public class HtmlContentTransformerImplTest {
 		Assert.assertEquals(
 			"<whatever></whatever>",
 			_htmlContentTransformer.transform(
-				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>"));
+				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>"));
 	}
 
 	@Test
 	public void testReplacesTwoConsecutiveImageTags() throws Exception {
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
-				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>",
+				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
@@ -142,8 +142,8 @@ public class HtmlContentTransformerImplTest {
 		Assert.assertEquals(
 			"<whatever></whatever><whatever></whatever>",
 			_htmlContentTransformer.transform(
-				"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>" +
-					"<img data-fileEntryId=\"1989\" src=\"adaptable\"/>"));
+				"<img data-fileentryid=\"1989\" src=\"adaptable\"/>" +
+					"<img data-fileentryid=\"1989\" src=\"adaptable\"/>"));
 	}
 
 	@Test
@@ -173,7 +173,7 @@ public class HtmlContentTransformerImplTest {
 	public void testSupportsImageTagsWithNewLineCharacters() throws Exception {
 		Mockito.when(
 			_amImageHTMLTagFactory.create(
-				"<img data-fileEntryId=\"1989\" \nsrc=\"adaptable\"/>",
+				"<img data-fileentryid=\"1989\" \nsrc=\"adaptable\"/>",
 				_fileEntry)
 		).thenReturn(
 			"<whatever></whatever>"
@@ -181,7 +181,7 @@ public class HtmlContentTransformerImplTest {
 
 		StringBundler originalSB = new StringBundler(3);
 
-		originalSB.append("<img data-fileEntryId=\"1989\" ");
+		originalSB.append("<img data-fileentryid=\"1989\" ");
 		originalSB.append(CharPool.NEW_LINE);
 		originalSB.append("src=\"adaptable\"/>");
 
@@ -207,7 +207,7 @@ public class HtmlContentTransformerImplTest {
 		StringBundler originalSB = new StringBundler(4);
 
 		originalSB.append("<div><div>");
-		originalSB.append("<img data-fileEntryId=\"1989\" ");
+		originalSB.append("<img data-fileentryid=\"1989\" ");
 		originalSB.append("src=\"adaptable\"/>");
 		originalSB.append("</div></div><br/>");
 

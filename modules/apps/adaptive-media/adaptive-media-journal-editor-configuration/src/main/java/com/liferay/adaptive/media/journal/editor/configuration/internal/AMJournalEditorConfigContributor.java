@@ -14,6 +14,7 @@
 
 package com.liferay.adaptive.media.journal.editor.configuration.internal;
 
+import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.adaptive.media.image.item.selector.AMImageFileEntryItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -111,6 +112,10 @@ public class AMJournalEditorConfigContributor
 		}
 
 		jsonObject.put("extraPlugins", extraPlugins);
+
+		jsonObject.put(
+			"adaptiveMediaFileEntryAttributeName",
+			AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME);
 
 		String itemSelectedEventName = _itemSelector.getItemSelectedEventName(
 			itemSelectorURL);

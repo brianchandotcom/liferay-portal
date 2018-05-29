@@ -55,7 +55,7 @@ public class PriceListHelper {
 	public CommercePriceList updateCommercePriceList(
 			long commercePriceListId, String currency, String name,
 			Double priority, Boolean neverExpire, Date displayDate,
-			Date expirationDate)
+			Date expirationDate, String externalReferenceCode)
 		throws PortalException {
 
 		CommercePriceList commercePriceList = getCommercePriceList(
@@ -119,13 +119,13 @@ public class PriceListHelper {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			externalReferenceCode, neverExpire, serviceContext);
 	}
 
 	public CommercePriceList upsertCommercePriceList(
-			long groupId, String currency, String name, Double priority,
-			Boolean neverExpire, Date displayDate, Date expirationDate,
-			String externalReferenceCode)
+			long groupId, long commercePriceListId, String currency,
+			String name, Double priority, Boolean neverExpire, Date displayDate,
+			Date expirationDate, String externalReferenceCode)
 		throws PortalException {
 
 		long commerceCurrencyId = _getCommerceCurrencyId(groupId, currency);
@@ -179,26 +179,12 @@ public class PriceListHelper {
 			expirationDateHour += 12;
 		}
 
-		CommercePriceList commercePriceList =
-			_commercePriceListService.fetchByExternalReferenceCode(
-				externalReferenceCode);
-
-		if (commercePriceList != null) {
-			return _commercePriceListService.updateCommercePriceList(
-				commercePriceList.getCommercePriceListId(), commerceCurrencyId,
-				name, priority, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
-		}
-
-		return _commercePriceListService.addCommercePriceList(
-			commerceCurrencyId, name, priority, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, externalReferenceCode,
-			neverExpire, serviceContext);
+		return _commercePriceListService.upsertCommercePriceList(
+			commercePriceListId, commerceCurrencyId, name, priority,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			externalReferenceCode, neverExpire, serviceContext);
 	}
 
 	private Calendar _convertDateToCalendar(Date date) {

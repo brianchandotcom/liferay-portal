@@ -26,6 +26,7 @@ import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListForm;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceListHelper;
+import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -64,7 +65,7 @@ public class PriceListNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addCommercePriceList,
+			this::_upsertCommercePriceList,
 			_hasPermission.forAddingIn(PriceListIdentifier.class),
 			PriceListForm::buildForm
 		).build();
@@ -122,28 +123,6 @@ public class PriceListNestedCollectionResource
 		).build();
 	}
 
-	private CommercePriceList _addCommercePriceList(
-			Long groupId, PriceListForm priceListForm)
-		throws PortalException {
-
-		try {
-			return _priceListHelper.upsertCommercePriceList(
-				groupId, priceListForm.getCurrency(), priceListForm.getName(),
-				priceListForm.getPriority(), priceListForm.isNeverExpire(),
-				priceListForm.getDisplayDate(),
-				priceListForm.getExpirationDate(),
-				priceListForm.getExternalReferenceCode());
-		}
-		catch (NoSuchCurrencyException nsce) {
-			throw new NotFoundException(
-				String.format(
-					"Unable to find currency with code: %s. Currency code " +
-						"should be expressed with 3-letter ISO 4217 format",
-					priceListForm.getCurrency()),
-				nsce);
-		}
-	}
-
 	private PageItems<CommercePriceList> _getPageItems(
 			Pagination pagination, Long groupId)
 		throws PortalException {
@@ -176,7 +155,38 @@ public class PriceListNestedCollectionResource
 				commercePriceListId, priceListForm.getCurrency(),
 				priceListForm.getName(), priceListForm.getPriority(),
 				priceListForm.isNeverExpire(), priceListForm.getDisplayDate(),
-				priceListForm.getExpirationDate());
+				priceListForm.getExpirationDate(),
+				priceListForm.getExternalReferenceCode());
+		}
+		catch (NoSuchCurrencyException nsce) {
+			throw new NotFoundException(
+				String.format(
+					"Unable to find currency with code: %s. Currency code " +
+						"should be expressed with 3-letter ISO 4217 format",
+					priceListForm.getCurrency()),
+				nsce);
+		}
+	}
+
+	private CommercePriceList _upsertCommercePriceList(
+			Long groupId, PriceListForm priceListForm)
+		throws PortalException {
+
+		try {
+			return _priceListHelper.upsertCommercePriceList(
+				groupId, priceListForm.getCommercePriceListId(),
+				priceListForm.getCurrency(), priceListForm.getName(),
+				priceListForm.getPriority(), priceListForm.isNeverExpire(),
+				priceListForm.getDisplayDate(),
+				priceListForm.getExpirationDate(),
+				priceListForm.getExternalReferenceCode());
+		}
+		catch (NoSuchPriceListException nsple) {
+			throw new NotFoundException(
+				String.format(
+					"Unable to update price list" +
+						nsple.getLocalizedMessage()),
+				nsple);
 		}
 		catch (NoSuchCurrencyException nsce) {
 			throw new NotFoundException(

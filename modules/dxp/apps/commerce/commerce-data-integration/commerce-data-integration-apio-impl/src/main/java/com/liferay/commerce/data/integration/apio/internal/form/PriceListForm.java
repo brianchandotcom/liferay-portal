@@ -48,6 +48,8 @@ public class PriceListForm {
 			"displayDate", PriceListForm::_setDisplayDate
 		).addOptionalDate(
 			"expirationDate", PriceListForm::_setExpirationDate
+		).addOptionalLong(
+			"commercePriceListId", PriceListForm::_setCommercePriceListId
 		).addOptionalString(
 			"externalReferenceCode", PriceListForm::_setExternalReferenceCode
 		).addRequiredBoolean(
@@ -59,6 +61,10 @@ public class PriceListForm {
 		).addRequiredString(
 			"name", PriceListForm::_setName
 		).build();
+	}
+
+	public Long getCommercePriceListId() {
+		return _commercePriceListId;
 	}
 
 	public String getCurrency() {
@@ -89,6 +95,10 @@ public class PriceListForm {
 		return _neverExpire;
 	}
 
+	private void _setCommercePriceListId(Long commercePriceListId) {
+		_commercePriceListId = commercePriceListId;
+	}
+
 	private void _setCurrency(String currency) {
 		_currency = currency;
 	}
@@ -117,6 +127,7 @@ public class PriceListForm {
 		_priority = priority;
 	}
 
+	private Long _commercePriceListId;
 	private String _currency;
 	private Date _displayDate;
 	private Date _expirationDate;

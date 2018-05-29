@@ -18,19 +18,16 @@ import com.liferay.frontend.taglib.dynamic.section.DynamicSection;
 import com.liferay.frontend.taglib.dynamic.section.DynamicSectionReplace;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 
-import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -104,18 +101,11 @@ public class DynamicSectionUtil {
 				bundleContext, DynamicSection.class, "(name=*)",
 				(serviceReference, emitter) ->
 					emitter.emit((String)serviceReference.getProperty("name")),
-				Comparator.comparing(this::_getServiceRanking));
+				ServiceReference::compareTo);
 
 		_dynamicSectionReplaceServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DynamicSectionReplace.class, "name");
-	}
-
-	private Integer _getServiceRanking(ServiceReference serviceReference) {
-		Object serviceRankingObject = serviceReference.getProperty(
-			Constants.SERVICE_RANKING);
-
-		return GetterUtil.getInteger(serviceRankingObject.toString());
 	}
 
 	private static ServiceTrackerMap<String, DynamicSectionReplace>

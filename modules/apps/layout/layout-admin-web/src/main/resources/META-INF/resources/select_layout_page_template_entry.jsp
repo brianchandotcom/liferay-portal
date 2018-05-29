@@ -137,7 +137,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 										actionJspServletContext="<%= application %>"
 										cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
 										data="<%= addLayoutData %>"
-										icon="page"
+										icon='<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) ? "page-template" : "page" %>'
 										resultRow="<%= row %>"
 										rowChecker="<%= searchContainer.getRowChecker() %>"
 										title="<%= layoutPageTemplateEntry.getName() %>"

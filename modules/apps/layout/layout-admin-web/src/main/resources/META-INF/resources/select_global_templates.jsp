@@ -48,7 +48,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 				actionJspServletContext="<%= application %>"
 				cssClass='<%= renderResponse.getNamespace() + "add-layout-prototype-action-option" %>'
 				data="<%= addLayoutPrototypeData %>"
-				icon="page"
+				icon="page-set"
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
 				title="<%= HtmlUtil.escape(layoutPrototype.getName(locale)) %>"

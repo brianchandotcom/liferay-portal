@@ -343,7 +343,7 @@ public class JSONFactoryImpl implements JSONFactory {
 	private static final String _NULL_JSON = "{}";
 
 	private static final Object _NULL_JSON_OBJECT = org.json.JSONObject.NULL;
-	
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSONFactoryImpl.class);
 

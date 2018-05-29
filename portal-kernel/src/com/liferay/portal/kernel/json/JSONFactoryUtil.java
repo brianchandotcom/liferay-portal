@@ -100,9 +100,9 @@ public class JSONFactoryUtil {
 	}
 
 	public static Object getNullJSONObject() {
-		return getJSONFactory().getNullJSONObject();	
+		return getJSONFactory().getNullJSONObject();
 	}
-	
+
 	public static JSONObject getUnmodifiableJSONObject() {
 		return getJSONFactory().getUnmodifiableJSONObject();
 	}

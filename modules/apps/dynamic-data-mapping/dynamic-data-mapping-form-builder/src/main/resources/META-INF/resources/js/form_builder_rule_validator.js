@@ -47,6 +47,18 @@ AUI.add(
 						return false;
 					},
 
+					_isEmpty: function(content) {
+						var instance = this;
+
+						var empty = false;
+
+						if (content == '') {
+							empty = true;
+						}
+
+						return empty;
+					},
+
 					_isValidAction: function(action) {
 						var instance = this;
 

@@ -837,6 +837,33 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
+	public void testParseTextWithinAngleBrackets() throws Exception {
+		WikiPageNode wikiPageNode = getWikiPageNode("text-9.creole");
+
+		Assert.assertNotNull(wikiPageNode);
+		Assert.assertEquals(1, wikiPageNode.getChildASTNodesCount());
+
+		ParagraphNode paragraphNode =
+			(ParagraphNode)wikiPageNode.getChildASTNode(0);
+
+		List<ASTNode> astNodes = paragraphNode.getChildASTNodes();
+
+		Assert.assertEquals(astNodes.toString(), 1, astNodes.size());
+
+		LineNode lineNode = (LineNode)paragraphNode.getChildASTNode(0);
+
+		Assert.assertEquals(1, lineNode.getChildASTNodesCount());
+
+		UnformattedTextNode unformattedTextNode =
+			(UnformattedTextNode)lineNode.getChildASTNode(0);
+
+		unformattedTextNode =
+			(UnformattedTextNode)unformattedTextNode.getChildASTNode(0);
+
+		Assert.assertEquals("<<<Text>>>", unformattedTextNode.getContent());
+	}
+
+	@Test
 	public void testSimpleEscapedCharacter() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("escape-1.creole");
 

@@ -1173,5 +1173,6 @@ DASH					: '-';
 STAR					: '*';
 SLASH					: '/';
 EXTENSION				: '@@';
+DOUBLE_LESS_THAN		: '<<';
 
 INSIGNIFICANT_CHAR		: .;

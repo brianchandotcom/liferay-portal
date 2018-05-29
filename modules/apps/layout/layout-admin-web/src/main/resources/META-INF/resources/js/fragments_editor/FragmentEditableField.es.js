@@ -205,12 +205,14 @@ class FragmentEditableField extends Component {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (!this.showMapping) {
-			this._showTooltip = false;
-			this._enableEditor();
-		}
-		else if (getActiveEditableElement() !== this.refs.editable) {
-			this._showTooltip = !this._showTooltip;
+		if (getActiveEditableElement() !== this.refs.editable) {
+			if (!this.showMapping) {
+				this._showTooltip = false;
+				this._enableEditor();
+			}
+			else {
+				this._showTooltip = !this._showTooltip;
+			}
 		}
 	}
 

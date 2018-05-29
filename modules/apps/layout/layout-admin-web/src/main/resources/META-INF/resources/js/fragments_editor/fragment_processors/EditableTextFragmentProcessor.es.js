@@ -37,6 +37,14 @@ const EDITOR_CONFIGURATION = {
 	].join(',')
 };
 
+/**
+ * Enter key keycode
+ * @review
+ * @type {number}
+ */
+
+const KEY_ENTER = 13;
+
 let _editableElement;
 let _editor;
 let _editorEventHandler;
@@ -104,20 +112,22 @@ function init(
 
 	_editor = AlloyEditor.editable(
 		wrapper,
-		object.mixin(
-			defaultEditorConfiguration.editorConfig || {},
-			EDITOR_CONFIGURATION,
-			{
-				title: [
-					portletNamespace,
-					'_FragmentEntryLinkEditable_',
-					fragmentEntryLinkId
-				].join('')
-			}
+		_getEditorConfiguration(
+			editableElement,
+			portletNamespace,
+			fragmentEntryLinkId,
+			defaultEditorConfiguration
 		)
 	);
 
 	const nativeEditor = _editor.get('nativeEditor');
+
+	_editorEventHandler.add(
+		nativeEditor.on(
+			'key',
+			_handleNativeEditorKey
+		)
+	);
 
 	_editorEventHandler.add(
 		nativeEditor.on(
@@ -139,6 +149,60 @@ function init(
 			() => nativeEditor.focus()
 		)
 	);
+}
+
+/**
+ * Returns a configuration object for a AlloyEditor instance.
+ * @param {HTMLElement} editableElement
+ * @param {string} portletNamespace
+ * @param {string} fragmentEntryLinkId
+ * @param {object} defaultEditorConfiguration
+ */
+
+function _getEditorConfiguration(
+	editableElement,
+	portletNamespace,
+	fragmentEntryLinkId,
+	defaultEditorConfiguration
+) {
+	const configuration = {};
+
+	configuration.title = [
+		portletNamespace,
+		'_FragmentEntryLinkEditable_',
+		fragmentEntryLinkId
+	].join('');
+
+	if (editableElement.getAttribute('type') === 'text') {
+		configuration.allowedContent = '';
+		configuration.disallowedContent = 'br';
+		configuration.toolbars = {};
+	}
+
+	return object.mixin(
+		{},
+		defaultEditorConfiguration.editorConfig || {},
+		EDITOR_CONFIGURATION,
+		configuration
+	);
+}
+
+/**
+ * Handle native editor key presses.
+ * It avoids including line breaks on text editors.
+ * @param {Event} event
+ * @private
+ * @review
+ */
+
+function _handleNativeEditorKey(event) {
+	if (
+		event.data.keyCode === KEY_ENTER &&
+		_editableElement &&
+		_editableElement.getAttribute('type') === 'text'
+	) {
+		event.cancel();
+	}
 }
 
 export {destroy, getActiveEditableElement, init};

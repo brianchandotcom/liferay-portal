@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "type=text",
+	immediate = true, property = "type=html",
 	service = EditableElementParser.class
 )
-public class TextEditableElementParser implements EditableElementParser {
+public class HtmlEditableElementParser implements EditableElementParser {
 
 	@Override
 	public String getFieldTemplate() {
@@ -53,7 +53,7 @@ public class TextEditableElementParser implements EditableElementParser {
 
 		document.outputSettings(outputSettings);
 
-		element.html(document.text());
+		element.html(document.html());
 	}
 
 	private static final String _TMPL_VALIDATE_TEXT_FIELD = StringUtil.read(

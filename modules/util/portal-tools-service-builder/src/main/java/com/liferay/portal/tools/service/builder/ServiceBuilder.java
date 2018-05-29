@@ -4407,6 +4407,21 @@ public class ServiceBuilder {
 		return columnLengths;
 	}
 
+	private String _getCommercialCopyright() throws IOException {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		String resourceName = _TPL_ROOT + "copyright-commercial.txt";
+
+		InputStream inputStream = classLoader.getResourceAsStream(resourceName);
+
+		String content = StringUtil.read(inputStream);
+
+		return StringUtil.replace(
+			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
 	private Map<String, Object> _getContext() throws TemplateModelException {
 		BeansWrapper beansWrapper = BeansWrapper.getDefaultInstance();
 
@@ -6969,8 +6984,14 @@ public class ServiceBuilder {
 			String packagePath)
 		throws IOException {
 
+		String header = null;
+
+		if (_commercialPlugin) {
+			header = _getCommercialCopyright();
+		}
+
 		ToolsUtil.writeFile(
-			file, content, author, jalopySettings, modifiedFileNames,
+			file, content, header, author, jalopySettings, modifiedFileNames,
 			packagePath);
 	}
 

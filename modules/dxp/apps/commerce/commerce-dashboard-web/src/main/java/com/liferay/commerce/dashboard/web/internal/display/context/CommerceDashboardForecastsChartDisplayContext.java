@@ -189,6 +189,8 @@ public class CommerceDashboardForecastsChartDisplayContext
 			commerceDashboardPredictiveChartConfig.setColors(colors);
 		}
 
+		commerceDashboardPredictiveChartConfig.setLegend(
+			Collections.singletonMap("show", false));
 		commerceDashboardPredictiveChartConfig.setPredictionDate(
 			_dateFormat.format(predictionDate));
 

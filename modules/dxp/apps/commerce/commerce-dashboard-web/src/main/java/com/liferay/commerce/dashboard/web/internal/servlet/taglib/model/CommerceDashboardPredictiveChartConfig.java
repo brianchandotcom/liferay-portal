@@ -28,8 +28,16 @@ public class CommerceDashboardPredictiveChartConfig
 		return get("colors", Map.class);
 	}
 
+	public Map<String, Object> getLegend() {
+		return get("legend", Map.class);
+	}
+
 	public void setColors(Map<String, String> colors) {
 		set("colors", colors);
+	}
+
+	public void setLegend(Map<String, ?> legend) {
+		set("legend", legend);
 	}
 
 }

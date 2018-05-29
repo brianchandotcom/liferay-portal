@@ -14,10 +14,10 @@
 
 package com.liferay.frontend.taglib.dynamic.section;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -40,19 +40,16 @@ public abstract class BaseJSPDynamicSection implements DynamicSection {
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(getJspPath());
 
-		String result = null;
-
-		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+		try (UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
 			HttpServletResponse httpServletResponse = new PipingServletResponse(
-				(HttpServletResponse)pageContext.getResponse(), outputStream);
+				(HttpServletResponse)pageContext.getResponse(),
+				unsyncStringWriter);
 
 			requestDispatcher.include(
 				pageContext.getRequest(), httpServletResponse);
 
-			result = new String(outputStream.toByteArray());
+			return unsyncStringWriter.getStringBundler();
 		}
-
-		return new StringBundler(result);
 	}
 
 	protected abstract String getJspPath();

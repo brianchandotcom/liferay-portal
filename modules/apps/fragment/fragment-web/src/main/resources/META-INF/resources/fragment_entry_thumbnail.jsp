@@ -15,3 +15,27 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<div class="fragment-thumbnail">
+	<div class="aspect-ratio-item-center-middle aspect-ratio-item-fluid thumbnail-container">
+		<div class="loading-animation"></div>
+	</div>
+
+	<div class="autofit-float autofit-row button-row">
+		<div class="autofit-col">
+			<button class="btn btn-default">
+				<liferay-ui:message key="change" />
+			</button>
+		</div>
+
+		<div class="autofit-col autofit-col-end">
+			<button class="btn btn-default">
+				<liferay-ui:message key="cancel" />
+			</button>
+
+			<button class="btn btn-primary">
+				<liferay-ui:message key="ok" />
+			</button>
+		</div>
+	</div>
+</div>

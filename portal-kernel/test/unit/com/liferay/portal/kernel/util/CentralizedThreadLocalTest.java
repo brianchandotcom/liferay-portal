@@ -206,7 +206,7 @@ public class CentralizedThreadLocalTest {
 	}
 
 	@Test
-	public void testTheadLocalManagement() {
+	public void testThreadLocalManagement() {
 
 		// Initial clean up
 

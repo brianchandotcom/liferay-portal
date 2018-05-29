@@ -280,7 +280,11 @@ public class PortletTracker
 			String jxPortletVersion = (String)serviceReference.getProperty(
 				"javax.portlet.version");
 
-			if (jxPortletVersion != null) {
+			if (jxPortletVersion == null) {
+				bundlePortletApp.setSpecMajorVersion(2);
+				bundlePortletApp.setSpecMinorVersion(0);
+			}
+			else {
 				String[] jxPortletVersionParts = StringUtil.split(
 					jxPortletVersion, CharPool.PERIOD);
 

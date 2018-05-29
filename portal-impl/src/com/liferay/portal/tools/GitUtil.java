@@ -312,14 +312,20 @@ public class GitUtil {
 	}
 
 	protected static int getGitLevel(String baseDirName) throws GitException {
-		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
-			File file = new File(baseDirName + ".git");
+		File dir = new File(baseDirName);
 
-			if (file.exists()) {
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
+			if ((dir == null) || !dir.exists()) {
+				continue;
+			}
+
+			File gitFile = new File(dir, ".git");
+
+			if (gitFile.exists()) {
 				return i;
 			}
 
-			baseDirName = "../" + baseDirName;
+			dir = dir.getParentFile();
 		}
 
 		throw new GitException(

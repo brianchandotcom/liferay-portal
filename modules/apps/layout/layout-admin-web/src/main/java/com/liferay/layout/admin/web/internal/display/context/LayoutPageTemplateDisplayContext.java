@@ -118,6 +118,17 @@ public class LayoutPageTemplateDisplayContext {
 							LanguageUtil.get(
 								_request, "content-page-template"));
 					});
+
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData(
+							"action", "addLayoutPageTemplateEntry");
+						dropdownItem.putData(
+							"submitURL", _getAddLayoutPrototypeURL());
+						dropdownItem.setHref("#");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "widget-page-template"));
+					});
 			}
 		};
 	}
@@ -461,6 +472,19 @@ public class LayoutPageTemplateDisplayContext {
 			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
 		actionURL.setParameter(
 			"redirect", String.valueOf(_renderResponse.createRenderURL()));
+		actionURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(getLayoutPageTemplateCollectionId()));
+
+		return actionURL.toString();
+	}
+
+	private String _getAddLayoutPrototypeURL() {
+		PortletURL actionURL = _renderResponse.createActionURL();
+
+		actionURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout_prototype/add_layout_prototype");
 		actionURL.setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(getLayoutPageTemplateCollectionId()));

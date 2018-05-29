@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,16 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/layout/edit_layout/init.jsp" %>
+package com.liferay.layout.type.controller.content.internal.constants;
 
-<liferay-portlet:runtime
-	portletName="<%= ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET %>"
-/>
+/**
+ * @author Eudaldo Alonso
+ */
+public class ContentLayoutPortletKeys {
 
-<liferay-ui:layout-common />
+	public static final String CONTENT_PAGE_EDITOR_PORTLET =
+		"com_liferay_layout_type_controller_content_internal_portlet_" +
+			"ContentPageEditorPortlet";
+
+}

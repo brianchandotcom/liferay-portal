@@ -17,15 +17,13 @@
 		label: string
 	]>}
 
-	<div class="lfr-editable-wrapper">
-		<lfr-editable
-			data-onclick="{$_handleEditableClick}"
-			id="{$editableId}"
-			ref="editable"
-			type="{$type}"
-		>
-			{$content}
-		</lfr-editable>
+	<lfr-editable
+		data-onclick="{$_handleEditableClick}"
+		id="{$editableId}"
+		ref="editable"
+		type="{$type}"
+	>
+		{$content}
 
 		{if $_showTooltip and $_tooltipAlignElement and $_tooltipButtons}
 			{call com.liferay.layout.admin.web.FragmentEditableFieldTooltip.render}
@@ -38,5 +36,5 @@
 				{param portalElement: 'body' /}
 			{/call}
 		{/if}
-	</div>
+	</lfr-editable>
 {/template}

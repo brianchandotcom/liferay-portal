@@ -23,7 +23,6 @@ import io.spring.gradle.dependencymanagement.dsl.ImportsHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -40,7 +39,7 @@ public class TargetPlatformPluginUtil {
 	public static void configureDependencyManagement(
 		final Project project,
 		final Configuration targetPlatformBomsConfiguration,
-		Set<Object> configurationNames) {
+		Iterable<?> configurationNames) {
 
 		final DependencyManagementExtension dependencyManagementExtension =
 			GradleUtil.getExtension(
@@ -55,8 +54,15 @@ public class TargetPlatformPluginUtil {
 			project.getConfigurations();
 
 		for (Object configurationName : configurationNames) {
-			Configuration configuration = configurationContainer.findByName(
-				GradleUtil.toString(configurationName));
+			Configuration configuration = null;
+
+			if (configurationName instanceof Configuration) {
+				configuration = (Configuration)configurationName;
+			}
+			else {
+				configuration = configurationContainer.findByName(
+					GradleUtil.toString(configurationName));
+			}
 
 			if (configuration != null) {
 				args.add(configuration);

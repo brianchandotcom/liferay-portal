@@ -21,7 +21,6 @@ import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformPl
 import groovy.lang.Closure;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -43,27 +42,23 @@ public class TargetPlatformExtension {
 	}
 
 	public TargetPlatformExtension applyToConfiguration(
-		Iterable<?> applyToConfiguration) {
+		Iterable<?> configurationNames) {
 
 		Configuration targetPlatformBomsConfiguration =
 			GradleUtil.getConfiguration(
 				_project,
 				TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
 
-		Set<Object> applyToConfigurationSet = new HashSet<>();
-
-		GUtil.addToCollection(applyToConfigurationSet, applyToConfiguration);
-
 		TargetPlatformPluginUtil.configureDependencyManagement(
-			_project, targetPlatformBomsConfiguration, applyToConfigurationSet);
+			_project, targetPlatformBomsConfiguration, configurationNames);
 
 		return this;
 	}
 
 	public TargetPlatformExtension applyToConfiguration(
-		Object... applyToConfiguration) {
+		Object... configurationNames) {
 
-		return applyToConfiguration(Arrays.asList(applyToConfiguration));
+		return applyToConfiguration(Arrays.asList(configurationNames));
 	}
 
 	public Spec<Project> getOnlyIf() {

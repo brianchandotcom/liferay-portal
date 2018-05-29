@@ -24,8 +24,7 @@ import groovy.lang.Closure;
 
 import io.spring.gradle.dependencymanagement.DependencyManagementPlugin;
 
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -106,14 +105,9 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 						targetPlatformBundlesConfiguration,
 						targetPlatformRequirementsConfiguration);
 
-					Set<Object> configurationNames = new HashSet<>();
-
-					Collections.addAll(
-						configurationNames, _CONFIGURATION_NAMES);
-
 					TargetPlatformPluginUtil.configureDependencyManagement(
 						project, targetPlatformBomsConfiguration,
-						configurationNames);
+						_configurationNames);
 				}
 
 			});
@@ -283,12 +277,8 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(subproject, DependencyManagementPlugin.class);
 
-		Set<Object> configurationNames = new HashSet<>();
-
-		Collections.addAll(configurationNames, _CONFIGURATION_NAMES);
-
 		TargetPlatformPluginUtil.configureDependencyManagement(
-			subproject, targetPlatformBomsConfiguration, configurationNames);
+			subproject, targetPlatformBomsConfiguration, _configurationNames);
 
 		spec = targetPlatformExtension.getResolveOnlyIf();
 
@@ -344,16 +334,14 @@ public class TargetPlatformPlugin implements Plugin<Project> {
 			});
 	}
 
-	private static final String[] _CONFIGURATION_NAMES = {
+	private static final Iterable<String> _configurationNames = Arrays.asList(
 		JavaPlugin.COMPILE_CONFIGURATION_NAME, "compileClasspath",
 		"compileInclude", "compileOnly", Dependency.DEFAULT_CONFIGURATION,
 		"implementation", JavaPlugin.RUNTIME_CONFIGURATION_NAME,
 		"runtimeClasspath", "runtimeImplementation", "runtimeOnly",
 		"testCompileClasspath", "testCompileOnly", "testIntegration",
 		"testImplementation", JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME,
-		"testRuntimeClasspath", "testRuntimeOnly"
-	};
-
+		"testRuntimeClasspath", "testRuntimeOnly");
 	private static final Spec<Task> _skipIfExecutingParentTaskSpec =
 		new SkipIfExecutingParentTaskSpec();
 

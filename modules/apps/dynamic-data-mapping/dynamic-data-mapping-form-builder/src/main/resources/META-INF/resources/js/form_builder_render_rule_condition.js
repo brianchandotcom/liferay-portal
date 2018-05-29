@@ -543,12 +543,24 @@ AUI.add(
 
 				var secondOperandFields = instance._getSecondOperand(index, 'fields');
 				var secondOperandOptions = instance._getSecondOperand(index, 'options');
+				var secondOperandsInputDate = instance._getSecondOperand(index, 'input-date');
+				var secondOperandsInputDecimal = instance._getSecondOperand(index, 'input-decimal');
+				var secondOperandsInputInteger = instance._getSecondOperand(index, 'input-integer');
+				var secondOperandsInputText = instance._getSecondOperand(index, 'input-text');
 
 				instance._setVisibleToOperandField(secondOperandFields, false);
 				instance._setVisibleToOperandField(secondOperandOptions, false);
+				instance._setVisibleToOperandField(secondOperandsInputDate, false);
+				instance._setVisibleToOperandField(secondOperandsInputDecimal, false);
+				instance._setVisibleToOperandField(secondOperandsInputInteger, false);
+				instance._setVisibleToOperandField(secondOperandsInputText, false);
 
 				secondOperandFields.set('value', '');
 				secondOperandOptions.set('value', '');
+				secondOperandsInputDate.set('value', '');
+				secondOperandsInputDecimal.set('value', '');
+				secondOperandsInputInteger.set('value', '');
+				secondOperandsInputText.set('value', '');
 			},
 
 			_hideSecondOperandTypeField: function(index) {

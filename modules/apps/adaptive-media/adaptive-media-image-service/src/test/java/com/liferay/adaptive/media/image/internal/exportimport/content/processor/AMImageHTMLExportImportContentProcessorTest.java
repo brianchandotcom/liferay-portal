@@ -148,13 +148,13 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		expectedSB.append(prefix);
 		expectedSB.append("<img src=\"");
 		expectedSB.append(urlFileEntry1);
-		expectedSB.append("\" data-fileEntryId=\"");
+		expectedSB.append("\" data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\" />");
 		expectedSB.append(infix);
 		expectedSB.append("<img src=\"");
 		expectedSB.append(urlFileEntry2);
-		expectedSB.append("\" data-fileEntryId=\"");
+		expectedSB.append("\" data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_2);
 		expectedSB.append("\" />");
 		expectedSB.append(suffix);
@@ -193,19 +193,19 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		StringBundler expectedSB = new StringBundler(17);
 
 		expectedSB.append(prefix);
-		expectedSB.append("<picture data-fileEntryId=\"");
+		expectedSB.append("<picture data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\"><source /><img src=\"");
 		expectedSB.append(urlFileEntry1);
-		expectedSB.append("\" data-fileEntryId=\"");
+		expectedSB.append("\" data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\" /></picture>");
 		expectedSB.append(infix);
-		expectedSB.append("<picture data-fileEntryId=\"");
+		expectedSB.append("<picture data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_2);
 		expectedSB.append("\"><source /><img src=\"");
 		expectedSB.append(urlFileEntry2);
-		expectedSB.append("\" data-fileEntryId=\"");
+		expectedSB.append("\" data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_2);
 		expectedSB.append("\" /></picture>");
 		expectedSB.append(suffix);
@@ -217,7 +217,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\"><img src=\"");
 		sb.append(urlFileEntry1);
-		sb.append("\" data-fileEntryId=\"");
+		sb.append("\" data-fileentryid=\"");
 		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" /></picture>");
 		sb.append(infix);
@@ -225,7 +225,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		sb.append(_FILE_ENTRY_ID_2);
 		sb.append("\"><img src=\"");
 		sb.append(urlFileEntry2);
-		sb.append("\" data-fileEntryId=\"");
+		sb.append("\" data-fileentryid=\"");
 		sb.append(_FILE_ENTRY_ID_2);
 		sb.append("\" /></picture>");
 		sb.append(suffix);
@@ -255,7 +255,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		expectedSB.append(prefix);
 		expectedSB.append("<img src=\"");
 		expectedSB.append(urlFileEntry1);
-		expectedSB.append("\" data-fileEntryId=\"");
+		expectedSB.append("\" data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\" />");
 		expectedSB.append(suffix);
@@ -288,7 +288,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		expectedSB.append(prefix);
 		expectedSB.append("<img attr1=\"1\" attr2=\"2\" src=\"");
 		expectedSB.append(urlFileEntry1);
-		expectedSB.append("\" attr3=\"3\" data-fileEntryId=\"");
+		expectedSB.append("\" attr3=\"3\" data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\" />");
 		expectedSB.append(suffix);
@@ -317,11 +317,11 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		StringBundler expectedSB = new StringBundler(9);
 
 		expectedSB.append(prefix);
-		expectedSB.append("<picture data-fileEntryId=\"");
+		expectedSB.append("<picture data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\"><source /><img src=\"");
 		expectedSB.append(urlFileEntry1);
-		expectedSB.append("\" data-fileEntryId=\"");
+		expectedSB.append("\" data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\" /></picture>");
 		expectedSB.append(suffix);
@@ -333,7 +333,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\"><img src=\"");
 		sb.append(urlFileEntry1);
-		sb.append("\" data-fileEntryId=\"");
+		sb.append("\" data-fileentryid=\"");
 		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" /></picture>");
 		sb.append(suffix);
@@ -350,11 +350,11 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 		StringBundler expectedSB = new StringBundler(7);
 
-		expectedSB.append("<picture data-fileEntryId=\"");
+		expectedSB.append("<picture data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\"><source /><img src=\"");
 		expectedSB.append(urlFileEntry1);
-		expectedSB.append("\" class=\"pretty\" data-fileEntryId=\"");
+		expectedSB.append("\" class=\"pretty\" data-fileentryid=\"");
 		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\" /></picture>");
 
@@ -364,7 +364,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\"><img src=\"");
 		sb.append(urlFileEntry1);
-		sb.append("\" class=\"pretty\" data-fileEntryId=\"");
+		sb.append("\" class=\"pretty\" data-fileentryid=\"");
 		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" /></picture>");
 

@@ -14,6 +14,7 @@
 
 package com.liferay.adaptive.media.upload.web.internal.attachment;
 
+import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.upload.AttachmentElementReplacer;
 
@@ -46,7 +47,8 @@ public class AMHTMLImageAttachmentElementReplacer
 				originalElement, fileEntry));
 
 		imageElement.attr(
-			"data-fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+			AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME,
+			String.valueOf(fileEntry.getFileEntryId()));
 
 		return imageElement.toString();
 	}

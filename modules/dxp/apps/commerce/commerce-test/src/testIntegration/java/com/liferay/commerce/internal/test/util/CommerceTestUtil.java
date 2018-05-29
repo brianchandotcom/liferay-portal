@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.internal.test.util;
 
-import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -42,13 +41,6 @@ public class CommerceTestUtil {
 	public static CommerceOrder addCommerceOrder(long groupId)
 		throws Exception {
 
-		return addCommerceOrder(
-			groupId, CommerceOrderConstants.ORDER_STATUS_COMPLETED);
-	}
-
-	public static CommerceOrder addCommerceOrder(long groupId, int orderStatus)
-		throws Exception {
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
@@ -60,6 +52,14 @@ public class CommerceTestUtil {
 			long commerceOrderId, long cpInstanceId)
 		throws Exception {
 
+		return addCommerceOrderItem(
+			commerceOrderId, cpInstanceId, RandomTestUtil.randomInt());
+	}
+
+	public static CommerceOrderItem addCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId, int quantity)
+		throws Exception {
+
 		CommerceOrder commerceOrder =
 			CommerceOrderLocalServiceUtil.getCommerceOrder(commerceOrderId);
 
@@ -68,9 +68,9 @@ public class CommerceTestUtil {
 				commerceOrder.getGroupId());
 
 		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
-			commerceOrderId, cpInstanceId, RandomTestUtil.randomInt(),
-			RandomTestUtil.randomInt(), null,
-			new BigDecimal(RandomTestUtil.nextDouble()), null, serviceContext);
+			commerceOrderId, cpInstanceId, quantity, RandomTestUtil.randomInt(),
+			null, new BigDecimal(RandomTestUtil.nextDouble()), null,
+			serviceContext);
 	}
 
 	public static CommerceWarehouse addCommerceWarehouse(long groupId)

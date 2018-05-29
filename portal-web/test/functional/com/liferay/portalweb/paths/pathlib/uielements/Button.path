@@ -759,6 +759,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MAIN_CONTENT_SUBMIT</td>
+	<td>//div[@id='main-content']//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MODAL_CONTENT_SUBMIT</td>
 	<td>//div[@class='modal-content']//button[contains(.,'Submit')]</td>
 	<td></td>

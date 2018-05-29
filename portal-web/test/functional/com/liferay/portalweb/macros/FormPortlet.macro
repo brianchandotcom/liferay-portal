@@ -14,7 +14,7 @@
 	</command>
 
 	<command name="clickSubmit">
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
+		<execute function="AssertClick" locator1="Button#MAIN_CONTENT_SUBMIT" value1="Submit" />
 	</command>
 
 	<command name="gotoFormPage">
@@ -55,9 +55,7 @@
 	</command>
 
 	<command name="submitLocalizedSuccessfully">
-		<execute macro="Button#clickSubmitLocalized">
-			<var name="buttonName" value="${buttonName}" />
-		</execute>
+		<execute function="AssertClick" locator1="Button#MAIN_CONTENT_SUBMIT" value1="${buttonName}" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

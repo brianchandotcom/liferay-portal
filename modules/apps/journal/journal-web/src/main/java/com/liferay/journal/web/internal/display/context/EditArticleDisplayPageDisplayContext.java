@@ -99,9 +99,15 @@ public class EditArticleDisplayPageDisplayContext {
 			return _assetDisplayPageId;
 		}
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			journalArticle.getGroupId(),
 			journalArticle.getArticleResourceUuid());
+
+		if (assetEntry == null) {
+			_assetDisplayPageId = assetDisplayPageId;
+
+			return _assetDisplayPageId;
+		}
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			AssetDisplayPageEntryLocalServiceUtil.

@@ -403,7 +403,14 @@ AUI.add(
 					return instance._conditions[index + '-condition-second-operand-select'];
 				case 'options':
 					return instance._conditions[index + '-condition-second-operand-options-select'];
+				case 'input-integer':
+					return instance._conditions[index + '-condition-second-operand-input-integer'];
+				case 'input-decimal':
+					return instance._conditions[index + '-condition-second-operand-input-decimal'];
+				case 'input-date':
+					return instance._conditions[index + '-condition-second-operand-input-date'];
 				default:
+					return instance._conditions[index + '-condition-second-operand-input-text'];
 				}
 			},
 

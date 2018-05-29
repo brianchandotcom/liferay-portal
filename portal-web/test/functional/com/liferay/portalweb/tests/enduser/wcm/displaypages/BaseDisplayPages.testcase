@@ -33,6 +33,24 @@
 		</if>
 	</tear-down>
 
+	<command name="AddBlankDisplayPage" priority="3">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
 	<command name="AssertAssetTypeOnlySelectableOnce" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
@@ -56,7 +74,76 @@
 		<execute macro="DisplayPages#assertAssetTypeUnselectable" />
 	</command>
 
-	<command name="AssertCannotDeleteDisplayPageInUse" priority="4">
+	<command name="DeleteDisplayPage" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#delete">
+			<var name="rowEntry" value="Display Page Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="Display Page Name" />
+		</execute>
+	</command>
+
+	<command name="RenameDisplayPage" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#add">
+			<var name="pageTemplateName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#rename">
+			<var name="pageTemplateName" value="Display Page Name New" />
+			<var name="rowEntry" value="Display Page Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="Display Page Name New" />
+		</execute>
+	</command>
+
+	<command name="ViewCannotDeleteActiveDisplayPage" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -111,93 +198,6 @@
 		<execute macro="LexiconEntry#delete">
 			<var name="failure" value="You cannot delete asset display pages that are used by one or more assets." />
 			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-	</command>
-
-	<command name="DeleteDisplayPage" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
-
-		<execute macro="LexiconEntry#delete">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#viewNoEntry">
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-	</command>
-
-	<command name="PublishBlankDisplayPage" priority="3">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-	</command>
-
-	<command name="RenameDisplayPage" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Display Pages" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#rename">
-			<var name="pageTemplateName" value="Display Page Name New" />
-			<var name="rowEntry" value="Display Page Name" />
-		</execute>
-
-		<execute macro="LexiconEntry#viewEntryName">
-			<var name="rowEntry" value="Display Page Name New" />
 		</execute>
 	</command>
 </definition>

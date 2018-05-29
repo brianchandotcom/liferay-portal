@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.dynamic.section.servlet.taglib;
 
 import com.liferay.frontend.taglib.dynamic.section.internal.util.DynamicSectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.taglib.BaseBodyTagSupport;
 
@@ -40,7 +39,7 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 			else if (_hasServices) {
 				ServletRequest servletRequest = pageContext.getRequest();
 
-				String key = _generateKey(_name);
+				String key = _PREFIX.concat(_name);
 
 				StringBundler sb = null;
 
@@ -98,9 +97,8 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 		_useOriginalBody = useOriginalBody;
 	}
 
-	private String _generateKey(String name) {
-		return DynamicSectionTag.class.getName() + "#" + name;
-	}
+	private static final String _PREFIX =
+		DynamicSectionTag.class.getName() + "#";
 
 	private boolean _hasReplace;
 	private boolean _hasServices;

@@ -93,8 +93,8 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 	}
 
 	private void _checkDynamicMethod(
-		DetailAST classDefAST, DetailAST methodDefAST,
-		String methodName, String defaultUnbindMethodName) {
+		DetailAST classDefAST, DetailAST methodDefAST, String methodName,
+		String defaultUnbindMethodName) {
 
 		String methodBody = _getMethodBody(methodDefAST);
 

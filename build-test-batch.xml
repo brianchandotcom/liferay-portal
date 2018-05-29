@@ -1943,6 +1943,102 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="wait-for-app-server-log-message">
+		<attribute name="log.message" />
+
+		<sequential>
+			<local name="timed.out.message" />
+
+			<beanshell>
+				<![CDATA[
+					import java.io.File;
+
+					import org.apache.commons.io.FileUtils;
+
+					import org.apache.tools.ant.DirectoryScanner;
+
+					public String getCatalinaLogFilesContent() {
+						Map catalinaLogFiles = new TreeMap();
+
+						DirectoryScanner directoryScanner = new DirectoryScanner();
+
+						File liferayHomeDir = new File(project.getProperty("liferay.home"));
+
+						String canonicalLogFileLocation = liferayHomeDir.getCanonicalPath();
+
+						directoryScanner.setIncludes(new String[] {canonicalLogFileLocation + "/logs/liferay.*.log"});
+
+						directoryScanner.scan();
+
+						for (String filePath : directoryScanner.getIncludedFiles()) {
+							String osName = project.getProperty("os.name");
+
+							osName = osName.toLowerCase();
+
+							if (osName.contains("win")) {
+								filePath = filePath.replace("/", "\\");
+							}
+
+							File file = new File(filePath);
+
+							catalinaLogFiles.put(Long.toString(file.lastModified()), file);
+						}
+
+						StringBuilder sb = new StringBuilder();
+
+						SortedSet keys = new TreeSet(catalinaLogFiles.keySet());
+
+						for (String key : keys) {
+							File file = catalinaLogFiles.get(key);
+
+							sb.append(FileUtils.readFileToString(file));
+						}
+
+						return sb.toString();
+					}
+
+					System.out.println("Waiting for '@{log.message}' to appear in log message");
+
+					int timeout = Integer.parseInt(project.getProperty("timeout.app.server.wait"));
+
+					int second = 0;
+
+					while (true) {
+						try {
+							String content = getCatalinaLogFilesContent();
+
+							if (content.contains("@{log.message}")) {
+								break;
+							}
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						if (second >= timeout) {
+							project.setProperty("timed.out.message", "Unable to find log message after " + (timeout / 60) + " minutes.");
+
+							break;
+						}
+
+						second++;
+
+						Thread.sleep(1000);
+					}
+				]]>
+			</beanshell>
+
+			<if>
+				<isset property="timed.out.message" />
+				<then>
+					<get-jstack-output process.name="Bootstrap" />
+
+					<fail message="${timed.out.message}${line.separator}${jstack.output}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<target name="blade-samples-jdk8">
 		<run-batch-test>
 			<test-action>

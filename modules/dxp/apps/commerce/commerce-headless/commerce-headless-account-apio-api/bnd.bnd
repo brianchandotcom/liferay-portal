@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Headless Account Apio API
-Bundle-SymbolicName: com.liferay.commerce.headless.account.apio.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.commerce.headless.account.apio.identifier

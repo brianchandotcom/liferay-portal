@@ -1,4 +1,0 @@
-dependencies {
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compileOnly group: "com.liferay", name: "com.liferay.apio.architect.api", version: "1.0.0-20180517.232708-32"
-}

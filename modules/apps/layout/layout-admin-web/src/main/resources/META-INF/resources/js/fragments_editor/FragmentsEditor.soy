@@ -173,19 +173,20 @@
 			{/if}
 
 			{call com.liferay.layout.admin.web.FragmentsEditorSidebar.render}
+				{param events: [
+					'collectionEntryClick': $_handleFragmentCollectionEntryClick,
+					'fragmentRemoveButtonClick': $_handleFragmentRemove,
+					'hide': $_handleHideContextualSidebar,
+					'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
+					'toggleHighlightMapping': $_handleToggleHighlightMapping
+				] /}
 				{param fragmentCollections: $fragmentCollections /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param sidebarTabs: $sidebarTabs /}
 				{param spritemap: $spritemap /}
-				{param _contextualSidebarVisible: $_contextualSidebarVisible /}
-				{param _handleFragmentRemove: $_handleFragmentRemove /}
-				{param _handleFragmentCollectionEntryClick: $_handleFragmentCollectionEntryClick /}
-				{param _handleHideContextualSidebar: $_handleHideContextualSidebar /}
-				{param _handleSelectAssetTypeButtonClick: $_handleSelectAssetTypeButtonClick /}
+				{param visible: $_contextualSidebarVisible ?: false /}
 				{param _handleSidebarTabClick: $_handleSidebarTabClick /}
-				{param _handleToggleHighlightMapping: $_handleToggleHighlightMapping /}
-				{param _handleToggleContextualSidebarButtonClick: $_handleToggleContextualSidebarButtonClick /}
 				{param _highlightMapping: $_highlightMapping /}
 				{param _sidebarSelectedTab: $_sidebarSelectedTab /}
 			{/call}

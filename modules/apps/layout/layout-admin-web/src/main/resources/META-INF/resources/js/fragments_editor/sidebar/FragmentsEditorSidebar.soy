@@ -4,21 +4,38 @@
  * FragmentsEditorSidebar
  */
 {template .render}
-	{@param fragmentCollections: ?}
-	{@param fragmentEntryLinks: ?}
-	{@param selectedMappingTypes: ?}
-	{@param sidebarTabs: ?}
-	{@param spritemap: ?}
-	{@param? _contextualSidebarVisible: ?}
-	{@param? _handleFragmentRemove: ?}
-	{@param? _handleFragmentCollectionEntryClick: ?}
-	{@param? _handleHideContextualSidebar: ?}
-	{@param? _handleSelectAssetTypeButtonClick: ?}
-	{@param? _handleSidebarTabClick: ?}
-	{@param? _handleToggleHighlightMapping: ?}
-	{@param? _handleToggleContextualSidebarButtonClick: ?}
-	{@param? _highlightMapping: ?}
-	{@param? _sidebarSelectedTab: ?}
+	{@param fragmentCollections: list<[
+		fragmentEntries: list<[
+			fragmentEntryId: string,
+			imagePreviewURL: string,
+			name: string
+		]>,
+		fragmentCollectionId: string,
+		name: string
+	]>}
+	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
+	{@param spritemap: string}
+	{@param visible: bool}
+	{@param? _handleSidebarTabClick: any}
+	{@param? _handleHideSidebarButtonClick: any}
+	{@param? _highlightMapping: bool}
+	{@param? _sidebarSelectedTab: string}
+	{@param? fragmentEntryLinks: list<[
+		content: html|null,
+		editableValues: ?,
+		fragmentEntryLinkId: number,
+		name: string
+	]>}
+	{@param? selectedMappingTypes: [
+		subtype: [
+			id: string,
+			label: string
+		],
+		type: [
+			id: string,
+			label: string
+		]
+	]}
 
 	{call liferay.frontend.ContextualSidebar.render}
 		{param body kind="html"}
@@ -44,23 +61,20 @@
 
 			{if $_sidebarSelectedTab == 'available'}
 				{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
-					{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
 					{param fragmentCollections: $fragmentCollections /}
+					{param ref: 'sidebarTab' /}
 					{param spritemap: $spritemap /}
 				{/call}
 			{elseif $_sidebarSelectedTab == 'added'}
 				{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
-					{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemove] /}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
+					{param ref: 'sidebarTab' /}
 					{param spritemap: $spritemap /}
 				{/call}
 			{elseif $_sidebarSelectedTab == 'mapping'}
 				{call com.liferay.layout.admin.web.SidebarMapping.render}
-					{param events: [
-						'selectAssetTypeButtonClick': $_handleSelectAssetTypeButtonClick,
-						'toggleHighlightMapping': $_handleToggleHighlightMapping
-					] /}
 					{param highlightMapping: $_highlightMapping ?: false /}
+					{param ref: 'sidebarTab' /}
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param spritemap: $spritemap /}
 				{/call}
@@ -68,10 +82,6 @@
 		{/param}
 
 		{param elementClasses: 'fragments-editor-sidebar' /}
-
-		{param events: [
-			'hide': $_handleHideContextualSidebar
-		]/}
 
 		{param header kind="html"}
 			<div class="autofit-row sidebar-section">
@@ -86,7 +96,7 @@
 				<div class="autofit-col">
 					<button
 						class="component-action"
-						data-onclick="{$_handleToggleContextualSidebarButtonClick}"
+						data-onclick="{$_handleHideSidebarButtonClick}"
 						type="button"
 					>
 						<svg class="icon-monospaced lexicon-icon">
@@ -97,7 +107,8 @@
 			</div>
 		{/param}
 
-		{param visible: $_contextualSidebarVisible ?: true /}
+		{param ref: 'contextualSidebar' /}
+		{param visible: $visible /}
 	{/call}
 {/template}
 

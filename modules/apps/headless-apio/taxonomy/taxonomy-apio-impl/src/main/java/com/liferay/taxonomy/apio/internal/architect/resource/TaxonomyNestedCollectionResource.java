@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import com.liferay.taxonomy.apio.identifier.architect.TaxonomyIdentifier;
+import com.liferay.taxonomy.apio.architect.identifier.TaxonomyIdentifier;
 import com.liferay.taxonomy.apio.internal.architect.form.TaxonomyForm;
 
 import java.util.List;

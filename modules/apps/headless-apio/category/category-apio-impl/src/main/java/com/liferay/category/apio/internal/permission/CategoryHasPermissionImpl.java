@@ -23,14 +23,14 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
-import com.liferay.category.apio.identifier.architect.CategoryIdentifier;
+import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
-import com.liferay.taxonomy.apio.identifier.architect.TaxonomyIdentifier;
+import com.liferay.taxonomy.apio.architect.identifier.TaxonomyIdentifier;
 
 import java.util.function.BiFunction;
 

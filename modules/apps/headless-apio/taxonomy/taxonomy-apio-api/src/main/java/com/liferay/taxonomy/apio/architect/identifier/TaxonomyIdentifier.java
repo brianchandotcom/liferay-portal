@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taxonomy.apio.identifier.architect;
+package com.liferay.taxonomy.apio.architect.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 

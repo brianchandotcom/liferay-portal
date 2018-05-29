@@ -1919,10 +1919,10 @@ public class PortalImpl implements Portal {
 
 		Set<Group> groups = new LinkedHashSet<>();
 
-		for (int i = 0; i < groupIds.length; i++) {
+		for (long groupId : groupIds) {
 			groups.addAll(
 				getCurrentAndAncestorSiteGroups(
-					groupIds[i], checkContentSharingWithChildrenEnabled));
+					groupId, checkContentSharingWithChildrenEnabled));
 		}
 
 		return new ArrayList<>(groups);

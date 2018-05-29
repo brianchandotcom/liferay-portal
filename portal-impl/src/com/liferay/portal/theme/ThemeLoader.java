@@ -65,13 +65,13 @@ public class ThemeLoader {
 			return;
 		}
 
-		for (int i = 0; i < files.length; i++) {
+		for (File directory : files) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Process directory " + files[i]);
+				_log.debug("Process directory " + directory);
 			}
 
 			File liferayLookAndFeelXML = new File(
-				files[i] + "/liferay-look-and-feel.xml");
+				directory + "/liferay-look-and-feel.xml");
 
 			if (liferayLookAndFeelXML.exists()) {
 				String lastModifiedKey = liferayLookAndFeelXML.toString();

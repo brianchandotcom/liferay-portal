@@ -239,9 +239,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 	private List<Map<String, Object>> _buildTypes() {
 		List<Map<String, Object>> types = new ArrayList<>();
 
-		for (int i = 0; i < _types.size(); i++) {
-			Class<?> type = _types.get(i);
-
+		for (Class<?> type : _types) {
 			Map<String, Object> map = new LinkedHashMap<>();
 
 			types.add(map);

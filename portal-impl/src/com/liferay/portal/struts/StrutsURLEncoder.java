@@ -47,12 +47,12 @@ public class StrutsURLEncoder implements URLEncoder {
 
 		String[] params = StringUtil.split(queryString, '&');
 
-		for (int i = 0; i < params.length; i++) {
-			int pos = params[i].indexOf("=");
+		for (String curParam : params) {
+			int pos = curParam.indexOf("=");
 
 			if (pos != -1) {
-				String param = params[i].substring(0, pos);
-				String value = params[i].substring(pos + 1);
+				String param = curParam.substring(0, pos);
+				String value = curParam.substring(pos + 1);
 
 				if (param.equals("windowState")) {
 					try {

@@ -285,8 +285,8 @@ public class InstanceWrapperBuilder {
 		sb.append(type.getValue());
 		sb.append("<");
 
-		for (int i = 0; i < actualTypeArguments.length; i++) {
-			sb.append(_getTypeGenericsName(actualTypeArguments[i]));
+		for (Type actualTypeArgument : actualTypeArguments) {
+			sb.append(_getTypeGenericsName(actualTypeArgument));
 			sb.append(", ");
 		}
 

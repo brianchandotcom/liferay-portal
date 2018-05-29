@@ -273,9 +273,8 @@ public abstract class BaseDB implements DB {
 		try {
 			s = con.createStatement();
 
-			for (int i = 0; i < sqls.length; i++) {
-				String sql = buildSQL(
-					applyMaxStringIndexLengthLimitation(sqls[i]));
+			for (String sql : sqls) {
+				sql = buildSQL(applyMaxStringIndexLengthLimitation(sql));
 
 				sql = SQLTransformer.transform(sql.trim());
 
@@ -1041,9 +1040,9 @@ public abstract class BaseDB implements DB {
 
 					String portalTableData = portalData.substring(x, y);
 
-					for (int i = 0; i < columns.length; i++) {
+					for (String column : columns) {
 						if (portalTableData.contains(
-								columns[i].trim() + " BOOLEAN")) {
+								column.trim() + " BOOLEAN")) {
 
 							append = false;
 

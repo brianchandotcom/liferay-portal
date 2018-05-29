@@ -78,9 +78,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs)
 		throws PortalException {
 
-		for (int i = 0; i < inputStreamOVPs.size(); i++) {
-			ObjectValuePair<String, InputStream> inputStreamOVP =
-				inputStreamOVPs.get(i);
+		for (ObjectValuePair<String, InputStream> inputStreamOVP :
+				inputStreamOVPs) {
 
 			InputStream inputStream = inputStreamOVP.getValue();
 			String fileName = inputStreamOVP.getKey();

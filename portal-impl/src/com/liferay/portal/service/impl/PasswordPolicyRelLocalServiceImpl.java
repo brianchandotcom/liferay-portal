@@ -67,8 +67,8 @@ public class PasswordPolicyRelLocalServiceImpl
 	public void addPasswordPolicyRels(
 		long passwordPolicyId, String className, long[] classPKs) {
 
-		for (int i = 0; i < classPKs.length; i++) {
-			addPasswordPolicyRel(passwordPolicyId, className, classPKs[i]);
+		for (long classPK : classPKs) {
+			addPasswordPolicyRel(passwordPolicyId, className, classPK);
 		}
 	}
 
@@ -123,8 +123,8 @@ public class PasswordPolicyRelLocalServiceImpl
 	public void deletePasswordPolicyRels(
 		long passwordPolicyId, String className, long[] classPKs) {
 
-		for (int i = 0; i < classPKs.length; i++) {
-			deletePasswordPolicyRel(passwordPolicyId, className, classPKs[i]);
+		for (long classPK : classPKs) {
+			deletePasswordPolicyRel(passwordPolicyId, className, classPK);
 		}
 	}
 

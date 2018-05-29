@@ -835,10 +835,10 @@ public class HtmlImpl implements Html {
 		if ((pos + tag.length + 1) <= text.length()) {
 			char item = '\0';
 
-			for (int i = 0; i < tag.length; i++) {
+			for (char c : tag) {
 				item = text.charAt(pos++);
 
-				if (Character.toLowerCase(item) != tag[i]) {
+				if (Character.toLowerCase(item) != c) {
 					return false;
 				}
 			}

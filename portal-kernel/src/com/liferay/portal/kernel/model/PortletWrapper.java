@@ -763,6 +763,46 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the maximum size of buffered bytes before storing occurs.
+	*
+	* @return the maximum size of buffered bytes before storing occurs
+	*/
+	@Override
+	public int getMultipartFileSizeThreshold() {
+		return _portlet.getMultipartFileSizeThreshold();
+	}
+
+	/**
+	* Returns the directory for storing uploaded files.
+	*
+	* @return the directory for storing uploaded files
+	*/
+	@Override
+	public String getMultipartLocation() {
+		return _portlet.getMultipartLocation();
+	}
+
+	/**
+	* Returns the maximum number of bytes permitted for an uploaded file.
+	*
+	* @return the maximum number of bytes permitted for an uploaded file
+	*/
+	@Override
+	public long getMultipartMaxFileSize() {
+		return _portlet.getMultipartMaxFileSize();
+	}
+
+	/**
+	* Returns the maximum number of bytes permitted for a multipart request.
+	*
+	* @return the maximum number of bytes permitted for a multipart request
+	*/
+	@Override
+	public long getMultipartMaxRequestSize() {
+		return _portlet.getMultipartMaxRequestSize();
+	}
+
+	/**
 	* Returns the mvcc version of this portlet.
 	*
 	* @return the mvcc version of this portlet
@@ -2693,6 +2733,49 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setMaximizeHelp(boolean maximizeHelp) {
 		_portlet.setMaximizeHelp(maximizeHelp);
+	}
+
+	/**
+	* Sets the maximum size of buffered bytes before storing occurs.
+	*
+	* @param multipartFileSizeThreshold the maximum size of buffered bytes
+	before storing occurs
+	*/
+	@Override
+	public void setMultipartFileSizeThreshold(int multipartFileSizeThreshold) {
+		_portlet.setMultipartFileSizeThreshold(multipartFileSizeThreshold);
+	}
+
+	/**
+	* Sets the directory for storing uploaded files.
+	*
+	* @param multipartLocation the directory for storing uploaded files
+	*/
+	@Override
+	public void setMultipartLocation(String multipartLocation) {
+		_portlet.setMultipartLocation(multipartLocation);
+	}
+
+	/**
+	* Sets the maximum number of bytes permitted for an uploaded file.
+	*
+	* @param multipartMaxFileSize the maximum number of bytes permitted for an
+	uploaded file
+	*/
+	@Override
+	public void setMultipartMaxFileSize(long multipartMaxFileSize) {
+		_portlet.setMultipartMaxFileSize(multipartMaxFileSize);
+	}
+
+	/**
+	* Sets the maximum number of bytes permitted for a multipart request.
+	*
+	* @param multipartMaxRequestSize the maximum number of bytes permitted for
+	a multipart request
+	*/
+	@Override
+	public void setMultipartMaxRequestSize(long multipartMaxRequestSize) {
+		_portlet.setMultipartMaxRequestSize(multipartMaxRequestSize);
 	}
 
 	/**

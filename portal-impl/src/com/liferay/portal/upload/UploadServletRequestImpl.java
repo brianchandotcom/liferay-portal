@@ -61,12 +61,7 @@ public class UploadServletRequestImpl
 	extends HttpServletRequestWrapper implements UploadServletRequest {
 
 	public static File getTempDir() {
-		if (_tempDir == null) {
-			_tempDir = new File(
-				UploadServletRequestConfigurationHelperUtil.getTempDir());
-		}
-
-		return _tempDir;
+		return _getTempDir(null);
 	}
 
 	public static void setTempDir(File tempDir) {
@@ -74,6 +69,13 @@ public class UploadServletRequestImpl
 	}
 
 	public UploadServletRequestImpl(HttpServletRequest request) {
+		this(request, 0, null, 0, 0);
+	}
+
+	public UploadServletRequestImpl(
+		HttpServletRequest request, int fileSizeThreshold, String location,
+		long maxRequestSize, long maxFileSize) {
+
 		super(request);
 
 		_fileParameters = new LinkedHashMap<>();
@@ -86,8 +88,25 @@ public class UploadServletRequestImpl
 
 			session.removeAttribute(ProgressTracker.PERCENT);
 
-			ServletFileUpload servletFileUpload = new ServletFileUpload(
-				new LiferayFileItemFactory(getTempDir()));
+			ServletFileUpload servletFileUpload;
+
+			if (fileSizeThreshold > 0) {
+				servletFileUpload = new ServletFileUpload(
+					new LiferayFileItemFactory(
+						_getTempDir(location), fileSizeThreshold));
+			}
+			else {
+				servletFileUpload = new ServletFileUpload(
+					new LiferayFileItemFactory(getTempDir()));
+			}
+
+			if (maxRequestSize > 0) {
+				servletFileUpload.setSizeMax(maxRequestSize);
+			}
+
+			if (maxFileSize > 0) {
+				servletFileUpload.setFileSizeMax(maxFileSize);
+			}
 
 			liferayServletRequest = new LiferayServletRequest(request);
 
@@ -613,6 +632,19 @@ public class UploadServletRequestImpl
 		}
 
 		return sortedFileItems;
+	}
+
+	private static File _getTempDir(String configuredTempDir) {
+		if (Validator.isNotNull(configuredTempDir)) {
+			return new File(configuredTempDir);
+		}
+
+		if (_tempDir == null) {
+			_tempDir = new File(
+				UploadServletRequestConfigurationHelperUtil.getTempDir());
+		}
+
+		return _tempDir;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

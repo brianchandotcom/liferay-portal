@@ -14,13 +14,19 @@
 
 package com.liferay.portal.kernel.upload;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Collection;
+
 /**
  * @author Raymond Augé
+ * @author Neil Griffin
  */
+@ProviderType
 public interface FileItem {
 
 	public void delete();
@@ -37,6 +43,12 @@ public interface FileItem {
 
 	public String getFullFileName();
 
+	public String getHeader(String name);
+
+	public Collection<String> getHeaderNames();
+
+	public Collection<String> getHeaders(String name);
+
 	public InputStream getInputStream() throws IOException;
 
 	public long getSize();
@@ -52,5 +64,7 @@ public interface FileItem {
 	public boolean isInMemory();
 
 	public void setString(String encode);
+
+	public void write(File file) throws Exception;
 
 }

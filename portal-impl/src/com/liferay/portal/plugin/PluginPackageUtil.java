@@ -268,8 +268,8 @@ public class PluginPackageUtil {
 			repositoryURLs = _getRepositoryURLs();
 		}
 
-		for (int i = 0; i < repositoryURLs.length; i++) {
-			_getRepository(repositoryURLs[i]);
+		for (String curRepositoryURL : repositoryURLs) {
+			_getRepository(curRepositoryURL);
 		}
 	}
 
@@ -301,10 +301,10 @@ public class PluginPackageUtil {
 
 		String[] repositoryURLs = _getRepositoryURLs();
 
-		for (int i = 0; i < repositoryURLs.length; i++) {
+		for (String repositoryURL : repositoryURLs) {
 			try {
 				RemotePluginPackageRepository repository = _getRepository(
-					repositoryURLs[i]);
+					repositoryURL);
 
 				pluginPackages.addAll(repository.getPluginPackages());
 			}
@@ -333,9 +333,9 @@ public class PluginPackageUtil {
 
 		String[] repositoryURLs = _getRepositoryURLs();
 
-		for (int i = 0; i < repositoryURLs.length; i++) {
+		for (String repositoryURL : repositoryURLs) {
 			RemotePluginPackageRepository repository = _getRepository(
-				repositoryURLs[i]);
+				repositoryURL);
 
 			List<PluginPackage> curPluginPackages =
 				repository.findPluginsByGroupIdAndArtifactId(
@@ -917,10 +917,10 @@ public class PluginPackageUtil {
 		String[] licensesArray = StringUtil.split(
 			properties.getProperty("licenses"));
 
-		for (int i = 0; i < licensesArray.length; i++) {
+		for (String curLicenses : licensesArray) {
 			License license = new License();
 
-			license.setName(licensesArray[i].trim());
+			license.setName(curLicenses.trim());
 			license.setOsiApproved(true);
 
 			licenses.add(license);

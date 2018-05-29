@@ -519,8 +519,8 @@ public class AnnouncementsEntryFinderImpl
 
 		qPos.add(classNameId);
 
-		for (int i = 0; i < classPKs.length; i++) {
-			qPos.add(classPKs[i]);
+		for (long classPK : classPKs) {
+			qPos.add(classPK);
 		}
 	}
 

@@ -701,8 +701,8 @@ public class CSSCompressor {
 
 			StringBuffer hexColor = new StringBuffer("#");
 
-			for (int i = 0; i < rgbColors.length; i++) {
-				int val = GetterUtil.getInteger(rgbColors[i]);
+			for (String rgbColor : rgbColors) {
+				int val = GetterUtil.getInteger(rgbColor);
 
 				if (val < 16) {
 					hexColor.append("0");

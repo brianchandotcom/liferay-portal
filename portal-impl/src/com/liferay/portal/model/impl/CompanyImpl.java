@@ -268,8 +268,8 @@ public class CompanyImpl extends CompanyBaseImpl {
 			getCompanyId(), PropsKeys.ADMIN_MAIL_HOST_NAMES,
 			StringPool.NEW_LINE, PropsValues.ADMIN_MAIL_HOST_NAMES);
 
-		for (int i = 0; i < mailHostNames.length; i++) {
-			if (StringUtil.equalsIgnoreCase(mx, mailHostNames[i])) {
+		for (String mailHostName : mailHostNames) {
+			if (StringUtil.equalsIgnoreCase(mx, mailHostName)) {
 				return true;
 			}
 		}

@@ -446,9 +446,9 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	protected void checkUserRolesPermission(long userId, long[] roleIds)
 		throws PortalException {
 
-		for (int i = 0; i < roleIds.length; i++) {
+		for (long roleId : roleIds) {
 			RolePermissionUtil.check(
-				getPermissionChecker(), roleIds[i], ActionKeys.ASSIGN_MEMBERS);
+				getPermissionChecker(), roleId, ActionKeys.ASSIGN_MEMBERS);
 		}
 	}
 

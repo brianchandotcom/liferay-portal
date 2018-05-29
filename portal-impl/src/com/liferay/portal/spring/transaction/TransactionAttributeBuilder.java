@@ -73,9 +73,9 @@ public class TransactionAttributeBuilder {
 			rollbackRuleAttributes.add(rollbackRuleAttribute);
 		}
 
-		for (int i = 0; i < rollbackForClassNames.length; i++) {
+		for (String rollbackForClassName : rollbackForClassNames) {
 			RollbackRuleAttribute rollbackRuleAttribute =
-				new RollbackRuleAttribute(rollbackForClassNames[i]);
+				new RollbackRuleAttribute(rollbackForClassName);
 
 			rollbackRuleAttributes.add(rollbackRuleAttribute);
 		}

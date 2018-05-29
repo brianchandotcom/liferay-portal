@@ -204,9 +204,7 @@ public class ServiceBeanMethodInvocation
 		sb.append(_method.getName());
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		for (int i = 0; i < parameterTypes.length; i++) {
-			Class<?> parameterType = parameterTypes[i];
-
+		for (Class<?> parameterType : parameterTypes) {
 			sb.append(parameterType.getName());
 
 			sb.append(StringPool.COMMA);

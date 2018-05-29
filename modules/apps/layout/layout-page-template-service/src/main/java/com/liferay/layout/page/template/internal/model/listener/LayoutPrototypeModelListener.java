@@ -86,6 +86,33 @@ public class LayoutPrototypeModelListener
 	}
 
 	@Override
+	public void onAfterUpdate(LayoutPrototype layoutPrototype)
+		throws ModelListenerException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchFirstLayoutPageTemplateEntry(
+					layoutPrototype.getLayoutPrototypeId());
+
+		if (layoutPageTemplateEntry == null) {
+			return;
+		}
+
+		String nameXML = layoutPrototype.getName();
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			nameXML);
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(
+			LocalizationUtil.getDefaultLanguageId(nameXML));
+
+		layoutPageTemplateEntry.setName(nameMap.get(defaultLocale));
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
+	}
+
+	@Override
 	public void onBeforeRemove(LayoutPrototype layoutPrototype)
 		throws ModelListenerException {
 

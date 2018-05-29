@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
-import com.liferay.portlet.internal.PortletAppUtil;
 
 import java.io.InputStream;
 
@@ -91,12 +90,16 @@ public class PortletContextImpl implements LiferayPortletContext {
 
 	@Override
 	public int getEffectiveMajorVersion() {
-		return PortletAppUtil.getSpecMajorVersion(_portlet.getPortletApp());
+		PortletApp portletApp = _portlet.getPortletApp();
+
+		return portletApp.getSpecMajorVersion();
 	}
 
 	@Override
 	public int getEffectiveMinorVersion() {
-		return PortletAppUtil.getSpecMinorVersion(_portlet.getPortletApp());
+		PortletApp portletApp = _portlet.getPortletApp();
+
+		return portletApp.getSpecMinorVersion();
 	}
 
 	@Override

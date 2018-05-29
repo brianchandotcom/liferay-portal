@@ -59,7 +59,7 @@
 			dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration, portlet.getRootPortletId());
 		}
 
-		PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), exportGroupId, dateRange.getStartDate(), dateRange.getEndDate());
+		PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), exportGroupId, range != null ? range : defaultRange, dateRange.getStartDate(), dateRange.getEndDate());
 
 		portletDataHandler.prepareManifestSummary(portletDataContext);
 

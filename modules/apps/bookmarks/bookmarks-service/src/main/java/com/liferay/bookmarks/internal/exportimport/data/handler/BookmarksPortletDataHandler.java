@@ -19,11 +19,13 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.portlet.data.handler.helper.PortletDataHandlerHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -190,6 +192,19 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new String[] {
+					BookmarksEntry.class.getName(),
+					BookmarksFolder.class.getName()
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery entryExportActionableDynamicQuery =
 			_bookmarksEntryStagedModelRepository.
 				getExportActionableDynamicQuery(portletDataContext);
@@ -222,5 +237,8 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private PortletDataHandlerHelper _portletDataHandlerHelper;
+
+	@Reference
+	private Staging _staging;
 
 }

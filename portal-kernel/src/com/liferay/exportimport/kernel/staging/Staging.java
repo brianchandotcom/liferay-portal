@@ -280,6 +280,10 @@ public interface Staging {
 	@Deprecated
 	public void lockGroup(long userId, long groupId) throws PortalException;
 
+	public void populateLastPublishDateCounts(
+			PortletDataContext portletDataContext, String[] classNames)
+		throws PortalException;
+
 	public long publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
 		throws PortalException;

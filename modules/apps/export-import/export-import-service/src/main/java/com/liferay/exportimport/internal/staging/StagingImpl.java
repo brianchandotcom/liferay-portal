@@ -42,11 +42,13 @@ import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
@@ -2114,6 +2116,47 @@ public class StagingImpl implements Staging {
 			userId, Staging.class.getName(), String.valueOf(groupId),
 			StagingImpl.class.getName(), false,
 			StagingConstants.LOCK_EXPIRATION_TIME);
+	}
+
+	@Override
+	public void populateLastPublishDateCounts(
+			PortletDataContext portletDataContext, String[] classNames)
+		throws PortalException {
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		ChangesetCollection changesetCollection =
+			_changesetCollectionLocalService.fetchChangesetCollection(
+				portletDataContext.getScopeGroupId(),
+				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
+
+		for (String className : classNames) {
+			StagedModelType stagedModelType = new StagedModelType(className);
+
+			long modelAdditionCount = manifestSummary.getModelAdditionCount(
+				stagedModelType);
+
+			if (modelAdditionCount > -1) {
+				continue;
+			}
+
+			if (changesetCollection != null) {
+				modelAdditionCount =
+					_changesetEntryLocalService.getChangesetEntriesCount(
+						changesetCollection.getChangesetCollectionId(),
+						_portal.getClassNameId(className));
+
+				manifestSummary.addModelAdditionCount(
+					stagedModelType, modelAdditionCount);
+			}
+
+			long modelDeletionCount = _exportImportHelper.getModelDeletionCount(
+				portletDataContext, stagedModelType);
+
+			manifestSummary.addModelDeletionCount(
+				stagedModelType, modelDeletionCount);
+		}
 	}
 
 	@Override

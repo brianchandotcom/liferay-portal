@@ -16,6 +16,7 @@ package com.liferay.exportimport.internal.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -178,14 +180,35 @@ public class PortletDataContextFactoryImpl
 			long companyId, long groupId, Date startDate, Date endDate)
 		throws PortletDataException {
 
+		return createPreparePortletDataContext(
+			companyId, groupId, null, startDate, endDate);
+	}
+
+	@Override
+	public PortletDataContext createPreparePortletDataContext(
+			long companyId, long groupId, String range, Date startDate,
+			Date endDate)
+		throws PortletDataException {
+
 		validateDateRange(startDate, endDate);
 
 		PortletDataContext portletDataContext = createPortletDataContext(
 			companyId, groupId);
 
 		portletDataContext.setEndDate(endDate);
-		portletDataContext.setParameterMap(
-			Collections.<String, String[]>emptyMap());
+
+		Map<String, String[]> parameterMap;
+
+		if (range != null) {
+			parameterMap = new HashMap<>();
+
+			parameterMap.put(ExportImportDateUtil.RANGE, new String[] {range});
+		}
+		else {
+			parameterMap = Collections.emptyMap();
+		}
+
+		portletDataContext.setParameterMap(parameterMap);
 		portletDataContext.setStartDate(startDate);
 
 		return portletDataContext;

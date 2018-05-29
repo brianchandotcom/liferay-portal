@@ -64,6 +64,15 @@ public class PortletDataContextFactoryUtil {
 	}
 
 	public static PortletDataContext createPreparePortletDataContext(
+			long companyId, long groupId, String range, Date startDate,
+			Date endDate)
+		throws PortletDataException {
+
+		return _portletDataContextFactory.createPreparePortletDataContext(
+			companyId, groupId, range, startDate, endDate);
+	}
+
+	public static PortletDataContext createPreparePortletDataContext(
 			ThemeDisplay themeDisplay, Date startDate, Date endDate)
 		throws PortletDataException {
 

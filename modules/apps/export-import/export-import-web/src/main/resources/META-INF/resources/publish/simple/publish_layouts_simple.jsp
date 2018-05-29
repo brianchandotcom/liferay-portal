@@ -164,7 +164,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 
 										DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration);
 
-										PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), dateRange.getStartDate(), dateRange.getEndDate());
+										PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, dateRange.getStartDate(), dateRange.getEndDate());
 
 										portletDataHandler.prepareManifestSummary(portletDataContext);
 

@@ -278,6 +278,58 @@ public class ExportImportDateUtil {
 		return new Date(lastPublishDate);
 	}
 
+	public static boolean isRange(
+		Map<String, String[]> parameterMap, String range) {
+
+		String rangeValue = MapUtil.getString(parameterMap, RANGE);
+
+		return rangeValue.equals(range);
+	}
+
+	public static boolean isRange(
+		PortletDataContext portletDataContext, String range) {
+
+		return isRange(portletDataContext.getParameterMap(), range);
+	}
+
+	public static boolean isRangeAll(Map<String, String[]> parameterMap) {
+		return isRange(parameterMap, RANGE_ALL);
+	}
+
+	public static boolean isRangeAll(PortletDataContext portletDataContext) {
+		return isRange(portletDataContext, RANGE_ALL);
+	}
+
+	public static boolean isRangeDateRange(Map<String, String[]> parameterMap) {
+		return isRange(parameterMap, RANGE_DATE_RANGE);
+	}
+
+	public static boolean isRangeDateRange(
+		PortletDataContext portletDataContext) {
+
+		return isRange(portletDataContext, RANGE_DATE_RANGE);
+	}
+
+	public static boolean isRangeFromLastPublishDate(
+		Map<String, String[]> parameterMap) {
+
+		return isRange(parameterMap, RANGE_FROM_LAST_PUBLISH_DATE);
+	}
+
+	public static boolean isRangeFromLastPublishDate(
+		PortletDataContext portletDataContext) {
+
+		return isRange(portletDataContext, RANGE_FROM_LAST_PUBLISH_DATE);
+	}
+
+	public static boolean isRangeLast(Map<String, String[]> parameterMap) {
+		return isRange(parameterMap, RANGE_LAST);
+	}
+
+	public static boolean isRangeLast(PortletDataContext portletDataContext) {
+		return isRange(portletDataContext, RANGE_LAST);
+	}
+
 	public static void updateLastPublishDate(
 			long groupId, boolean privateLayout, DateRange dateRange,
 			Date lastPublishDate)

@@ -71,7 +71,7 @@
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
@@ -95,7 +95,7 @@
 
 		<execute macro="Collection#addCollection">
 			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -133,7 +133,7 @@
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
@@ -160,7 +160,7 @@
 
 		<execute macro="Collection#addCollection">
 			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -198,7 +198,7 @@
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
@@ -216,7 +216,7 @@
 
 		<execute macro="Collection#addCollection">
 			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -254,7 +254,7 @@
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
@@ -330,7 +330,7 @@
 
 		<execute macro="Collection#addCollection">
 			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -368,7 +368,7 @@
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
@@ -421,7 +421,7 @@
 
 		<execute macro="Collection#addCollection">
 			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
@@ -459,7 +459,7 @@
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
-			<var name="collectionName" value="Collection Name" />
+			<var name="collectionName" value="Fragment Collection Name" />
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 

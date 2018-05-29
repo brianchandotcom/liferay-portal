@@ -76,6 +76,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 			var name = A.one('#<portlet:namespace />name').val();
 			var description = A.one('#<portlet:namespace />description').val();
+			var from = A.one('#<portlet:namespace />from').val();
+			var fromName = A.one('#<portlet:namespace />fromName').val();
 			var cc = A.one('#<portlet:namespace />cc').val();
 			var bcc = A.one('#<portlet:namespace />bcc').val();
 			var type = A.one('#<portlet:namespace />type').val();
@@ -84,6 +86,8 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 			portletURL.setParameter('name', name);
 			portletURL.setParameter('description', description);
+			portletURL.setParameter('from', from);
+			portletURL.setParameter('fromName', fromName);
 			portletURL.setParameter('cc', cc);
 			portletURL.setParameter('bcc', bcc);
 			portletURL.setParameter('type', type);

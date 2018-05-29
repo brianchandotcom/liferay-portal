@@ -23,6 +23,8 @@ CommerceNotificationTemplate commerceNotificationTemplate = commerceNotification
 
 String name = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "name");
 String description = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "description");
+String from = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "from");
+String fromName = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "fromName");
 String cc = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "cc");
 String bcc = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "bcc");
 String type = BeanParamUtil.getString(commerceNotificationTemplate, renderRequest, "type");
@@ -35,6 +37,8 @@ CommerceNotificationType commerceNotificationType = commerceNotificationTemplate
 	value="details"
 />
 
+<liferay-ui:error exception="<%= CommerceNotificationTemplateFromException.class %>" message="please-enter-a-valid-email-address" />
+<liferay-ui:error exception="<%= CommerceNotificationTemplateFromNameException.class %>" message="please-enter-a-valid-from-name" />
 <liferay-ui:error exception="<%= CommerceNotificationTemplateNameException.class %>" message="please-enter-a-valid-name" />
 <liferay-ui:error exception="<%= CommerceNotificationTemplateTypeException.class %>" message="please-select-a-valid-type" />
 
@@ -46,6 +50,10 @@ CommerceNotificationType commerceNotificationType = commerceNotificationTemplate
 	<aui:input name="description" value="<%= description %>" />
 
 	<%@ include file="/notification_template/user_segments.jspf" %>
+
+	<aui:input label="from-address" name="from" value="<%= from %>" />
+
+	<aui:input name="fromName" value="<%= fromName %>" />
 
 	<aui:input name="cc" value="<%= cc %>" />
 

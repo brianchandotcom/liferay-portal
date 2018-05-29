@@ -19,30 +19,30 @@
 	<portlet:param name="notificationNavigationItem" value="view-all-notification-templates" />
 </liferay-portlet:renderURL>
 
-<liferay-portlet:renderURL portletName="<%= CommerceAdminPortletKeys.COMMERCE_ADMIN %>" varImpl="viewNotificationQueuesURL">
-	<portlet:param name="mvcRenderCommandName" value="viewCommerceNotificationQueues" />
+<liferay-portlet:renderURL portletName="<%= CommerceAdminPortletKeys.COMMERCE_ADMIN %>" varImpl="viewNotificationQueueEntriesURL">
+	<portlet:param name="mvcRenderCommandName" value="viewCommerceNotificationQueueEntries" />
 	<portlet:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
-	<portlet:param name="notificationNavigationItem" value="view-all-notification-queues" />
+	<portlet:param name="notificationNavigationItem" value="view-all-notification-queue-entries" />
 </liferay-portlet:renderURL>
 
 <%
 List<NavigationItem> notificationNavigationItems = new ArrayList<>();
 
 NavigationItem notificationTemplatesNavigationItem = new NavigationItem();
-NavigationItem notificationQueuesNavigationItem = new NavigationItem();
+NavigationItem notificationQueueEntriesNavigationItem = new NavigationItem();
 
 notificationTemplatesNavigationItem.setActive(notificationNavigationItem.equals("view-all-notification-templates"));
 notificationTemplatesNavigationItem.setHref(viewNotificationTemplatesURL.toString());
 notificationTemplatesNavigationItem.setLabel(LanguageUtil.get(resourceBundle, "notification-templates"));
 
-notificationQueuesNavigationItem.setActive(notificationNavigationItem.equals("view-all-notification-queues"));
-notificationQueuesNavigationItem.setHref(viewNotificationQueuesURL.toString());
-notificationQueuesNavigationItem.setLabel(LanguageUtil.get(resourceBundle, "notification-queues"));
+notificationQueueEntriesNavigationItem.setActive(notificationNavigationItem.equals("view-all-notification-queue-entries"));
+notificationQueueEntriesNavigationItem.setHref(viewNotificationQueueEntriesURL.toString());
+notificationQueueEntriesNavigationItem.setLabel(LanguageUtil.get(resourceBundle, "notification-queue-entries"));
 
 notificationNavigationItems.add(notificationTemplatesNavigationItem);
-notificationNavigationItems.add(notificationQueuesNavigationItem);
+notificationNavigationItems.add(notificationQueueEntriesNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= notificationNavigationItems %>"
+	navigationItems="<%= notificationNavigationItems %>"
 />

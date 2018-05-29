@@ -43,7 +43,7 @@
 		</if>
 	</tear-down>
 
-	<command name="ChangeEditableTextDisplayPage" priority="5">
+	<command name="AddDisplayPage" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -89,15 +89,9 @@
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#editFragmentText">
-			<var name="fragmentName" value="Fragment Name" />
-			<var name="id" value="title" />
-			<var name="text" value="Editing Finished" />
-		</execute>
+		<execute macro="LayoutPageTemplates#viewAutoSaveMessage" />
 
-		<execute macro="LayoutPageTemplates#viewFragment">
-			<var name="fragmentName" value="Editing Finished" />
-		</execute>
+		<execute macro="PortletEntry#publish" />
 	</command>
 
 	<command name="MapDisplayPageToBasicWebContent" priority="5">
@@ -160,7 +154,7 @@
 		<execute macro="PortletEntry#publish" />
 	</command>
 
-	<command name="PublishDisplayPage" priority="5">
+	<command name="UpdateDisplayPageEditableText" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -206,9 +200,15 @@
 			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#viewAutoSaveMessage" />
+		<execute macro="LayoutPageTemplates#editFragmentText">
+			<var name="fragmentName" value="Fragment Name" />
+			<var name="id" value="title" />
+			<var name="text" value="Editing Finished" />
+		</execute>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="LayoutPageTemplates#viewFragment">
+			<var name="fragmentName" value="Editing Finished" />
+		</execute>
 	</command>
 
 	<command name="ViewDisplayPageViaAssetPublisher" priority="5">

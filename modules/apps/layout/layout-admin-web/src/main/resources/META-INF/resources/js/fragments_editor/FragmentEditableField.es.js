@@ -1,14 +1,34 @@
-import {Align} from 'metal-position';
-import debounce from 'metal-debounce';
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import dom from 'metal-dom';
 import {object} from 'metal';
 import Soy from 'metal-soy';
 
+import './FragmentEditableFieldTooltip.es';
 import FragmentProcessors from './fragment_processors/FragmentProcessors.es';
 import {getActiveEditableElement} from './fragment_processors/EditableTextFragmentProcessor.es';
 import templates from './FragmentEditableField.soy';
+
+/**
+ * Buttons rendered inside the tooltip
+ * @review
+ */
+
+const TOOLTIP_BUTTONS = {
+	edit: {
+		id: 'edit',
+		label: Liferay.Language.get('edit')
+	},
+
+	map: {
+		id: 'map',
+		label: Liferay.Language.get('map')
+	},
+
+	selectImage: {
+		id: 'selectImage',
+		label: Liferay.Language.get('select-image')
+	}
+};
 
 class FragmentEditableField extends Component {
 
@@ -19,21 +39,7 @@ class FragmentEditableField extends Component {
 
 	created() {
 		this._handleBeforeNavigate = this._handleBeforeNavigate.bind(this);
-		this._handleDocumentClick = this._handleDocumentClick.bind(this);
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
-		this._handleWindowResize = debounce(this._handleWindowResize.bind(this), 100);
-
-		this._windowResizeHandler = dom.on(
-			window,
-			'resize',
-			this._handleWindowResize
-		);
-
-		this._documentClickHandler = dom.on(
-			document.body,
-			'click',
-			this._handleDocumentClick
-		);
 
 		this._beforeNavigateHandler = Liferay.on(
 			'beforeNavigate',
@@ -47,16 +53,6 @@ class FragmentEditableField extends Component {
 	 */
 
 	disposed() {
-		if (this._documentClickHandler) {
-			this._documentClickHandler.removeListener();
-			this._documentClickHandler = null;
-		}
-
-		if (this._windowResizeHandler) {
-			this._windowResizeHandler.removeListener();
-			this._windowResizeHandler = null;
-		}
-
 		this._destroyProcessors();
 	}
 
@@ -87,10 +83,17 @@ class FragmentEditableField extends Component {
 			content = Soy.toIncDom(tempContent.innerHTML);
 		}
 
+		const _tooltipButtons = this._getTooltipButtons(
+			this.type
+		);
+
 		return object.mixin(
 			{},
 			state,
-			{content}
+			{
+				content,
+				_tooltipButtons
+			}
 		);
 	}
 
@@ -105,7 +108,9 @@ class FragmentEditableField extends Component {
 			this._enableEditor();
 		}
 
-		this._alignTooltip();
+		if (this.refs.editable !== this._tooltipAlignElement) {
+			this._tooltipAlignElement = this.refs.editable;
+		}
 	}
 
 	/**
@@ -117,22 +122,6 @@ class FragmentEditableField extends Component {
 
 	shouldUpdate(changes) {
 		return !!changes._showTooltip;
-	}
-
-	/**
-	 * Align tooltip position acording to editable field
-	 * @private
-	 * @review
-	 */
-
-	_alignTooltip() {
-		if (this.refs.editable && this.refs.tooltip) {
-			Align.align(
-				this.refs.tooltip,
-				this.refs.editable,
-				Align.Top
-			);
-		}
 	}
 
 	/**
@@ -167,6 +156,30 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
+	 * Get the list of buttons that should be rendered inside the tooltip
+	 * @param {string} editableType
+	 * @private
+	 * @review
+	 */
+
+	_getTooltipButtons(editableType) {
+		const _tooltipButtons = [];
+
+		if (this.showMapping) {
+			_tooltipButtons.push(TOOLTIP_BUTTONS.map);
+		}
+
+		if (editableType === 'image') {
+			_tooltipButtons.push(TOOLTIP_BUTTONS.selectImage);
+		}
+		else {
+			_tooltipButtons.push(TOOLTIP_BUTTONS.edit);
+		}
+
+		return _tooltipButtons;
+	}
+
+	/**
 	 * Handle beforeNavigate SPA event
 	 * and destroy all existing processors.
 	 * @private
@@ -180,17 +193,6 @@ class FragmentEditableField extends Component {
 		}
 
 		this._destroyProcessors();
-	}
-
-	/**
-	 * Hide tooltip on document click when it is outside the tooltip
-	 * @param {MouseEvent} event
-	 */
-
-	_handleDocumentClick(event) {
-		if (this.refs.tooltip && !this.refs.tooltip.contains(event.target)) {
-			this._showTooltip = false;
-		}
 	}
 
 	/**
@@ -213,16 +215,6 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
-	 * Handle edit button click event
-	 * @private
-	 */
-
-	_handleEditButtonClick() {
-		this._showTooltip = false;
-		this._showEditor = true;
-	}
-
-	/**
 	 * Handle image editor select event
 	 * @param {string} newValue
 	 * @private
@@ -239,27 +231,39 @@ class FragmentEditableField extends Component {
 	}
 
 	/**
-	 * Handle map button click event
-	 * @private
-	 */
-
-	_handleMapButtonClick() {
-		this._showTooltip = false;
-
-		this.emit(
-			'mapButtonClicked',
-			{editableId: this.editableId}
-		);
-	}
-
-	/**
-	 * Handle window resize event
+	 * Handle clicks outside tooltip element
 	 * @private
 	 * @review
 	 */
 
-	_handleWindowResize() {
-		this._alignTooltip();
+	_handleOutsideTooltipClick() {
+		this._showTooltip = false;
+	}
+
+	/**
+	 * Handle tooltip button click event
+	 * @param {{buttonId: string}} event
+	 * @private
+	 * @review
+	 */
+
+	_handleTooltipButtonClick(event) {
+		const {buttonId} = event;
+
+		if (
+			buttonId === TOOLTIP_BUTTONS.edit.id ||
+			buttonId === TOOLTIP_BUTTONS.selectImage.id
+		) {
+			this._showEditor = true;
+		}
+		else if (buttonId === TOOLTIP_BUTTONS.map.id) {
+			this.emit(
+				'mapButtonClicked',
+				{editableId: this.editableId}
+			);
+		}
+
+		this._showTooltip = false;
 	}
 }
 
@@ -372,6 +376,17 @@ FragmentEditableField.STATE = {
 	type: Config.string().required(),
 
 	/**
+	 * True if mapping is activated
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {!boolean}
+	 */
+
+	showMapping: Config.bool().required(),
+
+	/**
 	 * Flag indicating if the editable editor should be enabled.
 	 * @default false
 	 * @instance
@@ -393,7 +408,41 @@ FragmentEditableField.STATE = {
 	 * @type {boolean}
 	 */
 
-	_showTooltip: Config.internal().bool().value(false)
+	_showTooltip: Config.internal().bool().value(false),
+
+	/**
+	 * Reference element used for aligning the tooltip
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {HTMLElement}
+	 */
+
+	_tooltipAlignElement: Config.internal().object(),
+
+	/**
+	 * List of buttons rendered inside the tooltip
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @review
+	 * @type {Array<{
+	 *   id: !string,
+	 *   label: !string
+	 * }>}
+	 */
+
+	_tooltipButtons: Config
+		.internal()
+		.arrayOf(
+			Config.shapeOf(
+				{
+					id: Config.string().required(),
+					label: Config.string().required()
+				}
+			)
+		)
 };
 
 Soy.register(FragmentEditableField, templates);

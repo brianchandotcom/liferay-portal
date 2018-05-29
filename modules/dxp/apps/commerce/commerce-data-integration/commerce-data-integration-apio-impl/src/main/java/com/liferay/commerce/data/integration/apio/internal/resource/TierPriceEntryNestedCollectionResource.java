@@ -114,6 +114,9 @@ public class TierPriceEntryNestedCollectionResource
 			"price", CommerceTierPriceEntry::getPrice
 		).addNumber(
 			"promoPrice", CommerceTierPriceEntry::getPromoPrice
+		).addString(
+			"externalReferenceCode",
+			CommerceTierPriceEntry::getExternalReferenceCode
 		).build();
 	}
 

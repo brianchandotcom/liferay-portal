@@ -116,6 +116,8 @@ public class PriceListNestedCollectionResource
 		).addString(
 			"currency", PriceListHelper::getCurrencyCode
 		).addString(
+			"externalReferenceCode", CommercePriceList::getExternalReferenceCode
+		).addString(
 			"name", CommercePriceList::getName
 		).build();
 	}

@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -53,12 +52,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  */
-@ApplicationPath("/commerce-cloud-client")
 @Component(
 	configurationPid = CommerceCloudClientConstants.CONFIGURATION_PID,
-	immediate = true, service = Application.class
+	property = {
+		"osgi.jaxrs.application.base=/commerce-cloud-client-rest",
+		"osgi.jaxrs.name=commerce-cloud-client-application"
+	},
+	service = Application.class
 )
-public class CommerceCloudClientJaxRsApplication extends Application {
+public class CommerceCloudClientApplication extends Application {
 
 	@Consumes(ContentTypes.APPLICATION_JSON)
 	@Path("/{projectId}/forecasts")
@@ -132,7 +134,7 @@ public class CommerceCloudClientJaxRsApplication extends Application {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceCloudClientJaxRsApplication.class);
+		CommerceCloudClientApplication.class);
 
 	private static final TransactionConfig _transactionConfig;
 

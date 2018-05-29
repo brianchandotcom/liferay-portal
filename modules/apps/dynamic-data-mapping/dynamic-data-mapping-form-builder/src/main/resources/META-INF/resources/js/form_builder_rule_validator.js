@@ -104,29 +104,29 @@ AUI.add(
 					_isValidConditon: function(condition) {
 						var instance = this;
 
+						var valid = false;
+
 						if (condition.operands.length === 0) {
-							return false;
+							valid = false;
 						}
 
 						if (!condition.operator) {
-							return false;
+							valid = false;
 						}
 
 						var operatorType = CONDITIONS_OPERATOR[condition.operator];
 
-						if (operatorType === 'unary' && condition.operands.length > 1) {
-							return false;
+						if (operatorType === 'unary') {
+							valid = true;
 						}
 
 						if (operatorType === 'binary' && condition.operands.length == 2) {
-							if (condition.operands[1].type && condition.operands[1].value) {
-								return true;
+							if (condition.operands[1].type && !instance._isEmpty(condition.operands[1].value)) {
+								valid = true;
 							}
-
-							return false;
 						}
 
-						return true;
+						return valid;
 					},
 
 					_validateAction: function(action) {

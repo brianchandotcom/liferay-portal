@@ -16,7 +16,6 @@ package com.liferay.commerce.dashboard.web.internal.display.context;
 
 import com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardForecastsChartPortletInstanceConfiguration;
 import com.liferay.commerce.dashboard.web.internal.servlet.taglib.model.CommerceDashboardPredictiveChartConfig;
-import com.liferay.commerce.dashboard.web.internal.util.CommerceDashboardUtil;
 import com.liferay.commerce.forecast.model.CommerceForecastEntry;
 import com.liferay.commerce.forecast.model.CommerceForecastEntryConstants;
 import com.liferay.commerce.forecast.model.CommerceForecastValue;
@@ -55,6 +54,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -243,15 +243,18 @@ public class CommerceDashboardForecastsChartDisplayContext
 		while (attributedCharacterIterator.current() !=
 					AttributedCharacterIterator.DONE) {
 
-			Map<Attribute, Object> attributes =
+			Map<Attribute, Object> attributesMap =
 				attributedCharacterIterator.getAttributes();
 
-			if (attributes.isEmpty()) {
+			if (attributesMap.isEmpty()) {
 				sb.append(attributedCharacterIterator.current());
 			}
 			else {
-				Field field = (Field)CommerceDashboardUtil.first(
-					attributes.keySet());
+				Set<Attribute> attributes = attributesMap.keySet();
+
+				Iterator<Attribute> iterator = attributes.iterator();
+
+				Field field = (Field)iterator.next();
 
 				int calendarField = field.getCalendarField();
 

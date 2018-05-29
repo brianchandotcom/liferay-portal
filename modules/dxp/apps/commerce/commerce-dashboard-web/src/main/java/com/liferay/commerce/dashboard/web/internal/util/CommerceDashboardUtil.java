@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -28,12 +27,6 @@ import javax.portlet.PortletSession;
  * @author Andrea Di Giorgi
  */
 public class CommerceDashboardUtil {
-
-	public static <T> T first(Iterable<T> iterable) {
-		Iterator<T> iterator = iterable.iterator();
-
-		return iterator.next();
-	}
 
 	public static <K, V> Map<K, V> getSessionMap(
 		PortletRequest portletRequest, String name) {

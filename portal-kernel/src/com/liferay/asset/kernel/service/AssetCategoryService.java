@@ -82,9 +82,34 @@ public interface AssetCategoryService extends BaseService {
 	public AssetCategory fetchCategory(long categoryId)
 		throws PortalException;
 
+	/**
+	* Returns a range of assetCategories related to an AssetEntry with the given
+	* "classNameId-classPK".
+	*
+	* @param classNameId the className of the asset
+	* @param classPK the classPK of the asset
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the matching assetCategories
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategory> getCategories(long classNameId, long classPK,
+		int start, int end);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategory> getCategories(String className, long classPK)
 		throws PortalException;
+
+	/**
+	* Returns the number of assetCategories related to an AssetEntry with the
+	* given "classNameId-classPK".
+	*
+	* @param classNameId the className of the asset
+	* @param classPK the classPK of the asset
+	* @return the number of matching assetCategories
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetCategory getCategory(long categoryId) throws PortalException;
@@ -96,9 +121,30 @@ public interface AssetCategoryService extends BaseService {
 	public List<AssetCategory> getChildCategories(long parentCategoryId)
 		throws PortalException;
 
+	/**
+	* eturns a range of child assetCategories.
+	*
+	* @param parentCategoryId the parent category id
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param obc the comparator
+	* @return the matching categories
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategory> getChildCategories(long parentCategoryId,
 		int start, int end, OrderByComparator<AssetCategory> obc)
+		throws PortalException;
+
+	/**
+	* Returns the number of child categories
+	*
+	* @param parentCategoryId the parent category id
+	* @return the number of child categories
+	* @throws PortalException
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getChildCategoriesCount(long parentCategoryId)
 		throws PortalException;
 
 	/**

@@ -17,6 +17,7 @@ package com.liferay.portal.security.service.access.policy.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.access.control.AccessControlPolicy;
@@ -149,7 +150,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 					companyId, SAPConstants.SERVICE_NAME));
 		}
 		catch (ConfigurationException ce) {
-			throw new SecurityException(
+			throw new SystemException(
 				"Unable to get service access policy configuration", ce);
 		}
 
@@ -219,7 +220,7 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 					sapEntry.getAllowedServiceSignaturesList());
 			}
 			catch (PortalException pe) {
-				throw new SecurityException(pe);
+				throw new SystemException(pe);
 			}
 		}
 

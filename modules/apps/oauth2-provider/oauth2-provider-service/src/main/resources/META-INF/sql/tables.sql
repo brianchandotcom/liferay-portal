@@ -33,7 +33,7 @@ create table OAuth2ApplicationScopeAliases (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	oAuth2ApplicationId LONG,
-	scopeAliases TEXT null
+	scopeAliases VARCHAR(255) null
 );
 
 create table OAuth2Authorization (
@@ -44,11 +44,11 @@ create table OAuth2Authorization (
 	createDate DATE null,
 	oAuth2ApplicationId LONG,
 	oA2AScopeAliasesId LONG,
-	accessTokenContent TEXT null,
+	accessTokenContent VARCHAR(255) null,
 	accessTokenCreateDate DATE null,
 	accessTokenExpirationDate DATE null,
 	remoteIPInfo VARCHAR(75) null,
-	refreshTokenContent TEXT null,
+	refreshTokenContent VARCHAR(255) null,
 	refreshTokenCreateDate DATE null,
 	refreshTokenExpirationDate DATE null
 );

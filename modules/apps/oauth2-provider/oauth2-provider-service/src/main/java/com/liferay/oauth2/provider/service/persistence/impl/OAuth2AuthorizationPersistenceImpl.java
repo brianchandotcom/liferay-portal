@@ -1375,9 +1375,9 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	private static final String _FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_1 =
 		"oAuth2Authorization.accessTokenContent IS NULL";
 	private static final String _FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_2 =
-		"CAST_CLOB_TEXT(oAuth2Authorization.accessTokenContent) = ?";
+		"oAuth2Authorization.accessTokenContent = ?";
 	private static final String _FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_3 =
-		"(oAuth2Authorization.accessTokenContent IS NULL OR CAST_CLOB_TEXT(oAuth2Authorization.accessTokenContent) = '')";
+		"(oAuth2Authorization.accessTokenContent IS NULL OR oAuth2Authorization.accessTokenContent = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
 			OAuth2AuthorizationImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1622,9 +1622,9 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	private static final String _FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_1 =
 		"oAuth2Authorization.refreshTokenContent IS NULL";
 	private static final String _FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_2 =
-		"CAST_CLOB_TEXT(oAuth2Authorization.refreshTokenContent) = ?";
+		"oAuth2Authorization.refreshTokenContent = ?";
 	private static final String _FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_3 =
-		"(oAuth2Authorization.refreshTokenContent IS NULL OR CAST_CLOB_TEXT(oAuth2Authorization.refreshTokenContent) = '')";
+		"(oAuth2Authorization.refreshTokenContent IS NULL OR oAuth2Authorization.refreshTokenContent = '')";
 
 	public OAuth2AuthorizationPersistenceImpl() {
 		setModelClass(OAuth2Authorization.class);

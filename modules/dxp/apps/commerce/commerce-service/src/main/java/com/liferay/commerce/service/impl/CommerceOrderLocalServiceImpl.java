@@ -828,25 +828,9 @@ public class CommerceOrderLocalServiceImpl
 
 		// Messaging
 
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					Message message = new Message();
-
-					message.put(
-						"commerceOrderId", commerceOrder.getCommerceOrderId());
-					message.put("orderStatus", commerceOrder.getOrderStatus());
-					message.put("previousOrderStatus", previousOrderStatus);
-
-					MessageBusUtil.sendMessage(
-						CommerceDestinationNames.ORDER_STATUS, message);
-
-					return null;
-				}
-
-			});
+		sendMessage(
+			commerceOrder.getCommerceOrderId(), commerceOrder.getOrderStatus(),
+			previousOrderStatus);
 
 		return commerceOrder;
 	}
@@ -1118,17 +1102,48 @@ public class CommerceOrderLocalServiceImpl
 			CommerceOrder.class.getName(), 0, typePK);
 	}
 
+	protected void sendMessage(
+		long commerceOrderId, int orderStatus, int previousOrderStatus) {
+
+		TransactionCommitCallbackUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					Message message = new Message();
+
+					message.put("commerceOrderId", commerceOrderId);
+					message.put("orderStatus", orderStatus);
+					message.put("previousOrderStatus", previousOrderStatus);
+
+					MessageBusUtil.sendMessage(
+						CommerceDestinationNames.ORDER_STATUS, message);
+
+					return null;
+				}
+
+			});
+	}
+
 	protected CommerceOrder setCommerceOrderToTransmit(
 			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce order
 
+		int previousOrderStatus = commerceOrder.getOrderStatus();
+
 		commerceOrder.setOrderStatus(
 			CommerceOrderConstants.ORDER_STATUS_TO_TRANSMIT);
 		commerceOrder.setStatus(WorkflowConstants.STATUS_PENDING);
 
 		commerceOrderPersistence.update(commerceOrder);
+
+		// Messaging
+
+		sendMessage(
+			commerceOrder.getCommerceOrderId(), commerceOrder.getOrderStatus(),
+			previousOrderStatus);
 
 		// Workflow
 

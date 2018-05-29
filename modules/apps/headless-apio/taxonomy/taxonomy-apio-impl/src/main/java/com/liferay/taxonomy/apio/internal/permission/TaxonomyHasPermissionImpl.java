@@ -41,7 +41,7 @@ public class TaxonomyHasPermissionImpl implements HasPermission<Long> {
 
 		if (identifierClass.equals(WebSiteIdentifier.class)) {
 			return (credentials, groupId) -> AssetCategoriesPermission.contains(
-				(PermissionChecker)credentials.get(), (long)groupId,
+				(PermissionChecker)credentials.get(), (Long)groupId,
 				ActionKeys.ADD_VOCABULARY);
 		}
 

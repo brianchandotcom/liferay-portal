@@ -16,6 +16,9 @@ package com.liferay.frontend.taglib.dynamic.section;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -24,6 +27,6 @@ import javax.servlet.jsp.PageContext;
 public interface DynamicSection {
 
 	public StringBundler modify(StringBundler sb, PageContext pageContext)
-		throws Exception;
+		throws IOException, ServletException;
 
 }

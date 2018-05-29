@@ -18,9 +18,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
@@ -31,7 +33,7 @@ public abstract class BaseJSPDynamicSection implements DynamicSection {
 
 	@Override
 	public StringBundler modify(StringBundler sb, PageContext pageContext)
-		throws Exception {
+		throws IOException, ServletException {
 
 		ServletContext servletContext = getServletContext();
 

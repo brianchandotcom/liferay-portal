@@ -16,8 +16,11 @@ package com.liferay.frontend.taglib.dynamic.section;
 
 import com.liferay.petra.string.StringPool;
 
+import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -27,7 +30,9 @@ public abstract class BaseJSPDynamicSectionReplace
 	implements DynamicSectionReplace {
 
 	@Override
-	public String replace(PageContext pageContext) throws Exception {
+	public String replace(PageContext pageContext)
+		throws IOException, ServletException {
+
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =

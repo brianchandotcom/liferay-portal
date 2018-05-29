@@ -14,6 +14,9 @@
 
 package com.liferay.frontend.taglib.dynamic.section;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -21,6 +24,7 @@ import javax.servlet.jsp.PageContext;
  */
 public interface DynamicSectionReplace {
 
-	public String replace(PageContext pageContext) throws Exception;
+	public String replace(PageContext pageContext)
+		throws IOException, ServletException;
 
 }

@@ -21,9 +21,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.io.IOException;
+
 import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
 import org.osgi.framework.BundleContext;
@@ -62,7 +65,7 @@ public class DynamicSectionUtil {
 
 	public static StringBundler modify(
 			String name, PageContext pageContext, StringBundler sb)
-		throws Exception {
+		throws IOException, ServletException {
 
 		List<DynamicSection> dynamicSections =
 			_dynamicSectionServiceTrackerMap.getService(name);
@@ -79,7 +82,7 @@ public class DynamicSectionUtil {
 	}
 
 	public static String replace(String name, PageContext pageContext)
-		throws Exception {
+		throws IOException, ServletException {
 
 		DynamicSectionReplace dynamicSectionReplace =
 			_dynamicSectionReplaceServiceTrackerMap.getService(name);

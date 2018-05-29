@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_3;
+package com.liferay.portal.upgrade.v7_1_x;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeDBColumnSize;
-import com.liferay.portal.kernel.util.StringBundler;
 
 /**
- * @author Cristina González
+ * @author Preston Crary
  */
-public class UpgradeSQLServer extends BaseUpgradeDBColumnSize {
+public class UpgradeDB2 extends BaseUpgradeDBColumnSize {
 
-	public UpgradeSQLServer() {
-		super(DBType.SQLSERVER, "nvarchar", 2000);
+	public UpgradeDB2() {
+		super(DBType.DB2, "varchar", 750);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class UpgradeSQLServer extends BaseUpgradeDBColumnSize {
 		runSQL(
 			StringBundler.concat(
 				"alter table ", tableName, " alter column ", columnName,
-				" nvarchar(4000)"));
+				" set data type varchar(4000)"));
 	}
 
 }

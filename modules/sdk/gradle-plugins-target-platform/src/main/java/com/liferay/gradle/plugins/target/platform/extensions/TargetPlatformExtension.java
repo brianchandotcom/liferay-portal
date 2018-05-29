@@ -14,7 +14,9 @@
 
 package com.liferay.gradle.plugins.target.platform.extensions;
 
+import com.liferay.gradle.plugins.target.platform.TargetPlatformPlugin;
 import com.liferay.gradle.plugins.target.platform.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.target.platform.internal.util.TargetPlatformUtil;
 
 import groovy.lang.Closure;
 
@@ -23,6 +25,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
 import org.gradle.util.GUtil;
@@ -33,7 +36,34 @@ import org.gradle.util.GUtil;
 public class TargetPlatformExtension {
 
 	public TargetPlatformExtension(Project project) {
+		_project = project;
 		_subprojects.addAll(project.getSubprojects());
+	}
+
+	public TargetPlatformExtension applyToConfiguration(
+		Iterable<?> applyToConfiguration) {
+
+		GUtil.addToCollection(_applyToConfiguration, applyToConfiguration);
+
+		Configuration targetPlatformBomsConfiguration =
+			GradleUtil.getConfiguration(
+				_project,
+				TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME);
+
+		TargetPlatformUtil.configureDependencyManagement(
+			_project, targetPlatformBomsConfiguration, _applyToConfiguration);
+
+		return this;
+	}
+
+	public TargetPlatformExtension applyToConfiguration(
+		Object... applyToConfiguration) {
+
+		return applyToConfiguration(Arrays.asList(applyToConfiguration));
+	}
+
+	public Set<?> getApplyToConfiguration() {
+		return _applyToConfiguration;
 	}
 
 	public Spec<Project> getOnlyIf() {
@@ -80,6 +110,16 @@ public class TargetPlatformExtension {
 		return this;
 	}
 
+	public void setApplyToConfiguration(Iterable<?> applyToConfiguration) {
+		_applyToConfiguration.clear();
+
+		applyToConfiguration(applyToConfiguration);
+	}
+
+	public void setApplyToConfiguration(Object... applyToConfiguration) {
+		setApplyToConfiguration(Arrays.asList(applyToConfiguration));
+	}
+
 	public void setIgnoreResolveFailures(Object ignoreResolveFailures) {
 		_ignoreResolveFailures = ignoreResolveFailures;
 	}
@@ -124,8 +164,10 @@ public class TargetPlatformExtension {
 		return subprojects(Arrays.asList(subprojects));
 	}
 
+	private final Set<Object> _applyToConfiguration = new LinkedHashSet<>();
 	private Object _ignoreResolveFailures;
 	private AndSpec<Project> _onlyIfSpec = new AndSpec<>();
+	private final Project _project;
 	private AndSpec<Project> _resolveOnlyIfSpec = new AndSpec<>();
 	private final Set<Project> _subprojects = new LinkedHashSet<>();
 

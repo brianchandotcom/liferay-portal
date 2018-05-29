@@ -21,7 +21,9 @@ import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.commerce.data.integration.apio.identifiers.TierPriceEntryIdentifier;
 import com.liferay.commerce.price.list.constants.CommercePriceListActionKeys;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -43,10 +45,16 @@ public class TierPriceEntryHasPermissionImpl implements HasPermission<Long> {
 		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(TierPriceEntryIdentifier.class)) {
-			return (credentials, groupId) ->
-				_portletResourcePermission.contains(
-					(PermissionChecker)credentials.get(), (Long)groupId,
+			return (credentials, commercePriceEntryId) -> {
+				CommercePriceEntry commercePriceEntry =
+					_commercePriceEntryService.fetchCommercePriceEntry(
+						(Long)commercePriceEntryId);
+
+				return _portletResourcePermission.contains(
+					(PermissionChecker)credentials.get(),
+					commercePriceEntry.getGroupId(),
 					CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+			};
 		}
 
 		return (credentials, s) -> false;
@@ -80,6 +88,9 @@ public class TierPriceEntryHasPermissionImpl implements HasPermission<Long> {
 				CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 		};
 	}
+
+	@Reference
+	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;

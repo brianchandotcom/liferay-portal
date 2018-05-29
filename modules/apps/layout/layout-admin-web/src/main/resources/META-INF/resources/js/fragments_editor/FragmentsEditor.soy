@@ -37,7 +37,6 @@
 	{@param? _handleSelectAssetTypeButtonClick: any}
 	{@param? _handleSelectMappingDialogVisibleChanged: any}
 	{@param? _handleSelectMappingTypeDialogVisibleChanged: any}
-	{@param? _handleSidebarTabClick: any}
 	{@param? _handleToggleHighlightMapping: any}
 	{@param? _handleTranslationLanguageChange: any}
 	{@param? _highlightMapping: bool}
@@ -46,7 +45,6 @@
 	{@param? _selectMappingDialogFragmentEntryLinkId: string}
 	{@param? _selectMappingDialogVisible: bool}
 	{@param? _selectMappingTypeDialogVisible: bool}
-	{@param? _sidebarSelectedTab: string}
 	{@param? _translationStatus: [
 		languageValues: list<[languageId: string, values: list<string>]>,
 		translationKeys: list<string>
@@ -182,13 +180,12 @@
 				] /}
 				{param fragmentCollections: $fragmentCollections /}
 				{param fragmentEntryLinks: $fragmentEntryLinks /}
+				{param highlightMapping: $_highlightMapping ?: false /}
+				{param ref: 'sidebar' /}
 				{param selectedMappingTypes: $selectedMappingTypes /}
 				{param sidebarTabs: $sidebarTabs /}
 				{param spritemap: $spritemap /}
 				{param visible: $_contextualSidebarVisible ?: false /}
-				{param _handleSidebarTabClick: $_handleSidebarTabClick /}
-				{param _highlightMapping: $_highlightMapping /}
-				{param _sidebarSelectedTab: $_sidebarSelectedTab /}
 			{/call}
 		</div>
 	</div>

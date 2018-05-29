@@ -13,13 +13,13 @@
 		fragmentCollectionId: string,
 		name: string
 	]>}
+	{@param highlightMapping: bool}
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
 	{@param visible: bool}
-	{@param? _handleSidebarTabClick: any}
 	{@param? _handleHideSidebarButtonClick: any}
-	{@param? _highlightMapping: bool}
-	{@param? _sidebarSelectedTab: string}
+	{@param? _handleTabClick: any}
+	{@param? _selectedTab: string}
 	{@param? fragmentEntryLinks: list<[
 		content: html|null,
 		editableValues: ?,
@@ -46,10 +46,10 @@
 							{foreach $sidebarTab in $sidebarTabs}
 								{if $sidebarTab.enabled}
 									{call .sidebarTab}
-										{param active: $sidebarTab.id == $_sidebarSelectedTab /}
+										{param active: $sidebarTab.id == $_selectedTab /}
 										{param id: $sidebarTab.id /}
 										{param key: $sidebarTab.id /}
-										{param handleTabClick: $_handleSidebarTabClick /}
+										{param handleTabClick: $_handleTabClick /}
 										{param label: $sidebarTab.label /}
 									{/call}
 								{/if}
@@ -59,21 +59,21 @@
 				</nav>
 			</div>
 
-			{if $_sidebarSelectedTab == 'available'}
+			{if $_selectedTab == 'available'}
 				{call com.liferay.layout.admin.web.SidebarAvailableFragments.render}
 					{param fragmentCollections: $fragmentCollections /}
 					{param ref: 'sidebarTab' /}
 					{param spritemap: $spritemap /}
 				{/call}
-			{elseif $_sidebarSelectedTab == 'added'}
+			{elseif $_selectedTab == 'added'}
 				{call com.liferay.layout.admin.web.SidebarAddedFragments.render}
 					{param fragmentEntryLinks: $fragmentEntryLinks /}
 					{param ref: 'sidebarTab' /}
 					{param spritemap: $spritemap /}
 				{/call}
-			{elseif $_sidebarSelectedTab == 'mapping'}
+			{elseif $_selectedTab == 'mapping'}
 				{call com.liferay.layout.admin.web.SidebarMapping.render}
-					{param highlightMapping: $_highlightMapping ?: false /}
+					{param highlightMapping: $highlightMapping /}
 					{param ref: 'sidebarTab' /}
 					{param selectedMappingTypes: $selectedMappingTypes /}
 					{param spritemap: $spritemap /}
@@ -132,7 +132,7 @@
 		<a
 			class="{$navLinkClasses}"
 			data-onclick="{$handleTabClick}"
-			data-tab-name="{$id}"
+			data-tab-id="{$id}"
 			href="javascript:;"
 		>
 			<span class="text-truncate">

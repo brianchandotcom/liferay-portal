@@ -172,6 +172,33 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
+	/**
+	* Returns a range of assetCategories related to an AssetEntry with the given
+	* "classNameId-classPK".
+	*
+	* @param classNameId the className of the asset
+	* @param classPK the classPK of the asset
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @return the matching assetCategories
+	*/
+	public static com.liferay.asset.kernel.model.AssetCategorySoap[] getCategories(
+		long classNameId, long classPK, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.asset.kernel.model.AssetCategory> returnValue =
+				AssetCategoryServiceUtil.getCategories(classNameId, classPK,
+					start, end);
+
+			return com.liferay.asset.kernel.model.AssetCategorySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.asset.kernel.model.AssetCategorySoap[] getCategories(
 		String className, long classPK) throws RemoteException {
 		try {
@@ -179,6 +206,29 @@ public class AssetCategoryServiceSoap {
 				AssetCategoryServiceUtil.getCategories(className, classPK);
 
 			return com.liferay.asset.kernel.model.AssetCategorySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the number of assetCategories related to an AssetEntry with the
+	* given "classNameId-classPK".
+	*
+	* @param classNameId the className of the asset
+	* @param classPK the classPK of the asset
+	* @return the number of matching assetCategories
+	*/
+	public static int getCategoriesCount(long classNameId, long classPK)
+		throws RemoteException {
+		try {
+			int returnValue = AssetCategoryServiceUtil.getCategoriesCount(classNameId,
+					classPK);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -230,6 +280,16 @@ public class AssetCategoryServiceSoap {
 		}
 	}
 
+	/**
+	* eturns a range of child assetCategories.
+	*
+	* @param parentCategoryId the parent category id
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param obc the comparator
+	* @return the matching categories
+	* @throws PortalException
+	*/
 	public static com.liferay.asset.kernel.model.AssetCategorySoap[] getChildCategories(
 		long parentCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetCategory> obc)
@@ -240,6 +300,27 @@ public class AssetCategoryServiceSoap {
 					start, end, obc);
 
 			return com.liferay.asset.kernel.model.AssetCategorySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the number of child categories
+	*
+	* @param parentCategoryId the parent category id
+	* @return the number of child categories
+	* @throws PortalException
+	*/
+	public static int getChildCategoriesCount(long parentCategoryId)
+		throws RemoteException {
+		try {
+			int returnValue = AssetCategoryServiceUtil.getChildCategoriesCount(parentCategoryId);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

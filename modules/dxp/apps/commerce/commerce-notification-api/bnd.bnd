@@ -8,4 +8,5 @@ Export-Package:\
 	com.liferay.commerce.notification.service,\
 	com.liferay.commerce.notification.service.persistence,\
 	com.liferay.commerce.notification.type,\
+	com.liferay.commerce.notification.util,\
 	com.liferay.commerce.notification.util.comparator

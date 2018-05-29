@@ -1444,9 +1444,7 @@ public class CalendarPortlet extends MVCPortlet {
 			long layoutSetPrototypeClassNameId = _portal.getClassNameId(
 				LayoutSetPrototype.class);
 
-			if (group.getClassNameId() ==
-					layoutSetPrototypeClassNameId) {
-
+			if (group.getClassNameId() == layoutSetPrototypeClassNameId) {
 				continue;
 			}
 
@@ -1457,9 +1455,8 @@ public class CalendarPortlet extends MVCPortlet {
 
 				if (stagingGroupId == themeDisplay.getScopeGroupId()) {
 					calendar =
-						_calendarLocalService.
-							fetchCalendarByUuidAndGroupId(
-								calendar.getUuid(), stagingGroupId);
+						_calendarLocalService.fetchCalendarByUuidAndGroupId(
+							calendar.getUuid(), stagingGroupId);
 				}
 			}
 

@@ -120,3 +120,20 @@ if (Validator.isNotNull(backURL)) {
 		submitForm(form);
 	}
 </aui:script>
+
+<aui:script>
+	var quantityPrefix = "<portlet:namespace />commerceWarehouseItemQuantity";
+	var enterKeyCode = 13;
+
+	$('input[id^=' + quantityPrefix + ']').on(
+		'keypress',
+		function(event) {
+			if (event.keyCode == enterKeyCode) {
+				event.preventDefault();
+
+				var curIndex = $(this).attr('id').split(quantityPrefix)[1];
+				$("#<portlet:namespace/>saveButton" + curIndex).click();
+			}
+		}
+	);
+</aui:script>

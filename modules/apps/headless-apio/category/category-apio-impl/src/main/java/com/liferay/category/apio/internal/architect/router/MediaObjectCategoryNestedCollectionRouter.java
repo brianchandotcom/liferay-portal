@@ -21,9 +21,9 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.category.apio.internal.architect.form.NestedCategoryForm;
 import com.liferay.category.apio.internal.architect.router.base.BaseCategoryNestedCollectionRouter;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,7 +58,7 @@ public class MediaObjectCategoryNestedCollectionRouter extends
 
 	@Override
 	protected String getClassName() {
-		return FileEntry.class.getName();
+		return DLFileEntry.class.getName();
 	}
 
 	@Reference(

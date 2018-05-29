@@ -21,6 +21,7 @@ import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -94,14 +94,14 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
+		validate(name);
+
 		if (Validator.isNull(fragmentEntryKey)) {
-			fragmentEntryKey = String.valueOf(counterLocalService.increment());
-		}
-		else {
-			fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+			fragmentEntryKey = _generateFragmentEntryKey(groupId, name);
 		}
 
-		validate(name);
+		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+
 		validateFragmentEntryKey(groupId, fragmentEntryKey);
 
 		long fragmentEntryId = counterLocalService.increment();
@@ -437,18 +437,26 @@ public class FragmentEntryLocalServiceImpl
 		}
 	}
 
-	private String _getContent(FragmentEntry fragmentEntry) {
-		StringBundler sb = new StringBundler(7);
+	private String _generateFragmentEntryKey(long groupId, String name) {
+		String fragmentEntryKey = _getFragmentEntryKey(name);
 
-		sb.append("<html><head><style>");
-		sb.append(fragmentEntry.getCss());
-		sb.append("</style><script>");
-		sb.append(fragmentEntry.getJs());
-		sb.append("</script></head><body>");
-		sb.append(fragmentEntry.getHtml());
-		sb.append("</body></html>");
+		fragmentEntryKey = StringUtil.replace(
+			fragmentEntryKey, CharPool.SPACE, CharPool.DASH);
 
-		return sb.toString();
+		String curFragmentEntryKey = fragmentEntryKey;
+
+		int count = 0;
+
+		while (true) {
+			FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FEK(
+				groupId, curFragmentEntryKey);
+
+			if (fragmentEntry == null) {
+				return curFragmentEntryKey;
+			}
+
+			curFragmentEntryKey = fragmentEntryKey + CharPool.DASH + count++;
+		}
 	}
 
 	private String _getFragmentEntryKey(String fragmentEntryKey) {

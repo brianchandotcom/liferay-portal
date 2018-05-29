@@ -21,16 +21,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -50,30 +46,17 @@ public class FragmentEntryExceptionRequestHandler {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		String errorMessage = "an-unexpected-error-occurred";
+
 		if (pe instanceof FragmentEntryNameException) {
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					themeDisplay.getLocale(), "please-enter-a-valid-name"));
+			errorMessage = "please-enter-a-valid-name";
 		}
-		else {
-			String errorMessage = "an-unexpected-error-occurred";
 
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(
-					themeDisplay.getLocale());
-
-			jsonObject.put(
-				"error", LanguageUtil.get(resourceBundle, errorMessage));
-		}
+		jsonObject.put(
+			"error", LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.fragment.web)", unbind = "-"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

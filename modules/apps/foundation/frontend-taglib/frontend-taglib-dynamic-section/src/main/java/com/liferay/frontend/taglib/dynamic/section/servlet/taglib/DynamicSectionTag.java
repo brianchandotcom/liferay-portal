@@ -43,18 +43,13 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 
 				StringBundler sb = null;
 
-				if (_useOriginalBody) {
-					sb = (StringBundler)servletRequest.getAttribute(key);
-				}
-				else {
-					sb = getBodyContentAsStringBundler();
+				sb = getBodyContentAsStringBundler();
 
-					servletRequest.setAttribute(key, sb);
+				servletRequest.setAttribute(key, sb);
 
-					sb = DynamicSectionUtil.modify(_name, pageContext, sb);
+				sb = DynamicSectionUtil.modify(_name, pageContext, sb);
 
-					servletRequest.removeAttribute(key);
-				}
+				servletRequest.removeAttribute(key);
 
 				sb.writeTo(jspWriter);
 			}
@@ -68,7 +63,6 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 			_name = null;
 			_hasServices = false;
 			_hasReplace = false;
-			_useOriginalBody = false;
 		}
 	}
 
@@ -93,16 +87,11 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 		_name = name;
 	}
 
-	public void setUseOriginalBody(boolean useOriginalBody) {
-		_useOriginalBody = useOriginalBody;
-	}
-
 	private static final String _PREFIX =
 		DynamicSectionTag.class.getName() + "#";
 
 	private boolean _hasReplace;
 	private boolean _hasServices;
 	private String _name;
-	private boolean _useOriginalBody;
 
 }

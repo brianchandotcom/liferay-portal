@@ -27,4 +27,16 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<description></description>
+		<name>dynamic-section-original-body</name>
+		<tag-class>com.liferay.frontend.taglib.dynamic.section.servlet.taglib.DynamicSectionOriginalBodyTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Name for Dynamic Section Original Body</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

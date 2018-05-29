@@ -15,7 +15,7 @@
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
+import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,10 +52,9 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected TCKJunitBatchTestClassGroup(
-		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
-		String testSuiteName) {
+		String batchName, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, portalGitWorkingDirectory, testSuiteName);
+		super(batchName, portalTestClassJob);
 
 		File workingDirectory = portalGitWorkingDirectory.getWorkingDirectory();
 
@@ -64,7 +63,7 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 		if (!tckHomeDirectory.exists()) {
 			tckHomeDirectory = new File(
 				JenkinsResultsParserUtil.getProperty(
-					portalTestProperties, "tck.home"));
+					jobProperties, "tck.home"));
 		}
 
 		_tckHomeDirectory = tckHomeDirectory;

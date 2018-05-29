@@ -14,9 +14,8 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.PortalAcceptancePullRequestJob;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
-import com.liferay.jenkins.results.parser.PortalRepositoryJob;
+import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 /**
  * @author Michael Hashimoto
@@ -24,77 +23,55 @@ import com.liferay.jenkins.results.parser.PortalRepositoryJob;
 public class TestClassGroupFactory {
 
 	public static BatchTestClassGroup newBatchTestClassGroup(
-		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory) {
+		String batchName, Job job) {
 
-		return newBatchTestClassGroup(
-			batchName, portalGitWorkingDirectory, null);
-	}
+		if (job instanceof PortalTestClassJob) {
+			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
 
-	public static BatchTestClassGroup newBatchTestClassGroup(
-		String batchName, PortalGitWorkingDirectory portalGitWorkingDirectory,
-		String testSuiteName) {
+			if (batchName.contains("functional-")) {
+				return new FunctionalBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
 
-		if (batchName.contains("functional-")) {
-			return new FunctionalBatchTestClassGroup(
-				batchName, portalGitWorkingDirectory, testSuiteName);
+			if (batchName.startsWith("integration-") ||
+				batchName.startsWith("unit-")) {
+
+				return new JUnitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("modules-integration-") ||
+				batchName.startsWith("modules-unit-")) {
+
+				return new ModulesJUnitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("plugins-compile-")) {
+				return new PluginsBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("portal-frontend-js-")) {
+				return new NPMTestBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("semantic-versioning-")) {
+				return new SemVerBaselineBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			if (batchName.startsWith("tck-")) {
+				return new TCKJunitBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
+			return new DefaultBatchTestClassGroup(
+				batchName, portalTestClassJob);
 		}
 
-		if (batchName.startsWith("integration-") ||
-			batchName.startsWith("unit-")) {
-
-			return new JUnitBatchTestClassGroup(
-				batchName, portalGitWorkingDirectory, testSuiteName);
-		}
-
-		if (batchName.startsWith("modules-integration-") ||
-			batchName.startsWith("modules-unit-")) {
-
-			return new ModulesJUnitBatchTestClassGroup(
-				batchName, portalGitWorkingDirectory, testSuiteName);
-		}
-
-		if (batchName.startsWith("plugins-compile-")) {
-			return new PluginsBatchTestClassGroup(
-				batchName, portalGitWorkingDirectory, testSuiteName);
-		}
-
-		if (batchName.startsWith("portal-frontend-js-")) {
-			return new NPMTestBatchTestClassGroup(
-				batchName, portalGitWorkingDirectory, testSuiteName);
-		}
-
-		if (batchName.startsWith("semantic-versioning-")) {
-			return new SemVerBaselineBatchTestClassGroup(
-				batchName, portalGitWorkingDirectory, testSuiteName);
-		}
-
-		if (batchName.startsWith("tck-")) {
-			return new TCKJunitBatchTestClassGroup(
-				batchName, portalGitWorkingDirectory, testSuiteName);
-		}
-
-		return new DefaultBatchTestClassGroup(
-			batchName, portalGitWorkingDirectory, testSuiteName);
-	}
-
-	public static BatchTestClassGroup newBatchTestClassGroup(
-		String batchName, PortalRepositoryJob portalRepositoryJob) {
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			(PortalGitWorkingDirectory)portalRepositoryJob.
-				getGitWorkingDirectory();
-
-		String testSuiteName = null;
-
-		if (portalRepositoryJob instanceof PortalAcceptancePullRequestJob) {
-			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
-				(PortalAcceptancePullRequestJob)portalRepositoryJob;
-
-			testSuiteName = portalAcceptancePullRequestJob.getTestSuiteName();
-		}
-
-		return newBatchTestClassGroup(
-			batchName, portalGitWorkingDirectory, testSuiteName);
+		throw new IllegalArgumentException("Unknown test class group");
 	}
 
 }

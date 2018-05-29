@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Properties;
+
 /**
  * @author Michael Hashimoto
  */
@@ -24,10 +26,16 @@ public abstract class BaseJob implements Job {
 		return jobName;
 	}
 
+	@Override
+	public Properties getJobProperties() {
+		return jobProperties;
+	}
+
 	protected BaseJob(String jobName) {
 		this.jobName = jobName;
 	}
 
 	protected String jobName;
+	protected Properties jobProperties;
 
 }

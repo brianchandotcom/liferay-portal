@@ -847,6 +847,7 @@ AUI.add(
 			_setVisibleToOperandField: function(field, visibility) {
 				if (field) {
 					field.set('visible', visibility);
+					field.get('container').addClass('hide');
 				}
 			},
 

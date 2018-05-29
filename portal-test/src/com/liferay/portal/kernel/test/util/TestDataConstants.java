@@ -37,7 +37,7 @@ public class TestDataConstants {
 
 		byte[] result = new byte[length * i];
 
-		for (int n = 0; n < result.length; n +=length) {
+		for (int n = 0; n < result.length; n += length) {
 			System.arraycopy(TEST_BYTE_ARRAY, 0, result, n, length);
 		}
 

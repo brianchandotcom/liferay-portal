@@ -41,15 +41,15 @@ public class CategoryForm {
 		Form.Builder<CategoryForm> builder) {
 
 		return builder.title(
-			language -> "Category creator form"
+			__ -> "Category creator form"
 		).description(
-			language -> "This form can be used to create a category"
+			__ -> "This form can be used to create a category"
 		).constructor(
 			CategoryForm::new
 		).addOptionalString(
-			"description", CategoryForm::setDescription
+			"description", CategoryForm::_setDescription
 		).addRequiredString(
-			"name", CategoryForm::setName
+			"name", CategoryForm::_setName
 		).build();
 	}
 
@@ -73,11 +73,11 @@ public class CategoryForm {
 		return Collections.singletonMap(locale, _name);
 	}
 
-	public void setDescription(String description) {
+	private void _setDescription(String description) {
 		_description = description;
 	}
 
-	public void setName(String name) {
+	private void _setName(String name) {
 		_name = name;
 	}
 

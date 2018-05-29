@@ -42,19 +42,19 @@ public class NestedCategoryForm {
 		Form.Builder<NestedCategoryForm> builder) {
 
 		return builder.title(
-			language -> "Category creator form"
+			__ -> "Category creator form"
 		).description(
-			language -> "This form can be used to create a category"
+			__ -> "This form can be used to create a category"
 		).constructor(
 			NestedCategoryForm::new
 		).addOptionalLong(
-			"parentCategoryId", NestedCategoryForm::setParentCategoryId
+			"category", NestedCategoryForm::_setParentCategoryId
 		).addOptionalString(
-			"description", NestedCategoryForm::setDescription
+			"description", NestedCategoryForm::_setDescription
 		).addRequiredLong(
-			"vocabularyId", NestedCategoryForm::setVocabularyId
+			"taxonomy", NestedCategoryForm::_setVocabularyId
 		).addRequiredString(
-			"name", NestedCategoryForm::setName
+			"name", NestedCategoryForm::_setName
 		).build();
 	}
 
@@ -98,19 +98,19 @@ public class NestedCategoryForm {
 		return _vocabularyId;
 	}
 
-	public void setDescription(String description) {
+	private void _setDescription(String description) {
 		_description = description;
 	}
 
-	public void setName(String name) {
+	private void _setName(String name) {
 		_name = name;
 	}
 
-	public void setParentCategoryId(long parentCategoryId) {
+	private void _setParentCategoryId(long parentCategoryId) {
 		_parentCategoryId = parentCategoryId;
 	}
 
-	public void setVocabularyId(long vocabularyId) {
+	private void _setVocabularyId(long vocabularyId) {
 		_vocabularyId = vocabularyId;
 	}
 

@@ -16,7 +16,6 @@ package com.liferay.taxonomy.apio.internal.permission;
 
 import com.liferay.apio.architect.alias.routes.permission.HasNestedAddingPermissionFunction;
 import com.liferay.apio.architect.credentials.Credentials;
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,19 +49,21 @@ public class TaxonomyHasPermissionImpl implements HasPermission<Long> {
 	}
 
 	@Override
-	public Boolean forDeleting(Credentials credentials, Long entryId)
+	public Boolean forDeleting(Credentials credentials, Long assetVocabularyId)
 		throws PortalException {
 
 		return AssetVocabularyPermission.contains(
-			(PermissionChecker)credentials.get(), entryId, ActionKeys.DELETE);
+			(PermissionChecker)credentials.get(), assetVocabularyId,
+			ActionKeys.DELETE);
 	}
 
 	@Override
-	public Boolean forUpdating(Credentials credentials, Long entryId)
+	public Boolean forUpdating(Credentials credentials, Long assetVocabularyId)
 		throws PortalException {
 
 		return AssetVocabularyPermission.contains(
-			(PermissionChecker)credentials.get(), entryId, ActionKeys.UPDATE);
+			(PermissionChecker)credentials.get(), assetVocabularyId,
+			ActionKeys.UPDATE);
 	}
 
 }

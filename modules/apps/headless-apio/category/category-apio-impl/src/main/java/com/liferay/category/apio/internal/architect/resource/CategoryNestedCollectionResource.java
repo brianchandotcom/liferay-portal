@@ -123,23 +123,22 @@ public class CategoryNestedCollectionResource
 	}
 
 	private AssetCategory _addAssetCategory(
-			long vocabularyId, CategoryForm assetCategoryCreatorForm)
+			long vocabularyId, CategoryForm categoryForm)
 		throws PortalException {
 
-		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
 			vocabularyId);
 
-		Group group = _groupLocalService.getGroup(vocabulary.getGroupId());
+		Group group = _groupLocalService.getGroup(assetVocabulary.getGroupId());
 
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		return _assetCategoryService.addCategory(
-			vocabulary.getGroupId(), 0,
-			assetCategoryCreatorForm.getTitleMap(locale),
-			assetCategoryCreatorForm.getDescriptionMap(locale), vocabularyId,
-			null, serviceContext);
+			assetVocabulary.getGroupId(), 0, categoryForm.getTitles(locale),
+			categoryForm.getDescriptions(locale), vocabularyId, null,
+			serviceContext);
 	}
 
 	private AssetCategory _getAssetCategory(long assetCategoryId)
@@ -149,21 +148,21 @@ public class CategoryNestedCollectionResource
 	}
 
 	private PageItems<AssetCategory> _getPageItems(
-			Pagination pagination, long vocabularyId)
+			Pagination pagination, long assetVocabularyId)
 		throws PortalException {
 
-		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
-			vocabularyId);
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
+			assetVocabularyId);
 
-		List<AssetCategory> assetCategories =
+		List<AssetCategory> categories =
 			_assetCategoryService.getVocabularyRootCategories(
-				vocabulary.getGroupId(), vocabularyId,
+				assetVocabulary.getGroupId(), assetVocabularyId,
 				pagination.getStartPosition(), pagination.getEndPosition(),
 				null);
 		int count = _assetCategoryService.getVocabularyRootCategoriesCount(
-			vocabulary.getGroupId(), vocabularyId);
+			assetVocabulary.getGroupId(), assetVocabularyId);
 
-		return new PageItems<>(assetCategories, count);
+		return new PageItems<>(categories, count);
 	}
 
 	private void _removeAssetCategory(long assetCategoryId)
@@ -173,22 +172,23 @@ public class CategoryNestedCollectionResource
 	}
 
 	private AssetCategory _updateAssetCategory(
-			long categoryId, CategoryForm assetCategoryCreatorForm)
+			long assetCategoryId, CategoryForm categoryForm)
 		throws PortalException {
 
-		AssetCategory category = _assetCategoryService.getCategory(categoryId);
+		AssetCategory assetCategory = _assetCategoryService.getCategory(
+			assetCategoryId);
 
-		Group group = _groupLocalService.getGroup(category.getGroupId());
+		Group group = _groupLocalService.getGroup(assetCategory.getGroupId());
 
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		return _assetCategoryService.updateCategory(
-			categoryId, category.getParentCategoryId(),
-			assetCategoryCreatorForm.getTitleMap(locale),
-			assetCategoryCreatorForm.getDescriptionMap(locale),
-			category.getVocabularyId(), null, serviceContext);
+			assetCategoryId, assetCategory.getParentCategoryId(),
+			categoryForm.getTitles(locale),
+			categoryForm.getDescriptions(locale),
+			assetCategory.getVocabularyId(), null, serviceContext);
 	}
 
 	@Reference

@@ -62,13 +62,13 @@ public class CategoryCategoryNestedCollectionRouter implements
 	}
 
 	private AssetCategory _addAssetCategory(
-			long parentCategoryId, CategoryForm assetCategoryCreatorForm)
+			long parentCategoryId, CategoryForm categoryForm)
 		throws PortalException {
 
-		AssetCategory parentCategory = _assetCategoryService.getCategory(
+		AssetCategory assetCategory = _assetCategoryService.getCategory(
 			parentCategoryId);
 
-		Group group = _groupLocalService.getGroup(parentCategory.getGroupId());
+		Group group = _groupLocalService.getGroup(assetCategory.getGroupId());
 
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
@@ -76,23 +76,23 @@ public class CategoryCategoryNestedCollectionRouter implements
 
 		return _assetCategoryService.addCategory(
 			group.getGroupId(), parentCategoryId,
-			assetCategoryCreatorForm.getTitleMap(locale),
-			assetCategoryCreatorForm.getDescriptionMap(locale),
-			parentCategory.getVocabularyId(), null, serviceContext);
+			categoryForm.getTitles(locale),
+			categoryForm.getDescriptions(locale),
+			assetCategory.getVocabularyId(), null, serviceContext);
 	}
 
 	private PageItems<AssetCategory> _getPageItems(
 			Pagination pagination, long parentCategoryId)
 		throws PortalException {
 
-		List<AssetCategory> childCategories =
+		List<AssetCategory> assetCategories =
 			_assetCategoryService.getChildCategories(
 				parentCategoryId, pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
 		int count = _assetCategoryService.getChildCategoriesCount(
 			parentCategoryId);
 
-		return new PageItems<>(childCategories, count);
+		return new PageItems<>(assetCategories, count);
 	}
 
 	@Reference

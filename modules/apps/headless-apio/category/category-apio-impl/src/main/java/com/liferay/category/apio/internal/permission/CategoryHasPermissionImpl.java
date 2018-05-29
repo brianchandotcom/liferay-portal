@@ -51,12 +51,12 @@ public class CategoryHasPermissionImpl implements HasPermission<Long> {
 
 		if (identifierClass.equals(TaxonomyIdentifier.class)) {
 			return (credentials, vocabularyId) -> {
-				AssetVocabulary vocabulary =
+				AssetVocabulary assetVocabulary =
 					_assetVocabularyService.getVocabulary((Long)vocabularyId);
 
 				return AssetCategoryPermission.contains(
 					(PermissionChecker)credentials.get(),
-					vocabulary.getGroupId(),
+					assetVocabulary.getGroupId(),
 					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 					ActionKeys.ADD_CATEGORY);
 			};
@@ -91,19 +91,21 @@ public class CategoryHasPermissionImpl implements HasPermission<Long> {
 	}
 
 	@Override
-	public Boolean forDeleting(Credentials credentials, Long entryId)
+	public Boolean forDeleting(Credentials credentials, Long assetCategoryId)
 		throws PortalException {
 
 		return AssetCategoryPermission.contains(
-			(PermissionChecker)credentials.get(), entryId, ActionKeys.DELETE);
+			(PermissionChecker)credentials.get(), assetCategoryId,
+			ActionKeys.DELETE);
 	}
 
 	@Override
-	public Boolean forUpdating(Credentials credentials, Long entryId)
+	public Boolean forUpdating(Credentials credentials, Long assetCategoryId)
 		throws PortalException {
 
 		return AssetCategoryPermission.contains(
-			(PermissionChecker)credentials.get(), entryId, ActionKeys.UPDATE);
+			(PermissionChecker)credentials.get(), assetCategoryId,
+			ActionKeys.UPDATE);
 	}
 
 	@Reference

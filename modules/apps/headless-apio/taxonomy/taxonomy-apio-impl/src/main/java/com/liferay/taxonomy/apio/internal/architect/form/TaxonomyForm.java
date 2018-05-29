@@ -41,9 +41,9 @@ public class TaxonomyForm {
 		Form.Builder<TaxonomyForm> builder) {
 
 		return builder.title(
-			language -> "Title"
+			__ -> "Taxonomy form"
 		).description(
-			language -> "Description"
+			__ -> "This form can be used to create or update a taxonomy"
 		).constructor(
 			TaxonomyForm::new
 		).addOptionalString(
@@ -63,7 +63,7 @@ public class TaxonomyForm {
 	 * @return the taxonomy's description map
 	 * @review
 	 */
-	public Map<Locale, String> getDescriptionMap(Locale locale) {
+	public Map<Locale, String> getDescriptions(Locale locale) {
 		return Collections.singletonMap(locale, _description);
 	}
 
@@ -77,7 +77,7 @@ public class TaxonomyForm {
 	 * @return the taxonomy's description map
 	 * @review
 	 */
-	public Map<Locale, String> getTitleMap(Locale locale) {
+	public Map<Locale, String> getTitles(Locale locale) {
 		return Collections.singletonMap(locale, _name);
 	}
 

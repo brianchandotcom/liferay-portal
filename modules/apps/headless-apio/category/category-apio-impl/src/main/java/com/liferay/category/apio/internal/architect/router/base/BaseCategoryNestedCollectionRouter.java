@@ -62,19 +62,21 @@ public abstract class BaseCategoryNestedCollectionRouter
 	 * Creates a new {@link AssetCategory} and links it to {@link AssetEntry}
 	 * identified by the provided ID.
 	 *
-	 * @param  id the {@link AssetEntry} ID
+	 * @param  classPK the {@link AssetEntry} ID
 	 * @param  nestedCategoryForm the form containing the new category data
 	 * @return the newly created {@link AssetCategory}
 	 */
 	protected AssetCategory addAssetCategory(
-			long id, NestedCategoryForm nestedCategoryForm)
+			long classPK, NestedCategoryForm nestedCategoryForm)
 		throws PortalException {
 
-		AssetVocabulary vocabulary = getAssetVocabularyService().getVocabulary(
-			nestedCategoryForm.getVocabularyId());
+		AssetVocabulary assetVocabulary =
+			getAssetVocabularyService().getVocabulary(
+				nestedCategoryForm.getVocabularyId());
 		long parentCategoryId = nestedCategoryForm.getParentCategoryId();
 
-		Group group = getGroupLocalService().getGroup(vocabulary.getGroupId());
+		Group group =
+			getGroupLocalService().getGroup(assetVocabulary.getGroupId());
 
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
@@ -82,12 +84,12 @@ public abstract class BaseCategoryNestedCollectionRouter
 
 		AssetCategory assetCategory = getAssetCategoryService().addCategory(
 			group.getGroupId(), parentCategoryId,
-			nestedCategoryForm.getTitleMap(locale),
-			nestedCategoryForm.getDescriptionMap(locale),
-			vocabulary.getVocabularyId(), null, serviceContext);
+			nestedCategoryForm.getTitles(locale),
+			nestedCategoryForm.getDescriptions(locale),
+			assetVocabulary.getVocabularyId(), null, serviceContext);
 
 		AssetEntry assetEntry = getAssetEntryLocalService().getEntry(
-			getClassName(), id);
+			getClassName(), classPK);
 
 		long[] categoryIds = ArrayUtil.append(
 			assetEntry.getCategoryIds(), assetCategory.getCategoryId());
@@ -123,17 +125,17 @@ public abstract class BaseCategoryNestedCollectionRouter
 	protected abstract GroupLocalService getGroupLocalService();
 
 	protected PageItems<AssetCategory> getPageItems(
-			Pagination pagination, long id)
+			Pagination pagination, long classPK)
 		throws PortalException {
 
 		long classNameId = getClassNameId();
 
 		List<AssetCategory> assetCategories =
 			getAssetCategoryService().getCategories(
-				classNameId, id, pagination.getStartPosition(),
+				classNameId, classPK, pagination.getStartPosition(),
 				pagination.getEndPosition());
 		int count = getAssetCategoryService().getCategoriesCount(
-			classNameId, id);
+			classNameId, classPK);
 
 		return new PageItems<>(assetCategories, count);
 	}

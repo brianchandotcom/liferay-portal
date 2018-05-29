@@ -41,9 +41,9 @@ public class CategoryForm {
 		Form.Builder<CategoryForm> builder) {
 
 		return builder.title(
-			__ -> "Category creator form"
+			__ -> "Category form"
 		).description(
-			__ -> "This form can be used to create a category"
+			__ -> "This form can be used to create or update a category"
 		).constructor(
 			CategoryForm::new
 		).addOptionalString(
@@ -59,7 +59,7 @@ public class CategoryForm {
 	 * @return the asset category's description map
 	 * @review
 	 */
-	public Map<Locale, String> getDescriptionMap(Locale locale) {
+	public Map<Locale, String> getDescriptions(Locale locale) {
 		return Collections.singletonMap(locale, _description);
 	}
 
@@ -69,7 +69,7 @@ public class CategoryForm {
 	 * @return the asset category's title map
 	 * @review
 	 */
-	public Map<Locale, String> getTitleMap(Locale locale) {
+	public Map<Locale, String> getTitles(Locale locale) {
 		return Collections.singletonMap(locale, _name);
 	}
 

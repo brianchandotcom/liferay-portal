@@ -42,17 +42,17 @@ public class NestedCategoryForm {
 		Form.Builder<NestedCategoryForm> builder) {
 
 		return builder.title(
-			__ -> "Category creator form"
+			__ -> "Category form"
 		).description(
-			__ -> "This form can be used to create a category"
+			__ -> "This form can be used to create or update a category"
 		).constructor(
 			NestedCategoryForm::new
 		).addOptionalLong(
-			"parentCategoryId", NestedCategoryForm::_setParentCategoryId
+			"category", NestedCategoryForm::_setParentCategoryId
 		).addOptionalString(
 			"description", NestedCategoryForm::_setDescription
 		).addRequiredLong(
-			"vocabularyId", NestedCategoryForm::_setVocabularyId
+			"taxonomy", NestedCategoryForm::_setVocabularyId
 		).addRequiredString(
 			"name", NestedCategoryForm::_setName
 		).build();
@@ -64,7 +64,7 @@ public class NestedCategoryForm {
 	 * @return the asset category's description map
 	 * @review
 	 */
-	public Map<Locale, String> getDescriptionMap(Locale locale) {
+	public Map<Locale, String> getDescriptions(Locale locale) {
 		return Collections.singletonMap(locale, _description);
 	}
 
@@ -84,7 +84,7 @@ public class NestedCategoryForm {
 	 * @return the asset category's title map
 	 * @review
 	 */
-	public Map<Locale, String> getTitleMap(Locale locale) {
+	public Map<Locale, String> getTitles(Locale locale) {
 		return Collections.singletonMap(locale, _name);
 	}
 

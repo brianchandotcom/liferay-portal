@@ -120,7 +120,7 @@ public class TaxonomyNestedCollectionResource
 	}
 
 	private AssetVocabulary _addAssetVocabulary(
-			long groupId, TaxonomyForm creatorForm)
+			long groupId, TaxonomyForm taxonomyForm)
 		throws PortalException {
 
 		Group group = _groupLocalService.getGroup(groupId);
@@ -130,8 +130,8 @@ public class TaxonomyNestedCollectionResource
 		ServiceContext serviceContext = new ServiceContext();
 
 		return _assetVocabularyService.addVocabulary(
-			groupId, null, creatorForm.getTitleMap(locale),
-			creatorForm.getDescriptionMap(locale), null, serviceContext);
+			groupId, null, taxonomyForm.getTitles(locale),
+			taxonomyForm.getDescriptions(locale), null, serviceContext);
 	}
 
 	private void _deleteAssetVocabulary(long assetVocabularyId)
@@ -153,21 +153,21 @@ public class TaxonomyNestedCollectionResource
 	}
 
 	private AssetVocabulary _updateAssetVocabulary(
-			long vocabularyId, TaxonomyForm updaterForm)
+			long vocabularyId, TaxonomyForm taxonomyForm)
 		throws PortalException {
 
-		AssetVocabulary vocabulary = _assetVocabularyService.getVocabulary(
+		AssetVocabulary assetVocabulary = _assetVocabularyService.getVocabulary(
 			vocabularyId);
 
-		Group group = _groupLocalService.getGroup(vocabulary.getGroupId());
+		Group group = _groupLocalService.getGroup(assetVocabulary.getGroupId());
 
 		Locale locale = LocaleUtil.fromLanguageId(group.getDefaultLanguageId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		return _assetVocabularyService.updateVocabulary(
-			vocabularyId, null, updaterForm.getTitleMap(locale),
-			updaterForm.getDescriptionMap(locale), null, serviceContext);
+			vocabularyId, null, taxonomyForm.getTitles(locale),
+			taxonomyForm.getDescriptions(locale), null, serviceContext);
 	}
 
 	@Reference

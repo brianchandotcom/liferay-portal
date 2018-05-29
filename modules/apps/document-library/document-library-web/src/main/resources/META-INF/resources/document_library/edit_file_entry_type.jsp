@@ -55,10 +55,8 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	<liferay-util:buffer
 		var="removeStructureIcon"
 	>
-		<liferay-ui:icon
-			iconCssClass="icon-remove"
-			label="<%= true %>"
-			message="remove"
+		<clay:icon
+			symbol="times-circle"
 		/>
 	</liferay-util:buffer>
 
@@ -122,7 +120,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 						/>
 
 						<liferay-ui:search-container-column-text>
-							<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:;"><%= removeStructureIcon %></a>
+							<a class="modify-link" data-rowId="<%= curDDMStructure.getStructureId() %>" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= removeStructureIcon %></a>
 						</liferay-ui:search-container-column-text>
 					</liferay-ui:search-container-row>
 
@@ -134,10 +132,9 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 				<liferay-ui:icon
 					cssClass="modify-link select-metadata"
-					iconCssClass="icon-search"
 					label="<%= true %>"
 					linkCssClass="btn btn-default"
-					message="select-metadata-set"
+					message="select"
 					url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 				/>
 			</aui:fieldset>
@@ -181,7 +178,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 				var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />ddmStructuresSearchContainer');
 
-				var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
+				var ddmStructureLink = '<a class="modify-link" data-rowId="' + event.ddmstructureid + '" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
 
 				searchContainer.addRow([event.name, ddmStructureLink], event.ddmstructureid);
 

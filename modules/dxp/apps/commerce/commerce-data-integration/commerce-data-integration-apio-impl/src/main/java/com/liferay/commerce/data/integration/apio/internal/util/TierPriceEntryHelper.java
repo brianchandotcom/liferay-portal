@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 public class TierPriceEntryHelper {
 
 	public CommerceTierPriceEntry getCommerceTierPriceEntry(
-		long commerceTierPriceEntryId) {
+		Long commerceTierPriceEntryId) {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			_commerceTierPriceEntryService.fetchCommerceTierPriceEntry(
@@ -50,8 +50,8 @@ public class TierPriceEntryHelper {
 	}
 
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, Long minQuantity, double price,
-			double promoPrice)
+			Long commerceTierPriceEntryId, Long minQuantity, Double price,
+			Double promoPrice)
 		throws PortalException {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
@@ -67,8 +67,8 @@ public class TierPriceEntryHelper {
 	}
 
 	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, long commercePriceEntryId,
-			Long minQuantity, double price, double promoPrice,
+			Long commerceTierPriceEntryId, Long commercePriceEntryId,
+			Long minQuantity, Double price, Double promoPrice,
 			String externalReferenceCode,
 			String priceEntryExternalReferenceCode)
 		throws PortalException {

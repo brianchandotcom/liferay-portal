@@ -58,7 +58,7 @@ public class PriceEntryHelper {
 		);
 	}
 
-	public CommercePriceEntry getCommercePriceEntry(long commercePriceEntryId) {
+	public CommercePriceEntry getCommercePriceEntry(Long commercePriceEntryId) {
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.fetchCommercePriceEntry(
 				commercePriceEntryId);
@@ -72,7 +72,7 @@ public class PriceEntryHelper {
 	}
 
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, double price, double promoPrice)
+			Long commercePriceEntryId, Double price, Double promoPrice)
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry(
@@ -87,9 +87,9 @@ public class PriceEntryHelper {
 	}
 
 	public CommercePriceEntry upsertCommercePriceEntry(
-			long commercePriceEntryId, long skuId, long commercePriceListId,
+			Long commercePriceEntryId, Long skuId, Long commercePriceListId,
 			String externalReferenceCode, String skuExternalReferenceCode,
-			double price, double promoPrice)
+			Double price, Double promoPrice)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =

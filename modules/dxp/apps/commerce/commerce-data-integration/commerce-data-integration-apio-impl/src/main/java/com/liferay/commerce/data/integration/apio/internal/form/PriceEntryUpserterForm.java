@@ -108,11 +108,11 @@ public class PriceEntryUpserterForm {
 		_skuId = skuId;
 	}
 
-	private Long _commercePriceEntryId;
+	private Long _commercePriceEntryId = 0L;
 	private String _externalReferenceCode;
 	private Double _price;
 	private Double _promoPrice;
 	private String _skuExternalReferenceCode;
-	private Long _skuId;
+	private Long _skuId = 0L;
 
 }

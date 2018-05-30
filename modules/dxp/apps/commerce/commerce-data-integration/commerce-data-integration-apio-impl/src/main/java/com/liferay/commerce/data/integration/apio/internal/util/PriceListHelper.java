@@ -45,7 +45,7 @@ public class PriceListHelper {
 		);
 	}
 
-	public CommercePriceList getCommercePriceList(long commercePriceListId)
+	public CommercePriceList getCommercePriceList(Long commercePriceListId)
 		throws PortalException {
 
 		return _commercePriceListService.fetchCommercePriceList(
@@ -53,7 +53,7 @@ public class PriceListHelper {
 	}
 
 	public CommercePriceList updateCommercePriceList(
-			long commercePriceListId, String currency, String name,
+			Long commercePriceListId, String currency, String name,
 			Double priority, Boolean neverExpire, Date displayDate,
 			Date expirationDate)
 		throws PortalException {
@@ -123,7 +123,7 @@ public class PriceListHelper {
 	}
 
 	public CommercePriceList upsertCommercePriceList(
-			long groupId, long commercePriceListId, String currency,
+			Long groupId, Long commercePriceListId, String currency,
 			String name, Double priority, Boolean neverExpire, Date displayDate,
 			Date expirationDate, String externalReferenceCode)
 		throws PortalException {

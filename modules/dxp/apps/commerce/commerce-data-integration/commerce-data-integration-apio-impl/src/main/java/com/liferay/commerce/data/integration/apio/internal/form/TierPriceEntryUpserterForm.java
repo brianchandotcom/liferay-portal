@@ -110,7 +110,7 @@ public class TierPriceEntryUpserterForm {
 		_promoPrice = promoPrice;
 	}
 
-	private Long _commerceTierPriceEntryId;
+	private Long _commerceTierPriceEntryId = 0L;
 	private String _externalReferenceCode;
 	private Long _minQuantity;
 	private Double _price;

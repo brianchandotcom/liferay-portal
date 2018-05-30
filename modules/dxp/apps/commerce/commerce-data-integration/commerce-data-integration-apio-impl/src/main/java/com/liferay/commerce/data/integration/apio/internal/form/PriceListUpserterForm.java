@@ -129,7 +129,7 @@ public class PriceListUpserterForm {
 		_priority = priority;
 	}
 
-	private Long _commercePriceListId;
+	private Long _commercePriceListId = 0L;
 	private String _currency;
 	private Date _displayDate;
 	private Date _expirationDate;

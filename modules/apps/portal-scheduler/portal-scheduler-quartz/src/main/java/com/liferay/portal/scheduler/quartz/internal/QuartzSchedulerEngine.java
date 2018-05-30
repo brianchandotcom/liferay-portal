@@ -870,7 +870,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 	@Reference(unbind = "-")
 	protected void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
 	}
 
 	@Reference(unbind = "-")
@@ -1032,7 +1031,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private int _jobNameMaxLength;
 	private JSONFactory _jsonFactory;
 	private Scheduler _memoryScheduler;
-	private MessageBus _messageBus;
 	private Scheduler _persistedScheduler;
 	private Props _props;
 	private volatile boolean _schedulerEngineEnabled;

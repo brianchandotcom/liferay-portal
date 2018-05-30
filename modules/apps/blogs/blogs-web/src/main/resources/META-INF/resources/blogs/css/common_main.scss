@@ -31,14 +31,6 @@
 			max-width: 100%;
 		}
 
-		img[style~="float:"][style~="left;"] {
-			margin-right: 24px;
-		}
-
-		img[style~="float:"][style~="right;"] {
-			margin-left: 24px;
-		}
-
 		.cover-image-container {
 			background-position: center;
 			background-repeat: no-repeat;
@@ -59,12 +51,6 @@
 		}
 	}
 
-	.entry-content {
-		img {
-			max-width: 100%;
-		}
-	}
-
 	.cover-image-caption {
 		color: #868896;
 		margin-top: 8px;
@@ -72,6 +58,16 @@
 
 		p {
 			margin-bottom: 0;
+		}
+	}
+
+	.entry-body, .widget-mode-detail .widget-mode-detail-text {
+		img[style~="float:"][style~="left;"] {
+			margin-right: 24px;
+		}
+
+		img[style~="float:"][style~="right;"] {
+			margin-left: 24px;
 		}
 	}
 

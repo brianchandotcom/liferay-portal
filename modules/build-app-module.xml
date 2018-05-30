@@ -289,7 +289,7 @@
 		<property file="bnd.bnd" />
 
 		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar">
-			<equals arg1="${lp.version}" arg2="7.0.0" />
+			<equals arg1="${lp.version.major}" arg2="7.0" />
 		</condition>
 
 		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${lpkg.title.prefix}${liferay.releng.app.title} - SPI/${Bundle-SymbolicName}-${Bundle-Version}.jar">

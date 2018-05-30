@@ -176,6 +176,14 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
+		long groupId, int start, int end) {
+
+		return commerceTierPriceEntryPersistence.findByGroupId(
+			groupId, start, end);
+	}
+
+	@Override
 	public CommerceTierPriceEntry findClosestCommerceTierPriceEntry(
 		long commercePriceEntryId, int quantity) {
 
@@ -214,6 +222,11 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	public int getCommerceTierPriceEntriesCount(long commercePriceEntryId) {
 		return commerceTierPriceEntryPersistence.countByCommercePriceEntryId(
 			commercePriceEntryId);
+	}
+
+	@Override
+	public int getCommerceTierPriceEntriesCountByGroupId(long groupId) {
+		return commerceTierPriceEntryPersistence.countByGroupId(groupId);
 	}
 
 	@Override

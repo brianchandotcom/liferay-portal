@@ -96,8 +96,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 	</portlet:actionURL>
 
 	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
-		AUI().use('liferay-portlet-url');
-
 		var addSiteActionOptionQueryClickHandler = dom.delegate(
 			document.body,
 			'click',
@@ -107,12 +105,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 
 				var creationType = actionElement.dataset.creationType;
 
-				var portletURL = new Liferay.PortletURL.createURL('<%= addSiteURL %>');
+				var uri = '<%= addSiteURL %>';
 
-				portletURL.setParameter('creationType', creationType);
-				portletURL.setParameter('siteInitializerKey', actionElement.dataset.siteInitializerKey);
-
-				portletURL.setPortletId('<%= SiteAdminPortletKeys.SITE_ADMIN %>');
+				uri = Liferay.Util.addParams('<portlet:namespace />creationType=' + creationType, uri);
+				uri = Liferay.Util.addParams('<portlet:namespace />siteInitializerKey=' + actionElement.dataset.siteInitializerKey, uri);
 
 				modalCommands.openSimpleInputModal(
 					{
@@ -120,7 +116,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 						checkboxFieldName: creationType == '<%= SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE %>' ? 'layoutSetVisibilityPrivate' : '',
 						checkboxFieldValue: false,
 						dialogTitle: '<liferay-ui:message key="add-site" />',
-						formSubmitURL: portletURL.toString(),
+						formSubmitURL: uri,
 						idFieldName: 'layoutSetPrototypeId',
 						idFieldValue: actionElement.dataset.layoutSetPrototypeId,
 						mainFieldName: 'name',

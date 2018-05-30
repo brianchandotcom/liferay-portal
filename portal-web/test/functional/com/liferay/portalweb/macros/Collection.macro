@@ -6,8 +6,12 @@
 				<execute function="Click" locator1="NavNested#NAV_NESTED_PLUS" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="Button#ANY" value1="New">
-					<var name="key_text" value="New" />
+				<execute macro="Button#click">
+					<var name="button" value="New" />
+				</execute>
+
+				<execute macro="MenuItem#click">
+					<var name="menuItem" value="Collection" />
 				</execute>
 			</else>
 		</if>

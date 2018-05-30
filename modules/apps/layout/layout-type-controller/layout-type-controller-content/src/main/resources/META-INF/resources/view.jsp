@@ -14,10 +14,18 @@
  */
 --%>
 
-<%@ include file="/layout/edit_layout/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<liferay-portlet:runtime
-	portletName="<%= ContentLayoutPortletKeys.CONTENT_PAGE_EDITOR_PORTLET %>"
+<%
+FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse);
+%>
+
+<liferay-editor:resources
+	editorName="alloyeditor"
 />
 
-<liferay-ui:layout-common />
+<soy:template-renderer
+	context="<%= fragmentsEditorContext.getEditorContext() %>"
+	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
+	templateNamespace="com.liferay.layout.admin.web.FragmentsEditor.render"
+/>

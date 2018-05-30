@@ -14,6 +14,9 @@
  */
 --%>
 
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
 <%@ page import="com.liferay.layout.type.controller.content.internal.display.context.ContentLayoutTypeControllerDisplayContext" %><%@
 page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplateConstants" %><%@
@@ -23,4 +26,4 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
-<%@ include file="/init.jsp" %>
+<liferay-theme:defineObjects />

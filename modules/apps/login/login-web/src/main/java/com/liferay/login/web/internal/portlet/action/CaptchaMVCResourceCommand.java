@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
+import java.io.IOException;
+
+import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -40,17 +43,16 @@ public class CaptchaMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
 	public boolean serveResource(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
 
 		try {
 			CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 
 			return false;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return true;
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
 		}
 	}
 

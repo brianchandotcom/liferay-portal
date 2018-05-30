@@ -40,7 +40,7 @@ public abstract class BaseRSSMVCResourceCommand implements MVCResourceCommand {
 			catch (Exception e) {
 			}
 
-			return true;
+			return false;
 		}
 
 		try {

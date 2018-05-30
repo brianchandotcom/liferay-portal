@@ -17,9 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-int type = ParamUtil.getInteger(request, "type", 1);
-String keywords = ParamUtil.getString(request, "keywords");
-
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
@@ -31,22 +28,11 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+ViewRolesManagementToolbarDisplayContext viewRolesManagementToolbarDisplayContext = new ViewRolesManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle);
 
-PortletURL portletURL = renderResponse.createRenderURL();
+SearchContainer searchContainer = viewRolesManagementToolbarDisplayContext.getSearchContainer();
 
-portletURL.setParameter("mvcPath", "/view.jsp");
-portletURL.setParameter("type", String.valueOf(type));
-portletURL.setParameter("displayStyle", displayStyle);
-portletURL.setParameter("orderByCol", orderByCol);
-portletURL.setParameter("orderByType", orderByType);
-
-String portletURLString = portletURL.toString();
-
-portletURL.setParameter("keywords", keywords);
-
-pageContext.setAttribute("portletURL", portletURL);
+PortletURL portletURL = viewRolesManagementToolbarDisplayContext.getPortletURL();
 %>
 
 <liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
@@ -56,117 +42,32 @@ pageContext.setAttribute("portletURL", portletURL);
 	navigationItems="<%= roleDisplayContext.getViewRoleNavigationItems(portletURL) %>"
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionDropdownItems="<%= viewRolesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= viewRolesManagementToolbarDisplayContext.getClearResultsURL() %>"
+	componentId="viewRolesManagementToolbar"
+	creationMenu="<%= viewRolesManagementToolbarDisplayContext.getCreationMenu() %>"
+	filterDropdownItems="<%= viewRolesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= viewRolesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="roleSearch"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
+	searchFormName="searchFm"
+	selectable="<%= true %>"
+	showCreationMenu="<%= viewRolesManagementToolbarDisplayContext.showCreationMenu() %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewRolesManagementToolbarDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= viewRolesManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<aui:form action="<%= portletURLString %>" name="searchFm">
-				<liferay-ui:input-search
-					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-
-		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ROLE) %>">
-			<liferay-portlet:renderURL varImpl="addRoleURL">
-				<portlet:param name="mvcPath" value="/edit_role.jsp" />
-				<portlet:param name="redirect" value="<%= portletURLString %>" />
-				<portlet:param name="tabs1" value="details" />
-				<portlet:param name="type" value="<%= String.valueOf(type) %>" />
-			</liferay-portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-
-				<%
-				String title = null;
-
-				if (type == RoleConstants.TYPE_SITE) {
-					title = "site-role";
-				}
-				else if (type == RoleConstants.TYPE_ORGANIZATION) {
-					title = "organization-role";
-				}
-				else {
-					title = "regular-role";
-				}
-				%>
-
-				<liferay-frontend:add-menu-item
-					title="<%= LanguageUtil.get(request, title) %>"
-					url="<%= addRoleURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href="javascript:;"
-			icon="trash"
-			id="deleteRoles"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
-
-<aui:form action="<%= portletURLString %>" cssClass="container-fluid-1280" method="get" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
 	<aui:input name="deleteRoleIds" type="hidden" />
-
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
-
-	<%
-	SearchContainer searchContainer = new RoleSearch(renderRequest, portletURL);
-	%>
 
 	<liferay-ui:search-container
 		id="roleSearch"
-		rowChecker="<%= new RoleChecker(renderResponse) %>"
 		searchContainer="<%= searchContainer %>"
 		var="roleSearchContainer"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerms();
-
-			total = RoleServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getTypesObj(), new LinkedHashMap<String, Object>());
-
-			roleSearchContainer.setTotal(total);
-
-			results = RoleServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getTypesObj(), new LinkedHashMap<String, Object>(), roleSearchContainer.getStart(), roleSearchContainer.getEnd(), roleSearchContainer.getOrderByComparator());
-
-			roleSearchContainer.setResults(results);
-
-			portletURL.setParameter(roleSearchContainer.getCurParam(), String.valueOf(roleSearchContainer.getCur()));
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<aui:input name="rolesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 		<liferay-ui:search-container-row
@@ -213,11 +114,23 @@ pageContext.setAttribute("portletURL", portletURL);
 		}
 	};
 
-	$('#<portlet:namespace />deleteRoles').on(
-		'click',
-		function() {
-			deleteRoles(
-				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
+	var ACTIONS = {
+		'deleteRoles': deleteRoles
+	};
+
+	Liferay.componentReady('viewRolesManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				'actionItemClicked',
+				function(event) {
+					var itemData = event.data.item.data;
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action](
+							Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
+						);
+					}
+				}
 			);
 		}
 	);

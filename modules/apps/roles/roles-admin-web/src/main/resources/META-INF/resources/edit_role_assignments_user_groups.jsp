@@ -17,42 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs3 = (String)request.getAttribute("edit_role_assignments.jsp-tabs3");
-
-int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
-
-Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
-
 String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
-
-EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-if (tabs3.equals("available")) {
-	rowChecker = new UserGroupRoleChecker(renderResponse, role);
-}
+SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_role_assignments.jsp-searchContainer");
 %>
 
 <liferay-ui:search-container
 	id="assigneesSearch"
-	rowChecker="<%= rowChecker %>"
-	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= searchContainer %>"
+	var="userGroupSearchContainer"
 >
-
-	<%
-	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
-
-	if (tabs3.equals("current")) {
-		userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES, Long.valueOf(role.getRoleId()));
-	}
-	%>
-
-	<liferay-ui:user-group-search-container-results
-		searchTerms="<%= searchContainer.getSearchTerms() %>"
-		userGroupParams="<%= userGroupParams %>"
-	/>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.UserGroup"
 		escapedModel="<%= true %>"

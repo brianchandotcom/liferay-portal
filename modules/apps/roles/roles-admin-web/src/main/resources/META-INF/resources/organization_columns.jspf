@@ -53,7 +53,7 @@
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
-				rowChecker="<%= rowChecker %>"
+				rowChecker="<%= organizationSearchContainer.getRowChecker() %>"
 				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
 				title="<%= organization.getName() %>"
 			/>

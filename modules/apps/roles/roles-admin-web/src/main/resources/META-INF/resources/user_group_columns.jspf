@@ -43,7 +43,7 @@
 				cssClass="entry-display-style"
 				icon="users"
 				resultRow="<%= row %>"
-				rowChecker="<%= rowChecker %>"
+				rowChecker="<%= userGroupSearchContainer.getRowChecker() %>"
 				subtitle="<%= HtmlUtil.escape(userGroup.getDescription()) %>"
 				title="<%= HtmlUtil.escape(userGroup.getName()) %>"
 			/>

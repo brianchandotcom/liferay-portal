@@ -17,53 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs3 = (String)request.getAttribute("edit_role_assignments.jsp-tabs3");
-
-int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
-
-Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
-
 String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
-
-EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-if (tabs3.equals("available")) {
-	rowChecker = new GroupRoleChecker(renderResponse, role);
-}
+SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_role_assignments.jsp-searchContainer");
 %>
 
 <liferay-ui:search-container
 	id="assigneesSearch"
-	rowChecker="<%= rowChecker %>"
-	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= searchContainer %>"
+	var="groupSearchContainer"
 >
-
-	<%
-	LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
-
-	groupParams.put("site", Boolean.TRUE);
-
-	if (tabs3.equals("current")) {
-		groupParams.put("groupsRoles", Long.valueOf(role.getRoleId()));
-	}
-
-	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
-
-	total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
-
-	searchContainer.setTotal(total);
-	%>
-
-	<liferay-ui:search-container-results
-		results="<%= GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-	/>
-
-	<%
-	portletURL.setParameter("cur", String.valueOf(cur));
-	%>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Group"
 		escapedModel="<%= true %>"

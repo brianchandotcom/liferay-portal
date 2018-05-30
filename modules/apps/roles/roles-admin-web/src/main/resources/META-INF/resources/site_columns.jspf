@@ -43,7 +43,7 @@
 				cssClass="entry-display-style"
 				icon="sites"
 				resultRow="<%= row %>"
-				rowChecker="<%= rowChecker %>"
+				rowChecker="<%= groupSearchContainer.getRowChecker() %>"
 				subtitle="<%= LanguageUtil.get(request, group.getTypeLabel()) %>"
 				title="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 			/>

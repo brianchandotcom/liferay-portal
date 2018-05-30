@@ -22,83 +22,32 @@ String syncEntitiesEventName = ParamUtil.getString(request, "syncEntitiesEventNa
 
 User selUser = PortalUtil.getSelectedUser(request);
 
-PortletURL portletURL = renderResponse.createRenderURL();
+SelectRoleManagementToolbarDisplayContext SelectRoleManagementToolbarDisplayContext = new SelectRoleManagementToolbarDisplayContext(request, renderRequest, renderResponse, eventName);
 
-portletURL.setParameter("mvcPath", "/select_role.jsp");
+PortletURL portletURL = SelectRoleManagementToolbarDisplayContext.getPortletURL();
 
-if (selUser != null) {
-	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
-}
-
-portletURL.setParameter("eventName", eventName);
+SearchContainer roleSearchContainer = SelectRoleManagementToolbarDisplayContext.getRoleSearchContainer(filterManageableRoles);
 %>
 
 <clay:navigation-bar
 	navigationItems='<%= roleDisplayContext.getSelectRoleNavigationItems("regular-roles") %>'
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-filters>
-			<liferay-frontend:management-bar-navigation
-				navigationKeys='<%= new String[] {"all"} %>'
-				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			/>
-
-			<li>
-				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-					<liferay-ui:input-search
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</liferay-frontend:management-bar-filters>
-
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= SelectRoleManagementToolbarDisplayContext.getClearResultsURL() %>"
+	itemsTotal="<%= roleSearchContainer.getTotal() %>"
+	searchActionURL="<%= SelectRoleManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= true %>"
+	viewTypeItems="<%= SelectRoleManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectRegularRoleFm">
 	<liferay-ui:search-container
 		headerNames="name"
-		searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= roleSearchContainer %>"
 	>
-
-		<%
-		RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
-		%>
-
-		<liferay-ui:search-container-results>
-
-			<%
-			if (filterManageableRoles) {
-				List<Role> roles = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_REGULAR}, QueryUtil.ALL_POS, QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
-
-				roles = UsersAdminUtil.filterRoles(permissionChecker, roles);
-
-				total = roles.size();
-
-				searchContainer.setTotal(total);
-
-				results = ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd());
-			}
-			else {
-				total = RoleLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_REGULAR});
-
-				searchContainer.setTotal(total);
-
-				results = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_REGULAR}, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
-
-			searchContainer.setResults(results);
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Role"
 			keyProperty="roleId"

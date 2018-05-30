@@ -17,46 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs3 = (String)request.getAttribute("edit_role_assignments.jsp-tabs3");
-
-int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
-
-Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
-
 String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
-
-EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
-
-if (tabs3.equals("available")) {
-	rowChecker = new OrganizationRoleChecker(renderResponse, role);
-}
+SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_role_assignments.jsp-searchContainer");
 %>
 
 <liferay-ui:search-container
 	id="assigneesSearch"
-	rowChecker="<%= rowChecker %>"
-	searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= searchContainer %>"
 	var="organizationSearchContainer"
 >
-
-	<%
-	long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-
-	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-
-	if (tabs3.equals("current")) {
-		organizationParams.put("organizationsRoles", Long.valueOf(role.getRoleId()));
-	}
-	%>
-
-	<liferay-ui:organization-search-container-results
-		forceDatabase="<%= true %>"
-		organizationParams="<%= organizationParams %>"
-		parentOrganizationId="<%= parentOrganizationId %>"
-	/>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Organization"
 		escapedModel="<%= true %>"

@@ -19,8 +19,6 @@
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "users");
 
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 long roleId = ParamUtil.getLong(request, "roleId");
@@ -39,75 +37,42 @@ else {
 }
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectAssignees");
-String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+EditRoleAssignmentsManagementToolbarDisplayContext editRoleAssignmentsManagementToolbarDisplayContext = new EditRoleAssignmentsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, "available");
 
-portletURL.setParameter("mvcPath", "/select_assignees.jsp");
-portletURL.setParameter("tabs2", tabs2);
-portletURL.setParameter("tabs3", "available");
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-portletURL.setParameter("displayStyle", displayStyle);
-portletURL.setParameter("orderByCol", orderByCol);
-portletURL.setParameter("orderByType", orderByType);
+SearchContainer searchContainer = editRoleAssignmentsManagementToolbarDisplayContext.getSearchContainer();
 
-request.setAttribute("edit_role_assignments.jsp-tabs3", "available");
-
-request.setAttribute("edit_role_assignments.jsp-cur", cur);
-
-request.setAttribute("edit_role_assignments.jsp-role", role);
-
-request.setAttribute("edit_role_assignments.jsp-displayStyle", displayStyle);
-
-request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
+PortletURL portletURL = editRoleAssignmentsManagementToolbarDisplayContext.getPortletURL();
 %>
 
 <clay:navigation-bar
 	navigationItems="<%= roleDisplayContext.getSelectAssigneesNavigationItems(portletURL) %>"
 />
 
-<portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
-	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />
-</portlet:actionURL>
-
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	clearResultsURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
+	filterDropdownItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="assigneesSearch"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<li>
-			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search
-					autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	selectable="<%= true %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= editRoleAssignmentsManagementToolbarDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="available" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
+
+	<%
+	request.setAttribute("edit_role_assignments.jsp-displayStyle", displayStyle);
+	request.setAttribute("edit_role_assignments.jsp-searchContainer", searchContainer);
+	%>
 
 	<c:choose>
 		<c:when test='<%= tabs2.equals("users") %>'>

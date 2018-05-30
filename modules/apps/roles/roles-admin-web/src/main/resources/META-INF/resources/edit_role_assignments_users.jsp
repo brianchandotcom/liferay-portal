@@ -17,44 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs3 = (String)request.getAttribute("edit_role_assignments.jsp-tabs3");
-
-int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
-
-Role role = (Role)request.getAttribute("edit_role_assignments.jsp-role");
-
 String displayStyle = (String)request.getAttribute("edit_role_assignments.jsp-displayStyle");
 
-PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.jsp-portletURL");
-
-EmptyOnClickRowChecker rowChecker = new UnsetUserRoleChecker(renderResponse, role);
-
-if (tabs3.equals("available")) {
-	rowChecker = new SetUserRoleChecker(renderResponse, role);
-}
+SearchContainer searchContainer = (SearchContainer)request.getAttribute("edit_role_assignments.jsp-searchContainer");
 %>
 
 <liferay-ui:membership-policy-error />
 
 <liferay-ui:search-container
 	id="assigneesSearch"
-	rowChecker="<%= rowChecker %>"
-	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= searchContainer %>"
 	var="userSearchContainer"
 >
-
-	<%
-	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-	if (tabs3.equals("current")) {
-		userParams.put("usersRoles", Long.valueOf(role.getRoleId()));
-	}
-	%>
-
-	<liferay-ui:user-search-container-results
-		userParams="<%= userParams %>"
-	/>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.User"
 		escapedModel="<%= true %>"

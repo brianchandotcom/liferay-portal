@@ -122,12 +122,10 @@ public class AddContentLayoutMVCActionCommand
 			else {
 				layout = _layoutService.addLayout(
 					groupId, privateLayout, parentLayoutId, nameMap,
-					new HashMap<Locale, String>(),
-					new HashMap<Locale, String>(),
-					new HashMap<Locale, String>(),
-					new HashMap<Locale, String>(), "content",
-					typeSettingsProperties.toString(), false,
-					new HashMap<Locale, String>(), serviceContext);
+					new HashMap<>(), new HashMap<>(), new HashMap<>(),
+					new HashMap<>(), "content",
+					typeSettingsProperties.toString(), false, new HashMap<>(),
+					serviceContext);
 			}
 
 			jsonObject.put(

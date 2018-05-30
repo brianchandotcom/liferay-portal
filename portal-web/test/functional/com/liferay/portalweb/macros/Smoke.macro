@@ -48,8 +48,9 @@
 		<var name="portletName" value="Hello World" />
 
 		<task summary="Add a '${portletName}' portlet to the page named '${pageName}'">
-			<execute macro="Navigator#gotoPage">
+			<execute macro="Navigator#gotoSitePage">
 				<var name="pageName" value="${pageName}" />
+				<var name="siteName" value="Site Name" />
 			</execute>
 
 			<execute macro="Portlet#addPG">
@@ -66,8 +67,9 @@
 				<var name="portletName" value="${portletName}" />
 			</execute>
 
-			<execute macro="Navigator#gotoPage">
+			<execute macro="Navigator#gotoSitePage">
 				<var name="pageName" value="${pageName}" />
+				<var name="siteName" value="Site Name" />
 			</execute>
 
 			<execute macro="Portlet#viewTitle">
@@ -83,7 +85,9 @@
 		<var name="portlet" value="Web Content" />
 
 		<task macro-summary="ProductMenu#gotoSitesContent">
-			<execute macro="Navigator#openURL" />
+			<execute macro="Navigator#openSiteURL">
+				<var name="siteName" value="Site Name" />
+			</execute>
 
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />

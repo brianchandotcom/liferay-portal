@@ -15,9 +15,9 @@
 --%>
 
 <aui:select label="scope" name="preferences--searchScope--" value="<%= searchDisplayContext.getSearchScopePreferenceString() %>">
-	<aui:option label="this-site" value="" />
-	<aui:option label="everything" />
-	<aui:option label="let-the-user-choose" />
+	<aui:option label="this-site" value="this-site" />
+	<aui:option label="everything" value="everything" />
+	<aui:option label="let-the-user-choose" value="let-the-user-choose" />
 </aui:select>
 
 <aui:fieldset cssClass="facet-configuration-container" label="facets">

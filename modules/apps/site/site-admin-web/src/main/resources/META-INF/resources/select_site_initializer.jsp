@@ -23,19 +23,19 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 long parentGroupSearchContainerPrimaryKeys = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys");
 
-SearchContainer<SiteInitializerItemDisplayContext> SiteInitializerItemSearchContainer = new SearchContainer<>(liferayPortletRequest, currentURLObj, null, "there-are-no-site-templates");
+SearchContainer<SiteInitializerItemDisplayContext> siteInitializerItemSearchContainer = new SearchContainer<>(liferayPortletRequest, currentURLObj, null, "there-are-no-site-templates");
 
 List<SiteInitializerItemDisplayContext> siteInitializerItems = siteAdminDisplayContext.getSiteInitializerItems();
 
-int indexFrom = SiteInitializerItemSearchContainer.getStart();
-int indexTo = SiteInitializerItemSearchContainer.getEnd();
+int indexFrom = siteInitializerItemSearchContainer.getStart();
+int indexTo = siteInitializerItemSearchContainer.getEnd();
 
 if (indexTo > siteInitializerItems.size()) {
 	indexTo = siteInitializerItems.size();
 }
 
-SiteInitializerItemSearchContainer.setResults(siteInitializerItems.subList(indexFrom, indexTo));
-SiteInitializerItemSearchContainer.setTotal(siteInitializerItems.size());
+siteInitializerItemSearchContainer.setResults(siteInitializerItems.subList(indexFrom, indexTo));
+siteInitializerItemSearchContainer.setTotal(siteInitializerItems.size());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
@@ -45,7 +45,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		searchContainer="<%= SiteInitializerItemSearchContainer %>"
+		searchContainer="<%= siteInitializerItemSearchContainer %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.site.admin.web.internal.display.context.SiteInitializerItemDisplayContext"
@@ -90,7 +90,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
-			searchContainer="<%= SiteInitializerItemSearchContainer %>"
+			searchContainer="<%= siteInitializerItemSearchContainer %>"
 		/>
 	</liferay-ui:search-container>
 

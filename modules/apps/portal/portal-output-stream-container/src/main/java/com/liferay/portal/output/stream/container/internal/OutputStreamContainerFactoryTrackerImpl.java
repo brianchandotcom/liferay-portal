@@ -166,7 +166,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 	protected void deactivate() {
 		Logger rootLogger = Logger.getRootLogger();
 
-		if (_outputStreamContainerFactory != null) {
+		if (_outputStreamContainerFactories != null) {
 			_outputStreamContainerFactories.close();
 		}
 

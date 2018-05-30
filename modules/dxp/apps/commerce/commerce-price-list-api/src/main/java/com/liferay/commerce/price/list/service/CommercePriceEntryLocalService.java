@@ -367,14 +367,14 @@ public interface CommercePriceEntryLocalService extends BaseLocalService,
 	public CommercePriceEntry updateCommercePriceEntry(
 		CommercePriceEntry commercePriceEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry updateCommercePriceEntry(
 		long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
 		ServiceContext serviceContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry updateCommercePriceEntry(
-		long commercePriceEntryId, String externalReferenceCode,
-		BigDecimal price, BigDecimal promoPrice, ServiceContext serviceContext)
+	public CommercePriceEntry updateExternalReferenceCode(
+		CommercePriceEntry commercePriceEntry, String externalReferenceCode)
 		throws PortalException;
 
 	/**

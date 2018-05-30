@@ -471,13 +471,12 @@ public class CommercePriceEntryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceEntry updateCommercePriceEntry(
-		long commercePriceEntryId, String externalReferenceCode,
-		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.commerce.price.list.model.CommercePriceEntry updateExternalReferenceCode(
+		com.liferay.commerce.price.list.model.CommercePriceEntry commercePriceEntry,
+		String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commercePriceEntryLocalService.updateCommercePriceEntry(commercePriceEntryId,
-			externalReferenceCode, price, promoPrice, serviceContext);
+		return _commercePriceEntryLocalService.updateExternalReferenceCode(commercePriceEntry,
+			externalReferenceCode);
 	}
 
 	/**

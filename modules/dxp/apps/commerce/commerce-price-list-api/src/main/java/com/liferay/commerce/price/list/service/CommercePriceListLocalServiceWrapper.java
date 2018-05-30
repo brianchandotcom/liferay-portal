@@ -455,27 +455,18 @@ public class CommercePriceListLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceList updateCommercePriceList(
-		long commercePriceListId, long commerceCurrencyId, String name,
-		double priority, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute,
-		String externalReferenceCode, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commercePriceListLocalService.updateCommercePriceList(commercePriceListId,
-			commerceCurrencyId, name, priority, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			externalReferenceCode, neverExpire, serviceContext);
-	}
-
-	@Override
 	public void updateCommercePriceListCurrencies(long commerceCurrencyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_commercePriceListLocalService.updateCommercePriceListCurrencies(commerceCurrencyId);
+	}
+
+	@Override
+	public com.liferay.commerce.price.list.model.CommercePriceList updateExternalReferenceCode(
+		com.liferay.commerce.price.list.model.CommercePriceList commercePriceList,
+		String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePriceListLocalService.updateExternalReferenceCode(commercePriceList,
+			externalReferenceCode);
 	}
 
 	@Override

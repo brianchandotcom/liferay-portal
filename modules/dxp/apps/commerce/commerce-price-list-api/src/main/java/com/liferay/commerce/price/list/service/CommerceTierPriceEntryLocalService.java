@@ -340,16 +340,16 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
 		CommerceTierPriceEntry commerceTierPriceEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
+		CommerceTierPriceEntry commerceTierPriceEntry,
+		String externalReferenceCode) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
 		long commerceTierPriceEntryId, BigDecimal price, BigDecimal promoPrice,
 		int minQuantity, ServiceContext serviceContext)
 		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-		long commerceTierPriceEntryId, String externalReferenceCode,
-		BigDecimal price, BigDecimal promoPrice, int minQuantity,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* This method is used to insert a new CommerceTierPriceEntry or update an

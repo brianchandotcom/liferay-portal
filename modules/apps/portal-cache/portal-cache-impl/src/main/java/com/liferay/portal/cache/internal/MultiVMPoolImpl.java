@@ -32,9 +32,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -155,23 +152,6 @@ public class MultiVMPoolImpl implements MultiVMPool {
 		_portalCacheManager = portalCacheManager;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setSPIPortalCacheManagerConfigurator(
-		SPIPortalCacheManagerConfigurator spiPortalCacheManagerConfigurator) {
-
-		_spiPortalCacheManagerConfigurator = spiPortalCacheManagerConfigurator;
-	}
-
-	protected void unsetSPIPortalCacheManagerConfigurator(
-		SPIPortalCacheManagerConfigurator spiPortalCacheManagerConfigurator) {
-
-		_spiPortalCacheManagerConfigurator = spiPortalCacheManagerConfigurator;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MultiVMPoolImpl.class);
 
@@ -183,8 +163,6 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	private ServiceTracker
 		<SPIPortalCacheManagerConfigurator, SPIPortalCacheManagerConfigurator>
 			_serviceTracker;
-	private SPIPortalCacheManagerConfigurator
-		_spiPortalCacheManagerConfigurator;
 
 	private class SPIPortalCacheManagerConfiguratorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -198,12 +176,13 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 			_originalPortalCacheManager = _portalCacheManager;
 
-			_spiPortalCacheManagerConfigurator = _bundleContext.getService(
-				serviceReference);
+			SPIPortalCacheManagerConfigurator
+				spiPortalCacheManagerConfigurator = _bundleContext.getService(
+					serviceReference);
 
 			try {
 				_portalCacheManager =
-					_spiPortalCacheManagerConfigurator.
+					spiPortalCacheManagerConfigurator.
 						createSPIPortalCacheManager(_portalCacheManager);
 			}
 			catch (Exception e) {
@@ -212,7 +191,7 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 			_portalCacheManager.clearAll();
 
-			return _spiPortalCacheManagerConfigurator;
+			return spiPortalCacheManagerConfigurator;
 		}
 
 		@Override

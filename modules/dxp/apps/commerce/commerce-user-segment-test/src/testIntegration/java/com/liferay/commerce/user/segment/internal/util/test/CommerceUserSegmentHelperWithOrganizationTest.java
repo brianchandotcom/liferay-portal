@@ -114,12 +114,10 @@ public class CommerceUserSegmentHelperWithOrganizationTest {
 			new long[] {_users[2].getUserId(), _users[3].getUserId()});
 
 		_userLocalService.setUserGroupUsers(
-			_userGroup1.getUserGroupId(),
-			new long[] {_users[3].getUserId()});
+			_userGroup1.getUserGroupId(), new long[] {_users[3].getUserId()});
 
 		_userLocalService.setUserGroupUsers(
-			_userGroup2.getUserGroupId(),
-			new long[] {_users[4].getUserId()});
+			_userGroup2.getUserGroupId(), new long[] {_users[4].getUserId()});
 
 		_userLocalService.setOrganizationUsers(
 			_organization.getOrganizationId(),
@@ -128,9 +126,7 @@ public class CommerceUserSegmentHelperWithOrganizationTest {
 		CommerceUserSegmentEntry userCommerceUserSegmentEntry =
 			CommerceUserSegmentTestUtil.addUserCommerceUserSegmentEntry(
 				_group.getGroupId(),
-				new long[] {
-					_users[0].getUserId(), _users[1].getUserId()
-				});
+				new long[] {_users[0].getUserId(), _users[1].getUserId()});
 
 		CommerceUserSegmentEntry roleCommerceUserSegmentEntry =
 			CommerceUserSegmentTestUtil.addRoleCommerceUserSegmentEntry(

@@ -94,11 +94,6 @@
 	<td>//*[@data-qa-id='row'][contains(@*,'${key_rowEntry}') or contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
-<tr>
-	<td>ENTRY_CONTENT_ENTRY_WORKFLOW_STATUS</td>
-	<td>//*[@data-qa-id='row'][contains(@*,'${key_rowEntry}') or contains(.,'${key_rowEntry}')]//span[contains(@class,'workflow-status')]/span</td>
-	<td></td>
-</tr>
 <!--ENTRY_CONTENT_LIST-->
 <tr>
 	<td>ENTRY_CONTENT_LIST_COLUMN</td>

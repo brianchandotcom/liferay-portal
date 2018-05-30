@@ -1032,7 +1032,7 @@
 		<var name="key_pageName" value="${pageName}" />
 
 		<execute function="AssertTextEquals" locator1="Panel#PANEL_PAGE_TITLE" value1="${pageName}" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please select a tool from the left menu." />
+		<execute function="AssertTextEquals" locator1="Panel#PANEL_PAGE_DEFAULT_INFORMATION" value1="Please select a tool from the left menu." />
 
 		<for list="${portletNameList}" param="portletName">
 			<var name="key_portletName" value="${portletName}" />

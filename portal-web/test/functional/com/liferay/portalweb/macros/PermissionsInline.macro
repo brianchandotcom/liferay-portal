@@ -244,8 +244,9 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Permissions" />
+			<var name="pageName" value="${page}" />
 		</execute>
 	</command>
 

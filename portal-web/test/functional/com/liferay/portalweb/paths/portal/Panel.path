@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_PAGE_DEFAULT_INFORMATION</td>
+	<td>//div[contains(@class,'panel-page-body')]//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PANEL</td>
 	<td>//div[@class='panel-heading']//a[normalize-space(text())='${key_panel}']</td>
 	<td></td>

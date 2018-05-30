@@ -19,8 +19,8 @@ import java.util.Set;
 /**
  * @author Michael Hashimoto
  */
-public interface SmokeDependentJob {
+public interface BatchDependentJob {
 
-	public Set<String> getSmokeBatchNames();
+	public Set<String> getDependentBatchNames();
 
 }

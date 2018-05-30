@@ -24,7 +24,7 @@ import java.util.Set;
  * @author Michael Hashimoto
  */
 public class PortalReleaseJob
-	extends BaseJob implements PortalTestClassJob, SmokeDependentJob {
+	extends BaseJob implements PortalTestClassJob, BatchDependentJob {
 
 	public PortalReleaseJob(String jobName, String portalBranchName) {
 		super(jobName);
@@ -65,6 +65,14 @@ public class PortalReleaseJob
 	}
 
 	@Override
+	public Set<String> getDependentBatchNames() {
+		String testBatchNames = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "test.batch.names.smoke[" + _portalBranchName + "]");
+
+		return getSetFromString(testBatchNames);
+	}
+
+	@Override
 	public Set<String> getDistTypes() {
 		return Collections.emptySet();
 	}
@@ -72,14 +80,6 @@ public class PortalReleaseJob
 	@Override
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		return _portalGitWorkingDirectory;
-	}
-
-	@Override
-	public Set<String> getSmokeBatchNames() {
-		String testBatchNames = JenkinsResultsParserUtil.getProperty(
-			jobProperties, "test.batch.names.smoke[" + _portalBranchName + "]");
-
-		return getSetFromString(testBatchNames);
 	}
 
 	private final GitWorkingDirectory _jenkinsGitWorkingDirectory;

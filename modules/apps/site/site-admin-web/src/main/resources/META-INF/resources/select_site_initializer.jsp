@@ -74,12 +74,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					%>
 
 						<liferay-frontend:icon-vertical-card
-							actionJspServletContext="<%= application %>"
 							cssClass='<%= renderResponse.getNamespace() + "add-site-action-option" %>'
 							data="<%= addLayoutData %>"
 							icon="site-template"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= siteInitializerItem.getName() %>"
 							url="javascript:;"
 						/>
@@ -90,12 +87,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					%>
 
 						<liferay-frontend:vertical-card
-							actionJspServletContext="<%= application %>"
 							cssClass='<%= renderResponse.getNamespace() + "add-site-action-option" %>'
 							data="<%= addLayoutData %>"
 							imageUrl="<%= HtmlUtil.escape(siteInitializerItem.getIcon()) %>"
-							resultRow="<%= row %>"
-							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= siteInitializerItem.getName() %>"
 							url="javascript:;"
 						/>

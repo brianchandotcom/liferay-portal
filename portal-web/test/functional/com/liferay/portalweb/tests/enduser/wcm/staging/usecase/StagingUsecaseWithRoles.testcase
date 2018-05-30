@@ -647,6 +647,7 @@
 
 		<execute macro="Staging#enablePageInSitePagesVariation">
 			<var name="pageName" value="Test Page Name" />
+			<var name="privacy" value="Public" />
 			<var name="sitePagesVariationName" value="Main Variation Edit" />
 		</execute>
 

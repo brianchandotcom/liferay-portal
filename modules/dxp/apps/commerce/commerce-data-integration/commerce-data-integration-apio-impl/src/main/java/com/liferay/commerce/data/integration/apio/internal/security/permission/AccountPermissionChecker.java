@@ -22,12 +22,14 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import javax.ws.rs.NotFoundException;
 import java.util.function.BiFunction;
 
 /**
@@ -49,11 +51,35 @@ public class AccountPermissionChecker {
 	}
 
 	public BiFunction<Credentials, Long, Boolean> forDeleting() {
-		return _hasPermission.forDeleting(Organization.class);
+		return _permissionBridge();
 	}
 
 	public BiFunction<Credentials, Long, Boolean> forUpdating() {
-		return _hasPermission.forUpdating(Organization.class);
+		return (credentials, identifier) -> {
+			Try<PermissionChecker> permissionCheckerTry =
+				_getPermissionCheckerTry(credentials);
+
+			Try<Organization> organizationTry = Try.fromFallible(
+				() -> _organizationService.fetchOrganization(
+					identifier));
+
+			return permissionCheckerTry.map(
+				permissionChecker -> _portletResourcePermission.contains(
+					permissionChecker,
+					organizationTry.map(
+						Organization::getGroupId
+					).orElseThrow(
+							() -> new NotFoundException()
+					),
+					ActionKeys.UPDATE)
+			).orElse(
+					false
+			);
+		};
+	}
+
+	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
+		return forUpdating();
 	}
 
 	private Try<PermissionChecker> _getPermissionCheckerTry(
@@ -82,5 +108,8 @@ public class AccountPermissionChecker {
 
 	@Reference
 	private UserService _userService;
+
+	@Reference
+	private PortletResourcePermission _portletResourcePermission;
 
 }

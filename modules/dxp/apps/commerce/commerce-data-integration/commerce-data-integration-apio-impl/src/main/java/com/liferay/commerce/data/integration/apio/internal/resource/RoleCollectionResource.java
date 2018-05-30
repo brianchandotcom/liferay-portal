@@ -72,7 +72,8 @@ public class RoleCollectionResource
 			idempotent(_roleLocalService::deleteRole),
 			_rolePermissionChecker.forDeleting()::apply
 		).addUpdater(
-			this::_updateRole, _rolePermissionChecker.forUpdating()::apply,
+			this::_updateRole,
+			_rolePermissionChecker.forUpdating()::apply,
 			RoleForm::buildForm
 		).build();
 	}

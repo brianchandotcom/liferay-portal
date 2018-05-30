@@ -26,6 +26,8 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductDefinitionIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductInstanceIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.ProductInstanceCreatorForm;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.ProductInstancePermissionChecker;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.ProductPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductInstanceHelper;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
@@ -33,7 +35,6 @@ import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPInstanceService;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -71,7 +72,7 @@ public class ProductInstanceNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCPInstance,
-			_hasPermission.forAddingEntries(CPInstance.class)::apply,
+			_productInstancePermissionChecker.forAdding()::apply,
 			ProductInstanceCreatorForm::buildForm
 		).build();
 	}
@@ -89,11 +90,11 @@ public class ProductInstanceNestedCollectionResource
 			this::_getCPInstance
 		).addUpdater(
 			this::_updateCPInstance,
-			_hasPermission.forUpdating(CPInstance.class)::apply,
+			_productInstancePermissionChecker.forUpdating()::apply,
 			ProductInstanceCreatorForm::buildForm
 		).addRemover(
 			idempotent(_cpInstanceService::deleteCPInstance),
-			_hasPermission.forDeleting(CPInstance.class)::apply
+			_productInstancePermissionChecker.forDeleting()::apply
 		).build();
 	}
 
@@ -268,7 +269,7 @@ public class ProductInstanceNestedCollectionResource
 	private CPInstanceService _cpInstanceService;
 
 	@Reference
-	private HasPermission _hasPermission;
+	private ProductInstancePermissionChecker _productInstancePermissionChecker;
 
 	@Reference
 	private ProductIndexerHelper _productIndexerHelper;

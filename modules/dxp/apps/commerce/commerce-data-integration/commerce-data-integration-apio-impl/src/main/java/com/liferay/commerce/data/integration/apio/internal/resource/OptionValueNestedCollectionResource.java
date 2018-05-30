@@ -25,6 +25,7 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.OptionIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.OptionValueIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.OptionValueForm;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.OptionValuePermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.OptionValueHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPOptionValueKeyException;
@@ -71,7 +72,7 @@ public class OptionValueNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCPOptionValue,
-			_hasPermission.forAddingEntries(CPOptionValue.class)::apply,
+			_optionValuePermissionChecker.forAdding()::apply,
 			OptionValueForm::buildForm
 		).build();
 	}
@@ -89,10 +90,10 @@ public class OptionValueNestedCollectionResource
 			this::_getOptionValue
 		).addRemover(
 			idempotent(_cpOptionValueService::deleteCPOptionValue),
-			_hasPermission.forDeleting(CPOptionValue.class)::apply
+			_optionValuePermissionChecker.forDeleting()::apply
 		).addUpdater(
 			this::_updateCPOptionValue,
-			_hasPermission.forUpdating(CPOptionValue.class)::apply,
+			_optionValuePermissionChecker.forUpdating()::apply,
 			OptionValueForm::buildForm
 		).build();
 	}
@@ -245,7 +246,7 @@ public class OptionValueNestedCollectionResource
 	private CPOptionValueService _cpOptionValueService;
 
 	@Reference
-	private HasPermission _hasPermission;
+	private OptionValuePermissionChecker _optionValuePermissionChecker;
 
 	@Reference
 	private OptionValueHelper _optionValueHelper;

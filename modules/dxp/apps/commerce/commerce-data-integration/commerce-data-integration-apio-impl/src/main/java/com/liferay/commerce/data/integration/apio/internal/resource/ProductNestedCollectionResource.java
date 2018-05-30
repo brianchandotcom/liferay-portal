@@ -25,16 +25,15 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductDefinitionIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.ProductCreatorForm;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.ProductPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductDefinitionHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.media.object.apio.architect.identifier.FileEntryIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -79,7 +78,7 @@ public class ProductNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCPDefinition,
-			_hasPermission.forAddingEntries(CPDefinition.class)::apply,
+			_productPermissionChecker.forAdding()::apply,
 			ProductCreatorForm::buildForm
 		).build();
 	}
@@ -97,7 +96,7 @@ public class ProductNestedCollectionResource
 			this::_getCPDefinition
 		).addRemover(
 			idempotent(_cpDefinitionService::deleteCPDefinition),
-			_hasPermission.forDeleting(CPDefinition.class)::apply
+			_productPermissionChecker.forDeleting()::apply
 		).build();
 	}
 
@@ -125,11 +124,6 @@ public class ProductNestedCollectionResource
 		).addLinkedModel(
 			"author", PersonIdentifier.class,
 			document -> GetterUtil.getLong(document.get(Field.USER_ID))
-		).addLinkedModel(
-			"defaultImage", FileEntryIdentifier.class,
-			document -> GetterUtil.getLong(
-				document.get(
-					CPDefinitionIndexer.FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID))
 		).addString(
 			"description", this::_getSafeDescription
 		).addString(
@@ -270,7 +264,7 @@ public class ProductNestedCollectionResource
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private HasPermission _hasPermission;
+	private ProductPermissionChecker _productPermissionChecker;
 
 	@Reference
 	private ProductDefinitionHelper _productDefinitionHelper;

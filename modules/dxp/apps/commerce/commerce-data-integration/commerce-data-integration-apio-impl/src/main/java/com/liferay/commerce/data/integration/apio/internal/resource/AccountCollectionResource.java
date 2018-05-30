@@ -28,7 +28,6 @@ import com.liferay.commerce.data.integration.apio.identifiers.UserIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.AccountForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.AccountPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.AccountHelper;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;

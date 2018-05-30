@@ -28,6 +28,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.UserIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.UserCreatorForm;
 import com.liferay.commerce.data.integration.apio.internal.form.UserUpdaterForm;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.UserPermissionChecker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.permission.UserPermission;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,7 +71,8 @@ public class UserCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addUser, Company.class, _hasPermission::forAddingUsers,
+			this::_addUser, Company.class,
+			_userPermissionChecker::forAdding,
 			UserCreatorForm::buildForm
 		).build();
 	}
@@ -87,9 +90,10 @@ public class UserCollectionResource
 			this::_getUserWrapper
 		).addRemover(
 			idempotent(_userService::deleteUser),
-			_hasPermission.forDeleting(User.class)::apply
+			_userPermissionChecker.forDeleting()::apply
 		).addUpdater(
-			this::_updateUser, _hasPermission.forUpdating(User.class)::apply,
+			this::_updateUser,
+			_userPermissionChecker.forUpdating()::apply,
 			UserUpdaterForm::buildForm
 		).build();
 	}
@@ -275,7 +279,7 @@ public class UserCollectionResource
 	}
 
 	@Reference
-	private HasPermission _hasPermission;
+	private UserPermissionChecker _userPermissionChecker;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;

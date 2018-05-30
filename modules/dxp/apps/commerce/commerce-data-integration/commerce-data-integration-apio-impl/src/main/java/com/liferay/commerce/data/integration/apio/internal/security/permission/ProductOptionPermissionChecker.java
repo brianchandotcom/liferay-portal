@@ -16,17 +16,16 @@ package com.liferay.commerce.data.integration.apio.internal.security.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,19 +35,31 @@ import java.util.function.BiFunction;
 /**
  * @author Rodrigo Guedes de Souza
  */
-@Component(immediate = true, service = RolePermissionChecker.class)
-public class RolePermissionChecker {
+@Component(immediate = true, service = ProductOptionPermissionChecker.class)
+public class ProductOptionPermissionChecker {
 
-	public Boolean forAdding(Credentials credentials) {
-		Try<PermissionChecker> permissionCheckerTry = _getPermissionCheckerTry(
-			credentials);
+	public BiFunction<Credentials, Long, Boolean> forAdding() {
+		return (credentials, identifier) -> {
+			Try<PermissionChecker> permissionCheckerTry =
+				_getPermissionCheckerTry(credentials);
 
-		return permissionCheckerTry.map(
-			permissionChecker -> PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.ADD_ROLE)
-		).orElse(
-			false
-		);
+			Try<CPDefinitionOptionRel> cpDefinitionOptionRelTry = Try.fromFallible(
+				() -> _cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(
+					identifier));
+
+			return permissionCheckerTry.map(
+				permissionChecker -> _portletResourcePermission.contains(
+					permissionChecker,
+					cpDefinitionOptionRelTry.map(
+							CPDefinitionOptionRel::getGroupId
+					).orElseThrow(
+						() -> new NotFoundException()
+					),
+						CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION)
+			).orElse(
+				false
+			);
+		};
 	}
 
 	public BiFunction<Credentials, Long, Boolean> forDeleting() {
@@ -58,25 +69,29 @@ public class RolePermissionChecker {
 	public BiFunction<Credentials, Long, Boolean> forUpdating() {
 		return (credentials, identifier) -> {
 			Try<PermissionChecker> permissionCheckerTry =
-					_getPermissionCheckerTry(credentials);
+				_getPermissionCheckerTry(credentials);
 
-			Try<Role> roleTry = Try.fromFallible(
-					() -> _roleService.fetchRole(
-							identifier));
+			Try<CPDefinitionOptionRel> cpDefinitionOptionRelTry = Try.fromFallible(
+				() -> _cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(
+					identifier));
 
 			return permissionCheckerTry.map(
-					permissionChecker -> _portletResourcePermission.contains(
-							permissionChecker,
-							roleTry.map(
-									Role::getClassPK
-							).orElseThrow(
-									() -> new NotFoundException()
-							),
-							ActionKeys.UPDATE)
+				permissionChecker -> _portletResourcePermission.contains(
+					permissionChecker,
+					cpDefinitionOptionRelTry.map(
+							CPDefinitionOptionRel::getGroupId
+					).orElseThrow(
+						() -> new NotFoundException()
+					),
+					CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION)
 			).orElse(
-					false
+				false
 			);
 		};
+	}
+
+	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
+		return forUpdating();
 	}
 
 	private Try<PermissionChecker> _getPermissionCheckerTry(
@@ -97,12 +112,8 @@ public class RolePermissionChecker {
 		);
 	}
 
-	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
-		return forUpdating();
-	}
-
 	@Reference
-	private RoleService _roleService;
+	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
 	private UserService _userService;

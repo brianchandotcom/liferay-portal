@@ -24,6 +24,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.OptionIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.OptionForm;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.OptionPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.OptionHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductDefinitionHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
@@ -31,7 +32,6 @@ import com.liferay.commerce.product.exception.CPOptionKeyException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.search.CPOptionIndexer;
 import com.liferay.commerce.product.service.CPOptionService;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -70,7 +70,7 @@ public class OptionNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCPOption,
-			_hasPermission.forAddingEntries(CPOption.class)::apply,
+			_optionPermissionChecker.forAdding()::apply,
 			OptionForm::buildForm
 		).build();
 	}
@@ -88,10 +88,10 @@ public class OptionNestedCollectionResource
 			this::_getOption
 		).addRemover(
 			idempotent(_cpOptionService::deleteCPOption),
-			_hasPermission.forDeleting(CPOption.class)::apply
+			_optionPermissionChecker.forDeleting()::apply
 		).addUpdater(
 			this::_updateCPOption,
-			_hasPermission.forUpdating(CPOption.class)::apply,
+			_optionPermissionChecker.forUpdating()::apply,
 			OptionForm::buildForm
 		).build();
 	}
@@ -234,7 +234,7 @@ public class OptionNestedCollectionResource
 	private CPOptionService _cpOptionService;
 
 	@Reference
-	private HasPermission _hasPermission;
+	private OptionPermissionChecker _optionPermissionChecker;
 
 	@Reference
 	private OptionHelper _optionHelper;

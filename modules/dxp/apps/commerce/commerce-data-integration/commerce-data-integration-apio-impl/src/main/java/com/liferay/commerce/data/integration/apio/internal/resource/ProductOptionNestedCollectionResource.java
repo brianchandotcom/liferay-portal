@@ -26,6 +26,7 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductDefinitionIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductOptionIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.ProductOptionForm;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.ProductOptionPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductOptionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -73,7 +74,7 @@ public class ProductOptionNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCPDefinitionOptionRel,
-			_hasPermission.forAddingEntries(CPDefinitionOptionRel.class)::apply,
+			_productOptionPermissionChecker.forAdding()::apply,
 			ProductOptionForm::buildForm
 		).build();
 	}
@@ -93,7 +94,7 @@ public class ProductOptionNestedCollectionResource
 			idempotent(
 				_cpDefinitionOptionRelService::
 					deleteCPDefinitionOptionRel),
-			_hasPermission.forDeleting(CPDefinitionOptionRel.class)::apply
+			_productOptionPermissionChecker.forDeleting()::apply
 		).build();
 	}
 
@@ -246,7 +247,7 @@ public class ProductOptionNestedCollectionResource
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private HasPermission _hasPermission;
+	private ProductOptionPermissionChecker _productOptionPermissionChecker;
 
 	@Reference
 	private ProductIndexerHelper _productIndexerHelper;

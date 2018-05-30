@@ -16,9 +16,8 @@ package com.liferay.commerce.data.integration.apio.internal.security.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -36,8 +35,8 @@ import java.util.function.BiFunction;
 /**
  * @author Rodrigo Guedes de Souza
  */
-@Component(immediate = true, service = RolePermissionChecker.class)
-public class RolePermissionChecker {
+@Component(immediate = true, service = UserPermissionChecker.class)
+public class UserPermissionChecker {
 
 	public Boolean forAdding(Credentials credentials) {
 		Try<PermissionChecker> permissionCheckerTry = _getPermissionCheckerTry(
@@ -45,7 +44,7 @@ public class RolePermissionChecker {
 
 		return permissionCheckerTry.map(
 			permissionChecker -> PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.ADD_ROLE)
+				permissionChecker, ActionKeys.ADD_USER)
 		).orElse(
 			false
 		);
@@ -60,15 +59,15 @@ public class RolePermissionChecker {
 			Try<PermissionChecker> permissionCheckerTry =
 					_getPermissionCheckerTry(credentials);
 
-			Try<Role> roleTry = Try.fromFallible(
-					() -> _roleService.fetchRole(
+			Try<User> roleTry = Try.fromFallible(
+					() -> _userService.getUserById(
 							identifier));
 
 			return permissionCheckerTry.map(
 					permissionChecker -> _portletResourcePermission.contains(
 							permissionChecker,
 							roleTry.map(
-									Role::getClassPK
+									User::getGroupId
 							).orElseThrow(
 									() -> new NotFoundException()
 							),
@@ -100,9 +99,6 @@ public class RolePermissionChecker {
 	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
 		return forUpdating();
 	}
-
-	@Reference
-	private RoleService _roleService;
 
 	@Reference
 	private UserService _userService;

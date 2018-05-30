@@ -75,7 +75,6 @@ public class FacebookConnectImpl implements FacebookConnect {
 		Http.Options options = new Http.Options();
 
 		options.setLocation(url);
-		options.setPost(true);
 
 		try {
 			String content = _http.URLtoString(options);

@@ -196,8 +196,7 @@ public class PriceEntryNestedCollectionResource
 			Response.Status status = Response.Status.CONFLICT;
 
 			throw new ConflictException(
-				"Duplicate Product Instance with ID " +
-					priceEntryUpserterForm.getSkuId(),
+				"Duplicate Product Instance on the Price List ID",
 				status.getStatusCode(), dcpee);
 		}
 	}

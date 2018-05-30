@@ -24,9 +24,12 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.data.integration.apio.identifiers.PriceListIdentifier;
+import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListUpdaterForm;
 import com.liferay.commerce.data.integration.apio.internal.form.PriceListUpserterForm;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceListHelper;
+import com.liferay.commerce.price.list.exception.CommercePriceListDisplayDateException;
+import com.liferay.commerce.price.list.exception.CommercePriceListExpirationDateException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
@@ -41,6 +44,7 @@ import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import java.util.List;
 
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -167,6 +171,22 @@ public class PriceListNestedCollectionResource
 						"should be expressed with 3-letter ISO 4217 format",
 					priceListUpdaterForm.getCurrency()),
 				nsce);
+		}
+		catch (CommercePriceListDisplayDateException cpldde) {
+			Response.Status status = Response.Status.CONFLICT;
+
+			throw new ConflictException(
+				"Invalid display date:  " +
+					priceListUpdaterForm.getDisplayDate(),
+				status.getStatusCode(), cpldde);
+		}
+		catch (CommercePriceListExpirationDateException cplede) {
+			Response.Status status = Response.Status.CONFLICT;
+
+			throw new ConflictException(
+				"Invalid expiration date:  " +
+					priceListUpdaterForm.getExpirationDate(),
+				status.getStatusCode(), cplede);
 		}
 	}
 

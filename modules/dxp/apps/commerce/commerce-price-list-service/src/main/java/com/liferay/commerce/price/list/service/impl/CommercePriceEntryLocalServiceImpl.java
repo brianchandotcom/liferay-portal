@@ -17,8 +17,10 @@ package com.liferay.commerce.price.list.service.impl;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -353,14 +356,16 @@ public class CommercePriceEntryLocalServiceImpl
 				commercePriceEntryId, price, promoPrice, serviceContext);
 		}
 
-		CommercePriceEntry commercePriceEntry =
-			commercePriceEntryPersistence.fetchByExternalReferenceCode(
-				externalReferenceCode);
+		if (Validator.isNotNull(externalReferenceCode)) {
+			CommercePriceEntry commercePriceEntry =
+				commercePriceEntryPersistence.fetchByExternalReferenceCode(
+					externalReferenceCode);
 
-		if (Validator.isNotNull(commercePriceEntry)) {
-			return updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
-				serviceContext);
+			if (Validator.isNotNull(commercePriceEntry)) {
+				return updateCommercePriceEntry(
+					commercePriceEntry.getCommercePriceEntryId(), price,
+					promoPrice, serviceContext);
+			}
 		}
 
 		// Insert
@@ -376,15 +381,28 @@ public class CommercePriceEntryLocalServiceImpl
 				externalReferenceCode, price, promoPrice, serviceContext);
 		}
 
-		CPInstance cpInstance =
-			_cpInstancePersistence.findByExternalReferenceCode(
-				skuExternalReferenceCode);
+		if (Validator.isNotNull(skuExternalReferenceCode)) {
+			CPInstance cpInstance =
+				_cpInstancePersistence.findByExternalReferenceCode(
+					skuExternalReferenceCode);
 
-		validate(cpInstance.getCPInstanceId(), commercePriceListId);
+			validate(cpInstance.getCPInstanceId(), commercePriceListId);
 
-		return addCommercePriceEntry(
-			cpInstance.getCPInstanceId(), commercePriceListId,
-			externalReferenceCode, price, promoPrice, serviceContext);
+			return addCommercePriceEntry(
+				cpInstance.getCPInstanceId(), commercePriceListId,
+				externalReferenceCode, price, promoPrice, serviceContext);
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("{cpInstanceId=");
+		sb.append(cpInstanceId);
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append("skuExternalReferenceCode=");
+		sb.append(skuExternalReferenceCode);
+		sb.append("}");
+
+		throw new NoSuchCPInstanceException(sb.toString());
 	}
 
 	protected SearchContext buildSearchContext(

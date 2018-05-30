@@ -551,18 +551,20 @@ public class CommercePriceListLocalServiceImpl
 				expirationDateMinute, neverExpire, serviceContext);
 		}
 
-		CommercePriceList commercePriceList =
-			commercePriceListPersistence.fetchByExternalReferenceCode(
-				externalReferenceCode);
+		if (Validator.isNotNull(externalReferenceCode)) {
+			CommercePriceList commercePriceList =
+				commercePriceListPersistence.fetchByExternalReferenceCode(
+					externalReferenceCode);
 
-		if (Validator.isNotNull(commercePriceList)) {
-			return updateCommercePriceList(
-				commercePriceList.getCommercePriceListId(), commerceCurrencyId,
-				name, priority, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+			if (Validator.isNotNull(commercePriceList)) {
+				return updateCommercePriceList(
+					commercePriceList.getCommercePriceListId(),
+					commerceCurrencyId, name, priority, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, expirationDateMonth, expirationDateDay,
+					expirationDateYear, expirationDateHour,
+					expirationDateMinute, neverExpire, serviceContext);
+			}
 		}
 
 		// Insert

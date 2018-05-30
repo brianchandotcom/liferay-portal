@@ -15,12 +15,14 @@
 package com.liferay.commerce.price.list.service.impl;
 
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
+import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.base.CommerceTierPriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -335,14 +338,16 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				serviceContext);
 		}
 
-		CommerceTierPriceEntry commerceTierPriceEntry =
-			commerceTierPriceEntryPersistence.fetchByExternalReferenceCode(
-				externalReferenceCode);
+		if (Validator.isNotNull(externalReferenceCode)) {
+			CommerceTierPriceEntry commerceTierPriceEntry =
+				commerceTierPriceEntryPersistence.fetchByExternalReferenceCode(
+					externalReferenceCode);
 
-		if (Validator.isNotNull(commerceTierPriceEntry)) {
-			return updateCommerceTierPriceEntry(
-				commerceTierPriceEntry.getCommerceTierPriceEntryId(), price,
-				promoPrice, minQuantity, serviceContext);
+			if (Validator.isNotNull(commerceTierPriceEntry)) {
+				return updateCommerceTierPriceEntry(
+					commerceTierPriceEntry.getCommerceTierPriceEntryId(), price,
+					promoPrice, minQuantity, serviceContext);
+			}
 		}
 
 		// Insert
@@ -359,15 +364,28 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				minQuantity, serviceContext);
 		}
 
-		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryPersistence.findByExternalReferenceCode(
-				priceEntryExternalReferenceCode);
+		if (Validator.isNotNull(priceEntryExternalReferenceCode)) {
+			CommercePriceEntry commercePriceEntry =
+				_commercePriceEntryPersistence.findByExternalReferenceCode(
+					priceEntryExternalReferenceCode);
 
-		validate(commercePriceEntry.getCommercePriceEntryId(), minQuantity);
+			validate(commercePriceEntry.getCommercePriceEntryId(), minQuantity);
 
-		return addCommerceTierPriceEntry(
-			commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
-			minQuantity, serviceContext);
+			return addCommerceTierPriceEntry(
+				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
+				minQuantity, serviceContext);
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("{commercePriceEntryId=");
+		sb.append(commercePriceEntryId);
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append("priceEntryExternalReferenceCode=");
+		sb.append(priceEntryExternalReferenceCode);
+		sb.append("}");
+
+		throw new NoSuchPriceEntryException(sb.toString());
 	}
 
 	protected SearchContext buildSearchContext(

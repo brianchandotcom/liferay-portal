@@ -39,13 +39,13 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 			String line = null;
 			String previousLine = StringPool.BLANK;
 
-			int lineCount = 0;
+			int lineNumber = 0;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
+				lineNumber++;
 
 				if (!line.startsWith(StringPool.POUND)) {
-					checkLineBreaks(line, previousLine, fileName, lineCount);
+					checkLineBreaks(line, previousLine, fileName, lineNumber);
 				}
 
 				previousLine = line;

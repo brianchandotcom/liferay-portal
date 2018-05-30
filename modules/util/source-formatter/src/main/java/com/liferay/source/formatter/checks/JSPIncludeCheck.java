@@ -60,7 +60,7 @@ public class JSPIncludeCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"Include '" + includeFileName + "' should start with '/'",
-					getLineCount(content, x));
+					getLineNumber(content, x));
 			}
 		}
 

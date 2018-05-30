@@ -252,10 +252,10 @@ public class JavaClassParser {
 		return null;
 	}
 
-	private static int _getLineStartPos(String content, int lineCount) {
+	private static int _getLineStartPos(String content, int lineNumber) {
 		int x = 0;
 
-		for (int i = 1; i < lineCount; i++) {
+		for (int i = 1; i < lineNumber; i++) {
 			x = content.indexOf(CharPool.NEW_LINE, x + 1);
 
 			if (x == -1) {
@@ -350,7 +350,7 @@ public class JavaClassParser {
 
 		int javaTermStartPos = -1;
 		int level = 0;
-		int lineCount = 0;
+		int javaClassLineNumber = 0;
 		int metadataAnnotationLevel = 0;
 		int metadataBlockCommentLevel = 0;
 
@@ -360,7 +360,7 @@ public class JavaClassParser {
 		boolean multiLineComment = false;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			lineCount++;
+			javaClassLineNumber++;
 
 			if (!insideJavaTerm && line.startsWith(indent + "@")) {
 				insideMetadataAnnotation = true;
@@ -398,7 +398,7 @@ public class JavaClassParser {
 				if (javaTermStartPos == -1) {
 					if (line.matches(indent + "\\S+.*")) {
 						javaTermStartPos = _getLineStartPos(
-							classContent, lineCount);
+							classContent, javaClassLineNumber);
 					}
 				}
 				else if (Validator.isNull(line) && !insideMetadataAnnotation &&
@@ -439,7 +439,7 @@ public class JavaClassParser {
 
 			if (insideJavaTerm && line.matches(".*[};]") && (level == 1)) {
 				int nextLineStartPos = _getLineStartPos(
-					classContent, lineCount + 1);
+					classContent, javaClassLineNumber + 1);
 
 				String javaTermContent = classContent.substring(
 					javaTermStartPos, nextLineStartPos);

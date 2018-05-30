@@ -109,7 +109,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 					fileName,
 					"Use existing connection field instead of " +
 						"DataAccess.getConnection",
-					getLineCount(fileContent, x));
+					getLineNumber(fileContent, x));
 			}
 		}
 	}

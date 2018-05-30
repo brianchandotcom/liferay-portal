@@ -66,7 +66,7 @@ public class JavaVerifyUpgradeConnectionCheck extends BaseFileCheck {
 				fileName,
 				"Use existing connection field instead of DataAccess." +
 					methodName,
-				getLineCount(content, x));
+				getLineNumber(content, x));
 		}
 	}
 

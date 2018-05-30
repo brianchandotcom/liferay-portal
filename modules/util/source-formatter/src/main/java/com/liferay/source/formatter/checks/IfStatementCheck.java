@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 public abstract class IfStatementCheck extends BaseFileCheck {
 
 	protected void checkIfClauseParentheses(
-		String ifClause, String fileName, int lineCount) {
+		String ifClause, String fileName, int lineNumber) {
 
 		ifClause = stripQuotes(ifClause);
 
@@ -39,7 +39,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, "Redundant parentheses in if-statement",
-				"if_statement_parentheses.markdown", lineCount);
+				"if_statement_parentheses.markdown", lineNumber);
 
 			return;
 		}
@@ -50,14 +50,14 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			return;
 		}
 
-		_checkMissingParentheses(ifClause, fileName, lineCount);
+		_checkMissingParentheses(ifClause, fileName, lineNumber);
 
 		if (_hasRedundantParentheses(ifClause, "||", "&&") ||
 			_hasRedundantParentheses(ifClause, "&&", "||")) {
 
 			addMessage(
 				fileName, "Redundant parentheses in if-statement",
-				"if_statement_parentheses.markdown", lineCount);
+				"if_statement_parentheses.markdown", lineNumber);
 
 			return;
 		}
@@ -96,7 +96,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 						addMessage(
 							fileName, "Redundant parentheses in if-statement",
-							"if_statement_parentheses.markdown", lineCount);
+							"if_statement_parentheses.markdown", lineNumber);
 
 						return;
 					}
@@ -108,7 +108,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 	}
 
 	private void _checkMissingParentheses(
-		String ifClause, String fileName, int lineCount) {
+		String ifClause, String fileName, int lineNumber) {
 
 		int x = -1;
 
@@ -125,7 +125,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			if (getLevel(s) == 0) {
 				addMessage(
 					fileName, "Missing parentheses in if-statement",
-					"if_statement_parentheses.markdown", lineCount);
+					"if_statement_parentheses.markdown", lineNumber);
 
 				return;
 			}
@@ -178,7 +178,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				if (_hasMissingParentheses(s)) {
 					addMessage(
 						fileName, "Missing parentheses in if-statement",
-						"if_statement_parentheses.markdown", lineCount);
+						"if_statement_parentheses.markdown", lineNumber);
 
 					return;
 				}

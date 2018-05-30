@@ -70,11 +70,12 @@ public class DetailASTUtil {
 
 		List<String> importNamesList = new ArrayList<>();
 
-		DetailAST sibling = rootAST.getNextSibling();
+		DetailAST siblingAST = rootAST.getNextSibling();
 
 		while (true) {
-			if (sibling.getType() == TokenTypes.IMPORT) {
-				FullIdent importIdent = FullIdent.createFullIdentBelow(sibling);
+			if (siblingAST.getType() == TokenTypes.IMPORT) {
+				FullIdent importIdent = FullIdent.createFullIdentBelow(
+					siblingAST);
 
 				importNamesList.add(importIdent.getText());
 			}
@@ -82,7 +83,7 @@ public class DetailASTUtil {
 				break;
 			}
 
-			sibling = sibling.getNextSibling();
+			siblingAST = siblingAST.getNextSibling();
 		}
 
 		return importNamesList;

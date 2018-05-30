@@ -104,7 +104,7 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 				int x = content.lastIndexOf(
 					"StringBundler " + varName, matcher.start());
 
-				String line = getLine(content, getLineCount(content, x));
+				String line = getLine(content, getLineNumber(content, x));
 
 				if (!line.startsWith(tabs)) {
 					continue;

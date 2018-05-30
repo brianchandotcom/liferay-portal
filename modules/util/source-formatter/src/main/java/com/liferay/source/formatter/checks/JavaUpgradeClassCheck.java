@@ -82,7 +82,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 				fileName,
 				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
 					"instead of LocaleUtil.getDefault()",
-				"upgrade_locale_util.markdown", getLineCount(content, pos));
+				"upgrade_locale_util.markdown", getLineNumber(content, pos));
 		}
 	}
 
@@ -123,7 +123,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 						"Break up Upgrade classes with a minor version " +
 							"increment or order alphabetically",
 						"upgrade_register.markdown",
-						getLineCount(content, matcher1.start()));
+						getLineNumber(content, matcher1.start()));
 
 					break;
 				}
@@ -148,7 +148,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 					fileName,
 					"Do not use *ServiceUtil classes in upgrade classes",
 					"upgrade_service_util.markdown",
-					getLineCount(content, pos));
+					getLineNumber(content, pos));
 			}
 		}
 	}
@@ -159,7 +159,7 @@ public class JavaUpgradeClassCheck extends BaseFileCheck {
 		if (pos != -1) {
 			addMessage(
 				fileName, "Use rs.getTimestamp instead of rs.getDate",
-				"upgrade_timestamp.markdown", getLineCount(content, pos));
+				"upgrade_timestamp.markdown", getLineNumber(content, pos));
 		}
 	}
 

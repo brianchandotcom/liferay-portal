@@ -42,7 +42,7 @@ public class EmptyCollectionCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, "Use Collections.empty" + collectionType + "()",
-				getLineCount(content, matcher.start()));
+				getLineNumber(content, matcher.start()));
 		}
 	}
 

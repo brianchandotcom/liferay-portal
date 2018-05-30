@@ -43,7 +43,7 @@ public class JavaUnsafeCastingCheck extends BaseFileCheck {
 
 				addMessage(
 					fileName, message, "unsafe_casting.markdown",
-					getLineCount(content, pos));
+					getLineNumber(content, pos));
 			}
 		}
 

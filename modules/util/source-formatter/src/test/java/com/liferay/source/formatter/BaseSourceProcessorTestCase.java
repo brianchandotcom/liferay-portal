@@ -165,12 +165,12 @@ public abstract class BaseSourceProcessorTestCase {
 				Assert.assertEquals(
 					expectedMessages[i], sourceFormatterMessage.getMessage());
 
-				int lineCount = sourceFormatterMessage.getLineCount();
+				int lineNumber = sourceFormatterMessage.getLineNumber();
 
-				if (lineCount > -1) {
+				if (lineNumber > -1) {
 					Assert.assertEquals(
 						String.valueOf(lineNumbers[i]),
-						String.valueOf(lineCount));
+						String.valueOf(lineNumber));
 				}
 
 				String absolutePath = StringUtil.replace(

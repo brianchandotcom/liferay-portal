@@ -53,16 +53,16 @@ public class PropertiesPortletFileCheck extends BaseFileCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-			int lineCount = 0;
+			int lineNumber = 0;
 
 			String line = null;
 
 			String previousProperty = StringPool.BLANK;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
+				lineNumber++;
 
-				if (lineCount == 1) {
+				if (lineNumber == 1) {
 					continue;
 				}
 
@@ -92,7 +92,7 @@ public class PropertiesPortletFileCheck extends BaseFileCheck {
 
 					addMessage(
 						fileName, "Unsorted property '" + property + "'",
-						lineCount);
+						lineNumber);
 				}
 
 				previousProperty = property;

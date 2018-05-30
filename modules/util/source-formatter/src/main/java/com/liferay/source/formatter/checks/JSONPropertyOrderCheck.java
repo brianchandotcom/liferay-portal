@@ -38,7 +38,7 @@ public class JSONPropertyOrderCheck extends BaseFileCheck {
 		if (matcher.find()) {
 			addMessage(
 				fileName, "There should be a line break after '}'",
-				getLineCount(content, matcher.start()));
+				getLineNumber(content, matcher.start()));
 
 			return content;
 		}

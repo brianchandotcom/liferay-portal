@@ -93,16 +93,16 @@ public class MapIterationCheck extends BaseCheck {
 			DetailAST eListAST = getMethodCallAST.findFirstToken(
 				TokenTypes.ELIST);
 
-			DetailAST firstChild = eListAST.getFirstChild();
+			DetailAST firstChildAST = eListAST.getFirstChild();
 
-			if (firstChild.getType() != TokenTypes.EXPR) {
+			if (firstChildAST.getType() != TokenTypes.EXPR) {
 				continue;
 			}
 
-			firstChild = firstChild.getFirstChild();
+			firstChildAST = firstChildAST.getFirstChild();
 
-			if (firstChild.getType() == TokenTypes.IDENT) {
-				String parameterName = firstChild.getText();
+			if (firstChildAST.getType() == TokenTypes.IDENT) {
+				String parameterName = firstChildAST.getText();
 
 				if (parameterName.equals(keyName)) {
 					return true;

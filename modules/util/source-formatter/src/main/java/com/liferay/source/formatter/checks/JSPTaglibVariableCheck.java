@@ -52,7 +52,7 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 						fileName,
 						"Variable '" + variableName +
 							"' should start with 'taglib'",
-						getLineCount(content, matcher.start()));
+						getLineNumber(content, matcher.start()));
 				}
 
 				continue;
@@ -66,7 +66,7 @@ public class JSPTaglibVariableCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"No need to specify taglib variable '" + variableName + "'",
-					getLineCount(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 
 				continue;
 			}

@@ -66,7 +66,7 @@ public class PropertiesLanguageKeysCheck extends BaseFileCheck {
 					addMessage(
 						fileName, "Remove HTML markup for '" + key + "'",
 						"language_keys.markdown",
-						getLineCount(content, content.indexOf(line)));
+						getLineNumber(content, content.indexOf(line)));
 				}
 			}
 		}

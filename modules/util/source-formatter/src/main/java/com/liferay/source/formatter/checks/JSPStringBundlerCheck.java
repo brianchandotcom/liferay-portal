@@ -65,7 +65,7 @@ public class JSPStringBundlerCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, "Incorrect use of '+' inside StringBundler",
-				getLineCount(content, matcher.start(1)));
+				getLineNumber(content, matcher.start(1)));
 		}
 
 		matcher = _sbAppendWithStartingSpacePattern.matcher(content);

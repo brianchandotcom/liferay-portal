@@ -42,7 +42,7 @@ public class JavaStaticImportsCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, sb.toString(), "imports.markdown",
-				getLineCount(content, matcher.end()));
+				getLineNumber(content, matcher.end()));
 		}
 
 		matcher = _importConstantPattern.matcher(content);
@@ -58,7 +58,7 @@ public class JavaStaticImportsCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, sb.toString(), "imports.markdown",
-				getLineCount(content, matcher.end()));
+				getLineNumber(content, matcher.end()));
 		}
 
 		return content;

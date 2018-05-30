@@ -53,7 +53,7 @@ public abstract class TagAttributesCheck extends BaseFileCheck {
 					fileName,
 					"There should be a line break after '" + matcher.group(2) +
 						"'",
-					getLineCount(content, matcher.start(2)));
+					getLineNumber(content, matcher.start(2)));
 
 				continue;
 			}

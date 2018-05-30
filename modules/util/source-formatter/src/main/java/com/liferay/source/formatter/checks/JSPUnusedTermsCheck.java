@@ -464,14 +464,14 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-			int lineCount = 0;
+			int lineNumber = 0;
 
 			String line = null;
 
 			boolean javaSource = false;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
+				lineNumber++;
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
@@ -484,7 +484,7 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 
 				if (!javaSource ||
 					isExcludedPath(
-						_UNUSED_VARIABLES_EXCLUDES, absolutePath, lineCount) ||
+						_UNUSED_VARIABLES_EXCLUDES, absolutePath, lineNumber) ||
 					!_hasUnusedVariable(
 						fileName, trimmedLine, checkedFileNames,
 						includeFileNames)) {

@@ -61,9 +61,9 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		matcher = _emptyLineBetweenTagsPattern2.matcher(content);
 
 		while (matcher.find()) {
-			int lineCount = getLineCount(content, matcher.start());
+			int lineNumber = getLineNumber(content, matcher.start());
 
-			String line = getLine(content, lineCount);
+			String line = getLine(content, lineNumber);
 
 			String tabs = SourceUtil.getIndent(line);
 
@@ -79,7 +79,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				continue;
 			}
 
-			line = getLine(content, lineCount + 1);
+			line = getLine(content, lineNumber + 1);
 
 			if (line.contains("\"hidden\"")) {
 				continue;

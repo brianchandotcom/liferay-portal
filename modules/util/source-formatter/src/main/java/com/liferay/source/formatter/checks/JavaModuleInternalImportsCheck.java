@@ -77,7 +77,7 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"Do not import internal class from another module",
-					getLineCount(content, matcher.start(1)));
+					getLineNumber(content, matcher.start(1)));
 			}
 		}
 	}

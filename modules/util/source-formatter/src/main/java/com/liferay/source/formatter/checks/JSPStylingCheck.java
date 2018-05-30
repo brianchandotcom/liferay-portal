@@ -59,14 +59,15 @@ public class JSPStylingCheck extends StylingCheck {
 
 		if (pos != -1) {
 			addMessage(
-				fileName, "Do not use debugger", getLineCount(content, pos));
+				fileName, "Do not use debugger", getLineNumber(content, pos));
 		}
 
 		pos = content.indexOf("console.log(");
 
 		if (pos != -1) {
 			addMessage(
-				fileName, "Do not use console.log", getLineCount(content, pos));
+				fileName, "Do not use console.log",
+				getLineNumber(content, pos));
 		}
 
 		if (!fileName.endsWith("test.jsp")) {
@@ -75,7 +76,7 @@ public class JSPStylingCheck extends StylingCheck {
 			if (pos != -1) {
 				addMessage(
 					fileName, "Do not call 'System.out.print'",
-					getLineCount(content, pos));
+					getLineNumber(content, pos));
 			}
 		}
 
@@ -93,7 +94,7 @@ public class JSPStylingCheck extends StylingCheck {
 		if (matcher.find()) {
 			addMessage(
 				fileName, "Avoid chaining on 'getClass'", "chaining.markdown",
-				getLineCount(content, matcher.start()));
+				getLineNumber(content, matcher.start()));
 		}
 	}
 
@@ -103,7 +104,7 @@ public class JSPStylingCheck extends StylingCheck {
 		if (matcher.find()) {
 			addMessage(
 				fileName, "There should be a line break after '}'",
-				getLineCount(content, matcher.start(1)));
+				getLineNumber(content, matcher.start(1)));
 		}
 	}
 

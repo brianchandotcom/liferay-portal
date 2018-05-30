@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 public abstract class LineBreakCheck extends BaseFileCheck {
 
 	protected void checkLineBreaks(
-		String line, String previousLine, String fileName, int lineCount) {
+		String line, String previousLine, String fileName, int lineNumber) {
 
 		String trimmedLine = StringUtil.trimLeading(line);
 
@@ -41,7 +41,7 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 			(strippedQuotesLineOpenParenthesisCount > 0) &&
 			(getLevel(trimmedLine) > 0)) {
 
-			addMessage(fileName, "Incorrect line break", lineCount);
+			addMessage(fileName, "Incorrect line break", lineNumber);
 		}
 
 		if ((trimmedLine.endsWith(StringPool.COMMA) ||
@@ -49,7 +49,7 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 			(getLevel(trimmedLine) > 0)) {
 
 			addMessage(
-				fileName, "There should be a line break after '('", lineCount);
+				fileName, "There should be a line break after '('", lineNumber);
 		}
 
 		if (line.endsWith(" +") || line.endsWith(" -") || line.endsWith(" *") ||
@@ -63,7 +63,7 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 				if ((y == -1) || (x < y)) {
 					addMessage(
 						fileName, "There should be a line break after '='",
-						lineCount);
+						lineNumber);
 				}
 			}
 
@@ -75,7 +75,7 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 				if ((y == -1) || (x < y)) {
 					addMessage(
 						fileName, "There should be a line break after '->'",
-						lineCount);
+						lineNumber);
 				}
 			}
 		}

@@ -63,7 +63,7 @@ public class JavaModuleServiceReferenceCheck extends BaseFileCheck {
 			if (className.startsWith(servicePackageName)) {
 				addMessage(
 					fileName, "Use @BeanReference instead of @ServiceReference",
-					getLineCount(content, matcher.start()));
+					getLineNumber(content, matcher.start()));
 			}
 		}
 	}

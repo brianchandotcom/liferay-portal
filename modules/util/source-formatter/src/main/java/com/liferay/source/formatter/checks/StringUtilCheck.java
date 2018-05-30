@@ -92,7 +92,7 @@ public class StringUtilCheck extends BaseFileCheck {
 
 			addMessage(
 				fileName, sb.toString(), "string_methods.markdown",
-				getLineCount(content, matcher.start()));
+				getLineNumber(content, matcher.start()));
 		}
 	}
 

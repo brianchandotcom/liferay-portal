@@ -42,10 +42,10 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 			String line = null;
 
-			int lineCount = 0;
+			int lineNumber = 0;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
+				lineNumber++;
 
 				if (line.startsWith("import ") || line.startsWith("package ") ||
 					line.matches("\\s*\\*.*") ||
@@ -76,7 +76,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (isExcludedPath(
-						_LINE_LENGTH_EXCLUDES, absolutePath, lineCount) ||
+						_LINE_LENGTH_EXCLUDES, absolutePath, lineNumber) ||
 					_isAnnotationParameter(content, trimmedLine)) {
 
 					continue;
@@ -87,7 +87,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 				}
 
 				String truncateLongLinesContent = _getTruncateLongLinesContent(
-					content, line, trimmedLine, lineCount);
+					content, line, trimmedLine, lineNumber);
 
 				if ((truncateLongLinesContent != null) &&
 					!truncateLongLinesContent.equals(content)) {
@@ -95,7 +95,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 					return truncateLongLinesContent;
 				}
 
-				addMessage(fileName, "> " + getMaxLineLength(), lineCount);
+				addMessage(fileName, "> " + getMaxLineLength(), lineNumber);
 			}
 		}
 
@@ -182,7 +182,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 	}
 
 	private String _getTruncateLongLinesContent(
-		String content, String line, String trimmedLine, int lineCount) {
+		String content, String line, String trimmedLine, int lineNumber) {
 
 		String indent = StringPool.BLANK;
 
@@ -222,7 +222,9 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 						StringBundler.concat(
 							"\n", firstLine, "\n", secondLine, "\n"));
 				}
-				else if (Validator.isNotNull(getLine(content, lineCount + 1))) {
+				else if (Validator.isNotNull(
+							getLine(content, lineNumber + 1))) {
+
 					return StringUtil.replace(
 						content, "\n" + line + "\n",
 						StringBundler.concat(

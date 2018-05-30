@@ -20,8 +20,8 @@
 		"babel-cli": "6.26.0",
 		"babel-preset-env": "^1.6.1",
 		"check-source-formatting": "^2.0.6",
-		"liferay-npm-bridge-generator": "2.0.0-rc.2",
-		"liferay-npm-bundler": "2.0.0-rc.2"
+		"liferay-npm-bridge-generator": "2.0.0-rc.3",
+		"liferay-npm-bundler": "2.0.0-rc.3"
 	},
 	"name": "frontend-js-spa-web",
 	"scripts": {

@@ -17,8 +17,7 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class PortalAcceptanceUpstreamJob
-	extends PortalRepositoryJob implements PortalTestClassJob {
+public class PortalAcceptanceUpstreamJob extends PortalRepositoryJob {
 
 	public PortalAcceptanceUpstreamJob(String jobName) {
 		super(jobName);

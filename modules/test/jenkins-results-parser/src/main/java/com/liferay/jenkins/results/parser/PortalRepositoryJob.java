@@ -17,13 +17,13 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Properties;
 import java.util.Set;
 
 /**
  * @author Michael Hashimoto
  */
-public abstract class PortalRepositoryJob extends RepositoryJob {
+public abstract class PortalRepositoryJob
+	extends RepositoryJob implements PortalTestClassJob {
 
 	@Override
 	public Set<String> getBatchNames() {
@@ -42,27 +42,6 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 	}
 
 	@Override
-	public GitWorkingDirectory getGitWorkingDirectory() {
-		if (gitWorkingDirectory != null) {
-			return gitWorkingDirectory;
-		}
-
-		checkRepositoryDir();
-
-		try {
-			gitWorkingDirectory = new PortalGitWorkingDirectory(
-				getBranchName(), repositoryDir.getAbsolutePath());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to create portal Git working directory " +
-					repositoryDir.getPath(),
-				ioe);
-		}
-
-		return gitWorkingDirectory;
-	}
-
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -89,42 +68,24 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 		return null;
 	}
 
-	@Override
-	public void setRepositoryDir(File repositoryDir) {
-	}
-
 	protected PortalRepositoryJob(String jobName) {
 		super(jobName);
 
-		_findRepositoryDir();
+		try {
+			gitWorkingDirectory =
+				JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
+					getBranchName());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+
+		setRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 
 		checkRepositoryDir();
 
 		jobProperties = JenkinsResultsParserUtil.getProperties(
 			new File(repositoryDir, "test.properties"));
-	}
-
-	private void _findRepositoryDir() {
-		String branchName = getBranchName();
-
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to get build properties", ioe);
-		}
-
-		String workingDirectoryPath = buildProperties.getProperty(
-			"base.repository.dir") + "/liferay-portal";
-
-		if (!branchName.equals("master")) {
-			workingDirectoryPath = JenkinsResultsParserUtil.combine(
-				workingDirectoryPath, "-", branchName);
-		}
-
-		super.setRepositoryDir(new File(workingDirectoryPath));
 	}
 
 }

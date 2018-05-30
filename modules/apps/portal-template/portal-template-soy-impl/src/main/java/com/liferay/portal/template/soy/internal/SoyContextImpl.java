@@ -37,9 +37,16 @@ public class SoyContextImpl
 	public SoyContextImpl(Map<String, Object> context) {
 		super(context);
 
-		_injectedData = new HashMap<>();
+		Map<String, Object> injectedData = (Map<String, Object>)get(
+			SoyTemplateConstants.INJECTED_DATA);
 
-		put(SoyTemplateConstants.INJECTED_DATA, _injectedData);
+		if (injectedData == null) {
+			injectedData = new HashMap<>();
+
+			put(SoyTemplateConstants.INJECTED_DATA, injectedData);
+		}
+
+		_injectedData = injectedData;
 	}
 
 	@Override

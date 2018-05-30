@@ -20,21 +20,21 @@
 DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfiguration(DLConfiguration.class);
 %>
 
-<liferay-ui:success embed="<%= false %>" key='<%= portletDisplay.getId() + "filesImported" %>' message='<%= LanguageUtil.get(resourceBundle, "the-files-were-imported-correctly") %>' />
-
-<liferay-ui:error exception="<%= DuplicateFragmentCollectionKeyException.class %>">
-
-	<%
-	DuplicateFragmentCollectionKeyException dfcke = (DuplicateFragmentCollectionKeyException)errorException;
-	%>
-
-	<liferay-ui:message arguments="<%= dfcke.getMessage() %>" key="a-fragment-collection-with-the-key-x-already-exists" />
-</liferay-ui:error>
-
-<liferay-ui:error exception="<%= InvalidFragmentCollectionFileException.class %>" message="selected-file-does-not-contain-fragment-collections" />
-
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
-	<div class="container-fluid-1280">
+	<div class="sheet sheet-lg">
+		<liferay-ui:success embed="<%= false %>" key='<%= portletDisplay.getId() + "filesImported" %>' message='<%= LanguageUtil.get(resourceBundle, "the-files-were-imported-correctly") %>' />
+
+		<liferay-ui:error exception="<%= DuplicateFragmentCollectionKeyException.class %>">
+
+			<%
+			DuplicateFragmentCollectionKeyException dfcke = (DuplicateFragmentCollectionKeyException)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= dfcke.getMessage() %>" key="a-fragment-collection-with-the-key-x-already-exists" />
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= InvalidFragmentCollectionFileException.class %>" message="selected-file-does-not-contain-fragment-collections" />
+
 		<aui:row>
 			<aui:col width="<%= 50 %>">
 				<div class="lfr-upload-container" id="<portlet:namespace />fileUpload"></div>

@@ -277,8 +277,8 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				window,
 				'<%= randomNamespace %>hideEditor',
 				function(editorName, formId) {
-					if (window[editorName]) {
-						window[editorName].dispose();
+					if (window['<portlet:namespace/>' + editorName]) {
+						window['<portlet:namespace/>' + editorName].dispose();
 					}
 
 					<%= randomNamespace %>hideEl(formId);
@@ -492,12 +492,10 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 			Liferay.provide(
 				window,
 				'<%= randomNamespace %>showEditor',
-				function(editorName, formId) {
-					window[editorName].create();
+				function(formId, options) {
+					Liferay.Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), 'TODO' === '');
 
-					var html = window[editorName].getHTML();
-
-					Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), html === '');
+					<%= randomNamespace %>loadEditor(formId, options);
 
 					<%= randomNamespace %>showEl(formId);
 				}
@@ -659,6 +657,41 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 					popover.show();
 				},
 				'.lfr-discussion-parent-link'
+			);
+		</aui:script>
+
+		<aui:script use="aui-io-request,aui-parse-content">
+
+			<%
+			ResourceURL editorURL = PortletURLFactoryUtil.create(liferayPortletRequest, CommentTaglibPortletKeys.COMMENT_TAGLIB, PortletRequest.RESOURCE_PHASE);
+
+			editorURL.setResourceID("/comment_taglib/editor");
+			%>
+
+			Liferay.provide(
+				window,
+				'<%= randomNamespace %>loadEditor',
+				function(formId, options) {
+					fetch(
+						'<%= editorURL.toString() %>',
+						{
+							body: new URLSearchParams(Liferay.Util.ns(
+								'_<%= CommentTaglibPortletKeys.COMMENT_TAGLIB %>_',
+								options
+							)),
+							credentials: 'same-origin',
+							method: 'POST'
+						}
+					).then(function(response) {
+						return response.text();
+					}).then(function(text) {
+						var contentBox = A.one('#' + formId + ' .editor-wrapper');
+
+						contentBox.plug(A.Plugin.ParseContent);
+
+						contentBox.setContent(text);
+					});
+				}
 			);
 		</aui:script>
 	</c:if>

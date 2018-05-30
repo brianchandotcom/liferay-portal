@@ -551,8 +551,8 @@ public class LayoutLocalServiceStagingAdvice implements BeanFactoryAware {
 
 		List<Layout> wrappedLayouts = new ArrayList<>(layouts.size());
 
-		for (int i = 0; i < layouts.size(); i++) {
-			Layout wrappedLayout = wrapLayout(layouts.get(i));
+		for (Layout layout : layouts) {
+			Layout wrappedLayout = wrapLayout(layout);
 
 			if (showIncomplete ||
 				!StagingUtil.isIncomplete(wrappedLayout, layoutSetBranchId)) {

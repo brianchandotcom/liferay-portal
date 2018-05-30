@@ -76,8 +76,8 @@ public class PortalLDAPContext extends DummyDirContext {
 
 		Attributes attributes = new BasicAttributes(true);
 
-		for (int i = 0; i < ids.length; i++) {
-			Attribute attribute = _attributes.get(ids[i]);
+		for (String id : ids) {
+			Attribute attribute = _attributes.get(id);
 
 			if (attribute != null) {
 				attributes.put(attribute);

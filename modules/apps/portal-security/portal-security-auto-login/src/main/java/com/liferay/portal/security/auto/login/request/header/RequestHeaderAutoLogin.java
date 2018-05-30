@@ -124,8 +124,8 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 		Set<String> hostsAllowed = new HashSet<>();
 
-		for (int i = 0; i < hostsAllowedArray.length; i++) {
-			hostsAllowed.add(hostsAllowedArray[i]);
+		for (String hostAllowed : hostsAllowedArray) {
+			hostsAllowed.add(hostAllowed);
 		}
 
 		return AccessControlUtil.isAccessAllowed(request, hostsAllowed);

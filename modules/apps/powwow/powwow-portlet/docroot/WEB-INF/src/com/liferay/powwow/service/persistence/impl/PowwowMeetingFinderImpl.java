@@ -159,8 +159,8 @@ public class PowwowMeetingFinderImpl
 		sb.append("AND PowwowMeeting.status IN ");
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		for (int i = 0; i < statuses.length; i++) {
-			sb.append(statuses[i]);
+		for (int status : statuses) {
+			sb.append(status);
 			sb.append(StringPool.COMMA_AND_SPACE);
 		}
 

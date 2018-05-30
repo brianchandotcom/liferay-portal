@@ -95,10 +95,10 @@ public abstract class BaseServiceImpl implements BaseService {
 			throw new PrincipalException("Principal is null");
 		}
 		else {
-			for (int i = 0; i < ANONYMOUS_NAMES.length; i++) {
-				if (StringUtil.equalsIgnoreCase(name, ANONYMOUS_NAMES[i])) {
+			for (String anonymousName : ANONYMOUS_NAMES) {
+				if (StringUtil.equalsIgnoreCase(name, anonymousName)) {
 					throw new PrincipalException(
-						"Principal cannot be " + ANONYMOUS_NAMES[i]);
+						"Principal cannot be " + anonymousName);
 				}
 			}
 		}

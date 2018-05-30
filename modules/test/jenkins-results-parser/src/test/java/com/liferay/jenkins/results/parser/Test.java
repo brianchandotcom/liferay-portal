@@ -233,8 +233,8 @@ public class Test {
 
 		SAXReader saxReader = new SAXReader();
 
-		for (int i = 0; i < _XML_REPLACEMENTS.length; i++) {
-			xml = xml.replace(_XML_REPLACEMENTS[i][0], _XML_REPLACEMENTS[i][1]);
+		for (String[] xmlReplacement : _XML_REPLACEMENTS) {
+			xml = xml.replace(xmlReplacement[0], xmlReplacement[1]);
 		}
 
 		Document document = null;
@@ -253,9 +253,9 @@ public class Test {
 
 		String formattedXML = Dom4JUtil.format(document.getRootElement());
 
-		for (int i = 0; i < _XML_REPLACEMENTS.length; i++) {
+		for (String[] xmlReplacement : _XML_REPLACEMENTS) {
 			formattedXML = formattedXML.replace(
-				_XML_REPLACEMENTS[i][1], _XML_REPLACEMENTS[i][0]);
+				xmlReplacement[1], xmlReplacement[0]);
 		}
 
 		return formattedXML;

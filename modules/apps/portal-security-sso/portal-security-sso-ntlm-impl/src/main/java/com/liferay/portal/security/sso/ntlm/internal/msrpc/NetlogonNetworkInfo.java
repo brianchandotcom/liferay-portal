@@ -83,8 +83,8 @@ public class NetlogonNetworkInfo extends NdrObject {
 
 		ndrBuffer = ndrBuffer.derive(index);
 
-		for (int i = 0; i < challenge.length; i++) {
-			ndrBuffer.enc_ndr_small(challenge[i]);
+		for (byte b : challenge) {
+			ndrBuffer.enc_ndr_small(b);
 		}
 	}
 

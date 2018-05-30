@@ -204,17 +204,19 @@ public class SocialActivityInterpreterLocalServiceImpl
 
 		String className = PortalUtil.getClassName(activity.getClassNameId());
 
-		for (int i = 0; i < activityInterpreters.size(); i++) {
-			SocialActivityInterpreterImpl activityInterpreter =
-				(SocialActivityInterpreterImpl)activityInterpreters.get(i);
+		for (SocialActivityInterpreter activityInterpreter :
+				activityInterpreters) {
 
-			if (activityInterpreter.hasClassName(className)) {
+			SocialActivityInterpreterImpl activityInterpreterImpl =
+				(SocialActivityInterpreterImpl)activityInterpreter;
+
+			if (activityInterpreterImpl.hasClassName(className)) {
 				SocialActivityFeedEntry activityFeedEntry =
-					activityInterpreter.interpret(activity, serviceContext);
+					activityInterpreterImpl.interpret(activity, serviceContext);
 
 				if (activityFeedEntry != null) {
 					activityFeedEntry.setPortletId(
-						activityInterpreter.getPortletId());
+						activityInterpreterImpl.getPortletId());
 
 					return activityFeedEntry;
 				}
@@ -257,17 +259,20 @@ public class SocialActivityInterpreterLocalServiceImpl
 		String className = PortalUtil.getClassName(
 			activitySet.getClassNameId());
 
-		for (int i = 0; i < activityInterpreters.size(); i++) {
-			SocialActivityInterpreterImpl activityInterpreter =
-				(SocialActivityInterpreterImpl)activityInterpreters.get(i);
+		for (SocialActivityInterpreter activityInterpreter :
+				activityInterpreters) {
 
-			if (activityInterpreter.hasClassName(className)) {
+			SocialActivityInterpreterImpl activityInterpreterImpl =
+				(SocialActivityInterpreterImpl)activityInterpreter;
+
+			if (activityInterpreterImpl.hasClassName(className)) {
 				SocialActivityFeedEntry activityFeedEntry =
-					activityInterpreter.interpret(activitySet, serviceContext);
+					activityInterpreterImpl.interpret(
+						activitySet, serviceContext);
 
 				if (activityFeedEntry != null) {
 					activityFeedEntry.setPortletId(
-						activityInterpreter.getPortletId());
+						activityInterpreterImpl.getPortletId());
 
 					return activityFeedEntry;
 				}
@@ -296,12 +301,14 @@ public class SocialActivityInterpreterLocalServiceImpl
 			String className = PortalUtil.getClassName(
 				activity.getClassNameId());
 
-			for (int i = 0; i < activityInterpreters.size(); i++) {
-				SocialActivityInterpreterImpl activityInterpreter =
-					(SocialActivityInterpreterImpl)activityInterpreters.get(i);
+			for (SocialActivityInterpreter activityInterpreter :
+					activityInterpreters) {
 
-				if (activityInterpreter.hasClassName(className)) {
-					activityInterpreter.updateActivitySet(activityId);
+				SocialActivityInterpreterImpl activityInterpreterImpl =
+					(SocialActivityInterpreterImpl)activityInterpreter;
+
+				if (activityInterpreterImpl.hasClassName(className)) {
+					activityInterpreterImpl.updateActivitySet(activityId);
 
 					return;
 				}

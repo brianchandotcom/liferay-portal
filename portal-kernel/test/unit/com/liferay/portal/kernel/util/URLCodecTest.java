@@ -87,9 +87,9 @@ public class URLCodecTest {
 
 		byte[] animalsBytes = animalsString.getBytes(StringPool.UTF8);
 
-		for (int i = 0; i < animalsBytes.length; i++) {
+		for (byte animalsByte : animalsBytes) {
 			sb.append(StringPool.PERCENT);
-			sb.append(Integer.toHexString(0xFF & animalsBytes[i]));
+			sb.append(Integer.toHexString(0xFF & animalsByte));
 		}
 
 		String escapedAnimalsString = sb.toString();

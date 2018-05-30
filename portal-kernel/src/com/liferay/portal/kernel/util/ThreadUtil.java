@@ -141,9 +141,9 @@ public class ThreadUtil {
 			sb.append(thread.getState());
 			sb.append("\n");
 
-			for (int i = 0; i < elements.length; i++) {
+			for (StackTraceElement element : elements) {
 				sb.append("\t");
-				sb.append(elements[i]);
+				sb.append(element);
 				sb.append("\n");
 			}
 

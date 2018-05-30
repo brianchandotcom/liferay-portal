@@ -95,8 +95,8 @@ public class SerializerTest {
 		BufferOutputStream bufferOutputStream = new BufferOutputStream(
 			serializer);
 
-		for (int i = 0; i < data.length; i++) {
-			bufferOutputStream.write(data[i]);
+		for (byte b : data) {
+			bufferOutputStream.write(b);
 		}
 
 		byte[] result = serializer.toByteBuffer().array();

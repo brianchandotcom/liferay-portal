@@ -39,8 +39,8 @@ public class InternetAddressUtil {
 		InternetAddress[] internetAddresses, String emailAddress) {
 
 		if ((internetAddresses != null) && Validator.isNotNull(emailAddress)) {
-			for (int i = 0; i < internetAddresses.length; i++) {
-				if (emailAddress.equals(internetAddresses[i].getAddress())) {
+			for (InternetAddress internetAddress : internetAddresses) {
+				if (emailAddress.equals(internetAddress.getAddress())) {
 					return true;
 				}
 			}
@@ -66,9 +66,9 @@ public class InternetAddressUtil {
 			return internetAddresses;
 		}
 
-		for (int i = 0; i < internetAddresses.length; i++) {
-			if (!emailAddress.equals(internetAddresses[i].getAddress())) {
-				list.add(internetAddresses[i]);
+		for (InternetAddress internetAddress : internetAddresses) {
+			if (!emailAddress.equals(internetAddress.getAddress())) {
+				list.add(internetAddress);
 			}
 		}
 

@@ -792,9 +792,11 @@ public class SocialActivityServiceImpl extends SocialActivityServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 		ServiceContext serviceContext = new ServiceContext();
 
-		for (int i = 0; i < activityInterpreters.size(); i++) {
+		for (SocialActivityInterpreter activityInterpreter :
+				activityInterpreters) {
+
 			SocialActivityInterpreterImpl activityInterpreterImpl =
-				(SocialActivityInterpreterImpl)activityInterpreters.get(i);
+				(SocialActivityInterpreterImpl)activityInterpreter;
 
 			if (activityInterpreterImpl.hasClassName(activity.getClassName())) {
 				try {

@@ -341,6 +341,10 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public List<CPDefinition> getCPDefinitions(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinition> getCPDefinitions(long groupId, int status,
+		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinition> getCPDefinitionsByCategoryId(long categoryId,
 		int start, int end);
 

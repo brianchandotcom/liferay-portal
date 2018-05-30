@@ -432,6 +432,11 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getCPDefinitions(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
+		long groupId, int status, int start, int end) {
+		return getService().getCPDefinitions(groupId, status, start, end);
+	}
+
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByCategoryId(
 		long categoryId, int start, int end) {
 		return getService().getCPDefinitionsByCategoryId(categoryId, start, end);

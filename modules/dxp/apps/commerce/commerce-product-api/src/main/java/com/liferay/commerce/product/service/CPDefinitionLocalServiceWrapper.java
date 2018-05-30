@@ -455,6 +455,13 @@ public class CPDefinitionLocalServiceWrapper implements CPDefinitionLocalService
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
+		long groupId, int status, int start, int end) {
+		return _cpDefinitionLocalService.getCPDefinitions(groupId, status,
+			start, end);
+	}
+
+	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByCategoryId(
 		long categoryId, int start, int end) {
 		return _cpDefinitionLocalService.getCPDefinitionsByCategoryId(categoryId,

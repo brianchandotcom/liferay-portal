@@ -166,7 +166,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 
 				<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-layout-friendly-url-help" name="targetLayoutFriendlyUrl" />
 
-				<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-widget-id-help" name="targetPortletId" />
+				<aui:input cssClass="lfr-input-text-container" helpMessage="journal-feed-target-widget-id-help" label="target-widget-id" name="targetPortletId" />
 
 				<c:if test="<%= feed != null %>">
 					<aui:input name="url" type="resource" value="<%= feedURL.toString() %>" />

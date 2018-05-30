@@ -66,35 +66,28 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					addLayoutData.put("creation-type", siteInitializerItem.getType());
 					addLayoutData.put("layout-set-prototype-id", siteInitializerItem.getLayoutSetPrototypeId());
 					addLayoutData.put("site-initializer-key", siteInitializerItem.getSiteInitializerKey());
-
-					if (Objects.equals(siteInitializerItem.getType(), SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE) || Validator.isBlank(siteInitializerItem.getIcon())) {
 					%>
 
-						<liferay-frontend:icon-vertical-card
-							cssClass="add-site-action-option"
-							data="<%= addLayoutData %>"
-							icon="site-template"
-							title="<%= siteInitializerItem.getName() %>"
-							url="javascript:;"
-						/>
-
-					<%
-					}
-					else {
-					%>
-
-						<liferay-frontend:vertical-card
-							cssClass="add-site-action-option"
-							data="<%= addLayoutData %>"
-							imageUrl="<%= HtmlUtil.escape(siteInitializerItem.getIcon()) %>"
-							title="<%= siteInitializerItem.getName() %>"
-							url="javascript:;"
-						/>
-
-					<%
-					}
-					%>
-
+					<c:choose>
+						<c:when test="<%= Objects.equals(siteInitializerItem.getType(), SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE) || Validator.isBlank(siteInitializerItem.getIcon()) %>">
+							<liferay-frontend:icon-vertical-card
+								cssClass="add-site-action-option"
+								data="<%= addLayoutData %>"
+								icon="site-template"
+								title="<%= siteInitializerItem.getName() %>"
+								url="javascript:;"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-frontend:vertical-card
+								cssClass="add-site-action-option"
+								data="<%= addLayoutData %>"
+								imageUrl="<%= HtmlUtil.escape(siteInitializerItem.getIcon()) %>"
+								title="<%= siteInitializerItem.getName() %>"
+								url="javascript:;"
+							/>
+						</c:otherwise>
+					</c:choose>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 

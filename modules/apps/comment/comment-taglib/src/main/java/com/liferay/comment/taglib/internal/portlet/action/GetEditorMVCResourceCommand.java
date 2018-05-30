@@ -17,6 +17,7 @@ package com.liferay.comment.taglib.internal.portlet.action;
 import com.liferay.comment.taglib.internal.constants.CommentTaglibPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -40,6 +41,10 @@ public class GetEditorMVCResourceCommand extends BaseMVCResourceCommand {
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
+
+		String namespace = ParamUtil.getString(resourceRequest, "namespace");
+
+		resourceRequest.setAttribute("aui:form:portletNamespace", namespace);
 
 		include(resourceRequest, resourceResponse, "/discussion/editor.jsp");
 	}

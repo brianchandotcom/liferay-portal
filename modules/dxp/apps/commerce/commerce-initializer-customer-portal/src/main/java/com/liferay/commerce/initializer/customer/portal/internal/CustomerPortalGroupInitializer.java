@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.initializer.customer.portal.internal.util;
+package com.liferay.commerce.initializer.customer.portal.internal;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;

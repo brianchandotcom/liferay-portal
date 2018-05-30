@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.initializer.lotus.internal.util;
+package com.liferay.commerce.initializer.lotus.internal;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;

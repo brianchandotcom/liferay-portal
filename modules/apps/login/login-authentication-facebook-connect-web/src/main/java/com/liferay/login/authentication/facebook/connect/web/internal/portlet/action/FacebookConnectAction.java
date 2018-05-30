@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -138,6 +140,14 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		if (!stateNonce.equals(nonce)) {
 			throw new PrincipalException.MustBeAuthenticated(
 				_portal.getUserId(request));
+		}
+
+		if (!Validator.isBlank(ParamUtil.getString(request, "error"))) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Authentication error: " + request.getQueryString());
+			}
+
+			return _forwards.get("/common/referer_jsp.jsp");
 		}
 
 		redirect = _portal.escapeRedirect(redirect);
@@ -405,6 +415,9 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			contact.getJobTitle(), groupIds, organizationIds, roleIds,
 			userGroupRoles, userGroupIds, serviceContext);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FacebookConnectAction.class);
 
 	private FacebookConnect _facebookConnect;
 	private final Map<String, String> _forwards = new HashMap<>();

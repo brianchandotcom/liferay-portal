@@ -441,28 +441,18 @@ public class CommercePriceListServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceList updateCommercePriceList(
-		HttpPrincipal httpPrincipal, long commercePriceListId,
-		long commerceCurrencyId, String name, double priority,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, String externalReferenceCode,
-		boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.commerce.price.list.model.CommercePriceList updateExternalReferenceCode(
+		HttpPrincipal httpPrincipal,
+		com.liferay.commerce.price.list.model.CommercePriceList commercePriceList,
+		long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceListServiceUtil.class,
-					"updateCommercePriceList",
-					_updateCommercePriceListParameterTypes11);
+					"updateExternalReferenceCode",
+					_updateExternalReferenceCodeParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commercePriceListId, commerceCurrencyId, name, priority,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, externalReferenceCode, neverExpire,
-					serviceContext);
+					commercePriceList, groupId, externalReferenceCode);
 
 			Object returnObj = null;
 
@@ -575,11 +565,10 @@ public class CommercePriceListServiceHttp {
 			int.class, int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCommercePriceListParameterTypes11 = new Class[] {
-			long.class, long.class, String.class, double.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, String.class, boolean.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+	private static final Class<?>[] _updateExternalReferenceCodeParameterTypes11 =
+		new Class[] {
+			com.liferay.commerce.price.list.model.CommercePriceList.class,
+			long.class, String.class
 		};
 	private static final Class<?>[] _upsertCommercePriceListParameterTypes12 = new Class[] {
 			long.class, long.class, String.class, double.class, int.class,

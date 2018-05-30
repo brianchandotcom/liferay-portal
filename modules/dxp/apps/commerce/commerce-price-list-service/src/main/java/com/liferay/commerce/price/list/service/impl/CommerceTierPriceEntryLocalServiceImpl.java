@@ -260,18 +260,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-			CommerceTierPriceEntry commerceTierPriceEntry,
-			String externalReferenceCode)
-		throws PortalException {
-
-		commerceTierPriceEntry.setExternalReferenceCode(externalReferenceCode);
-
-		return commerceTierPriceEntryPersistence.update(commerceTierPriceEntry);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, BigDecimal price,
 			BigDecimal promoPrice, int minQuantity,
 			ServiceContext serviceContext)
@@ -289,6 +277,18 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		commerceTierPriceEntry.setPromoPrice(promoPrice);
 		commerceTierPriceEntry.setMinQuantity(minQuantity);
 		commerceTierPriceEntry.setExpandoBridgeAttributes(serviceContext);
+
+		return commerceTierPriceEntryPersistence.update(commerceTierPriceEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceTierPriceEntry updateExternalReferenceCode(
+			CommerceTierPriceEntry commerceTierPriceEntry,
+			String externalReferenceCode)
+		throws PortalException {
+
+		commerceTierPriceEntry.setExternalReferenceCode(externalReferenceCode);
 
 		return commerceTierPriceEntryPersistence.update(commerceTierPriceEntry);
 	}

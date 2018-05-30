@@ -155,25 +155,27 @@ public class CommerceTierPriceEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateCommerceTierPriceEntry(
-			commerceTierPriceEntryId, null, price, promoPrice, minQuantity,
-			serviceContext);
-	}
-
-	@Override
-	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
-			long commerceTierPriceEntryId, String externalReferenceCode,
-			BigDecimal price, BigDecimal promoPrice, int minQuantity,
-			ServiceContext serviceContext)
-		throws PortalException {
-
 		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
 		return commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
-			commerceTierPriceEntryId, externalReferenceCode, price, promoPrice,
-			minQuantity, serviceContext);
+			commerceTierPriceEntryId, price, promoPrice, minQuantity,
+			serviceContext);
+	}
+
+	@Override
+	public CommerceTierPriceEntry updateExternalReferenceCode(
+			CommerceTierPriceEntry commerceTierPriceEntry, long groupId,
+			String externalReferenceCode)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CommercePriceListActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
+
+		return commerceTierPriceEntryLocalService.updateExternalReferenceCode(
+			commerceTierPriceEntry, externalReferenceCode);
 	}
 
 	@Override

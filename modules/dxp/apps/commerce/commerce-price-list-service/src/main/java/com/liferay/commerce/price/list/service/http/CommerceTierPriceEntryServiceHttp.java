@@ -429,20 +429,18 @@ public class CommerceTierPriceEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
-		HttpPrincipal httpPrincipal, long commerceTierPriceEntryId,
-		String externalReferenceCode, java.math.BigDecimal price,
-		java.math.BigDecimal promoPrice, int minQuantity,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry updateExternalReferenceCode(
+		HttpPrincipal httpPrincipal,
+		com.liferay.commerce.price.list.model.CommerceTierPriceEntry commerceTierPriceEntry,
+		long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceTierPriceEntryServiceUtil.class,
-					"updateCommerceTierPriceEntry",
-					_updateCommerceTierPriceEntryParameterTypes12);
+					"updateExternalReferenceCode",
+					_updateExternalReferenceCodeParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceTierPriceEntryId, externalReferenceCode, price,
-					promoPrice, minQuantity, serviceContext);
+					commerceTierPriceEntry, groupId, externalReferenceCode);
 
 			Object returnObj = null;
 
@@ -546,11 +544,10 @@ public class CommerceTierPriceEntryServiceHttp {
 			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,
 			int.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCommerceTierPriceEntryParameterTypes12 =
+	private static final Class<?>[] _updateExternalReferenceCodeParameterTypes12 =
 		new Class[] {
-			long.class, String.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class, int.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			com.liferay.commerce.price.list.model.CommerceTierPriceEntry.class,
+			long.class, String.class
 		};
 	private static final Class<?>[] _upsertCommerceTierPriceEntryParameterTypes13 =
 		new Class[] {

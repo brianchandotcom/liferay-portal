@@ -158,14 +158,13 @@ public class CommercePriceEntryServiceUtil {
 			promoPrice, serviceContext);
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry updateCommercePriceEntry(
-		long commercePriceEntryId, String externalReferenceCode,
-		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry updateExternalReferenceCode(
+		com.liferay.commerce.price.list.model.CommercePriceEntry commercePriceEntry,
+		long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateCommercePriceEntry(commercePriceEntryId,
-			externalReferenceCode, price, promoPrice, serviceContext);
+				   .updateExternalReferenceCode(commercePriceEntry, groupId,
+			externalReferenceCode);
 	}
 
 	public static com.liferay.commerce.price.list.model.CommercePriceEntry upsertCommercePriceEntry(

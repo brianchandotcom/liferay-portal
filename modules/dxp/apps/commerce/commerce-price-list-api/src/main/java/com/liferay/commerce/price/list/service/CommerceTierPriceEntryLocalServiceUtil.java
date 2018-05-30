@@ -401,15 +401,6 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
-		com.liferay.commerce.price.list.model.CommerceTierPriceEntry commerceTierPriceEntry,
-		String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCommerceTierPriceEntry(commerceTierPriceEntry,
-			externalReferenceCode);
-	}
-
-	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry updateCommerceTierPriceEntry(
 		long commerceTierPriceEntryId, java.math.BigDecimal price,
 		java.math.BigDecimal promoPrice, int minQuantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -417,6 +408,15 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 		return getService()
 				   .updateCommerceTierPriceEntry(commerceTierPriceEntryId,
 			price, promoPrice, minQuantity, serviceContext);
+	}
+
+	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry updateExternalReferenceCode(
+		com.liferay.commerce.price.list.model.CommerceTierPriceEntry commerceTierPriceEntry,
+		String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateExternalReferenceCode(commerceTierPriceEntry,
+			externalReferenceCode);
 	}
 
 	/**

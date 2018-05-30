@@ -292,15 +292,13 @@ public class CommercePriceEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap updateCommercePriceEntry(
-		long commercePriceEntryId, String externalReferenceCode,
-		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
+	public static com.liferay.commerce.price.list.model.CommercePriceEntrySoap updateExternalReferenceCode(
+		com.liferay.commerce.price.list.model.CommercePriceEntrySoap commercePriceEntry,
+		long groupId, String externalReferenceCode) throws RemoteException {
 		try {
 			com.liferay.commerce.price.list.model.CommercePriceEntry returnValue =
-				CommercePriceEntryServiceUtil.updateCommercePriceEntry(commercePriceEntryId,
-					externalReferenceCode, price, promoPrice, serviceContext);
+				CommercePriceEntryServiceUtil.updateExternalReferenceCode(com.liferay.commerce.price.list.model.impl.CommercePriceEntryModelImpl.toModel(
+						commercePriceEntry), groupId, externalReferenceCode);
 
 			return com.liferay.commerce.price.list.model.CommercePriceEntrySoap.toSoapModel(returnValue);
 		}

@@ -545,20 +545,18 @@ public class CommercePriceEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.price.list.model.CommercePriceEntry updateCommercePriceEntry(
-		HttpPrincipal httpPrincipal, long commercePriceEntryId,
-		String externalReferenceCode, java.math.BigDecimal price,
-		java.math.BigDecimal promoPrice,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.commerce.price.list.model.CommercePriceEntry updateExternalReferenceCode(
+		HttpPrincipal httpPrincipal,
+		com.liferay.commerce.price.list.model.CommercePriceEntry commercePriceEntry,
+		long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePriceEntryServiceUtil.class,
-					"updateCommercePriceEntry",
-					_updateCommercePriceEntryParameterTypes16);
+					"updateExternalReferenceCode",
+					_updateExternalReferenceCodeParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commercePriceEntryId, externalReferenceCode, price,
-					promoPrice, serviceContext);
+					commercePriceEntry, groupId, externalReferenceCode);
 
 			Object returnObj = null;
 
@@ -674,10 +672,10 @@ public class CommercePriceEntryServiceHttp {
 			long.class, java.math.BigDecimal.class, java.math.BigDecimal.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCommercePriceEntryParameterTypes16 = new Class[] {
-			long.class, String.class, java.math.BigDecimal.class,
-			java.math.BigDecimal.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+	private static final Class<?>[] _updateExternalReferenceCodeParameterTypes16 =
+		new Class[] {
+			com.liferay.commerce.price.list.model.CommercePriceEntry.class,
+			long.class, String.class
 		};
 	private static final Class<?>[] _upsertCommercePriceEntryParameterTypes17 = new Class[] {
 			long.class, long.class, long.class, String.class,

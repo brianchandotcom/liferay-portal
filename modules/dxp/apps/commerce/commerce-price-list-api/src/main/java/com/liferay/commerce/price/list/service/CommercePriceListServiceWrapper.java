@@ -154,21 +154,12 @@ public class CommercePriceListServiceWrapper implements CommercePriceListService
 	}
 
 	@Override
-	public com.liferay.commerce.price.list.model.CommercePriceList updateCommercePriceList(
-		long commercePriceListId, long commerceCurrencyId, String name,
-		double priority, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute,
-		String externalReferenceCode, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public com.liferay.commerce.price.list.model.CommercePriceList updateExternalReferenceCode(
+		com.liferay.commerce.price.list.model.CommercePriceList commercePriceList,
+		long groupId, String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commercePriceListService.updateCommercePriceList(commercePriceListId,
-			commerceCurrencyId, name, priority, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			externalReferenceCode, neverExpire, serviceContext);
+		return _commercePriceListService.updateExternalReferenceCode(commercePriceList,
+			groupId, externalReferenceCode);
 	}
 
 	@Override

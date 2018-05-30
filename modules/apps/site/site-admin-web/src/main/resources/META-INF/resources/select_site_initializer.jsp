@@ -63,14 +63,11 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					<%
 					Map<String, Object> addLayoutData = new HashMap<>();
 
-					String siteInitializerType = siteInitializerItem.getType();
-
-					addLayoutData.put("creation-type", siteInitializerType);
-
+					addLayoutData.put("creation-type", siteInitializerItem.getType());
 					addLayoutData.put("layout-set-prototype-id", siteInitializerItem.getLayoutSetPrototypeId());
 					addLayoutData.put("site-initializer-key", siteInitializerItem.getSiteInitializerKey());
 
-					if (siteInitializerType.equals(SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE) || Validator.isBlank(siteInitializerItem.getIcon())) {
+					if (Objects.equals(siteInitializerItem.getType(), SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE) || Validator.isBlank(siteInitializerItem.getIcon())) {
 					%>
 
 						<liferay-frontend:icon-vertical-card

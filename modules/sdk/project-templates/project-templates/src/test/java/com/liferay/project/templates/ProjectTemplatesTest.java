@@ -56,6 +56,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -1981,10 +1982,10 @@ public class ProjectTemplatesTest {
 
 		_buildTemplateWithGradle(modulesDir, template, name);
 
-		String result = _executeGradleDebug(
-			gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		Optional<String> result = _executeGradle(
+			gradleProjectDir, true, _GRADLE_TASK_PATH_BUILD);
 
-		Scanner scanner = new Scanner(result);
+		Scanner scanner = new Scanner(result.get());
 
 		String standaloneGradlePluginVersion = null;
 
@@ -2010,10 +2011,10 @@ public class ProjectTemplatesTest {
 
 		scanner.close();
 
-		result = _executeGradleDebug(
-			workspaceDir, ":modules:" + name + ":clean");
+		result = _executeGradle(
+			workspaceDir, true, ":modules:" + name + ":clean");
 
-		scanner = new Scanner(result);
+		scanner = new Scanner(result.get());
 
 		String workspaceGradlePluginVersion = null;
 
@@ -2458,7 +2459,8 @@ public class ProjectTemplatesTest {
 		}
 	}
 
-	private static void _executeGradle(File projectDir, String... taskPaths)
+	private static Optional<String> _executeGradle(
+			File projectDir, boolean debug, String... taskPaths)
 		throws IOException {
 
 		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
@@ -2502,7 +2504,12 @@ public class ProjectTemplatesTest {
 
 		List<String> arguments = new ArrayList<>(taskPaths.length + 5);
 
-		arguments.add("--stacktrace");
+		if (debug) {
+			arguments.add("--debug");
+		}
+		else {
+			arguments.add("--stacktrace");
+		}
 
 		String httpProxyHost = mavenExecutor.getHttpProxyHost();
 		int httpProxyPort = mavenExecutor.getHttpProxyPort();
@@ -2514,6 +2521,13 @@ public class ProjectTemplatesTest {
 
 		for (String taskPath : taskPaths) {
 			arguments.add(taskPath);
+		}
+
+		String stdOutput = null;
+		StringWriter stringWriter = new StringWriter();
+
+		if (debug) {
+			gradleRunner.forwardStdOutput(stringWriter);
 		}
 
 		gradleRunner.withArguments(arguments);
@@ -2533,85 +2547,19 @@ public class ProjectTemplatesTest {
 				"Unexpected outcome for task \"" + buildTask.getPath() + "\"",
 				TaskOutcome.SUCCESS, buildTask.getOutcome());
 		}
+
+		if (debug) {
+			stdOutput = stringWriter.toString();
+			stringWriter.close();
+		}
+
+		return Optional.ofNullable(stdOutput);
 	}
 
-	private static String _executeGradleDebug(
-			File projectDir, String... taskPaths)
+	private static void _executeGradle(File projectDir, String... taskPaths)
 		throws IOException {
 
-		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
-
-		if (Validator.isNotNull(repositoryUrl)) {
-			Files.walkFileTree(
-				projectDir.toPath(),
-				new SimpleFileVisitor<Path>() {
-
-					@Override
-					public FileVisitResult visitFile(
-							Path path, BasicFileAttributes basicFileAttributes)
-						throws IOException {
-
-						String fileName = String.valueOf(path.getFileName());
-
-						if (fileName.equals("build.gradle") ||
-							fileName.equals("settings.gradle")) {
-
-							String content = FileUtil.read(path);
-
-							content = content.replace(
-								"\"" + _REPOSITORY_CDN_URL + "\"",
-								"\"" + repositoryUrl + "\"");
-
-							Files.write(
-								path, content.getBytes(StandardCharsets.UTF_8));
-						}
-
-						return FileVisitResult.CONTINUE;
-					}
-
-				});
-		}
-
-		StringWriter writer = new StringWriter();
-
-		GradleRunner gradleRunner = GradleRunner.create();
-
-		List<String> arguments = new ArrayList<>(taskPaths.length + 3);
-
-		arguments.add("--debug");
-
-		String httpProxyHost = mavenExecutor.getHttpProxyHost();
-		int httpProxyPort = mavenExecutor.getHttpProxyPort();
-
-		if (Validator.isNotNull(httpProxyHost) && (httpProxyPort > 0)) {
-			arguments.add("-Dhttp.proxyHost=" + httpProxyHost);
-			arguments.add("-Dhttp.proxyPort=" + httpProxyPort);
-		}
-
-		for (String taskPath : taskPaths) {
-			arguments.add(taskPath);
-		}
-
-		gradleRunner.withArguments(arguments);
-
-		gradleRunner.withGradleDistribution(_gradleDistribution);
-		gradleRunner.withProjectDir(projectDir);
-		gradleRunner.forwardStdOutput(writer);
-
-		BuildResult buildResult = gradleRunner.build();
-
-		for (String taskPath : taskPaths) {
-			BuildTask buildTask = buildResult.task(taskPath);
-
-			Assert.assertNotNull(
-				"Build task \"" + taskPath + "\" not found", buildTask);
-
-			Assert.assertEquals(
-				"Unexpected outcome for task \"" + buildTask.getPath() + "\"",
-				TaskOutcome.SUCCESS, buildTask.getOutcome());
-		}
-
-		return writer.toString();
+		_executeGradle(projectDir, false, taskPaths);
 	}
 
 	private static void _executeMaven(File projectDir, String... args)

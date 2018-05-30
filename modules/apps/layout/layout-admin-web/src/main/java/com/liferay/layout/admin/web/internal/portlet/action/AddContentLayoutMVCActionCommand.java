@@ -69,13 +69,15 @@ public class AddContentLayoutMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
 		UnicodeProperties typeSettingsProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long layoutPageTemplateEntryId = GetterUtil.getLong(
 			typeSettingsProperties.getProperty("layoutPageTemplateEntryId"));
+
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 		long parentLayoutId = ParamUtil.getLong(

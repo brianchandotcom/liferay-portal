@@ -28,7 +28,7 @@
 
 		<aui:input disabled="<%= disableInputs %>" label="remote-path-context" name="remotePathContext" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "remotePathContext", liveGroupTypeSettings.getProperty("remotePathContext")) %>' />
 
-		<aui:input disabled="<%= disableInputs %>" label="remote-site-id" name="remoteGroupId" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "remoteGroupId", liveGroupTypeSettings.getProperty("remoteGroupId")) %>' />
+		<aui:input disabled="<%= disableInputs %>" label="remote-site-id" name="remoteGroupId" size="10" type="text" value='<%= MapUtil.getString(settingsMap, "targetGroupId", liveGroupTypeSettings.getProperty("remoteGroupId")) %>' />
 
 		<aui:input disabled="<%= disableInputs %>" name="remotePrivateLayout" type="hidden" value='<%= MapUtil.getBoolean(settingsMap, "remotePrivateLayout", privateLayout) %>' />
 	</aui:fieldset>

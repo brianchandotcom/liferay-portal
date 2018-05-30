@@ -8,7 +8,7 @@
 			<var name="fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute macro="Modal#submit" />
+		<execute macro="Button#clickModalSubmit" />
 	</command>
 
 	<command name="editFragment">

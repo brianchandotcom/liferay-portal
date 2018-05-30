@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -132,11 +131,6 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 			Collectors.toList()
 		);
 	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"\\s*" + AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID +
-			"=\"(\\d+)\"",
-		Pattern.CASE_INSENSITIVE);
 
 	private MediaQueryProvider _mediaQueryProvider;
 

@@ -493,11 +493,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				window,
 				'<%= randomNamespace %>showEditor',
 				function(formId, options) {
-					Liferay.Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), 'TODO' === '');
-
 					<%= randomNamespace %>loadEditor(formId, options);
-
-					<%= randomNamespace %>showEl(formId);
 				}
 			);
 
@@ -690,6 +686,10 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						contentBox.plug(A.Plugin.ParseContent);
 
 						contentBox.setContent(text);
+
+						Liferay.Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), options.contents === '');
+
+						<%= randomNamespace %>showEl(formId);
 					});
 				}
 			);

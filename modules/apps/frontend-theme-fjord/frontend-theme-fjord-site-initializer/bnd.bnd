@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend Theme Fjord Site Initializer
+Bundle-SymbolicName: com.liferay.frontend.theme.fjord.site.initializer
+Bundle-Version: 1.0.0
+Web-ContextPath: /frontend-theme-fjord-site-initializer

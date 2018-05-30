@@ -198,6 +198,10 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
+		long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
 		long commerceTierPriceEntryId);
 
@@ -278,6 +282,9 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceTierPriceEntriesCount(long commercePriceEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceTierPriceEntriesCountByGroupId(long groupId);
 
 	/**
 	* Returns the commerce tier price entry with the primary key.

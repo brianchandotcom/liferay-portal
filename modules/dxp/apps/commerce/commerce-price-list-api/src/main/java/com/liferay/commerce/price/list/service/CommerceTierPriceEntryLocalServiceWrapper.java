@@ -211,6 +211,13 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.price.list.model.CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
+		long groupId, int start, int end) {
+		return _commerceTierPriceEntryLocalService.fetchCommerceTierPriceEntries(groupId,
+			start, end);
+	}
+
+	@Override
 	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry fetchCommerceTierPriceEntry(
 		long commerceTierPriceEntryId) {
 		return _commerceTierPriceEntryLocalService.fetchCommerceTierPriceEntry(commerceTierPriceEntryId);
@@ -320,6 +327,11 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	@Override
 	public int getCommerceTierPriceEntriesCount(long commercePriceEntryId) {
 		return _commerceTierPriceEntryLocalService.getCommerceTierPriceEntriesCount(commercePriceEntryId);
+	}
+
+	@Override
+	public int getCommerceTierPriceEntriesCountByGroupId(long groupId) {
+		return _commerceTierPriceEntryLocalService.getCommerceTierPriceEntriesCountByGroupId(groupId);
 	}
 
 	/**

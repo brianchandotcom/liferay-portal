@@ -126,7 +126,8 @@ public class CommerceTierPriceEntryServiceImpl
 
 	@Override
 	public int getCommerceTierPriceEntriesCountByGroupId(long groupId) {
-		return commerceTierPriceEntryLocalService.countByGroupId(groupId);
+		return commerceTierPriceEntryLocalService.
+			getCommerceTierPriceEntriesCountByGroupId(groupId);
 	}
 
 	@Override

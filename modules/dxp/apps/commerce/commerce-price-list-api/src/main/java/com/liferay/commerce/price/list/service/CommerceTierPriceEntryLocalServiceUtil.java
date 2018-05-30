@@ -207,6 +207,11 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static java.util.List<com.liferay.commerce.price.list.model.CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
+		long groupId, int start, int end) {
+		return getService().fetchCommerceTierPriceEntries(groupId, start, end);
+	}
+
 	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry fetchCommerceTierPriceEntry(
 		long commerceTierPriceEntryId) {
 		return getService().fetchCommerceTierPriceEntry(commerceTierPriceEntryId);
@@ -311,6 +316,10 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 		long commercePriceEntryId) {
 		return getService()
 				   .getCommerceTierPriceEntriesCount(commercePriceEntryId);
+	}
+
+	public static int getCommerceTierPriceEntriesCountByGroupId(long groupId) {
+		return getService().getCommerceTierPriceEntriesCountByGroupId(groupId);
 	}
 
 	/**

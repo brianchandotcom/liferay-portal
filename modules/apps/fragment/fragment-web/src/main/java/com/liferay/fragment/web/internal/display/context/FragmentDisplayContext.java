@@ -110,6 +110,15 @@ public class FragmentDisplayContext {
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "import"));
 					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteCollections();");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
+					});
 			}
 		};
 	}

@@ -134,12 +134,12 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 	</div>
 </div>
 
-<aui:form cssClass="hide" name="exportFragmentCollectionsFm">
+<aui:form cssClass="hide" name="fragmentCollectionsFm">
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	window.<portlet:namespace />exportCollections = function() {
-		var exportFragmentCollectionsFm = $(document.<portlet:namespace />exportFragmentCollectionsFm);
+	window.<portlet:namespace />deleteCollections = function() {
+		var fragmentCollectionsFm = $(document.<portlet:namespace />fragmentCollectionsFm);
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 			{
@@ -149,9 +149,35 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 						var selectedItem = event.newVal;
 
 						if (selectedItem) {
-							exportFragmentCollectionsFm.append(selectedItem);
+							fragmentCollectionsFm.append(selectedItem);
 
-							submitForm(exportFragmentCollectionsFm, '<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/fragment/export_fragment_collections" />');
+							submitForm(fragmentCollectionsFm, '<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/fragment/delete_fragment_collection"></liferay-portlet:actionURL>');
+						}
+					}
+				},
+				'strings.add': '<liferay-ui:message key="delete" />',
+				title: '<liferay-ui:message key="delete-collection" />',
+				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_collections" /></portlet:renderURL>'
+			}
+		);
+
+		itemSelectorDialog.open();
+	}
+
+	window.<portlet:namespace />exportCollections = function() {
+		var fragmentCollectionsFm = $(document.<portlet:namespace />fragmentCollectionsFm);
+
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			{
+				eventName: '<portlet:namespace />selectCollections',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItem = event.newVal;
+
+						if (selectedItem) {
+							fragmentCollectionsFm.append(selectedItem);
+
+							submitForm(fragmentCollectionsFm, '<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/fragment/export_fragment_collections" />');
 						}
 					}
 				},

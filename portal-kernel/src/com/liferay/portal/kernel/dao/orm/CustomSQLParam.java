@@ -41,9 +41,9 @@ public class CustomSQLParam {
 		else if (_value instanceof Long[]) {
 			Long[] valueArray = (Long[])_value;
 
-			for (int i = 0; i < valueArray.length; i++) {
-				if (valueArray[i] != null) {
-					qPos.add(valueArray[i]);
+			for (Long l : valueArray) {
+				if (l != null) {
+					qPos.add(l);
 				}
 			}
 		}
@@ -57,9 +57,9 @@ public class CustomSQLParam {
 		else if (_value instanceof String[]) {
 			String[] valueArray = (String[])_value;
 
-			for (int i = 0; i < valueArray.length; i++) {
-				if (Validator.isNotNull(valueArray[i])) {
-					qPos.add(valueArray[i]);
+			for (String s : valueArray) {
+				if (Validator.isNotNull(s)) {
+					qPos.add(s);
 				}
 			}
 		}

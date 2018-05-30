@@ -39,8 +39,8 @@ public class ManifestTask {
 		manifest.setProject(AntUtil.getProject());
 		manifest.setFile(file);
 
-		for (int i = 0; i < attributes.length; i++) {
-			manifest.addConfiguredAttribute(attributes[i]);
+		for (Manifest.Attribute attribute : attributes) {
+			manifest.addConfiguredAttribute(attribute);
 		}
 
 		manifest.execute();

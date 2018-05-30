@@ -1,4 +1,4 @@
-@import "./variables";
+@import "./_variables";
 
 .fragments-editor .contextual-sidebar.fragments-editor-sidebar {
 	height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});

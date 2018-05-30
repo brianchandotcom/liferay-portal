@@ -6,7 +6,7 @@ import './dialogs/SelectMappingDialog.es';
 import './dialogs/SelectMappingTypeDialog.es';
 import './sidebar/FragmentsEditorSidebar.es';
 import './toolbar/FragmentsEditorToolbar.es';
-import FragmentEntryLink from './FragmentEntryLink.es';
+import FragmentEntryLink from './render/FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 
 /**

@@ -650,6 +650,11 @@
 			<var name="sitePagesVariationName" value="Main Variation Edit" />
 		</execute>
 
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Community Site Name" />
+		</execute>
+
 		<execute macro="Staging#viewSitePagesVariationPG">
 			<var name="sitePagesVariationName" value="Main Variation Edit" />
 		</execute>
@@ -672,6 +677,11 @@
 
 		<execute macro="SitePages#deletePage">
 			<var name="pageName" value="Home" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Staging#changeSitePageVariationPG">

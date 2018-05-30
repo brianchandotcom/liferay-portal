@@ -75,7 +75,49 @@ public class FragmentDisplayContext {
 							"/fragment/edit_fragment_collection", "redirect",
 							themeDisplay.getURLCurrent());
 						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "new"));
+							LanguageUtil.get(_request, "collection"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"openImportView();");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "import"));
+					});
+			}
+		};
+	}
+
+	public List<DropdownItem> getCollectionsDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"exportCollections();");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "export"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"openImportView();");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "import"));
+					});
+
+				add(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							"javascript:" + _renderResponse.getNamespace() +
+								"deleteCollections();");
+						dropdownItem.setLabel(
+							LanguageUtil.get(_request, "delete"));
 					});
 			}
 		};

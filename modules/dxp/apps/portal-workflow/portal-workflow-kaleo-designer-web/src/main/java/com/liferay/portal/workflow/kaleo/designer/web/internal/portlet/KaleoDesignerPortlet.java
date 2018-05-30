@@ -364,8 +364,8 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
 
 		if (ArrayUtil.isNotEmpty(userIds)) {
-			for (int i = 0; i < userIds.length; i++) {
-				User user = _userLocalService.fetchUser(userIds[i]);
+			for (long userId : userIds) {
+				User user = _userLocalService.fetchUser(userId);
 
 				if (user != null) {
 					users.add(user);

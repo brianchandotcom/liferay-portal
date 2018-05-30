@@ -115,7 +115,9 @@
 		<if>
 			<equals arg1="${associatedToSite}" arg2="true" />
 			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
+				<execute macro="Alert#viewErrorMessage">
+					<var name="errorMessage" value="${errorMessage}" />
+				</execute>
 			</then>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />

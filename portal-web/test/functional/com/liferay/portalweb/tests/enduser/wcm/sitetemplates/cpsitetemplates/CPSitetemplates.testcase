@@ -256,6 +256,7 @@
 
 		<execute macro="SiteTemplates#deleteCP">
 			<var name="associatedToSite" value="true" />
+			<var name="errorMessage" value="You cannot delete site templates that are used by a site." />
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 

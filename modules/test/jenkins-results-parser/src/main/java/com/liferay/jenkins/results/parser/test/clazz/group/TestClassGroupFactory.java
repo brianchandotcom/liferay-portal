@@ -40,6 +40,11 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 
+			if (batchName.startsWith("modules-compile-")) {
+				return new ModulesCompileBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
 			if (batchName.startsWith("modules-integration-") ||
 				batchName.startsWith("modules-unit-")) {
 

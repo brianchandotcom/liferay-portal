@@ -31,6 +31,6 @@ public class JSONSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	private static final String[] _INCLUDES = {"**/*.json"};
+	private static final String[] _INCLUDES = {"**/*.json", "**/.npmbridgerc"};
 
 }

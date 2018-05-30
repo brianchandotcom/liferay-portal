@@ -1,12 +1,5 @@
 {
 	"liferay": {
-		"input": "classes/META-INF/resources",
-		"output": "classes/META-INF/resources/bridge/frontend-js-web",
-		"file-globs": "liferay/**/*.js",
-		"src-mod-name-mapper": {
-			"from": "(.*)\\.js$",
-			"to": "frontend-js-web/$1"
-		},
 		"dest-file-mapper": {
 			"from": "(.*)\\$(.*)@.*/lib/(.*)",
 			"to": "$2/src/$3"
@@ -14,6 +7,13 @@
 		"dest-mod-name-mapper": {
 			"from": "(.*)\\.js$",
 			"to": "bridge/frontend-js-web/$1"
+		},
+		"file-globs": "liferay/**/*.js",
+		"input": "classes/META-INF/resources",
+		"output": "classes/META-INF/resources/bridge/frontend-js-web",
+		"src-mod-name-mapper": {
+			"from": "(.*)\\.js$",
+			"to": "frontend-js-web/$1"
 		}
 	}
 }

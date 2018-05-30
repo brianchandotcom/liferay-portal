@@ -2397,7 +2397,7 @@ public class ProjectTemplatesTest {
 
 							content = content.replace(
 								"repositories {",
-								"repositories {\n mavenLocal()\n");
+								"repositories {\tmavenLocal()\n");
 
 							Files.write(
 								path, content.getBytes(StandardCharsets.UTF_8));

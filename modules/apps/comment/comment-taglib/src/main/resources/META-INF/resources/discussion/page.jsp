@@ -492,14 +492,6 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				}
 			);
 
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>showEditor',
-				function(formId, options) {
-					<%= randomNamespace %>loadEditor(formId, options);
-				}
-			);
-
 			window.<%= randomNamespace %>showStatusMessage = Liferay.lazyLoad(
 				'frontend-js-web/liferay/toast/commands/OpenToast.es',
 				function(toastCommands, data) {
@@ -662,7 +654,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 			Liferay.provide(
 				window,
-				'<%= randomNamespace %>loadEditor',
+				'<%= randomNamespace %>showEditor',
 				function(formId, options) {
 					fetch(
 						'<%= editorURL.toString() %>',

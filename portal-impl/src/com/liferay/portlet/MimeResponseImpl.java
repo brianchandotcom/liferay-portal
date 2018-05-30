@@ -55,12 +55,12 @@ public abstract class MimeResponseImpl
 		int expirationTime = 0;
 
 		Integer expCache = portlet.getExpCache();
+
 		if (expCache != null) {
-			expirationTime = expCache.intValue();
+			expirationTime = expCache;
 		}
 
-		return new CacheControlImpl(
-			null, expirationTime, false, false, this);
+		return new CacheControlImpl(null, expirationTime, false, false, this);
 	}
 
 	@Override

@@ -46,6 +46,11 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(fragmentCollection.getName()) %>"
 			/>
+
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				property="createDate"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
@@ -54,3 +59,19 @@ FragmentCollectionsDisplayContext fragmentCollectionsDisplayContext = new Fragme
 		/>
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />fragmentCollections');
+
+	searchContainer.on(
+		'rowToggled',
+		function(event) {
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(fragmentCollectionsDisplayContext.getEventName()) %>',
+				{
+					data: event.elements.allSelectedElements.getDOMNodes()
+				}
+			);
+		}
+	);
+</aui:script>

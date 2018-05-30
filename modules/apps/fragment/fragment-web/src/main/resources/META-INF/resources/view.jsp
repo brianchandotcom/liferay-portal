@@ -134,7 +134,36 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 	</div>
 </div>
 
-<aui:script>
+<aui:form cssClass="hide" name="exportFragmentCollectionsFm">
+</aui:form>
+
+<aui:script use="liferay-item-selector-dialog">
+	window.<portlet:namespace />exportCollections = function() {
+		var exportFragmentCollectionsFm = $(document.<portlet:namespace />exportFragmentCollectionsFm);
+
+		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+			{
+				eventName: '<portlet:namespace />selectCollections',
+				on: {
+					selectedItemChange: function(event) {
+						var selectedItem = event.newVal;
+
+						if (selectedItem) {
+							exportFragmentCollectionsFm.append(selectedItem);
+
+							submitForm(exportFragmentCollectionsFm, '<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/fragment/export_fragment_collections" />');
+						}
+					}
+				},
+				'strings.add': '<liferay-ui:message key="export" />',
+				title: '<liferay-ui:message key="export-collection" />',
+				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_collections" /></portlet:renderURL>'
+			}
+		);
+
+		itemSelectorDialog.open();
+	}
+
 	window.<portlet:namespace />openImportView = function() {
 		Liferay.Util.openWindow(
 			{

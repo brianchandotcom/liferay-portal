@@ -60,6 +60,18 @@ public class FragmentCollectionsDisplayContext {
 		return clearResultsURL.toString();
 	}
 
+	public String getEventName() {
+		if (Validator.isNotNull(_eventName)) {
+			return _eventName;
+		}
+
+		_eventName = ParamUtil.getString(
+			_request, "eventName",
+			_renderResponse.getNamespace() + "selectCollections");
+
+		return _eventName;
+	}
+
 	public List<DropdownItem> getFilterItemsDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -246,6 +258,12 @@ public class FragmentCollectionsDisplayContext {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/fragment/view_fragment_collections");
 
+		String eventName = getEventName();
+
+		if (Validator.isNotNull(eventName)) {
+			portletURL.setParameter("eventName", eventName);
+		}
+
 		String keywords = _getKeywords();
 
 		if (Validator.isNotNull(keywords)) {
@@ -275,6 +293,7 @@ public class FragmentCollectionsDisplayContext {
 		return false;
 	}
 
+	private String _eventName;
 	private String _keywords;
 	private String _orderByCol;
 	private String _orderByType;

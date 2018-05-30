@@ -246,7 +246,7 @@ AUI.add(
 
 				var undoLink = '<a href="javascript:;" onclick=Liferay.fire(' + undoEvent + '); class="alert-link">' + undo + '</a>';
 
-				var successMessage = Liferay.Language.get('definition-imported-sucessfully');
+				var successMessage = Liferay.Language.get('definition-imported-sucessfully') + '&nbsp;';
 
 				successMessage += undoLink;
 

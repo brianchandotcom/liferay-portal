@@ -56,18 +56,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 
 				<%
 				row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+
+				Map<String, Object> addLayoutData = new HashMap<>();
+
+				addLayoutData.put("creation-type", siteInitializerItem.getType());
+				addLayoutData.put("layout-set-prototype-id", siteInitializerItem.getLayoutSetPrototypeId());
+				addLayoutData.put("site-initializer-key", siteInitializerItem.getSiteInitializerKey());
 				%>
 
 				<liferay-ui:search-container-column-text>
-
-					<%
-					Map<String, Object> addLayoutData = new HashMap<>();
-
-					addLayoutData.put("creation-type", siteInitializerItem.getType());
-					addLayoutData.put("layout-set-prototype-id", siteInitializerItem.getLayoutSetPrototypeId());
-					addLayoutData.put("site-initializer-key", siteInitializerItem.getSiteInitializerKey());
-					%>
-
 					<c:choose>
 						<c:when test="<%= Objects.equals(siteInitializerItem.getType(), SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE) || Validator.isBlank(siteInitializerItem.getIcon()) %>">
 							<liferay-frontend:icon-vertical-card

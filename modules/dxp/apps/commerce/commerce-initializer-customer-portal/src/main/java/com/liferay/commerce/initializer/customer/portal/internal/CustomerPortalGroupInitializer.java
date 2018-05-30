@@ -125,6 +125,8 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CustomerPortalGroupInitializer implements GroupInitializer {
 
+	public static final int ACCOUNT_ORGANIZATIONS_COUNT = 3;
+
 	public static final String KEY = "customer-portal-initializer";
 
 	public long[] addAssetCategories(
@@ -404,8 +406,8 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		Group group = _groupLocalService.getGroup(groupId);
 
 		_addDemoAccountOrganizations(
-			group.getOrganizationId(), group.getNameCurrentValue(), 3,
-			serviceContext);
+			group.getOrganizationId(), group.getNameCurrentValue(),
+			ACCOUNT_ORGANIZATIONS_COUNT, serviceContext);
 	}
 
 	protected void createCommerceRoles(JSONArray jsonArray) throws Exception {

@@ -145,7 +145,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	public void setContext(Map<String, Object> context) {
-		_context = context;
+		_context = SoyContextFactoryUtil.createSoyContext(context);
 	}
 
 	public void setDependencies(Set<String> dependencies) {

@@ -1013,9 +1013,9 @@
 
 		<var name="key_attachmentFileName" value="${attachmentFileName}" />
 
-		<execute function="AssertVisible" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertVisible" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN" value1="Move to Recycle Bin" />
 
-		<execute function="Click" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_THE_RECYCLE_BIN" />
+		<execute function="Click" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN" />
 
 		<execute macro="PortletEntry#publish" />
 	</command>
@@ -1210,7 +1210,7 @@
 			<condition function="IsTextNotEqual" locator1="WikiTable#ALL_PAGES_REVISION" value1="1.0 (Minor Edit)" />
 			<then>
 				<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-					<var name="menuItem" value="Move to the Recycle Bin" />
+					<var name="menuItem" value="Move to Recycle Bin" />
 				</execute>
 
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
@@ -1273,7 +1273,7 @@
 			</else>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertTextEquals" locator1="Wiki#ATTACHMENT_TABLE_MOVE_TO_RECYCLE_BIN" value1="Move to Recycle Bin" />
 	</command>
 
 	<command name="viewChildPagePG">

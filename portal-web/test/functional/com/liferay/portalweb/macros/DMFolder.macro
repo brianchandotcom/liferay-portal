@@ -547,7 +547,7 @@
 				<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />
 
 				<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
-					<var name="key_menuItem" value="Move to the Recycle Bin" />
+					<var name="key_menuItem" value="Move to Recycle Bin" />
 				</execute>
 
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
@@ -575,7 +575,7 @@
 			<then>
 				<execute function="Click" locator1="MediaGallery#ENTRIES_FOLDER" />
 
-				<execute function="AssertClick" locator1="MediaGallery#ENTRY_RECYCLE_BIN_ICON" value1="Move to the Recycle Bin" />
+				<execute function="AssertClick" locator1="MediaGallery#ENTRY_RECYCLE_BIN_ICON" value1="Move to Recycle Bin" />
 
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>

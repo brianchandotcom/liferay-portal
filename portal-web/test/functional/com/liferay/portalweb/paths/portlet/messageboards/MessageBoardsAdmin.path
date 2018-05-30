@@ -18,21 +18,10 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CATEGORIES-->
-<tr>
-	<td>CATEGORIES_RECYCLE_BIN_BUTTON</td>
-	<td>//div[contains(@id,'messageBoardsCategoriesPanel')]//button[contains(.,'Move to the Recycle Bin')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--THREADS-->
 <tr>
 	<td>THREADS_RECYCLE_BIN_BUTTON</td>
-	<td>//div[contains(@id,'messageBoardsThreadsPanel')]//button[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//div[contains(@id,'messageBoardsThreadsPanel')]//button[contains(.,'Move to Recycle Bin')]</td>
 	<td></td>
 </tr>
 </tbody>

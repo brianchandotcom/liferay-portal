@@ -438,7 +438,7 @@
 	</command>
 
 	<command name="moveToRecycleBinNoPermissionPG">
-		<execute function="AssertElementNotPresent" locator1="Link#MOVE_TO_THE_RECYCLING_BIN" />
+		<execute function="AssertElementNotPresent" locator1="Link#MOVE_TO_RECYCLING_BIN" />
 	</command>
 
 	<command name="moveToRecycleBinPG">

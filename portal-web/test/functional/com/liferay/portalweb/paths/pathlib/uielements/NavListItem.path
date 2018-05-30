@@ -164,11 +164,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ONLINE_TRAINING</td>
 	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li[contains(.,'Online Training')]/a/span</td>
 	<td></td>

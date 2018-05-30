@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ENTRY_RECYCLE_BIN_ICON</td>
-	<td>//ul//span[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul//span[contains(.,'Move to Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

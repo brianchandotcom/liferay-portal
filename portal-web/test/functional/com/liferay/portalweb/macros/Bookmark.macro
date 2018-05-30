@@ -342,7 +342,7 @@
 		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Move to the Recycle Bin" />
+			<var name="menuItem" value="Move to Recycle Bin" />
 			<var name="rowEntry" value="${bookmarkName}" />
 		</execute>
 
@@ -517,7 +517,7 @@
 		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Move to the Recycle Bin" />
+			<var name="menuItem" value="Move to Recycle Bin" />
 			<var name="rowEntry" value="${bookmarkName}" />
 		</execute>
 
@@ -527,7 +527,7 @@
 
 	<command name="moveToRecycleBinPG">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Move to the Recycle Bin" />
+			<var name="menuItem" value="Move to Recycle Bin" />
 			<var name="rowEntry" value="${bookmarkName}" />
 		</execute>
 

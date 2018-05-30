@@ -661,7 +661,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Move to the Recycle Bin" />
+			<var name="menuItem" value="Move to Recycle Bin" />
 			<var name="rowEntry" value="${publishTemplateName}" />
 		</execute>
 

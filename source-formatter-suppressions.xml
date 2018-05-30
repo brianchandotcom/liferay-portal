@@ -40,27 +40,6 @@
 		<suppress checks="MissingModifierCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
 		<suppress checks="PersistenceCallCheck" files="modules/apps/portal/portal-upgrade-test/src/testIntegration/java/com/liferay/portal/upgrade/test/BaseBuildAutoUpgradeTestCase\.java" />
 		<suppress checks="PlusStatementCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/blogs/blogs-item-selector-web/src/main/java/com/liferay/blogs/item/selector/web/internal/BlogsItemSelectorView\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/blogs/blogs-web/src/main/java/com/liferay/blogs/web/internal/BlogsItemSelectorHelper\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/blogs/blogs-web/src/main/java/com/liferay/blogs/web/internal/portlet/action/BlogsAdminViewMVCRenderCommand\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/document-library/document-library-item-selector-web/src/main/java/com/liferay/document/library/item/selector/web/internal/BaseDLItemSelectorView\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/document-library/document-library-web/src/main/java/com/liferay/document/library/web/internal/display/context/DLDisplayContextProvider\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/frontend-js/frontend-js-spa-web/src/main/java/com/liferay/frontend/js/spa/web/internal/servlet/taglib/SPATopHeadJSPDynamicInclude\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/journal/journal-item-selector-web/src/main/java/com/liferay/journal/item/selector/web/internal/JournalItemSelectorView\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/knowledge-base/knowledge-base-item-selector-web/src/main/java/com/liferay/knowledge/base/item/selector/web/internal/KBAttachmentItemSelectorView\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/oauth2-provider/oauth2-provider-scope-impl/src/main/java/com/liferay/oauth2/provider/scope/internal/liferay/ScopeLocatorImpl\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal-cache/portal-cache-impl/src/main/java/com/liferay/portal/cache/internal/MultiVMPoolImpl\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal-remote/portal-remote-soap-extender-impl/src/main/java/com/liferay/portal/remote/soap/extender/internal/SoapExtender\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal-scheduler/portal-scheduler-quartz/src/main/java/com/liferay/portal/scheduler/quartz/internal/QuartzSchedulerEngine\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal-scheduler/portal-scheduler/src/main/java/com/liferay/portal/scheduler/internal/SchedulerEngineHelperImpl\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal-search-solr/portal-search-solr/src/main/java/com/liferay/portal/search/solr/internal/SolrQuerySuggester\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal-search-solr/portal-search-solr/src/main/java/com/liferay/portal/search/solr/internal/suggest/NGramQueryBuilderImpl\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal/portal-cluster-multiple/src/main/java/com/liferay/portal/cluster/multiple/internal/ClusterLinkImpl\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal/portal-monitoring/src/main/java/com/liferay/portal/monitoring/internal/DataSampleFactoryImpl\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal/portal-monitoring/src/main/java/com/liferay/portal/monitoring/internal/servlet/filter/MonitoringFilter\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/portal/portal-output-stream-container/src/main/java/com/liferay/portal/output/stream/container/internal/OutputStreamContainerFactoryTrackerImpl\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/item/selector/view/WikiAttachmentItemSelectorView\.java" />
-		<suppress checks="ReferenceAnnotationCheck" files="modules/apps/wiki/wiki-web/src/main/java/com/liferay/wiki/web/internal/portlet/action/ViewMVCRenderCommand\.java" />
 		<suppress checks="ReferenceAnnotationCheck" files="portal-impl/test/integration/.*" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/src/com/liferay/portal/language/LanguageResources\.java" />
 		<suppress checks="StaticVariableNameCheck" files="portal-impl/src/com/liferay/portal/util/PropsValues\.java" />

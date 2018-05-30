@@ -360,8 +360,6 @@ public class LayoutAction extends Action {
 
 						writer.write(renderStateJSON);
 
-						response.flushBuffer();
-
 						return null;
 					}
 				}

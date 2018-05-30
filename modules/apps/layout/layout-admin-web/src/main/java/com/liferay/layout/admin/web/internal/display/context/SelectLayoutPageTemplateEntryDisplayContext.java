@@ -77,10 +77,13 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	public int getGlobalLayoutPageTemplateEntriesCount()
 		throws PortalException {
 
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			getGlobalLayoutPageTemplateEntries();
+		Company company = _themeDisplay.getCompany();
 
-		return layoutPageTemplateEntries.size();
+		return LayoutPageTemplateEntryServiceUtil.
+			getLayoutPageTemplateEntriesCount(
+				company.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+				WorkflowConstants.STATUS_APPROVED);
 	}
 
 	public long getLayoutPageTemplateCollectionId() {

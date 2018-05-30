@@ -96,43 +96,35 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 				}
 			).then(
 				response => {
-					if (!response.ok) {
-						onError();
+					return response.ok ? response.json() : Promise.reject();
+				}
+			).then(
+				data => {
+					return !data.exception ? data.userStatus : Promise.reject();
+				}
+			).then(
+				userStatus => {
+					var message = '';
+
+					if (userStatus == 'user_added') {
+						message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account-your-password-was-sent-to-x" translateArguments="<%= false %>" />';
 					}
-					else {
-						response.json().then(
-							function(data) {
-								var exception = data.exception;
+					else if (userStatus == 'user_pending') {
+						message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
+					}
 
-								var message;
+					showStatusMessage('success', message);
 
-								if (!exception) {
-									var userStatus = data.userStatus;
+					var anonymousAccount = document.querySelector('.anonymous-account');
 
-									if (userStatus == 'user_added') {
-										message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account-your-password-was-sent-to-x" translateArguments="<%= false %>" />';
-									}
-									else if (userStatus == 'user_pending') {
-										message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
-									}
+					if (anonymousAccount) {
+						dom.addClasses(anonymousAccount, 'hide');
 
-									showStatusMessage('success', message);
-
-									var anonymousAccount = document.querySelector('.anonymous-account');
-
-									if (anonymousAccount) {
-										dom.addClasses(anonymousAccount, 'hide');
-
-										dom.removeClasses(anonymousAccount, 'show');
-									}
-								}
-								else {
-									onError();
-								}
-							}
-						);
+						dom.removeClasses(anonymousAccount, 'show');
 					}
 				}
+			).catch(
+				onError
 			);
 		}
 	);

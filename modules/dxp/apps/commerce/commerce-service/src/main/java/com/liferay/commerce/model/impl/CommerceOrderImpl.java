@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -153,6 +154,10 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 		}
 
 		User orderUser = getOrderUser();
+
+		if (orderUser.isDefaultUser()) {
+			return RoleConstants.GUEST;
+		}
 
 		return orderUser.getFullName();
 	}

@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_SEARCH_BAR</td>
-	<td>//input[@aria-label='Search' and @type='text'] | //input[contains(@data-qa-id,'searchInput')]</td>
+	<td>//input[contains(@id,'templateSearch') and @type='text'] | //input[contains(@data-qa-id,'searchInput')]</td>
 	<td></td>
 </tr>
 </tbody>

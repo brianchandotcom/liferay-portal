@@ -19,8 +19,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -49,30 +47,22 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<LayoutPageTemplateEntry> getGlobalLayoutPageTemplateEntries()
-		throws PortalException {
-
-		Company company = _themeDisplay.getCompany();
-
+	public List<LayoutPageTemplateEntry> getGlobalLayoutPageTemplateEntries() {
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateEntryOrderByComparator("name", "asc");
 
 		return LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-			company.getGroupId(),
+			_themeDisplay.getCompanyGroupId(),
 			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, orderByComparator);
 	}
 
-	public int getGlobalLayoutPageTemplateEntriesCount()
-		throws PortalException {
-
-		Company company = _themeDisplay.getCompany();
-
+	public int getGlobalLayoutPageTemplateEntriesCount() {
 		return LayoutPageTemplateEntryServiceUtil.
 			getLayoutPageTemplateEntriesCount(
-				company.getGroupId(),
+				_themeDisplay.getCompanyGroupId(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
 				WorkflowConstants.STATUS_APPROVED);
 	}

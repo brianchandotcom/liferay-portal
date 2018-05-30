@@ -71,9 +71,7 @@
 
 		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME" value1="${kbFolderName}" />
 
-		<var method="StringUtil#upperCase('${key_kbFolderName}')" name="folderBreadcrumbUpperCase" />
-
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#FOLDER_BREADCRUMBS" value1="${folderBreadcrumbUpperCase}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#FOLDER_BREADCRUMBS" value1="${kbFolderName}" />
 	</command>
 
 	<command name="gotoViaKBDisplayPG">

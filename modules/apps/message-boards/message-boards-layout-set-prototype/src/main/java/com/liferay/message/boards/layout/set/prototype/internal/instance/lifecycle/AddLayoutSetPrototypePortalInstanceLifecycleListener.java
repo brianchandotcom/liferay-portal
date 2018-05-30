@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.DefaultLayoutSetPrototypesUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.social.user.statistics.constants.SocialUserStatisticsPortletKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.HashMap;
@@ -96,10 +95,6 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 
 		DefaultLayoutPrototypesUtil.addPortletId(
 			homeLayout, PollsPortletKeys.POLLS_DISPLAY, "column-2");
-
-		DefaultLayoutPrototypesUtil.addPortletId(
-			homeLayout, SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS,
-			"column-2");
 
 		portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			homeLayout, AssetPublisherPortletKeys.ASSET_PUBLISHER, "column-2");
@@ -184,13 +179,6 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 		unbind = "-"
 	)
 	protected void setPollsPortlet(Portlet portlet) {
-	}
-
-	@Reference(
-		target = "(javax.portlet.name=" + SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS + ")",
-		unbind = "-"
-	)
-	protected void setSocialUserStatisticsPortletKeys(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

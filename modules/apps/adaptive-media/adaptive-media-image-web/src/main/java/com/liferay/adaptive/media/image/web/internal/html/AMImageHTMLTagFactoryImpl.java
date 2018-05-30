@@ -52,7 +52,7 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 		StringBundler sb = new StringBundler(5 + sourceElements.size());
 
 		sb.append("<picture ");
-		sb.append(AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME);
+		sb.append(AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID);
 		sb.append("=\"");
 		sb.append(fileEntry.getFileEntryId());
 		sb.append("\">");
@@ -134,7 +134,8 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"\\s*" + AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME + "=\"(\\d+)\"",
+		"\\s*" + AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID +
+			"=\"(\\d+)\"",
 		Pattern.CASE_INSENSITIVE);
 
 	private MediaQueryProvider _mediaQueryProvider;

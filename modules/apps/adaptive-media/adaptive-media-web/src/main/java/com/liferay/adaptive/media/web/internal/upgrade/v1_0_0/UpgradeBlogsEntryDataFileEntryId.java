@@ -61,7 +61,8 @@ public class UpgradeBlogsEntryDataFileEntryId extends UpgradeProcess {
 
 		String upgradedContent = matcher.replaceAll(
 			StringBundler.concat(
-				AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME, StringPool.EQUAL));
+				AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID,
+				StringPool.EQUAL));
 
 		if (!content.equals(upgradedContent)) {
 			blogsEntry.setContent(upgradedContent);

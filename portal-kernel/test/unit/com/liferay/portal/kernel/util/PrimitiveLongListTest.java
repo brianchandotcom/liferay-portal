@@ -30,8 +30,8 @@ public class PrimitiveLongListTest {
 
 		PrimitiveLongList primitiveLongList = new PrimitiveLongList();
 
-		for (int i = 0; i < expected.length; i++) {
-			primitiveLongList.add(expected[i]);
+		for (long l : expected) {
+			primitiveLongList.add(l);
 		}
 
 		Assert.assertEquals(expected.length, primitiveLongList.size());

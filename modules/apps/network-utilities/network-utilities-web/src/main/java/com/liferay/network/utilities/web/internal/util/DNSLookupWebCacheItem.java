@@ -43,8 +43,8 @@ public class DNSLookupWebCacheItem implements WebCacheItem {
 
 			char[] array = trimmedDomain.toCharArray();
 
-			for (int i = 0; i < array.length; i++) {
-				if ((array[i] != '.') && !Character.isDigit(array[i])) {
+			for (char c : array) {
+				if ((c != '.') && !Character.isDigit(c)) {
 					InetAddress inetAddress = InetAddress.getByName(_domain);
 
 					results = inetAddress.getHostAddress();

@@ -609,13 +609,13 @@ public class SearchResultSummaryDisplayBuilder {
 
 		StringBundler sb = new StringBundler(4 * values.length);
 
-		for (int i = 0; i < values.length; i++) {
+		for (String value : values) {
 			if (field.isNumeric()) {
-				sb.append(HtmlUtil.escape(values[i]));
+				sb.append(HtmlUtil.escape(value));
 			}
 			else {
 				sb.append(StringPool.QUOTE);
-				sb.append(HtmlUtil.escape(values[i]));
+				sb.append(HtmlUtil.escape(value));
 				sb.append(StringPool.QUOTE);
 			}
 

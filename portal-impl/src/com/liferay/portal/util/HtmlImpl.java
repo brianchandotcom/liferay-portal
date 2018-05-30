@@ -461,8 +461,8 @@ public class HtmlImpl implements Html {
 
 			boolean hasToken = false;
 
-			for (int j = 0; j < _XPATH_TOKENS.length; j++) {
-				if (c == _XPATH_TOKENS[j]) {
+			for (char xPathToken : _XPATH_TOKENS) {
+				if (c == xPathToken) {
 					hasToken = true;
 
 					break;

@@ -157,8 +157,8 @@ public class XMLMerger {
 
 		List<Element> elements = new ArrayList<>();
 
-		for (int i = 0; i < orderedChildrenNames.length; i++) {
-			elements.addAll(parentElement.elements(orderedChildrenNames[i]));
+		for (String orderedChildrenName : orderedChildrenNames) {
+			elements.addAll(parentElement.elements(orderedChildrenName));
 		}
 
 		for (Element element : elements) {

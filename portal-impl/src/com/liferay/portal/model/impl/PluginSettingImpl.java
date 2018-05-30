@@ -108,8 +108,8 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 	 */
 	@Override
 	public boolean hasRoleWithName(String roleName) {
-		for (int i = 0; i < _rolesArray.length; i++) {
-			if (StringUtil.equalsIgnoreCase(_rolesArray[i], roleName)) {
+		for (String curRoleName : _rolesArray) {
+			if (StringUtil.equalsIgnoreCase(curRoleName, roleName)) {
 				return true;
 			}
 		}

@@ -41,9 +41,9 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 
 		ElementIdentifier[] elIds = getElementsIdentifiedByAttribute();
 
-		for (int i = 0; i < elIds.length; i++) {
-			if (name1.equals(elIds[i].getElementName())) {
-				if (_compareAttribute(el1, el2, elIds[i].getIdentifierName()) ==
+		for (ElementIdentifier elId : elIds) {
+			if (name1.equals(elId.getElementName())) {
+				if (_compareAttribute(el1, el2, elId.getIdentifierName()) ==
 						0) {
 
 					return true;
@@ -56,9 +56,9 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 
 		elIds = getElementsIdentifiedByChild();
 
-		for (int i = 0; i < elIds.length; i++) {
-			if (name1.equals(elIds[i].getElementName())) {
-				if (_compareChildText(el1, el2, elIds[i].getIdentifierName()) ==
+		for (ElementIdentifier elId : elIds) {
+			if (name1.equals(elId.getElementName())) {
+				if (_compareChildText(el1, el2, elId.getIdentifierName()) ==
 						0) {
 
 					return true;

@@ -934,8 +934,8 @@ public class Recurrence implements Serializable {
 			return true;
 		}
 
-		for (int i = 0; i < byDay.length; i++) {
-			if (matchesIndividualByDay(candidate, byDay[i])) {
+		for (DayAndPosition dayAndPosition : byDay) {
+			if (matchesIndividualByDay(candidate, dayAndPosition)) {
 				return true;
 			}
 		}
@@ -958,19 +958,19 @@ public class Recurrence implements Serializable {
 			return true;
 		}
 
-		for (int i = 0; i < array.length; i++) {
+		for (int i : array) {
 			int val = 0;
 
-			if (allowNegative && (array[i] < 0)) {
+			if (allowNegative && (i < 0)) {
 
 				// byMonthDay = -1, in a 31-day month, means 31
 
 				int max = candidate.getActualMaximum(field);
 
-				val = (max + 1) + array[i];
+				val = (max + 1) + i;
 			}
 			else {
-				val = array[i];
+				val = i;
 			}
 
 			if (val == candidate.get(field)) {

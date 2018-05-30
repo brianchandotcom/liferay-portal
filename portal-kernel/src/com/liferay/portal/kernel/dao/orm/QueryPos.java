@@ -44,9 +44,9 @@ public class QueryPos {
 	}
 
 	public void add(BigDecimal[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (BigDecimal value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -69,9 +69,9 @@ public class QueryPos {
 	}
 
 	public void add(boolean[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (boolean value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -81,9 +81,9 @@ public class QueryPos {
 	}
 
 	public void add(Boolean[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (Boolean value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -97,9 +97,9 @@ public class QueryPos {
 	}
 
 	public void add(Date[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (Date value : values) {
 			for (int j = 0; j < count; j++) {
-				add(CalendarUtil.getTimestamp(values[i]));
+				add(CalendarUtil.getTimestamp(value));
 			}
 		}
 	}
@@ -122,9 +122,9 @@ public class QueryPos {
 	}
 
 	public void add(double[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (double value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -134,9 +134,9 @@ public class QueryPos {
 	}
 
 	public void add(Double[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (Double value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -159,9 +159,9 @@ public class QueryPos {
 	}
 
 	public void add(float[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (float value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -171,9 +171,9 @@ public class QueryPos {
 	}
 
 	public void add(Float[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (Float value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -187,9 +187,9 @@ public class QueryPos {
 	}
 
 	public void add(int[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (int value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -208,9 +208,9 @@ public class QueryPos {
 	}
 
 	public void add(Integer[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (Integer value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -233,9 +233,9 @@ public class QueryPos {
 	}
 
 	public void add(long[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (long value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -245,9 +245,9 @@ public class QueryPos {
 	}
 
 	public void add(Long[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (Long value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -314,9 +314,9 @@ public class QueryPos {
 	}
 
 	public void add(short[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (short value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -326,9 +326,9 @@ public class QueryPos {
 	}
 
 	public void add(Short[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (Short value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -342,9 +342,9 @@ public class QueryPos {
 	}
 
 	public void add(String[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (String value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}
@@ -358,9 +358,9 @@ public class QueryPos {
 	}
 
 	public void add(Timestamp[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (Timestamp value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}

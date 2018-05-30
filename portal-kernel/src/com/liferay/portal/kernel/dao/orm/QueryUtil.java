@@ -156,8 +156,8 @@ public class QueryUtil {
 
 		ScrollableResults sr = query.scroll();
 
-		for (int i = 0; i < scrollIds.length; i++) {
-			if (sr.scroll(scrollIds[i])) {
+		for (int scrollId : scrollIds) {
+			if (sr.scroll(scrollId)) {
 				Object[] array = sr.get();
 
 				if (array.length == 1) {

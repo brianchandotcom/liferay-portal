@@ -199,16 +199,16 @@ public class RepositoryTest {
 
 		DLAppLocalServiceUtil.deleteAllRepositories(_group.getGroupId());
 
-		for (int i = 0; i < fileEntryIds.length; i++) {
+		for (long fileEntryId : fileEntryIds) {
 			try {
 				LocalRepository localRepository =
 					RepositoryProviderUtil.getLocalRepository(
 						dlRepository.getRepositoryId());
 
-				localRepository.getFileEntry(fileEntryIds[i]);
+				localRepository.getFileEntry(fileEntryId);
 
 				Assert.fail(
-					"Should not be able to get file entry " + fileEntryIds[i] +
+					"Should not be able to get file entry " + fileEntryId +
 						" from repository " + dlRepository.getRepositoryId());
 			}
 			catch (Exception e) {

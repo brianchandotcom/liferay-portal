@@ -122,8 +122,8 @@ public class TrashPortlet extends MVCPortlet {
 			actionRequest, "rowIds");
 
 		if (deleteEntryIds.length > 0) {
-			for (int i = 0; i < deleteEntryIds.length; i++) {
-				_trashEntryService.deleteEntry(deleteEntryIds[i]);
+			for (long deleteEntryId : deleteEntryIds) {
+				_trashEntryService.deleteEntry(deleteEntryId);
 			}
 
 			return;

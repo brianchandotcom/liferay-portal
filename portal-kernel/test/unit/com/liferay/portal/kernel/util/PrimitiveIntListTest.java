@@ -30,8 +30,8 @@ public class PrimitiveIntListTest {
 
 		PrimitiveIntList primitiveIntList = new PrimitiveIntList();
 
-		for (int i = 0; i < expected.length; i++) {
-			primitiveIntList.add(expected[i]);
+		for (int i : expected) {
+			primitiveIntList.add(i);
 		}
 
 		Assert.assertEquals(expected.length, primitiveIntList.size());

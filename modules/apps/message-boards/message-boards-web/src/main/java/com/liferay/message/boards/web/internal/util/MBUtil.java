@@ -211,14 +211,14 @@ public class MBUtil {
 	private static String[] _findThreadPriority(
 		double value, String[] priorities) {
 
-		for (int i = 0; i < priorities.length; i++) {
-			String[] priority = StringUtil.split(
-				priorities[i], StringPool.PIPE);
+		for (String priority : priorities) {
+			String[] priorityArray = StringUtil.split(
+				priority, StringPool.PIPE);
 
 			try {
-				String priorityName = priority[0];
-				String priorityImage = priority[1];
-				double priorityValue = GetterUtil.getDouble(priority[2]);
+				String priorityName = priorityArray[0];
+				String priorityImage = priorityArray[1];
+				double priorityValue = GetterUtil.getDouble(priorityArray[2]);
 
 				if (value == priorityValue) {
 					return new String[] {priorityName, priorityImage};

@@ -81,8 +81,8 @@ public class MultiVMEhcachePortalCacheManagerConfigurator
 
 		StringBundler sb = new StringBundler(array.length * 2);
 
-		for (int i = 0; i < array.length; i++) {
-			sb.append(array[i]);
+		for (String value : array) {
+			sb.append(value);
 			sb.append(StringPool.COMMA);
 		}
 

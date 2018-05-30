@@ -41,8 +41,8 @@ public class SetUtil {
 
 		Set<Boolean> set = new HashSet<>(array.length);
 
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
+		for (boolean b : array) {
+			set.add(b);
 		}
 
 		return set;
@@ -55,8 +55,8 @@ public class SetUtil {
 
 		Set<Byte> set = new HashSet<>(array.length);
 
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
+		for (byte b : array) {
+			set.add(b);
 		}
 
 		return set;
@@ -69,8 +69,8 @@ public class SetUtil {
 
 		Set<Character> set = new HashSet<>(array.length);
 
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
+		for (char c : array) {
+			set.add(c);
 		}
 
 		return set;
@@ -83,8 +83,8 @@ public class SetUtil {
 
 		Set<Double> set = new HashSet<>(array.length);
 
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
+		for (double d : array) {
+			set.add(d);
 		}
 
 		return set;
@@ -97,8 +97,8 @@ public class SetUtil {
 
 		Set<E> set = new HashSet<>(array.length);
 
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
+		for (E obj : array) {
+			set.add(obj);
 		}
 
 		return set;
@@ -111,8 +111,8 @@ public class SetUtil {
 
 		Set<Float> set = new HashSet<>(array.length);
 
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
+		for (float f : array) {
+			set.add(f);
 		}
 
 		return set;
@@ -125,8 +125,8 @@ public class SetUtil {
 
 		Set<Integer> set = new HashSet<>(array.length);
 
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
+		for (int i : array) {
+			set.add(i);
 		}
 
 		return set;
@@ -139,8 +139,8 @@ public class SetUtil {
 
 		Set<Long> set = new HashSet<>(array.length);
 
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
+		for (long l : array) {
+			set.add(l);
 		}
 
 		return set;
@@ -153,8 +153,8 @@ public class SetUtil {
 
 		Set<Short> set = new HashSet<>(array.length);
 
-		for (int i = 0; i < array.length; i++) {
-			set.add(array[i]);
+		for (short s : array) {
+			set.add(s);
 		}
 
 		return set;

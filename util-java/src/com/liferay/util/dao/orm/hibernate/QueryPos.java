@@ -117,9 +117,9 @@ public class QueryPos {
 	}
 
 	public void add(String[] values, int count) {
-		for (int i = 0; i < values.length; i++) {
+		for (String value : values) {
 			for (int j = 0; j < count; j++) {
-				add(values[i]);
+				add(value);
 			}
 		}
 	}

@@ -40,8 +40,8 @@ public class PKParser {
 
 		String[] array = StringUtil.split(pk);
 
-		for (int i = 0; i < array.length; i++) {
-			String[] kvp = StringUtil.split(array[i], CharPool.EQUAL);
+		for (String s : array) {
+			String[] kvp = StringUtil.split(s, CharPool.EQUAL);
 
 			String key = kvp[0].trim();
 			String value = kvp[1].trim();

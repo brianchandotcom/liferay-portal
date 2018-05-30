@@ -124,9 +124,9 @@ public class UnicodeFormatter {
 
 		char[] hexes = new char[4];
 
-		for (int i = 0; i < array.length; i++) {
+		for (char c : array) {
 			sb.append(UNICODE_PREFIX);
-			sb.append(_charToHex(array[i], hexes));
+			sb.append(_charToHex(c, hexes));
 		}
 
 		return sb.toString();

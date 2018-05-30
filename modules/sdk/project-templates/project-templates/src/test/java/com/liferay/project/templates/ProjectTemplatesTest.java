@@ -917,7 +917,7 @@ public class ProjectTemplatesTest {
 				"extender.configuration.RestExtenderConfiguration-rest." +
 					"properties",
 			"contextPaths=/my-rest",
-			"jaxRsServiceFilterStrings=(component.name=" +
+			"jaxRsApplicationFilterStrings=(component.name=" +
 				"my.rest.application.MyRestApplication)");
 
 		File mavenProjectDir = _buildTemplateWithMaven(

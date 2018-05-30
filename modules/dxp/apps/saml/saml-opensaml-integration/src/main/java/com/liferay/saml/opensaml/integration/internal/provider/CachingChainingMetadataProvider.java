@@ -156,8 +156,8 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 				_metadataProvidersMap.remove(entityId);
 			}
 
-			for (int i = 0; i < _metadataProviders.size(); i++) {
-				metadataProvider = _metadataProviders.get(i);
+			for (MetadataProvider curMetadataProvider : _metadataProviders) {
+				metadataProvider = curMetadataProvider;
 
 				try {
 					EntityDescriptor entityDescriptor =
@@ -220,8 +220,8 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 				_metadataProvidersMap.remove(entityId);
 			}
 
-			for (int i = 0; i < _metadataProviders.size(); i++) {
-				metadataProvider = _metadataProviders.get(i);
+			for (MetadataProvider curMetadataProvider : _metadataProviders) {
+				metadataProvider = curMetadataProvider;
 
 				try {
 					List<RoleDescriptor> roleDescriptors =
@@ -279,8 +279,8 @@ public class CachingChainingMetadataProvider extends BaseMetadataProvider {
 				_metadataProvidersMap.remove(entityId);
 			}
 
-			for (int i = 0; i < _metadataProviders.size(); i++) {
-				metadataProvider = _metadataProviders.get(i);
+			for (MetadataProvider curMetadataProvider : _metadataProviders) {
+				metadataProvider = curMetadataProvider;
 
 				try {
 					RoleDescriptor roleDescriptor = metadataProvider.getRole(

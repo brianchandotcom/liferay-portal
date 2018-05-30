@@ -436,6 +436,8 @@ public class CommerceTierPriceEntryLocalServiceWrapper
 	* @param commercePriceEntryId - <b>Only</b> used when adding a new entity
 	* @param externalReferenceCode - The external identifier code from a 3rd
 	party system to be able to locate the same entity in the portal
+	<b>Only</b> used when updating an entity; the first entity with a
+	matching reference code one will be updated
 	* @param price
 	* @param promoPrice
 	* @param minQuantity

@@ -500,6 +500,34 @@ public class CommercePriceListLocalServiceImpl
 		return commercePriceList;
 	}
 
+	/**
+	 * This method is used to insert a new CommercePriceList or update an
+	 * existing one
+	 *
+	 * @param  commercePriceListId - <b>Only</b> used when updating an entity;
+	 *         the matching one will be updated
+	 * @param  commerceCurrencyId
+	 * @param  name
+	 * @param  priority
+	 * @param  displayDateMonth
+	 * @param  displayDateDay
+	 * @param  displayDateYear
+	 * @param  displayDateHour
+	 * @param  displayDateMinute
+	 * @param  expirationDateMonth
+	 * @param  expirationDateDay
+	 * @param  expirationDateYear
+	 * @param  expirationDateHour
+	 * @param  expirationDateMinute
+	 * @param  externalReferenceCode - The external identifier code from a 3rd
+	 *         party system to be able to locate the same entity in the portal
+	 *         <b>Only</b> used when updating an entity; the first entity with a
+	 *         matching reference code one will be updated
+	 * @param  neverExpire
+	 * @param  serviceContext
+	 * @return
+	 * @throws PortalException
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommercePriceList upsertCommercePriceList(

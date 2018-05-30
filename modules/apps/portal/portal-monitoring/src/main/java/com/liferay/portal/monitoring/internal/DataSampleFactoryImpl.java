@@ -70,14 +70,6 @@ public class DataSampleFactoryImpl implements DataSampleFactory {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	protected void unsetPortal(Portal portal) {
-		_portal = null;
-	}
-
-	private Portal _portal;
+	private volatile Portal _portal;
 
 }

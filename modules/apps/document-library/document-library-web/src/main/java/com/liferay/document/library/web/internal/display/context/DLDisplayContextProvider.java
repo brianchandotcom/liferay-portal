@@ -198,26 +198,9 @@ public class DLDisplayContextProvider {
 		return dlViewFileVersionDisplayContext;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void setDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
-	}
-
 	@Reference(unbind = "-")
 	public void setStorageEngine(StorageEngine storageEngine) {
 		_storageEngine = storageEngine;
-	}
-
-	public void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = null;
 	}
 
 	@Activate
@@ -246,7 +229,13 @@ public class DLDisplayContextProvider {
 
 	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
 		_dlDisplayContextFactories;
-	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 	@Reference
 	private DLTrashUtil _dlTrashUtil;

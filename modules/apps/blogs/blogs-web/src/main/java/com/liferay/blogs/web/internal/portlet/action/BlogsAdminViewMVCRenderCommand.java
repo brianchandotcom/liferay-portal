@@ -57,18 +57,6 @@ public class BlogsAdminViewMVCRenderCommand implements MVCRenderCommand {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	public void setDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
-	}
-
-	public void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = null;
-	}
-
-	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 }

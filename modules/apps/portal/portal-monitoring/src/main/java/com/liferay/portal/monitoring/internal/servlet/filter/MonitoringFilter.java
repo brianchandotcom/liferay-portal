@@ -224,17 +224,6 @@ public class MonitoringFilter
 		_dataSampleFactory = dataSampleFactory;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
 	@Reference(unbind = "-")
 	protected final void setPortletMonitoringControl(
 		PortletMonitoringControl portletMonitoringControl) {
@@ -249,12 +238,6 @@ public class MonitoringFilter
 		_serviceMonitoringControl = serviceMonitoringControl;
 	}
 
-	protected void unsetLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringFilter.class);
 
@@ -264,7 +247,14 @@ public class MonitoringFilter
 			AtomicInteger::new);
 
 	private DataSampleFactory _dataSampleFactory;
-	private LayoutLocalService _layoutLocalService;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile LayoutLocalService _layoutLocalService;
+
 	private boolean _monitorPortalRequest;
 
 	@Reference

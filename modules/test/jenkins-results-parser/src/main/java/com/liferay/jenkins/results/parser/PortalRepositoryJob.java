@@ -17,12 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeSet;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Michael Hashimoto
@@ -106,24 +102,6 @@ public abstract class PortalRepositoryJob extends RepositoryJob {
 
 		jobProperties = JenkinsResultsParserUtil.getProperties(
 			new File(repositoryDir, "test.properties"));
-	}
-
-	protected Set<String> getSetFromString(String string) {
-		if (string == null) {
-			return Collections.emptySet();
-		}
-
-		Set<String> set = new TreeSet<>();
-
-		for (String item : StringUtils.split(string, ",")) {
-			if (item.startsWith("#")) {
-				continue;
-			}
-
-			set.add(item.trim());
-		}
-
-		return set;
 	}
 
 	private void _findRepositoryDir() {

@@ -2,25 +2,18 @@
 
 @import "mixins";
 
-$borderRadius: 3px;
-$borderWidth: 1px;
-$focusedBorderWidth: 2px;
-$fragmentControlBackgroundColor: #FFF4EC;
-$fragmentControlColor: #B95000;
-$portletBorderColor: #89A7E0;
-$portletColor: #0B5FFF;
-$wrapperBorderColor: #FF8F39;
+@import "./variables";
 
 .fragment-entry-link-wrapper {
-	box-shadow: 0 0 0 $borderWidth fade_out($wrapperBorderColor, 1);
+	box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth fade_out($fragmentEntryLinkBorderColor, 1);
 	position: relative;
 	transition: box-shadow ease 0.3s;
 
 	.portlet {
 		> .portlet-topper {
 			background-color: rgba(255, 255, 255, 0.95);
-			border: $borderWidth solid $portletBorderColor;
-			border-radius: $borderRadius;
+			border: $portletBorderWidth solid $portletBorderColor;
+			border-radius: $portletBorderRadius;
 			height: 100%;
 			min-height: 54px;
 			opacity: 0;
@@ -48,11 +41,11 @@ $wrapperBorderColor: #FF8F39;
 	}
 
 	.fragment-entry-link-control {
-		background-color: $fragmentControlBackgroundColor;
-		border-radius: $borderRadius $borderRadius 0 0;
+		background-color: $fragmentEntryLinkControlBackgroundColor;
+		border-radius: $fragmentEntryLinkBorderRadius $fragmentEntryLinkBorderRadius 0 0;
 		bottom: 100%;
-		box-shadow: 0 0 0 $borderWidth $wrapperBorderColor;
-		color: $fragmentControlColor;
+		box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
+		color: $fragmentEntryLinkControlColor;
 		left: 0;
 		opacity: 0;
 		padding: 0.5em 1em;
@@ -68,7 +61,7 @@ $wrapperBorderColor: #FF8F39;
 		}
 
 		.lexicon-icon {
-			fill: $fragmentControlColor;
+			fill: $fragmentEntryLinkControlColor;
 		}
 
 		.tbar-item {
@@ -90,7 +83,7 @@ $wrapperBorderColor: #FF8F39;
 .fragment-entry-link-wrapper:focus,
 .fragment-entry-link-wrapper:focus-within,
 .fragment-entry-link-wrapper:hover {
-	box-shadow: 0 0 0 $borderWidth $wrapperBorderColor;
+	box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
 
 	.fragment-entry-link-control {
 		opacity: 1;
@@ -102,10 +95,10 @@ $wrapperBorderColor: #FF8F39;
 
 .fragment-entry-link-wrapper:focus,
 .fragment-entry-link-wrapper:focus-within {
-	box-shadow: 0 0 0 $focusedBorderWidth $wrapperBorderColor;
+	box-shadow: 0 0 0 $fragmentEntryLinkFocusedBorderWidth $fragmentEntryLinkBorderColor;
 	outline: none;
 
 	.fragment-entry-link-control {
-		box-shadow: 0 0 0 $focusedBorderWidth $wrapperBorderColor;
+		box-shadow: 0 0 0 $fragmentEntryLinkFocusedBorderWidth $fragmentEntryLinkBorderColor;
 	}
 }

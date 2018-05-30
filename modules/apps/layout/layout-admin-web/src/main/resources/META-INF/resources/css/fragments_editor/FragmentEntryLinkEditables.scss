@@ -1,10 +1,7 @@
-$accentColor: #80ACFF;
-$defaultColor: #A7A9BC;
-$gridSize: 8px;
-$translatedColor: #3DC513;
+@import "./variables";
 
-.fragments-editor__fragment-entry-links lfr-editable {
-	background-size: $gridSize $gridSize;
+lfr-editable {
+	background-size: $fragmentEditableFieldGridSize $fragmentEditableFieldGridSize;
 	box-shadow: 0 0 0 1px transparent;
 	cursor: pointer;
 	display: block;
@@ -19,7 +16,7 @@ $translatedColor: #3DC513;
 	}
 
 	&[type="image"]:after {
-		background-size: $gridSize $gridSize;
+		background-size: $fragmentEditableFieldGridSize $fragmentEditableFieldGridSize;
 		content: '';
 		height: 100%;
 		left: 0;
@@ -29,60 +26,60 @@ $translatedColor: #3DC513;
 	}
 
 	&:hover {
-		box-shadow: 0 0 0 1px fade_out($accentColor, 0.6);
+		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.6);
 	}
 
 	&:focus,
 	&:focus-within {
-		background-color: fade_out($accentColor, 0.9);
-		box-shadow: 0 0 0 1px $accentColor;
-	}
-}
-
-.fragments-editor__fragment-entry-links.translating lfr-editable {
-	background-color: fade_out($defaultColor, 0.9);
-	box-shadow: 0 0 0 1px $defaultColor;
-
-	&.translated,
-	&.translated[type="image"]:after {
-		background-color: fade_out($translatedColor, 0.9);
-		box-shadow: 0 0 0 1px $translatedColor;
+		background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
+		box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
 	}
 
-	&:hover {
-		box-shadow: 0 0 0 1px fade_out($accentColor, 0.6);
+	.fragments-editor-render.translating & {
+		background-color: fade_out($fragmentEditableFieldGridDefaultColor, 0.9);
+		box-shadow: 0 0 0 1px $fragmentEditableFieldGridDefaultColor;
+
+		&.translated,
+		&.translated[type="image"]:after {
+			background-color: fade_out($fragmentEditableFieldGridTranslatedColor, 0.9);
+			box-shadow: 0 0 0 1px $fragmentEditableFieldGridTranslatedColor;
+		}
+
+		&:hover {
+			box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.6);
+		}
+
+		&:focus,
+		&:focus-within {
+			background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
+			box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
+		}
 	}
 
-	&:focus,
-	&:focus-within {
-		background-color: fade_out($accentColor, 0.9);
-		box-shadow: 0 0 0 1px $accentColor;
+	.fragments-editor-render.mapping & {
+		box-shadow: 0 0 0 1px $fragmentEditableFieldGridDefaultColor;
+
+		&,
+		&[type="image"]:after {
+			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($fragmentEditableFieldGridDefaultColor, 0.7) 50%, transparent calc(50% + 1px), transparent 100%);
+		}
+
+		&:hover,
+		&[type="image"]:hover:after {
+			box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
+		}
 	}
-}
 
-.fragments-editor__fragment-entry-links.mapping lfr-editable {
-	box-shadow: 0 0 0 1px $defaultColor;
-
-	&,
-	&[type="image"]:after {
-		background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($defaultColor, 0.7) 50%, transparent calc(50% + 1px), transparent 100%);
+	&.mapped,
+	&.mapped[type="image"]:after {
+		background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($fragmentEditableFieldGridAccentColor, 0.7) 50%, transparent calc(50% + 1px), transparent 100%);
+		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.7);
 	}
 
-	&:hover,
-	&[type="image"]:hover:after {
-		box-shadow: 0 0 0 1px $accentColor;
+	&.mapped:hover,
+	&.mapped[type="image"]:hover:after {
+		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.4);
 	}
-}
-
-.fragments-editor__fragment-entry-links lfr-editable.mapped,
-.fragments-editor__fragment-entry-links lfr-editable.mapped[type="image"]:after {
-	background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($accentColor, 0.7) 50%, transparent calc(50% + 1px), transparent 100%);
-	box-shadow: 0 0 0 1px fade_out($accentColor, 0.7);
-}
-
-.fragments-editor__fragment-entry-links lfr-editable.mapped:hover,
-.fragments-editor__fragment-entry-links lfr-editable.mapped[type="image"]:hover:after {
-	box-shadow: 0 0 0 1px fade_out($accentColor, 0.4);
 }
 
 .lfr-editable-field-tooltip.tooltip {

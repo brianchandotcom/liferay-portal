@@ -1,5 +1,4 @@
-$controlMenuHeight: 49px;
-$managementBarHeight: 48px;
+@import "./variables";
 
 .fragments-editor .contextual-sidebar.fragments-editor-sidebar {
 	height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});
@@ -19,12 +18,9 @@ $managementBarHeight: 48px;
 	}
 
 	@media (min-width: 768px) {
-		$controlMenuHeight: 64px;
-		$managementBarHeight: 48px;
-
 		& {
-			height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});
-			top: $controlMenuHeight + $managementBarHeight;
+			height: calc(100vh - #{$desktopControlMenuHeight} - #{$managementBarHeight});
+			top: $desktopControlMenuHeight + $managementBarHeight;
 		}
 	}
 }

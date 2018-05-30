@@ -135,7 +135,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 		}
 	);
 
-	window.<portlet:namespace />closeDialog() {
+	window.<portlet:namespace />closeDialog = function() {
 		var namespace = window.parent.namespace;
 
 		Liferay.fire(
@@ -144,7 +144,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 				id: namespace + 'signInDialog'
 			}
 		);
-	}
+	};
 
 	<c:if test="<%= !company.isStrangers() && (user == null) %>">
 		<portlet:namespace />closeDialog();

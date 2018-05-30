@@ -1,20 +1,31 @@
 $controlMenuHeight: 49px;
 $desktopControlMenuHeight: 64px;
 $managementBarHeight: 48px;
+$managementBarZIndex: 4;
+$sidebarZIndex: 4;
 
 $fragmentEditableFieldGridAccentColor: #80ACFF;
 $fragmentEditableFieldGridDefaultColor: #A7A9BC;
 $fragmentEditableFieldGridSize: 8px;
 $fragmentEditableFieldGridTranslatedColor: #3DC513;
+$fragmentEditableFieldTooltipZIndex: 3;
 
 $fragmentEntryLinkBorderColor: #FF8F39;
 $fragmentEntryLinkBorderRadius: 3px;
 $fragmentEntryLinkBorderWidth: 1px;
+$fragmentEntryLinkContentZIndex: 0;
+$fragmentEntryLinkContentHoverZIndex: auto;
 $fragmentEntryLinkControlBackgroundColor: #FFF4EC;
 $fragmentEntryLinkControlColor: #B95000;
+$fragmentEntryLinkControlHeight: 48px;
+$fragmentEntryLinkControlZIndex: 1;
+$fragmentEntryLinkControlHoverZIndex: 2;
 $fragmentEntryLinkFocusedBorderWidth: 2px;
 
 $portletColor: #0B5FFF;
 $portletBorderColor: #89A7E0;
 $portletBorderRadius: $fragmentEntryLinkBorderRadius;
 $portletBorderWidth: $fragmentEntryLinkBorderWidth;
+$portletTopperZIndex: $fragmentEntryLinkControlZIndex;
+
+$translationStatusListZIndex: 4;

@@ -2,8 +2,9 @@
 
 .fragments-editor .contextual-sidebar.fragments-editor-sidebar {
 	height: calc(100vh - #{$controlMenuHeight} - #{$managementBarHeight});
-	margin-top: 1px;
+	margin-top: 2px;
 	top: $controlMenuHeight + $managementBarHeight;
+	z-index: $sidebarZIndex;
 
 	button.component-action {
 		cursor: pointer;

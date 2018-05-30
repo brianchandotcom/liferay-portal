@@ -19,7 +19,7 @@
 			opacity: 0;
 			padding: 10px 20px 10px 10px;
 			pointer-events: none;
-			z-index: 1;
+			z-index: $portletTopperZIndex;
 
 			@include transform(translateY(0));
 		}
@@ -54,7 +54,7 @@
 		transform: translateY(100%);
 		transition: box-shadow ease 0.3s, transform ease 0.6s, opacity ease 0.2s;
 		width: 100%;
-		z-index: 1;
+		z-index: $fragmentEntryLinkControlZIndex;
 
 		&__fragment-name {
 			text-align: left;
@@ -72,11 +72,11 @@
 	.fragment-entry-link-content {
 		overflow: hidden;
 		position: relative;
-		z-index: -1;
+		z-index: $fragmentEntryLinkContentZIndex;
 	}
 
 	&:hover > .fragment-entry-link-content {
-		z-index: auto;
+		z-index: $fragmentEntryLinkContentHoverZIndex;
 	}
 }
 
@@ -84,12 +84,14 @@
 .fragment-entry-link-wrapper:focus-within,
 .fragment-entry-link-wrapper:hover {
 	box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
+	z-index: $fragmentEntryLinkControlHoverZIndex;
 
 	.fragment-entry-link-control {
 		opacity: 1;
 		pointer-events: all;
-		transform: translateY(0);
+		transform: translateY(1px);
 		transition: box-shadow ease 0.3s, transform ease 0.2s, opacity ease 0.3s;
+		z-index: $fragmentEntryLinkControlHoverZIndex;
 	}
 }
 

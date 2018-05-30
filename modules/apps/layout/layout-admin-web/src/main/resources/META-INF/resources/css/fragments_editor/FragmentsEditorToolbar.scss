@@ -7,7 +7,7 @@
 	position: fixed;
 	top: $controlMenuHeight;
 	width: 100%;
-	z-index: 2;
+	z-index: $managementBarZIndex;
 
 	&__add-fragment-button {
 		padding: 0;
@@ -23,6 +23,7 @@
 
 	&__translation-status-list {
 		min-width: 35ch;
+		z-index: $translationStatusListZIndex;
 	}
 
 	&__translation-status-item {

@@ -71,7 +71,7 @@ public class SearchBarPortletPreferencesImpl
 			valueOptional.map(SearchScopePreference::getSearchScopePreference);
 
 		return searchScopePreferenceOptional.orElse(
-			SearchScopePreference.EVERYTHING);
+			SearchScopePreference.THIS_SITE);
 	}
 
 	@Override

@@ -21,15 +21,15 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 %>
 
 <liferay-ui:search-container
-	total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypesCount() %>"
+	total="<%= selectLayoutPageTemplateEntryDisplayContext.getGlobalLayoutPageTemplateEntriesCount() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPrototypes() %>"
+		results="<%= selectLayoutPageTemplateEntryDisplayContext.getGlobalLayoutPageTemplateEntries() %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.LayoutPrototype"
-		modelVar="layoutPrototype"
+		className="com.liferay.layout.page.template.model.LayoutPageTemplateEntry"
+		modelVar="layoutPageTemplateEntry"
 	>
 
 		<%
@@ -41,7 +41,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 			<%
 			Map<String, Object> addLayoutPrototypeData = new HashMap<>();
 
-			addLayoutPrototypeData.put("layout-prototype-id", layoutPrototype.getLayoutPrototypeId());
+			addLayoutPrototypeData.put("layout-page-template-entry-id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 			%>
 
 			<liferay-frontend:icon-vertical-card
@@ -51,7 +51,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 				icon="page-set"
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
-				title="<%= HtmlUtil.escape(layoutPrototype.getName(locale)) %>"
+				title="<%= HtmlUtil.escape(layoutPageTemplateEntry.getName()) %>"
 				url="javascript:;"
 			/>
 		</liferay-ui:search-container-column-text>
@@ -63,13 +63,11 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 	/>
 </liferay-ui:search-container>
 
-<portlet:actionURL name="/layout/add_layout_prototype_layout" var="addLayoutPrototypeLayoutURL">
+<portlet:actionURL name="/layout/add_content_layout" var="addContentLayoutURL">
 	<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
 	<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
-	<portlet:param name="portletResource" value="<%= layoutsAdminDisplayContext.getPortletResource() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
-	<portlet:param name="liveGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
-	<portlet:param name="stagingGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getStagingGroupId()) %>" />
+	<portlet:param name="portletResource" value="<%= layoutsAdminDisplayContext.getPortletResource() %>" />
 	<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
 	<portlet:param name="explicitCreation" value="<%= Boolean.TRUE.toString() %>" />
@@ -96,9 +94,9 @@ String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavig
 					</c:if>
 
 					dialogTitle: '<liferay-ui:message key="add-page" />',
-					formSubmitURL: '<%= addLayoutPrototypeLayoutURL %>',
-					idFieldName: 'layoutPrototypeId',
-					idFieldValue: actionElement.dataset.layoutPrototypeId,
+					formSubmitURL: '<%= addContentLayoutURL %>',
+					idFieldName: 'TypeSettingsProperties--layoutPageTemplateEntryId--',
+					idFieldValue: actionElement.dataset.layoutPageTemplateEntryId,
 					mainFieldName: 'name',
 					mainFieldLabel: '<liferay-ui:message key="name" />',
 					namespace: '<portlet:namespace />',

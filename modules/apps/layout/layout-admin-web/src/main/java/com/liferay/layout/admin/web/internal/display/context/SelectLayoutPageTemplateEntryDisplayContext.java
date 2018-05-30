@@ -14,14 +14,15 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -44,6 +45,26 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public List<LayoutPageTemplateEntry> getGlobalLayoutPageTemplateEntries() {
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
+			LayoutPageTemplatePortletUtil.
+				getLayoutPageTemplateEntryOrderByComparator("name", "asc");
+
+		return LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
+			_themeDisplay.getCompanyGroupId(),
+			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, orderByComparator);
+	}
+
+	public int getGlobalLayoutPageTemplateEntriesCount() {
+		return LayoutPageTemplateEntryServiceUtil.
+			getLayoutPageTemplateEntriesCount(
+				_themeDisplay.getCompanyGroupId(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+				WorkflowConstants.STATUS_APPROVED);
 	}
 
 	public long getLayoutPageTemplateCollectionId() {
@@ -71,23 +92,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			getLayoutPageTemplateEntriesCount(
 				_themeDisplay.getScopeGroupId(),
 				getLayoutPageTemplateCollectionId());
-	}
-
-	public List<LayoutPrototype> getLayoutPrototypes() throws PortalException {
-		if (_layoutPrototypes != null) {
-			return _layoutPrototypes;
-		}
-
-		_layoutPrototypes = LayoutPrototypeServiceUtil.search(
-			_themeDisplay.getCompanyId(), Boolean.TRUE, null);
-
-		return _layoutPrototypes;
-	}
-
-	public int getLayoutPrototypesCount() throws PortalException {
-		List<LayoutPrototype> layoutPrototypes = getLayoutPrototypes();
-
-		return layoutPrototypes.size();
 	}
 
 	public List<String> getPrimaryTypes() {
@@ -182,7 +186,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	private Long _layoutPageTemplateCollectionId;
-	private List<LayoutPrototype> _layoutPrototypes;
 	private List<String> _primaryTypes;
 	private final HttpServletRequest _request;
 	private String _selectedTab;

@@ -16,22 +16,29 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -63,6 +70,14 @@ public class AddContentLayoutMVCActionCommand
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		UnicodeProperties typeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
+		long layoutPageTemplateEntryId = GetterUtil.getLong(
+			typeSettingsProperties.getProperty("layoutPageTemplateEntryId"));
+
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 		long parentLayoutId = ParamUtil.getLong(
@@ -73,22 +88,47 @@ public class AddContentLayoutMVCActionCommand
 
 		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
-		UnicodeProperties typeSettingsProperties =
-			PropertiesParamUtil.getProperties(
-				actionRequest, "TypeSettingsProperties--");
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		Layout layout = null;
+
 		try {
-			Layout layout = _layoutService.addLayout(
-				groupId, privateLayout, parentLayoutId, nameMap,
-				new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-				new HashMap<Locale, String>(), new HashMap<Locale, String>(),
-				"content", typeSettingsProperties.toString(), false,
-				new HashMap<Locale, String>(), serviceContext);
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
+					layoutPageTemplateEntryId);
+
+			if ((layoutPageTemplateEntry != null) &&
+				(layoutPageTemplateEntry.getLayoutPrototypeId() > 0)) {
+
+				LayoutPrototype layoutPrototype =
+					_layoutPrototypeService.getLayoutPrototype(
+						layoutPageTemplateEntry.getLayoutPrototypeId());
+
+				serviceContext.setAttribute(
+					"layoutPrototypeUuid", layoutPrototype.getUuid());
+
+				layout = _layoutService.addLayout(
+					groupId, privateLayout, parentLayoutId, nameMap,
+					new HashMap<>(), new HashMap<>(), new HashMap<>(),
+					new HashMap<>(), LayoutConstants.TYPE_PORTLET,
+					typeSettingsProperties.toString(), false, new HashMap<>(),
+					serviceContext);
+
+				// Force propagation from page template to page. See LPS-48430.
+
+				SitesUtil.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
+			}
+			else {
+				layout = _layoutService.addLayout(
+					groupId, privateLayout, parentLayoutId, nameMap,
+					new HashMap<>(), new HashMap<>(), new HashMap<>(),
+					new HashMap<>(), "content",
+					typeSettingsProperties.toString(), false, new HashMap<>(),
+					serviceContext);
+			}
 
 			jsonObject.put(
 				"redirectURL", getRedirectURL(actionRequest, actionResponse));
@@ -117,6 +157,12 @@ public class AddContentLayoutMVCActionCommand
 
 	@Reference
 	private LayoutExceptionRequestHandler _layoutExceptionRequestHandler;
+
+	@Reference
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private LayoutPrototypeService _layoutPrototypeService;
 
 	@Reference
 	private LayoutService _layoutService;

@@ -6,7 +6,7 @@
 			<var name="name" value="${pageTemplateName}" />
 		</execute>
 
-		<execute macro="Modal#submit" />
+		<execute macro="Button#clickModalSubmit" />
 	</command>
 
 	<command name="editFragmentImage">

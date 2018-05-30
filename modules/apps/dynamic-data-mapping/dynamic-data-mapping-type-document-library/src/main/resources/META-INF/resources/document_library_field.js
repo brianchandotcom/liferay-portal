@@ -7,7 +7,6 @@ AUI.add(
 			{
 				ATTRS: {
 					fileEntryTitle: {
-						getter: '_getFileEntryTitle',
 						value: ''
 					},
 
@@ -94,7 +93,7 @@ AUI.add(
 							DocumentLibraryField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								clearButtonVisible: instance._getClearButtonVisible(),
-								fileEntryTitle: instance.get('fileEntryTitle'),
+								fileEntryTitle: instance._getFileEntryTitle(),
 								strings: instance.get('strings'),
 								value: instance.getStringValue()
 							}
@@ -123,13 +122,6 @@ AUI.add(
 
 					setValue: function(value) {
 						var instance = this;
-
-						if (value.title && value.uuid) {
-							instance.set('fileEntryTitle', value.title);
-						}
-						else {
-							instance.set('fileEntryTitle', '');
-						}
 
 						instance.set('value', value);
 
@@ -160,6 +152,12 @@ AUI.add(
 
 					_getFileEntryTitle: function() {
 						var instance = this;
+
+						var fileEntryTitle = instance.get('fileEntryTitle');
+
+						if (fileEntryTitle) {
+							return fileEntryTitle;
+						}
 
 						var value = instance.getValue();
 

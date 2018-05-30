@@ -71,13 +71,19 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		}
 	}
 
+	public String getFileEntryTitle(FileEntry fileEntry) {
+		if (fileEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return html.escape(fileEntry.getTitle());
+	}
+
 	public String getFileEntryURL(
-		HttpServletRequest request, JSONObject valueJSONObject) {
+		HttpServletRequest request, FileEntry fileEntry) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		FileEntry fileEntry = getFileEntry(valueJSONObject);
 
 		if (fileEntry == null) {
 			return StringPool.BLANK;
@@ -133,8 +139,11 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext.getValue());
 
 			if ((valueJSONObject != null) && (valueJSONObject.length() > 0)) {
+				FileEntry fileEntry = getFileEntry(valueJSONObject);
+
+				parameters.put("fileEntryTitle", getFileEntryTitle(fileEntry));
 				parameters.put(
-					"fileEntryURL", getFileEntryURL(request, valueJSONObject));
+					"fileEntryURL", getFileEntryURL(request, fileEntry));
 			}
 		}
 

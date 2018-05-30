@@ -36,9 +36,7 @@ $management-bar-height: 49px;
 			top: $control-menu-height + $management-bar-height;
 		}
 	}
-}
 
-@media (min-width: 768px) and (max-width: 1919px) {
 	body.contextual-sidebar-visible .contextual-sidebar-content {
 		padding-right: $contextual-sidebar-width;
 	}

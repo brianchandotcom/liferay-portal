@@ -2395,6 +2395,10 @@ public class ProjectTemplatesTest {
 								"\"" + _REPOSITORY_CDN_URL + "\"",
 								"\"" + repositoryUrl + "\"");
 
+							content = content.replace(
+								"repositories {",
+								"repositories {\tmavenLocal()\n");
+
 							Files.write(
 								path, content.getBytes(StandardCharsets.UTF_8));
 						}

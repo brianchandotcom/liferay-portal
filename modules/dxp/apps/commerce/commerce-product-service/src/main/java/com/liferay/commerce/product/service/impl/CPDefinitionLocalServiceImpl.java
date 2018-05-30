@@ -592,6 +592,14 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinition> getCPDefinitions(
+		long groupId, int status, int start, int end) {
+
+		return cpDefinitionPersistence.filterFindByG_NotS(
+			groupId, status, start, end);
+	}
+
+	@Override
 	public List<CPDefinition> getCPDefinitionsByCategoryId(
 		long categoryId, int start, int end) {
 

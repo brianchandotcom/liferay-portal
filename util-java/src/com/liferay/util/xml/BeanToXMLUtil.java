@@ -68,8 +68,8 @@ public class BeanToXMLUtil {
 
 						Element listEl = parentEl.addElement(memberName);
 
-						for (int j = 0; j < list.size(); j++) {
-							addBean(list.get(j), listEl);
+						for (Object curObj : list) {
+							addBean(curObj, listEl);
 						}
 					}
 					else {

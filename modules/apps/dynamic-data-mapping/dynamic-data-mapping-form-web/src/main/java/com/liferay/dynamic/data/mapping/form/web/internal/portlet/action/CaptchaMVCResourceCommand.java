@@ -16,9 +16,11 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 
+import java.io.IOException;
+
+import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -35,14 +37,21 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MVCResourceCommand.class
 )
-public class CaptchaMVCResourceCommand extends BaseMVCResourceCommand {
+public class CaptchaMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
-	protected void doServeResource(
+	public boolean serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
+		throws PortletException {
 
-		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
+		try {
+			CaptchaUtil.serveImage(resourceRequest, resourceResponse);
+
+			return false;
+		}
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
+		}
 	}
 
 }

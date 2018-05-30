@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -71,10 +70,6 @@ public class ExportConfigurationMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
-		if (!(resourceResponse instanceof MimeResponse)) {
-			return false;
-		}
-
 		String pid = ParamUtil.getString(resourceRequest, "pid");
 		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");
 
@@ -93,7 +88,7 @@ public class ExportConfigurationMVCResourceCommand
 			throw new PortletException(e);
 		}
 
-		return true;
+		return false;
 	}
 
 	protected void exportAll(

@@ -60,7 +60,7 @@ public class GetUsersCountMVCResourceCommand implements MVCResourceCommand {
 
 			printWriter.write(getText(resourceRequest, resourceResponse));
 
-			return true;
+			return false;
 		}
 		catch (Exception e) {
 			throw new PortletException(e);

@@ -32,28 +32,27 @@ public abstract class BaseRSSMVCResourceCommand implements MVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
-		if (!isRSSFeedsEnabled(resourceRequest)) {
+		if (isRSSFeedsEnabled(resourceRequest)) {
+			try {
+				PortletResponseUtil.sendFile(
+					resourceRequest, resourceResponse, null,
+					getRSS(resourceRequest, resourceResponse),
+					ContentTypes.TEXT_XML_UTF8);
+			}
+			catch (Exception e) {
+				throw new PortletException(e);
+			}
+		}
+		else {
 			try {
 				PortalUtil.sendRSSFeedsDisabledError(
 					resourceRequest, resourceResponse);
 			}
 			catch (Exception e) {
 			}
-
-			return false;
 		}
 
-		try {
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, null,
-				getRSS(resourceRequest, resourceResponse),
-				ContentTypes.TEXT_XML_UTF8);
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-
-		return true;
+		return false;
 	}
 
 	protected abstract byte[] getRSS(

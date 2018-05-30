@@ -81,7 +81,7 @@ public class ExportAllFragmentEntriesMVCResourceCommand
 			throw new PortletException(e);
 		}
 
-		return true;
+		return false;
 	}
 
 	@Reference

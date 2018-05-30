@@ -349,19 +349,18 @@ public class LayoutAction extends Action {
 						renderStateJSON = RenderStateUtil.generateJSON(
 							request, themeDisplay, renderDataMap);
 					}
-
-					if (themeDisplay.isHubAction() ||
-						themeDisplay.isHubPartialAction()) {
-
-						response.setContentLength(renderStateJSON.length());
-						response.setContentType("application/json");
-
-						PrintWriter writer = response.getWriter();
-
-						writer.write(renderStateJSON);
-
+					else {
 						return null;
 					}
+
+					response.setContentLength(renderStateJSON.length());
+					response.setContentType("application/json");
+
+					PrintWriter writer = response.getWriter();
+
+					writer.write(renderStateJSON);
+
+					return null;
 				}
 				else if (themeDisplay.isLifecycleResource()) {
 					PortletContainerUtil.serveResource(

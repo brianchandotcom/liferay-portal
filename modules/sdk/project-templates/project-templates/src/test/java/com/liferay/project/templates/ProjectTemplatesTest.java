@@ -25,10 +25,6 @@ import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
 import com.liferay.project.templates.util.XMLTestUtil;
 
-import difflib.Delta;
-import difflib.DiffUtils;
-import difflib.Patch;
-
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,9 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-
 import java.net.URI;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
@@ -49,7 +43,6 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,29 +66,29 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
-import net.diibadaaba.zipdiff.DifferenceCalculator;
-import net.diibadaaba.zipdiff.Differences;
-
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
-
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
 import org.gradle.testkit.runner.TaskOutcome;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+
+import difflib.Delta;
+import difflib.DiffUtils;
+import difflib.Patch;
+import net.diibadaaba.zipdiff.DifferenceCalculator;
+import net.diibadaaba.zipdiff.Differences;
 
 /**
  * @author Lawrence Lee
@@ -829,7 +822,7 @@ public class ProjectTemplatesTest {
 				"/ProviderTestPortletKeys.java",
 			"package provider.test.constants;",
 			"public class ProviderTestPortletKeys",
-			"public static final String ProviderTest = \"ProviderTest\";");
+			"public static final String ProviderTest = \"providertest\";");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet-provider", "provider.test", "com.test",
@@ -1214,7 +1207,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/constants/FooPortletKeys.java",
-			"public static final String Foo = \"Foo\"");
+			"public static final String Foo = \"foo\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
@@ -1306,7 +1299,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/constants/FooPortletKeys.java",
-			"public static final String Foo = \"Foo\"");
+			"public static final String Foo = \"foo\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooSoyPortletRegister.java",

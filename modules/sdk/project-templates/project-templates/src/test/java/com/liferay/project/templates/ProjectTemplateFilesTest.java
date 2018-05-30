@@ -27,7 +27,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
@@ -35,7 +34,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -58,7 +56,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.junit.Assert;
 import org.junit.Test;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -535,36 +532,36 @@ public class ProjectTemplateFilesTest {
 			Properties properties = FileUtil.readProperties(path);
 
 			String keywords = properties.getProperty(
-				"javax.portlet.keywords.${artifactId}");
+				"javax.portlet.keywords.${className.toLowerCase()}");
 
 			Assert.assertTrue(
-				"Value of \"javax.portlet.keywords.${artifactId}\" in " + path +
-					" must start with \"${artifactId},\"",
-				(keywords != null) && keywords.startsWith("${artifactId},"));
+				"Value of \"javax.portlet.keywords.${className.toLowerCase()}\" in " + path +
+					" must be \"${className}\"",
+				(keywords != null) && keywords.equals("${className}"));
 
 			String title = properties.getProperty(
-				"javax.portlet.title.${artifactId}");
+				"javax.portlet.title.${className.toLowerCase()}");
 
 			Assert.assertTrue(
-				"Value of \"javax.portlet.title.${artifactId}\" in " + path +
-					" must end with \" Portlet\"",
-				(title != null) && title.endsWith(" Portlet"));
+				"Value of \"javax.portlet.title.${className.toLowerCase()}\" in " + path +
+					" must be \"${className}\"",
+				(title != null) && title.equals("${className}"));
 
-			String expectedShortTitle = title.substring(0, title.length() - 8);
-
-			Assert.assertEquals(
-				"Incorrect value of " +
-					"\"javax.portlet.display-name.${artifactId}\" in " + path,
-				expectedShortTitle,
-				properties.getProperty(
-					"javax.portlet.display-name.${artifactId}"));
+			String expectedShortTitle = "${className}";
 
 			Assert.assertEquals(
 				"Incorrect value of " +
-					"\"javax.portlet.short-title.${artifactId}\" in " + path,
+					"\"javax.portlet.display-name.${className.toLowerCase()}\" in " + path,
 				expectedShortTitle,
 				properties.getProperty(
-					"javax.portlet.short-title.${artifactId}"));
+					"javax.portlet.display-name.${className.toLowerCase()}"));
+
+			Assert.assertEquals(
+				"Incorrect value of " +
+					"\"javax.portlet.short-title.${className.toLowerCase()}\" in " + path,
+				expectedShortTitle,
+				properties.getProperty(
+					"javax.portlet.short-title.${className.toLowerCase()}"));
 		}
 	}
 

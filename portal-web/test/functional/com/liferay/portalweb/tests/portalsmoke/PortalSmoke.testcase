@@ -22,6 +22,8 @@
 			<else>
 				<execute macro="Page#tearDownCP" />
 
+				<execute macro="Site#tearDownCP" />
+
 				<execute macro="WebContent#tearDownCP" />
 			</else>
 		</if>

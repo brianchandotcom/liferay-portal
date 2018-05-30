@@ -318,8 +318,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		if (commerceTierPriceEntryId > 0) {
 			return updateCommerceTierPriceEntry(
-				commerceTierPriceEntryId, externalReferenceCode, price,
-				promoPrice, minQuantity, serviceContext);
+				commerceTierPriceEntryId, price, promoPrice, minQuantity,
+				serviceContext);
 		}
 
 		CommerceTierPriceEntry commerceTierPriceEntry =

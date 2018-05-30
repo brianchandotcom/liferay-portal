@@ -350,8 +350,7 @@ public class CommercePriceEntryLocalServiceImpl
 
 		if (commercePriceEntryId > 0) {
 			return updateCommercePriceEntry(
-				commercePriceEntryId, externalReferenceCode, price, promoPrice,
-				serviceContext);
+				commercePriceEntryId, price, promoPrice, serviceContext);
 		}
 
 		CommercePriceEntry commercePriceEntry =

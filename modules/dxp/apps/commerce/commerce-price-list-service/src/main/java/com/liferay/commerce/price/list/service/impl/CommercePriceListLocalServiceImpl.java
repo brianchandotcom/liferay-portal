@@ -548,8 +548,7 @@ public class CommercePriceListLocalServiceImpl
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, externalReferenceCode, neverExpire,
-				serviceContext);
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 
 		CommercePriceList commercePriceList =

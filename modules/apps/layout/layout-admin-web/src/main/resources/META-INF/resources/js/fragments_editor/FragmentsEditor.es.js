@@ -4,6 +4,7 @@ import {Config} from 'metal-state';
 
 import './dialogs/SelectMappingDialog.es';
 import './dialogs/SelectMappingTypeDialog.es';
+import './render/FragmentsEditorRender.es';
 import './sidebar/FragmentsEditorSidebar.es';
 import './toolbar/FragmentsEditorToolbar.es';
 import FragmentEntryLink from './render/FragmentEntryLink.es';
@@ -155,7 +156,9 @@ class FragmentsEditor extends Component {
 	 */
 
 	_getFragmentEntryLinkComponent(fragmentEntryLinkId) {
-		return this.refs[`fragmentEntryLink_${fragmentEntryLinkId}`];
+		return this.refs.fragmentsEditorRender.refs[
+			`fragmentEntryLink_${fragmentEntryLinkId}`
+		];
 	}
 
 	/**

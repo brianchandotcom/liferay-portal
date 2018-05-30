@@ -1,0 +1,93 @@
+{namespace com.liferay.layout.admin.web.FragmentsEditorRender}
+
+/**
+ * FragmentsEditorRender
+ */
+{template .render}
+	{@param defaultEditorConfiguration: ?}
+	{@param defaultLanguageId: string}
+	{@param imageSelectorURL: string}
+	{@param languageId: string}
+	{@param mapping: bool}
+	{@param portletNamespace: string}
+	{@param spritemap: string}
+	{@param translating: bool}
+	{@param? _handleEditableChanged: any}
+	{@param? _handleFragmentMove: any}
+	{@param? _handleFragmentRemove: any}
+	{@param? _handleMappeableFieldClicked: any}
+	{@param? fragmentEntryLinks: list<[
+		content: html|null,
+		editableValues: ?,
+		fragmentEntryLinkId: number,
+		name: string
+	]>}
+	{@param? mappingFieldsURL: string}
+	{@param? selectedMappingTypes: [
+		subtype: [
+			id: string,
+			label: string
+		],
+		type: [
+			id: string,
+			label: string
+		]
+	]}
+
+	{let $entryLinksClasses kind="text"}
+		fragments-editor-render
+
+		{if $translating}
+			{sp}translating
+		{/if}
+
+		{if $mapping}
+			{sp}mapping
+		{/if}
+	{/let}
+
+	<div class="{$entryLinksClasses}" ref="fragmentEntryLinks">
+		{if $fragmentEntryLinks and (length($fragmentEntryLinks) > 0)}
+			{foreach $fragmentEntryLink in $fragmentEntryLinks}
+				<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
+					{call com.liferay.layout.admin.web.FragmentEntryLink.render}
+						{param content: $fragmentEntryLink.content /}
+						{param defaultEditorConfiguration: $defaultEditorConfiguration /}
+						{param defaultLanguageId: $defaultLanguageId /}
+						{param editableValues: $fragmentEntryLink.editableValues /}
+						{param events: [
+							'editableChanged': $_handleEditableChanged,
+							'mappeableFieldClicked': $_handleMappeableFieldClicked,
+							'move': $_handleFragmentMove,
+							'remove': $_handleFragmentRemove
+						] /}
+						{param fragmentEntryLinkId: $fragmentEntryLink.fragmentEntryLinkId /}
+						{param imageSelectorURL: $imageSelectorURL /}
+						{param languageId: $languageId /}
+						{param name: $fragmentEntryLink.name /}
+						{param portletNamespace: $portletNamespace /}
+						{param ref: 'fragmentEntryLink_' + $fragmentEntryLink.fragmentEntryLinkId /}
+						{param selectedMappingTypes: $selectedMappingTypes /}
+						{param showMapping: $selectedMappingTypes and $mappingFieldsURL ? true : false /}
+						{param spritemap: $spritemap /}
+					{/call}
+				</div>
+			{/foreach}
+		{else}
+			{call .noFragmentsMessage /}
+		{/if}
+	</div>
+{/template}
+
+/**
+ * No fragments message
+ */
+{template .noFragmentsMessage}
+	<div class="taglib-empty-result-message">
+		<div class="taglib-empty-result-message-header"></div>
+
+		<div class="text-center text-muted">
+			{msg desc=""}the-fragment-editor-is-empty{/msg}
+		</div>
+	</div>
+{/template}

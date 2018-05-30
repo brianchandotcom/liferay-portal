@@ -2009,9 +2009,9 @@
 			<then>
 				<var name="key_dmDocumentSize" value="${dmDocumentSize}" />
 
-				<execute function="AssertVisible" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" />
+				<execute function="AssertVisible" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_SIZE" />
 
-				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DOWNLOAD" value1="Download (${dmDocumentSize})" />
+				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_SIZE" value1="${dmDocumentSize}" />
 			</then>
 		</if>
 	</command>

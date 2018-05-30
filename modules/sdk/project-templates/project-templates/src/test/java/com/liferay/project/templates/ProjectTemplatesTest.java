@@ -1967,9 +1967,8 @@ public class ProjectTemplatesTest {
 			".*liferay.workspace.bundle.url=.*liferay.com/portal/7.1.0-.*");
 	}
 
-	@Ignore
 	@Test
-	public void testGradlePluginVersions() throws Exception {
+	public void testCompareGradlePluginVersions() throws Exception {
 		String template = "mvc-portlet";
 
 		String name = "foo";

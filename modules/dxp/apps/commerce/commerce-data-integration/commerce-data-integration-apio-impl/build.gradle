@@ -7,7 +7,7 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.apio.architect.error", version: "1.0.0-20180510.174722-8"
 	compileOnly group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "3.0.0-20180316.221954-1"
 	compileOnly group: "com.liferay", name: "com.liferay.person.apio.api", version: "1.0.0-20180518.185806-2"
-	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "2.0.0-20180530.144920-1"
 	compileOnly group: "com.liferay", name: "com.liferay.portal.apio.api", version: "1.0.0-20180424.162921-1"
 	compileOnly group: "com.liferay", name: "com.liferay.registry.api", version: "1.2.2"
 	compileOnly group: "com.liferay", name: "com.liferay.site.apio.api", version: "1.0.0-20180518.190020-2"

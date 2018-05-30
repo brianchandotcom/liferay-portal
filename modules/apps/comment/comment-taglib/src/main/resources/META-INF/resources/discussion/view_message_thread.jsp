@@ -174,7 +174,7 @@ String postReplyEditorName = randomNamespace + "postReplyBody" + index;
 											<aui:button name='<%= randomNamespace + "editReplyButton" + index %>' onClick='<%= randomNamespace + "updateMessage(" + index + ");" %>' value="<%= commentTreeDisplayContext.getPublishButtonLabel(locale) %>" />
 
 											<%
-											String taglibCancel = randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage" + index + "');" + randomNamespace + "hideEditor('" + editReplyEditorName + "', '" + namespace + randomNamespace + "editReplyBody" + index + "','" + namespace + randomNamespace + "editForm" + index + "');";
+											String taglibCancel = randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage" + index + "');" + randomNamespace + "hideEditor('" + editReplyEditorName + "', '" + namespace + randomNamespace + "editForm" + index + "');";
 											%>
 
 											<aui:button onClick="<%= taglibCancel %>" type="cancel" />

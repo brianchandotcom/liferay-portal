@@ -51,6 +51,7 @@
 	</source-processor>
 	<source-processor name="DockerfileSourceProcessor">
 		<check name="DockerfileEmptyLinesCheck" />
+		<check name="DockerfileInstructionCheck" />
 		<check name="WhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>

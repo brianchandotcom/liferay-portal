@@ -619,10 +619,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	protected Message getMessage(JobDataMap jobDataMap) {
 		String messageJSON = (String)jobDataMap.get(SchedulerEngine.MESSAGE);
 
-		if (_jsonFactory == null) {
-			throw new IllegalStateException("JSON factory not initialized");
-		}
-
 		return (Message)_jsonFactory.deserialize(messageJSON);
 	}
 
@@ -811,10 +807,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			String description, String destinationName, Message message)
 		throws Exception {
 
-		if (_jsonFactory == null) {
-			throw new IllegalStateException("JSON factory not initialized");
-		}
-
 		try {
 			JobBuilder jobBuilder = JobBuilder.newJob(MessageSenderJob.class);
 
@@ -857,15 +849,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				_log.info("Message is already scheduled");
 			}
 		}
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setJsonFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -948,10 +931,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		scheduler.addJob(jobDetail, true);
 	}
 
-	protected void unsetJsonFactory(JSONFactory jsonFactory) {
-		_jsonFactory = null;
-	}
-
 	protected void unsetSchedulerEngineHelper(
 		SchedulerEngineHelper schedulerEngineHelper) {
 
@@ -1029,7 +1008,10 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private int _descriptionMaxLength;
 	private int _groupNameMaxLength;
 	private int _jobNameMaxLength;
+
+	@Reference
 	private JSONFactory _jsonFactory;
+
 	private Scheduler _memoryScheduler;
 	private Scheduler _persistedScheduler;
 	private Props _props;

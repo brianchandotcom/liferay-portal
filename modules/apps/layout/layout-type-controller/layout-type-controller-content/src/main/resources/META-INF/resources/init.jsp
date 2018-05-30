@@ -20,7 +20,7 @@
 taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.layout.type.controller.content.internal.display.context.FragmentsEditorContext" %>
+<%@ page import="com.liferay.layout.type.controller.content.internal.display.context.FragmentsEditorDisplayContext" %>
 
 <liferay-theme:defineObjects />
 

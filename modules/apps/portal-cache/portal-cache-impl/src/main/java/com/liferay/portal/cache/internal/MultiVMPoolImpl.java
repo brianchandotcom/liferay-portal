@@ -44,7 +44,10 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 	@Override
 	public void clear() {
-		_portalCacheManager.clearAll();
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager = getPortalCacheManager();
+
+		portalCacheManager.clearAll();
 	}
 
 	/**
@@ -85,27 +88,43 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName) {
 
-		return _portalCacheManager.getPortalCache(portalCacheName);
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager = getPortalCacheManager();
+
+		return portalCacheManager.getPortalCache(portalCacheName);
 	}
 
 	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName, boolean blocking) {
 
-		return _portalCacheManager.getPortalCache(portalCacheName, blocking);
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager = getPortalCacheManager();
+
+		return portalCacheManager.getPortalCache(portalCacheName, blocking);
 	}
 
 	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName, boolean blocking, boolean mvcc) {
 
-		return _portalCacheManager.getPortalCache(
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager = getPortalCacheManager();
+
+		return portalCacheManager.getPortalCache(
 			portalCacheName, blocking, mvcc);
 	}
 
 	@Override
 	public PortalCacheManager<? extends Serializable, ? extends Serializable>
 		getPortalCacheManager() {
+
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager = _spiPortalCacheManager;
+
+		if (portalCacheManager != null) {
+			return portalCacheManager;
+		}
 
 		return _portalCacheManager;
 	}
@@ -121,7 +140,10 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 	@Override
 	public void removePortalCache(String portalCacheName) {
-		_portalCacheManager.removePortalCache(portalCacheName);
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			portalCacheManager = getPortalCacheManager();
+
+		portalCacheManager.removePortalCache(portalCacheName);
 	}
 
 	@Activate
@@ -157,12 +179,13 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 	private BundleContext _bundleContext;
 	private PortalCacheManager<? extends Serializable, ? extends Serializable>
-		_originalPortalCacheManager;
-	private PortalCacheManager<? extends Serializable, ? extends Serializable>
 		_portalCacheManager;
 	private ServiceTracker
 		<SPIPortalCacheManagerConfigurator, SPIPortalCacheManagerConfigurator>
 			_serviceTracker;
+	private volatile
+		PortalCacheManager<? extends Serializable, ? extends Serializable>
+			_spiPortalCacheManager;
 
 	private class SPIPortalCacheManagerConfiguratorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
@@ -174,22 +197,27 @@ public class MultiVMPoolImpl implements MultiVMPool {
 			ServiceReference<SPIPortalCacheManagerConfigurator>
 				serviceReference) {
 
-			_originalPortalCacheManager = _portalCacheManager;
-
 			SPIPortalCacheManagerConfigurator
 				spiPortalCacheManagerConfigurator = _bundleContext.getService(
 					serviceReference);
 
 			try {
-				_portalCacheManager =
-					spiPortalCacheManagerConfigurator.
-						createSPIPortalCacheManager(_portalCacheManager);
+				PortalCacheManager
+					<? extends Serializable, ? extends Serializable>
+						portalCacheManager =
+							spiPortalCacheManagerConfigurator.
+								createSPIPortalCacheManager(
+									_portalCacheManager);
+
+				if (portalCacheManager != _portalCacheManager) {
+					_spiPortalCacheManager = portalCacheManager;
+
+					_portalCacheManager.clearAll();
+				}
 			}
 			catch (Exception e) {
 				_log.error("Unable to create SPI portal cache manager", e);
 			}
-
-			_portalCacheManager.clearAll();
 
 			return spiPortalCacheManagerConfigurator;
 		}
@@ -205,7 +233,7 @@ public class MultiVMPoolImpl implements MultiVMPool {
 			ServiceReference<SPIPortalCacheManagerConfigurator> reference,
 			SPIPortalCacheManagerConfigurator service) {
 
-			_portalCacheManager = _originalPortalCacheManager;
+			_spiPortalCacheManager = null;
 		}
 
 	}

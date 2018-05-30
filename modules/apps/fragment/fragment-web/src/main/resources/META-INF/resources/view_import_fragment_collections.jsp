@@ -21,7 +21,7 @@ DLConfiguration dlConfiguration = ConfigurationProviderUtil.getSystemConfigurati
 %>
 
 <div class="lfr-dynamic-uploader" id="<portlet:namespace />uploaderContainer">
-	<div class="container-fluid-1280">
+	<div class="sheet sheet-lg">
 		<liferay-ui:success embed="<%= false %>" key='<%= portletDisplay.getId() + "filesImported" %>' message='<%= LanguageUtil.get(resourceBundle, "the-files-were-imported-correctly") %>' />
 
 		<liferay-ui:error exception="<%= DuplicateFragmentCollectionKeyException.class %>">

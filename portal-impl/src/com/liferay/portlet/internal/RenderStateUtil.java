@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portlet.RenderParametersPool;
@@ -417,13 +416,9 @@ public class RenderStateUtil {
 			PRPGroup prpGroup = entry.getValue();
 
 			for (String portletId : prpGroup.getPortletIds()) {
-				StringBundler sb = new StringBundler(3);
+				String value = portletId.concat(StringPool.PIPE);
 
-				sb.append(portletId);
-				sb.append(StringPool.PIPE);
-				sb.append(prpGroup.getIdentifier());
-
-				jsonArray.put(sb.toString());
+				jsonArray.put(value.concat(prpGroup.getIdentifier()));
 			}
 
 			jsonObject.put(entry.getKey(), jsonArray);

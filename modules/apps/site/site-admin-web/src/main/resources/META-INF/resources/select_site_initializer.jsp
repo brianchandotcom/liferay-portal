@@ -82,9 +82,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= siteInitializerItem.getName() %>"
 							url="javascript:;"
-						>
-
-						</liferay-frontend:icon-vertical-card>
+						/>
 
 					<%
 					}
@@ -100,9 +98,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= siteInitializerItem.getName() %>"
 							url="javascript:;"
-						>
-
-						</liferay-frontend:vertical-card>
+						/>
 
 					<%
 					}

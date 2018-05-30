@@ -34,13 +34,6 @@
 		<execute macro="Upgrade#viewDocument" />
 	</command>
 
-	<command name="ViewDMArchive623" priority="5">
-		<property name="data.archive.type" value="data-archive-documents-and-media" />
-		<property name="portal.version" value="6.2.3" />
-
-		<execute macro="Upgrade#viewDocument" />
-	</command>
-
 	<command name="ViewDMArchive625" priority="5">
 		<property name="data.archive.type" value="data-archive-documents-and-media" />
 		<property name="portal.version" value="6.2.5" />

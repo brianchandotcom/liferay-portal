@@ -44,13 +44,6 @@
 		<execute macro="Upgrade#ViewDroolsAppManager" />
 	</command>
 
-	<command name="ViewDroolsInAppManagerAfterUpgrade623" priority="5">
-		<property name="data.archive.type" value="data-archive-portal" />
-		<property name="portal.version" value="6.2.3" />
-
-		<execute macro="Upgrade#ViewDroolsAppManager" />
-	</command>
-
 	<command name="ViewDroolsInAppManagerAfterUpgrade625" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
 		<property name="portal.version" value="6.2.5" />

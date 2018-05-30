@@ -78,15 +78,6 @@
 		<execute macro="Upgrade#publishWCDraft" />
 	</command>
 
-	<command name="ViewWebContentArchive623" priority="5">
-		<property name="data.archive.type" value="data-archive-web-content-draft" />
-		<property name="portal.version" value="6.2.3" />
-
-		<execute macro="Upgrade#addWCStructureAndTemplate" />
-
-		<execute macro="Upgrade#publishWCDraft" />
-	</command>
-
 	<command name="ViewWebContentArchive625" priority="5">
 		<property name="data.archive.type" value="data-archive-web-content-draft" />
 		<property name="portal.version" value="6.2.5" />

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -473,6 +474,13 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 	}
 
 	public void validateName(String name) throws PortalException {
+		int maxLength = ModelHintsUtil.getMaxLength(
+			Layout.class.getName(), "friendlyURL");
+
+		if (name.length() > maxLength) {
+			throw new LayoutNameException(LayoutNameException.TOO_LONG);
+		}
+
 		if (Validator.isNull(name)) {
 			throw new LayoutNameException();
 		}

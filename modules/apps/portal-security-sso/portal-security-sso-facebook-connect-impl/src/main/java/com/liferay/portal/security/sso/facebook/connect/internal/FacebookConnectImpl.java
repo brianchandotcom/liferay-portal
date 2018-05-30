@@ -61,16 +61,13 @@ public class FacebookConnectImpl implements FacebookConnect {
 		FacebookConnectConfiguration facebookConnectConfiguration =
 			getFacebookConnectConfiguration(companyId);
 
-		String url = _http.addParameter(
-			facebookConnectConfiguration.oauthTokenURL(), "client_id",
-			facebookConnectConfiguration.appId());
-
-		String facebookConnectRedirectURL =
-			facebookConnectConfiguration.oauthRedirectURL();
+		String url = facebookConnectConfiguration.oauthTokenURL();
 
 		url = _http.addParameter(
-			url, "redirect_uri", facebookConnectRedirectURL);
-
+			url, "client_id", facebookConnectConfiguration.appId());
+		url = _http.addParameter(
+			url, "redirect_uri",
+			facebookConnectConfiguration.oauthRedirectURL());
 		url = _http.addParameter(
 			url, "client_secret", facebookConnectConfiguration.appSecret());
 		url = _http.addParameter(url, "code", code);

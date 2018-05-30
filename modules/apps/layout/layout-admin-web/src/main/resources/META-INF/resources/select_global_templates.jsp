@@ -63,7 +63,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 	/>
 </liferay-ui:search-container>
 
-<portlet:actionURL name="/layout/add_content_layout" var="addLayoutURL">
+<portlet:actionURL name="/layout/add_content_layout" var="addContentLayoutURL">
 	<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
 	<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
@@ -94,7 +94,7 @@ String autoSiteNavigationMenuNames = layoutsAdminDisplayContext.getAutoSiteNavig
 					</c:if>
 
 					dialogTitle: '<liferay-ui:message key="add-page" />',
-					formSubmitURL: '<%= addLayoutURL %>',
+					formSubmitURL: '<%= addContentLayoutURL %>',
 					idFieldName: 'TypeSettingsProperties--layoutPageTemplateEntryId--',
 					idFieldValue: actionElement.dataset.layoutPageTemplateEntryId,
 					mainFieldName: 'name',

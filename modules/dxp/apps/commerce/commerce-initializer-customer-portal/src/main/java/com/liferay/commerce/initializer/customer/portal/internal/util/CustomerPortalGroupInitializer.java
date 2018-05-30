@@ -321,6 +321,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 			setThemePortletSettings(serviceContext);
 		}
+		catch (InitializationException ie) {
+			throw ie;
+		}
 		catch (Exception e) {
 			_log.error(e, e);
 

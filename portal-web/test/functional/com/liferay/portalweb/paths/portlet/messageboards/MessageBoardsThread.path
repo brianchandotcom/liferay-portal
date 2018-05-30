@@ -76,11 +76,6 @@
 </tr>
 <!--THREAD_CONTROLS-->
 <tr>
-	<td>THREAD_CONTROLS_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//div[@class='thread-actions']/ul/li/a[contains(.,'Move to the Recycle Bin')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>THREAD_CONTROLS_NAVIGATION</td>
 	<td>//div[@class='thread-navigation']</td>
 	<td></td>

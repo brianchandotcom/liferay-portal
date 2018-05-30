@@ -101,24 +101,22 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			'click',
 			'.add-site-action-option',
 			function(event) {
-				var actionElement = event.delegateTarget;
-
-				var creationType = actionElement.dataset.creationType;
+				var data = event.delegateTarget.dataset;
 
 				var uri = '<%= addSiteURL %>';
 
-				uri = Liferay.Util.addParams('<portlet:namespace />creationType=' + creationType, uri);
-				uri = Liferay.Util.addParams('<portlet:namespace />siteInitializerKey=' + actionElement.dataset.siteInitializerKey, uri);
+				uri = Liferay.Util.addParams('<portlet:namespace />creationType=' + data.creationType, uri);
+				uri = Liferay.Util.addParams('<portlet:namespace />siteInitializerKey=' + data.siteInitializerKey, uri);
 
 				modalCommands.openSimpleInputModal(
 					{
 						checkboxFieldLabel: '<liferay-ui:message key="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" />',
-						checkboxFieldName: creationType == '<%= SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE %>' ? 'layoutSetVisibilityPrivate' : '',
+						checkboxFieldName: (data.creationType == '<%= SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE %>') ? 'layoutSetVisibilityPrivate' : '',
 						checkboxFieldValue: false,
 						dialogTitle: '<liferay-ui:message key="add-site" />',
 						formSubmitURL: uri,
 						idFieldName: 'layoutSetPrototypeId',
-						idFieldValue: actionElement.dataset.layoutSetPrototypeId,
+						idFieldValue: data.layoutSetPrototypeId,
 						mainFieldName: 'name',
 						mainFieldLabel: '<liferay-ui:message key="name" />',
 						namespace: '<portlet:namespace />',

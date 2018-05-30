@@ -183,7 +183,7 @@
 		<loadproperties srcFile="${modules.dir}/../release.properties">
 			<filterchain>
 				<linecontains>
-					<contains value="lp.version=" />
+					<contains value="lp.version.major=" />
 				</linecontains>
 			</filterchain>
 		</loadproperties>
@@ -314,7 +314,7 @@
 				includes="${app.module.dirs}"
 			/>
 			<property name="liferay.releng.app.title" value="${Liferay-Releng-App-Title}" />
-			<property name="lp.version" value="${lp.version}" />
+			<property name="lp.version.major" value="${lp.version.major}" />
 			<property name="lpkg.title.prefix" value="${lpkg.title.prefix}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
 			<property name="osgi.static.modules" value="${osgi.static.modules}" />

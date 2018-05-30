@@ -106,7 +106,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		Map<String, Object> context = getContext();
 
-		if (Validator.isNotNull(_componentId) ||
+		if (Validator.isNotNull(_componentId) || Validator.isNotNull(_module) ||
 			Validator.isNotNull(context.get("data"))) {
 
 			return true;

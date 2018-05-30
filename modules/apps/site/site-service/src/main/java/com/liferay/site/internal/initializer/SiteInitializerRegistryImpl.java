@@ -85,7 +85,7 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, SiteInitializer.class, "group.initializer.key",
+			bundleContext, SiteInitializer.class, "site.initializer.key",
 			ServiceTrackerCustomizerFactory.<SiteInitializer>serviceWrapper(
 				bundleContext));
 	}

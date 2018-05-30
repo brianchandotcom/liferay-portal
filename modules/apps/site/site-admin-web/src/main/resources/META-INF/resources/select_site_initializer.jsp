@@ -86,7 +86,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 		<liferay-ui:search-iterator
 			displayStyle="icon"
 			markupView="lexicon"
-			searchContainer="<%= siteInitializerItemSearchContainer %>"
 		/>
 	</liferay-ui:search-container>
 

@@ -18,22 +18,24 @@
 
 <portlet:actionURL name="installRemoteApp" var="installRemoteAppURL" />
 
-<aui:form action="<%= installRemoteAppURL %>" method="post" name="fm">
+<aui:form action="<%= installRemoteAppURL %>" cssClass="container-fluid-1280 container-view" method="post" name="fm">
 	<aui:input name="mvcPath" type="hidden" value="/install_remote_app.jsp" />
 
-	<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount(false) > 1 %>">
-		<div class="alert alert-info">
-			<liferay-ui:message key="installed-apps-are-available-to-all-portal-instances.-go-to-plugins-configuration-within-each-portal-instance-to-enable-disable-each-app" />
-		</div>
-	</c:if>
+	<div class="sheet">
+		<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount(false) > 1 %>">
+			<div class="alert alert-info">
+				<liferay-ui:message key="installed-apps-are-available-to-all-portal-instances.-go-to-plugins-configuration-within-each-portal-instance-to-enable-disable-each-app" />
+			</div>
+		</c:if>
 
-	<liferay-ui:error key="invalidURL" message="please-enter-a-valid-url" />
+		<liferay-ui:error key="invalidURL" message="please-enter-a-valid-url" />
 
-	<liferay-ui:success key="pluginDownloaded" message="the-plugin-was-downloaded-successfully-and-is-now-being-installed" />
+		<liferay-ui:success key="pluginDownloaded" message="the-plugin-was-downloaded-successfully-and-is-now-being-installed" />
 
-	<aui:fieldset>
 		<aui:input cssClass="file-input" name="url" type="text" />
 
-		<aui:button type="submit" value="install" />
-	</aui:fieldset>
+		<div class="sheet-footer">
+			<aui:button type="submit" value="install" />
+		</div>
+	</div>
 </aui:form>

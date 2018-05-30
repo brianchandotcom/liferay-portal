@@ -16,22 +16,33 @@ package com.liferay.document.library.uad.anonymizer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseUADAnonymizerTestCase;
 
+import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -49,6 +60,42 @@ public class DLFileEntryUADAnonymizerTest
 	@After
 	public void tearDown() throws Exception {
 		_dlFileEntryUADTestHelper.cleanUpDependencies(_dlFileEntries);
+	}
+
+	@Test
+	public void testAnonymizeDLFileEntryVersions() throws Exception {
+		Assert.assertTrue(true);
+
+		DLFileEntry dlFileEntry = _dlFileEntryUADTestHelper.addDLFileEntry(
+			user.getUserId());
+
+		_dlFileEntries.add(dlFileEntry);
+
+		long dlFileEntryId = dlFileEntry.getFileEntryId();
+
+		_randomDLFileEntryUpdate(dlFileEntryId);
+		_randomDLFileEntryUpdate(dlFileEntryId);
+		_randomDLFileEntryUpdate(dlFileEntryId);
+
+		dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(dlFileEntryId);
+
+		List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(
+			WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			dlFileVersions.toString(), 3, dlFileVersions.size());
+
+		uadAnonymizer.autoAnonymize(
+			dlFileEntry, user.getUserId(), anonymousUser);
+
+		dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(dlFileEntryId);
+
+		dlFileVersions = dlFileEntry.getFileVersions(
+			WorkflowConstants.STATUS_ANY);
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+			_assertDLFileVersionAnonymized(dlFileVersion);
+		}
 	}
 
 	@Override
@@ -108,6 +155,47 @@ public class DLFileEntryUADAnonymizerTest
 
 		return false;
 	}
+
+	private void _assertDLFileVersionAnonymized(DLFileVersion dlFileVersion) {
+		Assert.assertEquals(
+			dlFileVersion.toString(), anonymousUser.getUserId(),
+			dlFileVersion.getUserId());
+		Assert.assertEquals(
+			dlFileVersion.toString(), anonymousUser.getUserId(),
+			dlFileVersion.getStatusByUserId());
+		Assert.assertEquals(
+			dlFileVersion.toString(), anonymousUser.getFullName(),
+			dlFileVersion.getUserName());
+		Assert.assertEquals(
+			dlFileVersion.toString(), anonymousUser.getFullName(),
+			dlFileVersion.getStatusByUserName());
+	}
+
+	private void _randomDLFileEntryUpdate(long dlFileEntryId) throws Exception {
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
+			dlFileEntryId);
+
+		long userId = dlFileEntry.getUserId();
+
+		long fileEntryId = dlFileEntryId;
+		String sourceFileName = RandomTestUtil.randomString();
+		String contentType = ContentTypes.TEXT;
+		String title = RandomTestUtil.randomString();
+		String description = RandomTestUtil.randomString();
+		String changeLog = RandomTestUtil.randomString();
+		boolean majorVersion = true;
+		InputStream is = dlFileEntry.getContentStream();
+		long size = dlFileEntry.getSize();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		_dlAppLocalService.updateFileEntry(
+			userId, fileEntryId, sourceFileName, contentType, title,
+			description, changeLog, majorVersion, is, size, serviceContext);
+	}
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	@DeleteAfterTestRun
 	private final List<DLFileEntry> _dlFileEntries = new ArrayList<>();

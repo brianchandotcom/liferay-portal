@@ -3419,6 +3419,7 @@
 		<exception>LayoutFriendlyURLs</exception>
 		<exception>LayoutHidden</exception>
 		<exception>LayoutName</exception>
+		<exception>LayoutNameLength</exception>
 		<exception>LayoutParentLayoutId</exception>
 		<exception>LayoutPermission</exception>
 		<exception>LayoutPrototype</exception>

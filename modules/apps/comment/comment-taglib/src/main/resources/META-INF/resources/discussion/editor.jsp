@@ -25,5 +25,5 @@
 	onChangeMethod='<%= ParamUtil.getString(request, "onChangeMethod") %>'
 	placeholder='<%= ParamUtil.getString(request, "placeholder") %>'
 	showSource="<%= false %>"
-	skipEditorLoading='<%= ParamUtil.getBoolean(request, "skipEditorLoading") %>'
+	skipEditorLoading="<%= true %>"
 />

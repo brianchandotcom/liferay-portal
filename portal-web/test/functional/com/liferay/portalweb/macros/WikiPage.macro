@@ -1210,7 +1210,7 @@
 			<condition function="IsTextNotEqual" locator1="WikiTable#ALL_PAGES_REVISION" value1="1.0 (Minor Edit)" />
 			<then>
 				<execute macro="LexiconEntry#gotoEllipsisMenuItem">
-					<var name="menuItem" value="Move to the Recycle Bin" />
+					<var name="menuItem" value="Move to Recycle Bin" />
 				</execute>
 
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />

@@ -117,7 +117,8 @@ public class LayoutPageTemplateDisplayContext {
 						dropdownItem.putData(
 							"action", "addLayoutPageTemplateEntry");
 						dropdownItem.putData(
-							"submitURL", _getAddLayoutPageTemplateEntryURL());
+							"addPageTemplateURL",
+							_getAddLayoutPageTemplateEntryURL());
 						dropdownItem.setHref("#");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
@@ -129,7 +130,7 @@ public class LayoutPageTemplateDisplayContext {
 						dropdownItem.putData(
 							"action", "addLayoutPageTemplateEntry");
 						dropdownItem.putData(
-							"submitURL", _getAddLayoutPrototypeURL());
+							"addPageTemplateURL", _getAddLayoutPrototypeURL());
 						dropdownItem.setHref("#");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "widget-page-template"));

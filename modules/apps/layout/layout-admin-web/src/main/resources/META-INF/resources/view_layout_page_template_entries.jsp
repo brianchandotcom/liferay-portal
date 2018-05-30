@@ -151,7 +151,7 @@ request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, la
 		modalCommands.openSimpleInputModal(
 			{
 				dialogTitle: '<liferay-ui:message key="add-page-template" />',
-				formSubmitURL: itemData.submitURL,
+				formSubmitURL: itemData.addPageTemplateURL,
 				mainFieldLabel: '<liferay-ui:message key="name" />',
 				mainFieldName: 'name',
 				mainFieldPlaceholder: '<liferay-ui:message key="name" />',

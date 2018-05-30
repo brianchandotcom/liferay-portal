@@ -50,6 +50,7 @@
 		<check name="CSSWhitespaceCheck" />
 	</source-processor>
 	<source-processor name="DockerfileSourceProcessor">
+		<check name="DockerfileEmptyLinesCheck" />
 		<check name="WhitespaceCheck">
 			<property name="allowLeadingSpaces" value="true" />
 		</check>

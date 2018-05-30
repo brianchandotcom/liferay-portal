@@ -14,11 +14,15 @@
 
 package com.liferay.portal.template.soy.utils;
 
+import java.util.Map;
+
 /**
  * @author Matthew Tambara
  */
 public interface SoyContextFactory {
 
 	public SoyContext createSoyContext();
+
+	public SoyContext createSoyContext(Map<String, Object> context);
 
 }

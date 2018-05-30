@@ -18,6 +18,8 @@ import com.liferay.portal.template.soy.internal.SoyContextImpl;
 import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.portal.template.soy.utils.SoyContextFactory;
 
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -29,6 +31,11 @@ public class SoyContextFactoryImpl implements SoyContextFactory {
 	@Override
 	public SoyContext createSoyContext() {
 		return new SoyContextImpl();
+	}
+
+	@Override
+	public SoyContext createSoyContext(Map<String, Object> context) {
+		return new SoyContextImpl(context);
 	}
 
 }

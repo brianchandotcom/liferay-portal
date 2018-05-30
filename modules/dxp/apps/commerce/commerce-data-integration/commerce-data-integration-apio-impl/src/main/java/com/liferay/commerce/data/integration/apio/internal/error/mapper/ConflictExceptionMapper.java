@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Zoltán Takács
  */
-@Component(immediate = true)
+@Component(immediate = true, property = "service.ranking:Integer=90")
 public class ConflictExceptionMapper
 	implements ExceptionMapper<ConflictException> {
 
@@ -37,7 +37,7 @@ public class ConflictExceptionMapper
 
 		return new APIError(
 			ce, "Unable to process the contained instructions in the request",
-			"Conflict", status.getStatusCode());
+			"Conflict: " + ce.getLocalizedMessage(), status.getStatusCode());
 	}
 
 }

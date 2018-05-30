@@ -104,8 +104,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_TO_THE_RECYCLING_BIN</td>
-	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Move to the Recycle Bin')]</td>
+	<td>MOVE_TO_RECYCLING_BIN</td>
+	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Move to Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

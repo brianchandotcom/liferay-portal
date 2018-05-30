@@ -104,7 +104,7 @@ public class AMJournalEditorConfigContributor
 
 		jsonObject.put(
 			"adaptiveMediaFileEntryAttributeName",
-			AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME);
+			AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID);
 
 		String extraPlugins = jsonObject.getString("extraPlugins");
 

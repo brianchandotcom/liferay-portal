@@ -25,7 +25,7 @@ page import="com.liferay.portal.servlet.ComboServletStaticURLGenerator" %><%@
 page import="com.liferay.portal.util.LayoutTypeAccessPolicyTracker" %><%@
 page import="com.liferay.portlet.PortletResourceAccessor" %><%@
 page import="com.liferay.portlet.PortletResourceStaticURLGenerator" %><%@
-page import="com.liferay.portlet.RenderStateUtil" %><%@
+page import="com.liferay.portlet.internal.RenderStateUtil" %><%@
 page import="com.liferay.taglib.aui.ScriptTag" %>
 
 <%@ page import="java.util.Iterator" %><%@

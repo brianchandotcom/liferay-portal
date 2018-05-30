@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -31,7 +30,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
-import com.liferay.portlet.internal.LiferayPortletURLPrivilegedAction;
+import com.liferay.portlet.RenderParametersPool;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -52,7 +51,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Neil Griffin
  */
-@ProviderType
 public class RenderStateUtil {
 
 	public static String generateJSON(

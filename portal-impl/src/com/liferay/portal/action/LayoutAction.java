@@ -45,8 +45,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.RenderData;
 import com.liferay.portlet.RenderParametersPool;
-import com.liferay.portlet.RenderStateUtil;
-import com.liferay.portlet.internal.RenderDataImpl;
+import com.liferay.portlet.internal.RenderData;
+import com.liferay.portlet.internal.RenderStateUtil;
 
 import java.io.PrintWriter;
 
@@ -340,7 +340,7 @@ public class LayoutAction extends Action {
 								PortletContainerUtil.serveResource(
 									request, bufferedResponse, curPortlet);
 
-								RenderData renderData = new RenderDataImpl(
+								RenderData renderData = new RenderData(
 									bufferedResponse.getContentType(),
 									bufferedResponse.getString());
 

@@ -105,7 +105,6 @@ public class QuartzSchedulerEngineTest {
 		_quartzSchedulerEngine.setJsonFactory(setUpJSONFactory());
 		_quartzSchedulerEngine.setMessageBus(setUpMessageBus());
 		_quartzSchedulerEngine.setProps(setUpProps());
-		_quartzSchedulerEngine.setQuartzTriggerFactory(_quartzTriggerFactory);
 
 		ReflectionTestUtil.setFieldValue(
 			_quartzSchedulerEngine, "_memoryScheduler",

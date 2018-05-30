@@ -887,13 +887,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			_props.get(PropsKeys.SCHEDULER_JOB_NAME_MAX_LENGTH), 80);
 	}
 
-	@Reference(unbind = "-")
-	protected void setQuartzTriggerFactory(
-		QuartzTriggerFactory quartzTriggerFactory) {
-
-		_quartzTriggerFactory = quartzTriggerFactory;
-	}
-
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.portal.scheduler.quartz)(release.schema.version=1.0.0))",
 		unbind = "-"
@@ -1042,7 +1035,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private MessageBus _messageBus;
 	private Scheduler _persistedScheduler;
 	private Props _props;
-	private QuartzTriggerFactory _quartzTriggerFactory;
 	private volatile boolean _schedulerEngineEnabled;
 	private SchedulerEngineHelper _schedulerEngineHelper;
 

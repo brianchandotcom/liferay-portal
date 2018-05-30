@@ -2383,15 +2383,15 @@ public class StringUtil {
 
 		iterate:
 		for (int i = 0; i < s.length(); i++) {
-			char c = s.charAt(i);
+			char c1 = s.charAt(i);
 
-			for (int j = 0; j < oldSubs.length; j++) {
-				if (c == oldSubs[j]) {
+			for (char c2 : oldSubs) {
+				if (c1 == c2) {
 					continue iterate;
 				}
 			}
 
-			sb.append(c);
+			sb.append(c1);
 		}
 
 		if (s.length() == sb.length()) {

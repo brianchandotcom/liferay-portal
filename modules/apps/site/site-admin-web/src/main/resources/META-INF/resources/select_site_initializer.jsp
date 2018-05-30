@@ -74,7 +74,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					%>
 
 						<liferay-frontend:icon-vertical-card
-							cssClass='<%= renderResponse.getNamespace() + "add-site-action-option" %>'
+							cssClass="add-site-action-option"
 							data="<%= addLayoutData %>"
 							icon="site-template"
 							title="<%= siteInitializerItem.getName() %>"
@@ -87,7 +87,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					%>
 
 						<liferay-frontend:vertical-card
-							cssClass='<%= renderResponse.getNamespace() + "add-site-action-option" %>'
+							cssClass="add-site-action-option"
 							data="<%= addLayoutData %>"
 							imageUrl="<%= HtmlUtil.escape(siteInitializerItem.getIcon()) %>"
 							title="<%= siteInitializerItem.getName() %>"
@@ -120,7 +120,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 			var addSiteActionOptionQueryClickHandler = dom.delegate(
 				document.body,
 				'click',
-				'.<portlet:namespace />add-site-action-option',
+				'.add-site-action-option',
 				function(event) {
 					var actionElement = event.delegateTarget;
 

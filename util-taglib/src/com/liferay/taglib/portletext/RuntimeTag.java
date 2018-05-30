@@ -257,7 +257,8 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			boolean writeObject = false;
 
 			if (persistSettings &&
-				!themeDisplay.isPortletEmbedded(portlet.getPortletId())) {
+				!layout.isPortletEmbedded(
+					portlet.getPortletId(), layout.getGroupId())) {
 
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),

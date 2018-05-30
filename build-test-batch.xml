@@ -2852,35 +2852,52 @@ app.server.type=@{app.server.type}]]></echo>
 
 						<propertycopy from="browser.firefox.bin.file[${browser.firefox.version}]" name="browser.firefox.bin.file" silent="true" />
 
-						<mirrors-get
-							dest="${project.dir}"
-							src="${faces.war.url}"
-						/>
+						<execute dir="${liferay.faces.bridge.impl.dir}/demo">
+							mvn clean package -P liferay,mojarra,tomcat
+						</execute>
 
-						<local name="faces.war.file.name" />
+						<execute dir="${liferay.faces.bridge.impl.dir}/issue">
+							mvn clean package -P liferay,mojarra,tomcat
+						</execute>
 
-						<basename file="${faces.war.url}" property="faces.war.file.name" />
+						<execute dir="${liferay.faces.bridge.impl.dir}/tck">
+							mvn clean package -P liferay,mojarra,tomcat
+						</execute>
 
-						<unzip
-							dest="${liferay.home}/deploy/"
-							src="${project.dir}/${faces.war.file.name}"
+						<execute dir="${liferay.faces.portal.dir}/demo">
+							mvn clean package -P liferay,mojarra,tomcat,validateCaptchaForTest
+						</execute>
+
+						<execute dir="${liferay.faces.portal.dir}/test/test-setup-hook">
+							mvn clean package -P liferay,mojarra,tomcat
+						</execute>
+
+						<copy
+							flatten="true"
+							todir="${liferay.home}/deploy/"
 						>
-							<patternset
-								excludes="com.liferay.faces.test.setup.hook*.war"
-								includes="*.war"
+							<fileset
+								dir="${liferay.faces.bridge.impl.dir}"
+								includes="**/target/*.war"
 							/>
-						</unzip>
+							<fileset
+								dir="${liferay.faces.portal.dir}"
+								excludes="**/target/com.liferay.faces.test.setup.hook*.war"
+								includes="**/target/*.war"
+							/>
+						</copy>
 
 						<antcall target="start-app-server" />
 
-						<unzip
-							dest="${liferay.home}/deploy/"
-							src="${project.dir}/${faces.war.file.name}"
+						<copy
+							flatten="true"
+							todir="${liferay.home}/deploy/"
 						>
-							<patternset
-								includes="com.liferay.faces.test.setup.hook*.war"
+							<fileset
+								dir="${liferay.faces.portal.dir}"
+								includes="**/target/com.liferay.faces.test.setup.hook*.war"
 							/>
-						</unzip>
+						</copy>
 
 						<wait-for-app-server-log-message log.message="Hook for com.liferay.faces.test.setup.hook is available for use" />
 

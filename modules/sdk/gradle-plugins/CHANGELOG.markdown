@@ -4645,7 +4645,7 @@ to version 2.3.170.
 - [LPS-80517]: Update the [Liferay Source Formatter] dependency to version
 1.0.643.
 
-## 3.12.20 - 2018-05-29
+## 3.12.21 - 2018-05-29
 
 ### Added
 - [LPS-81635]: Set the Bnd instruction `-contract` to

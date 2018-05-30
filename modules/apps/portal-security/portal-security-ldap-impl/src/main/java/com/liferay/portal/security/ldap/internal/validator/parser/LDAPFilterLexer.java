@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 LDAPFilter.g 2016-02-01 08:06:23
+// $ANTLR 3.0.1 LDAPFilter.g 2018-02-19 15:27:52
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -18,32 +18,35 @@ package com.liferay.portal.security.ldap.internal.validator.parser;
 
 
 import org.antlr.runtime.*;
+import java.util.Stack;
+import java.util.List;
+import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class LDAPFilterLexer extends Lexer {
-    public static final int DASH=10;
-    public static final int ASCII_LETTER=8;
-    public static final int Tokens=24;
-    public static final int EOF=-1;
     public static final int UTF=6;
-    public static final int T23=23;
-    public static final int T22=22;
+    public static final int DASH=10;
     public static final int T21=21;
     public static final int T20=20;
-    public static final int COLON=7;
+    public static final int T23=23;
     public static final int ASCII_LATIN1=4;
-    public static final int T11=11;
-    public static final int T12=12;
-    public static final int DIGIT=9;
-    public static final int T13=13;
-    public static final int T14=14;
+    public static final int T22=22;
+    public static final int EOF=-1;
+    public static final int Tokens=24;
     public static final int DOT=5;
-    public static final int T15=15;
+    public static final int COLON=7;
+    public static final int DIGIT=9;
+    public static final int ASCII_LETTER=8;
+    public static final int T12=12;
+    public static final int T11=11;
+    public static final int T14=14;
+    public static final int T13=13;
     public static final int T16=16;
-    public static final int T17=17;
+    public static final int T15=15;
     public static final int T18=18;
+    public static final int T17=17;
     public static final int T19=19;
-
+    
 	@Override
 	public void reportError(RecognitionException e) {
 		throw new RuntimeException(e);
@@ -297,7 +300,7 @@ public class LDAPFilterLexer extends Lexer {
     // $ANTLR start ASCII_LETTER
     public final void mASCII_LETTER() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:152:2: ( 'a' .. 'z' | 'A' .. 'Z' )
+	    // LDAPFilter.g:153:2: ( 'a' .. 'z' | 'A' .. 'Z' )
 	    // LDAPFilter.g:
 	    {
 	    if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -322,8 +325,8 @@ public class LDAPFilterLexer extends Lexer {
     // $ANTLR start DIGIT
     public final void mDIGIT() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:155:15: ( '0' .. '9' )
-	    // LDAPFilter.g:155:18: '0' .. '9'
+	    // LDAPFilter.g:156:15: ( '0' .. '9' )
+	    // LDAPFilter.g:156:18: '0' .. '9'
 	    {
 	    matchRange('0','9'); 
 
@@ -338,8 +341,8 @@ public class LDAPFilterLexer extends Lexer {
     // $ANTLR start DASH
     public final void mDASH() throws RecognitionException {
 	try {
-	    // LDAPFilter.g:156:14: ( '-' )
-	    // LDAPFilter.g:156:16: '-'
+	    // LDAPFilter.g:157:14: ( '-' )
+	    // LDAPFilter.g:157:16: '-'
 	    {
 	    match('-'); 
 
@@ -355,8 +358,8 @@ public class LDAPFilterLexer extends Lexer {
     public final void mDOT() throws RecognitionException {
 	try {
 	    int _type = DOT;
-	    // LDAPFilter.g:158:4: ( '.' )
-	    // LDAPFilter.g:158:6: '.'
+	    // LDAPFilter.g:159:4: ( '.' )
+	    // LDAPFilter.g:159:6: '.'
 	    {
 	    match('.'); 
 
@@ -373,8 +376,8 @@ public class LDAPFilterLexer extends Lexer {
     public final void mCOLON() throws RecognitionException {
 	try {
 	    int _type = COLON;
-	    // LDAPFilter.g:159:6: ( ':' )
-	    // LDAPFilter.g:159:8: ':'
+	    // LDAPFilter.g:160:6: ( ':' )
+	    // LDAPFilter.g:160:8: ':'
 	    {
 	    match(':'); 
 
@@ -391,8 +394,8 @@ public class LDAPFilterLexer extends Lexer {
     public final void mUTF() throws RecognitionException {
 	try {
 	    int _type = UTF;
-	    // LDAPFilter.g:160:4: ( '\\u0080' .. '\\ufffe' )
-	    // LDAPFilter.g:160:6: '\\u0080' .. '\\ufffe'
+	    // LDAPFilter.g:161:4: ( '\\u0080' .. '\\ufffe' )
+	    // LDAPFilter.g:161:6: '\\u0080' .. '\\ufffe'
 	    {
 	    matchRange('\u0080','\uFFFE'); 
 
@@ -409,8 +412,8 @@ public class LDAPFilterLexer extends Lexer {
     public final void mASCII_LATIN1() throws RecognitionException {
 	try {
 	    int _type = ASCII_LATIN1;
-	    // LDAPFilter.g:161:13: ( '\\u0000' .. '\\u007f' )
-	    // LDAPFilter.g:161:15: '\\u0000' .. '\\u007f'
+	    // LDAPFilter.g:162:13: ( '\\u0000' .. '\\u007f' )
+	    // LDAPFilter.g:162:15: '\\u0000' .. '\\u007f'
 	    {
 	    matchRange('\u0000','\u007F'); 
 
@@ -475,14 +478,14 @@ public class LDAPFilterLexer extends Lexer {
 	}
 	else if ( (LA1_0==':') ) {
 	    switch ( input.LA(2) ) {
-	    case '=':
-		{
-		alt1=11;
-		}
-		break;
 	    case 'd':
 		{
 		alt1=10;
+		}
+		break;
+	    case '=':
+		{
+		alt1=11;
 		}
 		break;
 	    default:

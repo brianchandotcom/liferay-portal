@@ -41,23 +41,21 @@ T21 : ':=' ;
 T22 : '*' ;
 T23 : ';' ;
 
-// $ANTLR src "LDAPFilter.g" 151
+// $ANTLR src "LDAPFilter.g" 152
 fragment ASCII_LETTER
 	: 'a'..'z'
 	|'A'..'Z'
 	;
-// $ANTLR src "LDAPFilter.g" 155
-fragment DIGIT:  '0'..'9';
 // $ANTLR src "LDAPFilter.g" 156
+fragment DIGIT:  '0'..'9';
+// $ANTLR src "LDAPFilter.g" 157
 fragment DASH: '-';
 
-// $ANTLR src "LDAPFilter.g" 158
-DOT: '.';
 // $ANTLR src "LDAPFilter.g" 159
-COLON: ':';
+DOT: '.';
 // $ANTLR src "LDAPFilter.g" 160
-UTF: '\u0080'..'\ufffe';
+COLON: ':';
 // $ANTLR src "LDAPFilter.g" 161
+UTF: '\u0080'..'\ufffe';
+// $ANTLR src "LDAPFilter.g" 162
 ASCII_LATIN1: '\u0000'..'\u007f';
-
-

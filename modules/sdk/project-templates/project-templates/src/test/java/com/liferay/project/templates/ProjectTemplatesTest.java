@@ -58,7 +58,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.jar.JarFile;
@@ -1985,73 +1984,35 @@ public class ProjectTemplatesTest {
 		Optional<String> result = _executeGradle(
 			gradleProjectDir, true, _GRADLE_TASK_PATH_BUILD);
 
-		Scanner scanner = new Scanner(result.get());
+		Matcher matcher = _gradlePluginVersionPattern.matcher(result.get());
 
 		String standaloneGradlePluginVersion = null;
 
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-
-			if ((standaloneGradlePluginVersion == null) &&
-				line.contains("com.liferay.gradle.plugins:")) {
-
-				int lastIndex = line.lastIndexOf("com.liferay.gradle.plugins:");
-
-				String lineFixed = line.substring(lastIndex);
-
-				if (lineFixed.indexOf("(") > -1) {
-					lineFixed = lineFixed.substring(0, lineFixed.indexOf("("));
-				}
-
-				standaloneGradlePluginVersion = lineFixed.split(":")[1];
-
-				break;
-			}
+		if (matcher.matches()) {
+			standaloneGradlePluginVersion = matcher.group(1);
 		}
-
-		scanner.close();
 
 		result = _executeGradle(
 			workspaceDir, true, ":modules:" + name + ":clean");
 
-		scanner = new Scanner(result.get());
+		matcher = _gradlePluginVersionPattern.matcher(result.get());
 
 		String workspaceGradlePluginVersion = null;
 
-		while (scanner.hasNextLine()) {
-			String line = scanner.nextLine();
-
-			if ((workspaceGradlePluginVersion == null) &&
-				line.contains("com.liferay.gradle.plugins:")) {
-
-				int lastIndex = line.lastIndexOf("com.liferay.gradle.plugins:");
-
-				String lineFixed = line.substring(lastIndex);
-
-				if (lineFixed.indexOf("(") > -1) {
-					lineFixed = lineFixed.substring(0, lineFixed.indexOf("("));
-				}
-
-				workspaceGradlePluginVersion = lineFixed.split(":")[1];
-
-				break;
-			}
+		if (matcher.matches()) {
+			workspaceGradlePluginVersion = matcher.group(1);
 		}
 
-		scanner.close();
-		boolean versionCheck = standaloneGradlePluginVersion.equals(
+		boolean versionsEqual = standaloneGradlePluginVersion.equals(
 			workspaceGradlePluginVersion);
 
-		if (!versionCheck) {
-			String message =
-				"com.liferay.gradle.plugins versions must match (standalone: " +
-					"%s, workspace: %s)";
+		if (!versionsEqual) {
+			String message = String.format(
+				"com.liferay.plugin versions don't match (standalone: %s, " +
+					"workspace: %s)",
+				standaloneGradlePluginVersion, workspaceGradlePluginVersion);
 
-			message = String.format(
-				message, standaloneGradlePluginVersion,
-				workspaceGradlePluginVersion);
-
-			Assert.assertTrue(message, versionCheck);
+			Assert.assertTrue(message, versionsEqual);
 		}
 	}
 
@@ -3571,6 +3532,9 @@ public class ProjectTemplatesTest {
 		"test.debug.bundle.diffs");
 
 	private static URI _gradleDistribution;
+	private static final Pattern _gradlePluginVersionPattern = Pattern.compile(
+		".*com\\.liferay\\.gradle\\.plugins:([0-9]+\\.[0-9]+\\.[0-9]+).*",
+		Pattern.DOTALL | Pattern.MULTILINE);
 	private static XPathExpression _pomXmlNpmInstallXPathExpression;
 	private static Properties _projectTemplateVersions;
 

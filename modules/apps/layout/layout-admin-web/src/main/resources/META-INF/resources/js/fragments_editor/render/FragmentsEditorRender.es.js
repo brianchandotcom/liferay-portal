@@ -12,6 +12,31 @@ import templates from './FragmentsEditorRender.soy';
 class FragmentsEditorRender extends Component {
 
 	/**
+	 * Gives focus to the specified fragmentEntryLinkId
+	 * @param {string} fragmentEntryLinkId
+	 * @review
+	 */
+
+	focusFragmentEntryLink(fragmentEntryLinkId) {
+		requestAnimationFrame(
+			() => {
+				const index = this.fragmentEntryLinks.findIndex(
+					_fragmentEntryLink => {
+						return _fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId;
+					}
+				);
+
+				const fragmentEntryLinkElement = this.refs.fragmentEntryLinks.querySelectorAll(
+					'.fragment-entry-link-wrapper'
+				)[index];
+
+				fragmentEntryLinkElement.focus();
+				fragmentEntryLinkElement.scrollIntoView();
+			}
+		);
+	}
+
+	/**
 	 * @param {object} event
 	 * @private
 	 * @review

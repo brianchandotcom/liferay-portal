@@ -108,21 +108,8 @@ class FragmentsEditor extends Component {
 	 */
 
 	_focusFragmentEntryLink(fragmentEntryLinkId) {
-		requestAnimationFrame(
-			() => {
-				const index = this.fragmentEntryLinks.findIndex(
-					_fragmentEntryLink => {
-						return _fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId;
-					}
-				);
-
-				const fragmentEntryLinkElement = this.refs.fragmentEntryLinks.querySelectorAll(
-					'.fragment-entry-link-wrapper'
-				)[index];
-
-				fragmentEntryLinkElement.focus();
-				fragmentEntryLinkElement.scrollIntoView();
-			}
+		this.refs.fragmentsEditorRender.focusFragmentEntryLink(
+			fragmentEntryLinkId
 		);
 	}
 

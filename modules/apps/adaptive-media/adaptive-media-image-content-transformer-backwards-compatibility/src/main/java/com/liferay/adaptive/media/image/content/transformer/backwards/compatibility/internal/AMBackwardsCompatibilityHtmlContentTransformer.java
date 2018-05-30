@@ -51,7 +51,8 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 	@Override
 	protected FileEntry getFileEntry(Matcher matcher) throws PortalException {
 		if (StringUtil.containsIgnoreCase(
-				matcher.group(0), AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME)) {
+				matcher.group(0),
+				AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID)) {
 
 			return null;
 		}

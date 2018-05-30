@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,7 +51,7 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 		StringBundler sb = new StringBundler(5 + sourceElements.size());
 
 		sb.append("<picture ");
-		sb.append(AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME);
+		sb.append(AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID);
 		sb.append("=\"");
 		sb.append(fileEntry.getFileEntryId());
 		sb.append("\">");
@@ -132,10 +131,6 @@ public class AMImageHTMLTagFactoryImpl implements AMImageHTMLTagFactory {
 			Collectors.toList()
 		);
 	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"\\s*" + AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME + "=\"(\\d+)\"",
-		Pattern.CASE_INSENSITIVE);
 
 	private MediaQueryProvider _mediaQueryProvider;
 

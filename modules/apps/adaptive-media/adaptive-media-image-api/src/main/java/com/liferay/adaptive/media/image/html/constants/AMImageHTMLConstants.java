@@ -19,6 +19,7 @@ package com.liferay.adaptive.media.image.html.constants;
  */
 public class AMImageHTMLConstants {
 
-	public static final String FILE_ENTRY_ATTR_NAME = "data-fileentryid";
+	public static final String ATTRIBUTE_NAME_FILE_ENTRY_ID =
+		"data-fileentryid";
 
 }

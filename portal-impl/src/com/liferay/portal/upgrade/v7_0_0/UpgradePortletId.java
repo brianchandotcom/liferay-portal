@@ -46,6 +46,7 @@ public class UpgradePortletId
 			new String[] {"146", _LAYOUT_PROTOTYPE},
 			new String[] {"147", _ASSET_CATEGORIES_ADMIN},
 			new String[] {"149", _LAYOUT_SET_PROTOTYPE},
+			new String[] {"153", PortletKeys.MY_WORKFLOW_TASK},
 			new String[] {"156", PortletKeys.GROUP_PAGES},
 			new String[] {"161", PortletKeys.BLOGS_ADMIN},
 			new String[] {"162", PortletKeys.MESSAGE_BOARDS_ADMIN},

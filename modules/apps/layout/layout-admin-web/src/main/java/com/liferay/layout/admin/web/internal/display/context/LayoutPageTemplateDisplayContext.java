@@ -482,7 +482,6 @@ public class LayoutPageTemplateDisplayContext {
 		return false;
 	}
 
-	private String _displayStyle;
 	private String _keywords;
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 	private Long _layoutPageTemplateCollectionId;

@@ -52,26 +52,17 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	public List<LayoutPageTemplateEntry> getGlobalLayoutPageTemplateEntries()
 		throws PortalException {
 
-		if (_layoutPageTemplateEntries != null) {
-			return _layoutPageTemplateEntries;
-		}
-
 		Company company = _themeDisplay.getCompany();
 
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator =
 			LayoutPageTemplatePortletUtil.
 				getLayoutPageTemplateEntryOrderByComparator("name", "asc");
 
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
-			LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
-				company.getGroupId(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, orderByComparator);
-
-		_layoutPageTemplateEntries = layoutPageTemplateEntries;
-
-		return _layoutPageTemplateEntries;
+		return LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
+			company.getGroupId(),
+			LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, orderByComparator);
 	}
 
 	public int getGlobalLayoutPageTemplateEntriesCount()
@@ -205,7 +196,6 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	private Long _layoutPageTemplateCollectionId;
-	private List<LayoutPageTemplateEntry> _layoutPageTemplateEntries;
 	private List<String> _primaryTypes;
 	private final HttpServletRequest _request;
 	private String _selectedTab;

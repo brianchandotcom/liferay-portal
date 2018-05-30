@@ -291,15 +291,6 @@ public class SolrQuerySuggester implements QuerySuggester {
 		_solrClientManager = solrClientManager;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setStringDistance(StringDistance stringDistance) {
-		_stringDistance = stringDistance;
-	}
-
 	protected List<String> suggestKeywords(
 			SearchContext searchContext, int max, String input)
 		throws SearchException {
@@ -358,6 +349,12 @@ public class SolrQuerySuggester implements QuerySuggester {
 
 			SolrDocumentList solrDocumentList = queryResponse.getResults();
 
+			StringDistance stringDistance = _stringDistance;
+
+			if (stringDistance == null) {
+				stringDistance = _defaultStringDistance;
+			}
+
 			for (SolrDocument solrDocument : solrDocumentList) {
 				List<String> suggestions = (List<String>)solrDocument.get(
 					Field.SPELL_CHECK_WORD);
@@ -375,7 +372,7 @@ public class SolrQuerySuggester implements QuerySuggester {
 					String suggestionLowerCase = StringUtil.toLowerCase(
 						suggestion);
 
-					float distance = _stringDistance.getDistance(
+					float distance = stringDistance.getDistance(
 						inputLowerCase, suggestionLowerCase);
 
 					if (distance >= _distanceThreshold) {
@@ -408,10 +405,6 @@ public class SolrQuerySuggester implements QuerySuggester {
 		}
 	}
 
-	protected void unsetStringDistance(StringDistance stringDistance) {
-		_stringDistance = new LevensteinDistance();
-	}
-
 	protected Localization localization;
 
 	private static final long _GLOBAL_GROUP_ID = 0;
@@ -423,10 +416,18 @@ public class SolrQuerySuggester implements QuerySuggester {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrQuerySuggester.class);
 
+	private final StringDistance _defaultStringDistance =
+		new LevensteinDistance();
 	private double _distanceThreshold;
 	private NGramQueryBuilder _nGramQueryBuilder;
 	private SolrClientManager _solrClientManager;
-	private StringDistance _stringDistance = new LevensteinDistance();
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile StringDistance _stringDistance;
 
 	private static class Suggestion {
 

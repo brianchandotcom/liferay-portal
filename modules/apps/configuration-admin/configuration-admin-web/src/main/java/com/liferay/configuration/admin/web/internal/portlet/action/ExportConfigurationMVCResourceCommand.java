@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -70,10 +69,6 @@ public class ExportConfigurationMVCResourceCommand
 	public boolean serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
-
-		if (!(resourceResponse instanceof MimeResponse)) {
-			return true;
-		}
 
 		String pid = ParamUtil.getString(resourceRequest, "pid");
 		String factoryPid = ParamUtil.getString(resourceRequest, "factoryPid");

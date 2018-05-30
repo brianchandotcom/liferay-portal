@@ -105,7 +105,7 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 		request.setAttribute(
 			DLItemSelectorWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
-			_dlMimeTypeDisplayContext);
+			dlMimeTypeDisplayContext);
 
 		requestDispatcher.include(request, response);
 	}
@@ -122,17 +122,6 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		ClassNameLocalService classNameLocalService) {
 
 		_classNameLocalService = classNameLocalService;
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void setDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
 	}
 
 	@Reference(unbind = "-")
@@ -152,22 +141,22 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 		_servletContext = servletContext;
 	}
 
-	public void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = null;
-	}
-
 	protected ResourceBundleLoader getResourceBundleLoader() {
 		return LanguageResources.RESOURCE_BUNDLE_LOADER;
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected volatile DLMimeTypeDisplayContext dlMimeTypeDisplayContext;
 
 	@Reference
 	protected StagingGroupHelper stagingGroupHelper;
 
 	private AssetVocabularyService _assetVocabularyService;
 	private ClassNameLocalService _classNameLocalService;
-	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 	private ServletContext _servletContext;

@@ -309,7 +309,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a file with a valid file size no larger than 293KB." />
+		<execute function="AssertTextEquals" locator1="Message#MAX_FILESIZE_ALERT" value1="Please enter a file with a valid file size no larger than 300000." />
 
 		<execute macro="Button#clickCancel" />
 

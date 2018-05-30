@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.util.Time;
 
 import java.util.Date;
 import java.util.Map;
@@ -80,8 +81,7 @@ public class CheckGuestCommerceOrdersMessageListener
 		int deleteInterval = _commerceOrderConfiguration.deleteInterval();
 
 		Date createDate = new Date(
-			System.currentTimeMillis() -
-				java.util.concurrent.TimeUnit.MINUTES.toMillis(deleteInterval));
+			System.currentTimeMillis() - (deleteInterval * Time.MINUTE));
 
 		_commerceOrderLocalService.deleteCommerceOrders(
 			UserConstants.USER_ID_DEFAULT, createDate,

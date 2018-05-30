@@ -3658,6 +3658,30 @@ to version 1.0.4.
 - [LPS-80517]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.19.
 
+## 5.4.18 - 2018-05-28
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.20.
+
+## 5.4.19 - 2018-05-29
+
+### Changed
+- [LPS-81635]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.21.
+
+## 5.4.20 - 2018-05-29
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.22.
+
+## 5.4.21 - 2018-05-30
+
+### Changed
+- [LPS-81555]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.23.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -4068,6 +4092,8 @@ to version 1.0.4.
 [LPS-80950]: https://issues.liferay.com/browse/LPS-80950
 [LPS-81106]: https://issues.liferay.com/browse/LPS-81106
 [LPS-81404]: https://issues.liferay.com/browse/LPS-81404
+[LPS-81555]: https://issues.liferay.com/browse/LPS-81555
+[LPS-81635]: https://issues.liferay.com/browse/LPS-81635
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

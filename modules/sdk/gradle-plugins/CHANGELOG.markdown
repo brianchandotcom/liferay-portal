@@ -4645,11 +4645,49 @@ to version 2.3.170.
 - [LPS-80517]: Update the [Liferay Source Formatter] dependency to version
 1.0.643.
 
-## 3.12.20 - 2018-05-29
+## 3.12.20 - 2018-05-28
+
+### Changed
+- [LPS-79679]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.171.
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.644.
+
+## 3.12.21 - 2018-05-29
 
 ### Added
 - [LPS-81635]: Set the Bnd instruction `-contract` to
 `"JavaPortlet,JavaServlet"` by default.
+
+### Changed
+- [LPS-80517]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.172.
+- [LPS-80517]: Update the [Liferay Source Formatter] dependency to version
+1.0.645.
+- [LPS-81106]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.37.
+- [LPS-81106]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.220.
+
+## 3.12.22 - 2018-05-29
+
+### Changed
+- [LPS-68101]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.38.
+- [LPS-68101]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.221.
+- [LPS-79679]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.173.
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.646.
+
+## 3.12.23 - 2018-05-30
+
+### Changed
+- [LPS-81555]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.174.
+- [LPS-81555]: Update the [Liferay Source Formatter] dependency to version
+1.0.647.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -4713,6 +4751,7 @@ to version 2.3.170.
 [LPS-67996]: https://issues.liferay.com/browse/LPS-67996
 [LPS-68014]: https://issues.liferay.com/browse/LPS-68014
 [LPS-68035]: https://issues.liferay.com/browse/LPS-68035
+[LPS-68101]: https://issues.liferay.com/browse/LPS-68101
 [LPS-68131]: https://issues.liferay.com/browse/LPS-68131
 [LPS-68165]: https://issues.liferay.com/browse/LPS-68165
 [LPS-68289]: https://issues.liferay.com/browse/LPS-68289
@@ -5040,5 +5079,6 @@ to version 2.3.170.
 [LPS-80920]: https://issues.liferay.com/browse/LPS-80920
 [LPS-81106]: https://issues.liferay.com/browse/LPS-81106
 [LPS-81404]: https://issues.liferay.com/browse/LPS-81404
+[LPS-81555]: https://issues.liferay.com/browse/LPS-81555
 [LPS-81635]: https://issues.liferay.com/browse/LPS-81635
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

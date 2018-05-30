@@ -47,6 +47,14 @@ public class GitUtil {
 	}
 
 	public static List<String> getCurrentBranchFileNames(
+			String baseDirName, String gitWorkingBranchName)
+		throws Exception {
+
+		return getCurrentBranchFileNames(
+			baseDirName, gitWorkingBranchName, false);
+	}
+
+	public static List<String> getCurrentBranchFileNames(
 			String baseDirName, String gitWorkingBranchName,
 			boolean includeDeletedFileNames)
 		throws Exception {
@@ -68,6 +76,12 @@ public class GitUtil {
 		return getFileContent(getLatestAuthorCommitId(), fileName);
 	}
 
+	public static List<String> getLatestAuthorFileNames(String baseDirName)
+		throws Exception {
+
+		return getLatestAuthorFileNames(baseDirName, false);
+	}
+
 	public static List<String> getLatestAuthorFileNames(
 			String baseDirName, boolean includeDeletedFileNames)
 		throws Exception {
@@ -87,6 +101,12 @@ public class GitUtil {
 		throws Exception {
 
 		return getFileContent("HEAD", fileName);
+	}
+
+	public static List<String> getLocalChangesFileNames(String baseDirName)
+		throws Exception {
+
+		return getLocalChangesFileNames(baseDirName, false);
 	}
 
 	public static List<String> getLocalChangesFileNames(

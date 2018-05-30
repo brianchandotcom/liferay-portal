@@ -13,7 +13,7 @@
 	- configurations added by [Liferay Gradle Plugins Test Integration]
 	- configurations added by the `java` plugin
 
-## 1.1.0 - 2018-05-29
+## 1.1.0 - *(Unreleased)*
 
 ### Added
 - [LPS-81530]: Add the ability to add additional configurations to configure the

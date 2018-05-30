@@ -2261,14 +2261,14 @@
 			<finder-column name="name" />
 			<finder-column name="scope" />
 			<finder-column name="primKey" />
-			<finder-column arrayable-operator="OR" name="roleId" />
+			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="roleId" />
 		</finder>
 		<finder name="C_N_S_P_R_V" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="scope" />
 			<finder-column name="primKeyId" />
-			<finder-column arrayable-operator="OR" name="roleId" />
+			<finder-column arrayable-operator="OR" arrayable-pagination="true" name="roleId" />
 			<finder-column name="viewActionId" />
 		</finder>
 

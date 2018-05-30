@@ -1,4 +1,7 @@
-<#assign entityColumns = entityFinder.entityColumns />
+<#assign
+	entityColumns = entityFinder.entityColumns
+	entityFinderArrayableColsList = entityFinder.getArrayableColumns()
+/>
 
 /**
  * Returns the number of ${entity.humanNames} where ${entityFinder.getHumanConditions(false)}.
@@ -76,7 +79,7 @@ public int countBy${entityFinder.name}(
 	return count.intValue();
 }
 
-<#if entityFinder.hasArrayableOperator()>
+<#if entityFinder.hasArrayableOperator() && !entityFinder.hasArrayablePagination()>
 	/**
 	 * Returns the number of ${entity.humanNames} where ${entityFinder.getHumanConditions(true)}.
 	 *
@@ -175,6 +178,185 @@ public int countBy${entityFinder.name}(
 			finally {
 				closeSession(session);
 			}
+		}
+
+		return count.intValue();
+	}
+</#if>
+
+<#if entityFinder.hasArrayableOperator() && entityFinder.hasArrayablePagination()>
+	/**
+	 * Returns the number of ${entity.humanNames} where ${entityFinder.getHumanConditions(true)}.
+	 *
+	<#list entityColumns as entityColumn>
+		<#if entityColumn.hasArrayableOperator()>
+	 * @param ${entityColumn.names} the ${entityColumn.humanNames}
+		<#else>
+	 * @param ${entityColumn.name} the ${entityColumn.humanName}
+		</#if>
+	</#list>
+	 * @return the number of matching ${entity.humanNames}
+	 */
+	@Override
+	public int countBy${entityFinder.name}(
+
+	<#list entityColumns as entityColumn>
+		<#if entityColumn.hasArrayableOperator()>
+			${entityColumn.type}[] ${entityColumn.names}
+		<#else>
+			${entityColumn.type} ${entityColumn.name}
+		</#if>
+
+		<#if entityColumn_has_next>
+			,
+		</#if>
+	</#list>
+
+	) {
+		<#list entityColumns as entityColumn>
+			<#if entityColumn.hasArrayableOperator()>
+				if (${entityColumn.names} == null) {
+					${entityColumn.names} = new ${entityColumn.type}[0];
+				}
+				else if (${entityColumn.names}.length > 1) {
+					${entityColumn.names} =
+						<#if stringUtil.equals(entityColumn.type, "String")>
+							ArrayUtil.distinct(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
+						<#else>
+							ArrayUtil.unique(${entityColumn.names});
+						</#if>
+
+					<#if stringUtil.equals(entityColumn.type, "String")>
+						Arrays.sort(${entityColumn.names}, NULL_SAFE_STRING_COMPARATOR);
+					<#else>
+						Arrays.sort(${entityColumn.names});
+					</#if>
+				}
+			</#if>
+		</#list>
+
+		Object[] finderArgs = new Object[] {
+			<#list entityColumns as entityColumn>
+				<#if entityColumn.hasArrayableOperator()>
+					StringUtil.merge(${entityColumn.names})
+				<#else>
+					${entityColumn.name}
+				</#if>
+
+				<#if entityColumn_has_next>
+					,
+				</#if>
+			</#list>
+		};
+
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case}, finderArgs, this);
+
+		if (count == null) {
+			try {
+				if ((databaseInMaxParameters > 0) && (<#list entityFinderArrayableColsList as arrayablefinderCol>
+							(${arrayablefinderCol.names}.length > databaseInMaxParameters)
+
+							<#if arrayablefinderCol_has_next>
+								||
+							</#if>
+						</#list>)) {
+						count = Long.valueOf(0);
+
+						<#list entityFinderArrayableColsList as arrayablefinderCol>
+							${arrayablefinderCol.type}[][] ${arrayablefinderCol.names}Pages = (${arrayablefinderCol.type}[][])ArrayUtil.split(${arrayablefinderCol.names}, databaseInMaxParameters);
+						</#list>
+
+						<#list entityFinderArrayableColsList as arrayablefinderCol>
+							for (${arrayablefinderCol.type}[] ${arrayablefinderCol.names}Page : ${arrayablefinderCol.names}Pages) {
+						</#list>
+
+							count += Long.valueOf(_countBy${entityFinder.name}(
+
+							<#list entityColumns as entityColumn>
+								<#if entityColumn.hasArrayableOperator()>
+									${entityColumn.names}Page
+								<#else>
+									${entityColumn.name}
+								</#if>
+
+								<#if entityColumn_has_next>
+									,
+								</#if>
+							</#list>));
+
+					<#list entityFinderArrayableColsList as arrayablefinderCol>
+						}
+					</#list>
+					}
+					else {
+						count = Long.valueOf(_countBy${entityFinder.name}(
+
+						<#list entityColumns as entityColumn>
+							<#if entityColumn.hasArrayableOperator()>
+								${entityColumn.names}
+							<#else>
+								${entityColumn.name}
+							</#if>
+
+							<#if entityColumn_has_next>
+								,
+							</#if>
+						</#list>));
+					}
+
+					finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case}, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_${entityFinder.name?upper_case}, finderArgs);
+
+				throw processException(e);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countBy${entityFinder.name}(
+
+	<#list entityColumns as entityColumn>
+		<#if entityColumn.hasArrayableOperator()>
+			${entityColumn.type}[] ${entityColumn.names}
+		<#else>
+			${entityColumn.type} ${entityColumn.name}
+		</#if>
+
+		<#if entityColumn_has_next>
+			,
+		</#if>
+	</#list>
+
+	) {
+		Long count = null;
+
+		<#include "persistence_impl_count_by_arrayable_query.ftl">
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			<#if bindParameter(entityColumns)>
+				QueryPos qPos = QueryPos.getInstance(q);
+			</#if>
+
+			<@finderQPos _arrayable=true />
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();

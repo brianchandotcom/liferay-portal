@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, SearchPortletParameterNames.GROUP_ID);
-
-boolean scopeEverything = (groupId == 0);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/search.jsp");
@@ -49,11 +45,11 @@ pageContext.setAttribute("portletURL", portletURL);
 		<c:choose>
 			<c:when test="<%= searchDisplayContext.isSearchScopePreferenceLetTheUserChoose() %>">
 				<aui:select cssClass="search-select" inlineField="<%= true %>" label="" name="scope" title="scope">
-					<c:if test="<%= searchDisplayContext.isSearchScopePreferenceEverythingAvailable() %>">
-						<aui:option label="everything" selected="<%= scopeEverything %>" value="everything" />
-					</c:if>
+					<aui:option label="this-site" value="this-site" />
 
-					<aui:option label="this-site" selected="<%= !scopeEverything %>" value="this-site" />
+					<c:if test="<%= searchDisplayContext.isSearchScopePreferenceEverythingAvailable() %>">
+						<aui:option label="everything" value="everything" />
+					</c:if>
 				</aui:select>
 			</c:when>
 			<c:otherwise>

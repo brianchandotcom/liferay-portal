@@ -14,23 +14,42 @@
 
 package com.liferay.exportimport.internal.configuration;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.exportimport.kernel.exception.ExportImportRuntimeException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
+import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Akos Thurzo
  */
 @Component(immediate = true)
+@ProviderType
 public class ExportImportConfigurationParameterMapFactoryImpl
 	implements ExportImportConfigurationParameterMapFactory {
 
@@ -47,6 +66,10 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 
 		Map<String, String[]> parameterMap = new LinkedHashMap<>(
 			portletRequest.getParameterMap());
+
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(parameterMap)) {
+			_replaceParameterMap(parameterMap);
+		}
 
 		if (!parameterMap.containsKey(PortletDataHandlerKeys.DATA_STRATEGY)) {
 			parameterMap.put(
@@ -382,7 +405,102 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 			PortletDataHandlerKeys.USER_ID_STRATEGY,
 			new String[] {userIdStrategyParameter});
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(parameterMap)) {
+			_replaceParameterMap(parameterMap);
+		}
+
 		return parameterMap;
 	}
+
+	private void _addModelParameter(
+			Map<String, String[]> parameterMap, Portlet dataSiteLevelPortlet,
+			boolean portletDataAll)
+		throws PortletDataException {
+
+		PortletDataHandler portletDataHandlerInstance =
+			dataSiteLevelPortlet.getPortletDataHandlerInstance();
+
+		PortletDataHandlerControl[] exportControls =
+			portletDataHandlerInstance.getExportControls();
+
+		for (PortletDataHandlerControl exportControl : exportControls) {
+			if (exportControl instanceof PortletDataHandlerBoolean) {
+				PortletDataHandlerBoolean portletDataHandlerBoolean =
+					(PortletDataHandlerBoolean)exportControl;
+
+				boolean controlValue = MapUtil.getBoolean(
+					parameterMap,
+					portletDataHandlerBoolean.getNamespacedControlName());
+
+				if ((portletDataAll || controlValue) &&
+					(portletDataHandlerBoolean.getClassName() != null)) {
+
+					parameterMap.put(
+						portletDataHandlerBoolean.getClassName(),
+						new String[] {Boolean.TRUE.toString()});
+				}
+			}
+		}
+	}
+
+	/**
+	 * 1. Removes PORTLET_DATA_portletId and PORTLET_DATA_ALL parameters in parameterMap and replaces them with PORTLET_DATA_changesetPortletId.
+	 * 2. It also adds model specific parameters to be able to decide in changeset portlet data handler whether a model needs to be exported or not.
+	 * For example: <"com.liferay.journal.model.JournalArticle", [true]>
+	 * 3. It adds originalPortletId parameter in case of portlet publication
+	 * @param parameterMap
+	 */
+	private void _replaceParameterMap(Map<String, String[]> parameterMap) {
+		try {
+			List<Portlet> dataSiteLevelPortlets =
+				_exportImportHelper.getDataSiteLevelPortlets(
+					CompanyThreadLocal.getCompanyId());
+
+			boolean portletDataAll = MapUtil.getBoolean(
+				parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
+
+			for (Portlet dataSiteLevelPortlet : dataSiteLevelPortlets) {
+				String[] portletDataValues = parameterMap.remove(
+					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+						dataSiteLevelPortlet.getRootPortletId());
+
+				if (portletDataAll ||
+					((portletDataValues != null) &&
+					 GetterUtil.getBoolean(portletDataValues[0]))) {
+
+					_addModelParameter(
+						parameterMap, dataSiteLevelPortlet, portletDataAll);
+
+					if (Objects.equals(
+							MapUtil.getString(
+								parameterMap, "javax.portlet.action"),
+							"publishPortlet")) {
+
+						parameterMap.put(
+							"originalPortletId",
+							new String[] {
+								dataSiteLevelPortlet.getRootPortletId()
+							});
+					}
+				}
+			}
+
+			parameterMap.remove(PortletDataHandlerKeys.PORTLET_DATA_ALL);
+
+			parameterMap.put(
+				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+					ChangesetPortletKeys.CHANGESET,
+				new String[] {StringPool.TRUE});
+		}
+		catch (Exception e) {
+			throw new ExportImportRuntimeException(e);
+		}
+	}
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

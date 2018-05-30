@@ -42,13 +42,6 @@
 		<execute macro="Upgrade#viewNestedPortlets" />
 	</command>
 
-	<command name="ViewNestedPortletsArchive623" priority="5">
-		<property name="data.archive.type" value="data-archive-nested-portlets" />
-		<property name="portal.version" value="6.2.3" />
-
-		<execute macro="Upgrade#viewNestedPortlets" />
-	</command>
-
 	<command name="ViewNestedPortletsArchive625" priority="5">
 		<property name="data.archive.type" value="data-archive-nested-portlets" />
 		<property name="portal.version" value="6.2.5" />

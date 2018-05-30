@@ -251,34 +251,40 @@ public class RenderStateUtil {
 		if (layoutTypePortlet.hasModeAboutPortletId(portletId)) {
 			return LiferayPortletMode.ABOUT;
 		}
-		else if (layoutTypePortlet.hasModeConfigPortletId(portletId)) {
+
+		if (layoutTypePortlet.hasModeConfigPortletId(portletId)) {
 			return LiferayPortletMode.CONFIG;
 		}
-		else if (layoutTypePortlet.hasModeEditDefaultsPortletId(portletId)) {
+
+		if (layoutTypePortlet.hasModeEditDefaultsPortletId(portletId)) {
 			return LiferayPortletMode.EDIT_DEFAULTS;
 		}
-		else if (layoutTypePortlet.hasModeEditGuestPortletId(portletId)) {
+
+		if (layoutTypePortlet.hasModeEditGuestPortletId(portletId)) {
 			return LiferayPortletMode.EDIT_GUEST;
 		}
-		else if (layoutTypePortlet.hasModeEditPortletId(portletId)) {
+
+		if (layoutTypePortlet.hasModeEditPortletId(portletId)) {
 			return LiferayPortletMode.EDIT;
 		}
-		else if (layoutTypePortlet.hasModeHelpPortletId(portletId)) {
+
+		if (layoutTypePortlet.hasModeHelpPortletId(portletId)) {
 			return LiferayPortletMode.HELP;
 		}
-		else if (layoutTypePortlet.hasModePreviewPortletId(portletId)) {
+
+		if (layoutTypePortlet.hasModePreviewPortletId(portletId)) {
 			return LiferayPortletMode.PREVIEW;
 		}
-		else if (layoutTypePortlet.hasModePrintPortletId(portletId)) {
+
+		if (layoutTypePortlet.hasModePrintPortletId(portletId)) {
 			return LiferayPortletMode.PRINT;
 		}
-		else {
-			String customPortletMode =
-				layoutTypePortlet.getAddedCustomPortletMode();
 
-			if (customPortletMode != null) {
-				return new PortletMode(customPortletMode);
-			}
+		String customPortletMode =
+			layoutTypePortlet.getAddedCustomPortletMode();
+
+		if (customPortletMode != null) {
+			return new PortletMode(customPortletMode);
 		}
 
 		return LiferayPortletMode.VIEW;
@@ -429,6 +435,7 @@ public class RenderStateUtil {
 				sb.append(portletId);
 				sb.append(StringPool.PIPE);
 				sb.append(prpGroup.getIdentifier());
+
 				jsonArray.put(sb.toString());
 			}
 
@@ -459,7 +466,8 @@ public class RenderStateUtil {
 		if (layoutTypePortlet.hasStateMaxPortletId(portletId)) {
 			return WindowState.MAXIMIZED;
 		}
-		else if (layoutTypePortlet.hasStateMinPortletId(portletId)) {
+
+		if (layoutTypePortlet.hasStateMinPortletId(portletId)) {
 			return WindowState.MINIMIZED;
 		}
 

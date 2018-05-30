@@ -193,9 +193,9 @@ public class PortletImpl extends PortletBaseImpl {
 		boolean addDefaultResource, String roles, Set<String> unlinkedRoles,
 		Map<String, String> roleMappers, boolean system, boolean active,
 		boolean include, Map<String, String> initParams, Integer expCache,
-		int multipartFileSizeThreshold, String multipartLocation,
-		long multipartMaxFileSize, long multipartMaxRequestSize,
-		Map<String, Set<String>> portletModes,
+		boolean asyncSupported, int multipartFileSizeThreshold,
+		String multipartLocation, long multipartMaxFileSize,
+		long multipartMaxRequestSize, Map<String, Set<String>> portletModes,
 		Map<String, Set<String>> windowStates, Set<String> supportedLocales,
 		String resourceBundle, PortletInfo portletInfo,
 		Map<String, PortletFilter> portletFilters, Set<QName> processingEvents,
@@ -294,6 +294,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_include = include;
 		_initParams = initParams;
 		_expCache = expCache;
+		_asyncSupported = asyncSupported;
 		_multipartFileSizeThreshold = multipartFileSizeThreshold;
 		_multipartLocation = multipartLocation;
 		_multipartMaxFileSize = multipartMaxFileSize;
@@ -417,7 +418,7 @@ public class PortletImpl extends PortletBaseImpl {
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
 			getCssClassWrapper(), isAddDefaultResource(), getRoles(),
 			getUnlinkedRoles(), getRoleMappers(), isSystem(), isActive(),
-			isInclude(), getInitParams(), getExpCache(),
+			isInclude(), getInitParams(), getExpCache(), isAsyncSupported(),
 			getMultipartFileSizeThreshold(), getMultipartLocation(),
 			getMultipartMaxFileSize(), getMultipartMaxRequestSize(),
 			getPortletModes(), getWindowStates(), getSupportedLocales(),
@@ -2484,6 +2485,18 @@ public class PortletImpl extends PortletBaseImpl {
 		return _ajaxable;
 	}
 
+	/**
+	 * Returns <code>true</code> if the portlet supports asynchronous processing
+	 * in resource requests.
+	 *
+	 * @return <code>true</code> if the portlet supports asynchrounous
+	 *         processing in resource requests
+	 */
+	@Override
+	public boolean isAsyncSupported() {
+		return _asyncSupported;
+	}
+
 	@Override
 	public boolean isFullPageDisplayable() {
 		return _applicationTypes.contains(
@@ -2879,6 +2892,18 @@ public class PortletImpl extends PortletBaseImpl {
 		List<String> assetRendererFactoryClasses) {
 
 		_assetRendererFactoryClasses = assetRendererFactoryClasses;
+	}
+
+	/**
+	 * Set to <code>true</code> if the portlet supports asynchronous processing
+	 * in resource requests.
+	 *
+	 * @param asyncSupported boolean value for whether the portlet supports
+	 *        asynchronous processing in resource requests
+	 */
+	@Override
+	public void setAsyncSupported(boolean asyncSupported) {
+		_asyncSupported = asyncSupported;
 	}
 
 	/**
@@ -4139,6 +4164,12 @@ public class PortletImpl extends PortletBaseImpl {
 	 * portlet.
 	 */
 	private List<String> _assetRendererFactoryClasses;
+
+	/**
+	 * <code>True</code> if the portlet supports asynchronous processing in
+	 * resource requests.
+	 */
+	private boolean _asyncSupported;
 
 	/**
 	 * The names of the classes that represents atom collection adapters

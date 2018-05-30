@@ -1,12 +1,5 @@
 {
 	"metal": {
-		"input": "classes/META-INF/resources/node_modules",
-		"output": "classes/META-INF/resources/bridge",
-		"file-globs": "**/lib/**/*.js",
-		"src-mod-name-mapper": {
-			"from": "(.*)@[^/]*(.*)\\.js$",
-			"to": "$1$2"
-		},
 		"dest-file-mapper": {
 			"from": "(.*)\\$(.*)@.*/lib/(.*)",
 			"to": "$2/src/$3"
@@ -14,6 +7,13 @@
 		"dest-mod-name-mapper": {
 			"from": "(.*)\\.js$",
 			"to": "bridge/$1"
+		},
+		"file-globs": "**/lib/**/*.js",
+		"input": "classes/META-INF/resources/node_modules",
+		"output": "classes/META-INF/resources/bridge",
+		"src-mod-name-mapper": {
+			"from": "(.*)@[^/]*(.*)\\.js$",
+			"to": "$1$2"
 		}
 	}
 }

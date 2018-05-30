@@ -4659,6 +4659,16 @@ to version 2.3.171.
 - [LPS-81635]: Set the Bnd instruction `-contract` to
 `"JavaPortlet,JavaServlet"` by default.
 
+### Changed
+- [LPS-80517]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.172.
+- [LPS-80517]: Update the [Liferay Source Formatter] dependency to version
+1.0.645.
+- [LPS-81106]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.37.
+- [LPS-81106]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.220.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

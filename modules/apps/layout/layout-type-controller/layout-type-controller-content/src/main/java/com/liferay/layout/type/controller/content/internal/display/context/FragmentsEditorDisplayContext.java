@@ -64,9 +64,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class FragmentsEditorContext {
+public class FragmentsEditorDisplayContext {
 
-	public FragmentsEditorContext(
+	public FragmentsEditorDisplayContext(
 		HttpServletRequest request, RenderResponse renderResponse) {
 
 		_request = request;

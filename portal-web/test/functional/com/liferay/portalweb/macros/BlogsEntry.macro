@@ -456,7 +456,7 @@
 
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
 		<execute function="AssertElementNotPresent" locator1="BlogsEntry#CONTENT" />

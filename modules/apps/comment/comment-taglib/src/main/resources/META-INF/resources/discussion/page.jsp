@@ -491,14 +491,6 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 			Liferay.provide(
 				window,
-				'<%= randomNamespace %>showEditor',
-				function(formId, options) {
-					<%= randomNamespace %>loadEditor(formId, options);
-				}
-			);
-
-			Liferay.provide(
-				window,
 				'<%= randomNamespace %>showStatusMessage',
 				function(data) {
 					new Liferay.Alert(
@@ -666,7 +658,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 			Liferay.provide(
 				window,
-				'<%= randomNamespace %>loadEditor',
+				'<%= randomNamespace %>showEditor',
 				function(formId, options) {
 					fetch(
 						'<%= editorURL.toString() %>',

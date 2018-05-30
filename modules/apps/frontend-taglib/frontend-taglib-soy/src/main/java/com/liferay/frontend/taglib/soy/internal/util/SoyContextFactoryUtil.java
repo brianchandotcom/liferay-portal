@@ -17,6 +17,8 @@ package com.liferay.frontend.taglib.soy.internal.util;
 import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.portal.template.soy.utils.SoyContextFactory;
 
+import java.util.Map;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -28,6 +30,10 @@ public class SoyContextFactoryUtil {
 
 	public static SoyContext createSoyContext() {
 		return _soyContextFactory.createSoyContext();
+	}
+
+	public static SoyContext createSoyContext(Map<String, Object> context) {
+		return _soyContextFactory.createSoyContext(context);
 	}
 
 	@Reference(unbind = "-")

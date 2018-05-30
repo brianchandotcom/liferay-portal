@@ -159,13 +159,12 @@ public class RenderStateUtil {
 				for (PublicRenderParameter publicRenderParameter :
 						publicRenderParameters) {
 
-					if (privateRenderParameterMap.containsKey(
-							publicRenderParameter.getIdentifier())) {
+					String[] values = privateRenderParameterMap.get(
+						publicRenderParameter.getIdentifier());
 
+					if (values != null) {
 						publicRenderParameterMap.put(
-							publicRenderParameter.getIdentifier(),
-							privateRenderParameterMap.get(
-								publicRenderParameter.getIdentifier()));
+							publicRenderParameter.getIdentifier(), values);
 					}
 				}
 			}
@@ -303,13 +302,11 @@ public class RenderStateUtil {
 		for (PublicRenderParameter publicRenderParameter :
 				publicRenderParameters) {
 
-			if (changedPublicRenderParameters.containsKey(
-					publicRenderParameter.getIdentifier())) {
+			String[] values = changedPublicRenderParameters.get(
+				publicRenderParameter.getIdentifier());
 
-				jsonObject.put(
-					publicRenderParameter.getIdentifier(),
-					changedPublicRenderParameters.get(
-						publicRenderParameter.getIdentifier()));
+			if (values != null) {
+				jsonObject.put(publicRenderParameter.getIdentifier(), values);
 			}
 		}
 

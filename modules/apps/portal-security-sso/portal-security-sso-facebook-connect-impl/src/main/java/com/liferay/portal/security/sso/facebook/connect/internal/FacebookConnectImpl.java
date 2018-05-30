@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.facebook.connect.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -86,6 +87,23 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 			if (Validator.isNotNull(accessToken)) {
 				return accessToken;
+			}
+
+			if (_log.isDebugEnabled()) {
+				String appSecret = facebookConnectConfiguration.appSecret();
+
+				if (!appSecret.isEmpty()) {
+					url = _http.setParameter(
+						url, "client_secret",
+						StringBundler.concat(
+							appSecret.charAt(0), "...redacted...",
+							appSecret.charAt(appSecret.length() - 1)));
+				}
+
+				_log.debug(
+					StringBundler.concat(
+						"Unable to get access token for URL ", url,
+						" Response:", content));
 			}
 		}
 		catch (Exception e) {

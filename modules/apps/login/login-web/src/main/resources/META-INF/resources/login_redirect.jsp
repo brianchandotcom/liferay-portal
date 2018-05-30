@@ -87,9 +87,11 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 				{
 					body: new FormData(form),
 					credentials: 'include',
-					headers: new Headers({
-						'Content-Type': 'application/json'
-					}),
+					headers: new Headers(
+						{
+							'Content-Type': 'application/json'
+						}
+					),
 					method: 'POST'
 				}
 			).then(

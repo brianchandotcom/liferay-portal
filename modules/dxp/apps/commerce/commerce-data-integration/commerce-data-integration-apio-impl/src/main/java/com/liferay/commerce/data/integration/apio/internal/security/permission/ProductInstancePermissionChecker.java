@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.function.BiFunction;
 
 import javax.ws.rs.NotFoundException;
-import java.util.function.BiFunction;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -42,18 +44,17 @@ public class ProductInstancePermissionChecker {
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPInstance> cpInstance = Try.fromFallible(
-				() -> _cpInstanceService.fetchCPInstance(
-					identifier));
+				() -> _cpInstanceService.fetchCPInstance(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
 					permissionChecker,
 					cpInstance.map(
-							CPInstance::getGroupId
+						CPInstance::getGroupId
 					).orElseThrow(
 						() -> new NotFoundException()
 					),
-						CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE)
+					CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE)
 			).orElse(
 				false
 			);
@@ -70,26 +71,21 @@ public class ProductInstancePermissionChecker {
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPInstance> optionValueTry = Try.fromFallible(
-				() -> _cpInstanceService.fetchCPInstance(
-					identifier));
+				() -> _cpInstanceService.fetchCPInstance(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
 					permissionChecker,
 					optionValueTry.map(
-							CPInstance::getGroupId
+						CPInstance::getGroupId
 					).orElseThrow(
 						() -> new NotFoundException()
 					),
-						CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE)
+					CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE)
 			).orElse(
 				false
 			);
 		};
-	}
-
-	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
-		return forUpdating();
 	}
 
 	private Try<PermissionChecker> _getPermissionCheckerTry(
@@ -110,13 +106,17 @@ public class ProductInstancePermissionChecker {
 		);
 	}
 
+	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
+		return forUpdating();
+	}
+
 	@Reference
 	private CPInstanceService _cpInstanceService;
 
 	@Reference
-	private UserService _userService;
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
-	private PortletResourcePermission _portletResourcePermission;
+	private UserService _userService;
 
 }

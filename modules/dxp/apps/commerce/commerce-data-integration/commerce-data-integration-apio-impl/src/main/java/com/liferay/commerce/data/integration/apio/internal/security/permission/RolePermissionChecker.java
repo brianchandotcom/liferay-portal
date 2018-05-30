@@ -16,8 +16,6 @@ package com.liferay.commerce.data.integration.apio.internal.security.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -27,11 +25,13 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.function.BiFunction;
 
 import javax.ws.rs.NotFoundException;
-import java.util.function.BiFunction;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -58,23 +58,22 @@ public class RolePermissionChecker {
 	public BiFunction<Credentials, Long, Boolean> forUpdating() {
 		return (credentials, identifier) -> {
 			Try<PermissionChecker> permissionCheckerTry =
-					_getPermissionCheckerTry(credentials);
+				_getPermissionCheckerTry(credentials);
 
 			Try<Role> roleTry = Try.fromFallible(
-					() -> _roleService.fetchRole(
-							identifier));
+				() -> _roleService.fetchRole(identifier));
 
 			return permissionCheckerTry.map(
-					permissionChecker -> _portletResourcePermission.contains(
-							permissionChecker,
-							roleTry.map(
-									Role::getClassPK
-							).orElseThrow(
-									() -> new NotFoundException()
-							),
-							ActionKeys.UPDATE)
+				permissionChecker -> _portletResourcePermission.contains(
+					permissionChecker,
+					roleTry.map(
+						Role::getClassPK
+					).orElseThrow(
+						() -> new NotFoundException()
+					),
+					ActionKeys.UPDATE)
 			).orElse(
-					false
+				false
 			);
 		};
 	}
@@ -102,12 +101,12 @@ public class RolePermissionChecker {
 	}
 
 	@Reference
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
 	private RoleService _roleService;
 
 	@Reference
 	private UserService _userService;
-
-	@Reference
-	private PortletResourcePermission _portletResourcePermission;
 
 }

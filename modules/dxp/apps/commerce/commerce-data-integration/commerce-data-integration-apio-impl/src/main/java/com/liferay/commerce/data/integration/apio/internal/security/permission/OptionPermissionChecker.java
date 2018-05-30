@@ -25,11 +25,13 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.function.BiFunction;
 
 import javax.ws.rs.NotFoundException;
-import java.util.function.BiFunction;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -38,14 +40,12 @@ import java.util.function.BiFunction;
 public class OptionPermissionChecker implements CollectionPermissionChecker {
 
 	public BiFunction<Credentials, Long, Boolean> forAdding() {
-//        return (credentials, identifier) -> true;
 		return (credentials, identifier) -> {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPOption> cpOptionTry = Try.fromFallible(
-				() -> _cpOptionService.fetchCPOption(
-					identifier));
+				() -> _cpOptionService.fetchCPOption(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
@@ -55,7 +55,7 @@ public class OptionPermissionChecker implements CollectionPermissionChecker {
 					).orElseThrow(
 						() -> new NotFoundException()
 					),
-						CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION)
+					CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION)
 			).orElse(
 				false
 			);
@@ -67,14 +67,12 @@ public class OptionPermissionChecker implements CollectionPermissionChecker {
 	}
 
 	public BiFunction<Credentials, Long, Boolean> forUpdating() {
-//		return (credentials, identifier) -> true;
 		return (credentials, identifier) -> {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPOption> optionTry = Try.fromFallible(
-				() -> _cpOptionService.fetchCPOption(
-					identifier));
+				() -> _cpOptionService.fetchCPOption(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
@@ -89,10 +87,6 @@ public class OptionPermissionChecker implements CollectionPermissionChecker {
 				false
 			);
 		};
-	}
-
-	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
-		return forUpdating();
 	}
 
 	private Try<PermissionChecker> _getPermissionCheckerTry(
@@ -113,13 +107,17 @@ public class OptionPermissionChecker implements CollectionPermissionChecker {
 		);
 	}
 
+	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
+		return forUpdating();
+	}
+
 	@Reference
 	private CPOptionService _cpOptionService;
 
 	@Reference
-	private UserService _userService;
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
-	private PortletResourcePermission _portletResourcePermission;
+	private UserService _userService;
 
 }

@@ -27,7 +27,6 @@ import com.liferay.commerce.data.integration.apio.identifiers.ProductDefinitionI
 import com.liferay.commerce.data.integration.apio.identifiers.ProductInstanceIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.ProductInstanceCreatorForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.ProductInstancePermissionChecker;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.ProductPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductInstanceHelper;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
@@ -46,14 +45,16 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-import java.util.Collections;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -269,12 +270,12 @@ public class ProductInstanceNestedCollectionResource
 	private CPInstanceService _cpInstanceService;
 
 	@Reference
-	private ProductInstancePermissionChecker _productInstancePermissionChecker;
-
-	@Reference
 	private ProductIndexerHelper _productIndexerHelper;
 
 	@Reference
 	private ProductInstanceHelper _productInstanceHelper;
+
+	@Reference
+	private ProductInstancePermissionChecker _productInstancePermissionChecker;
 
 }

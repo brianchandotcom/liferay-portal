@@ -17,20 +17,20 @@ package com.liferay.commerce.data.integration.apio.internal.security.permission;
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.commerce.product.constants.CPActionKeys;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.function.BiFunction;
 
 import javax.ws.rs.NotFoundException;
-import java.util.function.BiFunction;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -43,19 +43,20 @@ public class ProductOptionPermissionChecker {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
-			Try<CPDefinitionOptionRel> cpDefinitionOptionRelTry = Try.fromFallible(
-				() -> _cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(
-					identifier));
+			Try<CPDefinitionOptionRel> cpDefinitionOptionRelTry =
+				Try.fromFallible(
+					() -> _cpDefinitionOptionRelService.
+						fetchCPDefinitionOptionRel(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
 					permissionChecker,
 					cpDefinitionOptionRelTry.map(
-							CPDefinitionOptionRel::getGroupId
+						CPDefinitionOptionRel::getGroupId
 					).orElseThrow(
 						() -> new NotFoundException()
 					),
-						CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION)
+					CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION)
 			).orElse(
 				false
 			);
@@ -71,15 +72,16 @@ public class ProductOptionPermissionChecker {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
-			Try<CPDefinitionOptionRel> cpDefinitionOptionRelTry = Try.fromFallible(
-				() -> _cpDefinitionOptionRelService.fetchCPDefinitionOptionRel(
-					identifier));
+			Try<CPDefinitionOptionRel> cpDefinitionOptionRelTry =
+				Try.fromFallible(
+					() -> _cpDefinitionOptionRelService.
+						fetchCPDefinitionOptionRel(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
 					permissionChecker,
 					cpDefinitionOptionRelTry.map(
-							CPDefinitionOptionRel::getGroupId
+						CPDefinitionOptionRel::getGroupId
 					).orElseThrow(
 						() -> new NotFoundException()
 					),
@@ -88,10 +90,6 @@ public class ProductOptionPermissionChecker {
 				false
 			);
 		};
-	}
-
-	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
-		return forUpdating();
 	}
 
 	private Try<PermissionChecker> _getPermissionCheckerTry(
@@ -112,13 +110,17 @@ public class ProductOptionPermissionChecker {
 		);
 	}
 
+	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
+		return forUpdating();
+	}
+
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
 	@Reference
-	private UserService _userService;
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
-	private PortletResourcePermission _portletResourcePermission;
+	private UserService _userService;
 
 }

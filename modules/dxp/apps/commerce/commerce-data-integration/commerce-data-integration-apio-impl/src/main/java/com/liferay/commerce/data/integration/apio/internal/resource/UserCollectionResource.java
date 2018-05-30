@@ -30,7 +30,6 @@ import com.liferay.commerce.data.integration.apio.internal.form.UserCreatorForm;
 import com.liferay.commerce.data.integration.apio.internal.form.UserUpdaterForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.UserPermissionChecker;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -44,10 +43,7 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.UserPermission;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Date;
 import java.util.List;
@@ -56,6 +52,9 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -71,8 +70,7 @@ public class UserCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addUser, Company.class,
-			_userPermissionChecker::forAdding,
+			this::_addUser, Company.class, _userPermissionChecker::forAdding,
 			UserCreatorForm::buildForm
 		).build();
 	}
@@ -92,8 +90,7 @@ public class UserCollectionResource
 			idempotent(_userService::deleteUser),
 			_userPermissionChecker.forDeleting()::apply
 		).addUpdater(
-			this::_updateUser,
-			_userPermissionChecker.forUpdating()::apply,
+			this::_updateUser, _userPermissionChecker.forUpdating()::apply,
 			UserUpdaterForm::buildForm
 		).build();
 	}
@@ -279,9 +276,6 @@ public class UserCollectionResource
 	}
 
 	@Reference
-	private UserPermissionChecker _userPermissionChecker;
-
-	@Reference
 	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
@@ -289,6 +283,9 @@ public class UserCollectionResource
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserPermissionChecker _userPermissionChecker;
 
 	@Reference
 	private UserService _userService;

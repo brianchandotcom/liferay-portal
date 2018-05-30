@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.function.BiFunction;
 
 import javax.ws.rs.NotFoundException;
-import java.util.function.BiFunction;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -42,8 +44,7 @@ public class OptionValuePermissionChecker {
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPOptionValue> optionValueTry = Try.fromFallible(
-				() -> _cpOptionValueService.fetchCPOptionValue(
-					identifier));
+				() -> _cpOptionValueService.fetchCPOptionValue(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
@@ -53,7 +54,7 @@ public class OptionValuePermissionChecker {
 					).orElseThrow(
 						() -> new NotFoundException()
 					),
-						CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_VALUE)
+					CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_VALUE)
 			).orElse(
 				false
 			);
@@ -70,8 +71,7 @@ public class OptionValuePermissionChecker {
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPOptionValue> optionValueTry = Try.fromFallible(
-				() -> _cpOptionValueService.fetchCPOptionValue(
-					identifier));
+				() -> _cpOptionValueService.fetchCPOptionValue(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
@@ -86,10 +86,6 @@ public class OptionValuePermissionChecker {
 				false
 			);
 		};
-	}
-
-	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
-		return forUpdating();
 	}
 
 	private Try<PermissionChecker> _getPermissionCheckerTry(
@@ -110,13 +106,17 @@ public class OptionValuePermissionChecker {
 		);
 	}
 
+	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
+		return forUpdating();
+	}
+
 	@Reference
 	private CPOptionValueService _cpOptionValueService;
 
 	@Reference
-	private UserService _userService;
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
-	private PortletResourcePermission _portletResourcePermission;
+	private UserService _userService;
 
 }

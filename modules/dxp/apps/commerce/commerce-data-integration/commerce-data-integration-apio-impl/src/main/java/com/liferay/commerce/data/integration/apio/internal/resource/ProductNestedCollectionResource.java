@@ -1,15 +1,15 @@
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- *
- *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  */
 
 package com.liferay.commerce.data.integration.apio.internal.resource;
@@ -48,14 +48,16 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.ServerErrorException;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose <a
@@ -68,7 +70,7 @@ import java.util.List;
 public class ProductNestedCollectionResource
 	implements
 		NestedCollectionResource<Document, Long,
-				ProductDefinitionIdentifier, Long, WebSiteIdentifier> {
+			ProductDefinitionIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Document, Long, Long> collectionRoutes(
@@ -264,12 +266,12 @@ public class ProductNestedCollectionResource
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private ProductPermissionChecker _productPermissionChecker;
-
-	@Reference
 	private ProductDefinitionHelper _productDefinitionHelper;
 
 	@Reference
 	private ProductIndexerHelper _productIndexerHelper;
+
+	@Reference
+	private ProductPermissionChecker _productPermissionChecker;
 
 }

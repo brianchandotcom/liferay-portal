@@ -44,14 +44,16 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-import java.util.Collections;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -60,7 +62,7 @@ import java.util.List;
 public class OptionNestedCollectionResource
 	implements
 		NestedCollectionResource<Document, Long, OptionIdentifier, Long,
-				WebSiteIdentifier> {
+			WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Document, Long, Long> collectionRoutes(
@@ -69,8 +71,7 @@ public class OptionNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addCPOption,
-			_optionPermissionChecker.forAdding()::apply,
+			this::_addCPOption, _optionPermissionChecker.forAdding()::apply,
 			OptionForm::buildForm
 		).build();
 	}
@@ -91,8 +92,7 @@ public class OptionNestedCollectionResource
 			_optionPermissionChecker.forDeleting()::apply
 		).addUpdater(
 			this::_updateCPOption,
-			_optionPermissionChecker.forUpdating()::apply,
-			OptionForm::buildForm
+			_optionPermissionChecker.forUpdating()::apply, OptionForm::buildForm
 		).build();
 	}
 
@@ -234,10 +234,10 @@ public class OptionNestedCollectionResource
 	private CPOptionService _cpOptionService;
 
 	@Reference
-	private OptionPermissionChecker _optionPermissionChecker;
+	private OptionHelper _optionHelper;
 
 	@Reference
-	private OptionHelper _optionHelper;
+	private OptionPermissionChecker _optionPermissionChecker;
 
 	@Reference
 	private ProductDefinitionHelper _productDefinitionHelper;

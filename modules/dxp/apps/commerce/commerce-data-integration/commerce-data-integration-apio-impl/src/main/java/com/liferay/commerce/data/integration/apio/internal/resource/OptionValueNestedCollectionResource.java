@@ -34,7 +34,6 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.search.CPOptionValueIndexer;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionValueService;
-import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -46,14 +45,16 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-import java.util.Collections;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -62,7 +63,7 @@ import java.util.List;
 public class OptionValueNestedCollectionResource
 	implements
 		NestedCollectionResource<Document, Long, OptionValueIdentifier, Long,
-				OptionIdentifier> {
+			OptionIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Document, Long, Long> collectionRoutes(
@@ -246,10 +247,10 @@ public class OptionValueNestedCollectionResource
 	private CPOptionValueService _cpOptionValueService;
 
 	@Reference
-	private OptionValuePermissionChecker _optionValuePermissionChecker;
+	private OptionValueHelper _optionValueHelper;
 
 	@Reference
-	private OptionValueHelper _optionValueHelper;
+	private OptionValuePermissionChecker _optionValuePermissionChecker;
 
 	@Reference
 	private ProductIndexerHelper _productIndexerHelper;

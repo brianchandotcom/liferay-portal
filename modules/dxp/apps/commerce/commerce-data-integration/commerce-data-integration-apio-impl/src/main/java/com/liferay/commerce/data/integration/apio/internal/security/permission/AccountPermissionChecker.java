@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.function.BiFunction;
 
 import javax.ws.rs.NotFoundException;
-import java.util.function.BiFunction;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -60,8 +62,7 @@ public class AccountPermissionChecker {
 				_getPermissionCheckerTry(credentials);
 
 			Try<Organization> organizationTry = Try.fromFallible(
-				() -> _organizationService.fetchOrganization(
-					identifier));
+				() -> _organizationService.fetchOrganization(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
@@ -69,17 +70,13 @@ public class AccountPermissionChecker {
 					organizationTry.map(
 						Organization::getGroupId
 					).orElseThrow(
-							() -> new NotFoundException()
+						() -> new NotFoundException()
 					),
 					ActionKeys.UPDATE)
 			).orElse(
-					false
+				false
 			);
 		};
-	}
-
-	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
-		return forUpdating();
 	}
 
 	private Try<PermissionChecker> _getPermissionCheckerTry(
@@ -100,6 +97,10 @@ public class AccountPermissionChecker {
 		);
 	}
 
+	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
+		return forUpdating();
+	}
+
 	@Reference
 	private HasPermission _hasPermission;
 
@@ -107,9 +108,9 @@ public class AccountPermissionChecker {
 	private OrganizationService _organizationService;
 
 	@Reference
-	private UserService _userService;
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
-	private PortletResourcePermission _portletResourcePermission;
+	private UserService _userService;
 
 }

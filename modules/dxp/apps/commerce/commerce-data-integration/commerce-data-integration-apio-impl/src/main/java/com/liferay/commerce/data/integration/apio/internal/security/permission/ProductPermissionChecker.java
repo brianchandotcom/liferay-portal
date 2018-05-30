@@ -24,11 +24,13 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.function.BiFunction;
 
 import javax.ws.rs.NotFoundException;
-import java.util.function.BiFunction;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -42,18 +44,17 @@ public class ProductPermissionChecker {
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPDefinition> cpInstance = Try.fromFallible(
-				() -> _cpDefinitionService.fetchCPDefinition(
-					identifier));
+				() -> _cpDefinitionService.fetchCPDefinition(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
 					permissionChecker,
 					cpInstance.map(
-							CPDefinition::getGroupId
+						CPDefinition::getGroupId
 					).orElseThrow(
 						() -> new NotFoundException()
 					),
-						CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION)
+					CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION)
 			).orElse(
 				false
 			);
@@ -70,8 +71,7 @@ public class ProductPermissionChecker {
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPDefinition> cpDefinitionTry = Try.fromFallible(
-				() -> _cpDefinitionService.fetchCPDefinition(
-					identifier));
+				() -> _cpDefinitionService.fetchCPDefinition(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
@@ -86,10 +86,6 @@ public class ProductPermissionChecker {
 				false
 			);
 		};
-	}
-
-	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
-		return forUpdating();
 	}
 
 	private Try<PermissionChecker> _getPermissionCheckerTry(
@@ -110,13 +106,17 @@ public class ProductPermissionChecker {
 		);
 	}
 
+	private BiFunction<Credentials, Long, Boolean> _permissionBridge() {
+		return forUpdating();
+	}
+
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private UserService _userService;
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
-	private PortletResourcePermission _portletResourcePermission;
+	private UserService _userService;
 
 }

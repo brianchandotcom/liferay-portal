@@ -31,11 +31,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -51,8 +52,7 @@ public class RoleCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addRole,
-			_rolePermissionChecker::forAdding,
+			this::_addRole, _rolePermissionChecker::forAdding,
 			RoleForm::buildForm
 		).build();
 	}
@@ -72,8 +72,7 @@ public class RoleCollectionResource
 			idempotent(_roleLocalService::deleteRole),
 			_rolePermissionChecker.forDeleting()::apply
 		).addUpdater(
-			this::_updateRole,
-			_rolePermissionChecker.forUpdating()::apply,
+			this::_updateRole, _rolePermissionChecker.forUpdating()::apply,
 			RoleForm::buildForm
 		).build();
 	}

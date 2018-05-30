@@ -3,6 +3,28 @@
 	<var name="userLastName" value="Test" />
 
 	<command name="runSmoke" summary-ignore="true">
+		<task macro-summary="Ensure that the super admin can add a Blank Site">
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Sites" />
+				<var name="panel" value="Control Panel" />
+				<var name="portlet" value="Sites" />
+			</execute>
+
+			<execute macro="Site#addBlankCP">
+				<var name="siteName" value="Site Name" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoPortlet">
+				<var name="category" value="Sites" />
+				<var name="panel" value="Control Panel" />
+				<var name="portlet" value="Sites" />
+			</execute>
+
+			<execute macro="Site#viewCP">
+				<var name="siteName" value="Site Name" />
+			</execute>
+		</task>
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -26,8 +48,9 @@
 		<var name="portletName" value="Hello World" />
 
 		<task summary="Add a '${portletName}' portlet to the page named '${pageName}'">
-			<execute macro="Navigator#gotoPage">
+			<execute macro="Navigator#gotoSitePage">
 				<var name="pageName" value="${pageName}" />
+				<var name="siteName" value="Site Name" />
 			</execute>
 
 			<execute macro="Portlet#addPG">
@@ -44,8 +67,9 @@
 				<var name="portletName" value="${portletName}" />
 			</execute>
 
-			<execute macro="Navigator#gotoPage">
+			<execute macro="Navigator#gotoSitePage">
 				<var name="pageName" value="${pageName}" />
+				<var name="siteName" value="Site Name" />
 			</execute>
 
 			<execute macro="Portlet#viewTitle">
@@ -61,7 +85,9 @@
 		<var name="portlet" value="Web Content" />
 
 		<task macro-summary="ProductMenu#gotoSitesContent">
-			<execute macro="Navigator#openURL" />
+			<execute macro="Navigator#openSiteURL">
+				<var name="siteName" value="Site Name" />
+			</execute>
 
 			<execute macro="ProductMenu#gotoPortlet">
 				<var name="category" value="Content" />

@@ -16,18 +16,14 @@
 
 <%@ include file="/discussion/init.jsp" %>
 
-<%
-String randomNamespace = ParamUtil.getString(request, "randomNamespace");
-int index = ParamUtil.getInteger(request, "index");
-%>
-
 <liferay-ui:input-editor
 	autoCreate="<%= true %>"
 	configKey="commentEditor"
-	contents='<%= "TODO" %>'
+	contents='<%= ParamUtil.getString(request, "contents") %>'
 	editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
-	name='<%= randomNamespace + "editReplyBody" + index %>'
-	onChangeMethod='<%= randomNamespace + index + "EditOnChange" %>'
+	name='<%= ParamUtil.getString(request, "name") %>'
+	onChangeMethod='<%= ParamUtil.getString(request, "onChangeMethod") %>'
+	placeholder='<%= ParamUtil.getString(request, "placeholder") %>'
 	showSource="<%= false %>"
-	skipEditorLoading="<%= false %>"
+	skipEditorLoading='<%= ParamUtil.getBoolean(request, "skipEditorLoading") %>'
 />

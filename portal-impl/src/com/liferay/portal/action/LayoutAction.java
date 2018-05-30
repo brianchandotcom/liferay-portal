@@ -14,6 +14,7 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -312,19 +313,20 @@ public class LayoutAction extends Action {
 						return null;
 					}
 
-					String renderStateJSON = null;
+					String renderStateJSON = StringPool.BLANK;
 
 					if (themeDisplay.isHubAction()) {
 						renderStateJSON = RenderStateUtil.generateJSON(
 							request, themeDisplay);
 					}
 					else if (themeDisplay.isHubPartialAction()) {
-						Map<String, RenderData> renderDataMap = new HashMap<>();
-
 						LayoutTypePortlet layoutTypePortlet =
 							themeDisplay.getLayoutTypePortlet();
 
 						if (layoutTypePortlet != null) {
+							Map<String, RenderData> renderDataMap =
+								new HashMap<>();
+
 							List<Portlet> allPortlets =
 								layoutTypePortlet.getAllPortlets();
 
@@ -345,10 +347,10 @@ public class LayoutAction extends Action {
 								renderDataMap.put(
 									curPortlet.getPortletId(), renderData);
 							}
-						}
 
-						renderStateJSON = RenderStateUtil.generateJSON(
-							request, themeDisplay, renderDataMap);
+							renderStateJSON = RenderStateUtil.generateJSON(
+								request, themeDisplay, renderDataMap);
+						}
 					}
 					else {
 						return null;

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -354,7 +355,7 @@ public class LayoutAction extends Action {
 					}
 
 					response.setContentLength(renderStateJSON.length());
-					response.setContentType("application/json");
+					response.setContentType(ContentTypes.APPLICATION_JSON);
 
 					PrintWriter writer = response.getWriter();
 

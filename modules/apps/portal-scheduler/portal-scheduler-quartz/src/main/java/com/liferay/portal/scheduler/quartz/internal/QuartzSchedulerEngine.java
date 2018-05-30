@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
@@ -874,17 +873,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		_messageBus = messageBus;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
 		_props = props;
@@ -972,12 +960,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		_jsonFactory = null;
 	}
 
-	protected void unsetPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = null;
-	}
-
 	protected void unsetSchedulerEngineHelper(
 		SchedulerEngineHelper schedulerEngineHelper) {
 
@@ -1059,7 +1041,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private Scheduler _memoryScheduler;
 	private MessageBus _messageBus;
 	private Scheduler _persistedScheduler;
-	private PortletLocalService _portletLocalService;
 	private Props _props;
 	private QuartzTriggerFactory _quartzTriggerFactory;
 	private volatile boolean _schedulerEngineEnabled;

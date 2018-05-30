@@ -53,7 +53,7 @@ public class HtmlContentTransformerImpl
 			return null;
 		}
 
-		if (!html.contains(AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME)) {
+		if (!html.contains(AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID)) {
 			return html;
 		}
 
@@ -92,7 +92,7 @@ public class HtmlContentTransformerImpl
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"<img [^>]*?\\s*" + AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME +
+		"<img [^>]*?\\s*" + AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID +
 			"=\"(\\d+)\".*?/>",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 

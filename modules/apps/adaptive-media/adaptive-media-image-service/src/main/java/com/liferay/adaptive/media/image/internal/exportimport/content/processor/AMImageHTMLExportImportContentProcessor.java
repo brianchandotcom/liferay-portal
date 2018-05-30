@@ -73,11 +73,12 @@ public class AMImageHTMLExportImportContentProcessor
 
 		Document document = _parseDocument(content);
 		String elementSelector =
-			"[" + AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME + "]";
+			"[" + AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID + "]";
 
 		for (Element element : document.select(elementSelector)) {
 			long fileEntryId = Long.valueOf(
-				element.attr(AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME));
+				element.attr(
+					AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID));
 
 			_dlAppLocalService.getFileEntry(fileEntryId);
 		}
@@ -161,7 +162,7 @@ public class AMImageHTMLExportImportContentProcessor
 			}
 
 			element.attr(
-				AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME,
+				AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID,
 				String.valueOf(fileEntryId));
 			element.removeAttr(_ATTRIBUTE_NAME_EXPORT_IMPORT_PATH);
 
@@ -172,7 +173,7 @@ public class AMImageHTMLExportImportContentProcessor
 
 				imgElement.removeAttr(_ATTRIBUTE_NAME_EXPORT_IMPORT_PATH);
 				imgElement.attr(
-					AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME,
+					AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID,
 					String.valueOf(fileEntryId));
 
 				Element picture = _parseNode(
@@ -193,11 +194,12 @@ public class AMImageHTMLExportImportContentProcessor
 
 		Document document = _parseDocument(content);
 		String elementSelector =
-			"[" + AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME + "]";
+			"[" + AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID + "]";
 
 		for (Element element : document.select(elementSelector)) {
 			long fileEntryId = Long.valueOf(
-				element.attr(AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME));
+				element.attr(
+					AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID));
 
 			try {
 				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
@@ -205,7 +207,8 @@ public class AMImageHTMLExportImportContentProcessor
 
 				amReferenceExporter.exportReference(fileEntry);
 
-				element.removeAttr(AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME);
+				element.removeAttr(
+					AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID);
 				element.attr(
 					_ATTRIBUTE_NAME_EXPORT_IMPORT_PATH,
 					ExportImportPathUtil.getModelPath(fileEntry));

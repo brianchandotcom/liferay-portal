@@ -83,7 +83,7 @@ public class UpgradeJournalArticleDataFileEntryId extends UpgradeProcess {
 
 				String upgradedStringValue = matcher.replaceAll(
 					StringBundler.concat(
-						AMImageHTMLConstants.FILE_ENTRY_ATTR_NAME,
+						AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID,
 						StringPool.EQUAL));
 
 				if (!upgradedStringValue.equals(stringValue)) {

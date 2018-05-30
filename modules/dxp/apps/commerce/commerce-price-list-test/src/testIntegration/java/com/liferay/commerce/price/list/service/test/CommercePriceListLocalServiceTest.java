@@ -14,15 +14,22 @@
 
 package com.liferay.commerce.price.list.service.test;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.price.list.test.util.CommercePriceListTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
 import org.frutilla.FrutillaRule;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -47,7 +54,7 @@ public class CommercePriceListLocalServiceTest {
 	}
 
 	@Test
-	public void testUpsertCommercePriceList() {
+	public void testUpsertCommercePriceList() throws Exception {
 		frutillaRule.scenario(
 			"Adding a new Price List"
 		).given(
@@ -64,16 +71,24 @@ public class CommercePriceListLocalServiceTest {
 			"The result should be a new Price List on the given site"
 		);
 
-		Assert.assertEquals(_group.getGroupId(), _group.getGroupId());
+		String currency = "EUR";
+		String name = RandomTestUtil.randomString();
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.upsertCommercePriceList(
+				_group.getGroupId(), 0L, currency, name, 0D, true, null, null,
+				null);
+
+		Assert.assertThat(name, equalTo(commercePriceList.getName()));
 	}
 
+	@Rule
+	public final FrutillaRule frutillaRule = new FrutillaRule();
+
 	@Inject
-	private CommercePriceListLocalService
-		_commercePriceListLocalService;
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Rule
-	public final FrutillaRule frutillaRule = new FrutillaRule();
 }

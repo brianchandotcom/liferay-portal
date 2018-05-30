@@ -468,17 +468,17 @@ public class RenderStateUtil {
 
 	private static class PRPGroup {
 
-		public PRPGroup(String identifier, Set<String> portletIds) {
-			_identifier = identifier;
-			_portletIds = portletIds;
-		}
-
 		public String getIdentifier() {
 			return _identifier;
 		}
 
 		public Set<String> getPortletIds() {
 			return _portletIds;
+		}
+
+		private PRPGroup(String identifier, Set<String> portletIds) {
+			_identifier = identifier;
+			_portletIds = portletIds;
 		}
 
 		private final String _identifier;

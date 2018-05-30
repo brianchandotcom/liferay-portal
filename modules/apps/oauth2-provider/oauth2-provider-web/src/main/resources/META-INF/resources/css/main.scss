@@ -1,0 +1,123 @@
+$grayLineColor: #E7E7ED;
+$grayTextColor: #6B6C7E;
+
+.assign-scopes-modal {
+	max-width: 100%;
+
+	.inline {
+		display: inline-block;
+	}
+}
+
+.edit-client-credentials-modal {
+	.hidden {
+		display: none;
+	}
+	.padlock {
+		flex: 1;
+	}
+}
+
+.portlet-oauth2-provider-admin {
+	.hidden {
+		display: none;
+	}
+	.inline {
+		display: inline-block;
+	}
+}
+
+.portlet-oauth2-provider-authorize {
+	.consent {
+		.panel-body {
+			padding: 1.25rem 1.25rem;
+		}
+		.user-icon, .app-icon {
+			display: inline-block;
+			height: 88px;
+			margin-bottom: 1.25rem;
+			position: relative;
+			width: 88px;
+		}
+
+		.user-icon {
+			left: -16px;
+			z-index: 1;
+		}
+
+		.app-icon {
+			z-index: 2;
+		}
+
+		.application-wants-permissions {
+			margin-bottom: 2rem;
+		}
+
+		.list-group-item:first-child {
+			border: 0;
+		}
+		.list-group-item {
+			border-bottom-width: 0;
+			border-left-width: 0;
+			border-right-width: 0;
+			border-top: 1px solid $grayLineColor;
+
+			.lexicon-icon-check {
+				fill: green;
+			}
+		}
+
+		.buttons {
+			border-top: 1px solid $grayLineColor;
+			margin-top: 1.25rem;
+			padding-top: 1.25rem;
+		}
+	}
+}
+.portlet-oauth2-provider-connected-applications {
+	.view-application {
+		.panel-body {
+			padding: 1.25rem 1.25rem;
+		}
+		.app-icon {
+			display: block;
+			margin-bottom: 1rem;
+
+			img {
+				max-height: 88px;
+				max-width: 88px;
+			}
+		}
+		.application-information, .last-access, .authorization {
+			span {
+				color: $grayTextColor;
+			}
+		}
+		.list-group-item:first-child {
+			border: 0;
+		}
+		.list-group-item {
+			border-bottom-width: 0;
+			border-left-width: 0;
+			border-right-width: 0;
+			border-top: 1px solid $grayLineColor;
+
+			.lexicon-icon-check {
+				fill: green;
+			}
+		}
+		.activity, .permissions {
+			border-bottom: 1px solid $grayLineColor;
+			margin-bottom: 1rem;
+			margin-top: 2rem;
+			text-transform: uppercase;
+		}
+		.buttons {
+			margin: 2rem 0 0 0;
+		}
+		.remove-access {
+			border-color: rgb(218,20,20);
+			color: rgb(218,20,20);
+		}
+	}
+}

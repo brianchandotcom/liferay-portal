@@ -27,15 +27,11 @@ SearchContainer<SiteInitializerItemDisplayContext> siteInitializerItemSearchCont
 
 List<SiteInitializerItemDisplayContext> siteInitializerItems = siteAdminDisplayContext.getSiteInitializerItems();
 
-int indexFrom = siteInitializerItemSearchContainer.getStart();
-int indexTo = siteInitializerItemSearchContainer.getEnd();
-
-if (indexTo > siteInitializerItems.size()) {
-	indexTo = siteInitializerItems.size();
-}
-
-siteInitializerItemSearchContainer.setResults(siteInitializerItems.subList(indexFrom, indexTo));
 siteInitializerItemSearchContainer.setTotal(siteInitializerItems.size());
+
+siteInitializerItems = ListUtil.subList(siteInitializerItems, siteInitializerItemSearchContainer.getStart(), siteInitializerItemSearchContainer.getEnd());
+
+siteInitializerItemSearchContainer.setResults(siteInitializerItems);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);

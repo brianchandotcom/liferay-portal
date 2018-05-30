@@ -75,7 +75,7 @@ public class CommerceCloudClientException extends PortalException {
 
 			super(
 				StringBundler.concat(
-					"Request ", url, " failed: ", String.valueOf(responseCode),
+					"Request ", url, " failed: ", responseCode,
 					StringPool.SPACE, responseBody));
 
 			_url = url;

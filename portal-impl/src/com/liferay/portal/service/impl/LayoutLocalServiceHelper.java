@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
 import com.liferay.portal.kernel.exception.LayoutNameException;
-import com.liferay.portal.kernel.exception.LayoutNameLengthException;
 import com.liferay.portal.kernel.exception.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
@@ -479,7 +478,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			Layout.class.getName(), "friendlyURL");
 
 		if (name.length() > maxLength) {
-			throw new LayoutNameLengthException();
+			throw new LayoutNameException(LayoutNameException.TOO_LONG);
 		}
 
 		if (Validator.isNull(name)) {

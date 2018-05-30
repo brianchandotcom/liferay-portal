@@ -15,7 +15,6 @@
 package com.liferay.layout.admin.web.internal.handler;
 
 import com.liferay.portal.kernel.exception.LayoutNameException;
-import com.liferay.portal.kernel.exception.LayoutNameLengthException;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -58,16 +57,20 @@ public class LayoutExceptionRequestHandler {
 		String errorMessage = null;
 
 		if (pe instanceof LayoutNameException) {
-			errorMessage = LanguageUtil.get(
-				themeDisplay.getRequest(),
-				"please-enter-a-valid-name-for-the-page");
-		}
-		else if (pe instanceof LayoutNameLengthException) {
-			errorMessage = LanguageUtil.format(
-				themeDisplay.getRequest(),
-				"page-name-cannot-exceed-x-characters",
-				ModelHintsUtil.getMaxLength(
-					Layout.class.getName(), "friendlyURL"));
+			LayoutNameException lne = (LayoutNameException)pe;
+
+			if (lne.getType() == LayoutNameException.TOO_LONG) {
+				errorMessage = LanguageUtil.format(
+					themeDisplay.getRequest(),
+					"page-name-cannot-exceed-x-characters",
+					ModelHintsUtil.getMaxLength(
+						Layout.class.getName(), "friendlyURL"));
+			}
+			else {
+				errorMessage = LanguageUtil.get(
+					themeDisplay.getRequest(),
+					"please-enter-a-valid-name-for-the-page");
+			}
 		}
 		else if (pe instanceof LayoutTypeException) {
 			LayoutTypeException lte = (LayoutTypeException)pe;

@@ -1,5 +1,5 @@
 $sidebar-background-color: #FFF;
-$sidebar-content-width: 320px;
+$sidebar-content-width: 380px;
 $sidebar-header-padding: 0.5rem 1.5rem;
 $sidebar-list-group-icon-size: 0.75rem;
 $sidebar-list-subtitle-font-size: 0.7rem;
@@ -40,11 +40,11 @@ $sidebar-z-index: 1000;
 
 	.navbar {
 		border-bottom: 1px solid $sidebar-navbar-border-color;
-		border-top: 1px solid $sidebar-navbar-border-color;
 	}
 
-	.form-builder-sidebar-title {
-		margin-top: 8px;
+	.sidebar .tbar-section {
+		margin-left: 8px;
+		margin-right: auto;
 	}
 
 	.sidebar-body {
@@ -93,6 +93,11 @@ $sidebar-z-index: 1000;
 			color: $sidebar-background-color;
 		}
 	}
+}
+
+.form-builder-sidebar.sidenav-fixed.sidenav-menu-slider.open {
+	visibility: visible;
+	width: 380px;
 }
 
 .form-builder-sidebar-close {

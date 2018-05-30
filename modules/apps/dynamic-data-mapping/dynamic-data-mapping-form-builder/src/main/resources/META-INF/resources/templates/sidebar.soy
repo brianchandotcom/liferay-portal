@@ -45,33 +45,27 @@
 {@param toolbarButtonIcon: html}
 {@param? toolbarTemplateContext: [options: list<[buttonClass: string, handler: string, label: string]>]}
 {@param? type: string}
-
-<div class="sidebar-header">
-	<div class="sidebar-section-flex">
-		<div class="flex-col flex-col-expand">
-			{if $type}
-				{delcall DDMSidebar.sidebar_toolbar variant="$type" data="all" /}
-			{else}
-				{delcall DDMSidebar.sidebar_toolbar data="all" /}
-			{/if}
-		</div>
-
-		<div class="flex-col">
-			<ul class="nav nav-unstyled sidebar-actions">
-				{if $toolbarTemplateContext}
-					<li class="nav-item">
-						{call .field_options_toolbar data="all" /}
-					</li>
-				{/if}
-				<li class="nav-item">
-					<a class="form-builder-sidebar-close nav-link nav-link-monospaced sidebar-link" href="javascript:;">
+	<nav class="component-tbar tbar">
+		<div class="container-fluid">
+			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand">
+					<div class="tbar-section">
+						{if $type}
+							{delcall DDMSidebar.sidebar_toolbar variant="$type" data="all" /}
+						{else}
+							{delcall DDMSidebar.sidebar_toolbar data="all" /}
+						{/if}
+					</div>
+				</li>
+				<li class="tbar-item">
+					<a class="component-action form-builder-sidebar-close" href="javascript:;" role="button">
 						{$closeButtonIcon}
 					</a>
 				</li>
 			</ul>
 		</div>
-	</div>
-</div>
+	</nav>
+
 {/template}
 
 /**
@@ -118,7 +112,7 @@
 	{if length(keys($fieldTypeOptions)) != 0}
 		<ul class="lfr-ddm-toolbar-field-type nav">
 			<li class="dropdown nav-item">
-				<button aria-expanded="false" aria-haspopup="true" class="btn btn-unstyled pl-0 dropdown-toggle nav-link"
+				<button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary btn-sm dropdown-toggle nav-link"
 						data-toggle="dropdown" type="button" id="field-type-menu-content">
 				</button>
 

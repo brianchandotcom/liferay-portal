@@ -262,7 +262,7 @@ String postReplyEditorName = randomNamespace + "postReplyBody" + index;
 											<%= randomNamespace %>showEditor(
 												'<%= namespace + randomNamespace + "editForm" + index %>',
 												{
-													contents: '<%= HtmlUtil.escape(discussionComment.getBody()) %>',
+													contents: '<%= HtmlUtil.escapeJS(discussionComment.getBody()) %>',
 													name: '<%= editReplyEditorName %>',
 													namespace: '<portlet:namespace/>',
 													onChangeMethod: '<%= randomNamespace + index + "EditOnChange" %>'

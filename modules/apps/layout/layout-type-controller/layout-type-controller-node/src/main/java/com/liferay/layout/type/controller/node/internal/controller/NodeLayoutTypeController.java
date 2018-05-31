@@ -14,8 +14,8 @@
 
 package com.liferay.layout.type.controller.node.internal.controller;
 
+import com.liferay.layout.type.controller.node.internal.constants.NodeLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -31,15 +31,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juergen Kappler
  */
 @Component(
-	immediate = true, property = "layout.type=" + LayoutConstants.TYPE_NODE,
+	immediate = true,
+	property = "layout.type=" + NodeLayoutTypeControllerConstants.LAYOUT_TYPE_NODE,
 	service = LayoutTypeController.class
 )
 public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
-
-	@Override
-	public String getType() {
-		return LayoutConstants.TYPE_NODE;
-	}
 
 	@Override
 	public String getURL() {

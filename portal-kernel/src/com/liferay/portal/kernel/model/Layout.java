@@ -426,8 +426,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isTypeLinkToLayout();
 
-	public boolean isTypeNode();
-
 	public boolean isTypePanel();
 
 	public boolean isTypePortlet();

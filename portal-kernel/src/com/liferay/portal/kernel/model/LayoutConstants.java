@@ -46,8 +46,6 @@ public class LayoutConstants {
 
 	public static final String TYPE_LINK_TO_LAYOUT = "link_to_layout";
 
-	public static final String TYPE_NODE = "node";
-
 	public static final String TYPE_PANEL = "panel";
 
 	public static final String TYPE_PORTLET = "portlet";

@@ -57,7 +57,12 @@
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 
-		<execute function="Click" locator1="Button#CLOSE_SUCCESS_MESSAGE" />
+		<if>
+			<condition function="IsElementPresent" locator1="Button#CLOSE_SUCCESS_MESSAGE" />
+			<then>
+				<execute function="Click" locator1="Button#CLOSE_SUCCESS_MESSAGE" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewSuccessMessageText">

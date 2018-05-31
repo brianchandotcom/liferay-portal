@@ -731,6 +731,17 @@ public class JenkinsResultsParserUtil {
 		return Float.parseFloat(matcher.group(1));
 	}
 
+	public static GitWorkingDirectory getJenkinsGitWorkingDirectory()
+		throws IOException {
+
+		Properties buildProperties = getBuildProperties();
+
+		String workingDirectoryPath = buildProperties.getProperty(
+			"base.repository.dir") + "/liferay-jenkins-ee";
+
+		return new GitWorkingDirectory("master", workingDirectoryPath);
+	}
+
 	public static List<JenkinsMaster> getJenkinsMasters(
 		Properties buildProperties, String prefix) {
 
@@ -918,6 +929,24 @@ public class JenkinsResultsParserUtil {
 		catch (IOException ioe) {
 			throw new RuntimeException("Unable to get relative path", ioe);
 		}
+	}
+
+	public static PortalGitWorkingDirectory getPortalGitWorkingDirectory(
+			String portalBranchName)
+		throws IOException {
+
+		Properties buildProperties = getBuildProperties();
+
+		String workingDirectoryPath = buildProperties.getProperty(
+			"base.repository.dir") + "/liferay-portal";
+
+		if (!portalBranchName.equals("master")) {
+			workingDirectoryPath = combine(
+				workingDirectoryPath, "-", portalBranchName);
+		}
+
+		return new PortalGitWorkingDirectory(
+			portalBranchName, workingDirectoryPath);
 	}
 
 	public static Properties getProperties(File... propertiesFiles) {

@@ -14,13 +14,13 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Set;
+
 /**
  * @author Michael Hashimoto
  */
-public class PortalAcceptanceUpstreamJob extends PortalRepositoryJob {
+public interface BatchDependentJob {
 
-	public PortalAcceptanceUpstreamJob(String jobName) {
-		super(jobName);
-	}
+	public Set<String> getDependentBatchNames();
 
 }

@@ -23,10 +23,8 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.GradleSourceUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 
-import java.io.File;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -44,16 +42,16 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		for (String dependencies : _getDependenciesBlocks(content)) {
-			content = _formatDependencies(absolutePath, content, dependencies);
+		List<String> blocks = GradleSourceUtil.getDependenciesBlocks(content);
+
+		for (String dependencies : blocks) {
+			content = _formatDependencies(content, dependencies);
 		}
 
 		return content;
 	}
 
-	private String _formatDependencies(
-		String absolutePath, String content, String dependencies) {
-
+	private String _formatDependencies(String content, String dependencies) {
 		String indent = SourceUtil.getIndent(dependencies);
 
 		int x = dependencies.indexOf("\n");
@@ -115,33 +113,12 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 			uniqueDependencies.add(dependency);
 		}
 
-		boolean checkScope = false;
-
-		if (isModulesApp(absolutePath, false) && _hasBNDFile(absolutePath) &&
-			!GradleSourceUtil.isSpringBootExecutable(content)) {
-
-			checkScope = true;
-		}
-
 		StringBundler sb = new StringBundler();
 
 		String previousConfiguration = null;
 
 		for (String dependency : uniqueDependencies) {
 			String configuration = _getConfiguration(dependency);
-
-			if (checkScope) {
-				if (!_isTestUtilModule(absolutePath) &&
-					configuration.equals("compile")) {
-
-					dependency = StringUtil.replaceFirst(
-						dependency, "compile", "compileOnly");
-				}
-				else if (configuration.equals("compileOnly")) {
-					dependency = StringUtil.removeSubstrings(
-						dependency, "transitive: false, ", "transitive: true,");
-				}
-			}
 
 			if ((previousConfiguration == null) ||
 				!previousConfiguration.equals(configuration)) {
@@ -170,67 +147,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return dependency;
 	}
 
-	private List<String> _getDependenciesBlocks(String content) {
-		List<String> dependenciesBlocks = new ArrayList<>();
-
-		Matcher matcher = _dependenciesPattern.matcher(content);
-
-		while (matcher.find()) {
-			int y = matcher.start();
-
-			while (true) {
-				y = content.indexOf("}", y + 1);
-
-				if (y == -1) {
-					return dependenciesBlocks;
-				}
-
-				String dependencies = content.substring(
-					matcher.start(2), y + 1);
-
-				int level = getLevel(dependencies, "{", "}");
-
-				if (level == 0) {
-					if (!dependencies.contains("}\n")) {
-						dependenciesBlocks.add(dependencies);
-					}
-
-					break;
-				}
-			}
-		}
-
-		return dependenciesBlocks;
-	}
-
-	private boolean _hasBNDFile(String absolutePath) {
-		if (!absolutePath.endsWith("/build.gradle")) {
-			return false;
-		}
-
-		int pos = absolutePath.lastIndexOf(StringPool.SLASH);
-
-		File file = new File(absolutePath.substring(0, pos + 1) + "bnd.bnd");
-
-		return file.exists();
-	}
-
-	private boolean _isTestUtilModule(String absolutePath) {
-		int x = absolutePath.lastIndexOf(StringPool.SLASH);
-
-		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
-
-		String moduleName = absolutePath.substring(y + 1, x);
-
-		if (!moduleName.endsWith("-test-util")) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private final Pattern _dependenciesPattern = Pattern.compile(
-		"(\n|\\A)(\t*)dependencies \\{\n");
 	private final Pattern _incorrectGroupNameVersionPattern = Pattern.compile(
 		"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)", Pattern.DOTALL);
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(

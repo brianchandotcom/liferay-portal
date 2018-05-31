@@ -14,7 +14,9 @@
 	</command>
 
 	<command name="add">
-		<execute macro="LexiconEntry#gotoAdd" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Content Page Template" />
+		</execute>
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${pageTemplateName}" />

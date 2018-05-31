@@ -147,7 +147,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 		if (oAuth2Authorization == null) {
 			throw new NoSuchOAuth2AuthorizationException(
-				"No OAuth2Authorization exists with accessTokenContent " +
+				"No OAuth2Authorization exists with refreshTokenContent " +
 					refreshTokenContent);
 		}
 

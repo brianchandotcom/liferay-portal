@@ -73,13 +73,11 @@ public class UpdateLayoutPrototypeMVCActionCommand
 
 			nameMap.put(actionRequest.getLocale(), name);
 
-			Map<Locale, String> descriptionMap = new HashMap<>();
-
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				LayoutPrototype.class.getName(), actionRequest);
 
 			_layoutPrototypeService.updateLayoutPrototype(
-				layoutPrototypeId, nameMap, descriptionMap, true,
+				layoutPrototypeId, nameMap, new HashMap<>(), true,
 				serviceContext);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");

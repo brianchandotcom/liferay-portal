@@ -293,7 +293,7 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="configuration">
-						<aui:input label="Summary" name="summary" />
+						<aui:input name="summary" />
 
 						<c:if test="<%= (wikiPage == null) || wikiPage.isNew() || wikiPage.isApproved() %>">
 							<aui:model-context bean="<%= WikiPageLocalServiceUtil.createWikiPage(0) %>" model="<%= WikiPage.class %>" />

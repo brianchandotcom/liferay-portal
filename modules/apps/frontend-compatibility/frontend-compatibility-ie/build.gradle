@@ -23,8 +23,8 @@ buildArrayFind {
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 
-	rename { String fileName ->
-		fileName.replace("index", "array.find")
+	rename {
+		it.replace "index", "array.find"
 	}
 }
 
@@ -51,8 +51,8 @@ buildObjectAssign {
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 
-	rename { String fileName ->
-		fileName.replace("object-assign-auto", "object.assign")
+	rename {
+		it.replace "object-assign-auto", "object.assign"
 	}
 }
 
@@ -67,8 +67,8 @@ buildUrlSearchParams {
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
 
-	rename { String fileName ->
-		fileName.replace("url-search-params", "url.search.params")
+	rename {
+		it.replace "url-search-params", "url.search.params"
 	}
 }
 

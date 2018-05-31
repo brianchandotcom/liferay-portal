@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.portal.search.engine,\
 	com.liferay.portal.search.facet,\
 	com.liferay.portal.search.facet.custom,\
+	com.liferay.portal.search.facet.site,\
 	com.liferay.portal.search.facet.tag,\
 	com.liferay.portal.search.facet.type,\
 	com.liferay.portal.search.filter,\

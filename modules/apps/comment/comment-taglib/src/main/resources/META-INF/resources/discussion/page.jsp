@@ -277,8 +277,12 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				window,
 				'<%= randomNamespace %>hideEditor',
 				function(editorName, formId) {
-					if (window['<%= namespace %>' + editorName]) {
-						window['<%= namespace %>' + editorName].dispose();
+					var editorId = '<%= namespace %>' + editorName;
+					var editor = window[editorId];
+
+					if (editor) {
+						editor.dispose();
+						delete window[editorId];
 					}
 
 					<%= randomNamespace %>hideEl(formId);
@@ -660,6 +664,11 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				window,
 				'<%= randomNamespace %>showEditor',
 				function(formId, options) {
+
+					if (window['<%= namespace %>' + options.name]) {
+						return;
+					}
+
 					fetch(
 						'<%= editorURL %>',
 						{

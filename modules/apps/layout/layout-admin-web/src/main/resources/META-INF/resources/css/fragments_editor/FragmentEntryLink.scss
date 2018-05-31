@@ -2,7 +2,7 @@
 
 @import "mixins";
 
-@import "./_variables";
+@import "./variables";
 
 .fragment-entry-link-wrapper {
 	box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth fade_out($fragmentEntryLinkBorderColor, 1);

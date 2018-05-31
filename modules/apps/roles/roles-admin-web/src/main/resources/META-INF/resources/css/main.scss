@@ -151,7 +151,16 @@
 
 	.lfr-permission-navigation-container {
 		.search {
-			margin: 20px 0;
+			margin-bottom: 20px;
+			width: 100%;
+
+			> .form-control {
+				background-color: #FFF;
+			}
+		}
+
+		.table > tbody > tr.info {
+			background-color: #F0F5FF;
 		}
 
 		.lfr-permission-navigation {
@@ -204,6 +213,10 @@
 			.permission-navigation-section .permission-navigation-section {
 				margin-left: 1em;
 			}
+		}
+
+		.toggler-content-wrapper {
+			margin-left: 16px;
 		}
 	}
 

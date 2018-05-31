@@ -62,6 +62,10 @@ public interface LayoutTypeController extends Serializable {
 
 	public boolean isURLFriendliable();
 
+	public default boolean isWorkflowEnabled() {
+		return true;
+	}
+
 	public boolean matches(
 		HttpServletRequest request, String friendlyURL, Layout layout);
 

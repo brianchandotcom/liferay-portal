@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  */
 public abstract class IfStatementCheck extends BaseFileCheck {
 
-	protected void checkIfClauseParentheses(
+	protected int checkIfClauseParentheses(
 		String ifClause, String fileName, int lineNumber) {
 
 		ifClause = stripQuotes(ifClause);
@@ -41,13 +41,13 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				fileName, "Redundant parentheses in if-statement",
 				"if_statement_parentheses.markdown", lineNumber);
 
-			return;
+			return -1;
 		}
 
 		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
 			ifClause.contains("/*") || ifClause.contains("*/")) {
 
-			return;
+			return -1;
 		}
 
 		_checkMissingParentheses(ifClause, fileName, lineNumber);
@@ -59,17 +59,21 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				fileName, "Redundant parentheses in if-statement",
 				"if_statement_parentheses.markdown", lineNumber);
 
-			return;
+			return -1;
 		}
 
 		int x = ifClause.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		int parenthesisIndex = 1;
 
 		while (true) {
 			x = ifClause.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
 
 			if (x == -1) {
-				break;
+				return -1;
 			}
+
+			parenthesisIndex++;
 
 			char previousChar = ifClause.charAt(x - 1);
 
@@ -106,7 +110,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 							fileName, "Redundant parentheses in if-statement",
 							"if_statement_parentheses.markdown", lineNumber);
 
-						return;
+						return parenthesisIndex;
 					}
 
 					if (((nextChar == CharPool.CLOSE_PARENTHESIS) ||
@@ -117,7 +121,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 							fileName, "Redundant parentheses in if-statement",
 							"if_statement_parentheses.markdown", lineNumber);
 
-						return;
+						return parenthesisIndex;
 					}
 
 					break;

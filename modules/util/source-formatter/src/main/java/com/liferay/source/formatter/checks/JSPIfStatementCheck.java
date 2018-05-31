@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.regex.Matcher;
@@ -32,9 +34,14 @@ public class JSPIfStatementCheck extends IfStatementCheck {
 
 		while (matcher.find()) {
 			if (JSPSourceUtil.isJavaSource(content, matcher.start())) {
-				checkIfClauseParentheses(
+				int index = checkIfClauseParentheses(
 					matcher.group(), fileName,
 					getLineNumber(content, matcher.start(1)));
+
+				if (index != -1) {
+					return _fixClause(
+						content, matcher.group(), index, matcher.start());
+				}
 			}
 		}
 
@@ -44,13 +51,52 @@ public class JSPIfStatementCheck extends IfStatementCheck {
 			if (!JSPSourceUtil.isJavaSource(content, matcher.start())) {
 				String ifClause = "if (" + matcher.group(1) + ") {";
 
-				checkIfClauseParentheses(
+				int index = checkIfClauseParentheses(
 					ifClause, fileName,
 					getLineNumber(content, matcher.start(1)));
+
+				if (index != -1) {
+					return _fixClause(
+						content, matcher.group(), index - 1, matcher.start());
+				}
 			}
 		}
 
 		return content;
+	}
+
+	private String _fixClause(
+		String content, String clause, int index, int start) {
+
+		int x = -1;
+
+		for (int i = 0; i < index; i++) {
+			x = clause.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
+		}
+
+		int y = x;
+
+		while (true) {
+			y = clause.indexOf(StringPool.CLOSE_PARENTHESIS, y + 1);
+
+			if (y == -1) {
+				return content;
+			}
+
+			String s = clause.substring(x, y + 1);
+
+			if (getLevel(s) != 0) {
+				continue;
+			}
+
+			String replacement = StringUtil.replaceFirst(
+				clause, StringPool.CLOSE_PARENTHESIS, StringPool.BLANK, y);
+
+			replacement = StringUtil.replaceFirst(
+				replacement, StringPool.OPEN_PARENTHESIS, StringPool.BLANK, x);
+
+			return StringUtil.replaceFirst(content, clause, replacement, start);
+		}
 	}
 
 	private final Pattern _ifStatementPattern = Pattern.compile(

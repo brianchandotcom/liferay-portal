@@ -38,7 +38,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			!ifClause.matches("[^()]*\\([^()]*\\)[^()]*")) {
 
 			addMessage(
-				fileName, "Redundant parentheses in if-statement",
+				fileName, "Redundant parentheses",
 				"if_statement_parentheses.markdown", lineNumber);
 
 			return -1;
@@ -56,7 +56,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			_hasRedundantParentheses(ifClause, "&&", "||")) {
 
 			addMessage(
-				fileName, "Redundant parentheses in if-statement",
+				fileName, "Redundant parentheses",
 				"if_statement_parentheses.markdown", lineNumber);
 
 			return -1;
@@ -107,7 +107,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 						(nextChar == CharPool.CLOSE_PARENTHESIS)) {
 
 						addMessage(
-							fileName, "Redundant parentheses in if-statement",
+							fileName, "Redundant parentheses",
 							"if_statement_parentheses.markdown", lineNumber);
 
 						return parenthesisIndex;
@@ -118,7 +118,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 						_hasRedundantParentheses(s)) {
 
 						addMessage(
-							fileName, "Redundant parentheses in if-statement",
+							fileName, "Redundant parentheses",
 							"if_statement_parentheses.markdown", lineNumber);
 
 						return parenthesisIndex;
@@ -147,7 +147,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 			if (getLevel(s) == 0) {
 				addMessage(
-					fileName, "Missing parentheses in if-statement",
+					fileName, "Missing parentheses",
 					"if_statement_parentheses.markdown", lineNumber);
 
 				return;
@@ -200,7 +200,7 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 				if (_hasMissingParentheses(s)) {
 					addMessage(
-						fileName, "Missing parentheses in if-statement",
+						fileName, "Missing parentheses",
 						"if_statement_parentheses.markdown", lineNumber);
 
 					return;

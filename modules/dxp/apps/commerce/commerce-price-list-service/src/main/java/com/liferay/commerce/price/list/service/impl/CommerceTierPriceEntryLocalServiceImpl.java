@@ -512,7 +512,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		throws PortalException {
 
 		CommercePriceEntry commercePriceEntry =
-			_commercePriceEntryPersistence.fetchByPrimaryKey(
+			_commercePriceEntryPersistence.findByPrimaryKey(
 				commercePriceEntryId);
 
 		CommerceTierPriceEntry commerceTierPriceEntry =

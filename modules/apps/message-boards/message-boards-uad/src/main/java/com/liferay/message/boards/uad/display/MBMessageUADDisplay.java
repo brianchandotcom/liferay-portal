@@ -41,8 +41,8 @@ public class MBMessageUADDisplay extends BaseMBMessageUADDisplay {
 	@Override
 	public String[] getDisplayFieldNames() {
 		return new String[] {
-			"subject", "body", "messageId", "userId", "userName",
-			"statusByUserId", "statusByUserName"
+			"subject", "body", "userId", "userName", "statusByUserId",
+			"statusByUserName"
 		};
 	}
 

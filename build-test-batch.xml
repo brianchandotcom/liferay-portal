@@ -1970,11 +1970,11 @@ app.server.type=@{app.server.type}]]></echo>
 
 						directoryScanner.scan();
 
+						String osName = project.getProperty("os.name");
+
+						osName = osName.toLowerCase();
+
 						for (String filePath : directoryScanner.getIncludedFiles()) {
-							String osName = project.getProperty("os.name");
-
-							osName = osName.toLowerCase();
-
 							if (osName.contains("win")) {
 								filePath = filePath.replace("/", "\\");
 							}

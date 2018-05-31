@@ -15,7 +15,7 @@
 package com.liferay.portal.search.web.internal.site.facet.portlet.shared.search;
 
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.ScopeFacetFactory;
+import com.liferay.portal.search.facet.site.SiteFacetFactory;
 import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
 import com.liferay.portal.search.web.internal.site.facet.portlet.ScopeFacetBuilder;
 import com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortletPreferences;
@@ -57,7 +57,7 @@ public class SiteFacetPortletSharedSearchContributor
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		ScopeFacetBuilder scopeFacetBuilder = new ScopeFacetBuilder(
-			scopeFacetFactory);
+			siteFacetFactory);
 
 		scopeFacetBuilder.setFrequencyThreshold(
 			siteFacetPortletPreferences.getFrequencyThreshold());
@@ -76,6 +76,6 @@ public class SiteFacetPortletSharedSearchContributor
 	}
 
 	@Reference
-	protected ScopeFacetFactory scopeFacetFactory;
+	protected SiteFacetFactory siteFacetFactory;
 
 }

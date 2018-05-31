@@ -187,6 +187,23 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
+	public CPInstance getCPInstance(long cpDefinitionId, String sku)
+		throws PortalException {
+
+		return cpInstanceLocalService.getCPInstance(cpDefinitionId, sku);
+	}
+
+	@Override
+	public CPInstance getCPInstance(String externalReferenceCode)
+		throws PortalException {
+
+		CPDefinitionPermission.checkCPInstance(
+			getPermissionChecker(), externalReferenceCode, ActionKeys.VIEW);
+
+		return cpInstanceLocalService.getCPInstance(externalReferenceCode);
+	}
+
+	@Override
 	public List<CPInstance> getCPInstances(
 			long groupId, int status, int start, int end,
 			OrderByComparator<CPInstance> orderByComparator)

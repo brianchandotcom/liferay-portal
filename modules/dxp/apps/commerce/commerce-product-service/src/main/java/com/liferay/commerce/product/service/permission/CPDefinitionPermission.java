@@ -161,6 +161,17 @@ public class CPDefinitionPermission implements BaseModelPermissionChecker {
 		checkCPInstance(permissionChecker, cpInstance, actionId);
 	}
 
+	public static void checkCPInstance(
+			PermissionChecker permissionChecker, String externalReferenceCode,
+			String actionId)
+		throws PortalException {
+
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			externalReferenceCode);
+
+		checkCPInstance(permissionChecker, cpInstance, actionId);
+	}
+
 	public static boolean contains(
 		PermissionChecker permissionChecker, CPDefinition cpDefinition,
 		String actionId) {

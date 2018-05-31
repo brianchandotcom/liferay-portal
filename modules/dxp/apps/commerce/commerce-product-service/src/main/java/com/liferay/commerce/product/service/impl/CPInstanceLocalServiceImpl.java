@@ -438,6 +438,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public CPInstance getCPInstance(String externalReferenceCode)
+		throws PortalException {
+
+		return cpInstancePersistence.findByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	@Override
 	public List<CPInstance> getCPInstances(
 			long groupId, int status, int start, int end,
 			OrderByComparator<CPInstance> orderByComparator)

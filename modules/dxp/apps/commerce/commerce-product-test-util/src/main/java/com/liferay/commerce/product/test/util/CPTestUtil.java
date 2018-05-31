@@ -28,6 +28,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPOptionValueLocalServiceUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,7 +52,7 @@ public class CPTestUtil {
 	public static CPDefinition addCPDefinition(
 			long groupId, boolean ignoreSKUCombinations,
 			boolean hasDefaultInstance, int workflowAction)
-		throws Exception {
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
@@ -66,7 +67,7 @@ public class CPTestUtil {
 	public static CPDefinition addCPDefinition(
 			long groupId, String productTypeName, boolean ignoreSKUCombinations,
 			boolean hasDefaultInstance)
-		throws Exception {
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
@@ -78,7 +79,7 @@ public class CPTestUtil {
 
 	public static CPDefinitionOptionRel addCPDefinitionOptionRel(
 			long groupId, long cpDefinitionId, long cpOptionId)
-		throws Exception {
+		throws PortalException {
 
 		CPOptionConfiguration cpOptionConfiguration =
 			ConfigurationProviderUtil.getConfiguration(
@@ -99,7 +100,9 @@ public class CPTestUtil {
 			true, serviceContext);
 	}
 
-	public static CPInstance addCPInstance(long groupId) throws Exception {
+	public static CPInstance addCPInstance(long groupId)
+		throws PortalException {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
@@ -112,7 +115,7 @@ public class CPTestUtil {
 	}
 
 	public static CPOption addCPOption(long groupId, boolean skuContributor)
-		throws Exception {
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
@@ -133,7 +136,7 @@ public class CPTestUtil {
 	}
 
 	public static CPOptionValue addCPOptionValue(CPOption cpOption)
-		throws Exception {
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(cpOption.getGroupId());
@@ -145,7 +148,7 @@ public class CPTestUtil {
 	}
 
 	public static void buildCPInstances(CPDefinition cpDefinition)
-		throws Exception {
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(cpDefinition.getGroupId());
@@ -157,7 +160,7 @@ public class CPTestUtil {
 	private static CPDefinition _addCPDefinition(
 			String productTypeName, boolean ignoreSKUCombinations,
 			boolean hasDefaultInstance, ServiceContext serviceContext)
-		throws Exception {
+		throws PortalException {
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 

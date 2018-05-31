@@ -37,7 +37,7 @@ public class CommercePriceListTestUtil {
 			Long groupId, String currency, String name, Double priority,
 			Boolean neverExpire, Date displayDate, Date expirationDate,
 			String externalReferenceCode)
-		throws Exception {
+		throws PortalException {
 
 		long commerceCurrencyId = _getCommerceCurrencyId(groupId, currency);
 
@@ -105,7 +105,7 @@ public class CommercePriceListTestUtil {
 			Long groupId, Long commercePriceListId, String currency,
 			String name, Double priority, Boolean neverExpire, Date displayDate,
 			Date expirationDate, String externalReferenceCode)
-		throws Exception {
+		throws PortalException {
 
 		long commerceCurrencyId = _getCommerceCurrencyId(groupId, currency);
 

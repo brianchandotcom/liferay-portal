@@ -18,12 +18,14 @@
 	</command>
 
 	<command name="addCollection">
-		<execute macro="LayoutPageTemplates#_gotoAddCollection" />
+		<execute macro="Fragment#_gotoAddCollection" />
 
 		<execute macro="Collection#editCollection">
 			<var name="collectionDescription" value="${collectionDescription}" />
 			<var name="collectionName" value="${collectionName}" />
 		</execute>
+
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="addFragment">

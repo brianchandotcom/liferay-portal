@@ -30,6 +30,8 @@
 			<var name="collectionDescription" value="${collectionDescription}" />
 			<var name="collectionName" value="${collectionName}" />
 		</execute>
+
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="editFragmentImage">

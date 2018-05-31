@@ -27,7 +27,7 @@
 		<column name="code" type="String" />
 		<column localized="true" name="name" type="String" />
 		<column name="rate" type="BigDecimal" />
-		<column name="formatPattern" type="String" />
+		<column localized="true" name="formatPattern" type="String" />
 		<column name="maxFractionDigits" type="int" />
 		<column name="minFractionDigits" type="int" />
 		<column name="roundingMode" type="String" />

@@ -405,7 +405,7 @@ if (portletTitleBasedNavigation) {
 				'ACTION_SAVE_DRAFT': '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
 				'CMD': '<%= Constants.CMD %>'
 			},
-			currentAction: '<%= (wikiPage == null || wikiPage.isNew()) ? Constants.ADD : Constants.UPDATE %>',
+			currentAction: '<%= ((wikiPage == null) || wikiPage.isNew()) ? Constants.ADD : Constants.UPDATE %>',
 			namespace: '<portlet:namespace />',
 			renderUrl: '<%= editPageRenderURL %>',
 			rootNode: '#<portlet:namespace />wikiEditPageContainer'

@@ -59,7 +59,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "copy-applications"));
 						if (layoutDescriptionLayout != null) {
 					%>
 
-							<aui:option disabled="<%= (selLayout != null) && selLayout.getPlid() == layoutDescriptionLayout.getPlid() %>" label="<%= layoutDescription.getDisplayName() %>" value="<%= layoutDescriptionLayout.getLayoutId() %>" />
+							<aui:option disabled="<%= (selLayout != null) && (selLayout.getPlid() == layoutDescriptionLayout.getPlid()) %>" label="<%= layoutDescription.getDisplayName() %>" value="<%= layoutDescriptionLayout.getLayoutId() %>" />
 
 					<%
 						}

@@ -260,37 +260,14 @@ AUI.add(
 							);
 						}
 						else if (instance._isConstant(secondOperandTypeValue)) {
-							var fieldType = instance._getFieldType(instance._getFirstOperandValue(index));
+							var dataType = instance._getFieldDataType(instance._getFirstOperandValue(index));
+							var secondOperandValueFromInputTypes = instance._getSecondOperandValueFromInputTypes(index);
 
-							if (fieldType == 'date' && instance._getSecondOperandValue(index, 'input-date')) {
+							if (secondOperandValueFromInputTypes) {
 								condition.operands.push(
 									{
-										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
-										value: instance._getSecondOperandValue(index, 'input-date')
-									}
-								);
-							}
-							else if (instance._getSecondOperandValue(index, 'input-decimal')) {
-								condition.operands.push(
-									{
-										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
-										value: instance._getSecondOperandValue(index, 'input-decimal')
-									}
-								);
-							}
-							else if (instance._getSecondOperandValue(index, 'input-integer')) {
-								condition.operands.push(
-									{
-										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
-										value: instance._getSecondOperandValue(index, 'input-integer')
-									}
-								);
-							}
-							else if (instance._getSecondOperandValue(index, 'input-text')) {
-								condition.operands.push(
-									{
-										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
-										value: instance._getSecondOperandValue(index, 'input-text')
+										type: dataType,
+										value: secondOperandValueFromInputTypes
 									}
 								);
 							}
@@ -298,7 +275,7 @@ AUI.add(
 								condition.operands.push(
 									{
 										label: instance._getOptionsLabel(instance._getSecondOperand(index, 'options'), instance._getSecondOperandValue(index, 'options')),
-										type: instance._getFieldDataType(instance._getFirstOperandValue(index)),
+										type: dataType,
 										value: instance._getSecondOperandValue(index, 'options')
 									}
 								);
@@ -458,6 +435,23 @@ AUI.add(
 				}
 
 				return value || '';
+			},
+
+			_getSecondOperandValueFromInputTypes: function(index) {
+				var instance = this;
+
+				var inputTypes = ['input-date', 'input-decimal', 'input-integer', 'input-text'];
+				var secondOperandValue = '';
+
+				for (var i = 0; i < inputTypes.length; i++) {
+					secondOperandValue = instance._getSecondOperandValue(index, inputTypes[i]);
+
+					if (secondOperandValue) {
+						break;
+					}
+				}
+
+				return secondOperandValue;
 			},
 
 			_handleAddConditionClick: function() {

@@ -524,9 +524,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			fileName, new SourceFormatterMessage(fileName, message, null, -1));
 	}
 
-	protected boolean portalSource;
-	protected SourceFormatterArgs sourceFormatterArgs;
-	protected boolean subrepository;
+	private boolean _portalSource;
+	private SourceFormatterArgs _sourceFormatterArgs;
+	private boolean _subrepository;
 
 	private void _checkUTF8(File file, String fileName) throws Exception {
 		byte[] bytes = FileUtil.getBytes(file);

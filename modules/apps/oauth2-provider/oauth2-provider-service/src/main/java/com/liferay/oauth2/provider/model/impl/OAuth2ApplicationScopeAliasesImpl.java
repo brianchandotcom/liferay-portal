@@ -44,9 +44,18 @@ public class OAuth2ApplicationScopeAliasesImpl
 
 		String scopeAliases = StringUtil.merge(list, StringPool.SPACE);
 
-		setScopeAliasesHash(scopeAliases.hashCode());
-
 		setScopeAliases(scopeAliases);
 	}
 
+	@Override
+	public void setScopeAliases(String scopeAliases) {
+		super.setScopeAliases(scopeAliases);
+
+		if (scopeAliases != null) {
+			setScopeAliasesHash(scopeAliases.hashCode());
+		}
+		else {
+			setScopeAliasesHash(0);
+		}
+	}
 }

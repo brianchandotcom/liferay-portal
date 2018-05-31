@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ADD_TO_NAVIGATION_MENU</td>
-	<td>//label[contains(.,'Add This Page to the Primary Navigation:')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Add this Page to the following Menus:')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

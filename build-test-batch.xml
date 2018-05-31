@@ -2001,7 +2001,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 					int timeout = Integer.parseInt(project.getProperty("timeout.app.server.wait"));
 
-					int second = 0;
+					long timeoutTime = System.currentTimeMillis() + (1000 * timeout);
 
 					while (true) {
 						try {
@@ -2015,13 +2015,13 @@ app.server.type=@{app.server.type}]]></echo>
 							e.printStackTrace();
 						}
 
-						if (second >= timeout) {
+						long currentTime = System.currentTimeMillis();
+
+						if (currentTime > timeoutTime) {
 							project.setProperty("timed.out.message", "Unable to find log message after " + (timeout / 60) + " minutes.");
 
 							break;
 						}
-
-						second++;
 
 						Thread.sleep(1000);
 					}

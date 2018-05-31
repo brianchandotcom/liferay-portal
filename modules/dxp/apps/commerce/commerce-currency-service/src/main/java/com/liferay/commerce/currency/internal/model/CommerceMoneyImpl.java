@@ -17,8 +17,11 @@ package com.liferay.commerce.currency.internal.model;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
+
+import java.util.Locale;
 
 /**
  * @author Marco Leo
@@ -27,6 +30,12 @@ public class CommerceMoneyImpl implements CommerceMoney {
 
 	public CommerceMoneyImpl(CommercePriceFormatter commercePriceFormatter) {
 		_commercePriceFormatter = commercePriceFormatter;
+	}
+
+	@Override
+	public String format(Locale locale) throws PortalException {
+		return _commercePriceFormatter.format(
+			getCommerceCurrency(), getPrice(), locale);
 	}
 
 	@Override
@@ -45,12 +54,6 @@ public class CommerceMoneyImpl implements CommerceMoney {
 
 	public void setPrice(BigDecimal price) {
 		_price = price;
-	}
-
-	@Override
-	public String toString() {
-		return _commercePriceFormatter.format(
-			getCommerceCurrency(), getPrice());
 	}
 
 	private CommerceCurrency _commerceCurrency;

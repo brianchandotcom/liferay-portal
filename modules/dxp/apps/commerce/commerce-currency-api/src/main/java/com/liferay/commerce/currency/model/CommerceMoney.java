@@ -14,12 +14,18 @@
 
 package com.liferay.commerce.currency.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 import java.math.BigDecimal;
+
+import java.util.Locale;
 
 /**
  * @author Marco Leo
  */
 public interface CommerceMoney {
+
+	public String format(Locale locale) throws PortalException;
 
 	public CommerceCurrency getCommerceCurrency();
 

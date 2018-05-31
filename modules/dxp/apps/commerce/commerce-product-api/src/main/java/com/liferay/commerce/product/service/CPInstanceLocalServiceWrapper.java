@@ -319,6 +319,13 @@ public class CPInstanceLocalServiceWrapper implements CPInstanceLocalService,
 		return _cpInstanceLocalService.getCPInstance(cpDefinitionId, sku);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPInstance getCPInstance(
+		String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpInstanceLocalService.getCPInstance(externalReferenceCode);
+	}
+
 	/**
 	* Returns the cp instance matching the UUID and group.
 	*

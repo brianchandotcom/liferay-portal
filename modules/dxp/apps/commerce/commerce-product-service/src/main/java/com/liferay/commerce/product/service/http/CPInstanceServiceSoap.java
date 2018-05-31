@@ -244,6 +244,35 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPInstanceSoap getCPInstance(
+		long cpDefinitionId, String sku) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.getCPInstance(cpDefinitionId,
+					sku);
+
+			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.product.model.CPInstanceSoap getCPInstance(
+		String externalReferenceCode) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.getCPInstance(externalReferenceCode);
+
+			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPInstanceSoap[] getCPInstances(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)

@@ -117,6 +117,14 @@ public interface CPInstanceService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstance getCPInstance(long cpDefinitionId, String sku)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CPInstance getCPInstance(String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPInstance> getCPInstances(long groupId, int status, int start,
 		int end, OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException;

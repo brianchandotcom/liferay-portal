@@ -303,6 +303,12 @@ public class CPInstanceLocalServiceUtil {
 		return getService().getCPInstance(cpDefinitionId, sku);
 	}
 
+	public static com.liferay.commerce.product.model.CPInstance getCPInstance(
+		String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPInstance(externalReferenceCode);
+	}
+
 	/**
 	* Returns the cp instance matching the UUID and group.
 	*

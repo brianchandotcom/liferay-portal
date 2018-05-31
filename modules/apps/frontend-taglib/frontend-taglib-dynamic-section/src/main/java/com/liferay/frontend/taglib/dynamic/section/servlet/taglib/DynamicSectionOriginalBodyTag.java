@@ -17,6 +17,8 @@ package com.liferay.frontend.taglib.dynamic.section.servlet.taglib;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.taglib.TagSupport;
 
+import java.io.IOException;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
 
@@ -27,11 +29,10 @@ public class DynamicSectionOriginalBodyTag extends TagSupport {
 
 	@Override
 	public int doEndTag() throws JspException {
-		String key = _PREFIX.concat(_name);
-
 		ServletRequest servletRequest = pageContext.getRequest();
 
-		StringBundler sb = (StringBundler)servletRequest.getAttribute(key);
+		StringBundler sb = (StringBundler)servletRequest.getAttribute(
+			_PREFIX.concat(_name));
 
 		if (sb == null) {
 			throw new IllegalArgumentException(
@@ -43,8 +44,8 @@ public class DynamicSectionOriginalBodyTag extends TagSupport {
 
 			return EVAL_PAGE;
 		}
-		catch (Exception e) {
-			throw new JspException(e);
+		catch (IOException ioe) {
+			throw new JspException(ioe);
 		}
 		finally {
 			_name = null;

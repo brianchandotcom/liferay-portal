@@ -18,14 +18,8 @@ import com.liferay.frontend.taglib.dynamic.section.DynamicSection;
 import com.liferay.frontend.taglib.dynamic.section.DynamicSectionReplace;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.util.StringBundler;
-
-import java.io.IOException;
 
 import java.util.List;
-
-import javax.servlet.ServletException;
-import javax.servlet.jsp.PageContext;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -38,53 +32,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true)
 public class DynamicSectionUtil {
 
-	public static boolean hasReplace(String name) {
-		return _dynamicSectionReplaceServiceTrackerMap.containsKey(name);
+	public static DynamicSectionReplace getReplace(String name) {
+		return _dynamicSectionReplaceServiceTrackerMap.getService(name);
 	}
 
-	public static boolean hasServices(String name) {
-		List<DynamicSection> dynamicSections =
-			_dynamicSectionServiceTrackerMap.getService(name);
-
-		if ((dynamicSections == null) || dynamicSections.isEmpty()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public static StringBundler modify(
-			String name, PageContext pageContext, StringBundler sb)
-		throws IOException, ServletException {
-
-		List<DynamicSection> dynamicSections =
-			_dynamicSectionServiceTrackerMap.getService(name);
-
-		if (dynamicSections == null) {
-			return sb;
-		}
-
-		for (DynamicSection dynamicSection : dynamicSections) {
-			sb = dynamicSection.modify(sb, pageContext);
-		}
-
-		return sb;
-	}
-
-	public static String replace(String name, PageContext pageContext)
-		throws IOException, ServletException {
-
-		DynamicSectionReplace dynamicSectionReplace =
-			_dynamicSectionReplaceServiceTrackerMap.getService(name);
-
-		if (dynamicSectionReplace == null) {
-			throw new IllegalArgumentException(
-				StringBundler.concat(
-					"No ", DynamicSectionReplace.class.getName(),
-					" found for name ", name));
-		}
-
-		return dynamicSectionReplace.replace(pageContext);
+	public static List<DynamicSection> getServices(String name) {
+		return _dynamicSectionServiceTrackerMap.getService(name);
 	}
 
 	@Activate

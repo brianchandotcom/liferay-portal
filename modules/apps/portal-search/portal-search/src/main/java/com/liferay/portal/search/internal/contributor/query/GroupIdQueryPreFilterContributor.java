@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.internal.contributor.query;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -24,7 +24,10 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,16 +48,14 @@ public class GroupIdQueryPreFilterContributor
 		if (ArrayUtil.isEmpty(groupIds) ||
 			((groupIds.length == 1) && (groupIds[0] == 0))) {
 
+			_addInactiveGroupsBooleanFilter(booleanFilter, searchContext);
+
 			return;
 		}
 
 		BooleanFilter scopeBooleanFilter = new BooleanFilter();
 
-		long ownerUserId = searchContext.getOwnerUserId();
-
-		if (ownerUserId > 0) {
-			scopeBooleanFilter.addRequiredTerm(Field.USER_ID, ownerUserId);
-		}
+		_addOwnerBooleanFilter(scopeBooleanFilter, searchContext);
 
 		TermsFilter groupIdsTermsFilter = new TermsFilter(Field.GROUP_ID);
 		TermsFilter scopeGroupIdsTermsFilter = new TermsFilter(
@@ -67,35 +68,26 @@ public class GroupIdQueryPreFilterContributor
 				continue;
 			}
 
-			try {
-				Group group = groupLocalService.getGroup(groupId);
+			Group group = _getGroup(groupId);
 
-				if (!groupLocalService.isLiveGroupActive(group)) {
-					continue;
-				}
-
-				long parentGroupId = groupId;
-
-				if (group.isLayout()) {
-					parentGroupId = group.getParentGroupId();
-				}
-
-				groupIdsTermsFilter.addValue(String.valueOf(parentGroupId));
-
-				groupIds[i] = parentGroupId;
-
-				if (group.isLayout() || searchContext.isScopeStrict()) {
-					scopeGroupIdsTermsFilter.addValue(String.valueOf(groupId));
-				}
+			if (!groupLocalService.isLiveGroupActive(group)) {
+				continue;
 			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
+
+			long parentGroupId = groupId;
+
+			if (group.isLayout()) {
+				parentGroupId = group.getParentGroupId();
+			}
+
+			groupIdsTermsFilter.addValue(String.valueOf(parentGroupId));
+
+			groupIds[i] = parentGroupId;
+
+			if (group.isLayout() || searchContext.isScopeStrict()) {
+				scopeGroupIdsTermsFilter.addValue(String.valueOf(groupId));
 			}
 		}
-
-		searchContext.setGroupIds(groupIds);
 
 		if (!groupIdsTermsFilter.isEmpty()) {
 			scopeBooleanFilter.add(
@@ -113,7 +105,42 @@ public class GroupIdQueryPreFilterContributor
 	@Reference
 	protected GroupLocalService groupLocalService;
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		GroupIdQueryPreFilterContributor.class);
+	private void _addInactiveGroupsBooleanFilter(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		List<Group> inactiveGroups = groupLocalService.getActiveGroups(
+			searchContext.getCompanyId(), false);
+
+		if (ListUtil.isEmpty(inactiveGroups)) {
+			return;
+		}
+
+		TermsFilter groupIdTermsFilter = new TermsFilter(Field.GROUP_ID);
+
+		groupIdTermsFilter.addValues(
+			ArrayUtil.toStringArray(
+				ListUtil.toArray(inactiveGroups, Group.GROUP_ID_ACCESSOR)));
+
+		booleanFilter.add(groupIdTermsFilter, BooleanClauseOccur.MUST_NOT);
+	}
+
+	private void _addOwnerBooleanFilter(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		long ownerUserId = searchContext.getOwnerUserId();
+
+		if (ownerUserId > 0) {
+			booleanFilter.addRequiredTerm(Field.USER_ID, ownerUserId);
+		}
+	}
+
+	private Group _getGroup(long groupId) {
+		try {
+			return groupLocalService.getGroup(groupId);
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+	}
 
 }

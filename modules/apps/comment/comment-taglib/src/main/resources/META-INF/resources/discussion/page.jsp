@@ -277,8 +277,8 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				window,
 				'<%= randomNamespace %>hideEditor',
 				function(editorName, formId) {
-					if (window['<portlet:namespace/>' + editorName]) {
-						window['<portlet:namespace/>' + editorName].dispose();
+					if (window['<%= namespace %>' + editorName]) {
+						window['<%= namespace %>' + editorName].dispose();
 					}
 
 					<%= randomNamespace %>hideEl(formId);

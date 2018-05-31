@@ -255,7 +255,7 @@
 
 		<execute function="AssertClick" locator1="Pagination#NEXT_LINK" value1="Next" />
 
-		<for list="${viewEntryList}" param="viewEntryCount">
+		<for list="1,2" param="viewEntryCount">
 			<execute macro="AnnouncementsEntry#viewViaEntriesPG">
 				<var name="distributionScope" value="General" />
 				<var name="entryContent" value="Announcements Entry Content ${viewEntryCount}" />
@@ -272,7 +272,7 @@
 
 		<execute function="AssertClick" locator1="Pagination#PREVIOUS_LINK" value1="Previous" />
 
-		<for list="${viewEntryList}" param="viewEntryCount">
+		<for list="3,4,5,6,7" param="viewEntryCount">
 			<execute macro="AnnouncementsEntry#viewViaEntriesPG">
 				<var name="distributionScope" value="General" />
 				<var name="entryContent" value="Announcements Entry Content ${viewEntryCount}" />
@@ -315,7 +315,7 @@
 
 		<execute function="Click" locator1="Pagination#NEXT_LINK" />
 
-		<for list="${viewEntryList}" param="viewEntryCount">
+		<for list="6,7" param="viewEntryCount">
 			<execute macro="AnnouncementsEntry#viewList">
 				<var name="distributionScope" value="General" />
 				<var name="entryTitle" value="Announcements Entry Title ${viewEntryCount}" />
@@ -330,7 +330,7 @@
 
 		<execute function="Click" locator1="Pagination#PREVIOUS_LINK" />
 
-		<for list="${viewEntryList}" param="viewEntryCount">
+		<for list="1,2,3,4,5" param="viewEntryCount">
 			<execute macro="AnnouncementsEntry#viewList">
 				<var name="distributionScope" value="General" />
 				<var name="entryTitle" value="Announcements Entry Title ${viewEntryCount}" />

@@ -775,6 +775,8 @@
 			<var name="localizedFriendlyURL" value="/test" />
 		</execute>
 
+		<execute macro="Button#clickSave" />
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="Navigator#openSpecificURL">

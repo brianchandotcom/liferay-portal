@@ -55,6 +55,11 @@ public class UADExportProcessManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean getSelectable() {
+		return false;
+	}
+
+	@Override
 	protected String[] getNavigationKeys() {
 		return new String[] {"all", "in-progress", "successful", "failed"};
 	}

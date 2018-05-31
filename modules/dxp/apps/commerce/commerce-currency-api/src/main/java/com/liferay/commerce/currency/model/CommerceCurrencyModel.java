@@ -348,8 +348,58 @@ public interface CommerceCurrencyModel extends BaseModel<CommerceCurrency>,
 	 *
 	 * @return the format pattern of this commerce currency
 	 */
-	@AutoEscape
 	public String getFormatPattern();
+
+	/**
+	 * Returns the localized format pattern of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized format pattern of this commerce currency
+	 */
+	@AutoEscape
+	public String getFormatPattern(Locale locale);
+
+	/**
+	 * Returns the localized format pattern of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized format pattern of this commerce currency. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getFormatPattern(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized format pattern of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized format pattern of this commerce currency
+	 */
+	@AutoEscape
+	public String getFormatPattern(String languageId);
+
+	/**
+	 * Returns the localized format pattern of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized format pattern of this commerce currency
+	 */
+	@AutoEscape
+	public String getFormatPattern(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getFormatPatternCurrentLanguageId();
+
+	@AutoEscape
+	public String getFormatPatternCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized format patterns of this commerce currency.
+	 *
+	 * @return the locales and localized format patterns of this commerce currency
+	 */
+	public Map<Locale, String> getFormatPatternMap();
 
 	/**
 	 * Sets the format pattern of this commerce currency.
@@ -357,6 +407,42 @@ public interface CommerceCurrencyModel extends BaseModel<CommerceCurrency>,
 	 * @param formatPattern the format pattern of this commerce currency
 	 */
 	public void setFormatPattern(String formatPattern);
+
+	/**
+	 * Sets the localized format pattern of this commerce currency in the language.
+	 *
+	 * @param formatPattern the localized format pattern of this commerce currency
+	 * @param locale the locale of the language
+	 */
+	public void setFormatPattern(String formatPattern, Locale locale);
+
+	/**
+	 * Sets the localized format pattern of this commerce currency in the language, and sets the default locale.
+	 *
+	 * @param formatPattern the localized format pattern of this commerce currency
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setFormatPattern(String formatPattern, Locale locale,
+		Locale defaultLocale);
+
+	public void setFormatPatternCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized format patterns of this commerce currency from the map of locales and localized format patterns.
+	 *
+	 * @param formatPatternMap the locales and localized format patterns of this commerce currency
+	 */
+	public void setFormatPatternMap(Map<Locale, String> formatPatternMap);
+
+	/**
+	 * Sets the localized format patterns of this commerce currency from the map of locales and localized format patterns, and sets the default locale.
+	 *
+	 * @param formatPatternMap the locales and localized format patterns of this commerce currency
+	 * @param defaultLocale the default locale
+	 */
+	public void setFormatPatternMap(Map<Locale, String> formatPatternMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the max fraction digits of this commerce currency.

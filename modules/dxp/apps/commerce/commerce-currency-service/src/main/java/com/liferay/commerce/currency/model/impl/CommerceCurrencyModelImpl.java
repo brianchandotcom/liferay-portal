@@ -126,7 +126,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,rate DECIMAL(30, 16) null,formatPattern VARCHAR(75) null,maxFractionDigits INTEGER,minFractionDigits INTEGER,roundingMode VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCurrency (uuid_ VARCHAR(75) null,commerceCurrencyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,code_ VARCHAR(75) null,name STRING null,rate DECIMAL(30, 16) null,formatPattern STRING null,maxFractionDigits INTEGER,minFractionDigits INTEGER,roundingMode VARCHAR(75) null,primary_ BOOLEAN,priority DOUBLE,active_ BOOLEAN,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCurrency";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCurrency.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCurrency.priority ASC";
@@ -690,8 +690,95 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 	}
 
 	@Override
+	public String getFormatPattern(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getFormatPattern(languageId);
+	}
+
+	@Override
+	public String getFormatPattern(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getFormatPattern(languageId, useDefault);
+	}
+
+	@Override
+	public String getFormatPattern(String languageId) {
+		return LocalizationUtil.getLocalization(getFormatPattern(), languageId);
+	}
+
+	@Override
+	public String getFormatPattern(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getFormatPattern(), languageId,
+			useDefault);
+	}
+
+	@Override
+	public String getFormatPatternCurrentLanguageId() {
+		return _formatPatternCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getFormatPatternCurrentValue() {
+		Locale locale = getLocale(_formatPatternCurrentLanguageId);
+
+		return getFormatPattern(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getFormatPatternMap() {
+		return LocalizationUtil.getLocalizationMap(getFormatPattern());
+	}
+
+	@Override
 	public void setFormatPattern(String formatPattern) {
 		_formatPattern = formatPattern;
+	}
+
+	@Override
+	public void setFormatPattern(String formatPattern, Locale locale) {
+		setFormatPattern(formatPattern, locale, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setFormatPattern(String formatPattern, Locale locale,
+		Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(formatPattern)) {
+			setFormatPattern(LocalizationUtil.updateLocalization(
+					getFormatPattern(), "FormatPattern", formatPattern,
+					languageId, defaultLanguageId));
+		}
+		else {
+			setFormatPattern(LocalizationUtil.removeLocalization(
+					getFormatPattern(), "FormatPattern", languageId));
+		}
+	}
+
+	@Override
+	public void setFormatPatternCurrentLanguageId(String languageId) {
+		_formatPatternCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setFormatPatternMap(Map<Locale, String> formatPatternMap) {
+		setFormatPatternMap(formatPatternMap, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setFormatPatternMap(Map<Locale, String> formatPatternMap,
+		Locale defaultLocale) {
+		if (formatPatternMap == null) {
+			return;
+		}
+
+		setFormatPattern(LocalizationUtil.updateLocalization(formatPatternMap,
+				getFormatPattern(), "FormatPattern",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -852,6 +939,17 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 			}
 		}
 
+		Map<Locale, String> formatPatternMap = getFormatPatternMap();
+
+		for (Map.Entry<Locale, String> entry : formatPatternMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
 		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
 	}
 
@@ -895,6 +993,17 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 		}
 		else {
 			setName(getName(defaultLocale), defaultLocale, defaultLocale);
+		}
+
+		String formatPattern = getFormatPattern(defaultLocale);
+
+		if (Validator.isNull(formatPattern)) {
+			setFormatPattern(getFormatPattern(modelDefaultLanguageId),
+				defaultLocale);
+		}
+		else {
+			setFormatPattern(getFormatPattern(defaultLocale), defaultLocale,
+				defaultLocale);
 		}
 	}
 
@@ -1287,6 +1396,7 @@ public class CommerceCurrencyModelImpl extends BaseModelImpl<CommerceCurrency>
 	private String _nameCurrentLanguageId;
 	private BigDecimal _rate;
 	private String _formatPattern;
+	private String _formatPatternCurrentLanguageId;
 	private int _maxFractionDigits;
 	private int _minFractionDigits;
 	private String _roundingMode;

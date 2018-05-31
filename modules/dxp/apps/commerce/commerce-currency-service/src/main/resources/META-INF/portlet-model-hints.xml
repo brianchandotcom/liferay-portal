@@ -20,7 +20,7 @@
 			<validator name="min">[0]</validator>
 			<validator name="number" />
 		</field>
-		<field name="formatPattern" type="String" />
+		<field localized="true" name="formatPattern" type="String" />
 		<field name="maxFractionDigits" type="int" />
 		<field name="minFractionDigits" type="int" />
 		<field name="roundingMode" type="String" />

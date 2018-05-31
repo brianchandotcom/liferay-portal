@@ -10,7 +10,7 @@ create table CommerceCurrency (
 	code_ VARCHAR(75) null,
 	name STRING null,
 	rate DECIMAL(30, 16) null,
-	formatPattern VARCHAR(75) null,
+	formatPattern STRING null,
 	maxFractionDigits INTEGER,
 	minFractionDigits INTEGER,
 	roundingMode VARCHAR(75) null,

@@ -83,10 +83,11 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 		CommerceCurrency commerceCurrency);
 
 	public CommerceCurrency addCommerceCurrency(String code,
-		Map<Locale, String> nameMap, BigDecimal rate, String formatPattern,
-		int maxFractionDigits, int minFractionDigits, String roundingMode,
-		boolean primary, double priority, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> nameMap, BigDecimal rate,
+		Map<Locale, String> formatPatternMap, int maxFractionDigits,
+		int minFractionDigits, String roundingMode, boolean primary,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce currency with the primary key. Does not add the commerce currency to the database.
@@ -342,9 +343,10 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 
 	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
 		String code, Map<Locale, String> nameMap, BigDecimal rate,
-		String formatPattern, int maxFractionDigits, int minFractionDigits,
-		String roundingMode, boolean primary, double priority, boolean active,
-		ServiceContext serviceContext) throws PortalException;
+		Map<Locale, String> formatPatternMap, int maxFractionDigits,
+		int minFractionDigits, String roundingMode, boolean primary,
+		double priority, boolean active, ServiceContext serviceContext)
+		throws PortalException;
 
 	public CommerceCurrency updateCommerceCurrencyRate(
 		long commerceCurrencyId, BigDecimal rate) throws PortalException;

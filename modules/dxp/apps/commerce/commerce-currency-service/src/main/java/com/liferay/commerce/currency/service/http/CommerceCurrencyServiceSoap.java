@@ -71,7 +71,8 @@ import java.util.Map;
 public class CommerceCurrencyServiceSoap {
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap addCommerceCurrency(
 		String code, String[] nameMapLanguageIds, String[] nameMapValues,
-		java.math.BigDecimal rate, String formatPattern, int maxFractionDigits,
+		java.math.BigDecimal rate, String[] formatPatternMapLanguageIds,
+		String[] formatPatternMapValues, int maxFractionDigits,
 		int minFractionDigits, String roundingMode, boolean primary,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -79,9 +80,11 @@ public class CommerceCurrencyServiceSoap {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);
+			Map<Locale, String> formatPatternMap = LocalizationUtil.getLocalizationMap(formatPatternMapLanguageIds,
+					formatPatternMapValues);
 
 			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.addCommerceCurrency(code,
-					nameMap, rate, formatPattern, maxFractionDigits,
+					nameMap, rate, formatPatternMap, maxFractionDigits,
 					minFractionDigits, roundingMode, primary, priority, active,
 					serviceContext);
 
@@ -247,16 +250,19 @@ public class CommerceCurrencyServiceSoap {
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap updateCommerceCurrency(
 		long commerceCurrencyId, String code, String[] nameMapLanguageIds,
 		String[] nameMapValues, java.math.BigDecimal rate,
-		String formatPattern, int maxFractionDigits, int minFractionDigits,
-		String roundingMode, boolean primary, double priority, boolean active,
+		String[] formatPatternMapLanguageIds, String[] formatPatternMapValues,
+		int maxFractionDigits, int minFractionDigits, String roundingMode,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
 					nameMapValues);
+			Map<Locale, String> formatPatternMap = LocalizationUtil.getLocalizationMap(formatPatternMapLanguageIds,
+					formatPatternMapValues);
 
 			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.updateCommerceCurrency(commerceCurrencyId,
-					code, nameMap, rate, formatPattern, maxFractionDigits,
+					code, nameMap, rate, formatPatternMap, maxFractionDigits,
 					minFractionDigits, roundingMode, primary, priority, active,
 					serviceContext);
 

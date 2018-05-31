@@ -288,6 +288,72 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	}
 
 	/**
+	* Returns the localized format pattern of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized format pattern of this commerce currency
+	*/
+	@Override
+	public String getFormatPattern(java.util.Locale locale) {
+		return _commerceCurrency.getFormatPattern(locale);
+	}
+
+	/**
+	* Returns the localized format pattern of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized format pattern of this commerce currency. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public String getFormatPattern(java.util.Locale locale, boolean useDefault) {
+		return _commerceCurrency.getFormatPattern(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized format pattern of this commerce currency in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized format pattern of this commerce currency
+	*/
+	@Override
+	public String getFormatPattern(String languageId) {
+		return _commerceCurrency.getFormatPattern(languageId);
+	}
+
+	/**
+	* Returns the localized format pattern of this commerce currency in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized format pattern of this commerce currency
+	*/
+	@Override
+	public String getFormatPattern(String languageId, boolean useDefault) {
+		return _commerceCurrency.getFormatPattern(languageId, useDefault);
+	}
+
+	@Override
+	public String getFormatPatternCurrentLanguageId() {
+		return _commerceCurrency.getFormatPatternCurrentLanguageId();
+	}
+
+	@Override
+	public String getFormatPatternCurrentValue() {
+		return _commerceCurrency.getFormatPatternCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized format patterns of this commerce currency.
+	*
+	* @return the locales and localized format patterns of this commerce currency
+	*/
+	@Override
+	public Map<java.util.Locale, String> getFormatPatternMap() {
+		return _commerceCurrency.getFormatPatternMap();
+	}
+
+	/**
 	* Returns the group ID of this commerce currency.
 	*
 	* @return the group ID of this commerce currency
@@ -650,6 +716,59 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 	@Override
 	public void setFormatPattern(String formatPattern) {
 		_commerceCurrency.setFormatPattern(formatPattern);
+	}
+
+	/**
+	* Sets the localized format pattern of this commerce currency in the language.
+	*
+	* @param formatPattern the localized format pattern of this commerce currency
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setFormatPattern(String formatPattern, java.util.Locale locale) {
+		_commerceCurrency.setFormatPattern(formatPattern, locale);
+	}
+
+	/**
+	* Sets the localized format pattern of this commerce currency in the language, and sets the default locale.
+	*
+	* @param formatPattern the localized format pattern of this commerce currency
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setFormatPattern(String formatPattern, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_commerceCurrency.setFormatPattern(formatPattern, locale, defaultLocale);
+	}
+
+	@Override
+	public void setFormatPatternCurrentLanguageId(String languageId) {
+		_commerceCurrency.setFormatPatternCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized format patterns of this commerce currency from the map of locales and localized format patterns.
+	*
+	* @param formatPatternMap the locales and localized format patterns of this commerce currency
+	*/
+	@Override
+	public void setFormatPatternMap(
+		Map<java.util.Locale, String> formatPatternMap) {
+		_commerceCurrency.setFormatPatternMap(formatPatternMap);
+	}
+
+	/**
+	* Sets the localized format patterns of this commerce currency from the map of locales and localized format patterns, and sets the default locale.
+	*
+	* @param formatPatternMap the locales and localized format patterns of this commerce currency
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setFormatPatternMap(
+		Map<java.util.Locale, String> formatPatternMap,
+		java.util.Locale defaultLocale) {
+		_commerceCurrency.setFormatPatternMap(formatPatternMap, defaultLocale);
 	}
 
 	/**

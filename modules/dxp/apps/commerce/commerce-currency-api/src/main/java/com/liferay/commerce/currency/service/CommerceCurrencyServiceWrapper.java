@@ -36,13 +36,14 @@ public class CommerceCurrencyServiceWrapper implements CommerceCurrencyService,
 	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency addCommerceCurrency(
 		String code, java.util.Map<java.util.Locale, String> nameMap,
-		java.math.BigDecimal rate, String formatPattern, int maxFractionDigits,
-		int minFractionDigits, String roundingMode, boolean primary,
-		double priority, boolean active,
+		java.math.BigDecimal rate,
+		java.util.Map<java.util.Locale, String> formatPatternMap,
+		int maxFractionDigits, int minFractionDigits, String roundingMode,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCurrencyService.addCommerceCurrency(code, nameMap,
-			rate, formatPattern, maxFractionDigits, minFractionDigits,
+			rate, formatPatternMap, maxFractionDigits, minFractionDigits,
 			roundingMode, primary, priority, active, serviceContext);
 	}
 
@@ -127,13 +128,14 @@ public class CommerceCurrencyServiceWrapper implements CommerceCurrencyService,
 	public com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
 		long commerceCurrencyId, String code,
 		java.util.Map<java.util.Locale, String> nameMap,
-		java.math.BigDecimal rate, String formatPattern, int maxFractionDigits,
-		int minFractionDigits, String roundingMode, boolean primary,
-		double priority, boolean active,
+		java.math.BigDecimal rate,
+		java.util.Map<java.util.Locale, String> formatPatternMap,
+		int maxFractionDigits, int minFractionDigits, String roundingMode,
+		boolean primary, double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceCurrencyService.updateCommerceCurrency(commerceCurrencyId,
-			code, nameMap, rate, formatPattern, maxFractionDigits,
+			code, nameMap, rate, formatPatternMap, maxFractionDigits,
 			minFractionDigits, roundingMode, primary, priority, active,
 			serviceContext);
 	}

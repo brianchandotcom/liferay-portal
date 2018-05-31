@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -112,6 +113,9 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		Callable<LayoutPrototype> addLayoutPrototypeCallable =
 			new AddLayoutPrototypeCallable(actionRequest);
 
@@ -123,9 +127,6 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 
 			Group layoutPrototypeGroup = layoutPrototype.getGroup();
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
 			jsonObject.put(
 				"redirectURL",
 				layoutPrototypeGroup.getDisplayURL(themeDisplay, true));
@@ -133,7 +134,10 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 		catch (Throwable t) {
 			_log.error(t, t);
 
-			jsonObject.put("error", "an-unexpected-error-ocurred");
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getRequest(), "an-unexpected-error-ocurred"));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

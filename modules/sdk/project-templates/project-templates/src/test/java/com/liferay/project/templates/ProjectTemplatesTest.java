@@ -756,10 +756,10 @@ public class ProjectTemplatesTest {
 			"public class FooPortletKeys");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
-			"package foo.test.portlet;", "javax.portlet.display-name=foo.test",
+			"package foo.test.portlet;", "javax.portlet.display-name=Foo",
 			"javax.portlet.name=\" + FooPortletKeys.Foo",
 			"public class FooPortlet extends GenericPortlet {",
-			"printWriter.print(\"foo.test Portlet");
+			"printWriter.print(\"foo Portlet");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet", "foo.test", "com.test", "-DclassName=Foo",
@@ -877,7 +877,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
-			"package portlet.portlet;", "javax.portlet.display-name=portlet",
+			"package portlet.portlet;", "javax.portlet.display-name=Portlet",
 			"public class PortletPortlet extends GenericPortlet {",
 			"printWriter.print(\"portlet Portlet");
 

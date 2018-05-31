@@ -66,6 +66,10 @@ buildUrlSearchParams {
 	include "META-INF/resources/webjars/url-search-params/0.10.0/build/url-search-params.js"
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
+
+	rename { String fileName ->
+		fileName.replace("url-search-params", "url.search.params")
+	}
 }
 
 classes {

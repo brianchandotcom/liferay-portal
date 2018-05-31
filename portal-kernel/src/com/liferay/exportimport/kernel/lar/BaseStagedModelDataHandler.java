@@ -821,6 +821,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
+		if (isSkipImportReferenceStagedModels()) {
+			return;
+		}
+
 		Element stagedModelElement =
 			portletDataContext.getImportDataStagedModelElement(stagedModel);
 
@@ -860,6 +864,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, stagedModel, className, classPK);
 		}
+	}
+
+	protected boolean isSkipImportReferenceStagedModels() {
+		return false;
 	}
 
 	protected boolean isStagedModelInTrash(T stagedModel) {

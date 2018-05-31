@@ -42,6 +42,10 @@ public class ManagementBarButtonTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
 	public String getId() {
 		return _id;
 	}

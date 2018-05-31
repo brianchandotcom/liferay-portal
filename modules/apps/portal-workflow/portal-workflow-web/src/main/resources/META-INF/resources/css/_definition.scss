@@ -6,8 +6,7 @@
 	margin: 0 !important;
 }
 
-.dialog-iframe-popup,
-.info-bar-container {
+.dialog-iframe-popup {
 	background: #FFF;
 }
 
@@ -23,7 +22,7 @@
 	position: absolute;
 }
 
-.info-bar-container .info-bar-default .btn-default.sidenav-transition {
+.info-bar-container .info-bar-default .btn.sidenav-transition {
 	pointer-events: none;
 }
 

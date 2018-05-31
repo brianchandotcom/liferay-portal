@@ -43,9 +43,9 @@ if (portletTitleBasedNavigation) {
 
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<liferay-frontend:info-bar>
-		<small class="text-capitalize text-muted">
+		<span class="text-secondary">
 			<liferay-ui:message arguments="<%= new String[] {entry.getUserName(), LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true)} %>" key="x-modified-x-ago" translateArguments="<%= false %>" />
-		</small>
+		</span>
 	</liferay-frontend:info-bar>
 </c:if>
 

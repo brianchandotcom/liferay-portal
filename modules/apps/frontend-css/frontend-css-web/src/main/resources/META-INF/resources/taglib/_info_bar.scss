@@ -1,5 +1,5 @@
 .info-bar-container {
-	background-color: #F5F7F8;
+	background-color: #FFF;
 	border-bottom: 1px solid #EDF0F2;
 	min-height: 47px;
 
@@ -12,15 +12,12 @@
 	}
 
 	.info-bar-default {
-		.btn-default {
-			background-color: transparent;
-			border-color: #E4E9EC;
-			color: #869CAD;
-			margin: 7px 0 7px 15px;
+		.taglib-workflow-status .workflow-version {
+			color: #6B6C7E;
+		}
 
-			&.active {
-				background-color: #E4E9EC;
-			}
+		.btn {
+			margin: 7px 0 7px 15px;
 
 			@include sm() {
 				margin: 13px 0 13px 15px;

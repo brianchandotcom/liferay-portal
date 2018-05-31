@@ -1,4 +1,6 @@
-## Using parentheses in if-statements
+## Use of Parentheses
+
+### If-Statements
 
 In if-statements we use parentheses in the following cases:
 
@@ -107,4 +109,36 @@ Correct:
 if ((a < 0) || (b < 0)) {
     return true;
 }
+```
+
+### JSP attributes
+
+For attributes in JSP files, we use the same rules
+
+#### Example of missing parentheses
+
+Incorrect:
+
+```
+<aui:option disabled="<%= (user != null) && user.isActive() || user.isFemale() %>" label="name" value="0" />
+```
+
+Correct:
+
+```
+<aui:option disabled="<%= (user != null) && (user.isActive() || user.isFemale()) %>" label="name" value="0" />
+```
+
+#### Example of redundant parentheses
+
+Incorrect:
+
+```
+<aui:option label="name" selected="<%= (index == 0) %>" value="0" />
+```
+
+Correct:
+
+```
+<aui:option label="name" selected="<%= index == 0 %>" value="0" />
 ```

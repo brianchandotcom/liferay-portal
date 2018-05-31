@@ -104,6 +104,15 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 
+	_handleHide() {
+		this.emit('hide');
+	}
+
+	/**
+	 * @private
+	 * @review
+	 */
+
 	_handleHideSidebarButtonClick() {
 		this.emit('hide');
 	}

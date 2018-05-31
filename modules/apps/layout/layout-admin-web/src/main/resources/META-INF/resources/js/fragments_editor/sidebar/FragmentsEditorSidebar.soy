@@ -17,6 +17,7 @@
 	{@param sidebarTabs: list<[enabled:bool, id:string, label:string]>}
 	{@param spritemap: string}
 	{@param visible: bool}
+	{@param? _handleHide: any}
 	{@param? _handleHideSidebarButtonClick: any}
 	{@param? _handleTabClick: any}
 	{@param? _selectedTab: string}
@@ -82,6 +83,10 @@
 		{/param}
 
 		{param elementClasses: 'fragments-editor-sidebar' /}
+
+		{param events: [
+			'hide': $_handleHide
+		] /}
 
 		{param header kind="html"}
 			<div class="autofit-row sidebar-section">

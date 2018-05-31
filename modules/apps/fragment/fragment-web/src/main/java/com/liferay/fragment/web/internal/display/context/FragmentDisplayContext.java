@@ -80,9 +80,7 @@ public class FragmentDisplayContext {
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"openImportView();");
+						dropdownItem.putData("action", "openImportView");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "import"));
 					});
@@ -95,27 +93,21 @@ public class FragmentDisplayContext {
 			{
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"exportCollections();");
+						dropdownItem.putData("action", "exportCollections");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "export"));
 					});
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"openImportView();");
+						dropdownItem.putData("action", "openImportView");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "import"));
 					});
 
 				add(
 					dropdownItem -> {
-						dropdownItem.setHref(
-							"javascript:" + _renderResponse.getNamespace() +
-								"deleteCollections();");
+						dropdownItem.putData("action", "deleteCollections");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "delete"));
 					});

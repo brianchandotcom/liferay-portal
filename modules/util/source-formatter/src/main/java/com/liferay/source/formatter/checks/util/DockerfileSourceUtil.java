@@ -27,10 +27,6 @@ import java.util.Objects;
 public class DockerfileSourceUtil {
 
 	public static boolean endsWithBackSlash(String line) {
-		if (Validator.isNull(line)) {
-			return false;
-		}
-
 		String trimmedLine = StringUtil.trim(line);
 
 		if (Validator.isNotNull(trimmedLine) &&

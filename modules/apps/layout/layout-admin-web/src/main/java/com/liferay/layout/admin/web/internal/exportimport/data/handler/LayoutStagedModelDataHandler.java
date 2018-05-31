@@ -1452,11 +1452,6 @@ public class LayoutStagedModelDataHandler
 				linkedToLayoutUuid));
 	}
 
-	@Override
-	protected void importReferenceStagedModels(
-		PortletDataContext portletDataContext, Layout layout) {
-	}
-
 	protected void importTheme(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
@@ -1508,6 +1503,11 @@ public class LayoutStagedModelDataHandler
 			companyId, groupId, userId, Layout.class.getName(),
 			importedLayout.getPlid(), false, addGroupPermissions,
 			addGuestPermissions);
+	}
+
+	@Override
+	protected boolean isSkipImportReferenceStagedModels() {
+		return true;
 	}
 
 	protected void mergePortlets(

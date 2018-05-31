@@ -109,10 +109,6 @@
 	</command>
 
 	<command name="contentDeletion">
-		<execute macro="Panel#expandPanel">
-			<var name="panel" value="Deletions" />
-		</execute>
-
 		<execute function="Check" locator1="StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX" />
 	</command>
 

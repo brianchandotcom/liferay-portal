@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JSPIfStatementCheck extends IfStatementCheck {
+public class JSPParenthesesCheck extends IfStatementCheck {
 
 	@Override
 	protected String doProcess(

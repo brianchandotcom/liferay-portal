@@ -245,13 +245,13 @@
 		<check name="JSPDefineObjectsCheck" />
 		<check name="JSPEmptyLinesCheck" />
 		<check name="JSPExceptionOrderCheck" />
-		<check name="JSPIfStatementCheck" />
 		<check name="JSPImportsCheck" />
 		<check name="JSPIncludeCheck" />
 		<check name="JSPIndentationCheck" />
 		<check name="JSPLanguageUtilCheck" />
 		<check name="JSPLineBreakCheck" />
 		<check name="JSPLogFileNameCheck" />
+		<check name="JSPParenthesesCheck" />
 		<check name="JSPRedirectBackURLCheck" />
 		<check name="JSPSessionKeysCheck" />
 		<check name="JSPStringBundlerCheck" />

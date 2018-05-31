@@ -162,7 +162,7 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_embed = true;
+		_embed = false;
 		_hasMessage = false;
 		_key = null;
 		_message = null;
@@ -202,7 +202,7 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 
 	private static final String _PAGE = "/html/taglib/ui/success/page.jsp";
 
-	private boolean _embed = true;
+	private boolean _embed = false;
 	private boolean _hasMessage;
 	private String _key;
 	private String _message;

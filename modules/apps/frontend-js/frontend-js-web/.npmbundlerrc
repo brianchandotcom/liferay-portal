@@ -13,6 +13,9 @@
 				"metal-promise": "^3.0.3",
 				"metal-soy": "^2.16.4",
 				"metal-state": "^2.0.0"
+			},
+			"frontend-taglib-clay": {
+				"clay-alert": "^2.0.0"
 			}
 		}
 	},
@@ -22,4 +25,3 @@
 	"ignore": ["**/*.js", "!**/*.es.js", "!**/*.soy.js"],
 	"output": "classes/META-INF/resources/"
 }
-

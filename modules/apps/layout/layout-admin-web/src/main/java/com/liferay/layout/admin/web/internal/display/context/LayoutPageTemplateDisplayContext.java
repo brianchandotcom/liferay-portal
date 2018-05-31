@@ -467,9 +467,11 @@ public class LayoutPageTemplateDisplayContext {
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
 
-		String formSubmitURL = null;
-		String idFieldName = null;
-		String idFieldValue = null;
+		String formSubmitURL = _getUpdateLayoutPageTemplateEntryURL(
+			layoutPageTemplateEntry);
+		String idFieldName = "layoutPageTemplateEntryId";
+		long idFieldValue =
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
 
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
@@ -484,15 +486,7 @@ public class LayoutPageTemplateDisplayContext {
 
 			formSubmitURL = _getUpdateLayoutPrototypeURL(layoutPrototype);
 			idFieldName = "layoutPrototypeId";
-			idFieldValue = String.valueOf(
-				layoutPrototype.getLayoutPrototypeId());
-		}
-		else {
-			formSubmitURL = _getUpdateLayoutPageTemplateEntryURL(
-				layoutPageTemplateEntry);
-			idFieldName = "layoutPageTemplateEntryId";
-			idFieldValue = String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			idFieldValue = layoutPrototype.getLayoutPrototypeId();
 		}
 
 		Map<String, Object> updateLayoutPageTemplateEntryData = new HashMap<>();

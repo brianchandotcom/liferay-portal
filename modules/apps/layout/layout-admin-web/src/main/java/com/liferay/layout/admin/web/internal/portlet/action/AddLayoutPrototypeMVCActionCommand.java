@@ -78,32 +78,32 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 
 		nameMap.put(locale, name);
 
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			LayoutPrototype.class.getName(), actionRequest);
 
 		LayoutPrototype layoutPrototype =
 			_layoutPrototypeService.addLayoutPrototype(
-				nameMap, descriptionMap, true, serviceContext);
+				nameMap, new HashMap<>(), true, serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchFirstLayoutPageTemplateEntry(
 					layoutPrototype.getLayoutPrototypeId());
 
-		if (layoutPageTemplateEntry != null) {
-			long layoutPageTemplateCollectionId = ParamUtil.getLong(
-				actionRequest, "layoutPageTemplateCollectionId");
-
-			layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
-				layoutPageTemplateCollectionId);
-
-			layoutPageTemplateEntry.setGroupId(themeDisplay.getScopeGroupId());
-
-			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry);
+		if (layoutPageTemplateEntry == null) {
+			return layoutPrototype;
 		}
+
+		long layoutPageTemplateCollectionId = ParamUtil.getLong(
+			actionRequest, "layoutPageTemplateCollectionId");
+
+		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
+			layoutPageTemplateCollectionId);
+
+		layoutPageTemplateEntry.setGroupId(themeDisplay.getScopeGroupId());
+
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
 
 		return layoutPrototype;
 	}

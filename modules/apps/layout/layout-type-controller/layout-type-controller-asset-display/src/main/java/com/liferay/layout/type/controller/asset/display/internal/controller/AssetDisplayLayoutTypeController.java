@@ -73,20 +73,23 @@ public class AssetDisplayLayoutTypeController
 		AssetEntry assetEntry = (AssetEntry)request.getAttribute(
 			AssetDisplayWebKeys.ASSET_ENTRY);
 
-		long layoutPageTemplateEntryId = _getLayoutPageTemplateEntryId(
-			layout.getGroupId(), assetEntry);
+		if (assetEntry != null) {
+			long layoutPageTemplateEntryId = _getLayoutPageTemplateEntryId(
+				layout.getGroupId(), assetEntry);
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				layout.getGroupId(),
-				_portal.getClassNameId(LayoutPageTemplateEntry.class.getName()),
-				layoutPageTemplateEntryId);
+			List<FragmentEntryLink> fragmentEntryLinks =
+				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+					layout.getGroupId(),
+					_portal.getClassNameId(
+						LayoutPageTemplateEntry.class.getName()),
+					layoutPageTemplateEntryId);
 
-		request.setAttribute(
-			AssetDisplayLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
-			fragmentEntryLinks);
+			request.setAttribute(
+				AssetDisplayLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
+				fragmentEntryLinks);
 
-		request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
+			request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
+		}
 
 		return super.includeLayoutContent(request, response, layout);
 	}

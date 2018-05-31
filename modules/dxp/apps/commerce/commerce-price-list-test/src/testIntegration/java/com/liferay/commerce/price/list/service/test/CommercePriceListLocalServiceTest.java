@@ -270,6 +270,36 @@ public class CommercePriceListLocalServiceTest {
 			RandomTestUtil.randomDouble(), true, null, null, null);
 	}
 
+	@Test
+	public void testUpsertCommercePriceList5() throws Exception {
+		frutillaRule.scenario(
+			"Adding a new Price List"
+		).given(
+			"A site (group)"
+		).and(
+			"A currency code expressed with 3-letter ISO 4217 format"
+		).and(
+			"The name of the new list"
+		).when(
+			"The external reference code (externalReferenceCode) is not used"
+		).and(
+			"A non-existent but greater than 0 (commercePriceListId) is used " +
+				"in the method invocation"
+		).then(
+			"The result should be a new Price List on the given site"
+		);
+
+		Currency currency = Currency.getInstance(Locale.US);
+		String name = RandomTestUtil.randomString();
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.upsertCommercePriceList(
+				_group.getGroupId(), 1L, currency.getCurrencyCode(), name,
+				RandomTestUtil.randomDouble(), true, null, null, null);
+
+		_assertPriceListAttributes(currency, name, commercePriceList);
+	}
+
 	@Rule
 	public final FrutillaRule frutillaRule = new FrutillaRule();
 

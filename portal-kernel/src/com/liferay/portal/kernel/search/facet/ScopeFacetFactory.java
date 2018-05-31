@@ -18,8 +18,11 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.portal.search.facet.site.SiteFacetFactory}
  */
+@Deprecated
 public class ScopeFacetFactory implements FacetFactory {
 
 	@Override

@@ -211,7 +211,9 @@ public class CustomSQLImpl implements CustomSQL {
 
 				@Override
 				public void bundleChanged(BundleEvent bundleEvent) {
-					if (bundleEvent.getType() == BundleEvent.UNINSTALLED) {
+					if ((bundleEvent.getType() == BundleEvent.UNINSTALLED) ||
+						(bundleEvent.getType() == BundleEvent.UPDATED)) {
+
 						_sqlPool.remove(bundleEvent.getBundle());
 					}
 				}

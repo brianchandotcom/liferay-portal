@@ -1989,9 +1989,9 @@ app.server.type=@{app.server.type}]]></echo>
 
 					System.out.println("Waiting for '@{log.message}' to appear in log message");
 
-					int timeout = Integer.parseInt(project.getProperty("timeout.app.server.wait"));
+					int timeoutDuration = Integer.parseInt(project.getProperty("timeout.app.server.wait"));
 
-					long timeoutTime = System.currentTimeMillis() + (1000 * timeout);
+					long timeoutTime = System.currentTimeMillis() + (1000 * timeoutDuration);
 
 					while (true) {
 						try {
@@ -2006,7 +2006,7 @@ app.server.type=@{app.server.type}]]></echo>
 						long currentTime = System.currentTimeMillis();
 
 						if (currentTime > timeoutTime) {
-							project.setProperty("timed.out.message", "Unable to find log message after " + (timeout / 60) + " minutes.");
+							project.setProperty("timed.out.message", "Unable to find log message after " + (timeoutDuration / 60) + " minutes.");
 
 							break;
 						}

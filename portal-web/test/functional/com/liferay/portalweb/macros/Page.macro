@@ -865,9 +865,10 @@
 		<if>
 			<isset var="friendlyUrlLocalized" />
 			<then>
-				<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
-
-				<execute function="Click" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
+				<execute macro="PortletEntry#changeLocale">
+					<var name="fieldName" value="Friendly URL" />
+					<var name="locale" value="${friendlyUrlLocalized}" />
+				</execute>			
 			</then>
 		</if>
 

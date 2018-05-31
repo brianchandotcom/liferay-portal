@@ -24,20 +24,33 @@ import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author David Truong
+ * @author Jesse Rao
  */
 public class RobotsUtil {
 
 	public static String getDefaultRobots() {
-		return getDefaultRobots(null);
+		return getDefaultRobots(false, null, 8080);
 	}
 
-	public static String getDefaultRobots(String virtualHost) {
+	public static String getDefaultRobots(
+		boolean https, String virtualHost, int port) {
+
 		if (Validator.isNotNull(virtualHost)) {
 			String content = ContentUtil.get(
 				RobotsUtil.class.getClassLoader(),
 				PropsValues.ROBOTS_TXT_WITH_SITEMAP);
 
+			if (https) {
+				content = StringUtil.replace(content, "[$PROTOCOL$]", "https");
+			}
+			else {
+				content = StringUtil.replace(content, "[$PROTOCOL$]", "http");
+			}
+
 			content = StringUtil.replace(content, "[$HOST$]", virtualHost);
+
+			content = StringUtil.replace(
+				content, "[$PORT$]", String.valueOf(port));
 
 			return content;
 		}
@@ -48,14 +61,33 @@ public class RobotsUtil {
 	}
 
 	public static String getRobots(LayoutSet layoutSet) throws PortalException {
+		String webServerProtocol = PropsValues.WEB_SERVER_PROTOCOL;
+
+		boolean https = false;
+
+		if ((webServerProtocol != null) && webServerProtocol.equals("https")) {
+			https = true;
+		}
+
+		int portalServerPort;
+
+		if (https) {
+			portalServerPort = PortalUtil.getPortalServerPort(true);
+		}
+		else {
+			portalServerPort = PortalUtil.getPortalServerPort(false);
+		}
+
 		if (layoutSet == null) {
-			return getDefaultRobots(null);
+			return getDefaultRobots(https, null, portalServerPort);
 		}
 
 		return GetterUtil.get(
 			layoutSet.getSettingsProperty(
 				layoutSet.isPrivateLayout() + "-robots.txt"),
-			getDefaultRobots(PortalUtil.getVirtualHostname(layoutSet)));
+			getDefaultRobots(
+				https, PortalUtil.getVirtualHostname(layoutSet),
+				portalServerPort));
 	}
 
 }

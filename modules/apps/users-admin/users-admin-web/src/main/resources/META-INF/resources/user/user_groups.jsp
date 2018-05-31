@@ -85,7 +85,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		cssClass="modify-link"
 		id="openUserGroupsLink"
 		label="<%= true %>"
-		linkCssClass="btn btn-primary"
+		linkCssClass="btn btn-secondary"
 		message="select"
 		url="javascript:;"
 	/>

@@ -25,6 +25,7 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -673,7 +674,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	}
 
 	private String _fixLineStartingWithCloseParenthesis(
-		String content, String fileName) {
+			String content, String fileName)
+		throws Exception {
 
 		Matcher matcher = _lineStartingWithCloseParenthesisPattern.matcher(
 			content);
@@ -706,7 +708,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					getLine(content, getLineNumber(content, y)));
 
 				if (trimmedLine.startsWith(").") ||
-					trimmedLine.startsWith("@")) {
+					trimmedLine.startsWith("@") ||
+					_hasAllowedChain(trimmedLine)) {
 
 					break;
 				}
@@ -857,6 +860,35 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				return x;
 			}
 		}
+	}
+
+	private boolean _hasAllowedChain(String line) throws Exception {
+		Map<String, String> attributesMap = getCheckstyleAttributesMap(
+			"ChainingCheck");
+
+		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
+			String key = entry.getKey();
+
+			if (!key.startsWith("allowed")) {
+				continue;
+			}
+
+			String[] values = StringUtil.split(entry.getValue());
+
+			for (String value : values) {
+				String regex = ".*" + value + "\\..*";
+
+				if (key.contains("Method")) {
+					regex = ".*" + value + "\\(.*";
+				}
+
+				if (line.matches(regex)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private final Pattern _arrayPattern = Pattern.compile(

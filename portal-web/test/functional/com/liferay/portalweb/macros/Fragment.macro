@@ -1,6 +1,5 @@
 <definition>
 	<command name="_gotoAddCollection">
-		<command name="addCollection">
 		<if>
 			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_PLUS" />
 			<then>

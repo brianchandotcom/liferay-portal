@@ -1,6 +1,8 @@
 $contextual-sidebar-width: 320px;
 $control-menu-height: 49px;
 $management-bar-height: 49px;
+$transition-duration: 0.5s;
+$transition-timing-function: ease;
 
 .contextual-sidebar {
 	height: calc(100vh - #{$management-bar-height});
@@ -9,8 +11,9 @@ $management-bar-height: 49px;
 	right: 0;
 	top: $management-bar-height;
 	transform: translateX(100%);
-	transition: transform ease 0.5s;
+	transition: transform $transition-timing-function $transition-duration;
 	width: $contextual-sidebar-width;
+	will-change: transform;
 
 	&.contextual-sidebar-visible {
 		pointer-events: auto;
@@ -35,6 +38,11 @@ $management-bar-height: 49px;
 			height: calc(100vh - #{$control-menu-height + $management-bar-height});
 			top: $control-menu-height + $management-bar-height;
 		}
+	}
+
+	.contextual-sidebar-content {
+		transition: padding-right $transition-timing-function $transition-duration;
+		will-change: padding-right;
 	}
 
 	body.contextual-sidebar-visible .contextual-sidebar-content {

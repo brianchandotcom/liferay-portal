@@ -50,6 +50,14 @@ class FragmentsEditorSidebar extends Component {
 	}
 
 	/**
+	 * Disallow setting element display to none
+	 * @inheritDoc
+	 * @review
+	 */
+
+	syncVisible() {}
+
+	/**
 	 * Enable or disable added tab depending on we have fragments or not
 	 * @private
 	 * @review

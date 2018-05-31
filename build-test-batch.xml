@@ -1985,6 +1985,8 @@ app.server.type=@{app.server.type}]]></echo>
 								return true;
 							}
 						}
+
+						return false;
 					}
 
 					System.out.println("Waiting for '@{log.message}' to appear in log message");

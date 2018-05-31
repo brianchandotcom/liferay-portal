@@ -30,6 +30,9 @@ public class LayoutAdminWebKeys {
 	public static final String LAYOUT_PAGE_TEMPLATE_COLLECTION_SERVICE =
 		"LAYOUT_PAGE_TEMPLATE_COLLECTION_SERVICE";
 
+	public static final String LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT =
+		"LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT";
+
 	public static final String LAYOUT_PROTOTYPE = "LAYOUT_PROTOTYPE";
 
 }

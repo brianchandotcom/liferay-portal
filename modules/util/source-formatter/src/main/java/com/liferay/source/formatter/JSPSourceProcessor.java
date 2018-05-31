@@ -52,6 +52,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		List<String> fileNames = getFileNames(excludes, getIncludes());
 
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
 		if (fileNames.isEmpty() ||
 			(!sourceFormatterArgs.isFormatCurrentBranch() &&
 			 !sourceFormatterArgs.isFormatLatestAuthor() &&
@@ -103,6 +105,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		// added to the list. Here we make sure we do not format files that
 		// should be excluded.
 
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
 		if (sourceFormatterArgs.isFormatCurrentBranch() ||
 			sourceFormatterArgs.isFormatLatestAuthor() ||
 			sourceFormatterArgs.isFormatLocalChanges()) {
@@ -142,6 +146,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		throws Exception {
 
 		List<String> fileNames = Collections.emptyList();
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 		if (sourceFormatterArgs.isFormatCurrentBranch()) {
 			fileNames = GitUtil.getCurrentBranchFileNames(
@@ -203,6 +208,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (_configuration == null) {
+			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
 			_checkstyleLogger = new AlloyMVCCheckstyleLogger(
 				new UnsyncByteArrayOutputStream(), true,
 				sourceFormatterArgs.getBaseDirName());

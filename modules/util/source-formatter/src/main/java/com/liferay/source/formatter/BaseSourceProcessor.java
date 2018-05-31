@@ -160,6 +160,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
+	public SourceFormatterArgs getSourceFormatterArgs() {
+		return _sourceFormatterArgs;
+	}
+
+	@Override
 	public Set<SourceFormatterMessage> getSourceFormatterMessages() {
 		Set<SourceFormatterMessage> sourceFormatterMessages = new TreeSet<>();
 
@@ -175,6 +180,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public List<SourceMismatchException> getSourceMismatchExceptions() {
 		return _sourceMismatchExceptions;
+	}
+
+	@Override
+	public boolean isPortalSource() {
+		return _portalSource;
+	}
+
+	@Override
+	public boolean isSubrepository() {
+		return _subrepository;
 	}
 
 	@Override

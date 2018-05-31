@@ -1957,9 +1957,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 					import org.apache.tools.ant.DirectoryScanner;
 
-					public String getCatalinaLogFilesContent() {
-						Map catalinaLogFiles = new TreeMap();
-
+					public boolean isContainedInCatalinaLogFiles(String searchString) {
 						DirectoryScanner directoryScanner = new DirectoryScanner();
 
 						File liferayHomeDir = new File(project.getProperty("liferay.home"));
@@ -1981,20 +1979,12 @@ app.server.type=@{app.server.type}]]></echo>
 
 							File file = new File(filePath);
 
-							catalinaLogFiles.put(Long.toString(file.lastModified()), file);
+							String fileContent = FileUtils.readFileToString(file);
+
+							if (fileContent.contains(searchString)) {
+								return true;
+							}
 						}
-
-						StringBuilder sb = new StringBuilder();
-
-						SortedSet keys = new TreeSet(catalinaLogFiles.keySet());
-
-						for (String key : keys) {
-							File file = catalinaLogFiles.get(key);
-
-							sb.append(FileUtils.readFileToString(file));
-						}
-
-						return sb.toString();
 					}
 
 					System.out.println("Waiting for '@{log.message}' to appear in log message");
@@ -2005,9 +1995,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 					while (true) {
 						try {
-							String content = getCatalinaLogFilesContent();
-
-							if (content.contains("@{log.message}")) {
+							if (isContainedInCatalinaLogFiles("@{log.message}")) {
 								break;
 							}
 						}

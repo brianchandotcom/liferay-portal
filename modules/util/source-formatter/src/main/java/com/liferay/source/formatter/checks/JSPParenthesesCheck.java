@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JSPSourceUtil;
 
 import java.util.regex.Matcher;
@@ -49,15 +50,15 @@ public class JSPParenthesesCheck extends IfStatementCheck {
 
 		while (matcher.find()) {
 			if (!JSPSourceUtil.isJavaSource(content, matcher.start())) {
-				String ifClause = "if (" + matcher.group(1) + ") {";
+				String ifClause = "if (" + matcher.group(2) + ") {";
 
 				int index = checkIfClauseParentheses(
 					ifClause, fileName,
-					getLineNumber(content, matcher.start(1)));
+					getLineNumber(content, matcher.start()));
 
 				if (index != -1) {
 					return _fixClause(
-						content, matcher.group(), index - 1, matcher.start());
+						content, matcher.group(1), index - 1, matcher.start());
 				}
 			}
 		}
@@ -71,7 +72,13 @@ public class JSPParenthesesCheck extends IfStatementCheck {
 		int x = -1;
 
 		for (int i = 0; i < index; i++) {
-			x = clause.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
+			while (true) {
+				x = clause.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
+
+				if (!ToolsUtil.isInsideQuotes(clause, x)) {
+					break;
+				}
+			}
 		}
 
 		int y = x;
@@ -81,6 +88,10 @@ public class JSPParenthesesCheck extends IfStatementCheck {
 
 			if (y == -1) {
 				return content;
+			}
+
+			if (ToolsUtil.isInsideQuotes(clause, y)) {
+				continue;
 			}
 
 			String s = clause.substring(x, y + 1);
@@ -102,6 +113,6 @@ public class JSPParenthesesCheck extends IfStatementCheck {
 	private final Pattern _ifStatementPattern = Pattern.compile(
 		"[\t\n]((else )?if|while) .*\\) \\{\n");
 	private final Pattern _tagPattern = Pattern.compile(
-		"['\"]<%= (.+?) %>['\"]");
+		"['\"](<%= (.+?) %>)['\"]");
 
 }

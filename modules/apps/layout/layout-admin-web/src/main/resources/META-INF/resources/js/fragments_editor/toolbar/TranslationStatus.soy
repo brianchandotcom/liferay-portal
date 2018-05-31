@@ -17,7 +17,11 @@
 	]}
 
 	<div class="dropdown lfr-icon-menu">
-		<button class="btn btn-link p-1" data-toggle="dropdown" type="button">
+		<button
+			class="btn btn-outline-light fragments-editor-toolbar__translation-status-button"
+			data-toggle="dropdown"
+			type="button"
+		>
 			<span class="inline-item">
 				{call .lexiconIcon}
 					{param name: $availableLanguages[$languageId].languageIcon /}
@@ -28,7 +32,7 @@
 		</button>
 
 		{if isNonnull($translationStatus)}
-			<div class="dropdown-menu dropdown-menu-indicator-end fragments-editor__translation-status-list">
+			<div class="dropdown-menu dropdown-menu-indicator-end fragments-editor-toolbar__translation-status-list">
 				{call .translationStatusItem}
 					{param isCurrent: $defaultLanguageId == $languageId /}
 					{param isDefault: true /}
@@ -71,7 +75,7 @@
 	{@param? translationKeys: int}
 
 	<a
-		class="dropdown-item fragments-editor__translation-status-item"
+		class="dropdown-item fragments-editor-toolbar__translation-status-item"
 		data-languageid="{$languageId}"
 		data-onclick="_handleLanguageChange"
 	>
@@ -90,7 +94,7 @@
 
 		<span class="dropdown-item-indicator">
 			{let $labelClasses kind="text"}
-				fragments-editor__translation-status-item__label
+				fragments-editor-toolbar__translation-status-item__label
 				{sp}label
 
 				{if $isDefault}

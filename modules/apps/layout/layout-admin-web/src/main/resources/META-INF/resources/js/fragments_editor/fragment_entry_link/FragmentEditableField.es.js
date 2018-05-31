@@ -4,8 +4,8 @@ import {object} from 'metal';
 import Soy from 'metal-soy';
 
 import './FragmentEditableFieldTooltip.es';
-import FragmentProcessors from './fragment_processors/FragmentProcessors.es';
-import {getActiveEditableElement} from './fragment_processors/EditableTextFragmentProcessor.es';
+import FragmentProcessors from '../fragment_processors/FragmentProcessors.es';
+import {getActiveEditableElement} from '../fragment_processors/EditableTextFragmentProcessor.es';
 import templates from './FragmentEditableField.soy';
 
 /**

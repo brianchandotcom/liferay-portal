@@ -2,7 +2,7 @@ import Component from 'metal-component';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import 'layout-admin-web/js/fragments_editor/FragmentEntryLink.es';
+import 'layout-admin-web/js/fragments_editor/fragment_entry_link/FragmentEntryLink.es';
 import templates from './FragmentEntryDisplay.soy';
 
 /**

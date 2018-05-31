@@ -95,7 +95,7 @@ public class UpdateLayoutPrototypeMVCActionCommand
 			jsonObject.put(
 				"error",
 				LanguageUtil.get(
-					themeDisplay.getRequest(), "an-unexpected-error-ocurred"));
+					themeDisplay.getRequest(), "an-unexpected-error-occurred"));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

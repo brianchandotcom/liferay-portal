@@ -95,12 +95,11 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 	public OAuth2ApplicationScopeAliases fetchOAuth2ApplicationScopeAliases(
 		long oAuth2ApplicationId, List<String> scopeAliasesList) {
 
-		scopeAliasesList = new ArrayList<>(scopeAliasesList);
+		List<String> list = new ArrayList<>(scopeAliasesList);
 
-		scopeAliasesList.sort(null);
+		list.sort(null);
 
-		String scopeAliases = StringUtil.merge(
-			scopeAliasesList, StringPool.SPACE);
+		String scopeAliases = StringUtil.merge(list, StringPool.SPACE);
 
 		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliasesList =
 			oAuth2ApplicationScopeAliasesPersistence.findByO_S(

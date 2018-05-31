@@ -345,7 +345,7 @@ public class GitWorkingDirectory {
 			}
 		}
 
-		return getBranch(branchName, null);
+		return getBranch(branchName, null, true);
 	}
 
 	public String createPullRequest(
@@ -864,7 +864,7 @@ public class GitWorkingDirectory {
 				pullRequest.getSenderRemoteURL());
 
 			Branch remoteSenderBranch = getBranch(
-				pullRequest.getSenderBranchName(), senderTempRemote);
+				pullRequest.getSenderBranchName(), senderTempRemote, true);
 
 			fetch(null, remoteSenderBranch);
 
@@ -875,7 +875,7 @@ public class GitWorkingDirectory {
 			Remote upstreamRemote = getRemote("upstream");
 
 			Branch remoteUpstreamBranch = getBranch(
-				pullRequest.getUpstreamBranchName(), upstreamRemote);
+				pullRequest.getUpstreamBranchName(), upstreamRemote, true);
 
 			if (!localSHAExists(remoteUpstreamBranch.getSHA())) {
 				fetch(null, remoteUpstreamBranch);
@@ -921,7 +921,7 @@ public class GitWorkingDirectory {
 		String bashCommand = JenkinsResultsParserUtil.combine(
 			"git diff --diff-filter=AM --name-only ",
 			_getMergeBaseCommitSHA(
-				currentBranch, getBranch(_upstreamBranchName, null)),
+				currentBranch, getBranch(_upstreamBranchName, null, true)),
 			" ", currentBranch.getSHA());
 
 		if ((grepPredicateString != null) && !grepPredicateString.isEmpty()) {

@@ -20,7 +20,6 @@ import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommercePriceCalculation;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -29,13 +28,12 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListUserSegmentEntryRelLocalService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentCriterionConstants;
 import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentCriterionLocalService;
 import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -55,7 +53,6 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 import org.frutilla.FrutillaRule;
 
@@ -171,7 +168,7 @@ public class CommercePriceCalculationTest {
 				null, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, _buyerUser1);
+			commerceCurrency, _buyerUser1, _organization, null);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
@@ -274,7 +271,7 @@ public class CommercePriceCalculationTest {
 			null, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, _buyerUser1);
+			commerceCurrency, _buyerUser1, _organization, null);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
@@ -348,7 +345,7 @@ public class CommercePriceCalculationTest {
 				null, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, _buyerUser1);
+			commerceCurrency, _buyerUser1, _organization, null);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
@@ -441,7 +438,7 @@ public class CommercePriceCalculationTest {
 		}
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			targetCurrency, _buyerUser1);
+			commerceCurrency, _buyerUser1, _organization, null);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
@@ -527,7 +524,7 @@ public class CommercePriceCalculationTest {
 			null, quantity, serviceContext);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency, _buyerUser1);
+			commerceCurrency, _buyerUser1, _organization, null);
 
 		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), quantity, false, false,
@@ -586,56 +583,5 @@ public class CommercePriceCalculationTest {
 
 	@DeleteAfterTestRun
 	private Organization _organization;
-
-	private class TestCommerceContext implements CommerceContext {
-
-		public TestCommerceContext(
-			CommerceCurrency commerceCurrency, User contextUser) {
-
-			_commerceCurrency = commerceCurrency;
-			_contextUser = contextUser;
-		}
-
-		@Override
-		public CommerceCurrency getCommerceCurrency() throws PortalException {
-			return _commerceCurrency;
-		}
-
-		@Override
-		public CommerceOrder getCommerceOrder() throws PortalException {
-			return null;
-		}
-
-		@Override
-		public Optional<CommercePriceList> getCommercePriceList()
-			throws PortalException {
-
-			return _commercePriceListLocalService.getCommercePriceList(
-				_organization.getGroupId(), getCommerceUserSegmentEntryIds());
-		}
-
-		@Override
-		public long[] getCommerceUserSegmentEntryIds() throws PortalException {
-			return _commerceUserSegmentEntryLocalService.
-				getCommerceUserSegmentEntryIds(
-					_organization.getGroupId(),
-					_organization.getOrganizationId(),
-					_contextUser.getUserId());
-		}
-
-		@Override
-		public List<CPRule> getCPRules() throws PortalException {
-			return null;
-		}
-
-		@Override
-		public Organization getOrganization() throws PortalException {
-			return _organization;
-		}
-
-		private final CommerceCurrency _commerceCurrency;
-		private final User _contextUser;
-
-	}
 
 }

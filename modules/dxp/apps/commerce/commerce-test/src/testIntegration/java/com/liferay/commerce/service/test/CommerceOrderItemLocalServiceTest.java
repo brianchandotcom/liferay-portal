@@ -23,18 +23,15 @@ import com.liferay.commerce.internal.test.util.CommerceTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceWarehouse;
-import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceConstants;
-import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -49,7 +46,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.math.BigDecimal;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.frutilla.FrutillaRule;
 
@@ -115,7 +111,7 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertNotNull(commerceCurrency);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency);
+			commerceCurrency, null, null, null);
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
@@ -181,7 +177,7 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertNotNull(commerceCurrency);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency);
+			commerceCurrency, null, null, null);
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
@@ -230,7 +226,7 @@ public class CommerceOrderItemLocalServiceTest {
 		Assert.assertNotNull(commerceCurrency);
 
 		CommerceContext commerceContext = new TestCommerceContext(
-			commerceCurrency);
+			commerceCurrency, null, null, null);
 
 		_commerceOrderItemLocalService.addCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(), 1,
@@ -257,47 +253,5 @@ public class CommerceOrderItemLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	private class TestCommerceContext implements CommerceContext {
-
-		public TestCommerceContext(CommerceCurrency commerceCurrency) {
-			_commerceCurrency = commerceCurrency;
-		}
-
-		@Override
-		public CommerceCurrency getCommerceCurrency() throws PortalException {
-			return _commerceCurrency;
-		}
-
-		@Override
-		public CommerceOrder getCommerceOrder() throws PortalException {
-			return null;
-		}
-
-		@Override
-		public Optional<CommercePriceList> getCommercePriceList()
-			throws PortalException {
-
-			return null;
-		}
-
-		@Override
-		public long[] getCommerceUserSegmentEntryIds() throws PortalException {
-			return null;
-		}
-
-		@Override
-		public List<CPRule> getCPRules() throws PortalException {
-			return null;
-		}
-
-		@Override
-		public Organization getOrganization() throws PortalException {
-			return null;
-		}
-
-		private final CommerceCurrency _commerceCurrency;
-
-	}
 
 }

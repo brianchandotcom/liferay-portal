@@ -235,7 +235,7 @@
 					</execute>
 
 					<execute macro="ProductMenuHelper#expandCategory">
-						<var name="category" value="Navigation" />
+						<var name="category" value="Build" />
 					</execute>
 
 					<execute macro="ProductMenuHelper#expandPagePagination" />

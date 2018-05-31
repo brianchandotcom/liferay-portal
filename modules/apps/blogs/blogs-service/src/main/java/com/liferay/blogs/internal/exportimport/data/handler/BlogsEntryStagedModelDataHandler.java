@@ -14,7 +14,6 @@
 
 package com.liferay.blogs.internal.exportimport.data.handler;
 
-import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
@@ -30,7 +29,6 @@ import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -45,7 +43,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -54,7 +51,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
-import com.liferay.ratings.kernel.model.RatingsEntry;
 
 import java.io.InputStream;
 
@@ -356,6 +352,11 @@ public class BlogsEntryStagedModelDataHandler
 		}
 	}
 
+	@Override
+	protected String[] getSkipImportReferenceStagedModelNames() {
+		return _SKIPPING_REFERENCE_STAGED_MODEL_NAMES;
+	}
+
 	protected InputStream getSmallImageInputStream(
 		PortletDataContext portletDataContext, Element attachmentElement) {
 
@@ -390,50 +391,6 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		return inputStream;
-	}
-
-	@Override
-	protected void importReferenceStagedModels(
-			PortletDataContext portletDataContext, BlogsEntry stagedModel)
-		throws PortletDataException {
-
-		Element stagedModelElement =
-			portletDataContext.getImportDataStagedModelElement(stagedModel);
-
-		Element referencesElement = stagedModelElement.element("references");
-
-		if (referencesElement == null) {
-			return;
-		}
-
-		DiscussionStagingHandler discussionStagingHandler =
-			_commentManager.getDiscussionStagingHandler();
-
-		String stagedModelClassName = null;
-
-		if (discussionStagingHandler != null) {
-			stagedModelClassName = discussionStagingHandler.getClassName();
-		}
-
-		List<Element> referenceElements = referencesElement.elements();
-
-		for (Element referenceElement : referenceElements) {
-			String className = referenceElement.attributeValue("class-name");
-
-			if (className.equals(FriendlyURLEntry.class.getName()) ||
-				className.equals(AssetCategory.class.getName()) ||
-				className.equals(RatingsEntry.class.getName()) ||
-				className.equals(stagedModelClassName)) {
-
-				continue;
-			}
-
-			long classPK = GetterUtil.getLong(
-				referenceElement.attributeValue("class-pk"));
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, stagedModel, className, classPK);
-		}
 	}
 
 	@Reference(unbind = "-")
@@ -565,6 +522,9 @@ public class BlogsEntryStagedModelDataHandler
 
 		_blogsEntryLocalService.updateBlogsEntry(importedBlogsEntry);
 	}
+
+	private static final String[] _SKIPPING_REFERENCE_STAGED_MODEL_NAMES =
+		{FriendlyURLEntry.class.getName()};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryStagedModelDataHandler.class);

@@ -182,11 +182,9 @@ public class PriceEntryNestedCollectionResource
 				"Unable to find SKU: " + nscpie.getLocalizedMessage(), nscpie);
 		}
 		catch (DuplicateCommercePriceEntryException dcpee) {
-			Response.Status status = Response.Status.CONFLICT;
-
 			throw new ConflictException(
 				"Duplicate Product Instance on the Price List ID",
-				status.getStatusCode(), dcpee);
+				Response.Status.CONFLICT.getStatusCode(), dcpee);
 		}
 	}
 

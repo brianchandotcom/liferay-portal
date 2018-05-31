@@ -173,20 +173,16 @@ public class PriceListNestedCollectionResource
 				nsce);
 		}
 		catch (CommercePriceListDisplayDateException cpldde) {
-			Response.Status status = Response.Status.CONFLICT;
-
 			throw new ConflictException(
 				"Invalid display date:  " +
 					priceListUpdaterForm.getDisplayDate(),
-				status.getStatusCode(), cpldde);
+				Response.Status.CONFLICT.getStatusCode(), cpldde);
 		}
 		catch (CommercePriceListExpirationDateException cplede) {
-			Response.Status status = Response.Status.CONFLICT;
-
 			throw new ConflictException(
 				"Invalid expiration date:  " +
 					priceListUpdaterForm.getExpirationDate(),
-				status.getStatusCode(), cplede);
+				Response.Status.CONFLICT.getStatusCode(), cplede);
 		}
 	}
 

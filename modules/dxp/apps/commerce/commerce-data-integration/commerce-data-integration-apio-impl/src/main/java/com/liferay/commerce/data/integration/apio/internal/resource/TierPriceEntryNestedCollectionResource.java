@@ -163,12 +163,10 @@ public class TierPriceEntryNestedCollectionResource
 				tierPriceEntryUpdaterForm.getPromoPrice());
 		}
 		catch (DuplicateCommerceTierPriceEntryException dctpee) {
-			Response.Status status = Response.Status.CONFLICT;
-
 			throw new ConflictException(
 				"Minimum quantity already exists for this price entry: " +
 					tierPriceEntryUpdaterForm.getMinQuantity(),
-				status.getStatusCode(), dctpee);
+				Response.Status.CONFLICT.getStatusCode(), dctpee);
 		}
 	}
 
@@ -194,12 +192,10 @@ public class TierPriceEntryNestedCollectionResource
 				nspee);
 		}
 		catch (DuplicateCommerceTierPriceEntryException dctpee) {
-			Response.Status status = Response.Status.CONFLICT;
-
 			throw new ConflictException(
 				"Minimum quantity already exists for this price entry: " +
 					tierPriceEntryUpserterForm.getMinQuantity(),
-				status.getStatusCode(), dctpee);
+				Response.Status.CONFLICT.getStatusCode(), dctpee);
 		}
 	}
 

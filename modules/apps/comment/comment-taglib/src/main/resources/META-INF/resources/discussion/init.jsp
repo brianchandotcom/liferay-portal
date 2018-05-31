@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.comment.constants.CommentConstants" %><%@
-page import="com.liferay.comment.taglib.internal.constants.CommentTaglibPortletKeys" %><%@
 page import="com.liferay.portal.comment.display.context.CommentDisplayContextProviderUtil" %><%@
 page import="com.liferay.portal.comment.display.context.util.DiscussionRequestHelper" %><%@
 page import="com.liferay.portal.comment.display.context.util.DiscussionTaglibHelper" %><%@
@@ -31,7 +30,5 @@ page import="com.liferay.portal.kernel.comment.display.context.CommentSectionDis
 page import="com.liferay.portal.kernel.comment.display.context.CommentTreeDisplayContext" %><%@
 page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContextFunction" %>
-
-<%@ page import="javax.portlet.ResourceURL" %>
 
 <portlet:defineObjects />

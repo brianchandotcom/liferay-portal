@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.facebook.connect.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -61,22 +62,13 @@ public class FacebookConnectImpl implements FacebookConnect {
 		FacebookConnectConfiguration facebookConnectConfiguration =
 			getFacebookConnectConfiguration(companyId);
 
-		String url = _http.addParameter(
-			facebookConnectConfiguration.oauthTokenURL(), "client_id",
-			facebookConnectConfiguration.appId());
-
-		String facebookConnectRedirectURL =
-			facebookConnectConfiguration.oauthRedirectURL();
+		String url = facebookConnectConfiguration.oauthTokenURL();
 
 		url = _http.addParameter(
-			url, "redirect_uri", facebookConnectRedirectURL);
-
-		facebookConnectRedirectURL = _http.addParameter(
-			facebookConnectRedirectURL, "redirect", redirect);
-
+			url, "client_id", facebookConnectConfiguration.appId());
 		url = _http.addParameter(
-			url, "redirect_uri", facebookConnectRedirectURL);
-
+			url, "redirect_uri",
+			facebookConnectConfiguration.oauthRedirectURL());
 		url = _http.addParameter(
 			url, "client_secret", facebookConnectConfiguration.appSecret());
 		url = _http.addParameter(url, "code", code);
@@ -84,7 +76,6 @@ public class FacebookConnectImpl implements FacebookConnect {
 		Http.Options options = new Http.Options();
 
 		options.setLocation(url);
-		options.setPost(true);
 
 		try {
 			String content = _http.URLtoString(options);
@@ -96,6 +87,23 @@ public class FacebookConnectImpl implements FacebookConnect {
 
 			if (Validator.isNotNull(accessToken)) {
 				return accessToken;
+			}
+
+			if (_log.isDebugEnabled()) {
+				String appSecret = facebookConnectConfiguration.appSecret();
+
+				if (!appSecret.isEmpty()) {
+					url = _http.setParameter(
+						url, "client_secret",
+						StringBundler.concat(
+							appSecret.charAt(0), "...redacted...",
+							appSecret.charAt(appSecret.length() - 1)));
+				}
+
+				_log.debug(
+					StringBundler.concat(
+						"Unable to get access token for URL ", url,
+						" Response:", content));
 			}
 		}
 		catch (Exception e) {

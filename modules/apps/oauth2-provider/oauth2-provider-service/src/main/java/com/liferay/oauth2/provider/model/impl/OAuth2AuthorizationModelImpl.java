@@ -75,12 +75,12 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 			{ "createDate", Types.TIMESTAMP },
 			{ "oAuth2ApplicationId", Types.BIGINT },
 			{ "oA2AScopeAliasesId", Types.BIGINT },
-			{ "accessTokenContent", Types.VARCHAR },
+			{ "accessTokenContent", Types.CLOB },
 			{ "accessTokenContentHash", Types.BIGINT },
 			{ "accessTokenCreateDate", Types.TIMESTAMP },
 			{ "accessTokenExpirationDate", Types.TIMESTAMP },
 			{ "remoteIPInfo", Types.VARCHAR },
-			{ "refreshTokenContent", Types.VARCHAR },
+			{ "refreshTokenContent", Types.CLOB },
 			{ "refreshTokenContentHash", Types.BIGINT },
 			{ "refreshTokenCreateDate", Types.TIMESTAMP },
 			{ "refreshTokenExpirationDate", Types.TIMESTAMP }
@@ -95,18 +95,18 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("oA2AScopeAliasesId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("accessTokenContent", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("accessTokenContent", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("accessTokenContentHash", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accessTokenCreateDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("accessTokenExpirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("remoteIPInfo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("refreshTokenContent", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("refreshTokenContent", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("refreshTokenContentHash", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("refreshTokenCreateDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("refreshTokenExpirationDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2Authorization (oAuth2AuthorizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,oA2AScopeAliasesId LONG,accessTokenContent VARCHAR(75) null,accessTokenContentHash LONG,accessTokenCreateDate DATE null,accessTokenExpirationDate DATE null,remoteIPInfo VARCHAR(75) null,refreshTokenContent VARCHAR(75) null,refreshTokenContentHash LONG,refreshTokenCreateDate DATE null,refreshTokenExpirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2Authorization (oAuth2AuthorizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,oA2AScopeAliasesId LONG,accessTokenContent TEXT null,accessTokenContentHash LONG,accessTokenCreateDate DATE null,accessTokenExpirationDate DATE null,remoteIPInfo VARCHAR(75) null,refreshTokenContent TEXT null,refreshTokenContentHash LONG,refreshTokenCreateDate DATE null,refreshTokenExpirationDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Authorization";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2Authorization.oAuth2AuthorizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2Authorization.oAuth2AuthorizationId ASC";

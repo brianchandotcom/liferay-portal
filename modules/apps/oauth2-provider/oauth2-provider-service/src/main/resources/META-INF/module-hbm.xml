@@ -37,7 +37,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2ApplicationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="scopeAliases" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="scopeAliasesHash" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.oauth2.provider.model.impl.OAuth2AuthorizationImpl" table="OAuth2Authorization">
@@ -50,12 +50,12 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="oAuth2ApplicationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" column="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="accessTokenContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="accessTokenContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="accessTokenContentHash" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="accessTokenCreateDate" type="org.hibernate.type.TimestampType" />
 		<property name="accessTokenExpirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="remoteIPInfo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="refreshTokenContent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="refreshTokenContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="refreshTokenContentHash" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="refreshTokenCreateDate" type="org.hibernate.type.TimestampType" />
 		<property name="refreshTokenExpirationDate" type="org.hibernate.type.TimestampType" />

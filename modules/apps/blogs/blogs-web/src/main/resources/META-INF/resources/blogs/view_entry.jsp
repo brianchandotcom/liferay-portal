@@ -158,7 +158,7 @@ if (portletTitleBasedNavigation) {
 													<div class="autofit-col autofit-col-expand">
 														<a class="username" href="<%= previousEntryUserURL %>"><%= previousEntry.getUserName() %></a>
 
-														<div>
+														<div class="text-secondary">
 															<%= DateUtil.getDate(previousEntry.getStatusDate(), "dd MMM", locale) %>
 
 															<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">
@@ -319,7 +319,7 @@ if (portletTitleBasedNavigation) {
 													<div class="autofit-col autofit-col-expand">
 														<a class="username" href="<%= nextEntryUserURL %>"><%= nextEntry.getUserName() %></a>
 
-														<div>
+														<div class="text-secondary">
 															<%= DateUtil.getDate(nextEntry.getStatusDate(), "dd MMM", locale) %>
 
 															<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">

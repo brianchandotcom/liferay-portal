@@ -65,15 +65,10 @@ public class DockerfileSourceUtil {
 	public static boolean isNewInstruction(
 		String instruction, String previousInstruction, String previousLine) {
 
-		if (Validator.isNull(previousInstruction)) {
-			return false;
-		}
+		if (Validator.isNull(previousInstruction) ||
+			endsWithBackSlash(previousLine) ||
+			Objects.equals(instruction, previousInstruction)) {
 
-		if (endsWithBackSlash(previousLine)) {
-			return false;
-		}
-
-		if (Objects.equals(instruction, previousInstruction)) {
 			return false;
 		}
 

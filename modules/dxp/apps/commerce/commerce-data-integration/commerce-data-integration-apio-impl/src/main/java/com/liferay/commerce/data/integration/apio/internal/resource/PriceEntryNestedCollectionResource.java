@@ -179,10 +179,7 @@ public class PriceEntryNestedCollectionResource
 		}
 		catch (NoSuchCPInstanceException nscpie) {
 			throw new NotFoundException(
-				String.format(
-					"Unable to find SKU: " +
-						nscpie.getLocalizedMessage()),
-				nscpie);
+				"Unable to find SKU: " + nscpie.getLocalizedMessage(), nscpie);
 		}
 		catch (DuplicateCommercePriceEntryException dcpee) {
 			Response.Status status = Response.Status.CONFLICT;

@@ -190,9 +190,7 @@ public class TierPriceEntryNestedCollectionResource
 		}
 		catch (NoSuchPriceEntryException nspee) {
 			throw new NotFoundException(
-				String.format(
-					"Unable to find price entry: " +
-						nspee.getLocalizedMessage()),
+				"Unable to find price entry: " + nspee.getLocalizedMessage(),
 				nspee);
 		}
 		catch (DuplicateCommerceTierPriceEntryException dctpee) {

@@ -207,9 +207,7 @@ public class PriceListNestedCollectionResource
 		}
 		catch (NoSuchPriceListException nsple) {
 			throw new NotFoundException(
-				String.format(
-					"Unable to update price list: " +
-						nsple.getLocalizedMessage()),
+				"Unable to update price list: " + nsple.getLocalizedMessage(),
 				nsple);
 		}
 		catch (NoSuchCurrencyException nsce) {

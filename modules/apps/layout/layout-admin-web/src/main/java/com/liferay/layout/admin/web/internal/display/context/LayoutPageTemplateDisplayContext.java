@@ -162,21 +162,23 @@ public class LayoutPageTemplateDisplayContext {
 			return layoutPrototypeGroup.getDisplayURL(themeDisplay, true);
 		}
 
-		PortletURL portletURL = _renderResponse.createRenderURL();
+		PortletURL editLayoutPageTemplateEntryURL =
+			_renderResponse.createRenderURL();
 
-		portletURL.setParameter(
+		editLayoutPageTemplateEntryURL.setParameter(
 			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
+		editLayoutPageTemplateEntryURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
+		editLayoutPageTemplateEntryURL.setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-		portletURL.setParameter(
+		editLayoutPageTemplateEntryURL.setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
 
-		return portletURL.toString();
+		return editLayoutPageTemplateEntryURL.toString();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -626,38 +628,41 @@ public class LayoutPageTemplateDisplayContext {
 	private String _getUpdateLayoutPageTemplateEntryURL(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		PortletURL actionURL = _renderResponse.createActionURL();
+		PortletURL updateLayoutPageTemplateEntryURL =
+			_renderResponse.createActionURL();
 
-		actionURL.setParameter(
+		updateLayoutPageTemplateEntryURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/layout/update_layout_page_template_entry");
-		actionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		actionURL.setParameter(
+		updateLayoutPageTemplateEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		updateLayoutPageTemplateEntryURL.setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()));
-		actionURL.setParameter(
+		updateLayoutPageTemplateEntryURL.setParameter(
 			"layoutPageTemplateEntryId",
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 
-		return actionURL.toString();
+		return updateLayoutPageTemplateEntryURL.toString();
 	}
 
 	private String _getUpdateLayoutPrototypeURL(
 		LayoutPrototype layoutPrototype) {
 
-		PortletURL actionURL = _renderResponse.createActionURL();
+		PortletURL updateLayoutPrototypeURL = _renderResponse.createActionURL();
 
-		actionURL.setParameter(
+		updateLayoutPrototypeURL.setParameter(
 			ActionRequest.ACTION_NAME,
 			"/layout_prototype/update_layout_prototype");
-		actionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		actionURL.setParameter(
+		updateLayoutPrototypeURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		updateLayoutPrototypeURL.setParameter(
 			"layoutPrototypeId",
 			String.valueOf(layoutPrototype.getLayoutPrototypeId()));
 
-		return actionURL.toString();
+		return updateLayoutPrototypeURL.toString();
 	}
 
 	private boolean _hasLayoutPageTemplateEntriesResults() {

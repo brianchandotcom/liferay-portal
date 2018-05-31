@@ -164,7 +164,7 @@ public class CommercePriceListLocalServiceTest {
 		).and(
 			"A currency code expressed with 3-letter ISO 4217 format"
 		).and(
-			"The name of the new list"
+			"The name of the list"
 		).when(
 			"The external reference code (externalReferenceCode) is used"
 		).and(

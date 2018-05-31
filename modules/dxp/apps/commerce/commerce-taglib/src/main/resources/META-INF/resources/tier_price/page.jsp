@@ -50,14 +50,14 @@ String tierPriceId = randomNamespace + "tierPrice";
 
 						BigDecimal discount = price.subtract(commerceTierPriceEntry.getPrice());
 
-						BigDecimal discountPercent = (discount.divide(price)).multiply(BigDecimal.valueOf(100));
+						BigDecimal discountPercent = (discount.divide(price, RoundingMode.HALF_EVEN)).multiply(BigDecimal.valueOf(100));
 
 						BigDecimal total = commerceTierPriceEntry.getPrice().multiply(BigDecimal.valueOf(commerceTierPriceEntry.getMinQuantity()));
 
 						BigDecimal savings = priceTotal.subtract(total);
 					%>
 
-						<tr class="multiples-row" onclick="<%= randomNamespace %>setQuantity('<%= commerceTierPriceEntry.getMinQuantity() %>')">
+						<tr class="multiples-row" onclick="<%= randomNamespace %>setQuantity('<%= commerceTierPriceEntry.getMinQuantity() %>');">
 							<td class="price-point-column"><%= commerceTierPriceEntry.getMinQuantity() %></td>
 							<td class="msrp-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), priceTotal, themeDisplay.getLocale()) %></td>
 							<td class="discount-column table-cell-expand"><%= commercePriceFormatter.format(discountPercent, themeDisplay.getLocale()) %> %</td>
@@ -74,7 +74,7 @@ String tierPriceId = randomNamespace + "tierPrice";
 		</div>
 	</div>
 
-	<script use="aui-base">
+	<aui:script use="aui-base">
 		Liferay.provide(
 			window,
 			'<%= randomNamespace %>setQuantity',
@@ -86,5 +86,5 @@ String tierPriceId = randomNamespace + "tierPrice";
 				}
 			}
 		);
-	</script>
+	</aui:script>
 </c:if>

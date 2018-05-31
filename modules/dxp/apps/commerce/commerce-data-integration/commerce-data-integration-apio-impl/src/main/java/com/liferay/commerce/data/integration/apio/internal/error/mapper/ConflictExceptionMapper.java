@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Zoltán Takács
  */
-@Component(immediate = true, property = "service.ranking:Integer=90")
+@Component(immediate = true)
 public class ConflictExceptionMapper
 	implements ExceptionMapper<ConflictException> {
 

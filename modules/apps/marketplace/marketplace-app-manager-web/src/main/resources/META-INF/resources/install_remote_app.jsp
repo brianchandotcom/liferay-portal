@@ -18,10 +18,10 @@
 
 <portlet:actionURL name="installRemoteApp" var="installRemoteAppURL" />
 
-<aui:form action="<%= installRemoteAppURL %>" cssClass="container-fluid-1280 container-view" method="post" name="fm">
+<aui:form action="<%= installRemoteAppURL %>" cssClass="container-fluid container-fluid-max-xl container-view" method="post" name="fm">
 	<aui:input name="mvcPath" type="hidden" value="/install_remote_app.jsp" />
 
-	<div class="sheet">
+	<div class="sheet sheet-lg">
 		<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount(false) > 1 %>">
 			<div class="alert alert-info">
 				<liferay-ui:message key="installed-apps-are-available-to-all-portal-instances.-go-to-plugins-configuration-within-each-portal-instance-to-enable-disable-each-app" />

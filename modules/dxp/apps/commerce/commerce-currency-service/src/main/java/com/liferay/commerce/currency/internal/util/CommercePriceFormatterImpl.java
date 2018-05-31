@@ -21,12 +21,15 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import java.text.DecimalFormat;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -47,15 +50,21 @@ import org.osgi.service.component.annotations.Reference;
 public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Override
-	public String format(BigDecimal price) {
-		DecimalFormat decimalFormat = getDecimalFormat(null);
+	public String format(BigDecimal price, Locale locale)
+		throws PortalException {
+
+		DecimalFormat decimalFormat = getDecimalFormat(null, locale);
 
 		return decimalFormat.format(price);
 	}
 
 	@Override
-	public String format(CommerceCurrency commerceCurrency, BigDecimal price) {
-		DecimalFormat decimalFormat = getDecimalFormat(commerceCurrency);
+	public String format(
+			CommerceCurrency commerceCurrency, BigDecimal price, Locale locale)
+		throws PortalException {
+
+		DecimalFormat decimalFormat = getDecimalFormat(
+			commerceCurrency, locale);
 
 		String value = decimalFormat.format(price);
 
@@ -67,13 +76,13 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	@Override
-	public String format(long groupId, BigDecimal price)
+	public String format(long groupId, BigDecimal price, Locale locale)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 
-		return format(commerceCurrency, price);
+		return format(commerceCurrency, price, locale);
 	}
 
 	@Activate
@@ -89,7 +98,8 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	protected DecimalFormat getDecimalFormat(
-		CommerceCurrency commerceCurrency) {
+			CommerceCurrency commerceCurrency, Locale locale)
+		throws PortalException {
 
 		String formatPattern = _roundingTypeConfiguration.formatPattern();
 		int maxFractionDigits =
@@ -99,7 +109,16 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 		RoundingMode roundingMode = _roundingTypeConfiguration.roundingMode();
 
 		if (commerceCurrency != null) {
-			formatPattern = commerceCurrency.getFormatPattern();
+			formatPattern = commerceCurrency.getFormatPattern(locale);
+
+			if (Validator.isNull(formatPattern)) {
+				Locale siteDefaultLocale = _portal.getSiteDefaultLocale(
+					commerceCurrency.getGroupId());
+
+				formatPattern = commerceCurrency.getFormatPattern(
+					siteDefaultLocale);
+			}
+
 			maxFractionDigits = commerceCurrency.getMaxFractionDigits();
 			minFractionDigits = commerceCurrency.getMinFractionDigits();
 			roundingMode = RoundingMode.valueOf(
@@ -117,6 +136,9 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
+	private Portal _portal;
 
 	private volatile RoundingTypeConfiguration _roundingTypeConfiguration;
 

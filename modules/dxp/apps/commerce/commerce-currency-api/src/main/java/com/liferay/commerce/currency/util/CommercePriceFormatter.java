@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
 
+import java.util.Locale;
+
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
@@ -28,10 +30,14 @@ import java.math.BigDecimal;
 @ProviderType
 public interface CommercePriceFormatter {
 
-	public String format(BigDecimal price);
+	public String format(BigDecimal price, Locale locale)
+		throws PortalException;
 
-	public String format(CommerceCurrency commerceCurrency, BigDecimal price);
+	public String format(
+			CommerceCurrency commerceCurrency, BigDecimal price, Locale locale)
+		throws PortalException;
 
-	public String format(long groupId, BigDecimal price) throws PortalException;
+	public String format(long groupId, BigDecimal price, Locale locale)
+		throws PortalException;
 
 }

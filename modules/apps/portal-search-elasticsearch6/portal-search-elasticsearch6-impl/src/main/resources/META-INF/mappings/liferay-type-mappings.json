@@ -570,6 +570,10 @@
 				"store": true,
 				"type": "keyword"
 			},
+			"defaultLanguageId": {
+				"store": true,
+				"type": "keyword"
+			},
 			"description": {
 				"store": true,
 				"term_vector": "with_positions_offsets",

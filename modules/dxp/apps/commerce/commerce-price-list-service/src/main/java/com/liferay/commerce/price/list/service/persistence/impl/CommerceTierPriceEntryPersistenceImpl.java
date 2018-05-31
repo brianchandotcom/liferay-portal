@@ -3267,19 +3267,19 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 
 	private static final String _FINDER_COLUMN_C_M_COMMERCEPRICEENTRYID_2 = "commerceTierPriceEntry.commercePriceEntryId = ? AND ";
 	private static final String _FINDER_COLUMN_C_M_MINQUANTITY_2 = "commerceTierPriceEntry.minQuantity = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_M2 = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LTM = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED,
 			CommerceTierPriceEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M2",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LtM",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_M2 = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_LTM = new FinderPath(CommerceTierPriceEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceTierPriceEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_M2",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtM",
 			new String[] { Long.class.getName(), Integer.class.getName() });
 
 	/**
@@ -3290,10 +3290,10 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @return the matching commerce tier price entries
 	 */
 	@Override
-	public List<CommerceTierPriceEntry> findByC_M2(long commercePriceEntryId,
+	public List<CommerceTierPriceEntry> findByC_LtM(long commercePriceEntryId,
 		int minQuantity) {
-		return findByC_M2(commercePriceEntryId, minQuantity, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByC_LtM(commercePriceEntryId, minQuantity,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
@@ -3310,9 +3310,9 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @return the range of matching commerce tier price entries
 	 */
 	@Override
-	public List<CommerceTierPriceEntry> findByC_M2(long commercePriceEntryId,
+	public List<CommerceTierPriceEntry> findByC_LtM(long commercePriceEntryId,
 		int minQuantity, int start, int end) {
-		return findByC_M2(commercePriceEntryId, minQuantity, start, end, null);
+		return findByC_LtM(commercePriceEntryId, minQuantity, start, end, null);
 	}
 
 	/**
@@ -3330,10 +3330,10 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @return the ordered range of matching commerce tier price entries
 	 */
 	@Override
-	public List<CommerceTierPriceEntry> findByC_M2(long commercePriceEntryId,
+	public List<CommerceTierPriceEntry> findByC_LtM(long commercePriceEntryId,
 		int minQuantity, int start, int end,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-		return findByC_M2(commercePriceEntryId, minQuantity, start, end,
+		return findByC_LtM(commercePriceEntryId, minQuantity, start, end,
 			orderByComparator, true);
 	}
 
@@ -3353,7 +3353,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @return the ordered range of matching commerce tier price entries
 	 */
 	@Override
-	public List<CommerceTierPriceEntry> findByC_M2(long commercePriceEntryId,
+	public List<CommerceTierPriceEntry> findByC_LtM(long commercePriceEntryId,
 		int minQuantity, int start, int end,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator,
 		boolean retrieveFromCache) {
@@ -3361,7 +3361,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_M2;
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LTM;
 		finderArgs = new Object[] {
 				commercePriceEntryId, minQuantity,
 				
@@ -3399,9 +3399,9 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 
 			query.append(_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_C_M2_COMMERCEPRICEENTRYID_2);
+			query.append(_FINDER_COLUMN_C_LTM_COMMERCEPRICEENTRYID_2);
 
-			query.append(_FINDER_COLUMN_C_M2_MINQUANTITY_2);
+			query.append(_FINDER_COLUMN_C_LTM_MINQUANTITY_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -3467,11 +3467,11 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
 	 */
 	@Override
-	public CommerceTierPriceEntry findByC_M2_First(long commercePriceEntryId,
+	public CommerceTierPriceEntry findByC_LtM_First(long commercePriceEntryId,
 		int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException {
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_M2_First(commercePriceEntryId,
+		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_LtM_First(commercePriceEntryId,
 				minQuantity, orderByComparator);
 
 		if (commerceTierPriceEntry != null) {
@@ -3502,10 +3502,10 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @return the first matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
 	 */
 	@Override
-	public CommerceTierPriceEntry fetchByC_M2_First(long commercePriceEntryId,
-		int minQuantity,
+	public CommerceTierPriceEntry fetchByC_LtM_First(
+		long commercePriceEntryId, int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-		List<CommerceTierPriceEntry> list = findByC_M2(commercePriceEntryId,
+		List<CommerceTierPriceEntry> list = findByC_LtM(commercePriceEntryId,
 				minQuantity, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3525,11 +3525,11 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
 	 */
 	@Override
-	public CommerceTierPriceEntry findByC_M2_Last(long commercePriceEntryId,
+	public CommerceTierPriceEntry findByC_LtM_Last(long commercePriceEntryId,
 		int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException {
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_M2_Last(commercePriceEntryId,
+		CommerceTierPriceEntry commerceTierPriceEntry = fetchByC_LtM_Last(commercePriceEntryId,
 				minQuantity, orderByComparator);
 
 		if (commerceTierPriceEntry != null) {
@@ -3560,16 +3560,16 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
 	 */
 	@Override
-	public CommerceTierPriceEntry fetchByC_M2_Last(long commercePriceEntryId,
+	public CommerceTierPriceEntry fetchByC_LtM_Last(long commercePriceEntryId,
 		int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
-		int count = countByC_M2(commercePriceEntryId, minQuantity);
+		int count = countByC_LtM(commercePriceEntryId, minQuantity);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CommerceTierPriceEntry> list = findByC_M2(commercePriceEntryId,
+		List<CommerceTierPriceEntry> list = findByC_LtM(commercePriceEntryId,
 				minQuantity, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3590,7 +3590,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	 */
 	@Override
-	public CommerceTierPriceEntry[] findByC_M2_PrevAndNext(
+	public CommerceTierPriceEntry[] findByC_LtM_PrevAndNext(
 		long commerceTierPriceEntryId, long commercePriceEntryId,
 		int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
@@ -3604,12 +3604,12 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 
 			CommerceTierPriceEntry[] array = new CommerceTierPriceEntryImpl[3];
 
-			array[0] = getByC_M2_PrevAndNext(session, commerceTierPriceEntry,
+			array[0] = getByC_LtM_PrevAndNext(session, commerceTierPriceEntry,
 					commercePriceEntryId, minQuantity, orderByComparator, true);
 
 			array[1] = commerceTierPriceEntry;
 
-			array[2] = getByC_M2_PrevAndNext(session, commerceTierPriceEntry,
+			array[2] = getByC_LtM_PrevAndNext(session, commerceTierPriceEntry,
 					commercePriceEntryId, minQuantity, orderByComparator, false);
 
 			return array;
@@ -3622,7 +3622,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 		}
 	}
 
-	protected CommerceTierPriceEntry getByC_M2_PrevAndNext(Session session,
+	protected CommerceTierPriceEntry getByC_LtM_PrevAndNext(Session session,
 		CommerceTierPriceEntry commerceTierPriceEntry,
 		long commercePriceEntryId, int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator,
@@ -3640,9 +3640,9 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 
 		query.append(_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE);
 
-		query.append(_FINDER_COLUMN_C_M2_COMMERCEPRICEENTRYID_2);
+		query.append(_FINDER_COLUMN_C_LTM_COMMERCEPRICEENTRYID_2);
 
-		query.append(_FINDER_COLUMN_C_M2_MINQUANTITY_2);
+		query.append(_FINDER_COLUMN_C_LTM_MINQUANTITY_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -3741,8 +3741,8 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @param minQuantity the min quantity
 	 */
 	@Override
-	public void removeByC_M2(long commercePriceEntryId, int minQuantity) {
-		for (CommerceTierPriceEntry commerceTierPriceEntry : findByC_M2(
+	public void removeByC_LtM(long commercePriceEntryId, int minQuantity) {
+		for (CommerceTierPriceEntry commerceTierPriceEntry : findByC_LtM(
 				commercePriceEntryId, minQuantity, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(commerceTierPriceEntry);
@@ -3757,8 +3757,8 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 * @return the number of matching commerce tier price entries
 	 */
 	@Override
-	public int countByC_M2(long commercePriceEntryId, int minQuantity) {
-		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_M2;
+	public int countByC_LtM(long commercePriceEntryId, int minQuantity) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_LTM;
 
 		Object[] finderArgs = new Object[] { commercePriceEntryId, minQuantity };
 
@@ -3769,9 +3769,9 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 
 			query.append(_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_C_M2_COMMERCEPRICEENTRYID_2);
+			query.append(_FINDER_COLUMN_C_LTM_COMMERCEPRICEENTRYID_2);
 
-			query.append(_FINDER_COLUMN_C_M2_MINQUANTITY_2);
+			query.append(_FINDER_COLUMN_C_LTM_MINQUANTITY_2);
 
 			String sql = query.toString();
 
@@ -3805,8 +3805,8 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_M2_COMMERCEPRICEENTRYID_2 = "commerceTierPriceEntry.commercePriceEntryId = ? AND ";
-	private static final String _FINDER_COLUMN_C_M2_MINQUANTITY_2 = "commerceTierPriceEntry.minQuantity <= ?";
+	private static final String _FINDER_COLUMN_C_LTM_COMMERCEPRICEENTRYID_2 = "commerceTierPriceEntry.commercePriceEntryId = ? AND ";
+	private static final String _FINDER_COLUMN_C_LTM_MINQUANTITY_2 = "commerceTierPriceEntry.minQuantity <= ?";
 
 	public CommerceTierPriceEntryPersistenceImpl() {
 		setModelClass(CommerceTierPriceEntry.class);

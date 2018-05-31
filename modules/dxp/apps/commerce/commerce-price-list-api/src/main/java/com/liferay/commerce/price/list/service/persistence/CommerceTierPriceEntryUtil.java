@@ -1081,9 +1081,9 @@ public class CommerceTierPriceEntryUtil {
 	* @param minQuantity the min quantity
 	* @return the matching commerce tier price entries
 	*/
-	public static List<CommerceTierPriceEntry> findByC_M2(
+	public static List<CommerceTierPriceEntry> findByC_LtM(
 		long commercePriceEntryId, int minQuantity) {
-		return getPersistence().findByC_M2(commercePriceEntryId, minQuantity);
+		return getPersistence().findByC_LtM(commercePriceEntryId, minQuantity);
 	}
 
 	/**
@@ -1099,10 +1099,10 @@ public class CommerceTierPriceEntryUtil {
 	* @param end the upper bound of the range of commerce tier price entries (not inclusive)
 	* @return the range of matching commerce tier price entries
 	*/
-	public static List<CommerceTierPriceEntry> findByC_M2(
+	public static List<CommerceTierPriceEntry> findByC_LtM(
 		long commercePriceEntryId, int minQuantity, int start, int end) {
 		return getPersistence()
-				   .findByC_M2(commercePriceEntryId, minQuantity, start, end);
+				   .findByC_LtM(commercePriceEntryId, minQuantity, start, end);
 	}
 
 	/**
@@ -1119,11 +1119,11 @@ public class CommerceTierPriceEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce tier price entries
 	*/
-	public static List<CommerceTierPriceEntry> findByC_M2(
+	public static List<CommerceTierPriceEntry> findByC_LtM(
 		long commercePriceEntryId, int minQuantity, int start, int end,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 		return getPersistence()
-				   .findByC_M2(commercePriceEntryId, minQuantity, start, end,
+				   .findByC_LtM(commercePriceEntryId, minQuantity, start, end,
 			orderByComparator);
 	}
 
@@ -1142,12 +1142,12 @@ public class CommerceTierPriceEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce tier price entries
 	*/
-	public static List<CommerceTierPriceEntry> findByC_M2(
+	public static List<CommerceTierPriceEntry> findByC_LtM(
 		long commercePriceEntryId, int minQuantity, int start, int end,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByC_M2(commercePriceEntryId, minQuantity, start, end,
+				   .findByC_LtM(commercePriceEntryId, minQuantity, start, end,
 			orderByComparator, retrieveFromCache);
 	}
 
@@ -1160,12 +1160,12 @@ public class CommerceTierPriceEntryUtil {
 	* @return the first matching commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
 	*/
-	public static CommerceTierPriceEntry findByC_M2_First(
+	public static CommerceTierPriceEntry findByC_LtM_First(
 		long commercePriceEntryId, int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException {
 		return getPersistence()
-				   .findByC_M2_First(commercePriceEntryId, minQuantity,
+				   .findByC_LtM_First(commercePriceEntryId, minQuantity,
 			orderByComparator);
 	}
 
@@ -1177,11 +1177,11 @@ public class CommerceTierPriceEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
 	*/
-	public static CommerceTierPriceEntry fetchByC_M2_First(
+	public static CommerceTierPriceEntry fetchByC_LtM_First(
 		long commercePriceEntryId, int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 		return getPersistence()
-				   .fetchByC_M2_First(commercePriceEntryId, minQuantity,
+				   .fetchByC_LtM_First(commercePriceEntryId, minQuantity,
 			orderByComparator);
 	}
 
@@ -1194,12 +1194,12 @@ public class CommerceTierPriceEntryUtil {
 	* @return the last matching commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
 	*/
-	public static CommerceTierPriceEntry findByC_M2_Last(
+	public static CommerceTierPriceEntry findByC_LtM_Last(
 		long commercePriceEntryId, int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException {
 		return getPersistence()
-				   .findByC_M2_Last(commercePriceEntryId, minQuantity,
+				   .findByC_LtM_Last(commercePriceEntryId, minQuantity,
 			orderByComparator);
 	}
 
@@ -1211,11 +1211,11 @@ public class CommerceTierPriceEntryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
 	*/
-	public static CommerceTierPriceEntry fetchByC_M2_Last(
+	public static CommerceTierPriceEntry fetchByC_LtM_Last(
 		long commercePriceEntryId, int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator) {
 		return getPersistence()
-				   .fetchByC_M2_Last(commercePriceEntryId, minQuantity,
+				   .fetchByC_LtM_Last(commercePriceEntryId, minQuantity,
 			orderByComparator);
 	}
 
@@ -1229,13 +1229,13 @@ public class CommerceTierPriceEntryUtil {
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
-	public static CommerceTierPriceEntry[] findByC_M2_PrevAndNext(
+	public static CommerceTierPriceEntry[] findByC_LtM_PrevAndNext(
 		long commerceTierPriceEntryId, long commercePriceEntryId,
 		int minQuantity,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException {
 		return getPersistence()
-				   .findByC_M2_PrevAndNext(commerceTierPriceEntryId,
+				   .findByC_LtM_PrevAndNext(commerceTierPriceEntryId,
 			commercePriceEntryId, minQuantity, orderByComparator);
 	}
 
@@ -1245,8 +1245,8 @@ public class CommerceTierPriceEntryUtil {
 	* @param commercePriceEntryId the commerce price entry ID
 	* @param minQuantity the min quantity
 	*/
-	public static void removeByC_M2(long commercePriceEntryId, int minQuantity) {
-		getPersistence().removeByC_M2(commercePriceEntryId, minQuantity);
+	public static void removeByC_LtM(long commercePriceEntryId, int minQuantity) {
+		getPersistence().removeByC_LtM(commercePriceEntryId, minQuantity);
 	}
 
 	/**
@@ -1256,8 +1256,8 @@ public class CommerceTierPriceEntryUtil {
 	* @param minQuantity the min quantity
 	* @return the number of matching commerce tier price entries
 	*/
-	public static int countByC_M2(long commercePriceEntryId, int minQuantity) {
-		return getPersistence().countByC_M2(commercePriceEntryId, minQuantity);
+	public static int countByC_LtM(long commercePriceEntryId, int minQuantity) {
+		return getPersistence().countByC_LtM(commercePriceEntryId, minQuantity);
 	}
 
 	/**

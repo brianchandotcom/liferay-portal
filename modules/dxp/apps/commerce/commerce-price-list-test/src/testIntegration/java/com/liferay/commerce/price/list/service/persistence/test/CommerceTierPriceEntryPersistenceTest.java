@@ -246,11 +246,11 @@ public class CommerceTierPriceEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_M2() throws Exception {
-		_persistence.countByC_M2(RandomTestUtil.nextLong(),
+	public void testCountByC_LtM() throws Exception {
+		_persistence.countByC_LtM(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
 
-		_persistence.countByC_M2(0L, 0);
+		_persistence.countByC_LtM(0L, 0);
 	}
 
 	@Test

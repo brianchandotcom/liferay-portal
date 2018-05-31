@@ -831,7 +831,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @param minQuantity the min quantity
 	* @return the matching commerce tier price entries
 	*/
-	public java.util.List<CommerceTierPriceEntry> findByC_M2(
+	public java.util.List<CommerceTierPriceEntry> findByC_LtM(
 		long commercePriceEntryId, int minQuantity);
 
 	/**
@@ -847,7 +847,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @param end the upper bound of the range of commerce tier price entries (not inclusive)
 	* @return the range of matching commerce tier price entries
 	*/
-	public java.util.List<CommerceTierPriceEntry> findByC_M2(
+	public java.util.List<CommerceTierPriceEntry> findByC_LtM(
 		long commercePriceEntryId, int minQuantity, int start, int end);
 
 	/**
@@ -864,7 +864,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching commerce tier price entries
 	*/
-	public java.util.List<CommerceTierPriceEntry> findByC_M2(
+	public java.util.List<CommerceTierPriceEntry> findByC_LtM(
 		long commercePriceEntryId, int minQuantity, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator);
 
@@ -883,7 +883,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching commerce tier price entries
 	*/
-	public java.util.List<CommerceTierPriceEntry> findByC_M2(
+	public java.util.List<CommerceTierPriceEntry> findByC_LtM(
 		long commercePriceEntryId, int minQuantity, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator,
 		boolean retrieveFromCache);
@@ -897,7 +897,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @return the first matching commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
 	*/
-	public CommerceTierPriceEntry findByC_M2_First(long commercePriceEntryId,
+	public CommerceTierPriceEntry findByC_LtM_First(long commercePriceEntryId,
 		int minQuantity,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException;
@@ -910,8 +910,8 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
 	*/
-	public CommerceTierPriceEntry fetchByC_M2_First(long commercePriceEntryId,
-		int minQuantity,
+	public CommerceTierPriceEntry fetchByC_LtM_First(
+		long commercePriceEntryId, int minQuantity,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator);
 
 	/**
@@ -923,7 +923,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @return the last matching commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a matching commerce tier price entry could not be found
 	*/
-	public CommerceTierPriceEntry findByC_M2_Last(long commercePriceEntryId,
+	public CommerceTierPriceEntry findByC_LtM_Last(long commercePriceEntryId,
 		int minQuantity,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException;
@@ -936,7 +936,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching commerce tier price entry, or <code>null</code> if a matching commerce tier price entry could not be found
 	*/
-	public CommerceTierPriceEntry fetchByC_M2_Last(long commercePriceEntryId,
+	public CommerceTierPriceEntry fetchByC_LtM_Last(long commercePriceEntryId,
 		int minQuantity,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator);
 
@@ -950,7 +950,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
-	public CommerceTierPriceEntry[] findByC_M2_PrevAndNext(
+	public CommerceTierPriceEntry[] findByC_LtM_PrevAndNext(
 		long commerceTierPriceEntryId, long commercePriceEntryId,
 		int minQuantity,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator)
@@ -962,7 +962,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @param commercePriceEntryId the commerce price entry ID
 	* @param minQuantity the min quantity
 	*/
-	public void removeByC_M2(long commercePriceEntryId, int minQuantity);
+	public void removeByC_LtM(long commercePriceEntryId, int minQuantity);
 
 	/**
 	* Returns the number of commerce tier price entries where commercePriceEntryId = &#63; and minQuantity &le; &#63;.
@@ -971,7 +971,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @param minQuantity the min quantity
 	* @return the number of matching commerce tier price entries
 	*/
-	public int countByC_M2(long commercePriceEntryId, int minQuantity);
+	public int countByC_LtM(long commercePriceEntryId, int minQuantity);
 
 	/**
 	* Caches the commerce tier price entry in the entity cache if it is enabled.

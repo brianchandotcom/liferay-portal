@@ -43,6 +43,6 @@ public class FormsConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_KEY = "forms";
 
-	private static final String _CATEGORY_SECTION = "content-management";
+	private static final String _CATEGORY_SECTION = "content";
 
 }

@@ -43,6 +43,6 @@ public class WikiConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_KEY = "wiki";
 
-	private static final String _CATEGORY_SECTION = "social";
+	private static final String _CATEGORY_SECTION = "content";
 
 }

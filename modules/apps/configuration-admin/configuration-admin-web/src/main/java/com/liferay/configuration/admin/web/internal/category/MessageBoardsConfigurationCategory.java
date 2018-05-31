@@ -15,14 +15,19 @@
 package com.liferay.configuration.admin.web.internal.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
 @Component
-public class AutoLoginConfigurationCategory implements ConfigurationCategory {
+public class MessageBoardsConfigurationCategory
+	implements ConfigurationCategory {
+
+	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
 
 	@Override
 	public String getCategoryKey() {
@@ -34,8 +39,10 @@ public class AutoLoginConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "auto-login";
+	private static final String _CATEGORY_ICON = "message-boards";
 
-	private static final String _CATEGORY_SECTION = "security";
+	private static final String _CATEGORY_KEY = "message-boards";
+
+	private static final String _CATEGORY_SECTION = "social";
 
 }

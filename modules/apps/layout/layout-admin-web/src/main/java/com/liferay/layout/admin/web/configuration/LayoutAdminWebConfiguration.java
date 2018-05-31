@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Jürgen Kappler
  */
-@ExtendedObjectClassDefinition(category = "page-administration")
+@ExtendedObjectClassDefinition(category = "pages")
 @Meta.OCD(
 	id = "com.liferay.layout.admin.web.configuration.LayoutAdminWebConfiguration",
 	localization = "content/Language",

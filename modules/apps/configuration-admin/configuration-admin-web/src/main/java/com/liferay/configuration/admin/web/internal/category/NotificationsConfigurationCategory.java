@@ -19,11 +19,16 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pei-Jung Lan
+ * @author Jorge Ferrer
  */
 @Component
-public class FrontendInfrastructureConfigurationCategory
+public class NotificationsConfigurationCategory
 	implements ConfigurationCategory {
+
+	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
 
 	@Override
 	public String getCategoryKey() {
@@ -35,7 +40,9 @@ public class FrontendInfrastructureConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "frontend-infrastructure";
+	private static final String _CATEGORY_ICON = "info-circle";
+
+	private static final String _CATEGORY_KEY = "notifications";
 
 	private static final String _CATEGORY_SECTION = "platform";
 

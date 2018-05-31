@@ -43,6 +43,6 @@ public class SearchConfigurationCategory implements ConfigurationCategory {
 
 	private static final String _CATEGORY_KEY = "search";
 
-	private static final String _CATEGORY_SECTION = "content-management";
+	private static final String _CATEGORY_SECTION = "platform";
 
 }

@@ -19,15 +19,11 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jorge Ferrer
+ * @author Pei-Jung Lan
  */
 @Component
-public class MessagingConfigurationCategory implements ConfigurationCategory {
-
-	@Override
-	public String getCategoryIcon() {
-		return _CATEGORY_ICON;
-	}
+public class PagesConfigurationCategory
+	implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryKey() {
@@ -39,10 +35,8 @@ public class MessagingConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_ICON = "message-boards";
+	private static final String _CATEGORY_KEY = "pages";
 
-	private static final String _CATEGORY_KEY = "messaging";
-
-	private static final String _CATEGORY_SECTION = "social";
+	private static final String _CATEGORY_SECTION = "content";
 
 }

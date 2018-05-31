@@ -26,6 +26,11 @@ public class APIAuthenticationConfigurationCategory
 	implements ConfigurationCategory {
 
 	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
+
+	@Override
 	public String getCategoryKey() {
 		return _CATEGORY_KEY;
 	}
@@ -34,6 +39,8 @@ public class APIAuthenticationConfigurationCategory
 	public String getCategorySection() {
 		return _CATEGORY_SECTION;
 	}
+
+	private static final String _CATEGORY_ICON = "api-lock";
 
 	private static final String _CATEGORY_KEY = "api-authentication";
 

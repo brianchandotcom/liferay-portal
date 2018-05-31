@@ -22,7 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Peter Fellwock
  */
 @ExtendedObjectClassDefinition(
-	category = "community", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "community-tools",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.flags.configuration.FlagsGroupServiceConfiguration",

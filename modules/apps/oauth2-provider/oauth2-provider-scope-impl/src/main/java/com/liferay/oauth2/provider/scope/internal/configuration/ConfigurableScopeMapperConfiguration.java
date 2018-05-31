@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Tomas Polesovsky
  */
 @ExtendedObjectClassDefinition(
-	category = "foundation",
+	category = "oauth2",
 	factoryInstanceLabelAttribute = OAuth2ProviderScopeConstants.OSGI_JAXRS_NAME
 )
 @Meta.OCD(

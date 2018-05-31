@@ -19,11 +19,10 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jorge Ferrer
+ * @author Pei-Jung Lan
  */
 @Component
-public class PushNotificationsConfigurationCategory
-	implements ConfigurationCategory {
+public class SecurityToolsConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
@@ -40,10 +39,10 @@ public class PushNotificationsConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_ICON = "info-circle";
+	private static final String _CATEGORY_ICON = "lock";
 
-	private static final String _CATEGORY_KEY = "push-notifications";
+	private static final String _CATEGORY_KEY = "security-tools";
 
-	private static final String _CATEGORY_SECTION = "platform";
+	private static final String _CATEGORY_SECTION = "security";
 
 }

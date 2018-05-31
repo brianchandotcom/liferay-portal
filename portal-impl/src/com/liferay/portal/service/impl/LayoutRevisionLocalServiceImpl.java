@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.comparator.LayoutRevisionModifiedDateCompa
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.service.base.LayoutRevisionLocalServiceBaseImpl;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -673,11 +675,15 @@ public class LayoutRevisionLocalServiceImpl
 	protected boolean isWorkflowEnabled(long plid) throws PortalException {
 		Layout layout = layoutLocalService.getLayout(plid);
 
-		if (layout.isTypeLinkToLayout() || layout.isTypeURL()) {
-			return false;
+		LayoutTypeController layoutTypeController =
+			LayoutTypeControllerTracker.getLayoutTypeController(
+				layout.getType());
+
+		if (layoutTypeController.isWorkflowEnabled()) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	protected LayoutRevision updateMajor(LayoutRevision layoutRevision)

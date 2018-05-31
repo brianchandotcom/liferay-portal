@@ -17,9 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNull(redirect)) {
+	PortletURL backURL = renderResponse.createRenderURL();
+
+	redirect = backURL.toString();
+}
+
 FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid(), false);
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(selLayout.getName(locale));
 %>

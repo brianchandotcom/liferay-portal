@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,6 +66,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
@@ -73,6 +76,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -234,6 +238,22 @@ public class LayoutsAdminDisplayContext {
 			"selPlid", String.valueOf(layout.getPlid()));
 
 		return deleteLayoutURL.toString();
+	}
+
+	public String getEditLayoutURL(Layout layout) {
+		if (!Objects.equals(layout.getType(), "content")) {
+			return StringPool.BLANK;
+		}
+
+		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
+
+		editLayoutURL.setParameter("mvcPath", "/edit_content_layout.jsp");
+		editLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		editLayoutURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+
+		return editLayoutURL.toString();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {
@@ -743,19 +763,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getViewLayoutURL(Layout layout) throws PortalException {
-		if (!Objects.equals(layout.getType(), "content")) {
-			return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
-		}
-
-		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
-
-		editLayoutURL.setParameter("mvcPath", "/edit_content_layout.jsp");
-		editLayoutURL.setParameter("backURL", _themeDisplay.getURLCurrent());
-		editLayoutURL.setParameter(
-			"groupId", String.valueOf(layout.getGroupId()));
-		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
-
-		return editLayoutURL.toString();
+		return PortalUtil.getLayoutFullURL(layout, _themeDisplay);
 	}
 
 	public boolean isMillerColumnsEnabled() {
@@ -970,6 +978,8 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
 		}
 
+		jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
+
 		if (showOrphanPortletsAction(layout)) {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));
 		}
@@ -1067,6 +1077,21 @@ public class LayoutsAdminDisplayContext {
 			layoutJSONObject.put(
 				"actionURLs", _getActionURLsJSONObject(layout));
 			layoutJSONObject.put("active", _isActive(layout.getPlid()));
+
+			LayoutTypeController layoutTypeController =
+				LayoutTypeControllerTracker.getLayoutTypeController(
+					layout.getType());
+
+			ResourceBundle layoutTypeResourceBundle =
+				ResourceBundleUtil.getBundle(
+					"content.Language", _themeDisplay.getLocale(),
+					layoutTypeController.getClass());
+
+			layoutJSONObject.put(
+				"description",
+				LanguageUtil.get(
+					_request, layoutTypeResourceBundle,
+					"layout.types." + layout.getType()));
 
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 				getSelGroup(), isPrivatePages(), layout.getLayoutId());

@@ -14,6 +14,9 @@
 
 package com.liferay.source.formatter.checks.util;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,6 +27,16 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class GradleSourceUtil {
+
+	public static String getConfiguration(String dependency) {
+		int pos = dependency.indexOf(StringPool.SPACE);
+
+		if (pos != -1) {
+			return StringUtil.trim(dependency.substring(0, pos));
+		}
+
+		return StringUtil.trim(dependency);
+	}
 
 	public static List<String> getDependenciesBlocks(String content) {
 		List<String> dependenciesBlocks = new ArrayList<>();

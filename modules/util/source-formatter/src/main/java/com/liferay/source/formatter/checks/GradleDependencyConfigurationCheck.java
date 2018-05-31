@@ -59,7 +59,8 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 		dependencies = dependencies.substring(x, y + 1);
 
 		for (String oldDependency : StringUtil.splitLines(dependencies)) {
-			String configuration = _getConfiguration(oldDependency);
+			String configuration = GradleSourceUtil.getConfiguration(
+				oldDependency);
 			String newDependency = oldDependency;
 
 			if (!_isTestUtilModule(absolutePath) &&
@@ -81,16 +82,6 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 		}
 
 		return content;
-	}
-
-	private String _getConfiguration(String dependency) {
-		int pos = dependency.indexOf(StringPool.SPACE);
-
-		if (pos != -1) {
-			return StringUtil.trim(dependency.substring(0, pos));
-		}
-
-		return StringUtil.trim(dependency);
 	}
 
 	private boolean _hasBNDFile(String absolutePath) {

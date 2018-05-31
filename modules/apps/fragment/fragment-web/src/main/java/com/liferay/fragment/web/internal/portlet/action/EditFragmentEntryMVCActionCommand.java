@@ -14,17 +14,26 @@
 
 package com.liferay.fragment.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
@@ -61,6 +70,10 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		String js = ParamUtil.getString(actionRequest, "jsContent");
 		String html = ParamUtil.getString(actionRequest, "htmlContent");
 		int status = ParamUtil.getInteger(actionRequest, "status");
+		String previewBase64 = ParamUtil.getString(
+			actionRequest, "previewBase64");
+		long previewFileEntryId = ParamUtil.getLong(
+			actionRequest, "previewFileEntryId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -70,6 +83,18 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 				_fragmentEntryService.updateFragmentEntry(
 					fragmentEntryId, name, css, html, js, status,
 					serviceContext);
+
+			if (previewFileEntryId > 0) {
+				fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
+			}
+			else if (Validator.isNotNull(previewBase64)) {
+				fragmentEntry.setPreviewFileEntryId(
+					_updatePreviewFileEntryId(
+						serviceContext.getUserId(), fragmentEntry.getGroupId(),
+						fragmentEntryId, previewBase64));
+			}
+
+			_fragmentEntryLocalService.updateFragmentEntry(fragmentEntry);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -114,6 +139,42 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		return portletURL.toString();
 	}
+
+	private long _updatePreviewFileEntryId(
+			long userId, long groupId, long fragmentEntryId,
+			String previewBase64)
+		throws PortalException {
+
+		String fileName = fragmentEntryId + "_thumbnail.png";
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId, FragmentPortletKeys.FRAGMENT);
+
+		FileEntry fileEntry = null;
+
+		if (repository != null) {
+			fileEntry = PortletFileRepositoryUtil.fetchPortletFileEntry(
+				groupId, repository.getDlFolderId(), fileName);
+		}
+
+		if (fileEntry != null) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				fileEntry.getFileEntryId());
+		}
+
+		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+			groupId, userId, FragmentEntry.class.getName(), fragmentEntryId,
+			FragmentPortletKeys.FRAGMENT,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			Base64.decode(previewBase64), fileName, ContentTypes.IMAGE_PNG,
+			false);
+
+		return fileEntry.getFileEntryId();
+	}
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

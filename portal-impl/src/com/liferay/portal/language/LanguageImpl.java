@@ -68,6 +68,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -1178,8 +1179,6 @@ public class LanguageImpl implements Language, Serializable {
 
 		String description = Time.getDescription(milliseconds, approximate);
 
-		Locale locale = _getLocale(request);
-
 		String value = null;
 
 		try {
@@ -1191,7 +1190,7 @@ public class LanguageImpl implements Language, Serializable {
 				request,
 				StringUtil.toLowerCase(description.substring(pos + 1)));
 
-			if (locale.equals(Locale.JAPAN)) {
+			if (Objects.equals(_getLocale(request), Locale.JAPAN)) {
 				value = x.concat(unit);
 			}
 			else {

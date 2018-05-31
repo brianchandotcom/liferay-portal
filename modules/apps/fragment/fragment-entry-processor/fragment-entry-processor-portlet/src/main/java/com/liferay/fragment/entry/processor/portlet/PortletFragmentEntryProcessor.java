@@ -57,6 +57,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.FreemarkerCompatibleElement;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -96,7 +97,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						"there-is-no-widget-available-for-alias-x", alias));
 			}
 
-			Element runtimeTagElement = new Element("@liferay_portlet.runtime");
+			Element runtimeTagElement = new FreemarkerCompatibleElement(
+				"@liferay_portlet.runtime");
 
 			FragmentEntryLink originalFragmentEntryLink =
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(

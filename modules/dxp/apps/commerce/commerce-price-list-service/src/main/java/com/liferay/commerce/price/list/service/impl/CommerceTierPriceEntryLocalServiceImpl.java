@@ -379,8 +379,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 					commercePriceEntryId);
 
 			return addCommerceTierPriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
-				minQuantity, serviceContext);
+				commercePriceEntry.getCommercePriceEntryId(),
+				externalReferenceCode, price, promoPrice, minQuantity,
+				serviceContext);
 		}
 
 		if (Validator.isNotNull(priceEntryExternalReferenceCode)) {
@@ -391,8 +392,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			validate(commercePriceEntry.getCommercePriceEntryId(), minQuantity);
 
 			return addCommerceTierPriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
-				minQuantity, serviceContext);
+				commercePriceEntry.getCommercePriceEntryId(),
+				externalReferenceCode, price, promoPrice, minQuantity,
+				serviceContext);
 		}
 
 		StringBundler sb = new StringBundler(6);

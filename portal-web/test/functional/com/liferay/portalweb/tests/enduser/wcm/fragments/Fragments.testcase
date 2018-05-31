@@ -24,7 +24,7 @@
 			<var name="portlet" value="Page Fragments" />
 		</execute>
 
-		<execute macro="Collection#addCollection">
+		<execute macro="Fragment#addCollection">
 			<var name="collectionDescription" value="Collection Description" />
 			<var name="collectionName" value="Collection Name" />
 		</execute>
@@ -263,7 +263,7 @@
 			<var name="navItem" value="Page Templates" />
 		</execute>
 
-		<execute macro="Collection#addCollection">
+		<execute macro="LayoutPageTemplates#addCollection">
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 

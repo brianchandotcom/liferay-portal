@@ -17,7 +17,7 @@ package com.liferay.frontend.taglib.dynamic.section.servlet.taglib;
 import com.liferay.frontend.taglib.dynamic.section.DynamicSection;
 import com.liferay.frontend.taglib.dynamic.section.DynamicSectionReplace;
 import com.liferay.frontend.taglib.dynamic.section.internal.util.DynamicSectionUtil;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.taglib.BaseBodyTagSupport;
 
 import java.util.List;
@@ -49,7 +49,11 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 
 				StringBundler sb = getBodyContentAsStringBundler();
 
-				servletRequest.setAttribute(key, sb);
+				StringBundler originalBodySB = new StringBundler(sb.index());
+
+				originalBodySB.append(sb);
+
+				servletRequest.setAttribute(key, originalBodySB);
 
 				for (DynamicSection dynamicSection : _dynamicSections) {
 					sb = dynamicSection.modify(sb, pageContext);

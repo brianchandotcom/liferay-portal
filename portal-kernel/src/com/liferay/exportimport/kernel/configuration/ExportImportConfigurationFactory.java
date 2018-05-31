@@ -16,9 +16,7 @@ package com.liferay.exportimport.kernel.configuration;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,8 +51,9 @@ public class ExportImportConfigurationFactory {
 		boolean privateLayout = ParamUtil.getBoolean(
 			portletRequest, "privateLayout");
 
-		Map<String, String[]> parameterMap = getDefaultPublishingParameters(
-			portletRequest);
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
 
 		return buildDefaultLocalPublishingExportImportConfiguration(
 			themeDisplay.getUser(), sourceGroupId, targetGroupId, privateLayout,
@@ -69,7 +68,8 @@ public class ExportImportConfigurationFactory {
 
 		return buildDefaultLocalPublishingExportImportConfiguration(
 			user, sourceGroupId, targetGroupId, privateLayout,
-			getDefaultPublishingParameters());
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap());
 	}
 
 	public static ExportImportConfiguration
@@ -113,8 +113,9 @@ public class ExportImportConfigurationFactory {
 			portletRequest, "secureConnection");
 		long remoteGroupId = ParamUtil.getLong(portletRequest, "remoteGroupId");
 
-		Map<String, String[]> parameterMap = getDefaultPublishingParameters(
-			portletRequest);
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
 
 		return buildDefaultRemotePublishingExportImportConfiguration(
 			themeDisplay.getUser(), sourceGroupId, privateLayout, remoteAddress,
@@ -132,7 +133,8 @@ public class ExportImportConfigurationFactory {
 		return buildDefaultRemotePublishingExportImportConfiguration(
 			user, sourceGroupId, privateLayout, remoteAddress, remotePort,
 			remotePathContext, secureConnection, remoteGroupId,
-			getDefaultPublishingParameters());
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap());
 	}
 
 	public static ExportImportConfiguration cloneExportImportConfiguration(
@@ -154,57 +156,15 @@ public class ExportImportConfigurationFactory {
 				exportImportConfiguration.getStatus(), new ServiceContext());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link ExportImportConfigurationParameterMapFactoryUtil#buildParameterMap()}
+	 */
+	@Deprecated
 	public static Map<String, String[]> getDefaultPublishingParameters(
 		PortletRequest portletRequest) {
 
-		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
-				portletRequest);
-
-		return addDefaultPublishingParameters(parameterMap);
-	}
-
-	protected static Map<String, String[]> addDefaultPublishingParameters(
-		Map<String, String[]> parameterMap) {
-
-		parameterMap.put(
-			PortletDataHandlerKeys.DELETIONS,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.IGNORE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.LOGO,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
-			new String[] {Boolean.TRUE.toString()});
-		parameterMap.put(
-			ExportImportDateUtil.RANGE,
-			new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE});
-		parameterMap.put(
-			PortletDataHandlerKeys.THEME_REFERENCE,
-			new String[] {Boolean.TRUE.toString()});
-
-		return parameterMap;
+		return ExportImportConfigurationParameterMapFactoryUtil.
+			buildParameterMap();
 	}
 
 	protected static ExportImportConfiguration
@@ -230,14 +190,6 @@ public class ExportImportConfigurationFactory {
 				user.getUserId(),
 				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE,
 				publishLayoutRemoteSettingsMap);
-	}
-
-	protected static Map<String, String[]> getDefaultPublishingParameters() {
-		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap();
-
-		return addDefaultPublishingParameters(parameterMap);
 	}
 
 }

@@ -34,10 +34,18 @@ import org.osgi.service.component.annotations.Component;
 public class ExportImportConfigurationParameterMapFactoryImpl
 	implements ExportImportConfigurationParameterMapFactory {
 
+	public Map<String, String[]> buildFullPublishParameterMap() {
+		return buildParameterMap(
+			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true, false,
+			true, true, false, true, true, true, true, true, true, true, true,
+			ExportImportDateUtil.RANGE_ALL, true, true,
+			UserIdStrategy.CURRENT_USER_ID);
+	}
+
 	public Map<String, String[]> buildParameterMap() {
 		return buildParameterMap(
 			PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true, false,
-			false, false, false, false, true, true, true, true, true, true,
+			true, false, false, true, true, true, true, true, true, true, true,
 			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, true, true,
 			UserIdStrategy.CURRENT_USER_ID);
 	}
@@ -151,12 +159,12 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 
 	public Map<String, String[]> buildParameterMap(
 		String dataStrategy, Boolean deleteMissingLayouts,
-		Boolean deletePortletData, Boolean ignoreLastPublishDate,
-		Boolean layoutSetPrototypeLinkEnabled, Boolean layoutSetSettings,
-		Boolean logo, Boolean permissions, Boolean portletConfiguration,
-		Boolean portletConfigurationAll, Boolean portletData,
-		Boolean portletDataAll, Boolean portletSetupAll, String range,
-		Boolean themeReference, Boolean updateLastPublishDate,
+		Boolean deletePortletData, Boolean deletions,
+		Boolean ignoreLastPublishDate, Boolean layoutSetPrototypeLinkEnabled,
+		Boolean layoutSetSettings, Boolean logo, Boolean permissions,
+		Boolean portletConfiguration, Boolean portletConfigurationAll,
+		Boolean portletData, Boolean portletDataAll, Boolean portletSetupAll,
+		String range, Boolean themeReference, Boolean updateLastPublishDate,
 		String userIdStrategy) {
 
 		Map<String, String[]> parameterMap = new LinkedHashMap<>();
@@ -194,6 +202,18 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 		parameterMap.put(
 			PortletDataHandlerKeys.DELETE_PORTLET_DATA,
 			new String[] {String.valueOf(deletePortletDataParameter)});
+
+		// Deletions
+
+		boolean deletionsParameter = false;
+
+		if (deletions != null) {
+			deletionsParameter = deletions.booleanValue();
+		}
+
+		parameterMap.put(
+			PortletDataHandlerKeys.DELETIONS,
+			new String[] {String.valueOf(deletionsParameter)});
 
 		// Ignore last publish date
 

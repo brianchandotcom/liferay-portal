@@ -257,9 +257,9 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
 				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true,
-				false, false, false, false, false, true, true, true, true, true,
-				true, ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, true,
-				true, UserIdStrategy.CURRENT_USER_ID);
+				false, true, false, false, false, false, true, true, true, true,
+				true, true, ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE,
+				true, true, UserIdStrategy.CURRENT_USER_ID);
 
 		Layout sourceLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 			targetLayout.getUuid(), stagingGroup.getGroupId(), false);

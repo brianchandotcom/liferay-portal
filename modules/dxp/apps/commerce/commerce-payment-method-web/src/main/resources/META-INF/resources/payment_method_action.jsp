@@ -53,7 +53,7 @@ long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId(
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message='<%= (commercePaymentMethod.getActive()) ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			message='<%= commercePaymentMethod.getActive() ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
 			url="<%= setActiveURL %>"
 		/>
 

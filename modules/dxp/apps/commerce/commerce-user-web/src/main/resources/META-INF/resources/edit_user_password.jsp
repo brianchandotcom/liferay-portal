@@ -101,7 +101,7 @@ else {
 			</aui:validator>
 		</aui:input>
 
-		<c:if test="<%= (user.getUserId() != selUser.getUserId()) %>">
+		<c:if test="<%= user.getUserId() != selUser.getUserId() %>">
 			<aui:input disabled="<%= passwordResetDisabled %>" label="require-password-reset" name="passwordReset" type="checkbox" value="<%= passwordReset %>" />
 		</c:if>
 	</aui:fieldset>

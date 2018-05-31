@@ -51,7 +51,7 @@ CommerceTaxMethod commerceTaxMethod = (CommerceTaxMethod)row.getObject();
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message='<%= (commerceTaxMethod.getActive()) ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			message='<%= commerceTaxMethod.getActive() ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
 			url="<%= setActiveURL %>"
 		/>
 	</c:if>

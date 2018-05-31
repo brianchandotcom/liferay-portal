@@ -63,7 +63,7 @@ if (sampleFileEntryId > 0) {
 			</span>
 			<span id="<portlet:namespace />sampleFileEntryNameInput">
 				<c:choose>
-					<c:when test="<%= (sampleFileEntry != null) %>">
+					<c:when test="<%= sampleFileEntry != null %>">
 						<a href="<%= cpDefinitionVirtualSettingDisplayContext.getDownloadSampleFileEntryURL() %>">
 							<%= sampleFileEntry.getFileName() %>
 						</a>

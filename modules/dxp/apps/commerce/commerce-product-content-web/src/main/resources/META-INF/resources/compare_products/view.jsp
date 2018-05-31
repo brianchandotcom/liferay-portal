@@ -119,7 +119,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 
 				<c:if test="<%= !cpDefinitionOptionRelTitles.isEmpty() %>">
 					<tr class="table-divider">
-						<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4 class="table-title"><liferay-ui:message key="options" /></h4></td>
+						<td colspan="<%= cpDefinitions.size() + 1 %>"><h4 class="table-title"><liferay-ui:message key="options" /></h4></td>
 					</tr>
 
 					<%
@@ -148,7 +148,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 				</c:if>
 
 				<tr class="table-divider">
-					<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4 class="table-title"><liferay-ui:message key="dimensions" /></h4></td>
+					<td colspan="<%= cpDefinitions.size() + 1 %>"><h4 class="table-title"><liferay-ui:message key="dimensions" /></h4></td>
 				</tr>
 
 				<%
@@ -190,7 +190,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 
 				<c:if test="<%= !cpSpecificationOptions.isEmpty() %>">
 					<tr class="table-divider">
-						<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4 class="table-title"><liferay-ui:message key="specifications" /></h4></td>
+						<td colspan="<%= cpDefinitions.size() + 1 %>"><h4 class="table-title"><liferay-ui:message key="specifications" /></h4></td>
 					</tr>
 
 					<%
@@ -224,7 +224,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 
 					<c:if test="<%= cpCompareContentDisplayContext.hasCategorizedCPDefinitionSpecificationOptionValues(cpOptionCategory.getCPOptionCategoryId()) %>">
 						<tr class="table-divider">
-							<td colspan="<%= (cpDefinitions.size() + 1) %>"><h4 class="table-title"><%= HtmlUtil.escape(cpOptionCategory.getTitle(languageId)) %></h4></td>
+							<td colspan="<%= cpDefinitions.size() + 1 %>"><h4 class="table-title"><%= HtmlUtil.escape(cpOptionCategory.getTitle(languageId)) %></h4></td>
 						</tr>
 
 						<%

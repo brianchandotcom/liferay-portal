@@ -59,7 +59,7 @@ if (termsOfUseJournalArticleResourcePrimKey > 0) {
 			</span>
 			<span id="<portlet:namespace />journalArticleNameInput">
 				<c:choose>
-					<c:when test="<%= (journalArticle != null) %>">
+					<c:when test="<%= journalArticle != null %>">
 						<%= journalArticle.getTitle() %>
 					</c:when>
 					<c:otherwise>

@@ -49,7 +49,7 @@ CommerceCurrency commerceCurrency = (CommerceCurrency)row.getObject();
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message='<%= (commerceCurrency.getPrimary()) ? LanguageUtil.get(request, "unset-as-primary") : LanguageUtil.get(request, "set-as-primary") %>'
+			message='<%= commerceCurrency.getPrimary() ? LanguageUtil.get(request, "unset-as-primary") : LanguageUtil.get(request, "set-as-primary") %>'
 			url="<%= setPrimaryURL %>"
 		/>
 
@@ -61,7 +61,7 @@ CommerceCurrency commerceCurrency = (CommerceCurrency)row.getObject();
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message='<%= (commerceCurrency.getActive()) ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			message='<%= commerceCurrency.getActive() ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
 			url="<%= setActiveURL %>"
 		/>
 

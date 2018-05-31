@@ -92,7 +92,7 @@ if (!usePercentage) {
 			</div>
 
 			<div class="input-group-item input-group-item-shrink">
-				<aui:button cssClass='<%= (level2Disabled) ? "hide" : StringPool.BLANK %>' name="level1MinusButton" value="-" />
+				<aui:button cssClass='<%= level2Disabled ? "hide" : StringPool.BLANK %>' name="level1MinusButton" value="-" />
 			</div>
 		</div>
 	</div>
@@ -108,7 +108,7 @@ if (!usePercentage) {
 			</div>
 
 			<div class="input-group-item input-group-item-shrink">
-				<aui:button cssClass='<%= (level2Disabled) ? "hide" : StringPool.BLANK %>' name="level2MinusButton" value="-" />
+				<aui:button cssClass='<%= level2Disabled ? "hide" : StringPool.BLANK %>' name="level2MinusButton" value="-" />
 			</div>
 		</div>
 	</div>

@@ -68,33 +68,33 @@ long commerceRegionId = BeanParamUtil.getLong(defaultCommerceAddress, request, "
 
 <div class="address-fields">
 	<div class="form-group-autofit">
-		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="name" placeholder="name" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="name" placeholder="name" wrapperCssClass="form-group-item" />
 
-		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="phoneNumber" placeholder="phone-number" wrapperCssClass="form-group-item" />
 	</div>
 
 	<div class="form-group-autofit">
-		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="street1" placeholder="shipping-address" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="street1" placeholder="shipping-address" wrapperCssClass="form-group-item" />
 
-		<aui:select disabled="<%= (commerceAddressId > 0) %>" label="" name="commerceCountryId" placeholder="country" wrapperCssClass="form-group-item" />
+		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="commerceCountryId" placeholder="country" wrapperCssClass="form-group-item" />
 	</div>
 
 	<div class="add-street-link form-group-autofit">
-		<aui:a disabled="<%= (commerceAddressId > 0) %>" href="javascript:;" label="+-add-address-line" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
+		<aui:a disabled="<%= commerceAddressId > 0 %>" href="javascript:;" label="+-add-address-line" onClick='<%= renderResponse.getNamespace() + "addStreetAddress();" %>' />
 	</div>
 
 	<div class="add-street-fields form-group-autofit hide">
-		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="street2" placeholder="shipping-address-2" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="street2" placeholder="shipping-address-2" wrapperCssClass="form-group-item" />
 
-		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="street3" placeholder="shipping-address-3" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="street3" placeholder="shipping-address-3" wrapperCssClass="form-group-item" />
 	</div>
 
 	<div class="form-group-autofit">
-		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="zip" placeholder="zip" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="zip" placeholder="zip" wrapperCssClass="form-group-item" />
 
-		<aui:input disabled="<%= (commerceAddressId > 0) %>" label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
+		<aui:input disabled="<%= commerceAddressId > 0 %>" label="" name="city" placeholder="city" wrapperCssClass="form-group-item" />
 
-		<aui:select disabled="<%= (commerceAddressId > 0) %>" label="" name="commerceRegionId" placeholder="region" wrapperCssClass="form-group-item" />
+		<aui:select disabled="<%= commerceAddressId > 0 %>" label="" name="commerceRegionId" placeholder="region" wrapperCssClass="form-group-item" />
 	</div>
 </div>
 

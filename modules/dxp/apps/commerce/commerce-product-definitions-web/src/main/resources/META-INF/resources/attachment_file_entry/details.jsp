@@ -61,7 +61,7 @@ int type = cpAttachmentFileEntriesDisplayContext.getType();
 
 		<div id="<portlet:namespace />fileEntryContainer">
 			<h5 id="<portlet:namespace />fileEntryTitle">
-				<c:if test="<%= (fileEntryId > 0) %>">
+				<c:if test="<%= fileEntryId > 0 %>">
 					<%= cpAttachmentFileEntriesDisplayContext.getFileEntryName() %>
 				</c:if>
 			</h5>

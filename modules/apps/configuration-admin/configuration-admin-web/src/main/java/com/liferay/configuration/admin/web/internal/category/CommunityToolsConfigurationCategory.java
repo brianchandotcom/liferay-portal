@@ -19,11 +19,15 @@ import com.liferay.configuration.admin.category.ConfigurationCategory;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pei-Jung Lan
+ * @author Jorge Ferrer
  */
 @Component
-public class PageAdministrationConfigurationCategory
-	implements ConfigurationCategory {
+public class CommunityToolsConfigurationCategory implements ConfigurationCategory {
+
+	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
 
 	@Override
 	public String getCategoryKey() {
@@ -35,8 +39,10 @@ public class PageAdministrationConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "page-administration";
+	private static final String _CATEGORY_ICON = "community";
 
-	private static final String _CATEGORY_SECTION = "content-management";
+	private static final String _CATEGORY_KEY = "community-tools";
+
+	private static final String _CATEGORY_SECTION = "social";
 
 }

@@ -25,6 +25,11 @@ import org.osgi.service.component.annotations.Component;
 public class XSLContentConfigurationCategory implements ConfigurationCategory {
 
 	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
+
+	@Override
 	public String getCategoryKey() {
 		return _CATEGORY_KEY;
 	}
@@ -34,8 +39,10 @@ public class XSLContentConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
+	private static final String _CATEGORY_ICON = "file-xsl";
+
 	private static final String _CATEGORY_KEY = "xsl-content";
 
-	private static final String _CATEGORY_SECTION = "content-management";
+	private static final String _CATEGORY_SECTION = "content";
 
 }

@@ -44,6 +44,6 @@ public class AdaptiveMediaConfigurationCategory
 
 	private static final String _CATEGORY_KEY = "adaptive-media";
 
-	private static final String _CATEGORY_SECTION = "content-management";
+	private static final String _CATEGORY_SECTION = "content";
 
 }

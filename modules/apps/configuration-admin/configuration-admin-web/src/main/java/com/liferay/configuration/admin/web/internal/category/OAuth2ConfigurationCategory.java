@@ -15,15 +15,13 @@
 package com.liferay.configuration.admin.web.internal.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pei-Jung Lan
+ * @author Jorge Ferrer
  */
 @Component
-public class MobileAndDevicesConfigurationCategory
-	implements ConfigurationCategory {
+public class OAuth2ConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryKey() {
@@ -35,8 +33,8 @@ public class MobileAndDevicesConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "mobile-and-devices";
+	private static final String _CATEGORY_KEY = "oauth2";
 
-	private static final String _CATEGORY_SECTION = "platform";
+	private static final String _CATEGORY_SECTION = "security";
 
 }

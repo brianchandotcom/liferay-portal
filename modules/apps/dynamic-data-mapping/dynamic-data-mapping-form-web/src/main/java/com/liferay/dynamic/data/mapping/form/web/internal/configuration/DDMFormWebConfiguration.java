@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Lino Alves
  */
 @ExtendedObjectClassDefinition(
-	category = "dynamic-data-mapping",
+	category = "forms",
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(

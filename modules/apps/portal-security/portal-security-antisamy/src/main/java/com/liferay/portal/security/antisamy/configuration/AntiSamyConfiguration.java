@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Tomas Polesovsky
  */
-@ExtendedObjectClassDefinition(category = "security")
+@ExtendedObjectClassDefinition(category = "security-tools")
 @Meta.OCD(
 	id = "com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration",
 	localization = "content/Language", name = "anti-samy-configuration-name"

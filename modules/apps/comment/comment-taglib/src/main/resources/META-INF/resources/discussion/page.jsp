@@ -495,6 +495,48 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 			Liferay.provide(
 				window,
+				'<%= randomNamespace %>showEditor',
+				function(formId, options) {
+
+					if (window['<%= namespace %>' + options.name]) {
+						return;
+					}
+
+					<%
+					String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
+
+					editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
+					%>
+
+					$.ajax(
+						'<%= editorURL %>',
+						{
+							data: Liferay.Util.ns('<%= namespace %>', options),
+							error: function() {
+								<%= randomNamespace %>showStatusMessage(
+									{
+										id: <%= randomNamespace %>,
+										message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
+										type: 'danger'
+									}
+								);
+							},
+							success: function(data) {
+								var editorWrapper = $('#' + formId + ' .editor-wrapper');
+
+								editorWrapper.html(data);
+
+								Liferay.Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), options.contents === '');
+
+								<%= randomNamespace %>showEl(formId);
+							}
+						}
+					);
+				}
+			);
+
+			Liferay.provide(
+				window,
 				'<%= randomNamespace %>showStatusMessage',
 				function(data) {
 					new Liferay.Alert(
@@ -649,51 +691,6 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 					popover.show();
 				},
 				'.lfr-discussion-parent-link'
-			);
-		</aui:script>
-
-		<aui:script>
-
-			<%
-			String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
-
-			editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
-			%>
-
-			Liferay.provide(
-				window,
-				'<%= randomNamespace %>showEditor',
-				function(formId, options) {
-
-					if (window['<%= namespace %>' + options.name]) {
-						return;
-					}
-
-					$.ajax(
-						'<%= editorURL %>',
-						{
-							data: Liferay.Util.ns('<%= namespace %>', options),
-							error: function() {
-								<%= randomNamespace %>showStatusMessage(
-									{
-										id: <%= randomNamespace %>,
-										message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-										type: 'danger'
-									}
-								);
-							},
-							success: function(data) {
-								var editorWrapper = $('#' + formId + ' .editor-wrapper');
-
-								editorWrapper.html(data);
-
-								Liferay.Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), options.contents === '');
-
-								<%= randomNamespace %>showEl(formId);
-							}
-						}
-					);
-				}
 			);
 		</aui:script>
 	</c:if>

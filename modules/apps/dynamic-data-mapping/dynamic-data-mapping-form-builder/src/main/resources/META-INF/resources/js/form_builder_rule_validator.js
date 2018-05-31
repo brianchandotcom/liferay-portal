@@ -52,7 +52,7 @@ AUI.add(
 
 						var empty = false;
 
-						if (content == '') {
+						if (content === '') {
 							empty = true;
 						}
 

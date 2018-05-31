@@ -73,9 +73,13 @@ AUI.add(
 			_createDateField: function(index, condition, config, container, firstOperand, secondOperandTypeValue) {
 				var instance = this;
 
-				var value = '';
+				var visible = false;
 
-				var visible = instance._isDate(secondOperandTypeValue) && !instance._isFieldList(firstOperand);
+				if (instance._isDate(secondOperandTypeValue) && !instance._isFieldList(firstOperand)) {
+					visible = true;
+				}
+
+				var value = '';
 
 				if (condition && instance._isBinaryCondition(index) && visible) {
 					value = condition.operands[1].value;
@@ -97,9 +101,13 @@ AUI.add(
 			_createDecimalField: function(index, condition, config, container, firstOperand, secondOperandTypeValue) {
 				var instance = this;
 
-				var value = '';
+				var visible = false;
 
-				var visible = instance._isNumeric(secondOperandTypeValue) && secondOperandTypeValue == 'double' && !instance._isFieldList(firstOperand);
+				if (instance._isNumeric(secondOperandTypeValue) && (secondOperandTypeValue === 'double') && !instance._isFieldList(firstOperand)) {
+					visible = true;
+				}
+
+				var value = '';
 
 				if (condition && instance._isBinaryCondition(index) && secondOperandTypeValue == 'double' && visible) {
 					value = condition.operands[1].value;
@@ -120,9 +128,13 @@ AUI.add(
 			_createIntegerField: function(index, condition, config, container, firstOperand, secondOperandTypeValue) {
 				var instance = this;
 
-				var value = '';
+				var visible = false;
 
-				var visible = instance._isNumeric(secondOperandTypeValue) && secondOperandTypeValue == 'integer' && !instance._isFieldList(firstOperand);
+				if (instance._isNumeric(secondOperandTypeValue) && secondOperandTypeValue == 'integer' && !instance._isFieldList(firstOperand)) {
+					visible = true;
+				}
+
+				var value = '';
 
 				if (condition && instance._isBinaryCondition(index) && secondOperandTypeValue == 'integer' && visible) {
 					value = condition.operands[1].value;
@@ -143,9 +155,13 @@ AUI.add(
 			_createTextField: function(index, condition, config, container, firstOperand, type) {
 				var instance = this;
 
-				var value = '';
+				var visible = false;
 
-				var visible = instance._isText(type) && !instance._isFieldList(firstOperand);
+				if (instance._isText(type) && !instance._isFieldList(firstOperand)) {
+					visible = true;
+				}
+
+				var value = '';
 
 				if (condition && condition.operands[1] && instance._isBinaryCondition(index) && condition.operands[1].type == 'string' && visible) {
 					value = condition.operands[1].value;

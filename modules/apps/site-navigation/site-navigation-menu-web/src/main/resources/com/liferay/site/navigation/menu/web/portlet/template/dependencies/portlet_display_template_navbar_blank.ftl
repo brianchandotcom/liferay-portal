@@ -23,9 +23,9 @@
 						nav_item_attr_has_popup = ""
 						nav_item_attr_selected = ""
 						nav_item_caret = ""
-						nav_item_css_class = "lfr-nav-item nav-item"
+						nav_item_css_class = "lfr-nav-item nav-item text-truncate"
 						nav_item_href_link = ""
-						nav_item_link_css_class = "nav-link"
+						nav_item_link_css_class = "nav-link text-truncate"
 					/>
 
 					<#if showChildren>

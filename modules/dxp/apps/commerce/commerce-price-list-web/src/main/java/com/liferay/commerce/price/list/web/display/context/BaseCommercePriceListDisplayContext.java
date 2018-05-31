@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
@@ -58,8 +59,9 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 		_defaultOrderByType = "desc";
 	}
 
-	public String format(BigDecimal price) {
-		return commercePriceFormatter.format(price);
+	public String format(BigDecimal price) throws PortalException {
+		return commercePriceFormatter.format(
+			price, PortalUtil.getLocale(liferayPortletRequest));
 	}
 
 	public CommercePriceList getCommercePriceList() throws PortalException {

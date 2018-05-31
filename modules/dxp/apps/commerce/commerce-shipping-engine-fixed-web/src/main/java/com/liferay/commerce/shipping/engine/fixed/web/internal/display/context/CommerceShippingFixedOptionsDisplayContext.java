@@ -93,7 +93,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 			WebKeys.THEME_DISPLAY);
 
 		return commercePriceFormatter.format(
-			themeDisplay.getScopeGroupId(), amount);
+			themeDisplay.getScopeGroupId(), amount, themeDisplay.getLocale());
 	}
 
 	public String getEditURL(String functionName, boolean isNew, String url) {

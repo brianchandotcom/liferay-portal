@@ -73,7 +73,8 @@ public class CommerceOrderContentDisplayContext
 			commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
 
 		return _commercePriceFormatter.format(
-			commerceOrder.getCommerceCurrency(), commerceOrder.getTotal());
+			commerceOrder.getCommerceCurrency(), commerceOrder.getTotal(),
+			cpRequestHelper.getLocale());
 	}
 
 	public String getDisplayStyle() {

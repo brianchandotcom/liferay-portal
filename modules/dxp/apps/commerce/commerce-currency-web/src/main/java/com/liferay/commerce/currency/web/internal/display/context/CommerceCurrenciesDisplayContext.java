@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
@@ -68,8 +69,9 @@ public class CommerceCurrenciesDisplayContext {
 		_renderResponse = renderResponse;
 	}
 
-	public String format(BigDecimal rate) {
-		return _commercePriceFormatter.format(rate);
+	public String format(BigDecimal rate) throws PortalException {
+		return _commercePriceFormatter.format(
+			rate, PortalUtil.getLocale(_renderRequest));
 	}
 
 	public CommerceCurrency getCommerceCurrency() throws PortalException {

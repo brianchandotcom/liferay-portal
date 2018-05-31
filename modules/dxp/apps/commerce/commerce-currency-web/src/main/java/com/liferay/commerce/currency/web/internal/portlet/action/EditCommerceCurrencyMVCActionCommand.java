@@ -167,8 +167,8 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		String rate = ParamUtil.getString(actionRequest, "rate");
-		String formatPattern = ParamUtil.getString(
-			actionRequest, "formatPattern");
+		Map<Locale, String> formatPatternMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "formatPattern");
 		int maxFractionDigits = ParamUtil.getInteger(
 			actionRequest, "maxFractionDigits");
 		int minFractionDigits = ParamUtil.getInteger(
@@ -186,14 +186,14 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 		if (commerceCurrencyId <= 0) {
 			commerceCurrency = _commerceCurrencyService.addCommerceCurrency(
-				code, nameMap, new BigDecimal(rate), formatPattern,
+				code, nameMap, new BigDecimal(rate), formatPatternMap,
 				maxFractionDigits, minFractionDigits, roundingMode, primary,
 				priority, active, serviceContext);
 		}
 		else {
 			commerceCurrency = _commerceCurrencyService.updateCommerceCurrency(
 				commerceCurrencyId, code, nameMap, new BigDecimal(rate),
-				formatPattern, maxFractionDigits, minFractionDigits,
+				formatPatternMap, maxFractionDigits, minFractionDigits,
 				roundingMode, primary, priority, active, serviceContext);
 		}
 

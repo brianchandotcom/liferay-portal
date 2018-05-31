@@ -57,7 +57,8 @@ public class FormatPriceTag extends IncludeTag {
 			_price.multiply(BigDecimal.valueOf(_quantity));
 
 			_formattedPrice = commercePriceFormatter.format(
-				commerceContext.getCommerceCurrency(), _price);
+				commerceContext.getCommerceCurrency(), _price,
+				themeDisplay.getLocale());
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

@@ -90,8 +90,9 @@ public class CommerceDiscountDisplayContext {
 			httpServletRequest);
 	}
 
-	public String format(BigDecimal price) {
-		return _commercePriceFormatter.format(price);
+	public String format(BigDecimal price) throws PortalException {
+		return _commercePriceFormatter.format(
+			price, commerceDiscountRequestHelper.getLocale());
 	}
 
 	public CommerceDiscount getCommerceDiscount() throws PortalException {

@@ -68,7 +68,8 @@ public class CommerceOrderItemItemSelectorViewDisplayContext
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		return _commercePriceFormatter.format(
-			commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice());
+			commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice(),
+			cpRequestHelper.getLocale());
 	}
 
 	public SearchContainer<CommerceOrderItem> getSearchContainer()

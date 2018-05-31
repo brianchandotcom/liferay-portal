@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -58,8 +59,9 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 		_defaultOrderByType = "asc";
 	}
 
-	public String format(BigDecimal price) {
-		return commercePriceFormatter.format(price);
+	public String format(BigDecimal price) throws PortalException {
+		return commercePriceFormatter.format(
+			price, PortalUtil.getLocale(renderRequest));
 	}
 
 	public String getCommerceCurrencyCode() {

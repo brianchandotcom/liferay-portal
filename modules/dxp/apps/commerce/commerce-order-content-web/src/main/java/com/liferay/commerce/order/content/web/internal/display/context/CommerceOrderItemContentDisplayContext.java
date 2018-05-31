@@ -69,7 +69,8 @@ public class CommerceOrderItemContentDisplayContext
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		return _commercePriceFormatter.format(
-			commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice());
+			commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice(),
+			cpRequestHelper.getLocale());
 	}
 
 	@Override

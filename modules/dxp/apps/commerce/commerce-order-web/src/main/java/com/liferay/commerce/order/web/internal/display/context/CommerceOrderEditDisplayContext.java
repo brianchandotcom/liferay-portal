@@ -111,8 +111,9 @@ public class CommerceOrderEditDisplayContext {
 				themeDisplay.getTimeZone());
 	}
 
-	public String format(BigDecimal price) {
-		return _commercePriceFormatter.format(price);
+	public String format(BigDecimal price) throws PortalException {
+		return _commercePriceFormatter.format(
+			price, _commerceOrderRequestHelper.getLocale());
 	}
 
 	public int[] getAvailableOrderStatuses() throws PortalException {
@@ -169,7 +170,8 @@ public class CommerceOrderEditDisplayContext {
 		throws PortalException {
 
 		return _commercePriceFormatter.format(
-			_commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice());
+			_commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice(),
+			_commerceOrderRequestHelper.getLocale());
 	}
 
 	public PortletURL getCommerceOrderItemsPortletURL() throws PortalException {

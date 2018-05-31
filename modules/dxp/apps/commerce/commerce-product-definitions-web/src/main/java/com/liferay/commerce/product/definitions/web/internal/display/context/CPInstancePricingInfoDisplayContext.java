@@ -52,8 +52,9 @@ public class CPInstancePricingInfoDisplayContext
 		_commerceCurrencyService = commerceCurrencyService;
 	}
 
-	public String format(BigDecimal price) {
-		return commercePriceFormatter.format(price);
+	public String format(BigDecimal price) throws PortalException {
+		return commercePriceFormatter.format(
+			price, cpRequestHelper.getLocale());
 	}
 
 	public String getCommerceCurrencyCode() {

@@ -127,7 +127,8 @@ public class CommerceOrderDetailDisplayContext {
 		throws PortalException {
 
 		return _commercePriceFormatter.format(
-			_commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice());
+			_commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice(),
+			_commerceOrderRequestHelper.getLocale());
 	}
 
 	public List<CommerceOrderNote> getCommerceOrderNotes()
@@ -225,7 +226,8 @@ public class CommerceOrderDetailDisplayContext {
 		}
 
 		return _commercePriceFormatter.format(
-			_commerceOrder.getCommerceCurrency(), _commerceOrder.getTotal());
+			_commerceOrder.getCommerceCurrency(), _commerceOrder.getTotal(),
+			_commerceOrderRequestHelper.getLocale());
 	}
 
 	public PortletURL getPortletURL() {

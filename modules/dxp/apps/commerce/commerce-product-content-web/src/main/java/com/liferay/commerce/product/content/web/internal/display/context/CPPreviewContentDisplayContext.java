@@ -125,7 +125,7 @@ public class CPPreviewContentDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		return _commercePriceFormatter.format(
-			themeDisplay.getScopeGroupId(), price);
+			themeDisplay.getScopeGroupId(), price, themeDisplay.getLocale());
 	}
 
 	public PortletURL getPortletURL() {

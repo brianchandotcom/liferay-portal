@@ -85,7 +85,8 @@ public class CPInstanceDisplayContext
 	public String formatPrice(long groupId, BigDecimal price)
 		throws PortalException {
 
-		return commercePriceFormatter.format(groupId, price);
+		return commercePriceFormatter.format(
+			groupId, price, cpRequestHelper.getLocale());
 	}
 
 	public List<CPDefinitionOptionRel> getCPDefinitionOptionRels()

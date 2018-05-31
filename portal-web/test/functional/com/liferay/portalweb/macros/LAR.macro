@@ -562,7 +562,7 @@
 	<command name="filterCompletedProcesses">
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Completed">
 			<var name="key_menuItem" value="Completed" />

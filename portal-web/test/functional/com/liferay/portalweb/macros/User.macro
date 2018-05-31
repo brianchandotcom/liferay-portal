@@ -14,7 +14,7 @@
 	</command>
 
 	<command name="activateCP">
-		<execute function="Click" locator1="Dropdown#FILTER" />
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Inactive">
 			<var name="key_menuItem" value="Inactive" />
@@ -2019,7 +2019,7 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Active">
 			<var name="key_menuItem" value="Active" />
@@ -2038,7 +2038,7 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Inactive">
 			<var name="key_menuItem" value="Inactive" />
@@ -2065,7 +2065,7 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Active">
 			<var name="key_menuItem" value="Active" />
@@ -2088,7 +2088,7 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="Dropdown#FILTER" />
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Inactive">
 			<var name="key_menuItem" value="Inactive" />

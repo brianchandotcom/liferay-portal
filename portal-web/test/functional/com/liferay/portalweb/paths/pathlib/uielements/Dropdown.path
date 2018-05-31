@@ -35,11 +35,6 @@
 </tr>
 <!--FILTER-->
 <tr>
-	<td>FILTER</td>
-	<td>//*[@data-qa-id='filter']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FILTER_STATUS</td>
 	<td>//*[@data-qa-id='filterstatus']</td>
 	<td></td>

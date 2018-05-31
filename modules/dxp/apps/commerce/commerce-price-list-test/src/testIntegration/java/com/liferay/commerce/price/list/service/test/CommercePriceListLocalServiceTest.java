@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Currency;
+import java.util.Locale;
+
 import org.frutilla.FrutillaRule;
 
 import org.junit.Assert;
@@ -71,13 +74,13 @@ public class CommercePriceListLocalServiceTest {
 			"The result should be a new Price List on the given site"
 		);
 
-		String currency = "EUR";
+		Currency currency = Currency.getInstance(Locale.US);
 		String name = RandomTestUtil.randomString();
 
 		CommercePriceList commercePriceList =
 			CommercePriceListTestUtil.upsertCommercePriceList(
-				_group.getGroupId(), 0L, currency, name, 0D, true, null, null,
-				null);
+				_group.getGroupId(), 0L, currency.getCurrencyCode(), name, 0D,
+				true, null, null, null);
 
 		Assert.assertThat(name, equalTo(commercePriceList.getName()));
 	}

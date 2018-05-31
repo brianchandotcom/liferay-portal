@@ -80,6 +80,14 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				continue;
 			}
 
+			if (previousChar == CharPool.SPACE) {
+				String s = StringUtil.trim(ifClause.substring(0, x - 1));
+
+				if (Character.isLetterOrDigit(s.charAt(s.length() - 1))) {
+					continue;
+				}
+			}
+
 			int y = x;
 
 			while (true) {
@@ -89,6 +97,17 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 				if (getLevel(s) == 0) {
 					char nextChar = ifClause.charAt(y + 1);
+
+					if (!(this instanceof JavaIfStatementCheck) &&
+						(previousChar == CharPool.OPEN_PARENTHESIS) &&
+						(nextChar == CharPool.CLOSE_PARENTHESIS)) {
+
+						addMessage(
+							fileName, "Redundant parentheses in if-statement",
+							"if_statement_parentheses.markdown", lineNumber);
+
+						return;
+					}
 
 					if (((nextChar == CharPool.CLOSE_PARENTHESIS) ||
 						 (nextChar == CharPool.SPACE)) &&

@@ -38,15 +38,15 @@ public class JSPIfStatementCheck extends IfStatementCheck {
 			}
 		}
 
-		matcher = _testTagPattern.matcher(content);
+		matcher = _tagPattern.matcher(content);
 
 		while (matcher.find()) {
 			if (!JSPSourceUtil.isJavaSource(content, matcher.start())) {
-				String ifClause = "if (" + matcher.group(2) + ") {";
+				String ifClause = "if (" + matcher.group(1) + ") {";
 
 				checkIfClauseParentheses(
 					ifClause, fileName,
-					getLineNumber(content, matcher.start(2)));
+					getLineNumber(content, matcher.start(1)));
 			}
 		}
 
@@ -55,7 +55,7 @@ public class JSPIfStatementCheck extends IfStatementCheck {
 
 	private final Pattern _ifStatementPattern = Pattern.compile(
 		"[\t\n]((else )?if|while) .*\\) \\{\n");
-	private final Pattern _testTagPattern = Pattern.compile(
-		"[\t\n]<c:(if|when) test=['\"]<%= (.+) %>['\"]>\n");
+	private final Pattern _tagPattern = Pattern.compile(
+		"['\"]<%= (.+?) %>['\"]");
 
 }

@@ -71,6 +71,8 @@ page import="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion" %>
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.WindowState" %>
 
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %>
+
 <%
 String refererPortletName = ParamUtil.getString(request, "refererPortletName", portletName);
 String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));

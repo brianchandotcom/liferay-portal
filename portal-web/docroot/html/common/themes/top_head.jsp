@@ -174,6 +174,14 @@ StringBundler pageTopSB = OutputTag.getData(request, WebKeys.PAGE_TOP);
 
 </c:if>
 
+<script type="text/javascript">
+	var portlet = portlet || {};
+	portlet.impl = portlet.impl || {};
+	portlet.impl.getInitData = function() {
+		return <%= RenderStateUtil.generateJSON(request, themeDisplay) %>;
+	}
+</script>
+
 <%-- Theme CSS --%>
 
 <link class="lfr-css-file" data-senna-track="temporary" href="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getPathThemeCss() + "/main.css")) %>" id="liferayThemeCSS" rel="stylesheet" type="text/css" />

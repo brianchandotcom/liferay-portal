@@ -58,7 +58,7 @@ public class FreemarkerCompatibleElement extends Element {
 			}
 		}
 
-		appendable.append("<");
+		appendable.append("[");
 		appendable.append(tagName());
 
 		attributes.html(appendable, out);
@@ -67,14 +67,14 @@ public class FreemarkerCompatibleElement extends Element {
 			if ((out.syntax() == Document.OutputSettings.Syntax.html) &&
 				tag.isEmpty()) {
 
-				appendable.append('>');
+				appendable.append(']');
 			}
 			else {
-				appendable.append(" />");
+				appendable.append(" /]");
 			}
 		}
 		else {
-			appendable.append(">");
+			appendable.append("]");
 		}
 	}
 
@@ -96,9 +96,9 @@ public class FreemarkerCompatibleElement extends Element {
 				indent(appendable, depth, out);
 			}
 
-			appendable.append("</");
+			appendable.append("[/");
 			appendable.append(tagName());
-			appendable.append(">");
+			appendable.append("]");
 		}
 	}
 

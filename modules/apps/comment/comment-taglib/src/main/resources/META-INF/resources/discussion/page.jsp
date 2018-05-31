@@ -652,7 +652,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 			);
 		</aui:script>
 
-		<aui:script use="aui-io-request,aui-parse-content">
+		<aui:script>
 
 			<%
 			String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
@@ -669,29 +669,30 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						return;
 					}
 
-					fetch(
+					$.ajax(
 						'<%= editorURL %>',
 						{
-							body: new URLSearchParams(Liferay.Util.ns(
-								'<%= namespace %>',
-								options
-							)),
-							credentials: 'same-origin',
-							method: 'POST'
+							data: Liferay.Util.ns('<%= namespace %>', options),
+							error: function() {
+								<%= randomNamespace %>showStatusMessage(
+									{
+										id: <%= randomNamespace %>,
+										message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
+										type: 'danger'
+									}
+								);
+							},
+							success: function(data) {
+								var editorWrapper = $('#' + formId + ' .editor-wrapper');
+
+								editorWrapper.html(data);
+
+								Liferay.Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), options.contents === '');
+
+								<%= randomNamespace %>showEl(formId);
+							}
 						}
-					).then(function(response) {
-						return response.text();
-					}).then(function(text) {
-						var contentBox = A.one('#' + formId + ' .editor-wrapper');
-
-						contentBox.plug(A.Plugin.ParseContent);
-
-						contentBox.setContent(text);
-
-						Liferay.Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), options.contents === '');
-
-						<%= randomNamespace %>showEl(formId);
-					});
+					);
 				}
 			);
 		</aui:script>

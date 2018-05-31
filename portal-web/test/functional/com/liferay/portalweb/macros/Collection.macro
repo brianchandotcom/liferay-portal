@@ -1,29 +1,4 @@
 <definition>
-	<command name="addCollection">
-		<if>
-			<condition function="IsElementPresent" locator1="NavNested#NAV_NESTED_PLUS" />
-			<then>
-				<execute function="Click" locator1="NavNested#NAV_NESTED_PLUS" />
-			</then>
-			<else>
-				<execute macro="Button#click">
-					<var name="button" value="New" />
-				</execute>
-
-				<execute macro="MenuItem#click">
-					<var name="menuItem" value="Collection" />
-				</execute>
-			</else>
-		</if>
-
-		<execute macro="Collection#editCollection">
-			<var name="collectionDescription" value="${collectionDescription}" />
-			<var name="collectionName" value="${collectionName}" />
-		</execute>
-
-		<execute macro="PortletEntry#save" />
-	</command>
-
 	<command name="deleteCollection">
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="${collectionName}" />

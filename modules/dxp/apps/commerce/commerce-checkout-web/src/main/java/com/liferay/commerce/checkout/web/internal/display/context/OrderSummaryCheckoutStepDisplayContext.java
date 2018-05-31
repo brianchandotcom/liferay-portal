@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -105,7 +106,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	public String getCommerceOrderShippingPrice() throws PortalException {
 		CommerceMoney commerceMoney = _commerceOrder.getShippingMoney();
 
-		return commerceMoney.toString();
+		return commerceMoney.format(PortalUtil.getLocale(_httpServletRequest));
 	}
 
 	public String getCommerceOrderSubtotal() throws PortalException {
@@ -130,7 +131,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			commerceOrderItem.getCPInstanceId(),
 			commerceOrderItem.getQuantity(), true, true, _commerceContext);
 
-		return commerceMoney.toString();
+		return commerceMoney.format(PortalUtil.getLocale(_httpServletRequest));
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)

@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -97,7 +99,8 @@ public class PriceTag extends IncludeTag {
 			}
 
 			if (_cpInstance == null) {
-				_formattedPrice = getFormattedPrice(_quantity, commerceContext);
+				_formattedPrice = getFormattedPrice(
+					_quantity, commerceContext, themeDisplay.getLocale());
 			}
 			else {
 				CommerceMoney commerceMoney =
@@ -105,7 +108,8 @@ public class PriceTag extends IncludeTag {
 						_cpInstance.getCPInstanceId(), _quantity, true, true,
 						commerceContext);
 
-				_formattedPrice = commerceMoney.toString();
+				_formattedPrice = commerceMoney.format(
+					themeDisplay.getLocale());
 			}
 		}
 		catch (Exception e) {
@@ -156,7 +160,7 @@ public class PriceTag extends IncludeTag {
 	}
 
 	protected String getFormattedPrice(
-			int quantity, CommerceContext commerceContext)
+			int quantity, CommerceContext commerceContext, Locale locale)
 		throws PortalException {
 
 		CommerceMoney minPriceCommerceMoney =
@@ -164,15 +168,15 @@ public class PriceTag extends IncludeTag {
 				_cpDefinitionId, quantity, commerceContext);
 
 		if (!_showPriceRange) {
-			return minPriceCommerceMoney.toString();
+			return minPriceCommerceMoney.format(locale);
 		}
 
 		CommerceMoney maxPriceCommerceMoney =
 			commercePriceCalculation.getUnitMaxPrice(
 				_cpDefinitionId, quantity, commerceContext);
 
-		return minPriceCommerceMoney.toString() + " - " +
-			maxPriceCommerceMoney.toString();
+		return minPriceCommerceMoney.format(locale) + " - " +
+			maxPriceCommerceMoney.format(locale);
 	}
 
 	@Override

@@ -150,7 +150,8 @@ public class CommerceWishListDisplayContext {
 					cpInstance.getCPInstanceId(), 1, true, true,
 					_commerceWishListRequestHelper.getCommerceContext());
 
-			return commerceMoney.toString();
+			return commerceMoney.format(
+				_commerceWishListRequestHelper.getLocale());
 		}
 
 		return StringPool.BLANK;

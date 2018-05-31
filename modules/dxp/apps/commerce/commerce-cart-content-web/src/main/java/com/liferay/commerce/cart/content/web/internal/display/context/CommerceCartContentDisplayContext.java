@@ -144,14 +144,16 @@ public class CommerceCartContentDisplayContext {
 
 			CommerceMoney commerceMoney = commerceCurrency.getZero();
 
-			return commerceMoney.toString();
+			return commerceMoney.format(
+				commerceCartContentRequestHelper.getLocale());
 		}
 
 		CommerceMoney commerceMoney =
 			_commercePriceCalculation.getOrderSubtotal(
 				getCommerceOrder(), commerceContext);
 
-		return commerceMoney.toString();
+		return commerceMoney.format(
+			commerceCartContentRequestHelper.getLocale());
 	}
 
 	public Map<Long, List<CommerceOrderValidatorResult>>
@@ -215,7 +217,8 @@ public class CommerceCartContentDisplayContext {
 			commerceOrderItem.getCPInstanceId(),
 			commerceOrderItem.getQuantity(), true, true, commerceContext);
 
-		return commerceMoney.toString();
+		return commerceMoney.format(
+			commerceCartContentRequestHelper.getLocale());
 	}
 
 	public String getFormattedUnitPrice(CommerceOrderItem commerceOrderItem)
@@ -225,7 +228,8 @@ public class CommerceCartContentDisplayContext {
 			commerceOrderItem.getCPInstanceId(),
 			commerceOrderItem.getQuantity(), commerceContext);
 
-		return commerceMoney.toString();
+		return commerceMoney.format(
+			commerceCartContentRequestHelper.getLocale());
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)

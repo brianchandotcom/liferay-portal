@@ -217,7 +217,8 @@ public class CommerceOrganizationOrderDisplayContext {
 
 		CommerceMoney commerceMoney = commerceOrderItem.getPriceMoney();
 
-		return commerceMoney.toString();
+		return commerceMoney.format(
+			_commerceOrganizationOrderRequestHelper.getLocale());
 	}
 
 	public SearchContainer<CommerceOrderItem>
@@ -376,7 +377,8 @@ public class CommerceOrganizationOrderDisplayContext {
 				_commerceOrganizationOrderRequestHelper.getCommerceContext());
 		}
 
-		return commerceMoney.toString();
+		return commerceMoney.format(
+			_commerceOrganizationOrderRequestHelper.getLocale());
 	}
 
 	public String getDisplayStyle() {

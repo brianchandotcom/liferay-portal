@@ -122,7 +122,7 @@ public class CommerceTierPriceEntryDisplayContext
 
 			CommerceMoney zeroCommerceMoney = commerceCurrency.getZero();
 
-			return zeroCommerceMoney.toString();
+			return zeroCommerceMoney.format(_cpRequestHelper.getLocale());
 		}
 
 		CommercePriceList commercePriceList = getCommercePriceList();
@@ -130,7 +130,7 @@ public class CommerceTierPriceEntryDisplayContext
 		CommerceMoney priceCommerceMoney = commerceTierPriceEntry.getPriceMoney(
 			commercePriceList.getCommerceCurrencyId());
 
-		return priceCommerceMoney.toString();
+		return priceCommerceMoney.format(_cpRequestHelper.getLocale());
 	}
 
 	public String getContextTitle() throws PortalException {

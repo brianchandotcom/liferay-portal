@@ -29,6 +29,7 @@ import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,7 +80,9 @@ public class PriceCPContentContributor implements CPContentContributor {
 			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance), true,
 			true, commerceContext);
 
-		jsonObject.put("price", commerceMoney.toString());
+		jsonObject.put(
+			"price",
+			commerceMoney.format(_portal.getLocale(httpServletRequest)));
 
 		return jsonObject;
 	}
@@ -100,5 +103,8 @@ public class PriceCPContentContributor implements CPContentContributor {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Portal _portal;
 
 }

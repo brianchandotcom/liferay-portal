@@ -107,7 +107,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(
 			commercePriceList.getCommerceCurrencyId());
 
-		return priceCommerceMoney.toString();
+		return priceCommerceMoney.format(cpRequestHelper.getLocale());
 	}
 
 	public CPInstance getCPInstance() throws PortalException {

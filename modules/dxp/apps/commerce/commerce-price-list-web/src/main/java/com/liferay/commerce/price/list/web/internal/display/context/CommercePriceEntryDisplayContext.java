@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -104,7 +105,8 @@ public class CommercePriceEntryDisplayContext
 		CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(
 			commercePriceList.getCommerceCurrencyId());
 
-		return priceCommerceMoney.toString();
+		return priceCommerceMoney.format(
+			PortalUtil.getLocale(httpServletRequest));
 	}
 
 	public String getItemSelectorUrl() throws PortalException {

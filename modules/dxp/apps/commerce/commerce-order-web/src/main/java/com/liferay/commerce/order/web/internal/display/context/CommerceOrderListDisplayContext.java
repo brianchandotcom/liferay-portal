@@ -193,7 +193,7 @@ public class CommerceOrderListDisplayContext {
 				_commerceOrderRequestHelper.getCommerceContext());
 		}
 
-		return commerceMoney.toString();
+		return commerceMoney.format(_commerceOrderRequestHelper.getLocale());
 	}
 
 	public List<NavigationItem> getNavigationItems() throws PortalException {

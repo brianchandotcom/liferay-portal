@@ -129,7 +129,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(
 			commercePriceList.getCommerceCurrencyId());
 
-		return priceCommerceMoney.toString();
+		return priceCommerceMoney.format(cpRequestHelper.getLocale());
 	}
 
 	public String getContextTitle() throws PortalException {

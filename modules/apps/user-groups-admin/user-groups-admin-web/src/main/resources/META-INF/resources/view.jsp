@@ -31,20 +31,6 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-if (Validator.isNotNull(viewUserGroupsRedirect)) {
-	portletURL.setParameter("viewUserGroupsRedirect", viewUserGroupsRedirect);
-}
-
-pageContext.setAttribute("portletURL", portletURL);
-
-String portletURLString = portletURL.toString();
-
-SearchContainer userGroupSearchContainer = new UserGroupSearch(renderRequest, portletURL);
-
-boolean hasAddUserGroupPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP);
-
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "user-groups"), null);
 %>
 
@@ -67,73 +53,34 @@ navigationItems.add(entriesNavigationItem);
 	navigationItems="<%= navigationItems %>"
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<%
+ViewUserGroupsManagementToolbarDisplayContext viewUserGroupsManagementToolbarDisplayContext = new ViewUserGroupsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle);
+
+SearchContainer searchContainer = viewUserGroupsManagementToolbarDisplayContext.getSearchContainer();
+
+PortletURL portletURL = viewUserGroupsManagementToolbarDisplayContext.getPortletURL();
+%>
+
+<clay:management-toolbar
+	actionDropdownItems="<%= viewUserGroupsManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= viewUserGroupsManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= viewUserGroupsManagementToolbarDisplayContext.getCreationMenu() %>"
+	filterDropdownItems="<%= viewUserGroupsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= viewUserGroupsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="userGroups"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
+	searchFormName="searchFm"
+	selectable="<%= true %>"
+	showCreationMenu="<%= viewUserGroupsManagementToolbarDisplayContext.showCreationMenu() %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewUserGroupsManagementToolbarDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= viewUserGroupsManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
-		<c:if test="<%= hasAddUserGroupPermission %>">
-			<portlet:renderURL var="viewUserGroupsURL" />
-
-			<portlet:renderURL var="addUsergroupURL">
-				<portlet:param name="mvcPath" value="/edit_user_group.jsp" />
-				<portlet:param name="redirect" value="<%= viewUserGroupsURL %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add") %>'
-					url="<%= addUsergroupURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= userGroupSearchContainer.getOrderByCol() %>"
-			orderByType="<%= userGroupSearchContainer.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<li>
-			<aui:form action="<%= portletURLString %>" name="searchFm">
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
-		<liferay-frontend:management-bar-action-buttons>
-			<liferay-frontend:management-bar-button
-				href="javascript:;"
-				icon="trash"
-				id="deleteUserGroups"
-				label="delete"
-			/>
-		</liferay-frontend:management-bar-action-buttons>
-	</c:if>
-</liferay-frontend:management-bar>
-
-<aui:form action="<%= portletURLString %>" cssClass="container-fluid-1280" method="get" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
+	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="deleteUserGroupIds" type="hidden" />
 
 	<div id="breadcrumb">
@@ -149,15 +96,12 @@ navigationItems.add(entriesNavigationItem);
 </aui:form>
 
 <aui:script>
-	$('#<portlet:namespace />deleteUserGroups').on(
-		'click',
-		function() {
-			<portlet:namespace />doDeleteUserGroup(
-				'<%= UserGroup.class.getName() %>',
-				Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
-			);
-		}
-	);
+	function <portlet:namespace />deleteUserGroups() {
+		<portlet:namespace />doDeleteUserGroup(
+			'<%= UserGroup.class.getName() %>',
+			Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds')
+		);
+	}
 
 	function <portlet:namespace />doDeleteUserGroup(className, ids) {
 		var status = <%= WorkflowConstants.STATUS_INACTIVE %>;

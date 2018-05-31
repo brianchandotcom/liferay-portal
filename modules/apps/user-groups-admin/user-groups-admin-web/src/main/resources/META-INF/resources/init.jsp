@@ -72,11 +72,10 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UnsetUserUserGroupChecker" %><%@
-page import="com.liferay.portlet.usergroupsadmin.search.UserGroupChecker" %><%@
-page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys" %>
+page import="com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys" %><%@
+page import="com.liferay.user.groups.admin.web.internal.display.context.ViewUserGroupsManagementToolbarDisplayContext" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.LinkedHashMap" %><%@

@@ -59,6 +59,8 @@ UADDisplay uadDisplay = (UADDisplay)request.getAttribute(UADWebKeys.INFO_PANEL_U
 					<dd class="sidebar-dd"><%= primaryKey %></dd>
 
 					<%
+					displayValues = new TreeMap<>(displayValues);
+
 					for (Map.Entry<String, Object> entry : displayValues.entrySet()) {
 						if (identifierFieldName.equals(entry.getKey())) {
 							continue;

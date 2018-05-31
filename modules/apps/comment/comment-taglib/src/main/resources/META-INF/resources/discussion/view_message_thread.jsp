@@ -29,8 +29,6 @@ request.setAttribute("liferay-comment:discussion:index", Integer.valueOf(index))
 
 String randomNamespace = (String)request.getAttribute("liferay-comment:discussion:randomNamespace");
 
-boolean skipEditorLoading = ParamUtil.getBoolean(request, "skipEditorLoading");
-
 DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
 
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);

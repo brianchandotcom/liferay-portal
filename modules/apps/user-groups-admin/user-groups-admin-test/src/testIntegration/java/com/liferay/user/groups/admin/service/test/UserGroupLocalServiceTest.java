@@ -16,9 +16,12 @@ package com.liferay.user.groups.admin.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -137,6 +140,25 @@ public class UserGroupLocalServiceTest {
 		List<UserGroup> userGroups = _search(keywords, emptyParams);
 
 		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
+	}
+
+	@Test
+	public void testSearchUserGroupWithDescendingOrder()
+		throws PortalException {
+
+		Hits hits = UserGroupLocalServiceUtil.search(
+			_companyId, null, new LinkedHashMap<>(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS,
+			SortFactoryUtil.getSort(UserGroup.class, "name", "desc"));
+
+		List<UserGroup> expectedUserGroups = UsersAdminUtil.getUserGroups(hits);
+
+		List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(
+			_companyId, null, new LinkedHashMap<>(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS,
+			UsersAdminUtil.getUserGroupOrderByComparator("name", "desc"));
+
+		Assert.assertEquals(expectedUserGroups, userGroups);
 	}
 
 	private List<UserGroup> _search(

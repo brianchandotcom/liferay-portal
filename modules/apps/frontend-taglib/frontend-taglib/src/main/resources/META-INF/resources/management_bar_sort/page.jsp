@@ -41,7 +41,7 @@ orderByColAscURL.setParameter("orderByType", "asc");
 
 <li>
 	<liferay-frontend:management-bar-button
-		active='<%= ((Validator.isNotNull(orderByType)) && orderByType.equals("asc")) %>'
+		active='<%= Validator.isNotNull(orderByType) && orderByType.equals("asc") %>'
 		cssClass="hidden-xs"
 		disabled="<%= disabled %>"
 		href="<%= orderByColAscURL.toString() %>"

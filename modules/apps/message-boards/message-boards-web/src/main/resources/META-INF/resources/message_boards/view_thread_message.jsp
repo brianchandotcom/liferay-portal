@@ -431,7 +431,7 @@ if (message.isAnonymous()) {
 			int attachmentsFileEntriesCount = message.getAttachmentsFileEntriesCount();
 			%>
 
-			<c:if test="<%= (attachmentsFileEntriesCount > 0) %>">
+			<c:if test="<%= attachmentsFileEntriesCount > 0 %>">
 				<div class="card-row card-row-padded message-attachments">
 					<h3><liferay-ui:message key="attachments" />:</h3>
 

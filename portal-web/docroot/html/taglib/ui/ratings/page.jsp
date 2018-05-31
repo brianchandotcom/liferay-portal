@@ -237,7 +237,7 @@ if (!inTrash) {
 								</a>
 
 								<c:if test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-									<a class="btn btn-outline-borderless btn-outline-secondary btn-sm rating-element rating-thumb-down rating-<%= (thumbDown) ? "on" : "off" %>" href="javascript:;" title="<liferay-ui:message key='<%= (thumbDown) ? "you-have-rated-this-as-bad" : "rate-this-as-bad" %>' />">
+									<a class="btn btn-outline-borderless btn-outline-secondary btn-sm rating-element rating-thumb-down rating-<%= (thumbDown) ? "on" : "off" %>" href="javascript:;" title="<liferay-ui:message key='<%= thumbDown ? "you-have-rated-this-as-bad" : "rate-this-as-bad" %>' />">
 										<span class="inline-item inline-item-before">
 											<svg aria-hidden="true" class="lexicon-icon lexicon-icon-thumbs-down">
 												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-down" />

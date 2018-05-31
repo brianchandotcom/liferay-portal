@@ -67,14 +67,14 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 				<aui:select label="assignee" name="assigneeUserId">
 					<c:choose>
 						<c:when test="<%= group.isUser() %>">
-							<aui:option label="<%= HtmlUtil.escape(user.getFullName()) %>" selected="<%= (assigneeUserId == 0) %>" value="<%= user.getUserId() %>" />
+							<aui:option label="<%= HtmlUtil.escape(user.getFullName()) %>" selected="<%= assigneeUserId == 0 %>" value="<%= user.getUserId() %>" />
 
 							<optgroup label="<liferay-ui:message key="contacts" />">
 						</c:when>
 						<c:otherwise>
-							<aui:option label="unassigned" selected="<%= (assigneeUserId == 0) %>" value="0" />
+							<aui:option label="unassigned" selected="<%= assigneeUserId == 0 %>" value="0" />
 
-							<aui:option label="<%= HtmlUtil.escape(user.getFullName()) %>" selected="<%= (assigneeUserId == user.getUserId()) %>" value="<%= user.getUserId() %>" />
+							<aui:option label="<%= HtmlUtil.escape(user.getFullName()) %>" selected="<%= assigneeUserId == user.getUserId() %>" value="<%= user.getUserId() %>" />
 
 							<c:if test="<%= (tasksEntry != null) && (assigneeUserId > 0) && (assigneeUserId != user.getUserId()) %>">
 								<aui:option label="<%= PortalUtil.getUserName(assigneeUserId, tasksEntry.getAssigneeFullName()) %>" selected="<%= true %>" />
@@ -107,7 +107,7 @@ String dueDateWrapperCssClass = dueDateControlGroupCssClass + StringPool.SPACE +
 						}
 					%>
 
-						<aui:option label="<%= HtmlUtil.escape(curUser.getFullName()) %>" selected="<%= (assigneeUserId == curUserId) %>" value="<%= curUserId %>" />
+						<aui:option label="<%= HtmlUtil.escape(curUser.getFullName()) %>" selected="<%= assigneeUserId == curUserId %>" value="<%= curUserId %>" />
 
 					<%
 					}

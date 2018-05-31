@@ -27,7 +27,7 @@ PowwowServer powwowServer = PowwowServerLocalServiceUtil.fetchPowwowServer(powwo
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	localizeTitle="<%= (powwowServer == null) %>"
+	localizeTitle="<%= powwowServer == null %>"
 	title='<%= (powwowServer != null) ? powwowServer.getName() : "new-server" %>'
 />
 

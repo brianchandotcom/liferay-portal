@@ -54,11 +54,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input cols="55" cssClass="task-action-comment" disabled="<%= !hasOtherAssignees && assigneeUserId <= 0 %>" name="comment" placeholder="comment" rows="1" type="textarea" />
+			<aui:input cols="55" cssClass="task-action-comment" disabled="<%= !hasOtherAssignees && (assigneeUserId <= 0) %>" name="comment" placeholder="comment" rows="1" type="textarea" />
 		</div>
 
 		<aui:button-row cssClass="modal-footer task-action-button">
-			<aui:button disabled="<%= !hasOtherAssignees && assigneeUserId <= 0 %>" name="done" primary="<%= true %>" value="done" />
+			<aui:button disabled="<%= !hasOtherAssignees && (assigneeUserId <= 0) %>" name="done" primary="<%= true %>" value="done" />
 
 			<aui:button name="close" type="cancel" />
 		</aui:button-row>

@@ -185,7 +185,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (double curDefaultValue : (double[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -198,7 +198,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (double curDefaultValue : (double[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -245,7 +245,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (float curDefaultValue : (float[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -258,7 +258,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (float curDefaultValue : (float[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -365,7 +365,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (int curDefaultValue : (int[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -378,7 +378,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (int curDefaultValue : (int[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -425,7 +425,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (long curDefaultValue : (long[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -438,7 +438,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (long curDefaultValue : (long[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -485,7 +485,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (Number curDefaultValue : (Number[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -498,7 +498,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (Number curDefaultValue : (Number[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -545,7 +545,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (short curDefaultValue : (short[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -558,7 +558,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (short curDefaultValue : (short[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -605,7 +605,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (String curDefaultValue : (String[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" id="<%= StringUtil.randomId() %>" label="<%= String.valueOf(curDefaultValue) %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="checkbox" value="<%= curDefaultValue %>" />
 
 									<%
 									}
@@ -618,7 +618,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									for (String curDefaultValue : (String[])defaultValue) {
 									%>
 
-										<aui:input checked="<%= ((curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue)) %>" label="<%= curDefaultValue %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
+										<aui:input checked="<%= (curValue.length > 0) && ArrayUtil.contains(curValue, curDefaultValue) %>" label="<%= curDefaultValue %>" name='<%= "ExpandoAttribute--" + HtmlUtil.escapeAttribute(name) + "--" %>' type="radio" value="<%= curDefaultValue %>" />
 
 									<%
 									}

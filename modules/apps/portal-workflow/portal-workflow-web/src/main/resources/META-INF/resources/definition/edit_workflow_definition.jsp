@@ -266,7 +266,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 					String taglibUpdateOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "publishDefinition');";
 					%>
 
-					<aui:button onClick="<%= taglibUpdateOnClick %>" primary="<%= true %>" value='<%= (workflowDefinition == null || !active) ? "publish" : "update" %>' />
+					<aui:button onClick="<%= taglibUpdateOnClick %>" primary="<%= true %>" value='<%= ((workflowDefinition == null) || !active) ? "publish" : "update" %>' />
 
 					<c:if test="<%= (workflowDefinition == null) || !active %>">
 

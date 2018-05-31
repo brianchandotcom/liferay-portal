@@ -456,7 +456,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 								</div>
 							</div>
 
-							<c:if test="<%= (groupThreadsUserId > 0) %>">
+							<c:if test="<%= groupThreadsUserId > 0 %>">
 								<div class="alert alert-info">
 									<liferay-ui:message key="filter-by-user" />: <%= HtmlUtil.escape(PortalUtil.getUserName(groupThreadsUserId, StringPool.BLANK)) %>
 								</div>

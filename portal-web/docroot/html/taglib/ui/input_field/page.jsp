@@ -425,7 +425,7 @@ if (hints != null) {
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
 								placeholder="<%= placeholder %>"
-								style='<%= (upperCase ? "text-transform: uppercase;" : "") %>'
+								style='<%= upperCase ? "text-transform: uppercase;" : "" %>'
 								type="editor"
 								xml="<%= xml %>"
 							/>
@@ -470,7 +470,7 @@ if (hints != null) {
 								maxLength="<%= maxLength %>"
 								name="<%= fieldParam %>"
 								placeholder="<%= placeholder %>"
-								style='<%= (upperCase ? "text-transform: uppercase;" : "") %>'
+								style='<%= upperCase ? "text-transform: uppercase;" : "" %>'
 								xml="<%= xml %>"
 							/>
 						</c:when>

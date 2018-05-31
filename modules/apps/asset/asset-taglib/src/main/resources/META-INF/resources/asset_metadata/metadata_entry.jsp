@@ -120,14 +120,14 @@ else if (metadataField.equals("view-count")) {
 					<c:when test='<%= value.equals("categories") %>'>
 						<liferay-asset:asset-categories-summary
 							className="<%= assetEntry.getClassName() %>"
-							classPK="<%= assetEntry.getClassPK () %>"
+							classPK="<%= assetEntry.getClassPK() %>"
 							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
 						/>
 					</c:when>
 					<c:when test='<%= value.equals("tags") %>'>
 						<liferay-asset:asset-tags-summary
 							className="<%= assetEntry.getClassName() %>"
-							classPK="<%= assetEntry.getClassPK () %>"
+							classPK="<%= assetEntry.getClassPK() %>"
 							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
 						/>
 					</c:when>

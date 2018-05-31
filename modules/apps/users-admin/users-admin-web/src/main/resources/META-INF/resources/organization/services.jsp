@@ -165,7 +165,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 								cal.add(Calendar.MINUTE, 30);
 							%>
 
-								<aui:option label="<%= timeOfDayDisplay %>" selected="<%= (open == timeOfDayValue) %>" value="<%= timeOfDayValue %>" />
+								<aui:option label="<%= timeOfDayDisplay %>" selected="<%= open == timeOfDayValue %>" value="<%= timeOfDayValue %>" />
 
 							<%
 							}
@@ -192,7 +192,7 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 								cal.add(Calendar.MINUTE, 30);
 							%>
 
-								<aui:option label="<%= timeOfDayDisplay %>" selected="<%= (close == timeOfDayValue) %>" value="<%= timeOfDayValue %>" />
+								<aui:option label="<%= timeOfDayDisplay %>" selected="<%= close == timeOfDayValue %>" value="<%= timeOfDayValue %>" />
 
 							<%
 							}

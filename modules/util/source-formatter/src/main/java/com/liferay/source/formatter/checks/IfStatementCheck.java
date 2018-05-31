@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  */
 public abstract class IfStatementCheck extends BaseFileCheck {
 
-	protected void checkIfClauseParentheses(
+	protected int checkIfClauseParentheses(
 		String ifClause, String fileName, int lineNumber) {
 
 		ifClause = stripQuotes(ifClause);
@@ -38,16 +38,16 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			!ifClause.matches("[^()]*\\([^()]*\\)[^()]*")) {
 
 			addMessage(
-				fileName, "Redundant parentheses in if-statement",
-				"if_statement_parentheses.markdown", lineNumber);
+				fileName, "Redundant parentheses", "parentheses.markdown",
+				lineNumber);
 
-			return;
+			return -1;
 		}
 
 		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
 			ifClause.contains("/*") || ifClause.contains("*/")) {
 
-			return;
+			return -1;
 		}
 
 		_checkMissingParentheses(ifClause, fileName, lineNumber);
@@ -56,20 +56,24 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			_hasRedundantParentheses(ifClause, "&&", "||")) {
 
 			addMessage(
-				fileName, "Redundant parentheses in if-statement",
-				"if_statement_parentheses.markdown", lineNumber);
+				fileName, "Redundant parentheses", "parentheses.markdown",
+				lineNumber);
 
-			return;
+			return -1;
 		}
 
 		int x = ifClause.indexOf(StringPool.OPEN_PARENTHESIS);
+
+		int parenthesisIndex = 1;
 
 		while (true) {
 			x = ifClause.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
 
 			if (x == -1) {
-				break;
+				return -1;
 			}
+
+			parenthesisIndex++;
 
 			char previousChar = ifClause.charAt(x - 1);
 
@@ -78,6 +82,14 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				(previousChar != CharPool.SPACE)) {
 
 				continue;
+			}
+
+			if (previousChar == CharPool.SPACE) {
+				String s = StringUtil.trim(ifClause.substring(0, x - 1));
+
+				if (Character.isLetterOrDigit(s.charAt(s.length() - 1))) {
+					continue;
+				}
 			}
 
 			int y = x;
@@ -90,15 +102,26 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 				if (getLevel(s) == 0) {
 					char nextChar = ifClause.charAt(y + 1);
 
+					if (!(this instanceof JavaIfStatementCheck) &&
+						(previousChar == CharPool.OPEN_PARENTHESIS) &&
+						(nextChar == CharPool.CLOSE_PARENTHESIS)) {
+
+						addMessage(
+							fileName, "Redundant parentheses",
+							"parentheses.markdown", lineNumber);
+
+						return parenthesisIndex;
+					}
+
 					if (((nextChar == CharPool.CLOSE_PARENTHESIS) ||
 						 (nextChar == CharPool.SPACE)) &&
 						_hasRedundantParentheses(s)) {
 
 						addMessage(
-							fileName, "Redundant parentheses in if-statement",
-							"if_statement_parentheses.markdown", lineNumber);
+							fileName, "Redundant parentheses",
+							"parentheses.markdown", lineNumber);
 
-						return;
+						return parenthesisIndex;
 					}
 
 					break;
@@ -124,8 +147,8 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 			if (getLevel(s) == 0) {
 				addMessage(
-					fileName, "Missing parentheses in if-statement",
-					"if_statement_parentheses.markdown", lineNumber);
+					fileName, "Missing parentheses", "parentheses.markdown",
+					lineNumber);
 
 				return;
 			}
@@ -177,8 +200,8 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 
 				if (_hasMissingParentheses(s)) {
 					addMessage(
-						fileName, "Missing parentheses in if-statement",
-						"if_statement_parentheses.markdown", lineNumber);
+						fileName, "Missing parentheses", "parentheses.markdown",
+						lineNumber);
 
 					return;
 				}

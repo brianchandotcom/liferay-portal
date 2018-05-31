@@ -131,7 +131,7 @@ portletDisplay.setURLBack(redirect);
 							<aui:input ignoreRequestValue="<%= true %>" label="<%= c + StringPool.PERIOD %>" localized="<%= true %>" name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + c %>" type="text" value="<%= value %>" />
 						</div>
 
-						<c:if test="<%= (choicesCount > 2) %>">
+						<c:if test="<%= choicesCount > 2 %>">
 							<div class="delete-poll-choice">
 								<aui:button cssClass="btn-delete" onClick='<%= renderResponse.getNamespace() + "deletePollChoice(" + i + ");" %>' value="delete" />
 							</div>

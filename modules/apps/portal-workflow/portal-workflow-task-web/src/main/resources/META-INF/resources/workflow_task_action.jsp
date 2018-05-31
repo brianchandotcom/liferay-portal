@@ -36,7 +36,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
-	showExpanded="<%= (row == null) %>"
+	showExpanded="<%= row == null %>"
 >
 	<c:if test="<%= !workflowTask.isCompleted() && workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
 

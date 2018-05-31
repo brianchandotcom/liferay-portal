@@ -4,10 +4,10 @@ import {Config} from 'metal-state';
 
 import './dialogs/SelectMappingDialog.es';
 import './dialogs/SelectMappingTypeDialog.es';
-import './render/FragmentsEditorRender.es';
+import './fragment_entry_link/FragmentEntryLinkList.es';
 import './sidebar/FragmentsEditorSidebar.es';
 import './toolbar/FragmentsEditorToolbar.es';
-import FragmentEntryLink from './render/FragmentEntryLink.es';
+import FragmentEntryLink from './fragment_entry_link/FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
 
 /**

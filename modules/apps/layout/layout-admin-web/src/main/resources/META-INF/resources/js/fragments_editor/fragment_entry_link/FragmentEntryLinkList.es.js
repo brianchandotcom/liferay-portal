@@ -2,14 +2,14 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 
 import './FragmentEntryLink.es';
-import templates from './FragmentsEditorRender.soy';
+import templates from './FragmentEntryLinkList.soy';
 
 /**
- * FragmentsEditorRender
+ * FragmentEntryLinkList
  * @review
  */
 
-class FragmentsEditorRender extends Component {
+class FragmentEntryLinkList extends Component {
 
 	/**
 	 * Gives focus to the specified fragmentEntryLinkId
@@ -84,9 +84,9 @@ class FragmentsEditorRender extends Component {
  * @type {!Object}
  */
 
-FragmentsEditorRender.STATE = {};
+FragmentEntryLinkList.STATE = {};
 
-Soy.register(FragmentsEditorRender, templates);
+Soy.register(FragmentEntryLinkList, templates);
 
-export {FragmentsEditorRender};
-export default FragmentsEditorRender;
+export {FragmentEntryLinkList};
+export default FragmentEntryLinkList;

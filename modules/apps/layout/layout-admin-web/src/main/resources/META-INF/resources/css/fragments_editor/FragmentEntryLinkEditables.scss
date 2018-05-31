@@ -35,7 +35,7 @@ lfr-editable {
 		box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
 	}
 
-	.fragments-editor-render.translating & {
+	.fragment-entry-link-list.translating & {
 		background-color: fade_out($fragmentEditableFieldGridDefaultColor, 0.9);
 		box-shadow: 0 0 0 1px $fragmentEditableFieldGridDefaultColor;
 
@@ -56,7 +56,7 @@ lfr-editable {
 		}
 	}
 
-	.fragments-editor-render.mapping & {
+	.fragment-entry-link-list.mapping & {
 		box-shadow: 0 0 0 1px $fragmentEditableFieldGridDefaultColor;
 
 		&,

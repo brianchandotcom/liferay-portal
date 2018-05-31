@@ -37,17 +37,6 @@ public class OAuth2ApplicationScopeAliasesImpl
 	}
 
 	@Override
-	public void setScopeAliasesList(List<String> scopeAliasesList) {
-		ArrayList<String> list = new ArrayList<>(scopeAliasesList);
-
-		list.sort(null);
-
-		String scopeAliases = StringUtil.merge(list, StringPool.SPACE);
-
-		setScopeAliases(scopeAliases);
-	}
-
-	@Override
 	public void setScopeAliases(String scopeAliases) {
 		super.setScopeAliases(scopeAliases);
 
@@ -58,4 +47,16 @@ public class OAuth2ApplicationScopeAliasesImpl
 			setScopeAliasesHash(0);
 		}
 	}
+
+	@Override
+	public void setScopeAliasesList(List<String> scopeAliasesList) {
+		ArrayList<String> list = new ArrayList<>(scopeAliasesList);
+
+		list.sort(null);
+
+		String scopeAliases = StringUtil.merge(list, StringPool.SPACE);
+
+		setScopeAliases(scopeAliases);
+	}
+
 }

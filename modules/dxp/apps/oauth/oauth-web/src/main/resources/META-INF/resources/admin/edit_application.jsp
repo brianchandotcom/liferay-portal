@@ -27,7 +27,7 @@ OAuthApplication oAuthApplication = OAuthApplicationLocalServiceUtil.fetchOAuthA
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
-	localizeTitle="<%= (oAuthApplication == null) %>"
+	localizeTitle="<%= oAuthApplication == null %>"
 	title='<%= (oAuthApplication == null) ? "new-application" : oAuthApplication.getName() %>'
 />
 

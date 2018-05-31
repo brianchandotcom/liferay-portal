@@ -70,7 +70,7 @@ if (useDefaultRestartOptions) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	localizeTitle="<%= (spiDefinition == null) %>"
+	localizeTitle="<%= spiDefinition == null %>"
 	title='<%= (spiDefinition == null) ? LanguageUtil.get(request, "add-spi") : name + " (" + LanguageUtil.get(request, SPIAdminConstants.getStatusLabel(status)) + ")" %>'
 />
 
@@ -110,7 +110,7 @@ if (useDefaultRestartOptions) {
 			title="general"
 		>
 			<aui:fieldset>
-				<aui:input autoFocus="<%= (spiDefinition == null) && windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= (spiDefinition != null) %>" name="name" />
+				<aui:input autoFocus="<%= (spiDefinition == null) && windowState.equals(WindowState.MAXIMIZED) %>" disabled="<%= spiDefinition != null %>" name="name" />
 
 				<aui:input autoFocus="<%= (spiDefinition != null) && windowState.equals(WindowState.MAXIMIZED) %>" name="description" />
 			</aui:fieldset>

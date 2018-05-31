@@ -39,7 +39,7 @@ if (auditEventId > 0) {
 <liferay-ui:header
 	backURL='<%= Validator.isNotNull(referrer) ? referrer : "javascript:history.go(-1);" %>'
 	escapeXml="<%= false %>"
-	localizeTitle="<%= (auditEvent == null) %>"
+	localizeTitle="<%= auditEvent == null %>"
 	title='<%= (auditEvent == null) ? "audit-event" : auditEvent.getEventType() + " (" + eventTypeAction + ")" %>'
 />
 

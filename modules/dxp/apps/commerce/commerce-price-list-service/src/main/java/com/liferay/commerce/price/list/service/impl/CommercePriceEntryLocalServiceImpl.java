@@ -15,6 +15,7 @@
 package com.liferay.commerce.price.list.service.impl;
 
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
+import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
@@ -24,6 +25,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -352,8 +355,17 @@ public class CommercePriceEntryLocalServiceImpl
 		// Update
 
 		if (commercePriceEntryId > 0) {
-			return updateCommercePriceEntry(
-				commercePriceEntryId, price, promoPrice, serviceContext);
+			try {
+				return updateCommercePriceEntry(
+					commercePriceEntryId, price, promoPrice, serviceContext);
+			}
+			catch (NoSuchPriceEntryException nspee) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find price entry with ID: " +
+							commercePriceEntryId);
+				}
+			}
 		}
 
 		if (Validator.isNotNull(externalReferenceCode)) {
@@ -517,6 +529,9 @@ public class CommercePriceEntryLocalServiceImpl
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommercePriceEntryLocalServiceImpl.class);
 
 	@ServiceReference(type = CPInstanceLocalService.class)
 	private CPInstanceLocalService _cpInstanceLocalService;

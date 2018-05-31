@@ -29,7 +29,6 @@ import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpdate
 import com.liferay.commerce.data.integration.apio.internal.form.PriceEntryUpserterForm;
 import com.liferay.commerce.data.integration.apio.internal.util.PriceEntryHelper;
 import com.liferay.commerce.price.list.exception.DuplicateCommercePriceEntryException;
-import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
@@ -177,13 +176,6 @@ public class PriceEntryNestedCollectionResource
 				priceEntryUpserterForm.getSkuExternalReferenceCode(),
 				priceEntryUpserterForm.getPrice(),
 				priceEntryUpserterForm.getPromoPrice());
-		}
-		catch (NoSuchPriceEntryException nspee) {
-			throw new NotFoundException(
-				String.format(
-					"Unable to update price entry: " +
-						nspee.getLocalizedMessage()),
-				nspee);
 		}
 		catch (NoSuchCPInstanceException nscpie) {
 			throw new NotFoundException(

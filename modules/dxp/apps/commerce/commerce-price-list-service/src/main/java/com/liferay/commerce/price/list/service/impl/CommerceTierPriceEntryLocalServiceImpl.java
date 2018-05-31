@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -333,9 +335,18 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		// Update
 
 		if (commerceTierPriceEntryId > 0) {
-			return updateCommerceTierPriceEntry(
-				commerceTierPriceEntryId, price, promoPrice, minQuantity,
-				serviceContext);
+			try {
+				return updateCommerceTierPriceEntry(
+					commerceTierPriceEntryId, price, promoPrice, minQuantity,
+					serviceContext);
+			}
+			catch (NoSuchTierPriceEntryException nstpee) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find tier price entry with ID: " +
+							commerceTierPriceEntryId);
+				}
+			}
 		}
 
 		if (Validator.isNotNull(externalReferenceCode)) {
@@ -510,6 +521,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceTierPriceEntryLocalServiceImpl.class);
 
 	@BeanReference(type = CommercePriceEntryPersistence.class)
 	private CommercePriceEntryPersistence _commercePriceEntryPersistence;

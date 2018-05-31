@@ -30,7 +30,6 @@ import com.liferay.commerce.data.integration.apio.internal.form.TierPriceEntryUp
 import com.liferay.commerce.data.integration.apio.internal.util.TierPriceEntryHelper;
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
-import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.portal.apio.permission.HasPermission;
@@ -188,13 +187,6 @@ public class TierPriceEntryNestedCollectionResource
 				tierPriceEntryUpserterForm.getExternalReferenceCode(),
 				tierPriceEntryUpserterForm.
 					getPriceEntryExternalReferenceCode());
-		}
-		catch (NoSuchTierPriceEntryException nstpee) {
-			throw new NotFoundException(
-				String.format(
-					"Unable to update tier price entry: " +
-						nstpee.getLocalizedMessage()),
-				nstpee);
 		}
 		catch (NoSuchPriceEntryException nspee) {
 			throw new NotFoundException(

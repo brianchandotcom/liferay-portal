@@ -653,6 +653,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		return 0;
 	}
 
+	protected String[] getSkipImportReferenceStagedModelNames() {
+		return null;
+	}
+
 	protected void importAssetCategories(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
@@ -842,7 +846,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			if (className.equals(AssetCategory.class.getName()) ||
 				className.equals(RatingsEntry.class.getName()) ||
-				className.equals(stagedModelClassName)) {
+				className.equals(stagedModelClassName) ||
+				ArrayUtil.contains(
+					getSkipImportReferenceStagedModelNames(), className,
+					false)) {
 
 				continue;
 			}

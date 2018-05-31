@@ -38,9 +38,9 @@ public class CommerceCurrencyServiceImpl
 	@Override
 	public CommerceCurrency addCommerceCurrency(
 			String code, Map<Locale, String> nameMap, BigDecimal rate,
-			String formatPattern, int maxFractionDigits, int minFractionDigits,
-			String roundingMode, boolean primary, double priority,
-			boolean active, ServiceContext serviceContext)
+			Map<Locale, String> formatPatternMap, int maxFractionDigits,
+			int minFractionDigits, String roundingMode, boolean primary,
+			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCurrencyPermission.check(
@@ -48,7 +48,7 @@ public class CommerceCurrencyServiceImpl
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
 		return commerceCurrencyLocalService.addCommerceCurrency(
-			code, nameMap, rate, formatPattern, maxFractionDigits,
+			code, nameMap, rate, formatPatternMap, maxFractionDigits,
 			minFractionDigits, roundingMode, primary, priority, active,
 			serviceContext);
 	}
@@ -150,9 +150,10 @@ public class CommerceCurrencyServiceImpl
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
 			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
-			BigDecimal rate, String formatPattern, int maxFractionDigits,
-			int minFractionDigits, String roundingMode, boolean primary,
-			double priority, boolean active, ServiceContext serviceContext)
+			BigDecimal rate, Map<Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -164,8 +165,8 @@ public class CommerceCurrencyServiceImpl
 
 		return commerceCurrencyLocalService.updateCommerceCurrency(
 			commerceCurrency.getCommerceCurrencyId(), code, nameMap, rate,
-			formatPattern, maxFractionDigits, minFractionDigits, roundingMode,
-			primary, priority, active, serviceContext);
+			formatPatternMap, maxFractionDigits, minFractionDigits,
+			roundingMode, primary, priority, active, serviceContext);
 	}
 
 	@Override

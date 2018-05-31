@@ -65,9 +65,9 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public CommerceCurrency addCommerceCurrency(
 			String code, Map<Locale, String> nameMap, BigDecimal rate,
-			String formatPattern, int maxFractionDigits, int minFractionDigits,
-			String roundingMode, boolean primary, double priority,
-			boolean active, ServiceContext serviceContext)
+			Map<Locale, String> formatPatternMap, int maxFractionDigits,
+			int minFractionDigits, String roundingMode, boolean primary,
+			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -84,8 +84,10 @@ public class CommerceCurrencyLocalServiceImpl
 				RoundingTypeConfiguration.class,
 				new SystemSettingsLocator(RoundingTypeConstants.SERVICE_NAME));
 
-		if (Validator.isNull(formatPattern)) {
-			formatPattern = roundingTypeConfiguration.formatPattern();
+		if (formatPatternMap.isEmpty()) {
+			formatPatternMap.put(
+				serviceContext.getLocale(),
+				roundingTypeConfiguration.formatPattern());
 		}
 
 		if (Validator.isNull(roundingMode)) {
@@ -108,7 +110,7 @@ public class CommerceCurrencyLocalServiceImpl
 		commerceCurrency.setCode(code);
 		commerceCurrency.setNameMap(nameMap);
 		commerceCurrency.setRate(rate);
-		commerceCurrency.setFormatPattern(formatPattern);
+		commerceCurrency.setFormatPatternMap(formatPatternMap);
 		commerceCurrency.setMaxFractionDigits(maxFractionDigits);
 		commerceCurrency.setMinFractionDigits(minFractionDigits);
 		commerceCurrency.setRoundingMode(roundingMode);
@@ -216,22 +218,25 @@ public class CommerceCurrencyLocalServiceImpl
 			boolean primary = jsonObject.getBoolean("primary");
 			double priority = jsonObject.getDouble("priority");
 
-			Map<Locale, String> nameMap = new HashMap<>();
-
-			nameMap.put(serviceContext.getLocale(), name);
-
 			RoundingTypeConfiguration roundingTypeConfiguration =
 				_configurationProvider.getConfiguration(
 					RoundingTypeConfiguration.class,
 					new SystemSettingsLocator(
 						RoundingTypeConstants.SERVICE_NAME));
 
+			Map<Locale, String> nameMap = new HashMap<>();
+			Map<Locale, String> formatPatternMap = new HashMap<>();
+
+			nameMap.put(serviceContext.getLocale(), name);
+			formatPatternMap.put(
+				serviceContext.getLocale(),
+				roundingTypeConfiguration.formatPattern());
+
 			RoundingMode roundingMode =
 				roundingTypeConfiguration.roundingMode();
 
 			commerceCurrencyLocalService.addCommerceCurrency(
-				code, nameMap, BigDecimal.ONE,
-				roundingTypeConfiguration.formatPattern(),
+				code, nameMap, BigDecimal.ONE, formatPatternMap,
 				roundingTypeConfiguration.maximumFractionDigits(),
 				roundingTypeConfiguration.minimumFractionDigits(),
 				roundingMode.name(), primary, priority, true, serviceContext);
@@ -282,9 +287,10 @@ public class CommerceCurrencyLocalServiceImpl
 	@Override
 	public CommerceCurrency updateCommerceCurrency(
 			long commerceCurrencyId, String code, Map<Locale, String> nameMap,
-			BigDecimal rate, String formatPattern, int maxFractionDigits,
-			int minFractionDigits, String roundingMode, boolean primary,
-			double priority, boolean active, ServiceContext serviceContext)
+			BigDecimal rate, Map<Locale, String> formatPatternMap,
+			int maxFractionDigits, int minFractionDigits, String roundingMode,
+			boolean primary, double priority, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -303,8 +309,10 @@ public class CommerceCurrencyLocalServiceImpl
 				RoundingTypeConfiguration.class,
 				new SystemSettingsLocator(RoundingTypeConstants.SERVICE_NAME));
 
-		if (Validator.isNull(formatPattern)) {
-			formatPattern = roundingTypeConfiguration.formatPattern();
+		if (formatPatternMap.isEmpty()) {
+			formatPatternMap.put(
+				serviceContext.getLocale(),
+				roundingTypeConfiguration.formatPattern());
 		}
 
 		if (Validator.isNull(roundingMode)) {
@@ -317,7 +325,7 @@ public class CommerceCurrencyLocalServiceImpl
 		commerceCurrency.setCode(code);
 		commerceCurrency.setNameMap(nameMap);
 		commerceCurrency.setRate(rate);
-		commerceCurrency.setFormatPattern(formatPattern);
+		commerceCurrency.setFormatPatternMap(formatPatternMap);
 		commerceCurrency.setMaxFractionDigits(maxFractionDigits);
 		commerceCurrency.setMinFractionDigits(minFractionDigits);
 		commerceCurrency.setRoundingMode(roundingMode);

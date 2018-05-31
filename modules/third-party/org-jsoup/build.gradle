@@ -1,0 +1,37 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+apply plugin: "nebula.optional-base"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "org.jsoup", name: "jsoup", optional, version: "1.10.2"
+}
+
+deploy {
+	finalizedBy deployJar
+}
+
+deployJar {
+	ext {
+		autoClean = false
+	}
+
+	from jar
+	into "../../../lib/portal"
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/jsoup/nodes/FreemarkerCompatibleElement.java"
+
+	originalLibModuleName = "jsoup"
+}

@@ -2002,17 +2002,9 @@ public class ProjectTemplatesTest {
 			workspaceGradlePluginVersion = matcher.group(1);
 		}
 
-		boolean versionsEqual = standaloneGradlePluginVersion.equals(
-			workspaceGradlePluginVersion);
-
-		if (!versionsEqual) {
-			String message = String.format(
-				"com.liferay.plugin versions don't match (standalone: %s, " +
-					"workspace: %s)",
-				standaloneGradlePluginVersion, workspaceGradlePluginVersion);
-
-			Assert.assertTrue(message, versionsEqual);
-		}
+		Assert.assertEquals(
+			"com.liferay.plugin versions do not match",
+			standaloneGradlePluginVersion, workspaceGradlePluginVersion);
 	}
 
 	@Test

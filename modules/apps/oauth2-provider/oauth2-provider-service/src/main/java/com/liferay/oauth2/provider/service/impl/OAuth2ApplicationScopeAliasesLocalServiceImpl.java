@@ -109,8 +109,8 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
 				oAuth2ApplicationScopeAliasesList) {
 
-			if (scopeAliasesList.equals(
-					oAuth2ApplicationScopeAliases.getScopeAliasesList())) {
+			if (scopeAliases.equals(
+					oAuth2ApplicationScopeAliases.getScopeAliases())) {
 
 				return oAuth2ApplicationScopeAliases;
 			}

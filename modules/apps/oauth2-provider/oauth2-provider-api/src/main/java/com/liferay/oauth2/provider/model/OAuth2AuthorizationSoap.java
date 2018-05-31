@@ -42,10 +42,12 @@ public class OAuth2AuthorizationSoap implements Serializable {
 		soapModel.setOAuth2ApplicationId(model.getOAuth2ApplicationId());
 		soapModel.setOAuth2ApplicationScopeAliasesId(model.getOAuth2ApplicationScopeAliasesId());
 		soapModel.setAccessTokenContent(model.getAccessTokenContent());
+		soapModel.setAccessTokenContentHash(model.getAccessTokenContentHash());
 		soapModel.setAccessTokenCreateDate(model.getAccessTokenCreateDate());
 		soapModel.setAccessTokenExpirationDate(model.getAccessTokenExpirationDate());
 		soapModel.setRemoteIPInfo(model.getRemoteIPInfo());
 		soapModel.setRefreshTokenContent(model.getRefreshTokenContent());
+		soapModel.setRefreshTokenContentHash(model.getRefreshTokenContentHash());
 		soapModel.setRefreshTokenCreateDate(model.getRefreshTokenCreateDate());
 		soapModel.setRefreshTokenExpirationDate(model.getRefreshTokenExpirationDate());
 
@@ -168,6 +170,14 @@ public class OAuth2AuthorizationSoap implements Serializable {
 		_accessTokenContent = accessTokenContent;
 	}
 
+	public long getAccessTokenContentHash() {
+		return _accessTokenContentHash;
+	}
+
+	public void setAccessTokenContentHash(long accessTokenContentHash) {
+		_accessTokenContentHash = accessTokenContentHash;
+	}
+
 	public Date getAccessTokenCreateDate() {
 		return _accessTokenCreateDate;
 	}
@@ -200,6 +210,14 @@ public class OAuth2AuthorizationSoap implements Serializable {
 		_refreshTokenContent = refreshTokenContent;
 	}
 
+	public long getRefreshTokenContentHash() {
+		return _refreshTokenContentHash;
+	}
+
+	public void setRefreshTokenContentHash(long refreshTokenContentHash) {
+		_refreshTokenContentHash = refreshTokenContentHash;
+	}
+
 	public Date getRefreshTokenCreateDate() {
 		return _refreshTokenCreateDate;
 	}
@@ -224,10 +242,12 @@ public class OAuth2AuthorizationSoap implements Serializable {
 	private long _oAuth2ApplicationId;
 	private long _oAuth2ApplicationScopeAliasesId;
 	private String _accessTokenContent;
+	private long _accessTokenContentHash;
 	private Date _accessTokenCreateDate;
 	private Date _accessTokenExpirationDate;
 	private String _remoteIPInfo;
 	private String _refreshTokenContent;
+	private long _refreshTokenContentHash;
 	private Date _refreshTokenCreateDate;
 	private Date _refreshTokenExpirationDate;
 }

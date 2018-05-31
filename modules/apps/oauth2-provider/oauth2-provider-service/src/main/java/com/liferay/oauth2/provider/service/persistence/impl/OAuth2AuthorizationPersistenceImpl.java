@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -58,7 +57,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1132,106 +1130,162 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 	private static final String _FINDER_COLUMN_OAUTH2APPLICATIONID_OAUTH2APPLICATIONID_2 =
 		"oAuth2Authorization.oAuth2ApplicationId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ACCESSTOKENCONTENTHASH =
+		new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByAccessTokenContent",
-			new String[] { String.class.getName() },
-			OAuth2AuthorizationModelImpl.ACCESSTOKENCONTENT_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENT = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+			OAuth2AuthorizationImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByAccessTokenContentHash",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCESSTOKENCONTENTHASH =
+		new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+			OAuth2AuthorizationImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByAccessTokenContentHash",
+			new String[] { Long.class.getName() },
+			OAuth2AuthorizationModelImpl.ACCESSTOKENCONTENTHASH_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENTHASH = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByAccessTokenContent", new String[] { String.class.getName() });
+			"countByAccessTokenContentHash",
+			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns the o auth2 authorization where accessTokenContent = &#63; or throws a {@link NoSuchOAuth2AuthorizationException} if it could not be found.
+	 * Returns all the o auth2 authorizations where accessTokenContentHash = &#63;.
 	 *
-	 * @param accessTokenContent the access token content
-	 * @return the matching o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
+	 * @param accessTokenContentHash the access token content hash
+	 * @return the matching o auth2 authorizations
 	 */
 	@Override
-	public OAuth2Authorization findByAccessTokenContent(
-		String accessTokenContent) throws NoSuchOAuth2AuthorizationException {
-		OAuth2Authorization oAuth2Authorization = fetchByAccessTokenContent(accessTokenContent);
+	public List<OAuth2Authorization> findByAccessTokenContentHash(
+		long accessTokenContentHash) {
+		return findByAccessTokenContentHash(accessTokenContentHash,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
 
-		if (oAuth2Authorization == null) {
-			StringBundler msg = new StringBundler(4);
+	/**
+	 * Returns a range of all the o auth2 authorizations where accessTokenContentHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2AuthorizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accessTokenContentHash the access token content hash
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @return the range of matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByAccessTokenContentHash(
+		long accessTokenContentHash, int start, int end) {
+		return findByAccessTokenContentHash(accessTokenContentHash, start, end,
+			null);
+	}
 
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+	/**
+	 * Returns an ordered range of all the o auth2 authorizations where accessTokenContentHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2AuthorizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accessTokenContentHash the access token content hash
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByAccessTokenContentHash(
+		long accessTokenContentHash, int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+		return findByAccessTokenContentHash(accessTokenContentHash, start, end,
+			orderByComparator, true);
+	}
 
-			msg.append("accessTokenContent=");
-			msg.append(accessTokenContent);
+	/**
+	 * Returns an ordered range of all the o auth2 authorizations where accessTokenContentHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2AuthorizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param accessTokenContentHash the access token content hash
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByAccessTokenContentHash(
+		long accessTokenContentHash, int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchOAuth2AuthorizationException(msg.toString());
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCESSTOKENCONTENTHASH;
+			finderArgs = new Object[] { accessTokenContentHash };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ACCESSTOKENCONTENTHASH;
+			finderArgs = new Object[] {
+					accessTokenContentHash,
+					
+					start, end, orderByComparator
+				};
 		}
 
-		return oAuth2Authorization;
-	}
-
-	/**
-	 * Returns the o auth2 authorization where accessTokenContent = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param accessTokenContent the access token content
-	 * @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByAccessTokenContent(
-		String accessTokenContent) {
-		return fetchByAccessTokenContent(accessTokenContent, true);
-	}
-
-	/**
-	 * Returns the o auth2 authorization where accessTokenContent = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param accessTokenContent the access token content
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByAccessTokenContent(
-		String accessTokenContent, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { accessTokenContent };
-
-		Object result = null;
+		List<OAuth2Authorization> list = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT,
+			list = (List<OAuth2Authorization>)finderCache.getResult(finderPath,
 					finderArgs, this);
-		}
 
-		if (result instanceof OAuth2Authorization) {
-			OAuth2Authorization oAuth2Authorization = (OAuth2Authorization)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (OAuth2Authorization oAuth2Authorization : list) {
+					if ((accessTokenContentHash != oAuth2Authorization.getAccessTokenContentHash())) {
+						list = null;
 
-			if (!Objects.equals(accessTokenContent,
-						oAuth2Authorization.getAccessTokenContent())) {
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
 
 			query.append(_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE);
 
-			boolean bindAccessTokenContent = false;
+			query.append(_FINDER_COLUMN_ACCESSTOKENCONTENTHASH_ACCESSTOKENCONTENTHASH_2);
 
-			if (accessTokenContent == null) {
-				query.append(_FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_1);
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (accessTokenContent.equals("")) {
-				query.append(_FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_3);
-			}
-			else {
-				bindAccessTokenContent = true;
-
-				query.append(_FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_2);
+			else
+			 if (pagination) {
+				query.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -1245,38 +1299,27 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindAccessTokenContent) {
-					qPos.add(accessTokenContent);
-				}
+				qPos.add(accessTokenContentHash);
 
-				List<OAuth2Authorization> list = q.list();
+				if (!pagination) {
+					list = (List<OAuth2Authorization>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT,
-						finderArgs, list);
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"OAuth2AuthorizationPersistenceImpl.fetchByAccessTokenContent(String, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					OAuth2Authorization oAuth2Authorization = list.get(0);
-
-					result = oAuth2Authorization;
-
-					cacheResult(oAuth2Authorization);
+					list = (List<OAuth2Authorization>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT,
-					finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1285,39 +1328,297 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (OAuth2Authorization)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the o auth2 authorization where accessTokenContent = &#63; from the database.
+	 * Returns the first o auth2 authorization in the ordered set where accessTokenContentHash = &#63;.
 	 *
-	 * @param accessTokenContent the access token content
-	 * @return the o auth2 authorization that was removed
+	 * @param accessTokenContentHash the access token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
 	 */
 	@Override
-	public OAuth2Authorization removeByAccessTokenContent(
-		String accessTokenContent) throws NoSuchOAuth2AuthorizationException {
-		OAuth2Authorization oAuth2Authorization = findByAccessTokenContent(accessTokenContent);
+	public OAuth2Authorization findByAccessTokenContentHash_First(
+		long accessTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws NoSuchOAuth2AuthorizationException {
+		OAuth2Authorization oAuth2Authorization = fetchByAccessTokenContentHash_First(accessTokenContentHash,
+				orderByComparator);
 
-		return remove(oAuth2Authorization);
+		if (oAuth2Authorization != null) {
+			return oAuth2Authorization;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("accessTokenContentHash=");
+		msg.append(accessTokenContentHash);
+
+		msg.append("}");
+
+		throw new NoSuchOAuth2AuthorizationException(msg.toString());
 	}
 
 	/**
-	 * Returns the number of o auth2 authorizations where accessTokenContent = &#63;.
+	 * Returns the first o auth2 authorization in the ordered set where accessTokenContentHash = &#63;.
 	 *
-	 * @param accessTokenContent the access token content
+	 * @param accessTokenContentHash the access token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization fetchByAccessTokenContentHash_First(
+		long accessTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+		List<OAuth2Authorization> list = findByAccessTokenContentHash(accessTokenContentHash,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last o auth2 authorization in the ordered set where accessTokenContentHash = &#63;.
+	 *
+	 * @param accessTokenContentHash the access token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization findByAccessTokenContentHash_Last(
+		long accessTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws NoSuchOAuth2AuthorizationException {
+		OAuth2Authorization oAuth2Authorization = fetchByAccessTokenContentHash_Last(accessTokenContentHash,
+				orderByComparator);
+
+		if (oAuth2Authorization != null) {
+			return oAuth2Authorization;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("accessTokenContentHash=");
+		msg.append(accessTokenContentHash);
+
+		msg.append("}");
+
+		throw new NoSuchOAuth2AuthorizationException(msg.toString());
+	}
+
+	/**
+	 * Returns the last o auth2 authorization in the ordered set where accessTokenContentHash = &#63;.
+	 *
+	 * @param accessTokenContentHash the access token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization fetchByAccessTokenContentHash_Last(
+		long accessTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+		int count = countByAccessTokenContentHash(accessTokenContentHash);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<OAuth2Authorization> list = findByAccessTokenContentHash(accessTokenContentHash,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where accessTokenContentHash = &#63;.
+	 *
+	 * @param oAuth2AuthorizationId the primary key of the current o auth2 authorization
+	 * @param accessTokenContentHash the access token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
+	 */
+	@Override
+	public OAuth2Authorization[] findByAccessTokenContentHash_PrevAndNext(
+		long oAuth2AuthorizationId, long accessTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws NoSuchOAuth2AuthorizationException {
+		OAuth2Authorization oAuth2Authorization = findByPrimaryKey(oAuth2AuthorizationId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			OAuth2Authorization[] array = new OAuth2AuthorizationImpl[3];
+
+			array[0] = getByAccessTokenContentHash_PrevAndNext(session,
+					oAuth2Authorization, accessTokenContentHash,
+					orderByComparator, true);
+
+			array[1] = oAuth2Authorization;
+
+			array[2] = getByAccessTokenContentHash_PrevAndNext(session,
+					oAuth2Authorization, accessTokenContentHash,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected OAuth2Authorization getByAccessTokenContentHash_PrevAndNext(
+		Session session, OAuth2Authorization oAuth2Authorization,
+		long accessTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE);
+
+		query.append(_FINDER_COLUMN_ACCESSTOKENCONTENTHASH_ACCESSTOKENCONTENTHASH_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(accessTokenContentHash);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(oAuth2Authorization);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<OAuth2Authorization> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the o auth2 authorizations where accessTokenContentHash = &#63; from the database.
+	 *
+	 * @param accessTokenContentHash the access token content hash
+	 */
+	@Override
+	public void removeByAccessTokenContentHash(long accessTokenContentHash) {
+		for (OAuth2Authorization oAuth2Authorization : findByAccessTokenContentHash(
+				accessTokenContentHash, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
+			remove(oAuth2Authorization);
+		}
+	}
+
+	/**
+	 * Returns the number of o auth2 authorizations where accessTokenContentHash = &#63;.
+	 *
+	 * @param accessTokenContentHash the access token content hash
 	 * @return the number of matching o auth2 authorizations
 	 */
 	@Override
-	public int countByAccessTokenContent(String accessTokenContent) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENT;
+	public int countByAccessTokenContentHash(long accessTokenContentHash) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENTHASH;
 
-		Object[] finderArgs = new Object[] { accessTokenContent };
+		Object[] finderArgs = new Object[] { accessTokenContentHash };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1326,19 +1627,7 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 			query.append(_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE);
 
-			boolean bindAccessTokenContent = false;
-
-			if (accessTokenContent == null) {
-				query.append(_FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_1);
-			}
-			else if (accessTokenContent.equals("")) {
-				query.append(_FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_3);
-			}
-			else {
-				bindAccessTokenContent = true;
-
-				query.append(_FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_2);
-			}
+			query.append(_FINDER_COLUMN_ACCESSTOKENCONTENTHASH_ACCESSTOKENCONTENTHASH_2);
 
 			String sql = query.toString();
 
@@ -1351,9 +1640,7 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindAccessTokenContent) {
-					qPos.add(accessTokenContent);
-				}
+				qPos.add(accessTokenContentHash);
 
 				count = (Long)q.uniqueResult();
 
@@ -1372,113 +1659,164 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_1 =
-		"oAuth2Authorization.accessTokenContent IS NULL";
-	private static final String _FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_2 =
-		"oAuth2Authorization.accessTokenContent = ?";
-	private static final String _FINDER_COLUMN_ACCESSTOKENCONTENT_ACCESSTOKENCONTENT_3 =
-		"(oAuth2Authorization.accessTokenContent IS NULL OR oAuth2Authorization.accessTokenContent = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_ACCESSTOKENCONTENTHASH_ACCESSTOKENCONTENTHASH_2 =
+		"oAuth2Authorization.accessTokenContentHash = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_REFRESHTOKENCONTENTHASH =
+		new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2AuthorizationImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByRefreshTokenContent",
-			new String[] { String.class.getName() },
-			OAuth2AuthorizationModelImpl.REFRESHTOKENCONTENT_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENT = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+			OAuth2AuthorizationImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByRefreshTokenContentHash",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REFRESHTOKENCONTENTHASH =
+		new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
+			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED,
+			OAuth2AuthorizationImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByRefreshTokenContentHash",
+			new String[] { Long.class.getName() },
+			OAuth2AuthorizationModelImpl.REFRESHTOKENCONTENTHASH_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENTHASH = new FinderPath(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2AuthorizationModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByRefreshTokenContent",
-			new String[] { String.class.getName() });
+			"countByRefreshTokenContentHash",
+			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns the o auth2 authorization where refreshTokenContent = &#63; or throws a {@link NoSuchOAuth2AuthorizationException} if it could not be found.
+	 * Returns all the o auth2 authorizations where refreshTokenContentHash = &#63;.
 	 *
-	 * @param refreshTokenContent the refresh token content
-	 * @return the matching o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
+	 * @param refreshTokenContentHash the refresh token content hash
+	 * @return the matching o auth2 authorizations
 	 */
 	@Override
-	public OAuth2Authorization findByRefreshTokenContent(
-		String refreshTokenContent) throws NoSuchOAuth2AuthorizationException {
-		OAuth2Authorization oAuth2Authorization = fetchByRefreshTokenContent(refreshTokenContent);
+	public List<OAuth2Authorization> findByRefreshTokenContentHash(
+		long refreshTokenContentHash) {
+		return findByRefreshTokenContentHash(refreshTokenContentHash,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
 
-		if (oAuth2Authorization == null) {
-			StringBundler msg = new StringBundler(4);
+	/**
+	 * Returns a range of all the o auth2 authorizations where refreshTokenContentHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2AuthorizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param refreshTokenContentHash the refresh token content hash
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @return the range of matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByRefreshTokenContentHash(
+		long refreshTokenContentHash, int start, int end) {
+		return findByRefreshTokenContentHash(refreshTokenContentHash, start,
+			end, null);
+	}
 
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+	/**
+	 * Returns an ordered range of all the o auth2 authorizations where refreshTokenContentHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2AuthorizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param refreshTokenContentHash the refresh token content hash
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByRefreshTokenContentHash(
+		long refreshTokenContentHash, int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+		return findByRefreshTokenContentHash(refreshTokenContentHash, start,
+			end, orderByComparator, true);
+	}
 
-			msg.append("refreshTokenContent=");
-			msg.append(refreshTokenContent);
+	/**
+	 * Returns an ordered range of all the o auth2 authorizations where refreshTokenContentHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2AuthorizationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param refreshTokenContentHash the refresh token content hash
+	 * @param start the lower bound of the range of o auth2 authorizations
+	 * @param end the upper bound of the range of o auth2 authorizations (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching o auth2 authorizations
+	 */
+	@Override
+	public List<OAuth2Authorization> findByRefreshTokenContentHash(
+		long refreshTokenContentHash, int start, int end,
+		OrderByComparator<OAuth2Authorization> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchOAuth2AuthorizationException(msg.toString());
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REFRESHTOKENCONTENTHASH;
+			finderArgs = new Object[] { refreshTokenContentHash };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_REFRESHTOKENCONTENTHASH;
+			finderArgs = new Object[] {
+					refreshTokenContentHash,
+					
+					start, end, orderByComparator
+				};
 		}
 
-		return oAuth2Authorization;
-	}
-
-	/**
-	 * Returns the o auth2 authorization where refreshTokenContent = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param refreshTokenContent the refresh token content
-	 * @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByRefreshTokenContent(
-		String refreshTokenContent) {
-		return fetchByRefreshTokenContent(refreshTokenContent, true);
-	}
-
-	/**
-	 * Returns the o auth2 authorization where refreshTokenContent = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param refreshTokenContent the refresh token content
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
-	 */
-	@Override
-	public OAuth2Authorization fetchByRefreshTokenContent(
-		String refreshTokenContent, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { refreshTokenContent };
-
-		Object result = null;
+		List<OAuth2Authorization> list = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT,
+			list = (List<OAuth2Authorization>)finderCache.getResult(finderPath,
 					finderArgs, this);
-		}
 
-		if (result instanceof OAuth2Authorization) {
-			OAuth2Authorization oAuth2Authorization = (OAuth2Authorization)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (OAuth2Authorization oAuth2Authorization : list) {
+					if ((refreshTokenContentHash != oAuth2Authorization.getRefreshTokenContentHash())) {
+						list = null;
 
-			if (!Objects.equals(refreshTokenContent,
-						oAuth2Authorization.getRefreshTokenContent())) {
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
 
 			query.append(_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE);
 
-			boolean bindRefreshTokenContent = false;
+			query.append(_FINDER_COLUMN_REFRESHTOKENCONTENTHASH_REFRESHTOKENCONTENTHASH_2);
 
-			if (refreshTokenContent == null) {
-				query.append(_FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_1);
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (refreshTokenContent.equals("")) {
-				query.append(_FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_3);
-			}
-			else {
-				bindRefreshTokenContent = true;
-
-				query.append(_FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_2);
+			else
+			 if (pagination) {
+				query.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -1492,38 +1830,27 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindRefreshTokenContent) {
-					qPos.add(refreshTokenContent);
-				}
+				qPos.add(refreshTokenContentHash);
 
-				List<OAuth2Authorization> list = q.list();
+				if (!pagination) {
+					list = (List<OAuth2Authorization>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT,
-						finderArgs, list);
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"OAuth2AuthorizationPersistenceImpl.fetchByRefreshTokenContent(String, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					OAuth2Authorization oAuth2Authorization = list.get(0);
-
-					result = oAuth2Authorization;
-
-					cacheResult(oAuth2Authorization);
+					list = (List<OAuth2Authorization>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT,
-					finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1532,39 +1859,297 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (OAuth2Authorization)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the o auth2 authorization where refreshTokenContent = &#63; from the database.
+	 * Returns the first o auth2 authorization in the ordered set where refreshTokenContentHash = &#63;.
 	 *
-	 * @param refreshTokenContent the refresh token content
-	 * @return the o auth2 authorization that was removed
+	 * @param refreshTokenContentHash the refresh token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
 	 */
 	@Override
-	public OAuth2Authorization removeByRefreshTokenContent(
-		String refreshTokenContent) throws NoSuchOAuth2AuthorizationException {
-		OAuth2Authorization oAuth2Authorization = findByRefreshTokenContent(refreshTokenContent);
+	public OAuth2Authorization findByRefreshTokenContentHash_First(
+		long refreshTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws NoSuchOAuth2AuthorizationException {
+		OAuth2Authorization oAuth2Authorization = fetchByRefreshTokenContentHash_First(refreshTokenContentHash,
+				orderByComparator);
 
-		return remove(oAuth2Authorization);
+		if (oAuth2Authorization != null) {
+			return oAuth2Authorization;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("refreshTokenContentHash=");
+		msg.append(refreshTokenContentHash);
+
+		msg.append("}");
+
+		throw new NoSuchOAuth2AuthorizationException(msg.toString());
 	}
 
 	/**
-	 * Returns the number of o auth2 authorizations where refreshTokenContent = &#63;.
+	 * Returns the first o auth2 authorization in the ordered set where refreshTokenContentHash = &#63;.
 	 *
-	 * @param refreshTokenContent the refresh token content
+	 * @param refreshTokenContentHash the refresh token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization fetchByRefreshTokenContentHash_First(
+		long refreshTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+		List<OAuth2Authorization> list = findByRefreshTokenContentHash(refreshTokenContentHash,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last o auth2 authorization in the ordered set where refreshTokenContentHash = &#63;.
+	 *
+	 * @param refreshTokenContentHash the refresh token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization findByRefreshTokenContentHash_Last(
+		long refreshTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws NoSuchOAuth2AuthorizationException {
+		OAuth2Authorization oAuth2Authorization = fetchByRefreshTokenContentHash_Last(refreshTokenContentHash,
+				orderByComparator);
+
+		if (oAuth2Authorization != null) {
+			return oAuth2Authorization;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("refreshTokenContentHash=");
+		msg.append(refreshTokenContentHash);
+
+		msg.append("}");
+
+		throw new NoSuchOAuth2AuthorizationException(msg.toString());
+	}
+
+	/**
+	 * Returns the last o auth2 authorization in the ordered set where refreshTokenContentHash = &#63;.
+	 *
+	 * @param refreshTokenContentHash the refresh token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 authorization, or <code>null</code> if a matching o auth2 authorization could not be found
+	 */
+	@Override
+	public OAuth2Authorization fetchByRefreshTokenContentHash_Last(
+		long refreshTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator) {
+		int count = countByRefreshTokenContentHash(refreshTokenContentHash);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<OAuth2Authorization> list = findByRefreshTokenContentHash(refreshTokenContentHash,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the o auth2 authorizations before and after the current o auth2 authorization in the ordered set where refreshTokenContentHash = &#63;.
+	 *
+	 * @param oAuth2AuthorizationId the primary key of the current o auth2 authorization
+	 * @param refreshTokenContentHash the refresh token content hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth2 authorization
+	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
+	 */
+	@Override
+	public OAuth2Authorization[] findByRefreshTokenContentHash_PrevAndNext(
+		long oAuth2AuthorizationId, long refreshTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator)
+		throws NoSuchOAuth2AuthorizationException {
+		OAuth2Authorization oAuth2Authorization = findByPrimaryKey(oAuth2AuthorizationId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			OAuth2Authorization[] array = new OAuth2AuthorizationImpl[3];
+
+			array[0] = getByRefreshTokenContentHash_PrevAndNext(session,
+					oAuth2Authorization, refreshTokenContentHash,
+					orderByComparator, true);
+
+			array[1] = oAuth2Authorization;
+
+			array[2] = getByRefreshTokenContentHash_PrevAndNext(session,
+					oAuth2Authorization, refreshTokenContentHash,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected OAuth2Authorization getByRefreshTokenContentHash_PrevAndNext(
+		Session session, OAuth2Authorization oAuth2Authorization,
+		long refreshTokenContentHash,
+		OrderByComparator<OAuth2Authorization> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE);
+
+		query.append(_FINDER_COLUMN_REFRESHTOKENCONTENTHASH_REFRESHTOKENCONTENTHASH_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(OAuth2AuthorizationModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(refreshTokenContentHash);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(oAuth2Authorization);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<OAuth2Authorization> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the o auth2 authorizations where refreshTokenContentHash = &#63; from the database.
+	 *
+	 * @param refreshTokenContentHash the refresh token content hash
+	 */
+	@Override
+	public void removeByRefreshTokenContentHash(long refreshTokenContentHash) {
+		for (OAuth2Authorization oAuth2Authorization : findByRefreshTokenContentHash(
+				refreshTokenContentHash, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
+			remove(oAuth2Authorization);
+		}
+	}
+
+	/**
+	 * Returns the number of o auth2 authorizations where refreshTokenContentHash = &#63;.
+	 *
+	 * @param refreshTokenContentHash the refresh token content hash
 	 * @return the number of matching o auth2 authorizations
 	 */
 	@Override
-	public int countByRefreshTokenContent(String refreshTokenContent) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENT;
+	public int countByRefreshTokenContentHash(long refreshTokenContentHash) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENTHASH;
 
-		Object[] finderArgs = new Object[] { refreshTokenContent };
+		Object[] finderArgs = new Object[] { refreshTokenContentHash };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1573,19 +2158,7 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 			query.append(_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE);
 
-			boolean bindRefreshTokenContent = false;
-
-			if (refreshTokenContent == null) {
-				query.append(_FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_1);
-			}
-			else if (refreshTokenContent.equals("")) {
-				query.append(_FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_3);
-			}
-			else {
-				bindRefreshTokenContent = true;
-
-				query.append(_FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_2);
-			}
+			query.append(_FINDER_COLUMN_REFRESHTOKENCONTENTHASH_REFRESHTOKENCONTENTHASH_2);
 
 			String sql = query.toString();
 
@@ -1598,9 +2171,7 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (bindRefreshTokenContent) {
-					qPos.add(refreshTokenContent);
-				}
+				qPos.add(refreshTokenContentHash);
 
 				count = (Long)q.uniqueResult();
 
@@ -1619,12 +2190,8 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_1 =
-		"oAuth2Authorization.refreshTokenContent IS NULL";
-	private static final String _FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_2 =
-		"oAuth2Authorization.refreshTokenContent = ?";
-	private static final String _FINDER_COLUMN_REFRESHTOKENCONTENT_REFRESHTOKENCONTENT_3 =
-		"(oAuth2Authorization.refreshTokenContent IS NULL OR oAuth2Authorization.refreshTokenContent = '')";
+	private static final String _FINDER_COLUMN_REFRESHTOKENCONTENTHASH_REFRESHTOKENCONTENTHASH_2 =
+		"oAuth2Authorization.refreshTokenContentHash = ?";
 
 	public OAuth2AuthorizationPersistenceImpl() {
 		setModelClass(OAuth2Authorization.class);
@@ -1658,14 +2225,6 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 	public void cacheResult(OAuth2Authorization oAuth2Authorization) {
 		entityCache.putResult(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2AuthorizationImpl.class, oAuth2Authorization.getPrimaryKey(),
-			oAuth2Authorization);
-
-		finderCache.putResult(FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT,
-			new Object[] { oAuth2Authorization.getAccessTokenContent() },
-			oAuth2Authorization);
-
-		finderCache.putResult(FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT,
-			new Object[] { oAuth2Authorization.getRefreshTokenContent() },
 			oAuth2Authorization);
 
 		oAuth2Authorization.resetOriginalValues();
@@ -1721,9 +2280,6 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((OAuth2AuthorizationModelImpl)oAuth2Authorization,
-			true);
 	}
 
 	@Override
@@ -1735,80 +2291,6 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 			entityCache.removeResult(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
 				OAuth2AuthorizationImpl.class,
 				oAuth2Authorization.getPrimaryKey());
-
-			clearUniqueFindersCache((OAuth2AuthorizationModelImpl)oAuth2Authorization,
-				true);
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl) {
-		Object[] args = new Object[] {
-				oAuth2AuthorizationModelImpl.getAccessTokenContent()
-			};
-
-		finderCache.putResult(FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENT, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT, args,
-			oAuth2AuthorizationModelImpl, false);
-
-		args = new Object[] {
-				oAuth2AuthorizationModelImpl.getRefreshTokenContent()
-			};
-
-		finderCache.putResult(FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENT, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT, args,
-			oAuth2AuthorizationModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl,
-		boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					oAuth2AuthorizationModelImpl.getAccessTokenContent()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENT,
-				args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT,
-				args);
-		}
-
-		if ((oAuth2AuthorizationModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					oAuth2AuthorizationModelImpl.getOriginalAccessTokenContent()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENT,
-				args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_ACCESSTOKENCONTENT,
-				args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					oAuth2AuthorizationModelImpl.getRefreshTokenContent()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENT,
-				args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT,
-				args);
-		}
-
-		if ((oAuth2AuthorizationModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					oAuth2AuthorizationModelImpl.getOriginalRefreshTokenContent()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENT,
-				args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_REFRESHTOKENCONTENT,
-				args);
 		}
 	}
 
@@ -1984,6 +2466,24 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONID,
 				args);
 
+			args = new Object[] {
+					oAuth2AuthorizationModelImpl.getAccessTokenContentHash()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENTHASH,
+				args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCESSTOKENCONTENTHASH,
+				args);
+
+			args = new Object[] {
+					oAuth2AuthorizationModelImpl.getRefreshTokenContentHash()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENTHASH,
+				args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REFRESHTOKENCONTENTHASH,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -2027,14 +2527,53 @@ public class OAuth2AuthorizationPersistenceImpl extends BasePersistenceImpl<OAut
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONID,
 					args);
 			}
+
+			if ((oAuth2AuthorizationModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCESSTOKENCONTENTHASH.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						oAuth2AuthorizationModelImpl.getOriginalAccessTokenContentHash()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENTHASH,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCESSTOKENCONTENTHASH,
+					args);
+
+				args = new Object[] {
+						oAuth2AuthorizationModelImpl.getAccessTokenContentHash()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ACCESSTOKENCONTENTHASH,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCESSTOKENCONTENTHASH,
+					args);
+			}
+
+			if ((oAuth2AuthorizationModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REFRESHTOKENCONTENTHASH.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						oAuth2AuthorizationModelImpl.getOriginalRefreshTokenContentHash()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENTHASH,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REFRESHTOKENCONTENTHASH,
+					args);
+
+				args = new Object[] {
+						oAuth2AuthorizationModelImpl.getRefreshTokenContentHash()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_REFRESHTOKENCONTENTHASH,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REFRESHTOKENCONTENTHASH,
+					args);
+			}
 		}
 
 		entityCache.putResult(OAuth2AuthorizationModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2AuthorizationImpl.class, oAuth2Authorization.getPrimaryKey(),
 			oAuth2Authorization, false);
-
-		clearUniqueFindersCache(oAuth2AuthorizationModelImpl, false);
-		cacheUniqueFindersCache(oAuth2AuthorizationModelImpl);
 
 		oAuth2Authorization.resetOriginalValues();
 

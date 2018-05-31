@@ -59,6 +59,7 @@ public class OAuth2ScopeGrantFinderImpl
 			qPos.add(applicationName);
 			qPos.add(bundleSymbolicName);
 			qPos.add(accessTokenContent);
+			qPos.add(accessTokenContent.hashCode());
 
 			return (List<OAuth2ScopeGrant>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);

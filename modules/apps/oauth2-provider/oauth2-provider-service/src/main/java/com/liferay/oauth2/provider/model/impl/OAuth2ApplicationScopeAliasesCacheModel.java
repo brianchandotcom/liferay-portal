@@ -66,7 +66,7 @@ public class OAuth2ApplicationScopeAliasesCacheModel implements CacheModel<OAuth
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{oAuth2ApplicationScopeAliasesId=");
 		sb.append(oAuth2ApplicationScopeAliasesId);
@@ -82,6 +82,8 @@ public class OAuth2ApplicationScopeAliasesCacheModel implements CacheModel<OAuth
 		sb.append(oAuth2ApplicationId);
 		sb.append(", scopeAliases=");
 		sb.append(scopeAliases);
+		sb.append(", scopeAliasesHash=");
+		sb.append(scopeAliasesHash);
 		sb.append("}");
 
 		return sb.toString();
@@ -118,6 +120,8 @@ public class OAuth2ApplicationScopeAliasesCacheModel implements CacheModel<OAuth
 			oAuth2ApplicationScopeAliasesImpl.setScopeAliases(scopeAliases);
 		}
 
+		oAuth2ApplicationScopeAliasesImpl.setScopeAliasesHash(scopeAliasesHash);
+
 		oAuth2ApplicationScopeAliasesImpl.resetOriginalValues();
 
 		return oAuth2ApplicationScopeAliasesImpl;
@@ -135,6 +139,8 @@ public class OAuth2ApplicationScopeAliasesCacheModel implements CacheModel<OAuth
 
 		oAuth2ApplicationId = objectInput.readLong();
 		scopeAliases = objectInput.readUTF();
+
+		scopeAliasesHash = objectInput.readLong();
 	}
 
 	@Override
@@ -163,6 +169,8 @@ public class OAuth2ApplicationScopeAliasesCacheModel implements CacheModel<OAuth
 		else {
 			objectOutput.writeUTF(scopeAliases);
 		}
+
+		objectOutput.writeLong(scopeAliasesHash);
 	}
 
 	public long oAuth2ApplicationScopeAliasesId;
@@ -172,4 +180,5 @@ public class OAuth2ApplicationScopeAliasesCacheModel implements CacheModel<OAuth
 	public long createDate;
 	public long oAuth2ApplicationId;
 	public String scopeAliases;
+	public long scopeAliasesHash;
 }

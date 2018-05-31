@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -52,7 +51,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1134,119 +1132,165 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 	private static final String _FINDER_COLUMN_OAUTH2APPLICATIONID_OAUTH2APPLICATIONID_2 =
 		"oAuth2ApplicationScopeAliases.oAuth2ApplicationId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_O_S = new FinderPath(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_O_S = new FinderPath(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2ApplicationScopeAliasesModelImpl.FINDER_CACHE_ENABLED,
-			OAuth2ApplicationScopeAliasesImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByO_S",
-			new String[] { Long.class.getName(), String.class.getName() },
+			OAuth2ApplicationScopeAliasesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByO_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_S = new FinderPath(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
+			OAuth2ApplicationScopeAliasesModelImpl.FINDER_CACHE_ENABLED,
+			OAuth2ApplicationScopeAliasesImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByO_S",
+			new String[] { Long.class.getName(), Long.class.getName() },
 			OAuth2ApplicationScopeAliasesModelImpl.OAUTH2APPLICATIONID_COLUMN_BITMASK |
-			OAuth2ApplicationScopeAliasesModelImpl.SCOPEALIASES_COLUMN_BITMASK);
+			OAuth2ApplicationScopeAliasesModelImpl.SCOPEALIASESHASH_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_O_S = new FinderPath(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2ApplicationScopeAliasesModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByO_S",
-			new String[] { Long.class.getName(), String.class.getName() });
+			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; or throws a {@link NoSuchOAuth2ApplicationScopeAliasesException} if it could not be found.
+	 * Returns all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
 	 *
 	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param scopeAliases the scope aliases
-	 * @return the matching o auth2 application scope aliases
-	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
+	 * @param scopeAliasesHash the scope aliases hash
+	 * @return the matching o auth2 application scope aliaseses
 	 */
 	@Override
-	public OAuth2ApplicationScopeAliases findByO_S(long oAuth2ApplicationId,
-		String scopeAliases)
-		throws NoSuchOAuth2ApplicationScopeAliasesException {
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = fetchByO_S(oAuth2ApplicationId,
-				scopeAliases);
+	public List<OAuth2ApplicationScopeAliases> findByO_S(
+		long oAuth2ApplicationId, long scopeAliasesHash) {
+		return findByO_S(oAuth2ApplicationId, scopeAliasesHash,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
 
-		if (oAuth2ApplicationScopeAliases == null) {
-			StringBundler msg = new StringBundler(6);
+	/**
+	 * Returns a range of all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ApplicationScopeAliasesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param scopeAliasesHash the scope aliases hash
+	 * @param start the lower bound of the range of o auth2 application scope aliaseses
+	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
+	 * @return the range of matching o auth2 application scope aliaseses
+	 */
+	@Override
+	public List<OAuth2ApplicationScopeAliases> findByO_S(
+		long oAuth2ApplicationId, long scopeAliasesHash, int start, int end) {
+		return findByO_S(oAuth2ApplicationId, scopeAliasesHash, start, end, null);
+	}
 
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+	/**
+	 * Returns an ordered range of all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ApplicationScopeAliasesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param scopeAliasesHash the scope aliases hash
+	 * @param start the lower bound of the range of o auth2 application scope aliaseses
+	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth2 application scope aliaseses
+	 */
+	@Override
+	public List<OAuth2ApplicationScopeAliases> findByO_S(
+		long oAuth2ApplicationId, long scopeAliasesHash, int start, int end,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
+		return findByO_S(oAuth2ApplicationId, scopeAliasesHash, start, end,
+			orderByComparator, true);
+	}
 
-			msg.append("oAuth2ApplicationId=");
-			msg.append(oAuth2ApplicationId);
+	/**
+	 * Returns an ordered range of all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ApplicationScopeAliasesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param scopeAliasesHash the scope aliases hash
+	 * @param start the lower bound of the range of o auth2 application scope aliaseses
+	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching o auth2 application scope aliaseses
+	 */
+	@Override
+	public List<OAuth2ApplicationScopeAliases> findByO_S(
+		long oAuth2ApplicationId, long scopeAliasesHash, int start, int end,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-			msg.append(", scopeAliases=");
-			msg.append(scopeAliases);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchOAuth2ApplicationScopeAliasesException(msg.toString());
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_S;
+			finderArgs = new Object[] { oAuth2ApplicationId, scopeAliasesHash };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_O_S;
+			finderArgs = new Object[] {
+					oAuth2ApplicationId, scopeAliasesHash,
+					
+					start, end, orderByComparator
+				};
 		}
 
-		return oAuth2ApplicationScopeAliases;
-	}
-
-	/**
-	 * Returns the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param scopeAliases the scope aliases
-	 * @return the matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
-	 */
-	@Override
-	public OAuth2ApplicationScopeAliases fetchByO_S(long oAuth2ApplicationId,
-		String scopeAliases) {
-		return fetchByO_S(oAuth2ApplicationId, scopeAliases, true);
-	}
-
-	/**
-	 * Returns the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param scopeAliases the scope aliases
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
-	 */
-	@Override
-	public OAuth2ApplicationScopeAliases fetchByO_S(long oAuth2ApplicationId,
-		String scopeAliases, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { oAuth2ApplicationId, scopeAliases };
-
-		Object result = null;
+		List<OAuth2ApplicationScopeAliases> list = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_O_S,
+			list = (List<OAuth2ApplicationScopeAliases>)finderCache.getResult(finderPath,
 					finderArgs, this);
-		}
 
-		if (result instanceof OAuth2ApplicationScopeAliases) {
-			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = (OAuth2ApplicationScopeAliases)result;
+			if ((list != null) && !list.isEmpty()) {
+				for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases : list) {
+					if ((oAuth2ApplicationId != oAuth2ApplicationScopeAliases.getOAuth2ApplicationId()) ||
+							(scopeAliasesHash != oAuth2ApplicationScopeAliases.getScopeAliasesHash())) {
+						list = null;
 
-			if ((oAuth2ApplicationId != oAuth2ApplicationScopeAliases.getOAuth2ApplicationId()) ||
-					!Objects.equals(scopeAliases,
-						oAuth2ApplicationScopeAliases.getScopeAliases())) {
-				result = null;
+						break;
+					}
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
 
 			query.append(_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE);
 
 			query.append(_FINDER_COLUMN_O_S_OAUTH2APPLICATIONID_2);
 
-			boolean bindScopeAliases = false;
+			query.append(_FINDER_COLUMN_O_S_SCOPEALIASESHASH_2);
 
-			if (scopeAliases == null) {
-				query.append(_FINDER_COLUMN_O_S_SCOPEALIASES_1);
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
 			}
-			else if (scopeAliases.equals("")) {
-				query.append(_FINDER_COLUMN_O_S_SCOPEALIASES_3);
-			}
-			else {
-				bindScopeAliases = true;
-
-				query.append(_FINDER_COLUMN_O_S_SCOPEALIASES_2);
+			else
+			 if (pagination) {
+				query.append(OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL);
 			}
 
 			String sql = query.toString();
@@ -1262,37 +1306,27 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 				qPos.add(oAuth2ApplicationId);
 
-				if (bindScopeAliases) {
-					qPos.add(scopeAliases);
-				}
+				qPos.add(scopeAliasesHash);
 
-				List<OAuth2ApplicationScopeAliases> list = q.list();
+				if (!pagination) {
+					list = (List<OAuth2ApplicationScopeAliases>)QueryUtil.list(q,
+							getDialect(), start, end, false);
 
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_O_S, finderArgs,
-						list);
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"OAuth2ApplicationScopeAliasesPersistenceImpl.fetchByO_S(long, String, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = list.get(0);
-
-					result = oAuth2ApplicationScopeAliases;
-
-					cacheResult(oAuth2ApplicationScopeAliases);
+					list = (List<OAuth2ApplicationScopeAliases>)QueryUtil.list(q,
+							getDialect(), start, end);
 				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_O_S, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1301,43 +1335,316 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (OAuth2ApplicationScopeAliases)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; from the database.
+	 * Returns the first o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
 	 *
 	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param scopeAliases the scope aliases
-	 * @return the o auth2 application scope aliases that was removed
+	 * @param scopeAliasesHash the scope aliases hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 application scope aliases
+	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
 	 */
 	@Override
-	public OAuth2ApplicationScopeAliases removeByO_S(long oAuth2ApplicationId,
-		String scopeAliases)
+	public OAuth2ApplicationScopeAliases findByO_S_First(
+		long oAuth2ApplicationId, long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
 		throws NoSuchOAuth2ApplicationScopeAliasesException {
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = findByO_S(oAuth2ApplicationId,
-				scopeAliases);
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = fetchByO_S_First(oAuth2ApplicationId,
+				scopeAliasesHash, orderByComparator);
 
-		return remove(oAuth2ApplicationScopeAliases);
+		if (oAuth2ApplicationScopeAliases != null) {
+			return oAuth2ApplicationScopeAliases;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("oAuth2ApplicationId=");
+		msg.append(oAuth2ApplicationId);
+
+		msg.append(", scopeAliasesHash=");
+		msg.append(scopeAliasesHash);
+
+		msg.append("}");
+
+		throw new NoSuchOAuth2ApplicationScopeAliasesException(msg.toString());
 	}
 
 	/**
-	 * Returns the number of o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliases = &#63;.
+	 * Returns the first o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
 	 *
 	 * @param oAuth2ApplicationId the o auth2 application ID
-	 * @param scopeAliases the scope aliases
+	 * @param scopeAliasesHash the scope aliases hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
+	 */
+	@Override
+	public OAuth2ApplicationScopeAliases fetchByO_S_First(
+		long oAuth2ApplicationId, long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
+		List<OAuth2ApplicationScopeAliases> list = findByO_S(oAuth2ApplicationId,
+				scopeAliasesHash, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	 *
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param scopeAliasesHash the scope aliases hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 application scope aliases
+	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
+	 */
+	@Override
+	public OAuth2ApplicationScopeAliases findByO_S_Last(
+		long oAuth2ApplicationId, long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
+		throws NoSuchOAuth2ApplicationScopeAliasesException {
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = fetchByO_S_Last(oAuth2ApplicationId,
+				scopeAliasesHash, orderByComparator);
+
+		if (oAuth2ApplicationScopeAliases != null) {
+			return oAuth2ApplicationScopeAliases;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("oAuth2ApplicationId=");
+		msg.append(oAuth2ApplicationId);
+
+		msg.append(", scopeAliasesHash=");
+		msg.append(scopeAliasesHash);
+
+		msg.append("}");
+
+		throw new NoSuchOAuth2ApplicationScopeAliasesException(msg.toString());
+	}
+
+	/**
+	 * Returns the last o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	 *
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param scopeAliasesHash the scope aliases hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
+	 */
+	@Override
+	public OAuth2ApplicationScopeAliases fetchByO_S_Last(
+		long oAuth2ApplicationId, long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
+		int count = countByO_S(oAuth2ApplicationId, scopeAliasesHash);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<OAuth2ApplicationScopeAliases> list = findByO_S(oAuth2ApplicationId,
+				scopeAliasesHash, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the o auth2 application scope aliaseses before and after the current o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	 *
+	 * @param oAuth2ApplicationScopeAliasesId the primary key of the current o auth2 application scope aliases
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param scopeAliasesHash the scope aliases hash
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next o auth2 application scope aliases
+	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a o auth2 application scope aliases with the primary key could not be found
+	 */
+	@Override
+	public OAuth2ApplicationScopeAliases[] findByO_S_PrevAndNext(
+		long oAuth2ApplicationScopeAliasesId, long oAuth2ApplicationId,
+		long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
+		throws NoSuchOAuth2ApplicationScopeAliasesException {
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases = findByPrimaryKey(oAuth2ApplicationScopeAliasesId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			OAuth2ApplicationScopeAliases[] array = new OAuth2ApplicationScopeAliasesImpl[3];
+
+			array[0] = getByO_S_PrevAndNext(session,
+					oAuth2ApplicationScopeAliases, oAuth2ApplicationId,
+					scopeAliasesHash, orderByComparator, true);
+
+			array[1] = oAuth2ApplicationScopeAliases;
+
+			array[2] = getByO_S_PrevAndNext(session,
+					oAuth2ApplicationScopeAliases, oAuth2ApplicationId,
+					scopeAliasesHash, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected OAuth2ApplicationScopeAliases getByO_S_PrevAndNext(
+		Session session,
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases,
+		long oAuth2ApplicationId, long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE);
+
+		query.append(_FINDER_COLUMN_O_S_OAUTH2APPLICATIONID_2);
+
+		query.append(_FINDER_COLUMN_O_S_SCOPEALIASESHASH_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(oAuth2ApplicationId);
+
+		qPos.add(scopeAliasesHash);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(oAuth2ApplicationScopeAliases);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<OAuth2ApplicationScopeAliases> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63; from the database.
+	 *
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param scopeAliasesHash the scope aliases hash
+	 */
+	@Override
+	public void removeByO_S(long oAuth2ApplicationId, long scopeAliasesHash) {
+		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases : findByO_S(
+				oAuth2ApplicationId, scopeAliasesHash, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(oAuth2ApplicationScopeAliases);
+		}
+	}
+
+	/**
+	 * Returns the number of o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	 *
+	 * @param oAuth2ApplicationId the o auth2 application ID
+	 * @param scopeAliasesHash the scope aliases hash
 	 * @return the number of matching o auth2 application scope aliaseses
 	 */
 	@Override
-	public int countByO_S(long oAuth2ApplicationId, String scopeAliases) {
+	public int countByO_S(long oAuth2ApplicationId, long scopeAliasesHash) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_O_S;
 
-		Object[] finderArgs = new Object[] { oAuth2ApplicationId, scopeAliases };
+		Object[] finderArgs = new Object[] { oAuth2ApplicationId, scopeAliasesHash };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1348,19 +1655,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 			query.append(_FINDER_COLUMN_O_S_OAUTH2APPLICATIONID_2);
 
-			boolean bindScopeAliases = false;
-
-			if (scopeAliases == null) {
-				query.append(_FINDER_COLUMN_O_S_SCOPEALIASES_1);
-			}
-			else if (scopeAliases.equals("")) {
-				query.append(_FINDER_COLUMN_O_S_SCOPEALIASES_3);
-			}
-			else {
-				bindScopeAliases = true;
-
-				query.append(_FINDER_COLUMN_O_S_SCOPEALIASES_2);
-			}
+			query.append(_FINDER_COLUMN_O_S_SCOPEALIASESHASH_2);
 
 			String sql = query.toString();
 
@@ -1375,9 +1670,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 				qPos.add(oAuth2ApplicationId);
 
-				if (bindScopeAliases) {
-					qPos.add(scopeAliases);
-				}
+				qPos.add(scopeAliasesHash);
 
 				count = (Long)q.uniqueResult();
 
@@ -1397,9 +1690,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_O_S_OAUTH2APPLICATIONID_2 = "oAuth2ApplicationScopeAliases.oAuth2ApplicationId = ? AND ";
-	private static final String _FINDER_COLUMN_O_S_SCOPEALIASES_1 = "oAuth2ApplicationScopeAliases.scopeAliases IS NULL";
-	private static final String _FINDER_COLUMN_O_S_SCOPEALIASES_2 = "oAuth2ApplicationScopeAliases.scopeAliases = ?";
-	private static final String _FINDER_COLUMN_O_S_SCOPEALIASES_3 = "(oAuth2ApplicationScopeAliases.scopeAliases IS NULL OR oAuth2ApplicationScopeAliases.scopeAliases = '')";
+	private static final String _FINDER_COLUMN_O_S_SCOPEALIASESHASH_2 = "oAuth2ApplicationScopeAliases.scopeAliasesHash = ?";
 
 	public OAuth2ApplicationScopeAliasesPersistenceImpl() {
 		setModelClass(OAuth2ApplicationScopeAliases.class);
@@ -1436,12 +1727,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			OAuth2ApplicationScopeAliasesImpl.class,
 			oAuth2ApplicationScopeAliases.getPrimaryKey(),
 			oAuth2ApplicationScopeAliases);
-
-		finderCache.putResult(FINDER_PATH_FETCH_BY_O_S,
-			new Object[] {
-				oAuth2ApplicationScopeAliases.getOAuth2ApplicationId(),
-				oAuth2ApplicationScopeAliases.getScopeAliases()
-			}, oAuth2ApplicationScopeAliases);
 
 		oAuth2ApplicationScopeAliases.resetOriginalValues();
 	}
@@ -1499,9 +1784,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache((OAuth2ApplicationScopeAliasesModelImpl)oAuth2ApplicationScopeAliases,
-			true);
 	}
 
 	@Override
@@ -1514,47 +1796,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			entityCache.removeResult(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
 				OAuth2ApplicationScopeAliasesImpl.class,
 				oAuth2ApplicationScopeAliases.getPrimaryKey());
-
-			clearUniqueFindersCache((OAuth2ApplicationScopeAliasesModelImpl)oAuth2ApplicationScopeAliases,
-				true);
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		OAuth2ApplicationScopeAliasesModelImpl oAuth2ApplicationScopeAliasesModelImpl) {
-		Object[] args = new Object[] {
-				oAuth2ApplicationScopeAliasesModelImpl.getOAuth2ApplicationId(),
-				oAuth2ApplicationScopeAliasesModelImpl.getScopeAliases()
-			};
-
-		finderCache.putResult(FINDER_PATH_COUNT_BY_O_S, args, Long.valueOf(1),
-			false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_O_S, args,
-			oAuth2ApplicationScopeAliasesModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(
-		OAuth2ApplicationScopeAliasesModelImpl oAuth2ApplicationScopeAliasesModelImpl,
-		boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					oAuth2ApplicationScopeAliasesModelImpl.getOAuth2ApplicationId(),
-					oAuth2ApplicationScopeAliasesModelImpl.getScopeAliases()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_O_S, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_O_S, args);
-		}
-
-		if ((oAuth2ApplicationScopeAliasesModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_O_S.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					oAuth2ApplicationScopeAliasesModelImpl.getOriginalOAuth2ApplicationId(),
-					oAuth2ApplicationScopeAliasesModelImpl.getOriginalScopeAliases()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_O_S, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_O_S, args);
 		}
 	}
 
@@ -1731,6 +1972,15 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONID,
 				args);
 
+			args = new Object[] {
+					oAuth2ApplicationScopeAliasesModelImpl.getOAuth2ApplicationId(),
+					oAuth2ApplicationScopeAliasesModelImpl.getScopeAliasesHash()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_O_S, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_S,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -1776,15 +2026,33 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_OAUTH2APPLICATIONID,
 					args);
 			}
+
+			if ((oAuth2ApplicationScopeAliasesModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						oAuth2ApplicationScopeAliasesModelImpl.getOriginalOAuth2ApplicationId(),
+						oAuth2ApplicationScopeAliasesModelImpl.getOriginalScopeAliasesHash()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_O_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_S,
+					args);
+
+				args = new Object[] {
+						oAuth2ApplicationScopeAliasesModelImpl.getOAuth2ApplicationId(),
+						oAuth2ApplicationScopeAliasesModelImpl.getScopeAliasesHash()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_O_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_O_S,
+					args);
+			}
 		}
 
 		entityCache.putResult(OAuth2ApplicationScopeAliasesModelImpl.ENTITY_CACHE_ENABLED,
 			OAuth2ApplicationScopeAliasesImpl.class,
 			oAuth2ApplicationScopeAliases.getPrimaryKey(),
 			oAuth2ApplicationScopeAliases, false);
-
-		clearUniqueFindersCache(oAuth2ApplicationScopeAliasesModelImpl, false);
-		cacheUniqueFindersCache(oAuth2ApplicationScopeAliasesModelImpl);
 
 		oAuth2ApplicationScopeAliases.resetOriginalValues();
 

@@ -196,6 +196,20 @@ public interface OAuth2AuthorizationModel extends BaseModel<OAuth2Authorization>
 	public void setAccessTokenContent(String accessTokenContent);
 
 	/**
+	 * Returns the access token content hash of this o auth2 authorization.
+	 *
+	 * @return the access token content hash of this o auth2 authorization
+	 */
+	public long getAccessTokenContentHash();
+
+	/**
+	 * Sets the access token content hash of this o auth2 authorization.
+	 *
+	 * @param accessTokenContentHash the access token content hash of this o auth2 authorization
+	 */
+	public void setAccessTokenContentHash(long accessTokenContentHash);
+
+	/**
 	 * Returns the access token create date of this o auth2 authorization.
 	 *
 	 * @return the access token create date of this o auth2 authorization
@@ -252,6 +266,20 @@ public interface OAuth2AuthorizationModel extends BaseModel<OAuth2Authorization>
 	 * @param refreshTokenContent the refresh token content of this o auth2 authorization
 	 */
 	public void setRefreshTokenContent(String refreshTokenContent);
+
+	/**
+	 * Returns the refresh token content hash of this o auth2 authorization.
+	 *
+	 * @return the refresh token content hash of this o auth2 authorization
+	 */
+	public long getRefreshTokenContentHash();
+
+	/**
+	 * Sets the refresh token content hash of this o auth2 authorization.
+	 *
+	 * @param refreshTokenContentHash the refresh token content hash of this o auth2 authorization
+	 */
+	public void setRefreshTokenContentHash(long refreshTokenContentHash);
 
 	/**
 	 * Returns the refresh token create date of this o auth2 authorization.

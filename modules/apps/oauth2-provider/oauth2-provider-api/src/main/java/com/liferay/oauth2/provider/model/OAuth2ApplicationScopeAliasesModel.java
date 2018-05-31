@@ -181,6 +181,20 @@ public interface OAuth2ApplicationScopeAliasesModel extends BaseModel<OAuth2Appl
 	 */
 	public void setScopeAliases(String scopeAliases);
 
+	/**
+	 * Returns the scope aliases hash of this o auth2 application scope aliases.
+	 *
+	 * @return the scope aliases hash of this o auth2 application scope aliases
+	 */
+	public long getScopeAliasesHash();
+
+	/**
+	 * Sets the scope aliases hash of this o auth2 application scope aliases.
+	 *
+	 * @param scopeAliasesHash the scope aliases hash of this o auth2 application scope aliases
+	 */
+	public void setScopeAliasesHash(long scopeAliasesHash);
+
 	@Override
 	public boolean isNew();
 

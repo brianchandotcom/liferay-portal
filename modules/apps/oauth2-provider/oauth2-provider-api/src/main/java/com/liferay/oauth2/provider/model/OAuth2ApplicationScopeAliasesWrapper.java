@@ -68,6 +68,7 @@ public class OAuth2ApplicationScopeAliasesWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("oAuth2ApplicationId", getOAuth2ApplicationId());
 		attributes.put("scopeAliases", getScopeAliases());
+		attributes.put("scopeAliasesHash", getScopeAliasesHash());
 
 		return attributes;
 	}
@@ -115,6 +116,12 @@ public class OAuth2ApplicationScopeAliasesWrapper
 
 		if (scopeAliases != null) {
 			setScopeAliases(scopeAliases);
+		}
+
+		Long scopeAliasesHash = (Long)attributes.get("scopeAliasesHash");
+
+		if (scopeAliasesHash != null) {
+			setScopeAliasesHash(scopeAliasesHash);
 		}
 	}
 
@@ -197,6 +204,16 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	@Override
 	public String getScopeAliases() {
 		return _oAuth2ApplicationScopeAliases.getScopeAliases();
+	}
+
+	/**
+	* Returns the scope aliases hash of this o auth2 application scope aliases.
+	*
+	* @return the scope aliases hash of this o auth2 application scope aliases
+	*/
+	@Override
+	public long getScopeAliasesHash() {
+		return _oAuth2ApplicationScopeAliases.getScopeAliasesHash();
 	}
 
 	@Override
@@ -349,6 +366,16 @@ public class OAuth2ApplicationScopeAliasesWrapper
 	@Override
 	public void setScopeAliases(String scopeAliases) {
 		_oAuth2ApplicationScopeAliases.setScopeAliases(scopeAliases);
+	}
+
+	/**
+	* Sets the scope aliases hash of this o auth2 application scope aliases.
+	*
+	* @param scopeAliasesHash the scope aliases hash of this o auth2 application scope aliases
+	*/
+	@Override
+	public void setScopeAliasesHash(long scopeAliasesHash) {
+		_oAuth2ApplicationScopeAliases.setScopeAliasesHash(scopeAliasesHash);
 	}
 
 	@Override

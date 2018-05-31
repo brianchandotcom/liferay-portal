@@ -75,11 +75,13 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 			{ "createDate", Types.TIMESTAMP },
 			{ "oAuth2ApplicationId", Types.BIGINT },
 			{ "oA2AScopeAliasesId", Types.BIGINT },
-			{ "accessTokenContent", Types.VARCHAR },
+			{ "accessTokenContent", Types.CLOB },
+			{ "accessTokenContentHash", Types.BIGINT },
 			{ "accessTokenCreateDate", Types.TIMESTAMP },
 			{ "accessTokenExpirationDate", Types.TIMESTAMP },
 			{ "remoteIPInfo", Types.VARCHAR },
-			{ "refreshTokenContent", Types.VARCHAR },
+			{ "refreshTokenContent", Types.CLOB },
+			{ "refreshTokenContentHash", Types.BIGINT },
 			{ "refreshTokenCreateDate", Types.TIMESTAMP },
 			{ "refreshTokenExpirationDate", Types.TIMESTAMP }
 		};
@@ -93,16 +95,18 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("oA2AScopeAliasesId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("accessTokenContent", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("accessTokenContent", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("accessTokenContentHash", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("accessTokenCreateDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("accessTokenExpirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("remoteIPInfo", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("refreshTokenContent", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("refreshTokenContent", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("refreshTokenContentHash", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("refreshTokenCreateDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("refreshTokenExpirationDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2Authorization (oAuth2AuthorizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,oA2AScopeAliasesId LONG,accessTokenContent VARCHAR(255) null,accessTokenCreateDate DATE null,accessTokenExpirationDate DATE null,remoteIPInfo VARCHAR(75) null,refreshTokenContent VARCHAR(255) null,refreshTokenCreateDate DATE null,refreshTokenExpirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2Authorization (oAuth2AuthorizationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,oA2AScopeAliasesId LONG,accessTokenContent TEXT null,accessTokenContentHash LONG,accessTokenCreateDate DATE null,accessTokenExpirationDate DATE null,remoteIPInfo VARCHAR(75) null,refreshTokenContent TEXT null,refreshTokenContentHash LONG,refreshTokenCreateDate DATE null,refreshTokenExpirationDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Authorization";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2Authorization.oAuth2AuthorizationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2Authorization.oAuth2AuthorizationId ASC";
@@ -118,9 +122,9 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.oauth2.provider.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.oauth2.provider.model.OAuth2Authorization"),
 			true);
-	public static final long ACCESSTOKENCONTENT_COLUMN_BITMASK = 1L;
+	public static final long ACCESSTOKENCONTENTHASH_COLUMN_BITMASK = 1L;
 	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 2L;
-	public static final long REFRESHTOKENCONTENT_COLUMN_BITMASK = 4L;
+	public static final long REFRESHTOKENCONTENTHASH_COLUMN_BITMASK = 4L;
 	public static final long USERID_COLUMN_BITMASK = 8L;
 	public static final long OAUTH2AUTHORIZATIONID_COLUMN_BITMASK = 16L;
 
@@ -145,10 +149,12 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		model.setOAuth2ApplicationId(soapModel.getOAuth2ApplicationId());
 		model.setOAuth2ApplicationScopeAliasesId(soapModel.getOAuth2ApplicationScopeAliasesId());
 		model.setAccessTokenContent(soapModel.getAccessTokenContent());
+		model.setAccessTokenContentHash(soapModel.getAccessTokenContentHash());
 		model.setAccessTokenCreateDate(soapModel.getAccessTokenCreateDate());
 		model.setAccessTokenExpirationDate(soapModel.getAccessTokenExpirationDate());
 		model.setRemoteIPInfo(soapModel.getRemoteIPInfo());
 		model.setRefreshTokenContent(soapModel.getRefreshTokenContent());
+		model.setRefreshTokenContentHash(soapModel.getRefreshTokenContentHash());
 		model.setRefreshTokenCreateDate(soapModel.getRefreshTokenCreateDate());
 		model.setRefreshTokenExpirationDate(soapModel.getRefreshTokenExpirationDate());
 
@@ -236,11 +242,13 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		attributes.put("oAuth2ApplicationScopeAliasesId",
 			getOAuth2ApplicationScopeAliasesId());
 		attributes.put("accessTokenContent", getAccessTokenContent());
+		attributes.put("accessTokenContentHash", getAccessTokenContentHash());
 		attributes.put("accessTokenCreateDate", getAccessTokenCreateDate());
 		attributes.put("accessTokenExpirationDate",
 			getAccessTokenExpirationDate());
 		attributes.put("remoteIPInfo", getRemoteIPInfo());
 		attributes.put("refreshTokenContent", getRefreshTokenContent());
+		attributes.put("refreshTokenContentHash", getRefreshTokenContentHash());
 		attributes.put("refreshTokenCreateDate", getRefreshTokenCreateDate());
 		attributes.put("refreshTokenExpirationDate",
 			getRefreshTokenExpirationDate());
@@ -303,6 +311,13 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 			setAccessTokenContent(accessTokenContent);
 		}
 
+		Long accessTokenContentHash = (Long)attributes.get(
+				"accessTokenContentHash");
+
+		if (accessTokenContentHash != null) {
+			setAccessTokenContentHash(accessTokenContentHash);
+		}
+
 		Date accessTokenCreateDate = (Date)attributes.get(
 				"accessTokenCreateDate");
 
@@ -328,6 +343,13 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 		if (refreshTokenContent != null) {
 			setRefreshTokenContent(refreshTokenContent);
+		}
+
+		Long refreshTokenContentHash = (Long)attributes.get(
+				"refreshTokenContentHash");
+
+		if (refreshTokenContentHash != null) {
+			setRefreshTokenContentHash(refreshTokenContentHash);
 		}
 
 		Date refreshTokenCreateDate = (Date)attributes.get(
@@ -473,17 +495,29 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 	@Override
 	public void setAccessTokenContent(String accessTokenContent) {
-		_columnBitmask |= ACCESSTOKENCONTENT_COLUMN_BITMASK;
-
-		if (_originalAccessTokenContent == null) {
-			_originalAccessTokenContent = _accessTokenContent;
-		}
-
 		_accessTokenContent = accessTokenContent;
 	}
 
-	public String getOriginalAccessTokenContent() {
-		return GetterUtil.getString(_originalAccessTokenContent);
+	@Override
+	public long getAccessTokenContentHash() {
+		return _accessTokenContentHash;
+	}
+
+	@Override
+	public void setAccessTokenContentHash(long accessTokenContentHash) {
+		_columnBitmask |= ACCESSTOKENCONTENTHASH_COLUMN_BITMASK;
+
+		if (!_setOriginalAccessTokenContentHash) {
+			_setOriginalAccessTokenContentHash = true;
+
+			_originalAccessTokenContentHash = _accessTokenContentHash;
+		}
+
+		_accessTokenContentHash = accessTokenContentHash;
+	}
+
+	public long getOriginalAccessTokenContentHash() {
+		return _originalAccessTokenContentHash;
 	}
 
 	@Override
@@ -533,17 +567,29 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 	@Override
 	public void setRefreshTokenContent(String refreshTokenContent) {
-		_columnBitmask |= REFRESHTOKENCONTENT_COLUMN_BITMASK;
-
-		if (_originalRefreshTokenContent == null) {
-			_originalRefreshTokenContent = _refreshTokenContent;
-		}
-
 		_refreshTokenContent = refreshTokenContent;
 	}
 
-	public String getOriginalRefreshTokenContent() {
-		return GetterUtil.getString(_originalRefreshTokenContent);
+	@Override
+	public long getRefreshTokenContentHash() {
+		return _refreshTokenContentHash;
+	}
+
+	@Override
+	public void setRefreshTokenContentHash(long refreshTokenContentHash) {
+		_columnBitmask |= REFRESHTOKENCONTENTHASH_COLUMN_BITMASK;
+
+		if (!_setOriginalRefreshTokenContentHash) {
+			_setOriginalRefreshTokenContentHash = true;
+
+			_originalRefreshTokenContentHash = _refreshTokenContentHash;
+		}
+
+		_refreshTokenContentHash = refreshTokenContentHash;
+	}
+
+	public long getOriginalRefreshTokenContentHash() {
+		return _originalRefreshTokenContentHash;
 	}
 
 	@Override
@@ -605,10 +651,12 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		oAuth2AuthorizationImpl.setOAuth2ApplicationId(getOAuth2ApplicationId());
 		oAuth2AuthorizationImpl.setOAuth2ApplicationScopeAliasesId(getOAuth2ApplicationScopeAliasesId());
 		oAuth2AuthorizationImpl.setAccessTokenContent(getAccessTokenContent());
+		oAuth2AuthorizationImpl.setAccessTokenContentHash(getAccessTokenContentHash());
 		oAuth2AuthorizationImpl.setAccessTokenCreateDate(getAccessTokenCreateDate());
 		oAuth2AuthorizationImpl.setAccessTokenExpirationDate(getAccessTokenExpirationDate());
 		oAuth2AuthorizationImpl.setRemoteIPInfo(getRemoteIPInfo());
 		oAuth2AuthorizationImpl.setRefreshTokenContent(getRefreshTokenContent());
+		oAuth2AuthorizationImpl.setRefreshTokenContentHash(getRefreshTokenContentHash());
 		oAuth2AuthorizationImpl.setRefreshTokenCreateDate(getRefreshTokenCreateDate());
 		oAuth2AuthorizationImpl.setRefreshTokenExpirationDate(getRefreshTokenExpirationDate());
 
@@ -681,9 +729,13 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 		oAuth2AuthorizationModelImpl._setOriginalOAuth2ApplicationId = false;
 
-		oAuth2AuthorizationModelImpl._originalAccessTokenContent = oAuth2AuthorizationModelImpl._accessTokenContent;
+		oAuth2AuthorizationModelImpl._originalAccessTokenContentHash = oAuth2AuthorizationModelImpl._accessTokenContentHash;
 
-		oAuth2AuthorizationModelImpl._originalRefreshTokenContent = oAuth2AuthorizationModelImpl._refreshTokenContent;
+		oAuth2AuthorizationModelImpl._setOriginalAccessTokenContentHash = false;
+
+		oAuth2AuthorizationModelImpl._originalRefreshTokenContentHash = oAuth2AuthorizationModelImpl._refreshTokenContentHash;
+
+		oAuth2AuthorizationModelImpl._setOriginalRefreshTokenContentHash = false;
 
 		oAuth2AuthorizationModelImpl._columnBitmask = 0;
 	}
@@ -727,6 +779,8 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 			oAuth2AuthorizationCacheModel.accessTokenContent = null;
 		}
 
+		oAuth2AuthorizationCacheModel.accessTokenContentHash = getAccessTokenContentHash();
+
 		Date accessTokenCreateDate = getAccessTokenCreateDate();
 
 		if (accessTokenCreateDate != null) {
@@ -762,6 +816,8 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 			oAuth2AuthorizationCacheModel.refreshTokenContent = null;
 		}
 
+		oAuth2AuthorizationCacheModel.refreshTokenContentHash = getRefreshTokenContentHash();
+
 		Date refreshTokenCreateDate = getRefreshTokenCreateDate();
 
 		if (refreshTokenCreateDate != null) {
@@ -785,7 +841,7 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{oAuth2AuthorizationId=");
 		sb.append(getOAuth2AuthorizationId());
@@ -803,6 +859,8 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		sb.append(getOAuth2ApplicationScopeAliasesId());
 		sb.append(", accessTokenContent=");
 		sb.append(getAccessTokenContent());
+		sb.append(", accessTokenContentHash=");
+		sb.append(getAccessTokenContentHash());
 		sb.append(", accessTokenCreateDate=");
 		sb.append(getAccessTokenCreateDate());
 		sb.append(", accessTokenExpirationDate=");
@@ -811,6 +869,8 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		sb.append(getRemoteIPInfo());
 		sb.append(", refreshTokenContent=");
 		sb.append(getRefreshTokenContent());
+		sb.append(", refreshTokenContentHash=");
+		sb.append(getRefreshTokenContentHash());
 		sb.append(", refreshTokenCreateDate=");
 		sb.append(getRefreshTokenCreateDate());
 		sb.append(", refreshTokenExpirationDate=");
@@ -822,7 +882,7 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.oauth2.provider.model.OAuth2Authorization");
@@ -861,6 +921,10 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		sb.append(getAccessTokenContent());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>accessTokenContentHash</column-name><column-value><![CDATA[");
+		sb.append(getAccessTokenContentHash());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>accessTokenCreateDate</column-name><column-value><![CDATA[");
 		sb.append(getAccessTokenCreateDate());
 		sb.append("]]></column-value></column>");
@@ -875,6 +939,10 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 		sb.append(
 			"<column><column-name>refreshTokenContent</column-name><column-value><![CDATA[");
 		sb.append(getRefreshTokenContent());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>refreshTokenContentHash</column-name><column-value><![CDATA[");
+		sb.append(getRefreshTokenContentHash());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>refreshTokenCreateDate</column-name><column-value><![CDATA[");
@@ -906,12 +974,16 @@ public class OAuth2AuthorizationModelImpl extends BaseModelImpl<OAuth2Authorizat
 	private boolean _setOriginalOAuth2ApplicationId;
 	private long _oAuth2ApplicationScopeAliasesId;
 	private String _accessTokenContent;
-	private String _originalAccessTokenContent;
+	private long _accessTokenContentHash;
+	private long _originalAccessTokenContentHash;
+	private boolean _setOriginalAccessTokenContentHash;
 	private Date _accessTokenCreateDate;
 	private Date _accessTokenExpirationDate;
 	private String _remoteIPInfo;
 	private String _refreshTokenContent;
-	private String _originalRefreshTokenContent;
+	private long _refreshTokenContentHash;
+	private long _originalRefreshTokenContentHash;
+	private boolean _setOriginalRefreshTokenContentHash;
 	private Date _refreshTokenCreateDate;
 	private Date _refreshTokenExpirationDate;
 	private long _columnBitmask;

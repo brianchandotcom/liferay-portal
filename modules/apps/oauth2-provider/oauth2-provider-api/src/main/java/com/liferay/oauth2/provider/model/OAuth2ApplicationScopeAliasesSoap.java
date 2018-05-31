@@ -41,6 +41,7 @@ public class OAuth2ApplicationScopeAliasesSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setOAuth2ApplicationId(model.getOAuth2ApplicationId());
 		soapModel.setScopeAliases(model.getScopeAliases());
+		soapModel.setScopeAliasesHash(model.getScopeAliasesHash());
 
 		return soapModel;
 	}
@@ -153,6 +154,14 @@ public class OAuth2ApplicationScopeAliasesSoap implements Serializable {
 		_scopeAliases = scopeAliases;
 	}
 
+	public long getScopeAliasesHash() {
+		return _scopeAliasesHash;
+	}
+
+	public void setScopeAliasesHash(long scopeAliasesHash) {
+		_scopeAliasesHash = scopeAliasesHash;
+	}
+
 	private long _oAuth2ApplicationScopeAliasesId;
 	private long _companyId;
 	private long _userId;
@@ -160,4 +169,5 @@ public class OAuth2ApplicationScopeAliasesSoap implements Serializable {
 	private Date _createDate;
 	private long _oAuth2ApplicationId;
 	private String _scopeAliases;
+	private long _scopeAliasesHash;
 }

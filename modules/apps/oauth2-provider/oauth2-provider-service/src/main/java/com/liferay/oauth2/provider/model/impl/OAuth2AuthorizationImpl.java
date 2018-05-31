@@ -36,4 +36,28 @@ public class OAuth2AuthorizationImpl extends OAuth2AuthorizationBaseImpl {
 	public OAuth2AuthorizationImpl() {
 	}
 
+	@Override
+	public void setAccessTokenContent(String accessTokenContent) {
+		super.setAccessTokenContent(accessTokenContent);
+
+		if (accessTokenContent != null) {
+			setAccessTokenContentHash(accessTokenContent.hashCode());
+		}
+		else {
+			setAccessTokenContentHash(0);
+		}
+	}
+
+	@Override
+	public void setRefreshTokenContent(String refreshTokenContent) {
+		super.setRefreshTokenContent(refreshTokenContent);
+
+		if (refreshTokenContent != null) {
+			setRefreshTokenContentHash(refreshTokenContent.hashCode());
+		}
+		else {
+			setRefreshTokenContentHash(0);
+		}
+	}
+
 }

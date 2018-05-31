@@ -67,11 +67,13 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 		attributes.put("oAuth2ApplicationScopeAliasesId",
 			getOAuth2ApplicationScopeAliasesId());
 		attributes.put("accessTokenContent", getAccessTokenContent());
+		attributes.put("accessTokenContentHash", getAccessTokenContentHash());
 		attributes.put("accessTokenCreateDate", getAccessTokenCreateDate());
 		attributes.put("accessTokenExpirationDate",
 			getAccessTokenExpirationDate());
 		attributes.put("remoteIPInfo", getRemoteIPInfo());
 		attributes.put("refreshTokenContent", getRefreshTokenContent());
+		attributes.put("refreshTokenContentHash", getRefreshTokenContentHash());
 		attributes.put("refreshTokenCreateDate", getRefreshTokenCreateDate());
 		attributes.put("refreshTokenExpirationDate",
 			getRefreshTokenExpirationDate());
@@ -131,6 +133,13 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 			setAccessTokenContent(accessTokenContent);
 		}
 
+		Long accessTokenContentHash = (Long)attributes.get(
+				"accessTokenContentHash");
+
+		if (accessTokenContentHash != null) {
+			setAccessTokenContentHash(accessTokenContentHash);
+		}
+
 		Date accessTokenCreateDate = (Date)attributes.get(
 				"accessTokenCreateDate");
 
@@ -156,6 +165,13 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 
 		if (refreshTokenContent != null) {
 			setRefreshTokenContent(refreshTokenContent);
+		}
+
+		Long refreshTokenContentHash = (Long)attributes.get(
+				"refreshTokenContentHash");
+
+		if (refreshTokenContentHash != null) {
+			setRefreshTokenContentHash(refreshTokenContentHash);
 		}
 
 		Date refreshTokenCreateDate = (Date)attributes.get(
@@ -191,6 +207,16 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	@Override
 	public String getAccessTokenContent() {
 		return _oAuth2Authorization.getAccessTokenContent();
+	}
+
+	/**
+	* Returns the access token content hash of this o auth2 authorization.
+	*
+	* @return the access token content hash of this o auth2 authorization
+	*/
+	@Override
+	public long getAccessTokenContentHash() {
+		return _oAuth2Authorization.getAccessTokenContentHash();
 	}
 
 	/**
@@ -294,6 +320,16 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	}
 
 	/**
+	* Returns the refresh token content hash of this o auth2 authorization.
+	*
+	* @return the refresh token content hash of this o auth2 authorization
+	*/
+	@Override
+	public long getRefreshTokenContentHash() {
+		return _oAuth2Authorization.getRefreshTokenContentHash();
+	}
+
+	/**
 	* Returns the refresh token create date of this o auth2 authorization.
 	*
 	* @return the refresh token create date of this o auth2 authorization
@@ -386,6 +422,16 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	@Override
 	public void setAccessTokenContent(String accessTokenContent) {
 		_oAuth2Authorization.setAccessTokenContent(accessTokenContent);
+	}
+
+	/**
+	* Sets the access token content hash of this o auth2 authorization.
+	*
+	* @param accessTokenContentHash the access token content hash of this o auth2 authorization
+	*/
+	@Override
+	public void setAccessTokenContentHash(long accessTokenContentHash) {
+		_oAuth2Authorization.setAccessTokenContentHash(accessTokenContentHash);
 	}
 
 	/**
@@ -508,6 +554,16 @@ public class OAuth2AuthorizationWrapper implements OAuth2Authorization,
 	@Override
 	public void setRefreshTokenContent(String refreshTokenContent) {
 		_oAuth2Authorization.setRefreshTokenContent(refreshTokenContent);
+	}
+
+	/**
+	* Sets the refresh token content hash of this o auth2 authorization.
+	*
+	* @param refreshTokenContentHash the refresh token content hash of this o auth2 authorization
+	*/
+	@Override
+	public void setRefreshTokenContentHash(long refreshTokenContentHash) {
+		_oAuth2Authorization.setRefreshTokenContentHash(refreshTokenContentHash);
 	}
 
 	/**

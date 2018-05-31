@@ -71,7 +71,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "oAuth2ApplicationId", Types.BIGINT },
-			{ "scopeAliases", Types.VARCHAR }
+			{ "scopeAliases", Types.CLOB },
+			{ "scopeAliasesHash", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -82,10 +83,11 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("oAuth2ApplicationId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("scopeAliases", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("scopeAliases", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("scopeAliasesHash", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OAuth2ApplicationScopeAliases (oA2AScopeAliasesId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,scopeAliases VARCHAR(255) null)";
+	public static final String TABLE_SQL_CREATE = "create table OAuth2ApplicationScopeAliases (oA2AScopeAliasesId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,oAuth2ApplicationId LONG,scopeAliases TEXT null,scopeAliasesHash LONG)";
 	public static final String TABLE_SQL_DROP = "drop table OAuth2ApplicationScopeAliases";
 	public static final String ORDER_BY_JPQL = " ORDER BY oAuth2ApplicationScopeAliases.oAuth2ApplicationScopeAliasesId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OAuth2ApplicationScopeAliases.oA2AScopeAliasesId ASC";
@@ -103,7 +105,7 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long OAUTH2APPLICATIONID_COLUMN_BITMASK = 2L;
-	public static final long SCOPEALIASES_COLUMN_BITMASK = 4L;
+	public static final long SCOPEALIASESHASH_COLUMN_BITMASK = 4L;
 	public static final long OAUTH2APPLICATIONSCOPEALIASESID_COLUMN_BITMASK = 8L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.oauth2.provider.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases"));
@@ -153,6 +155,7 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 		attributes.put("createDate", getCreateDate());
 		attributes.put("oAuth2ApplicationId", getOAuth2ApplicationId());
 		attributes.put("scopeAliases", getScopeAliases());
+		attributes.put("scopeAliasesHash", getScopeAliasesHash());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -203,6 +206,12 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 
 		if (scopeAliases != null) {
 			setScopeAliases(scopeAliases);
+		}
+
+		Long scopeAliasesHash = (Long)attributes.get("scopeAliasesHash");
+
+		if (scopeAliasesHash != null) {
+			setScopeAliasesHash(scopeAliasesHash);
 		}
 	}
 
@@ -324,17 +333,29 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 
 	@Override
 	public void setScopeAliases(String scopeAliases) {
-		_columnBitmask |= SCOPEALIASES_COLUMN_BITMASK;
-
-		if (_originalScopeAliases == null) {
-			_originalScopeAliases = _scopeAliases;
-		}
-
 		_scopeAliases = scopeAliases;
 	}
 
-	public String getOriginalScopeAliases() {
-		return GetterUtil.getString(_originalScopeAliases);
+	@Override
+	public long getScopeAliasesHash() {
+		return _scopeAliasesHash;
+	}
+
+	@Override
+	public void setScopeAliasesHash(long scopeAliasesHash) {
+		_columnBitmask |= SCOPEALIASESHASH_COLUMN_BITMASK;
+
+		if (!_setOriginalScopeAliasesHash) {
+			_setOriginalScopeAliasesHash = true;
+
+			_originalScopeAliasesHash = _scopeAliasesHash;
+		}
+
+		_scopeAliasesHash = scopeAliasesHash;
+	}
+
+	public long getOriginalScopeAliasesHash() {
+		return _originalScopeAliasesHash;
 	}
 
 	public long getColumnBitmask() {
@@ -375,6 +396,7 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 		oAuth2ApplicationScopeAliasesImpl.setCreateDate(getCreateDate());
 		oAuth2ApplicationScopeAliasesImpl.setOAuth2ApplicationId(getOAuth2ApplicationId());
 		oAuth2ApplicationScopeAliasesImpl.setScopeAliases(getScopeAliases());
+		oAuth2ApplicationScopeAliasesImpl.setScopeAliasesHash(getScopeAliasesHash());
 
 		oAuth2ApplicationScopeAliasesImpl.resetOriginalValues();
 
@@ -447,7 +469,9 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 
 		oAuth2ApplicationScopeAliasesModelImpl._setOriginalOAuth2ApplicationId = false;
 
-		oAuth2ApplicationScopeAliasesModelImpl._originalScopeAliases = oAuth2ApplicationScopeAliasesModelImpl._scopeAliases;
+		oAuth2ApplicationScopeAliasesModelImpl._originalScopeAliasesHash = oAuth2ApplicationScopeAliasesModelImpl._scopeAliasesHash;
+
+		oAuth2ApplicationScopeAliasesModelImpl._setOriginalScopeAliasesHash = false;
 
 		oAuth2ApplicationScopeAliasesModelImpl._columnBitmask = 0;
 	}
@@ -490,12 +514,14 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 			oAuth2ApplicationScopeAliasesCacheModel.scopeAliases = null;
 		}
 
+		oAuth2ApplicationScopeAliasesCacheModel.scopeAliasesHash = getScopeAliasesHash();
+
 		return oAuth2ApplicationScopeAliasesCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{oAuth2ApplicationScopeAliasesId=");
 		sb.append(getOAuth2ApplicationScopeAliasesId());
@@ -511,6 +537,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 		sb.append(getOAuth2ApplicationId());
 		sb.append(", scopeAliases=");
 		sb.append(getScopeAliases());
+		sb.append(", scopeAliasesHash=");
+		sb.append(getScopeAliasesHash());
 		sb.append("}");
 
 		return sb.toString();
@@ -518,7 +546,7 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -553,6 +581,10 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 			"<column><column-name>scopeAliases</column-name><column-value><![CDATA[");
 		sb.append(getScopeAliases());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>scopeAliasesHash</column-name><column-value><![CDATA[");
+		sb.append(getScopeAliasesHash());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -574,7 +606,9 @@ public class OAuth2ApplicationScopeAliasesModelImpl extends BaseModelImpl<OAuth2
 	private long _originalOAuth2ApplicationId;
 	private boolean _setOriginalOAuth2ApplicationId;
 	private String _scopeAliases;
-	private String _originalScopeAliases;
+	private long _scopeAliasesHash;
+	private long _originalScopeAliasesHash;
+	private boolean _setOriginalScopeAliasesHash;
 	private long _columnBitmask;
 	private OAuth2ApplicationScopeAliases _escapedModel;
 }

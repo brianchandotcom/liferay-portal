@@ -67,6 +67,7 @@
 
 		<column name="oAuth2ApplicationId" type="long" />
 		<column name="scopeAliases" type="String" />
+		<column name="scopeAliasesHash" type="long" />
 
 		<!-- Finder methods -->
 
@@ -76,9 +77,9 @@
 		<finder name="OAuth2ApplicationId" return-type="Collection">
 			<finder-column name="oAuth2ApplicationId" />
 		</finder>
-		<finder name="O_S" return-type="OAuth2ApplicationScopeAliases">
+		<finder name="O_S" return-type="Collection">
 			<finder-column name="oAuth2ApplicationId" />
-			<finder-column name="scopeAliases" />
+			<finder-column name="scopeAliasesHash" />
 		</finder>
 
 		<!-- References -->
@@ -106,10 +107,12 @@
 		<column name="oAuth2ApplicationId" type="long" />
 		<column db-name="oA2AScopeAliasesId" name="oAuth2ApplicationScopeAliasesId" type="long" />
 		<column name="accessTokenContent" type="String" />
+		<column name="accessTokenContentHash" type="long" />
 		<column name="accessTokenCreateDate" type="Date" />
 		<column name="accessTokenExpirationDate" type="Date" />
 		<column name="remoteIPInfo" type="String" />
 		<column name="refreshTokenContent" type="String" />
+		<column name="refreshTokenContentHash" type="long" />
 		<column name="refreshTokenCreateDate" type="Date" />
 		<column name="refreshTokenExpirationDate" type="Date" />
 
@@ -125,11 +128,11 @@
 		<finder name="OAuth2ApplicationId" return-type="Collection">
 			<finder-column name="oAuth2ApplicationId" />
 		</finder>
-		<finder name="AccessTokenContent" return-type="OAuth2Authorization">
-			<finder-column name="accessTokenContent" />
+		<finder name="AccessTokenContentHash" return-type="Collection">
+			<finder-column name="accessTokenContentHash" />
 		</finder>
-		<finder name="RefreshTokenContent" return-type="OAuth2Authorization">
-			<finder-column name="refreshTokenContent" />
+		<finder name="RefreshTokenContentHash" return-type="Collection">
+			<finder-column name="refreshTokenContentHash" />
 		</finder>
 
 		<!-- References -->

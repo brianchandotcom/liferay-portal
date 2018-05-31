@@ -65,7 +65,7 @@ public class OAuth2AuthorizationCacheModel implements CacheModel<OAuth2Authoriza
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{oAuth2AuthorizationId=");
 		sb.append(oAuth2AuthorizationId);
@@ -83,6 +83,8 @@ public class OAuth2AuthorizationCacheModel implements CacheModel<OAuth2Authoriza
 		sb.append(oAuth2ApplicationScopeAliasesId);
 		sb.append(", accessTokenContent=");
 		sb.append(accessTokenContent);
+		sb.append(", accessTokenContentHash=");
+		sb.append(accessTokenContentHash);
 		sb.append(", accessTokenCreateDate=");
 		sb.append(accessTokenCreateDate);
 		sb.append(", accessTokenExpirationDate=");
@@ -91,6 +93,8 @@ public class OAuth2AuthorizationCacheModel implements CacheModel<OAuth2Authoriza
 		sb.append(remoteIPInfo);
 		sb.append(", refreshTokenContent=");
 		sb.append(refreshTokenContent);
+		sb.append(", refreshTokenContentHash=");
+		sb.append(refreshTokenContentHash);
 		sb.append(", refreshTokenCreateDate=");
 		sb.append(refreshTokenCreateDate);
 		sb.append(", refreshTokenExpirationDate=");
@@ -132,6 +136,8 @@ public class OAuth2AuthorizationCacheModel implements CacheModel<OAuth2Authoriza
 			oAuth2AuthorizationImpl.setAccessTokenContent(accessTokenContent);
 		}
 
+		oAuth2AuthorizationImpl.setAccessTokenContentHash(accessTokenContentHash);
+
 		if (accessTokenCreateDate == Long.MIN_VALUE) {
 			oAuth2AuthorizationImpl.setAccessTokenCreateDate(null);
 		}
@@ -161,6 +167,8 @@ public class OAuth2AuthorizationCacheModel implements CacheModel<OAuth2Authoriza
 		else {
 			oAuth2AuthorizationImpl.setRefreshTokenContent(refreshTokenContent);
 		}
+
+		oAuth2AuthorizationImpl.setRefreshTokenContentHash(refreshTokenContentHash);
 
 		if (refreshTokenCreateDate == Long.MIN_VALUE) {
 			oAuth2AuthorizationImpl.setRefreshTokenCreateDate(null);
@@ -197,10 +205,14 @@ public class OAuth2AuthorizationCacheModel implements CacheModel<OAuth2Authoriza
 
 		oAuth2ApplicationScopeAliasesId = objectInput.readLong();
 		accessTokenContent = objectInput.readUTF();
+
+		accessTokenContentHash = objectInput.readLong();
 		accessTokenCreateDate = objectInput.readLong();
 		accessTokenExpirationDate = objectInput.readLong();
 		remoteIPInfo = objectInput.readUTF();
 		refreshTokenContent = objectInput.readUTF();
+
+		refreshTokenContentHash = objectInput.readLong();
 		refreshTokenCreateDate = objectInput.readLong();
 		refreshTokenExpirationDate = objectInput.readLong();
 	}
@@ -234,6 +246,7 @@ public class OAuth2AuthorizationCacheModel implements CacheModel<OAuth2Authoriza
 			objectOutput.writeUTF(accessTokenContent);
 		}
 
+		objectOutput.writeLong(accessTokenContentHash);
 		objectOutput.writeLong(accessTokenCreateDate);
 		objectOutput.writeLong(accessTokenExpirationDate);
 
@@ -251,6 +264,7 @@ public class OAuth2AuthorizationCacheModel implements CacheModel<OAuth2Authoriza
 			objectOutput.writeUTF(refreshTokenContent);
 		}
 
+		objectOutput.writeLong(refreshTokenContentHash);
 		objectOutput.writeLong(refreshTokenCreateDate);
 		objectOutput.writeLong(refreshTokenExpirationDate);
 	}
@@ -263,10 +277,12 @@ public class OAuth2AuthorizationCacheModel implements CacheModel<OAuth2Authoriza
 	public long oAuth2ApplicationId;
 	public long oAuth2ApplicationScopeAliasesId;
 	public String accessTokenContent;
+	public long accessTokenContentHash;
 	public long accessTokenCreateDate;
 	public long accessTokenExpirationDate;
 	public String remoteIPInfo;
 	public String refreshTokenContent;
+	public long refreshTokenContentHash;
 	public long refreshTokenCreateDate;
 	public long refreshTokenExpirationDate;
 }

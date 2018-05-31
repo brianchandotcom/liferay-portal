@@ -86,16 +86,38 @@ public class OAuth2AuthorizationLocalServiceImpl
 	public OAuth2Authorization fetchOAuth2AuthorizationByAccessTokenContent(
 		String accessTokenContent) {
 
-		return oAuth2AuthorizationPersistence.fetchByAccessTokenContent(
-			accessTokenContent);
+		List<OAuth2Authorization> oAuth2Authorizations =
+			oAuth2AuthorizationPersistence.findByAccessTokenContentHash(
+				accessTokenContent.hashCode());
+
+		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
+			if (accessTokenContent.equals(
+					oAuth2Authorization.getAccessTokenContent())) {
+
+				return oAuth2Authorization;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
 	public OAuth2Authorization fetchOAuth2AuthorizationByRefreshTokenContent(
 		String refreshTokenContent) {
 
-		return oAuth2AuthorizationPersistence.fetchByRefreshTokenContent(
-			refreshTokenContent);
+		List<OAuth2Authorization> oAuth2Authorizations =
+			oAuth2AuthorizationPersistence.findByRefreshTokenContentHash(
+				refreshTokenContent.hashCode());
+
+		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
+			if (refreshTokenContent.equals(
+					oAuth2Authorization.getRefreshTokenContent())) {
+
+				return oAuth2Authorization;
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -103,8 +125,16 @@ public class OAuth2AuthorizationLocalServiceImpl
 			String accessTokenContent)
 		throws NoSuchOAuth2AuthorizationException {
 
-		return oAuth2AuthorizationPersistence.findByAccessTokenContent(
-			accessTokenContent);
+		OAuth2Authorization oAuth2Authorization =
+			fetchOAuth2AuthorizationByAccessTokenContent(accessTokenContent);
+
+		if (oAuth2Authorization == null) {
+			throw new NoSuchOAuth2AuthorizationException(
+				"No OAuth2Authorization exists with accessTokenContent " +
+					accessTokenContent);
+		}
+
+		return oAuth2Authorization;
 	}
 
 	@Override
@@ -112,8 +142,16 @@ public class OAuth2AuthorizationLocalServiceImpl
 			String refreshTokenContent)
 		throws NoSuchOAuth2AuthorizationException {
 
-		return oAuth2AuthorizationPersistence.findByRefreshTokenContent(
-			refreshTokenContent);
+		OAuth2Authorization oAuth2Authorization =
+			fetchOAuth2AuthorizationByRefreshTokenContent(refreshTokenContent);
+
+		if (oAuth2Authorization == null) {
+			throw new NoSuchOAuth2AuthorizationException(
+				"No OAuth2Authorization exists with refreshTokenContent " +
+					refreshTokenContent);
+		}
+
+		return oAuth2Authorization;
 	}
 
 	@Override

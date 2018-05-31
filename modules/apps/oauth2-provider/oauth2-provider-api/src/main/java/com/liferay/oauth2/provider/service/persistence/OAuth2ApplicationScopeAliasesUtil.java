@@ -449,68 +449,190 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	}
 
 	/**
-	* Returns the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; or throws a {@link NoSuchOAuth2ApplicationScopeAliasesException} if it could not be found.
+	* Returns all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
 	*
 	* @param oAuth2ApplicationId the o auth2 application ID
-	* @param scopeAliases the scope aliases
-	* @return the matching o auth2 application scope aliases
+	* @param scopeAliasesHash the scope aliases hash
+	* @return the matching o auth2 application scope aliaseses
+	*/
+	public static List<OAuth2ApplicationScopeAliases> findByO_S(
+		long oAuth2ApplicationId, long scopeAliasesHash) {
+		return getPersistence().findByO_S(oAuth2ApplicationId, scopeAliasesHash);
+	}
+
+	/**
+	* Returns a range of all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ApplicationScopeAliasesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param oAuth2ApplicationId the o auth2 application ID
+	* @param scopeAliasesHash the scope aliases hash
+	* @param start the lower bound of the range of o auth2 application scope aliaseses
+	* @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
+	* @return the range of matching o auth2 application scope aliaseses
+	*/
+	public static List<OAuth2ApplicationScopeAliases> findByO_S(
+		long oAuth2ApplicationId, long scopeAliasesHash, int start, int end) {
+		return getPersistence()
+				   .findByO_S(oAuth2ApplicationId, scopeAliasesHash, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ApplicationScopeAliasesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param oAuth2ApplicationId the o auth2 application ID
+	* @param scopeAliasesHash the scope aliases hash
+	* @param start the lower bound of the range of o auth2 application scope aliaseses
+	* @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching o auth2 application scope aliaseses
+	*/
+	public static List<OAuth2ApplicationScopeAliases> findByO_S(
+		long oAuth2ApplicationId, long scopeAliasesHash, int start, int end,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
+		return getPersistence()
+				   .findByO_S(oAuth2ApplicationId, scopeAliasesHash, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link OAuth2ApplicationScopeAliasesModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param oAuth2ApplicationId the o auth2 application ID
+	* @param scopeAliasesHash the scope aliases hash
+	* @param start the lower bound of the range of o auth2 application scope aliaseses
+	* @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching o auth2 application scope aliaseses
+	*/
+	public static List<OAuth2ApplicationScopeAliases> findByO_S(
+		long oAuth2ApplicationId, long scopeAliasesHash, int start, int end,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByO_S(oAuth2ApplicationId, scopeAliasesHash, start,
+			end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	*
+	* @param oAuth2ApplicationId the o auth2 application ID
+	* @param scopeAliasesHash the scope aliases hash
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching o auth2 application scope aliases
 	* @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
 	*/
-	public static OAuth2ApplicationScopeAliases findByO_S(
-		long oAuth2ApplicationId, String scopeAliases)
+	public static OAuth2ApplicationScopeAliases findByO_S_First(
+		long oAuth2ApplicationId, long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
 		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationScopeAliasesException {
-		return getPersistence().findByO_S(oAuth2ApplicationId, scopeAliases);
-	}
-
-	/**
-	* Returns the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param oAuth2ApplicationId the o auth2 application ID
-	* @param scopeAliases the scope aliases
-	* @return the matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
-	*/
-	public static OAuth2ApplicationScopeAliases fetchByO_S(
-		long oAuth2ApplicationId, String scopeAliases) {
-		return getPersistence().fetchByO_S(oAuth2ApplicationId, scopeAliases);
-	}
-
-	/**
-	* Returns the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param oAuth2ApplicationId the o auth2 application ID
-	* @param scopeAliases the scope aliases
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
-	*/
-	public static OAuth2ApplicationScopeAliases fetchByO_S(
-		long oAuth2ApplicationId, String scopeAliases, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByO_S(oAuth2ApplicationId, scopeAliases,
-			retrieveFromCache);
+				   .findByO_S_First(oAuth2ApplicationId, scopeAliasesHash,
+			orderByComparator);
 	}
 
 	/**
-	* Removes the o auth2 application scope aliases where oAuth2ApplicationId = &#63; and scopeAliases = &#63; from the database.
+	* Returns the first o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
 	*
 	* @param oAuth2ApplicationId the o auth2 application ID
-	* @param scopeAliases the scope aliases
-	* @return the o auth2 application scope aliases that was removed
+	* @param scopeAliasesHash the scope aliases hash
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
 	*/
-	public static OAuth2ApplicationScopeAliases removeByO_S(
-		long oAuth2ApplicationId, String scopeAliases)
-		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationScopeAliasesException {
-		return getPersistence().removeByO_S(oAuth2ApplicationId, scopeAliases);
+	public static OAuth2ApplicationScopeAliases fetchByO_S_First(
+		long oAuth2ApplicationId, long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
+		return getPersistence()
+				   .fetchByO_S_First(oAuth2ApplicationId, scopeAliasesHash,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the number of o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliases = &#63;.
+	* Returns the last o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
 	*
 	* @param oAuth2ApplicationId the o auth2 application ID
-	* @param scopeAliases the scope aliases
+	* @param scopeAliasesHash the scope aliases hash
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching o auth2 application scope aliases
+	* @throws NoSuchOAuth2ApplicationScopeAliasesException if a matching o auth2 application scope aliases could not be found
+	*/
+	public static OAuth2ApplicationScopeAliases findByO_S_Last(
+		long oAuth2ApplicationId, long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationScopeAliasesException {
+		return getPersistence()
+				   .findByO_S_Last(oAuth2ApplicationId, scopeAliasesHash,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	*
+	* @param oAuth2ApplicationId the o auth2 application ID
+	* @param scopeAliasesHash the scope aliases hash
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching o auth2 application scope aliases, or <code>null</code> if a matching o auth2 application scope aliases could not be found
+	*/
+	public static OAuth2ApplicationScopeAliases fetchByO_S_Last(
+		long oAuth2ApplicationId, long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
+		return getPersistence()
+				   .fetchByO_S_Last(oAuth2ApplicationId, scopeAliasesHash,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the o auth2 application scope aliaseses before and after the current o auth2 application scope aliases in the ordered set where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	*
+	* @param oAuth2ApplicationScopeAliasesId the primary key of the current o auth2 application scope aliases
+	* @param oAuth2ApplicationId the o auth2 application ID
+	* @param scopeAliasesHash the scope aliases hash
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next o auth2 application scope aliases
+	* @throws NoSuchOAuth2ApplicationScopeAliasesException if a o auth2 application scope aliases with the primary key could not be found
+	*/
+	public static OAuth2ApplicationScopeAliases[] findByO_S_PrevAndNext(
+		long oAuth2ApplicationScopeAliasesId, long oAuth2ApplicationId,
+		long scopeAliasesHash,
+		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator)
+		throws com.liferay.oauth2.provider.exception.NoSuchOAuth2ApplicationScopeAliasesException {
+		return getPersistence()
+				   .findByO_S_PrevAndNext(oAuth2ApplicationScopeAliasesId,
+			oAuth2ApplicationId, scopeAliasesHash, orderByComparator);
+	}
+
+	/**
+	* Removes all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63; from the database.
+	*
+	* @param oAuth2ApplicationId the o auth2 application ID
+	* @param scopeAliasesHash the scope aliases hash
+	*/
+	public static void removeByO_S(long oAuth2ApplicationId,
+		long scopeAliasesHash) {
+		getPersistence().removeByO_S(oAuth2ApplicationId, scopeAliasesHash);
+	}
+
+	/**
+	* Returns the number of o auth2 application scope aliaseses where oAuth2ApplicationId = &#63; and scopeAliasesHash = &#63;.
+	*
+	* @param oAuth2ApplicationId the o auth2 application ID
+	* @param scopeAliasesHash the scope aliases hash
 	* @return the number of matching o auth2 application scope aliaseses
 	*/
-	public static int countByO_S(long oAuth2ApplicationId, String scopeAliases) {
-		return getPersistence().countByO_S(oAuth2ApplicationId, scopeAliases);
+	public static int countByO_S(long oAuth2ApplicationId, long scopeAliasesHash) {
+		return getPersistence().countByO_S(oAuth2ApplicationId, scopeAliasesHash);
 	}
 
 	/**

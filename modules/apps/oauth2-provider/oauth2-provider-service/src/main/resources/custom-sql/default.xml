@@ -17,7 +17,8 @@
 				(OAuth2ScopeGrant.companyId = ?) AND
 				(OAuth2ScopeGrant.applicationName = ?) AND
 				(OAuth2ScopeGrant.bundleSymbolicName = ?) AND
-				(OAuth2Authorization.accessTokenContent = ?)
+				(OAuth2Authorization.accessTokenContent = ?) AND
+				(OAuth2Authorization.accessTokenContentHash = ?)
 		]]>
 	</sql>
 </custom-sql>

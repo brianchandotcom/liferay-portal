@@ -19,7 +19,7 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -373,7 +373,7 @@ public class CommercePriceEntryLocalServiceImpl
 		if (cpInstanceId > 0) {
 			validate(cpInstanceId, commercePriceListId);
 
-			CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
+			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 				cpInstanceId);
 
 			return addCommercePriceEntry(
@@ -382,9 +382,8 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 
 		if (Validator.isNotNull(skuExternalReferenceCode)) {
-			CPInstance cpInstance =
-				_cpInstancePersistence.findByExternalReferenceCode(
-					skuExternalReferenceCode);
+			CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+				skuExternalReferenceCode);
 
 			validate(cpInstance.getCPInstanceId(), commercePriceListId);
 
@@ -504,7 +503,7 @@ public class CommercePriceEntryLocalServiceImpl
 	protected void validate(long cpInstanceId, long commercePriceListId)
 		throws PortalException {
 
-		CPInstance cpInstance = _cpInstancePersistence.findByPrimaryKey(
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
 		CommercePriceEntry commercePriceEntry =
@@ -519,7 +518,7 @@ public class CommercePriceEntryLocalServiceImpl
 	private static final String[] _SELECTED_FIELD_NAMES =
 		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID, Field.GROUP_ID, Field.UID};
 
-	@ServiceReference(type = CPInstancePersistence.class)
-	private CPInstancePersistence _cpInstancePersistence;
+	@ServiceReference(type = CPInstanceLocalService.class)
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

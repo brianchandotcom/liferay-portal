@@ -181,6 +181,14 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	}
 
 	@Override
+	public CommerceTierPriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		return commerceTierPriceEntryPersistence.fetchByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	@Override
 	public List<CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
 		long groupId, int start, int end) {
 

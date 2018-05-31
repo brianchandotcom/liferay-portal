@@ -63,6 +63,12 @@ public class CommerceTierPriceEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.price.list.model.CommerceTierPriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return _commerceTierPriceEntryService.fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
+	@Override
 	public java.util.List<com.liferay.commerce.price.list.model.CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
 		long groupId, int start, int end) {
 		return _commerceTierPriceEntryService.fetchCommerceTierPriceEntries(groupId,

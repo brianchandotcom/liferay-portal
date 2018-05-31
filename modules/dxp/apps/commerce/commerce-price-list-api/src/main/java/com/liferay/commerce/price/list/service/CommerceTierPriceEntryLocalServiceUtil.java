@@ -207,6 +207,11 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.commerce.price.list.model.CommerceTierPriceEntry fetchByExternalReferenceCode(
+		String externalReferenceCode) {
+		return getService().fetchByExternalReferenceCode(externalReferenceCode);
+	}
+
 	public static java.util.List<com.liferay.commerce.price.list.model.CommerceTierPriceEntry> fetchCommerceTierPriceEntries(
 		long groupId, int start, int end) {
 		return getService().fetchCommerceTierPriceEntries(groupId, start, end);

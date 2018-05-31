@@ -118,7 +118,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		String previousConfiguration = null;
 
 		for (String dependency : uniqueDependencies) {
-			String configuration = _getConfiguration(dependency);
+			String configuration = GradleSourceUtil.getConfiguration(
+				dependency);
 
 			if ((previousConfiguration == null) ||
 				!previousConfiguration.equals(configuration)) {
@@ -137,16 +138,6 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		return StringUtil.replace(content, dependencies, sb.toString());
 	}
 
-	private String _getConfiguration(String dependency) {
-		int pos = dependency.indexOf(StringPool.SPACE);
-
-		if (pos != -1) {
-			return dependency.substring(0, pos);
-		}
-
-		return dependency;
-	}
-
 	private final Pattern _incorrectGroupNameVersionPattern = Pattern.compile(
 		"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)", Pattern.DOTALL);
 	private final Pattern _incorrectWhitespacePattern = Pattern.compile(
@@ -157,8 +148,10 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 		@Override
 		public int compare(String dependency1, String dependency2) {
-			String configuration1 = _getConfiguration(dependency1);
-			String configuration2 = _getConfiguration(dependency2);
+			String configuration1 = GradleSourceUtil.getConfiguration(
+				dependency1);
+			String configuration2 = GradleSourceUtil.getConfiguration(
+				dependency2);
 
 			if (!configuration1.equals(configuration2)) {
 				return dependency1.compareTo(dependency2);

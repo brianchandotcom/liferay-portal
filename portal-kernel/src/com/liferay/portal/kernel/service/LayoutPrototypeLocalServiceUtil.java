@@ -212,6 +212,11 @@ public class LayoutPrototypeLocalServiceUtil {
 		return getService().fetchLayoutPrototype(layoutPrototypeId);
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutPrototype fetchLayoutPrototype(
+		long companyId, String name, java.util.Locale locale) {
+		return getService().fetchLayoutPrototype(companyId, name, locale);
+	}
+
 	/**
 	* Returns the layout prototype with the matching UUID and company.
 	*
@@ -223,6 +228,11 @@ public class LayoutPrototypeLocalServiceUtil {
 		String uuid, long companyId) {
 		return getService()
 				   .fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutPrototype fetchLayoutProtoype(
+		long companyId, String name) {
+		return getService().fetchLayoutProtoype(companyId, name);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
@@ -249,6 +259,18 @@ public class LayoutPrototypeLocalServiceUtil {
 		long layoutPrototypeId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayoutPrototype(layoutPrototypeId);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutPrototype getLayoutPrototype(
+		long companyId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutPrototype(companyId, name);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutPrototype getLayoutPrototype(
+		long companyId, String name, java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutPrototype(companyId, name, locale);
 	}
 
 	/**

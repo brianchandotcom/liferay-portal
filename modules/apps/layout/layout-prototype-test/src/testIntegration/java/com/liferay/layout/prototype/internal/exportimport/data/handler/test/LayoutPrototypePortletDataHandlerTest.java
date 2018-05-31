@@ -38,6 +38,10 @@ public class LayoutPrototypePortletDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
+	public void testPrepareManifestSummary() throws Exception {
+	}
+
+	@Override
 	protected void addStagedModels() throws Exception {
 	}
 

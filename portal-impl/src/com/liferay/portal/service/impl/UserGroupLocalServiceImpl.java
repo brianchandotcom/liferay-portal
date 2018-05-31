@@ -21,7 +21,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -552,14 +551,15 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 				companyId, keywords, params, start, end, obc);
 		}
 
-		String orderByType = StringPool.BLANK;
+		String orderByCol = obc.getOrderByFields()[0];
+		String orderByType = "asc";
 
-		if (obc.isAscending()) {
-			orderByType = "asc";
+		if (!obc.isAscending()) {
+			orderByType = "desc";
 		}
 
 		Sort sort = SortFactoryUtil.getSort(
-			UserGroup.class, obc.getOrderBy(), orderByType);
+			UserGroup.class, orderByCol, orderByType);
 
 		try {
 			return UsersAdminUtil.getUserGroups(
@@ -666,14 +666,15 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 				obc);
 		}
 
-		String orderByType = StringPool.BLANK;
+		String orderByCol = obc.getOrderByFields()[0];
+		String orderByType = "asc";
 
-		if (obc.isAscending()) {
-			orderByType = "asc";
+		if (!obc.isAscending()) {
+			orderByType = "desc";
 		}
 
 		Sort sort = SortFactoryUtil.getSort(
-			UserGroup.class, obc.getOrderBy(), orderByType);
+			UserGroup.class, orderByCol, orderByType);
 
 		try {
 			return UsersAdminUtil.getUserGroups(

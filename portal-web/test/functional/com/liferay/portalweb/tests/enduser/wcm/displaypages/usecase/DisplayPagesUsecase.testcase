@@ -24,7 +24,7 @@
 			<var name="portlet" value="Page Fragments" />
 		</execute>
 
-		<execute macro="Collection#addCollection">
+		<execute macro="Fragment#addCollection">
 			<var name="collectionName" value="Fragment Collection Name" />
 		</execute>
 	</set-up>

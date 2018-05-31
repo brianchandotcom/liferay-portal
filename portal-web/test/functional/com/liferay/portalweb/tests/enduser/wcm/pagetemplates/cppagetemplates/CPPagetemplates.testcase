@@ -105,20 +105,9 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute macro="TestCase#getSiteName">
-			<return from="siteName" name="siteName" />
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute function="SelectWindow" locator1="title=Page Template Name - ${siteName}" />
-
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
 		</execute>
-
-		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
-
-		<execute function="SelectWindow" locator1="title=Site Pages - Global - ${siteName}" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />
@@ -162,15 +151,9 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="title=Page Template Name - ${siteName}" />
-
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
-
-		<execute function="Close#closeWindow" locator1="title=Page Template Name - ${siteName}" />
-
-		<execute function="SelectWindow" locator1="title=Site Pages - Global - ${siteName}" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page" />

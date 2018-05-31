@@ -522,12 +522,25 @@ public class GitWorkingDirectory {
 	}
 
 	public Branch getBranch(String branchName, Remote remote) {
+		return getBranch(branchName, remote, false);
+	}
+
+	public Branch getBranch(
+		String branchName, Remote remote, boolean required) {
+
 		if (branchName.equals("HEAD") && (remote == null)) {
 			ExecutionResult executionResult = executeBashCommands(
 				_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT,
 				"git rev-parse --abbrev-ref " + branchName);
 
 			if (executionResult.getExitValue() != 0) {
+				if (required) {
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Unable to find required local branch ",
+							branchName));
+				}
+
 				return null;
 			}
 
@@ -538,6 +551,13 @@ public class GitWorkingDirectory {
 			branchName = branchName.trim();
 
 			if (branchName.isEmpty()) {
+				if (required) {
+					throw new RuntimeException(
+						JenkinsResultsParserUtil.combine(
+							"Unable to find required local branch ",
+							branchName));
+				}
+
 				return null;
 			}
 
@@ -550,6 +570,13 @@ public class GitWorkingDirectory {
 			if (branchName.equals(branch.getName())) {
 				return branch;
 			}
+		}
+
+		if (required) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to find required branch ", branchName,
+					" from remote URL " + remote.getRemoteURL()));
 		}
 
 		return null;

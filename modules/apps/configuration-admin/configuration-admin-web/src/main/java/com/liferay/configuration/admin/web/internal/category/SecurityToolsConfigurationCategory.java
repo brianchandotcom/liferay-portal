@@ -22,8 +22,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component
-public class PageAdministrationConfigurationCategory
-	implements ConfigurationCategory {
+public class SecurityToolsConfigurationCategory implements ConfigurationCategory {
+
+	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
 
 	@Override
 	public String getCategoryKey() {
@@ -35,8 +39,10 @@ public class PageAdministrationConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "page-administration";
+	private static final String _CATEGORY_ICON = "lock";
 
-	private static final String _CATEGORY_SECTION = "content-management";
+	private static final String _CATEGORY_KEY = "security-tools";
+
+	private static final String _CATEGORY_SECTION = "security";
 
 }

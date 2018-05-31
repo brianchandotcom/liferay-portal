@@ -44,6 +44,6 @@ public class DocumentsAndMediaConfigurationCategory
 
 	private static final String _CATEGORY_KEY = "documents-and-media";
 
-	private static final String _CATEGORY_SECTION = "content-management";
+	private static final String _CATEGORY_SECTION = "content";
 
 }

@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Andrea Di Giorgi
  */
-@ExtendedObjectClassDefinition(category = "push-notifications")
+@ExtendedObjectClassDefinition(category = "notifications")
 @Meta.OCD(
 	id = "com.liferay.push.notifications.sender.sms.internal.configuration.SMSPushNotificationsSenderConfiguration",
 	localization = "content/Language",

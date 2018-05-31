@@ -39,7 +39,7 @@ public class UpgradesConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_ICON = "reload";
+	private static final String _CATEGORY_ICON = "arrow-up-full";
 
 	private static final String _CATEGORY_KEY = "upgrades";
 

@@ -15,19 +15,13 @@
 package com.liferay.configuration.admin.web.internal.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
 @Component
-public class MessagingConfigurationCategory implements ConfigurationCategory {
-
-	@Override
-	public String getCategoryIcon() {
-		return _CATEGORY_ICON;
-	}
+public class OAuth2ConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryKey() {
@@ -39,10 +33,8 @@ public class MessagingConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_ICON = "message-boards";
+	private static final String _CATEGORY_KEY = "oauth2";
 
-	private static final String _CATEGORY_KEY = "messaging";
-
-	private static final String _CATEGORY_SECTION = "social";
+	private static final String _CATEGORY_SECTION = "security";
 
 }

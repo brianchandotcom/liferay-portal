@@ -40,7 +40,7 @@ public class LocalizationConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_ICON = "vocabulary";
+	private static final String _CATEGORY_ICON = "globe";
 
 	private static final String _CATEGORY_KEY = "localization";
 

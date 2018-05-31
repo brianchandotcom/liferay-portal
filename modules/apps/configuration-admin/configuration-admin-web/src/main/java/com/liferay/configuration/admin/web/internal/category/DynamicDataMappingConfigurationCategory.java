@@ -40,10 +40,10 @@ public class DynamicDataMappingConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_ICON = "dynamic-data-list";
+	private static final String _CATEGORY_ICON = "dynamic-data-mapping";
 
 	private static final String _CATEGORY_KEY = "dynamic-data-mapping";
 
-	private static final String _CATEGORY_SECTION = "content-management";
+	private static final String _CATEGORY_SECTION = "content";
 
 }

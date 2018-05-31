@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component
-public class PushNotificationsConfigurationCategory
+public class MessageBoardsConfigurationCategory
 	implements ConfigurationCategory {
 
 	@Override
@@ -40,10 +40,10 @@ public class PushNotificationsConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_ICON = "info-circle";
+	private static final String _CATEGORY_ICON = "message-boards";
 
-	private static final String _CATEGORY_KEY = "push-notifications";
+	private static final String _CATEGORY_KEY = "message-boards";
 
-	private static final String _CATEGORY_SECTION = "platform";
+	private static final String _CATEGORY_SECTION = "social";
 
 }

@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Juergen Kappler
  */
 @ExtendedObjectClassDefinition(
-	category = "navigation",
+	category = "localization",
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(

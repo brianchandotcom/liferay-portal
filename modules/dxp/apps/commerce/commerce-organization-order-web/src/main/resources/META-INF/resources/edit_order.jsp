@@ -221,43 +221,6 @@ List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList
 			</div>
 		</c:if>
 	</div>
-
-	<div class="autofit-float autofit-row order-details-footer">
-		<div class="autofit-col autofit-col-expand">
-			<div class="autofit-section">
-				<strong><liferay-ui:message key="carrier" /></strong>
-
-				<%
-				String shippingOptionName = commerceOrganizationOrderDisplayContext.getCommerceOrderShippingOptionName(commerceOrder);
-				%>
-
-				<c:if test="<%= Validator.isNotNull(shippingOptionName) %>">
-					<span class="inline-item-after"><%= HtmlUtil.escape(shippingOptionName) %></span>
-				</c:if>
-			</div>
-		</div>
-
-		<div class="autofit-col autofit-col-expand">
-			<div class="autofit-section">
-				<strong><liferay-ui:message key="method" /></strong>
-
-				<%
-				String shippingMethodName = commerceOrganizationOrderDisplayContext.getCommerceOrderShippingMethodName(commerceOrder);
-				%>
-
-				<c:if test="<%= Validator.isNotNull(shippingMethodName) %>">
-					<span class="inline-item-after"><%= HtmlUtil.escape(shippingMethodName) %></span>
-				</c:if>
-			</div>
-		</div>
-
-		<div class="autofit-col autofit-col-expand">
-			<div class="autofit-section">
-				<strong><liferay-ui:message key="expected-duration" /></strong>
-				<span class="inline-item-after">3 Business Days</span>
-			</div>
-		</div>
-	</div>
 </aui:form>
 
 <liferay-portlet:actionURL name="editCommerceOrderItem" var="editCommerceOrderItemURL" />

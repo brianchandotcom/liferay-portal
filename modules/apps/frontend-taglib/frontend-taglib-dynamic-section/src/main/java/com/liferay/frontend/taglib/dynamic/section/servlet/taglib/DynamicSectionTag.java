@@ -40,9 +40,7 @@ public class DynamicSectionTag extends BaseBodyTagSupport implements BodyTag {
 			if (_dynamicSectionReplace != null) {
 				jspWriter.write(_dynamicSectionReplace.replace(pageContext));
 			}
-			else if ((_dynamicSections != null) &&
-					 !_dynamicSections.isEmpty()) {
-
+			else if (_dynamicSections != null) {
 				ServletRequest servletRequest = pageContext.getRequest();
 
 				String key = _PREFIX.concat(_name);

@@ -236,6 +236,22 @@ public class LayoutsAdminDisplayContext {
 		return deleteLayoutURL.toString();
 	}
 
+	public String getEditLayoutURL(Layout layout) {
+		if (!Objects.equals(layout.getType(), "content")) {
+			return StringPool.BLANK;
+		}
+
+		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
+
+		editLayoutURL.setParameter("mvcPath", "/edit_content_layout.jsp");
+		editLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		editLayoutURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+
+		return editLayoutURL.toString();
+	}
+
 	public List<DropdownItem> getFilterDropdownItems() {
 		return new DropdownItemList() {
 			{
@@ -957,6 +973,8 @@ public class LayoutsAdminDisplayContext {
 		if (showDeleteAction(layout)) {
 			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
 		}
+
+		jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
 
 		if (showOrphanPortletsAction(layout)) {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));

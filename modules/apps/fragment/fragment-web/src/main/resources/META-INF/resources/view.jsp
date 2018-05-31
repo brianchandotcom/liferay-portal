@@ -46,7 +46,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 												<c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
 													<liferay-ui:icon
 														icon="plus"
-														iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+														iconCssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
 														markupView="lexicon"
 														url="<%= editFragmentCollectionURL %>"
 													/>

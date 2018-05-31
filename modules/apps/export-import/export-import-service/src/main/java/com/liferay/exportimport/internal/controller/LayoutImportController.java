@@ -1080,26 +1080,36 @@ public class LayoutImportController implements ImportController {
 				layoutElement.attributeValue("layout-prototype-uuid"));
 
 			if (Validator.isNotNull(layoutPrototypeUuid)) {
-				try {
-					_layoutPrototypeLocalService.
-						getLayoutPrototypeByUuidAndCompanyId(
-							layoutPrototypeUuid, companyId);
-				}
-				catch (NoSuchLayoutPrototypeException nslpe) {
+				String layoutPrototypeName = GetterUtil.getString(
+					layoutElement.attributeValue("layout-prototype-name"));
 
-					// LPS-52675
+				boolean preloaded = GetterUtil.getBoolean(
+					layoutElement.attributeValue("preloaded"));
 
-					if (_log.isDebugEnabled()) {
-						_log.debug(nslpe, nslpe);
+				if (!preloaded) {
+					LayoutPrototype layoutPrototype =
+						_layoutPrototypeLocalService.
+							fetchLayoutPrototypeByUuidAndCompanyId(
+								layoutPrototypeUuid, companyId);
+
+					if (layoutPrototype == null) {
+						missingLayoutPrototypes.add(
+							new Tuple(
+								LayoutPrototype.class.getName(),
+								layoutPrototypeUuid, layoutPrototypeName));
 					}
+				}
+				else {
+					LayoutPrototype layoutPrototype =
+						_layoutPrototypeLocalService.fetchLayoutProtoype(
+							companyId, layoutPrototypeName);
 
-					String layoutPrototypeName = GetterUtil.getString(
-						layoutElement.attributeValue("layout-prototype-name"));
-
-					missingLayoutPrototypes.add(
-						new Tuple(
-							LayoutPrototype.class.getName(),
-							layoutPrototypeUuid, layoutPrototypeName));
+					if (layoutPrototype == null) {
+						missingLayoutPrototypes.add(
+							new Tuple(
+								LayoutPrototype.class.getName(),
+								layoutPrototypeUuid, layoutPrototypeName));
+					}
 				}
 			}
 		}

@@ -59,6 +59,12 @@ public class LayoutHeaderProductNavigationControlMenuEntry
 			return false;
 		}
 
+		if (!(themeDisplay.isShowLayoutTemplatesIcon() ||
+			themeDisplay.isShowPageSettingsIcon())) {
+
+			return false;
+		}
+
 		return super.isShow(request);
 	}
 

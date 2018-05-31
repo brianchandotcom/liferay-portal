@@ -70,8 +70,9 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
-	private static final String[] _FILE_NAMES =
-		{"array.find.js", "fetch.js", "object.assign.js"};
+	private static final String[] _FILE_NAMES = {
+		"array.find.js", "fetch.js", "object.assign.js", "url.search.params.js"
+	};
 
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;

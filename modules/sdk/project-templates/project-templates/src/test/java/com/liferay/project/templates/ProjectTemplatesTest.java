@@ -1970,7 +1970,6 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testCompareGradlePluginVersions() throws Exception {
 		String template = "mvc-portlet";
-
 		String name = "foo";
 
 		File gradleProjectDir = _buildTemplateWithGradle(template, name);

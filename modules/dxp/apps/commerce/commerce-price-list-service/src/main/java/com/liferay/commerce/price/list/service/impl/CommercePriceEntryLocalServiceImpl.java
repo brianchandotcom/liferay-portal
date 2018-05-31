@@ -21,6 +21,7 @@ import com.liferay.commerce.price.list.service.base.CommercePriceEntryLocalServi
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -380,7 +381,7 @@ public class CommercePriceEntryLocalServiceImpl
 			}
 		}
 
-		// Insert
+		// Add
 
 		if (cpInstanceId > 0) {
 			validate(cpInstanceId, commercePriceListId);
@@ -411,7 +412,7 @@ public class CommercePriceEntryLocalServiceImpl
 		sb.append(StringPool.COMMA_AND_SPACE);
 		sb.append("skuExternalReferenceCode=");
 		sb.append(skuExternalReferenceCode);
-		sb.append("}");
+		sb.append(CharPool.CLOSE_CURLY_BRACE);
 
 		throw new NoSuchCPInstanceException(sb.toString());
 	}

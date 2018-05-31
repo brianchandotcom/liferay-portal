@@ -22,6 +22,7 @@ import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.base.CommerceTierPriceEntryLocalServiceBaseImpl;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -369,7 +370,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			}
 		}
 
-		// Insert
+		// Add
 
 		if (commercePriceEntryId > 0) {
 			validate(commercePriceEntryId, minQuantity);
@@ -404,7 +405,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		sb.append(StringPool.COMMA_AND_SPACE);
 		sb.append("priceEntryExternalReferenceCode=");
 		sb.append(priceEntryExternalReferenceCode);
-		sb.append("}");
+		sb.append(CharPool.CLOSE_CURLY_BRACE);
 
 		throw new NoSuchPriceEntryException(sb.toString());
 	}

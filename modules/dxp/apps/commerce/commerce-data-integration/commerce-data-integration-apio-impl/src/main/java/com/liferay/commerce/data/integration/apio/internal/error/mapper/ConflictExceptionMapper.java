@@ -33,11 +33,10 @@ public class ConflictExceptionMapper
 
 	@Override
 	public APIError map(ConflictException ce) {
-		Response.Status status = Response.Status.CONFLICT;
-
 		return new APIError(
-			ce, "Unable to process the contained instructions in the request",
-			"Conflict: " + ce.getLocalizedMessage(), status.getStatusCode());
+			ce, "Unable to process the instructions in the request",
+			"Conflict: " + ce.getLocalizedMessage(),
+			Response.Status.CONFLICT.getStatusCode());
 	}
 
 }

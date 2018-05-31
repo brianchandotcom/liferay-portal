@@ -577,7 +577,7 @@ public class CommercePriceListLocalServiceImpl
 			}
 		}
 
-		// Insert
+		// Add
 
 		return addCommercePriceList(
 			commerceCurrencyId, name, priority, displayDateMonth,

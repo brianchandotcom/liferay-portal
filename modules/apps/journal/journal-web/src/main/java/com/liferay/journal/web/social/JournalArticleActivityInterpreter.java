@@ -20,9 +20,13 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.journal.constants.JournalActivityKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.web.util.JournalResourceBundleLoader;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -68,9 +72,35 @@ public class JournalArticleActivityInterpreter
 			journalArticleAssetRendererFactory.getAssetRenderer(
 				activity.getClassPK());
 
-		return journalArticleAssetRenderer.getURLViewInContext(
-			serviceContext.getLiferayPortletRequest(),
-			serviceContext.getLiferayPortletResponse(), null);
+		LiferayPortletRequest liferayPortletRequest =
+			serviceContext.getLiferayPortletRequest();
+
+		LiferayPortletResponse liferayPortletResponse =
+			serviceContext.getLiferayPortletResponse();
+
+		if ((liferayPortletRequest != null) &&
+			(liferayPortletResponse != null)) {
+
+			return journalArticleAssetRenderer.getURLViewInContext(
+				serviceContext.getLiferayPortletRequest(),
+				serviceContext.getLiferayPortletResponse(), null);
+		}
+
+		JournalArticle article = _journalArticleLocalService.getLatestArticle(
+			activity.getClassPK());
+
+		Layout layout = article.getLayout();
+
+		if (layout != null) {
+			String groupFriendlyURL = _portal.getGroupFriendlyURL(
+				layout.getLayoutSet(), serviceContext.getThemeDisplay());
+
+			return groupFriendlyURL.concat(
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR).concat(
+				article.getUrlTitle());
+		}
+
+		return null;
 	}
 
 	@Override

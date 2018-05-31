@@ -230,6 +230,15 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	}
 
 	@Override
+	public boolean isWorkflowEnabled() {
+		if (_type.equals(LayoutConstants.TYPE_URL)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean matches(
 		HttpServletRequest request, String friendlyURL, Layout layout) {
 

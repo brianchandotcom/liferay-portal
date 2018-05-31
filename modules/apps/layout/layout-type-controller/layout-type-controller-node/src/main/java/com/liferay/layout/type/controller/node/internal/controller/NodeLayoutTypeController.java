@@ -68,6 +68,11 @@ public class NodeLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	}
 
 	@Override
+	public boolean isWorkflowEnabled() {
+		return false;
+	}
+
+	@Override
 	protected ServletResponse createServletResponse(
 		HttpServletResponse response, UnsyncStringWriter unsyncStringWriter) {
 

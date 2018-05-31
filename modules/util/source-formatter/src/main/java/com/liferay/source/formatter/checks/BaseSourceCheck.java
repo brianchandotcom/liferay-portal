@@ -26,6 +26,7 @@ import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
@@ -217,6 +218,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			bndFileLocation = StringUtil.replaceLast(
 				bndFileLocation, CharPool.SLASH, StringPool.BLANK);
 		}
+	}
+
+	protected Map<String, String> getCheckstyleAttributesMap(String checkName)
+		throws Exception {
+
+		return CheckstyleUtil.getAttributesMap(checkName, _configuration);
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {

@@ -47,6 +47,20 @@ import java.util.TreeSet;
 public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
+	public void init() throws Exception {
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
+		_checkstyleLogger = new AlloyMVCCheckstyleLogger(
+			new UnsyncByteArrayOutputStream(), true,
+			sourceFormatterArgs.getBaseDirName());
+		_configuration = CheckstyleUtil.getConfiguration(
+			"checkstyle-alloy-mvc.xml", getPropertiesMap(),
+			sourceFormatterArgs);
+
+		setConfiguration(_configuration);
+	}
+
+	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = {"**/null.jsp", "**/tools/**"};
 
@@ -205,17 +219,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private void _processCheckstyle() throws Exception {
 		if (_ungeneratedFiles.isEmpty()) {
 			return;
-		}
-
-		if (_configuration == null) {
-			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
-
-			_checkstyleLogger = new AlloyMVCCheckstyleLogger(
-				new UnsyncByteArrayOutputStream(), true,
-				sourceFormatterArgs.getBaseDirName());
-			_configuration = CheckstyleUtil.getConfiguration(
-				"checkstyle-alloy-mvc.xml", getPropertiesMap(),
-				sourceFormatterArgs);
 		}
 
 		_sourceFormatterMessages.addAll(

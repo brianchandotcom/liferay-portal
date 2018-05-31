@@ -70,7 +70,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		validate(commercePriceEntryId, minQuantity);
+		validate(0, commercePriceEntryId, minQuantity);
 
 		long commerceTierPriceEntryId = counterLocalService.increment();
 
@@ -166,7 +166,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		try {
 			commerceTierPriceEntry =
-				commerceTierPriceEntryPersistence.findByC_M2_First(
+				commerceTierPriceEntryPersistence.findByC_LtM_First(
 					commercePriceEntryId, quantity,
 					new CommerceTierPriceEntryMinQuantityComparator(false));
 		}
@@ -239,7 +239,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			commerceTierPriceEntryPersistence.findByPrimaryKey(
 				commerceTierPriceEntryId);
 
-		validate(commerceTierPriceEntry.getCommercePriceEntryId(), minQuantity);
+		validate(
+			commerceTierPriceEntryId,
+			commerceTierPriceEntry.getCommercePriceEntryId(), minQuantity);
 
 		commerceTierPriceEntry.setPrice(price);
 		commerceTierPriceEntry.setPromoPrice(promoPrice);
@@ -348,14 +350,19 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	protected void validate(long commercePriceEntryId, int minQuantity)
+	protected void validate(
+			long commerceTierPriceEntryId, long commercePriceEntryId,
+			int minQuantity)
 		throws PortalException {
 
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			commerceTierPriceEntryPersistence.fetchByC_M(
 				commercePriceEntryId, minQuantity);
 
-		if (commerceTierPriceEntry != null) {
+		if ((commerceTierPriceEntry != null) &&
+			!(commerceTierPriceEntry.getCommerceTierPriceEntryId() ==
+				commerceTierPriceEntryId)) {
+
 			throw new DuplicateCommerceTierPriceEntryException();
 		}
 	}

@@ -233,7 +233,7 @@
 			<finder-column name="commercePriceEntryId" />
 			<finder-column name="minQuantity" />
 		</finder>
-		<finder name="C_M2" return-type="Collection">
+		<finder name="C_LtM" return-type="Collection">
 			<finder-column name="commercePriceEntryId" />
 			<finder-column comparator="&lt;=" name="minQuantity" />
 		</finder>

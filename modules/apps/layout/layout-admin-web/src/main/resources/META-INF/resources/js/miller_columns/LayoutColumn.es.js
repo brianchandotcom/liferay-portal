@@ -99,6 +99,7 @@ LayoutColumn.STATE = {
 			{
 				actionURLs: Config.object().required(),
 				active: Config.bool().required(),
+				description: Config.string().required(),
 				hasChild: Config.bool().required(),
 				plid: Config.string().required(),
 				title: Config.string().required(),

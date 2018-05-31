@@ -22,11 +22,11 @@ import com.liferay.oauth2.provider.service.base.OAuth2ApplicationScopeAliasesLoc
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -95,11 +95,8 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 	public OAuth2ApplicationScopeAliases fetchOAuth2ApplicationScopeAliases(
 		long oAuth2ApplicationId, List<String> scopeAliasesList) {
 
-		List<String> list = new ArrayList<>(scopeAliasesList);
-
-		list.sort(null);
-
-		String scopeAliases = StringUtil.merge(list, StringPool.SPACE);
+		String scopeAliases = StringUtil.merge(
+			ListUtil.sort(scopeAliasesList), StringPool.SPACE);
 
 		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliasesList =
 			oAuth2ApplicationScopeAliasesPersistence.findByO_S(

@@ -17,9 +17,9 @@ package com.liferay.oauth2.provider.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,11 +50,8 @@ public class OAuth2ApplicationScopeAliasesImpl
 
 	@Override
 	public void setScopeAliasesList(List<String> scopeAliasesList) {
-		ArrayList<String> list = new ArrayList<>(scopeAliasesList);
-
-		list.sort(null);
-
-		String scopeAliases = StringUtil.merge(list, StringPool.SPACE);
+		String scopeAliases = StringUtil.merge(
+			ListUtil.sort(scopeAliasesList), StringPool.SPACE);
 
 		setScopeAliases(scopeAliases);
 	}

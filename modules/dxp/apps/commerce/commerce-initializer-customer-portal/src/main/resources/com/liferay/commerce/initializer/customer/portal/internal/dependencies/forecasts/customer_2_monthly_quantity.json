@@ -1,0 +1,73 @@
+[
+	{
+		"customerId": 2,
+		"period": "monthly",
+		"target": "quantity",
+		"values": [
+			{
+				"time": -15552000000,
+				"value": 735162.6
+			},
+			{
+				"time": -12960000000,
+				"value": 756519.7
+			},
+			{
+				"time": -10368000000,
+				"value": 768867.2
+			},
+			{
+				"time": -7776000000,
+				"value": 756553.5
+			},
+			{
+				"time": -5184000000,
+				"value": 759625.3
+			},
+			{
+				"time": -2592000000,
+				"value": 755604.6
+			},
+			{
+				"time": 0,
+				"value": 734095.7
+			},
+			{
+				"lowerValue": 726282.9,
+				"time": 2592000000,
+				"upperValue": 757934.4,
+				"value": 738428.5
+			},
+			{
+				"lowerValue": 691269.5,
+				"time": 5184000000,
+				"upperValue": 791958.6,
+				"value": 745988.8
+			},
+			{
+				"lowerValue": 716724.2,
+				"time": 7776000000,
+				"upperValue": 768736.4,
+				"value": 756847
+			},
+			{
+				"lowerValue": 725940.2,
+				"time": 10368000000,
+				"upperValue": 751975.9,
+				"value": 738571.1
+			},
+			{
+				"lowerValue": 729730.4,
+				"time": 12960000000,
+				"upperValue": 801225,
+				"value": 752439.8
+			},
+			{
+				"lowerValue": 677362.5,
+				"time": 15552000000,
+				"upperValue": 781283.2,
+				"value": 730620.3
+			}
+		]
+	}
+]

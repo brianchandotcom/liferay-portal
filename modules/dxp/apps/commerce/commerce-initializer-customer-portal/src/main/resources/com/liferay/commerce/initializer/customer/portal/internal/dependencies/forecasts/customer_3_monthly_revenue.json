@@ -1,0 +1,73 @@
+[
+	{
+		"customerId": 3,
+		"period": "monthly",
+		"target": "revenue",
+		"values": [
+			{
+				"time": -15552000000,
+				"value": 477556.1
+			},
+			{
+				"time": -12960000000,
+				"value": 478753.2
+			},
+			{
+				"time": -10368000000,
+				"value": 483809.6
+			},
+			{
+				"time": -7776000000,
+				"value": 516682
+			},
+			{
+				"time": -5184000000,
+				"value": 516388.5
+			},
+			{
+				"time": -2592000000,
+				"value": 534603.5
+			},
+			{
+				"time": 0,
+				"value": 568687.8
+			},
+			{
+				"lowerValue": 528495.8,
+				"time": 2592000000,
+				"upperValue": 546700.7,
+				"value": 529888
+			},
+			{
+				"lowerValue": 506344.5,
+				"time": 5184000000,
+				"upperValue": 568356,
+				"value": 561077.4
+			},
+			{
+				"lowerValue": 524683.4,
+				"time": 7776000000,
+				"upperValue": 555809.5,
+				"value": 531205
+			},
+			{
+				"lowerValue": 486481.1,
+				"time": 10368000000,
+				"upperValue": 524016,
+				"value": 516749.8
+			},
+			{
+				"lowerValue": 480958,
+				"time": 12960000000,
+				"upperValue": 548176.4,
+				"value": 529691.7
+			},
+			{
+				"lowerValue": 467166.2,
+				"time": 15552000000,
+				"upperValue": 518404.7,
+				"value": 499405.2
+			}
+		]
+	}
+]

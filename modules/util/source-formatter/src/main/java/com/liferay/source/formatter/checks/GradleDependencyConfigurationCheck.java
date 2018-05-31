@@ -87,10 +87,10 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 		int pos = dependency.indexOf(StringPool.SPACE);
 
 		if (pos != -1) {
-			return dependency.substring(0, pos);
+			return StringUtil.trim(dependency.substring(0, pos));
 		}
 
-		return dependency;
+		return StringUtil.trim(dependency);
 	}
 
 	private boolean _hasBNDFile(String absolutePath) {

@@ -150,21 +150,22 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		deleteCustomFields.addEventListener(
-		'click',
-		function() {
-			if (form) {
-				var columnIds = form.querySelector('#<portlet:namespace />columnIds');
+			'click',
+			function() {
+				if (form) {
+					var columnIds = form.querySelector('#<portlet:namespace />columnIds');
 
-				if (columnIds) {
-					var checkedIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+					if (columnIds) {
+						var checkedIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
-					columnIds.setAttribute('value', checkedIds);
+						columnIds.setAttribute('value', checkedIds);
 
-					submitForm(form, '<portlet:actionURL name="deleteExpandos" />');
+						submitForm(form, '<portlet:actionURL name="deleteExpandos" />');
+					}
 				}
 			}
-		}
-	);
+		);
+	}
 </aui:script>
 
 <%

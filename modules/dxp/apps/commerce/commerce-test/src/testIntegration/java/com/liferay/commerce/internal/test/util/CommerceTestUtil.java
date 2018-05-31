@@ -14,39 +14,40 @@
 
 package com.liferay.commerce.internal.test.util;
 
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
+import com.liferay.commerce.service.CommercePaymentMethodLocalServiceUtil;
 import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
+import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
 import java.math.BigDecimal;
 
+import java.util.Collections;
+
 /**
  * @author Andrea Di Giorgi
  */
 public class CommerceTestUtil {
-
-	public static CommerceOrder addCommerceOrder(long groupId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return CommerceOrderLocalServiceUtil.addUserCommerceOrder(
-			groupId, serviceContext.getUserId());
-	}
 
 	public static CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId)
@@ -71,6 +72,18 @@ public class CommerceTestUtil {
 			commerceOrderId, cpInstanceId, quantity, RandomTestUtil.randomInt(),
 			null, new BigDecimal(RandomTestUtil.nextDouble()), null,
 			serviceContext);
+	}
+
+	public static CommercePaymentMethod addCommercePaymentMethod(long groupId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CommercePaymentMethodLocalServiceUtil.addCommercePaymentMethod(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), null, "money-order",
+			Collections.<String, String>emptyMap(), 1, true, serviceContext);
 	}
 
 	public static CommerceWarehouse addCommerceWarehouse(long groupId)
@@ -121,6 +134,59 @@ public class CommerceTestUtil {
 
 		return CommerceWarehouseItemLocalServiceUtil.addCommerceWarehouseItem(
 			commerceWarehouse.getCommerceWarehouseId(), cpInstanceId, quantity,
+			serviceContext);
+	}
+
+	public static CommerceAddress addUserCommerceAddress(
+			long groupId, long userId)
+		throws Exception {
+
+		CommerceCountry commerceCountry =
+			CommerceCountryLocalServiceUtil.fetchCommerceCountry(groupId, 380);
+
+		CommerceRegion commerceRegion =
+			CommerceRegionLocalServiceUtil.getCommerceRegion(
+				commerceCountry.getCommerceCountryId(), "VE");
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CommerceAddressLocalServiceUtil.addCommerceAddress(
+			User.class.getName(), userId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), String.valueOf(30133),
+			commerceRegion.getCommerceRegionId(),
+			commerceCountry.getCommerceCountryId(),
+			RandomTestUtil.randomString(), false, false, serviceContext);
+	}
+
+	public static CommerceOrder addUserCommerceOrder(long groupId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CommerceOrderLocalServiceUtil.addUserCommerceOrder(
+			groupId, serviceContext.getUserId());
+	}
+
+	public static CommerceOrder checkoutOrder(CommerceOrder commerceOrder)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				commerceOrder.getGroupId());
+
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyServiceUtil.fetchPrimaryCommerceCurrency(
+				commerceOrder.getGroupId());
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			commerceCurrency, null, null, commerceOrder);
+
+		return CommerceOrderLocalServiceUtil.checkoutCommerceOrder(
+			commerceOrder.getCommerceOrderId(), commerceContext,
 			serviceContext);
 	}
 

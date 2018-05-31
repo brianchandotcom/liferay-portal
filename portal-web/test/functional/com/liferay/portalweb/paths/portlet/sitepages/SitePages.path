@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>LIST_GROUP_ITEM_ELLIPSIS_ICON</td>
-	<td>//li[contains(@class,'list-group-item')][div[normalize-space()='${key_pageName}']]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_pageName}')]//button[contains(@class,'btn') and contains(@class,'btn-link')]</td>
 	<td></td>
 </tr>
 <tr>

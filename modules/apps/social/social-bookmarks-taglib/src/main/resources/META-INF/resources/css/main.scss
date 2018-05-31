@@ -10,13 +10,17 @@
 
 	.lfr-icon-item {
 		height: 32px;
-		width: 37px;
+		width: 40px;
 		img {
-			height: 13px;
+			height: 1em;
+			max-width: initial;
+			position: relative;
+			top: 1px;
+			width: 1em;
 		}
 		i {
 			display: inline-block;
-			font-size: 15px;
+			font-size: 17px;
 			position: relative;
 			top: -1px;
 			width: 14px;

@@ -756,8 +756,8 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Language Page" />
 			<var name="hideFromNavMenu" value="true" />
+			<var name="pageName" value="Language Page" />
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">

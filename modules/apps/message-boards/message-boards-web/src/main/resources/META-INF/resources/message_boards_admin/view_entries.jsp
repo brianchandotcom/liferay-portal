@@ -164,7 +164,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 							colspan="<%= 2 %>"
 						>
 							<c:choose>
-								<c:when test="<%= ((message != null) && (thread.getMessageCount() == 1)) %>">
+								<c:when test="<%= (message != null) && (thread.getMessageCount() == 1) %>">
 
 									<%
 									String messageUserName = "anonymous";
@@ -204,7 +204,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 
 							<h4>
 								<aui:a href="<%= rowURL.toString() %>">
-									<c:if test="<%= (message != null) %>">
+									<c:if test="<%= message != null %>">
 										<c:choose>
 											<c:when test="<%= !MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread) %>">
 												<strong><%= message.getSubject() %></strong>
@@ -269,7 +269,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 						row.setObject(new Object[] {message});
 						%>
 
-						<c:if test="<%= (message != null) %>">
+						<c:if test="<%= message != null %>">
 							<liferay-ui:search-container-column-jsp
 								path="/message_boards/message_action.jsp"
 							/>

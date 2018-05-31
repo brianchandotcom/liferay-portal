@@ -298,7 +298,7 @@ if (comment) {
 			var autocompleteContent = A.one('#<portlet:namespace />autocompleteContent<%= formId %>');
 			var highlighterContent = A.one('#<portlet:namespace />highlighterContent<%= formId %>');
 
-			var inputValue = '<%= ((microblogsEntry != null) && (edit)) ? StringUtil.replace(HtmlUtil.escapeJS(microblogsEntry.getContent()), "\'", "\\'") : StringPool.BLANK %>';
+			var inputValue = '<%= ((microblogsEntry != null) && edit) ? StringUtil.replace(HtmlUtil.escapeJS(microblogsEntry.getContent()), "\'", "\\'") : StringPool.BLANK %>';
 
 			var textarea = new A.Textarea(
 				{

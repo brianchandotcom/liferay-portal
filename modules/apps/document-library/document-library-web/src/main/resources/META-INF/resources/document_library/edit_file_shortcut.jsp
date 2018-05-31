@@ -122,7 +122,7 @@ if (portletTitleBasedNavigation) {
 				<div class="form-group">
 					<aui:input label="document" name="toFileEntryTitle" type="resource" value="<%= HtmlUtil.unescape(toFileEntryTitle) %>" />
 
-					<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
+					<aui:button disabled="<%= toGroup == null %>" name="selectToFileEntryButton" value="select" />
 				</div>
 			</aui:fieldset>
 

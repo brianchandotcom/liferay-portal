@@ -360,7 +360,7 @@ if (portletTitleBasedNavigation) {
 							for (String trackback : StringUtil.split(entry.getTrackbacks())) {
 							%>
 
-								<aui:input label="" name='<%= "trackback" + (i++) %>' title="" type="resource" value="<%= trackback %>" />
+								<aui:input label="" name='<%= "trackback" + i++ %>' title="" type="resource" value="<%= trackback %>" />
 
 							<%
 							}

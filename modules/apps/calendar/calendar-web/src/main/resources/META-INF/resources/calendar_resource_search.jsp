@@ -39,8 +39,8 @@ CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(ren
 		</aui:select>
 
 		<aui:select name="<%= CalendarResourceDisplayTerms.SCOPE %>">
-			<aui:option label="current" selected="<%= (displayTerms.getScope() == themeDisplay.getScopeGroupId()) %>" value="<%= themeDisplay.getScopeGroupId() %>" />
-			<aui:option label="global" selected="<%= (displayTerms.getScope() == themeDisplay.getCompanyGroupId()) %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
+			<aui:option label="current" selected="<%= displayTerms.getScope() == themeDisplay.getScopeGroupId() %>" value="<%= themeDisplay.getScopeGroupId() %>" />
+			<aui:option label="global" selected="<%= displayTerms.getScope() == themeDisplay.getCompanyGroupId() %>" value="<%= themeDisplay.getCompanyGroupId() %>" />
 		</aui:select>
 	</aui:fieldset>
 </liferay-ui:search-toggle>

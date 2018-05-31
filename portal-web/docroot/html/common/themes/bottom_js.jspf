@@ -163,7 +163,7 @@ if (layout != null) {
 								Layout curLayout = (Layout)layouts.get(i);
 							%>
 
-								<c:if test="<%= (i > 0) %>">,</c:if>
+								<c:if test="<%= i > 0 %>">,</c:if>
 
 								{
 									deletable: !A.UA.touchMobile && <%= LayoutPermissionUtil.contains(permissionChecker, curLayout, ActionKeys.DELETE) %>,

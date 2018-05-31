@@ -62,7 +62,7 @@ catch (Exception e) {
 				for (int i = 4; i <= 16; i++) {
 				%>
 
-					<aui:option label="<%= i %>" selected="<%= (i == length) %>" value="<%= i %>" />
+					<aui:option label="<%= i %>" selected="<%= i == length %>" value="<%= i %>" />
 
 				<%
 				}

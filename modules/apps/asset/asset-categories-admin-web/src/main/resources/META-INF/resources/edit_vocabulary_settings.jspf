@@ -131,7 +131,7 @@ if (vocabulary != null) {
 						for (ClassType classType : classTypes) {
 						%>
 
-							<aui:option label="<%= classType.getName() %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypePK == (classType.getClassTypeId())) %>" value="<%= classType.getClassTypeId() %>" />
+							<aui:option label="<%= classType.getName() %>" selected="<%= (classNameId == assetRendererFactory.getClassNameId()) && (classTypePK == classType.getClassTypeId()) %>" value="<%= classType.getClassTypeId() %>" />
 
 						<%
 						}

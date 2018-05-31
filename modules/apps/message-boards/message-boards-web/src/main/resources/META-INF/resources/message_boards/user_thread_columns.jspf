@@ -31,7 +31,7 @@
 		<i class="icon-lock" title="<liferay-ui:message key="thread-locked" />"></i>
 	</c:if>
 
-	<c:if test="<%= (message != null) %>">
+	<c:if test="<%= message != null %>">
 		<%= message.getSubject() %>
 	</c:if>
 </liferay-ui:search-container-column-text>
@@ -73,7 +73,7 @@
 row.setObject(new Object[] {message, threadSubscriptionClassPKs});
 %>
 
-<c:if test="<%= (message != null) %>">
+<c:if test="<%= message != null %>">
 	<liferay-ui:search-container-column-jsp
 		align="right"
 		cssClass="entry-action"

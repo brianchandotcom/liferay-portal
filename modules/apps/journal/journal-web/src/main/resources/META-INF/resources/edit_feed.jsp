@@ -160,7 +160,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 					</c:otherwise>
 				</c:choose>
 
-				<aui:input autoFocus="<%= ((feed != null) && !journalWebConfiguration.journalFeedForceAutogenerateId() && (windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP)) %>" cssClass="lfr-input-text-container" name="name" />
+				<aui:input autoFocus="<%= (feed != null) && !journalWebConfiguration.journalFeedForceAutogenerateId() && windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-input-text-container" name="name" />
 
 				<aui:input cssClass="lfr-textarea-container" name="description" />
 

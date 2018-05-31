@@ -114,7 +114,7 @@ publishTemplatesURL.setParameter("publishConfigurationButtons", "saved");
 
 			<portlet:renderURL var="simplePublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="mvcRenderCommandName" value="publishLayoutsSimple" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= (localPublishing) ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= localPublishing ? Constants.PUBLISH_TO_LIVE : Constants.PUBLISH_TO_REMOTE %>" />
 				<portlet:param name="redirect" value="<%= simplePublishRedirectURL %>" />
 				<portlet:param name="lastImportUserName" value="<%= user.getFullName() %>" />
 				<portlet:param name="lastImportUserUuid" value="<%= String.valueOf(user.getUserUuid()) %>" />

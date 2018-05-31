@@ -65,7 +65,7 @@ Map<Locale, String> reminderQueriesMap = LocalizationUtil.getLocalizationMap(ren
 			}
 		%>
 
-			<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= (currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale))) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
+			<aui:option label="<%= curLocale.getDisplayName(locale) %>" selected="<%= currentLanguageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" style="<%= style %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
 		<%
 		}

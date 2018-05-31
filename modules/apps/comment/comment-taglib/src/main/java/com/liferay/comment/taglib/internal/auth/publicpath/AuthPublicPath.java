@@ -23,7 +23,8 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"auth.public.path=/portal/comment/discussion/edit",
-		"auth.public.path=/portal/comment/discussion/get_comments"
+		"auth.public.path=/portal/comment/discussion/get_comments",
+		"auth.public.path=/portal/comment/discussion/get_editor"
 	},
 	service = Object.class
 )

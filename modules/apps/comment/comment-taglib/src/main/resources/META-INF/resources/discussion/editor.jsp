@@ -16,14 +16,21 @@
 
 <%@ include file="/discussion/init.jsp" %>
 
+<%
+String contents = GetterUtil.getString(request.getAttribute("liferay-comment:editor:contents"));
+String name = GetterUtil.getString(request.getAttribute("liferay-comment:editor:name"));
+String onChangeMethod = GetterUtil.getString(request.getAttribute("liferay-comment:editor:onChangeMethod"));
+String placeholder = GetterUtil.getString(request.getAttribute("liferay-comment:editor:placeholder"));
+%>
+
 <liferay-ui:input-editor
 	autoCreate="<%= true %>"
 	configKey="commentEditor"
-	contents='<%= ParamUtil.getString(request, "contents") %>'
+	contents="<%= contents %>"
 	editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>'
-	name='<%= ParamUtil.getString(request, "name") %>'
-	onChangeMethod='<%= ParamUtil.getString(request, "onChangeMethod") %>'
-	placeholder='<%= ParamUtil.getString(request, "placeholder") %>'
+	name="<%= name %>"
+	onChangeMethod="<%= onChangeMethod %>"
+	placeholder="<%= placeholder %>"
 	showSource="<%= false %>"
 	skipEditorLoading="<%= true %>"
 />

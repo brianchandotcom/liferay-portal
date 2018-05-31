@@ -651,9 +651,9 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 		<aui:script use="aui-io-request,aui-parse-content">
 
 			<%
-			ResourceURL editorURL = PortletURLFactoryUtil.create(liferayPortletRequest, CommentTaglibPortletKeys.COMMENT_TAGLIB, PortletRequest.RESOURCE_PHASE);
+			String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
 
-			editorURL.setResourceID("/comment_taglib/editor");
+			editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
 			%>
 
 			Liferay.provide(
@@ -661,10 +661,10 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				'<%= randomNamespace %>showEditor',
 				function(formId, options) {
 					fetch(
-						'<%= editorURL.toString() %>',
+						'<%= editorURL %>',
 						{
 							body: new URLSearchParams(Liferay.Util.ns(
-								'_<%= CommentTaglibPortletKeys.COMMENT_TAGLIB %>_',
+								'<%= namespace %>',
 								options
 							)),
 							credentials: 'same-origin',

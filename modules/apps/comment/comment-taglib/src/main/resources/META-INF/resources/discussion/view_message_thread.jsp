@@ -215,7 +215,6 @@ String postReplyEditorName = randomNamespace + "postReplyBody" + index;
 																'<%= namespace + randomNamespace + "postReplyForm" + index %>',
 																{
 																	name: '<%= postReplyEditorName %>',
-																	namespace: '<portlet:namespace/>',
 																	onChangeMethod: '<%= randomNamespace + index + "ReplyOnChange" %>',
 																	placeholder: 'type-your-comment-here'
 																}
@@ -262,7 +261,6 @@ String postReplyEditorName = randomNamespace + "postReplyBody" + index;
 												{
 													contents: '<%= HtmlUtil.escapeJS(discussionComment.getBody()) %>',
 													name: '<%= editReplyEditorName %>',
-													namespace: '<portlet:namespace/>',
 													onChangeMethod: '<%= randomNamespace + index + "EditOnChange" %>'
 												}
 											);

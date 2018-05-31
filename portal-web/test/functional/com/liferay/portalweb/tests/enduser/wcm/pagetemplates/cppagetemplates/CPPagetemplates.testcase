@@ -37,7 +37,7 @@
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateActive" value="Active" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 	</command>
@@ -57,7 +57,7 @@
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateActive" value="Active" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
@@ -199,18 +199,18 @@
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateActive" value="Active" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
 		<execute macro="PageTemplate#deactivateAndActivate">
 			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="pageTemplateStatus" value="No" />
+			<var name="pageTemplateStatus" value="Not Active" />
 		</execute>
 
 		<execute macro="PageTemplate#viewStatus">
 			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="pageTemplateStatus" value="No" />
+			<var name="pageTemplateStatus" value="Not Active" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -245,12 +245,12 @@
 
 		<execute macro="PageTemplate#deactivateAndActivate">
 			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="pageTemplateStatus" value="Yes" />
+			<var name="pageTemplateStatus" value="Active" />
 		</execute>
 
 		<execute macro="PageTemplate#viewStatus">
 			<var name="pageTemplateName" value="Page Template Name" />
-			<var name="pageTemplateStatus" value="Yes" />
+			<var name="pageTemplateStatus" value="Active" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -288,7 +288,7 @@
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateActive" value="Active" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
@@ -313,12 +313,12 @@
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateActive" value="Active" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
 		<execute macro="PageTemplate#editCP">
-			<var name="pageTemplateActive" value="No" />
+			<var name="pageTemplateActive" value="Not Active" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 	</command>
@@ -335,7 +335,7 @@
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateActive" value="Active" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
@@ -521,7 +521,7 @@
 		</execute>
 
 		<execute macro="PageTemplate#addCP">
-			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateActive" value="Active" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
@@ -546,7 +546,7 @@
 		</execute>
 
 		<execute macro="PageTemplate#editCP">
-			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateActive" value="Active" />
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 

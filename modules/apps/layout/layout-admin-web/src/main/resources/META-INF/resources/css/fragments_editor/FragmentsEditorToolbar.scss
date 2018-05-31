@@ -4,10 +4,19 @@
 	background-color: #6B6C7E;
 	color: #FFF;
 	height: $managementBarHeight;
+	left: 0;
 	position: fixed;
 	top: $controlMenuHeight;
+	transition: ease $productMenuTransitionDuration;
+	transition-property: left, width;
 	width: 100%;
+	will-change: left, width;
 	z-index: $managementBarZIndex;
+
+	body.open & {
+		left: $productMenuWidth;
+		width: calc(100% - #{$productMenuWidth});
+	}
 
 	&__add-fragment-button {
 		padding: 0;

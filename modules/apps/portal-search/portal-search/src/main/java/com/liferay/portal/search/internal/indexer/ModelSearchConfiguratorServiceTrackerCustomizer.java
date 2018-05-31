@@ -45,12 +45,10 @@ import com.liferay.portal.search.indexer.IndexerQueryBuilder;
 import com.liferay.portal.search.indexer.IndexerSearcher;
 import com.liferay.portal.search.indexer.IndexerSummaryBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
-import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 import com.liferay.portal.search.permission.SearchPermissionIndexWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.QueryConfigContributor;
-import com.liferay.portal.search.spi.model.query.contributor.QueryPreFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.SearchContextContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -176,9 +174,6 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			_bundleContext, KeywordQueryContributor.class,
 			"(!(indexer.class.name=*))");
 
-		_modelPreFilterContributorsHolderImpl =
-			new ModelPreFilterContributorsHolderImpl(_bundleContext);
-
 		_modelResourcePermissionServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ModelResourcePermission.class,
@@ -188,16 +183,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 			_bundleContext, QueryConfigContributor.class,
 			"(!(indexer.class.name=*))");
 
-		_queryPreFilterContributors = ServiceTrackerListFactory.open(
-			_bundleContext, QueryPreFilterContributor.class,
-			"(!(indexer.class.name=*))");
-
 		_searchContextContributors = ServiceTrackerListFactory.open(
 			_bundleContext, SearchContextContributor.class,
 			"(!(indexer.class.name=*))");
-
-		_searchPermissionFilterContributors = ServiceTrackerListFactory.open(
-			_bundleContext, SearchPermissionFilterContributor.class);
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, ModelSearchConfigurator.class, this);
@@ -236,11 +224,10 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 				indexerRegistry,
 				modelSearchConfigurator.getModelSearchSettings(),
 				modelSearchConfigurator.getKeywordQueryContributors(),
-				_modelPreFilterContributorsHolderImpl,
 				modelSearchConfigurator.getSearchContextContributors(),
-				_keywordQueryContributors, _queryPreFilterContributors,
-				_searchContextContributors, _searchPermissionFilterContributors,
-				indexerPostProcessorsHolder, relatedEntryIndexerRegistry);
+				_keywordQueryContributors, preFilterContributorHelper,
+				_searchContextContributors, indexerPostProcessorsHolder,
+				relatedEntryIndexerRegistry);
 
 		ServiceRegistration<IndexerQueryBuilder>
 			indexerQueryBuilderServiceRegistration =
@@ -326,11 +313,8 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		_serviceTracker.close();
 		_documentContributors.close();
 		_keywordQueryContributors.close();
-		_modelPreFilterContributorsHolderImpl.close();
-		_queryPreFilterContributors.close();
 		_queryConfigContributors.close();
 		_searchContextContributors.close();
-		_searchPermissionFilterContributors.close();
 
 		_serviceRegistrationHolders.forEach(
 			(key, serviceRegistrationHolder) ->
@@ -359,6 +343,9 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 	protected IndexWriterHelper indexWriterHelper;
 
 	@Reference
+	protected PreFilterContributorHelper preFilterContributorHelper;
+
+	@Reference
 	protected Props props;
 
 	@Reference
@@ -382,21 +369,13 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 		_documentContributors;
 	private ServiceTrackerList<KeywordQueryContributor, KeywordQueryContributor>
 		_keywordQueryContributors;
-	private ModelPreFilterContributorsHolderImpl
-		_modelPreFilterContributorsHolderImpl;
 	private ServiceTrackerMap<String, ModelResourcePermission>
 		_modelResourcePermissionServiceTrackerMap;
 	private ServiceTrackerList<QueryConfigContributor, QueryConfigContributor>
 		_queryConfigContributors;
 	private ServiceTrackerList
-		<QueryPreFilterContributor, QueryPreFilterContributor>
-			_queryPreFilterContributors;
-	private ServiceTrackerList
 		<SearchContextContributor, SearchContextContributor>
 			_searchContextContributors;
-	private ServiceTrackerList
-		<SearchPermissionFilterContributor, SearchPermissionFilterContributor>
-			_searchPermissionFilterContributors;
 	private final Map<String, ServiceRegistrationHolder>
 		_serviceRegistrationHolders = new Hashtable<>();
 	private ServiceTracker

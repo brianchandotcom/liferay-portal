@@ -43,6 +43,9 @@ public class OAuth2AuthorizationImpl extends OAuth2AuthorizationBaseImpl {
 		if (accessTokenContent != null) {
 			setAccessTokenContentHash(accessTokenContent.hashCode());
 		}
+		else {
+			setAccessTokenContentHash(0);
+		}
 	}
 
 	@Override
@@ -51,6 +54,9 @@ public class OAuth2AuthorizationImpl extends OAuth2AuthorizationBaseImpl {
 
 		if (refreshTokenContent != null) {
 			setRefreshTokenContentHash(refreshTokenContent.hashCode());
+		}
+		else {
+			setRefreshTokenContentHash(0);
 		}
 	}
 

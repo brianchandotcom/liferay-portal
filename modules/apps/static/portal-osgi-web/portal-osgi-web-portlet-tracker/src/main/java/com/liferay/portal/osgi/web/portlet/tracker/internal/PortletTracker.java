@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.EventDefinition;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.PortletInfo;
+import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
@@ -55,6 +56,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReader;
+import com.liferay.portal.model.impl.PortletURLListenerImpl;
 import com.liferay.portal.model.impl.PublicRenderParameterImpl;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
@@ -68,6 +70,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -465,6 +469,7 @@ public class PortletTracker
 		collectCacheScope(serviceReference, portletModel);
 		collectExpirationCache(serviceReference, portletModel);
 		collectInitParams(serviceReference, portletModel);
+		collectListeners(serviceReference, portletModel);
 		collectMultipartConfig(serviceReference, portletModel);
 		collectPortletInfo(serviceReference, portletModel);
 		collectPortletModes(serviceReference, portletModel);
@@ -662,6 +667,41 @@ public class PortletTracker
 			GetterUtil.getString(
 				get(serviceReference, "virtual-path"),
 				portletModel.getVirtualPath()));
+	}
+
+	protected void collectListeners(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.kernel.model.Portlet portletModel) {
+
+		PortletApp portletApp = portletModel.getPortletApp();
+
+		List<String> listeners = StringPlus.asList(
+			serviceReference.getProperty("javax.portlet.listener"));
+
+		List<PortletURLListener> portletURLListeners = new ArrayList<>();
+
+		for (String listener : listeners) {
+			String listenerClass = listener;
+			int ordinal = 0;
+
+			String[] parts = StringUtil.split(listener, CharPool.SEMICOLON);
+
+			if (parts.length == 2) {
+				listenerClass = parts[0];
+				ordinal = GetterUtil.getInteger(parts[1]);
+			}
+
+			portletURLListeners.add(
+				new PortletURLListenerImpl(ordinal, listenerClass, portletApp));
+		}
+
+		Collections.sort(
+			portletURLListeners,
+			Comparator.comparingInt(PortletURLListener::getOrdinal));
+
+		for (PortletURLListener portletURLListener : portletURLListeners) {
+			portletApp.addPortletURLListener(portletURLListener);
+		}
 	}
 
 	protected void collectMultipartConfig(

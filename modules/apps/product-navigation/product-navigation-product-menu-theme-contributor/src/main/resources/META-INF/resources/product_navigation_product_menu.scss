@@ -243,8 +243,7 @@ body {
 			height: $product-menu-list-group-heading-border-width;
 		}
 
-		&:focus,
-		&:hover {
+		&:focus, &:hover {
 			background-color: $product-menu-list-group-heading-bg;
 		}
 

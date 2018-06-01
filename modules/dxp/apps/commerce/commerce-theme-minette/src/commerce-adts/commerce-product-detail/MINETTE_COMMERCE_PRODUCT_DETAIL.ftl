@@ -79,7 +79,7 @@
 
 								<#if imagesIndex gt 3>
 									<#if imagesIndex == 4>
-										<div class="product-detail-thumbnail-container" id="<@portlet.namespace />thumbs-container">
+										<div class="product-detail-thumbnail-container product-detail-thumbnail-text-container" id="<@portlet.namespace />thumbs-container">
 											<a class="thumb thumb-text" data-toggle="modal" href="#<@portlet.namespace />ImageWidgetModal">
 												+ ${images?size - 3}
 											</a>

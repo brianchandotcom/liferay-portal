@@ -279,7 +279,7 @@ public class CPDefinitionsPortletUtil {
 		}
 		else if (orderByCol.equals("title")) {
 			sort = SortFactoryUtil.create(
-				Field.TITLE, Sort.STRING_TYPE, reverse);
+				Field.NAME, Sort.STRING_TYPE, reverse);
 		}
 
 		return sort;

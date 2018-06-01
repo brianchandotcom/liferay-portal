@@ -107,7 +107,7 @@ public class ProductOptionValueNestedCollectionResource
 				() -> document.getDate(Field.MODIFIED_DATE)
 			).getUnchecked()
 		).addString(
-			"name", document -> document.get(Field.TITLE)
+			"name", document -> document.get(Field.NAME)
 		).build();
 	}
 

@@ -242,7 +242,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		Map<String, Serializable> attributes = new HashMap<>();
 
 		attributes.put(Field.ENTRY_CLASS_PK, keywords);
-		attributes.put(Field.TITLE, keywords);
+		attributes.put(Field.NAME, keywords);
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_ANY);

@@ -92,7 +92,7 @@ public class ProductOptionValueHelper {
 		queryConfig.addSelectedFieldNames(
 			CPDefinitionOptionValueRelIndexer.FIELD_CP_DEFINITION_OPTION_REL_ID,
 			Field.CREATE_DATE, Field.ENTRY_CLASS_PK, Field.DESCRIPTION,
-			Field.MODIFIED_DATE, Field.TITLE);
+			Field.MODIFIED_DATE, Field.NAME);
 
 		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);

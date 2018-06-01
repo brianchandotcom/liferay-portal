@@ -99,7 +99,7 @@ public class ProductDefinitionHelper {
 			CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME,
 			CPDefinitionIndexer.FIELD_SKUS, Field.CREATE_DATE,
 			Field.ENTRY_CLASS_PK, Field.DESCRIPTION, Field.GROUP_ID,
-			Field.MODIFIED_DATE, Field.TITLE, Field.USER_ID);
+			Field.MODIFIED_DATE, Field.NAME, Field.USER_ID);
 
 		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);

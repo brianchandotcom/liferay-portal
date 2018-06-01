@@ -178,7 +178,7 @@ public class CPSearchResultsPortlet
 
 		queryConfig.setHighlightEnabled(false);
 
-		searchContext.setSorts(SortFactoryUtil.create(Field.TITLE, false));
+		searchContext.setSorts(SortFactoryUtil.create(Field.NAME, false));
 
 		filterByThisSite(portletSharedSearchSettings);
 

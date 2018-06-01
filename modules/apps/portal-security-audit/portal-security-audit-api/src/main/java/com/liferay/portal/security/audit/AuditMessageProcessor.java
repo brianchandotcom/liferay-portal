@@ -14,12 +14,15 @@
 
 package com.liferay.portal.security.audit;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.audit.AuditException;
 import com.liferay.portal.kernel.audit.AuditMessage;
 
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface AuditMessageProcessor {
 
 	public void process(AuditMessage auditMessage) throws AuditException;

@@ -35,12 +35,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceDashboardPortletKeys.COMMERCE_DASHBOARD_PRODUCT_INSTANCE_SELECTOR,
-		"mvc.command.name=editCommerceDashboardProductInstance"
+		"javax.portlet.name=" + CommerceDashboardPortletKeys.COMMERCE_DASHBOARD_INSTANCE_SELECTOR,
+		"mvc.command.name=editCommerceDashboardInstance"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceDashboardProductInstanceMVCActionCommand
+public class EditCommerceDashboardInstanceMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override

@@ -4,8 +4,8 @@
 	}
 }
 
-.portlet-commerce-dashboard-product-instance-selector {
-	.product-instances-list {
+.portlet-commerce-dashboard-instance-selector {
+	.instances-list {
 		font-size: 0.8rem;
 		list-style-type: none;
 		margin: 0;
@@ -19,11 +19,11 @@
 			width: 0.5rem;
 		}
 
-		.product-instance, .product-instance-selected {
+		.instance, .instance-selected {
 			margin-left: 2rem;
 		}
 
-		.product-instance-selected {
+		.instance-selected {
 			display: none;
 
 			div {
@@ -35,11 +35,11 @@
 			}
 		}
 
-		.product-instance-sku {
+		.instance-sku {
 			font-size: 0.7rem;
 		}
 
-		.product-instance-title {
+		.instance-title {
 			font-size: 0.8rem;
 			font-weight: bold;
 			margin-bottom: 0;
@@ -51,11 +51,11 @@
 			&:hover {
 				background-color: #EEE;
 
-				.product-instance {
+				.instance {
 					display: none;
 				}
 
-				.product-instance-selected {
+				.instance-selected {
 					display: block;
 				}
 			}

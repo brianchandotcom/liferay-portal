@@ -15,7 +15,7 @@
 package com.liferay.commerce.dashboard.web.internal.portlet;
 
 import com.liferay.commerce.dashboard.web.internal.constants.CommerceDashboardPortletKeys;
-import com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardProductInstanceSelectorDisplayContext;
+import com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardInstanceSelectorDisplayContext;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.css-class-wrapper=portlet-commerce-dashboard-product-instance-selector",
+		"com.liferay.portlet.css-class-wrapper=portlet-commerce-dashboard-instance-selector",
 		"com.liferay.portlet.display-category=commerce",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.layout-cacheable=true",
@@ -49,17 +49,16 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.render-weight=50",
 		"javax.portlet.display-name=Commerce Dashboard SKU Selector",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.view-template=/product_instance_selector/view.jsp",
-		"javax.portlet.name=" + CommerceDashboardPortletKeys.COMMERCE_DASHBOARD_PRODUCT_INSTANCE_SELECTOR,
+		"javax.portlet.init-param.view-template=/instance_selector/view.jsp",
+		"javax.portlet.name=" + CommerceDashboardPortletKeys.COMMERCE_DASHBOARD_INSTANCE_SELECTOR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service =
-		{CommerceDashboardProductInstanceSelectorPortlet.class, Portlet.class}
+		{CommerceDashboardInstanceSelectorPortlet.class, Portlet.class}
 )
-public class CommerceDashboardProductInstanceSelectorPortlet
-	extends MVCPortlet {
+public class CommerceDashboardInstanceSelectorPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -67,15 +66,15 @@ public class CommerceDashboardProductInstanceSelectorPortlet
 		throws IOException, PortletException {
 
 		try {
-			CommerceDashboardProductInstanceSelectorDisplayContext
-				commerceDashboardProductInstanceSelectorDisplayContext =
-					new CommerceDashboardProductInstanceSelectorDisplayContext(
+			CommerceDashboardInstanceSelectorDisplayContext
+				commerceDashboardInstanceSelectorDisplayContext =
+					new CommerceDashboardInstanceSelectorDisplayContext(
 						_configurationProvider, _cpInstanceService,
 						renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceDashboardProductInstanceSelectorDisplayContext);
+				commerceDashboardInstanceSelectorDisplayContext);
 
 			super.render(renderRequest, renderResponse);
 		}

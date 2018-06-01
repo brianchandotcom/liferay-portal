@@ -33,10 +33,10 @@ import javax.portlet.RenderRequest;
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceDashboardProductInstanceSelectorDisplayContext
+public class CommerceDashboardInstanceSelectorDisplayContext
 	extends CommerceDashboardDisplayContext {
 
-	public CommerceDashboardProductInstanceSelectorDisplayContext(
+	public CommerceDashboardInstanceSelectorDisplayContext(
 			ConfigurationProvider configurationProvider,
 			CPInstanceService cpInstanceService, RenderRequest renderRequest)
 		throws PortalException {
@@ -78,7 +78,7 @@ public class CommerceDashboardProductInstanceSelectorDisplayContext
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceDashboardProductInstanceSelectorDisplayContext.class);
+		CommerceDashboardInstanceSelectorDisplayContext.class);
 
 	private final CPInstanceService _cpInstanceService;
 

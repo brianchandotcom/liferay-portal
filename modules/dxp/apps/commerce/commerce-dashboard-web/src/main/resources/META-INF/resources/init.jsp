@@ -29,7 +29,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardForecastsChartPortletInstanceConfiguration" %><%@
 page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardDisplayContext" %><%@
 page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardForecastsChartDisplayContext" %><%@
-page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardProductInstanceSelectorDisplayContext" %><%@
+page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardInstanceSelectorDisplayContext" %><%@
 page import="com.liferay.commerce.forecast.model.CommerceForecastEntryConstants" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@

@@ -14,19 +14,19 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-CommerceDashboardProductInstanceSelectorDisplayContext commerceDashboardProductInstanceSelectorDisplayContext = (CommerceDashboardProductInstanceSelectorDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceDashboardInstanceSelectorDisplayContext commerceDashboardInstanceSelectorDisplayContext = (CommerceDashboardInstanceSelectorDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-List<CPInstance> cpInstances = commerceDashboardProductInstanceSelectorDisplayContext.getCPInstances();
+List<CPInstance> cpInstances = commerceDashboardInstanceSelectorDisplayContext.getCPInstances();
 %>
 
 <c:choose>
 	<c:when test="<%= !cpInstances.isEmpty() %>">
-		<liferay-portlet:actionURL name="editCommerceDashboardProductInstance" varImpl="editCommerceDashboardProductInstanceURL" />
+		<liferay-portlet:actionURL name="editCommerceDashboardInstance" varImpl="editCommerceDashboardInstanceURL" />
 
-		<aui:form action="<%= editCommerceDashboardProductInstanceURL.toString() %>" cssClass="form-group-autofit" method="post" name="fm">
+		<aui:form action="<%= editCommerceDashboardInstanceURL.toString() %>" cssClass="form-group-autofit" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
@@ -36,7 +36,7 @@ List<CPInstance> cpInstances = commerceDashboardProductInstanceSelectorDisplayCo
 				for (CPInstance cpInstance : cpInstances) {
 				%>
 
-					<aui:option label="<%= commerceDashboardProductInstanceSelectorDisplayContext.getCPInstanceLabel(cpInstance) %>" value="<%= cpInstance.getCPInstanceId() %>" />
+					<aui:option label="<%= commerceDashboardInstanceSelectorDisplayContext.getCPInstanceLabel(cpInstance) %>" value="<%= cpInstance.getCPInstanceId() %>" />
 
 				<%
 				}
@@ -52,17 +52,17 @@ List<CPInstance> cpInstances = commerceDashboardProductInstanceSelectorDisplayCo
 			/>
 		</aui:form>
 
-		<ol class="product-instances-list" id="<portlet:namespace />productInstancesList">
+		<ol class="instances-list" id="<portlet:namespace />instancesList">
 
 			<%
-			Map<Long, Boolean> cpInstanceIds = commerceDashboardProductInstanceSelectorDisplayContext.getCPInstanceIds();
+			Map<Long, Boolean> cpInstanceIds = commerceDashboardInstanceSelectorDisplayContext.getCPInstanceIds();
 
 			int i = -1;
 
 			for (Map.Entry<Long, Boolean> entry : cpInstanceIds.entrySet()) {
 				i++;
 
-				CPInstance cpInstance = commerceDashboardProductInstanceSelectorDisplayContext.getCPInstance(entry.getKey());
+				CPInstance cpInstance = commerceDashboardInstanceSelectorDisplayContext.getCPInstance(entry.getKey());
 
 				if (cpInstance == null) {
 					continue;
@@ -72,47 +72,47 @@ List<CPInstance> cpInstances = commerceDashboardProductInstanceSelectorDisplayCo
 
 				CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-				String color = commerceDashboardProductInstanceSelectorDisplayContext.getChartColor(i);
+				String color = commerceDashboardInstanceSelectorDisplayContext.getChartColor(i);
 			%>
 
 				<li>
 					<div class="color-dot" style="background-color: <%= color %>"></div>
 
-					<div class="product-instance">
-						<h4 class="product-instance-title"><%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %></h4>
+					<div class="instance">
+						<h4 class="instance-title"><%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %></h4>
 
-						<div class="product-instance-sku">
+						<div class="instance-sku">
 							<liferay-ui:message key="sku" /> <%= HtmlUtil.escape(cpInstance.getSku()) %>
 						</div>
 					</div>
 
-					<div class="product-instance-selected">
+					<div class="instance-selected">
 
 						<%
 						if (visible) {
-							editCommerceDashboardProductInstanceURL.setParameter(Constants.CMD, Constants.DEACTIVATE);
+							editCommerceDashboardInstanceURL.setParameter(Constants.CMD, Constants.DEACTIVATE);
 						}
 						else {
-							editCommerceDashboardProductInstanceURL.setParameter(Constants.CMD, Constants.VIEW);
+							editCommerceDashboardInstanceURL.setParameter(Constants.CMD, Constants.VIEW);
 						}
 
-						editCommerceDashboardProductInstanceURL.setParameter("cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
+						editCommerceDashboardInstanceURL.setParameter("cpInstanceId", String.valueOf(cpInstance.getCPInstanceId()));
 						%>
 
 						<clay:link
 							elementClasses="hide-show-link"
-							href="<%= editCommerceDashboardProductInstanceURL.toString() %>"
+							href="<%= editCommerceDashboardInstanceURL.toString() %>"
 							icon="view"
 							label='<%= StringUtil.toUpperCase(LanguageUtil.get(request, visible ? "hide" : "show")) %>'
 						/>
 
 						<%
-						editCommerceDashboardProductInstanceURL.setParameter(Constants.CMD, Constants.REMOVE);
+						editCommerceDashboardInstanceURL.setParameter(Constants.CMD, Constants.REMOVE);
 						%>
 
 						<clay:link
 							elementClasses="remove-link"
-							href="<%= editCommerceDashboardProductInstanceURL.toString() %>"
+							href="<%= editCommerceDashboardInstanceURL.toString() %>"
 							label='<%= LanguageUtil.get(request, "remove") %>'
 						/>
 					</div>
@@ -125,12 +125,12 @@ List<CPInstance> cpInstances = commerceDashboardProductInstanceSelectorDisplayCo
 		</ol>
 
 		<aui:script require="metal-dom/src/all/dom as dom">
-			var productInstancesList = document.querySelector('#<portlet:namespace/>productInstancesList');
+			var instancesList = document.querySelector('#<portlet:namespace/>instancesList');
 
 			var editCommerceDashboardPeriodHandler = dom.delegate(
-				productInstancesList,
+				instancesList,
 				'click',
-				'.product-instance-selected a',
+				'.instance-selected a',
 				function(event) {
 					event.preventDefault();
 

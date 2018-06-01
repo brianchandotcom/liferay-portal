@@ -27,12 +27,12 @@ public class CommerceDashboardPortletKeys {
 		"com_liferay_commerce_dashboard_web_internal_portlet_" +
 			"CommerceDashboardForecastsChartPortlet";
 
+	public static final String COMMERCE_DASHBOARD_INSTANCE_SELECTOR =
+		"com_liferay_commerce_dashboard_web_internal_portlet_" +
+			"CommerceDashboardInstanceSelectorPortlet";
+
 	public static final String COMMERCE_DASHBOARD_PERIOD_SELECTOR =
 		"com_liferay_commerce_dashboard_web_internal_portlet_" +
 			"CommerceDashboardPeriodSelectorPortlet";
-
-	public static final String COMMERCE_DASHBOARD_PRODUCT_INSTANCE_SELECTOR =
-		"com_liferay_commerce_dashboard_web_internal_portlet_" +
-			"CommerceDashboardProductInstanceSelectorPortlet";
 
 }

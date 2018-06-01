@@ -35,7 +35,7 @@
 		var $ = AUI.$;
 
 		$.ajax(
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getMobileDeviceRules" portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" var="viewRuleGroupInstancesURL">
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/mobile_device_rules/rule_group_instances" var="viewRuleGroupInstancesURL">
 				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
@@ -128,10 +128,10 @@
 		function(event) {
 			Liferay.Util.openWindow(
 				{
-					id: '<portlet:namespace />ruleGroupsPriorities',
 					dialogIframe: {
 						bodyCssClass: 'dialog-with-footer'
 					},
+					id: '<portlet:namespace />ruleGroupsPriorities',
 					title: '<%= UnicodeLanguageUtil.get(resourceBundle, "rule-priorities") %>',
 
 					<liferay-portlet:renderURL portletName="<%= MDRPortletKeys.MOBILE_DEVICE_RULES %>" varImpl="managePrioritiesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

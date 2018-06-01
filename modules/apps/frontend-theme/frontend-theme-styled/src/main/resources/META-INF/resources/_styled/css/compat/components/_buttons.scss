@@ -35,6 +35,14 @@
 		@include clay-button-variant(map-get($btn-palette, danger));
 	}
 
+	.btn-monospaced {
+		line-height: inherit;
+
+		.lexicon-icon {
+			font-size: 1rem;
+		}
+	}
+
 	.btn-link.btn-default {
 		background-color: transparent;
 		border-color: transparent;

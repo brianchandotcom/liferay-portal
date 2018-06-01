@@ -12,18 +12,14 @@
 		height: 32px;
 		width: 40px;
 		img {
-			height: 1em;
+			height: 1rem;
 			max-width: initial;
-			position: relative;
-			top: 1px;
-			width: 1em;
+			vertical-align: middle;
+			width: 1rem;
 		}
 		i {
-			display: inline-block;
-			font-size: 17px;
-			position: relative;
-			top: -1px;
-			width: 14px;
+			font-size: 19px;
+			vertical-align: middle;
 		}
 	}
 

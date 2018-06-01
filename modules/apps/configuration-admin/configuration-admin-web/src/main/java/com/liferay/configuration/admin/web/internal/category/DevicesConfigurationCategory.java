@@ -22,8 +22,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component
-public class MobileAndDevicesConfigurationCategory
-	implements ConfigurationCategory {
+public class DevicesConfigurationCategory implements ConfigurationCategory {
+
+	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
 
 	@Override
 	public String getCategoryKey() {
@@ -35,7 +39,9 @@ public class MobileAndDevicesConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "mobile-and-devices";
+	private static final String _CATEGORY_ICON = "devices";
+
+	private static final String _CATEGORY_KEY = "devices";
 
 	private static final String _CATEGORY_SECTION = "platform";
 

@@ -22,12 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component
-public class MessagingConfigurationCategory implements ConfigurationCategory {
-
-	@Override
-	public String getCategoryIcon() {
-		return _CATEGORY_ICON;
-	}
+public class WidgetToolsConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryKey() {
@@ -39,10 +34,8 @@ public class MessagingConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_ICON = "message-boards";
+	private static final String _CATEGORY_KEY = "widget-tools";
 
-	private static final String _CATEGORY_KEY = "messaging";
-
-	private static final String _CATEGORY_SECTION = "social";
+	private static final String _CATEGORY_SECTION = "content";
 
 }

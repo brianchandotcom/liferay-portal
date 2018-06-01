@@ -23,7 +23,8 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  * @author Adolfo Pérez
  */
 @ExtendedObjectClassDefinition(
-	category = "community", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "community-tools",
+	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration",

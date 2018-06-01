@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Tomas Polesovsky
  */
-@ExtendedObjectClassDefinition(category = "auto-login")
+@ExtendedObjectClassDefinition(category = "api-authentication")
 @Meta.OCD(
 	id = "com.liferay.portal.security.auto.login.basic.auth.header.module.configuration.BasicAuthHeaderAutoLoginConfiguration",
 	localization = "content/Language",

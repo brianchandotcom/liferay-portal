@@ -26,6 +26,11 @@ public class SocialNetworksConfigurationCategory
 	implements ConfigurationCategory {
 
 	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
+
+	@Override
 	public String getCategoryKey() {
 		return _CATEGORY_KEY;
 	}
@@ -34,6 +39,8 @@ public class SocialNetworksConfigurationCategory
 	public String getCategorySection() {
 		return _CATEGORY_SECTION;
 	}
+
+	private static final String _CATEGORY_ICON = "share";
 
 	private static final String _CATEGORY_KEY = "social-networks";
 

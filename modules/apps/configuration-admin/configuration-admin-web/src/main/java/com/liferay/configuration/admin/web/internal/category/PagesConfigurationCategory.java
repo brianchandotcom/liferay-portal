@@ -22,8 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pei-Jung Lan
  */
 @Component
-public class FrontendInfrastructureConfigurationCategory
-	implements ConfigurationCategory {
+public class PagesConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryKey() {
@@ -35,8 +34,8 @@ public class FrontendInfrastructureConfigurationCategory
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "frontend-infrastructure";
+	private static final String _CATEGORY_KEY = "pages";
 
-	private static final String _CATEGORY_SECTION = "platform";
+	private static final String _CATEGORY_SECTION = "content";
 
 }

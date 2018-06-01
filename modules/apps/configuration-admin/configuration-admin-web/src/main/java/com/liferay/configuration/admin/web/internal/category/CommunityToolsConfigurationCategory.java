@@ -22,7 +22,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component
-public class CommunityConfigurationCategory implements ConfigurationCategory {
+public class CommunityToolsConfigurationCategory
+	implements ConfigurationCategory {
+
+	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
 
 	@Override
 	public String getCategoryKey() {
@@ -34,7 +40,9 @@ public class CommunityConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "community";
+	private static final String _CATEGORY_ICON = "community";
+
+	private static final String _CATEGORY_KEY = "community-tools";
 
 	private static final String _CATEGORY_SECTION = "social";
 

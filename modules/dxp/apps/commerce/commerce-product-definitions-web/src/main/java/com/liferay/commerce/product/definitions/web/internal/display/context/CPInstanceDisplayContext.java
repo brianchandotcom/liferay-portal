@@ -110,7 +110,9 @@ public class CPInstanceDisplayContext
 			cpDefinitionOptionRelListMap = parseCPInstanceDDMContent(
 				getCPInstanceId());
 
-		if (cpDefinitionOptionRelListMap.isEmpty()) {
+		if (cpDefinitionOptionRelListMap.isEmpty() ||
+			!cpDefinitionOptionRelListMap.containsKey(cpDefinitionOptionRel)) {
+
 			return Collections.emptyList();
 		}
 

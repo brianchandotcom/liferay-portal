@@ -221,6 +221,12 @@
 		+ .input-group-btn, + .input-group-input {
 			margin-left: -$input-border-right-width;
 		}
+
+		&[type=file] {
+			background: transparent;
+			border-color: transparent;
+			padding: 0;
+		}
 	}
 
 	.input-group-input {

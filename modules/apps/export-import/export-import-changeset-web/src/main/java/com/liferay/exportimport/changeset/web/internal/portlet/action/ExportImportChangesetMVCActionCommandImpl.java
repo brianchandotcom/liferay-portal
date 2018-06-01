@@ -225,6 +225,15 @@ public class ExportImportChangesetMVCActionCommandImpl
 				return;
 			}
 
+			int type =
+				ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET_LOCAL;
+
+			if (scopeGroup.isStagedRemotely()) {
+				type =
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE;
+			}
+
 			long liveGroupId = 0;
 
 			if (scopeGroup.isStagingGroup()) {
@@ -245,10 +254,7 @@ public class ExportImportChangesetMVCActionCommandImpl
 			ExportImportConfiguration exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(
-						themeDisplay.getUserId(), portletId,
-						ExportImportConfigurationConstants.
-							TYPE_PUBLISH_PORTLET_LOCAL,
-						settingsMap);
+						themeDisplay.getUserId(), portletId, type, settingsMap);
 
 			backgroundTaskId = _staging.publishPortlet(
 				themeDisplay.getUserId(), exportImportConfiguration);

@@ -35,6 +35,7 @@ import java.util.regex.PatternSyntaxException;
  */
 public class Element extends Node {
     private Tag tag;
+    private boolean useSquareBrackets;
 
     private static final Pattern classSplit = Pattern.compile("\\s+");
 
@@ -44,6 +45,17 @@ public class Element extends Node {
      */
     public Element(String tag) {
         this(Tag.valueOf(tag), "", new Attributes());
+    }
+
+    /**
+     * Create a new, standalone element with posibility to use square brackets
+     * instead of normal "<" and ">" characters;
+     * @param tag tag name
+     */
+    public Element(String tag, boolean useSquareBrackets) {
+        super(tag);
+
+        useSquareBrackets = useSquareBrackets;
     }
 
     /**
@@ -1213,19 +1225,19 @@ public class Element extends Node {
             }
         }
         accum
-                .append("<")
+                .append(useSquareBrackets ? "[" : "<")
                 .append(tagName());
         attributes.html(accum, out);
 
         // selfclosing includes unknown tags, isEmpty defines tags that are always empty
         if (childNodes.isEmpty() && tag.isSelfClosing()) {
             if (out.syntax() == Document.OutputSettings.Syntax.html && tag.isEmpty())
-                accum.append('>');
+                accum.append(useSquareBrackets ? ']' : '>');
             else
-                accum.append(" />"); // <img> in html, <img /> in xml
+                accum.append(useSquareBrackets ? " /]" : " />"); // <img> in html, <img /> in xml
         }
         else
-            accum.append(">");
+            accum.append(useSquareBrackets ? "]" : ">");
     }
 
 	void outerHtmlTail(Appendable accum, int depth, Document.OutputSettings out) throws IOException {
@@ -1234,7 +1246,7 @@ public class Element extends Node {
                     tag.formatAsBlock() || (out.outline() && (childNodes.size()>1 || (childNodes.size()==1 && !(childNodes.get(0) instanceof TextNode))))
             )))
                 indent(accum, depth, out);
-            accum.append("</").append(tagName()).append(">");
+            accum.append(useSquareBrackets ? "[/" : "</").append(tagName()).append(useSquareBrackets ? "]" : ">");
         }
     }
 
@@ -1288,3 +1300,4 @@ public class Element extends Node {
         return (Element) super.clone();
     }
 }
+/* @generated */

@@ -76,7 +76,8 @@ public class GetEditorStrutsAction extends BaseStrutsAction {
 		namespacedRequest.setAttribute(WebKeys.PORTLET_ID, portletId);
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher("/discussion/editor.jsp");
+			_servletContext.getRequestDispatcher(
+				"/discussion/editor_resource.jsp");
 
 		requestDispatcher.include(namespacedRequest, response);
 

@@ -22,6 +22,12 @@ CommerceDashboardInstanceSelectorDisplayContext commerceDashboardInstanceSelecto
 List<CPInstance> cpInstances = commerceDashboardInstanceSelectorDisplayContext.getCPInstances();
 %>
 
+<c:if test="<%= commerceDashboardInstanceSelectorDisplayContext.isShowTitle() %>">
+	<h2>
+		<%= HtmlUtil.escape(portletDisplay.getTitle()) %>
+	</h2>
+</c:if>
+
 <c:choose>
 	<c:when test="<%= !cpInstances.isEmpty() %>">
 		<liferay-portlet:actionURL name="editCommerceDashboardInstance" varImpl="editCommerceDashboardInstanceURL" />

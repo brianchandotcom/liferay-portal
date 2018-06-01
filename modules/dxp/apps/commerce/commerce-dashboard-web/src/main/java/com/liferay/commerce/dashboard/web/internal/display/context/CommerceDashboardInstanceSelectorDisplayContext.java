@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.dashboard.web.internal.display.context;
 
+import com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardInstanceSelectorPortletInstanceConfiguration;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -44,6 +46,14 @@ public class CommerceDashboardInstanceSelectorDisplayContext
 		super(configurationProvider, renderRequest);
 
 		_cpInstanceService = cpInstanceService;
+
+		PortletDisplay portletDisplay =
+			commerceDashboardRequestHelper.getPortletDisplay();
+
+		_commerceDashboardInstanceSelectorPortletInstanceConfiguration =
+			portletDisplay.getPortletInstanceConfiguration(
+				CommerceDashboardInstanceSelectorPortletInstanceConfiguration.
+					class);
 	}
 
 	public CPInstance getCPInstance(long cpInstanceId) {
@@ -77,9 +87,16 @@ public class CommerceDashboardInstanceSelectorDisplayContext
 			QueryUtil.ALL_POS, new CPInstanceSkuComparator(true));
 	}
 
+	public boolean isShowTitle() {
+		return _commerceDashboardInstanceSelectorPortletInstanceConfiguration.
+			showTitle();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDashboardInstanceSelectorDisplayContext.class);
 
+	private final CommerceDashboardInstanceSelectorPortletInstanceConfiguration
+		_commerceDashboardInstanceSelectorPortletInstanceConfiguration;
 	private final CPInstanceService _cpInstanceService;
 
 }

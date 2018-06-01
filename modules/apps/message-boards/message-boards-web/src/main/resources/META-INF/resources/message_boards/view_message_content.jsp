@@ -345,7 +345,11 @@ if (portletTitleBasedNavigation) {
 				{
 					data: data,
 					success: function(data) {
-						$('#<portlet:namespace />messageContainer').append(data);
+						var messageContainer = $('#<portlet:namespace />messageContainer');
+
+						messageContainer.append(data);
+
+						messageContainer.append($('#<portlet:namespace />messageContainer > .reply-container'));
 					}
 				}
 			);

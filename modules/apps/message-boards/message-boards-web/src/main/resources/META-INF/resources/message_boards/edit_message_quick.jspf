@@ -61,7 +61,7 @@ if (messageFormat.equals("bbcode")) {
 Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-showPermanentLink");
 %>
 
-<div class="card-tab message-container">
+<div class="card-tab message-container reply-container">
 	<div class="card hide list-group-card panel" id="<portlet:namespace />addReplyToMessage<%= replyToMessageId %>">
 		<div class="panel-heading">
 			<div class="card-row card-row-padded">

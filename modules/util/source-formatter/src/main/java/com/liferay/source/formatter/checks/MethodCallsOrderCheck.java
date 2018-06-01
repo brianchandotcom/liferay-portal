@@ -147,11 +147,12 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 
 	private String _sortMethodCalls(String content) {
 		content = _sortMethodCall(
-			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
-			"TreeSet<.*>");
+			content, "add", "ConcurrentSkipListSet(<.*>|\\(\\))",
+			"HashSet(<.*>|\\(\\))", "TreeSet(<.*>|\\(\\))");
 		content = _sortMethodCall(
-			content, "put", "ConcurrentHashMap<.*>", "HashMap<.*>",
-			"JSONObject", "TreeMap<.*>");
+			content, "put", "ConcurrentHashMap(<.*>|\\(\\))",
+			"HashMap(<.*>|\\(\\))", "JSONObject", "SortedMap(<.*>|\\(\\))",
+			"TreeMap(<.*>|\\(\\))");
 		content = _sortMethodCall(content, "setAttribute");
 
 		return content;

@@ -335,8 +335,8 @@ private static final String _VALUE_KEY = "value";
 private static final Set _unitSet = new HashSet();
 
 static {
-	_unitSet.add("px");
-	_unitSet.add("em");
 	_unitSet.add("%");
+	_unitSet.add("em");
+	_unitSet.add("px");
 }
 %>

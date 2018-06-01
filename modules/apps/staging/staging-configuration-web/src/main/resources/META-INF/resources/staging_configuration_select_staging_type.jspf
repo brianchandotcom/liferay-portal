@@ -14,58 +14,46 @@
  */
 --%>
 
-<aui:fieldset markupView="lexicon">
-	<h1 class="staging-configuration-title"><%= LanguageUtil.get(request, "javax.portlet.title.com_liferay_staging_configuration_web_portlet_StagingConfigurationPortlet") %></h1>
+<div class="sheet-section">
+	<div class="sheet-text">
+		<liferay-ui:message key="select-one-of-the-options" />
+	</div>
 
-	<div><%= LanguageUtil.get(request, "select-one-of-the-options") %></div>
-
-	<div id="<portlet:namespace />stagingTypes">
-		<liferay-util:buffer
-			var="noneText"
-		>
-			<span class="staging-configuration-radio-label">
-				<span class="staging-configuration-radio-text">
-					<%= LanguageUtil.get(request, "none") %>
-				</span>
-			</span>
-		</liferay-util:buffer>
-
-		<aui:input checked="<%= !liveGroup.isStaged() %>" cssClass="staging-configuration-radio" id="none" label="<%= noneText %>" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_NOT_STAGED %>" />
+	<div class="form-group" id="<portlet:namespace />stagingTypes">
+		<div class="custom-distance">
+			<liferay-staging:radio
+				checked="<%= !liveGroup.isStaged() %>"
+				id="none"
+				label="none"
+				name="stagingType"
+				value="<%= String.valueOf(StagingConstants.TYPE_NOT_STAGED) %>"
+			/>
+		</div>
 
 		<c:if test="<%= !liveGroupRemoteStaging && !stagedRemotely %>">
-			<liferay-util:buffer
-				var="localLiveText"
-			>
-				<span class="staging-configuration-radio-label">
-					<span class="staging-configuration-radio-text">
-						<%= LanguageUtil.get(request, "local-live") %>:
-
-						<span class="staging-configuration-radio-help-message">
-							<%= LanguageUtil.get(request, "staging-type-local") %>
-						</span>
-					</span>
-				</span>
-			</liferay-util:buffer>
-
-			<aui:input checked="<%= stagedLocally %>" cssClass="staging-configuration-radio" id="local" label="<%= localLiveText %>" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_LOCAL_STAGING %>" />
+			<div class="custom-distance">
+				<liferay-staging:radio
+					checked="<%= stagedLocally %>"
+					description="staging-type-local"
+					id="local"
+					label="local-live"
+					name="stagingType"
+					value="<%= String.valueOf(StagingConstants.TYPE_LOCAL_STAGING) %>"
+				/>
+			</div>
 		</c:if>
 
 		<c:if test="<%= !stagedLocally %>">
-			<liferay-util:buffer
-				var="remoteLiveText"
-			>
-				<span class="staging-configuration-radio-label">
-					<span class="staging-configuration-radio-text">
-						<%= LanguageUtil.get(request, "remote-live") %>:
-
-						<span class="staging-configuration-radio-help-message">
-							<%= LanguageUtil.get(request, "staging-type-remote") %>
-						</span>
-					</span>
-				</span>
-			</liferay-util:buffer>
-
-			<aui:input checked="<%= stagedRemotely %>" cssClass="staging-configuration-radio" id="remote" label="<%= remoteLiveText %>" name="stagingType" type="radio" value="<%= StagingConstants.TYPE_REMOTE_STAGING %>" />
+			<div class="custom-distance">
+				<liferay-staging:radio
+					checked="<%= stagedRemotely %>"
+					description="staging-type-remote"
+					id="remote"
+					label="remote-live"
+					name="stagingType"
+					value="<%= String.valueOf(StagingConstants.TYPE_REMOTE_STAGING) %>"
+				/>
+			</div>
 		</c:if>
 	</div>
-</aui:fieldset>
+</div>

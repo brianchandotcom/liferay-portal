@@ -42,7 +42,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.MANAGE_STAGING) && GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.VIEW_STAGING) %>">
 		<%@ include file="/staging_configuration_exceptions.jspf" %>
 
-		<div class="container-fluid-960">
+		<div class="custom-sheet sheet sheet-lg">
 			<liferay-ui:success key="stagingDisabled" message="staging-is-successfully-disabled" />
 
 			<portlet:actionURL name="editStagingConfiguration" var="editStagingConfigurationURL">
@@ -61,17 +61,29 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 				<aui:input name="forceDisable" type="hidden" value="<%= false %>" />
 
 				<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
-					<aui:fieldset-group markupView="lexicon">
-						<%@ include file="/staging_configuration_select_staging_type.jspf" %>
-
-						<%@ include file="/staging_configuration_remote_options.jspf" %>
-
-						<%@ include file="/staging_configuration_staged_portlets.jspf" %>
-
-						<div class="staging-configuration-submit-button-holder">
-							<button class="btn btn-primary"><span class="lfr-btn-label"><%= LanguageUtil.get(request, "save") %></span></button>
+					<div class="sheet-header">
+						<div class="sheet-title">
+							<liferay-ui:message key="javax.portlet.title.com_liferay_staging_configuration_web_portlet_StagingConfigurationPortlet" />
 						</div>
-					</aui:fieldset-group>
+					</div>
+
+					<%@ include file="/staging_configuration_select_staging_type.jspf" %>
+
+					<%@ include file="/staging_configuration_remote_options.jspf" %>
+
+					<%@ include file="/staging_configuration_staged_portlets.jspf" %>
+
+					<div class="sheet-footer">
+						<div class="btn-group-item">
+							<div class="btn-group-item">
+								<button class="btn btn-primary">
+									<span class="lfr-btn-label">
+										<%= LanguageUtil.get(request, "save") %>
+									</span>
+								</button>
+							</div>
+						</div>
+					</div>
 
 					<aui:script sandbox="<%= true %>">
 						var remoteStagingOptions = $('#<portlet:namespace />remoteStagingOptions');

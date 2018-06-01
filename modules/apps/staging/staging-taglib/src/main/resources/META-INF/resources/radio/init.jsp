@@ -18,6 +18,7 @@
 
 <%
 boolean checked = GetterUtil.getBoolean(request.getAttribute("liferay-staging:radio:checked"));
+String descriptionKey = GetterUtil.getString(request.getAttribute("liferay-staging:radio:description"));
 boolean disabled = GetterUtil.getBoolean(request.getAttribute("liferay-staging:radio:disabled"));
 String id = GetterUtil.getString(request.getAttribute("liferay-staging:radio:id"));
 boolean ignoreRequestValue = GetterUtil.getBoolean(request.getAttribute("liferay-staging:radio:ignoreRequestValue"));
@@ -46,6 +47,7 @@ if (!ignoreRequestValue) {
 }
 
 String checkedString = (checked) ? "checked" : "";
+String description = LanguageUtil.get(request, descriptionKey);
 String disabledString = (disabled) ? "disabled" : "";
 String dataQAID = (name.equals(id)) ? name : name + StringPool.UNDERLINE + id;
 String domId = liferayPortletResponse.getNamespace() + id;
@@ -54,4 +56,6 @@ String inlineString = (inline) ? "custom-control-inline" : "";
 String label = LanguageUtil.get(request, labelKey);
 String popoverName = name + "_popover";
 String popoverText = (Validator.isNull(popoverTextKey)) ? StringPool.SPACE : LanguageUtil.get(request, popoverTextKey);
+
+String separator = Validator.isNotNull(description) ? ":" : "";
 %>

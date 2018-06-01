@@ -31,13 +31,17 @@
 
 		<span class="custom-control-label">
 			<span class="custom-control-label-text">
-				<%= label %>
+				<%= HtmlUtil.escape(label) %><%= separator %>
 
 				<liferay-staging:popover
 					id="<%= popoverName %>"
 					text="<%= popoverText %>"
 					title="<%= label %>"
 				/>
+
+				<c:if test="<%= Validator.isNotNull(description) %>">
+					<span class="staging-taglib-checkbox-description"><%= HtmlUtil.escape(description) %></span>
+				</c:if>
 			</span>
 		</span>
 	</label>

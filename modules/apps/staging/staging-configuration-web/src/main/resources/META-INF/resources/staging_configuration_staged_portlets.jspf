@@ -16,49 +16,41 @@
 
 <div class="<%= (liveGroup.isStaged() || (stagingType != StagingConstants.TYPE_NOT_STAGED)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />stagedPortlets">
 	<c:if test="<%= !liveGroup.isCompany() && !liveGroupRemoteStaging %>">
-		<aui:fieldset>
-			<div class="staging-configuration-section-title-holder">
-				<span class="staging-configuration-section-title"><%= LanguageUtil.get(request, "page-versioning") %></span>
+		<div class="sheet-section">
+			<div class="sheet-subtitle">
+				<liferay-ui:message key="page-versioning" />
 			</div>
 
-			<p class="staging-configuration-help-label">
+			<div class="sheet-text">
 				<liferay-ui:message key="page-versioning-help" />
-			</p>
+			</div>
 
 			<%
 			boolean branchingPublic = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPublic"));
 			boolean branchingPrivate = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("branchingPrivate"));
 			%>
 
-			<liferay-util:buffer
-				var="branchingPublicLabel"
-			>
-				<span class="staging-configuration-checkbox-label">
-					<span class="staging-configuration-checkbox-text">
-						<%= LanguageUtil.get(request, "enabled-on-public-pages") %>
-					</span>
-				</span>
-			</liferay-util:buffer>
+			<div class="custom-distance">
+				<liferay-staging:checkbox
+					checked="<%= branchingPublic %>"
+					label="enabled-on-public-pages"
+					name="branchingPublic"
+				/>
+			</div>
 
-			<aui:input cssClass="staging-configuration-checkbox" label="<%= branchingPublicLabel %>" name="branchingPublic" type="checkbox" value="<%= branchingPublic %>" />
-
-			<liferay-util:buffer
-				var="branchingPrivateLabel"
-			>
-				<span class="staging-configuration-checkbox-label">
-					<span class="staging-configuration-checkbox-text">
-						<%= LanguageUtil.get(request, "enabled-on-private-pages") %>
-					</span>
-				</span>
-			</liferay-util:buffer>
-
-			<aui:input cssClass="staging-configuration-checkbox" label="<%= branchingPrivateLabel %>" name="branchingPrivate" type="checkbox" value="<%= branchingPrivate %>" />
-		</aui:fieldset>
+			<div class="custom-distance">
+				<liferay-staging:checkbox
+					checked="<%= branchingPrivate %>"
+					label="enabled-on-private-pages"
+					name="branchingPrivate"
+				/>
+			</div>
+		</div>
 	</c:if>
 
-	<aui:fieldset markupView="lexicon">
-		<div class="staging-configuration-section-title-holder">
-			<span class="staging-configuration-section-title"><%= LanguageUtil.get(request, "staged-content") %></span>
+	<div class="sheet-section">
+		<div class="sheet-subtitle">
+			<liferay-ui:message key="staged-content" />
 
 			<liferay-staging:popover
 				id="stagedportlets"
@@ -77,23 +69,24 @@
 			</c:if>
 		</div>
 
-		<p class="staging-configuration-help-label">
+		<div class="sheet-text">
 			<liferay-ui:message key="staged-applications-alert" />
-		</p>
+		</div>
 
-		<liferay-util:buffer
-			var="selectAllCheckboxLabel"
-		>
-			<span class="staging-configuration-checkbox-label">
-				<span class="staging-configuration-checkbox-text">
-					<%= LanguageUtil.get(request, "select-all") %>
-				</span>
-			</span>
-		</liferay-util:buffer>
+		<c:if test="<%= !stagedLocally && !stagedRemotely %>">
 
-		<aui:input cssClass="select-all-checkbox staging-configuration-checkbox" disabled="<%= (liveGroupRemoteStaging && liveGroup.isStagedRemotely()) || liveGroup.isStaged() %>" id="selectAllCheckbox" label="<%= selectAllCheckboxLabel %>" name="selectAll" type="checkbox" />
+		</c:if>
 
-		<div id="stagingConfigurationControls">
+		<div class="form-group">
+			<liferay-staging:checkbox
+				disabled="<%= (liveGroupRemoteStaging && liveGroup.isStagedRemotely()) || liveGroup.isStaged() %>"
+				id="selectAllCheckbox"
+				label="select-all"
+				name="selectAll"
+			/>
+		</div>
+
+		<div class="form-group" id="stagingConfigurationControls">
 
 			<%
 			Set<String> portletDataHandlerClassNames = new HashSet<String>();
@@ -127,22 +120,19 @@
 				}
 			%>
 
-				<liferay-util:buffer
-					var="portletTitle"
-				>
-					<span class="staging-configuration-checkbox-label">
-						<span class="staging-configuration-checkbox-text">
-							<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>
-						</span>
-					</span>
-				</liferay-util:buffer>
-
-				<aui:input cssClass="staging-configuration-checkbox" disabled="<%= (liveGroupRemoteStaging && liveGroup.isStagedRemotely()) || liveGroup.isStaged() %>" label="<%= portletTitle %>" name="<%= StagingConstants.STAGED_PREFIX + StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()) + StringPool.DOUBLE_DASH %>" type="checkbox" value="<%= staged %>" />
+				<div class="custom-distance">
+					<liferay-staging:checkbox
+						checked="<%= staged %>"
+						disabled="<%= (liveGroupRemoteStaging && liveGroup.isStagedRemotely()) || liveGroup.isStaged() %>"
+						label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>"
+						name="<%= StagingConstants.STAGED_PREFIX + StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()) + StringPool.DOUBLE_DASH %>"
+					/>
+				</div>
 
 			<%
 			}
 			%>
 
 		</div>
-	</aui:fieldset>
+	</div>
 </div>

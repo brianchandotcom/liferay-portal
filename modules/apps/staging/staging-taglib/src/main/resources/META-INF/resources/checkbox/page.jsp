@@ -45,7 +45,7 @@
 					<span class="staging-taglib-checkbox-warning"><%= HtmlUtil.escape(warning) %></span>
 				</c:if>
 
-				<c:if test="<%= Validator.isNotNull(warning) %>">
+				<c:if test="<%= Validator.isNotNull(suggestion) %>">
 					<span class="staging-taglib-checkbox-suggestion"><%= HtmlUtil.escape(suggestion) %></span>
 				</c:if>
 			</span>

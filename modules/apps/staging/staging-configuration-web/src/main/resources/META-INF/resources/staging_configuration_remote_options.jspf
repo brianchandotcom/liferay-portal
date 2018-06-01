@@ -29,9 +29,9 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 
 	<%@ include file="/error_remote_export_exception.jspf" %>
 
-	<aui:fieldset cssClass="staging-configuration-fieldset-title">
-		<div class="staging-configuration-section-title-holder">
-			<span class="staging-configuration-section-title"><%= LanguageUtil.get(request, "remote-live-connection-settings") %></span>
+	<div cssClass="sheet-section">
+		<div class="sheet-subtitle">
+			<liferay-ui:message key="remote-live-connection-settings" />
 		</div>
 
 		<%@ include file="/error_remote_options_exception.jspf" %>
@@ -50,22 +50,17 @@ if (stagingType == StagingConstants.TYPE_REMOTE_STAGING) {
 
 		<aui:input label='<%= LanguageUtil.get(request, "remote-site-id") %>' name="remoteGroupId" size="10" type="text" value='<%= liveGroupTypeSettings.getProperty("remoteGroupId") %>' />
 
-		<div class="flex-container">
-			<liferay-util:buffer
-				var="secureConnectionLabel"
-			>
-				<span class="staging-configuration-checkbox-label">
-					<span class="staging-configuration-checkbox-text">
-						<%= LanguageUtil.get(request, "use-a-secure-network-connection") %>
-					</span>
-				</span>
-			</liferay-util:buffer>
+		<div class="form-group">
 
 			<%
 			boolean secureConnection = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty("secureConnection"));
 			%>
 
-			<aui:input cssClass="staging-configuration-checkbox" label="<%= secureConnectionLabel %>" name="secureConnection" type="checkbox" value="<%= secureConnection %>" />
+			<liferay-staging:checkbox
+				checked="<%= secureConnection %>"
+				label="use-a-secure-network-connection"
+				name="secureConnection"
+			/>
 		</div>
-	</aui:fieldset>
+	</div>
 </div>

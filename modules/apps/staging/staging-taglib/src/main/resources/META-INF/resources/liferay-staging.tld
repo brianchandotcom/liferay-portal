@@ -740,6 +740,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The language key of the radio's description text. It is displayed after the label.</description>
+			<name>description</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether the radio button is disabled. The default is enabled.</description>
 			<name>disabled</name>
 			<required>false</required>

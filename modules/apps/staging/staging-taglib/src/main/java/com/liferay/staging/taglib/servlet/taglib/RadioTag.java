@@ -33,6 +33,10 @@ public class RadioTag extends IncludeTag {
 		_checked = checked;
 	}
 
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
 	}
@@ -77,6 +81,7 @@ public class RadioTag extends IncludeTag {
 		super.cleanUp();
 
 		_checked = false;
+		_description = StringPool.BLANK;
 		_disabled = false;
 		_id = StringPool.BLANK;
 		_ignoreRequestValue = false;
@@ -95,6 +100,7 @@ public class RadioTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-staging:radio:checked", _checked);
+		request.setAttribute("liferay-staging:radio:description", _description);
 		request.setAttribute("liferay-staging:radio:disabled", _disabled);
 		request.setAttribute("liferay-staging:radio:id", _id);
 		request.setAttribute(
@@ -109,6 +115,7 @@ public class RadioTag extends IncludeTag {
 	private static final String _PAGE = "/radio/page.jsp";
 
 	private boolean _checked;
+	private String _description = StringPool.BLANK;
 	private boolean _disabled;
 	private String _id = StringPool.BLANK;
 	private boolean _ignoreRequestValue;

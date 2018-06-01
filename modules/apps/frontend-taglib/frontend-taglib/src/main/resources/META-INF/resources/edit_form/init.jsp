@@ -34,5 +34,5 @@ String portletNamespace = GetterUtil.getString((java.lang.String)request.getAttr
 boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:useNamespace")));
 boolean validateOnBlur = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:edit-form:validateOnBlur")));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-frontend:edit-form:dynamicAttributes");
-Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("liferay-frontend:edit-form:validatorTagsMap");
+Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("LIFERAY_SHARED_aui:form:validatorTagsMap");
 %>

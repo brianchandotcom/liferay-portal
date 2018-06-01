@@ -80,7 +80,7 @@ public abstract class BaseValidatorTagSupport extends IncludeTag {
 
 		Map<String, List<ValidatorTag>> validatorTagsMap =
 			(Map<String, List<ValidatorTag>>)request.getAttribute(
-				"aui:form:validatorTagsMap");
+				"LIFERAY_SHARED_aui:form:validatorTagsMap");
 
 		if (validatorTagsMap != null) {
 			List<ValidatorTag> validatorTags = ListUtil.fromMapValues(

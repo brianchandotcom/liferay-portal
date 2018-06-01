@@ -27,7 +27,7 @@ String icon = "../aui/google-plus-sign";
 <liferay-ui:icon
 	image="<%= icon %>"
 	label="<%= false %>"
-	linkCssClass="btn btn-borderless btn-outline-borderless btn-outline-secondary btn-sm"
+	linkCssClass="btn btn-borderless btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
 	message="<%= socialBookmark.getName(locale) %>"
 	method="get"
 	src="<%= icon %>"

@@ -1,9 +1,41 @@
 [
 	{
 		"icon" : "icon-cards.png",
-		"layoutTemplateId": "1_column",
+		"layoutTemplateId": "3_2_3_columns",
 		"name": "Dashboard",
-		"portlets": []
+		"portlets": [
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardPeriodSelectorPortlet"
+			},
+			{
+				"layoutColumnId": "column-3",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardDateRangeSelectorPortlet"
+			},
+			{
+				"layoutColumnId": "column-4",
+				"layoutColumnPos": 0,
+				"lookAndFeel": {
+					"portletSetupTitle": "products",
+					"portletSetupUseCustomTitle": true
+				},
+				"portletName": "com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardInstanceSelectorPortlet",
+				"portletPreferences": {
+					"showTitle": true
+				}
+			},
+			{
+				"layoutColumnId": "column-5",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardForecastsChartPortlet",
+				"portletPreferences": {
+					"filterBySKU": true,
+					"target": 2
+				}
+			}
+		]
 	},
 	{
 		"icon" : "icon-cube.png",

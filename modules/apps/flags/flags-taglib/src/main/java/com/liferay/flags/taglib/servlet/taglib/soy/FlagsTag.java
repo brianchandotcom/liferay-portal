@@ -43,7 +43,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 /**
  * @author Julio Camarero
@@ -222,7 +221,7 @@ public class FlagsTag extends TemplateRendererTag {
 		return reasons;
 	}
 
-	private String _getURI() throws WindowStateException {
+	private String _getURI() {
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			request, PortletKeys.FLAGS, PortletRequest.ACTION_PHASE);
 

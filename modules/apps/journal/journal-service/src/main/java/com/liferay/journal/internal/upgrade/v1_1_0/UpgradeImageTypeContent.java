@@ -130,14 +130,15 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 	protected void copyJournalArticleImagesToJournalRepository()
 		throws Exception {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("select JournalArticleImage.articleImageId, ");
 		sb.append("JournalArticleImage.groupId, ");
 		sb.append("JournalArticle.resourcePrimKey, JournalArticle.userId ");
-		sb.append("from JournalArticleImage left join JournalArticle on ");
+		sb.append("from JournalArticleImage inner join JournalArticle on ");
 		sb.append("(JournalArticle.groupId=JournalArticleImage.groupId and ");
-		sb.append("JournalArticle.articleId=JournalArticleImage.articleId)");
+		sb.append("JournalArticle.articleId=JournalArticleImage.articleId ");
+		sb.append(" and JournalArticle.version=JournalArticleImage.version)");
 
 		List<SaveImageFileEntryCallable> saveImageFileEntryCallables =
 			new ArrayList<>();

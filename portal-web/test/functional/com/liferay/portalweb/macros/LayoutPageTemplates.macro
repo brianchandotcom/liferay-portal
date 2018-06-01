@@ -87,14 +87,6 @@
 	</command>
 
 	<command name="moveFragment">
-		<execute function="Refresh" />
-
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
-			<var name="key_fragmentName" value="${fragmentName}" />
-		</execute>
-
-		<var method="StringUtil#lowerCase('${direction}')" name="direction" />
-
 		<if>
 			<equals arg1="${direction}" arg2="up" />
 			<then>

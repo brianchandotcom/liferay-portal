@@ -1,26 +1,14 @@
-import 'frontend-taglib/contextual_sidebar/ContextualSidebar.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import {Config} from 'metal-state';
-import {object} from 'metal';
 
 import './dialogs/SelectMappingDialog.es';
 import './dialogs/SelectMappingTypeDialog.es';
-import './sidebar/SidebarAddedFragments.es';
-import './sidebar/SidebarAvailableFragments.es';
-import './sidebar/SidebarMapping.es';
-import './translation/TranslationStatus.es';
-import FragmentEntryLink from './FragmentEntryLink.es';
+import './fragment_entry_link/FragmentEntryLinkList.es';
+import './sidebar/FragmentsEditorSidebar.es';
+import './toolbar/FragmentsEditorToolbar.es';
+import FragmentEntryLink from './fragment_entry_link/FragmentEntryLink.es';
 import templates from './FragmentsEditor.soy';
-
-/**
- * Tab that will show fragmentEntryLinks added to the editor
- * @review
- * @type {!{
- *   id: !string,
- *   label: !string
- * }}
- */
 
 /**
  * FragmentsEditor
@@ -84,32 +72,6 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
-	 * Enable or disable added tab depending on we have fragments or not
-	 * @private
-	 * @review
-	 */
-
-	_enabledAddedTab(enabled) {
-		const addedTabIndex = this.sidebarTabs.findIndex(tab => tab.id === 'added');
-
-		if (addedTabIndex !== -1) {
-			const newAddedTab = object.mixin(
-				{},
-				this.sidebarTabs[addedTabIndex],
-				{
-					enabled: enabled
-				}
-			);
-
-			const newSidebarTabs = [...this.sidebarTabs];
-
-			newSidebarTabs[addedTabIndex] = newAddedTab;
-
-			this.sidebarTabs = newSidebarTabs;
-		}
-	}
-
-	/**
 	 * Fetches a FragmentEntryLink content from the fragment ID and
 	 * fragmentEntryLink ID, returns a promise that resolves into it's content.
 	 * @param {!string} fragmentEntryLinkId
@@ -146,21 +108,8 @@ class FragmentsEditor extends Component {
 	 */
 
 	_focusFragmentEntryLink(fragmentEntryLinkId) {
-		requestAnimationFrame(
-			() => {
-				const index = this.fragmentEntryLinks.findIndex(
-					_fragmentEntryLink => {
-						return _fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId;
-					}
-				);
-
-				const fragmentEntryLinkElement = this.refs.fragmentEntryLinks.querySelectorAll(
-					'.fragment-entry-link-wrapper'
-				)[index];
-
-				fragmentEntryLinkElement.focus();
-				fragmentEntryLinkElement.scrollIntoView();
-			}
+		this.refs.fragmentsEditorRender.focusFragmentEntryLink(
+			fragmentEntryLinkId
 		);
 	}
 
@@ -194,7 +143,9 @@ class FragmentsEditor extends Component {
 	 */
 
 	_getFragmentEntryLinkComponent(fragmentEntryLinkId) {
-		return this.refs[`fragmentEntryLink_${fragmentEntryLinkId}`];
+		return this.refs.fragmentsEditorRender.refs[
+			`fragmentEntryLink_${fragmentEntryLinkId}`
+		];
 	}
 
 	/**
@@ -380,7 +331,9 @@ class FragmentsEditor extends Component {
 
 							this._dirty = false;
 
-							this._enabledAddedTab(true);
+							if (this.refs.sidebar) {
+								this.refs.sidebar.toggleAddedTab(true);
+							}
 
 							this._focusFragmentEntryLink(
 								response.fragmentEntryLinkId
@@ -470,10 +423,8 @@ class FragmentsEditor extends Component {
 				...this.fragmentEntryLinks.slice(index + 1)
 			];
 
-			if (this.fragmentEntryLinks.length === 0) {
-				this._sidebarSelectedTab = FragmentsEditor.DEFAULT_TAB_ID;
-
-				this._enabledAddedTab(false);
+			if (this.fragmentEntryLinks.length === 0 && this.refs.sidebar) {
+				this.refs.sidebar.toggleAddedTab(false);
 			}
 
 			this._translationStatus = this._getTranslationStatus(
@@ -592,17 +543,6 @@ class FragmentsEditor extends Component {
 
 	_handleSelectMappingTypeDialogVisibleChanged(change) {
 		this._selectMappingTypeDialogVisible = change.newVal;
-	}
-
-	/**
-	 * Updates _sidebarSelectedTab according to the clicked element
-	 * @param {!Event} event
-	 * @private
-	 * @review
-	 */
-
-	_handleSidebarTabClick(event) {
-		this._sidebarSelectedTab = event.delegateTarget.dataset.tabName;
 	}
 
 	/**
@@ -743,15 +683,6 @@ class FragmentsEditor extends Component {
 		}
 	}
 }
-
-/**
- * Default selected tab
- * @review
- * @static
- * @type {!string}
- */
-
-FragmentsEditor.DEFAULT_TAB_ID = 'available';
 
 /**
  * State definition.
@@ -1058,28 +989,6 @@ FragmentsEditor.STATE = {
 		.value({}),
 
 	/**
-	 * Tabs being shown in sidebar
-	 * @default undefined
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {!Array<{
-	 * 	 id: string,
-	 * 	 label: string
-	 * }>}
-	 */
-
-	sidebarTabs: Config.arrayOf(
-		Config.shapeOf(
-			{
-				enabled: Config.bool().required(),
-				id: Config.string().required(),
-				label: Config.string().required()
-			}
-		)
-	).required(),
-
-	/**
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
@@ -1225,23 +1134,7 @@ FragmentsEditor.STATE = {
 	_selectMappingTypeDialogVisible: Config
 		.bool()
 		.internal()
-		.value(false),
-
-	/**
-	 * Tab selected inside sidebar
-	 * @default 'fragments'
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @private
-	 * @review
-	 * @type {string}
-	 */
-
-	_sidebarSelectedTab: Config
-		.string()
-		.internal()
-		.value(FragmentsEditor.DEFAULT_TAB_ID)
-
+		.value(false)
 };
 
 Soy.register(FragmentsEditor, templates);

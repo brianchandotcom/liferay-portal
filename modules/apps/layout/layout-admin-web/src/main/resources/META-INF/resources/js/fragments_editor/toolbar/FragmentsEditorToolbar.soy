@@ -1,0 +1,94 @@
+{namespace com.liferay.layout.admin.web.FragmentsEditorToolbar}
+
+/**
+ * FragmentsEditorToolbar
+ */
+{template .render}
+	{@param classPK: ?}
+	{@param lastSaveDate: string}
+	{@param portletNamespace: string}
+	{@param savingChanges: bool}
+	{@param spritemap: string}
+	{@param translationAvailableLanguages: ?}
+	{@param translationDefaultLanguageId: string}
+	{@param translationLanguageId: string}
+	{@param? _handleToggleContextualSidebarButtonClick: any}
+	{@param? _handleTranslationLanguageChange: any}
+	{@param? publishLayoutPageTemplateEntryURL: string}
+	{@param? publishRedirectURL: string}
+	{@param? publishStatus: string}
+	{@param? translationStatus: [
+		languageValues: list<[
+			languageId: string,
+			values: list<string>
+		]>,
+		translationKeys: list<string>
+	]}
+
+	<div class="fragments-editor-toolbar management-bar navbar navbar-expand-md">
+		<div class="container">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					{call com.liferay.layout.admin.web.TranslationStatus.render}
+						{param availableLanguages: $translationAvailableLanguages /}
+						{param defaultLanguageId: $translationDefaultLanguageId /}
+						{param events: ['languageChange': $_handleTranslationLanguageChange] /}
+						{param languageId: $translationLanguageId /}
+						{param spritemap: $spritemap /}
+						{param translationStatus: $translationStatus /}
+					{/call}
+				</li>
+				<li class="nav-item">
+					<span class="navbar-text">
+						{if $savingChanges}
+							{msg desc=""}saving-changes{/msg}
+						{elseif $lastSaveDate}
+							{msg desc=""}changes-saved-at-{$lastSaveDate}{/msg}
+						{/if}
+					</span>
+				</li>
+			</ul>
+
+			<ul class="navbar-nav">
+				{if $publishStatus}
+					<li class="nav-item">
+						<span class="label label-secondary">{$publishStatus}</span>
+					</li>
+				{/if}
+				{if $publishLayoutPageTemplateEntryURL}
+					<li class="nav-item">
+						<form action="{$publishLayoutPageTemplateEntryURL}" method="POST">
+							<input
+								name="{$portletNamespace}classPK"
+								type="hidden"
+								value="{$classPK}"
+							/>
+
+							<input
+								name="{$portletNamespace}redirect"
+								type="hidden"
+								value="{$publishRedirectURL}"
+							/>
+
+							<button class="btn btn-outline-light nav-btn" type="submit">
+								{msg desc=""}publish{/msg}
+							</button>
+						</form>
+					</li>
+				{/if}
+				<li class="nav-item">
+					<button
+						class="btn btn-dark btn-monospaced fragments-editor-toolbar__add-fragment-button nav-btn"
+						data-onclick="{$_handleToggleContextualSidebarButtonClick}"
+					>
+						<span class="inline-item">
+							<svg class="icon-monospaced lexicon-icon">
+								<use xlink:href="{$spritemap}#plus"></use>
+							</svg>
+						</span>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+{/template}

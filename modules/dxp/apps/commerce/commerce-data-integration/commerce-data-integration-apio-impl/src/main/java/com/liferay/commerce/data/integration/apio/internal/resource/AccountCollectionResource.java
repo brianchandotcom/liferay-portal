@@ -20,10 +20,11 @@ import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
-import com.liferay.apio.architect.resource.CollectionResource;
-import com.liferay.apio.architect.routes.CollectionRoutes;
+import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.AccountIdentifier;
+import com.liferay.commerce.data.integration.apio.identifiers.CommerceOrganizationIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.UserIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.AccountForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.AccountPermissionChecker;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
 
@@ -46,17 +46,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class AccountCollectionResource
-	implements CollectionResource<Organization, Long, AccountIdentifier> {
+	implements NestedCollectionResource<Organization, Long, AccountIdentifier, Long, CommerceOrganizationIdentifier> {
 
 	@Override
-	public CollectionRoutes<Organization, Long> collectionRoutes(
-		CollectionRoutes.Builder<Organization, Long> builder) {
+	public NestedCollectionRoutes<Organization, Long, Long> collectionRoutes(
+			NestedCollectionRoutes.Builder<Organization, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addAccount, Company.class,
-			_accountPermissionChecker::forAdding, AccountForm::buildForm
+			this::_addAccount,
+			_accountPermissionChecker.forAdding()::apply,
+			 AccountForm::buildForm
 		).build();
 	}
 
@@ -89,8 +90,9 @@ public class AccountCollectionResource
 			"Account"
 		).identifier(
 			Organization::getOrganizationId
-		).addLinkedModel(
-			"website", WebSiteIdentifier.class, this::_getSiteId
+		).addBidirectionalModel(
+			"organization", "accounts", CommerceOrganizationIdentifier.class,
+			Organization::getParentOrganizationId
 		).addRelatedCollection(
 			"members", UserIdentifier.class
 		).addString(
@@ -99,11 +101,11 @@ public class AccountCollectionResource
 	}
 
 	private Organization _addAccount(
-			AccountForm accountCreateForm, Company company)
+			Long organizationId, AccountForm accountCreateForm)
 		throws Exception {
 
-		Organization organization = _accountHelper.createOrganization(
-			accountCreateForm.getName());
+		Organization organization = _accountHelper.createAccount(
+			accountCreateForm.getName(), organizationId);
 
 		_accountHelper.addMembers(accountCreateForm.getUserIds(), organization);
 
@@ -111,15 +113,15 @@ public class AccountCollectionResource
 	}
 
 	private PageItems<Organization> _getPageItems(
-		Pagination pagination, Company company) {
+		Pagination pagination, Long organizationId, Company company) {
 
 		List<Organization> organizations =
 			_organizationService.getOrganizations(
-				company.getCompanyId(), 0, pagination.getStartPosition(),
+				company.getCompanyId(), organizationId, pagination.getStartPosition(),
 				pagination.getEndPosition());
 
 		int count = _organizationService.getOrganizationsCount(
-			company.getCompanyId(), 0);
+			company.getCompanyId(), organizationId);
 
 		return new PageItems<>(organizations, count);
 	}
@@ -138,12 +140,22 @@ public class AccountCollectionResource
 		);
 	}
 
+	public static Long _getParentOrganizationId(Organization organization) {
+		long parentOrganizationId = organization.getParentOrganizationId();
+
+		if (parentOrganizationId <= 0) {
+			return null;
+		}
+
+		return parentOrganizationId;
+	}
+
 	private Organization _updateAccount(
-			Long organizationId, AccountForm accountCreateForm, Company company)
+			Long accountId, AccountForm accountCreateForm, Company company)
 		throws PortalException {
 
-		Organization organization = _accountHelper.updateOrganization(
-			organizationId, accountCreateForm.getName());
+		Organization organization = _accountHelper.updateAccount(
+			accountId, accountCreateForm.getName());
 
 		_accountHelper.addMembers(accountCreateForm.getUserIds(), organization);
 

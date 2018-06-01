@@ -16,6 +16,8 @@ package com.liferay.commerce.data.integration.apio.internal.security.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
+import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -40,16 +42,29 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = AccountPermissionChecker.class)
 public class AccountPermissionChecker {
 
-	public Boolean forAdding(Credentials credentials) {
-		Try<PermissionChecker> permissionCheckerTry = _getPermissionCheckerTry(
-			credentials);
+	public BiFunction<Credentials, Long, Boolean> forAdding() {
+		return (credentials, identifier) -> {
+			Try<PermissionChecker> permissionCheckerTry =
+				_getPermissionCheckerTry(credentials);
 
-		return permissionCheckerTry.map(
-			permissionChecker -> PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.ADD_ORGANIZATION)
-		).orElse(
-			false
-		);
+			Try<Organization> accountTry =
+				Try.fromFallible(
+					() -> _organizationService.
+						fetchOrganization(identifier));
+
+			return permissionCheckerTry.map(
+				permissionChecker -> _portletResourcePermission.contains(
+					permissionChecker,
+					accountTry.map(
+						Organization::getGroupId
+					).orElseThrow(
+						() -> new NotFoundException()
+					),
+					ActionKeys.ADD_ORGANIZATION)
+			).orElse(
+				false
+			);
+		};
 	}
 
 	public BiFunction<Credentials, Long, Boolean> forDeleting() {

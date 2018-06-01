@@ -224,9 +224,8 @@ public class LayoutPrototypeStagedModelDataHandler
 	}
 
 	@Override
-	protected void importReferenceStagedModels(
-		PortletDataContext portletDataContext,
-		LayoutPrototype layoutPrototype) {
+	protected boolean isSkipImportReferenceStagedModels() {
+		return true;
 	}
 
 	@Reference(unbind = "-")

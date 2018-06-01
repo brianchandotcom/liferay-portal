@@ -108,12 +108,38 @@ public class CommerceDashboardForecastsChartDisplayContext
 			return null;
 		}
 
+		BigDecimal minValue = null;
+		BigDecimal maxValue = null;
 		Date predictionDate = null;
 		Set<Date> timeseriesDates = new TreeSet<>();
 
 		for (ForecastChartEntry forecastChartEntry : forecastChartEntries) {
 			for (CommerceForecastValue commerceForecastValue :
 					forecastChartEntry.commerceForecastValues) {
+
+				BigDecimal lowerValue = commerceForecastValue.getLowerValue();
+				BigDecimal value = commerceForecastValue.getValue();
+				BigDecimal upperValue = commerceForecastValue.getUpperValue();
+
+				if (minValue == null) {
+					minValue = value;
+				}
+				else if (lowerValue != null) {
+					minValue = minValue.min(lowerValue);
+				}
+				else {
+					minValue = minValue.min(value);
+				}
+
+				if (maxValue == null) {
+					maxValue = value;
+				}
+				else if (upperValue != null) {
+					maxValue = maxValue.max(upperValue);
+				}
+				else {
+					maxValue = maxValue.max(value);
+				}
 
 				timeseriesDates.add(_getTimeseriesDate(commerceForecastValue));
 
@@ -152,6 +178,11 @@ public class CommerceDashboardForecastsChartDisplayContext
 		commerceDashboardPredictiveChartConfig.setTimeseries(
 			_getTimeseries(timeseriesDatesList));
 
+		AxisY axisY = commerceDashboardPredictiveChartConfig.getAxisY();
+
+		axisY.setMin(minValue);
+		axisY.setMax(maxValue);
+
 		if (_commerceDashboardForecastsChartPortletInstanceConfiguration.
 				target() == CommerceForecastEntryConstants.TARGET_REVENUE) {
 
@@ -160,8 +191,6 @@ public class CommerceDashboardForecastsChartDisplayContext
 
 			CommerceCurrency commerceCurrency =
 				commerceContext.getCommerceCurrency();
-
-			AxisY axisY = commerceDashboardPredictiveChartConfig.getAxisY();
 
 			axisY.setPositionLabel(
 				new PositionLabel(

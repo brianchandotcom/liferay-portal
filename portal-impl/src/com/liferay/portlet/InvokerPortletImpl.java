@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -401,7 +401,7 @@ public class InvokerPortletImpl
 			_log.debug(
 				StringBundler.concat(
 					"processAction for ", _portletId, " takes ",
-					String.valueOf(stopWatch.getTime()), " ms"));
+					stopWatch.getTime(), " ms"));
 		}
 	}
 
@@ -424,7 +424,7 @@ public class InvokerPortletImpl
 			_log.debug(
 				StringBundler.concat(
 					"processEvent for ", _portletId, " takes ",
-					String.valueOf(stopWatch.getTime()), " ms"));
+					stopWatch.getTime(), " ms"));
 		}
 	}
 
@@ -512,8 +512,8 @@ public class InvokerPortletImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"render for ", _portletId, " takes ",
-					String.valueOf(stopWatch.getTime()), " ms"));
+					"render for ", _portletId, " takes ", stopWatch.getTime(),
+					" ms"));
 		}
 	}
 
@@ -580,14 +580,10 @@ public class InvokerPortletImpl
 		}
 
 		if (_log.isDebugEnabled()) {
-			StringBundler sb = new StringBundler("header for");
-
-			sb.append(_portletId);
-			sb.append(" takes ");
-			sb.append(stopWatch.getTime());
-			sb.append(" ms");
-
-			_log.debug(sb.toString());
+			_log.debug(
+				StringBundler.concat(
+					"header for", _portletId, " takes ", stopWatch.getTime(),
+					" ms"));
 		}
 	}
 
@@ -610,7 +606,7 @@ public class InvokerPortletImpl
 			_log.debug(
 				StringBundler.concat(
 					"serveResource for ", _portletId, " takes ",
-					String.valueOf(stopWatch.getTime()), " ms"));
+					stopWatch.getTime(), " ms"));
 		}
 	}
 

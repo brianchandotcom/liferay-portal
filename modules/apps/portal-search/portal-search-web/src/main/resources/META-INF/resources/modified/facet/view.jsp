@@ -94,8 +94,8 @@ ModifiedFacetCalendarDisplayContext modifiedFacetCalendarDisplayContext = modifi
 						}
 						%>
 
-						<li class="facet-value nav-item" name="<%= renderResponse.getNamespace() + "range_" + customRangeModifiedFacetTermDisplayContext.getLabel() %>">
-							<a class="nav-link" href="<%= customRangeModifiedFacetTermDisplayContext.getRangeURL() %>" id="<portlet:namespace /><%= customRangeModifiedFacetTermDisplayContext.getLabel() + "-toggleLink" %>">
+						<li class="facet-value" name="<%= renderResponse.getNamespace() + "range_" + customRangeModifiedFacetTermDisplayContext.getLabel() %>">
+							<a href="<%= customRangeModifiedFacetTermDisplayContext.getRangeURL() %>" id="<portlet:namespace /><%= customRangeModifiedFacetTermDisplayContext.getLabel() + "-toggleLink" %>">
 								<span class="term-name <%= customRangeModifiedFacetTermDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>"><liferay-ui:message key="<%= customRangeModifiedFacetTermDisplayContext.getLabel() %>" />&hellip;</span>
 
 								<c:if test="<%= customRangeModifiedFacetTermDisplayContext.isSelected() %>">

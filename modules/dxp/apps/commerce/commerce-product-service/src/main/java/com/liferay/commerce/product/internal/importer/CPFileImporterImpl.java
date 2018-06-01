@@ -356,9 +356,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 		if (Validator.isNotNull(icon)) {
 			String filePath = dependenciesFilePath + "layout_icons/" + icon;
 
-			InputStream is = classLoader.getResourceAsStream(filePath);
+			InputStream inputStream = classLoader.getResourceAsStream(filePath);
 
-			byte[] byteArray = FileUtil.getBytes(is);
+			byte[] byteArray = FileUtil.getBytes(inputStream);
 
 			layout = _layoutLocalService.updateIconImage(
 				layout.getPlid(), byteArray);
@@ -467,11 +467,11 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		String filePath = dependenciesFilePath + fileName;
 
-		InputStream is = classLoader.getResourceAsStream(filePath);
+		InputStream inputStream = classLoader.getResourceAsStream(filePath);
 
 		String mimeType = MimeTypesUtil.getContentType(fileName);
 
-		byte[] byteArray = FileUtil.getBytes(is);
+		byte[] byteArray = FileUtil.getBytes(inputStream);
 
 		return _dlAppLocalService.addFileEntry(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
@@ -584,7 +584,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 				layout.getGroupId(), 0, layout, portletId, false);
 
-		PortletPreferences portletSetup =
+		PortletPreferences portletPreferences =
 			_portletPreferencesLocalService.getPreferences(
 				portletPreferencesIds);
 
@@ -606,10 +606,10 @@ public class CPFileImporterImpl implements CPFileImporter {
 				value = String.valueOf(assetEntryId);
 			}
 
-			portletSetup.setValue(key, value);
+			portletPreferences.setValue(key, value);
 		}
 
-		portletSetup.store();
+		portletPreferences.store();
 	}
 
 	protected void setThemeSettingProperties(

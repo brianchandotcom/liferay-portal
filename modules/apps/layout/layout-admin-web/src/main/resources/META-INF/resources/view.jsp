@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+portletDisplay.setShowStagingIcon(false);
+
 Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 

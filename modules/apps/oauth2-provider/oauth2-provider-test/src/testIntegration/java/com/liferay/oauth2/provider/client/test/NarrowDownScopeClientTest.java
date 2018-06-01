@@ -22,14 +22,8 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Dictionary;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import java.util.HashSet;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -45,45 +39,48 @@ import org.junit.runner.RunWith;
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class HttpMethodApplicationClientTest extends BaseClientTestCase {
+public class NarrowDownScopeClientTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			MethodApplicationBundleActivator.class);
+			NarrowDownScopeTestPreparator.class);
 	}
 
 	@Test
 	public void test() throws Exception {
-		WebTarget webTarget = getWebTarget("/methods");
+		Assert.assertEquals(
+			"HEAD",
+			getToken(
+				"oauthTestApplication", null, getClientCredentials("HEAD"),
+				this::parseScopeString));
 
-		Invocation.Builder builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationAfter"));
+		Assert.assertEquals(
+			"HEAD",
+			getToken(
+				"oauthTestApplication", null,
+				getResourceOwnerPassword("test@liferay.com", "test", "HEAD"),
+				this::parseScopeString));
 
-		Assert.assertEquals("get", builder.get(String.class));
+		String scopeString = getToken(
+			"oauthTestApplication", null,
+			getResourceOwnerPassword("test@liferay.com", "test"),
+			this::parseScopeString);
 
-		Response response = builder.post(
-			Entity.entity("post", MediaType.TEXT_PLAIN_TYPE));
+		Assert.assertEquals(
+			new HashSet<>(Arrays.asList("HEAD", "GET", "OPTIONS", "POST")),
+			new HashSet<>(Arrays.asList(scopeString.split(" "))));
 
-		Assert.assertEquals("post", response.readEntity(String.class));
-
-		builder = authorize(
-			webTarget.request(),
-			getToken("oauthTestApplicationBefore"));
-
-		response = builder.get();
-
-		Assert.assertEquals(403, response.getStatus());
-
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationWrong"));
-
-		response = builder.get();
-
-		Assert.assertEquals(403, response.getStatus());
+		Assert.assertEquals(
+			"invalid_grant",
+			getToken(
+				"oauthTestApplication", null,
+				getResourceOwnerPassword(
+					"test@liferay.com", "test", "HEAD GET OPTIONS POST PUT"),
+				this::parseError));
 	}
 
-	public static class MethodApplicationBundleActivator
+	public static class NarrowDownScopeTestPreparator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -96,20 +93,12 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 			properties.put("oauth2.test.application", true);
 
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore",
-				Arrays.asList("GET", "POST"));
-
 			registerJaxRsApplication(
 				new TestApplication(), "methods", properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter",
-				Arrays.asList("GET", "POST"));
-
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationWrong",
-				Collections.singletonList("everything"));
+				defaultCompanyId, user, "oauthTestApplication",
+				Arrays.asList("HEAD", "GET", "OPTIONS", "POST"));
 		}
 
 	}

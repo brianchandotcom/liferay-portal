@@ -14,7 +14,8 @@
 
 package com.liferay.oauth2.provider.client.test;
 
-import com.liferay.oauth2.provider.test.internal.TestApplication;
+import com.liferay.oauth2.provider.constants.GrantType;
+import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -28,8 +29,11 @@ import java.util.Dictionary;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+
+import org.codehaus.jettison.json.JSONObject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -45,45 +49,60 @@ import org.junit.runner.RunWith;
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class HttpMethodApplicationClientTest extends BaseClientTestCase {
+public class RefreshTokenTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			MethodApplicationBundleActivator.class);
+			TokenExpeditionTestPreparator.class);
 	}
 
 	@Test
 	public void test() throws Exception {
-		WebTarget webTarget = getWebTarget("/methods");
+		JSONObject jsonObject = getToken(
+			"oauthTestApplication", null,
+			getResourceOwnerPassword("test@liferay.com", "test"),
+			this::parseJSONObject);
 
-		Invocation.Builder builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationAfter"));
+		WebTarget webTarget = getWebTarget("/annotated");
 
-		Assert.assertEquals("get", builder.get(String.class));
+		String accessTokenString = jsonObject.getString("access_token");
 
-		Response response = builder.post(
-			Entity.entity("post", MediaType.TEXT_PLAIN_TYPE));
+		Invocation.Builder invocationBuilder = authorize(
+			webTarget.request(), accessTokenString);
 
-		Assert.assertEquals("post", response.readEntity(String.class));
+		Assert.assertEquals(
+			"everything.readonly", invocationBuilder.get(String.class));
 
-		builder = authorize(
-			webTarget.request(),
-			getToken("oauthTestApplicationBefore"));
+		WebTarget tokenWebTarget = getTokenWebTarget();
 
-		response = builder.get();
+		Invocation.Builder tokenBuilder = tokenWebTarget.request();
 
-		Assert.assertEquals(403, response.getStatus());
+		MultivaluedMap<String, String> formData = new MultivaluedHashMap<>();
 
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationWrong"));
+		formData.add("client_id", "oauthTestApplication");
+		formData.add("client_secret", "oauthTestApplicationSecret");
+		formData.add("grant_type", "refresh_token");
+		formData.add("refresh_token", jsonObject.getString("refresh_token"));
 
-		response = builder.get();
+		String tokenString = parseTokenString(
+			tokenBuilder.post(Entity.form(formData)));
+
+		Assert.assertNotEquals(tokenString, accessTokenString);
+
+		invocationBuilder = authorize(webTarget.request(), tokenString);
+
+		Assert.assertEquals(
+			"everything.readonly", invocationBuilder.get(String.class));
+
+		invocationBuilder = authorize(webTarget.request(), accessTokenString);
+
+		Response response = invocationBuilder.get();
 
 		Assert.assertEquals(403, response.getStatus());
 	}
 
-	public static class MethodApplicationBundleActivator
+	public static class TokenExpeditionTestPreparator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -94,21 +113,15 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-			properties.put("oauth2.test.application", true);
-
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore",
-				Arrays.asList("GET", "POST"));
+			properties.put("oauth2.scopechecker.type", "annotations");
 
 			registerJaxRsApplication(
-				new TestApplication(), "methods", properties);
+				new TestAnnotatedApplication(), "annotated", properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter",
-				Arrays.asList("GET", "POST"));
-
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationWrong",
+				defaultCompanyId, user, "oauthTestApplication",
+				Arrays.asList(
+					GrantType.RESOURCE_OWNER_PASSWORD, GrantType.REFRESH_TOKEN),
 				Collections.singletonList("everything"));
 		}
 

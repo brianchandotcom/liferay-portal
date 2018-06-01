@@ -26,14 +26,23 @@ import java.util.Set;
 public class PortletFilterImpl implements PortletFilter {
 
 	public PortletFilterImpl(
-		String filterName, String filterClass, Set<String> lifecycles,
-		Map<String, String> initParams, PortletApp portletApp) {
+		int ordinal, String filterName, String filterClass,
+		Set<String> lifecycles, Map<String, String> initParams,
+		PortletApp portletApp) {
 
+		_ordinal = ordinal;
 		_filterName = filterName;
 		_filterClass = filterClass;
 		_lifecycles = lifecycles;
 		_initParams = initParams;
 		_portletApp = portletApp;
+	}
+
+	public PortletFilterImpl(
+		String filterName, String filterClass, Set<String> lifecycles,
+		Map<String, String> initParams, PortletApp portletApp) {
+
+		this(0, filterName, filterClass, lifecycles, initParams, portletApp);
 	}
 
 	@Override
@@ -54,6 +63,11 @@ public class PortletFilterImpl implements PortletFilter {
 	@Override
 	public Set<String> getLifecycles() {
 		return _lifecycles;
+	}
+
+	@Override
+	public int getOrdinal() {
+		return _ordinal;
 	}
 
 	@Override
@@ -82,6 +96,11 @@ public class PortletFilterImpl implements PortletFilter {
 	}
 
 	@Override
+	public void setOrdinal(int ordinal) {
+		_ordinal = ordinal;
+	}
+
+	@Override
 	public void setPortletApp(PortletApp portletApp) {
 		_portletApp = portletApp;
 	}
@@ -90,6 +109,7 @@ public class PortletFilterImpl implements PortletFilter {
 	private String _filterName;
 	private Map<String, String> _initParams;
 	private Set<String> _lifecycles;
+	private int _ordinal;
 	private PortletApp _portletApp;
 
 }

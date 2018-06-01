@@ -536,6 +536,26 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 			Liferay.provide(
 				window,
+				'<%= randomNamespace %>showPostReplyEditor',
+				function(index) {
+					<%= randomNamespace %>showEditor(
+						'<%= namespace + randomNamespace %>' + 'postReplyForm' + index,
+						{
+							name: '<%= randomNamespace %>' + 'postReplyBody' + index,
+							onChangeMethod: '<%= randomNamespace %>' + index + 'ReplyOnChange',
+							placeholder: 'type-your-comment-here'
+						}
+					);
+					<%= randomNamespace %>hideEditor(
+						'<%= randomNamespace %>' + 'editReplyBody' + index,
+						'<%= namespace + randomNamespace %>' + 'editForm' + index
+					);
+					<%= randomNamespace %>showEl('<%= namespace + randomNamespace %>' + 'discussionMessage' + index);
+				}
+			);
+
+			Liferay.provide(
+				window,
 				'<%= randomNamespace %>showStatusMessage',
 				function(data) {
 					new Liferay.Alert(

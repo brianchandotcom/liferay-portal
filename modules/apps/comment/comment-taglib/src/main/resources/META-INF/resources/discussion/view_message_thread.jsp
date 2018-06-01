@@ -206,23 +206,8 @@ String postReplyEditorName = randomNamespace + "postReplyBody" + index;
 													<liferay-ui:icon
 														label="<%= true %>"
 														message="reply"
-														url='<%= "javascript:" + randomNamespace + index + "reply();" %>'
+														url='<%= "javascript:" + randomNamespace + "showPostReplyEditor(" + index + ");" %>'
 													/>
-
-													<aui:script>
-														window['<%= randomNamespace + index %>reply'] = function() {
-															<%= randomNamespace %>showEditor(
-																'<%= namespace + randomNamespace + "postReplyForm" + index %>',
-																{
-																	name: '<%= postReplyEditorName %>',
-																	onChangeMethod: '<%= randomNamespace + index + "ReplyOnChange" %>',
-																	placeholder: 'type-your-comment-here'
-																}
-															);
-															<%= randomNamespace %>hideEditor('<%= editReplyEditorName %>', '<%= namespace + randomNamespace + "editForm" + index %>');
-															<%= randomNamespace %>showEl('<%= namespace + randomNamespace + "discussionMessage" + index %>');
-														};
-													</aui:script>
 												</div>
 											</c:when>
 											<c:otherwise>

@@ -280,10 +280,7 @@ public class DLAdminDisplayContext {
 					_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Unable to get folder ", _folderId),
-							nsfe);
+						_log.warn("Unable to get folder " + _folderId, nsfe);
 					}
 				}
 			}

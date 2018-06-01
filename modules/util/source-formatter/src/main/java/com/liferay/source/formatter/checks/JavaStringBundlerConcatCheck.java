@@ -44,9 +44,8 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 
 		List<String> imports = javaClass.getImports();
 
-		if (!imports.contains("com.liferay.petra.string.StringBundler")) {
-			return javaTerm.getContent();
-		}
+		boolean hasPetraStringStringBundler = imports.contains(
+			"com.liferay.petra.string.StringBundler");
 
 		String content = javaTerm.getContent();
 
@@ -55,6 +54,22 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 		while (matcher1.find()) {
 			String stringBundlerConcatMethodCall = _getMethodCall(
 				content, matcher1.start());
+
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				stringBundlerConcatMethodCall);
+
+			if (parameterList.size() < 3) {
+				addMessage(
+					fileName,
+					"Do not use 'StringBundler.concat' when concatenating " +
+						"less than 3 elements",
+					javaTerm.getLineNumber() - 1 +
+						getLineNumber(content, matcher1.start()));
+			}
+
+			if (!hasPetraStringStringBundler) {
+				continue;
+			}
 
 			Matcher matcher2 = _stringValueOfPattern.matcher(
 				stringBundlerConcatMethodCall);
@@ -71,7 +86,7 @@ public class JavaStringBundlerConcatCheck extends BaseJavaTermCheck {
 				String stringValueOfMethodCall = _getMethodCall(
 					stringBundlerConcatMethodCall, matcher2.start());
 
-				List<String> parameterList = JavaSourceUtil.getParameterList(
+				parameterList = JavaSourceUtil.getParameterList(
 					stringValueOfMethodCall);
 
 				if (parameterList.size() != 1) {

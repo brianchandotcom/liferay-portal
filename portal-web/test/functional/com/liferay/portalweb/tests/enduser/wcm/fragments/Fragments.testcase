@@ -289,7 +289,7 @@
 		</execute>
 
 		<execute macro="LexiconEntry#delete">
-			<var name="failure" value="The fragment entry cannot be deleted because it is required by one or more page templates." />
+			<var name="failure" value="Error:The fragment entry cannot be deleted because it is required by one or more page templates." />
 			<var name="rowEntry" value="Fragment Name" />
 		</execute>
 	</command>

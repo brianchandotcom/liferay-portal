@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.facet.tag;
+package com.liferay.portal.search.internal.facet;
 
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.List;
 
@@ -26,13 +27,13 @@ import org.junit.Test;
 /**
  * @author André de Oliveira
  */
-public class AssetTagNamesFacetTest {
+public class FacetImplTest {
 
 	@Test
-	public void testFacetCollector() {
-		Facet assetTagNamesFacet = new AssetTagNamesFacet(null);
+	public void testTermCollectorsNeverNull() {
+		Facet facet = new FacetImpl(RandomTestUtil.randomString(), null);
 
-		FacetCollector facetCollector = assetTagNamesFacet.getFacetCollector();
+		FacetCollector facetCollector = facet.getFacetCollector();
 
 		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 

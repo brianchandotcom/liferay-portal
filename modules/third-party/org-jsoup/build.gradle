@@ -1,0 +1,24 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+apply plugin: "nebula.optional-base"
+
+task patch(type: PatchTask)
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+dependencies {
+	compile group: "org.jsoup", name: "jsoup", version: "1.10.2"
+}
+
+patch {
+	copyOriginalLibClasses = false
+
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/jsoup/nodes/Element.java"
+	originalLibModuleName = "jsoup"
+}

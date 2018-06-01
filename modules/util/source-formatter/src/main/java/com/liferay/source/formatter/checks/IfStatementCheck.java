@@ -248,6 +248,13 @@ public abstract class IfStatementCheck extends BaseFileCheck {
 			return true;
 		}
 
+		if (s.contains(" ? ") &&
+			(containsAndOperator || containsCompareOperator ||
+			 containsOrOperator)) {
+
+			return true;
+		}
+
 		return false;
 	}
 

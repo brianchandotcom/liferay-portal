@@ -66,6 +66,51 @@
 		</execute>
 	</command>
 
+	<command name="exportCollection">
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="${collectionName}" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+			<var name="menuItem" value="Export" />
+		</execute>
+	</command>
+
+	<command name="importCollection">
+		<execute macro="Fragment#_gotoImportCollection" />
+
+		<execute macro="Button#click">
+			<var name="button" value="Select Files" />
+		</execute>
+
+		<var method="TestPropsUtil#get('output.dir.name')" name="tempDir" />
+
+		<var method="StringUtil#split('**/collections-*.zip')" name="pattern" />
+
+		<execute class="com.liferay.poshi.runner.util.FileUtil" method="getIncludedResourceURLs">
+			<arg value="${pattern}" />
+			<arg value="${tempDir}" />
+			<return name="fileName" />
+		</execute>
+
+		<var method="RegexUtil#replace('${fileName}', '\[(.*)\]', '1')" name="fileName" />
+
+		<execute class="org.apache.commons.io.FilenameUtils" method="getName">
+			<arg value="${fileName}" />
+			<return name="shortFileName" />
+		</execute>
+
+		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${shortFileName}" />
+
+		<execute macro="Button#click">
+			<var name="button" value="Import" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
 	<command name="typeFragmentEditor">
 		<var method="StringUtil#toUpperCase('${editor}')" name="key_editor" />
 

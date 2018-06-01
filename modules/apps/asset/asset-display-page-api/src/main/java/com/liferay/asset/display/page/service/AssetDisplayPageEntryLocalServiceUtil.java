@@ -61,6 +61,13 @@ public class AssetDisplayPageEntryLocalServiceUtil {
 			layoutPageTemplateEntryId);
 	}
 
+	public static com.liferay.asset.display.page.model.AssetDisplayPageEntry addAssetDisplayPageEntry(
+		long assetEntryId, long layoutPageTemplateEntryId, int type) {
+		return getService()
+				   .addAssetDisplayPageEntry(assetEntryId,
+			layoutPageTemplateEntryId, type);
+	}
+
 	/**
 	* Creates a new asset display page entry with the primary key. Does not add the asset display page entry to the database.
 	*

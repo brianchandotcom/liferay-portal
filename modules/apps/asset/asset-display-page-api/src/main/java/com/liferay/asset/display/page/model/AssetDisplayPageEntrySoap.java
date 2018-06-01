@@ -36,6 +36,7 @@ public class AssetDisplayPageEntrySoap implements Serializable {
 		soapModel.setAssetDisplayPageEntryId(model.getAssetDisplayPageEntryId());
 		soapModel.setAssetEntryId(model.getAssetEntryId());
 		soapModel.setLayoutPageTemplateEntryId(model.getLayoutPageTemplateEntryId());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -115,7 +116,16 @@ public class AssetDisplayPageEntrySoap implements Serializable {
 		_layoutPageTemplateEntryId = layoutPageTemplateEntryId;
 	}
 
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_type = type;
+	}
+
 	private long _assetDisplayPageEntryId;
 	private long _assetEntryId;
 	private long _layoutPageTemplateEntryId;
+	private int _type;
 }

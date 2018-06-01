@@ -62,6 +62,7 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 		attributes.put("assetEntryId", getAssetEntryId());
 		attributes.put("layoutPageTemplateEntryId",
 			getLayoutPageTemplateEntryId());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -86,6 +87,12 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 
 		if (layoutPageTemplateEntryId != null) {
 			setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -147,6 +154,16 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _assetDisplayPageEntry.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the type of this asset display page entry.
+	*
+	* @return the type of this asset display page entry
+	*/
+	@Override
+	public int getType() {
+		return _assetDisplayPageEntry.getType();
 	}
 
 	@Override
@@ -243,6 +260,16 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_assetDisplayPageEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the type of this asset display page entry.
+	*
+	* @param type the type of this asset display page entry
+	*/
+	@Override
+	public void setType(int type) {
+		_assetDisplayPageEntry.setType(type);
 	}
 
 	@Override

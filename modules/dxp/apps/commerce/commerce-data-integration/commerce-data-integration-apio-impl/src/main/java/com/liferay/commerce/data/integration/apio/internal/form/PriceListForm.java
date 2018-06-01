@@ -124,6 +124,5 @@ public class PriceListForm {
 	private String _name;
 	private Boolean _neverExpire;
 	private Double _priority;
-	private String _title;
 
 }

@@ -149,10 +149,7 @@ public class ActionUtil {
 		List<FileShortcut> fileShortcuts = new ArrayList<>();
 
 		for (long fileShortcutId : fileShortcutIds) {
-			if (fileShortcutId > 0) {
-				fileShortcuts.add(
-					DLAppServiceUtil.getFileShortcut(fileShortcutId));
-			}
+			fileShortcuts.add(DLAppServiceUtil.getFileShortcut(fileShortcutId));
 		}
 
 		return fileShortcuts;

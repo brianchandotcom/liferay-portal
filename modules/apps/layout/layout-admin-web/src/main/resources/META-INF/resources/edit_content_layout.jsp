@@ -25,7 +25,7 @@ if (Validator.isNull(redirect)) {
 	redirect = backURL.toString();
 }
 
-FragmentsEditorContext fragmentsEditorContext = new FragmentsEditorContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid(), false);
+FragmentsEditorDisplayContext fragmentsEditorDisplayContext = new FragmentsEditorDisplayContext(request, renderResponse, Layout.class.getName(), layoutsAdminDisplayContext.getSelPlid(), false);
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
@@ -40,7 +40,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 />
 
 <soy:template-renderer
-	context="<%= fragmentsEditorContext.getEditorContext() %>"
+	context="<%= fragmentsEditorDisplayContext.getEditorContext() %>"
 	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
 	templateNamespace="com.liferay.layout.admin.web.FragmentsEditor.render"
 />

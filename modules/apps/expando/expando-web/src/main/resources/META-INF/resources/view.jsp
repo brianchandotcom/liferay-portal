@@ -31,7 +31,7 @@ List<CustomAttributesDisplay> customAttributesDisplays = PortletLocalServiceUtil
 Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator(locale));
 %>
 
-<div class="container-fluid-1280">
+<div class="container-fluid container-fluid-max-xl container-view">
 	<liferay-ui:search-container
 		emptyResultsMessage='<%= LanguageUtil.get(request, "custom-fields-are-not-enabled-for-any-resource") %>'
 		iteratorURL="<%= portletURL %>"

@@ -17,6 +17,8 @@ package com.liferay.journal.internal.exportimport.content.processor;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesTransformer;
@@ -52,7 +54,9 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -89,6 +93,12 @@ public class JournalArticleExportImportContentProcessor
 			DDMFormValues ddmFormValues = _journalConverter.getDDMFormValues(
 				ddmStructure, fields);
 
+			ddmFormValues =
+				_ddmFormValuesExportImportContentProcessor.
+					replaceExportContentReferences(
+						portletDataContext, stagedModel, ddmFormValues, true,
+						true);
+
 			DDMFormValuesTransformer ddmFormValuesTransformer =
 				new DDMFormValuesTransformer(ddmFormValues);
 
@@ -124,13 +134,30 @@ public class JournalArticleExportImportContentProcessor
 
 		JournalArticle article = (JournalArticle)stagedModel;
 
-		DDMStructure ddmStructure = article.getDDMStructure();
+		DDMStructure ddmStructure = _fetchDDMStructure(
+			portletDataContext, article);
 
 		Fields fields = _getDDMStructureFields(ddmStructure, content);
 
 		if (fields != null) {
 			DDMFormValues ddmFormValues = _journalConverter.getDDMFormValues(
 				ddmStructure, fields);
+
+			List<String> originalContents = _fetchContentsFromDDMFormValues(
+				ddmFormValues.getDDMFormFieldValues());
+
+			ddmFormValues =
+				_ddmFormValuesExportImportContentProcessor.
+					replaceImportContentReferences(
+						portletDataContext, stagedModel, ddmFormValues);
+
+			List<String> modifiedContents = _fetchContentsFromDDMFormValues(
+				ddmFormValues.getDDMFormFieldValues());
+
+			for (int i = 0; i < originalContents.size(); i++) {
+				content = StringUtil.replace(
+					content, originalContents.get(i), modifiedContents.get(i));
+			}
 
 			DDMFormValuesTransformer ddmFormValuesTransformer =
 				new DDMFormValuesTransformer(ddmFormValues);
@@ -493,6 +520,36 @@ public class JournalArticleExportImportContentProcessor
 		}
 	}
 
+	private List<String> _fetchContentsFromDDMFormValues(
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		List<String> contents = new ArrayList<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			Value value = ddmFormFieldValue.getValue();
+
+			for (Locale locale : value.getAvailableLocales()) {
+				contents.add(value.getString(locale));
+			}
+		}
+
+		return contents;
+	}
+
+	private DDMStructure _fetchDDMStructure(
+		PortletDataContext portletDataContext, JournalArticle article) {
+
+		long formerGroupId = article.getGroupId();
+
+		article.setGroupId(portletDataContext.getScopeGroupId());
+
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		article.setGroupId(formerGroupId);
+
+		return ddmStructure;
+	}
+
 	private Fields _getDDMStructureFields(
 		DDMStructure ddmStructure, String content) {
 
@@ -517,6 +574,12 @@ public class JournalArticleExportImportContentProcessor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleExportImportContentProcessor.class);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)"
+	)
+	private ExportImportContentProcessor<DDMFormValues>
+		_ddmFormValuesExportImportContentProcessor;
 
 	@Reference(target = "(model.class.name=java.lang.String)")
 	private ExportImportContentProcessor<String>

@@ -16,7 +16,8 @@ package com.liferay.portal.search.test.util.facet;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.internal.facet.tag.AssetTagNamesFacet;
+import com.liferay.portal.search.facet.tag.AssetTagNamesFacetFactory;
+import com.liferay.portal.search.internal.facet.tag.AssetTagNamesFacetFactoryImpl;
 import com.liferay.portal.search.test.util.indexing.QueryContributor;
 import com.liferay.portal.search.test.util.indexing.QueryContributors;
 
@@ -32,8 +33,12 @@ public abstract class BaseAssetTagNamesFacetTestCase extends BaseFacetTestCase {
 			QueryContributor queryContributor, List<String> expectedTerms)
 		throws Exception {
 
+		AssetTagNamesFacetFactory assetTagNamesFacetFactory =
+			new AssetTagNamesFacetFactoryImpl();
+
 		assertFacet(
-			searchContext -> initFacet(new AssetTagNamesFacet(searchContext)),
+			searchContext -> initFacet(
+				assetTagNamesFacetFactory.newInstance(searchContext)),
 			queryContributor, expectedTerms);
 	}
 

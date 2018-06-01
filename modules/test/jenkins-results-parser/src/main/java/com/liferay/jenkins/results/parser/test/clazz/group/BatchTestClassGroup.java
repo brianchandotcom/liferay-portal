@@ -138,12 +138,17 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected String getFirstMatchingPropertyName(
 		String basePropertyName, Properties properties, String testSuiteName) {
 
+		Pattern pattern = Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				basePropertyName, "\\[(?<batchName>[^\\]]+)\\]",
+				"(\\[(?<testSuiteName>[^\\]]+)\\])?"));
+
 		for (String propertyName : properties.stringPropertyNames()) {
 			if (!propertyName.startsWith(basePropertyName)) {
 				continue;
 			}
 
-			Matcher matcher = _propertyNamePattern.matcher(propertyName);
+			Matcher matcher = pattern.matcher(propertyName);
 
 			if (matcher.find()) {
 				String batchNameRegex = matcher.group("batchName");
@@ -294,8 +299,5 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;
 
 	private static final boolean _DEFAULT_TEST_RELEVANT_CHANGES = false;
-
-	private final Pattern _propertyNamePattern = Pattern.compile(
-		"[^\\]]+\\[(?<batchName>[^\\]]+)\\](\\[(?<testSuiteName>[^\\]]+)\\])?");
 
 }

@@ -135,7 +135,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 						<liferay-ui:message key="default-configuration-for-all-sites" />
 					</c:when>
 					<c:when test="<%= ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.equals(configurationModel.getScope()) %>">
-						<liferay-ui:message key="default-configuration-for-application" />
+						<liferay-ui:message key="default-configuration-for-widget" />
 					</c:when>
 					<c:when test="<%= ExtendedObjectClassDefinition.Scope.SYSTEM.equals(configurationModel.getScope()) %>">
 						<liferay-ui:message key="system" />

@@ -27,6 +27,8 @@ public interface ConfigurationEntry {
 	public String getEditURL(
 		RenderRequest renderRequest, RenderResponse renderResponse);
 
+	public String getKey();
+
 	public String getName();
 
 	public String getScope();

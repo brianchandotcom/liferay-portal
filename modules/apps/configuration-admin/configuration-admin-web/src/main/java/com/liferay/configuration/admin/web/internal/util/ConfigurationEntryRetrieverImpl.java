@@ -316,10 +316,10 @@ public class ConfigurationEntryRetrieverImpl
 			ConfigurationEntry configurationEntry1,
 			ConfigurationEntry configurationEntry2) {
 
-			String name1 = configurationEntry1.getName();
-			String name2 = configurationEntry2.getName();
+			String key1 = configurationEntry1.getKey();
+			String key2 = configurationEntry2.getKey();
 
-			return name1.compareTo(name2);
+			return key1.compareTo(key2);
 		}
 
 	}

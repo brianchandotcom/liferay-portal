@@ -55,6 +55,11 @@ public class ConfigurationScreenConfigurationEntry
 	}
 
 	@Override
+	public String getKey() {
+		return _configurationScreen.getKey();
+	}
+
+	@Override
 	public String getName() {
 		return _configurationScreen.getName(_locale);
 	}

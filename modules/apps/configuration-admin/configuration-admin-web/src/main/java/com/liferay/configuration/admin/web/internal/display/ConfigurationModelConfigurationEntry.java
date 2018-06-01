@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
@@ -39,6 +40,13 @@ public class ConfigurationModelConfigurationEntry
 		_configurationModel = configurationModel;
 		_locale = locale;
 		_resourceBundleLoaderProvider = resourceBundleLoaderProvider;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		ConfigurationEntry configurationEntry = (ConfigurationEntry)obj;
+
+		return Objects.equals(getKey(), configurationEntry.getKey());
 	}
 
 	@Override
@@ -71,6 +79,11 @@ public class ConfigurationModelConfigurationEntry
 	}
 
 	@Override
+	public String getKey() {
+		return _configurationModel.getID();
+	}
+
+	@Override
 	public String getName() {
 		ResourceBundleLoader curResourceBundleLoader =
 			_resourceBundleLoaderProvider.getResourceBundleLoader(
@@ -95,6 +108,11 @@ public class ConfigurationModelConfigurationEntry
 	@Override
 	public String getScope() {
 		return _configurationModel.getScope();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(_configurationModel);
 	}
 
 	private final ConfigurationModel _configurationModel;

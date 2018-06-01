@@ -20,25 +20,18 @@
 List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays = (List<ConfigurationCategorySectionDisplay>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SECTION_DISPLAYS);
 %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<li>
-			<portlet:renderURL var="redirectURL" />
+<portlet:renderURL var="redirectURL" />
 
-			<portlet:renderURL var="searchURL">
-				<portlet:param name="mvcRenderCommandName" value="/search" />
-				<portlet:param name="redirect" value="<%= redirectURL %>" />
-			</portlet:renderURL>
+<portlet:renderURL var="searchURL">
+	<portlet:param name="mvcRenderCommandName" value="/search" />
+	<portlet:param name="redirect" value="<%= redirectURL %>" />
+</portlet:renderURL>
 
-			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-ui:input-search
-					autoFocus="<%= true %>"
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	searchActionURL="<%= searchURL %>"
+	selectable="<%= false %>"
+	showSearch="<%= true %>"
+/>
 
 <div class="container-fluid container-fluid-max-xl container-view">
 	<ul class="list-group">

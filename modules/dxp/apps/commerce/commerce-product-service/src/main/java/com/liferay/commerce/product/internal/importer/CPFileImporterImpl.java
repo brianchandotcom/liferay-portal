@@ -33,6 +33,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -80,6 +82,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
@@ -235,12 +238,13 @@ public class CPFileImporterImpl implements CPFileImporter {
 			String portletId = addPortletId(
 				portletJSONObject, layoutTypePortlet, serviceContext);
 
-			JSONObject portletPreferencesJSONObject =
-				portletJSONObject.getJSONObject("portletPreferences");
-
 			setPortletPreferences(
-				portletPreferencesJSONObject, layout, portletId,
-				serviceContext);
+				portletJSONObject.getJSONObject("portletPreferences"), layout,
+				portletId, serviceContext);
+
+			setPortletLookAndFeel(
+				portletJSONObject.getJSONObject("lookAndFeel"), layout,
+				portletId);
 		}
 	}
 
@@ -571,6 +575,56 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return role;
 	}
 
+	protected void setLocalizedValues(
+			PortletPreferences portletPreferences, long groupId, String key,
+			String value)
+		throws PortletException {
+
+		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+			portletPreferences.setValue(
+				key + StringPool.UNDERLINE + LanguageUtil.getLanguageId(locale),
+				LanguageUtil.get(locale, value));
+		}
+	}
+
+	protected void setPortletLookAndFeel(
+			JSONObject jsonObject, Layout layout, String portletId)
+		throws Exception {
+
+		if (jsonObject == null) {
+			return;
+		}
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				layout.getCompanyId(), layout.getGroupId(), layout.getPlid(),
+				portletId,
+				PortletPreferencesFactoryConstants.
+					SETTINGS_SCOPE_PORTLET_INSTANCE);
+
+		PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.getPreferences(
+				portletPreferencesIds);
+
+		Iterator<String> iterator = jsonObject.keys();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			String value = jsonObject.getString(key);
+
+			if (key.equals("portletSetupTitle")) {
+				setLocalizedValues(
+					portletPreferences, layout.getGroupId(), key, value);
+			}
+			else {
+				portletPreferences.setValue(key, value);
+			}
+		}
+
+		portletPreferences.store();
+	}
+
 	protected void setPortletPreferences(
 			JSONObject jsonObject, Layout layout, String portletId,
 			ServiceContext serviceContext)
@@ -604,6 +658,12 @@ public class CPFileImporterImpl implements CPFileImporter {
 				long assetEntryId = getAssetEntryId(articleId, serviceContext);
 
 				value = String.valueOf(assetEntryId);
+			}
+			else if (key.equals("portletSetUpTitle")) {
+				setLocalizedValues(
+					portletPreferences, layout.getGroupId(), key, value);
+
+				continue;
 			}
 
 			portletPreferences.setValue(key, value);

@@ -10,16 +10,6 @@
 		<execute macro="SignIn#signIn" />
 
 		<execute macro="Smoke#viewWelcomePage" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Search" />
-		</execute>
-
-		<execute macro="SearchAdministration#executeSearchActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
-		</execute>
 	</set-up>
 
 	<command name="ViewPortalSmokeArchive612" priority="5">

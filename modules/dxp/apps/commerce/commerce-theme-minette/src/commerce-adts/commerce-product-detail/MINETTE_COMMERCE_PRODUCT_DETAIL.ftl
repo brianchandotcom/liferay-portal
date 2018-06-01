@@ -21,6 +21,7 @@
 
 	categories = simpleCPTypeDisplayContext.getAssetCategories()
 />
+
 <#if isIgnoreSKUCombinations>
 	<#if simpleCPTypeDisplayContext.getDefaultCPInstance()??>
 		<#assign cpInstance = simpleCPTypeDisplayContext.getDefaultCPInstance() />
@@ -86,7 +87,11 @@
 									</#if>
 								<#else>
 									<div class="product-detail-thumbnail-container" id="<@portlet.namespace />thumbs-container">
-										<a class="thumb thumb-image" href="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}">
+										<#--
+											`data-standard` value should be same as img value
+											`href` value should be the large version used for zoom
+										-->
+										<a class="thumb thumb-image" data-standard="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}" href="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}">
 											<img class="img-fluid" src="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}">
 										</a>
 									</div>
@@ -100,27 +105,28 @@
 					</div>
 
 					<#if validator.isNotNull(defaultImage)>
+						<#assign
+							easyzoomCssClass = " easyzoom easyzoom--adjacent"
+						/>
+
 						<div class="product-detail-image-column">
 							<div class="full-image product-detail-image-container">
-								<img class="img-fluid" id="<@portlet.namespace />full-image" src="${simpleCPTypeDisplayContext.getImageURL(defaultImage.getFileEntry(), themeDisplay)}">
+								<div class="product-detail-image${easyzoomCssClass}">
+									<a href="${simpleCPTypeDisplayContext.getImageURL(defaultImage.getFileEntry(), themeDisplay)}" tabindex="-1">
+										<img class="img-fluid" id="<@portlet.namespace />full-image" src="${simpleCPTypeDisplayContext.getImageURL(defaultImage.getFileEntry(), themeDisplay)}">
+									</a>
+								</div>
 
 								<div class="product-detail-info-compare">
 									<@liferay_commerce["compare-product"] CPDefinitionId=cpDefinitionId />
 								</div>
-
-								<a class="sticker sticker-bottom-right" href="#placeholder">
-									<@liferay_aui.icon
-										image="search"
-										markupView="lexicon"
-									/>
-								</a>
 							</div>
 						</div>
 					</#if>
 				</div>
 
 				<div class="product-detail-social-navigation">
-					<!-- Use @liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") and set it up. The nav below is just a placeholder. -->
+					<#-- Use @liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") and set it up. The nav below is just a placeholder. -->
 
 					<ul class="nav">
 						<li class="nav-item">
@@ -252,7 +258,7 @@
 				<div class="modal-dialog modal-full-screen" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<div class="modal-title"></div>
+							<div class="modal-title">${cpDefinition.getName()}</div>
 							<button aria-label="Close" class="close" data-dismiss="modal" type="button">
 								<@liferay_aui.icon
 									image="times"
@@ -263,6 +269,10 @@
 						<div class="modal-body">
 							<div id="carouselExampleFade" class="carousel" data-interval="false" data-ride="carousel">
 								<div class="carousel-inner">
+									<#assign
+										imageOverflowUrlsIndex = 1
+									/>
+
 									<#list imageOverflowUrls as url>
 										<#assign
 											activeClass=""
@@ -275,8 +285,15 @@
 										</#if>
 
 										<div class="${activeClass}carousel-item">
-											<img alt="Product Image" class="img-fluid" src="${url}">
+											<div class="carousel-item-image">
+												<img alt="Product Image" class="img-fluid" src="${url}">
+											</div>
+											<div class="carousel-index">${imageOverflowUrlsIndex}/${imageOverflowUrls?size}</div>
 										</div>
+
+										<#assign
+											imageOverflowUrlsIndex = imageOverflowUrlsIndex + 1
+										/>
 									</#list>
 
 									<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
@@ -434,14 +451,19 @@
 </#if>
 
 <script>
-	$('.product-detail-image-widget .thumb-image').on('click', function(event) {
-		var container = $(this).closest('.product-detail-image-widget');
-		var img = $(this).find('img');
+	var easyzoom = $('.easyzoom').easyZoom();
+	var easyzoomApi = easyzoom.filter('.easyzoom').data('easyZoom');
 
-		event.preventDefault();
+	$('.product-detail-image-widget .thumb-image').on(
+		'click',
+		function(event) {
+			var $this = $(this);
 
-		container.find('.product-detail-image-container img').attr('src', img.attr('src'));
-	});
+			event.preventDefault();
+
+			easyzoomApi.swap($this.data('standard'), $this.attr('href'));
+		}
+	);
 </script>
 
 <@liferay_aui.script use="liferay-commerce-product-content">

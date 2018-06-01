@@ -162,13 +162,13 @@ $commerce-order-items-footer-color: null !default;
 
 // Commerce Product Detail
 
-$product-detail-image-widget-width: 350px !default;
+$product-detail-image-widget-width: 100% !default;
 
-$product-detail-image-widget-height: calc(#{$product-detail-image-widget-width} * 0.84) !default;
+$product-detail-image-widget-height: calc(#{$product-detail-image-widget-width} * 0.9) !default;
 
-$product-detail-image-widget-width-sm: null !default;
+$product-detail-image-widget-width-sm: 350px !default;
 
-$product-detail-image-widget-height-sm: null !default;
+$product-detail-image-widget-height-sm: calc(#{$product-detail-image-widget-width-sm} * 0.84) !default;
 
 $product-detail-image-widget-width-md: null !default;
 

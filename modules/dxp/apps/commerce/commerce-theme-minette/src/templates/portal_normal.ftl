@@ -12,6 +12,8 @@
 	<@liferay_util["include"] page=top_head_include />
 
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+
+	<script src="${javascript_folder}/easyzoom.js" type="text/javascript"></script>
 </head>
 
 <body class="${css_class} commerce-full-page commerce-site">

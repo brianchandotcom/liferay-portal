@@ -14,13 +14,17 @@
 
 package com.liferay.commerce.price.list.test.util;
 
+import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalServiceUtil;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServiceUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.math.BigDecimal;
 
@@ -55,13 +59,11 @@ public class CommerceTierPriceEntryTestUtil {
 			String priceEntryExternalReferenceCode)
 		throws PortalException {
 
-		CommercePriceEntry commercePriceEntry =
-			CommercePriceEntryLocalServiceUtil.getCommercePriceEntry(
-				commercePriceEntryId);
+		long groupId = _getGroupId(
+			commercePriceEntryId, priceEntryExternalReferenceCode);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				commercePriceEntry.getGroupId());
+			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CommerceTierPriceEntryLocalServiceUtil.
 			upsertCommerceTierPriceEntry(
@@ -69,6 +71,42 @@ public class CommerceTierPriceEntryTestUtil {
 				externalReferenceCode, BigDecimal.valueOf(price),
 				BigDecimal.valueOf(promoPrice), minQuantity,
 				priceEntryExternalReferenceCode, serviceContext);
+	}
+
+	private static long _getGroupId(
+			Long commercePriceEntryId, String priceEntryExternalReferenceCode)
+		throws PortalException {
+
+		if (commercePriceEntryId > 0) {
+			CommercePriceEntry commercePriceEntry =
+				CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
+					commercePriceEntryId);
+
+			if (commercePriceEntry != null) {
+				return commercePriceEntry.getGroupId();
+			}
+		}
+
+		if (priceEntryExternalReferenceCode != null) {
+			CommercePriceEntry commercePriceEntry =
+				CommercePriceEntryLocalServiceUtil.fetchByExternalReferenceCode(
+					priceEntryExternalReferenceCode);
+
+			if (commercePriceEntry != null) {
+				return commercePriceEntry.getGroupId();
+			}
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("{commercePriceEntryId=");
+		sb.append(commercePriceEntryId);
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append("priceEntryExternalReferenceCode=");
+		sb.append(priceEntryExternalReferenceCode);
+		sb.append(CharPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPriceEntryException(sb.toString());
 	}
 
 }

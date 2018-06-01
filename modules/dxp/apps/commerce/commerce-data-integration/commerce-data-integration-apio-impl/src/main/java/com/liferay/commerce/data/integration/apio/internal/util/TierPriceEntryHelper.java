@@ -14,11 +14,16 @@
 
 package com.liferay.commerce.data.integration.apio.internal.util;
 
+import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.math.BigDecimal;
 
@@ -73,11 +78,11 @@ public class TierPriceEntryHelper {
 			String priceEntryExternalReferenceCode)
 		throws PortalException {
 
-		CommercePriceEntry commercePriceEntry =
-			_priceEntryHelper.getCommercePriceEntry(commercePriceEntryId);
+		long groupId = _getGroupId(
+			commercePriceEntryId, priceEntryExternalReferenceCode);
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			commercePriceEntry.getGroupId());
+			groupId);
 
 		return _commerceTierPriceEntryService.upsertCommerceTierPriceEntry(
 			commerceTierPriceEntryId, commercePriceEntryId,
@@ -86,11 +91,47 @@ public class TierPriceEntryHelper {
 			priceEntryExternalReferenceCode, serviceContext);
 	}
 
-	@Reference
-	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
+	private long _getGroupId(
+			Long commercePriceEntryId, String priceEntryExternalReferenceCode)
+		throws PortalException {
+
+		if (commercePriceEntryId > 0) {
+			CommercePriceEntry commercePriceEntry =
+				_commercePriceEntryService.fetchCommercePriceEntry(
+					commercePriceEntryId);
+
+			if (commercePriceEntry != null) {
+				return commercePriceEntry.getGroupId();
+			}
+		}
+
+		if (priceEntryExternalReferenceCode != null) {
+			CommercePriceEntry commercePriceEntry =
+				_commercePriceEntryService.fetchByExternalReferenceCode(
+					priceEntryExternalReferenceCode);
+
+			if (commercePriceEntry != null) {
+				return commercePriceEntry.getGroupId();
+			}
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("{commercePriceEntryId=");
+		sb.append(commercePriceEntryId);
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append("priceEntryExternalReferenceCode=");
+		sb.append(priceEntryExternalReferenceCode);
+		sb.append(CharPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchPriceEntryException(sb.toString());
+	}
 
 	@Reference
-	private PriceEntryHelper _priceEntryHelper;
+	private CommercePriceEntryService _commercePriceEntryService;
+
+	@Reference
+	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

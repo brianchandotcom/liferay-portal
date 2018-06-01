@@ -43,7 +43,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 /**
  * @author Julio Camarero
@@ -124,6 +123,7 @@ public class FlagsTag extends TemplateRendererTag {
 			_log.error(e, e);
 		}
 
+		setHydrate(true);
 		setTemplateNamespace("Flags.render");
 
 		return super.doStartTag();
@@ -173,20 +173,15 @@ public class FlagsTag extends TemplateRendererTag {
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		String currentURL;
-
-		if ((portletRequest != null) && (portletResponse != null)) {
-			PortletURL currentURLObj = PortletURLUtil.getCurrent(
-				PortalUtil.getLiferayPortletRequest(portletRequest),
-				PortalUtil.getLiferayPortletResponse(portletResponse));
-
-			currentURL = currentURLObj.toString();
-		}
-		else {
-			currentURL = PortalUtil.getCurrentURL(request);
+		if ((portletRequest == null) || (portletResponse == null)) {
+			return PortalUtil.getCurrentURL(request);
 		}
 
-		return currentURL;
+		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+			PortalUtil.getLiferayPortletRequest(portletRequest),
+			PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		return currentURLObj.toString();
 	}
 
 	private JSONObject _getDataJSONObject(Map<String, Object> context) {
@@ -221,7 +216,7 @@ public class FlagsTag extends TemplateRendererTag {
 		return reasons;
 	}
 
-	private String _getURI() throws WindowStateException {
+	private String _getURI() {
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			request, PortletKeys.FLAGS, PortletRequest.ACTION_PHASE);
 
@@ -238,15 +233,13 @@ public class FlagsTag extends TemplateRendererTag {
 				FlagsGroupServiceConfiguration.class,
 				themeDisplay.getCompanyId());
 
-		boolean flagsEnabled = false;
-
 		if (flagsGroupServiceConfiguration.guestUsersEnabled() ||
 			themeDisplay.isSignedIn()) {
 
-			flagsEnabled = true;
+			return true;
 		}
 
-		return flagsEnabled;
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(FlagsTag.class);

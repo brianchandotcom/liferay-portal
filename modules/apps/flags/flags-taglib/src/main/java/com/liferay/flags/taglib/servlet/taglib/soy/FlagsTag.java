@@ -124,6 +124,7 @@ public class FlagsTag extends TemplateRendererTag {
 			_log.error(e, e);
 		}
 
+		setHydrate(true);
 		setTemplateNamespace("Flags.render");
 
 		return super.doStartTag();

@@ -240,12 +240,15 @@ public class FjordSiteInitializer implements SiteInitializer {
 			long previewFileEntryId = _getPreviewFileEntryId(
 				path, shortFileName, serviceContext);
 
+			String fragmentEntryTitle = StringUtil.upperCaseFirstLetter(
+				FileUtil.stripExtension(shortFileName));
+
 			FragmentEntry fragmentEntry =
 				_fragmentEntryLocalService.addFragmentEntry(
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(), fragmentCollectionId,
-					FileUtil.getShortFileName(url.getPath()), StringPool.BLANK,
-					html, StringPool.BLANK, previewFileEntryId,
+					fragmentEntryTitle, StringPool.BLANK, html,
+					StringPool.BLANK, previewFileEntryId,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 			fragmentEntries.add(fragmentEntry);

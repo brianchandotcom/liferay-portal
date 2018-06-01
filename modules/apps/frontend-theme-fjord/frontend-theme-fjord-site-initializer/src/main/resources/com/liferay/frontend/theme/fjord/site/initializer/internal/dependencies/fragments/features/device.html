@@ -3,9 +3,19 @@
 		<div class="container-fluid container-fluid-max-xl">
 			<div class="row">
 				<div class="col-md-8 mx-auto text-center">
-					<h1 class="display-4">Engage Your Audience</h1>
-					<p class="lead">Feature videos, news, or anything else you want your customer to see.</p>
-					<a href="http://www.liferay.com"> <img alt="[Insert alternative description of the image here]" class="center-block img-responsive img-spacing" src="$phone.png$"> </a>
+					<h1 class="display-4">
+						<lfr-editable id="title" type="text">Engage Your Audience</lfr-editable>
+					</h1>
+
+					<p class="lead">
+						<lfr-editable id="lead" type="html">Feature videos, news, or anything else you want your customer to see.</lfr-editable>
+					</p>
+
+					<lfr-editable id="image" type="html">
+						<a href="#">
+							<img alt="" class="center-block img-responsive img-spacing" src="$phone.png$">
+						</a>
+					</lfr-editable>
 				</div>
 			</div>
 		</div>

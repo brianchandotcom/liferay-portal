@@ -25,6 +25,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletURLGenerationListener;
 import javax.portlet.UnavailableException;
 
+import javax.servlet.ServletContext;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -81,8 +83,11 @@ public class PortletURLListenerFactory {
 			portletURLGenerationListener = portletURLListenersMap.get(
 				portletURLListener.getListenerClass());
 
+			ServletContext servletContext = portletApp.getServletContext();
+
 			portletURLGenerationListener = _init(
-				portletURLListener, portletURLGenerationListener);
+				portletURLListener, portletURLGenerationListener,
+				servletContext.getClassLoader());
 		}
 		else {
 			portletURLGenerationListener = _init(portletURLListener);
@@ -122,19 +127,20 @@ public class PortletURLListenerFactory {
 			PortletURLListener portletURLListener)
 		throws PortletException {
 
-		return _init(portletURLListener, null);
+		return _init(portletURLListener, null, null);
 	}
 
 	private PortletURLGenerationListener _init(
 			PortletURLListener portletURLListener,
-			PortletURLGenerationListener portletURLGenerationListener)
+			PortletURLGenerationListener portletURLGenerationListener,
+			ClassLoader classLoader)
 		throws PortletException {
 
 		try {
 			if (portletURLGenerationListener == null) {
 				portletURLGenerationListener =
 					(PortletURLGenerationListener)InstanceFactory.newInstance(
-						portletURLListener.getListenerClass());
+						classLoader, portletURLListener.getListenerClass());
 			}
 		}
 		catch (Exception e) {

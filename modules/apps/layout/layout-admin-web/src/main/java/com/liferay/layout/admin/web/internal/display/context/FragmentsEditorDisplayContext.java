@@ -70,9 +70,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class FragmentsEditorContext {
+public class FragmentsEditorDisplayContext {
 
-	public FragmentsEditorContext(
+	public FragmentsEditorDisplayContext(
 		HttpServletRequest request, RenderResponse renderResponse,
 		String className, long classPK, boolean showMapping) {
 

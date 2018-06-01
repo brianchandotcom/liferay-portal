@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<taglib
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+>
+	<tlib-version>1.0</tlib-version>
+	<short-name>liferay-dynamic-section</short-name>
+	<uri>http://liferay.com/tld/dynamic-section</uri>
+	<tag>
+		<description></description>
+		<name>dynamic-section</name>
+		<tag-class>com.liferay.frontend.taglib.dynamic.section.servlet.taglib.DynamicSectionTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Name for Dynamic Section</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description></description>
+		<name>dynamic-section-original-body</name>
+		<tag-class>com.liferay.frontend.taglib.dynamic.section.servlet.taglib.DynamicSectionOriginalBodyTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Name for Dynamic Section Original Body</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

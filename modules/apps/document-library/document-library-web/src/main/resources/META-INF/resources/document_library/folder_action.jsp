@@ -371,7 +371,7 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					</portlet:actionURL>
 
 					<liferay-ui:icon-delete
-						trash="<%= (folder.getModel() instanceof DLFolder) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %>"
+						trash="<%= folder.isRepositoryCapabilityProvided(TrashCapability.class) && dlTrashUtil.isTrashEnabled(scopeGroupId, repositoryId) %>"
 						url="<%= deleteURL %>"
 					/>
 				</c:when>

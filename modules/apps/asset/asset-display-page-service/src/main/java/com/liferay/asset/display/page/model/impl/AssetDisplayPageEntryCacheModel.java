@@ -63,7 +63,7 @@ public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{assetDisplayPageEntryId=");
 		sb.append(assetDisplayPageEntryId);
@@ -71,6 +71,8 @@ public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayP
 		sb.append(assetEntryId);
 		sb.append(", layoutPageTemplateEntryId=");
 		sb.append(layoutPageTemplateEntryId);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -83,6 +85,7 @@ public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayP
 		assetDisplayPageEntryImpl.setAssetDisplayPageEntryId(assetDisplayPageEntryId);
 		assetDisplayPageEntryImpl.setAssetEntryId(assetEntryId);
 		assetDisplayPageEntryImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+		assetDisplayPageEntryImpl.setType(type);
 
 		assetDisplayPageEntryImpl.resetOriginalValues();
 
@@ -96,6 +99,8 @@ public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayP
 		assetEntryId = objectInput.readLong();
 
 		layoutPageTemplateEntryId = objectInput.readLong();
+
+		type = objectInput.readInt();
 	}
 
 	@Override
@@ -106,9 +111,12 @@ public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayP
 		objectOutput.writeLong(assetEntryId);
 
 		objectOutput.writeLong(layoutPageTemplateEntryId);
+
+		objectOutput.writeInt(type);
 	}
 
 	public long assetDisplayPageEntryId;
 	public long assetEntryId;
 	public long layoutPageTemplateEntryId;
+	public int type;
 }

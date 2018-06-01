@@ -345,4 +345,7 @@ public interface AssetDisplayPageEntryPersistence extends BasePersistence<AssetD
 	* @return the number of asset display page entries
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<String> getBadColumnNames();
 }

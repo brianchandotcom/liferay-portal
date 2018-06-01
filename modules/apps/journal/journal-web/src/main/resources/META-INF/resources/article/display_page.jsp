@@ -42,10 +42,6 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		<aui:input id="assetDisplayPageIdInput" ignoreRequestValue="<%= true %>" name="assetDisplayPageId" type="hidden" value="<%= editArticleDisplayPageDisplayContext.getAssetDisplayPageId() %>" />
 
-		<p class="text-muted">
-			<liferay-ui:message key="default-display-page-help" />
-		</p>
-
 		<p class="text-default">
 			<span class="<%= Validator.isNull(editArticleDisplayPageDisplayContext.getDisplayPageName()) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
 				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />

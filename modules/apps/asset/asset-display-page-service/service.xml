@@ -13,6 +13,7 @@
 
 		<column name="assetEntryId" type="long" />
 		<column name="layoutPageTemplateEntryId" type="long" />
+		<column name="type" type="int" />
 
 		<!-- Finder methods -->
 

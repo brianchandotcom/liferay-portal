@@ -126,6 +126,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 		newAssetDisplayPageEntry.setLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 
+		newAssetDisplayPageEntry.setType(RandomTestUtil.nextInt());
+
 		_assetDisplayPageEntries.add(_persistence.update(
 				newAssetDisplayPageEntry));
 
@@ -137,6 +139,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 			newAssetDisplayPageEntry.getAssetEntryId());
 		Assert.assertEquals(existingAssetDisplayPageEntry.getLayoutPageTemplateEntryId(),
 			newAssetDisplayPageEntry.getLayoutPageTemplateEntryId());
+		Assert.assertEquals(existingAssetDisplayPageEntry.getType(),
+			newAssetDisplayPageEntry.getType());
 	}
 
 	@Test
@@ -180,7 +184,7 @@ public class AssetDisplayPageEntryPersistenceTest {
 	protected OrderByComparator<AssetDisplayPageEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetDisplayPageEntry",
 			"assetDisplayPageEntryId", true, "assetEntryId", true,
-			"layoutPageTemplateEntryId", true);
+			"layoutPageTemplateEntryId", true, "type", true);
 	}
 
 	@Test
@@ -408,6 +412,8 @@ public class AssetDisplayPageEntryPersistenceTest {
 		assetDisplayPageEntry.setAssetEntryId(RandomTestUtil.nextLong());
 
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
+
+		assetDisplayPageEntry.setType(RandomTestUtil.nextInt());
 
 		_assetDisplayPageEntries.add(_persistence.update(assetDisplayPageEntry));
 

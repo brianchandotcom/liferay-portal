@@ -2019,13 +2019,13 @@ public class ProjectTemplatesTest {
 		Optional<String> gradleResult = _executeGradle(
 			gradleProjectDir, true, ":" + serviceProjectName + ":dependencies");
 
-		String gradleSericeBuilderVersion = null;
+		String gradleServiceBuilderVersion = null;
 
 		Matcher matcher = _serviceBuilderVersionPattern.matcher(
 			gradleResult.get());
 
 		if (matcher.matches()) {
-			gradleSericeBuilderVersion = matcher.group(1);
+			gradleServiceBuilderVersion = matcher.group(1);
 		}
 
 		final File mavenProjectDir = _buildTemplateWithMaven(
@@ -2037,15 +2037,15 @@ public class ProjectTemplatesTest {
 
 		matcher = _serviceBuilderVersionPattern.matcher(mavenResult);
 
-		String mavenSericeBuilderVersion = null;
+		String mavenServiceBuilderVersion = null;
 
 		if (matcher.matches()) {
-			mavenSericeBuilderVersion = matcher.group(1);
+			mavenServiceBuilderVersion = matcher.group(1);
 		}
 
 		Assert.assertEquals(
 			"com.liferay.portal.tools.service.builder versions do not match",
-			gradleSericeBuilderVersion, mavenSericeBuilderVersion);
+			gradleServiceBuilderVersion, mavenServiceBuilderVersion);
 	}
 
 	@Test

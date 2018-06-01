@@ -15,10 +15,20 @@
 package com.liferay.commerce.initializer.customer.portal.internal.osgi.commands;
 
 import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalForecastsInitializer;
+import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalLayoutsInitializer;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Locale;
 import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"osgi.command.function=initCustomerPortalForecasts",
+		"osgi.command.function=initCustomerPortalLayouts",
 		"osgi.command.scope=commerce"
 	},
 	service = CustomerPortalOSGiCommands.class
@@ -54,6 +65,46 @@ public class CustomerPortalOSGiCommands {
 			});
 	}
 
+	public void initCustomerPortalLayouts(final long groupId) throws Throwable {
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					ServiceContext serviceContext = _getServiceContext(groupId);
+
+					_customerPortalLayoutsInitializer.initialize(
+						serviceContext);
+
+					return null;
+				}
+
+			});
+	}
+
+	private ServiceContext _getServiceContext(long groupId)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		User user = _userLocalService.getUser(group.getCreatorUserId());
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(group.getCompanyId());
+		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(user.getUserId());
+		serviceContext.setTimeZone(user.getTimeZone());
+
+		return serviceContext;
+	}
+
 	private static final TransactionConfig _transactionConfig;
 
 	static {
@@ -68,5 +119,14 @@ public class CustomerPortalOSGiCommands {
 	@Reference
 	private CustomerPortalForecastsInitializer
 		_customerPortalForecastsInitializer;
+
+	@Reference
+	private CustomerPortalLayoutsInitializer _customerPortalLayoutsInitializer;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

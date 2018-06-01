@@ -46,18 +46,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class AccountCollectionResource
-	implements NestedCollectionResource<Organization, Long, AccountIdentifier, Long, CommerceOrganizationIdentifier> {
+	implements NestedCollectionResource<Organization, Long,
+		AccountIdentifier, Long, CommerceOrganizationIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Organization, Long, Long> collectionRoutes(
-			NestedCollectionRoutes.Builder<Organization, Long, Long> builder) {
+		NestedCollectionRoutes.Builder<Organization, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addAccount,
-			_accountPermissionChecker.forAdding()::apply,
-			 AccountForm::buildForm
+			this::_addAccount, _accountPermissionChecker.forAdding()::apply,
+			AccountForm::buildForm
 		).build();
 	}
 
@@ -117,8 +117,8 @@ public class AccountCollectionResource
 
 		List<Organization> organizations =
 			_organizationService.getOrganizations(
-				company.getCompanyId(), organizationId, pagination.getStartPosition(),
-				pagination.getEndPosition());
+				company.getCompanyId(), organizationId,
+				pagination.getStartPosition(), pagination.getEndPosition());
 
 		int count = _organizationService.getOrganizationsCount(
 			company.getCompanyId(), organizationId);
@@ -138,16 +138,6 @@ public class AccountCollectionResource
 		).orElse(
 			null
 		);
-	}
-
-	public static Long _getParentOrganizationId(Organization organization) {
-		long parentOrganizationId = organization.getParentOrganizationId();
-
-		if (parentOrganizationId <= 0) {
-			return null;
-		}
-
-		return parentOrganizationId;
 	}
 
 	private Organization _updateAccount(

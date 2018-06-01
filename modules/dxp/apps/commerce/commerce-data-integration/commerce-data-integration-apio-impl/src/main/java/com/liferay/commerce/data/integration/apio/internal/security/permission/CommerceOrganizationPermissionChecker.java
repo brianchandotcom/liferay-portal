@@ -26,17 +26,21 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.function.BiFunction;
 
 import javax.ws.rs.NotFoundException;
-import java.util.function.BiFunction;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
  */
-@Component(immediate = true, service = CommerceOrganzationPermissionChecker.class)
-public class CommerceOrganzationPermissionChecker {
+@Component(
+	immediate = true, service = CommerceOrganizationPermissionChecker.class
+)
+public class CommerceOrganizationPermissionChecker {
 
 	public Boolean forAdding(Credentials credentials) {
 		Try<PermissionChecker> permissionCheckerTry = _getPermissionCheckerTry(

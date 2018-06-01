@@ -26,7 +26,7 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.CommerceOrganizationIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.UserIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.CommerceOrganizationForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.CommerceOrganzationPermissionChecker;
+import com.liferay.commerce.data.integration.apio.internal.security.permission.CommerceOrganizationPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -35,17 +35,19 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true)
 public class CommerceOrganizationCollectionResource
-	implements CollectionResource<Organization, Long, CommerceOrganizationIdentifier> {
+	implements CollectionResource<Organization, Long,
+		CommerceOrganizationIdentifier> {
 
 	@Override
 	public CollectionRoutes<Organization, Long> collectionRoutes(
@@ -55,7 +57,8 @@ public class CommerceOrganizationCollectionResource
 			this::_getPageItems, Company.class
 		).addCreator(
 			this::_addCommerceOrganization, Company.class,
-			_commerceOrganizationPermissionChecker::forAdding, CommerceOrganizationForm::buildForm
+			_commerceOrganizationPermissionChecker::forAdding,
+			CommerceOrganizationForm::buildForm
 		).build();
 	}
 
@@ -98,13 +101,16 @@ public class CommerceOrganizationCollectionResource
 	}
 
 	private Organization _addCommerceOrganization(
-			CommerceOrganizationForm commerceOrganizationCreateForm, Company company)
+			CommerceOrganizationForm commerceOrganizationCreateForm,
+			Company company)
 		throws Exception {
 
-		Organization organization = _commerceOrganizationHelper.createOrganization(
-			commerceOrganizationCreateForm.getName());
+		Organization organization =
+			_commerceOrganizationHelper.createOrganization(
+				commerceOrganizationCreateForm.getName());
 
-		_commerceOrganizationHelper.addMembers(commerceOrganizationCreateForm.getUserIds(), organization);
+		_commerceOrganizationHelper.addMembers(
+			commerceOrganizationCreateForm.getUserIds(), organization);
 
 		return organization;
 	}
@@ -138,13 +144,16 @@ public class CommerceOrganizationCollectionResource
 	}
 
 	private Organization _updateCommerceOrganization(
-			Long organizationId, CommerceOrganizationForm commerceOrganizationForm, Company company)
+			Long organizationId,
+			CommerceOrganizationForm commerceOrganizationForm, Company company)
 		throws PortalException {
 
-		Organization organization = _commerceOrganizationHelper.updateOrganization(
-			organizationId, commerceOrganizationForm.getName());
+		Organization organization =
+			_commerceOrganizationHelper.updateOrganization(
+				organizationId, commerceOrganizationForm.getName());
 
-		_commerceOrganizationHelper.addMembers(commerceOrganizationForm.getUserIds(), organization);
+		_commerceOrganizationHelper.addMembers(
+			commerceOrganizationForm.getUserIds(), organization);
 
 		return organization;
 	}
@@ -153,7 +162,8 @@ public class CommerceOrganizationCollectionResource
 	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
-	private CommerceOrganzationPermissionChecker _commerceOrganizationPermissionChecker;
+	private CommerceOrganizationPermissionChecker
+		_commerceOrganizationPermissionChecker;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

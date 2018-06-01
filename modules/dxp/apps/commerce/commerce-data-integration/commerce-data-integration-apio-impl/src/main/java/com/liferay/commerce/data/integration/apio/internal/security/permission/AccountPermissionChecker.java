@@ -16,8 +16,6 @@ package com.liferay.commerce.data.integration.apio.internal.security.permission;
 
 import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.commerce.product.constants.CPActionKeys;
-import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import java.util.function.BiFunction;
 
@@ -47,10 +44,8 @@ public class AccountPermissionChecker {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
-			Try<Organization> accountTry =
-				Try.fromFallible(
-					() -> _organizationService.
-						fetchOrganization(identifier));
+			Try<Organization> accountTry = Try.fromFallible(
+				() -> _organizationService.fetchOrganization(identifier));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(

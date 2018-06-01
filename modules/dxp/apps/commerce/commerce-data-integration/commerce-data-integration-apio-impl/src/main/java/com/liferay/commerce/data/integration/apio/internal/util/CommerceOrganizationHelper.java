@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.data.integration.apio.internal.util;
 
-import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -27,10 +26,11 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -73,9 +73,9 @@ public class CommerceOrganizationHelper {
 		ServiceContext serviceContext = _getServiceContext();
 
 		return _organizationService.updateOrganization(
-			organizationId, 0, name, OrganizationConstants.TYPE_ORGANIZATION,
-			0, 0, ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			StringPool.BLANK, false, serviceContext);
+			organizationId, 0, name, OrganizationConstants.TYPE_ORGANIZATION, 0,
+			0, ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+			false, serviceContext);
 	}
 
 	private ServiceContext _getServiceContext() throws PortalException {
@@ -98,7 +98,8 @@ public class CommerceOrganizationHelper {
 			organization.getOrganizationId());
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(CommerceOrganizationHelper.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrganizationHelper.class);
 
 	@Reference
 	private OrganizationService _organizationService;

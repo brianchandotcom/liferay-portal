@@ -58,12 +58,14 @@ public class AccountHelper {
 		}
 	}
 
-	public Organization createAccount(String name, Long organizationId) throws PortalException {
+	public Organization createAccount(String name, Long organizationId)
+		throws PortalException {
+
 		ServiceContext serviceContext = _getServiceContext();
 
 		return _organizationService.addOrganization(
-				organizationId, name, CommerceOrganizationConstants.TYPE_ACCOUNT, 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+			organizationId, name, CommerceOrganizationConstants.TYPE_ACCOUNT, 0,
+			0, ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			false, serviceContext);
 	}
 
@@ -75,9 +77,10 @@ public class AccountHelper {
 		Organization account = _organizationService.getOrganization(accountId);
 
 		return _organizationService.updateOrganization(
-			accountId, account.getParentOrganizationId(), name, CommerceOrganizationConstants.TYPE_ACCOUNT,
-			0, 0, ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			StringPool.BLANK, false, serviceContext);
+			accountId, account.getParentOrganizationId(), name,
+			CommerceOrganizationConstants.TYPE_ACCOUNT, 0, 0,
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+			false, serviceContext);
 	}
 
 	private ServiceContext _getServiceContext() throws PortalException {

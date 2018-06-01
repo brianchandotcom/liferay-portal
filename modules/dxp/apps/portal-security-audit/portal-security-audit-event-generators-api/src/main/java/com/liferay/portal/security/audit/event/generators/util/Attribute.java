@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.security.audit.event.generators.internal.model.listener.util;
+package com.liferay.portal.security.audit.event.generators.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 

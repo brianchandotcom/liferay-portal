@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.security.audit.event.generators.internal.constants;
+package com.liferay.portal.security.audit.event.generators.constants;
 
 /**
  * @author Brian Wing Shun Chan

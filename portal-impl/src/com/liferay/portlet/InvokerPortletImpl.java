@@ -434,8 +434,7 @@ public class InvokerPortletImpl
 		throws IOException, PortletException {
 
 		PortletException portletException =
-			(PortletException)renderRequest.getAttribute(
-				_portletId + PortletException.class.getName());
+			(PortletException)renderRequest.getAttribute(_errorKey);
 
 		if (portletException != null) {
 			throw portletException;
@@ -524,8 +523,7 @@ public class InvokerPortletImpl
 		throws IOException, PortletException {
 
 		PortletException portletException =
-			(PortletException)headerRequest.getAttribute(
-				_portletId + PortletException.class.getName());
+			(PortletException)headerRequest.getAttribute(_errorKey);
 
 		if (portletException != null) {
 			throw portletException;
@@ -828,8 +826,7 @@ public class InvokerPortletImpl
 			}
 
 			if (!(portletRequest instanceof RenderRequest)) {
-				portletRequest.setAttribute(
-					_portletId + PortletException.class.getName(), e);
+				portletRequest.setAttribute(_errorKey, e);
 			}
 		}
 		else {
@@ -848,6 +845,9 @@ public class InvokerPortletImpl
 		_portlet = portlet;
 		_liferayPortletConfig = (LiferayPortletConfig)portletConfig;
 		_portletId = _portletModel.getPortletId();
+
+		_errorKey = _portletId.concat(PortletException.class.getName());
+
 		_liferayPortletContext = (LiferayPortletContext)portletContext;
 		_invokerFilterContainer = invokerFilterContainer;
 		_checkAuthToken = checkAuthToken;
@@ -871,6 +871,7 @@ public class InvokerPortletImpl
 		InvokerPortletImpl.class);
 
 	private boolean _checkAuthToken;
+	private String _errorKey;
 	private Integer _expCache;
 	private boolean _facesPortlet;
 	private boolean _headerPortlet;

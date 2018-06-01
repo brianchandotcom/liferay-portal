@@ -225,7 +225,7 @@ public class SelectLayoutTag extends TemplateRendererTag {
 			jsonObject.put("name", layout.getName(themeDisplay.getLocale()));
 			jsonObject.put("privateLayout", layout.isPrivateLayout());
 			jsonObject.put(
-				"url", PortalUtil.getLayoutURL(layout, themeDisplay));
+				"url", PortalUtil.getLayoutRelativeURL(layout, themeDisplay));
 
 			if (Objects.equals(layout.getUuid(), selectedLayoutUuid)) {
 				jsonObject.put("selected", true);

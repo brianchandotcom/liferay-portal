@@ -28,7 +28,8 @@ Liferay-JS-Submodules-Bridge:\
 	clay-radio,\
 	clay-select,\
 	clay-sticker,\
-	clay-table
+	clay-table,\
+	clay-tooltip
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

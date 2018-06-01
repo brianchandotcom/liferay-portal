@@ -12,17 +12,19 @@
  *
  */
 
-package com.liferay.portal.security.audit.event.generators.internal.model.listener;
+package com.liferay.portal.security.audit.event.generators.user.management.internal.model.listener;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.event.generators.util.Attribute;
 import com.liferay.portal.security.audit.event.generators.util.AttributesBuilder;
@@ -34,10 +36,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Amos Fong
+ * @author Mika Koivisto
+ * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = ModelListener.class)
-public class OrganizationModelListener extends BaseModelListener<Organization> {
+public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 
 	@Override
 	public void onBeforeAddAssociation(
@@ -50,16 +53,16 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 			associationClassPK);
 	}
 
-	public void onBeforeCreate(Organization organization)
+	public void onBeforeCreate(UserGroup userGroup)
 		throws ModelListenerException {
 
-		auditOnCreateOrRemove(EventTypes.ADD, organization);
+		auditOnCreateOrRemove(EventTypes.ADD, userGroup);
 	}
 
-	public void onBeforeRemove(Organization organization)
+	public void onBeforeRemove(UserGroup userGroup)
 		throws ModelListenerException {
 
-		auditOnCreateOrRemove(EventTypes.DELETE, organization);
+		auditOnCreateOrRemove(EventTypes.DELETE, userGroup);
 	}
 
 	@Override
@@ -73,22 +76,21 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 			associationClassPK);
 	}
 
-	public void onBeforeUpdate(Organization newOrganization)
+	public void onBeforeUpdate(UserGroup newUserGroup)
 		throws ModelListenerException {
 
 		try {
-			Organization oldOrganization =
-				_organizationLocalService.getOrganization(
-					newOrganization.getOrganizationId());
+			UserGroup oldUserGroup = _userGroupLocalService.getUserGroup(
+				newUserGroup.getUserGroupId());
 
 			List<Attribute> attributes = getModifiedAttributes(
-				newOrganization, oldOrganization);
+				newUserGroup, oldUserGroup);
 
 			if (!attributes.isEmpty()) {
 				AuditMessage auditMessage =
 					AuditMessageBuilder.buildAuditMessage(
-						EventTypes.UPDATE, Organization.class.getName(),
-						newOrganization.getOrganizationId(), attributes);
+						EventTypes.UPDATE, UserGroup.class.getName(),
+						newUserGroup.getUserGroupId(), attributes);
 
 				_auditRouter.route(auditMessage);
 			}
@@ -103,27 +105,40 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 			Object associationClassPK)
 		throws ModelListenerException {
 
-		if (!associationClassName.equals(User.class.getName())) {
+		if (!associationClassName.equals(Group.class.getName()) &&
+			!associationClassName.equals(User.class.getName())) {
+
 			return;
 		}
 
 		try {
-			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, associationClassName, (Long)associationClassPK,
-				null);
+			AuditMessage auditMessage = null;
+
+			if (associationClassName.equals(Group.class.getName())) {
+				long groupId = (Long)associationClassPK;
+
+				Group group = _groupLocalService.getGroup(groupId);
+
+				auditMessage = AuditMessageBuilder.buildAuditMessage(
+					eventType, group.getClassName(), group.getClassPK(), null);
+			}
+			else {
+				auditMessage = AuditMessageBuilder.buildAuditMessage(
+					eventType, associationClassName, (Long)associationClassPK,
+					null);
+			}
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();
 
-			long organizationId = (Long)classPK;
+			long userGroupId = (Long)classPK;
 
-			additionalInfoJSONObject.put("organizationId", organizationId);
+			additionalInfoJSONObject.put("userGroupId", userGroupId);
 
-			Organization organization =
-				_organizationLocalService.getOrganization(organizationId);
+			UserGroup userGroup = _userGroupLocalService.getUserGroup(
+				userGroupId);
 
-			additionalInfoJSONObject.put(
-				"organizationName", organization.getName());
+			additionalInfoJSONObject.put("userGroupName", userGroup.getName());
 
 			_auditRouter.route(auditMessage);
 		}
@@ -132,14 +147,13 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 		}
 	}
 
-	protected void auditOnCreateOrRemove(
-			String eventType, Organization organization)
+	protected void auditOnCreateOrRemove(String eventType, UserGroup userGroup)
 		throws ModelListenerException {
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, Organization.class.getName(),
-				organization.getOrganizationId(), null);
+				eventType, UserGroup.class.getName(),
+				userGroup.getUserGroupId(), null);
 
 			_auditRouter.route(auditMessage);
 		}
@@ -149,16 +163,13 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 	}
 
 	protected List<Attribute> getModifiedAttributes(
-		Organization newOrganization, Organization oldOrganization) {
+		UserGroup newUserGroup, UserGroup oldUserGroup) {
 
 		AttributesBuilder attributesBuilder = new AttributesBuilder(
-			newOrganization, oldOrganization);
+			newUserGroup, oldUserGroup);
 
-		attributesBuilder.add("comments");
-		attributesBuilder.add("countryId");
+		attributesBuilder.add("description");
 		attributesBuilder.add("name");
-		attributesBuilder.add("parentOrganizationId");
-		attributesBuilder.add("regionId");
 
 		return attributesBuilder.getAttributes();
 	}
@@ -167,6 +178,9 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 	private AuditRouter _auditRouter;
 
 	@Reference
-	private OrganizationLocalService _organizationLocalService;
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 }

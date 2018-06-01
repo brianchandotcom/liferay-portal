@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.portal.security.audit.event.generators.internal.model.listener;
+package com.liferay.portal.security.audit.event.generators.user.management.internal.model.listener;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;

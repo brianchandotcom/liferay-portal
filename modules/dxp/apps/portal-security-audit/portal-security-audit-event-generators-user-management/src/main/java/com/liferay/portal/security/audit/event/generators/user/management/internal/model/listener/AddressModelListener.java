@@ -12,16 +12,16 @@
  *
  */
 
-package com.liferay.portal.security.audit.event.generators.internal.model.listener;
+package com.liferay.portal.security.audit.event.generators.user.management.internal.model.listener;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ContactLocalService;
+import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 import com.liferay.portal.security.audit.event.generators.util.Attribute;
 import com.liferay.portal.security.audit.event.generators.util.AttributesBuilder;
@@ -37,23 +37,29 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = ModelListener.class)
-public class ContactModelListener extends BaseModelListener<Contact> {
+public class AddressModelListener extends BaseModelListener<Address> {
 
-	public void onBeforeUpdate(Contact newContact)
+	public void onBeforeUpdate(Address newAddress)
 		throws ModelListenerException {
 
 		try {
-			Contact oldContact = _contactLocalService.getContact(
-				newContact.getContactId());
+			String className = newAddress.getClassName();
+
+			if (!className.equals(User.class.getName())) {
+				return;
+			}
+
+			Address oldAddress = _addressLocalService.getAddress(
+				newAddress.getAddressId());
 
 			List<Attribute> attributes = getModifiedAttributes(
-				newContact, oldContact);
+				newAddress, oldAddress);
 
 			if (!attributes.isEmpty()) {
 				AuditMessage auditMessage =
 					AuditMessageBuilder.buildAuditMessage(
 						EventTypes.UPDATE, User.class.getName(),
-						newContact.getClassPK(), attributes);
+						newAddress.getClassPK(), attributes);
 
 				_auditRouter.route(auditMessage);
 			}
@@ -64,41 +70,29 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 	}
 
 	protected List<Attribute> getModifiedAttributes(
-		Contact newContact, Contact oldContact) {
+		Address newAddress, Address oldAddress) {
 
 		AttributesBuilder attributesBuilder = new AttributesBuilder(
-			newContact, oldContact);
+			newAddress, oldAddress);
 
-		//attributesBuilder.add("aimSn");
-		//attributesBuilder.add("icqSn");
-		//attributesBuilder.add("msnSn");
-		//attributesBuilder.add("mySpaceSn");
-		//attributesBuilder.add("ymSn");
-		attributesBuilder.add("birthday");
-		attributesBuilder.add("employeeNumber");
-		attributesBuilder.add("employeeStatusId");
-		attributesBuilder.add("facebookSn");
-		attributesBuilder.add("firstName");
-		attributesBuilder.add("hoursOfOperation");
-		attributesBuilder.add("jabberSn");
-		attributesBuilder.add("jobClass");
-		attributesBuilder.add("jobTitle");
-		attributesBuilder.add("lastName");
-		attributesBuilder.add("male");
-		attributesBuilder.add("middleName");
-		attributesBuilder.add("prefixId");
-		attributesBuilder.add("skypeSn");
-		attributesBuilder.add("smsSn");
-		attributesBuilder.add("suffixId");
-		attributesBuilder.add("twitterSn");
+		attributesBuilder.add("countryId");
+		attributesBuilder.add("city");
+		attributesBuilder.add("mailing");
+		attributesBuilder.add("primary");
+		attributesBuilder.add("regionId");
+		attributesBuilder.add("street1");
+		attributesBuilder.add("street2");
+		attributesBuilder.add("street3");
+		attributesBuilder.add("typeId");
+		attributesBuilder.add("zip");
 
 		return attributesBuilder.getAttributes();
 	}
 
 	@Reference
-	private AuditRouter _auditRouter;
+	private AddressLocalService _addressLocalService;
 
 	@Reference
-	private ContactLocalService _contactLocalService;
+	private AuditRouter _auditRouter;
 
 }

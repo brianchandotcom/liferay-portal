@@ -36,6 +36,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.io.StringWriter;
 
 import java.net.URI;
 
@@ -55,6 +56,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
@@ -1966,6 +1968,46 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testCompareGradlePluginVersions() throws Exception {
+		String template = "mvc-portlet";
+		String name = "foo";
+
+		File gradleProjectDir = _buildTemplateWithGradle(template, name);
+
+		File workspaceDir = _buildWorkspace();
+
+		File modulesDir = new File(workspaceDir, "modules");
+
+		_buildTemplateWithGradle(modulesDir, template, name);
+
+		Optional<String> result = _executeGradle(
+			gradleProjectDir, true, _GRADLE_TASK_PATH_BUILD);
+
+		Matcher matcher = _gradlePluginVersionPattern.matcher(result.get());
+
+		String standaloneGradlePluginVersion = null;
+
+		if (matcher.matches()) {
+			standaloneGradlePluginVersion = matcher.group(1);
+		}
+
+		result = _executeGradle(
+			workspaceDir, true, ":modules:" + name + ":clean");
+
+		matcher = _gradlePluginVersionPattern.matcher(result.get());
+
+		String workspaceGradlePluginVersion = null;
+
+		if (matcher.matches()) {
+			workspaceGradlePluginVersion = matcher.group(1);
+		}
+
+		Assert.assertEquals(
+			"com.liferay.plugin versions do not match",
+			standaloneGradlePluginVersion, workspaceGradlePluginVersion);
+	}
+
+	@Test
 	public void testListTemplates() throws Exception {
 		final Map<String, String> expectedTemplates = new TreeMap<>();
 
@@ -2369,7 +2411,8 @@ public class ProjectTemplatesTest {
 		}
 	}
 
-	private static void _executeGradle(File projectDir, String... taskPaths)
+	private static Optional<String> _executeGradle(
+			File projectDir, boolean debug, String... taskPaths)
 		throws IOException {
 
 		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
@@ -2413,7 +2456,12 @@ public class ProjectTemplatesTest {
 
 		List<String> arguments = new ArrayList<>(taskPaths.length + 5);
 
-		arguments.add("--stacktrace");
+		if (debug) {
+			arguments.add("--debug");
+		}
+		else {
+			arguments.add("--stacktrace");
+		}
 
 		String httpProxyHost = mavenExecutor.getHttpProxyHost();
 		int httpProxyPort = mavenExecutor.getHttpProxyPort();
@@ -2425,6 +2473,13 @@ public class ProjectTemplatesTest {
 
 		for (String taskPath : taskPaths) {
 			arguments.add(taskPath);
+		}
+
+		String stdOutput = null;
+		StringWriter stringWriter = new StringWriter();
+
+		if (debug) {
+			gradleRunner.forwardStdOutput(stringWriter);
 		}
 
 		gradleRunner.withArguments(arguments);
@@ -2444,6 +2499,19 @@ public class ProjectTemplatesTest {
 				"Unexpected outcome for task \"" + buildTask.getPath() + "\"",
 				TaskOutcome.SUCCESS, buildTask.getOutcome());
 		}
+
+		if (debug) {
+			stdOutput = stringWriter.toString();
+			stringWriter.close();
+		}
+
+		return Optional.ofNullable(stdOutput);
+	}
+
+	private static void _executeGradle(File projectDir, String... taskPaths)
+		throws IOException {
+
+		_executeGradle(projectDir, false, taskPaths);
 	}
 
 	private static void _executeMaven(File projectDir, String... args)
@@ -3455,6 +3523,9 @@ public class ProjectTemplatesTest {
 		"test.debug.bundle.diffs");
 
 	private static URI _gradleDistribution;
+	private static final Pattern _gradlePluginVersionPattern = Pattern.compile(
+		".*com\\.liferay\\.gradle\\.plugins:([0-9]+\\.[0-9]+\\.[0-9]+).*",
+		Pattern.DOTALL | Pattern.MULTILINE);
 	private static XPathExpression _pomXmlNpmInstallXPathExpression;
 	private static Properties _projectTemplateVersions;
 

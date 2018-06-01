@@ -29,31 +29,7 @@ headerNames.add("custom-fields");
 List<CustomAttributesDisplay> customAttributesDisplays = PortletLocalServiceUtil.getCustomAttributesDisplays();
 
 Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator(locale));
-
-ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request);
 %>
-
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems='<%= expandoDisplayContext.getNavigationItems("custom-fields") %>'
-/>
-
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container

@@ -33,6 +33,8 @@ public class ContextualSidebarTag extends TemplateRendererTag {
 
 		setTemplateNamespace("liferay.frontend.ContextualSidebar.render");
 
+		super.setHydrate(true);
+
 		return super.doStartTag();
 	}
 

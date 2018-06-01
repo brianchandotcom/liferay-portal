@@ -23,5 +23,5 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:xstream:xstream-configurator-api")
 	compileOnly project(":core:registry-api")
-	compileOnly project(":private:apps:portal-reports-engine:portal-reports-engine-console-api")
+	compileOnly project(":private:apps:portal-reports-engine-console:portal-reports-engine-console-api")
 }

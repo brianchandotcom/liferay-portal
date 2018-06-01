@@ -8,7 +8,7 @@ FileTree jasperZipTree = zipTree(jasperFile)
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:portal-reports-engine:portal-reports-engine-api")
-	testIntegrationCompile project(":private:apps:portal-reports-engine:portal-reports-engine-jasper")
+	testIntegrationCompile project(":private:apps:portal-reports-engine-console:portal-reports-engine-jasper")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }
 

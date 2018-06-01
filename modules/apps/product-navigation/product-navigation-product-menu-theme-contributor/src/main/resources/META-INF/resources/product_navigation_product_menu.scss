@@ -100,6 +100,10 @@ body {
 .product-menu {
 	a {
 		color: $product-menu-nav-link-color;
+
+		&:hover {
+			color: $product-menu-nav-link-color;
+		}
 	}
 
 	.dropdown-menu a {
@@ -237,6 +241,10 @@ body {
 		&:after {
 			background-color: $product-menu-list-group-heading-border;
 			height: $product-menu-list-group-heading-border-width;
+		}
+
+		&:focus, &:hover {
+			background-color: $product-menu-list-group-heading-bg;
 		}
 
 		&.collapsed {

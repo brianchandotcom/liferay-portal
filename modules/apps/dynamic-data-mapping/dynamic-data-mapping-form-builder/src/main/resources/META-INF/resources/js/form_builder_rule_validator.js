@@ -4,9 +4,14 @@ AUI.add(
 		var AObject = A.Object;
 
 		var CONDITIONS_OPERATOR = {
+			'belongs-to': 'binary',
 			'contains': 'binary',
 			'equals-to': 'binary',
+			'greater-than': 'binary',
+			'greater-than-equals': 'binary',
 			'is-empty': 'unary',
+			'less-than': 'binary',
+			'less-than-equals': 'binary',
 			'not-contains': 'binary',
 			'not-equals-to': 'binary',
 			'not-is-empty': 'unary'
@@ -40,6 +45,18 @@ AUI.add(
 						}
 
 						return false;
+					},
+
+					_isEmpty: function(content) {
+						var instance = this;
+
+						var empty = false;
+
+						if (content === '') {
+							empty = true;
+						}
+
+						return empty;
 					},
 
 					_isValidAction: function(action) {
@@ -87,29 +104,29 @@ AUI.add(
 					_isValidConditon: function(condition) {
 						var instance = this;
 
+						var valid = false;
+
 						if (condition.operands.length === 0) {
-							return false;
+							valid = false;
 						}
 
 						if (!condition.operator) {
-							return false;
+							valid = false;
 						}
 
 						var operatorType = CONDITIONS_OPERATOR[condition.operator];
 
-						if (operatorType === 'unary' && condition.operands.length > 1) {
-							return false;
+						if (operatorType === 'unary') {
+							valid = true;
 						}
 
 						if (operatorType === 'binary' && condition.operands.length == 2) {
-							if (condition.operands[1].type && condition.operands[1].value) {
-								return true;
+							if (condition.operands[1].type && !instance._isEmpty(condition.operands[1].value)) {
+								valid = true;
 							}
-
-							return false;
 						}
 
-						return true;
+						return valid;
 					},
 
 					_validateAction: function(action) {

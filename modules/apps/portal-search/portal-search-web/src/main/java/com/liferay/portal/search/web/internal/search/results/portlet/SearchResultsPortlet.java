@@ -289,13 +289,12 @@ public class SearchResultsPortlet extends MVCPortlet {
 		SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder =
 			new SearchResultSummaryDisplayBuilder();
 
-		PortletURL portletURL = portletURLFactory.getPortletURL();
-
 		searchResultSummaryDisplayBuilder.setAssetEntryLocalService(
 			assetEntryLocalService);
 		searchResultSummaryDisplayBuilder.setAssetRendererFactoryLookup(
 			assetRendererFactoryLookup);
-		searchResultSummaryDisplayBuilder.setCurrentURL(portletURL.toString());
+		searchResultSummaryDisplayBuilder.setCurrentURL(
+			_portal.getCurrentURL(renderRequest));
 		searchResultSummaryDisplayBuilder.setDocument(document);
 		searchResultSummaryDisplayBuilder.setFastDateFormatFactory(
 			fastDateFormatFactory);

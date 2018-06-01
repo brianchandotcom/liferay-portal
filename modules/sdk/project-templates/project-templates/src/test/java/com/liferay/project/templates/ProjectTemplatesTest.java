@@ -2043,16 +2043,9 @@ public class ProjectTemplatesTest {
 			mavenSericeBuilderVersion = matcher.group(1);
 		}
 
-		boolean versionsEqual = mavenSericeBuilderVersion.equals(
-			gradleSericeBuilderVersion);
-
-		if (!versionsEqual) {
-			String message = String.format(
-				"service.builder versions must match (maven: %s, gradle: %s)",
-				mavenSericeBuilderVersion, gradleSericeBuilderVersion);
-
-			Assert.assertTrue(message, versionsEqual);
-		}
+		Assert.assertEquals(
+			"com.liferay.portal.tools.service.builder versions do not match",
+			gradleSericeBuilderVersion, mavenSericeBuilderVersion);
 	}
 
 	@Test

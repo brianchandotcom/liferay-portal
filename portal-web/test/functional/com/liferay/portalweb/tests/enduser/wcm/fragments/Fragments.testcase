@@ -267,10 +267,6 @@
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Page Template Collection" />
-		</execute>
-
 		<execute macro="LayoutPageTemplates#add">
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>

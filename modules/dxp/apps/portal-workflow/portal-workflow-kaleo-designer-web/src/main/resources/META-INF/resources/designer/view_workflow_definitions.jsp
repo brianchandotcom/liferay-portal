@@ -21,9 +21,6 @@
 </liferay-portlet:renderURL>
 
 <%
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
-int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
-
 String definitionsNavigation = ParamUtil.getString(request, "definitionsNavigation");
 
 portletURL.setParameter("definitionsNavigation", definitionsNavigation);
@@ -35,24 +32,6 @@ if (StringUtil.equals(definitionsNavigation, "published")) {
 }
 else if (StringUtil.equals(definitionsNavigation, "not-published")) {
 	displayedStatus = KaleoDefinitionVersionConstants.STATUS_NOT_PUBLISHED;
-}
-
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL navigationPortletURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-if (delta > 0) {
-	navigationPortletURL.setParameter("delta", String.valueOf(delta));
-}
-
-navigationPortletURL.setParameter("orderByCol", orderByCol);
-navigationPortletURL.setParameter("orderByType", orderByType);
-
-PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
-
-if (cur > 0) {
-	displayStyleURL.setParameter("cur", String.valueOf(cur));
 }
 
 KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionVersionSearch(renderRequest, portletURL);
@@ -74,35 +53,6 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 </liferay-ui:error>
 
 <liferay-util:include page="/designer/management_bar.jsp" servletContext="<%= application %>" />
-
-<liferay-frontend:management-bar
-	searchContainerId="kaleoDefinitionVersions"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= displayStyleURL %>"
-			selectedDisplayStyle="list"
-		/>
-
-		<liferay-util:include page="/designer/add_button.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all", "published", "not-published"} %>'
-			navigationParam="definitionsNavigation"
-			portletURL="<%= navigationPortletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= orderByCol %>"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title", "last-modified"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280 main-content-body">
 	<liferay-ui:search-container

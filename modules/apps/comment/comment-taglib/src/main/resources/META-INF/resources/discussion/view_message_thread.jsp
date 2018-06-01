@@ -236,23 +236,8 @@ String postReplyEditorName = randomNamespace + "postReplyBody" + index;
 								<c:if test="<%= commentTreeDisplayContext.isEditActionControlVisible() %>">
 									<liferay-ui:icon
 										message="edit"
-										url='<%= "javascript:" + randomNamespace + index + "edit();" %>'
+										url='<%= "javascript:" + randomNamespace + "showEditReplyEditor(" + index + ");" %>'
 									/>
-
-									<aui:script>
-										window['<%= randomNamespace + index %>edit'] = function() {
-											<%= randomNamespace %>showEditor(
-												'<%= namespace + randomNamespace + "editForm" + index %>',
-												{
-													contents: '<%= HtmlUtil.escapeJS(discussionComment.getBody()) %>',
-													name: '<%= editReplyEditorName %>',
-													onChangeMethod: '<%= randomNamespace + index + "EditOnChange" %>'
-												}
-											);
-											<%= randomNamespace %>hideEditor('<%= postReplyEditorName %>', '<%= namespace + randomNamespace + "postReplyForm" + index %>');
-											<%= randomNamespace %>hideEl('<%= namespace + randomNamespace + "discussionMessage" + index %>');
-										};
-									</aui:script>
 								</c:if>
 
 								<c:if test="<%= commentTreeDisplayContext.isDeleteActionControlVisible() %>">

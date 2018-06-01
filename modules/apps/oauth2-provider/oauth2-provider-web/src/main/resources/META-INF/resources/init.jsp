@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,21 +12,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.oauth2.provider.constants;
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-/**
- * @author Tomas Polesovsky
- */
-public class OAuth2ProviderActionKeys {
+<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-	public static final String ACTION_ADD_APPLICATION = "ADD_APPLICATION";
+<liferay-frontend:defineObjects />
 
-	public static final String ACTION_CREATE_TOKEN = "CREATE_TOKEN";
+<liferay-theme:defineObjects />
 
-	public static final String ACTION_REVOKE_TOKEN = "REVOKE_TOKEN";
-
-	public static final String ACTION_VIEW_GRANTED_AUTHORIZATIONS =
-		"VIEW_GRANTED_AUTHORIZATIONS";
-
-}
+<portlet:defineObjects />

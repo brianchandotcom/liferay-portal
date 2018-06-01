@@ -1,4 +1,9 @@
 Bundle-Name: Liferay OAuth2 Provider Web
 Bundle-SymbolicName: com.liferay.oauth2.provider.web
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.oauth2.provider.api),(bundle.symbolic.name=com.liferay.oauth2.provider.rest),(bundle.symbolic.name=com.liferay.oauth2.provider.web)";\
+		resource.bundle.base.name="content.Language";\
+		service.ranking="1"
 Web-ContextPath: /oauth2-provider-web

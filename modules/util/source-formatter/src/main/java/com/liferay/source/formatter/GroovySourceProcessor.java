@@ -24,7 +24,7 @@ public class GroovySourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
-		if (!portalSource && !subrepository) {
+		if (!isPortalSource() && !isSubrepository()) {
 			return new ArrayList<>();
 		}
 

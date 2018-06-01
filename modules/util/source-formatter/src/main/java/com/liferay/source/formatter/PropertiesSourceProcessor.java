@@ -28,7 +28,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected String[] doGetIncludes() {
-		if (portalSource || subrepository) {
+		if (isPortalSource() || isSubrepository()) {
 			return new String[] {
 				"**/app-server.properties", "**/ci.properties",
 				"**/lib/*/dependencies.properties", "**/framework.properties",

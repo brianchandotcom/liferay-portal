@@ -45,7 +45,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		Collection<String> fileNames = null;
 
-		if (portalSource || subrepository) {
+		if (isPortalSource() || isSubrepository()) {
 			fileNames = _getPortalJavaFiles(includes);
 		}
 		else {
@@ -142,7 +142,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**/portal-web/test/**/*Test.java", "**/test/*-generated/**"
 		};
 
-		if (subrepository) {
+		if (isSubrepository()) {
 			excludes = ArrayUtil.append(
 				excludes, _getPluginExcludes(StringPool.BLANK));
 		}
@@ -202,6 +202,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (_configuration == null) {
+			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
 			_checkstyleLogger = new CheckstyleLogger(
 				new UnsyncByteArrayOutputStream(), true,
 				sourceFormatterArgs.getBaseDirName());

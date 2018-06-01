@@ -82,7 +82,7 @@ public class CustomFacetPortletSharedSearchContributor
 		copy(
 			() -> portletSharedSearchSettings.getParameterValues(
 				getParameterName(customFacetPortletPreferences)),
-			customFacetBuilder::setSelectedFields);
+			customFacetBuilder::setSelectedValues);
 
 		return customFacetBuilder.build();
 	}

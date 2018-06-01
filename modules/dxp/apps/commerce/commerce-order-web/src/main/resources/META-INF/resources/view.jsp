@@ -41,6 +41,7 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.commerce.model.CommerceOrder"
+			keyProperty="commerceOrderId"
 			modelVar="commerceOrder"
 		>
 

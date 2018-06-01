@@ -129,7 +129,81 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	public static final String KEY = "customer-portal-initializer";
 
-	public long[] addAssetCategories(
+	@Override
+	public String getDescription(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "beryl-description");
+	}
+
+	@Override
+	public String getKey() {
+		return KEY;
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "beryl");
+	}
+
+	@Override
+	public String getThumbnailSrc() {
+		return _servletContext.getContextPath() + "/images/thumbnail.jpg";
+	}
+
+	@Override
+	public void initialize(long groupId) throws InitializationException {
+		try {
+			ServiceContext serviceContext = getServiceContext(groupId);
+
+			configureB2BSite(groupId, serviceContext);
+
+			_cpFileImporter.cleanLayouts(serviceContext);
+
+			_cpFileImporter.updateLookAndFeel(
+				_CUSTOMER_PORTAL_THEME_ID, serviceContext);
+
+			createLayouts(serviceContext);
+
+			createRoles(serviceContext);
+
+			importProducts(serviceContext);
+
+			setThemePortletSettings(serviceContext);
+
+			_customerPortalForecastsInitializer.initialize(groupId);
+		}
+		catch (InitializationException ie) {
+			throw ie;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new InitializationException(e);
+		}
+	}
+
+	@Override
+	public boolean isActive(long companyId) {
+		Theme theme = _themeLocalService.fetchTheme(
+			companyId, _CUSTOMER_PORTAL_THEME_ID);
+
+		if (theme == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(_CUSTOMER_PORTAL_THEME_ID + " is not registered");
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+	protected long[] addAssetCategories(
 			long vocabularyId, JSONArray jsonArray,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -179,7 +253,53 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		return ListUtil.toLongArray(assetCategoryIdsList, Long::longValue);
 	}
 
-	public void addCPDefinitionAttachmentFileEntry(
+	protected List<CommerceWarehouse> addCommerceWarehouses(
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceCountry commerceCountry =
+			_commerceCountryLocalService.fetchCommerceCountry(
+				serviceContext.getScopeGroupId(), 840);
+
+		CommerceRegion commerceRegion =
+			_commerceRegionLocalService.getCommerceRegion(
+				commerceCountry.getCommerceCountryId(), "MN");
+
+		List<CommerceWarehouse> commerceWarehouses = new ArrayList<>();
+
+		commerceWarehouses.add(
+			_commerceWarehouseLocalService.addCommerceWarehouse(
+				"Thief River Falls, Minnesota", StringPool.BLANK, true,
+				"1101 MN-1", "", "", "Thief River Falls", "56701",
+				commerceRegion.getCommerceRegionId(),
+				commerceCountry.getCommerceCountryId(), 48.1252560, -96.1635400,
+				serviceContext));
+
+		commerceRegion = _commerceRegionLocalService.getCommerceRegion(
+			commerceCountry.getCommerceCountryId(), "IA");
+
+		commerceWarehouses.add(
+			_commerceWarehouseLocalService.addCommerceWarehouse(
+				"Des Moines, Iowa", StringPool.BLANK, true, "1330 Grand Ave",
+				"", "", "Des Moines", "50309",
+				commerceRegion.getCommerceRegionId(),
+				commerceCountry.getCommerceCountryId(), 41.5853130, -93.6345580,
+				serviceContext));
+
+		commerceRegion = _commerceRegionLocalService.getCommerceRegion(
+			commerceCountry.getCommerceCountryId(), "ID");
+
+		commerceWarehouses.add(
+			_commerceWarehouseLocalService.addCommerceWarehouse(
+				"Twin Falls, Idaho", StringPool.BLANK, true, "660 Park Ave", "",
+				"", "Twin Falls", "83301", commerceRegion.getCommerceRegionId(),
+				commerceCountry.getCommerceCountryId(), 42.5408580,
+				-114.4663890, serviceContext));
+
+		return commerceWarehouses;
+	}
+
+	protected void addCPDefinitionAttachmentFileEntry(
 			long cpDefinitionId, String fileName, ServiceContext serviceContext)
 		throws Exception {
 
@@ -254,147 +374,6 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			expirationDateYear, expirationDateHour, expirationDateMinute, true,
 			titleMap, null, 0, CPAttachmentFileEntryConstants.TYPE_IMAGE,
 			serviceContext);
-	}
-
-	@Override
-	public String getDescription(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "beryl-description");
-	}
-
-	@Override
-	public String getKey() {
-		return KEY;
-	}
-
-	@Override
-	public String getName(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "beryl");
-	}
-
-	public ServiceContext getServiceContext(long groupId)
-		throws PortalException {
-
-		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
-		Group group = _groupLocalService.getGroup(groupId);
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(group.getCompanyId());
-		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
-		serviceContext.setScopeGroupId(groupId);
-		serviceContext.setUserId(user.getUserId());
-		serviceContext.setTimeZone(user.getTimeZone());
-
-		return serviceContext;
-	}
-
-	@Override
-	public String getThumbnailSrc() {
-		return _servletContext.getContextPath() + "/images/thumbnail.jpg";
-	}
-
-	@Override
-	public void initialize(long groupId) throws InitializationException {
-		try {
-			ServiceContext serviceContext = getServiceContext(groupId);
-
-			configureB2BSite(groupId, serviceContext);
-
-			_cpFileImporter.cleanLayouts(serviceContext);
-
-			_cpFileImporter.updateLookAndFeel(
-				_CUSTOMER_PORTAL_THEME_ID, serviceContext);
-
-			createLayouts(serviceContext);
-
-			createRoles(serviceContext);
-
-			importProducts(serviceContext);
-
-			setThemePortletSettings(serviceContext);
-
-			_customerPortalForecastsInitializer.initialize(groupId);
-		}
-		catch (InitializationException ie) {
-			throw ie;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new InitializationException(e);
-		}
-	}
-
-	@Override
-	public boolean isActive(long companyId) {
-		Theme theme = _themeLocalService.fetchTheme(
-			companyId, _CUSTOMER_PORTAL_THEME_ID);
-
-		if (theme == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info(_CUSTOMER_PORTAL_THEME_ID + " is not registered");
-			}
-
-			return false;
-		}
-
-		return true;
-	}
-
-	protected List<CommerceWarehouse> addCommerceWarehouses(
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceCountry commerceCountry =
-			_commerceCountryLocalService.fetchCommerceCountry(
-				serviceContext.getScopeGroupId(), 840);
-
-		CommerceRegion commerceRegion =
-			_commerceRegionLocalService.getCommerceRegion(
-				commerceCountry.getCommerceCountryId(), "MN");
-
-		List<CommerceWarehouse> commerceWarehouses = new ArrayList<>();
-
-		commerceWarehouses.add(
-			_commerceWarehouseLocalService.addCommerceWarehouse(
-				"Thief River Falls, Minnesota", StringPool.BLANK, true,
-				"1101 MN-1", "", "", "Thief River Falls", "56701",
-				commerceRegion.getCommerceRegionId(),
-				commerceCountry.getCommerceCountryId(), 48.1252560, -96.1635400,
-				serviceContext));
-
-		commerceRegion = _commerceRegionLocalService.getCommerceRegion(
-			commerceCountry.getCommerceCountryId(), "IA");
-
-		commerceWarehouses.add(
-			_commerceWarehouseLocalService.addCommerceWarehouse(
-				"Des Moines, Iowa", StringPool.BLANK, true, "1330 Grand Ave",
-				"", "", "Des Moines", "50309",
-				commerceRegion.getCommerceRegionId(),
-				commerceCountry.getCommerceCountryId(), 41.5853130, -93.6345580,
-				serviceContext));
-
-		commerceRegion = _commerceRegionLocalService.getCommerceRegion(
-			commerceCountry.getCommerceCountryId(), "ID");
-
-		commerceWarehouses.add(
-			_commerceWarehouseLocalService.addCommerceWarehouse(
-				"Twin Falls, Idaho", StringPool.BLANK, true, "660 Park Ave", "",
-				"", "Twin Falls", "83301", commerceRegion.getCommerceRegionId(),
-				commerceCountry.getCommerceCountryId(), 42.5408580,
-				-114.4663890, serviceContext));
-
-		return commerceWarehouses;
 	}
 
 	protected void configureB2BSite(long groupId, ServiceContext serviceContext)
@@ -517,6 +496,27 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			_getFile(filePath), classNameId, 0L, resourceClassNameId, name,
 			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 			TemplateConstants.LANG_TYPE_FTL, serviceContext);
+	}
+
+	protected ServiceContext getServiceContext(long groupId)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(PrincipalThreadLocal.getUserId());
+		Group group = _groupLocalService.getGroup(groupId);
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setCompanyId(group.getCompanyId());
+		serviceContext.setLanguageId(LanguageUtil.getLanguageId(locale));
+		serviceContext.setScopeGroupId(groupId);
+		serviceContext.setUserId(user.getUserId());
+		serviceContext.setTimeZone(user.getTimeZone());
+
+		return serviceContext;
 	}
 
 	protected JSONArray getThemePortletSettingJSONArray() throws Exception {

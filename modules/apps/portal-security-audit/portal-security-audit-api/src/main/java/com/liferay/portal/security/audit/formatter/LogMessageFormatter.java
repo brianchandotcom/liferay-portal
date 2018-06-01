@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.security.audit.router;
+package com.liferay.portal.security.audit.formatter;
 
 import com.liferay.portal.kernel.audit.AuditMessage;
 
 /**
  * @author Mika Koivisto
  */
+@ProviderType
 public interface LogMessageFormatter {
 
 	public String format(AuditMessage auditMessage);

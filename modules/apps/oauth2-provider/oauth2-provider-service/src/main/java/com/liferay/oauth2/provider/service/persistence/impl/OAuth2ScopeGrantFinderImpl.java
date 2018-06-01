@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -54,15 +56,27 @@ public class OAuth2ScopeGrantFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			q.addEntity("OAuth2ScopeGrant", OAuth2ScopeGrantImpl.class);
+			q.addScalar("accessTokenContent", Type.MATERIALIZED_CLOB);
 
 			qPos.add(companyId);
 			qPos.add(applicationName);
 			qPos.add(bundleSymbolicName);
-			qPos.add(accessTokenContent);
 			qPos.add(accessTokenContent.hashCode());
 
-			return (List<OAuth2ScopeGrant>)QueryUtil.list(
+			List<Object[]> rows = (List<Object[]>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			ArrayList<OAuth2ScopeGrant> oAuth2ScopeGrants = new ArrayList<>();
+
+			for (Object[] row : rows) {
+				String string = (String)row[1];
+
+				if (accessTokenContent.equals(string)) {
+					oAuth2ScopeGrants.add((OAuth2ScopeGrant)row[0]);
+				}
+			}
+
+			return oAuth2ScopeGrants;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

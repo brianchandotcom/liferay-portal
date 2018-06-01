@@ -4,7 +4,7 @@
 	<sql id="com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder.findByC_A_B_A">
 		<![CDATA[
 			SELECT
-				{OAuth2ScopeGrant.*}
+				{OAuth2ScopeGrant.*}, OAuth2Authorization.accessTokenContent AS accessTokenContent
 		 	FROM
 			 	OAuth2ScopeGrant
 			INNER JOIN
@@ -17,7 +17,6 @@
 				(OAuth2ScopeGrant.companyId = ?) AND
 				(OAuth2ScopeGrant.applicationName = ?) AND
 				(OAuth2ScopeGrant.bundleSymbolicName = ?) AND
-				(OAuth2Authorization.accessTokenContent = ?) AND
 				(OAuth2Authorization.accessTokenContentHash = ?)
 		]]>
 	</sql>

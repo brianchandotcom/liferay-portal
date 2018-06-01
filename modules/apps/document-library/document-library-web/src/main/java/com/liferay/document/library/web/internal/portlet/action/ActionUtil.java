@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
@@ -149,7 +150,15 @@ public class ActionUtil {
 		List<FileShortcut> fileShortcuts = new ArrayList<>();
 
 		for (long fileShortcutId : fileShortcutIds) {
-			fileShortcuts.add(DLAppServiceUtil.getFileShortcut(fileShortcutId));
+			try {
+				fileShortcuts.add(
+					DLAppServiceUtil.getFileShortcut(fileShortcutId));
+			}
+			catch (NoSuchFileShortcutException nsfse) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfse, nsfse);
+				}
+			}
 		}
 
 		return fileShortcuts;

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.AuthFailure;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.security.audit.event.generators.internal.constants.EventTypes;
+import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 
 import java.util.Map;
 

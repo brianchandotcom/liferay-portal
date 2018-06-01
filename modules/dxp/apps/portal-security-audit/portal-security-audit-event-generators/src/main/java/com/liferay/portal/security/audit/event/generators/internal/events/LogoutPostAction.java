@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.security.audit.event.generators.internal.constants.EventTypes;
+import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

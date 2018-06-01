@@ -403,7 +403,7 @@ DDMNavigationHelper ddmNavigationHelper = ddmDisplay.getDDMNavigationHelper();
 				}
 			);
 
-			selectSmallImageType('<%= (template != null) && Validator.isNotNull(template.getSmallImageURL()) ? 0 : 1 %>');
+			selectSmallImageType('<%= ((template != null) && Validator.isNotNull(template.getSmallImageURL())) ? 0 : 1 %>');
 		</aui:script>
 	</c:if>
 

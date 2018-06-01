@@ -200,7 +200,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 					incompleteBackgroundTaskCount += BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, taskExecutorClassName, false);
 					%>
 
-					<div class="<%= incompleteBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
+					<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
 						<liferay-util:include page="/incomplete_processes_message.jsp" servletContext="<%= application %>">
 							<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 						</liferay-util:include>

@@ -96,10 +96,10 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 					}
 					%>
 
-					<option <%= (inputPermissionsViewRole.equals(RoleConstants.GUEST)) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.GUEST %>"><%= guestRoleLabel %></option>
+					<option <%= inputPermissionsViewRole.equals(RoleConstants.GUEST) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.GUEST %>"><%= guestRoleLabel %></option>
 
 					<c:if test="<%= hasViewDefaultGroupRolePermission %>">
-						<option <%= (inputPermissionsViewRole.equals(defaultGroupRole.getName())) ? "selected=\"selected\"" : "" %> value="<%= defaultGroupRole.getName() %>">
+						<option <%= inputPermissionsViewRole.equals(defaultGroupRole.getName()) ? "selected=\"selected\"" : "" %> value="<%= defaultGroupRole.getName() %>">
 							<c:choose>
 								<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.ORGANIZATION_USER) %>">
 									<liferay-ui:message key="organization-members" />
@@ -117,7 +117,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 						</option>
 					</c:if>
 
-					<option <%= (inputPermissionsViewRole.equals(RoleConstants.OWNER)) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>
+					<option <%= inputPermissionsViewRole.equals(RoleConstants.OWNER) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>
 				</select>
 
 				<span <%= inputPermissionsShowOptions ? "class=\"hide\"" : "" %> id="<%= uniqueNamespace %>inputPermissionsShowOptionsLink">
@@ -141,7 +141,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 							String action = (String)supportedActions.get(i);
 						%>
 
-							<th <%= (action.equals(ActionKeys.VIEW)) ? "class=\"hide-accessible\"" : "" %>>
+							<th <%= action.equals(ActionKeys.VIEW) ? "class=\"hide-accessible\"" : "" %>>
 								<%= ResourceActionsUtil.getAction(request, action) %>
 							</th>
 
@@ -206,7 +206,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 							checkboxFieldId = checkboxFieldId + StringPool.UNDERLINE + action;
 						%>
 
-							<td <%= (action.equals(ActionKeys.VIEW)) ? "class=\"hide-accessible\"" : "" %>>
+							<td <%= action.equals(ActionKeys.VIEW) ? "class=\"hide-accessible\"" : "" %>>
 								<label class="sr-only" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" translateArguments="<%= false %>" /></label>
 
 								<input <%= checked ? "checked" : "" %> <%= disabled ? "disabled" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title='<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>' type="checkbox" value="<%= action %>" />
@@ -288,7 +288,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 
 		<div class="checkbox">
 			<label>
-				<input <%= !addGroupPermissions && !addGuestPermissions ? "checked" : "" %> name="<%= namespace %>addUserPermissionsBox" onClick="<%= namespace %>checkUserPermissions();" type="checkbox" /> <liferay-ui:message key="only-assign-permissions-to-me" />
+				<input <%= (!addGroupPermissions && !addGuestPermissions) ? "checked" : "" %> name="<%= namespace %>addUserPermissionsBox" onClick="<%= namespace %>checkUserPermissions();" type="checkbox" /> <liferay-ui:message key="only-assign-permissions-to-me" />
 			</label>
 		</div>
 

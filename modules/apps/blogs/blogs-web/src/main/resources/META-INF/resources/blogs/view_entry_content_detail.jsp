@@ -131,7 +131,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 											AssetEntry assetEntry = _getAssetEntry(request, entry);
 											%>
 
-											- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= assetEntry.getViewCount() == 1 ? "x-view" : "x-views" %>' />
+											- <liferay-ui:message arguments="<%= assetEntry.getViewCount() %>" key='<%= (assetEntry.getViewCount() == 1) ? "x-view" : "x-views" %>' />
 										</c:if>
 									</div>
 								</div>

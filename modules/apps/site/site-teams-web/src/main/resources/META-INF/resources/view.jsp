@@ -103,7 +103,7 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							subtitle="<%= team.getDescription() %>"
 							title="<%= team.getName() %>"
-							url="<%= rowURL != null ? rowURL.toString() : null %>"
+							url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>

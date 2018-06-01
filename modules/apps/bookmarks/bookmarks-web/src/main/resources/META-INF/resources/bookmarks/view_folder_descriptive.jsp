@@ -46,8 +46,8 @@ int entriesCount = BookmarksEntryServiceUtil.getEntriesCount(scopeGroupId, folde
 %>
 
 <span class="h6">
-	<liferay-ui:message arguments="<%= foldersCount %>" key='<%= foldersCount == 1 ? "x-folder" : "x-folders" %>' />
+	<liferay-ui:message arguments="<%= foldersCount %>" key='<%= (foldersCount == 1) ? "x-folder" : "x-folders" %>' />
 </span>
 <span class="h6">
-	<liferay-ui:message arguments="<%= entriesCount %>" key='<%= entriesCount == 1 ? "x-bookmark" : "x-bookmarks" %>' />
+	<liferay-ui:message arguments="<%= entriesCount %>" key='<%= (entriesCount == 1) ? "x-bookmark" : "x-bookmarks" %>' />
 </span>

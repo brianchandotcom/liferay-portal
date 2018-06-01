@@ -200,7 +200,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 				</div>
 			</c:if>
 
-			<div class="<%= assetSelectedClassTypeIds.length > 1 ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= className %>Boxes">
+			<div class="<%= (assetSelectedClassTypeIds.length > 1) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= className %>Boxes">
 				<liferay-ui:input-move-boxes
 					leftBoxName='<%= className + "currentClassTypeIds" %>'
 					leftList="<%= subtypesLeftList %>"

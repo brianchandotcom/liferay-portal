@@ -50,7 +50,7 @@ public class JSPParenthesesCheck extends IfStatementCheck {
 
 		while (matcher.find()) {
 			if (!JSPSourceUtil.isJavaSource(content, matcher.start())) {
-				String ifClause = "if (" + matcher.group(2) + ") {";
+				String ifClause = "if (" + matcher.group(1) + ") {";
 
 				int index = checkIfClauseParentheses(
 					ifClause, fileName,
@@ -58,7 +58,8 @@ public class JSPParenthesesCheck extends IfStatementCheck {
 
 				if (index != -1) {
 					return _fixClause(
-						content, matcher.group(1), index - 1, matcher.start());
+						content, matcher.group(), index - 1,
+						matcher.start() - 1);
 				}
 			}
 		}
@@ -112,7 +113,6 @@ public class JSPParenthesesCheck extends IfStatementCheck {
 
 	private final Pattern _ifStatementPattern = Pattern.compile(
 		"[\t\n]((else )?if|while) .*\\) \\{\n");
-	private final Pattern _tagPattern = Pattern.compile(
-		"['\"](<%= (.+?) %>)['\"]");
+	private final Pattern _tagPattern = Pattern.compile("<%= (.+?) %>");
 
 }

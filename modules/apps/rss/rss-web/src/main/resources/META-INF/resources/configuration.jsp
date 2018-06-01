@@ -40,7 +40,7 @@
 				String url = (String)enu.nextElement();
 			%>
 
-				<strong><%= HtmlUtil.escape(url) %></strong><%= (enu.hasMoreElements()) ? ", " : "." %>
+				<strong><%= HtmlUtil.escape(url) %></strong><%= enu.hasMoreElements() ? ", " : "." %>
 
 			<%
 			}

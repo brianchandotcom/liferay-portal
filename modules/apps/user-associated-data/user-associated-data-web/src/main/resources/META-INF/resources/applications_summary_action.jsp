@@ -29,7 +29,7 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
-	triggerCssClass='<%= uadApplicationSummaryDisplay.getCount() <= 0 ? "component-action disabled" : "component-action" %>'
+	triggerCssClass='<%= (uadApplicationSummaryDisplay.getCount() <= 0) ? "component-action disabled" : "component-action" %>'
 >
 	<liferay-ui:icon
 		message="view"

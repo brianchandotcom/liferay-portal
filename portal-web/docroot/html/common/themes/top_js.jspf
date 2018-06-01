@@ -110,7 +110,7 @@
 		Liferay.Data.NAV_SELECTOR_MOBILE = '#navigationCollapse';
 
 		Liferay.Data.isCustomizationView = function() {
-			return <%= (layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE)) %>;
+			return <%= layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE) %>;
 		};
 
 		Liferay.Data.notices = [
@@ -183,7 +183,7 @@
 					return '<%= layout.isPrivateLayout() %>';
 				},
 				isVirtualLayout: function() {
-					return <%= (layout instanceof VirtualLayout) %>;
+					return <%= layout instanceof VirtualLayout %>;
 				},
 			</c:if>
 

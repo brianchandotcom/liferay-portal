@@ -28,7 +28,7 @@ for (int i = 0; i < deprecatedCategorySections.length; i++) {
 		<c:when test='<%= displayStyle.equals("panel") %>'>
 			<liferay-ui:panel
 				cssClass="list-unstyled panel-page-category"
-				defaultState='<%= i == 0 ? "open" : "closed" %>'
+				defaultState='<%= (i == 0) ? "open" : "closed" %>'
 				extended="<%= true %>"
 				id="<%= sectionId %>"
 				title="<%= section %>"
@@ -62,7 +62,7 @@ for (int i = 0; i < formNavigatorEntries.size(); i++) {
 		<c:when test='<%= displayStyle.equals("panel") %>'>
 			<liferay-ui:panel
 				cssClass="list-unstyled panel-page-category"
-				defaultState='<%= i == 0 ? "open" : "closed" %>'
+				defaultState='<%= (i == 0) ? "open" : "closed" %>'
 				extended="<%= true %>"
 				id="<%= sectionId %>"
 				title="<%= formNavigatorEntry.getLabel(locale) %>"

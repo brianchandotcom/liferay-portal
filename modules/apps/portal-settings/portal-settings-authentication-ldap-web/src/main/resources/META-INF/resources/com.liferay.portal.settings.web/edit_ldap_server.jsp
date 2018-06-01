@@ -324,7 +324,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 
 		form.fm('ldap--<%= LDAPConstants.GROUP_MAPPINGS %>--').val(groupMapping);
 
-		form.fm('<%= Constants.CMD %>').val('<%= ldapServerId <= 0 ? Constants.ADD : Constants.UPDATE %>');
+		form.fm('<%= Constants.CMD %>').val('<%= (ldapServerId <= 0) ? Constants.ADD : Constants.UPDATE %>');
 
 		submitForm(form);
 	}

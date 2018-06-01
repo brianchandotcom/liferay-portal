@@ -173,7 +173,7 @@ if (comment) {
 				</span>
 			</div>
 
-			<div class="highlighter-content <%= comment || edit || repost ? StringPool.BLANK : "textbox" %>" id="<portlet:namespace />highlighterContent<%= formId %>"></div>
+			<div class="highlighter-content <%= (comment || edit || repost) ? StringPool.BLANK : "textbox" %>" id="<portlet:namespace />highlighterContent<%= formId %>"></div>
 		</div>
 
 		<aui:input label="" name="content" type="hidden" />

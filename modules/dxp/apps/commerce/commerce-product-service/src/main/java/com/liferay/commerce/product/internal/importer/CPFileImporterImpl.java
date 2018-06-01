@@ -329,7 +329,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		boolean hidden = jsonObject.getBoolean("hidden");
 		String layoutTemplateId = jsonObject.getString("layoutTemplateId");
-		String layoutType = jsonObject.getString("layoutType");
+		String layoutType = jsonObject.getString(
+			"layoutType", LayoutConstants.TYPE_PORTLET);
 		String name = jsonObject.getString("name");
 		String icon = jsonObject.getString("icon");
 
@@ -337,10 +338,6 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		if (parentLayout != null) {
 			parentLayoutId = parentLayout.getLayoutId();
-		}
-
-		if (Validator.isNull(layoutType)) {
-			layoutType = LayoutConstants.TYPE_PORTLET;
 		}
 
 		String friendlyURL = StringUtil.toLowerCase(name);

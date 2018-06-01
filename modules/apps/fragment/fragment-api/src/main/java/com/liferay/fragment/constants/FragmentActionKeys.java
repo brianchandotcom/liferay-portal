@@ -19,9 +19,7 @@ package com.liferay.fragment.constants;
  */
 public class FragmentActionKeys {
 
-	public static final String ADD_FRAGMENT_COLLECTION =
-		"ADD_FRAGMENT_COLLECTION";
-
-	public static final String ADD_FRAGMENT_ENTRY = "ADD_FRAGMENT_ENTRY";
+	public static final String MANAGE_FRAGMENT_ENTRIES =
+		"MANAGE_FRAGMENT_ENTRIES";
 
 }

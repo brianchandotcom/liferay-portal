@@ -497,7 +497,6 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				window,
 				'<%= randomNamespace %>showEditor',
 				function(formId, options) {
-
 					if (window['<%= namespace %>' + options.name]) {
 						return;
 					}

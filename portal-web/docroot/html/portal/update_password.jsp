@@ -38,6 +38,7 @@ if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") &
 					<liferay-ui:message key="change-password" />
 				</h2>
 			</div>
+
 			<div class="autofit-col">
 				<%@ include file="/html/portal/select_language.jspf" %>
 			</div>

@@ -37,6 +37,7 @@ String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 					<liferay-ui:message key="change-email-address" />
 				</h2>
 			</div>
+
 			<div class="autofit-col">
 				<%@ include file="/html/portal/select_language.jspf" %>
 			</div>

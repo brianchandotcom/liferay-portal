@@ -15,7 +15,6 @@
 package com.liferay.oauth2.provider.scope.internal.spi.scope.descriptor;
 
 import com.liferay.oauth2.provider.scope.spi.scope.descriptor.ScopeDescriptor;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -36,7 +35,7 @@ public class ScopeDescriptorImpl implements ScopeDescriptor {
 
 	@Override
 	public String describeScope(String scope, Locale locale) {
-		String key = StringBundler.concat("oauth2.scope.", scope);
+		String key = "oauth2.scope." + scope;
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 

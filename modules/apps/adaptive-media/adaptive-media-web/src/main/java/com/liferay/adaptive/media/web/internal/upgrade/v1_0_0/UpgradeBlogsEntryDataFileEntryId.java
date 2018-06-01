@@ -17,7 +17,6 @@ package com.liferay.adaptive.media.web.internal.upgrade.v1_0_0;
 import com.liferay.adaptive.media.image.html.constants.AMImageHTMLConstants;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,9 +59,8 @@ public class UpgradeBlogsEntryDataFileEntryId extends UpgradeProcess {
 		Matcher matcher = _dataFileEntryIdPattern.matcher(content);
 
 		String upgradedContent = matcher.replaceAll(
-			StringBundler.concat(
-				AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID,
-				StringPool.EQUAL));
+			AMImageHTMLConstants.ATTRIBUTE_NAME_FILE_ENTRY_ID +
+				StringPool.EQUAL);
 
 		if (!content.equals(upgradedContent)) {
 			blogsEntry.setContent(upgradedContent);

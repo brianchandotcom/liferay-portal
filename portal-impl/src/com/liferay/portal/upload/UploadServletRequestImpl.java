@@ -236,9 +236,7 @@ public class UploadServletRequestImpl
 				_log.debug(e, e);
 			}
 			else if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to parse upload request: ", e.getMessage()));
+				_log.warn("Unable to parse upload request: " + e.getMessage());
 			}
 		}
 

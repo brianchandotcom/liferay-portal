@@ -77,7 +77,7 @@ public class MergeCentralSubrepositoryUtil {
 
 						GitWorkingDirectory.Branch topLevelBranch =
 							centralGitWorkingDirectory.getBranch(
-								topLevelBranchName, null);
+								topLevelBranchName, null, true);
 
 						GitWorkingDirectory.Branch mergeBranch =
 							_createMergeBranch(

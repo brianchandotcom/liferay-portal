@@ -86,12 +86,12 @@ public class CentralSubrepository {
 				gitWorkingDirectory.getRemote("upstream");
 
 			localUpstreamBranch = gitWorkingDirectory.getBranch(
-				_subrepositoryUpstreamBranchName, null);
+				_subrepositoryUpstreamBranchName, null, true);
 
 			gitWorkingDirectory.fetch(
 				localUpstreamBranch,
 				gitWorkingDirectory.getBranch(
-					_subrepositoryUpstreamBranchName, upstreamRemote));
+					_subrepositoryUpstreamBranchName, upstreamRemote, true));
 		}
 		finally {
 			if ((localUpstreamBranch != null) && (tempBranch != null) &&

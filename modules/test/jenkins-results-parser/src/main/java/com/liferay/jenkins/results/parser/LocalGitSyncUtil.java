@@ -110,7 +110,7 @@ public class LocalGitSyncUtil {
 		final GitWorkingDirectory.Branch upstreamBranch =
 			gitWorkingDirectory.getBranch(
 				gitWorkingDirectory.getUpstreamBranchName(),
-				gitWorkingDirectory.getRemote("upstream"));
+				gitWorkingDirectory.getRemote("upstream"), true);
 
 		List<Callable<Object>> callables = new ArrayList<>();
 
@@ -128,7 +128,7 @@ public class LocalGitSyncUtil {
 					if (upstreamUsername.equals("liferay")) {
 						GitWorkingDirectory.Branch localUpstreamBranch =
 							gitWorkingDirectory.getBranch(
-								upstreamBranch.getName(), null);
+								upstreamBranch.getName(), null, true);
 
 						gitWorkingDirectory.pushToRemote(
 							true, localUpstreamBranch, upstreamBranch.getName(),
@@ -600,7 +600,7 @@ public class LocalGitSyncUtil {
 
 					GitWorkingDirectory.Branch remoteCacheBranch =
 						gitWorkingDirectory.getBranch(
-							cacheBranchName, localGitRemote);
+							cacheBranchName, localGitRemote, true);
 
 					gitWorkingDirectory.fetch(null, remoteCacheBranch);
 
@@ -635,7 +635,7 @@ public class LocalGitSyncUtil {
 				gitWorkingDirectory.fetch(
 					localCacheBranch,
 					gitWorkingDirectory.getBranch(
-						senderBranchName, senderRemote));
+						senderBranchName, senderRemote, true));
 
 				updateLocalUpstreamBranch(
 					gitWorkingDirectory, upstreamBranchSHA);
@@ -648,7 +648,8 @@ public class LocalGitSyncUtil {
 
 					gitWorkingDirectory.rebase(
 						true,
-						gitWorkingDirectory.getBranch(upstreamBranchName, null),
+						gitWorkingDirectory.getBranch(
+							upstreamBranchName, null, true),
 						localCacheBranch);
 				}
 
@@ -781,7 +782,8 @@ public class LocalGitSyncUtil {
 
 				if (currentBranch == null) {
 					currentBranch = gitWorkingDirectory.getBranch(
-						gitWorkingDirectory.getUpstreamBranchName(), null);
+						gitWorkingDirectory.getUpstreamBranchName(), null,
+						true);
 				}
 
 				GitWorkingDirectory.Branch newTimestampBranch =
@@ -831,7 +833,8 @@ public class LocalGitSyncUtil {
 
 		GitWorkingDirectory.Branch remoteUpstreamBranch =
 			gitWorkingDirectory.getBranch(
-				upstreamBranchName, gitWorkingDirectory.getRemote("upstream"));
+				upstreamBranchName, gitWorkingDirectory.getRemote("upstream"),
+				true);
 
 		GitWorkingDirectory.Branch localUpstreamBranch =
 			gitWorkingDirectory.getBranch(upstreamBranchName, null);

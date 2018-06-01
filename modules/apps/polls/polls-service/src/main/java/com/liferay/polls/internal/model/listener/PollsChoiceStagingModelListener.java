@@ -12,44 +12,39 @@
  * details.
  */
 
-package com.liferay.journal.model.listener;
+package com.liferay.polls.internal.model.listener;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.polls.model.PollsChoice;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.staging.model.listener.StagingModelListener;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Díaz
+ * @author Akos Thurzo
  */
 @Component(immediate = true, service = ModelListener.class)
-public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
+public class PollsChoiceStagingModelListener
+	extends BaseModelListener<PollsChoice> {
 
 	@Override
-	public void onBeforeRemove(DDMStructure ddmStructure)
+	public void onAfterCreate(PollsChoice choice)
 		throws ModelListenerException {
 
-		try {
-			_journalArticleLocalService.deleteArticles(
-				ddmStructure.getGroupId(), DDMStructure.class.getName(),
-				ddmStructure.getStructureId());
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
+		_stagingModelListener.onAfterCreate(choice);
 	}
 
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
+	@Override
+	public void onAfterUpdate(PollsChoice choice)
+		throws ModelListenerException {
 
-		_journalArticleLocalService = journalArticleLocalService;
+		_stagingModelListener.onAfterUpdate(choice);
 	}
 
-	private JournalArticleLocalService _journalArticleLocalService;
+	@Reference
+	private StagingModelListener<PollsChoice> _stagingModelListener;
 
 }

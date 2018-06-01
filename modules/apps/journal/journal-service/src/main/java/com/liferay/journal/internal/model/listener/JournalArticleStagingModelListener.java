@@ -12,57 +12,39 @@
  * details.
  */
 
-package com.liferay.journal.model.listener;
+package com.liferay.journal.internal.model.listener;
 
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.util.JournalContent;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.staging.model.listener.StagingModelListener;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Jon Steer
- * @author Raymond Augé
+ * @author Akos Thurzo
  */
 @Component(immediate = true, service = ModelListener.class)
-public class JournalArticleModelListener
+public class JournalArticleStagingModelListener
 	extends BaseModelListener<JournalArticle> {
 
 	@Override
-	public void onAfterRemove(JournalArticle article) {
-		clearCache(article);
+	public void onAfterCreate(JournalArticle journalArticle)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterCreate(journalArticle);
 	}
 
 	@Override
-	public void onAfterUpdate(JournalArticle article) {
-		clearCache(article);
+	public void onAfterUpdate(JournalArticle journalArticle)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterUpdate(journalArticle);
 	}
 
-	protected void clearCache(JournalArticle article) {
-		if (article == null) {
-			return;
-		}
-
-		// Journal content
-
-		_journalContent.clearCache(
-			article.getGroupId(), article.getArticleId(),
-			article.getDDMTemplateKey());
-
-		// Layout cache
-
-		CacheUtil.clearCache(article.getCompanyId());
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalContent(JournalContent journalContent) {
-		_journalContent = journalContent;
-	}
-
-	private JournalContent _journalContent;
+	@Reference
+	private StagingModelListener<JournalArticle> _stagingModelListener;
 
 }

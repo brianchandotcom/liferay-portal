@@ -12,46 +12,39 @@
  * details.
  */
 
-package com.liferay.journal.model.listener;
+package com.liferay.document.library.internal.model.listener;
 
-import com.liferay.journal.model.JournalArticle;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.staging.model.listener.StagingModelListener;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eduardo Garcia
+ * @author Akos Thurzo
  */
 @Component(immediate = true, service = ModelListener.class)
-public class GroupModelListener extends BaseModelListener<Group> {
+public class DLFileShortcutStagingModelListener
+	extends BaseModelListener<DLFileShortcut> {
 
 	@Override
-	public void onBeforeRemove(Group group) throws ModelListenerException {
-		try {
-			_subscriptionLocalService.deleteSubscriptions(
-				group.getCompanyId(), JournalArticle.class.getName(),
-				group.getGroupId());
-		}
-		catch (Exception e) {
-			throw new ModelListenerException(e);
-		}
+	public void onAfterCreate(DLFileShortcut fileShortcut)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterCreate(fileShortcut);
 	}
 
-	/**
-	 * @deprecated As of 4.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected void setSubscriptionLocalService(
-		com.liferay.portal.kernel.service.SubscriptionLocalService
-			subscriptionLocalService) {
+	@Override
+	public void onAfterUpdate(DLFileShortcut fileShortcut)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterUpdate(fileShortcut);
 	}
 
 	@Reference
-	private SubscriptionLocalService _subscriptionLocalService;
+	private StagingModelListener<DLFileShortcut> _stagingModelListener;
 
 }

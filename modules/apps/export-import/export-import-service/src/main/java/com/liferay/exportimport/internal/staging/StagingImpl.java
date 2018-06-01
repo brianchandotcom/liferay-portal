@@ -196,7 +196,15 @@ public class StagingImpl implements Staging {
 
 		long groupId = stagedGroupedModel.getGroupId();
 
-		Group group = _groupLocalService.getGroup(groupId);
+		if (groupId <= 0) {
+			return;
+		}
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return;
+		}
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();

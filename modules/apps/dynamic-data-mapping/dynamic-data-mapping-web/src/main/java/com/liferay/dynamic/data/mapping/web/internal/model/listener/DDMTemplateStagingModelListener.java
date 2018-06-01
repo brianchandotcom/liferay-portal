@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.bookmarks.model.listener;
+package com.liferay.dynamic.data.mapping.web.internal.model.listener;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -27,24 +27,24 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(immediate = true, service = ModelListener.class)
-public class BookmarksEntryStagingModelListener
-	extends BaseModelListener<BookmarksEntry> {
+public class DDMTemplateStagingModelListener
+	extends BaseModelListener<DDMTemplate> {
 
 	@Override
-	public void onAfterCreate(BookmarksEntry bookmarksEntry)
+	public void onAfterCreate(DDMTemplate template)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(bookmarksEntry);
+		_stagingModelListener.onAfterCreate(template);
 	}
 
 	@Override
-	public void onAfterUpdate(BookmarksEntry bookmarksEntry)
+	public void onAfterUpdate(DDMTemplate template)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(bookmarksEntry);
+		_stagingModelListener.onAfterUpdate(template);
 	}
 
 	@Reference
-	private StagingModelListener<BookmarksEntry> _stagingModelListener;
+	private StagingModelListener<DDMTemplate> _stagingModelListener;
 
 }

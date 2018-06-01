@@ -29,7 +29,7 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.UPDATE) %>">
+	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 		<portlet:renderURL var="editFragmentEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -41,9 +41,7 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 			message="edit"
 			url="<%= editFragmentEntryURL %>"
 		/>
-	</c:if>
 
-	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.UPDATE) %>">
 		<portlet:actionURL name="/fragment/update_fragment_entry" var="updateFragmentEntryURL">
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
 			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
@@ -65,7 +63,7 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= FragmentEntry.class.getName() %>"
 			modelResourceDescription="<%= fragmentEntry.getName() %>"
@@ -105,7 +103,7 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.DELETE) %>">
+	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 		<portlet:actionURL name="/fragment/delete_fragment_entries" var="deleteFragmentEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />

@@ -25,7 +25,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -127,10 +126,6 @@ public class FragmentEntryLocalServiceImpl
 
 		fragmentEntryPersistence.update(fragmentEntry);
 
-		// Resources
-
-		resourceLocalService.addModelResources(fragmentEntry, serviceContext);
-
 		return fragmentEntry;
 	}
 
@@ -224,10 +219,6 @@ public class FragmentEntryLocalServiceImpl
 
 		fragmentEntryPersistence.update(fragmentEntry);
 
-		// Resources
-
-		resourceLocalService.addModelResources(fragmentEntry, serviceContext);
-
 		return fragmentEntry;
 	}
 
@@ -245,13 +236,6 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		fragmentEntryPersistence.remove(fragmentEntry);
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			fragmentEntry.getCompanyId(), FragmentEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			fragmentEntry.getFragmentEntryId());
 
 		return fragmentEntry;
 	}

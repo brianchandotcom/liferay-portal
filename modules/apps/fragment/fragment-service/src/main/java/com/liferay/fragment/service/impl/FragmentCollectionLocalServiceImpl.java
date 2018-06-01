@@ -22,7 +22,6 @@ import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -91,11 +90,6 @@ public class FragmentCollectionLocalServiceImpl
 
 		fragmentCollectionPersistence.update(fragmentCollection);
 
-		// Resources
-
-		resourceLocalService.addModelResources(
-			fragmentCollection, serviceContext);
-
 		return fragmentCollection;
 	}
 
@@ -107,14 +101,6 @@ public class FragmentCollectionLocalServiceImpl
 		/// Fragment collection
 
 		fragmentCollectionPersistence.remove(fragmentCollection);
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			fragmentCollection.getCompanyId(),
-			FragmentCollection.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			fragmentCollection.getFragmentCollectionId());
 
 		// Fragment entries
 

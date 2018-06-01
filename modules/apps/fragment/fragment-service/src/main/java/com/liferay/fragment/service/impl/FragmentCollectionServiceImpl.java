@@ -22,8 +22,6 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,7 +44,7 @@ public class FragmentCollectionServiceImpl
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
-			FragmentActionKeys.ADD_FRAGMENT_COLLECTION);
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentCollectionLocalService.addFragmentCollection(
 			getUserId(), groupId, name, description, serviceContext);
@@ -60,7 +58,7 @@ public class FragmentCollectionServiceImpl
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
-			FragmentActionKeys.ADD_FRAGMENT_COLLECTION);
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentCollectionLocalService.addFragmentCollection(
 			getUserId(), groupId, fragmentCollectionKey, name, description,
@@ -72,11 +70,16 @@ public class FragmentCollectionServiceImpl
 			long fragmentCollectionId)
 		throws PortalException {
 
-		_fragmentCollectionModelResourcePermission.check(
-			getPermissionChecker(), fragmentCollectionId, ActionKeys.DELETE);
+		FragmentCollection fragmentCollection =
+			fragmentCollectionLocalService.getFragmentCollection(
+				fragmentCollectionId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentCollection.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentCollectionLocalService.deleteFragmentCollection(
-			fragmentCollectionId);
+			fragmentCollection);
 	}
 
 	@Override
@@ -84,12 +87,16 @@ public class FragmentCollectionServiceImpl
 		throws PortalException {
 
 		for (long fragmentCollectionId : fragmentCollectionIds) {
-			_fragmentCollectionModelResourcePermission.check(
-				getPermissionChecker(), fragmentCollectionId,
-				ActionKeys.DELETE);
+			FragmentCollection fragmentCollection =
+				fragmentCollectionLocalService.getFragmentCollection(
+					fragmentCollectionId);
+
+			_portletResourcePermission.check(
+				getPermissionChecker(), fragmentCollection.getGroupId(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 			fragmentCollectionLocalService.deleteFragmentCollection(
-				fragmentCollectionId);
+				fragmentCollection);
 		}
 	}
 
@@ -102,8 +109,9 @@ public class FragmentCollectionServiceImpl
 				fragmentCollectionId);
 
 		if (fragmentCollection != null) {
-			_fragmentCollectionModelResourcePermission.check(
-				getPermissionChecker(), fragmentCollection, ActionKeys.VIEW);
+			_portletResourcePermission.check(
+				getPermissionChecker(), fragmentCollection.getGroupId(),
+				ActionKeys.VIEW);
 		}
 
 		return fragmentCollection;
@@ -158,7 +166,7 @@ public class FragmentCollectionServiceImpl
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
-			FragmentActionKeys.ADD_FRAGMENT_COLLECTION);
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentEntryLocalService.getTempFileNames(
 			getUserId(), groupId, folderName);
@@ -169,19 +177,18 @@ public class FragmentCollectionServiceImpl
 			long fragmentCollectionId, String name, String description)
 		throws PortalException {
 
-		_fragmentCollectionModelResourcePermission.check(
-			getPermissionChecker(), fragmentCollectionId, ActionKeys.UPDATE);
+		FragmentCollection fragmentCollection =
+			fragmentCollectionLocalService.getFragmentCollection(
+				fragmentCollectionId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentCollection.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentCollectionLocalService.updateFragmentCollection(
 			fragmentCollectionId, name, description);
 	}
 
-	private static volatile ModelResourcePermission<FragmentCollection>
-		_fragmentCollectionModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				FragmentCollectionServiceImpl.class,
-				"_fragmentCollectionModelResourcePermission",
-				FragmentCollection.class);
 	private static volatile PortletResourcePermission
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(

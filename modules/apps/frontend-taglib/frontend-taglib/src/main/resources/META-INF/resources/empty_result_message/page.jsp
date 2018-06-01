@@ -35,6 +35,7 @@
 				<c:choose>
 					<c:when test="<%= actionDropdownItems.size() > 1 %>">
 						<clay:dropdown-menu
+							componentId="<%= componentId %>"
 							dropdownItems="<%= actionDropdownItems %>"
 							itemsIconAlignment="left"
 							label='<%= LanguageUtil.get(request, "new") %>'
@@ -48,11 +49,25 @@
 						DropdownItem actionDropdownItem = actionDropdownItems.get(0);
 						%>
 
-						<clay:link
-							buttonStyle="secondary"
-							href='<%= String.valueOf(actionDropdownItem.get("href")) %>'
-							label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
-						/>
+						<c:choose>
+							<c:when test='<%= Validator.isNotNull(actionDropdownItem.get("href")) %>'>
+								<clay:link
+									buttonStyle="secondary"
+									componentId="<%= componentId %>"
+									data='<%= (HashMap)actionDropdownItem.get("data") %>'
+									href='<%= String.valueOf(actionDropdownItem.get("href")) %>'
+									label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
+								/>
+							</c:when>
+							<c:otherwise>
+								<clay:button
+									componentId="<%= componentId %>"
+									data='<%= (HashMap)actionDropdownItem.get("data") %>'
+									label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
+									style="secondary"
+								/>
+							</c:otherwise>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</div>

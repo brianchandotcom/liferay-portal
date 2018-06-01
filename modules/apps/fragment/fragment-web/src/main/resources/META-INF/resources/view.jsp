@@ -54,6 +54,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 											</li>
 											<li>
 												<clay:dropdown-actions
+													componentId="actionsComponent"
 													dropdownItems="<%= fragmentDisplayContext.getCollectionsDropdownItems() %>"
 												/>
 											</li>
@@ -95,6 +96,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 								<liferay-frontend:empty-result-message
 									actionDropdownItems="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) ? fragmentDisplayContext.getActionDropdownItems() : null %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
+									componentId="actionsComponent"
 									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-fragments") %>'
 									elementType='<%= LanguageUtil.get(request, "collections") %>'
 								/>
@@ -138,7 +140,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 </aui:form>
 
 <aui:script use="liferay-item-selector-dialog">
-	window.<portlet:namespace />deleteCollections = function() {
+	var deleteCollections = function() {
 		var fragmentCollectionsFm = $(document.<portlet:namespace />fragmentCollectionsFm);
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
@@ -162,9 +164,9 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 		);
 
 		itemSelectorDialog.open();
-	}
+	};
 
-	window.<portlet:namespace />exportCollections = function() {
+	var exportCollections = function() {
 		var fragmentCollectionsFm = $(document.<portlet:namespace />fragmentCollectionsFm);
 
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
@@ -188,9 +190,9 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 		);
 
 		itemSelectorDialog.open();
-	}
+	};
 
-	window.<portlet:namespace />openImportView = function() {
+	var openImportView = function() {
 		Liferay.Util.openWindow(
 			{
 				dialog: {
@@ -206,7 +208,35 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import_fragment_collections" /></portlet:renderURL>'
 			}
 		);
-	}
+	};
+
+	var ACTIONS = {
+		'deleteCollections': deleteCollections,
+		'exportCollections': exportCollections,
+		'openImportView': openImportView
+	};
+
+	Liferay.componentReady('actionsComponent').then(
+		function(actionsComponent) {
+			actionsComponent.on(
+				['click', 'itemClicked'],
+				function(event, facade) {
+					var itemData;
+
+					if (event.data && event.data.item) {
+						itemData = event.data.item.data;
+					}
+					else if (!event.data && facade && facade.target) {
+						itemData = facade.target.data;
+					}
+
+					if (itemData && itemData.action && ACTIONS[itemData.action]) {
+						ACTIONS[itemData.action]();
+					}
+				}
+			);
+		}
+	);
 </aui:script>
 
 <aui:script require="metal-dom/src/all/dom as dom">

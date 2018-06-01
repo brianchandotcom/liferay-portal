@@ -23,6 +23,7 @@
 <%
 List<DropdownItem> actionDropdownItems = (List<DropdownItem>)request.getAttribute("liferay-frontend:empty-result-message:actionDropdownItems");
 String animationTypeCssClass = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:animationTypeCssClass"));
+String componentId = GetterUtil.getString((String)request.getAttribute("liferay-frontend:empty-result-message:componentId"));
 String description = (String)request.getAttribute("liferay-frontend:empty-result-message:description");
 String elementType = (String)request.getAttribute("liferay-frontend:empty-result-message:elementType");
 %>

@@ -43,7 +43,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 									<div class="autofit-col autofit-col-end">
 										<ul class="navbar-nav">
 											<li>
-												<c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
+												<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 													<liferay-ui:icon
 														icon="plus"
 														iconCssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
@@ -94,7 +94,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 								</p>
 
 								<liferay-frontend:empty-result-message
-									actionDropdownItems="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) ? fragmentDisplayContext.getActionDropdownItems() : null %>"
+									actionDropdownItems="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? fragmentDisplayContext.getActionDropdownItems() : null %>"
 									animationType="<%= EmptyResultMessageKeys.AnimationType.NONE %>"
 									componentId="actionsComponent"
 									description='<%= LanguageUtil.get(request, "collections-are-needed-to-create-fragments") %>'

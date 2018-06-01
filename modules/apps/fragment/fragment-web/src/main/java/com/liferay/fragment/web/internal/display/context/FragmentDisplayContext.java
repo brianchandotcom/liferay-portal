@@ -19,7 +19,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
-import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.util.FragmentPortletUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -459,20 +458,6 @@ public class FragmentDisplayContext {
 		}
 
 		return true;
-	}
-
-	public boolean isShowAddButton(String actionId) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (FragmentPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getSiteGroupId(), actionId)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private List<DropdownItem>

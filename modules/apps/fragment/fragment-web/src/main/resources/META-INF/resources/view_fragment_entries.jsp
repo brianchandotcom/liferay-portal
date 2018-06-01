@@ -28,7 +28,7 @@
 	searchActionURL="<%= fragmentDisplayContext.getFragmentEntrySearchActionURL() %>"
 	searchContainerId="fragmentEntries"
 	searchFormName="searchFm"
-	showCreationMenu="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) ? true : false %>"
+	showCreationMenu="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? true : false %>"
 	sortingOrder="<%= fragmentDisplayContext.getOrderByType() %>"
 	sortingURL="<%= fragmentDisplayContext.getFragmentEntrySortingURL() %>"
 />
@@ -124,7 +124,7 @@
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) %>">
+<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 		function handleAddFragmentEntryMenuItemClick(event) {
 			event.preventDefault();

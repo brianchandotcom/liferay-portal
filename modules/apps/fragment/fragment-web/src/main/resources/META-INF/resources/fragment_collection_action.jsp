@@ -28,7 +28,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 	showWhenSingleIcon="<%= true %>"
 	triggerCssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
 >
-	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.UPDATE) %>">
+	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 		<portlet:renderURL var="editFragmentCollectionURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
 			<portlet:param name="redirect" value="<%= fragmentDisplayContext.getRedirect() %>" />
@@ -41,7 +41,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 		/>
 	</c:if>
 
-	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= FragmentCollection.class.getName() %>"
 			modelResourceDescription="<%= fragmentCollection.getName() %>"
@@ -67,7 +67,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 		url="<%= exportFragmentCollectionsURL %>"
 	/>
 
-	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.UPDATE) %>">
+	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 
 		<%
 		Map<String, Object> importFragmentEntriesData = new HashMap<String, Object>();
@@ -81,9 +81,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 			message="import"
 			url="javascript:;"
 		/>
-	</c:if>
 
-	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
 			<portlet:param name="mvcRenderCommandName" value="/fragment/view" />
 		</portlet:renderURL>

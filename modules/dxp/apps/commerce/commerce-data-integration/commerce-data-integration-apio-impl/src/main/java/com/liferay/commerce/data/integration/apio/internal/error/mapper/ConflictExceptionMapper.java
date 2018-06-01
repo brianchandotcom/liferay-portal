@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.data.integration.apio.internal.error.mapper;
 
-import com.liferay.apio.architect.converter.ExceptionMapper;
 import com.liferay.apio.architect.error.APIError;
+import com.liferay.apio.architect.exception.mapper.ExceptionMapper;
 import com.liferay.commerce.data.integration.apio.internal.exceptions.ConflictException;
 
 import javax.ws.rs.core.Response;

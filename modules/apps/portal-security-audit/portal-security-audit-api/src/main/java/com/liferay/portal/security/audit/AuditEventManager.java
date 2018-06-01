@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.audit;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -24,6 +26,7 @@ import java.util.List;
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
+@ProviderType
 public interface AuditEventManager {
 
 	public AuditEvent addAuditEvent(AuditMessage auditMessage);

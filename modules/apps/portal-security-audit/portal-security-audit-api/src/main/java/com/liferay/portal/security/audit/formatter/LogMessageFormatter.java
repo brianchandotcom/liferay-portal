@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.audit.formatter;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.audit.AuditMessage;
 
 /**

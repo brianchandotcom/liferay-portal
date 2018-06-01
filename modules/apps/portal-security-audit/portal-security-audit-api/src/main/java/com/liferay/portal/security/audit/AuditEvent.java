@@ -14,12 +14,15 @@
 
 package com.liferay.portal.security.audit;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.Date;
 
 /**
  * @author Brian Greenwald
  * @author Prathima Shreenath
  */
+@ProviderType
 public interface AuditEvent {
 
 	public String getAdditionalInfo();

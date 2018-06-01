@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.audit.configuration;
 
+import aQute.bnd.annotation.ProviderType;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -26,6 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	id = "com.liferay.portal.security.audit.configuration.AuditConfiguration",
 	localization = "content/Language", name = "audit-configuration-name"
 )
+@ProviderType
 public interface AuditConfiguration {
 
 	@Meta.AD(deflt = "true", name = "enabled", required = false)

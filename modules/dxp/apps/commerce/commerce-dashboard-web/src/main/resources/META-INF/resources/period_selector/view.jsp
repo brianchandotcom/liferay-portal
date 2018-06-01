@@ -32,7 +32,7 @@ CommerceDashboardDisplayContext commerceDashboardDisplayContext = (CommerceDashb
 		%>
 
 			<clay:button
-				elementClasses='<%= period == commerceDashboardDisplayContext.getPeriod() ? "active" : StringPool.BLANK %>'
+				elementClasses='<%= (period == commerceDashboardDisplayContext.getPeriod()) ? "active" : StringPool.BLANK %>'
 				label="<%= LanguageUtil.get(request, CommerceForecastEntryConstants.getPeriodLabel(period)) %>"
 				name='<%= renderResponse.getNamespace() + "period" %>'
 				style="secondary"

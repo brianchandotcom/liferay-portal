@@ -179,7 +179,7 @@ PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 													resultRow="<%= row %>"
 													rowChecker="<%= cpAttachmentFileEntriesDisplayContext.getRowChecker() %>"
 													title="<%= cpAttachmentFileEntry.getTitle(languageId) %>"
-													url="<%= rowURL != null ? rowURL.toString() : StringPool.BLANK %>"
+													url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
 												>
 													<%@ include file="/attachment_file_entry_vertical_card.jspf" %>
 												</liferay-frontend:icon-vertical-card>
@@ -193,7 +193,7 @@ PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 													resultRow="<%= row %>"
 													rowChecker="<%= cpAttachmentFileEntriesDisplayContext.getRowChecker() %>"
 													title="<%= cpAttachmentFileEntry.getTitle(languageId) %>"
-													url="<%= rowURL != null ? rowURL.toString() : StringPool.BLANK %>"
+													url="<%= (rowURL != null) ? rowURL.toString() : StringPool.BLANK %>"
 												>
 													<%@ include file="/attachment_file_entry_vertical_card.jspf" %>
 												</liferay-frontend:vertical-card>

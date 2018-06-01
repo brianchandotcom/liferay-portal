@@ -18,7 +18,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.kernel.util.RawMetadataProcessorUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -177,22 +176,13 @@ public class ActionUtil {
 			return null;
 		}
 
-		FileVersion fileVersion = null;
-
 		String version = ParamUtil.getString(request, "version");
 
 		if (Validator.isNotNull(version)) {
-			fileVersion = fileEntry.getFileVersion(version);
-		}
-		else {
-			fileVersion = fileEntry.getFileVersion();
+			return fileEntry.getFileVersion(version);
 		}
 
-		if (RawMetadataProcessorUtil.isSupported(fileVersion)) {
-			RawMetadataProcessorUtil.generateMetadata(fileVersion);
-		}
-
-		return fileVersion;
+		return fileEntry.getFileVersion();
 	}
 
 	public static FileVersion getFileVersion(

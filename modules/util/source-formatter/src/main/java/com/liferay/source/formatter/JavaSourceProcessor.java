@@ -36,7 +36,7 @@ import java.util.TreeSet;
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public void init() throws Exception {
+	public void preFormat() throws Exception {
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 		_checkstyleLogger = new CheckstyleLogger(

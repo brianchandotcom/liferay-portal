@@ -47,7 +47,7 @@ import java.util.TreeSet;
 public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public void init() throws Exception {
+	public void preFormat() throws Exception {
 		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
 
 		_checkstyleLogger = new AlloyMVCCheckstyleLogger(

@@ -682,7 +682,7 @@ public class SourceFormatter {
 			_sourceFormatterSuppressions);
 		sourceProcessor.setSubrepository(_subrepository);
 
-		sourceProcessor.init();
+		sourceProcessor.preFormat();
 
 		sourceProcessor.format();
 

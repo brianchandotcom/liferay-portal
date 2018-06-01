@@ -183,10 +183,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public void init() throws Exception {
-	}
-
-	@Override
 	public boolean isPortalSource() {
 		return _portalSource;
 	}
@@ -194,6 +190,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public boolean isSubrepository() {
 		return _subrepository;
+	}
+
+	@Override
+	public void preFormat() throws Exception {
 	}
 
 	@Override

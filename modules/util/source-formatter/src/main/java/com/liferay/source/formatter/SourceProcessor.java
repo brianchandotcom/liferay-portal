@@ -40,11 +40,11 @@ public interface SourceProcessor {
 
 	public List<SourceMismatchException> getSourceMismatchExceptions();
 
-	public void init() throws Exception;
-
 	public boolean isPortalSource();
 
 	public boolean isSubrepository();
+
+	public void preFormat() throws Exception;
 
 	public void setAllFileNames(List<String> allFileNames);
 

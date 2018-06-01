@@ -11,14 +11,12 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_FRAGMENT_COLLECTION</action-key>
-				<action-key>ADD_FRAGMENT_ENTRY</action-key>
+				<action-key>MANAGE_FRAGMENT_ENTRIES</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
-				<action-key>ADD_FRAGMENT_COLLECTION</action-key>
-				<action-key>ADD_FRAGMENT_ENTRY</action-key>
+				<action-key>MANAGE_FRAGMENT_ENTRIES</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
@@ -26,57 +24,8 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
-				<action-key>ADD_FRAGMENT_COLLECTION</action-key>
-				<action-key>ADD_FRAGMENT_ENTRY</action-key>
+				<action-key>MANAGE_FRAGMENT_ENTRIES</action-key>
 				<action-key>PERMISSIONS</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.fragment.model.FragmentCollection</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_fragment_web_portlet_FragmentPortlet</portlet-name>
-		</portlet-ref>
-		<weight>2</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>UPDATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.fragment.model.FragmentEntry</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_fragment_web_portlet_FragmentPortlet</portlet-name>
-		</portlet-ref>
-		<weight>3</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

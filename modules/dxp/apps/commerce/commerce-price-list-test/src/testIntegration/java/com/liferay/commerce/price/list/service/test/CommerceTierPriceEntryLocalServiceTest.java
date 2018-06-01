@@ -21,9 +21,11 @@ import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntry
 import com.liferay.commerce.price.list.exception.NoSuchPriceEntryException;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalService;
 import com.liferay.commerce.price.list.test.util.CommercePriceEntryTestUtil;
 import com.liferay.commerce.price.list.test.util.CommerceTierPriceEntryTestUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,6 +36,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.math.BigDecimal;
+
+import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
@@ -304,7 +308,7 @@ public class CommerceTierPriceEntryLocalServiceTest {
 		).and(
 			"entryExternalReferenceCode are not used"
 		).then(
-			"The result should be a DuplicateCommerceTierPriceEntryException"
+			"The result should be a NoSuchPriceEntryException"
 		);
 
 		long commercePriceEntryId = RandomTestUtil.randomLong();
@@ -316,6 +320,73 @@ public class CommerceTierPriceEntryLocalServiceTest {
 		CommerceTierPriceEntryTestUtil.upsertCommerceTierPriceEntry(
 			0L, commercePriceEntryId, minQuantity, price, promoPrice, null,
 			null);
+	}
+
+	@Test
+	public void testUpsertCommerceTierPriceEntry5() throws Exception {
+		frutillaRule.scenario(
+			"Adding a new Tier Price Entry where the referred Price Entry is" +
+				"given by its external reference code"
+		).given(
+			"A Price Entry's external reference code"
+		).and(
+			"The minimum quantity of the entry"
+		).and(
+			"The price of the entry"
+		).and(
+			"The promo price of the entry"
+		).when(
+			"The price, promo price, external reference code"
+		).and(
+			"The minimum quantity are checked against the input data"
+		).and(
+			"commerceTierPriceEntryId"
+		).and(
+			"entryExternalReferenceCode are not used"
+		).and(
+			"priceEntryExternalReferenceCode is used"
+		).then(
+			"The result should be a new Tier Price Entry on the Price Entry"
+		);
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryTestUtil.addCommercePriceEntry(
+				_group.getGroupId());
+
+		String priceEntryExternalReferenceCode = RandomTestUtil.randomString();
+
+		_commercePriceEntryLocalService.updateExternalReferenceCode(
+			commercePriceEntry, priceEntryExternalReferenceCode);
+
+		int minQuantity = RandomTestUtil.randomInt();
+		double price = RandomTestUtil.randomDouble();
+		double promoPrice = RandomTestUtil.randomDouble();
+
+		CommerceTierPriceEntryTestUtil.upsertCommerceTierPriceEntry(
+			0L, 0L, minQuantity, price, promoPrice, null,
+			priceEntryExternalReferenceCode);
+
+		CommercePriceEntry actualCommercePriceEntry =
+			_commercePriceEntryLocalService.fetchByExternalReferenceCode(
+				priceEntryExternalReferenceCode);
+
+		Assert.assertThat(
+			actualCommercePriceEntry.isHasTierPrice(), equalTo(Boolean.TRUE));
+
+		Assert.assertThat(
+			_commerceTierPriceEntryLocalService.
+				getCommerceTierPriceEntriesCount(
+					actualCommercePriceEntry.getCommercePriceEntryId()),
+			equalTo(1));
+
+		List<CommerceTierPriceEntry> commerceTierPriceEntries =
+			_commerceTierPriceEntryLocalService.getCommerceTierPriceEntries(
+				actualCommercePriceEntry.getCommercePriceEntryId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		_assertTierPriceEntryAttributes(
+			actualCommercePriceEntry, minQuantity, price, promoPrice,
+			commerceTierPriceEntries.get(0));
 	}
 
 	@Rule
@@ -343,6 +414,9 @@ public class CommerceTierPriceEntryLocalServiceTest {
 		Assert.assertThat(price, equalTo(actualPrice.doubleValue()));
 		Assert.assertThat(promoPrice, equalTo(actualPromoPrice.doubleValue()));
 	}
+
+	@Inject
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
 	@Inject
 	private CommerceTierPriceEntryLocalService

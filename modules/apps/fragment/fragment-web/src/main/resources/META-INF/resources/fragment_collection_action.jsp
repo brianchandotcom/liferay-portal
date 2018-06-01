@@ -26,7 +26,7 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
-	triggerCssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
+	triggerCssClass="btn btn-unstyled text-secondary"
 >
 	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 		<portlet:renderURL var="editFragmentCollectionURL">

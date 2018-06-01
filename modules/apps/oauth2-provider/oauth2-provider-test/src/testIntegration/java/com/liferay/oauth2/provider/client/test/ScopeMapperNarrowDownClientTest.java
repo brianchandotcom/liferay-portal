@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.client.test;
 
+import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.test.internal.TestApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.model.User;
@@ -21,15 +22,11 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -44,47 +41,39 @@ import org.junit.runner.RunWith;
 /**
  * @author Carlos Sierra Andrés
  */
-@Ignore
+@Ignore("TODO: We still need to fix this one")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class HttpMethodApplicationClientTest extends BaseClientTestCase {
+public class ScopeMapperNarrowDownClientTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			MethodApplicationBundleActivator.class);
+			ScopeMapperNarrowDownClientTestPreparator.class);
 	}
 
 	@Test
 	public void test() throws Exception {
-		WebTarget webTarget = getWebTarget("/methods");
+		WebTarget webTarget = getWebTarget("/annotated");
 
-		Invocation.Builder builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationAfter"));
+		Invocation.Builder invocationBuilder = authorize(
+			webTarget.request(),
+			getToken(
+				"oauthTestApplication", null,
+				getClientCredentials("everything"), this::parseTokenString));
 
-		Assert.assertEquals("get", builder.get(String.class));
+		Assert.assertEquals(
+			"everything.readonly", invocationBuilder.get(String.class));
 
-		Response response = builder.post(
-			Entity.entity("post", MediaType.TEXT_PLAIN_TYPE));
+		String scopeString = getToken(
+			"oauthTestApplication", null,
+			getClientCredentials("everything.readonly"),
+			this::parseScopeString);
 
-		Assert.assertEquals("post", response.readEntity(String.class));
-
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationBefore"));
-
-		response = builder.get();
-
-		Assert.assertEquals(403, response.getStatus());
-
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationWrong"));
-
-		response = builder.get();
-
-		Assert.assertEquals(403, response.getStatus());
+		Assert.assertEquals("everything.readonly", scopeString);
 	}
 
-	public static class MethodApplicationBundleActivator
+	public static class ScopeMapperNarrowDownClientTestPreparator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -93,23 +82,36 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
+			Dictionary<String, Object> annotatedApplicationProperties =
+				new HashMapDictionary<>();
+
+			annotatedApplicationProperties.put(
+				"oauth2.scopechecker.type", "annotations");
+
+			Dictionary<String, Object> scopeMapperProperties =
+				new HashMapDictionary<>();
+
+			scopeMapperProperties.put(
+				"osgi.jaxrs.name", TestApplication.class.getName());
+
+			createFactoryConfiguration(
+				"com.liferay.oauth2.provider.scope.internal.configuration." +
+					"ConfigurableScopeMapperConfiguration",
+				scopeMapperProperties);
+
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-			properties.put("oauth2.test.application", true);
+			properties.put("osgi.jaxrs.name", TestApplication.class.getName());
 
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore",
-				Arrays.asList("GET", "POST"));
+			registerJaxRsApplication(
+				new TestAnnotatedApplication(), "annotated",
+				annotatedApplicationProperties);
 
 			registerJaxRsApplication(
 				new TestApplication(), "methods", properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter",
-				Arrays.asList("GET", "POST"));
-
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationWrong",
+				defaultCompanyId, user, "oauthTestApplication",
 				Collections.singletonList("everything"));
 		}
 

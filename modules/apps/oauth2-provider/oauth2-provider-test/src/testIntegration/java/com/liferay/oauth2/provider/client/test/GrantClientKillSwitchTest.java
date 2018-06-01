@@ -14,22 +14,14 @@
 
 package com.liferay.oauth2.provider.client.test;
 
-import com.liferay.oauth2.provider.test.internal.TestApplication;
+import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Dictionary;
-
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -37,80 +29,66 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Ignore
 @RunAsClient
 @RunWith(Arquillian.class)
-public class HttpMethodApplicationClientTest extends BaseClientTestCase {
+public class GrantClientKillSwitchTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			MethodApplicationBundleActivator.class);
+			GrantKillClientCredentialsSwitchTestPreparator.class);
 	}
 
 	@Test
 	public void test() throws Exception {
-		WebTarget webTarget = getWebTarget("/methods");
-
-		Invocation.Builder builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationAfter"));
-
-		Assert.assertEquals("get", builder.get(String.class));
-
-		Response response = builder.post(
-			Entity.entity("post", MediaType.TEXT_PLAIN_TYPE));
-
-		Assert.assertEquals("post", response.readEntity(String.class));
-
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationBefore"));
-
-		response = builder.get();
-
-		Assert.assertEquals(403, response.getStatus());
-
-		builder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationWrong"));
-
-		response = builder.get();
-
-		Assert.assertEquals(403, response.getStatus());
+		Assert.assertEquals(
+			"unauthorized_client",
+			getToken(
+				"oauthTestApplication", null, this::getClientCredentials,
+				this::parseError));
 	}
 
-	public static class MethodApplicationBundleActivator
+	public static class GrantKillClientCredentialsSwitchTestPreparator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
+			executeAndWaitForReadiness(
+				() -> {
+					Dictionary<String, Object> properties =
+						new HashMapDictionary<>();
+
+					properties.put(
+						"oauth2.allow.client.credentials.grant", false);
+
+					Runnable runnable = updateOrCreateConfiguration(
+						"com.liferay.oauth2.provider.configuration." +
+							"OAuth2ProviderConfiguration",
+						properties);
+
+					autoCloseables.add(
+						() -> executeAndWaitForReadiness(runnable));
+				});
+
 			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-			properties.put("oauth2.test.application", true);
-
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore",
-				Arrays.asList("GET", "POST"));
+			properties.put("oauth2.scopechecker.type", "annotations");
 
 			registerJaxRsApplication(
-				new TestApplication(), "methods", properties);
+				new TestAnnotatedApplication(), "annotated", properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter",
-				Arrays.asList("GET", "POST"));
-
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationWrong",
-				Collections.singletonList("everything"));
+				defaultCompanyId, user, "oauthTestApplication");
 		}
 
 	}

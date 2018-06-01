@@ -55,7 +55,7 @@ pageContext.setAttribute("searchURL", searchURL);
 				>
 					<liferay-frontend:add-menu-item
 						id="addCommerceOrderMenuItem"
-						title='<%= LanguageUtil.get(request, "order") %>'
+						title='<%= LanguageUtil.get(request, "add-order") %>'
 						type="<%= AddMenuKeys.AddMenuType.PRIMARY %>"
 						url='<%= "javascript:" + renderResponse.getNamespace() + "addCommerceOrder();" %>'
 					/>

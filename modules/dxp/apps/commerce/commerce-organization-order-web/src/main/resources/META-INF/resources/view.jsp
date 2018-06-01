@@ -23,7 +23,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 <c:choose>
 	<c:when test="<%= commerceOrganizationOrderDisplayContext.getOrganization() != null %>">
 		<liferay-portlet:renderURL var="addCommerceOrderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-			<liferay-portlet:param name="mvcRenderCommandName" value="addCommerceOrder" />
+			<liferay-portlet:param name="mvcRenderCommandName" value="editCommerceOrderDetails" />
 			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:renderURL>
 
@@ -150,7 +150,7 @@ CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext 
 											label: '<liferay-ui:message key="add-order" />',
 											on: {
 												click: function() {
-													submitForm(document.<portlet:namespace />addFm);
+													submitForm(document.<portlet:namespace />editFm);
 												}
 											}
 										}

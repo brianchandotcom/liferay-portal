@@ -63,32 +63,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void addCommerceOrder(ActionRequest actionRequest)
-		throws Exception {
-
-		long organizationId = ParamUtil.getLong(
-			actionRequest, "organizationId");
-		long shippingAddressId = ParamUtil.getLong(
-			actionRequest, "shippingAddressId");
-		String purchaseOrderNumber = ParamUtil.getString(
-			actionRequest, "purchaseOrderNumber");
-
-		Organization organization =
-			_commerceOrganizationService.getOrganization(organizationId);
-
-		Organization accountOrganization =
-			_commerceOrganizationLocalService.getAccountOrganization(
-				organization.getOrganizationId());
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_commerceOrderService.addOrganizationCommerceOrder(
-			organization.getGroupId(), themeDisplay.getSiteGroupId(),
-			accountOrganization.getOrganizationId(), shippingAddressId,
-			purchaseOrderNumber);
-	}
-
 	protected void approveCommerceOrder(long commerceOrderId) throws Exception {
 		_commerceOrderService.approveCommerceOrder(commerceOrderId);
 	}
@@ -174,8 +148,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD)) {
-				addCommerceOrder(actionRequest);
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				updateCommerceOrder(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceOrders(actionRequest);
@@ -287,6 +261,49 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void submitCommerceOrder(long commerceOrderId) throws Exception {
 		_commerceOrderService.submitCommerceOrder(commerceOrderId);
+	}
+
+	protected void updateCommerceOrder(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		long organizationId = ParamUtil.getLong(
+			actionRequest, "organizationId");
+		long shippingAddressId = ParamUtil.getLong(
+			actionRequest, "shippingAddressId");
+		String purchaseOrderNumber = ParamUtil.getString(
+			actionRequest, "purchaseOrderNumber");
+
+		Organization organization =
+			_commerceOrganizationService.getOrganization(organizationId);
+
+		Organization accountOrganization =
+			_commerceOrganizationLocalService.getAccountOrganization(
+				organization.getOrganizationId());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (commerceOrderId > 0) {
+			CommerceOrder commerceOrder =
+				_commerceOrderService.getCommerceOrder(commerceOrderId);
+
+			_commerceOrderService.updateCommerceOrder(
+				commerceOrderId, commerceOrder.getBillingAddressId(),
+				shippingAddressId, commerceOrder.getCommercePaymentMethodId(),
+				commerceOrder.getCommerceShippingMethodId(),
+				commerceOrder.getShippingOptionName(), purchaseOrderNumber,
+				commerceOrder.getSubtotal(), commerceOrder.getShippingPrice(),
+				commerceOrder.getTotal(), commerceOrder.getAdvanceStatus());
+		}
+		else {
+			_commerceOrderService.addOrganizationCommerceOrder(
+				organization.getGroupId(), themeDisplay.getSiteGroupId(),
+				accountOrganization.getOrganizationId(), shippingAddressId,
+				purchaseOrderNumber);
+		}
 	}
 
 	@Reference

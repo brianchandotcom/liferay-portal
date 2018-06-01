@@ -29,18 +29,19 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER,
-		"mvc.command.name=addCommerceOrder"
+		"mvc.command.name=editCommerceOrderDetails"
 	},
 	service = MVCRenderCommand.class
 )
-public class AddCommerceOrderMVCRenderCommand implements MVCRenderCommand {
+public class EditCommerceOrderDetailsMVCRenderCommand
+	implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/add_order.jsp";
+		return "/edit_order_details.jsp";
 	}
 
 }

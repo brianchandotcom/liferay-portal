@@ -118,6 +118,11 @@ List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList
 						showWhenSingleIcon="<%= true %>"
 						triggerCssClass="component-action"
 					>
+						<liferay-ui:icon
+							message="edit"
+							url='<%= "javascript:" + renderResponse.getNamespace() + "editCommerceOrder();" %>'
+						/>
+
 						<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESET %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -359,11 +364,75 @@ List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList
 	/>
 </liferay-ui:search-container>
 
+<liferay-portlet:renderURL var="editCommerceOrderDetailsURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<liferay-portlet:param name="mvcRenderCommandName" value="editCommerceOrderDetails" />
+	<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+	<liferay-portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
+</liferay-portlet:renderURL>
+
 <portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
 
 <%@ include file="/transition.jspf" %>
 
 <aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />editCommerceOrder',
+		function(A) {
+			var A = AUI();
+
+			var dialog = Liferay.Util.Window.getWindow(
+				{
+					dialog: {
+						destroyOnClose: true,
+						toolbars: {
+							footer: [
+								{
+									cssClass: 'btn-cancel mr-2',
+									label: '<liferay-ui:message key="cancel" />',
+									on: {
+										click: function() {
+											dialog.hide();
+										}
+									}
+								},
+								{
+								cssClass: 'btn-primary',
+								label: '<liferay-ui:message key="edit-order" />',
+								on: {
+									click: function() {
+										submitForm(document.<portlet:namespace />editFm);
+									}
+								}
+							}
+						],
+						header: [
+							{
+								cssClass: 'close',
+								discardDefaultButtonCssClasses: true,
+								labelHTML: '<clay:icon symbol="times" />',
+								on: {
+									click: function(event) {
+										dialog.hide();
+									}
+								}
+							}
+						]
+					},
+					width: 600
+				},
+				title: '<liferay-ui:message key="edit-order" />'
+			}
+		).plug(
+			A.Plugin.IO,
+				{
+					uri: '<%= editCommerceOrderDetailsURL %>'
+				}
+			).render();
+		},
+		['aui-io-deprecated', 'liferay-util-window']
+	);
+
 	function <portlet:namespace />reorderCommerceOrder() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'reorder';
 

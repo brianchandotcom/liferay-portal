@@ -19,18 +19,20 @@
 <%
 CommerceOrganizationOrderDisplayContext commerceOrganizationOrderDisplayContext = (CommerceOrganizationOrderDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+CommerceOrder commerceOrder = commerceOrganizationOrderDisplayContext.getCommerceOrder();
 List<CommerceAddress> commerceAddresses = commerceOrganizationOrderDisplayContext.getAvailableCommerceOrderAddresses();
 Organization organization = commerceOrganizationOrderDisplayContext.getOrganization();
 %>
 
 <portlet:actionURL name="editCommerceOrder" var="editCommerceOrderActionURL" />
 
-<aui:form action="<%= editCommerceOrderActionURL %>" method="post" name="addFm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+<aui:form action="<%= editCommerceOrderActionURL %>" method="post" name="editFm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceOrder == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="commerceOrderId" type="hidden" value="<%= (commerceOrder == null) ? 0 : commerceOrder.getCommerceOrderId() %>" />
 	<aui:input name="organizationId" type="hidden" value="<%= organization.getOrganizationId() %>" />
 
-	<aui:model-context model="<%= CommerceOrder.class %>" />
+	<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 
 	<c:if test="<%= !commerceAddresses.isEmpty() %>">
 		<h6><liferay-ui:message key="shipping-address" /></h6>
@@ -48,7 +50,7 @@ Organization organization = commerceOrganizationOrderDisplayContext.getOrganizat
 					<div class="autofit-col">
 						<div class="custom-control custom-radio">
 							<label>
-								<aui:input checked="<%= i == 0 %>" cssClass="custom-control-input" id='<%= "shippingAddressId" + i %>' label="" name="shippingAddressId" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
+								<aui:input checked="<%= ((commerceOrder != null) && (commerceOrder.getShippingAddressId() == commerceAddress.getCommerceAddressId())) || ((commerceOrder == null) && (i == 0)) || (i == 0) %>" cssClass="custom-control-input" id='<%= "shippingAddressId" + i %>' label="" name="shippingAddressId" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
 								<span class="custom-control-label"></span>
 							</label>

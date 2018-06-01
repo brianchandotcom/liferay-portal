@@ -151,7 +151,8 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 			"HashSet(<.*>|\\(\\))", "TreeSet(<.*>|\\(\\))");
 		content = _sortMethodCall(
 			content, "put", "ConcurrentHashMap(<.*>|\\(\\))",
-			"HashMap(<.*>|\\(\\))", "JSONObject", "TreeMap(<.*>|\\(\\))");
+			"HashMap(<.*>|\\(\\))", "JSONObject", "SortedMap(<.*>|\\(\\))",
+			"TreeMap(<.*>|\\(\\))");
 		content = _sortMethodCall(content, "setAttribute");
 
 		return content;

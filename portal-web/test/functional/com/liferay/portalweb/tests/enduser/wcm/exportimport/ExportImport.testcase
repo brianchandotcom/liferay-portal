@@ -570,9 +570,7 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="LAR#configureExportSiteCP" />
-
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute macro="LAR#exportSiteCP" />
 
 		<var name="key_larFileName" value="${larFileName}" />
 

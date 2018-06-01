@@ -2028,7 +2028,7 @@ public class ProjectTemplatesTest {
 			gradleServiceBuilderVersion = matcher.group(1);
 		}
 
-		final File mavenProjectDir = _buildTemplateWithMaven(
+		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName);
 
 		String mavenResult = _executeMaven(

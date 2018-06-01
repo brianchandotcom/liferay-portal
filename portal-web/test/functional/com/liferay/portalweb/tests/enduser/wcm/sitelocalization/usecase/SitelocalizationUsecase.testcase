@@ -756,6 +756,7 @@
 		</execute>
 
 		<execute macro="SitePages#addPublicPage">
+			<var name="hideFromNavMenu" value="true" />
 			<var name="pageName" value="Language Page" />
 		</execute>
 
@@ -774,7 +775,7 @@
 			<var name="localizedFriendlyURL" value="/test" />
 		</execute>
 
-		<execute macro="Page#hideFromNavigationMenu" />
+		<execute macro="Button#clickSave" />
 
 		<execute macro="User#logoutPG" />
 

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_TO_NAVIGATION_MENU</td>
+	<td>//label[contains(.,'Add this Page to the following Menus:')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALLOW_DICTIONARY_WORDS</td>
 	<td>//label[contains(.,'Allow Dictionary Words')]/input[@type='checkbox']</td>
 	<td></td>
@@ -226,11 +231,6 @@
 <tr>
 	<td>EXPIRATION_ENABLED</td>
 	<td>//label[contains(.,'Expiration Enabled')]/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HIDE_FROM_NAVIGATION_MENU</td>
-	<td>//label[contains(.,'Hide from Navigation Menu')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

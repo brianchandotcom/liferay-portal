@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_ENTRY_CLOSE</td>
+	<td>//div[contains(@class,'navigation-menu-item')][@data-title='${key_itemName}']//span[*[name()='svg'][contains(@class,'circle')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEM_ENTRY_N</td>
 	<td>xpath=(//div[contains(@class,'navigation-menu-item')])[${key_index}]</td>
 	<td></td>

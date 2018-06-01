@@ -176,6 +176,12 @@
 		</if>
 	</command>
 
+	<command name="deleteItem">
+		<execute function="Click" locator1="SiteNavigationMenu#ITEM_ENTRY_CLOSE">
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+	</command>
+
 	<command name="editItem">
 		<execute macro="SiteNavigationMenu#openItemSidebar">
 			<var name="itemName" value="${itemName}" />

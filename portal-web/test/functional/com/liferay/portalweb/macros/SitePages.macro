@@ -9,6 +9,13 @@
 			<var name="name" value="${pageName}" />
 		</execute>
 
+		<if>
+			<equals arg1="${hideFromNavMenu}" arg2="true" />
+			<then>
+				<execute function="Uncheck" locator1="Checkbox#ADD_TO_NAVIGATION_MENU" />
+			</then>
+		</if>
+
 		<execute macro="Modal#submit" />
 	</command>
 
@@ -102,6 +109,7 @@
 		</execute>
 
 		<execute macro="SitePages#_addPage">
+			<var name="hideFromNavMenu" value="${hideFromNavMenu}" />
 			<var name="pageName" value="${childPageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="sitePageType" value="${sitePageType}" />
@@ -129,6 +137,7 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="SitePages#_addPage">
+			<var name="hideFromNavMenu" value="${hideFromNavMenu}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="sitePageType" value="${sitePageType}" />
@@ -156,6 +165,7 @@
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="SitePages#_addPage">
+			<var name="hideFromNavMenu" value="${hideFromNavMenu}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
 			<var name="pageTypeURL" value="${pageTypeURL}" />

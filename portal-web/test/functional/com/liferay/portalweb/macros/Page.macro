@@ -443,12 +443,6 @@
 		</execute>
 	</command>
 
-	<command name="hideFromNavigationMenu">
-		<execute function="Check#checkToggleSwitch" locator1="Checkbox#HIDE_FROM_NAVIGATION_MENU" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-	</command>
-
 	<command name="localizedPG">
 		<execute function="Click" locator1="Link#PAGE_LOCALE">
 			<var name="key_pageLocale" value="${pageLocale}" />
@@ -877,9 +871,10 @@
 		<if>
 			<isset var="friendlyUrlLocalized" />
 			<then>
-				<var name="key_friendlyUrlLocalized" value="${friendlyUrlLocalized}" />
-
-				<execute function="Click" locator1="SitePagesEditPage#FRIENDLY_URL_LOCALIZED" />
+				<execute macro="PortletEntry#changeLocale">
+					<var name="fieldName" value="Friendly URL" />
+					<var name="locale" value="${friendlyUrlLocalized}" />
+				</execute>
 			</then>
 		</if>
 

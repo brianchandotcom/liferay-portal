@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.dashboard.web.internal.display.context;
 
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardForecastsChartPortletInstanceConfiguration;
 import com.liferay.commerce.dashboard.web.internal.servlet.taglib.model.CommerceDashboardPredictiveChartConfig;
 import com.liferay.commerce.forecast.model.CommerceForecastEntry;
@@ -21,7 +23,10 @@ import com.liferay.commerce.forecast.model.CommerceForecastEntryConstants;
 import com.liferay.commerce.forecast.model.CommerceForecastValue;
 import com.liferay.commerce.forecast.service.CommerceForecastEntryLocalService;
 import com.liferay.commerce.forecast.service.CommerceForecastValueLocalService;
+import com.liferay.frontend.taglib.chart.model.AxisY;
 import com.liferay.frontend.taglib.chart.model.MixedDataColumn;
+import com.liferay.frontend.taglib.chart.model.PositionLabel;
+import com.liferay.frontend.taglib.chart.model.PositionLabel.Position;
 import com.liferay.frontend.taglib.chart.model.predictive.PredictiveChartConfig;
 import com.liferay.ibm.icu.text.DateFormat;
 import com.liferay.ibm.icu.text.DateFormat.Field;
@@ -146,6 +151,22 @@ public class CommerceDashboardForecastsChartDisplayContext
 			_dateFormat.format(predictionDate));
 		commerceDashboardPredictiveChartConfig.setTimeseries(
 			_getTimeseries(timeseriesDatesList));
+
+		if (_commerceDashboardForecastsChartPortletInstanceConfiguration.
+				target() == CommerceForecastEntryConstants.TARGET_REVENUE) {
+
+			CommerceContext commerceContext =
+				commerceDashboardRequestHelper.getCommerceContext();
+
+			CommerceCurrency commerceCurrency =
+				commerceContext.getCommerceCurrency();
+
+			AxisY axisY = commerceDashboardPredictiveChartConfig.getAxisY();
+
+			axisY.setPositionLabel(
+				new PositionLabel(
+					Position.OUTER_TOP, commerceCurrency.getCode()));
+		}
 
 		return commerceDashboardPredictiveChartConfig;
 	}

@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.dashboard.web.internal.display.context;
 
-import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardCompanyConfiguration;
 import com.liferay.commerce.dashboard.web.internal.display.context.util.CommerceDashboardRequestHelper;
@@ -52,8 +51,7 @@ public class CommerceDashboardDisplayContext {
 		}
 		else {
 			CommerceContext commerceContext =
-				(CommerceContext)renderRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
+				commerceDashboardRequestHelper.getCommerceContext();
 
 			Organization organization = commerceContext.getOrganization();
 

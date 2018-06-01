@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.dashboard.web.internal.display.context.util;
 
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -22,6 +24,8 @@ import java.util.TimeZone;
 
 import javax.portlet.RenderRequest;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -29,6 +33,13 @@ public class CommerceDashboardRequestHelper extends BaseRequestHelper {
 
 	public CommerceDashboardRequestHelper(RenderRequest renderRequest) {
 		super(PortalUtil.getHttpServletRequest(renderRequest));
+	}
+
+	public CommerceContext getCommerceContext() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		return (CommerceContext)httpServletRequest.getAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT);
 	}
 
 	public TimeZone getTimeZone() {

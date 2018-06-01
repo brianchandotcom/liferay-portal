@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.audit.event.generators.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,6 +33,7 @@ import java.util.List;
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class AuditMessageBuilder {
 
 	public static AuditMessage buildAuditMessage(

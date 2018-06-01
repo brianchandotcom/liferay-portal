@@ -14,12 +14,15 @@
 
 package com.liferay.portal.security.audit.event.generators.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class Attribute {
 
 	public Attribute(String name) {

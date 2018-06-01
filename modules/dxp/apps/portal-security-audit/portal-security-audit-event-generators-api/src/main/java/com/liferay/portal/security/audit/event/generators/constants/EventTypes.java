@@ -14,9 +14,12 @@
 
 package com.liferay.portal.security.audit.event.generators.constants;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface EventTypes {
 
 	public static final String ADD = "ADD";

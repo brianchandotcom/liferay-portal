@@ -164,8 +164,7 @@ public class DefaultAuditRouter implements AuditRouter {
 	@Reference (
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "unsetAuditMessageProcessor"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setAuditMessageProcessor(
 		AuditMessageProcessor auditMessageProcessor,

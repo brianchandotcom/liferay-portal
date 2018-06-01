@@ -68,8 +68,7 @@ public class LoggingAuditMessageProcessor implements AuditMessageProcessor {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeLogMessageFormatter"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addLogMessageFormatter(
 		LogMessageFormatter logMessageFormatter,

@@ -58,6 +58,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.GenericPortlet;
 import javax.portlet.HeaderPortlet;
 import javax.portlet.HeaderRequest;
 import javax.portlet.HeaderResponse;
@@ -213,11 +214,8 @@ public class InvokerPortletImpl
 				Method renderHeadersMethod = portletClass.getMethod(
 					"renderHeaders", HeaderRequest.class, HeaderResponse.class);
 
-				Class<?> declaringClass =
-					renderHeadersMethod.getDeclaringClass();
-
-				if ("javax.portlet.GenericPortlet".equals(
-						declaringClass.getName())) {
+				if (GenericPortlet.class ==
+						renderHeadersMethod.getDeclaringClass()) {
 
 					headerPortlet = false;
 				}

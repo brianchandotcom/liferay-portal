@@ -207,6 +207,15 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 				"Class '" + className +
 					"' should be in package ending with '.osgi.commands'");
 		}
+
+		if (className.matches(".*(?<!Display)Context") &&
+			packageName.endsWith(".display.context")) {
+
+			addMessage(
+				fileName,
+				"The name of Class '" + className +
+					"' should be ending with 'DisplayContext'");
+		}
 	}
 
 	private final List<String> _allowedInternalPackageDirNames =

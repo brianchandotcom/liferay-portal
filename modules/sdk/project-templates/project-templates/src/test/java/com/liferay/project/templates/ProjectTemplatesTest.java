@@ -2006,7 +2006,86 @@ public class ProjectTemplatesTest {
 			"com.liferay.plugin versions do not match",
 			standaloneGradlePluginVersion, workspaceGradlePluginVersion);
 	}
+	
+	@Test
+	public void testCompareServiceBuilderPluginVersions() throws Exception {
+		String name = "sample";
 
+		String packageName = "com.test.sample";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", name, "--package-name", packageName);
+
+		final String serviceProjectName = name + "-service";
+
+		String[] gradleSericeBuilderVersion = new String[1];
+
+		_testChangePortletModelHintsXml(
+			gradleProjectDir, serviceProjectName,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					_executeGradle(
+						gradleProjectDir,
+						":" + serviceProjectName +
+							_GRADLE_TASK_PATH_BUILD_SERVICE);
+
+					Optional<String> result = _executeGradle(
+						gradleProjectDir, true,
+						":" + serviceProjectName + ":dependencies");
+
+					Matcher matcher = _serviceBuilderVersionPattern.matcher(
+						result.get());
+
+					if (matcher.matches()) {
+						gradleSericeBuilderVersion[0] = matcher.group(1);
+					}
+
+					return null;
+				}
+
+			});
+
+		final File mavenProjectDir = _buildTemplateWithMaven(
+			"service-builder", name, "com.test", "-Dpackage=" + packageName);
+
+		String[] mavenSericeBuilderVersion = new String[1];
+
+		_testChangePortletModelHintsXml(
+			mavenProjectDir, serviceProjectName,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					String result = _executeMaven(
+						new File(mavenProjectDir, serviceProjectName),
+						_MAVEN_GOAL_BUILD_SERVICE);
+
+					Matcher matcher = _serviceBuilderVersionPattern.matcher(
+						result);
+
+					if (matcher.matches()) {
+						mavenSericeBuilderVersion[0] = matcher.group(1);
+					}
+
+					return null;
+				}
+
+			});
+
+		boolean versionsEqual = mavenSericeBuilderVersion[0].equals(
+			gradleSericeBuilderVersion[0]);
+
+		if (!versionsEqual) {
+			String message = String.format(
+				"service.builder versions must match (maven: %s, gradle: %s)",
+				mavenSericeBuilderVersion[0], gradleSericeBuilderVersion[0]);
+
+			Assert.assertTrue(message, versionsEqual);
+		}
+	}
+	
 	@Test
 	public void testListTemplates() throws Exception {
 		final Map<String, String> expectedTemplates = new TreeMap<>();
@@ -2514,7 +2593,7 @@ public class ProjectTemplatesTest {
 		_executeGradle(projectDir, false, taskPaths);
 	}
 
-	private static void _executeMaven(File projectDir, String... args)
+	private static String _executeMaven(File projectDir, String... args)
 		throws Exception {
 
 		String[] completeArgs = new String[args.length + 1];
@@ -2526,8 +2605,10 @@ public class ProjectTemplatesTest {
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
+		
+		return result.output;
 	}
-
+	
 	private static void _testArchetyper(
 			File parentDir, File destinationDir, File projectDir, String name,
 			String groupId, String template, List<String> args)
@@ -3528,5 +3609,9 @@ public class ProjectTemplatesTest {
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private static XPathExpression _pomXmlNpmInstallXPathExpression;
 	private static Properties _projectTemplateVersions;
+	private static final Pattern _serviceBuilderVersionPattern =
+			Pattern.compile(
+				".*service\\.builder:([0-9]+\\.[0-9]+\\.[0-9]+).*",
+				Pattern.DOTALL | Pattern.MULTILINE);
 
 }

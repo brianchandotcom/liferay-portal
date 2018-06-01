@@ -61,10 +61,6 @@
 	&.expired {
 		border-color: $status-expired-border !important;
 	}
-
-	&.draft {
-		border-color: $status-draft-border !important;
-	}
 }
 
 .status {
@@ -86,9 +82,5 @@
 
 	&.expired {
 		color: $status-expired-text;
-	}
-
-	&.draft {
-		color: $status-draft-text;
 	}
 }

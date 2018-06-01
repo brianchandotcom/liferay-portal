@@ -4,9 +4,6 @@ $status-approved-text: map-get($theme-colors, success) !default;
 $status-denied-border: map-get($theme-colors, danger) !default;
 $status-denied-text: map-get($theme-colors, danger) !default;
 
-$status-draft-border: $gray-500 !default;
-$status-draft-text: $status-draft-border !default;
-
 $status-expired-border: map-get($theme-colors, warning) !default;
 $status-expired-text: map-get($theme-colors, warning) !default;
 

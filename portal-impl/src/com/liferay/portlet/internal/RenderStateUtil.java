@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portlet.RenderParametersPool;
@@ -42,6 +43,7 @@ import java.util.Set;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
+import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,11 +113,11 @@ public class RenderStateUtil {
 			request, layout, portlet, PortletRequest.RESOURCE_PHASE,
 			MimeResponse.Copy.NONE);
 
-		liferayPortletURL.setParameter("p_p_state", (String)null, false);
-		liferayPortletURL.setParameter("p_p_mode", (String)null, false);
-		liferayPortletURL.setParameter("p_p_cacheability", (String)null, false);
+		liferayPortletURL.setCacheability(ResourceURL.FULL);
 
-		return liferayPortletURL.toString();
+		return StringUtil.replace(
+			liferayPortletURL.toString(), "&p_p_cacheability=cacheLevelFull",
+			StringPool.BLANK);
 	}
 
 	private static JSONArray _getAllowedPortletModesJSONArray(Portlet portlet) {

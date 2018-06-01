@@ -24,15 +24,15 @@
 				<tbody>
 					<#list entries as curCommerceOrderItem>
 						<#assign
-						cpDefinition = curCommerceOrderItem.getCPDefinition()
+							cpDefinition = curCommerceOrderItem.getCPDefinition()
 
-						image = ''
+							image = ''
 
-						productURL = commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay)
+							productURL = commerceCartContentDisplayContext.getCPDefinitionURL(cpDefinition.getCPDefinitionId(), themeDisplay)
 
-						title = cpDefinition.getName()
+							title = cpDefinition.getName()
 
-						deleteURL = commerceCartContentDisplayContext.getDeleteURL(curCommerceOrderItem)
+							deleteURL = commerceCartContentDisplayContext.getDeleteURL(curCommerceOrderItem)
 						/>
 
 						<#if commerceCartContentDisplayContext.getCommerceOrderItemThumbnailSrc(curCommerceOrderItem, themeDisplay)??>
@@ -62,9 +62,11 @@
 									${curCommerceOrderItem.getQuantity()} x ${curCommerceOrderItem.getPrice()}
 								</div>
 
-								<a class="commerce-cart-content-remove" href="${deleteURL}" role="button">
-									${languageUtil.get(request, "remove")}
-								</a>
+								<@liferay_ui["icon-delete"]
+									cssClass="commerce-cart-content-remove"
+									label=true
+									url=deleteURL
+								/>
 							</td>
 						</tr>
 					</#list>
@@ -79,7 +81,7 @@
 <div class="autofit-float autofit-row autofit-row-center commerce-cart-content-actions">
 	<div class="autofit-col autofit-col-expand">
 		<div class="autofit-section">
-			<a class="btn btn-secondary" href="${commerceCartContentDisplayContext.getPortletURL()}">${languageUtil.get(request, "continue-shopping")}</a>
+			<a class="btn btn-secondary" href="${themeDisplay.getLayout().getGroup().getDisplayURL(themeDisplay, false)}">${languageUtil.get(request, "continue-shopping")}</a>
 		</div>
 	</div>
 </div>

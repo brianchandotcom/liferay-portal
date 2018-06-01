@@ -988,13 +988,14 @@
 }
 
 .card:hover {
-	box-shadow: 0 0.625rem 2.5rem -0.1875rem rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0.625rem 2rem -0.1875rem rgba(0, 0, 0, 0.125);
 }
 
 .card-page-nowrap {
 	width: 100%;
 
 	.card-page {
+		-webkit-overflow-scrolling: touch;
 		flex-wrap: nowrap;
 		overflow: auto;
 	}
@@ -2332,11 +2333,19 @@
 	td, th {
 		border-bottom: $table-border-width solid $table-border-color;
 		border-top-width: 0;
+		padding: 0.75rem;
 		vertical-align: middle;
 	}
 
 	.title-column {
+		background-color: #F9F9F9;
+		border-left-width: 1px;
+		border-top-width: 1px;
 		min-width: 200px;
+
+		~ td {
+			text-align: center;
+		}
 	}
 
 	.product-table-row {
@@ -2349,6 +2358,7 @@
 		td, th {
 			background-color: transparent;
 			border-bottom-width: 0;
+			border-top-width: 0;
 		}
 
 		.table-title {

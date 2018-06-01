@@ -122,12 +122,4 @@
 			<a class="btn btn-primary commerce-btn-cta" href="${commerceCartContentTotalDisplayContext.getCheckoutPortletURL()}" role="button">Checkout</a>
 		</div>
 	</div>
-
-	<div class="autofit-col">
-		<div class="autofit-section">
-			<a class="btn btn-outline-borderless btn-outline-primary" href="#1" role="button">
-				Quick Checkout<span class="inline-item inline-item-after"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-info-circle" focusable="false"><use xlink:href="${themeDisplay.getPathThemeImages()}/lexicon/icons.svg#info-circle" /></svg></span>
-			</a>
-		</div>
-	</div>
 </div>

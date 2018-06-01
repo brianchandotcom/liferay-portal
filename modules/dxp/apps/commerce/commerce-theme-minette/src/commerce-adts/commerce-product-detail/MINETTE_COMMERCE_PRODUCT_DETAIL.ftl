@@ -244,8 +244,7 @@
 
 						<div class="autofit-col autofit-col-expand">
 							<div class="autofit-section">
-								8% Discount<br>
-								$28.12 Saved
+								<#-- discount % and $ saved goes here -->
 							</div>
 						</div>
 					</div>

@@ -65,3 +65,8 @@ Scenario: multiLineString
 		Five
 		Six
 		"""
+		# This
+		# is
+		# a
+		## comment
+		### section

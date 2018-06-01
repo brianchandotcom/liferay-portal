@@ -1,5 +1,5 @@
 {
-	"metal": {
+	"clay": {
 		"dest-file-mapper": {
 			"from": "(.*)\\$(.*)@.*/lib/(.*)",
 			"to": "$2/src/$3"

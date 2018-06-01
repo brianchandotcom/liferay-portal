@@ -192,7 +192,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 									<div class="lfr-contact">
 										<div class="lfr-contact-checkbox">
-											<input class="contact-ids" <%= themeDisplay.getUserId() == user2.getUserId() ? "disabled=\"true\"" : StringPool.BLANK %> name="contact-ids-<%= user2.getUserId() %>" type="checkbox" value="<%= user2.getUserId() %>" />
+											<input class="contact-ids" <%= (themeDisplay.getUserId() == user2.getUserId()) ? "disabled=\"true\"" : StringPool.BLANK %> name="contact-ids-<%= user2.getUserId() %>" type="checkbox" value="<%= user2.getUserId() %>" />
 										</div>
 
 										<liferay-portlet:renderURL var="viewUserSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">

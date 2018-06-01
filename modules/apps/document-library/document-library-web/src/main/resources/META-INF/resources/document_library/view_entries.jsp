@@ -192,7 +192,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 											resultRow="<%= row %>"
 											rowChecker="<%= entriesChecker %>"
 											title="<%= latestFileVersion.getTitle() %>"
-											url="<%= rowURL != null ? rowURL.toString() : null %>"
+											url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 										>
 											<%@ include file="/document_library/file_entry_vertical_card.jspf" %>
 										</liferay-frontend:icon-vertical-card>
@@ -206,7 +206,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 											resultRow="<%= row %>"
 											rowChecker="<%= entriesChecker %>"
 											title="<%= latestFileVersion.getTitle() %>"
-											url="<%= rowURL != null ? rowURL.toString() : null %>"
+											url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 										>
 											<%@ include file="/document_library/file_entry_vertical_card.jspf" %>
 										</liferay-frontend:vertical-card>

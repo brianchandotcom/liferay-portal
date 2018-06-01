@@ -144,7 +144,7 @@ JournalFileUploadsConfiguration journalFileUploadsConfiguration = (JournalFileUp
 
 	setTimeout(
 		function() {
-			selectSmallImageType('<%= (article != null) && Validator.isNotNull(article.getSmallImageURL()) ? 0 : 1 %>');
+			selectSmallImageType('<%= ((article != null) && Validator.isNotNull(article.getSmallImageURL())) ? 0 : 1 %>');
 		},
 		0
 	);

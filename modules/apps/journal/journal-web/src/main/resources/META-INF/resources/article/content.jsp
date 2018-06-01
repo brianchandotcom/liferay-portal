@@ -140,7 +140,7 @@ if (!searchRestriction) {
 			name="descriptionMapAsXML"
 			placeholder="description"
 			type="editor"
-			xml="<%= article != null ? article.getDescriptionMapAsXML() : StringPool.BLANK %>"
+			xml="<%= (article != null) ? article.getDescriptionMapAsXML() : StringPool.BLANK %>"
 		/>
 	</div>
 

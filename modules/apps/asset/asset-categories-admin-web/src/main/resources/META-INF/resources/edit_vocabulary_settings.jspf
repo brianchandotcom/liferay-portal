@@ -120,7 +120,7 @@ if (vocabulary != null) {
 					}
 				%>
 
-					<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>' wrapperCssClass='<%= (classNameId != assetRendererFactory.getClassNameId() ? "hide " : "") + "subtype-select" %>'>
+					<aui:select inlineField="<%= true %>" label="" name='<%= "subtype" + assetRendererFactory.getClassNameId() + "-classNameId" + index %>' wrapperCssClass='<%= ((classNameId != assetRendererFactory.getClassNameId()) ? "hide " : "") + "subtype-select" %>'>
 						<c:if test="<%= !exist %>">
 							<aui:option label="none" selected="<%= true %>" value="<%= classTypePK %>" />
 						</c:if>

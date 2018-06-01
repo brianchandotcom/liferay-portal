@@ -27,7 +27,7 @@ if (row != null) {
 %>
 
 <liferay-ui:icon-menu
-	cssClass='<%= row == null ? "entry-options inline" : StringPool.BLANK %>'
+	cssClass='<%= (row == null) ? "entry-options inline" : StringPool.BLANK %>'
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"

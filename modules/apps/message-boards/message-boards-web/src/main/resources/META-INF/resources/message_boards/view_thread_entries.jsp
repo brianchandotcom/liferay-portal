@@ -140,10 +140,10 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 			%>
 
 			<span class="h6 text-default">
-				<liferay-ui:message arguments="<%= repliesCount %>" key='<%= repliesCount == 1 ? "x-reply" : "x-replies" %>' />
+				<liferay-ui:message arguments="<%= repliesCount %>" key='<%= (repliesCount == 1) ? "x-reply" : "x-replies" %>' />
 			</span>
 			<span class="h6 text-default">
-				<liferay-ui:message arguments="<%= viewCount %>" key='<%= viewCount == 1 ? "x-view" : "x-views" %>' />
+				<liferay-ui:message arguments="<%= viewCount %>" key='<%= (viewCount == 1) ? "x-view" : "x-views" %>' />
 			</span>
 
 			<c:if test="<%= thread.isQuestion() %>">
@@ -155,7 +155,7 @@ SearchContainer entriesSearchContainer = (SearchContainer)request.getAttribute("
 				<span class="h6">
 					<%= threadAnswersCount %>
 
-					<liferay-ui:message key='<%= threadAnswersCount == 1 ? "answer" : "answers" %>' />
+					<liferay-ui:message key='<%= (threadAnswersCount == 1) ? "answer" : "answers" %>' />
 				</span>
 			</c:if>
 

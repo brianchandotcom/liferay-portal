@@ -46,5 +46,5 @@ entry = entry.toEscapedModel();
 </h5>
 
 <span class="h6">
-	<liferay-ui:message arguments="<%= entry.getVisits() %>" key='<%= entry.getVisits() == 1 ? "x-visit" : "x-visits" %>' />
+	<liferay-ui:message arguments="<%= entry.getVisits() %>" key='<%= (entry.getVisits() == 1) ? "x-visit" : "x-visits" %>' />
 </span>

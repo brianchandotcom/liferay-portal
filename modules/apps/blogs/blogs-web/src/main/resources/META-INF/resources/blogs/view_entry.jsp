@@ -431,7 +431,7 @@ if (portletTitleBasedNavigation) {
 
 				<c:if test="<%= discussion != null %>">
 					<h2>
-						<strong><liferay-ui:message arguments="<%= discussion.getDiscussionCommentsCount() %>" key='<%= discussion.getDiscussionCommentsCount() == 1 ? "x-comment" : "x-comments" %>' /></strong>
+						<strong><liferay-ui:message arguments="<%= discussion.getDiscussionCommentsCount() %>" key='<%= (discussion.getDiscussionCommentsCount() == 1) ? "x-comment" : "x-comments" %>' /></strong>
 					</h2>
 
 					<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED && entry.isAllowTrackbacks() && Validator.isNotNull(entry.getUrlTitle()) %>">

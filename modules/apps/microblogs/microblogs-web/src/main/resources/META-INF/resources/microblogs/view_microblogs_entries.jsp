@@ -113,7 +113,7 @@ if (microblogsEntries != null) {
 									<portlet:param name="parentMicroblogsEntryId" value="<%= String.valueOf(microblogsEntry.getMicroblogsEntryId()) %>" />
 								</portlet:renderURL>
 
-								<a data-microblogsEntryId="<%= microblogsEntry.getMicroblogsEntryId() %>" href="<%= commentsURL %>"><%= replyCount > 0 ? replyCount : StringPool.BLANK %> <liferay-ui:message key='<%= replyCount > 1 ? "comments" : "comment" %>' /></a>
+								<a data-microblogsEntryId="<%= microblogsEntry.getMicroblogsEntryId() %>" href="<%= commentsURL %>"><%= (replyCount > 0) ? replyCount : StringPool.BLANK %> <liferay-ui:message key='<%= (replyCount > 1) ? "comments" : "comment" %>' /></a>
 							</span>
 						</c:if>
 

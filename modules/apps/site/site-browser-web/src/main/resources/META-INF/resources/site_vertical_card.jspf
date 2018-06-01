@@ -18,7 +18,7 @@
 List<Group> childGroups = group.getChildren(true);
 %>
 
-<div role="<%= urlData != null ? "button" : "" %>">
+<div role="<%= (urlData != null) ? "button" : "" %>">
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(group.getLogoURL(themeDisplay, false)) %>">
 			<liferay-frontend:vertical-card
@@ -31,7 +31,7 @@ List<Group> childGroups = group.getChildren(true);
 				title="<%= group.getDescriptiveName(locale) %>"
 			>
 				<liferay-frontend:vertical-card-footer>
-					<label class="<%= childGroups.size() != 0 ? "text-default" : "disabled" %>">
+					<label class="<%= (childGroups.size() != 0) ? "text-default" : "disabled" %>">
 						<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
 					</label>
 				</liferay-frontend:vertical-card-footer>
@@ -48,7 +48,7 @@ List<Group> childGroups = group.getChildren(true);
 				title="<%= group.getDescriptiveName(locale) %>"
 			>
 				<liferay-frontend:vertical-card-footer>
-					<label class="<%= childGroups.size() != 0 ? "text-default" : "disabled" %>">
+					<label class="<%= (childGroups.size() != 0) ? "text-default" : "disabled" %>">
 						<liferay-ui:message arguments="<%= String.valueOf(childGroups.size()) %>" key="x-child-sites" />
 					</label>
 				</liferay-frontend:vertical-card-footer>

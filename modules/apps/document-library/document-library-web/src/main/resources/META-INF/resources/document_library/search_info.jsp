@@ -76,7 +76,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 			<c:if test="<%= (mountFolders.size() == 0) && (folder != null) %>">
 				<clay:link
 					buttonStyle="secondary"
-					elementClasses='<%= "btn-sm" + (searchFolderId == rootFolderId ? " active" : "") %>'
+					elementClasses='<%= "btn-sm" + ((searchFolderId == rootFolderId) ? " active" : "") %>'
 					href="<%= searchEverywhereURL.toString() %>"
 					label='<%= LanguageUtil.get(resourceBundle, "everywhere") %>'
 					title='<%= LanguageUtil.get(resourceBundle, "everywhere") %>'
@@ -86,7 +86,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 			<c:if test="<%= folder != null %>">
 				<clay:link
 					buttonStyle="secondary"
-					elementClasses='<%= "btn-sm" + (searchFolderId == folder.getFolderId() ? " active" : "") %>'
+					elementClasses='<%= "btn-sm" + ((searchFolderId == folder.getFolderId()) ? " active" : "") %>'
 					href="<%= searchFolderURL.toString() %>"
 					icon="folder"
 					label="<%= folder.getName() %>"
@@ -121,7 +121,7 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 					<clay:link
 						buttonStyle="secondary"
-						elementClasses='<%= "btn-sm" + (mountFolder.getFolderId() == searchFolderId ? " active" : "") %>'
+						elementClasses='<%= "btn-sm" + ((mountFolder.getFolderId() == searchFolderId) ? " active" : "") %>'
 						href="<%= searchRepositoryURL.toString() %>"
 						icon="repository"
 						label="<%= mountFolder.getName() %>"

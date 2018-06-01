@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
@@ -95,19 +96,48 @@ public class CommerceCountriesDisplayContext
 		searchContainer.setOrderByType(orderByType);
 		searchContainer.setRowChecker(getRowChecker());
 
-		Sort sort = CommerceUtil.getCommerceCountrySort(
-			orderByCol, orderByType);
+		int total;
+		List<CommerceCountry> results;
 
-		SearchContext searchContext = buildSearchContext(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(), active,
-			getKeywords(), searchContainer.getStart(), searchContainer.getEnd(),
-			sort);
+		if (isSearch()) {
+			Sort sort = CommerceUtil.getCommerceCountrySort(
+				orderByCol, orderByType);
 
-		BaseModelSearchResult<CommerceCountry> results =
-			_commerceCountryService.searchCommerceCountries(searchContext);
+			SearchContext searchContext = buildSearchContext(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				active, getKeywords(), searchContainer.getStart(),
+				searchContainer.getEnd(), sort);
 
-		searchContainer.setTotal(results.getLength());
-		searchContainer.setResults(results.getBaseModels());
+			BaseModelSearchResult<CommerceCountry>
+				commerceCountryBaseModelSearchResult =
+					_commerceCountryService.searchCommerceCountries(
+						searchContext);
+
+			total = commerceCountryBaseModelSearchResult.getLength();
+			results = commerceCountryBaseModelSearchResult.getBaseModels();
+		}
+		else {
+			if (active == null) {
+				total = _commerceCountryService.getCommerceCountriesCount(
+					themeDisplay.getScopeGroupId());
+
+				results = _commerceCountryService.getCommerceCountries(
+					themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+					searchContainer.getEnd(), orderByComparator);
+			}
+			else {
+				total = _commerceCountryService.getCommerceCountriesCount(
+					themeDisplay.getScopeGroupId(), active);
+
+				results = _commerceCountryService.getCommerceCountries(
+					themeDisplay.getScopeGroupId(), active,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					orderByComparator);
+			}
+		}
+
+		searchContainer.setTotal(total);
+		searchContainer.setResults(results);
 
 		return searchContainer;
 	}
@@ -159,6 +189,14 @@ public class CommerceCountriesDisplayContext
 		_keywords = ParamUtil.getString(renderRequest, "keywords");
 
 		return _keywords;
+	}
+
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final CommerceCountryService _commerceCountryService;

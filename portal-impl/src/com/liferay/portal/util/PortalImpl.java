@@ -24,8 +24,6 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.comment.action.EditDiscussionStrutsAction;
-import com.liferay.portal.comment.action.GetCommentsStrutsAction;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -154,6 +152,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.filters.compoundsessionid.CompoundSessionIdSplitterUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -558,6 +557,13 @@ public class PortalImpl implements Portal {
 								new PortalInetSocketAddressEventListenerServiceTrackerCustomizer());
 
 			portalInetSocketAddressEventListenerServiceTracker.open();
+
+			ServiceTracker<StrutsAction, StrutsAction>
+				commentsStrutsActionServiceTracker = registry.trackServices(
+					StrutsAction.class,
+					new CommentsStrutsActionServiceTrackerCustomizer());
+
+			commentsStrutsActionServiceTracker.open();
 		}
 		catch (NullPointerException npe) {
 		}
@@ -6216,6 +6222,14 @@ public class PortalImpl implements Portal {
 			ActionResponse actionResponse)
 		throws Exception {
 
+		if (_editDiscussionStrutsAction == null) {
+			_log.error(
+				"Unable to find a StrutsAction component with property " +
+					"path=/portal/comment/discussion/edit");
+
+			return;
+		}
+
 		_editDiscussionStrutsAction.execute(
 			getHttpServletRequest(actionRequest),
 			getHttpServletResponse(actionResponse));
@@ -6230,6 +6244,14 @@ public class PortalImpl implements Portal {
 			PortletConfig portletConfig, ResourceRequest resourceRequest,
 			ResourceResponse resourceResponse)
 		throws IOException, PortletException {
+
+		if (_getCommentsStrutsAction == null) {
+			_log.error(
+				"Unable to find a StrutsAction component with property " +
+					"path=/portal/comment/discussion/get_comments");
+
+			return;
+		}
 
 		try {
 			_getCommentsStrutsAction.execute(
@@ -8952,10 +8974,8 @@ public class PortalImpl implements Portal {
 	private final String _computerName;
 	private String[] _customSqlKeys;
 	private String[] _customSqlValues;
-	private final EditDiscussionStrutsAction _editDiscussionStrutsAction =
-		new EditDiscussionStrutsAction();
-	private final GetCommentsStrutsAction _getCommentsStrutsAction =
-		new GetCommentsStrutsAction();
+	private volatile StrutsAction _editDiscussionStrutsAction;
+	private volatile StrutsAction _getCommentsStrutsAction;
 	private final String _pathContext;
 	private final String _pathFriendlyURLPrivateGroup;
 	private final String _pathFriendlyURLPrivateUser;
@@ -9066,6 +9086,61 @@ public class PortalImpl implements Portal {
 					"There are " + _alwaysAllowDoAsUsers.size() +
 						" alway sallow do as user instances");
 			}
+		}
+
+	}
+
+	private class CommentsStrutsActionServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer <StrutsAction, StrutsAction> {
+
+		@Override
+		public StrutsAction addingService(
+			ServiceReference<StrutsAction> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			String path = GetterUtil.getString(
+				serviceReference.getProperty("path"));
+
+			StrutsAction strutsAction = registry.getService(serviceReference);
+
+			if ("/portal/comment/discussion/edit".equals(path)) {
+				_editDiscussionStrutsAction = strutsAction;
+			}
+			else if ("/portal/comment/discussion/get_comments".equals(path)) {
+				_getCommentsStrutsAction = strutsAction;
+			}
+
+			return strutsAction;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<StrutsAction> serviceReference,
+			StrutsAction strutsAction) {
+
+			removedService(serviceReference, strutsAction);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<StrutsAction> serviceReference,
+			StrutsAction strutsAction) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			String path = (String)serviceReference.getProperty("path");
+
+			if ("/portal/comment/discussion/edit".equals(path)) {
+				_editDiscussionStrutsAction = null;
+			}
+			else if ("/portal/comment/discussion/get_comments".equals(path)) {
+				_getCommentsStrutsAction = null;
+			}
+
+			registry.ungetService(serviceReference);
 		}
 
 	}

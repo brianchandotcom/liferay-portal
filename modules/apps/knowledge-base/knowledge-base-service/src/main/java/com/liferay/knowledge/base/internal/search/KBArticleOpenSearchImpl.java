@@ -44,6 +44,11 @@ public class KBArticleOpenSearchImpl extends HitsOpenSearchImpl {
 	public static final String TITLE = "Liferay Knowledge Base Search: ";
 
 	@Override
+	public String getClassName() {
+		return KBArticle.class.getName();
+	}
+
+	@Override
 	public Indexer<KBArticle> getIndexer() {
 		return IndexerRegistryUtil.getIndexer(KBArticle.class);
 	}

@@ -682,8 +682,6 @@ public class SourceFormatter {
 			_sourceFormatterSuppressions);
 		sourceProcessor.setSubrepository(_subrepository);
 
-		sourceProcessor.preFormat();
-
 		sourceProcessor.format();
 
 		_sourceFormatterMessages.addAll(

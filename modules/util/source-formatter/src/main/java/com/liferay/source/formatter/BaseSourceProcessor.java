@@ -97,6 +97,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
+		preFormat();
+
 		_sourceFormatterMessagesMap = new HashMap<>();
 
 		_sourceChecks = _getSourceChecks(

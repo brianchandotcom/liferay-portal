@@ -763,10 +763,10 @@ public class ProjectTemplatesTest {
 			"public class FooPortletKeys");
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/test/portlet/FooPortlet.java",
-			"package foo.test.portlet;", "javax.portlet.display-name=foo.test",
+			"package foo.test.portlet;", "javax.portlet.display-name=Foo",
 			"javax.portlet.name=\" + FooPortletKeys.Foo",
 			"public class FooPortlet extends GenericPortlet {",
-			"printWriter.print(\"foo.test Portlet");
+			"printWriter.print(\"Hello from Foo");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet", "foo.test", "com.test", "-DclassName=Foo",
@@ -829,7 +829,7 @@ public class ProjectTemplatesTest {
 				"/ProviderTestPortletKeys.java",
 			"package provider.test.constants;",
 			"public class ProviderTestPortletKeys",
-			"public static final String ProviderTest = \"ProviderTest\";");
+			"public static final String ProviderTest = \"providertest\";");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet-provider", "provider.test", "com.test",
@@ -884,9 +884,9 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/portlet/portlet/PortletPortlet.java",
-			"package portlet.portlet;", "javax.portlet.display-name=portlet",
+			"package portlet.portlet;", "javax.portlet.display-name=Portlet",
 			"public class PortletPortlet extends GenericPortlet {",
-			"printWriter.print(\"portlet Portlet");
+			"printWriter.print(\"Hello from Portlet");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"portlet", "portlet", "com.test", "-DclassName=Portlet",
@@ -1214,7 +1214,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/constants/FooPortletKeys.java",
-			"public static final String Foo = \"Foo\"");
+			"public static final String Foo = \"foo\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
@@ -1306,7 +1306,7 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/constants/FooPortletKeys.java",
-			"public static final String Foo = \"Foo\"");
+			"public static final String Foo = \"foo\"");
 		_testContains(
 			gradleProjectDir,
 			"src/main/java/com/liferay/test/portlet/FooSoyPortletRegister.java",

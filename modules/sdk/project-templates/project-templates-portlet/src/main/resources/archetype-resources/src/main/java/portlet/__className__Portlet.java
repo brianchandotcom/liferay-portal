@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.display-category=category.sample",
 		"com.liferay.portlet.instanceable=true",
-		"javax.portlet.display-name=${artifactId} Portlet",
+		"javax.portlet.display-name=${className}",
 		"javax.portlet.name=" + ${className}PortletKeys.${className},
 		"javax.portlet.security-role-ref=power-user,user"
 	},
@@ -36,7 +36,7 @@ public class ${className}Portlet extends GenericPortlet {
 
 		PrintWriter printWriter = renderResponse.getWriter();
 
-		printWriter.print("${artifactId} Portlet - Hello World!");
+		printWriter.print("Hello from ${className}!");
 	}
 
 }

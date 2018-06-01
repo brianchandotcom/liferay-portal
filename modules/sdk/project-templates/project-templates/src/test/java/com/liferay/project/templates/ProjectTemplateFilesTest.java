@@ -535,36 +535,37 @@ public class ProjectTemplateFilesTest {
 			Properties properties = FileUtil.readProperties(path);
 
 			String keywords = properties.getProperty(
-				"javax.portlet.keywords.${artifactId}");
+				"javax.portlet.keywords.${className.toLowerCase()}");
 
 			Assert.assertTrue(
-				"Value of \"javax.portlet.keywords.${artifactId}\" in " + path +
-					" must start with \"${artifactId},\"",
-				(keywords != null) && keywords.startsWith("${artifactId},"));
+				"Value of \"javax.portlet.keywords.${className.toLowerCase()}" +
+					"\" in " + path + " must be \"${className}\"",
+				(keywords != null) && keywords.equals("${className}"));
 
 			String title = properties.getProperty(
-				"javax.portlet.title.${artifactId}");
+				"javax.portlet.title.${className.toLowerCase()}");
 
 			Assert.assertTrue(
-				"Value of \"javax.portlet.title.${artifactId}\" in " + path +
-					" must end with \" Portlet\"",
-				(title != null) && title.endsWith(" Portlet"));
+				"Value of \"javax.portlet.title.${className.toLowerCase()}" +
+					"\" in " + path + " must be \"${className}\"",
+				(title != null) && title.equals("${className}"));
 
-			String expectedShortTitle = title.substring(0, title.length() - 8);
-
-			Assert.assertEquals(
-				"Incorrect value of " +
-					"\"javax.portlet.display-name.${artifactId}\" in " + path,
-				expectedShortTitle,
-				properties.getProperty(
-					"javax.portlet.display-name.${artifactId}"));
+			String expectedShortTitle = "${className}";
 
 			Assert.assertEquals(
 				"Incorrect value of " +
-					"\"javax.portlet.short-title.${artifactId}\" in " + path,
+					"\"javax.portlet.display-name.${className.toLowerCase()}" +
+						"\" in " + path,
 				expectedShortTitle,
 				properties.getProperty(
-					"javax.portlet.short-title.${artifactId}"));
+					"javax.portlet.display-name.${className.toLowerCase()}"));
+
+			Assert.assertEquals(
+				"Incorrect value of \"javax.portlet.short-title.${className." +
+					"toLowerCase()}\" in " + path,
+				expectedShortTitle,
+				properties.getProperty(
+					"javax.portlet.short-title.${className.toLowerCase()}"));
 		}
 	}
 

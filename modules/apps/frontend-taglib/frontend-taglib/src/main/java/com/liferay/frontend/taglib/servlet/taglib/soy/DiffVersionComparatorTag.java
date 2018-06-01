@@ -175,6 +175,8 @@ public class DiffVersionComparatorTag extends TemplateRendererTag {
 
 		setTemplateNamespace("liferay.frontend.DiffVersionComparator.render");
 
+		super.setHydrate(true);
+
 		return super.doStartTag();
 	}
 

@@ -32,6 +32,8 @@ public class CardsTreeviewTag extends TemplateRendererTag {
 
 		setTemplateNamespace("liferay.frontend.CardsTreeview.render");
 
+		super.setHydrate(true);
+
 		return super.doStartTag();
 	}
 

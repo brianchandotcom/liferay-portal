@@ -16,13 +16,10 @@ package com.liferay.portal.search.web.internal.layout.prototype;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,12 +36,10 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 	public void portalInstanceRegistered(Company company) throws Exception {
 		searchLayoutFactory.createSearchLayoutPrototype(company);
 
-		List<Group> groups = groupLocalService.getCompanyGroups(
-			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		Group guestGroup = groupLocalService.getFriendlyURLGroup(
+			company.getCompanyId(), "/guest");
 
-		for (Group group : groups) {
-			searchLayoutFactory.createSearchLayout(group);
-		}
+		searchLayoutFactory.createSearchLayout(guestGroup);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

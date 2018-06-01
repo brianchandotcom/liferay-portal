@@ -17,7 +17,6 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -235,15 +235,18 @@ public class ActionUtil {
 
 		Folder folder = DLAppServiceUtil.getFolder(folderId);
 
-		if (folder.getModel() instanceof DLFolder) {
+		if (!folder.isRepositoryCapabilityProvided(TrashCapability.class)) {
 			return folder;
 		}
 
-		DLFolder dlFolder = (DLFolder)folder.getModel();
+		TrashCapability trashCapability = folder.getRepositoryCapability(
+			TrashCapability.class);
 
-		if (dlFolder.isInTrash()) {
+		if (trashCapability.isInTrash(folder)) {
 			throw new NoSuchFolderException("{folderId=" + folderId + "}");
 		}
+
+		return folder;
 	}
 
 	public static Folder getFolder(PortletRequest portletRequest)

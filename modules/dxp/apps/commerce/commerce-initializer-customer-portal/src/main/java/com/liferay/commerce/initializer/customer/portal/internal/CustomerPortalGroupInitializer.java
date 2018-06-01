@@ -127,6 +127,10 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	public static final int ACCOUNT_ORGANIZATIONS_COUNT = 3;
 
+	public static final String DEPENDENCY_PATH =
+		"com/liferay/commerce/initializer/customer/portal/internal" +
+			"/dependencies/";
+
 	public static final String KEY = "customer-portal-initializer";
 
 	@Override
@@ -162,12 +166,10 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 			configureB2BSite(groupId, serviceContext);
 
-			_cpFileImporter.cleanLayouts(serviceContext);
-
 			_cpFileImporter.updateLookAndFeel(
 				_CUSTOMER_PORTAL_THEME_ID, serviceContext);
 
-			createLayouts(serviceContext);
+			_customerPortalLayoutsInitializer.initialize(serviceContext);
 
 			createRoles(serviceContext);
 
@@ -313,7 +315,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			serviceContext.getLocale(), fileName);
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			_DEPENDENCY_PATH + "images/" + fileName);
+			DEPENDENCY_PATH + "images/" + fileName);
 
 		if (inputStream == null) {
 			return;
@@ -455,26 +457,11 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			StringPool.BLANK, serviceContext);
 	}
 
-	protected void createLayouts(ServiceContext serviceContext)
-		throws Exception {
-
-		Class<?> clazz = getClass();
-
-		String layoutsJSON = StringUtil.read(
-			clazz.getClassLoader(), _DEPENDENCY_PATH + "layouts.json", false);
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(layoutsJSON);
-
-		_cpFileImporter.createLayouts(
-			jsonArray, false, clazz.getClassLoader(), _DEPENDENCY_PATH,
-			serviceContext);
-	}
-
 	protected void createRoles(ServiceContext serviceContext) throws Exception {
 		Class<?> clazz = getClass();
 
 		String rolesJSON = StringUtil.read(
-			clazz.getClassLoader(), _DEPENDENCY_PATH + "roles.json", true);
+			clazz.getClassLoader(), DEPENDENCY_PATH + "roles.json", true);
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(rolesJSON);
 
@@ -524,7 +511,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 		String themePortletSettingsJSON = StringUtil.read(
 			clazz.getClassLoader(),
-			_DEPENDENCY_PATH + "theme-portlet-settings.json", true);
+			DEPENDENCY_PATH + "theme-portlet-settings.json", true);
 
 		return _jsonFactory.createJSONArray(themePortletSettingsJSON);
 	}
@@ -535,7 +522,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		Class<?> clazz = getClass();
 
 		String productsJSON = StringUtil.read(
-			clazz.getClassLoader(), _DEPENDENCY_PATH + "products.json", false);
+			clazz.getClassLoader(), DEPENDENCY_PATH + "products.json", false);
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(productsJSON);
 
@@ -658,7 +645,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 			DDMTemplate ddmTemplate = getDDMTemplate(
 				_SIMPLE_CP_TYPE_CLASS_NAME,
-				_DEPENDENCY_PATH + "product_display_template.ftl",
+				DEPENDENCY_PATH + "product_display_template.ftl",
 				"Commerce Product Customer Portal", serviceContext);
 
 			String ddmTemplateKey =
@@ -723,7 +710,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 			DDMTemplate ddmTemplate = getDDMTemplate(
 				_CP_SEARCH_RESULT_PORTLET_CLASS_NAME,
-				_DEPENDENCY_PATH + "catalog_display_template.ftl",
+				DEPENDENCY_PATH + "catalog_display_template.ftl",
 				"Commerce Catalog Customer Portal", serviceContext);
 
 			String ddmTemplateKey =
@@ -991,10 +978,6 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	private static final String _CUSTOMER_PORTAL_THEME_ID =
 		"customerportal_WAR_commercethemecustomerportal";
 
-	private static final String _DEPENDENCY_PATH =
-		"com/liferay/commerce/initializer/customer/portal/internal" +
-			"/dependencies/";
-
 	private static final String _ORGANIZATION_TYPE_CONFIGURATION_PID =
 		"com.liferay.organizations.service.internal.configuration." +
 			"OrganizationTypeConfiguration";
@@ -1065,6 +1048,9 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	@Reference
 	private CustomerPortalForecastsInitializer
 		_customerPortalForecastsInitializer;
+
+	@Reference
+	private CustomerPortalLayoutsInitializer _customerPortalLayoutsInitializer;
 
 	@Reference
 	private DLAppService _dlAppService;

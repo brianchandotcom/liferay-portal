@@ -82,8 +82,7 @@ public class CustomerPortalForecastsInitializer {
 		Bundle bundle = _bundleContext.getBundle();
 
 		Enumeration<URL> enumeration = bundle.findEntries(
-			"com/liferay/commerce/initializer/customer/portal/internal" +
-				"/dependencies/forecasts",
+			CustomerPortalGroupInitializer.DEPENDENCY_PATH + "forecasts",
 			"*.json", false);
 
 		while (enumeration.hasMoreElements()) {

@@ -151,7 +151,16 @@
 
 	.lfr-permission-navigation-container {
 		.search {
-			margin: 20px 0;
+			margin-bottom: 20px;
+			width: 100%;
+
+			> .form-control {
+				background-color: #FFF;
+			}
+		}
+
+		.table > tbody > tr.info {
+			background-color: #F0F5FF;
 		}
 
 		.lfr-permission-navigation {
@@ -205,6 +214,10 @@
 				margin-left: 1em;
 			}
 		}
+
+		.toggler-content-wrapper {
+			margin-left: 16px;
+		}
 	}
 
 	.user-status-selector {
@@ -247,6 +260,16 @@
 	.lfr-asset-summary img.avatar {
 		max-width: 210px;
 	}
+
+    .toggler-header-collapsed {
+        .collapse-icon-closed {
+            display: inline-block;
+        }
+
+        .collapse-icon-open {
+            display: none;
+        }
+    }
 }
 
 .lfr-floating-container {

@@ -46,7 +46,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Eudaldo Alonso
@@ -135,6 +139,9 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 		sb.append("(JournalArticle.groupId=JournalArticleImage.groupId) and ");
 		sb.append("(JournalArticle.articleId=JournalArticleImage.articleId)");
 
+		List<SaveImageFileEntryCallable> saveImageFileEntryCallables =
+			new ArrayList<>();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			Statement statement = connection.createStatement();
 			ResultSet rs1 = statement.executeQuery(sb.toString())) {
@@ -147,26 +154,19 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 
 				long folderId = getFolderId(userId, groupId, resourcePrimKey);
 
-				FileEntry fileEntry =
-					PortletFileRepositoryUtil.fetchPortletFileEntry(
-						groupId, folderId, String.valueOf(articleImageId));
+				SaveImageFileEntryCallable saveImageFileEntryCallable =
+					new SaveImageFileEntryCallable(
+						articleImageId, folderId, groupId, resourcePrimKey,
+						userId);
 
-				if (fileEntry != null) {
-					continue;
-				}
-
-				Image image = _imageLocalService.getImage(articleImageId);
-
-				if (image == null) {
-					continue;
-				}
-
-				PortletFileRepositoryUtil.addPortletFileEntry(
-					groupId, userId, JournalArticle.class.getName(),
-					resourcePrimKey, JournalConstants.SERVICE_NAME, folderId,
-					image.getTextObj(), String.valueOf(articleImageId),
-					image.getType(), false);
+				saveImageFileEntryCallables.add(saveImageFileEntryCallable);
 			}
+
+			ExecutorService executorService = Executors.newWorkStealingPool();
+
+			executorService.invokeAll(saveImageFileEntryCallables);
+
+			executorService.shutdown();
 		}
 	}
 
@@ -269,5 +269,51 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 		UpgradeImageTypeContent.class);
 
 	private final ImageLocalService _imageLocalService;
+
+	private class SaveImageFileEntryCallable implements Callable<Void> {
+
+		public SaveImageFileEntryCallable(
+			long articleImageId, long folderId, long groupId,
+			long resourcePrimaryKey, long userId) {
+
+			_articleImageId = articleImageId;
+			_folderId = folderId;
+			_groupId = groupId;
+			_resourcePrimaryKey = resourcePrimaryKey;
+			_userId = userId;
+		}
+
+		@Override
+		public Void call() throws Exception {
+			FileEntry fileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					_groupId, _folderId, String.valueOf(_articleImageId));
+
+			if (fileEntry != null) {
+				return null;
+			}
+
+			Image image = _imageLocalService.getImage(_articleImageId);
+
+			if (image == null) {
+				return null;
+			}
+
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				_groupId, _userId, JournalArticle.class.getName(),
+				_resourcePrimaryKey, JournalConstants.SERVICE_NAME, _folderId,
+				image.getTextObj(), String.valueOf(_articleImageId),
+				image.getType(), false);
+
+			return null;
+		}
+
+		private final long _articleImageId;
+		private final long _folderId;
+		private final long _groupId;
+		private final long _resourcePrimaryKey;
+		private final long _userId;
+
+	}
 
 }

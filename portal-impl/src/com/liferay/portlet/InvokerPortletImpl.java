@@ -206,7 +206,7 @@ public class InvokerPortletImpl
 
 		boolean headerPortlet = false;
 
-		if (ClassUtil.isSubclass(portletClass, HeaderPortlet.class)) {
+		if (portlet instanceof HeaderPortlet) {
 			headerPortlet = true;
 
 			try {

@@ -2010,77 +2010,46 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testCompareServiceBuilderPluginVersions() throws Exception {
 		String name = "sample";
-
 		String packageName = "com.test.sample";
+		String serviceProjectName = name + "-service";
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"service-builder", name, "--package-name", packageName);
 
-		final String serviceProjectName = name + "-service";
+		Optional<String> gradleResult = _executeGradle(
+			gradleProjectDir, true, ":" + serviceProjectName + ":dependencies");
 
-		String[] gradleSericeBuilderVersion = new String[1];
+		String gradleSericeBuilderVersion = null;
 
-		_testChangePortletModelHintsXml(
-			gradleProjectDir, serviceProjectName,
-			new Callable<Void>() {
+		Matcher matcher = _serviceBuilderVersionPattern.matcher(
+			gradleResult.get());
 
-				@Override
-				public Void call() throws Exception {
-					_executeGradle(
-						gradleProjectDir,
-						":" + serviceProjectName +
-							_GRADLE_TASK_PATH_BUILD_SERVICE);
-
-					Optional<String> result = _executeGradle(
-						gradleProjectDir, true,
-						":" + serviceProjectName + ":dependencies");
-
-					Matcher matcher = _serviceBuilderVersionPattern.matcher(
-						result.get());
-
-					if (matcher.matches()) {
-						gradleSericeBuilderVersion[0] = matcher.group(1);
-					}
-
-					return null;
-				}
-
-			});
+		if (matcher.matches()) {
+			gradleSericeBuilderVersion = matcher.group(1);
+		}
 
 		final File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "com.test", "-Dpackage=" + packageName);
 
-		String[] mavenSericeBuilderVersion = new String[1];
+		String mavenResult = _executeMaven(
+			new File(mavenProjectDir, serviceProjectName),
+			_MAVEN_GOAL_BUILD_SERVICE);
 
-		_testChangePortletModelHintsXml(
-			mavenProjectDir, serviceProjectName,
-			new Callable<Void>() {
+		matcher = _serviceBuilderVersionPattern.matcher(mavenResult);
 
-				@Override
-				public Void call() throws Exception {
-					String result = _executeMaven(
-						new File(mavenProjectDir, serviceProjectName),
-						_MAVEN_GOAL_BUILD_SERVICE);
+		String mavenSericeBuilderVersion = null;
 
-					Matcher matcher = _serviceBuilderVersionPattern.matcher(
-						result);
+		if (matcher.matches()) {
+			mavenSericeBuilderVersion = matcher.group(1);
+		}
 
-					if (matcher.matches()) {
-						mavenSericeBuilderVersion[0] = matcher.group(1);
-					}
-
-					return null;
-				}
-
-			});
-
-		boolean versionsEqual = mavenSericeBuilderVersion[0].equals(
-			gradleSericeBuilderVersion[0]);
+		boolean versionsEqual = mavenSericeBuilderVersion.equals(
+			gradleSericeBuilderVersion);
 
 		if (!versionsEqual) {
 			String message = String.format(
 				"service.builder versions must match (maven: %s, gradle: %s)",
-				mavenSericeBuilderVersion[0], gradleSericeBuilderVersion[0]);
+				mavenSericeBuilderVersion, gradleSericeBuilderVersion);
 
 			Assert.assertTrue(message, versionsEqual);
 		}

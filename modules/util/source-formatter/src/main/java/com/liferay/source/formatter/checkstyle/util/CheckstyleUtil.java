@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.util.CheckType;
@@ -89,6 +90,16 @@ public class CheckstyleUtil {
 		}
 
 		return Collections.emptyMap();
+	}
+
+	public static String getAttributeValue(
+			String checkName, String attributeName, Configuration configuration)
+		throws CheckstyleException {
+
+		Map<String, String> attributesMap = getAttributesMap(
+			checkName, configuration);
+
+		return GetterUtil.getString(attributesMap.get(attributeName));
 	}
 
 	public static List<String> getCheckNames(Configuration configuration) {

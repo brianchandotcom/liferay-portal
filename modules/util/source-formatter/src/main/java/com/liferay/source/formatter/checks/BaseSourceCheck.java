@@ -226,6 +226,14 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return CheckstyleUtil.getAttributesMap(checkName, _configuration);
 	}
 
+	protected String getCheckstyleAttributeValue(
+			String checkName, String attributeName)
+		throws Exception {
+
+		return CheckstyleUtil.getAttributeValue(
+			checkName, attributeName, _configuration);
+	}
+
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
 		Map<String, String> compatClassNamesMap = new HashMap<>();
 

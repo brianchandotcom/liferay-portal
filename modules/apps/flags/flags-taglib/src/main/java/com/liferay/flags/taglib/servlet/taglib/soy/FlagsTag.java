@@ -173,20 +173,15 @@ public class FlagsTag extends TemplateRendererTag {
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		String currentURL;
-
-		if ((portletRequest != null) && (portletResponse != null)) {
-			PortletURL currentURLObj = PortletURLUtil.getCurrent(
-				PortalUtil.getLiferayPortletRequest(portletRequest),
-				PortalUtil.getLiferayPortletResponse(portletResponse));
-
-			currentURL = currentURLObj.toString();
-		}
-		else {
-			currentURL = PortalUtil.getCurrentURL(request);
+		if ((portletRequest == null) || (portletResponse == null)) {
+			return PortalUtil.getCurrentURL(request);
 		}
 
-		return currentURL;
+		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+			PortalUtil.getLiferayPortletRequest(portletRequest),
+			PortalUtil.getLiferayPortletResponse(portletResponse));
+
+		return currentURLObj.toString();
 	}
 
 	private JSONObject _getDataJSONObject(Map<String, Object> context) {
@@ -238,15 +233,13 @@ public class FlagsTag extends TemplateRendererTag {
 				FlagsGroupServiceConfiguration.class,
 				themeDisplay.getCompanyId());
 
-		boolean flagsEnabled = false;
-
 		if (flagsGroupServiceConfiguration.guestUsersEnabled() ||
 			themeDisplay.isSignedIn()) {
 
-			flagsEnabled = true;
+			return true;
 		}
 
-		return flagsEnabled;
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(FlagsTag.class);

@@ -33,7 +33,7 @@
 	colspan="<%= 2 %>"
 >
 	<h6 class="text-default">
-		<%= HtmlUtil.escape(cpDefinition.getProductTypeName()) %>
+		<%= HtmlUtil.escape(cpType.getLabel(locale)) %>
 	</h6>
 
 	<h5>

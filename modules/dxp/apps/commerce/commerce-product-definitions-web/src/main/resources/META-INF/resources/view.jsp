@@ -90,6 +90,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							rowURL.setParameter("redirect", currentURL);
 							rowURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.getCPDefinitionId()));
 							rowURL.setParameter("screenNavigationCategoryKey", CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS);
+
+							CPType cpType = cpDefinitionsDisplayContext.getCPType();
 							%>
 
 							<c:choose>

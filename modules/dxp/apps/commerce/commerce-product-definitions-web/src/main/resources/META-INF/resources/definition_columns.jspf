@@ -14,10 +14,6 @@
  */
 --%>
 
-<%
-CPType cpType = cpDefinitionsDisplayContext.getCPType(cpDefinition.getProductTypeName());
-%>
-
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 		<liferay-ui:search-container-column-image

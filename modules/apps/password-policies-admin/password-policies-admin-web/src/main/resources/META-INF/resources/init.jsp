@@ -21,7 +21,6 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -29,13 +28,11 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.password.policies.admin.constants.PasswordPoliciesAdminPortletKeys" %><%@
 page import="com.liferay.password.policies.admin.web.internal.display.context.PasswordPolicyDisplayContext" %><%@
+page import="com.liferay.password.policies.admin.web.internal.display.context.ViewPasswordPoliciesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.password.policies.admin.web.internal.search.AddOrganizationPasswordPolicyChecker" %><%@
 page import="com.liferay.password.policies.admin.web.internal.search.AddUserPasswordPolicyChecker" %><%@
 page import="com.liferay.password.policies.admin.web.internal.search.DeleteOrganizationPasswordPolicyChecker" %><%@
 page import="com.liferay.password.policies.admin.web.internal.search.DeleteUserPasswordPolicyChecker" %><%@
-page import="com.liferay.password.policies.admin.web.internal.search.PasswordPolicyChecker" %><%@
-page import="com.liferay.password.policies.admin.web.internal.search.PasswordPolicyDisplayTerms" %><%@
-page import="com.liferay.password.policies.admin.web.internal.search.PasswordPolicySearch" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
@@ -57,9 +54,7 @@ page import="com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PasswordPolicyRelLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.PasswordPolicyServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil" %><%@
-page import="com.liferay.portal.kernel.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
@@ -73,8 +68,7 @@ page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %>
 
-<%@ page import="java.util.LinkedHashMap" %><%@
-page import="java.util.List" %>
+<%@ page import="java.util.LinkedHashMap" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>

@@ -20,10 +20,9 @@ import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPort
 import com.liferay.portal.search.web.internal.site.facet.portlet.ScopeFacetBuilder;
 import com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.site.facet.portlet.SiteFacetPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
-
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,11 +65,10 @@ public class SiteFacetPortletSharedSearchContributor
 		scopeFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
 
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchSettings.getParameterValues(
-				siteFacetPortletPreferences.getParameterName());
-
-		parameterValuesOptional.ifPresent(scopeFacetBuilder::setSelectedSites);
+		SearchOptionalUtil.copy(
+			() -> portletSharedSearchSettings.getParameterValues(
+				siteFacetPortletPreferences.getParameterName()),
+			scopeFacetBuilder::setSelectedGroupIds);
 
 		return scopeFacetBuilder.build();
 	}

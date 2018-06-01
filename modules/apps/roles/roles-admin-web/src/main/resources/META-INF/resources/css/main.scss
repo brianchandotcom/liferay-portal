@@ -260,6 +260,16 @@
 	.lfr-asset-summary img.avatar {
 		max-width: 210px;
 	}
+
+    .toggler-header-collapsed {
+        .collapse-icon-closed {
+            display: inline-block;
+        }
+
+        .collapse-icon-open {
+            display: none;
+        }
+    }
 }
 
 .lfr-floating-container {

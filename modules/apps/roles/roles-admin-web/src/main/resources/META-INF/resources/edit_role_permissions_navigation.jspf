@@ -107,7 +107,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 							<liferay-ui:message key="control-panel" />
 
 							<span class="collapse-icon-closed">
-								<aui:icon image="lexicon-icon-caret-right" markupView="lexicon" />
+								<aui:icon image="caret-right" markupView="lexicon" />
 							</span>
 							<span class="collapse-icon-open">
 								<aui:icon image="caret-bottom" markupView="lexicon" />
@@ -135,7 +135,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 										<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
 											<%= panelCategory.getLabel(locale) %>
 											<span class="collapse-icon-closed">
-												<aui:icon image="lexicon-icon-caret-right" markupView="lexicon" />
+												<aui:icon image="caret-right" markupView="lexicon" />
 											</span>
 											<span class="collapse-icon-open">
 												<aui:icon image="caret-bottom" markupView="lexicon" />
@@ -190,7 +190,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 					<liferay-ui:message key="site-administration" />
 
 					<span class="collapse-icon-closed">
-						<aui:icon image="lexicon-icon-caret-right" markupView="lexicon" />
+						<aui:icon image="caret-right" markupView="lexicon" />
 					</span>
 					<span class="collapse-icon-open">
 						<aui:icon image="caret-bottom" markupView="lexicon" />
@@ -209,7 +209,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 								<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
 									<%= panelCategory.getLabel(locale) %>
 									<span class="collapse-icon-closed">
-										<aui:icon image="lexicon-icon-caret-right" markupView="lexicon" />
+										<aui:icon image="caret-right" markupView="lexicon" />
 									</span>
 									<span class="collapse-icon-open">
 										<aui:icon image="caret-bottom" markupView="lexicon" />
@@ -262,7 +262,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 							<liferay-ui:message key="applications" />
 
 							<span class="collapse-icon-closed">
-								<aui:icon image="lexicon-icon-caret-right" markupView="lexicon" />
+								<aui:icon image="caret-right" markupView="lexicon" />
 							</span>
 							<span class="collapse-icon-open">
 								<aui:icon image="caret-bottom" markupView="lexicon" />
@@ -311,7 +311,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 						<liferay-ui:message key="user" />
 
 						<span class="collapse-icon-closed">
-							<aui:icon image="lexicon-icon-caret-right" markupView="lexicon" />
+							<aui:icon image="caret-right" markupView="lexicon" />
 						</span>
 						<span class="collapse-icon-open">
 							<aui:icon image="caret-bottom" markupView="lexicon" />
@@ -330,7 +330,7 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 									<a class="collapse-icon nav-link permission-navigation-item-header toggler-header toggler-header-collapsed" href="javascript:;">
 										<%= panelCategory.getLabel(locale) %>
 										<span class="collapse-icon-closed">
-											<aui:icon image="lexicon-icon-caret-right" markupView="lexicon" />
+											<aui:icon image="caret-right" markupView="lexicon" />
 										</span>
 										<span class="collapse-icon-open">
 											<aui:icon image="caret-bottom" markupView="lexicon" />

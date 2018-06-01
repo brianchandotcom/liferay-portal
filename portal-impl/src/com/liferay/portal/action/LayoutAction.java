@@ -357,18 +357,19 @@ public class LayoutAction extends Action {
 								layoutTypePortlet);
 						}
 					}
-					else {
+
+					if (themeDisplay.isHubAction() ||
+						themeDisplay.isHubPartialAction()) {
+
+						response.setContentLength(renderStateJSON.length());
+						response.setContentType(ContentTypes.APPLICATION_JSON);
+
+						PrintWriter printWriter = response.getWriter();
+
+						printWriter.write(renderStateJSON);
+
 						return null;
 					}
-
-					response.setContentLength(renderStateJSON.length());
-					response.setContentType(ContentTypes.APPLICATION_JSON);
-
-					PrintWriter printWriter = response.getWriter();
-
-					printWriter.write(renderStateJSON);
-
-					return null;
 				}
 				else if (themeDisplay.isLifecycleResource()) {
 					PortletContainerUtil.serveResource(

@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.asset;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -113,13 +113,13 @@ public class CPDefinitionAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		int abstractLength = AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH;
+		int abstractLength = AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH;
 
 		if (portletRequest != null) {
 			abstractLength = GetterUtil.getInteger(
 				portletRequest.getAttribute(
 					WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH),
-				AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
+				AssetHelper.ASSET_ENTRY_ABSTRACT_LENGTH);
 		}
 
 		String summary = _cpDefinition.getDescription();

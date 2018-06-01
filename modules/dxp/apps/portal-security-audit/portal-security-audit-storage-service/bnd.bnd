@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Portal Security Audit Storage Service
-Bundle-SymbolicName: com.liferay.portal.security.audit.storage.service
-Bundle-Version: 2.0.0
-Import-Package:\
-	com.liferay.portal.security.audit.storage.comparator,\
-	\
-	*
-Liferay-Require-SchemaVersion: 1.0.0
-Liferay-Service: true

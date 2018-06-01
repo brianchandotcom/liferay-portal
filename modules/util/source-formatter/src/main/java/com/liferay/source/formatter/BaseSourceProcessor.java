@@ -635,7 +635,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private void _initSourceCheck(SourceCheck sourceCheck) throws Exception {
 		sourceCheck.setAllFileNames(_allFileNames);
 		sourceCheck.setBaseDirName(_sourceFormatterArgs.getBaseDirName());
-		sourceCheck.setConfiguration(_configuration);
+		sourceCheck.setCheckstyleConfiguration(_configuration);
 		sourceCheck.setMaxLineLength(_sourceFormatterArgs.getMaxLineLength());
 		sourceCheck.setPluginsInsideModulesDirectoryNames(
 			_pluginsInsideModulesDirectoryNames);

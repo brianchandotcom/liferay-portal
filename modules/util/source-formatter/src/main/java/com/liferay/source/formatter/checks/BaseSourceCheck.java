@@ -94,7 +94,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public void setConfiguration(Configuration configuration) {
+	public void setCheckstyleConfiguration(Configuration configuration) {
 		_configuration = configuration;
 	}
 

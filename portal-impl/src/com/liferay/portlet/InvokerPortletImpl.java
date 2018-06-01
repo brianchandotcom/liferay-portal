@@ -535,9 +535,7 @@ public class InvokerPortletImpl
 
 		String remoteUser = headerRequest.getRemoteUser();
 
-		if ((remoteUser == null) || (_expCache == null) ||
-			(_expCache.intValue() == 0)) {
-
+		if ((remoteUser == null) || (_expCache == null) || (_expCache == 0)) {
 			invokeHeader(headerRequest, headerResponse);
 		}
 		else {
@@ -567,7 +565,7 @@ public class InvokerPortletImpl
 			if (response == null) {
 				invokeHeader(headerRequest, headerResponse);
 			}
-			else if ((response.getTime() < now) && (_expCache.intValue() > 0)) {
+			else if ((response.getTime() < now) && (_expCache > 0)) {
 				invokeHeader(headerRequest, headerResponse);
 				response.setContent(bufferCacheServletResponse.getString());
 			}

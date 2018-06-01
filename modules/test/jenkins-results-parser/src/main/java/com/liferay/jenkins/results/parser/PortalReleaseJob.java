@@ -46,14 +46,14 @@ public class PortalReleaseJob
 
 		jobProperties = JenkinsResultsParserUtil.getProperties(
 			new File(
-				_jenkinsGitWorkingDirectory.getWorkingDirectory(),
-				"commands/dependencies/test-portal-release.properties"));
+				_portalGitWorkingDirectory.getWorkingDirectory(),
+				"test.properties"));
 
 		jobProperties.putAll(
 			JenkinsResultsParserUtil.getProperties(
 				new File(
-					_portalGitWorkingDirectory.getWorkingDirectory(),
-					"test.properties")));
+					_jenkinsGitWorkingDirectory.getWorkingDirectory(),
+					"commands/dependencies/test-portal-release.properties")));
 	}
 
 	@Override

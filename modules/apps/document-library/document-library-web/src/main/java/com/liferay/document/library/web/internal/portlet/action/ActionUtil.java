@@ -94,15 +94,11 @@ public class ActionUtil {
 
 		long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 
-		FileEntry fileEntry = null;
-
-		if (fileEntryId > 0) {
-			fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
-		}
-
-		if (fileEntry == null) {
+		if (fileEntryId <= 0) {
 			return null;
 		}
+
+		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
@@ -128,13 +124,11 @@ public class ActionUtil {
 
 		long fileShortcutId = ParamUtil.getLong(request, "fileShortcutId");
 
-		FileShortcut fileShortcut = null;
-
-		if (fileShortcutId > 0) {
-			fileShortcut = DLAppServiceUtil.getFileShortcut(fileShortcutId);
+		if (fileShortcutId <= 0) {
+			return null;
 		}
 
-		return fileShortcut;
+		return DLAppServiceUtil.getFileShortcut(fileShortcutId);
 	}
 
 	public static FileShortcut getFileShortcut(PortletRequest portletRequest)
@@ -235,27 +229,25 @@ public class ActionUtil {
 				portletPreferences.getValue("rootFolderId", null));
 		}
 
-		Folder folder = null;
-
-		if (folderId > 0) {
-			folder = DLAppServiceUtil.getFolder(folderId);
-
-			if (folder.getModel() instanceof DLFolder) {
-				DLFolder dlFolder = (DLFolder)folder.getModel();
-
-				if (dlFolder.isInTrash()) {
-					throw new NoSuchFolderException(
-						"{folderId=" + folderId + "}");
-				}
-			}
-		}
-		else {
+		if (folderId <= 0) {
 			DLPermission.check(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
+
+			return null;
 		}
 
-		return folder;
+		Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+		if (folder.getModel() instanceof DLFolder) {
+			return folder;
+		}
+
+		DLFolder dlFolder = (DLFolder)folder.getModel();
+
+		if (dlFolder.isInTrash()) {
+			throw new NoSuchFolderException("{folderId=" + folderId + "}");
+		}
 	}
 
 	public static Folder getFolder(PortletRequest portletRequest)
@@ -307,18 +299,15 @@ public class ActionUtil {
 
 		long repositoryId = ParamUtil.getLong(request, "repositoryId");
 
-		Repository repository = null;
-
 		if (repositoryId > 0) {
-			repository = RepositoryServiceUtil.getRepository(repositoryId);
-		}
-		else {
-			DLPermission.check(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
+			return RepositoryServiceUtil.getRepository(repositoryId);
 		}
 
-		return repository;
+		DLPermission.check(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			ActionKeys.VIEW);
+
+		return null;
 	}
 
 	public static Repository getRepository(PortletRequest portletRequest)

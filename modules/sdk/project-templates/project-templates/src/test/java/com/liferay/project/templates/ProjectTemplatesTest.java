@@ -2006,7 +2006,7 @@ public class ProjectTemplatesTest {
 			"com.liferay.plugin versions do not match",
 			standaloneGradlePluginVersion, workspaceGradlePluginVersion);
 	}
-	
+
 	@Test
 	public void testCompareServiceBuilderPluginVersions() throws Exception {
 		String name = "sample";
@@ -2085,7 +2085,7 @@ public class ProjectTemplatesTest {
 			Assert.assertTrue(message, versionsEqual);
 		}
 	}
-	
+
 	@Test
 	public void testListTemplates() throws Exception {
 		final Map<String, String> expectedTemplates = new TreeMap<>();
@@ -2605,10 +2605,10 @@ public class ProjectTemplatesTest {
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
-		
+
 		return result.output;
 	}
-	
+
 	private static void _testArchetyper(
 			File parentDir, File destinationDir, File projectDir, String name,
 			String groupId, String template, List<String> args)
@@ -3610,8 +3610,8 @@ public class ProjectTemplatesTest {
 	private static XPathExpression _pomXmlNpmInstallXPathExpression;
 	private static Properties _projectTemplateVersions;
 	private static final Pattern _serviceBuilderVersionPattern =
-			Pattern.compile(
-				".*service\\.builder:([0-9]+\\.[0-9]+\\.[0-9]+).*",
-				Pattern.DOTALL | Pattern.MULTILINE);
+		Pattern.compile(
+			".*service\\.builder:([0-9]+\\.[0-9]+\\.[0-9]+).*",
+			Pattern.DOTALL | Pattern.MULTILINE);
 
 }

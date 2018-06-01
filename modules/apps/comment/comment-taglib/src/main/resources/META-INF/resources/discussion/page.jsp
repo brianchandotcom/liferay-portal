@@ -566,6 +566,28 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 			Liferay.provide(
 				window,
+				'<%= randomNamespace %>showEditReplyEditor',
+				function(index) {
+					var discussionId = '<%= namespace + randomNamespace %>' + 'discussionMessage' + index;
+					var contents = $('#' + discussionId).html();
+					<%= randomNamespace %>showEditor(
+						'<%= namespace + randomNamespace %>' + 'editForm' + index,
+						{
+							contents: contents,
+							name: '<%= randomNamespace %>' + 'editReplyBody' + index,
+							onChangeMethod: '<%= randomNamespace %>' + index + 'EditOnChange'
+						}
+					);
+					<%= randomNamespace %>hideEditor(
+						'<%= randomNamespace %>' + 'postReplyBody' + index,
+						'<%= namespace + randomNamespace %>' + 'postReplyForm' + index
+					);
+					<%= randomNamespace %>hideEl(discussionId);
+				}
+			);
+
+			Liferay.provide(
+				window,
 				'<%= randomNamespace %>subscribeToComments',
 				function(subscribe) {
 					var form = AUI.$('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');

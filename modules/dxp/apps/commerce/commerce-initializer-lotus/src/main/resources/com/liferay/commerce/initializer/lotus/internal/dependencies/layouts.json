@@ -5,7 +5,7 @@
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				"portletPreferences": {
 					"articleId": "CAROUSEL",
@@ -16,7 +16,7 @@
 			},
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "1",
+				"layoutColumnPos": 1,
 				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				"portletPreferences": {
 					"articleId": "FEATURES",
@@ -27,7 +27,7 @@
 			},
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "2",
+				"layoutColumnPos": 2,
 				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				"portletPreferences": {
 					"articleId": "CATEGORIES-AND-SEPARATOR",
@@ -45,22 +45,22 @@
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet"
 			},
 			{
 				"layoutColumnId": "column-2",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
 			},
 			{
 				"layoutColumnId": "column-3",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
 			},
 			{
 				"layoutColumnId": "column-3",
-				"layoutColumnPos": "1",
+				"layoutColumnPos": 1,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet"
 			}
 		]
@@ -72,17 +72,17 @@
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet"
 			},
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "1",
+				"layoutColumnPos": 1,
 				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_related_products"
 			},
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "2",
+				"layoutColumnPos": 2,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet"
 			}
 		]
@@ -94,17 +94,17 @@
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet"
 			},
 			{
 				"layoutColumnId": "column-2",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet"
 			},
 			{
 				"layoutColumnId": "column-2",
-				"layoutColumnPos": "1",
+				"layoutColumnPos": 1,
 				"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 				"portletPreferences": {
 					"articleId": "CARDS-ACCEPTED",
@@ -122,7 +122,7 @@
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet"
 			}
 		]
@@ -134,7 +134,7 @@
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
 			}
 		]
@@ -146,7 +146,7 @@
 		"portlets": [
 			{
 				"layoutColumnId": "column-1",
-				"layoutColumnPos": "0",
+				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_wish_list_web_internal_portlet_CommerceWishListContentPortlet"
 			}
 		]
@@ -162,7 +162,7 @@
 				"portlets": [
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": "0",
+						"layoutColumnPos": 0,
 						"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 						"portletPreferences": {
 							"articleId": "MY-ACCOUNT",
@@ -172,12 +172,12 @@
 						}					},
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": "1",
+						"layoutColumnPos": 1,
 						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_addresses_navigation_menu"
 					},
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": "2",
+						"layoutColumnPos": 2,
 						"portletName": "com_liferay_commerce_address_content_web_internal_portlet_CommerceAddressContentPortlet"
 					}
 				]
@@ -188,7 +188,7 @@
 				"portlets": [
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": "0",
+						"layoutColumnPos": 0,
 						"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 						"portletPreferences": {
 							"articleId": "MY-ACCOUNT",
@@ -198,12 +198,12 @@
 						}					},
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": "1",
+						"layoutColumnPos": 1,
 						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_orders_navigation_menu"
 					},
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": "2",
+						"layoutColumnPos": 2,
 						"portletName": "com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet"
 					}
 				]
@@ -214,7 +214,7 @@
 				"portlets": [
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": "0",
+						"layoutColumnPos": 0,
 						"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
 						"portletPreferences": {
 							"articleId": "MY-ACCOUNT",
@@ -224,12 +224,12 @@
 						}					},
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": "1",
+						"layoutColumnPos": 1,
 						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_my_downloads_navigation_menu"
 					},
 					{
 						"layoutColumnId": "column-1",
-						"layoutColumnPos": "2",
+						"layoutColumnPos": 2,
 						"portletName": "com_liferay_commerce_product_type_virtual_order_content_web_internal_portlet_CommerceVirtualOrderItemContentPortlet"
 					}
 				]

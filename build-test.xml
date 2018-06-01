@@ -5140,6 +5140,7 @@ go]]></replacevalue>
 													dir="@{app.dir}"
 												>
 													<exclude name="**/*-test*" />
+													<exclude name="**/adaptive-media-demo" />
 													<include name="**" />
 													<present targetdir="@{app.dir}">
 														<mapper

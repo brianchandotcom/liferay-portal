@@ -18,6 +18,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -863,28 +865,32 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	}
 
 	private boolean _hasAllowedChain(String line) throws Exception {
-		Map<String, String> attributesMap = getCheckstyleAttributesMap(
-			"ChainingCheck");
+		Map<String, String> checkstyleAttributesMap =
+			getCheckstyleAttributesMap("ChainingCheck");
 
-		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
-			String key = entry.getKey();
+		String allowedClassNames = GetterUtil.getString(
+			checkstyleAttributesMap.get("allowedClassNames"));
+		String allowedVariableTypeNames = GetterUtil.getString(
+			checkstyleAttributesMap.get("allowedVariableTypeNames"));
 
-			if (!key.startsWith("allowed")) {
-				continue;
+		String[] values = ArrayUtil.append(
+			StringUtil.split(allowedClassNames),
+			StringUtil.split(allowedVariableTypeNames));
+
+		for (String value : values) {
+			if (line.matches(".*" + value + "\\..*")) {
+				return true;
 			}
+		}
 
-			String[] values = StringUtil.split(entry.getValue());
+		String allowedMethodNames = GetterUtil.getString(
+			checkstyleAttributesMap.get("allowedMethodNames"));
 
-			for (String value : values) {
-				String regex = ".*" + value + "\\..*";
+		values = StringUtil.split(allowedMethodNames);
 
-				if (key.contains("Method")) {
-					regex = ".*" + value + "\\(.*";
-				}
-
-				if (line.matches(regex)) {
-					return true;
-				}
+		for (String value : values) {
+			if (line.matches(".*" + value + "\\(.*")) {
+				return true;
 			}
 		}
 

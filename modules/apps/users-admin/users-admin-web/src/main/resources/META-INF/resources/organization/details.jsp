@@ -229,7 +229,7 @@ if (parentOrganization != null) {
 	cssClass="modify-link"
 	id="selectOrganizationLink"
 	label="<%= true %>"
-	linkCssClass="btn btn-primary"
+	linkCssClass="btn btn-secondary"
 	message="select"
 	method="get"
 	url="javascript:;"

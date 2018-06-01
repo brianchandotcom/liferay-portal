@@ -34,6 +34,7 @@ public class UADExportProcessManagementToolbarDisplayContext
 		super(liferayPortletRequest, liferayPortletResponse);
 	}
 
+	@Override
 	public CreationMenu getCreationMenu() {
 		CreationMenu creationMenu = new CreationMenu();
 
@@ -52,6 +53,11 @@ public class UADExportProcessManagementToolbarDisplayContext
 				}));
 
 		return creationMenu;
+	}
+
+	@Override
+	public Boolean getSelectable() {
+		return false;
 	}
 
 	@Override

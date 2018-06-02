@@ -108,7 +108,7 @@ if (!searchRestriction) {
 <liferay-ui:error exception="<%= NoSuchTemplateException.class %>" message="please-select-an-existing-template" />
 <liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
-<aui:fieldset>
+<liferay-frontend:fieldset>
 	<aui:input autoFocus="<%= true %>" label="title" localized="<%= true %>" name="titleMapAsXML" type="text" wrapperCssClass="article-content-title">
 		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 			<aui:validator name="required" />
@@ -156,7 +156,7 @@ if (!searchRestriction) {
 	</div>
 
 	<aui:input label="searchable" name="indexable" type="toggle-switch" value="<%= (article != null) ? article.isIndexable() : true %>" />
-</aui:fieldset>
+</liferay-frontend:fieldset>
 
 <liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/edit_structure.jsp" />

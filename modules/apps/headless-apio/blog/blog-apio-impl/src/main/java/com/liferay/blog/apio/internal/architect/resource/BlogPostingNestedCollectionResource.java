@@ -80,9 +80,10 @@ public class BlogPostingNestedCollectionResource
 		ItemRoutes.Builder<BlogsEntry, Long> builder) {
 
 		return builder.addGetter(
-			_blogsService::getEntry
+			_blogsEntryService::getEntry
 		).addRemover(
-			idempotent(_blogsService::deleteEntry), _hasPermission::forDeleting
+			idempotent(_blogsEntryService::deleteEntry),
+			_hasPermission::forDeleting
 		).addUpdater(
 			this::_updateBlogsEntry, _hasPermission::forUpdating,
 			BlogPostingForm::buildForm
@@ -141,7 +142,7 @@ public class BlogPostingNestedCollectionResource
 
 		String urlTitle = "";
 
-		return _blogsService.addEntry(
+		return _blogsEntryService.addEntry(
 			blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(), urlTitle,
 			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
@@ -152,10 +153,10 @@ public class BlogPostingNestedCollectionResource
 	private PageItems<BlogsEntry> _getPageItems(
 		Pagination pagination, long groupId) {
 
-		List<BlogsEntry> blogsEntries = _blogsService.getGroupEntries(
+		List<BlogsEntry> blogsEntries = _blogsEntryService.getGroupEntries(
 			groupId, WorkflowConstants.STATUS_APPROVED,
 			pagination.getStartPosition(), pagination.getEndPosition());
-		int count = _blogsService.getGroupEntriesCount(
+		int count = _blogsEntryService.getGroupEntriesCount(
 			groupId, WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(blogsEntries, count);
@@ -167,12 +168,12 @@ public class BlogPostingNestedCollectionResource
 
 		String urlTitle = "";
 
-		BlogsEntry blogsEntry = _blogsService.getEntry(blogsEntryId);
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogsEntryId);
 
 		ServiceContext serviceContext = blogPostingForm.getServiceContext(
 			blogsEntry.getGroupId());
 
-		return _blogsService.updateEntry(
+		return _blogsEntryService.updateEntry(
 			blogsEntryId, blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(), urlTitle,
 			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
@@ -180,7 +181,7 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	@Reference
-	private BlogsEntryService _blogsService;
+	private BlogsEntryService _blogsEntryService;
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private HasPermission<Long> _hasPermission;

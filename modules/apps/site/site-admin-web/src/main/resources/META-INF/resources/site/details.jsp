@@ -20,7 +20,7 @@
 Group group = (Group)request.getAttribute("site.group");
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
-long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", (group != null) ? group.getParentGroupId() : GroupConstants.DEFAULT_PARENT_GROUP_ID);
+long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", group.getParentGroupId());
 
 if (parentGroupId <= 0) {
 	parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
@@ -41,7 +41,7 @@ UnicodeProperties typeSettingsProperties = null;
 if (liveGroup != null) {
 	typeSettingsProperties = liveGroup.getTypeSettingsProperties();
 }
-else if (group != null) {
+else {
 	typeSettingsProperties = group.getTypeSettingsProperties();
 }
 %>
@@ -99,11 +99,7 @@ else if (group != null) {
 
 	<%
 	boolean disabled = false;
-	boolean value = false;
-
-	if (group != null) {
-		value = group.isInheritContent();
-	}
+	boolean value = group.isInheritContent();
 
 	if ((parentGroup != null) && parentGroup.isInheritContent()) {
 		disabled = true;
@@ -236,7 +232,7 @@ else if (group != null) {
 						PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
 
 						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
-						groupSelectorURL.setParameter("groupId", (group != null) ? String.valueOf(group.getGroupId()) : "0");
+						groupSelectorURL.setParameter("groupId", String.valueOf(group.getGroupId());
 						groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
 						groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
 						%>

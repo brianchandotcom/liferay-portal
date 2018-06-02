@@ -63,7 +63,7 @@ if (publicLayoutSet != null) {
 <%
 boolean disableLayoutSetPrototypeInput = false;
 
-if ((group != null) && !LanguageUtil.isInheritLocales(group.getGroupId())) {
+if (!LanguageUtil.isInheritLocales(group.getGroupId())) {
 	disableLayoutSetPrototypeInput = true;
 }
 
@@ -206,45 +206,43 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		</c:if>
 	</c:when>
 	<c:otherwise>
-		<c:if test="<%= group != null %>">
-			<c:choose>
-				<c:when test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
-					<aui:a href="<%= group.getDisplayURL(themeDisplay, true) %>" label="open-private-pages" target="_blank" />
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
-				</c:otherwise>
-			</c:choose>
+		<c:choose>
+			<c:when test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
+				<aui:a href="<%= group.getDisplayURL(themeDisplay, true) %>" label="open-private-pages" target="_blank" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
+			</c:otherwise>
+		</c:choose>
 
-			<c:choose>
-				<c:when test="<%= (privateLayoutSetPrototype != null) && !group.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
-					<c:if test="<%= disableLayoutSetPrototypeInput %>">
-						<div class="alert alert-info">
-							<liferay-ui:message key="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site" />
-						</div>
-					</c:if>
-
-					<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
-
-					<div class="<%= privateLayoutSetPrototypeLinkEnabled ? "" : "hide" %>" id="<portlet:namespace />privateLayoutSetPrototypeMergeAlert">
-
-						<%
-						request.setAttribute("edit_layout_set_prototype.jsp-groupId", String.valueOf(group.getGroupId()));
-						request.setAttribute("edit_layout_set_prototype.jsp-layoutSet", privateLayoutSet);
-						request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", privateLayoutSetPrototype);
-						request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
-						%>
-
-						<liferay-util:include page="/layout_set_merge_alert.jsp" servletContext="<%= application %>" />
+		<c:choose>
+			<c:when test="<%= (privateLayoutSetPrototype != null) && !group.isStaged() && hasUnlinkLayoutSetPrototypePermission %>">
+				<c:if test="<%= disableLayoutSetPrototypeInput %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="you-cannot-enable-the-propagation-of-changes-because-you-modified-the-display-settings-of-this-site" />
 					</div>
-				</c:when>
-				<c:when test="<%= privateLayoutSetPrototype != null %>">
-					<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+				</c:if>
 
-					<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
-				</c:when>
-			</c:choose>
-		</c:if>
+				<aui:input disabled="<%= disableLayoutSetPrototypeInput %>" label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)), false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="toggle-switch" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+
+				<div class="<%= privateLayoutSetPrototypeLinkEnabled ? "" : "hide" %>" id="<portlet:namespace />privateLayoutSetPrototypeMergeAlert">
+
+					<%
+					request.setAttribute("edit_layout_set_prototype.jsp-groupId", String.valueOf(group.getGroupId()));
+					request.setAttribute("edit_layout_set_prototype.jsp-layoutSet", privateLayoutSet);
+					request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", privateLayoutSetPrototype);
+					request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
+					%>
+
+					<liferay-util:include page="/layout_set_merge_alert.jsp" servletContext="<%= application %>" />
+				</div>
+			</c:when>
+			<c:when test="<%= privateLayoutSetPrototype != null %>">
+				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+
+				<aui:input name="privateLayoutSetPrototypeLinkEnabled" type="hidden" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+			</c:when>
+		</c:choose>
 	</c:otherwise>
 </c:choose>
 

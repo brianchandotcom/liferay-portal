@@ -12,22 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.facet.tag;
+package com.liferay.portal.search.facet.user;
 
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.search.facet.FacetFactory;
 
 /**
- * @author André de Oliveira
+ * @author Bryan Engler
  */
-public class AssetTagNamesFacet extends MultiValueFacet implements Facet {
-
-	public AssetTagNamesFacet(SearchContext searchContext) {
-		super(searchContext);
-
-		setFieldName(Field.ASSET_TAG_NAMES + ".raw");
-	}
-
+@ProviderType
+public interface UserFacetFactory extends FacetFactory {
 }

@@ -35,7 +35,7 @@ public class AssetEntriesFacetBuilder {
 
 		facet.setFacetConfiguration(buildFacetConfiguration(facet));
 
-		facet.select(_selectedTypes);
+		facet.select(_selectedEntryClassNames);
 
 		return facet;
 	}
@@ -48,8 +48,8 @@ public class AssetEntriesFacetBuilder {
 		_searchContext = searchContext;
 	}
 
-	public void setSelectedTypes(String... selectedTypes) {
-		_selectedTypes = selectedTypes;
+	public void setSelectedEntryClassNames(String... selectedEntryClassNames) {
+		_selectedEntryClassNames = selectedEntryClassNames;
 	}
 
 	protected FacetConfiguration buildFacetConfiguration(Facet facet) {
@@ -73,6 +73,6 @@ public class AssetEntriesFacetBuilder {
 	private final AssetEntriesFacetFactory _assetEntriesFacetFactory;
 	private int _frequencyThreshold;
 	private SearchContext _searchContext;
-	private String[] _selectedTypes;
+	private String[] _selectedEntryClassNames;
 
 }

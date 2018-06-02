@@ -22,15 +22,15 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.facet.Facet;
+import com.liferay.portal.search.facet.FacetFactory;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
@@ -152,12 +152,14 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getFacetClassName() {
-		return Field.ENTRY_CLASS_NAME;
+		return assetEntriesFacetFactory.getFacetClassName();
 	}
 
 	@Override
 	public String getFieldName() {
-		return Field.ENTRY_CLASS_NAME;
+		Facet facet = assetEntriesFacetFactory.newInstance(null);
+
+		return facet.getFieldName();
 	}
 
 	@Override

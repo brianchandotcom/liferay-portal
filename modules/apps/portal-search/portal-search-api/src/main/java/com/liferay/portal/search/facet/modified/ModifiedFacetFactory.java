@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.category.facet.builder;
+package com.liferay.portal.search.facet.modified;
 
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.search.facet.FacetFactory;
 
 /**
- * @author André de Oliveira
+ * @author Bryan Engler
  */
-public class AssetCategoriesFacetFactory {
-
-	public MultiValueFacet newInstance(SearchContext searchContext) {
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
-
-		multiValueFacet.setFieldName(Field.ASSET_CATEGORY_IDS);
-
-		return multiValueFacet;
-	}
-
+@ProviderType
+public interface ModifiedFacetFactory extends FacetFactory {
 }

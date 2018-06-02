@@ -22,10 +22,9 @@ import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPort
 import com.liferay.portal.search.web.internal.type.facet.portlet.AssetEntriesFacetBuilder;
 import com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.type.facet.portlet.TypeFacetPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
-
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,12 +74,10 @@ public class TypeFacetPortletSharedSearchContributor
 		assetEntriesFacetBuilder.setSearchContext(
 			portletSharedSearchSettings.getSearchContext());
 
-		Optional<String[]> parameterValuesOptional =
-			portletSharedSearchSettings.getParameterValues(
-				typeFacetPortletPreferences.getParameterName());
-
-		parameterValuesOptional.ifPresent(
-			assetEntriesFacetBuilder::setSelectedTypes);
+		SearchOptionalUtil.copy(
+			() -> portletSharedSearchSettings.getParameterValues(
+				typeFacetPortletPreferences.getParameterName()),
+			assetEntriesFacetBuilder::setSelectedEntryClassNames);
 
 		return assetEntriesFacetBuilder.build();
 	}

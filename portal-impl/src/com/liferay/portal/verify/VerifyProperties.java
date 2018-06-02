@@ -57,7 +57,16 @@ public class VerifyProperties extends VerifyProcess {
 
 		ClassLoader classLoader = VerifyProperties.class.getClassLoader();
 
-		return classLoader.getResourceAsStream(resourceName);
+		try {
+			return classLoader.getResourceAsStream(resourceName);
+		}
+		catch (RuntimeException re) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to find resource : " + resourceName);
+			}
+
+			return null;
+		}
 	}
 
 	protected Properties loadPortalProperties() {

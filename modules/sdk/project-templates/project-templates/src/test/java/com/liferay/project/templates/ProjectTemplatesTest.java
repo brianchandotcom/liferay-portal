@@ -2008,6 +2008,47 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testCompareServiceBuilderPluginVersions() throws Exception {
+		String name = "sample";
+		String packageName = "com.test.sample";
+		String serviceProjectName = name + "-service";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", name, "--package-name", packageName);
+
+		Optional<String> gradleResult = _executeGradle(
+			gradleProjectDir, true, ":" + serviceProjectName + ":dependencies");
+
+		String gradleServiceBuilderVersion = null;
+
+		Matcher matcher = _serviceBuilderVersionPattern.matcher(
+			gradleResult.get());
+
+		if (matcher.matches()) {
+			gradleServiceBuilderVersion = matcher.group(1);
+		}
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"service-builder", name, "com.test", "-Dpackage=" + packageName);
+
+		String mavenResult = _executeMaven(
+			new File(mavenProjectDir, serviceProjectName),
+			_MAVEN_GOAL_BUILD_SERVICE);
+
+		matcher = _serviceBuilderVersionPattern.matcher(mavenResult);
+
+		String mavenServiceBuilderVersion = null;
+
+		if (matcher.matches()) {
+			mavenServiceBuilderVersion = matcher.group(1);
+		}
+
+		Assert.assertEquals(
+			"com.liferay.portal.tools.service.builder versions do not match",
+			gradleServiceBuilderVersion, mavenServiceBuilderVersion);
+	}
+
+	@Test
 	public void testListTemplates() throws Exception {
 		final Map<String, String> expectedTemplates = new TreeMap<>();
 
@@ -2514,7 +2555,7 @@ public class ProjectTemplatesTest {
 		_executeGradle(projectDir, false, taskPaths);
 	}
 
-	private static void _executeMaven(File projectDir, String... args)
+	private static String _executeMaven(File projectDir, String... args)
 		throws Exception {
 
 		String[] completeArgs = new String[args.length + 1];
@@ -2526,6 +2567,8 @@ public class ProjectTemplatesTest {
 		MavenExecutor.Result result = mavenExecutor.execute(projectDir, args);
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
+
+		return result.output;
 	}
 
 	private static void _testArchetyper(
@@ -3528,5 +3571,9 @@ public class ProjectTemplatesTest {
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private static XPathExpression _pomXmlNpmInstallXPathExpression;
 	private static Properties _projectTemplateVersions;
+	private static final Pattern _serviceBuilderVersionPattern =
+		Pattern.compile(
+			".*service\\.builder:([0-9]+\\.[0-9]+\\.[0-9]+).*",
+			Pattern.DOTALL | Pattern.MULTILINE);
 
 }

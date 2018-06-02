@@ -143,14 +143,14 @@ public class BlogPostingNestedCollectionResource
 			CurrentUser currentUser)
 		throws PortalException {
 
-		String urlTitle = "";
-
 		return _blogsEntryLocalService.addEntry(
-			currentUser.getUserId(), blogPostingForm.getHeadline(),
-			blogPostingForm.getAlternativeHeadline(), urlTitle,
-			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
-			blogPostingForm.getDisplayDate(), true, true, new String[0], null,
-			null, null, blogPostingForm.getServiceContext(groupId));
+			blogPostingForm.getAuthorId(currentUser),
+			blogPostingForm.getHeadline(),
+			blogPostingForm.getAlternativeHeadline(),
+			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
+			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
+			true, true, new String[0], null, null, null,
+			blogPostingForm.getServiceContext(groupId));
 	}
 
 	private PageItems<BlogsEntry> _getPageItems(
@@ -170,20 +170,18 @@ public class BlogPostingNestedCollectionResource
 			CurrentUser currentUser)
 		throws PortalException {
 
-		String urlTitle = "";
-
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogsEntryId);
 
 		ServiceContext serviceContext = blogPostingForm.getServiceContext(
 			blogsEntry.getGroupId());
 
 		return _blogsEntryLocalService.updateEntry(
-			currentUser.getUserId(), blogsEntryId,
+			blogPostingForm.getAuthorId(currentUser), blogsEntryId,
 			blogPostingForm.getHeadline(),
-			blogPostingForm.getAlternativeHeadline(), urlTitle,
-			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
-			blogPostingForm.getDisplayDate(), true, true, new String[0], null,
-			null, null, serviceContext);
+			blogPostingForm.getAlternativeHeadline(),
+			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
+			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
+			true, true, new String[0], null, null, null, serviceContext);
 	}
 
 	@Reference

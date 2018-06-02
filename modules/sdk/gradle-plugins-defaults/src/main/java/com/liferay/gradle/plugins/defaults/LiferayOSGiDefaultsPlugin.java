@@ -104,7 +104,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -207,9 +206,6 @@ import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.JUnitXmlReport;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.api.tasks.testing.TestTaskReports;
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat;
-import org.gradle.api.tasks.testing.logging.TestLogEvent;
-import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 import org.gradle.execution.ProjectConfigurer;
 import org.gradle.external.javadoc.CoreJavadocOptions;
 import org.gradle.external.javadoc.StandardJavadocDocletOptions;
@@ -3314,7 +3310,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureTaskTestIgnoreFailures(test);
 		_configureTaskTestJvmArgs(test, "junit.java.unit.gc");
-		_configureTaskTestLogging(test);
 
 		test.setEnableAssertions(false);
 	}
@@ -3329,7 +3324,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureTaskTestIgnoreFailures(test);
 		_configureTaskTestJvmArgs(test, "junit.java.integration.gc");
-		_configureTaskTestLogging(test);
 
 		test.systemProperty("org.apache.maven.offline", Boolean.TRUE);
 
@@ -3351,14 +3345,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (Validator.isNotNull(jvmArgs)) {
 			test.jvmArgs((Object[])jvmArgs.split("\\s+"));
 		}
-	}
-
-	private void _configureTaskTestLogging(Test test) {
-		TestLoggingContainer testLoggingContainer = test.getTestLogging();
-
-		testLoggingContainer.setEvents(EnumSet.allOf(TestLogEvent.class));
-		testLoggingContainer.setExceptionFormat(TestExceptionFormat.FULL);
-		testLoggingContainer.setStackTraceFilters(Collections.emptyList());
 	}
 
 	private void _configureTaskTlddoc(Project project, File portalRootDir) {

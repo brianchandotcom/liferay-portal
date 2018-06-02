@@ -70,9 +70,11 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's alternative headline
+	 * Returns the blog posting's alternative headline if present. Returns an
+	 * empty {@code String} otherwise.
 	 *
-	 * @return the blog posting's alternative headline
+	 * @return the blog posting's alternative headline if present; an empty
+	 *         {@code String} otherwise
 	 * @review
 	 */
 	public String getAlternativeHeadline() {
@@ -94,8 +96,8 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's author ID, if present on the form. Returns the
-	 * {@link CurrentUser} ID otherwise.
+	 * Returns the blog posting's author ID if present. Returns the {@link
+	 * CurrentUser} ID otherwise.
 	 *
 	 * @param  currentUser the current authenticated user
 	 * @return the blog posting's author ID, if present; the {@link CurrentUser}
@@ -110,9 +112,11 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's description
+	 * Returns the blog posting's description if present. Returns an empty
+	 * {@code String} otherwise.
 	 *
-	 * @return the blog posting's description
+	 * @return the blog posting's description if present; an empty {@code
+	 *         String} otherwise
 	 * @review
 	 */
 	public String getDescription() {
@@ -124,9 +128,11 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's display date
+	 * Returns the blog posting's display date if present. Returns today's date
+	 * otherwise.
 	 *
-	 * @return the blog posting's display date
+	 * @return the blog posting's display date if present; today's date
+	 *         otherwise.
 	 * @review
 	 */
 	public Date getDisplayDate() {
@@ -148,9 +154,11 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's semantic URL
+	 * Returns the blog posting's semantic URL if present. Returns an empty
+	 * {@code String} otherwise.
 	 *
-	 * @return the blog posting's semantic URL
+	 * @return the blog posting's semantic URL if present; an empty {@code
+	 *         String} otherwise
 	 * @review
 	 */
 	public String getSemanticUrl() {

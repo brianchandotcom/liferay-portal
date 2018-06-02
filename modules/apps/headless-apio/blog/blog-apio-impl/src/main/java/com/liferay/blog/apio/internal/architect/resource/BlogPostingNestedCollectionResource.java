@@ -23,6 +23,9 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetTagModel;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.blog.apio.internal.architect.form.BlogPostingForm;
 import com.liferay.blogs.model.BlogsEntry;
@@ -37,6 +40,7 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
@@ -135,6 +139,8 @@ public class BlogPostingNestedCollectionResource
 			"fileFormat", blogsEntry -> "text/html"
 		).addString(
 			"headline", BlogsEntry::getTitle
+		).addStringList(
+			"keywords", this::_getBlogsEntryTags
 		).build();
 	}
 
@@ -151,6 +157,13 @@ public class BlogPostingNestedCollectionResource
 			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
 			true, true, new String[0], null, null, null,
 			blogPostingForm.getServiceContext(groupId));
+	}
+
+	private List<String> _getBlogsEntryTags(BlogsEntry blogsEntry) {
+		List<AssetTag> tags = _assetTagLocalService.getTags(
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		return ListUtil.toList(tags, AssetTagModel::getName);
 	}
 
 	private PageItems<BlogsEntry> _getPageItems(
@@ -183,6 +196,9 @@ public class BlogPostingNestedCollectionResource
 			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
 			true, true, new String[0], null, null, null, serviceContext);
 	}
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;

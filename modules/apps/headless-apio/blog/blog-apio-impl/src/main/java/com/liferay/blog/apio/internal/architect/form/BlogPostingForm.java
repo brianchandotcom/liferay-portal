@@ -18,8 +18,11 @@ import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -62,6 +65,8 @@ public class BlogPostingForm {
 			"description", BlogPostingForm::_setDescription
 		).addOptionalString(
 			"semanticUrl", BlogPostingForm::_setSemanticUrl
+		).addOptionalStringList(
+			"keywords", BlogPostingForm::_setKeywords
 		).addRequiredString(
 			"articleBody", BlogPostingForm::_setArticleBody
 		).addRequiredString(
@@ -191,6 +196,10 @@ public class BlogPostingForm {
 			serviceContext.setModifiedDate(_modifiedDate);
 		}
 
+		if (ListUtil.isNotEmpty(_keywords)) {
+			serviceContext.setAssetTagNames(ArrayUtil.toStringArray(_keywords));
+		}
+
 		return serviceContext;
 	}
 
@@ -222,6 +231,10 @@ public class BlogPostingForm {
 		_headline = headline;
 	}
 
+	private void _setKeywords(List<String> keywords) {
+		_keywords = keywords;
+	}
+
 	private void _setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
@@ -237,6 +250,7 @@ public class BlogPostingForm {
 	private String _description;
 	private Date _displayDate;
 	private String _headline;
+	private List<String> _keywords;
 	private Date _modifiedDate;
 	private String _semanticUrl;
 

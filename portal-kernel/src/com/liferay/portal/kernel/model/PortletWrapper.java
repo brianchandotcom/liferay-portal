@@ -659,6 +659,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the header timeout of the portlet.
+	*
+	* @return the header timeout of the portlet
+	*/
+	@Override
+	public int getHeaderTimeout() {
+		return _portlet.getHeaderTimeout();
+	}
+
+	/**
 	* Returns the icon of the portlet.
 	*
 	* @return the icon of the portlet
@@ -2690,6 +2700,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	public void setHeaderRequestAttributePrefixes(
 		java.util.List<String> headerRequestAttributePrefixes) {
 		_portlet.setHeaderRequestAttributePrefixes(headerRequestAttributePrefixes);
+	}
+
+	/**
+	* Sets the header timeout of the portlet.
+	*
+	* @param headerTimeout the header timeout of the portlet
+	*/
+	@Override
+	public void setHeaderTimeout(int headerTimeout) {
+		_portlet.setHeaderTimeout(headerTimeout);
 	}
 
 	/**

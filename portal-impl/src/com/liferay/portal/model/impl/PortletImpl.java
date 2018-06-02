@@ -194,7 +194,7 @@ public class PortletImpl extends PortletBaseImpl {
 		boolean addDefaultResource, String roles, Set<String> unlinkedRoles,
 		Map<String, String> roleMappers, boolean system, boolean active,
 		boolean include, List<String> headerRequestAttributePrefixes,
-		Map<String, String> initParams, Integer expCache,
+		int headerTimeout, Map<String, String> initParams, Integer expCache,
 		boolean asyncSupported, int multipartFileSizeThreshold,
 		String multipartLocation, long multipartMaxFileSize,
 		long multipartMaxRequestSize, Map<String, Set<String>> portletModes,
@@ -295,6 +295,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_system = system;
 		_include = include;
 		_headerRequestAttributePrefixes = headerRequestAttributePrefixes;
+		_headerTimeout = headerTimeout;
 		_initParams = initParams;
 		_expCache = expCache;
 		_asyncSupported = asyncSupported;
@@ -421,8 +422,9 @@ public class PortletImpl extends PortletBaseImpl {
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
 			getCssClassWrapper(), isAddDefaultResource(), getRoles(),
 			getUnlinkedRoles(), getRoleMappers(), isSystem(), isActive(),
-			isInclude(), getHeaderRequestAttributePrefixes(), getInitParams(),
-			getExpCache(), isAsyncSupported(), getMultipartFileSizeThreshold(),
+			isInclude(), getHeaderRequestAttributePrefixes(),
+			getHeaderTimeout(), getInitParams(), getExpCache(),
+			isAsyncSupported(), getMultipartFileSizeThreshold(),
 			getMultipartLocation(), getMultipartMaxFileSize(),
 			getMultipartMaxRequestSize(), getPortletModes(), getWindowStates(),
 			getSupportedLocales(), getResourceBundle(), getPortletInfo(),
@@ -1030,6 +1032,16 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public List<String> getHeaderRequestAttributePrefixes() {
 		return _headerRequestAttributePrefixes;
+	}
+
+	/**
+	 * Returns the header timeout of the portlet.
+	 *
+	 * @return the header timeout of the portlet
+	 */
+	@Override
+	public int getHeaderTimeout() {
+		return _headerTimeout;
 	}
 
 	/**
@@ -3241,6 +3253,16 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Sets the header timeout of the portlet.
+	 *
+	 * @param headerTimeout the header timeout of the portlet
+	 */
+	@Override
+	public void setHeaderTimeout(int headerTimeout) {
+		_headerTimeout = headerTimeout;
+	}
+
+	/**
 	 * Sets the icon of the portlet.
 	 *
 	 * @param icon the icon of the portlet
@@ -4357,6 +4379,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 * header request to the subsequent render request.
 	 */
 	private List<String> _headerRequestAttributePrefixes;
+
+	/**
+	 * The header timeout of the portlet.
+	 */
+	private int _headerTimeout;
 
 	/**
 	 * The icon of the portlet.

@@ -39,7 +39,7 @@ header-portlet-css*, header-portal-javascript*, header-portlet-javascript*,
 footer-portal-css*, footer-portlet-css*, footer-portal-javascript*,
 footer-portlet-javascript*, css-class-wrapper?, facebook-integration?,
 add-default-resource?, system?, active?, include?,
-header-request-attribute-prefix*)>
+header-request-attribute-prefix*, header-timeout?)>
 
 <!--
 The portlet-name element contains the unique name of the portlet. This name must
@@ -817,6 +817,16 @@ name starting with the prefix will be copied from the header request to the
 subsequent render request.
 -->
 <!ELEMENT header-request-attribute-prefix (#PCDATA)>
+
+<!--
+The default value of header-timeout is 0. If set to a value greater than 0,
+and monitoring-spring.xml is enabled via the property "spring.configs" in
+portal.properties, and the property "monitoring.portlet.header.request" in
+portal.properties is set to true, then the portlet's header phase processing
+will be timed. If the execution time is longer than header-timeout, it will be
+recorded as a timeout request processing. The time unit is millisecond.
+-->
+<!ELEMENT header-timeout (#PCDATA)>
 
 <!--
 The role-mapper contains two names specified by role-name and role-link. The

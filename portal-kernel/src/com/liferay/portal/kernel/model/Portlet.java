@@ -458,6 +458,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public java.util.List<String> getHeaderRequestAttributePrefixes();
 
 	/**
+	* Returns the header timeout of the portlet.
+	*
+	* @return the header timeout of the portlet
+	*/
+	public int getHeaderTimeout();
+
+	/**
 	* Returns the icon of the portlet.
 	*
 	* @return the icon of the portlet
@@ -1832,6 +1839,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public void setHeaderRequestAttributePrefixes(
 		java.util.List<String> headerRequestAttributePrefixes);
+
+	/**
+	* Sets the header timeout of the portlet.
+	*
+	* @param headerTimeout the header timeout of the portlet
+	*/
+	public void setHeaderTimeout(int headerTimeout);
 
 	/**
 	* Sets the icon of the portlet.

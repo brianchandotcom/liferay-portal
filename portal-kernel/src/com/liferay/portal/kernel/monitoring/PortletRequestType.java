@@ -20,6 +20,6 @@ package com.liferay.portal.kernel.monitoring;
  */
 public enum PortletRequestType {
 
-	ACTION, EVENT, RENDER, RESOURCE
+	ACTION, EVENT, HEADER, RENDER, RESOURCE
 
 }

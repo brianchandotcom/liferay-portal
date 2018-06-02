@@ -39,6 +39,11 @@ public class DefaultPortletMonitoringControl
 	}
 
 	@Override
+	public boolean isMonitorPortletHeaderRequest() {
+		return _monitorPortletHeaderRequest;
+	}
+
+	@Override
 	public boolean isMonitorPortletRenderRequest() {
 		return _monitorPortletRenderRequest;
 	}
@@ -63,6 +68,13 @@ public class DefaultPortletMonitoringControl
 	}
 
 	@Override
+	public void setMonitorPortletHeaderRequest(
+		boolean monitoringPortletHeaderRequest) {
+
+		_monitorPortletHeaderRequest = monitoringPortletHeaderRequest;
+	}
+
+	@Override
 	public void setMonitorPortletRenderRequest(
 		boolean monitorPortletRenderRequest) {
 
@@ -78,6 +90,7 @@ public class DefaultPortletMonitoringControl
 
 	private boolean _monitorPortletActionRequest;
 	private boolean _monitorPortletEventRequest;
+	private boolean _monitorPortletHeaderRequest;
 	private boolean _monitorPortletRenderRequest;
 	private boolean _monitorPortletResourceRequest;
 

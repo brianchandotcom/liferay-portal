@@ -15,17 +15,18 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
+import com.liferay.oauth2.provider.test.internal.TestApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Collections;
 import java.util.Dictionary;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -41,37 +42,34 @@ import org.junit.runner.RunWith;
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AnnotatedApplicationClientTest extends BaseClientTestCase {
+public class AnnotationsAndHttpApplicationClientTest
+	extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			AnnotatedApplicationTestPreparatorBundleActivator.class);
+			AnnotationsAndHttpTestPreparatorBundleActivator.class);
 	}
 
 	@Test
 	public void test() throws Exception {
-		WebTarget webTarget = getWebTarget("/annotated");
+		String tokenString = getToken("oauthTestApplication");
 
-		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(),
-			getToken(
-				"oauthTestApplicationAfter", null,
-				getResourceOwnerPassword("test@liferay.com", "test"),
-				this::parseTokenString));
+		WebTarget webTarget = getWebTarget("/methods");
 
-		Assert.assertEquals(
-			"everything.readonly", invocationBuilder.get(String.class));
+		Invocation.Builder builder = authorize(
+			webTarget.request(), tokenString);
 
-		invocationBuilder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationBefore"));
+		Assert.assertEquals("get", builder.get(String.class));
 
-		Response response = invocationBuilder.get();
+		webTarget = getWebTarget("/annotated");
 
-		Assert.assertEquals(403, response.getStatus());
+		builder = authorize(webTarget.request(), tokenString);
+
+		Assert.assertEquals("everything.readonly", builder.get(String.class));
 	}
 
-	public static class AnnotatedApplicationTestPreparatorBundleActivator
+	public static class AnnotationsAndHttpTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -80,18 +78,39 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
+			Dictionary<String, Object> annotatedApplicationProperties =
+				new HashMapDictionary<>();
+
+			annotatedApplicationProperties.put(
+				"oauth2.scopechecker.type", "annotations");
+
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-			properties.put("oauth2.scopechecker.type", "annotations");
-
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore");
+			properties.put("osgi.jaxrs.name", TestApplication.class.getName());
 
 			registerJaxRsApplication(
-				new TestAnnotatedApplication(), "annotated", properties);
+				new TestAnnotatedApplication(), "annotated",
+				annotatedApplicationProperties);
+
+			registerJaxRsApplication(
+				new TestApplication(), "methods", properties);
+
+			registerScopeMapper(
+				input -> {
+					if (input.equals("GET")) {
+						return Collections.singleton("everything.readonly");
+					}
+					else if (input.equals("POST")) {
+						return Collections.singleton("everything.writeonly");
+					}
+
+					return Collections.singleton(input);
+				},
+				properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter");
+				defaultCompanyId, user, "oauthTestApplication",
+				Collections.singletonList("everything"));
 		}
 
 	}

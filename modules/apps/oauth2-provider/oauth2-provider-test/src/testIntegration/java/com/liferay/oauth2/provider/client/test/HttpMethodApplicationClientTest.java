@@ -50,40 +50,39 @@ public class HttpMethodApplicationClientTest extends BaseClientTestCase {
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			MethodApplicationBundleActivator.class);
+			MethodApplicationTestPreparatorBundleActivator.class);
 	}
 
 	@Test
 	public void test() throws Exception {
-		WebTarget applicationTarget = getWebTarget("/methods");
+		WebTarget webTarget = getWebTarget("/methods");
 
 		Invocation.Builder builder = authorize(
-			applicationTarget.request(), getToken("oauthTestApplicationAfter"));
+			webTarget.request(), getToken("oauthTestApplicationAfter"));
 
 		Assert.assertEquals("get", builder.get(String.class));
 
-		Response post = builder.post(
+		Response response = builder.post(
 			Entity.entity("post", MediaType.TEXT_PLAIN_TYPE));
 
-		Assert.assertEquals("post", post.readEntity(String.class));
+		Assert.assertEquals("post", response.readEntity(String.class));
 
 		builder = authorize(
-			applicationTarget.request(),
-			getToken("oauthTestApplicationBefore"));
+			webTarget.request(), getToken("oauthTestApplicationBefore"));
 
-		Response response = builder.get();
+		response = builder.get();
 
 		Assert.assertEquals(403, response.getStatus());
 
 		builder = authorize(
-			applicationTarget.request(), getToken("oauthTestApplicationWrong"));
+			webTarget.request(), getToken("oauthTestApplicationWrong"));
 
 		response = builder.get();
 
 		Assert.assertEquals(403, response.getStatus());
 	}
 
-	public static class MethodApplicationBundleActivator
+	public static class MethodApplicationTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override

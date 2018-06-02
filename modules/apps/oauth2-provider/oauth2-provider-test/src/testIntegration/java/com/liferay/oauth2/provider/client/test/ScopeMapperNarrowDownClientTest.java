@@ -15,17 +15,18 @@
 package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
+import com.liferay.oauth2.provider.test.internal.TestApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Collections;
 import java.util.Dictionary;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -33,20 +34,22 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Carlos Sierra Andrés
  */
+@Ignore("TODO: We still need to fix this one")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AnnotatedApplicationClientTest extends BaseClientTestCase {
+public class ScopeMapperNarrowDownClientTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			AnnotatedApplicationTestPreparatorBundleActivator.class);
+			ScopeMapperNarrowDownClientTestPreparatorBundleActivator.class);
 	}
 
 	@Test
@@ -56,22 +59,21 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 		Invocation.Builder invocationBuilder = authorize(
 			webTarget.request(),
 			getToken(
-				"oauthTestApplicationAfter", null,
-				getResourceOwnerPassword("test@liferay.com", "test"),
-				this::parseTokenString));
+				"oauthTestApplication", null,
+				getClientCredentials("everything"), this::parseTokenString));
 
 		Assert.assertEquals(
 			"everything.readonly", invocationBuilder.get(String.class));
 
-		invocationBuilder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationBefore"));
+		String scopeString = getToken(
+			"oauthTestApplication", null,
+			getClientCredentials("everything.readonly"),
+			this::parseScopeString);
 
-		Response response = invocationBuilder.get();
-
-		Assert.assertEquals(403, response.getStatus());
+		Assert.assertEquals("everything.readonly", scopeString);
 	}
 
-	public static class AnnotatedApplicationTestPreparatorBundleActivator
+	public static class ScopeMapperNarrowDownClientTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -80,18 +82,37 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
+			Dictionary<String, Object> annotatedApplicationProperties =
+				new HashMapDictionary<>();
+
+			annotatedApplicationProperties.put(
+				"oauth2.scopechecker.type", "annotations");
+
+			Dictionary<String, Object> scopeMapperProperties =
+				new HashMapDictionary<>();
+
+			scopeMapperProperties.put(
+				"osgi.jaxrs.name", TestApplication.class.getName());
+
+			createFactoryConfiguration(
+				"com.liferay.oauth2.provider.scope.internal.configuration." +
+					"ConfigurableScopeMapperConfiguration",
+				scopeMapperProperties);
+
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-			properties.put("oauth2.scopechecker.type", "annotations");
-
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore");
+			properties.put("osgi.jaxrs.name", TestApplication.class.getName());
 
 			registerJaxRsApplication(
-				new TestAnnotatedApplication(), "annotated", properties);
+				new TestAnnotatedApplication(), "annotated",
+				annotatedApplicationProperties);
+
+			registerJaxRsApplication(
+				new TestApplication(), "methods", properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter");
+				defaultCompanyId, user, "oauthTestApplication",
+				Collections.singletonList("everything"));
 		}
 
 	}

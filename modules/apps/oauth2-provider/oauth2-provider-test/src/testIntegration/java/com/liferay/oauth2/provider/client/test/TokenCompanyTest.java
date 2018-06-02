@@ -14,18 +14,9 @@
 
 package com.liferay.oauth2.provider.client.test;
 
-import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PortalUtil;
-
-import java.util.Dictionary;
-
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -41,7 +32,7 @@ import org.junit.runner.RunWith;
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AnnotatedApplicationClientTest extends BaseClientTestCase {
+public class TokenCompanyTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
@@ -51,24 +42,15 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 	@Test
 	public void test() throws Exception {
-		WebTarget webTarget = getWebTarget("/annotated");
+		getToken("oauthTestApplication", "myhost.xyz");
 
-		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(),
-			getToken(
-				"oauthTestApplicationAfter", null,
-				getResourceOwnerPassword("test@liferay.com", "test"),
-				this::parseTokenString));
+		getToken("oauthTestApplicationAllowed", "myhostallowed.xyz");
 
 		Assert.assertEquals(
-			"everything.readonly", invocationBuilder.get(String.class));
-
-		invocationBuilder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationBefore"));
-
-		Response response = invocationBuilder.get();
-
-		Assert.assertEquals(403, response.getStatus());
+			"invalid_grant",
+			getToken(
+				"oauthTestApplicationDefault", "myhostdefaultuser.xyz",
+				this::getClientCredentials, this::parseError));
 	}
 
 	public static class AnnotatedApplicationTestPreparatorBundleActivator
@@ -76,22 +58,22 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
-
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
-
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put("oauth2.scopechecker.type", "annotations");
+			User user = addUser(createCompany("myhost"));
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore");
+				user.getCompanyId(), user, "oauthTestApplication");
 
-			registerJaxRsApplication(
-				new TestAnnotatedApplication(), "annotated", properties);
+			User adminUser = addAdminUser(createCompany("myhostallowed"));
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter");
+				adminUser.getCompanyId(), adminUser,
+				"oauthTestApplicationAllowed");
+
+			Company company = createCompany("myhostdefaultuser");
+
+			createOAuth2Application(
+				company.getCompanyId(), company.getDefaultUser(),
+				"oauthTestApplicationDefault");
 		}
 
 	}

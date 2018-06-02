@@ -14,18 +14,16 @@
 
 package com.liferay.oauth2.provider.client.test;
 
-import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
+import com.liferay.oauth2.provider.test.internal.TestApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Arrays;
 import java.util.Dictionary;
-
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
+import java.util.HashSet;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -41,37 +39,48 @@ import org.junit.runner.RunWith;
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AnnotatedApplicationClientTest extends BaseClientTestCase {
+public class NarrowDownScopeClientTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			AnnotatedApplicationTestPreparatorBundleActivator.class);
+			NarrowDownScopeTestPreparatorBundleActivator.class);
 	}
 
 	@Test
 	public void test() throws Exception {
-		WebTarget webTarget = getWebTarget("/annotated");
-
-		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(),
+		Assert.assertEquals(
+			"HEAD",
 			getToken(
-				"oauthTestApplicationAfter", null,
-				getResourceOwnerPassword("test@liferay.com", "test"),
-				this::parseTokenString));
+				"oauthTestApplication", null, getClientCredentials("HEAD"),
+				this::parseScopeString));
 
 		Assert.assertEquals(
-			"everything.readonly", invocationBuilder.get(String.class));
+			"HEAD",
+			getToken(
+				"oauthTestApplication", null,
+				getResourceOwnerPassword("test@liferay.com", "test", "HEAD"),
+				this::parseScopeString));
 
-		invocationBuilder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationBefore"));
+		String scopeString = getToken(
+			"oauthTestApplication", null,
+			getResourceOwnerPassword("test@liferay.com", "test"),
+			this::parseScopeString);
 
-		Response response = invocationBuilder.get();
+		Assert.assertEquals(
+			new HashSet<>(Arrays.asList("HEAD", "GET", "OPTIONS", "POST")),
+			new HashSet<>(Arrays.asList(scopeString.split(" "))));
 
-		Assert.assertEquals(403, response.getStatus());
+		Assert.assertEquals(
+			"invalid_grant",
+			getToken(
+				"oauthTestApplication", null,
+				getResourceOwnerPassword(
+					"test@liferay.com", "test", "HEAD GET OPTIONS POST PUT"),
+				this::parseError));
 	}
 
-	public static class AnnotatedApplicationTestPreparatorBundleActivator
+	public static class NarrowDownScopeTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
@@ -82,16 +91,14 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-			properties.put("oauth2.scopechecker.type", "annotations");
-
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore");
+			properties.put("oauth2.test.application", true);
 
 			registerJaxRsApplication(
-				new TestAnnotatedApplication(), "annotated", properties);
+				new TestApplication(), "methods", properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter");
+				defaultCompanyId, user, "oauthTestApplication",
+				Arrays.asList("HEAD", "GET", "OPTIONS", "POST"));
 		}
 
 	}

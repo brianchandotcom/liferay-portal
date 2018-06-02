@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Collections;
 import java.util.Dictionary;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -41,38 +41,29 @@ import org.junit.runner.RunWith;
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AnnotatedApplicationClientTest extends BaseClientTestCase {
+public class AnnotatedApplicationPrefixHandlerClientTest
+	extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			AnnotatedApplicationTestPreparatorBundleActivator.class);
+			AnnotatedApplicationPrefixHandlerTestPreparatorBundleActivator.
+				class);
 	}
 
 	@Test
 	public void test() throws Exception {
 		WebTarget webTarget = getWebTarget("/annotated");
 
-		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(),
-			getToken(
-				"oauthTestApplicationAfter", null,
-				getResourceOwnerPassword("test@liferay.com", "test"),
-				this::parseTokenString));
+		Invocation.Builder builder = authorize(
+			webTarget.request(), getToken("oauthTestApplication"));
 
-		Assert.assertEquals(
-			"everything.readonly", invocationBuilder.get(String.class));
-
-		invocationBuilder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationBefore"));
-
-		Response response = invocationBuilder.get();
-
-		Assert.assertEquals(403, response.getStatus());
+		Assert.assertEquals("everything.readonly", builder.get(String.class));
 	}
 
-	public static class AnnotatedApplicationTestPreparatorBundleActivator
-		extends BaseTestPreparatorBundleActivator {
+	public static class
+		AnnotatedApplicationPrefixHandlerTestPreparatorBundleActivator
+			extends BaseTestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
@@ -83,15 +74,17 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 			properties.put("oauth2.scopechecker.type", "annotations");
+			properties.put(
+				"osgi.jaxrs.name", TestAnnotatedApplication.class.getName());
 
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore");
+			registerPrefixHandler(input -> "test/" + input, properties);
 
 			registerJaxRsApplication(
 				new TestAnnotatedApplication(), "annotated", properties);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter");
+				defaultCompanyId, user, "oauthTestApplication",
+				Collections.singletonList("test/everything"));
 		}
 
 	}

@@ -16,10 +16,9 @@ package com.liferay.oauth2.provider.client.test;
 
 import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Dictionary;
 
@@ -41,57 +40,59 @@ import org.junit.runner.RunWith;
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AnnotatedApplicationClientTest extends BaseClientTestCase {
+public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			AnnotatedApplicationTestPreparatorBundleActivator.class);
+			IsolationAccrossCompaniesTestPreparatorBundleActivator.class);
 	}
 
 	@Test
 	public void test() throws Exception {
 		WebTarget webTarget = getWebTarget("/annotated");
 
-		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(),
-			getToken(
-				"oauthTestApplicationAfter", null,
-				getResourceOwnerPassword("test@liferay.com", "test"),
-				this::parseTokenString));
+		String tokenString = getToken("oauthTestApplication", "host1.xyz");
 
-		Assert.assertEquals(
-			"everything.readonly", invocationBuilder.get(String.class));
+		Invocation.Builder builder = authorize(
+			webTarget.request(), tokenString);
 
-		invocationBuilder = authorize(
-			webTarget.request(), getToken("oauthTestApplicationBefore"));
+		builder = builder.header("Host", "host1.xyz");
 
-		Response response = invocationBuilder.get();
+		Assert.assertEquals("everything.readonly", builder.get(String.class));
 
-		Assert.assertEquals(403, response.getStatus());
+		builder = builder.header("Host", "host2.xyz");
+
+		Response response = builder.get();
+
+		Assert.assertEquals(400, response.getStatus());
 	}
 
-	public static class AnnotatedApplicationTestPreparatorBundleActivator
+	public static class IsolationAccrossCompaniesTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
-
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
-
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 			properties.put("oauth2.scopechecker.type", "annotations");
 
-			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationBefore");
-
 			registerJaxRsApplication(
 				new TestAnnotatedApplication(), "annotated", properties);
 
+			Company company1 = createCompany("host1");
+
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplicationAfter");
+				company1.getCompanyId(),
+				UserTestUtil.getAdminUser(company1.getCompanyId()),
+				"oauthTestApplication");
+
+			Company company2 = createCompany("host2");
+
+			createOAuth2Application(
+				company2.getCompanyId(),
+				UserTestUtil.getAdminUser(company2.getCompanyId()),
+				"oauthTestApplication");
 		}
 
 	}

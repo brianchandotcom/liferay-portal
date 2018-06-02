@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet;
 
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
@@ -738,13 +739,21 @@ public class JournalPortlet extends MVCPortlet {
 			uploadPortletRequest, "ddmTemplateKey");
 		long assetDisplayPageId = ParamUtil.getLong(
 			uploadPortletRequest, "assetDisplayPageId");
+		int displayPageType = ParamUtil.getInteger(
+			uploadPortletRequest, "displayPageType");
 		String layoutUuid = ParamUtil.getString(
 			uploadPortletRequest, "layoutUuid");
 
 		Layout targetLayout = _journalHelper.getArticleLayout(
 			layoutUuid, groupId);
 
-		if ((assetDisplayPageId != 0) || (targetLayout == null)) {
+		if (displayPageType == AssetDisplayPageConstants.TYPE_SPECIFIC) {
+			if ((assetDisplayPageId != 0) || (targetLayout == null)) {
+				layoutUuid = null;
+			}
+		}
+		else {
+			assetDisplayPageId = 0;
 			layoutUuid = null;
 		}
 
@@ -914,7 +923,7 @@ public class JournalPortlet extends MVCPortlet {
 
 		// Asset display page
 
-		_updateAssetDisplayPage(article, assetDisplayPageId);
+		_updateAssetDisplayPage(article, assetDisplayPageId, displayPageType);
 
 		sendEditArticleRedirect(
 			actionRequest, actionResponse, article, oldUrlTitle);
@@ -1462,7 +1471,8 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	private void _updateAssetDisplayPage(
-			JournalArticle article, long assetDisplayPageId)
+			JournalArticle article, long assetDisplayPageId,
+			int displayPageType)
 		throws PortalException {
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
@@ -1479,10 +1489,8 @@ public class JournalPortlet extends MVCPortlet {
 					assetEntry.getEntryId());
 		}
 
-		if (assetDisplayPageId > 0) {
-			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-				assetEntry.getEntryId(), assetDisplayPageId);
-		}
+		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
+			assetEntry.getEntryId(), assetDisplayPageId, displayPageType);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);

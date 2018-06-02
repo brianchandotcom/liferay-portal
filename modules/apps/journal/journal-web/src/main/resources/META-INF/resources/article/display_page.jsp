@@ -42,41 +42,58 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		<aui:input id="assetDisplayPageIdInput" ignoreRequestValue="<%= true %>" name="assetDisplayPageId" type="hidden" value="<%= editArticleDisplayPageDisplayContext.getAssetDisplayPageId() %>" />
 
-		<p class="text-default">
-			<span class="<%= Validator.isNull(editArticleDisplayPageDisplayContext.getDisplayPageName()) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
-				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
-			</span>
-			<span id="<portlet:namespace />displayPageNameInput">
-				<c:choose>
-					<c:when test="<%= Validator.isNull(editArticleDisplayPageDisplayContext.getDisplayPageName()) %>">
-						<span class="text-muted"><liferay-ui:message key="none" /></span>
-					</c:when>
-					<c:otherwise>
-						<%= editArticleDisplayPageDisplayContext.getDisplayPageName() %>
-					</c:otherwise>
-				</c:choose>
-			</span>
-		</p>
+		<span><liferay-ui:message key="please-select-one-option" /></span>
 
-		<aui:button name="chooseDisplayPage" value="choose" />
+		<liferay-frontend:fieldset
+			id='<%= renderResponse.getNamespace() + "eventsContainer" %>'
+		>
+			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() %>" label='<%= LanguageUtil.format(request, "use-default-display-page-for-x-x", new Object[] {journalDisplayContext.getDDMStructureName(), editArticleDisplayPageDisplayContext.getDefaultAssetDisplayPageName()}, false) %>' name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />
 
-		<c:if test="<%= editArticleDisplayPageDisplayContext.isURLViewInContext() %>">
+			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() %>" label="use-a-specific-display-page-for-the-web-content" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>" />
 
-			<%
-			Layout defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(editArticleDisplayPageDisplayContext.getLayoutUuid(), themeDisplay.getScopeGroupId(), false);
+			<div class="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />displayPageContainer">
+				<p class="text-default">
+					<span class="<%= Validator.isNull(editArticleDisplayPageDisplayContext.getDisplayPageName()) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
+						<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+					</span>
+					<span id="<portlet:namespace />displayPageNameInput">
+						<c:choose>
+							<c:when test="<%= Validator.isNull(editArticleDisplayPageDisplayContext.getDisplayPageName()) %>">
+								<span class="text-muted"><liferay-ui:message key="none" /></span>
+							</c:when>
+							<c:otherwise>
+								<%= editArticleDisplayPageDisplayContext.getDisplayPageName() %>
+							</c:otherwise>
+						</c:choose>
+					</span>
+				</p>
 
-			if (defaultDisplayLayout == null) {
-				defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(editArticleDisplayPageDisplayContext.getLayoutUuid(), themeDisplay.getScopeGroupId(), true);
-			}
-			%>
+				<aui:button name="chooseDisplayPage" value="choose" />
 
-			<aui:a href="<%= editArticleDisplayPageDisplayContext.getURLViewInContext() %>" target="blank">
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(defaultDisplayLayout.getName(locale)) %>" key="view-content-in-x" translateArguments="<%= false %>" />
-			</aui:a>
-		</c:if>
+				<c:if test="<%= editArticleDisplayPageDisplayContext.isURLViewInContext() %>">
+
+					<%
+					Layout defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(editArticleDisplayPageDisplayContext.getLayoutUuid(), themeDisplay.getScopeGroupId(), false);
+
+					if (defaultDisplayLayout == null) {
+						defaultDisplayLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(editArticleDisplayPageDisplayContext.getLayoutUuid(), themeDisplay.getScopeGroupId(), true);
+					}
+					%>
+
+					<aui:a href="<%= editArticleDisplayPageDisplayContext.getURLViewInContext() %>" target="blank">
+						<liferay-ui:message arguments="<%= HtmlUtil.escape(defaultDisplayLayout.getName(locale)) %>" key="view-content-in-x" translateArguments="<%= false %>" />
+					</aui:a>
+				</c:if>
+			</div>
+
+			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeNone() %>" label="no-display-page" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
+
+			<span class="small text-muted"><liferay-ui:message key="this-content-will-not-be-referenceable-with-an-url" /></span>
+		</liferay-frontend:fieldset>
 
 		<aui:script use="liferay-item-selector-dialog">
 			var assetDisplayPageIdInput = $('#<portlet:namespace />assetDisplayPageIdInput');
+			var displayPageContainer = $('#<portlet:namespace />displayPageContainer');
 			var displayPageItemContainer = $('#<portlet:namespace />displayPageItemContainer');
 			var displayPageItemRemove = $('#<portlet:namespace />displayPageItemRemove');
 			var displayPageNameInput = $('#<portlet:namespace />displayPageNameInput');
@@ -128,6 +145,20 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 					pagesContainerInput.val('');
 
 					displayPageItemRemove.addClass('hide');
+				}
+			);
+
+			$('#<portlet:namespace />eventsContainer').on(
+				'change',
+				function(event) {
+					var target = event.target;
+
+					if (target && target.value === '<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>') {
+						displayPageContainer.removeClass('hide');
+					}
+					else {
+						displayPageContainer.addClass('hide');
+					}
 				}
 			);
 		</aui:script>

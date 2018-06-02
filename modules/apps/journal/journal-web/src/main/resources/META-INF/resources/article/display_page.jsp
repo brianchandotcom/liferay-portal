@@ -86,7 +86,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeNone() %>" id="displayPageTypeNone" label='<%= LanguageUtil.get(request, "no-display-page") %>' name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
 
-			<span class="small text-muted"><liferay-ui:message key="this-content-will-not-be-referenceable-with-a-url" /></span>
+			<span class="small text-muted"><liferay-ui:message key="this-content-will-not-be-referenceable-with-an-url" /></span>
 		</aui:fieldset>
 
 		<aui:script use="liferay-item-selector-dialog">

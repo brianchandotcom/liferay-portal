@@ -55,7 +55,7 @@ public class Element extends Node {
     public Element(String tag, boolean useSquareBrackets) {
         this(tag);
 
-        useSquareBrackets = useSquareBrackets;
+        this.useSquareBrackets = useSquareBrackets;
     }
 
     /**

@@ -21,7 +21,7 @@ index caf1110..00f06bd 100644
 +    public Element(String tag, boolean useSquareBrackets) {
 +        this(tag);
 +
-+        useSquareBrackets = useSquareBrackets;
++        this.useSquareBrackets = useSquareBrackets;
 +    }
 +
 +    /**

@@ -92,7 +92,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "settings_", Types.VARCHAR },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "externalReferenceCode", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -110,9 +111,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("settings_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetVocabulary (uuid_ VARCHAR(75) null,vocabularyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetVocabulary (uuid_ VARCHAR(75) null,vocabularyId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,title STRING null,description STRING null,settings_ STRING null,lastPublishDate DATE null,externalReferenceCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table AssetVocabulary";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetVocabulary.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetVocabulary.name ASC";
@@ -129,9 +131,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 				"value.object.column.bitmask.enabled.com.liferay.asset.kernel.model.AssetVocabulary"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long NAME_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -159,6 +162,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		model.setDescription(soapModel.getDescription());
 		model.setSettings(soapModel.getSettings());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 
 		return model;
 	}
@@ -237,6 +241,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		attributes.put("description", getDescription());
 		attributes.put("settings", getSettings());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -322,6 +327,13 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 	}
 
@@ -732,6 +744,32 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
+
+		if (_originalExternalReferenceCode == null) {
+			_originalExternalReferenceCode = _externalReferenceCode;
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	public String getOriginalExternalReferenceCode() {
+		return GetterUtil.getString(_originalExternalReferenceCode);
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -864,6 +902,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		assetVocabularyImpl.setDescription(getDescription());
 		assetVocabularyImpl.setSettings(getSettings());
 		assetVocabularyImpl.setLastPublishDate(getLastPublishDate());
+		assetVocabularyImpl.setExternalReferenceCode(getExternalReferenceCode());
 
 		assetVocabularyImpl.resetOriginalValues();
 
@@ -937,6 +976,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		assetVocabularyModelImpl._setModifiedDate = false;
 
 		assetVocabularyModelImpl._originalName = assetVocabularyModelImpl._name;
+
+		assetVocabularyModelImpl._originalExternalReferenceCode = assetVocabularyModelImpl._externalReferenceCode;
 
 		assetVocabularyModelImpl._columnBitmask = 0;
 	}
@@ -1028,12 +1069,21 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 			assetVocabularyCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		assetVocabularyCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = assetVocabularyCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+				(externalReferenceCode.length() == 0)) {
+			assetVocabularyCacheModel.externalReferenceCode = null;
+		}
+
 		return assetVocabularyCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1061,6 +1111,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		sb.append(getSettings());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", externalReferenceCode=");
+		sb.append(getExternalReferenceCode());
 		sb.append("}");
 
 		return sb.toString();
@@ -1068,7 +1120,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.asset.kernel.model.AssetVocabulary");
@@ -1126,6 +1178,10 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>externalReferenceCode</column-name><column-value><![CDATA[");
+		sb.append(getExternalReferenceCode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1158,6 +1214,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	private String _descriptionCurrentLanguageId;
 	private String _settings;
 	private Date _lastPublishDate;
+	private String _externalReferenceCode;
+	private String _originalExternalReferenceCode;
 	private long _columnBitmask;
 	private AssetVocabulary _escapedModel;
 }

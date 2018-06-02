@@ -146,6 +146,8 @@ public class AssetCategoryPersistenceTest {
 
 		newAssetCategory.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newAssetCategory.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		_assetCategories.add(_persistence.update(newAssetCategory));
 
 		AssetCategory existingAssetCategory = _persistence.findByPrimaryKey(newAssetCategory.getPrimaryKey());
@@ -185,6 +187,8 @@ public class AssetCategoryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingAssetCategory.getLastPublishDate()),
 			Time.getShortTimestamp(newAssetCategory.getLastPublishDate()));
+		Assert.assertEquals(existingAssetCategory.getExternalReferenceCode(),
+			newAssetCategory.getExternalReferenceCode());
 	}
 
 	@Test
@@ -329,6 +333,15 @@ public class AssetCategoryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetCategory newAssetCategory = addAssetCategory();
 
@@ -362,7 +375,8 @@ public class AssetCategoryPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "parentCategoryId", true, "leftCategoryId",
 			true, "rightCategoryId", true, "name", true, "title", true,
-			"description", true, "vocabularyId", true, "lastPublishDate", true);
+			"description", true, "vocabularyId", true, "lastPublishDate", true,
+			"externalReferenceCode", true);
 	}
 
 	@Test
@@ -583,6 +597,14 @@ public class AssetCategoryPersistenceTest {
 				existingAssetCategory.getVocabularyId()),
 			ReflectionTestUtil.<Long>invoke(existingAssetCategory,
 				"getOriginalVocabularyId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingAssetCategory.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetCategory,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
+				existingAssetCategory.getExternalReferenceCode(),
+				ReflectionTestUtil.invoke(existingAssetCategory,
+					"getOriginalExternalReferenceCode", new Class<?>[0])));
 	}
 
 	protected AssetCategory addAssetCategory() throws Exception {
@@ -617,6 +639,8 @@ public class AssetCategoryPersistenceTest {
 		assetCategory.setVocabularyId(RandomTestUtil.nextLong());
 
 		assetCategory.setLastPublishDate(RandomTestUtil.nextDate());
+
+		assetCategory.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		_assetCategories.add(_persistence.update(assetCategory));
 
@@ -867,6 +891,8 @@ public class AssetCategoryPersistenceTest {
 		assetCategory.setVocabularyId(RandomTestUtil.nextLong());
 
 		assetCategory.setLastPublishDate(RandomTestUtil.nextDate());
+
+		assetCategory.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		if (parentCategoryId != null) {
 			assetCategory.setParentCategoryId(parentCategoryId);

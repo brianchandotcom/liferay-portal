@@ -355,6 +355,21 @@ public interface OrganizationModel extends BaseModel<Organization>, MVCCModel,
 	 */
 	public void setLogoId(long logoId);
 
+	/**
+	 * Returns the external reference code of this organization.
+	 *
+	 * @return the external reference code of this organization
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this organization.
+	 *
+	 * @param externalReferenceCode the external reference code of this organization
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
 	@Override
 	public boolean isNew();
 

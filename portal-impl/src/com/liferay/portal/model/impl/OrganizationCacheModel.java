@@ -78,7 +78,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -116,6 +116,8 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		sb.append(comments);
 		sb.append(", logoId=");
 		sb.append(logoId);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -196,6 +198,13 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 
 		organizationImpl.setLogoId(logoId);
 
+		if (externalReferenceCode == null) {
+			organizationImpl.setExternalReferenceCode("");
+		}
+		else {
+			organizationImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		organizationImpl.resetOriginalValues();
 
 		return organizationImpl;
@@ -230,6 +239,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		comments = objectInput.readUTF();
 
 		logoId = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -299,6 +309,13 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		}
 
 		objectOutput.writeLong(logoId);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 	}
 
 	public long mvccVersion;
@@ -319,4 +336,5 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	public long statusId;
 	public String comments;
 	public long logoId;
+	public String externalReferenceCode;
 }

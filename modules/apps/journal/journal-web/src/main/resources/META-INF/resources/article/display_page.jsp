@@ -45,9 +45,9 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 		<span><liferay-ui:message key="please-select-one-option" /></span>
 
 		<aui:fieldset id='<%= renderResponse.getNamespace() + "eventsContainer" %>'>
-			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() %>" id="displayPageTypeDefault" label='<%= LanguageUtil.format(request, "use-default-display-page-for-x-x", new Object[] {journalDisplayContext.getDDMStructureName(), editArticleDisplayPageDisplayContext.getDefaultAssetDisplayPageName()}, false) %>' name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />
+			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() %>" label='<%= LanguageUtil.format(request, "use-default-display-page-for-x-x", new Object[] {journalDisplayContext.getDDMStructureName(), editArticleDisplayPageDisplayContext.getDefaultAssetDisplayPageName()}, false) %>' name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />
 
-			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() %>" id="displayPageTypeSpecific" label='<%= LanguageUtil.get(request, "use-a-specific-display-page-for-the-web-content") %>' name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>" />
+			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() %>" label="use-a-specific-display-page-for-the-web-content" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>" />
 
 			<div class="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />displayPageContainer">
 				<p class="text-default">
@@ -84,7 +84,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 				</c:if>
 			</div>
 
-			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeNone() %>" id="displayPageTypeNone" label='<%= LanguageUtil.get(request, "no-display-page") %>' name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
+			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeNone() %>" label="no-display-page" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
 
 			<span class="small text-muted"><liferay-ui:message key="this-content-will-not-be-referenceable-with-an-url" /></span>
 		</aui:fieldset>

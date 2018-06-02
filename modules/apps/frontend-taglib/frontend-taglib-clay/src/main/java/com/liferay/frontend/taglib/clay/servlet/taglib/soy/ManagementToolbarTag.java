@@ -43,8 +43,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 	public int doStartTag() {
 		super.setComponentBaseName(
 			"com.liferay.frontend.taglib.clay.ManagementToolbar");
-		super.setModuleBaseName("management-toolbar");
 		super.setHydrate(true);
+		super.setModuleBaseName("management-toolbar");
 
 		Map<String, Object> context = getContext();
 

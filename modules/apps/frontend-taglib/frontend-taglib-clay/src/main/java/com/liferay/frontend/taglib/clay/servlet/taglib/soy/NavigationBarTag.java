@@ -27,6 +27,7 @@ public class NavigationBarTag extends BaseClayTag {
 	@Override
 	public int doStartTag() {
 		super.setComponentBaseName("ClayNavigationBar");
+		super.setHydrate(true);
 		super.setModuleBaseName("navigation-bar");
 
 		return super.doStartTag();

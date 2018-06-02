@@ -72,6 +72,8 @@ public class TranslationManagerTag extends TemplateRendererTag {
 
 		setTemplateNamespace("liferay.frontend.TranslationManager.render");
 
+		super.setHydrate(true);
+
 		return super.doStartTag();
 	}
 

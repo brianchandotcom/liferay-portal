@@ -3,7 +3,7 @@
 
 <service-builder api-package-path="com.liferay.asset.kernel" auto-import-default-references="false" package-path="com.liferay.portlet.asset">
 	<namespace>Asset</namespace>
-	<entity local-service="true" name="AssetCategory" remote-service="true" uuid="true" uuid-accessor="true">
+	<entity external-reference-code="true" local-service="true" name="AssetCategory" remote-service="true" uuid="true" uuid-accessor="true">
 
 		<!-- PK fields -->
 
@@ -406,7 +406,7 @@
 
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 	</entity>
-	<entity local-service="true" name="AssetVocabulary" remote-service="true" uuid="true">
+	<entity external-reference-code="true" local-service="true" name="AssetVocabulary" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

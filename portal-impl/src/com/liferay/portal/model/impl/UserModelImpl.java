@@ -111,6 +111,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 			{ "lockoutDate", Types.TIMESTAMP },
 			{ "agreedToTermsOfUse", Types.BOOLEAN },
 			{ "emailAddressVerified", Types.BOOLEAN },
+			{ "externalReferenceCode", Types.VARCHAR },
 			{ "status", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -157,10 +158,11 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		TABLE_COLUMNS_MAP.put("lockoutDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("agreedToTermsOfUse", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("emailAddressVerified", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table User_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(254) null,facebookId LONG,googleUserId VARCHAR(75) null,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table User_ (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,defaultUser BOOLEAN,contactId LONG,password_ VARCHAR(75) null,passwordEncrypted BOOLEAN,passwordReset BOOLEAN,passwordModifiedDate DATE null,digest VARCHAR(255) null,reminderQueryQuestion VARCHAR(75) null,reminderQueryAnswer VARCHAR(75) null,graceLoginCount INTEGER,screenName VARCHAR(75) null,emailAddress VARCHAR(254) null,facebookId LONG,googleUserId VARCHAR(75) null,ldapServerId LONG,openId VARCHAR(1024) null,portraitId LONG,languageId VARCHAR(75) null,timeZoneId VARCHAR(75) null,greeting VARCHAR(255) null,comments STRING null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,jobTitle VARCHAR(100) null,loginDate DATE null,loginIP VARCHAR(75) null,lastLoginDate DATE null,lastLoginIP VARCHAR(75) null,lastFailedLoginDate DATE null,failedLoginAttempts INTEGER,lockout BOOLEAN,lockoutDate DATE null,agreedToTermsOfUse BOOLEAN,emailAddressVerified BOOLEAN,externalReferenceCode VARCHAR(75) null,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table User_";
 	public static final String ORDER_BY_JPQL = " ORDER BY user.userId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY User_.userId ASC";
@@ -181,15 +183,16 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 	public static final long DEFAULTUSER_COLUMN_BITMASK = 8L;
 	public static final long EMAILADDRESS_COLUMN_BITMASK = 16L;
-	public static final long FACEBOOKID_COLUMN_BITMASK = 32L;
-	public static final long GOOGLEUSERID_COLUMN_BITMASK = 64L;
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 128L;
-	public static final long OPENID_COLUMN_BITMASK = 256L;
-	public static final long PORTRAITID_COLUMN_BITMASK = 512L;
-	public static final long SCREENNAME_COLUMN_BITMASK = 1024L;
-	public static final long STATUS_COLUMN_BITMASK = 2048L;
-	public static final long USERID_COLUMN_BITMASK = 4096L;
-	public static final long UUID_COLUMN_BITMASK = 8192L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 32L;
+	public static final long FACEBOOKID_COLUMN_BITMASK = 64L;
+	public static final long GOOGLEUSERID_COLUMN_BITMASK = 128L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 256L;
+	public static final long OPENID_COLUMN_BITMASK = 512L;
+	public static final long PORTRAITID_COLUMN_BITMASK = 1024L;
+	public static final long SCREENNAME_COLUMN_BITMASK = 2048L;
+	public static final long STATUS_COLUMN_BITMASK = 4096L;
+	public static final long USERID_COLUMN_BITMASK = 8192L;
+	public static final long UUID_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -245,6 +248,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		model.setLockoutDate(soapModel.getLockoutDate());
 		model.setAgreedToTermsOfUse(soapModel.isAgreedToTermsOfUse());
 		model.setEmailAddressVerified(soapModel.isEmailAddressVerified());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setStatus(soapModel.getStatus());
 
 		return model;
@@ -396,6 +400,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		attributes.put("lockoutDate", getLockoutDate());
 		attributes.put("agreedToTermsOfUse", isAgreedToTermsOfUse());
 		attributes.put("emailAddressVerified", isEmailAddressVerified());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("status", getStatus());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -655,6 +660,13 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		if (emailAddressVerified != null) {
 			setEmailAddressVerified(emailAddressVerified);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -1408,6 +1420,32 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@JSON
 	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
+
+		if (_originalExternalReferenceCode == null) {
+			_originalExternalReferenceCode = _externalReferenceCode;
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	public String getOriginalExternalReferenceCode() {
+		return GetterUtil.getString(_originalExternalReferenceCode);
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -1507,6 +1545,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userImpl.setLockoutDate(getLockoutDate());
 		userImpl.setAgreedToTermsOfUse(isAgreedToTermsOfUse());
 		userImpl.setEmailAddressVerified(isEmailAddressVerified());
+		userImpl.setExternalReferenceCode(getExternalReferenceCode());
 		userImpl.setStatus(getStatus());
 
 		userImpl.resetOriginalValues();
@@ -1609,6 +1648,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		userModelImpl._originalPortraitId = userModelImpl._portraitId;
 
 		userModelImpl._setOriginalPortraitId = false;
+
+		userModelImpl._originalExternalReferenceCode = userModelImpl._externalReferenceCode;
 
 		userModelImpl._originalStatus = userModelImpl._status;
 
@@ -1868,6 +1909,15 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		userCacheModel.emailAddressVerified = isEmailAddressVerified();
 
+		userCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = userCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+				(externalReferenceCode.length() == 0)) {
+			userCacheModel.externalReferenceCode = null;
+		}
+
 		userCacheModel.status = getStatus();
 
 		return userCacheModel;
@@ -1875,7 +1925,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(87);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -1959,6 +2009,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append(isAgreedToTermsOfUse());
 		sb.append(", emailAddressVerified=");
 		sb.append(isEmailAddressVerified());
+		sb.append(", externalReferenceCode=");
+		sb.append(getExternalReferenceCode());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append("}");
@@ -1968,7 +2020,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(130);
+		StringBundler sb = new StringBundler(133);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.kernel.model.User");
@@ -2139,6 +2191,10 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		sb.append(isEmailAddressVerified());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>externalReferenceCode</column-name><column-value><![CDATA[");
+		sb.append(getExternalReferenceCode());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -2213,6 +2269,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private Date _lockoutDate;
 	private boolean _agreedToTermsOfUse;
 	private boolean _emailAddressVerified;
+	private String _externalReferenceCode;
+	private String _originalExternalReferenceCode;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

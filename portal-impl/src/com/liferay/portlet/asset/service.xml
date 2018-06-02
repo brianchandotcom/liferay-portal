@@ -31,6 +31,7 @@
 		<column localized="true" name="description" type="String" />
 		<column name="vocabularyId" type="long" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="externalReferenceCode" type="String" />
 
 		<!-- Relationships -->
 
@@ -60,6 +61,10 @@
 		<finder name="G_V" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="vocabularyId" />
+		</finder>
+		<finder name="C_ERC" return-type="AssetCategory">
+			<finder-column name="companyId" />
+			<finder-column name="externalReferenceCode" />
 		</finder>
 		<finder name="P_N" return-type="Collection">
 			<finder-column name="parentCategoryId" />
@@ -431,6 +436,7 @@
 		<column localized="true" name="description" type="String" />
 		<column name="settings" type="String" />
 		<column name="lastPublishDate" type="Date" />
+		<column name="externalReferenceCode" type="String" />
 
 		<!-- Order -->
 
@@ -453,6 +459,10 @@
 		<finder name="G_LikeN" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
+		</finder>
+		<finder name="C_ERC" return-type="AssetVocabulary">
+			<finder-column name="companyId" />
+			<finder-column name="externalReferenceCode" />
 		</finder>
 
 		<!-- References -->

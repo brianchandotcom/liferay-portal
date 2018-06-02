@@ -241,6 +241,14 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	@Override
+	public AssetVocabulary fetchVocaublaryByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return assetVocabularyPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	@Override
 	public List<AssetVocabulary> getCompanyVocabularies(long companyId) {
 		return assetVocabularyPersistence.findByCompanyId(companyId);
 	}
@@ -433,6 +441,39 @@ public class AssetVocabularyLocalServiceImpl
 		assetVocabularyPersistence.update(vocabulary);
 
 		return vocabulary;
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AssetVocabulary upsertVocabulary(
+			long userId, long groupId, String title,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String settings, String externalReferenceId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		AssetVocabulary assetVocabulary =
+			assetVocabularyPersistence.fetchByC_ERC(
+				user.getCompanyId(), externalReferenceId);
+
+		if (assetVocabulary == null) {
+			assetVocabulary = addVocabulary(
+				userId, groupId, title, titleMap, descriptionMap, settings,
+				serviceContext);
+
+			assetVocabulary.setExternalReferenceCode(externalReferenceId);
+
+			assetVocabularyPersistence.update(assetVocabulary);
+		}
+		else {
+			assetVocabulary = updateVocabulary(
+				assetVocabulary.getVocabularyId(), title, titleMap,
+				descriptionMap, settings, serviceContext);
+		}
+
+		return assetVocabulary;
 	}
 
 	protected SearchContext buildSearchContext(

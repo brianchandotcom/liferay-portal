@@ -78,7 +78,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(87);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -162,6 +162,8 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		sb.append(agreedToTermsOfUse);
 		sb.append(", emailAddressVerified=");
 		sb.append(emailAddressVerified);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -379,6 +381,14 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 
 		userImpl.setAgreedToTermsOfUse(agreedToTermsOfUse);
 		userImpl.setEmailAddressVerified(emailAddressVerified);
+
+		if (externalReferenceCode == null) {
+			userImpl.setExternalReferenceCode("");
+		}
+		else {
+			userImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		userImpl.setStatus(status);
 
 		userImpl.resetOriginalValues();
@@ -443,6 +453,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		agreedToTermsOfUse = objectInput.readBoolean();
 
 		emailAddressVerified = objectInput.readBoolean();
+		externalReferenceCode = objectInput.readUTF();
 
 		status = objectInput.readInt();
 	}
@@ -623,6 +634,13 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 
 		objectOutput.writeBoolean(emailAddressVerified);
 
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeInt(status);
 	}
 
@@ -667,5 +685,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 	public long lockoutDate;
 	public boolean agreedToTermsOfUse;
 	public boolean emailAddressVerified;
+	public String externalReferenceCode;
 	public int status;
 }

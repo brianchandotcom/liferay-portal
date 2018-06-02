@@ -151,6 +151,8 @@ public class OrganizationPersistenceTest {
 
 		newOrganization.setLogoId(RandomTestUtil.nextLong());
 
+		newOrganization.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		_organizations.add(_persistence.update(newOrganization));
 
 		Organization existingOrganization = _persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
@@ -193,6 +195,8 @@ public class OrganizationPersistenceTest {
 			newOrganization.getComments());
 		Assert.assertEquals(existingOrganization.getLogoId(),
 			newOrganization.getLogoId());
+		Assert.assertEquals(existingOrganization.getExternalReferenceCode(),
+			newOrganization.getExternalReferenceCode());
 	}
 
 	@Test
@@ -254,6 +258,15 @@ public class OrganizationPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByO_C_P() throws Exception {
 		_persistence.countByO_C_P(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -290,7 +303,7 @@ public class OrganizationPersistenceTest {
 			true, "modifiedDate", true, "parentOrganizationId", true,
 			"treePath", true, "name", true, "type", true, "recursable", true,
 			"regionId", true, "countryId", true, "statusId", true, "comments",
-			true, "logoId", true);
+			true, "logoId", true, "externalReferenceCode", true);
 	}
 
 	@Test
@@ -501,6 +514,14 @@ public class OrganizationPersistenceTest {
 		Assert.assertTrue(Objects.equals(existingOrganization.getName(),
 				ReflectionTestUtil.invoke(existingOrganization,
 					"getOriginalName", new Class<?>[0])));
+
+		Assert.assertEquals(Long.valueOf(existingOrganization.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingOrganization,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
+				existingOrganization.getExternalReferenceCode(),
+				ReflectionTestUtil.invoke(existingOrganization,
+					"getOriginalExternalReferenceCode", new Class<?>[0])));
 	}
 
 	protected Organization addOrganization() throws Exception {
@@ -541,6 +562,8 @@ public class OrganizationPersistenceTest {
 		organization.setComments(RandomTestUtil.randomString());
 
 		organization.setLogoId(RandomTestUtil.nextLong());
+
+		organization.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		_organizations.add(_persistence.update(organization));
 

@@ -1147,6 +1147,71 @@ public class UserGroupUtil {
 	}
 
 	/**
+	* Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or throws a {@link NoSuchUserGroupException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the matching user group
+	* @throws NoSuchUserGroupException if a matching user group could not be found
+	*/
+	public static UserGroup findByC_ERC(long companyId,
+		String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.NoSuchUserGroupException {
+		return getPersistence().findByC_ERC(companyId, externalReferenceCode);
+	}
+
+	/**
+	* Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the matching user group, or <code>null</code> if a matching user group could not be found
+	*/
+	public static UserGroup fetchByC_ERC(long companyId,
+		String externalReferenceCode) {
+		return getPersistence().fetchByC_ERC(companyId, externalReferenceCode);
+	}
+
+	/**
+	* Returns the user group where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching user group, or <code>null</code> if a matching user group could not be found
+	*/
+	public static UserGroup fetchByC_ERC(long companyId,
+		String externalReferenceCode, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByC_ERC(companyId, externalReferenceCode,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the user group where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the user group that was removed
+	*/
+	public static UserGroup removeByC_ERC(long companyId,
+		String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.NoSuchUserGroupException {
+		return getPersistence().removeByC_ERC(companyId, externalReferenceCode);
+	}
+
+	/**
+	* Returns the number of user groups where companyId = &#63; and externalReferenceCode = &#63;.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching user groups
+	*/
+	public static int countByC_ERC(long companyId, String externalReferenceCode) {
+		return getPersistence().countByC_ERC(companyId, externalReferenceCode);
+	}
+
+	/**
 	* Caches the user group in the entity cache if it is enabled.
 	*
 	* @param userGroup the user group

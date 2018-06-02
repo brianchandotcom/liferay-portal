@@ -14,16 +14,25 @@
 
 package com.liferay.blog.apio.internal.architect.form;
 
+import static com.liferay.portal.kernel.util.Validator.isNotNull;
+
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
+import com.liferay.apio.architect.function.throwable.ThrowableFunction;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.portal.apio.user.CurrentUser;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.ws.rs.BadRequestException;
 
 /**
  * Instances of this class represent the values extracted from a blog posting
@@ -59,8 +68,12 @@ public class BlogPostingForm {
 			"dateModified", BlogPostingForm::_setModifiedDate
 		).addOptionalLong(
 			"author", BlogPostingForm::_setAuthorId
+		).addOptionalLong(
+			"image", BlogPostingForm::_setImageId
 		).addOptionalString(
 			"alternativeHeadline", BlogPostingForm::_setAlternativeHeadline
+		).addOptionalString(
+			"caption", BlogPostingForm::_setImageCaption
 		).addOptionalString(
 			"description", BlogPostingForm::_setDescription
 		).addOptionalString(
@@ -159,6 +172,52 @@ public class BlogPostingForm {
 	}
 
 	/**
+	 * Returns the blog posting's image caption if both caption and image are
+	 * present. Returns {@code null} otherwise.
+	 *
+	 * @return the blog posting's image caption if both caption and image are
+	 *         present; {@code null} otherwise
+	 * @review
+	 */
+	public String getImageCaption() {
+		if (isNotNull(_imageCaption) && isNotNull(_imageId)) {
+			return _imageCaption;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the {@link ImageSelector} for the blog posting's image, if an
+	 * image ID is present. Returns {@code null} otherwise.
+	 *
+	 * @param  function a function that transforms a file entry ID into a {@link
+	 *         FileEntry}
+	 * @return the {@link ImageSelector} for the blog posting's image, if an
+	 *         image ID is present; {@code null} otherwise
+	 * @review
+	 */
+	public ImageSelector getImageSelector(
+		ThrowableFunction<Long, FileEntry> function) {
+
+		if (_imageId == null) {
+			return null;
+		}
+
+		return Try.fromFallible(
+			() -> function.apply(_imageId)
+		).map(
+			fileEntry -> new ImageSelector(
+				FileUtil.getBytes(fileEntry.getContentStream()),
+				fileEntry.getFileName(), fileEntry.getMimeType(),
+				"{\"height\": 0,\"width\": 0,\"x\": 0,\"y\": 0}")
+		).orElseThrow(
+			() -> new BadRequestException(
+				"Unable to find file entry with id " + _imageId)
+		);
+	}
+
+	/**
 	 * Returns the blog posting's semantic URL if present. Returns an empty
 	 * {@code String} otherwise.
 	 *
@@ -231,6 +290,14 @@ public class BlogPostingForm {
 		_headline = headline;
 	}
 
+	private void _setImageCaption(String imageCaption) {
+		_imageCaption = imageCaption;
+	}
+
+	private void _setImageId(long imageId) {
+		_imageId = imageId;
+	}
+
 	private void _setKeywords(List<String> keywords) {
 		_keywords = keywords;
 	}
@@ -250,6 +317,8 @@ public class BlogPostingForm {
 	private String _description;
 	private Date _displayDate;
 	private String _headline;
+	private String _imageCaption;
+	private Long _imageId;
 	private List<String> _keywords;
 	private Date _modifiedDate;
 	private String _semanticUrl;

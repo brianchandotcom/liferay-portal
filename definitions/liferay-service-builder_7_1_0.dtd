@@ -81,6 +81,9 @@ If the uuid-accessor value is true, then the service will generate a UUID column
 accessor for the service. This accessor will provide a fast and type-safe way to
 access entity's UUID.
 
+If the external-reference-code values is true, then the service will generate a
+externalReferenceCode column for the service. The default value is false.
+
 If the local-service value is true, then the service will generate the local
 interfaces for the service. The default value is false.
 
@@ -152,6 +155,7 @@ The deprecated value specifies whether the entity's services are deprecated.
 	table CDATA #IMPLIED
 	uuid CDATA #IMPLIED
 	uuid-accessor CDATA #IMPLIED
+	external-reference-code CDATA #IMPLIED
 	local-service CDATA #IMPLIED
 	remote-service CDATA #IMPLIED
 	persistence-class CDATA #IMPLIED

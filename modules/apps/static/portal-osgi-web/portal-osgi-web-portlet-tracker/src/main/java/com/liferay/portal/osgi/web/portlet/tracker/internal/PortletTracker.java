@@ -551,6 +551,10 @@ public class PortletTracker
 		portletModel.setHeaderRequestAttributePrefixes(
 			StringPlus.asList(
 				get(serviceReference, "header-request-attribute-prefix")));
+		portletModel.setHeaderTimeout(
+			GetterUtil.getInteger(
+				get(serviceReference, "header-timeout"),
+				portletModel.getHeaderTimeout()));
 		portletModel.setInstanceable(
 			GetterUtil.getBoolean(
 				get(serviceReference, "instanceable"),

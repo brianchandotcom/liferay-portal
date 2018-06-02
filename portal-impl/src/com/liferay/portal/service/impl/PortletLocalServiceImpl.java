@@ -2038,6 +2038,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		portletModel.setHeaderRequestAttributePrefixes(
 			headerRequestAttributePrefixes);
+		portletModel.setHeaderTimeout(
+			GetterUtil.getInteger(
+				portletElement.elementText("header-timeout"),
+				portletModel.getHeaderTimeout()));
 
 		if (Validator.isNull(servletContextName)) {
 			portletModel.setReady(true);

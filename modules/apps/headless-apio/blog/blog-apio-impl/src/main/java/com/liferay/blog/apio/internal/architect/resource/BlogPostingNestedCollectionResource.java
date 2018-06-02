@@ -26,6 +26,7 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.blog.apio.architect.identifier.BlogPostingIdentifier;
 import com.liferay.blog.apio.internal.architect.form.BlogPostingForm;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
@@ -33,6 +34,7 @@ import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
+import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -64,7 +66,7 @@ public class BlogPostingNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addBlogsEntry,
+			this::_addBlogsEntry, CurrentUser.class,
 			_hasPermission.forAddingIn(WebSiteIdentifier.class),
 			BlogPostingForm::buildForm
 		).build();
@@ -84,8 +86,8 @@ public class BlogPostingNestedCollectionResource
 		).addRemover(
 			idempotent(_blogsService::deleteEntry), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateBlogsEntry, _hasPermission::forUpdating,
-			BlogPostingForm::buildForm
+			this::_updateBlogsEntry, CurrentUser.class,
+			_hasPermission::forUpdating, BlogPostingForm::buildForm
 		).build();
 	}
 
@@ -136,18 +138,17 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private BlogsEntry _addBlogsEntry(
-			long groupId, BlogPostingForm blogPostingForm)
+			long groupId, BlogPostingForm blogPostingForm,
+			CurrentUser currentUser)
 		throws PortalException {
 
-		return _blogsService.addEntry(
-			blogPostingForm.getHeadline(),
-			blogPostingForm.getAlternativeHeadline(),
+		String urlTitle = "";
+
+		return _blogsEntryLocalService.addEntry(
+			currentUser.getUserId(), blogPostingForm.getHeadline(),
+			blogPostingForm.getAlternativeHeadline(), urlTitle,
 			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
-			blogPostingForm.getDisplayDateMonth(),
-			blogPostingForm.getDisplayDateDay(),
-			blogPostingForm.getDisplayDateYear(),
-			blogPostingForm.getDisplayDateHour(),
-			blogPostingForm.getDisplayDateMinute(), false, false, null, null,
+			blogPostingForm.getDisplayDate(), true, true, new String[0], null,
 			null, null, blogPostingForm.getServiceContext(groupId));
 	}
 
@@ -164,25 +165,28 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private BlogsEntry _updateBlogsEntry(
-			long blogsEntryId, BlogPostingForm blogPostingForm)
+			long blogsEntryId, BlogPostingForm blogPostingForm,
+			CurrentUser currentUser)
 		throws PortalException {
+
+		String urlTitle = "";
 
 		BlogsEntry blogsEntry = _blogsService.getEntry(blogsEntryId);
 
 		ServiceContext serviceContext = blogPostingForm.getServiceContext(
 			blogsEntry.getGroupId());
 
-		return _blogsService.updateEntry(
-			blogsEntryId, blogPostingForm.getHeadline(),
-			blogPostingForm.getAlternativeHeadline(),
+		return _blogsEntryLocalService.updateEntry(
+			currentUser.getUserId(), blogsEntryId,
+			blogPostingForm.getHeadline(),
+			blogPostingForm.getAlternativeHeadline(), urlTitle,
 			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
-			blogPostingForm.getDisplayDateMonth(),
-			blogPostingForm.getDisplayDateDay(),
-			blogPostingForm.getDisplayDateYear(),
-			blogPostingForm.getDisplayDateHour(),
-			blogPostingForm.getDisplayDateMinute(), false, false, null, null,
+			blogPostingForm.getDisplayDate(), true, true, new String[0], null,
 			null, null, serviceContext);
 	}
+
+	@Reference
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
 	private BlogsEntryService _blogsService;

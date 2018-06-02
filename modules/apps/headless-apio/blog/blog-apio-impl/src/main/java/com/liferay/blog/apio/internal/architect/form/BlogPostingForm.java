@@ -47,6 +47,10 @@ public class BlogPostingForm {
 			__ -> "This form can be used to create or update a blog posting"
 		).constructor(
 			BlogPostingForm::new
+		).addOptionalDate(
+			"dateCreated", BlogPostingForm::_setCreateDate
+		).addOptionalDate(
+			"dateModified", BlogPostingForm::_setModifiedDate
 		).addRequiredDate(
 			"dateDisplayed", BlogPostingForm::_setDisplayDate
 		).addRequiredString(
@@ -164,6 +168,14 @@ public class BlogPostingForm {
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(groupId);
 
+		if (_createDate != null) {
+			serviceContext.setCreateDate(_createDate);
+		}
+
+		if (_modifiedDate != null) {
+			serviceContext.setModifiedDate(_modifiedDate);
+		}
+
 		return serviceContext;
 	}
 
@@ -173,6 +185,10 @@ public class BlogPostingForm {
 
 	private void _setArticleBody(String articleBody) {
 		_articleBody = articleBody;
+	}
+
+	private void _setCreateDate(Date createDate) {
+		_createDate = createDate;
 	}
 
 	private void _setDescription(String description) {
@@ -195,8 +211,13 @@ public class BlogPostingForm {
 		_headline = headline;
 	}
 
+	private void _setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	private String _alternativeHeadline;
 	private String _articleBody;
+	private Date _createDate;
 	private String _description;
 	private int _displayDateDay;
 	private int _displayDateHour;
@@ -204,5 +225,6 @@ public class BlogPostingForm {
 	private int _displayDateMonth;
 	private int _displayDateYear;
 	private String _headline;
+	private Date _modifiedDate;
 
 }

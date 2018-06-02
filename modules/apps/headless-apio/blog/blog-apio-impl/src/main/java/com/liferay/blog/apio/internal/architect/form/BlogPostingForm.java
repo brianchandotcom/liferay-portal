@@ -14,8 +14,6 @@
 
 package com.liferay.blog.apio.internal.architect.form;
 
-import static com.liferay.portal.kernel.util.Validator.isNotNull;
-
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.apio.architect.function.throwable.ThrowableFunction;
@@ -120,6 +118,7 @@ public class BlogPostingForm {
 	 * @param  currentUser the current authenticated user
 	 * @return the blog posting's author ID, if present; the {@link CurrentUser}
 	 *         ID otherwise.
+	 * @review
 	 */
 	public long getAuthorId(CurrentUser currentUser) {
 		return Optional.ofNullable(
@@ -172,19 +171,19 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's image caption if both caption and image are
-	 * present. Returns {@code null} otherwise.
+	 * Returns the blog posting's image caption if present. Returns empty {@code
+	 * String} otherwise.
 	 *
-	 * @return the blog posting's image caption if both caption and image are
-	 *         present; {@code null} otherwise
+	 * @return the blog posting's image caption if present; empty {@code String}
+	 *         otherwise
 	 * @review
 	 */
 	public String getImageCaption() {
-		if (isNotNull(_imageCaption) && isNotNull(_imageId)) {
-			return _imageCaption;
-		}
-
-		return null;
+		return Optional.ofNullable(
+			_imageCaption
+		).orElse(
+			""
+		);
 	}
 
 	/**

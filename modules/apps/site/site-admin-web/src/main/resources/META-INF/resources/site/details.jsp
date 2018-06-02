@@ -32,22 +32,6 @@ if (liveGroup != null) {
 
 Group parentGroup = null;
 
-if ((group == null) && (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) && !permissionChecker.isCompanyAdmin()) {
-	List<Group> manageableGroups = new ArrayList<Group>();
-
-	for (Group curGroup : user.getGroups()) {
-		if (GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.MANAGE_SUBGROUPS)) {
-			manageableGroups.add(curGroup);
-		}
-	}
-
-	if (manageableGroups.size() == 1) {
-		Group manageableGroup = manageableGroups.get(0);
-
-		parentGroupId = manageableGroup.getGroupId();
-	}
-}
-
 if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 	parentGroup = GroupLocalServiceUtil.fetchGroup(parentGroupId);
 }
@@ -107,8 +91,8 @@ else if (group != null) {
 
 <aui:input name="description" placeholder="description" />
 
-<c:if test="<%= (group == null) || (!group.isCompany() && !group.isGuest()) %>">
-	<aui:input name="active" type="toggle-switch" value="<%= (group == null) ? true : group.isActive() %>" />
+<c:if test="<%= !group.isCompany() && !group.isGuest() %>">
+	<aui:input name="active" type="toggle-switch" value="<%= group.isActive() %>" />
 </c:if>
 
 <c:if test="<%= (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT_SCOPE_FROM_PARENT_SITE %>">
@@ -132,7 +116,7 @@ else if (group != null) {
 
 <h4 class="text-default"><liferay-ui:message key="membership-options" /></h4>
 
-<c:if test="<%= (group == null) || !group.isCompany() %>">
+<c:if test="<%= !group.isCompany() %>">
 	<aui:select label="membership-type" name="type">
 		<aui:option label="open" value="<%= GroupConstants.TYPE_SITE_OPEN %>" />
 		<aui:option label="restricted" value="<%= GroupConstants.TYPE_SITE_RESTRICTED %>" />
@@ -148,9 +132,6 @@ else if (group != null) {
 	%>
 
 	<aui:input label="allow-manual-membership-management" name="manualMembership" type="toggle-switch" value="<%= manualMembership %>" />
-</c:if>
-
-<c:if test="<%= (group == null) || !group.isCompany() %>">
 
 	<%
 	List<Group> parentGroups = new ArrayList<Group>();

@@ -141,8 +141,8 @@ public class BlogsEntryServiceHttp {
 	}
 
 	public static com.liferay.blogs.model.BlogsEntry addEntry(
-		HttpPrincipal httpPrincipal, String title, String subtitle,
-		String urlTitle, String description, String content,
+		HttpPrincipal httpPrincipal, long userId, String title,
+		String subtitle, String urlTitle, String description, String content,
 		java.util.Date displayDate, String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
@@ -152,9 +152,9 @@ public class BlogsEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
 					"addEntry", _addEntryParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, title,
-					subtitle, urlTitle, description, content, displayDate,
-					coverImageCaption, coverImageImageSelector,
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					title, subtitle, urlTitle, description, content,
+					displayDate, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 
 			Object returnObj = null;
@@ -1059,7 +1059,7 @@ public class BlogsEntryServiceHttp {
 	}
 
 	public static com.liferay.blogs.model.BlogsEntry updateEntry(
-		HttpPrincipal httpPrincipal, long entryId, String title,
+		HttpPrincipal httpPrincipal, long entryId, long userId, String title,
 		String subtitle, String urlTitle, String description, String content,
 		java.util.Date displayDate, String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
@@ -1071,7 +1071,7 @@ public class BlogsEntryServiceHttp {
 					"updateEntry", _updateEntryParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
-					title, subtitle, urlTitle, description, content,
+					userId, title, subtitle, urlTitle, description, content,
 					displayDate, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 
@@ -1158,8 +1158,8 @@ public class BlogsEntryServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addEntryParameterTypes2 = new Class[] {
-			String.class, String.class, String.class, String.class, String.class,
-			java.util.Date.class, String.class,
+			long.class, String.class, String.class, String.class, String.class,
+			String.class, java.util.Date.class, String.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
@@ -1272,8 +1272,8 @@ public class BlogsEntryServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes31 = new Class[] {
-			long.class, String.class, String.class, String.class, String.class,
-			String.class, java.util.Date.class, String.class,
+			long.class, long.class, String.class, String.class, String.class,
+			String.class, String.class, java.util.Date.class, String.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

@@ -94,6 +94,7 @@ public class BlogsEntryServiceSoap {
 	/**
 	* Creates a new blogs entry
 	*
+	* @param userId the blogs entry's author id
 	* @param title the blogs entry's title
 	* @param subtitle the blogs entry's subtitle
 	* @param urlTitle the blogs entry's urlTitle
@@ -110,7 +111,7 @@ public class BlogsEntryServiceSoap {
 	* @return the created blogs entry
 	* @review
 	*/
-	public static com.liferay.blogs.model.BlogsEntrySoap addEntry(
+	public static com.liferay.blogs.model.BlogsEntrySoap addEntry(long userId,
 		String title, String subtitle, String urlTitle, String description,
 		String content, java.util.Date displayDate, String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
@@ -118,9 +119,9 @@ public class BlogsEntryServiceSoap {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.blogs.model.BlogsEntry returnValue = BlogsEntryServiceUtil.addEntry(title,
-					subtitle, urlTitle, description, content, displayDate,
-					coverImageCaption, coverImageImageSelector,
+			com.liferay.blogs.model.BlogsEntry returnValue = BlogsEntryServiceUtil.addEntry(userId,
+					title, subtitle, urlTitle, description, content,
+					displayDate, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 
 			return com.liferay.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);
@@ -513,6 +514,7 @@ public class BlogsEntryServiceSoap {
 	* Updates a blogs entry
 	*
 	* @param entryId the blogs entry's ID
+	* @param userId the blogs entry's author id
 	* @param title the blogs entry's title
 	* @param subtitle the blogs entry's subtitle
 	* @param urlTitle the blogs entry's urlTitle
@@ -530,16 +532,16 @@ public class BlogsEntryServiceSoap {
 	* @review
 	*/
 	public static com.liferay.blogs.model.BlogsEntrySoap updateEntry(
-		long entryId, String title, String subtitle, String urlTitle,
-		String description, String content, java.util.Date displayDate,
-		String coverImageCaption,
+		long entryId, long userId, String title, String subtitle,
+		String urlTitle, String description, String content,
+		java.util.Date displayDate, String coverImageCaption,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.blogs.model.BlogsEntry returnValue = BlogsEntryServiceUtil.updateEntry(entryId,
-					title, subtitle, urlTitle, description, content,
+					userId, title, subtitle, urlTitle, description, content,
 					displayDate, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 

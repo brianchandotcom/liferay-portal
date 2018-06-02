@@ -19,44 +19,37 @@
 <%
 Group group = (Group)request.getAttribute("site.group");
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
-LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute("site.layoutSetPrototype");
 
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 
-LayoutSet privateLayoutSet = null;
 LayoutSetPrototype privateLayoutSetPrototype = null;
 boolean privateLayoutSetPrototypeLinkEnabled = true;
 
-LayoutSet publicLayoutSet = null;
-LayoutSetPrototype publicLayoutSetPrototype = null;
-boolean publicLayoutSetPrototypeLinkEnabled = true;
+LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(group.getGroupId(), true);
 
-try {
-	privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), true);
-
+if (privateLayoutSet != null) {
 	privateLayoutSetPrototypeLinkEnabled = privateLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
 	String layoutSetPrototypeUuid = privateLayoutSet.getLayoutSetPrototypeUuid();
 
 	if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-		privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
+		privateLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
 	}
 }
-catch (Exception e) {
-}
 
-try {
-	publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), false);
+LayoutSetPrototype publicLayoutSetPrototype = null;
+boolean publicLayoutSetPrototypeLinkEnabled = true;
 
+LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(group.getGroupId(), false);
+
+if (publicLayoutSet != null) {
 	publicLayoutSetPrototypeLinkEnabled = publicLayoutSet.isLayoutSetPrototypeLinkEnabled();
 
 	String layoutSetPrototypeUuid = publicLayoutSet.getLayoutSetPrototypeUuid();
 
 	if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-		publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
+		publicLayoutSetPrototype = LayoutSetPrototypeLocalServiceUtil.fetchLayoutSetPrototypeByUuidAndCompanyId(layoutSetPrototypeUuid, company.getCompanyId());
 	}
-}
-catch (Exception e) {
 }
 %>
 

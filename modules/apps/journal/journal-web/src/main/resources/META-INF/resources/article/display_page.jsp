@@ -44,7 +44,9 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		<span><liferay-ui:message key="please-select-one-option" /></span>
 
-		<aui:fieldset id='<%= renderResponse.getNamespace() + "eventsContainer" %>'>
+		<liferay-frontend:fieldset
+			id='<%= renderResponse.getNamespace() + "eventsContainer" %>'
+		>
 			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() %>" label='<%= LanguageUtil.format(request, "use-default-display-page-for-x-x", new Object[] {journalDisplayContext.getDDMStructureName(), editArticleDisplayPageDisplayContext.getDefaultAssetDisplayPageName()}, false) %>' name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />
 
 			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() %>" label="use-a-specific-display-page-for-the-web-content" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>" />
@@ -87,7 +89,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeNone() %>" label="no-display-page" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
 
 			<span class="small text-muted"><liferay-ui:message key="this-content-will-not-be-referenceable-with-an-url" /></span>
-		</aui:fieldset>
+		</liferay-frontend:fieldset>
 
 		<aui:script use="liferay-item-selector-dialog">
 			var assetDisplayPageIdInput = $('#<portlet:namespace />assetDisplayPageIdInput');

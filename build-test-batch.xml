@@ -1630,10 +1630,20 @@ app.server.type=@{app.server.type}]]></echo>
 	</macrodef>
 
 	<macrodef name="run-modules-integration-test">
+		<attribute default="tomcat" name="app.server.type" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
 		<attribute default="" name="refreshdependencies" />
+		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="subrepository.name" />
+		<attribute default="" name="test.build.fix.pack.zip.url" />
+		<attribute default="" name="test.fix.pack.base.url" />
+		<attribute default="" name="test.license.xml.url" />
+		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
+		<attribute default="" name="test.portal.bundle.osgi.zip.url" />
+		<attribute default="" name="test.portal.bundle.war.url" />
+		<attribute default="" name="test.portal.bundle.zip.url" />
+		<attribute default="" name="test.sql.zip.url" />
 
 		<sequential>
 			<run-batch-test tomcat.gc.log="true">
@@ -1667,6 +1677,27 @@ app.server.type=@{app.server.type}]]></echo>
 									<available file="${app.server.parent.dir}/osgi/state" />
 								</and>
 								<then>
+									<if>
+										<and>
+											<or>
+												<matches pattern="https?://" string="@{test.portal.bundle.war.url}" />
+												<matches pattern="https?://" string="@{test.portal.bundle.zip.url}" />
+											</or>
+											<matches pattern="https?://" string="@{test.sql.zip.url}" />
+										</and>
+										<then>
+											<gradle-execute dir="modules/core" task="deploy">
+												<arg value="--parallel" />
+												<arg value="-Dbuild.profile=portal-pre" />
+												<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
+											</gradle-execute>
+
+											<ant dir="portal-kernel" inheritAll="false" target="compile" />
+
+											<ant dir="portal-test" inheritAll="false" target="compile" />
+										</then>
+									</if>
+
 									<ant dir="portal-kernel" inheritAll="false" target="test-class">
 										<property name="test.class" value="PortalLogAssertorTest" />
 									</ant>
@@ -1678,10 +1709,82 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<test-set-up>
 					<if>
-						<isset property="env.DIST_PATH" />
+						<and>
+							<or>
+								<matches pattern="https?://" string="@{test.portal.bundle.war.url}" />
+								<matches pattern="https?://" string="@{test.portal.bundle.zip.url}" />
+							</or>
+							<matches pattern="https?://" string="@{test.sql.zip.url}" />
+						</and>
 						<then>
-							<prepare-test-environment />
+							<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
+
+							<antcall inheritAll="false" target="prepare-test-bundle">
+								<param name="app.server.type" value="${app.server.type}" />
+								<param name="test.app.server.bin.dir" value="${test.app.server.bin.dir}" />
+								<param name="test.build.bundle.zip.url" value="@{test.portal.bundle.zip.url}" />
+								<param name="test.build.fix.pack.zip.url" value="@{test.build.fix.pack.zip.url}" />
+								<param name="test.build.portal.dependencies.zip.url" value="@{test.portal.bundle.dependencies.zip.url}" />
+								<param name="test.build.portal.osgi.zip.url" value="@{test.portal.bundle.osgi.zip.url}" />
+								<param name="test.build.portal.war.url" value="@{test.portal.bundle.war.url}" />
+								<param name="test.fix.pack.base.url" value="@{test.fix.pack.base.url}" />
+							</antcall>
+
+							<if>
+								<matches pattern="https?://" string="@{test.license.xml.url}" />
+								<then>
+									<var name="test.build.license.xml.zip.url" unset="true" />
+
+									<property name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
+
+									<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[${line.separator}test.build.license.xml.zip.url=@{test.license.xml.url}]]></echo>
+								</then>
+							</if>
+
+							<if>
+								<not>
+									<equals arg1="${test.deploy.license}" arg2="false" />
+								</not>
+								<then>
+									<antcall target="deploy-license-xml" />
+								</then>
+							</if>
+
+							<antcall target="deploy-sql-zip">
+								<param name="test.sql.zip.url" value="@{test.sql.zip.url}" />
+							</antcall>
+
+							<antcall inheritAll="false" target="setup-libs" />
+
+							<antcall inheritAll="false" target="setup-sdk" />
+
+							<if>
+								<and>
+									<equals arg1="@{app.server.type}" arg2="jboss" />
+									<equals arg1="@{setup.testable.jboss}" arg2="true" />
+								</and>
+								<then>
+									<setup-testable-jboss />
+								</then>
+								<elseif>
+									<and>
+										<equals arg1="@{app.server.type}" arg2="tomcat" />
+										<equals arg1="@{setup.testable.tomcat}" arg2="true" />
+									</and>
+									<then>
+										<setup-testable-tomcat />
+
+										<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
+									</then>
+								</elseif>
+							</if>
 						</then>
+						<elseif>
+							<isset property="env.DIST_PATH" />
+							<then>
+								<prepare-test-environment />
+							</then>
+						</elseif>
 						<else>
 							<prepare-test-build />
 						</else>
@@ -3078,6 +3181,23 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="modules-functional-tomcat90-mysql57-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
+	</target>
+
+	<target name="modules-integration-bundle-mysql57-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-modules-integration-test
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
 	</target>
 
 	<target name="modules-integration-db2105-jdk8">

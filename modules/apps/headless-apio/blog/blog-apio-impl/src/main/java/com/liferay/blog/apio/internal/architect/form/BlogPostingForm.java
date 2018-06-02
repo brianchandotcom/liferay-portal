@@ -16,6 +16,7 @@ package com.liferay.blog.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -147,6 +148,23 @@ public class BlogPostingForm {
 	 */
 	public String getHeadline() {
 		return _headline;
+	}
+
+	/**
+	 * Returns the service context related with this form
+	 *
+	 * @param groupId the group ID
+	 * @return the service context
+	 * @review
+	 */
+	public ServiceContext getServiceContext(long groupId) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setScopeGroupId(groupId);
+
+		return serviceContext;
 	}
 
 	private void _setAlternativeHeadline(String alternativeHeadline) {

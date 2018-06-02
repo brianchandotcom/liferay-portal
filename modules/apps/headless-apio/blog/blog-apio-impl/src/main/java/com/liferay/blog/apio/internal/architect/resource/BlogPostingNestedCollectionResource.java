@@ -139,12 +139,6 @@ public class BlogPostingNestedCollectionResource
 			long groupId, BlogPostingForm blogPostingForm)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupId);
-
 		return _blogsService.addEntry(
 			blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(),
@@ -154,7 +148,7 @@ public class BlogPostingNestedCollectionResource
 			blogPostingForm.getDisplayDateYear(),
 			blogPostingForm.getDisplayDateHour(),
 			blogPostingForm.getDisplayDateMinute(), false, false, null, null,
-			null, null, serviceContext);
+			null, null, blogPostingForm.getServiceContext(groupId));
 	}
 
 	private PageItems<BlogsEntry> _getPageItems(
@@ -173,14 +167,10 @@ public class BlogPostingNestedCollectionResource
 			long blogsEntryId, BlogPostingForm blogPostingForm)
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
 		BlogsEntry blogsEntry = _blogsService.getEntry(blogsEntryId);
 
-		serviceContext.setScopeGroupId(blogsEntry.getGroupId());
+		ServiceContext serviceContext = blogPostingForm.getServiceContext(
+			blogsEntry.getGroupId());
 
 		return _blogsService.updateEntry(
 			blogsEntryId, blogPostingForm.getHeadline(),

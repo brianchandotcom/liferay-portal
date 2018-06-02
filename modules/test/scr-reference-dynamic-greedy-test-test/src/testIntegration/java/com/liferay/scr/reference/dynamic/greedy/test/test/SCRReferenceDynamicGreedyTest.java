@@ -23,12 +23,9 @@ import com.liferay.scr.reference.dynamic.greedy.test.ComponentController;
 import com.liferay.scr.reference.dynamic.greedy.test.DynamicGreedyComponent;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -39,8 +36,8 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Preston Crary
@@ -140,45 +137,31 @@ public class SCRReferenceDynamicGreedyTest {
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(Object.class, _service1, properties);
 
-		ServiceRegistration<?> serviceRegistration2 = null;
+		ServiceTracker<DynamicGreedyComponent, DynamicGreedyComponent>
+			serviceTracker = new ServiceTracker<>(
+				bundleContext,
+				bundleContext.createFilter(
+					"(&(objectClass=" + DynamicGreedyComponent.class.getName() +
+						")(reference.cardinality=" + referenceCardinality +
+							"))"),
+				null);
 
-		List<String> bindingCalls = null;
+		serviceTracker.open();
 
 		try {
-			Collection<ServiceReference<DynamicGreedyComponent>>
-				serviceReferences = bundleContext.getServiceReferences(
-					DynamicGreedyComponent.class,
-					"(reference.cardinality=" + referenceCardinality + ")");
-
-			Stream<ServiceReference<DynamicGreedyComponent>> stream =
-				serviceReferences.stream();
-
-			Optional<ServiceReference<DynamicGreedyComponent>> optional =
-				stream.findFirst();
-
-			ServiceReference<DynamicGreedyComponent> serviceReference =
-				optional.orElse(null);
-
-			Assert.assertNotNull(
-				serviceReferences.toString(), serviceReference);
-
 			DynamicGreedyComponent dynamicGreedyComponent =
-				bundleContext.getService(serviceReference);
+				serviceTracker.waitForService(0);
 
-			Assert.assertNotNull(
-				"Unable to get service with " + serviceReference,
-				dynamicGreedyComponent);
-
-			bindingCalls = dynamicGreedyComponent.getBindingCalls();
-
-			bundleContext.ungetService(serviceReference);
+			List<String> bindingCalls =
+				dynamicGreedyComponent.getBindingCalls();
 
 			bindingCalls.add("step1");
 
 			properties.put("service.ranking", 1);
 
-			serviceRegistration2 = bundleContext.registerService(
-				Object.class, _service2, properties);
+			ServiceRegistration<?> serviceRegistration2 =
+				bundleContext.registerService(
+					Object.class, _service2, properties);
 
 			bindingCalls.add("step2");
 
@@ -193,6 +176,8 @@ public class SCRReferenceDynamicGreedyTest {
 			bindingCallsConsumer.accept(bindingCalls);
 		}
 		finally {
+			serviceTracker.close();
+
 			_componentController.disableComponent(name);
 		}
 	}

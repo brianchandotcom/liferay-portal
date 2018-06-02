@@ -33,6 +33,30 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 <liferay-ui:membership-policy-error />
 
+<h3 class="sheet-subtitle">
+	<span class="autofit-padded-no-gutters autofit-row">
+		<span class="autofit-col autofit-col-expand">
+			<span class="heading-text">
+				<liferay-ui:message key="organizations" />
+			</span>
+		</span>
+
+		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
+			<span class="autofit-col">
+				<liferay-ui:icon
+					cssClass="modify-link"
+					id="selectOrganizationLink"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="select"
+					method="get"
+					url="javascript:;"
+				/>
+			</span>
+		</c:if>
+	</span>
+</h3>
+
 <liferay-util:buffer
 	var="removeOrganizationIcon"
 >
@@ -105,16 +129,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 </liferay-ui:search-container>
 
 <c:if test="<%= !portletName.equals(myAccountPortletId) %>">
-	<liferay-ui:icon
-		cssClass="modify-link"
-		id="selectOrganizationLink"
-		label="<%= true %>"
-		linkCssClass="btn btn-secondary"
-		message="select"
-		method="get"
-		url="javascript:;"
-	/>
-
 	<aui:script use="liferay-search-container">
 		var AArray = A.Array;
 		var Util = Liferay.Util;

@@ -17,13 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="sites" /></h3>
-
 	<liferay-util:include page="/user/sites.jsp" servletContext="<%= application %>" />
 </div>
 
 <div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="user-groups" /></h3>
-
 	<liferay-util:include page="/user/user_groups.jsp" servletContext="<%= application %>" />
 </div>

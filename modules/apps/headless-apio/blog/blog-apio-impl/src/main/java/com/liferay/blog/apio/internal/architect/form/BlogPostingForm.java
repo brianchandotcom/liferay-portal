@@ -18,8 +18,8 @@ import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * Instances of this class represent the values extracted from a blog posting
@@ -48,11 +48,11 @@ public class BlogPostingForm {
 		).constructor(
 			BlogPostingForm::new
 		).addOptionalDate(
+			"dateDisplayed", BlogPostingForm::_setDisplayDate
+		).addOptionalDate(
 			"dateCreated", BlogPostingForm::_setCreateDate
 		).addOptionalDate(
 			"dateModified", BlogPostingForm::_setModifiedDate
-		).addRequiredDate(
-			"dateDisplayed", BlogPostingForm::_setDisplayDate
 		).addRequiredString(
 			"alternativeHeadline", BlogPostingForm::_setAlternativeHeadline
 		).addRequiredString(
@@ -95,53 +95,17 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's display date day
+	 * Returns the blog posting's display date
 	 *
-	 * @return the blog posting's display date day
+	 * @return the blog posting's display date
 	 * @review
 	 */
-	public int getDisplayDateDay() {
-		return _displayDateDay;
-	}
-
-	/**
-	 * Returns the blog posting's display date hour
-	 *
-	 * @return the blog posting's display date hour
-	 * @review
-	 */
-	public int getDisplayDateHour() {
-		return _displayDateHour;
-	}
-
-	/**
-	 * Returns the blog posting's display date minute
-	 *
-	 * @return the blog posting's display date minute
-	 * @review
-	 */
-	public int getDisplayDateMinute() {
-		return _displayDateMinute;
-	}
-
-	/**
-	 * Returns the blog posting's display date month
-	 *
-	 * @return the blog posting's display date month
-	 * @review
-	 */
-	public int getDisplayDateMonth() {
-		return _displayDateMonth;
-	}
-
-	/**
-	 * Returns the blog posting's display date year
-	 *
-	 * @return the blog posting's display date year
-	 * @review
-	 */
-	public int getDisplayDateYear() {
-		return _displayDateYear;
+	public Date getDisplayDate() {
+		return Optional.ofNullable(
+			_displayDate
+		).orElseGet(
+			Date::new
+		);
 	}
 
 	/**
@@ -157,7 +121,7 @@ public class BlogPostingForm {
 	/**
 	 * Returns the service context related with this form
 	 *
-	 * @param groupId the group ID
+	 * @param  groupId the group ID
 	 * @return the service context
 	 * @review
 	 */
@@ -196,15 +160,7 @@ public class BlogPostingForm {
 	}
 
 	private void _setDisplayDate(Date displayDate) {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(displayDate);
-
-		_displayDateMonth = calendar.get(Calendar.MONTH);
-		_displayDateDay = calendar.get(Calendar.DATE);
-		_displayDateYear = calendar.get(Calendar.YEAR);
-		_displayDateHour = calendar.get(Calendar.HOUR);
-		_displayDateMinute = calendar.get(Calendar.MINUTE);
+		_displayDate = displayDate;
 	}
 
 	private void _setHeadline(String headline) {
@@ -219,11 +175,7 @@ public class BlogPostingForm {
 	private String _articleBody;
 	private Date _createDate;
 	private String _description;
-	private int _displayDateDay;
-	private int _displayDateHour;
-	private int _displayDateMinute;
-	private int _displayDateMonth;
-	private int _displayDateYear;
+	private Date _displayDate;
 	private String _headline;
 	private Date _modifiedDate;
 

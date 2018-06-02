@@ -38,7 +38,8 @@ render-timeout?, render-weight?, ajaxable?, header-portal-css*,
 header-portlet-css*, header-portal-javascript*, header-portlet-javascript*,
 footer-portal-css*, footer-portlet-css*, footer-portal-javascript*,
 footer-portlet-javascript*, css-class-wrapper?, facebook-integration?,
-add-default-resource?, system?, active?, include?)>
+add-default-resource?, system?, active?, include?,
+header-request-attribute-prefix*)>
 
 <!--
 The portlet-name element contains the unique name of the portlet. This name must
@@ -808,6 +809,14 @@ and memory usage is a cheap price to pay in order to provide an easy
 installation and upgrade path.
 -->
 <!ELEMENT include (#PCDATA)>
+
+<!--
+Set the header-request-attribute-prefix that will be referenced after the
+HEADER_PHASE completes for each portlet. Header request attributes that have a
+name starting with the prefix will be copied from the header request to the
+subsequent render request.
+-->
+<!ELEMENT header-request-attribute-prefix (#PCDATA)>
 
 <!--
 The role-mapper contains two names specified by role-name and role-link. The

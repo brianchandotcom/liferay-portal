@@ -642,6 +642,23 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns a list of attribute name prefixes that will be referenced after
+	* the HEADER_PHASE completes for each portlet. Header request attributes
+	* that have names starting with any of the prefixes will be copied from the
+	* header request to the subsequent render request.
+	*
+	* @return a list of attribute name prefixes that will be referenced after
+	the HEADER_PHASE completes for each portlet. Header request
+	attributes that have names starting with any of the prefixes will
+	be copied from the header request to the subsequent render
+	request.
+	*/
+	@Override
+	public java.util.List<String> getHeaderRequestAttributePrefixes() {
+		return _portlet.getHeaderRequestAttributePrefixes();
+	}
+
+	/**
 	* Returns the icon of the portlet.
 	*
 	* @return the icon of the portlet
@@ -2655,6 +2672,24 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	public void setHeaderPortletJavaScript(
 		java.util.List<String> headerPortletJavaScript) {
 		_portlet.setHeaderPortletJavaScript(headerPortletJavaScript);
+	}
+
+	/**
+	* Sets a list of attribute name prefixes that will be referenced after the
+	* HEADER_PHASE completes for each portlet. Header request attributes that
+	* have names starting with any of the prefixes will be copied from the
+	* header request to the subsequent render request.
+	*
+	* @param headerRequestAttributePrefixes a list of attribute name prefixes
+	that will be referenced after the HEADER_PHASE completes for each
+	portlet. Header request attributes that have names starting with
+	any of the prefixes will be copied from the header request to the
+	subsequent render request.
+	*/
+	@Override
+	public void setHeaderRequestAttributePrefixes(
+		java.util.List<String> headerRequestAttributePrefixes) {
+		_portlet.setHeaderRequestAttributePrefixes(headerRequestAttributePrefixes);
 	}
 
 	/**

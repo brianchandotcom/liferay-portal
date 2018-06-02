@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -116,7 +117,8 @@ public class PortletRenderer {
 	}
 
 	public Map<String, Object> renderHeaders(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response,
+			List<String> attributePrefixes)
 		throws PortletContainerException {
 
 		request = PortletContainerUtil.setupOptionalRenderParameters(
@@ -135,8 +137,20 @@ public class PortletRenderer {
 		while (attributeNames.hasMoreElements()) {
 			String attributeName = attributeNames.nextElement();
 
-			headerRequestAttributes.put(
-				attributeName, request.getAttribute(attributeName));
+			if (attributeName.startsWith("javax.portlet.faces")) {
+				headerRequestAttributes.put(
+					attributeName, request.getAttribute(attributeName));
+			}
+			else if (attributePrefixes != null) {
+				for (String attributePrefix : attributePrefixes) {
+					if (attributeName.startsWith(attributePrefix)) {
+						headerRequestAttributes.put(
+							attributeName, request.getAttribute(attributeName));
+
+						break;
+					}
+				}
+			}
 		}
 
 		return headerRequestAttributes;

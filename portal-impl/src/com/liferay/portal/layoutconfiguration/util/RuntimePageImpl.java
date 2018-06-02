@@ -454,7 +454,9 @@ public class RuntimePageImpl implements RuntimePage {
 				Portlet portlet = portletRenderer.getPortlet();
 
 				Map<String, Object> headerRequestMap =
-					portletRenderer.renderHeaders(request, response);
+					portletRenderer.renderHeaders(
+						request, response,
+						portlet.getHeaderRequestAttributePrefixes());
 				String rendererPortletId = portlet.getPortletId();
 
 				portletHeaderRequestMap.put(

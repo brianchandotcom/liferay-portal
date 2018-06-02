@@ -2027,6 +2027,18 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletElement.elementText("include"),
 				portletModel.isInclude()));
 
+		List<String> headerRequestAttributePrefixes = new ArrayList<>();
+
+		for (Element headerRequestAttributePrefixElement :
+				portletElement.elements("header-request-attribute-prefix")) {
+
+			headerRequestAttributePrefixes.add(
+				headerRequestAttributePrefixElement.getText());
+		}
+
+		portletModel.setHeaderRequestAttributePrefixes(
+			headerRequestAttributePrefixes);
+
 		if (Validator.isNull(servletContextName)) {
 			portletModel.setReady(true);
 		}

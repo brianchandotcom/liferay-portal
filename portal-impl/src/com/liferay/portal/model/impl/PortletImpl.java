@@ -130,6 +130,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_headerPortalJavaScript = new ArrayList<>();
 		_headerPortletCss = new ArrayList<>();
 		_headerPortletJavaScript = new ArrayList<>();
+		_headerRequestAttributePrefixes = new ArrayList<>();
 		_indexerClasses = new ArrayList<>();
 		_initParams = new HashMap<>();
 		_portletFilters = new LinkedHashMap<>();
@@ -192,7 +193,8 @@ public class PortletImpl extends PortletBaseImpl {
 		List<String> footerPortletJavaScript, String cssClassWrapper,
 		boolean addDefaultResource, String roles, Set<String> unlinkedRoles,
 		Map<String, String> roleMappers, boolean system, boolean active,
-		boolean include, Map<String, String> initParams, Integer expCache,
+		boolean include, List<String> headerRequestAttributePrefixes,
+		Map<String, String> initParams, Integer expCache,
 		boolean asyncSupported, int multipartFileSizeThreshold,
 		String multipartLocation, long multipartMaxFileSize,
 		long multipartMaxRequestSize, Map<String, Set<String>> portletModes,
@@ -292,6 +294,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_roleMappers = roleMappers;
 		_system = system;
 		_include = include;
+		_headerRequestAttributePrefixes = headerRequestAttributePrefixes;
 		_initParams = initParams;
 		_expCache = expCache;
 		_asyncSupported = asyncSupported;
@@ -418,12 +421,12 @@ public class PortletImpl extends PortletBaseImpl {
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
 			getCssClassWrapper(), isAddDefaultResource(), getRoles(),
 			getUnlinkedRoles(), getRoleMappers(), isSystem(), isActive(),
-			isInclude(), getInitParams(), getExpCache(), isAsyncSupported(),
-			getMultipartFileSizeThreshold(), getMultipartLocation(),
-			getMultipartMaxFileSize(), getMultipartMaxRequestSize(),
-			getPortletModes(), getWindowStates(), getSupportedLocales(),
-			getResourceBundle(), getPortletInfo(), getPortletFilters(),
-			getProcessingEvents(), getPublishingEvents(),
+			isInclude(), getHeaderRequestAttributePrefixes(), getInitParams(),
+			getExpCache(), isAsyncSupported(), getMultipartFileSizeThreshold(),
+			getMultipartLocation(), getMultipartMaxFileSize(),
+			getMultipartMaxRequestSize(), getPortletModes(), getWindowStates(),
+			getSupportedLocales(), getResourceBundle(), getPortletInfo(),
+			getPortletFilters(), getProcessingEvents(), getPublishingEvents(),
 			getPublicRenderParameters(), getPortletApp());
 
 		portletImpl.setApplicationTypes(getApplicationTypes());
@@ -1010,6 +1013,23 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public List<String> getHeaderPortletJavaScript() {
 		return _headerPortletJavaScript;
+	}
+
+	/**
+	 * Returns a list of attribute name prefixes that will be referenced after
+	 * the HEADER_PHASE completes for each portlet. Header request attributes
+	 * that have names starting with any of the prefixes will be copied from the
+	 * header request to the subsequent render request.
+	 *
+	 * @return a list of attribute name prefixes that will be referenced after
+	 *         the HEADER_PHASE completes for each portlet. Header request
+	 *         attributes that have names starting with any of the prefixes will
+	 *         be copied from the header request to the subsequent render
+	 *         request.
+	 */
+	@Override
+	public List<String> getHeaderRequestAttributePrefixes() {
+		return _headerRequestAttributePrefixes;
 	}
 
 	/**
@@ -3202,6 +3222,25 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Sets a list of attribute name prefixes that will be referenced after the
+	 * HEADER_PHASE completes for each portlet. Header request attributes that
+	 * have names starting with any of the prefixes will be copied from the
+	 * header request to the subsequent render request.
+	 *
+	 * @param headerRequestAttributePrefixes a list of attribute name prefixes
+	 *        that will be referenced after the HEADER_PHASE completes for each
+	 *        portlet. Header request attributes that have names starting with
+	 *        any of the prefixes will be copied from the header request to the
+	 *        subsequent render request.
+	 */
+	@Override
+	public void setHeaderRequestAttributePrefixes(
+		List<String> headerRequestAttributePrefixes) {
+
+		_headerRequestAttributePrefixes = headerRequestAttributePrefixes;
+	}
+
+	/**
 	 * Sets the icon of the portlet.
 	 *
 	 * @param icon the icon of the portlet
@@ -4310,6 +4349,14 @@ public class PortletImpl extends PortletBaseImpl {
 	 * relative to the portlet's context path.
 	 */
 	private List<String> _headerPortletJavaScript;
+
+	/**
+	 * A list of header request attribute prefixes that will be referenced after
+	 * the HEADER_PHASE completes for each portlet. Header request attributes
+	 * that have names starting with any of the prefixes will be copied from the
+	 * header request to the subsequent render request.
+	 */
+	private List<String> _headerRequestAttributePrefixes;
 
 	/**
 	 * The icon of the portlet.

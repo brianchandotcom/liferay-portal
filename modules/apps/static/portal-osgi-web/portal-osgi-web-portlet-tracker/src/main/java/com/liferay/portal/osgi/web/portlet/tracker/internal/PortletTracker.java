@@ -548,6 +548,9 @@ public class PortletTracker
 		portletModel.setInclude(
 			GetterUtil.getBoolean(
 				get(serviceReference, "include"), portletModel.isInclude()));
+		portletModel.setHeaderRequestAttributePrefixes(
+			StringPlus.asList(
+				get(serviceReference, "header-request-attribute-prefix")));
 		portletModel.setInstanceable(
 			GetterUtil.getBoolean(
 				get(serviceReference, "instanceable"),

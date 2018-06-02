@@ -444,6 +444,20 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public java.util.List<String> getHeaderPortletJavaScript();
 
 	/**
+	* Returns a list of attribute name prefixes that will be referenced after
+	* the HEADER_PHASE completes for each portlet. Header request attributes
+	* that have names starting with any of the prefixes will be copied from the
+	* header request to the subsequent render request.
+	*
+	* @return a list of attribute name prefixes that will be referenced after
+	the HEADER_PHASE completes for each portlet. Header request
+	attributes that have names starting with any of the prefixes will
+	be copied from the header request to the subsequent render
+	request.
+	*/
+	public java.util.List<String> getHeaderRequestAttributePrefixes();
+
+	/**
 	* Returns the icon of the portlet.
 	*
 	* @return the icon of the portlet
@@ -1803,6 +1817,21 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public void setHeaderPortletJavaScript(
 		java.util.List<String> headerPortletJavaScript);
+
+	/**
+	* Sets a list of attribute name prefixes that will be referenced after the
+	* HEADER_PHASE completes for each portlet. Header request attributes that
+	* have names starting with any of the prefixes will be copied from the
+	* header request to the subsequent render request.
+	*
+	* @param headerRequestAttributePrefixes a list of attribute name prefixes
+	that will be referenced after the HEADER_PHASE completes for each
+	portlet. Header request attributes that have names starting with
+	any of the prefixes will be copied from the header request to the
+	subsequent render request.
+	*/
+	public void setHeaderRequestAttributePrefixes(
+		java.util.List<String> headerRequestAttributePrefixes);
 
 	/**
 	* Sets the icon of the portlet.

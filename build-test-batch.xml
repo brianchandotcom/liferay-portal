@@ -146,6 +146,44 @@ lportal_BS
 		</sequential>
 	</macrodef>
 
+	<macrodef name="copy-artifact-to-local-cache">
+		<attribute name="artifact.file" />
+		<attribute name="artifact.name" />
+		<attribute name="artifact.version" />
+
+		<sequential>
+			<local name="local.cache.artifact" />
+
+			<beanshell>
+				<![CDATA[
+					String artifactName = "@{artifact.name}";
+					String artifactVersion = "@{artifact.version}";
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(project.getProperty("build.repository.local.dir"));
+					sb.append("/com/liferay/portal/");
+					sb.append(artifactName);
+					sb.append("/");
+					sb.append(artifactVersion);
+					sb.append("/");
+					sb.append(artifactName);
+					sb.append("-");
+					sb.append(artifactVersion);
+					sb.append(".jar");
+
+					project.setProperty("local.cache.artifact", sb.toString());
+				]]>
+			</beanshell>
+
+			<copy file="@{artifact.file}" tofile="${local.cache.artifact}" />
+
+			<propertyfile file="${project.dir}/.gradle/gradle.properties">
+				<entry key="@{artifact.name}.version" value="@{artifact.version}" />
+			</propertyfile>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="database-test-action">
 		<attribute name="database.type" />
 		<element name="action" />
@@ -1778,6 +1816,18 @@ app.server.type=@{app.server.type}]]></echo>
 									</then>
 								</elseif>
 							</if>
+
+							<local name="artifact.version" />
+
+							<property name="artifact.version" value="TEST_ARTIFACT" />
+
+							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${app.server.lib.global.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.portal.test.jar" artifact.name="com.liferay.portal.test" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${liferay.home}/osgi/test/com.liferay.portal.test.integration.jar" artifact.name="com.liferay.portal.test.integration" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
+							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
 						</then>
 						<elseif>
 							<isset property="env.DIST_PATH" />

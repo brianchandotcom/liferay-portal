@@ -15,10 +15,10 @@
 package com.liferay.portal.search.web.internal.folder.facet.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.facet.folder.FolderFacetFactory;
 import com.liferay.portal.search.web.internal.facet.display.builder.FolderSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.facet.display.context.FolderTitleLookup;
@@ -136,12 +136,13 @@ public class FolderFacetPortlet extends MVCPortlet {
 	}
 
 	protected String getFieldName() {
-		Facet facet = folderFacetFactory.newInstance(new SearchContext());
+		Facet facet = folderFacetFactory.newInstance(null);
 
 		return facet.getFieldName();
 	}
 
-	protected FolderFacetFactory folderFacetFactory = new FolderFacetFactory();
+	@Reference
+	protected FolderFacetFactory folderFacetFactory;
 
 	@Reference
 	protected Portal portal;

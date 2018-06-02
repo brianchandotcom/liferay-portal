@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.user.facet.portlet;
+package com.liferay.portal.search.facet.folder;
 
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.search.facet.FacetFactory;
 
 /**
- * @author André de Oliveira
+ * @author Bryan Engler
  */
-public class UserFacetFactory {
-
-	public MultiValueFacet newInstance(SearchContext searchContext) {
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
-
-		multiValueFacet.setFieldName(Field.USER_NAME);
-
-		return multiValueFacet;
-	}
-
+@ProviderType
+public interface FolderFacetFactory extends FacetFactory {
 }

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
-import com.liferay.portal.search.test.journal.util.JournalArticleBuilder;
+import com.liferay.portal.search.test.journal.util.JournalArticleBlueprint;
 import com.liferay.portal.search.test.journal.util.JournalArticleContent;
 import com.liferay.portal.search.test.journal.util.JournalArticleTitle;
 import com.liferay.portal.search.test.util.DocumentsAssert;
@@ -140,27 +140,25 @@ public class AssetEntriesFacetedSearcherTest
 	protected void addJournalArticle(String title, Group group)
 		throws Exception {
 
-		JournalArticleBuilder journalArticleBuilder =
-			new JournalArticleBuilder();
-
-		journalArticleBuilder.setContent(
-			new JournalArticleContent() {
+		journalArticleSearchFixture.addArticle(
+			new JournalArticleBlueprint() {
 				{
-					name = "content";
-					defaultLocale = LocaleUtil.US;
+					groupId = group.getGroupId();
+					journalArticleContent = new JournalArticleContent() {
+						{
+							defaultLocale = LocaleUtil.US;
+							name = "content";
 
-					put(LocaleUtil.US, RandomTestUtil.randomString());
+							put(LocaleUtil.US, RandomTestUtil.randomString());
+						}
+					};
+					journalArticleTitle = new JournalArticleTitle() {
+						{
+							put(LocaleUtil.US, title);
+						}
+					};
 				}
 			});
-		journalArticleBuilder.setGroupId(group.getGroupId());
-		journalArticleBuilder.setTitle(
-			new JournalArticleTitle() {
-				{
-					put(LocaleUtil.US, title);
-				}
-			});
-
-		journalArticleSearchFixture.addArticle(journalArticleBuilder);
 	}
 
 	protected void assertEntryClassNames(

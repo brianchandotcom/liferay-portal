@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.folder.facet.portlet;
+package com.liferay.portal.search.facet.category;
 
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.search.facet.FacetFactory;
 
 /**
- * @author André de Oliveira
+ * @author Bryan Engler
  */
-public class FolderFacetFactory {
-
-	public MultiValueFacet newInstance(SearchContext searchContext) {
-		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
-
-		multiValueFacet.setFieldName(Field.FOLDER_ID);
-
-		return multiValueFacet;
-	}
-
+@ProviderType
+public interface CategoryFacetFactory extends FacetFactory {
 }

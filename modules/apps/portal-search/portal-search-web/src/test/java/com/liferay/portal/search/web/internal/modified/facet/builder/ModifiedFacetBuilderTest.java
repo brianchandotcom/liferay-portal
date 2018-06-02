@@ -16,13 +16,14 @@ package com.liferay.portal.search.web.internal.modified.facet.builder;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.ModifiedFacetFactory;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.CalendarFactory;
 import com.liferay.portal.kernel.util.DateFormatFactory;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.search.facet.Facet;
+import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
+import com.liferay.portal.search.internal.facet.ModifiedFacetImpl;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.Arrays;
@@ -98,21 +99,38 @@ public class ModifiedFacetBuilderTest {
 	}
 
 	protected ModifiedFacetBuilder createModifiedFacetBuilder() {
-		ModifiedFacetFactory modifiedFacetFactory = new ModifiedFacetFactory();
+		SearchContext searchContext = new SearchContext();
+
+		ModifiedFacetFactory modifiedFacetFactory = createModifiedFacetFactory(
+			searchContext);
 
 		ModifiedFacetBuilder modifiedFacetBuilder = new ModifiedFacetBuilder(
 			modifiedFacetFactory, calendarFactory, dateFormatFactory);
 
-		modifiedFacetBuilder.setSearchContext(new SearchContext());
+		modifiedFacetBuilder.setSearchContext(searchContext);
 
 		return modifiedFacetBuilder;
 	}
 
-	protected List<String> getRangeBounds(Facet facet) {
-		SearchContext searchContext = facet.getSearchContext();
+	protected ModifiedFacetFactory createModifiedFacetFactory(
+		SearchContext searchContext) {
 
-		String range = GetterUtil.getString(
-			searchContext.getAttribute(facet.getFieldName()));
+		ModifiedFacetFactory modifiedFacetFactory = Mockito.mock(
+			ModifiedFacetFactory.class);
+
+		Mockito.doReturn(
+			new ModifiedFacetImpl(Field.MODIFIED_DATE, searchContext)
+		).when(
+			modifiedFacetFactory
+		).newInstance(
+			Mockito.anyObject()
+		);
+
+		return modifiedFacetFactory;
+	}
+
+	protected List<String> getRangeBounds(Facet facet) {
+		String range = facet.getSelections()[0];
 
 		String[] dateStrings = RangeParserUtil.parserRange(range);
 

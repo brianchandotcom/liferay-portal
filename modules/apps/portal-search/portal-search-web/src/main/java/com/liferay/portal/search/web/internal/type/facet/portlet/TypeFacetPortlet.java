@@ -15,7 +15,6 @@
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -149,7 +148,7 @@ public class TypeFacetPortlet extends MVCPortlet {
 	}
 
 	protected String getFieldName() {
-		Facet facet = assetEntriesFacetFactory.newInstance(new SearchContext());
+		Facet facet = assetEntriesFacetFactory.newInstance(null);
 
 		return facet.getFieldName();
 	}

@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.ModifiedFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.test.util.SearchMapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -79,9 +79,7 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		assertFrequencies(facet.getFieldName(), searchContext, frequencies);
 	}
 
-	protected static JSONObject createDataJSONObject(String... ranges)
-		throws Exception {
-
+	protected static JSONObject createDataJSONObject(String... ranges) {
 		JSONObject dataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -99,8 +97,8 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 		return dataJSONObject;
 	}
 
-	protected static void setConfigurationRanges(Facet facet, String... ranges)
-		throws Exception {
+	protected static void setConfigurationRanges(
+		Facet facet, String... ranges) {
 
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 

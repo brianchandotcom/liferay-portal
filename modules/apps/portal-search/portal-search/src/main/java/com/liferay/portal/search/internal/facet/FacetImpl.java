@@ -38,6 +38,11 @@ public class FacetImpl extends BaseFacet implements Facet {
 	}
 
 	@Override
+	public String[] getSelections() {
+		return _selections;
+	}
+
+	@Override
 	public void select(String... selections) {
 		_selections = selections;
 	}
@@ -64,6 +69,6 @@ public class FacetImpl extends BaseFacet implements Facet {
 		return new BooleanClauseImpl<>(termsFilter, BooleanClauseOccur.MUST);
 	}
 
-	private String[] _selections;
+	private String[] _selections = {};
 
 }

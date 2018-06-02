@@ -53,12 +53,12 @@ public class BlogPostingForm {
 			"dateCreated", BlogPostingForm::_setCreateDate
 		).addOptionalDate(
 			"dateModified", BlogPostingForm::_setModifiedDate
-		).addRequiredString(
+		).addOptionalString(
 			"alternativeHeadline", BlogPostingForm::_setAlternativeHeadline
+		).addOptionalString(
+			"description", BlogPostingForm::_setDescription
 		).addRequiredString(
 			"articleBody", BlogPostingForm::_setArticleBody
-		).addRequiredString(
-			"description", BlogPostingForm::_setDescription
 		).addRequiredString(
 			"headline", BlogPostingForm::_setHeadline
 		).build();
@@ -71,7 +71,11 @@ public class BlogPostingForm {
 	 * @review
 	 */
 	public String getAlternativeHeadline() {
-		return _alternativeHeadline;
+		return Optional.ofNullable(
+			_alternativeHeadline
+		).orElse(
+			""
+		);
 	}
 
 	/**
@@ -91,7 +95,11 @@ public class BlogPostingForm {
 	 * @review
 	 */
 	public String getDescription() {
-		return _description;
+		return Optional.ofNullable(
+			_description
+		).orElse(
+			""
+		);
 	}
 
 	/**

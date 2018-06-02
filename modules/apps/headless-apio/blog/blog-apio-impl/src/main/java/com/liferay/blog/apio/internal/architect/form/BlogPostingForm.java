@@ -16,6 +16,7 @@ package com.liferay.blog.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
+import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Date;
@@ -53,10 +54,14 @@ public class BlogPostingForm {
 			"dateCreated", BlogPostingForm::_setCreateDate
 		).addOptionalDate(
 			"dateModified", BlogPostingForm::_setModifiedDate
+		).addOptionalLong(
+			"author", BlogPostingForm::_setAuthorId
 		).addOptionalString(
 			"alternativeHeadline", BlogPostingForm::_setAlternativeHeadline
 		).addOptionalString(
 			"description", BlogPostingForm::_setDescription
+		).addOptionalString(
+			"semanticUrl", BlogPostingForm::_setSemanticUrl
 		).addRequiredString(
 			"articleBody", BlogPostingForm::_setArticleBody
 		).addRequiredString(
@@ -86,6 +91,22 @@ public class BlogPostingForm {
 	 */
 	public String getArticleBody() {
 		return _articleBody;
+	}
+
+	/**
+	 * Returns the blog posting's author ID, if present on the form. Returns the
+	 * {@link CurrentUser} ID otherwise.
+	 *
+	 * @param  currentUser the current authenticated user
+	 * @return the blog posting's author ID, if present; the {@link CurrentUser}
+	 *         ID otherwise.
+	 */
+	public long getAuthorId(CurrentUser currentUser) {
+		return Optional.ofNullable(
+			_authorId
+		).orElseGet(
+			currentUser::getUserId
+		);
 	}
 
 	/**
@@ -127,6 +148,20 @@ public class BlogPostingForm {
 	}
 
 	/**
+	 * Returns the blog posting's semantic URL
+	 *
+	 * @return the blog posting's semantic URL
+	 * @review
+	 */
+	public String getSemanticUrl() {
+		return Optional.ofNullable(
+			_semanticUrl
+		).orElse(
+			""
+		);
+	}
+
+	/**
 	 * Returns the service context related with this form
 	 *
 	 * @param  groupId the group ID
@@ -159,6 +194,10 @@ public class BlogPostingForm {
 		_articleBody = articleBody;
 	}
 
+	private void _setAuthorId(long authorId) {
+		_authorId = authorId;
+	}
+
 	private void _setCreateDate(Date createDate) {
 		_createDate = createDate;
 	}
@@ -179,12 +218,18 @@ public class BlogPostingForm {
 		_modifiedDate = modifiedDate;
 	}
 
+	private void _setSemanticUrl(String semanticUrl) {
+		_semanticUrl = semanticUrl;
+	}
+
 	private String _alternativeHeadline;
 	private String _articleBody;
+	private Long _authorId;
 	private Date _createDate;
 	private String _description;
 	private Date _displayDate;
 	private String _headline;
 	private Date _modifiedDate;
+	private String _semanticUrl;
 
 }

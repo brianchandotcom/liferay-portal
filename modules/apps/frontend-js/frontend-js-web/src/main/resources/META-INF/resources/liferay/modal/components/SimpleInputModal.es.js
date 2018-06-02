@@ -51,24 +51,23 @@ class SimpleInputModal extends Component {
 				method: 'POST'
 			}
 		)
-			.then(response => response.json())
-			.then(
-				responseContent => {
+		.then(response => response.json())
+		.then(
+			responseContent => {
+				if (responseContent.error) {
 					this._loadingResponse = false;
-
-					if (responseContent.error) {
-						this._handleFormError(responseContent);
-					}
-					else {
-						this._handleFormSuccess(responseContent);
-					}
+					this._handleFormError(responseContent);
 				}
-			)
-			.catch(
-				response => {
-					this._handleFormError(response);
+				else {
+					this._handleFormSuccess(responseContent);
 				}
-			);
+			}
+		)
+		.catch(
+			response => {
+				this._handleFormError(response);
+			}
+		);
 
 		this._loadingResponse = true;
 	}

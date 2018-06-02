@@ -101,13 +101,19 @@ function openSimpleInputModal(
 		if (serverResponseContent.redirectURL) {
 			if (Liferay.SPA) {
 				Liferay.SPA.app.navigate(serverResponseContent.redirectURL);
+
+				Liferay.once(
+					'beforeScreenFlip',
+					handleSimpleInputModalDisposal.bind(this)
+				);
 			}
 			else {
 				location.href = serverResponseContent.redirectURL;
 			}
 		}
-
-		handleSimpleInputModalDisposal();
+		else {
+			handleSimpleInputModalDisposal();
+		}
 	}
 
 	simpleInputModal = new SimpleInputModal(

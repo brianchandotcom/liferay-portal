@@ -103,22 +103,19 @@
 			{param events: ['visibleChanged': $_handleModalVisibleChanged] /}
 
 			{param footer kind="html"}
-				{let $submitButtonCssClasses kind="text"}
-					btn btn-primary
-
-					{if $_loadingResponse}
-						{sp}loading
-					{/if}
-				{/let}
-
 				{let $submitButtonAttributes kind="attributes"}
 					{if $_loadingResponse}disabled{/if}
-					class="{$submitButtonCssClasses}"
+					class="btn btn-primary"
 					data-onclick="{$_handleFormSubmit}"
 				{/let}
 
 				<button {$submitButtonAttributes}>
-					<span class="loading-icon linear"></span>
+					{if $_loadingResponse}
+						<span class="inline-item inline-item-before">
+							<span aria-hidden="true" class="loading-animation"></span>
+						</span>
+					{/if}
+
 					{msg desc=""}submit{/msg}
 				</button>
 

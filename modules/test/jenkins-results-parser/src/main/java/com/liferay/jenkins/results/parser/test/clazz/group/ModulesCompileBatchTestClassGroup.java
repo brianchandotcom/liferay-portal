@@ -95,6 +95,19 @@ public class ModulesCompileBatchTestClassGroup extends BatchTestClassGroup {
 					moduleDirsList.add(modifiedModuleDir);
 				}
 			}
+
+			String includedModules = getFirstPropertyValue(
+				"test.class.modules.includes");
+
+			if (includedModules != null) {
+				File modulesDir = new File(
+					portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
+				for (String includedModule : includedModules.split(",")) {
+					modifiedModuleDirsList.add(
+						new File(modulesDir, includedModule));
+				}
+			}
 		}
 
 		for (File moduleDir : moduleDirsList) {

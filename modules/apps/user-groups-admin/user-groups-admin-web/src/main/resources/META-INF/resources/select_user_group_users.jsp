@@ -34,24 +34,6 @@ else {
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUsers");
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/select_user_group_users.jsp");
-portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()));
-portletURL.setParameter("eventName", eventName);
-
-PortletURL searchURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-SearchContainer userSearchContainer = new UserSearch(renderRequest, searchURL);
-
-LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-if (filterManageableOrganizations) {
-	userParams.put("usersOrgsTree", user.getOrganizations());
-}
-
-RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
-
 List<NavigationItem> navigationItems = new ArrayList<>();
 
 NavigationItem entriesNavigationItem = new NavigationItem();
@@ -67,53 +49,38 @@ navigationItems.add(entriesNavigationItem);
 	navigationItems="<%= navigationItems %>"
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="users"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
+<%
+EditUserGroupAssignmentsManagementToolbarDisplayContext editUserGroupAssignmentsManagementToolbarDisplayContext = new EditUserGroupAssignmentsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, "/select_user_group_users.jsp");
 
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
+LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= userSearchContainer.getOrderByCol() %>"
-			orderByType="<%= userSearchContainer.getOrderByType() %>"
-			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
+if (filterManageableOrganizations) {
+	userParams.put("usersOrgsTree", user.getOrganizations());
+}
 
-		<li>
-			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
+SearchContainer searchContainer = editUserGroupAssignmentsManagementToolbarDisplayContext.getSearchContainer(userParams);
+%>
 
-	<liferay-frontend:management-bar-action-buttons />
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
+	filterDropdownItems="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchContainerId="selectUsers"
+	searchFormName="searchFm"
+	selectable="<%= true %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= editUserGroupAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
-		id="users"
-		rowChecker="<%= rowChecker %>"
-		searchContainer="<%= userSearchContainer %>"
+		id="selectUsers"
+		searchContainer="<%= searchContainer %>"
+		var="userSearchContainer"
 	>
-		<liferay-ui:user-search-container-results
-			userParams="<%= userParams %>"
-		/>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.User"
 			escapedModel="<%= true %>"
@@ -137,17 +104,23 @@ navigationItems.add(entriesNavigationItem);
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />selectUsers');
 
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
 			var selectedItems = event.elements.allSelectedElements;
 
+			var data = [];
+
+			if (selectedItems.size() > 0) {
+				data = selectedItems.attr('value');
+			}
+
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(eventName) %>',
 				{
-					data: selectedItems.attr('value').join(',')
+					data: data.join(',')
 				}
 			);
 		}

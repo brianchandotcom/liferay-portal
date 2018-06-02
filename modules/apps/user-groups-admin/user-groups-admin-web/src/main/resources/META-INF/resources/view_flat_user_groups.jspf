@@ -16,14 +16,9 @@
 
 <liferay-ui:search-container
 	id="userGroups"
-	rowChecker="<%= new UserGroupChecker(renderResponse) %>"
-	searchContainer="<%= userGroupSearchContainer %>"
+	searchContainer="<%= searchContainer %>"
+	var="userGroupSearchContainer"
 >
-	<liferay-ui:user-group-search-container-results
-		searchTerms="<%= searchContainer.getSearchTerms() %>"
-		userGroupParams="<%= new LinkedHashMap<String, Object>() %>"
-	/>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.UserGroup"
 		escapedModel="<%= true %>"
@@ -32,7 +27,7 @@
 	>
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="mvcPath" value="/edit_user_group_assignments.jsp" />
-			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+			<portlet:param name="redirect" value="<%= userGroupSearchContainer.getIteratorURL().toString() %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
 

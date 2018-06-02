@@ -86,6 +86,31 @@ public interface BlogsEntryService extends BaseService {
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	* Creates a new blogs entry
+	*
+	* @param title the blogs entry's title
+	* @param subtitle the blogs entry's subtitle
+	* @param urlTitle the blogs entry's urlTitle
+	* @param description the blogs entry's description
+	* @param content the blogs entry's content
+	* @param displayDate the blogs entry's displayDate
+	* @param coverImageCaption the blogs entry's cover image caption
+	* @param coverImageImageSelector an object containing the data of the
+	blogs's entry cover image, can be {@code null}
+	* @param smallImageImageSelector an object containing the data of the
+	blogs's entry small cover image, can be {@code null}
+	* @param serviceContext the blogs entry's serviceContext; at least it must
+	contain the {@code groupId}
+	* @return the created blogs entry
+	* @review
+	*/
+	public BlogsEntry addEntry(String title, String subtitle, String urlTitle,
+		String description, String content, Date displayDate,
+		String coverImageCaption, ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
+		throws PortalException;
+
 	public BlogsEntry addEntry(String title, String subtitle, String urlTitle,
 		String description, String content, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -214,6 +239,32 @@ public interface BlogsEntryService extends BaseService {
 		int displayDateMinute, boolean allowPingbacks, boolean allowTrackbacks,
 		String[] trackbacks, String coverImageCaption,
 		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	* Updates a blogs entry
+	*
+	* @param entryId the blogs entry's ID
+	* @param title the blogs entry's title
+	* @param subtitle the blogs entry's subtitle
+	* @param urlTitle the blogs entry's urlTitle
+	* @param description the blogs entry's description
+	* @param content the blogs entry's content
+	* @param displayDate the blogs entry's displayDate
+	* @param coverImageCaption the blogs entry's cover image caption
+	* @param coverImageImageSelector an object containing the data of the
+	blogs's entry cover image, can be {@code null}
+	* @param smallImageImageSelector an object containing the data of the
+	blogs's entry small cover image, can be {@code null}
+	* @param serviceContext the blogs entry's serviceContext; at least it must
+	contain the {@code groupId}
+	* @return the updated blogs entry
+	* @review
+	*/
+	public BlogsEntry updateEntry(long entryId, String title, String subtitle,
+		String urlTitle, String description, String content, Date displayDate,
+		String coverImageCaption, ImageSelector coverImageImageSelector,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 

@@ -19,7 +19,7 @@ index caf1110..00f06bd 100644
 +     * @param tag tag name
 +     */
 +    public Element(String tag, boolean useSquareBrackets) {
-+        super(tag);
++        this(tag);
 +
 +        useSquareBrackets = useSquareBrackets;
 +    }

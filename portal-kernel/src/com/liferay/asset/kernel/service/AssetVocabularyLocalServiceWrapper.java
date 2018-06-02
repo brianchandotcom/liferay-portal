@@ -272,6 +272,13 @@ public class AssetVocabularyLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.asset.kernel.model.AssetVocabulary fetchVocaublaryByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+		return _assetVocabularyLocalService.fetchVocaublaryByExternalReferenceCode(companyId,
+			externalReferenceCode);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _assetVocabularyLocalService.getActionableDynamicQuery();
 	}
@@ -520,6 +527,19 @@ public class AssetVocabularyLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabularyLocalService.updateVocabulary(vocabularyId,
 			title, titleMap, descriptionMap, settings, serviceContext);
+	}
+
+	@Override
+	public com.liferay.asset.kernel.model.AssetVocabulary upsertVocabulary(
+		long userId, long groupId, String title,
+		java.util.Map<java.util.Locale, String> titleMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		String settings, String externalReferenceId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyLocalService.upsertVocabulary(userId, groupId,
+			title, titleMap, descriptionMap, settings, externalReferenceId,
+			serviceContext);
 	}
 
 	@Override

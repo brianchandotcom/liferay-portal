@@ -96,7 +96,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						"there-is-no-widget-available-for-alias-x", alias));
 			}
 
-			Element runtimeTagElement = new Element("@liferay_portlet.runtime");
+			Element runtimeTagElement = new Element(
+				"@liferay_portlet.runtime", true);
 
 			FragmentEntryLink originalFragmentEntryLink =
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(

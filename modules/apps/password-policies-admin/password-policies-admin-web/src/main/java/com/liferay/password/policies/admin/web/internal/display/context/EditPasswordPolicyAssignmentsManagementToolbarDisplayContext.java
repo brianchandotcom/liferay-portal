@@ -18,10 +18,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.password.policies.admin.web.internal.search.AddOrganizationPasswordPolicyChecker;
+import com.liferay.password.policies.admin.web.internal.search.AddUserPasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.DeleteOrganizationPasswordPolicyChecker;
 import com.liferay.password.policies.admin.web.internal.search.DeleteUserPasswordPolicyChecker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -158,22 +161,28 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 		OrganizationSearch organizationSearch = new OrganizationSearch(
 			_renderRequest, getPortletURL());
 
-		organizationSearch.setRowChecker(
-			new DeleteOrganizationPasswordPolicyChecker(
-				_renderResponse, _passwordPolicy));
+		RowChecker rowChecker = new AddOrganizationPasswordPolicyChecker(
+			_renderResponse, _passwordPolicy);
+
+		LinkedHashMap<String, Object> organizationParams =
+			new LinkedHashMap<>();
+
+		if (_mvcPath.equals("/edit_password_policy_assignments.jsp")) {
+			rowChecker = new DeleteOrganizationPasswordPolicyChecker(
+				_renderResponse, _passwordPolicy);
+
+			organizationParams.put(
+				"organizationsPasswordPolicies",
+				Long.valueOf(_passwordPolicy.getPasswordPolicyId()));
+		}
+
+		organizationSearch.setRowChecker(rowChecker);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long parentOrganizationId =
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-
-		LinkedHashMap<String, Object> organizationParams =
-			new LinkedHashMap<>();
-
-		organizationParams.put(
-			"organizationsPasswordPolicies",
-			Long.valueOf(_passwordPolicy.getPasswordPolicyId()));
 
 		OrganizationSearchTerms searchTerms =
 			(OrganizationSearchTerms)organizationSearch.getSearchTerms();
@@ -270,18 +279,24 @@ public class EditPasswordPolicyAssignmentsManagementToolbarDisplayContext {
 	public SearchContainer getUserSearchContainer() {
 		UserSearch userSearch = new UserSearch(_renderRequest, getPortletURL());
 
-		userSearch.setRowChecker(
-			new DeleteUserPasswordPolicyChecker(
-				_renderResponse, _passwordPolicy));
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		RowChecker rowChecker = new AddUserPasswordPolicyChecker(
+			_renderResponse, _passwordPolicy);
 
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
 
-		userParams.put(
-			"usersPasswordPolicies",
-			Long.valueOf(_passwordPolicy.getPasswordPolicyId()));
+		if (_mvcPath.equals("/edit_password_policy_assignments.jsp")) {
+			rowChecker = new DeleteUserPasswordPolicyChecker(
+				_renderResponse, _passwordPolicy);
+
+			userParams.put(
+				"usersPasswordPolicies",
+				Long.valueOf(_passwordPolicy.getPasswordPolicyId()));
+		}
+
+		userSearch.setRowChecker(rowChecker);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		UserSearchTerms searchTerms =
 			(UserSearchTerms)userSearch.getSearchTerms();

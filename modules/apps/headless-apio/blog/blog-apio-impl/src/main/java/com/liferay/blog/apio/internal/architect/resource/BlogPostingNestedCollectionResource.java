@@ -82,9 +82,10 @@ public class BlogPostingNestedCollectionResource
 		ItemRoutes.Builder<BlogsEntry, Long> builder) {
 
 		return builder.addGetter(
-			_blogsService::getEntry
+			_blogsEntryService::getEntry
 		).addRemover(
-			idempotent(_blogsService::deleteEntry), _hasPermission::forDeleting
+			idempotent(_blogsEntryService::deleteEntry),
+			_hasPermission::forDeleting
 		).addUpdater(
 			this::_updateBlogsEntry, CurrentUser.class,
 			_hasPermission::forUpdating, BlogPostingForm::buildForm
@@ -155,10 +156,10 @@ public class BlogPostingNestedCollectionResource
 	private PageItems<BlogsEntry> _getPageItems(
 		Pagination pagination, long groupId) {
 
-		List<BlogsEntry> blogsEntries = _blogsService.getGroupEntries(
+		List<BlogsEntry> blogsEntries = _blogsEntryService.getGroupEntries(
 			groupId, WorkflowConstants.STATUS_APPROVED,
 			pagination.getStartPosition(), pagination.getEndPosition());
-		int count = _blogsService.getGroupEntriesCount(
+		int count = _blogsEntryService.getGroupEntriesCount(
 			groupId, WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(blogsEntries, count);
@@ -171,7 +172,7 @@ public class BlogPostingNestedCollectionResource
 
 		String urlTitle = "";
 
-		BlogsEntry blogsEntry = _blogsService.getEntry(blogsEntryId);
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogsEntryId);
 
 		ServiceContext serviceContext = blogPostingForm.getServiceContext(
 			blogsEntry.getGroupId());
@@ -189,7 +190,7 @@ public class BlogPostingNestedCollectionResource
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
-	private BlogsEntryService _blogsService;
+	private BlogsEntryService _blogsEntryService;
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private HasPermission<Long> _hasPermission;

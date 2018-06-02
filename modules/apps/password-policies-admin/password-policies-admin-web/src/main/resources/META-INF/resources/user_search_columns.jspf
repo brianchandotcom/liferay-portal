@@ -14,10 +14,6 @@
  */
 --%>
 
-<liferay-ui:user-search-container-results
-	userParams="<%= userParams %>"
-/>
-
 <liferay-ui:search-container-row
 	className="com.liferay.portal.kernel.model.User"
 	escapedModel="<%= true %>"
@@ -64,7 +60,7 @@
 				<liferay-frontend:user-vertical-card
 					cssClass="entry-display-style"
 					resultRow="<%= row %>"
-					rowChecker="<%= rowChecker %>"
+					rowChecker="<%= memberSearchContainer.getRowChecker() %>"
 					subtitle="<%= user2.getScreenName() %>"
 					title="<%= name %>"
 					userId="<%= user2.getUserId() %>"

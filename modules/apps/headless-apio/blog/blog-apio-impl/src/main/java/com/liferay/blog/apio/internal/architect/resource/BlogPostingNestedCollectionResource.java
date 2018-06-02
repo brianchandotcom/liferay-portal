@@ -32,13 +32,13 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
 import com.liferay.comment.apio.architect.identifier.CommentIdentifier;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
@@ -154,7 +154,9 @@ public class BlogPostingNestedCollectionResource
 			blogPostingForm.getAlternativeHeadline(),
 			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
 			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
-			null, null, null, blogPostingForm.getServiceContext(groupId));
+			blogPostingForm.getImageCaption(),
+			blogPostingForm.getImageSelector(_dlAppLocalService::getFileEntry),
+			null, blogPostingForm.getServiceContext(groupId));
 	}
 
 	private List<String> _getBlogsEntryTags(BlogsEntry blogsEntry) {
@@ -183,16 +185,15 @@ public class BlogPostingNestedCollectionResource
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogsEntryId);
 
-		ServiceContext serviceContext = blogPostingForm.getServiceContext(
-			blogsEntry.getGroupId());
-
 		return _blogsEntryService.updateEntry(
 			blogsEntryId, blogPostingForm.getAuthorId(currentUser),
 			blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(),
 			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
 			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
-			null, null, null, serviceContext);
+			blogPostingForm.getImageCaption(),
+			blogPostingForm.getImageSelector(_dlAppLocalService::getFileEntry),
+			null, blogPostingForm.getServiceContext(blogsEntry.getGroupId()));
 	}
 
 	@Reference
@@ -200,6 +201,9 @@ public class BlogPostingNestedCollectionResource
 
 	@Reference
 	private BlogsEntryService _blogsEntryService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private HasPermission<Long> _hasPermission;

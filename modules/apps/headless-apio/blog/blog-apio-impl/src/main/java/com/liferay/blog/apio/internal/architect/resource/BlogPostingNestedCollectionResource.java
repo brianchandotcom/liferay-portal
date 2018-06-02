@@ -139,16 +139,14 @@ public class BlogPostingNestedCollectionResource
 			long groupId, BlogPostingForm blogPostingForm)
 		throws PortalException {
 
+		String urlTitle = "";
+
 		return _blogsService.addEntry(
 			blogPostingForm.getHeadline(),
-			blogPostingForm.getAlternativeHeadline(),
+			blogPostingForm.getAlternativeHeadline(), urlTitle,
 			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
-			blogPostingForm.getDisplayDateMonth(),
-			blogPostingForm.getDisplayDateDay(),
-			blogPostingForm.getDisplayDateYear(),
-			blogPostingForm.getDisplayDateHour(),
-			blogPostingForm.getDisplayDateMinute(), false, false, null, null,
-			null, null, blogPostingForm.getServiceContext(groupId));
+			blogPostingForm.getDisplayDate(), null, null, null,
+			blogPostingForm.getServiceContext(groupId));
 	}
 
 	private PageItems<BlogsEntry> _getPageItems(
@@ -167,6 +165,8 @@ public class BlogPostingNestedCollectionResource
 			long blogsEntryId, BlogPostingForm blogPostingForm)
 		throws PortalException {
 
+		String urlTitle = "";
+
 		BlogsEntry blogsEntry = _blogsService.getEntry(blogsEntryId);
 
 		ServiceContext serviceContext = blogPostingForm.getServiceContext(
@@ -174,14 +174,9 @@ public class BlogPostingNestedCollectionResource
 
 		return _blogsService.updateEntry(
 			blogsEntryId, blogPostingForm.getHeadline(),
-			blogPostingForm.getAlternativeHeadline(),
+			blogPostingForm.getAlternativeHeadline(), urlTitle,
 			blogPostingForm.getDescription(), blogPostingForm.getArticleBody(),
-			blogPostingForm.getDisplayDateMonth(),
-			blogPostingForm.getDisplayDateDay(),
-			blogPostingForm.getDisplayDateYear(),
-			blogPostingForm.getDisplayDateHour(),
-			blogPostingForm.getDisplayDateMinute(), false, false, null, null,
-			null, null, serviceContext);
+			blogPostingForm.getDisplayDate(), null, null, null, serviceContext);
 	}
 
 	@Reference

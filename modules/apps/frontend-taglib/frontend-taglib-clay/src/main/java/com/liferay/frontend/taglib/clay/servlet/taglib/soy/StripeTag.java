@@ -22,8 +22,8 @@ public class StripeTag extends AlertTag {
 	@Override
 	public int doStartTag() {
 		setComponentBaseName("ClayStripe");
-		setModuleBaseName("alert");
 		setHydrate(true);
+		setModuleBaseName("alert");
 
 		return super.doStartTag();
 	}

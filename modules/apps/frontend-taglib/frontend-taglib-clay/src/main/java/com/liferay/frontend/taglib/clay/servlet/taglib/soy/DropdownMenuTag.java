@@ -30,8 +30,8 @@ public class DropdownMenuTag extends BaseClayTag {
 	@Override
 	public int doStartTag() {
 		setComponentBaseName("ClayDropdown");
-		setModuleBaseName("dropdown");
 		setHydrate(true);
+		setModuleBaseName("dropdown");
 
 		Map<String, Object> context = getContext();
 

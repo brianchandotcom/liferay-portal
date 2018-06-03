@@ -15,7 +15,7 @@
 package com.liferay.layout.taglib.servlet.taglib.soy;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -44,7 +44,7 @@ import javax.servlet.ServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SelectLayoutTag extends TemplateRendererTag {
+public class SelectLayoutTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {

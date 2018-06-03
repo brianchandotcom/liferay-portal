@@ -15,7 +15,7 @@
 package com.liferay.flags.taglib.servlet.taglib.soy;
 
 import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -48,7 +48,7 @@ import javax.portlet.PortletURL;
  * @author Julio Camarero
  * @author Ambrin Chaudhary
  */
-public class FlagsTag extends TemplateRendererTag {
+public class FlagsTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {
@@ -123,7 +123,6 @@ public class FlagsTag extends TemplateRendererTag {
 			_log.error(e, e);
 		}
 
-		setHydrate(true);
 		setTemplateNamespace("Flags.render");
 
 		return super.doStartTag();

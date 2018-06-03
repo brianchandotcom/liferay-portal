@@ -804,7 +804,7 @@
 
 		<execute function="AssertVisible" locator1="Message#SUCCESS" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_3" value1="Definition imported successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Definition imported successfully." />
 
 		<execute macro="Alert#_closeMessage">
 			<var name="messageType" value="SUCCESS" />

@@ -3,16 +3,18 @@
 import App from 'senna/lib/app/App';
 import core from 'metal/lib/core';
 import dom from 'metal-dom/lib/dom';
+import {CancellablePromise} from 'metal-promise/lib/promise/Promise';
+import {openToast} from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+
 import LiferaySurface from '../surface/Surface.es';
 import Utils from '../util/Utils.es';
-import {CancellablePromise} from 'metal-promise/lib/promise/Promise';
 
 /**
  * LiferayApp
  *
- * Inherits from `senna/src/app/App` and adds the following Liferay specific 
+ * Inherits from `senna/src/app/App` and adds the following Liferay specific
  * behavior to Senna's default App:
- * <ul> 
+ * <ul>
  *   <li> Makes cache expiration time configurable from System Settings</li>
  *   <li>Lets you set valid status codes (Liferay's default valid status codes
  *   are listed in {@link https://docs.liferay.com/portal/7.1/javadocs/portal-kernel/com/liferay/portal/kernel/servlet/ServletResponseConstants.html|ServletResponseConstants.java})
@@ -65,7 +67,7 @@ class LiferayApp extends App {
 
 	/**
 	 * Returns the cache expiration time configuration. This value comes from
-	 * System Settings. The configuration is set upon App initialization 
+	 * System Settings. The configuration is set upon App initialization
 	 * @See {@link https://github.com/liferay/liferay-portal/blob/7.1.x/modules/apps/frontend-js/frontend-js-spa-web/src/main/resources/META-INF/resources/init.tmpl|init.tmpl}
 	 * @return {!Number} The `cacheExpirationTime` value
 	 */
@@ -86,7 +88,7 @@ class LiferayApp extends App {
 
 	/**
 	 * Returns whether the cache is enabled. Cache is considered enabled
-	 * when {@link LiferayApp#getCacheExpirationTime|getCacheExpirationTime} is 
+	 * when {@link LiferayApp#getCacheExpirationTime|getCacheExpirationTime} is
 	 * greater than zero.
 	 * @return {!Boolean} True if cache is enabled
 	 */
@@ -115,7 +117,7 @@ class LiferayApp extends App {
 	}
 
 	/**
-	 * Returns whether a given Screen's cache is expired. The expiration timeframe 
+	 * Returns whether a given Screen's cache is expired. The expiration timeframe
 	 * is based on the value returned by {@link LiferayApp#getCacheExpirationTime|getCacheExpirationTime}.
 	 * @param  {!Screen} screen The Senna Screen
 	 * @return {!Boolean} True if the cache has expired
@@ -161,8 +163,8 @@ class LiferayApp extends App {
 	}
 
 	/**
-	 * A private event handler function, called when the 
-	 * `dataLayoutConfigReady` event is fired on the Liferay object, 
+	 * A private event handler function, called when the
+	 * `dataLayoutConfigReady` event is fired on the Liferay object,
 	 * that initializes `Liferay.Layout`
 	 * @param  {!Event} event The event object
 	 */
@@ -357,26 +359,15 @@ class LiferayApp extends App {
 	_createNotification(config) {
 		return new CancellablePromise(
 			(resolve) => {
-				AUI().use(
-					'liferay-notification',
-					() => {
-						resolve(
-							new Liferay.Notification(
-								Object.assign(
-									{
-										closeable: true,
-										delay: {
-											hide: 0,
-											show: 0
-										},
-										duration: 500,
-										type: 'warning'
-									},
-									config
-								)
-							).render('body')
-						);
-					}
+				resolve(
+					openToast(
+						Object.assign(
+							{
+								type: 'warning'
+							},
+							config
+						)
+					)
 				);
 			}
 		);
@@ -388,7 +379,7 @@ class LiferayApp extends App {
 
 	_hideTimeoutAlert() {
 		if (this.timeoutAlert) {
-			this.timeoutAlert.hide();
+			this.timeoutAlert.dispose();
 		}
 	}
 
@@ -412,22 +403,19 @@ class LiferayApp extends App {
 						}
 					);
 
-					if (!this.timeoutAlert) {
-						this._createNotification(
-							{
-								message: Liferay.SPA.userNotification.message,
-								title: Liferay.SPA.userNotification.title,
-								type: 'warning'
-							}
-						).then(
-							(alert) => {
-								this.timeoutAlert = alert;
-							}
-						);
-					}
-					else {
-						this.timeoutAlert.show();
-					}
+					this._hideTimeoutAlert();
+
+					this._createNotification(
+						{
+							message: Liferay.SPA.userNotification.message,
+							title: Liferay.SPA.userNotification.title,
+							type: 'warning'
+						}
+					).then(
+						(alert) => {
+							this.timeoutAlert = alert;
+						}
+					);
 				},
 				Liferay.SPA.userNotification.timeout
 			);

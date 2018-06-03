@@ -23,8 +23,8 @@ public class LinkTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayLink");
-		super.setModuleBaseName("link");
+		setComponentBaseName("ClayLink");
+		setModuleBaseName("link");
 
 		return super.doStartTag();
 	}

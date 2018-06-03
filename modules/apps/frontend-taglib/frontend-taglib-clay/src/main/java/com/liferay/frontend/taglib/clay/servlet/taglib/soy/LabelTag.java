@@ -23,8 +23,8 @@ public class LabelTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayLabel");
-		super.setModuleBaseName("label");
+		setComponentBaseName("ClayLabel");
+		setModuleBaseName("label");
 
 		return super.doStartTag();
 	}

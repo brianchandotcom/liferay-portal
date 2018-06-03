@@ -23,8 +23,8 @@ public class BadgeTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayBadge");
-		super.setModuleBaseName("badge");
+		setComponentBaseName("ClayBadge");
+		setModuleBaseName("badge");
 
 		return super.doStartTag();
 	}

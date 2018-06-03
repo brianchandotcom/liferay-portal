@@ -23,8 +23,8 @@ public class CheckboxTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayCheckbox");
-		super.setModuleBaseName("checkbox");
+		setComponentBaseName("ClayCheckbox");
+		setModuleBaseName("checkbox");
 
 		return super.doStartTag();
 	}

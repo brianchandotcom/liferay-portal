@@ -29,9 +29,9 @@ public class DropdownActionsTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayActionsDropdown");
-		super.setModuleBaseName("dropdown");
-		super.setHydrate(true);
+		setComponentBaseName("ClayActionsDropdown");
+		setModuleBaseName("dropdown");
+		setHydrate(true);
 
 		Map<String, Object> context = getContext();
 

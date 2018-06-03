@@ -23,8 +23,8 @@ public class ButtonTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayButton");
-		super.setModuleBaseName("button");
+		setComponentBaseName("ClayButton");
+		setModuleBaseName("button");
 
 		return super.doStartTag();
 	}

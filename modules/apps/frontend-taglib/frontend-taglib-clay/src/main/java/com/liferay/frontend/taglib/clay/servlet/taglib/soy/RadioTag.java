@@ -23,8 +23,8 @@ public class RadioTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayRadio");
-		super.setModuleBaseName("radio");
+		setComponentBaseName("ClayRadio");
+		setModuleBaseName("radio");
 
 		return super.doStartTag();
 	}

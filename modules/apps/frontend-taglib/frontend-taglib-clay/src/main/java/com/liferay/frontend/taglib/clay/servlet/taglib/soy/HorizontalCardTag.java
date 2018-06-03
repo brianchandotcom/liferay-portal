@@ -23,7 +23,7 @@ public class HorizontalCardTag extends BaseClayCardTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayHorizontalCard");
+		setComponentBaseName("ClayHorizontalCard");
 
 		return super.doStartTag();
 	}

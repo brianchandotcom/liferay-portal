@@ -128,8 +128,6 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 			_moduleBaseName = null;
 			_namespace = null;
 		}
-
-		super.cleanUp();
 	}
 
 	protected String[] getNamespacedParams() {

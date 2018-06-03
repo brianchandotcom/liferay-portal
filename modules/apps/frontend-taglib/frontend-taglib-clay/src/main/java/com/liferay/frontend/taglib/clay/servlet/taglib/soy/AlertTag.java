@@ -23,9 +23,9 @@ public class AlertTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayAlert");
-		super.setModuleBaseName("alert");
-		super.setHydrate(true);
+		setComponentBaseName("ClayAlert");
+		setModuleBaseName("alert");
+		setHydrate(true);
 
 		return super.doStartTag();
 	}

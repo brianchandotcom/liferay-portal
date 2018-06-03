@@ -26,8 +26,8 @@ public class SelectTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClaySelect");
-		super.setModuleBaseName("select");
+		setComponentBaseName("ClaySelect");
+		setModuleBaseName("select");
 
 		return super.doStartTag();
 	}

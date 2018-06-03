@@ -23,9 +23,9 @@ public class ProgressBarTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayProgressBar");
-		super.setModuleBaseName("progress-bar");
-		super.setHydrate(true);
+		setComponentBaseName("ClayProgressBar");
+		setModuleBaseName("progress-bar");
+		setHydrate(true);
 
 		return super.doStartTag();
 	}

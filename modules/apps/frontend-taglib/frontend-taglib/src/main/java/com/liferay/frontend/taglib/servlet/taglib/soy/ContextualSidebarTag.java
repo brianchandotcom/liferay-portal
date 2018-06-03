@@ -14,14 +14,14 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 
 import java.util.Map;
 
 /**
  * @author Chema Balsas
  */
-public class ContextualSidebarTag extends TemplateRendererTag {
+public class ContextualSidebarTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {

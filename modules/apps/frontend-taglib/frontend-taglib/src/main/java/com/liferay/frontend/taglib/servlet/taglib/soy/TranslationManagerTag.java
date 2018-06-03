@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,7 +31,7 @@ import java.util.Set;
 /**
  * @author Carlos Lancha
  */
-public class TranslationManagerTag extends TemplateRendererTag {
+public class TranslationManagerTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {

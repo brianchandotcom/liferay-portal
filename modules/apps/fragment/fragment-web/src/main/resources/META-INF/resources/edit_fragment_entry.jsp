@@ -104,7 +104,7 @@ renderResponse.setTitle(title);
 	<portlet:param name="mvcRenderCommandName" value="/fragment/preview_fragment_entry" />
 </liferay-portlet:renderURL>
 
-<aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor, metal-dom/src/all/dom as dom">
+<aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor, metal-dom/src/all/dom as dom, frontend-js-web/liferay/toast/commands/OpenToast.es as toastCommands">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
 	var jsInput = document.getElementById('<portlet:namespace />jsContent');
@@ -140,20 +140,13 @@ renderResponse.setTitle(title);
 			dom.toElement('#<portlet:namespace />status').value = '<%= WorkflowConstants.STATUS_APPROVED %>';
 
 			if (!fragmentEditor.isHtmlValid()) {
-				AUI().use('liferay-alert', () => {
-					new Liferay.Alert(
-						{
-							delay: {
-								hide: 500,
-								show: 0
-							},
-							duration: 500,
-							icon: 'exclamation-circle',
-							message: '<liferay-ui:message key="fragment-html-is-invalid" />',
-							type: 'danger'
-						}
-					).render();
-				});
+				toastCommands.openToast(
+					{
+						message: '<liferay-ui:message key="fragment-html-is-invalid" />',
+						title: '<liferay-ui:message key="error" />',
+						type: 'danger'
+					}
+				);
 
 				return;
 			}

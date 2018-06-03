@@ -22,6 +22,8 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface Facet extends com.liferay.portal.kernel.search.facet.Facet {
 
+	public String getAggregationName();
+
 	public String[] getSelections();
 
 	public void select(String... selections);

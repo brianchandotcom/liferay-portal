@@ -379,7 +379,7 @@ class LiferayApp extends App {
 
 	_hideTimeoutAlert() {
 		if (this.timeoutAlert) {
-			this.timeoutAlert.close();
+			this.timeoutAlert.dispose();
 		}
 	}
 
@@ -403,22 +403,19 @@ class LiferayApp extends App {
 						}
 					);
 
-					if (!this.timeoutAlert) {
-						this._createNotification(
-							{
-								message: Liferay.SPA.userNotification.message,
-								title: Liferay.SPA.userNotification.title,
-								type: 'warning'
-							}
-						).then(
-							(alert) => {
-								this.timeoutAlert = alert;
-							}
-						);
-					}
-					else {
-						this.timeoutAlert.show();
-					}
+					this._hideTimeoutAlert();
+
+					this._createNotification(
+						{
+							message: Liferay.SPA.userNotification.message,
+							title: Liferay.SPA.userNotification.title,
+							type: 'warning'
+						}
+					).then(
+						(alert) => {
+							this.timeoutAlert = alert;
+						}
+					);
 				},
 				Liferay.SPA.userNotification.timeout
 			);

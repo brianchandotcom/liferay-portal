@@ -26,7 +26,7 @@ contextUseForAllTitle.put("name", renderResponse.getNamespace() + "useCustomTitl
 contextUseForAllTitle.put("inputSelector", ".custom-title input");
 %>
 
-<soy:template-renderer
+<soy:component-renderer
 	context="<%= contextUseForAllTitle %>"
 	module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
 	templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"

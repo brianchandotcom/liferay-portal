@@ -29,7 +29,7 @@
 			contextUseForAllPadding.put("name", renderResponse.getNamespace() + "useForAllPadding");
 			%>
 
-			<soy:template-renderer
+			<soy:component-renderer
 				context="<%= contextUseForAllPadding %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
@@ -86,7 +86,7 @@
 			contextUseForAllMargin.put("name", renderResponse.getNamespace() + "useForAllMargin");
 			%>
 
-			<soy:template-renderer
+			<soy:component-renderer
 				context="<%= contextUseForAllMargin %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"

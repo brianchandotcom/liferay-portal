@@ -59,7 +59,7 @@ DecimalFormat decimalFormat = portletConfigurationCSSPortletDisplayContext.getDe
 		context.put("name", renderResponse.getNamespace() + "fontColor");
 		%>
 
-		<soy:template-renderer
+		<soy:component-renderer
 			context="<%= context %>"
 			module="portlet-configuration-css-web/js/ColorPickerInput.es"
 			templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"

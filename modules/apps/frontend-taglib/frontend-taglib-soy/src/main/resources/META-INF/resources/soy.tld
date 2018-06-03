@@ -10,6 +10,41 @@
 	<short-name>soy</short-name>
 	<uri>http://liferay.com/tld/soy</uri>
 	<tag>
+		<name>component-renderer</name>
+		<tag-class>com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The component's ID that can be referenced by <![CDATA[<code>Liferay.component()</code>]]>.</description>
+			<name>componentId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The chosen template's context map.</description>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The additional JavaScript module dependencies.</description>
+			<name>dependencies</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The AMD module of the component's JavaScript.</description>
+			<name>module</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The Soy template's namespace.</description>
+			<name>templateNamespace</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>template-renderer</name>
 		<tag-class>com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag</tag-class>
 		<body-content>empty</body-content>

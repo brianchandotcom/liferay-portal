@@ -1912,7 +1912,7 @@
 
 		<execute macro="FormFields#selectSelectOption">
 			<var name="fieldName" value="defaultDisplayView" />
-			<var name="selectOption" value="Descriptive" />
+			<var name="selectOption" value="List" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -1931,7 +1931,7 @@
 
 		<execute macro="FormFields#viewSelectOption">
 			<var name="fieldName" value="defaultDisplayView" />
-			<var name="selectOption" value="Descriptive" />
+			<var name="selectOption" value="List" />
 		</execute>
 
 		<execute macro="SystemSettings#resetConfiguration">

@@ -12,6 +12,9 @@
 				"metal-structs": "^1.0.0",
 				"metal-uri": "^2.0.2",
 				"metal-useragent": "^2.0.0"
+			},
+			"": {
+				"frontend-js-web": "^2.0.0"
 			}
 		}
 	},

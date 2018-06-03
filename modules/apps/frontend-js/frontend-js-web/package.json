@@ -17,6 +17,7 @@
 	},
 	"dependencies": {
 		"clay": "2.1.4",
+		"clay-alert": "^2.1.5",
 		"jquery": "^3.3.1",
 		"liferay-amd-loader": "3.1.1",
 		"lodash": "4.17.4",

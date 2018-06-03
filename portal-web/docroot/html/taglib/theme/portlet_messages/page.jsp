@@ -98,5 +98,5 @@ else if (group.isStagingGroup()) {
 <liferay-ui:success key="<%= portlet.getPortletId() + SessionMessages.KEY_SUFFIX_UPDATED_PREFERENCES %>" message="you-have-successfully-updated-your-preferences" />
 
 <c:if test="<%= !MultiSessionMessages.contains(renderRequest, portlet.getPortletId() + SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE) %>">
-	<liferay-ui:error />
+	<liferay-ui:error embed="<%= false %>" />
 </c:if>

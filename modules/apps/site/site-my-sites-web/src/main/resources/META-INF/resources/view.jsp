@@ -18,7 +18,7 @@
 
 <liferay-ui:success key="membershipRequestSent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
 
-<liferay-ui:error key="membershipAlreadyRequested" message="membership-was-already-requested" />
+<liferay-ui:error embed="<%= false %>" key="membershipAlreadyRequested" message="membership-was-already-requested" />
 
 <clay:navigation-bar
 	navigationItems="<%= siteMySitesDisplayContext.getNavigationItems() %>"

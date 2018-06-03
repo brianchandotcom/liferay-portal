@@ -1162,7 +1162,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Dynamic Data Mapping" />
+			<var name="configurationCategory" value="Forms" />
 			<var name="configurationName" value="Forms" />
 			<var name="configurationScope" value="Site Scope" />
 		</execute>
@@ -2123,7 +2123,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Dynamic Data Mapping" />
+			<var name="configurationCategory" value="Forms" />
 			<var name="configurationName" value="Forms" />
 			<var name="configurationScope" value="Site Scope" />
 		</execute>
@@ -2157,7 +2157,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Dynamic Data Mapping" />
+			<var name="configurationCategory" value="Forms" />
 			<var name="configurationName" value="Forms" />
 			<var name="configurationScope" value="Site Scope" />
 		</execute>

@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>DATE_SCHEDULE_RADIO</td>
-	<td>//input[contains(@id,'publishingEventSchedule')]</td>
+	<td>//span[contains(@class,'custom-control-label-text') and contains(.,'Schedule')]</td>
 	<td></td>
 </tr>
 <tr>

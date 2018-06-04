@@ -327,11 +327,15 @@ AUI.add(
 					_onPaste: function(event) {
 						var instance = this;
 
-						requestAnimationFrame(
-							function() {
-								instance.addEntries();
-							}
-						);
+						var pastedText = (event._event.clipboardData || window.clipboardData).getData('text');
+
+						if (pastedText.indexOf(',') !== -1) {
+							requestAnimationFrame(
+								function() {
+									instance.addEntries();
+								}
+							);
+						}
 					},
 
 					_renderIcons: function() {

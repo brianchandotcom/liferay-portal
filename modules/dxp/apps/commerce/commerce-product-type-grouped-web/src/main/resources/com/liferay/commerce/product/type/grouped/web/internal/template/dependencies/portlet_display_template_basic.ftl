@@ -29,7 +29,7 @@
 						<#assign cpAttachmentFileEntry = groupedCPTypeDisplayContext.getDefaultImage() />
 
 						<#if cpAttachmentFileEntry??>
-							<img class="center-block img-responsive" id="full-image" src="${groupedCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay)}">
+							<img class="center-block img-responsive" id="<@portlet.namespace />full-image" src="${groupedCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay)}">
 						</#if>
 					</div>
 				</div>
@@ -241,7 +241,7 @@
 		function() {
 			$(".thumb").click(
 				function() {
-					$("#full-image").attr("src", $(this).attr("data-url"));
+					$("#<@portlet.namespace />full-image").attr("src", $(this).attr("data-url"));
 				}
 			);
 		}

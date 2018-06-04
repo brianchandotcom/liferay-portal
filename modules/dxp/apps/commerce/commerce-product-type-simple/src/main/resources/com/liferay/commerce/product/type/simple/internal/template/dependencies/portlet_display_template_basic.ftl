@@ -213,7 +213,7 @@
 		function() {
 			$(".thumb").click(
 				function() {
-					$("#full-image").attr("src",$(this).attr("data-url"));
+					$("#<@portlet.namespace />full-image").attr("src",$(this).attr("data-url"));
 				}
 			);
 		}

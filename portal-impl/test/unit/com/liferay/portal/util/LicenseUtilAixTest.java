@@ -18,12 +18,10 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 
 /**
  * @author Manuel de la Peña
  */
-@Ignore
 public class LicenseUtilAixTest extends BaseLicenseUtilTestCase {
 
 	@Override

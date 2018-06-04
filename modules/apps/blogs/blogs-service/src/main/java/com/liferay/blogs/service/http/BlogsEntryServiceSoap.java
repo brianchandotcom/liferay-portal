@@ -91,48 +91,6 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
-	/**
-	* Creates a new blogs entry
-	*
-	* @param userId the blogs entry's author id
-	* @param title the blogs entry's title
-	* @param subtitle the blogs entry's subtitle
-	* @param urlTitle the blogs entry's urlTitle
-	* @param description the blogs entry's description
-	* @param content the blogs entry's content
-	* @param displayDate the blogs entry's displayDate
-	* @param coverImageCaption the blogs entry's cover image caption
-	* @param coverImageImageSelector an object containing the data of the
-	blogs's entry cover image, can be {@code null}
-	* @param smallImageImageSelector an object containing the data of the
-	blogs's entry small cover image, can be {@code null}
-	* @param serviceContext the blogs entry's serviceContext; at least it must
-	contain the {@code groupId}
-	* @return the created blogs entry
-	* @review
-	*/
-	public static com.liferay.blogs.model.BlogsEntrySoap addEntry(long userId,
-		String title, String subtitle, String urlTitle, String description,
-		String content, java.util.Date displayDate, String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.blogs.model.BlogsEntry returnValue = BlogsEntryServiceUtil.addEntry(userId,
-					title, subtitle, urlTitle, description, content,
-					displayDate, coverImageCaption, coverImageImageSelector,
-					smallImageImageSelector, serviceContext);
-
-			return com.liferay.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.blogs.model.BlogsEntrySoap addEntry(
 		String title, String subtitle, String urlTitle, String description,
 		String content, int displayDateMonth, int displayDateDay,
@@ -435,6 +393,49 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* Imports a blogs entry
+	*
+	* @param userId the blogs entry's author ID
+	* @param title the blogs entry's title
+	* @param subtitle the blogs entry's subtitle
+	* @param urlTitle the blogs entry's urlTitle
+	* @param description the blogs entry's description
+	* @param content the blogs entry's content
+	* @param displayDate the blogs entry's displayDate
+	* @param coverImageCaption the blogs entry's cover image caption
+	* @param coverImageImageSelector an object containing the data of the
+	blogs's entry cover image, can be {@code null}
+	* @param smallImageImageSelector an object containing the data of the
+	blogs's entry small cover image, can be {@code null}
+	* @param serviceContext the blogs entry's serviceContext; at least it must
+	contain the {@code groupId}
+	* @return the created blogs entry
+	* @review
+	*/
+	public static com.liferay.blogs.model.BlogsEntrySoap importEntry(
+		long userId, String title, String subtitle, String urlTitle,
+		String description, String content, java.util.Date displayDate,
+		String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.blogs.model.BlogsEntry returnValue = BlogsEntryServiceUtil.importEntry(userId,
+					title, subtitle, urlTitle, description, content,
+					displayDate, coverImageCaption, coverImageImageSelector,
+					smallImageImageSelector, serviceContext);
+
+			return com.liferay.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.blogs.model.BlogsEntrySoap moveEntryToTrash(
 		long entryId) throws RemoteException {
 		try {
@@ -483,38 +484,11 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.blogs.model.BlogsEntrySoap updateEntry(
-		long entryId, String title, String subtitle, String description,
-		String content, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks, String[] trackbacks,
-		String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.blogs.model.BlogsEntry returnValue = BlogsEntryServiceUtil.updateEntry(entryId,
-					title, subtitle, description, content, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, allowPingbacks, allowTrackbacks,
-					trackbacks, coverImageCaption, coverImageImageSelector,
-					smallImageImageSelector, serviceContext);
-
-			return com.liferay.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	/**
 	* Updates a blogs entry
 	*
 	* @param entryId the blogs entry's ID
-	* @param userId the blogs entry's author id
+	* @param userId the blogs entry's author ID
 	* @param title the blogs entry's title
 	* @param subtitle the blogs entry's subtitle
 	* @param urlTitle the blogs entry's urlTitle
@@ -543,6 +517,33 @@ public class BlogsEntryServiceSoap {
 			com.liferay.blogs.model.BlogsEntry returnValue = BlogsEntryServiceUtil.updateEntry(entryId,
 					userId, title, subtitle, urlTitle, description, content,
 					displayDate, coverImageCaption, coverImageImageSelector,
+					smallImageImageSelector, serviceContext);
+
+			return com.liferay.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.blogs.model.BlogsEntrySoap updateEntry(
+		long entryId, String title, String subtitle, String description,
+		String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks, String[] trackbacks,
+		String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.blogs.model.BlogsEntry returnValue = BlogsEntryServiceUtil.updateEntry(entryId,
+					title, subtitle, description, content, displayDateMonth,
+					displayDateDay, displayDateYear, displayDateHour,
+					displayDateMinute, allowPingbacks, allowTrackbacks,
+					trackbacks, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 
 			return com.liferay.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);

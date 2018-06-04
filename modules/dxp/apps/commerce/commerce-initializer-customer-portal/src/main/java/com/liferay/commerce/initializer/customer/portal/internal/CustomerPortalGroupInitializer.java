@@ -176,8 +176,6 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 			importProducts(serviceContext);
 
 			setThemePortletSettings(serviceContext);
-
-			_customerPortalForecastsInitializer.initialize(groupId);
 		}
 		catch (InitializationException ie) {
 			throw ie;
@@ -1044,10 +1042,6 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	@Reference
 	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
-
-	@Reference
-	private CustomerPortalForecastsInitializer
-		_customerPortalForecastsInitializer;
 
 	@Reference
 	private CustomerPortalLayoutsInitializer _customerPortalLayoutsInitializer;

@@ -100,7 +100,7 @@ public class DeployWorkflowDefinitionMVCActionCommand
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(titleMap), name, content.getBytes());
+				getTitle(actionRequest, titleMap), name, content.getBytes());
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
 

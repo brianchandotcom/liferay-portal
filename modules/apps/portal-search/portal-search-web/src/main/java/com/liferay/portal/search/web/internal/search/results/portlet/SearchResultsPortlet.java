@@ -294,7 +294,7 @@ public class SearchResultsPortlet extends MVCPortlet {
 		searchResultSummaryDisplayBuilder.setAssetRendererFactoryLookup(
 			assetRendererFactoryLookup);
 		searchResultSummaryDisplayBuilder.setCurrentURL(
-			_portal.getCurrentURL(renderRequest));
+			getCurrentURL(renderRequest));
 		searchResultSummaryDisplayBuilder.setDocument(document);
 		searchResultSummaryDisplayBuilder.setFastDateFormatFactory(
 			fastDateFormatFactory);
@@ -321,6 +321,10 @@ public class SearchResultsPortlet extends MVCPortlet {
 		searchResultSummaryDisplayBuilder.setThemeDisplay(themeDisplay);
 
 		return searchResultSummaryDisplayBuilder.build();
+	}
+
+	protected String getCurrentURL(RenderRequest renderRequest) {
+		return _portal.getCurrentURL(renderRequest);
 	}
 
 	protected HttpServletRequest getHttpServletRequest(

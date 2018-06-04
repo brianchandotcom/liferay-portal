@@ -437,70 +437,26 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			boolean updateName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(5);
+		runSQL(
+			StringBundler.concat(
+				"update ResourcePermission set primKey = replace(primKey, ",
+				"'_LAYOUT_", oldRootPortletId, "', '_LAYOUT_", newRootPortletId,
+				"') where name = '", oldRootPortletId,
+				"' and primKey like '%_LAYOUT_", oldRootPortletId, "'"));
 
-		sb.append("select distinct companyId, primKey from ");
-		sb.append("ResourcePermission where name = '");
-		sb.append(oldRootPortletId);
-		sb.append("' and scope = ");
-		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
-
-		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update ResourcePermission set primKey = ? where " +
-						"companyId = ? and primKey = ?");
-			ResultSet rs = ps1.executeQuery()) {
-
-			while (rs.next()) {
-				String oldPrimKey = rs.getString("primKey");
-
-				int pos = oldPrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
-
-				if (pos != -1) {
-					long plid = GetterUtil.getLong(
-						oldPrimKey.substring(0, pos));
-
-					String portletId = oldPrimKey.substring(
-						pos + PortletConstants.LAYOUT_SEPARATOR.length());
-
-					String instanceId = PortletIdCodec.decodeInstanceId(
-						portletId);
-					long userId = PortletIdCodec.decodeUserId(portletId);
-
-					String newPortletId = PortletIdCodec.encode(
-						newRootPortletId, userId, instanceId);
-
-					String newPrimKey = PortletPermissionUtil.getPrimaryKey(
-						plid, newPortletId);
-
-					ps2.setString(1, newPrimKey);
-
-					long companyId = rs.getLong("companyId");
-
-					ps2.setLong(2, companyId);
-
-					ps2.setString(3, oldPrimKey);
-
-					ps2.addBatch();
-				}
-			}
-
-			ps2.executeBatch();
-		}
-		catch (SQLException sqle) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(sqle, sqle);
-			}
-		}
+		runSQL(
+			StringBundler.concat(
+				"update ResourcePermission set primKey = replace(primKey, ",
+				"'_LAYOUT_", oldRootPortletId, "_', '_LAYOUT_",
+				newRootPortletId, "') where name = '", oldRootPortletId,
+				"' and primKey like '%_LAYOUT_", oldRootPortletId, "_%'"));
 
 		if (updateName) {
 			runSQL(
 				StringBundler.concat(
 					"update ResourcePermission set primKey = '",
-					newRootPortletId, "' where primKey = '", oldRootPortletId,
-					"' and name = '", oldRootPortletId, "'"));
+					newRootPortletId, "' where name = '", oldRootPortletId,
+					"' and primKey = '", oldRootPortletId, "'"));
 
 			runSQL(
 				StringBundler.concat(

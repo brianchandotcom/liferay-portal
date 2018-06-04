@@ -1234,10 +1234,10 @@
 		<if>
 			<condition function="IsElementPresent" locator1="KaleoDesignerEditWorkflow#SOURCE_KALEO_XML_TAB" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Please enter valid content." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please enter valid content." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Please enter a valid definition before publishing." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please enter a valid definition before publishing." />
 			</else>
 		</if>
 	</command>

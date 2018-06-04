@@ -121,7 +121,7 @@ public abstract class BaseMergeTask extends DefaultTask {
 
 			destinationFileDir.mkdirs();
 
-			if (sourceFiles.size() == 1) {
+			if ((sourceFiles.size() == 1) && isCopyAllowed()) {
 				Iterator<File> iterator = sourceFiles.iterator();
 
 				File sourceFile = iterator.next();
@@ -180,6 +180,10 @@ public abstract class BaseMergeTask extends DefaultTask {
 		args.put("include", getPattern());
 
 		return project.fileTree(args);
+	}
+
+	protected boolean isCopyAllowed() {
+		return true;
 	}
 
 	protected abstract void merge(Set<File> sourceFiles, File destinationFile)

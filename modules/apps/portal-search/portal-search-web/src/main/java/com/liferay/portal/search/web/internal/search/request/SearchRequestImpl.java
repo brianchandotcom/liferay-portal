@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
@@ -86,6 +88,14 @@ public class SearchRequestImpl implements SearchRequest {
 		return searchResponseImpl;
 	}
 
+	protected void addScopeFacet(SearchContext searchContext) {
+		Facet scopeFacet = new ScopeFacet(searchContext);
+
+		scopeFacet.setStatic(true);
+
+		searchContext.addFacet(scopeFacet);
+	}
+
 	protected SearchContainer<Document> buildSearchContainer(
 		SearchSettingsImpl searchSettingsImpl) {
 
@@ -96,6 +106,8 @@ public class SearchRequestImpl implements SearchRequest {
 		SearchContext searchContext = _searchContextBuilder.getSearchContext();
 
 		searchContext.setAttribute("paginationType", "more");
+
+		addScopeFacet(searchContext);
 
 		return searchContext;
 	}

@@ -54,6 +54,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.mockito.ArgumentCaptor;
@@ -80,6 +81,7 @@ public class SearchResultsPortletTest {
 		_searchResultsPortlet = createSearchResultsPortlet();
 	}
 
+	@Ignore
 	@Test
 	public void testDocumentWithoutSummaryIsRemoved() throws Exception {
 		Document document = createDocumentWithSummary();

@@ -49,6 +49,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.w3c.dom.Document;
@@ -128,11 +129,13 @@ public class LibraryReferenceTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testLibDependencyJarsInGitIgnore() {
 		testMissingJarReferences(_gitIgnoreJars, _GIT_IGNORE_FILE_NAME);
 	}
 
+	@Ignore
 	@Test
 	public void testLibDependencyJarsInVersionsExt() {
 		for (String jar : _libDependencyJars) {
@@ -143,6 +146,7 @@ public class LibraryReferenceTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testLibJarsInEclipse() {
 		testMissingJarReferences(_eclipseJars, _ECLIPSE_FILE_NAME);

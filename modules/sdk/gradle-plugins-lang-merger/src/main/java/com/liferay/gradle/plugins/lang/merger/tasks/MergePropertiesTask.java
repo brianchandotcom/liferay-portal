@@ -70,8 +70,16 @@ public class MergePropertiesTask extends BaseMergeTask {
 
 		File dir = GradleUtil.toFile(getProject(), object);
 
-		return _mergePropertiesSettings.create(
-			_getSettingName(dir), closure);
+		return _mergePropertiesSettings.create(_getSettingName(dir), closure);
+	}
+
+	@Override
+	protected boolean isCopyAllowed() {
+		if (_mergePropertiesSettings.isEmpty()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

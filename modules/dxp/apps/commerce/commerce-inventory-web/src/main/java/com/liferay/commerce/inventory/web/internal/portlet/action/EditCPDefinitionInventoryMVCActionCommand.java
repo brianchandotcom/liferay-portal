@@ -63,6 +63,7 @@ public class EditCPDefinitionInventoryMVCActionCommand
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchCPDefinitionInventoryException ||
+				e instanceof NumberFormatException ||
 				e instanceof PrincipalException) {
 
 				hideDefaultErrorMessage(actionRequest);
@@ -103,21 +104,25 @@ public class EditCPDefinitionInventoryMVCActionCommand
 			actionRequest, "displayAvailability");
 		boolean displayStockQuantity = ParamUtil.getBoolean(
 			actionRequest, "displayStockQuantity");
-		int minStockQuantity = ParamUtil.getInteger(
-			actionRequest, "minStockQuantity");
 		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
-		int minOrderQuantity = ParamUtil.getInteger(
+		String minStockQuantityString = ParamUtil.getString(
+			actionRequest, "minStockQuantity");
+		String minOrderQuantityString = ParamUtil.getString(
 			actionRequest, "minOrderQuantity");
-		int maxOrderQuantity = ParamUtil.getInteger(
+		String maxOrderQuantityString = ParamUtil.getString(
 			actionRequest, "maxOrderQuantity");
+		String multipleOrderQuantityString = ParamUtil.getString(
+			actionRequest, "multipleOrderQuantity");
+		int minStockQuantity = Integer.valueOf(minStockQuantityString);
+		int minOrderQuantity = Integer.valueOf(minOrderQuantityString);
+		int maxOrderQuantity = Integer.valueOf(maxOrderQuantityString);
+		int multipleOrderQuantity = Integer.valueOf(
+			multipleOrderQuantityString);
 		String allowedOrderQuantities = ParamUtil.getString(
 			actionRequest, "allowedOrderQuantities");
 
 		allowedOrderQuantities = allowedOrderQuantities.replaceAll(
 			StringPool.SPACE, StringPool.BLANK);
-
-		int multipleOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "multipleOrderQuantity");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionInventory.class.getName(), actionRequest);

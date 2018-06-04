@@ -92,6 +92,8 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 				<aui:input name="displayStockQuantity" />
 
+				<liferay-ui:error exception="<%= NumberFormatException.class %>" message="there-was-an-error-processing-one-or-more-of-the-quantities-entered" />
+
 				<aui:input name="minStockQuantity">
 					<aui:validator name="digits" />
 				</aui:input>

@@ -28,6 +28,7 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 
 <liferay-frontend:edit-form
 	action="<%= importFragmentEntriesURL %>"
+	name="fm"
 >
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:success key='<%= portletDisplay.getId() + "filesImported" %>' message='<%= LanguageUtil.get(resourceBundle, "the-files-were-imported-correctly") %>' />
@@ -45,7 +46,13 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<aui:input label="select-file" name="file" type="file" />
+				<aui:input label="select-file" name="file" type="file">
+					<aui:validator name="required" />
+
+					<aui:validator name="acceptFiles">
+						'zip'
+					</aui:validator>
+				</aui:input>
 
 				<aui:input checked="<%= true %>" label="overwrite-existing-entries" name="overwrite" type="checkbox" />
 			</liferay-frontend:fieldset>

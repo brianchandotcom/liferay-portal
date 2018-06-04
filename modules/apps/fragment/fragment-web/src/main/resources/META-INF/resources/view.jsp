@@ -203,6 +203,9 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 					},
 					destroyOnHide: true
 				},
+				dialogIframe: {
+					bodyCssClass: 'dialog-with-footer'
+				},
 				id: '<portlet:namespace />openImportView',
 				title: '<liferay-ui:message key="import-collections" />',
 				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import_fragment_collections" /></portlet:renderURL>'
@@ -270,6 +273,9 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 							}
 						},
 						destroyOnHide: true
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
 					},
 					id: '<portlet:namespace />openInstallFromURLView',
 					title: '<liferay-ui:message key="import-fragments" />',

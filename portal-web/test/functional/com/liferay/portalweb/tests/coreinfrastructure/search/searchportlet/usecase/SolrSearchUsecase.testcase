@@ -185,9 +185,16 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="SearchPortlet#configureScope">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Search" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="SearchPortlet#configureSearchScopePG">
 			<var name="searchScope" value="Everything" />
 		</execute>
+
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Apple" />

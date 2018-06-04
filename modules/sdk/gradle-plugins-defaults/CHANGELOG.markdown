@@ -3710,6 +3710,12 @@ Java project.
 - [LPS-81895]: Update the [Liferay Gradle Plugins Lang Merger] dependency to
 version 1.1.0.
 
+## 5.4.26 - 2018-06-04
+
+### Fixed
+- [LPS-67694]: Fix error when `-PsnapshotIfStale` is set and the latest snapshot
+of a module includes transitive dependencies.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

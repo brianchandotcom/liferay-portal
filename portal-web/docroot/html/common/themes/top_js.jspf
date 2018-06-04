@@ -161,11 +161,9 @@
 				Layout controlPanelLayout = themeDisplay.getControlPanelLayout();
 				%>
 
-				<c:if test="<%= controlPanelLayout.getGroupId() != scopeGroup.getGroupId() %>">
-					getLayoutRelativeControlPanelURL: function() {
-						return '<%= PortalUtil.getLayoutRelativeURL(new VirtualLayout(controlPanelLayout, scopeGroup), themeDisplay) %>';
-					},
-				</c:if>
+				getLayoutRelativeControlPanelURL: function() {
+					return '<%= PortalUtil.getLayoutRelativeURL(new VirtualLayout(controlPanelLayout, scopeGroup), themeDisplay) %>';
+				},
 
 				getLayoutRelativeURL: function() {
 					return '<%= PortalUtil.getLayoutRelativeURL(layout, themeDisplay) %>';

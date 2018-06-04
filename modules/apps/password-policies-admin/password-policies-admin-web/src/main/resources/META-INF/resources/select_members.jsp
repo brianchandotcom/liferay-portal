@@ -39,94 +39,40 @@ else {
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectMember");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+EditPasswordPolicyAssignmentsManagementToolbarDisplayContext editPasswordPolicyAssignmentsManagementToolbarDisplayContext = new EditPasswordPolicyAssignmentsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle, "/select_members.jsp");
 
-portletURL.setParameter("mvcPath", "/select_members.jsp");
-portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("tabs2", tabs2);
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("passwordPolicyId", String.valueOf(passwordPolicy.getPasswordPolicyId()));
-portletURL.setParameter("eventName", eventName);
-
-String[] orderColumns = {"first-name", "screen-name"};
-RowChecker rowChecker = new AddUserPasswordPolicyChecker(renderResponse, passwordPolicy);
-PortletURL searchURL = PortletURLUtil.clone(portletURL, renderResponse);
-SearchContainer searchContainer = new UserSearch(renderRequest, searchURL);
-String searchContainerId = "users";
-
-if (tabs2.equals("organizations")) {
-	orderColumns = new String[] {"name", "type"};
-	rowChecker = new AddOrganizationPasswordPolicyChecker(renderResponse, passwordPolicy);
-	searchContainer = new OrganizationSearch(renderRequest, searchURL);
-	searchContainerId = "organizations";
-}
+SearchContainer searchContainer = editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getSearchContainer();
 %>
 
 <clay:navigation-bar
 	navigationItems="<%= passwordPolicyDisplayContext.getSelectMembersNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="<%= searchContainerId %>"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= searchContainer.getOrderByCol() %>"
-			orderByType="<%= searchContainer.getOrderByType() %>"
-			orderColumns="<%= orderColumns %>"
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-
-		<li>
-			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	clearResultsURL="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getClearResultsURL() %>"
+	filterDropdownItems="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchContainerId="passwordPolicyMembers"
+	searchFormName="searchFm"
+	selectable="<%= true %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= editPasswordPolicyAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" name="selectMemberFm">
 	<liferay-ui:search-container
-		id="<%= searchContainerId %>"
-		rowChecker="<%= rowChecker %>"
+		id="passwordPolicyMembers"
 		searchContainer="<%= searchContainer %>"
 		var="memberSearchContainer"
 	>
 		<c:choose>
 			<c:when test='<%= tabs2.equals("users") %>'>
-
-				<%
-				UserSearchTerms searchTerms = (UserSearchTerms)memberSearchContainer.getSearchTerms();
-
-				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-				%>
-
 				<%@ include file="/user_search_columns.jspf" %>
 			</c:when>
 			<c:when test='<%= tabs2.equals("organizations") %>'>
-
-				<%
-				OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)memberSearchContainer.getSearchTerms();
-
-				LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
-				%>
-
 				<%@ include file="/organization_search_columns.jspf" %>
 			</c:when>
 		</c:choose>
@@ -139,7 +85,7 @@ if (tabs2.equals("organizations")) {
 </aui:form>
 
 <aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + '<%= searchContainerId %>');
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />' + 'passwordPolicyMembers');
 
 	searchContainer.on(
 		'rowToggled',

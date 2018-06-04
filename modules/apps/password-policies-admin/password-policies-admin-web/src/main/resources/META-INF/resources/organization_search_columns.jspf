@@ -14,12 +14,6 @@
  */
 --%>
 
-<liferay-ui:organization-search-container-results
-	forceDatabase="<%= true %>"
-	organizationParams="<%= organizationParams %>"
-	parentOrganizationId="<%= OrganizationConstants.ANY_PARENT_ORGANIZATION_ID %>"
-/>
-
 <liferay-ui:search-container-row
 	className="com.liferay.portal.kernel.model.Organization"
 	escapedModel="<%= true %>"
@@ -66,7 +60,7 @@
 					cssClass="entry-display-style"
 					icon="users"
 					resultRow="<%= row %>"
-					rowChecker="<%= rowChecker %>"
+					rowChecker="<%= memberSearchContainer.getRowChecker() %>"
 					subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
 					title="<%= name %>"
 				/>

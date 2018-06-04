@@ -28,24 +28,11 @@ else {
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
 
-PortletURL portletURL = renderResponse.createRenderURL();
-
-pageContext.setAttribute("portletURL", portletURL);
-
-String portletURLString = portletURL.toString();
-
 boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company.getCompanyId());
-
-PasswordPolicySearch searchContainer = new PasswordPolicySearch(renderRequest, portletURL);
-
-searchContainer.setId("passwordPolicy");
-searchContainer.setRowChecker(new PasswordPolicyChecker(renderResponse));
 
 String description = LanguageUtil.get(request, "javax.portlet.description.com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet") + " " + LanguageUtil.get(request, "when-no-password-policy-is-assigned-to-a-user,-either-explicitly-or-through-an-organization,-the-default-password-policy-is-used");
 
 portletDisplay.setDescription(description);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "password-policies"), null);
 %>
 
 <clay:navigation-bar
@@ -53,74 +40,33 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 	navigationItems="<%= passwordPolicyDisplayContext.getViewPasswordPoliciesNavigationItems() %>"
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<%
+ViewPasswordPoliciesManagementToolbarDisplayContext viewPasswordPoliciesManagementToolbarDisplayContext = new ViewPasswordPoliciesManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle);
+
+SearchContainer searchContainer = viewPasswordPoliciesManagementToolbarDisplayContext.getSearchContainer();
+
+PortletURL portletURL = viewPasswordPoliciesManagementToolbarDisplayContext.getPortletURL();
+%>
+
+<clay:management-toolbar
+	actionDropdownItems="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getActionDropdownItems() %>"
+	clearResultsURL="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getClearResultsURL() %>"
+	creationMenu="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getCreationMenu() %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="passwordPolicies"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
+	searchFormName="searchFm"
+	selectable="<%= true %>"
+	showCreationMenu="<%= viewPasswordPoliciesManagementToolbarDisplayContext.showCreationMenu() %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getSortingURL() %>"
+	viewTypeItems="<%= viewPasswordPoliciesManagementToolbarDisplayContext.getViewTypeItems() %>"
+/>
 
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= searchContainer.getOrderByCol() %>"
-			orderByType="<%= searchContainer.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<c:if test="<%= !passwordPolicyEnabled %>">
-
-			<%
-			PortletURL searchURL = renderResponse.createRenderURL();
-			%>
-
-			<li>
-				<aui:form action="<%= searchURL %>" name="searchFm">
-					<liferay-ui:input-search
-						autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-						markupView="lexicon"
-					/>
-				</aui:form>
-			</li>
-		</c:if>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-
-		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_PASSWORD_POLICY) %>">
-			<portlet:renderURL var="viewPasswordPoliciesURL" />
-
-			<portlet:renderURL var="addPasswordPolicyURL">
-				<portlet:param name="mvcPath" value="/edit_password_policy.jsp" />
-				<portlet:param name="redirect" value="<%= viewPasswordPoliciesURL %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add") %>'
-					url="<%= addPasswordPolicyURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deletePasswordPolicies" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
-
-<aui:form action="<%= portletURLString %>" cssClass="container-fluid-1280" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
 	<aui:input name="passwordPolicyIds" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb
@@ -143,25 +89,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 			searchContainer="<%= searchContainer %>"
 			var="passwordPolicySearchContainer"
 		>
-
-			<%
-			PasswordPolicyDisplayTerms searchTerms = (PasswordPolicyDisplayTerms)passwordPolicySearchContainer.getSearchTerms();
-
-			total = PasswordPolicyServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords());
-
-			passwordPolicySearchContainer.setTotal(total);
-
-			List results = PasswordPolicyServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), passwordPolicySearchContainer.getStart(), passwordPolicySearchContainer.getEnd(), passwordPolicySearchContainer.getOrderByComparator());
-
-			passwordPolicySearchContainer.setResults(results);
-
-			PortletURL passwordPoliciesRedirectURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-			passwordPoliciesRedirectURL.setParameter(passwordPolicySearchContainer.getCurParam(), String.valueOf(passwordPolicySearchContainer.getCur()));
-			%>
-
-			<aui:input name="passwordPoliciesRedirect" type="hidden" value="<%= passwordPoliciesRedirectURL.toString() %>" />
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.model.PasswordPolicy"
 				escapedModel="<%= true %>"
@@ -187,34 +114,27 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 </aui:form>
 
 <aui:script>
-	var <portlet:namespace />deletePasswordPolicies = document.getElementById('<portlet:namespace />deletePasswordPolicies');
+	function <portlet:namespace />deletePasswordPolicies() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			var form = document.getElementById('<portlet:namespace />fm');
 
-	if (<portlet:namespace />deletePasswordPolicies) {
-		<portlet:namespace />deletePasswordPolicies.addEventListener(
-			'click',
-			function(event) {
-				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-					var form = document.getElementById('<portlet:namespace />fm');
+			if (form) {
+				form.setAttribute('method', 'post');
 
-					if (form) {
-						form.setAttribute('method', 'post');
+				var passwordPolicyIds = form.querySelector('#<portlet:namespace />passwordPolicyIds');
 
-						var passwordPolicyIds = form.querySelector('#<portlet:namespace />passwordPolicyIds');
-
-						if (passwordPolicyIds) {
-							passwordPolicyIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-						}
-
-						var lifecycle = form.querySelctor('#p_p_lifecycle');
-
-						if (lifecycle) {
-							lifecycle.setAttribute('value', '1');
-						}
-
-						submitForm(form, '<portlet:actionURL name="deletePasswordPolicies" />');
-					}
+				if (passwordPolicyIds) {
+					passwordPolicyIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 				}
+
+				var lifecycle = form.querySelector('#p_p_lifecycle');
+
+				if (lifecycle) {
+					lifecycle.setAttribute('value', '1');
+				}
+
+				submitForm(form, '<portlet:actionURL name="deletePasswordPolicies" />');
 			}
-		);
+		}
 	}
 </aui:script>

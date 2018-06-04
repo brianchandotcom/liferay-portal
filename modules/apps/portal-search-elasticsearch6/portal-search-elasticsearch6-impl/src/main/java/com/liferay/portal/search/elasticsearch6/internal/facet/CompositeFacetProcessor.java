@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,19 +41,17 @@ public class CompositeFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 
 	@Override
-	public void processFacet(
-		SearchRequestBuilder searchRequestBuilder, Facet facet) {
-
+	public Optional<AggregationBuilder> processFacet(Facet facet) {
 		Class<?> clazz = facet.getClass();
 
 		FacetProcessor<SearchRequestBuilder> facetProcessor =
 			_facetProcessors.get(clazz.getName());
 
 		if (facetProcessor == null) {
-			facetProcessor = _defaultFacetProcessor;
+			facetProcessor = defaultFacetProcessor;
 		}
 
-		facetProcessor.processFacet(searchRequestBuilder, facet);
+		return facetProcessor.processFacet(facet);
 	}
 
 	@Reference(
@@ -82,7 +82,7 @@ public class CompositeFacetProcessor
 		cardinality = ReferenceCardinality.MANDATORY,
 		target = "(class.name=DEFAULT)"
 	)
-	private FacetProcessor<SearchRequestBuilder> _defaultFacetProcessor;
+	protected FacetProcessor<SearchRequestBuilder> defaultFacetProcessor;
 
 	private final Map<String, FacetProcessor<SearchRequestBuilder>>
 		_facetProcessors = new HashMap<>();

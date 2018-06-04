@@ -12,22 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.search.facet;
+package com.liferay.portal.search.elasticsearch6.internal.facet;
 
-import aQute.bnd.annotation.ProviderType;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface Facet extends com.liferay.portal.kernel.search.facet.Facet {
+public interface FacetProcessorContext {
 
-	public String getAggregationName();
-
-	public String[] getSelections();
-
-	public void select(String... selections);
-
-	public void setAggregationName(String aggregationName);
+	public AggregationBuilder postProcessAggregationBuilder(
+		AggregationBuilder aggregationBuilder);
 
 }

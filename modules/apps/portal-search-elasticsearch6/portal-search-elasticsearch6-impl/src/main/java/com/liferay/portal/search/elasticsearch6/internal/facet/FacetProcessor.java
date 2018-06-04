@@ -16,11 +16,15 @@ package com.liferay.portal.search.elasticsearch6.internal.facet;
 
 import com.liferay.portal.kernel.search.facet.Facet;
 
+import java.util.Optional;
+
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+
 /**
  * @author Michael C. Han
  */
 public interface FacetProcessor<T> {
 
-	public void processFacet(T searchRequestBuilder, Facet facet);
+	public Optional<AggregationBuilder> processFacet(Facet facet);
 
 }

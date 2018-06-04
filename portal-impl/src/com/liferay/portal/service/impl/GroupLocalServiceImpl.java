@@ -348,6 +348,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					entry.getKey(), name.concat(ORGANIZATION_STAGING_SUFFIX));
 			}
 
+			friendlyURL = getValidatedFriendlyURL(
+				user.getCompanyId(), groupId, classNameId, classPK,
+				friendlyURL);
+
 			friendlyURL = getFriendlyURL(friendlyURL.concat("-staging"));
 		}
 
@@ -4397,28 +4401,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		friendlyURL = StringPool.SLASH + getFriendlyURL(friendlyName);
 
-		int i = 0;
-
-		while (true) {
-			try {
-				validateFriendlyURL(
-					companyId, groupId, classNameId, classPK, friendlyURL);
-
-				break;
-			}
-			catch (GroupFriendlyURLException gfurle) {
-				int type = gfurle.getType();
-
-				if (type == GroupFriendlyURLException.DUPLICATE) {
-					friendlyURL = friendlyURL + "-" + ++i;
-				}
-				else {
-					friendlyURL = StringPool.SLASH + "group-" + classPK;
-				}
-			}
-		}
-
-		return friendlyURL;
+		return getValidatedFriendlyURL(
+			companyId, groupId, classNameId, classPK, friendlyURL);
 	}
 
 	protected String getFriendlyURL(String friendlyURL) {
@@ -4488,6 +4472,39 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return CustomSQLUtil.keywords(name);
+	}
+
+	protected String getValidatedFriendlyURL(
+			long companyId, long groupId, long classNameId, long classPK,
+			String friendlyURL)
+		throws PortalException {
+
+		int i = 0;
+
+		while (true) {
+			try {
+				validateFriendlyURL(
+					companyId, groupId, classNameId, classPK, friendlyURL);
+
+				break;
+			}
+			catch (GroupFriendlyURLException gfurle) {
+				int type = gfurle.getType();
+
+				if (type == GroupFriendlyURLException.DUPLICATE) {
+					friendlyURL = friendlyURL + "-" + ++i;
+				}
+				else if (type == GroupFriendlyURLException.ENDS_WITH_DASH) {
+					friendlyURL = StringUtil.replaceLast(
+						friendlyURL, CharPool.DASH, StringPool.BLANK);
+				}
+				else {
+					friendlyURL = StringPool.SLASH + "group-" + classPK;
+				}
+			}
+		}
+
+		return friendlyURL;
 	}
 
 	protected void initImportLARFile() {
@@ -4898,6 +4915,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		if (StringUtil.count(friendlyURL, CharPool.SLASH) > 1) {
 			throw new GroupFriendlyURLException(
 				GroupFriendlyURLException.TOO_DEEP);
+		}
+
+		if (StringUtil.endsWith(friendlyURL, CharPool.DASH)) {
+			throw new GroupFriendlyURLException(
+				GroupFriendlyURLException.ENDS_WITH_DASH);
 		}
 	}
 

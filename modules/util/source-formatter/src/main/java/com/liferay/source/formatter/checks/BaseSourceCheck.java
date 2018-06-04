@@ -94,8 +94,10 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public void setCheckstyleConfiguration(Configuration configuration) {
-		_configuration = configuration;
+	public void setCheckstyleConfiguration(
+		Configuration checkstyleConfiguration) {
+
+		_checkstyleConfiguration = checkstyleConfiguration;
 	}
 
 	@Override
@@ -223,7 +225,8 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	protected Map<String, String> getCheckstyleAttributesMap(String checkName)
 		throws Exception {
 
-		return CheckstyleUtil.getAttributesMap(checkName, _configuration);
+		return CheckstyleUtil.getAttributesMap(
+			checkName, _checkstyleConfiguration);
 	}
 
 	protected String getCheckstyleAttributeValue(
@@ -231,7 +234,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		throws Exception {
 
 		return CheckstyleUtil.getAttributeValue(
-			checkName, attributeName, _configuration);
+			checkName, attributeName, _checkstyleConfiguration);
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
@@ -717,7 +720,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
-	private Configuration _configuration;
+	private Configuration _checkstyleConfiguration;
 	private boolean _enabled = true;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;

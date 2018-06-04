@@ -42,10 +42,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_checkstyleLogger = new CheckstyleLogger(
 			new UnsyncByteArrayOutputStream(), true,
 			sourceFormatterArgs.getBaseDirName());
-		_configuration = CheckstyleUtil.getConfiguration(
+		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
 			"checkstyle.xml", getPropertiesMap(), sourceFormatterArgs);
 
-		setConfiguration(_configuration);
+		setCheckstyleConfiguration(_checkstyleConfiguration);
 	}
 
 	@Override
@@ -215,13 +215,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		_sourceFormatterMessages.addAll(
-			processCheckstyle(_configuration, _checkstyleLogger, files));
+			processCheckstyle(
+				_checkstyleConfiguration, _checkstyleLogger, files));
 	}
 
 	private static final String[] _INCLUDES = {"**/*.java"};
 
+	private Configuration _checkstyleConfiguration;
 	private CheckstyleLogger _checkstyleLogger;
-	private Configuration _configuration;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new TreeSet<>();
 	private final List<File> _ungeneratedFiles = new ArrayList<>();

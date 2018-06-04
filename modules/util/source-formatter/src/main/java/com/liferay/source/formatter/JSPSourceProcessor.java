@@ -53,11 +53,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_checkstyleLogger = new AlloyMVCCheckstyleLogger(
 			new UnsyncByteArrayOutputStream(), true,
 			sourceFormatterArgs.getBaseDirName());
-		_configuration = CheckstyleUtil.getConfiguration(
+		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
 			"checkstyle-alloy-mvc.xml", getPropertiesMap(),
 			sourceFormatterArgs);
 
-		setConfiguration(_configuration);
+		setCheckstyleConfiguration(_checkstyleConfiguration);
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		_sourceFormatterMessages.addAll(
 			processCheckstyle(
-				_configuration, _checkstyleLogger,
+				_checkstyleConfiguration, _checkstyleLogger,
 				_ungeneratedFiles.toArray(new File[_ungeneratedFiles.size()])));
 
 		for (File ungeneratedFile : _ungeneratedFiles) {
@@ -251,8 +251,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private static final String[] _INCLUDES =
 		{"**/*.jsp", "**/*.jspf", "**/*.tag", "**/*.tpl", "**/*.vm"};
 
+	private Configuration _checkstyleConfiguration;
 	private AlloyMVCCheckstyleLogger _checkstyleLogger;
-	private Configuration _configuration;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new TreeSet<>();
 	private final List<File> _ungeneratedFiles = new ArrayList<>();

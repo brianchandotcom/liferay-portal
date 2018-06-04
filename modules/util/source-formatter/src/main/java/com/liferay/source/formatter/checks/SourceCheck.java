@@ -44,7 +44,8 @@ public interface SourceCheck {
 
 	public void setBaseDirName(String baseDirName);
 
-	public void setCheckstyleConfiguration(Configuration configuration);
+	public void setCheckstyleConfiguration(
+		Configuration checkstyleConfiguration);
 
 	public void setEnabled(boolean enabled);
 

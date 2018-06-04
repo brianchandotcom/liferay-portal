@@ -26,9 +26,12 @@ import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.util.SourceUtil;
+import com.liferay.source.formatter.checkstyle.util.CheckstyleUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
+
+import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
 
@@ -88,6 +91,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	@Override
 	public void setBaseDirName(String baseDirName) {
 		_baseDirName = baseDirName;
+	}
+
+	@Override
+	public void setCheckstyleConfiguration(
+		Configuration checkstyleConfiguration) {
+
+		_checkstyleConfiguration = checkstyleConfiguration;
 	}
 
 	@Override
@@ -210,6 +220,21 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			bndFileLocation = StringUtil.replaceLast(
 				bndFileLocation, CharPool.SLASH, StringPool.BLANK);
 		}
+	}
+
+	protected Map<String, String> getCheckstyleAttributesMap(String checkName)
+		throws Exception {
+
+		return CheckstyleUtil.getAttributesMap(
+			checkName, _checkstyleConfiguration);
+	}
+
+	protected String getCheckstyleAttributeValue(
+			String checkName, String attributeName)
+		throws Exception {
+
+		return CheckstyleUtil.getAttributeValue(
+			checkName, attributeName, _checkstyleConfiguration);
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
@@ -695,6 +720,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =
 		new ConcurrentHashMap<>();
+	private Configuration _checkstyleConfiguration;
 	private boolean _enabled = true;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;

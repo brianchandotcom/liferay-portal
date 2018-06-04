@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.util.CheckType;
@@ -28,8 +29,11 @@ import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.xml.sax.InputSource;
@@ -40,6 +44,63 @@ import org.xml.sax.InputSource;
 public class CheckstyleUtil {
 
 	public static final int BATCH_SIZE = 1000;
+
+	public static Map<String, String> getAttributesMap(
+			String checkName, Configuration configuration)
+		throws CheckstyleException {
+
+		if (Validator.isNull(checkName) || (configuration == null)) {
+			return Collections.emptyMap();
+		}
+
+		Configuration[] checkConfigurations = _getCheckConfigurations(
+			configuration);
+
+		if (checkConfigurations == null) {
+			return Collections.emptyMap();
+		}
+
+		for (Configuration checkConfiguration : checkConfigurations) {
+			if (!(checkConfiguration instanceof DefaultConfiguration)) {
+				continue;
+			}
+
+			String simpleName = SourceFormatterUtil.getSimpleName(
+				checkConfiguration.getName());
+
+			if (!Objects.equals(simpleName, checkName)) {
+				continue;
+			}
+
+			DefaultConfiguration defaultConfiguration =
+				(DefaultConfiguration)checkConfiguration;
+
+			String[] attributeNames = defaultConfiguration.getAttributeNames();
+
+			Map<String, String> attributesMap = new HashMap<>();
+
+			for (String attributeName : attributeNames) {
+				String attributeValue = defaultConfiguration.getAttribute(
+					attributeName);
+
+				attributesMap.put(attributeName, attributeValue);
+			}
+
+			return attributesMap;
+		}
+
+		return Collections.emptyMap();
+	}
+
+	public static String getAttributeValue(
+			String checkName, String attributeName, Configuration configuration)
+		throws CheckstyleException {
+
+		Map<String, String> attributesMap = getAttributesMap(
+			checkName, configuration);
+
+		return GetterUtil.getString(attributesMap.get(attributeName));
+	}
 
 	public static List<String> getCheckNames(Configuration configuration) {
 		List<String> checkNames = new ArrayList<>();

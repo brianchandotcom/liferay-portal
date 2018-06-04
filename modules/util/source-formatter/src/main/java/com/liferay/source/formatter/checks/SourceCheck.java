@@ -17,6 +17,8 @@ package com.liferay.source.formatter.checks;
 import com.liferay.source.formatter.SourceFormatterExcludes;
 import com.liferay.source.formatter.SourceFormatterMessage;
 
+import com.puppycrawl.tools.checkstyle.api.Configuration;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -41,6 +43,9 @@ public interface SourceCheck {
 	public void setAllFileNames(List<String> allFileNames);
 
 	public void setBaseDirName(String baseDirName);
+
+	public void setCheckstyleConfiguration(
+		Configuration checkstyleConfiguration);
 
 	public void setEnabled(boolean enabled);
 

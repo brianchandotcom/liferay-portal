@@ -90,6 +90,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	@Override
+	protected void preFormat() throws Exception {
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
+		_checkstyleLogger = new CheckstyleLogger(
+			new UnsyncByteArrayOutputStream(), true,
+			sourceFormatterArgs.getBaseDirName());
+		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
+			"checkstyle.xml", getPropertiesMap(), sourceFormatterArgs);
+
+		setCheckstyleConfiguration(_checkstyleConfiguration);
+	}
+
 	private String[] _getPluginExcludes(String pluginDirectoryName) {
 		return new String[] {
 			pluginDirectoryName + "**/model/*Clp.java",
@@ -201,24 +214,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		if (_configuration == null) {
-			SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
-
-			_checkstyleLogger = new CheckstyleLogger(
-				new UnsyncByteArrayOutputStream(), true,
-				sourceFormatterArgs.getBaseDirName());
-			_configuration = CheckstyleUtil.getConfiguration(
-				"checkstyle.xml", getPropertiesMap(), sourceFormatterArgs);
-		}
-
 		_sourceFormatterMessages.addAll(
-			processCheckstyle(_configuration, _checkstyleLogger, files));
+			processCheckstyle(
+				_checkstyleConfiguration, _checkstyleLogger, files));
 	}
 
 	private static final String[] _INCLUDES = {"**/*.java"};
 
+	private Configuration _checkstyleConfiguration;
 	private CheckstyleLogger _checkstyleLogger;
-	private Configuration _configuration;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new TreeSet<>();
 	private final List<File> _ungeneratedFiles = new ArrayList<>();

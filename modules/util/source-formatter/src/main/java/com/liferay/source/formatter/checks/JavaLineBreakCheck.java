@@ -18,6 +18,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,6 +27,7 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -673,7 +676,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 	}
 
 	private String _fixLineStartingWithCloseParenthesis(
-		String content, String fileName) {
+			String content, String fileName)
+		throws Exception {
 
 		Matcher matcher = _lineStartingWithCloseParenthesisPattern.matcher(
 			content);
@@ -706,7 +710,8 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 					getLine(content, getLineNumber(content, y)));
 
 				if (trimmedLine.startsWith(").") ||
-					trimmedLine.startsWith("@")) {
+					trimmedLine.startsWith("@") ||
+					_hasAllowedChain(trimmedLine)) {
 
 					break;
 				}
@@ -857,6 +862,39 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				return x;
 			}
 		}
+	}
+
+	private boolean _hasAllowedChain(String line) throws Exception {
+		Map<String, String> checkstyleAttributesMap =
+			getCheckstyleAttributesMap("ChainingCheck");
+
+		String allowedClassNames = GetterUtil.getString(
+			checkstyleAttributesMap.get("allowedClassNames"));
+		String allowedVariableTypeNames = GetterUtil.getString(
+			checkstyleAttributesMap.get("allowedVariableTypeNames"));
+
+		String[] values = ArrayUtil.append(
+			StringUtil.split(allowedClassNames),
+			StringUtil.split(allowedVariableTypeNames));
+
+		for (String value : values) {
+			if (line.matches(".*" + value + "\\..*")) {
+				return true;
+			}
+		}
+
+		String allowedMethodNames = GetterUtil.getString(
+			checkstyleAttributesMap.get("allowedMethodNames"));
+
+		values = StringUtil.split(allowedMethodNames);
+
+		for (String value : values) {
+			if (line.matches(".*" + value + "\\(.*")) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final Pattern _arrayPattern = Pattern.compile(

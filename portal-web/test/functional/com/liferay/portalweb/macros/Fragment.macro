@@ -93,6 +93,8 @@
 			<return name="fileName" />
 		</execute>
 
+		<var name="fileName" value="${fileName}" />
+
 		<var method="RegexUtil#replace('${fileName}', '\[(.*)\]', '1')" name="fileName" />
 
 		<execute class="org.apache.commons.io.FilenameUtils" method="getName">

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.initializer.customer.portal.internal.osgi.commands;
 
-import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalForecastsInitializer;
 import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalLayoutsInitializer;
+import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalSampleForecastsInitializer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -40,30 +40,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.command.function=initCustomerPortalForecasts",
 		"osgi.command.function=initCustomerPortalLayouts",
+		"osgi.command.function=initCustomerPortalSampleForecasts",
 		"osgi.command.scope=commerce"
 	},
 	service = CustomerPortalOSGiCommands.class
 )
 public class CustomerPortalOSGiCommands {
-
-	public void initCustomerPortalForecasts(final long groupId)
-		throws Throwable {
-
-		TransactionInvokerUtil.invoke(
-			_transactionConfig,
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					_customerPortalForecastsInitializer.initialize(groupId);
-
-					return null;
-				}
-
-			});
-	}
 
 	public void initCustomerPortalLayouts(final long groupId) throws Throwable {
 		TransactionInvokerUtil.invoke(
@@ -76,6 +59,24 @@ public class CustomerPortalOSGiCommands {
 
 					_customerPortalLayoutsInitializer.initialize(
 						serviceContext);
+
+					return null;
+				}
+
+			});
+	}
+
+	public void initCustomerPortalSampleForecasts(final long groupId)
+		throws Throwable {
+
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					_customerPortalSampleForecastsInitializer.initialize(
+						groupId);
 
 					return null;
 				}
@@ -117,11 +118,11 @@ public class CustomerPortalOSGiCommands {
 	}
 
 	@Reference
-	private CustomerPortalForecastsInitializer
-		_customerPortalForecastsInitializer;
+	private CustomerPortalLayoutsInitializer _customerPortalLayoutsInitializer;
 
 	@Reference
-	private CustomerPortalLayoutsInitializer _customerPortalLayoutsInitializer;
+	private CustomerPortalSampleForecastsInitializer
+		_customerPortalSampleForecastsInitializer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

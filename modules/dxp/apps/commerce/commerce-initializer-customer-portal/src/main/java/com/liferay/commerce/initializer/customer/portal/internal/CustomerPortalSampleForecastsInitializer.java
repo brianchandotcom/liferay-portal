@@ -57,8 +57,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(service = CustomerPortalForecastsInitializer.class)
-public class CustomerPortalForecastsInitializer {
+@Component(service = CustomerPortalSampleForecastsInitializer.class)
+public class CustomerPortalSampleForecastsInitializer {
 
 	public void initialize(long groupId) throws Exception {
 		Group group = _groupLocalService.getGroup(groupId);
@@ -232,7 +232,7 @@ public class CustomerPortalForecastsInitializer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomerPortalForecastsInitializer.class);
+		CustomerPortalSampleForecastsInitializer.class);
 
 	private BundleContext _bundleContext;
 

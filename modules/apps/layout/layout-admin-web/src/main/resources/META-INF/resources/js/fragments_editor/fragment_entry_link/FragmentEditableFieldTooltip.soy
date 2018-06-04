@@ -5,6 +5,7 @@
  */
 {template .render}
 	{@param buttons: list<[id: string, label: string]>}
+	{@param? label: string}
 	{@param? _handleButtonClick: any}
 
 	<div
@@ -15,16 +16,20 @@
 		<div class="arrow"></div>
 		<div class="tooltip-inner">
 			<div class="lfr-editable-field-tooltip__btn-group">
-				{foreach $button in $buttons}
-					<button
-						class="btn btn-outline-light"
-						data-onclick="{$_handleButtonClick}"
-						data-tooltip-button-id="{$button.id}"
-						type="button"
-					>
-						{$button.label}
-					</button>
-				{/foreach}
+				{if $label}
+					{$label}
+				{else}
+					{foreach $button in $buttons}
+						<button
+							class="btn btn-outline-light"
+							data-onclick="{$_handleButtonClick}"
+							data-tooltip-button-id="{$button.id}"
+							type="button"
+						>
+							{$button.label}
+						</button>
+					{/foreach}
+				{/if}
 			</div>
 		</div>
 	</div>

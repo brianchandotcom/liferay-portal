@@ -57,8 +57,7 @@ public class CustomerPortalSampleForecastsBuilder {
 		Path outputDirPath = Paths.get(outputDirName);
 
 		String productsJSON = _read(
-			"com/liferay/commerce/initializer/customer/portal/internal" +
-				"/dependencies/products.json");
+			CustomerPortalGroupInitializer.DEPENDENCY_PATH + "products.json");
 
 		JSONArray productsJSONArray = new JSONArray(productsJSON);
 

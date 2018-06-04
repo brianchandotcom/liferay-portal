@@ -117,7 +117,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 				var deleteFileEntryIds = form.querySelector('#<portlet:namespace />deleteFileEntryIds');
 
 				if (deleteFileEntryIds) {
-					deleteFileEntryIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+					deleteFileEntryIds.setAttribute('value', Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 				}
 
 				submitForm(form);

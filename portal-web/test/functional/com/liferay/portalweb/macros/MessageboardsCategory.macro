@@ -359,17 +359,17 @@
 	<command name="viewMySubscriptionsPG">
 		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_MY_SUBSCRIPTIONS" value1="My Subscriptions" />
 
-		<var method="StringUtil#upperCase('${parentcategory1}')" name="parentcategory1" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_1" value1="${parentcategory1}">
+			<var name="key_parentcategory1" value="${parentcategory1}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_1" value1="${parentcategory1}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_2" value1="${parentcategory2}">
+			<var name="key_parentcategory2" value="${parentcategory2}" />
+		</execute>
 
-		<var method="StringUtil#upperCase('${parentcategory2}')" name="parentcategory2" />
-
-		<execute function="AssertTextEquals" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_2" value1="${parentcategory2}" />
-
-		<var method="StringUtil#upperCase('${subscribedThread}')" name="subscribedThread" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_3" value1="${subscribedThread}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_3" value1="${subscribedThread}">
+			<var name="key_subscribedThread" value="${subscribedThread}" />
+		</execute>
 	</command>
 
 	<command name="viewNoCP">

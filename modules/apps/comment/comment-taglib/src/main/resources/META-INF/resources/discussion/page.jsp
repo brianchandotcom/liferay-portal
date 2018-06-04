@@ -277,12 +277,10 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				window,
 				'<%= randomNamespace %>hideEditor',
 				function(editorName, formId) {
-					var editorId = '<%= namespace %>' + editorName;
-					var editor = window[editorId];
+					var editor = window['<%= namespace %>' + editorName];
 
 					if (editor) {
-						editor.dispose();
-						delete window[editorId];
+						editor.destroy();
 					}
 
 					<%= randomNamespace %>hideEl(formId);
@@ -500,40 +498,39 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				window,
 				'<%= randomNamespace %>showEditor',
 				function(formId, options) {
-					if (window['<%= namespace %>' + options.name]) {
-						return;
-					}
+					if (!window['<%= namespace %>' + options.name]) {
 
-					<%
-					String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
+						<%
+						String editorURL = GetterUtil.getString(request.getAttribute("liferay-comment:discussion:editorURL"));
 
-					editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
-					%>
+						editorURL = HttpUtil.addParameter(editorURL, "namespace", namespace);
+						%>
 
-					$.ajax(
-						'<%= editorURL %>',
-						{
-							data: Liferay.Util.ns('<%= namespace %>', options),
-							error: function() {
-								<%= randomNamespace %>showStatusMessage(
-									{
-										id: <%= randomNamespace %>,
-										message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-										type: 'danger'
-									}
-								);
-							},
-							success: function(data) {
-								var editorWrapper = $('#' + formId + ' .editor-wrapper');
+						$.ajax(
+							'<%= editorURL %>',
+							{
+								data: Liferay.Util.ns('<%= namespace %>', options),
+								error: function() {
+									<%= randomNamespace %>showStatusMessage(
+										{
+											id: <%= randomNamespace %>,
+											message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
+											type: 'danger'
+										}
+									);
+								},
+								success: function(data) {
+									var editorWrapper = $('#' + formId + ' .editor-wrapper');
 
-								editorWrapper.html(data);
+									editorWrapper.html(data);
 
-								Liferay.Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), options.contents === '');
+									Liferay.Util.toggleDisabled('#' + options.name.replace('Body', 'Button'), options.contents === '');
 
-								<%= randomNamespace %>showEl(formId);
+									<%= randomNamespace %>showEl(formId);
+								}
 							}
-						}
-					);
+						);
+					}
 				}
 			);
 
@@ -549,10 +546,12 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 							placeholder: 'type-your-comment-here'
 						}
 					);
+
 					<%= randomNamespace %>hideEditor(
 						'<%= randomNamespace %>' + 'editReplyBody' + index,
 						'<%= namespace + randomNamespace %>' + 'editForm' + index
 					);
+
 					<%= randomNamespace %>showEl('<%= namespace + randomNamespace %>' + 'discussionMessage' + index);
 				}
 			);
@@ -569,7 +568,9 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				'<%= randomNamespace %>showEditReplyEditor',
 				function(index) {
 					var discussionId = '<%= namespace + randomNamespace %>' + 'discussionMessage' + index;
+
 					var contents = $('#' + discussionId).html();
+
 					<%= randomNamespace %>showEditor(
 						'<%= namespace + randomNamespace %>' + 'editForm' + index,
 						{
@@ -578,10 +579,12 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 							onChangeMethod: '<%= randomNamespace %>' + index + 'EditOnChange'
 						}
 					);
+
 					<%= randomNamespace %>hideEditor(
 						'<%= randomNamespace %>' + 'postReplyBody' + index,
 						'<%= namespace + randomNamespace %>' + 'postReplyForm' + index
 					);
+
 					<%= randomNamespace %>hideEl(discussionId);
 				}
 			);

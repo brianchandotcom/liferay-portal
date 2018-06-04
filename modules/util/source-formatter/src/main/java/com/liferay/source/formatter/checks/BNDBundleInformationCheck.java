@@ -87,8 +87,7 @@ public class BNDBundleInformationCheck extends BaseFileCheck {
 				"bnd_bundle_information.markdown");
 		}
 
-		if (moduleName.endsWith("-import") ||
-			moduleName.contains("-import-") ||
+		if (moduleName.endsWith("-import") || moduleName.contains("-import-") ||
 			moduleName.contains("-private-")) {
 
 			return;

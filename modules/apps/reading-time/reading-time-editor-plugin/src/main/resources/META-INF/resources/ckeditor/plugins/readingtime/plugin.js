@@ -11,16 +11,22 @@
 						editor.on(
 							'change',
 							A.debounce(function() {
+								const formData = new FormData();
+
+								formData.append(
+									Liferay.Util.ns(NAMESPACE, 'content'),
+									editor.getData()
+								);
+
+								formData.append(
+									Liferay.Util.ns(NAMESPACE, 'contentType'),
+									'text/html'
+								);
+
 								fetch(
 									editor.config.readingTime.url,
 									{
-										body: new URLSearchParams(Liferay.Util.ns(
-											NAMESPACE,
-											{
-												content: editor.getData(),
-												contentType: 'text/html'
-											}
-										)),
+										body: formData,
 										credentials: 'same-origin',
 										method: 'POST'
 									}

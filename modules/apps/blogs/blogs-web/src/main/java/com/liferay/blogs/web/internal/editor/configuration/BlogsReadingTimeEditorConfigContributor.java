@@ -12,13 +12,18 @@
  * details.
  */
 
-package com.liferay.blogs.reading.time.internal.editor.configuration;
+package com.liferay.blogs.web.internal.editor.configuration;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -48,6 +54,23 @@ public class BlogsReadingTimeEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		try {
+			BlogsPortletInstanceConfiguration
+				blogsPortletInstanceConfiguration =
+					portletDisplay.getPortletInstanceConfiguration(
+						BlogsPortletInstanceConfiguration.class);
+
+			if (!blogsPortletInstanceConfiguration.enableReadingTime()) {
+				return;
+			}
+		}
+		catch (ConfigurationException ce) {
+			_log.error(
+				"Unable to get blogs portlet instance configuration", ce);
+		}
+
 		String extraPlugins = jsonObject.getString("extraPlugins");
 
 		if (Validator.isNotNull(extraPlugins)) {
@@ -69,6 +92,16 @@ public class BlogsReadingTimeEditorConfigContributor
 		if (readingTimeJSONObject != null) {
 			readingTimeJSONObject.put("elementId", namespace + "readingTime");
 		}
+
+		_readingTimeConfigContributor.populateConfigJSONObject(
+			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+			requestBackedPortletURLFactory);
 	}
+
+	@Reference(target = "(editor.config.key=reading-time-editor-config-key)")
+	private EditorConfigContributor _readingTimeConfigContributor;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsReadingTimeEditorConfigContributor.class);
 
 }

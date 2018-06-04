@@ -72,9 +72,10 @@ public class FormTag extends BaseFormTag {
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
-		request.setAttribute("aui:form:validatorTagsMap", _validatorTagsMap);
 		request.setAttribute(
 			"LIFERAY_SHARED_aui:form:checkboxNames", _checkboxNames);
+		request.setAttribute(
+			"LIFERAY_SHARED_aui:form:validatorTagsMap", _validatorTagsMap);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

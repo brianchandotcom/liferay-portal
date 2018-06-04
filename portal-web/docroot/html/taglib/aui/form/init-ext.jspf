@@ -22,5 +22,5 @@ if (themeDisplay.isAddSessionIdToURL()) {
 }
 
 List<String> checkboxNames = (List<String>)request.getAttribute("LIFERAY_SHARED_aui:form:checkboxNames");
-Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("aui:form:validatorTagsMap");
+Map<String, List<ValidatorTag>> validatorTagsMap = (Map<String, List<ValidatorTag>>)request.getAttribute("LIFERAY_SHARED_aui:form:validatorTagsMap");
 %>

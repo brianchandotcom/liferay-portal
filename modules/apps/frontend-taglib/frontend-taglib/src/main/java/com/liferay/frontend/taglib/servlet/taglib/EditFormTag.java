@@ -173,9 +173,9 @@ public class EditFormTag extends IncludeTag {
 			"liferay-frontend:edit-form:validateOnBlur",
 			String.valueOf(_validateOnBlur));
 		request.setAttribute(
-			"liferay-frontend:edit-form:validatorTagsMap", _validatorTagsMap);
-		request.setAttribute(
 			"LIFERAY_SHARED_aui:form:checkboxNames", _checkboxNames);
+		request.setAttribute(
+			"LIFERAY_SHARED_aui:form:validatorTagsMap", _validatorTagsMap);
 	}
 
 	private String _getAction(HttpServletRequest request) {

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>oAuth2Features</name>
+		<value>token_introspection</value>
+	</preference>
+	<preference>
+		<name>oAuth2Grants</name>
+		<value></value>
+	</preference>
+</portlet-preferences>

@@ -17,7 +17,6 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryDisplayDateException;
 import com.liferay.commerce.product.exception.CPAttachmentFileEntryExpirationDateException;
-import com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryLocalServiceBaseImpl;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -96,11 +97,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				CPAttachmentFileEntryExpirationDateException.class);
 		}
 
-		validate(fileEntryId);
+		FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 		if (Validator.isNull(titleMap.get(locale))) {
-			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
-
 			titleMap.put(locale, fileEntry.getFileName());
 		}
 
@@ -116,7 +115,14 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setUserName(user.getFullName());
 		cpAttachmentFileEntry.setClassNameId(classNameId);
 		cpAttachmentFileEntry.setClassPK(classPK);
+
+		fileEntryId = _getFileEntryId(
+			fileEntry, user.getUserId(), groupId,
+			cpAttachmentFileEntry.getClassName(),
+			cpAttachmentFileEntry.getClassPK());
+
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
+
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
 
@@ -346,15 +352,19 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				CPAttachmentFileEntryExpirationDateException.class);
 		}
 
-		validate(fileEntryId);
+		FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 
 		if (Validator.isNull(titleMap.get(locale))) {
-			FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
-
 			titleMap.put(locale, fileEntry.getFileName());
 		}
 
+		fileEntryId = _getFileEntryId(
+			fileEntry, user.getUserId(), cpAttachmentFileEntry.getGroupId(),
+			cpAttachmentFileEntry.getClassName(),
+			cpAttachmentFileEntry.getClassPK());
+
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
+
 		cpAttachmentFileEntry.setDisplayDate(displayDate);
 		cpAttachmentFileEntry.setExpirationDate(expirationDate);
 
@@ -505,10 +515,32 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry, serviceContext, workflowContext);
 	}
 
-	protected void validate(long fileEntryId) throws PortalException {
-		if (fileEntryId <= 0) {
-			throw new CPAttachmentFileEntryFileEntryIdException();
+	private long _getFileEntryId(
+			FileEntry fileEntry, long userId, long groupId, String className,
+			long classPK)
+		throws PortalException {
+
+		boolean tempFile = fileEntry.isRepositoryCapabilityProvided(
+			TemporaryFileEntriesCapability.class);
+
+		if (!tempFile) {
+			return fileEntry.getFileEntryId();
 		}
+
+		Folder folder = cpAttachmentFileEntryLocalService.getAttachmentsFolder(
+			userId, groupId, className, classPK);
+
+		String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
+			groupId, folder.getFolderId(), fileEntry.getFileName());
+
+		FileEntry newFileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+			groupId, userId, className, classPK, CPConstants.SERVICE_NAME,
+			folder.getFolderId(), fileEntry.getContentStream(), uniqueFileName,
+			fileEntry.getMimeType(), true);
+
+		TempFileEntryUtil.deleteTempFileEntry(fileEntry.getFileEntryId());
+
+		return newFileEntry.getFileEntryId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
@@ -9,4 +11,12 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:user-associated-data:user-associated-data-api")
 	compileOnly project(":core:petra:petra-string")
+}
+
+mergeLang {
+	setting("../bookmarks-web/src/main/resources/content") {
+		transformKey "javax.portlet.title.com_liferay_bookmarks_web_portlet_BookmarksPortlet", "application.name.com.liferay.bookmarks.uad"
+	}
+
+	sourceDirs = ["../bookmarks-web/src/main/resources/content"]
 }

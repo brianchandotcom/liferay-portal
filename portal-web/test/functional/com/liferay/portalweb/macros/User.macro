@@ -721,7 +721,7 @@
 
 		<execute macro="UserNavigator#gotoRoles" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_SELECT_LINK" value1="Select" />
+		<execute function="AssertClick#assertTextClickCaseInsensitive" locator1="UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_SELECT_LINK" value1="Select" />
 
 		<execute function="Pause" locator1="5000" />
 

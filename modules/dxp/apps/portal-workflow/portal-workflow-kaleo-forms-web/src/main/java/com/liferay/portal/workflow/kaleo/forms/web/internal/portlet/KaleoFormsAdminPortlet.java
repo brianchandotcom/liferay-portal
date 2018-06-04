@@ -1061,9 +1061,6 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 			boolean majorVersion = ParamUtil.getBoolean(
 				serviceContext, "majorVersion");
 
-			ddmFormValues = _ddmFormValuesMerger.merge(
-				ddmFormValues, ddlRecord.getDDMFormValues());
-
 			ddlRecord = _ddlRecordLocalService.updateRecord(
 				serviceContext.getUserId(), ddlRecordId, majorVersion,
 				DDLRecordConstants.DISPLAY_INDEX_DEFAULT, ddmFormValues,

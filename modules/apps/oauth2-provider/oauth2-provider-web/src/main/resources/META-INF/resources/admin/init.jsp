@@ -32,12 +32,15 @@ page import="com.liferay.oauth2.provider.exception.OAuth2ApplicationRedirectURIM
 page import="com.liferay.oauth2.provider.exception.OAuth2ApplicationRedirectURIPathException" %><%@
 page import="com.liferay.oauth2.provider.exception.OAuth2ApplicationRedirectURISchemeException" %><%@
 page import="com.liferay.oauth2.provider.model.OAuth2ApplicationScopeAliases" %><%@
+page import="com.liferay.oauth2.provider.model.OAuth2Authorization" %><%@
 page import="com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalServiceUtil" %><%@
+page import="com.liferay.oauth2.provider.service.OAuth2AuthorizationServiceUtil" %><%@
 page import="com.liferay.oauth2.provider.web.internal.AssignableScopes" %><%@
 page import="com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderWebKeys" %><%@
 page import="com.liferay.oauth2.provider.web.internal.display.context.AssignScopesDisplayContext" %><%@
 page import="com.liferay.oauth2.provider.web.internal.display.context.OAuth2AdminPortletDisplayContext" %><%@
 page import="com.liferay.oauth2.provider.web.internal.display.context.OAuth2ApplicationsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.oauth2.provider.web.internal.display.context.OAuth2AuthorizationsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
@@ -47,6 +50,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Collections" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.HashSet" %>
 

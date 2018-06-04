@@ -549,6 +549,15 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceOrder> getCommerceOrdersByGroupId(
+			long groupId, int start, int end,
+			OrderByComparator<CommerceOrder> orderByComparator) {
+
+		return commerceOrderPersistence.findByGroupId(
+				groupId, start, end, orderByComparator);
+	}
+
+	@Override
 	public List<CommerceOrder> getCommerceOrdersByBillingAddress(
 		long billingAddressId) {
 
@@ -567,6 +576,11 @@ public class CommerceOrderLocalServiceImpl
 	@Override
 	public int getCommerceOrdersCount(long groupId, long orderUserId) {
 		return commerceOrderPersistence.countByG_O(groupId, orderUserId);
+	}
+
+	@Override
+	public int getCommerceOrdersCountByGroupId(long groupId) {
+		return commerceOrderPersistence.countByGroupId(groupId);
 	}
 
 	@Override

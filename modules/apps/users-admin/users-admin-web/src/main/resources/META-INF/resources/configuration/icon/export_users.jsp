@@ -24,8 +24,13 @@ int status = GetterUtil.getInteger(request.getAttribute(UsersAdminWebKeys.STATUS
 	<liferay-portlet:param name="status" value="<%= String.valueOf(status) %>" />
 </liferay-portlet:resourceURL>
 
+<%
+exportURL = exportURL + "&compress=0&etag=0&strip=0";
+String exportURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(request, "csv-warning-message") + "')) {submitForm(document.hrefFm, '"+ exportURL +"');}";
+%>
+
 <liferay-ui:icon
 	message="export-users"
 	method="get"
-	url='<%= exportURL + "&compress=0&etag=0&strip=0" %>'
+	url='<%= exportURLString %>'
 />

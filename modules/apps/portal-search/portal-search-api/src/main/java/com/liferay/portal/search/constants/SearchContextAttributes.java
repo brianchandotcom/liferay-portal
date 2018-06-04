@@ -12,22 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.facet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portal.search.constants;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface Facet extends com.liferay.portal.kernel.search.facet.Facet {
+public class SearchContextAttributes {
 
-	public String getAggregationName();
-
-	public String[] getSelections();
-
-	public void select(String... selections);
-
-	public void setAggregationName(String aggregationName);
+	public static final String ATTRIBUTE_KEY_BASIC_FACET_SELECTION =
+		"search.basic.facet.selection";
 
 }

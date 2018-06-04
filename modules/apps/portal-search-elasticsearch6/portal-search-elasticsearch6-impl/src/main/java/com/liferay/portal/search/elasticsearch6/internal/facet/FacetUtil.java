@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.search.facet;
+package com.liferay.portal.search.elasticsearch6.internal.facet;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.search.facet.Facet;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface Facet extends com.liferay.portal.kernel.search.facet.Facet {
+public class FacetUtil {
 
-	public String getAggregationName();
+	public static String getAggregationName(Facet facet) {
+		if (facet instanceof com.liferay.portal.search.facet.Facet) {
+			return ((com.liferay.portal.search.facet.Facet)facet).
+				getAggregationName();
+		}
 
-	public String[] getSelections();
-
-	public void select(String... selections);
-
-	public void setAggregationName(String aggregationName);
+		return facet.getFieldName();
+	}
 
 }

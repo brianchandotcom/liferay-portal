@@ -14,13 +14,11 @@
 
 package com.liferay.portal.search.web.internal.search.request;
 
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
@@ -128,11 +126,12 @@ public class SearchSettingsImpl implements SearchSettings {
 	}
 
 	protected String getAggregationName(Facet facet) {
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+		if (facet instanceof com.liferay.portal.search.facet.Facet) {
+			return ((com.liferay.portal.search.facet.Facet)facet).
+				getAggregationName();
+		}
 
-		JSONObject data = facetConfiguration.getData();
-
-		return data.getString("aggregationName", facet.getFieldName());
+		return facet.getFieldName();
 	}
 
 	private String _keywordsParameterName;

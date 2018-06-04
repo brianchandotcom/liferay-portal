@@ -201,6 +201,8 @@ AUI.add(
 						instance._submitFormListener = A.Do.before(instance._addEntries, form, 'submit', instance);
 
 						instance.get('boundingBox').on('keypress', instance._onKeyPress, instance);
+
+						instance.get('boundingBox').after('paste', instance._onPaste, instance);
 					},
 
 					_checkDuplicateTag: function(object) {
@@ -319,6 +321,24 @@ AUI.add(
 							else if (MAP_INVALID_CHARACTERS[String.fromCharCode(charCode)]) {
 								event.halt();
 							}
+						}
+					},
+
+					_onPaste: function(event) {
+						var instance = this;
+
+						var ev = event._event;
+
+						var pastedText = (ev.clipboardData || window.clipboardData).getData('text');
+
+						if (pastedText && pastedText.indexOf(',') !== -1) {
+							event.preventDefault();
+
+							var existingValue = instance.inputNode.val();
+
+							instance.inputNode.val(existingValue.substring(0, ev.target.selectionStart) + pastedText + existingValue.substring(ev.target.selectionEnd));
+
+							instance._addEntries();
 						}
 					},
 

@@ -205,6 +205,11 @@ class FragmentEditableField extends Component {
 		event.preventDefault();
 		event.stopPropagation();
 
+		if (this._tooltipLabel) {
+			this._showTooltip = false;
+			this._tooltipLabel = '';
+		}
+
 		if (getActiveEditableElement() !== this.refs.editable) {
 			if (!this.showMapping) {
 				this._showTooltip = false;
@@ -213,6 +218,32 @@ class FragmentEditableField extends Component {
 			else {
 				this._showTooltip = !this._showTooltip;
 			}
+		}
+	}
+
+	/**
+	 * Callback executed when cursor enters editable element
+	 * @private
+	 * @review
+	 */
+
+	_handleEditableMouseEnter() {
+		if (this.editableValues.mappedField) {
+			this._showTooltip = true;
+			this._tooltipLabel = this.editableValues.mappedField;
+		}
+	}
+
+	/**
+	 * Callback executed when cursor leaves editable element
+	 * @private
+	 * @review
+	 */
+
+	_handleEditableMouseLeave() {
+		if (this._tooltipLabel) {
+			this._showTooltip = false;
+			this._tooltipLabel = '';
 		}
 	}
 
@@ -444,7 +475,22 @@ FragmentEditableField.STATE = {
 					label: Config.string().required()
 				}
 			)
-		)
+		),
+
+	/**
+	 * Label shown inside editable's tooltip instead of action buttons
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	_tooltipLabel: Config
+		.internal()
+		.string()
+		.value('')
 };
 
 Soy.register(FragmentEditableField, templates);

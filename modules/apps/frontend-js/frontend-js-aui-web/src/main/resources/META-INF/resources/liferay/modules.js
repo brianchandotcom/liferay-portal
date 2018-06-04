@@ -431,15 +431,6 @@
 					},
 					'liferay-navigation': {
 						path: 'navigation.js',
-						plugins: {
-							'liferay-navigation-touch': {
-								condition: {
-									name: 'liferay-navigation-touch',
-									trigger: 'liferay-navigation',
-									ua: 'touch'
-								}
-							}
-						},
 						requires: [
 							'aui-component',
 							'event-mouseenter'
@@ -470,13 +461,6 @@
 							'event-tap',
 							'event-touch',
 							'liferay-navigation-interaction'
-						]
-					},
-					'liferay-navigation-touch': {
-						path: 'navigation_touch.js',
-						requires: [
-							'event-touch',
-							'liferay-navigation'
 						]
 					},
 					'liferay-node': {

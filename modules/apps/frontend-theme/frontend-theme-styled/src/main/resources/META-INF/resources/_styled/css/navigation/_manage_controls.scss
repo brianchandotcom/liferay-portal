@@ -41,25 +41,13 @@
 }
 
 .controls-hidden .modify-pages {
-	.lfr-nav-sortable > a > span {
-		padding-left: 0;
-	}
-
 	.drag-handle {
 		display: none;
 	}
 }
 
 .touch .modify-pages {
-	.lfr-nav-sortable > a > span {
-		padding-left: 28px;
-	}
-
 	@include md {
-		.lfr-nav-sortable > a > span {
-			padding-left: 0;
-		}
-
 		.drag-handle {
 			display: none;
 		}

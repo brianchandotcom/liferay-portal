@@ -218,6 +218,7 @@
 /portal/saaj-impl.jar
 /portal/scribe.jar
 /portal/serializer.jar
+/portal/sigar.jar
 /portal/simplecaptcha.jar
 /portal/slf4j-api.jar
 /portal/soap.jar

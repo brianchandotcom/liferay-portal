@@ -33,7 +33,7 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 
 <aui:model-context bean="<%= cpAttachmentFileEntry %>" model="<%= CPAttachmentFileEntry.class %>" />
 
-<liferay-ui:error exception="<%= CPAttachmentFileEntryFileEntryIdException.class %>" message="please-select-an-existing-file" />
+<liferay-ui:error exception="<%= NoSuchFileEntryException.class %>" message="please-select-an-existing-file" />
 
 <portlet:actionURL name="uploadTempCategoryAttachment" var="uploadCoverImageURL">
 	<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />

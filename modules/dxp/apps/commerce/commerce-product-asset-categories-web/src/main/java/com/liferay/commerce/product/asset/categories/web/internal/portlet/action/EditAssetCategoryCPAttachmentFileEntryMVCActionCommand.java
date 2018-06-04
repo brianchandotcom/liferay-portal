@@ -15,9 +15,9 @@
 package com.liferay.commerce.product.asset.categories.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.product.exception.CPAttachmentFileEntryFileEntryIdException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -80,7 +80,7 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof CPAttachmentFileEntryFileEntryIdException) {
+			if (e instanceof NoSuchFileEntryException) {
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 

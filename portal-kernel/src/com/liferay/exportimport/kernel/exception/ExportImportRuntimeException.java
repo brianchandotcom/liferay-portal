@@ -31,6 +31,10 @@ public class ExportImportRuntimeException extends NestableRuntimeException {
 		super(msg, cause);
 	}
 
+	public ExportImportRuntimeException(Throwable cause) {
+		super(cause);
+	}
+
 	public String getClassName() {
 		return _className;
 	}

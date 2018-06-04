@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
@@ -69,6 +70,7 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 import java.io.File;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -260,6 +262,14 @@ public class StagingImplTest {
 			journalPortletPath + StringPool.SLASH + _group.getGroupId() +
 				"/portlet-data.xml");
 
+		if (portletData == null) {
+			String changesetPortletPath = ExportImportPathUtil.getPortletPath(
+				portletDataContext, ChangesetPortletKeys.CHANGESET);
+
+			portletData = portletDataContext.getZipEntryAsString(
+				changesetPortletPath + "/0/portlet-data.xml");
+		}
+
 		Document document = SAXReaderUtil.read(portletData);
 
 		portletDataContext.setImportDataRootElement(document.getRootElement());
@@ -362,28 +372,17 @@ public class StagingImplTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		Map<String, String[]> parameters =
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap();
+		List<String> portletIds = new ArrayList<>();
 
-		parameters.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION +
-				StringPool.UNDERLINE + JournalPortletKeys.JOURNAL,
-			new String[] {String.valueOf(stageJournal)});
-		parameters.put(
-			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			new String[] {Boolean.FALSE.toString()});
-		parameters.put(
-			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-				JournalPortletKeys.JOURNAL,
-			new String[] {String.valueOf(stageJournal)});
-		parameters.put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.FALSE.toString()});
-		parameters.put(
-			PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE +
-				JournalPortletKeys.JOURNAL,
-			new String[] {String.valueOf(stageJournal)});
+		portletIds.add(JournalPortletKeys.JOURNAL);
+
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
+				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, false,
+				false, false, false, false, false, false, false, stageJournal,
+				false, portletIds, stageJournal, false, portletIds, false,
+				portletIds, ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE,
+				false, true, UserIdStrategy.CURRENT_USER_ID);
 
 		serviceContext.setAttribute(
 			StagingUtil.getStagedPortletId(JournalPortletKeys.JOURNAL),

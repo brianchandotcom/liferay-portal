@@ -18,7 +18,9 @@ import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -31,6 +33,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -95,23 +99,17 @@ public class CalendarStagingTestUtil {
 
 		Group stagingGroup = liveGroup.getStagingGroup();
 
-		Map<String, String[]> parameters =
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap();
+		List<String> portletIds = new ArrayList<>();
 
-		addStagingAttribute(parameters, PortletDataHandlerKeys.DELETIONS, true);
-		addStagingAttribute(
-			parameters, PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
-			false);
-		addStagingAttribute(
-			parameters,
-			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
-				CalendarPortletKeys.CALENDAR,
-			enableCalendarStaging);
-		addStagingAttribute(
-			parameters, PortletDataHandlerKeys.PORTLET_DATA_ALL, false);
-		addStagingAttribute(
-			parameters, PortletDataHandlerKeys.PORTLET_SETUP_ALL, false);
+		portletIds.add(CalendarPortletKeys.CALENDAR);
+
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
+				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true,
+				false, true, false, false, true, true, true, true, false, null,
+				true, false, enableCalendarStaging ? portletIds : null, false,
+				null, ExportImportDateUtil.RANGE_ALL, true, true,
+				UserIdStrategy.CURRENT_USER_ID);
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),

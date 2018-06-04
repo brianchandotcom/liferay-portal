@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -30,6 +31,7 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUti
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -219,7 +221,7 @@ public abstract class BasePortletExportImportTestCase
 
 		LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), layout, getPortletId(), "column-1",
-			new HashMap<String, String[]>());
+			new HashMap<>());
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
@@ -230,17 +232,6 @@ public abstract class BasePortletExportImportTestCase
 
 		portletPreferences.store();
 
-		Map<String, String[]> exportParameterMap = new LinkedHashMap<>();
-
-		exportParameterMap.put(
-			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE,
-			new String[] {Boolean.TRUE.toString()});
-		exportParameterMap.put(
-			"range",
-			new String[] {ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE});
-
-		Map<String, String[]> importParameterMap = new LinkedHashMap<>();
-
 		portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				layout, getPortletId());
@@ -248,8 +239,7 @@ public abstract class BasePortletExportImportTestCase
 		Date oldLastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			portletPreferences);
 
-		exportImportPortlet(
-			getPortletId(), exportParameterMap, importParameterMap);
+		publishPortlet(getPortletId());
 
 		portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
@@ -486,6 +476,34 @@ public abstract class BasePortletExportImportTestCase
 
 	protected boolean isVersioningEnabled() {
 		return false;
+	}
+
+	protected void publishPortlet(String portletId) throws Exception {
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildFullPublishParameterMap();
+
+		if (importedLayout == null) {
+			importedLayout = LayoutTestUtil.addLayout(importedGroup);
+		}
+
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildPublishPortletSettingsMap(
+					TestPropsValues.getUser(), layout.getGroupId(),
+					layout.getPlid(), importedLayout.getGroupId(),
+					importedLayout.getPlid(), portletId, parameterMap);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL,
+					settingsMap);
+
+		StagingUtil.publishPortlet(
+			TestPropsValues.getUserId(), exportImportConfiguration);
 	}
 
 	protected void testExportImportAvailableLocales(

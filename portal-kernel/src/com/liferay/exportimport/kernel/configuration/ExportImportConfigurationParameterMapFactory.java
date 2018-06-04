@@ -16,6 +16,7 @@ package com.liferay.exportimport.kernel.configuration;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -39,7 +40,9 @@ public interface ExportImportConfigurationParameterMapFactory {
 		Boolean ignoreLastPublishDate, Boolean layoutSetPrototypeLinkEnabled,
 		Boolean layoutSetSettings, Boolean logo, Boolean permissions,
 		Boolean portletConfiguration, Boolean portletConfigurationAll,
-		Boolean portletData, Boolean portletDataAll, Boolean portletSetupAll,
+		List<String> portletConfigurationPortletIds, Boolean portletData,
+		Boolean portletDataAll, List<String> portletDataPortletIds,
+		Boolean portletSetupAll, List<String> portletSetupPortletIds,
 		String range, Boolean themeReference, Boolean updateLastPublishDate,
 		String userIdStrategy);
 

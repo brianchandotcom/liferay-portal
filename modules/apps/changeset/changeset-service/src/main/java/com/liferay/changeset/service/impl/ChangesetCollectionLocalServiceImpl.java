@@ -51,6 +51,17 @@ public class ChangesetCollectionLocalServiceImpl
 	}
 
 	@Override
+	public ChangesetCollection deleteChangesetCollection(
+			long changesetCollectionId)
+		throws PortalException {
+
+		changesetEntryLocalService.deleteChangesetEntries(
+			changesetCollectionId);
+
+		return super.deleteChangesetCollection(changesetCollectionId);
+	}
+
+	@Override
 	public ChangesetCollection fetchChangesetCollection(
 		long groupId, String name) {
 

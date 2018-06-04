@@ -71,7 +71,9 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 		}
 	}
 
-	protected void addDefaultTitle(Map<Locale, String> titleMap) {
+	protected void addDefaultTitle(
+		ActionRequest actionRequest, Map<Locale, String> titleMap) {
+
 		Locale defaultLocale = LocaleUtil.getDefault();
 
 		if (Validator.isNull(titleMap.get(defaultLocale))) {
@@ -115,12 +117,14 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 			resourceBundle, "workflow-updated-successfully");
 	}
 
-	protected String getTitle(Map<Locale, String> titleMap) {
+	protected String getTitle(
+		ActionRequest actionRequest, Map<Locale, String> titleMap) {
+
 		if (titleMap == null) {
 			return null;
 		}
 
-		addDefaultTitle(titleMap);
+		addDefaultTitle(actionRequest, titleMap);
 
 		String value = StringPool.BLANK;
 

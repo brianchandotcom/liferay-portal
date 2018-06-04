@@ -3538,6 +3538,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Configuration configuration =
 			configurationContainer.detachedConfiguration(dependency);
 
+		configuration.setTransitive(false);
+
 		_configureConfigurationNoCache(configuration);
 
 		File file = CollectionUtils.single(configuration.resolve());

@@ -253,7 +253,6 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 		'click',
 		'.<portlet:namespace />import-fragment-entries-action-option > a',
 		function(event) {
-			debugger;
 			var data = event.delegateTarget.dataset;
 
 			event.preventDefault();

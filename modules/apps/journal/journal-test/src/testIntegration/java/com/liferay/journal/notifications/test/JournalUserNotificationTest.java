@@ -28,7 +28,6 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.notifications.test.BaseUserNotificationTestCase;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -36,7 +35,6 @@ import org.junit.runner.RunWith;
  * @author Roberto Díaz
  * @author Sergio González
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 

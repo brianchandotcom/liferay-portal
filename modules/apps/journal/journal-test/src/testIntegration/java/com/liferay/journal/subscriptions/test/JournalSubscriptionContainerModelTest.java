@@ -27,7 +27,6 @@ import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -35,7 +34,6 @@ import org.junit.runner.RunWith;
  * @author Zsolt Berentey
  * @author Roberto Díaz
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class JournalSubscriptionContainerModelTest
 	extends BaseSubscriptionContainerModelTestCase {

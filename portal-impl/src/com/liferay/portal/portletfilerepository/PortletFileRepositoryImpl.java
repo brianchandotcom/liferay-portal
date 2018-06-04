@@ -16,6 +16,7 @@ package com.liferay.portal.portletfilerepository;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
@@ -317,24 +318,35 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public void deletePortletFileEntry(long fileEntryId)
 		throws PortalException {
 
-		_run(
-			FileEntry.class,
-			() -> {
-				try {
-					LocalRepository localRepository =
-						RepositoryProviderUtil.getFileEntryLocalRepository(
-							fileEntryId);
+		try {
+			LocalRepository localRepository =
+				RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
 
-					localRepository.deleteFileEntry(fileEntryId);
-				}
-				catch (NoSuchFileEntryException nsfee) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(nsfee, nsfee);
-					}
-				}
+			FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-				return null;
-			});
+			if (_isAttachment(fileEntry)) {
+				_run(
+					FileEntry.class,
+					() -> {
+						localRepository.deleteFileEntry(fileEntryId);
+
+						return null;
+					});
+			}
+			else {
+				_run(
+					() -> {
+						localRepository.deleteFileEntry(fileEntryId);
+
+						return null;
+					});
+			}
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsfee, nsfee);
+			}
+		}
 	}
 
 	@Override
@@ -729,6 +741,20 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			RepositoryProviderUtil.getRepository(repositoryId);
 
 		return repository.search(searchContext);
+	}
+
+	private boolean _isAttachment(FileEntry fileEntry) {
+		if (!(fileEntry.getModel() instanceof DLFileEntry)) {
+			return false;
+		}
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		if (dlFileEntry.getClassNameId() == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private <T, E extends Throwable> T _run(

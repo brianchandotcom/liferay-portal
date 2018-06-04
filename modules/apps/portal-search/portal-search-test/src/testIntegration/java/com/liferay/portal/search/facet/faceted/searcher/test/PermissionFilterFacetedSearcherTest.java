@@ -98,13 +98,15 @@ public class PermissionFilterFacetedSearcherTest
 
 		User user1 = addUser(group);
 
+		ServiceContext serviceContext = createServiceContext(group, user1);
+
 		String title = RandomTestUtil.randomString();
 
-		addJournalArticle(user1, group, title, 0);
+		addArticle(title, user1, group, 0, serviceContext);
 
-		JournalFolder folder = addJournalFolder(user1, group);
+		JournalFolder folder = addFolder(user1, group, serviceContext);
 
-		addJournalArticle(user1, group, title, folder.getFolderId());
+		addArticle(title, user1, group, folder.getFolderId(), serviceContext);
 
 		User user2 = addUser(group);
 
@@ -125,11 +127,10 @@ public class PermissionFilterFacetedSearcherTest
 		assertFrequencies(facet.getFieldName(), searchContext, expected);
 	}
 
-	protected void addJournalArticle(
-			User user, Group group, String title, long folderId)
+	protected void addArticle(
+			String title, User user, Group group, long folderId,
+			ServiceContext serviceContext)
 		throws Exception {
-
-		ServiceContext serviceContext = createServiceContext(group, user);
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent();
 
@@ -141,10 +142,9 @@ public class PermissionFilterFacetedSearcherTest
 		_articles.add(article);
 	}
 
-	protected JournalFolder addJournalFolder(User user, Group group)
+	protected JournalFolder addFolder(
+			User user, Group group, ServiceContext serviceContext)
 		throws Exception {
-
-		ServiceContext serviceContext = createServiceContext(group, user);
 
 		JournalFolder folder = journalFolderLocalService.addFolder(
 			user.getUserId(), group.getGroupId(), 0,
@@ -160,9 +160,7 @@ public class PermissionFilterFacetedSearcherTest
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getCompanyId(), group.getGroupId(), user.getUserId());
-
-		serviceContext.setAddGuestPermissions(false);
+				group.getGroupId(), user.getUserId());
 
 		ModelPermissions modelPermissions = new ModelPermissions();
 
@@ -170,6 +168,9 @@ public class PermissionFilterFacetedSearcherTest
 			RoleConstants.OWNER, ActionKeys.VIEW);
 
 		serviceContext.setModelPermissions(modelPermissions);
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(false);
 
 		return serviceContext;
 	}

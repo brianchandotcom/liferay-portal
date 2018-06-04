@@ -131,7 +131,7 @@ else {
 					<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
 					<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
 
-					<div class="document-type-selector">
+					<div class="document-type-selector" id="<portlet:namespace />documentTypeSelector">
 						<liferay-ui:icon-menu
 							direction="down"
 							icon="../aui/file-alt"
@@ -201,7 +201,7 @@ else {
 					%>
 
 					<aui:script sandbox="<%= true %>">
-						$('#<portlet:namespace />groupSelector').next('.lfr-menu-list').on(
+						$('#<portlet:namespace/>documentTypeSelector .lfr-menu-list').on(
 							'click',
 							'li a',
 							function(event) {

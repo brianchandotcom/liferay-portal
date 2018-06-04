@@ -55,7 +55,7 @@ AUI.add(
 							);
 						}
 
-						new A.TogglerDelegate(
+						instance._togglerDelegate = new A.TogglerDelegate(
 							{
 								animated: true,
 								closeAllOnExpand: false,
@@ -145,6 +145,19 @@ AUI.add(
 
 						if (item.hasClass('active')) {
 							return;
+						}
+
+						var animating = instance._togglerDelegate.animating;
+
+						if (animating) {
+							instance._togglerDelegate.items.forEach(
+								function(item) {
+									if (item.get('animating')) {
+										item.set('animating', false);
+										item.set('expanded', !item.get('expanded'));
+									}
+								}
+							);
 						}
 
 						var oldItem = A.one('.' + CSS_PREFIX + ' .nav-tabs li.active');

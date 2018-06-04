@@ -17,10 +17,11 @@ package com.liferay.portal.search.web.internal.facet;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.facet.ScopeFacet;
+import com.liferay.portal.kernel.search.facet.ScopeFacetFactory;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.search.facet.site.SiteFacetFactory;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
 
@@ -72,7 +73,7 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getFacetClassName() {
-		return Field.GROUP_ID;
+		return ScopeFacet.class.getName();
 	}
 
 	@Override
@@ -119,10 +120,10 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	protected FacetFactory getFacetFactory() {
-		return siteFacetFactory;
+		return scopeFacetFactory;
 	}
 
 	@Reference
-	protected SiteFacetFactory siteFacetFactory;
+	protected ScopeFacetFactory scopeFacetFactory;
 
 }

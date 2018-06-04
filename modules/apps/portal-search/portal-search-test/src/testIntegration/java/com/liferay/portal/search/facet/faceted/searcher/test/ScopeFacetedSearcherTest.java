@@ -17,12 +17,17 @@ package com.liferay.portal.search.facet.faceted.searcher.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.ScopeFacetFactory;
+import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.facet.site.SiteFacetFactory;
 import com.liferay.portal.search.test.util.SearchMapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -61,12 +66,12 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		SearchContext searchContext = getSearchContext(keyword);
 
-		searchContext.setGroupIds(
-			new long[] {group1.getGroupId(), group2.getGroupId()});
-
-		Facet facet = _siteFacetFactory.newInstance(searchContext);
+		Facet facet = _scopeFacetFactory.newInstance(searchContext);
 
 		searchContext.addFacet(facet);
+
+		searchContext.setGroupIds(
+			new long[] {group1.getGroupId(), group2.getGroupId()});
 
 		search(searchContext);
 
@@ -96,9 +101,12 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		SearchContext searchContext = getSearchContext(keyword);
 
-		Facet facet = _siteFacetFactory.newInstance(searchContext);
+		Facet facet = _scopeFacetFactory.newInstance(searchContext);
 
 		searchContext.addFacet(facet);
+
+		searchContext.setAttribute("groupId", "0");
+		searchContext.setGroupIds(new long[] {RandomTestUtil.randomLong()});
 
 		Hits hits = search(searchContext);
 
@@ -133,11 +141,21 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		SearchContext searchContext = getSearchContext(keyword);
 
-		searchContext.setGroupIds(new long[] {group1.getGroupId()});
-
-		Facet facet = _siteFacetFactory.newInstance(searchContext);
+		Facet facet = _scopeFacetFactory.newInstance(searchContext);
 
 		searchContext.addFacet(facet);
+
+		searchContext.setAttribute(
+			"groupId", String.valueOf(group1.getGroupId()));
+
+		BooleanClause<?> booleanClause = new BooleanClauseImpl<>(
+			new TermQueryImpl(
+				Field.GROUP_ID, String.valueOf(group1.getGroupId())),
+			BooleanClauseOccur.MUST);
+
+		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
+
+		searchContext.setGroupIds(new long[] {group2.getGroupId()});
 
 		Hits hits = search(searchContext);
 
@@ -156,6 +174,6 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	}
 
 	@Inject
-	private static SiteFacetFactory _siteFacetFactory;
+	private static ScopeFacetFactory _scopeFacetFactory;
 
 }

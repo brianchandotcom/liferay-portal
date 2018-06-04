@@ -31,7 +31,7 @@ public class OptionForm {
 		return formBuilder.title(
 			__ -> "The option form"
 		).description(
-			__ -> "This form can be used to create a option"
+			__ -> "This form can be used to create an option"
 		).constructor(
 			OptionForm::new
 		).addRequiredString(

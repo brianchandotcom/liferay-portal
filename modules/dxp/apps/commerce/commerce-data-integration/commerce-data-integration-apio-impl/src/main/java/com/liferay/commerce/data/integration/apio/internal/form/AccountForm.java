@@ -30,7 +30,7 @@ public class AccountForm {
 		return formBuilder.title(
 			__ -> "The account creator form"
 		).description(
-			__ -> "This form can be used to create a account"
+			__ -> "This form can be used to create an account"
 		).constructor(
 			AccountForm::new
 		).addRequiredString(

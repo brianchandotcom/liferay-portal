@@ -33,7 +33,7 @@ public class UserCreatorForm {
 		return formBuilder.title(
 			__ -> "The person creator form"
 		).description(
-			__ -> "This form can be used to create a person"
+			__ -> "This form can be used to create an user"
 		).constructor(
 			UserCreatorForm::new
 		).addRequiredString(

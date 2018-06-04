@@ -70,11 +70,13 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 		excludesPathMatchers.addAll(
 			getPathMatchers(
-				"test.batch.class.names.excludes", _tckHomeDirectory));
+				getFirstPropertyValue("test.batch.class.names.excludes"),
+				_tckHomeDirectory));
 
 		includesPathMatchers.addAll(
 			getPathMatchers(
-				"test.batch.class.names.includes", _tckHomeDirectory));
+				getFirstPropertyValue("test.batch.class.names.includes"),
+				_tckHomeDirectory));
 
 		setTestClasses();
 

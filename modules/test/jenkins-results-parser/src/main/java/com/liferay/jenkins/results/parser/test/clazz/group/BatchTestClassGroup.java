@@ -138,6 +138,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected String getFirstMatchingPropertyName(
 		String basePropertyName, Properties properties, String testSuiteName) {
 
+		if (basePropertyName.contains("[") || basePropertyName.contains("]")) {
+			throw new RuntimeException(
+				"Invalid base property name " + basePropertyName);
+		}
+
 		Pattern pattern = Pattern.compile(
 			JenkinsResultsParserUtil.combine(
 				basePropertyName, "\\[(?<batchName>[^\\]]+)\\]",
@@ -173,6 +178,11 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected String getFirstPropertyValue(String basePropertyName) {
+		if (basePropertyName.contains("[") || basePropertyName.contains("]")) {
+			throw new RuntimeException(
+				"Invalid base property name " + basePropertyName);
+		}
+
 		List<String> propertyNames = new ArrayList<>();
 
 		if (testSuiteName != null) {
@@ -218,28 +228,22 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected List<PathMatcher> getPathMatchers(
-		String propertyName, File workingDirectory) {
-
-		String pluginNamesRelativeGlobs = getFirstPropertyValue(propertyName);
-
-		if ((pluginNamesRelativeGlobs == null) ||
-			pluginNamesRelativeGlobs.isEmpty()) {
-
-			return new ArrayList<>();
-		}
+		String relativeGlobs, File workingDirectory) {
 
 		List<PathMatcher> pathMatchers = new ArrayList<>();
 
-		for (String pluginNamesRelativeGlob :
-				pluginNamesRelativeGlobs.split(",")) {
+		if ((relativeGlobs == null) || relativeGlobs.isEmpty()) {
+			return pathMatchers;
+		}
 
+		for (String relativeGlob : relativeGlobs.split(",")) {
 			FileSystem fileSystem = FileSystems.getDefault();
 
 			pathMatchers.add(
 				fileSystem.getPathMatcher(
 					JenkinsResultsParserUtil.combine(
 						"glob:", workingDirectory.getAbsolutePath(), "/",
-						pluginNamesRelativeGlob)));
+						relativeGlob)));
 		}
 
 		return pathMatchers;

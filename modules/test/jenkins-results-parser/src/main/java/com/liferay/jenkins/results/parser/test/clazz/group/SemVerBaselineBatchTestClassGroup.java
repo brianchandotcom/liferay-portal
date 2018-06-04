@@ -54,14 +54,12 @@ public class SemVerBaselineBatchTestClassGroup extends BatchTestClassGroup {
 		try {
 			excludesPathMatchers.addAll(
 				getPathMatchers(
-					JenkinsResultsParserUtil.combine(
-						"modules.excludes[", batchName, "]"),
+					getFirstPropertyValue("modules.excludes"),
 					portalGitWorkingDirectory.getWorkingDirectory()));
 
 			includesPathMatchers.addAll(
 				getPathMatchers(
-					JenkinsResultsParserUtil.combine(
-						"modules.includes[", batchName, "]"),
+					getFirstPropertyValue("modules.includes"),
 					portalGitWorkingDirectory.getWorkingDirectory()));
 
 			setTestClasses();

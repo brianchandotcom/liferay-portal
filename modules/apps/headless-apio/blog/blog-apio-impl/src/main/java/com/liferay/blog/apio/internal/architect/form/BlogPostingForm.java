@@ -18,7 +18,6 @@ import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.apio.architect.function.throwable.ThrowableFunction;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -112,19 +111,19 @@ public class BlogPostingForm {
 	}
 
 	/**
-	 * Returns the blog posting's author ID if present. Returns the {@link
-	 * CurrentUser} ID otherwise.
+	 * Returns the blog posting's author ID if present. Returns the provided
+	 * default ID otherwise.
 	 *
-	 * @param  currentUser the current authenticated user
-	 * @return the blog posting's author ID, if present; the {@link CurrentUser}
-	 *         ID otherwise.
+	 * @param  defaultAuthorId the default author ID
+	 * @return the blog posting's author ID, if present; the provided default ID
+	 *         otherwise.
 	 * @review
 	 */
-	public long getAuthorId(CurrentUser currentUser) {
+	public long getAuthorId(long defaultAuthorId) {
 		return Optional.ofNullable(
 			_authorId
-		).orElseGet(
-			currentUser::getUserId
+		).orElse(
+			defaultAuthorId
 		);
 	}
 

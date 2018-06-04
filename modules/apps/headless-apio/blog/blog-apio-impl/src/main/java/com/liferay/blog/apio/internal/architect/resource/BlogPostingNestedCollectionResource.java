@@ -40,6 +40,8 @@ import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
@@ -149,15 +151,21 @@ public class BlogPostingNestedCollectionResource
 			CurrentUser currentUser)
 		throws PortalException {
 
+		long userId = blogPostingForm.getAuthorId(currentUser.getUserId());
+
+		ImageSelector imageSelector = blogPostingForm.getImageSelector(
+			_dlAppLocalService::getFileEntry);
+
+		ServiceContext serviceContext = blogPostingForm.getServiceContext(
+			groupId);
+
 		return _blogsEntryLocalService.addEntry(
-			blogPostingForm.getAuthorId(currentUser),
-			blogPostingForm.getHeadline(),
+			userId, blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(),
 			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
 			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
 			true, true, new String[0], blogPostingForm.getImageCaption(),
-			blogPostingForm.getImageSelector(_dlAppLocalService::getFileEntry),
-			null, blogPostingForm.getServiceContext(groupId));
+			imageSelector, null, serviceContext);
 	}
 
 	private List<String> _getBlogsEntryTags(BlogsEntry blogsEntry) {
@@ -184,17 +192,23 @@ public class BlogPostingNestedCollectionResource
 			CurrentUser currentUser)
 		throws PortalException {
 
+		long userId = blogPostingForm.getAuthorId(currentUser.getUserId());
+
+		ImageSelector imageSelector = blogPostingForm.getImageSelector(
+			_dlAppLocalService::getFileEntry);
+
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogsEntryId);
 
+		ServiceContext serviceContext = blogPostingForm.getServiceContext(
+			blogsEntry.getGroupId());
+
 		return _blogsEntryLocalService.updateEntry(
-			blogPostingForm.getAuthorId(currentUser), blogsEntryId,
-			blogPostingForm.getHeadline(),
+			userId, blogsEntryId, blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(),
 			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
 			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
 			true, true, new String[0], blogPostingForm.getImageCaption(),
-			blogPostingForm.getImageSelector(_dlAppLocalService::getFileEntry),
-			null, blogPostingForm.getServiceContext(blogsEntry.getGroupId()));
+			imageSelector, null, serviceContext);
 	}
 
 	@Reference

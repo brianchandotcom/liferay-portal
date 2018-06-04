@@ -93,6 +93,20 @@ public class DiscussionTag extends IncludeTag {
 		_userId = 0;
 	}
 
+	protected String getEditorURL(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletId = portletDisplay.getId();
+
+		return StringBundler.concat(
+			themeDisplay.getPathMain(),
+			"/portal/comment/discussion/get_editor?p_p_isolated=1&",
+			"portletId=", portletId);
+	}
+
 	protected String getFormAction(HttpServletRequest request) {
 		if (_formAction != null) {
 			return _formAction;
@@ -138,6 +152,8 @@ public class DiscussionTag extends IncludeTag {
 				"liferay-comment:discussion:discussion", _discussion);
 		}
 
+		request.setAttribute(
+			"liferay-comment:discussion:editorURL", getEditorURL(request));
 		request.setAttribute(
 			"liferay-comment:discussion:formAction", getFormAction(request));
 		request.setAttribute("liferay-comment:discussion:formName", _formName);

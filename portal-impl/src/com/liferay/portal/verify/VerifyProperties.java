@@ -29,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -63,10 +64,18 @@ public class VerifyProperties extends VerifyProcess {
 	protected Properties loadPortalProperties() {
 		Properties properties = new Properties();
 
-		List<String> propertiesResourceNames = ListUtil.fromArray(
-			PropsUtil.getArray("include-and-override"));
+		List<String> propertiesResourceNames = new ArrayList<>();
 
-		propertiesResourceNames.add(0, "portal.properties");
+		propertiesResourceNames.add("portal.properties");
+
+		for (String includeAndOverride :
+				ListUtil.fromArray(
+					PropsUtil.getArray("include-and-override"))) {
+
+			if (!includeAndOverride.contains("${")) {
+				propertiesResourceNames.add(includeAndOverride);
+			}
+		}
 
 		for (String propertyResourceName : propertiesResourceNames) {
 			try (InputStream inputStream = getPropertiesResourceAsStream(

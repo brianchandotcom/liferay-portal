@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SEARCH_BAR</td>
-	<td>//input[not(ancestor::header[@id='banner'])][@title='Search']</td>
+	<td>//h2/ancestor::section//input[@title='Search']</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>TEMPLATE_SEARCH_BAR</td>
-	<td>//header[@id='banner']//input[@title='Search'] | //input[contains(@id,'templateSearch') and @type='text'] | //input[contains(@data-qa-id,'searchInput')]</td>
+	<td>//input[contains(@id,'templateSearch') and @type='text'] | //input[contains(@data-qa-id,'searchInput')]</td>
 	<td></td>
 </tr>
 </tbody>

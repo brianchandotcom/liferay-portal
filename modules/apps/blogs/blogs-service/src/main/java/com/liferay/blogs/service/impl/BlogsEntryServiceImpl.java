@@ -631,46 +631,6 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	/**
-	 * Updates a blogs entry
-	 *
-	 * @param  entryId the blogs entry's ID
-	 * @param  userId the blogs entry's author ID
-	 * @param  title the blogs entry's title
-	 * @param  subtitle the blogs entry's subtitle
-	 * @param  urlTitle the blogs entry's urlTitle
-	 * @param  description the blogs entry's description
-	 * @param  content the blogs entry's content
-	 * @param  displayDate the blogs entry's displayDate
-	 * @param  coverImageCaption the blogs entry's cover image caption
-	 * @param  coverImageImageSelector an object containing the data of the
-	 *         blogs's entry cover image, can be {@code null}
-	 * @param  smallImageImageSelector an object containing the data of the
-	 *         blogs's entry small cover image, can be {@code null}
-	 * @param  serviceContext the blogs entry's serviceContext; at least it must
-	 *         contain the {@code groupId}
-	 * @return the updated blogs entry
-	 * @review
-	 */
-	@Override
-	public BlogsEntry updateEntry(
-			long entryId, long userId, String title, String subtitle,
-			String urlTitle, String description, String content,
-			Date displayDate, String coverImageCaption,
-			ImageSelector coverImageImageSelector,
-			ImageSelector smallImageImageSelector,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_blogsEntryFolderModelResourcePermission.check(
-			getPermissionChecker(), entryId, ActionKeys.UPDATE);
-
-		return blogsEntryLocalService.updateEntry(
-			userId, entryId, title, subtitle, urlTitle, description, content,
-			displayDate, true, true, new String[0], coverImageCaption,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
-	}
-
-	/**
 	 * @deprecated As of 1.1.0, replaced by {@link #updateEntry(long, String,
 	 *             String, String, String, int, int, int, int, int, boolean,
 	 *             boolean, String[], String, ImageSelector, ImageSelector,
@@ -743,6 +703,44 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageCaption, coverImageImageSelector, smallImageImageSelector,
 			serviceContext);
+	}
+
+	/**
+	 * Updates a blogs entry
+	 *
+	 * @param  entryId the blogs entry's ID
+	 * @param  title the blogs entry's title
+	 * @param  subtitle the blogs entry's subtitle
+	 * @param  urlTitle the blogs entry's urlTitle
+	 * @param  description the blogs entry's description
+	 * @param  content the blogs entry's content
+	 * @param  displayDate the blogs entry's displayDate
+	 * @param  coverImageCaption the blogs entry's cover image caption
+	 * @param  coverImageImageSelector an object containing the data of the
+	 *         blogs's entry cover image, can be {@code null}
+	 * @param  smallImageImageSelector an object containing the data of the
+	 *         blogs's entry small cover image, can be {@code null}
+	 * @param  serviceContext the blogs entry's serviceContext; at least it must
+	 *         contain the {@code groupId}
+	 * @return the updated blogs entry
+	 * @review
+	 */
+	@Override
+	public BlogsEntry updateEntry(
+			long entryId, String title, String subtitle, String urlTitle,
+			String description, String content, Date displayDate,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_blogsEntryFolderModelResourcePermission.check(
+			getPermissionChecker(), entryId, ActionKeys.UPDATE);
+
+		return blogsEntryLocalService.updateEntry(
+			getUserId(), entryId, title, subtitle, urlTitle, description,
+			content, displayDate, true, true, new String[0], coverImageCaption,
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
 	@Override

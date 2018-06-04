@@ -13,7 +13,7 @@ import {
  * to the right in order to consider it nested to it's parent.
  */
 
-const NEST_THRESHOLD = 100;
+const NEST_THRESHOLD = 30;
 
 /**
  * Set of static functions for managing site navigation menu

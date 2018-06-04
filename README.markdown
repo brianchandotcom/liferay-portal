@@ -46,8 +46,8 @@ To get up and running quickly, follow the steps below:
 3. Extract the downloaded pre-built Liferay Portal bundle into a folder.
 
 4. Navigate to the bundle's `liferay-ce-portal-[version]/tomcat-[version]/bin`
-   folder and execute the `startup.bat` (Windows) or `startup.sh`
-   (Unix/Linux/Mac OS X), depending on your operating system.
+   folder and execute `startup.bat` (Windows) or `startup.sh` (Unix/Linux/Mac OS
+   X), depending on your operating system.
 
 5. A server console opens, which starts your Liferay Portal instance. Once your
    instance is ready to use, the portal URL address (http://localhost:8080) is
@@ -64,7 +64,7 @@ To get up and running quickly, follow the steps below:
 7. Agree to the terms and conditions, create a password, and configure a
    security question/answer.
 
-You're now ready to begin using Liferay Portal!
+You can now use Liferay Portal!
 
 For more detailed installation instructions, refer to the
 [system administrator guide](https://dev.liferay.com/discover/deployment) on the
@@ -76,9 +76,9 @@ repositories and building the software.
 
 ## Liferay Developer Network
 
-The [Liferay Developer Network](https://dev.liferay.com) (LDN), is the best
-place to learn about Liferay. It has over 200 tutorials, guided learning, and
-much more.
+The [Liferay Developer Network](https://dev.liferay.com) (LDN) is the best place
+to learn about Liferay. It has over 200 tutorials, guided learning, and much
+more.
 
 LDN provides
 [learning paths and tutorials](https://dev.liferay.com/develop/tutorials), which
@@ -163,8 +163,8 @@ Did you find a bug? Please file an issue for it at
 [Liferay's JIRA Guidelines](http://www.liferay.com/community/wiki/-/wiki/Main/JIRA).
 
 If you'd like to suggest a new feature for Liferay, visit the
-[Ideas Dashboard](https://dev.liferay.com/participate/ideas) to submit and track
-the progress of your idea!
+[Contribute a New Feature or Improvement](https://dev.liferay.com/participate/contribute-a-feature)
+page to learn about contributing.
 
 ## Professional Services
 
@@ -184,7 +184,7 @@ or exceeds your expectations!
 In addition to Liferay's engineering staff, a special thanks goes to the many
 open source developers who volunteer their time and energy to help with the
 release, whether it was bug fixing, idea generation, documentation,
-translations, or other contribution that helped to improve this release.
+translations, or other contributions that helped to improve this release.
 
 ## Liferay Portal Community Edition License
 
@@ -203,6 +203,6 @@ You should have received a copy of the
 [GNU Lesser General Public License](http://www.gnu.org/licenses/lgpl-2.1.html)
 along with this library; if not, write to
 
-Free Software Foundation, Inc.
-51 Franklin Street, Fifth Floor
+Free Software Foundation, Inc.  
+51 Franklin Street, Fifth Floor  
 Boston, MA 02110-1301 USA

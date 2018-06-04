@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.web.internal.layout.prototype;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,6 +23,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -33,8 +33,8 @@ import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.language.LanguageResources;
-import com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration;
 import com.liferay.portal.search.web.layout.prototype.SearchLayoutPrototypeCustomizer;
 
 import java.util.List;
@@ -43,9 +43,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -56,10 +54,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author André de Oliveira
  * @author Lino Alves
  */
-@Component(
-	configurationPid = "com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration",
-	immediate = true, service = SearchLayoutFactory.class
-)
+@Component(immediate = true, service = SearchLayoutFactory.class)
 public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 
 	@Override
@@ -91,13 +86,6 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_searchWebConfiguration = ConfigurableUtil.createConfigurable(
-			SearchWebConfiguration.class, properties);
 	}
 
 	protected void createSearchLayout(
@@ -198,12 +186,8 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		return stream2.findAny();
 	}
 
-	protected String getFriendlyURL() {
-		return _searchWebConfiguration.searchPageFriendlyURL();
-	}
-
 	protected Map<Locale, String> getFriendlyURLMap() {
-		return LocalizationUtil.getLocalizationMap(getFriendlyURL());
+		return LocalizationUtil.getLocalizationMap("/search");
 	}
 
 	protected String getLayoutTemplateId() {
@@ -243,17 +227,6 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		return getLocalizationMap("layout-prototype-search-title");
 	}
 
-	protected boolean hasSearchLayout(Group group) {
-		Layout layout = layoutLocalService.fetchLayoutByFriendlyURL(
-			group.getGroupId(), false, getFriendlyURL());
-
-		if (layout != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean isSearchLayoutPrototype(
 		LayoutPrototype layoutPrototype, long companyId,
 		Map<Locale, String> searchTitleLocalizationMap) {
@@ -268,26 +241,23 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	}
 
 	protected boolean shouldCreateSearchLayout(Group group) {
-		if (_searchWebConfiguration.
-				skipAutomaticCreationOfSearchPageInGuestSite()) {
+		UnicodeProperties properties = group.getTypeSettingsProperties();
 
+		if (properties.get("searchLayoutCreated") != null) {
 			return false;
 		}
 
-		if (!group.isGuest()) {
-			return false;
-		}
+		properties.put("searchLayoutCreated", "true");
 
-		if (!group.isSite()) {
-			return false;
-		}
+		group.setTypeSettingsProperties(properties);
 
-		if (hasSearchLayout(group)) {
-			return false;
-		}
+		groupLocalService.updateGroup(group);
 
 		return true;
 	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
 
 	@Reference
 	protected LayoutLocalService layoutLocalService;
@@ -310,6 +280,5 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	private final SearchLayoutPrototypeCustomizer
 		_defaultSearchLayoutPrototypeCustomizer =
 			new DefaultSearchLayoutPrototypeCustomizer();
-	private volatile SearchWebConfiguration _searchWebConfiguration;
 
 }

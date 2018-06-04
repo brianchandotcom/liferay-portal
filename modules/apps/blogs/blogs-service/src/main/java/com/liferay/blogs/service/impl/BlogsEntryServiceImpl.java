@@ -22,6 +22,8 @@ import com.liferay.blogs.util.comparator.EntryIdComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -70,45 +72,6 @@ import java.util.List;
  * @author Mate Thurzo
  */
 public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
-
-	/**
-	 * Creates a new blogs entry
-	 *
-	 * @param  userId the blogs entry's author ID
-	 * @param  title the blogs entry's title
-	 * @param  subtitle the blogs entry's subtitle
-	 * @param  urlTitle the blogs entry's urlTitle
-	 * @param  description the blogs entry's description
-	 * @param  content the blogs entry's content
-	 * @param  displayDate the blogs entry's displayDate
-	 * @param  coverImageCaption the blogs entry's cover image caption
-	 * @param  coverImageImageSelector an object containing the data of the
-	 *         blogs's entry cover image, can be {@code null}
-	 * @param  smallImageImageSelector an object containing the data of the
-	 *         blogs's entry small cover image, can be {@code null}
-	 * @param  serviceContext the blogs entry's serviceContext; at least it must
-	 *         contain the {@code groupId}
-	 * @return the created blogs entry
-	 * @review
-	 */
-	@Override
-	public BlogsEntry addEntry(
-			long userId, String title, String subtitle, String urlTitle,
-			String description, String content, Date displayDate,
-			String coverImageCaption, ImageSelector coverImageImageSelector,
-			ImageSelector smallImageImageSelector,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), serviceContext.getScopeGroupId(),
-			ActionKeys.ADD_ENTRY);
-
-		return blogsEntryLocalService.addEntry(
-			userId, title, subtitle, urlTitle, description, content,
-			displayDate, true, true, new String[0], coverImageCaption,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
-	}
 
 	/**
 	 * @deprecated As of 1.1.0, replaced by {@link #addEntry(String, String,
@@ -593,6 +556,46 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return exportToRSS(
 			name, name, type, version, displayStyle, feedURL, entryURL,
 			blogsEntries, themeDisplay);
+	}
+
+	/**
+	 * Imports a blogs entry
+	 *
+	 * @param  userId the blogs entry's author ID
+	 * @param  title the blogs entry's title
+	 * @param  subtitle the blogs entry's subtitle
+	 * @param  urlTitle the blogs entry's urlTitle
+	 * @param  description the blogs entry's description
+	 * @param  content the blogs entry's content
+	 * @param  displayDate the blogs entry's displayDate
+	 * @param  coverImageCaption the blogs entry's cover image caption
+	 * @param  coverImageImageSelector an object containing the data of the
+	 *         blogs's entry cover image, can be {@code null}
+	 * @param  smallImageImageSelector an object containing the data of the
+	 *         blogs's entry small cover image, can be {@code null}
+	 * @param  serviceContext the blogs entry's serviceContext; at least it must
+	 *         contain the {@code groupId}
+	 * @return the created blogs entry
+	 * @review
+	 */
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
+	@Override
+	public BlogsEntry importEntry(
+			long userId, String title, String subtitle, String urlTitle,
+			String description, String content, Date displayDate,
+			String coverImageCaption, ImageSelector coverImageImageSelector,
+			ImageSelector smallImageImageSelector,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		return blogsEntryLocalService.addEntry(
+			userId, title, subtitle, urlTitle, description, content,
+			displayDate, true, true, new String[0], coverImageCaption,
+			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
 	@Override

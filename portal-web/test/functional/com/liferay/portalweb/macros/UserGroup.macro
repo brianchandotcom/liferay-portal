@@ -329,7 +329,7 @@
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 		<execute function="AssertElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-		<execute function="AssertElementPresent" locator1="Checkbox#SELECT_ALL" />
+		<execute function="AssertElementPresent" locator1="Checkbox#LEXICON_SELECT_ALL_INPUT" />
 		<execute function="AssertElementPresent" locator1="UserGroups#USER_GROUP_TABLE_CHECKBOX" />
 		<execute function="AssertElementPresent" locator1="Button#PLUS" />
 		<execute function="AssertElementPresent" locator1="TextInput#SEARCH" />

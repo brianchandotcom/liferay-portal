@@ -67,7 +67,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			</aui:col>
 		</c:if>
 
-		<aui:col id="permissionContentContainer" width="<%= portletName.equals(PortletKeys.SERVER_ADMIN) ? 100 : 75 %>">
+		<aui:col cssClass="lfr-permission-content-container" id="permissionContentContainer" width="<%= portletName.equals(PortletKeys.SERVER_ADMIN) ? 100 : 75 %>">
 			<c:choose>
 				<c:when test="<%= cmd.equals(Constants.VIEW) %>">
 					<liferay-util:include page="/edit_role_permissions_summary.jsp" servletContext="<%= application %>" />

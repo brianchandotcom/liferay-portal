@@ -149,6 +149,14 @@
 		margin-right: 10px;
 	}
 
+	.lfr-permission-content-container {
+		.table tr.info {
+			> td, > th {
+				background-color: #F0F5FF;
+			}
+		}
+	}
+
 	.lfr-permission-navigation-container {
 		.search {
 			margin-bottom: 20px;
@@ -157,10 +165,6 @@
 			> .form-control {
 				background-color: #FFF;
 			}
-		}
-
-		.table > tbody > tr.info {
-			background-color: #F0F5FF;
 		}
 
 		.lfr-permission-navigation {

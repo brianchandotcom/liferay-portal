@@ -2705,10 +2705,10 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/simplecaptcha.jar</file-name>
-				<version>1.1.1</version>
-				<project-name>SimpleCaptcha</project-name>
-				<project-url>http://simplecaptcha.sourceforge.net</project-url>
+				<file-name>lib/portal/sigar.jar</file-name>
+				<version>1.6.4</version>
+				<project-name>Sigar</project-name>
+				<project-url>https://sourceforge.net/projects/sigar/</project-url>
 				<licenses>
 					<license>
 						<license-name>BSD Style License</license-name>
@@ -2718,6 +2718,18 @@
 				<comments>
 					This includes modifications for compatibility with JDK 5.
 				</comments>
+			</library>
+			<library>
+				<file-name>lib/portal/simplecaptcha.jar</file-name>
+				<version>1.1.1</version>
+				<project-name>SimpleCaptcha</project-name>
+				<project-url>http://simplecaptcha.sourceforge.net</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
 			</library>
 			<library>
 				<file-name>lib/portal/slf4j-api.jar</file-name>

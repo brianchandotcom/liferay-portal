@@ -327,19 +327,11 @@ AUI.add(
 					_onPaste: function(event) {
 						var instance = this;
 
-						var ev = event._event;
-
-						var pastedText = (ev.clipboardData || window.clipboardData).getData('text');
-
-						if (pastedText && pastedText.indexOf(',') !== -1) {
-							event.preventDefault();
-
-							var existingValue = instance.inputNode.val();
-
-							instance.inputNode.val(existingValue.substring(0, ev.target.selectionStart) + pastedText + existingValue.substring(ev.target.selectionEnd));
-
-							instance._addEntries();
-						}
+						requestAnimationFrame(
+							function() {
+								instance.addEntries();
+							}
+						);
 					},
 
 					_renderIcons: function() {

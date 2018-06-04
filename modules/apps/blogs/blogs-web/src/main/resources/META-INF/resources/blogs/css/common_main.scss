@@ -62,22 +62,14 @@
 	}
 
 	.entry-body, .widget-mode-detail .widget-mode-detail-text {
-		img[style~="float:"][style~="left;"] {
-			margin-right: 24px;
-		}
+		img, .cke_widget_embedurl, .embed-responsive {
+			&[style*="float: left;"], &[style*="float:left;"] {
+				margin-right: 24px;
+			}
 
-		img[style~="float:"][style~="right;"] {
-			margin-left: 24px;
-		}
-	}
-
-	.entry-body {
-		[style~="float:"][style~="left;"] {
-			margin-right: 24px;
-		}
-
-		[style~="float:"][style~="right;"] {
-			margin-left: 24px;
+			&[style*="float: right;"], &[style*="float:right;"] {
+				margin-left: 24px;
+			}
 		}
 	}
 

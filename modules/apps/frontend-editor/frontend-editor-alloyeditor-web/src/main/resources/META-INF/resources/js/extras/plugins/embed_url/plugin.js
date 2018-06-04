@@ -145,7 +145,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 
 	const getSelectedElement = function(editor) {
 		const result = {
-			alignement: null,
+			alignment: null,
 			element: null
 		};
 
@@ -155,7 +155,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 			const selectedElement = selection.getSelectedElement();
 
 			if (selectedElement && selectedElement.getAttribute('data-cke-widget-wrapper')) {
-				result.alignement = getEmbedAlignment(selectedElement);
+				result.alignment = getEmbedAlignment(selectedElement);
 				result.element = selectedElement;
 			}
 		}
@@ -368,14 +368,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 							instance.wrapper.setAttribute('style', CKEDITOR.tools.writeCssText(styles));
 
 							if (editor._selectEmbedWidget === event.data.url) {
-								setTimeout(
-									() => {
-										editor.getSelection().selectElement(instance.wrapper);
-
-										editor._selectEmbedWidget = null;
-									},
-									0
-								);
+								reselectSelection();
 							}
 						},
 
@@ -481,7 +474,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 				const mouseDownListener = event => {
 					const result = getSelectedElement(editor);
 
-					currentAlignment = result.alignement;
+					currentAlignment = result.alignment;
 					currentElement = result.element;
 
 					if (resizer.isHandle(event.target)) {
@@ -504,32 +497,38 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 				);
 
 				const reselectSelection = function(editor) {
-					const selection = editor.getSelection();
+					setTimeout(
+						() => {
+							const selection = editor.getSelection();
 
-					if (!selection) {
-						return;
-					}
-					const startElement = selection.getStartElement();
-
-					if (startElement) {
-						const wrapperElement = startElement.findOne('[data-cke-widget-wrapper]') ||
-							startElement.is('[data-cke-widget-wrapper]');
-
-						if (wrapperElement) {
-							const imageElement = wrapperElement.findOne('img');
-							const widgetElement = wrapperElement.findOne('[data-widget="embedurl"]');
-
-							if (imageElement && widgetElement) {
-								const range = editor.createRange();
-
-								range.setStart(widgetElement, 0);
-								range.setEnd(imageElement, 1);
-
-								selection.selectRanges([range]);
-								selection.selectElement(wrapperElement);
+							if (!selection) {
+								return;
 							}
-						}
-					}
+
+							const startElement = selection.getStartElement();
+
+							if (startElement) {
+								const wrapperElement = startElement.findOne('[data-cke-widget-wrapper]') ||
+									startElement.is('[data-cke-widget-wrapper]');
+
+								if (wrapperElement) {
+									const imageElement = wrapperElement.findOne('img');
+									const widgetElement = wrapperElement.findOne('[data-widget="embedurl"]');
+
+									if (imageElement && widgetElement) {
+										const range = editor.createRange();
+
+										range.setStart(widgetElement, 0);
+										range.setEnd(imageElement, 1);
+
+										selection.selectRanges([range]);
+										selection.selectElement(wrapperElement);
+									}
+								}
+							}
+						},
+						0
+					);
 				};
 
 				document.addEventListener('mousedown', mouseDownListener, false);

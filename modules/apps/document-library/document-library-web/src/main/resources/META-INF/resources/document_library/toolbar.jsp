@@ -116,7 +116,7 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 						}
 					}
 				},
-				'strings.add': '<liferay-ui:message key="done" />',
+				'strings.add': '<liferay-ui:message key="select" />',
 				title: '<liferay-ui:message key="select-document-type" />',
 				url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_file_entry_type.jsp" /><portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" /></portlet:renderURL>'
 			}

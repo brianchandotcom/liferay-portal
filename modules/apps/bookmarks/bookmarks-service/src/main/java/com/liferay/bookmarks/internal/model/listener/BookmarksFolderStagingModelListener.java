@@ -31,17 +31,17 @@ public class BookmarksFolderStagingModelListener
 	extends BaseModelListener<BookmarksFolder> {
 
 	@Override
-	public void onAfterCreate(BookmarksFolder folder)
+	public void onAfterCreate(BookmarksFolder bookmarksFolder)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(folder);
+		_stagingModelListener.onAfterCreate(bookmarksFolder);
 	}
 
 	@Override
-	public void onAfterUpdate(BookmarksFolder folder)
+	public void onAfterUpdate(BookmarksFolder bookmarksFolder)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(folder);
+		_stagingModelListener.onAfterUpdate(bookmarksFolder);
 	}
 
 	@Reference

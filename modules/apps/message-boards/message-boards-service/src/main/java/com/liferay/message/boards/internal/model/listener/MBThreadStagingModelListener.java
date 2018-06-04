@@ -30,13 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 public class MBThreadStagingModelListener extends BaseModelListener<MBThread> {
 
 	@Override
-	public void onAfterCreate(MBThread thread) throws ModelListenerException {
-		_stagingModelListener.onAfterCreate(thread);
+	public void onAfterCreate(MBThread mbThread) throws ModelListenerException {
+		_stagingModelListener.onAfterCreate(mbThread);
 	}
 
 	@Override
-	public void onAfterUpdate(MBThread thread) throws ModelListenerException {
-		_stagingModelListener.onAfterUpdate(thread);
+	public void onAfterUpdate(MBThread mbThread) throws ModelListenerException {
+		_stagingModelListener.onAfterUpdate(mbThread);
 	}
 
 	@Reference

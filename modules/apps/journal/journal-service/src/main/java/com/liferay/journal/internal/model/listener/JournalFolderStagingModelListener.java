@@ -31,17 +31,17 @@ public class JournalFolderStagingModelListener
 	extends BaseModelListener<JournalFolder> {
 
 	@Override
-	public void onAfterCreate(JournalFolder folder)
+	public void onAfterCreate(JournalFolder journalFolder)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(folder);
+		_stagingModelListener.onAfterCreate(journalFolder);
 	}
 
 	@Override
-	public void onAfterUpdate(JournalFolder folder)
+	public void onAfterUpdate(JournalFolder journalFolder)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(folder);
+		_stagingModelListener.onAfterUpdate(journalFolder);
 	}
 
 	@Reference

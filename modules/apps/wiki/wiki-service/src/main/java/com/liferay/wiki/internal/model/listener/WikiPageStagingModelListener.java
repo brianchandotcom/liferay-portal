@@ -30,13 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPageStagingModelListener extends BaseModelListener<WikiPage> {
 
 	@Override
-	public void onAfterCreate(WikiPage page) throws ModelListenerException {
-		_stagingModelListener.onAfterCreate(page);
+	public void onAfterCreate(WikiPage wikiPage) throws ModelListenerException {
+		_stagingModelListener.onAfterCreate(wikiPage);
 	}
 
 	@Override
-	public void onAfterUpdate(WikiPage page) throws ModelListenerException {
-		_stagingModelListener.onAfterUpdate(page);
+	public void onAfterUpdate(WikiPage wikiPage) throws ModelListenerException {
+		_stagingModelListener.onAfterUpdate(wikiPage);
 	}
 
 	@Reference

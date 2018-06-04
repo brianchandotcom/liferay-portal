@@ -31,13 +31,17 @@ public class JournalFeedStagingModelListener
 	extends BaseModelListener<JournalFeed> {
 
 	@Override
-	public void onAfterCreate(JournalFeed feed) throws ModelListenerException {
-		_stagingModelListener.onAfterCreate(feed);
+	public void onAfterCreate(JournalFeed journalFeed)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterCreate(journalFeed);
 	}
 
 	@Override
-	public void onAfterUpdate(JournalFeed feed) throws ModelListenerException {
-		_stagingModelListener.onAfterUpdate(feed);
+	public void onAfterUpdate(JournalFeed journalFeed)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterUpdate(journalFeed);
 	}
 
 	@Reference

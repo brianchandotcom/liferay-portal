@@ -31,17 +31,17 @@ public class DDLRecordSetStagingModelListener
 	extends BaseModelListener<DDLRecordSet> {
 
 	@Override
-	public void onAfterCreate(DDLRecordSet recordSet)
+	public void onAfterCreate(DDLRecordSet ddlRecordSet)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(recordSet);
+		_stagingModelListener.onAfterCreate(ddlRecordSet);
 	}
 
 	@Override
-	public void onAfterUpdate(DDLRecordSet recordSet)
+	public void onAfterUpdate(DDLRecordSet ddlRecordSet)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(recordSet);
+		_stagingModelListener.onAfterUpdate(ddlRecordSet);
 	}
 
 	@Reference

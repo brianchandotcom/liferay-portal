@@ -31,17 +31,17 @@ public class DDMFormInstanceStagingModelListener
 	extends BaseModelListener<DDMFormInstance> {
 
 	@Override
-	public void onAfterCreate(DDMFormInstance formInstance)
+	public void onAfterCreate(DDMFormInstance ddmFormInstance)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(formInstance);
+		_stagingModelListener.onAfterCreate(ddmFormInstance);
 	}
 
 	@Override
-	public void onAfterUpdate(DDMFormInstance formInstance)
+	public void onAfterUpdate(DDMFormInstance ddmFormInstance)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(formInstance);
+		_stagingModelListener.onAfterUpdate(ddmFormInstance);
 	}
 
 	@Reference

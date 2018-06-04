@@ -30,13 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 public class MBBanStagingModelListener extends BaseModelListener<MBBan> {
 
 	@Override
-	public void onAfterCreate(MBBan ban) throws ModelListenerException {
-		_stagingModelListener.onAfterCreate(ban);
+	public void onAfterCreate(MBBan mbBan) throws ModelListenerException {
+		_stagingModelListener.onAfterCreate(mbBan);
 	}
 
 	@Override
-	public void onAfterUpdate(MBBan ban) throws ModelListenerException {
-		_stagingModelListener.onAfterUpdate(ban);
+	public void onAfterUpdate(MBBan mbBan) throws ModelListenerException {
+		_stagingModelListener.onAfterUpdate(mbBan);
 	}
 
 	@Reference

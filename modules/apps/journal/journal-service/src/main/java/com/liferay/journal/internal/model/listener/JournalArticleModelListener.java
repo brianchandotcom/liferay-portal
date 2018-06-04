@@ -33,29 +33,29 @@ public class JournalArticleModelListener
 	extends BaseModelListener<JournalArticle> {
 
 	@Override
-	public void onAfterRemove(JournalArticle article) {
-		clearCache(article);
+	public void onAfterRemove(JournalArticle journalArticle) {
+		clearCache(journalArticle);
 	}
 
 	@Override
-	public void onAfterUpdate(JournalArticle article) {
-		clearCache(article);
+	public void onAfterUpdate(JournalArticle journalArticle) {
+		clearCache(journalArticle);
 	}
 
-	protected void clearCache(JournalArticle article) {
-		if (article == null) {
+	protected void clearCache(JournalArticle journalArticle) {
+		if (journalArticle == null) {
 			return;
 		}
 
 		// Journal content
 
 		_journalContent.clearCache(
-			article.getGroupId(), article.getArticleId(),
-			article.getDDMTemplateKey());
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getDDMTemplateKey());
 
 		// Layout cache
 
-		CacheUtil.clearCache(article.getCompanyId());
+		CacheUtil.clearCache(journalArticle.getCompanyId());
 	}
 
 	@Reference(unbind = "-")

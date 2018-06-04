@@ -31,17 +31,17 @@ public class PollsQuestionStagingModelListener
 	extends BaseModelListener<PollsQuestion> {
 
 	@Override
-	public void onAfterCreate(PollsQuestion question)
+	public void onAfterCreate(PollsQuestion pollsQuestion)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(question);
+		_stagingModelListener.onAfterCreate(pollsQuestion);
 	}
 
 	@Override
-	public void onAfterUpdate(PollsQuestion question)
+	public void onAfterUpdate(PollsQuestion pollsQuestion)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(question);
+		_stagingModelListener.onAfterUpdate(pollsQuestion);
 	}
 
 	@Reference

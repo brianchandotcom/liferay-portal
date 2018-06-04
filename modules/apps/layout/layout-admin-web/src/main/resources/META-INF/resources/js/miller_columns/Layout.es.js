@@ -39,21 +39,12 @@ class Layout extends Component {
 				const searchContainer = new Liferay.SearchContainer(
 					{
 						contentBox: A.one(this.refs.layout),
-						id:
-							this.getInitialConfig().portletNamespace +
-							this.getInitialConfig().searchContainerId,
+						id: this.getInitialConfig().portletNamespace + this.getInitialConfig().searchContainerId,
 						plugins: plugins
 					}
 				);
 
 				this.searchContainer_ = searchContainer;
-
-				Liferay.fire(
-					'search-container:registered',
-					{
-						searchContainer: searchContainer
-					}
-				);
 			}
 		);
 	}

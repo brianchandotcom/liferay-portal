@@ -62,7 +62,7 @@ public class VerifyProperties extends VerifyProcess {
 		}
 		catch (RuntimeException re) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to find resource : " + resourceName);
+				_log.warn("Unable to find resource : " + resourceName, re);
 			}
 
 			return null;

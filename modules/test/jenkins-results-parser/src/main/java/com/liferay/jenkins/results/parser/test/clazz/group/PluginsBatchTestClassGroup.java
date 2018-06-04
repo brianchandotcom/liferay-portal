@@ -72,12 +72,12 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 			excludesPathMatchers.addAll(
 				getPathMatchers(
-					"test.batch.plugin.names.excludes",
+					getFirstPropertyValue("test.batch.plugin.names.excludes"),
 					_pluginsGitWorkingDirectory.getWorkingDirectory()));
 
 			includesPathMatchers.addAll(
 				getPathMatchers(
-					"test.batch.plugin.names.includes",
+					getFirstPropertyValue("test.batch.plugin.names.includes"),
 					_pluginsGitWorkingDirectory.getWorkingDirectory()));
 
 			setTestClasses();

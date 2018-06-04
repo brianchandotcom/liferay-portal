@@ -4,14 +4,14 @@ lfr-editable {
 	background-size: $fragmentEditableFieldGridSize $fragmentEditableFieldGridSize;
 	box-shadow: 0 0 0 1px transparent;
 	cursor: pointer;
-	display: block;
-	min-height: 25px;
-	min-width: 25px;
+	display: inline-block;
 	position: relative;
 	transition: box-shadow ease 0.2s;
 
 	& > div[data-lfr-editable-id] {
-		display: inline;
+		display: inline-block;
+		min-height: 25px;
+		min-width: 25px;
 		outline: none;
 	}
 

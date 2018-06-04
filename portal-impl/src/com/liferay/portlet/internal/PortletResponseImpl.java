@@ -40,10 +40,13 @@ import java.io.Writer;
 import java.lang.reflect.Constructor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionURL;
@@ -446,17 +449,47 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 	@Override
 	public String getProperty(String key) {
-		throw new UnsupportedOperationException();
+		Object value = _headers.get(key);
+
+		if ((value != null) && (value instanceof String[])) {
+			String[] values = (String[])value;
+
+			return (String)ArrayUtil.getValue(values, 0);
+		}
+
+		return null;
 	}
 
 	@Override
 	public Collection<String> getPropertyNames() {
-		throw new UnsupportedOperationException();
+		Set<String> keySet = _headers.keySet();
+
+		if (keySet.isEmpty()) {
+			return Collections.emptySet();
+		}
+
+		List<String> propertyNames = new ArrayList<>();
+
+		for (String key : keySet) {
+			Object value = _headers.get(key);
+
+			if ((value != null) && (value instanceof String[])) {
+				propertyNames.add(key);
+			}
+		}
+
+		return propertyNames;
 	}
 
 	@Override
 	public Collection<String> getPropertyValues(String key) {
-		throw new UnsupportedOperationException();
+		Object value = _headers.get(key);
+
+		if ((value != null) && (value instanceof String[])) {
+			return Arrays.asList((String[])value);
+		}
+
+		return Collections.emptySet();
 	}
 
 	public URLEncoder getUrlEncoder() {

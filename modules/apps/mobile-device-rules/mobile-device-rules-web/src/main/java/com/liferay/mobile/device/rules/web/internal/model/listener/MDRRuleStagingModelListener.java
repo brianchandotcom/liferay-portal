@@ -30,13 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 public class MDRRuleStagingModelListener extends BaseModelListener<MDRRule> {
 
 	@Override
-	public void onAfterCreate(MDRRule rule) throws ModelListenerException {
-		_stagingModelListener.onAfterCreate(rule);
+	public void onAfterCreate(MDRRule mdrRule) throws ModelListenerException {
+		_stagingModelListener.onAfterCreate(mdrRule);
 	}
 
 	@Override
-	public void onAfterUpdate(MDRRule rule) throws ModelListenerException {
-		_stagingModelListener.onAfterUpdate(rule);
+	public void onAfterUpdate(MDRRule mdrRule) throws ModelListenerException {
+		_stagingModelListener.onAfterUpdate(mdrRule);
 	}
 
 	@Reference

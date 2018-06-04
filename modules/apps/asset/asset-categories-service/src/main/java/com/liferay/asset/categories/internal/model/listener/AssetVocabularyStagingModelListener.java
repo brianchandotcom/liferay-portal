@@ -31,17 +31,17 @@ public class AssetVocabularyStagingModelListener
 	extends BaseModelListener<AssetVocabulary> {
 
 	@Override
-	public void onAfterCreate(AssetVocabulary vocabulary)
+	public void onAfterCreate(AssetVocabulary assetVocabulary)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(vocabulary);
+		_stagingModelListener.onAfterCreate(assetVocabulary);
 	}
 
 	@Override
-	public void onAfterUpdate(AssetVocabulary vocabulary)
+	public void onAfterUpdate(AssetVocabulary assetVocabulary)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(vocabulary);
+		_stagingModelListener.onAfterUpdate(assetVocabulary);
 	}
 
 	@Reference

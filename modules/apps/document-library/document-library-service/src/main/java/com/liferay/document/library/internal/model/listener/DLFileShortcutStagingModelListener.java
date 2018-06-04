@@ -31,17 +31,17 @@ public class DLFileShortcutStagingModelListener
 	extends BaseModelListener<DLFileShortcut> {
 
 	@Override
-	public void onAfterCreate(DLFileShortcut fileShortcut)
+	public void onAfterCreate(DLFileShortcut dlFileShortcut)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(fileShortcut);
+		_stagingModelListener.onAfterCreate(dlFileShortcut);
 	}
 
 	@Override
-	public void onAfterUpdate(DLFileShortcut fileShortcut)
+	public void onAfterUpdate(DLFileShortcut dlFileShortcut)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(fileShortcut);
+		_stagingModelListener.onAfterUpdate(dlFileShortcut);
 	}
 
 	@Reference

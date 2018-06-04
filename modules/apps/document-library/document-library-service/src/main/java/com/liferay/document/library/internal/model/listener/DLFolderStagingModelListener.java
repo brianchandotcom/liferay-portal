@@ -30,13 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 public class DLFolderStagingModelListener extends BaseModelListener<DLFolder> {
 
 	@Override
-	public void onAfterCreate(DLFolder folder) throws ModelListenerException {
-		_stagingModelListener.onAfterCreate(folder);
+	public void onAfterCreate(DLFolder dlFolder) throws ModelListenerException {
+		_stagingModelListener.onAfterCreate(dlFolder);
 	}
 
 	@Override
-	public void onAfterUpdate(DLFolder folder) throws ModelListenerException {
-		_stagingModelListener.onAfterUpdate(folder);
+	public void onAfterUpdate(DLFolder dlFolder) throws ModelListenerException {
+		_stagingModelListener.onAfterUpdate(dlFolder);
 	}
 
 	@Reference

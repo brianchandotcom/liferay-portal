@@ -31,17 +31,17 @@ public class DDMTemplateStagingModelListener
 	extends BaseModelListener<DDMTemplate> {
 
 	@Override
-	public void onAfterCreate(DDMTemplate template)
+	public void onAfterCreate(DDMTemplate ddmTemplate)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(template);
+		_stagingModelListener.onAfterCreate(ddmTemplate);
 	}
 
 	@Override
-	public void onAfterUpdate(DDMTemplate template)
+	public void onAfterUpdate(DDMTemplate ddmTemplate)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(template);
+		_stagingModelListener.onAfterUpdate(ddmTemplate);
 	}
 
 	@Reference

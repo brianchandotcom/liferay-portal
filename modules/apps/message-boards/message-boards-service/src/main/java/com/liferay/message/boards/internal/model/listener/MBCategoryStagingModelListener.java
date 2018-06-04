@@ -31,17 +31,17 @@ public class MBCategoryStagingModelListener
 	extends BaseModelListener<MBCategory> {
 
 	@Override
-	public void onAfterCreate(MBCategory category)
+	public void onAfterCreate(MBCategory mbCategory)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(category);
+		_stagingModelListener.onAfterCreate(mbCategory);
 	}
 
 	@Override
-	public void onAfterUpdate(MBCategory category)
+	public void onAfterUpdate(MBCategory mbCategory)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(category);
+		_stagingModelListener.onAfterUpdate(mbCategory);
 	}
 
 	@Reference

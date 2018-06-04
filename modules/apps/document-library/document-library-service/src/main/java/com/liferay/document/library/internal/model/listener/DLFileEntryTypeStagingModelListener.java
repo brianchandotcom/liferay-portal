@@ -31,17 +31,17 @@ public class DLFileEntryTypeStagingModelListener
 	extends BaseModelListener<DLFileEntryType> {
 
 	@Override
-	public void onAfterCreate(DLFileEntryType fileEntryType)
+	public void onAfterCreate(DLFileEntryType dlFileEntryType)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(fileEntryType);
+		_stagingModelListener.onAfterCreate(dlFileEntryType);
 	}
 
 	@Override
-	public void onAfterUpdate(DLFileEntryType fileEntryType)
+	public void onAfterUpdate(DLFileEntryType dlFileEntryType)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(fileEntryType);
+		_stagingModelListener.onAfterUpdate(dlFileEntryType);
 	}
 
 	@Reference

@@ -31,17 +31,17 @@ public class MBDiscussionStagingModelListener
 	extends BaseModelListener<MBDiscussion> {
 
 	@Override
-	public void onAfterCreate(MBDiscussion discussion)
+	public void onAfterCreate(MBDiscussion mbDiscussion)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(discussion);
+		_stagingModelListener.onAfterCreate(mbDiscussion);
 	}
 
 	@Override
-	public void onAfterUpdate(MBDiscussion discussion)
+	public void onAfterUpdate(MBDiscussion mbDiscussion)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(discussion);
+		_stagingModelListener.onAfterUpdate(mbDiscussion);
 	}
 
 	@Reference

@@ -31,17 +31,17 @@ public class MDRRuleGroupInstanceStagingModelListener
 	extends BaseModelListener<MDRRuleGroupInstance> {
 
 	@Override
-	public void onAfterCreate(MDRRuleGroupInstance ruleGroupInstance)
+	public void onAfterCreate(MDRRuleGroupInstance mdrRuleGroupInstance)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(ruleGroupInstance);
+		_stagingModelListener.onAfterCreate(mdrRuleGroupInstance);
 	}
 
 	@Override
-	public void onAfterUpdate(MDRRuleGroupInstance ruleGroupInstance)
+	public void onAfterUpdate(MDRRuleGroupInstance mdrRuleGroupInstance)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(ruleGroupInstance);
+		_stagingModelListener.onAfterUpdate(mdrRuleGroupInstance);
 	}
 
 	@Reference

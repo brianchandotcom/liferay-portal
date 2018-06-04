@@ -30,13 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiNodeStagingModelListener extends BaseModelListener<WikiNode> {
 
 	@Override
-	public void onAfterCreate(WikiNode node) throws ModelListenerException {
-		_stagingModelListener.onAfterCreate(node);
+	public void onAfterCreate(WikiNode wikiNode) throws ModelListenerException {
+		_stagingModelListener.onAfterCreate(wikiNode);
 	}
 
 	@Override
-	public void onAfterUpdate(WikiNode node) throws ModelListenerException {
-		_stagingModelListener.onAfterUpdate(node);
+	public void onAfterUpdate(WikiNode wikiNode) throws ModelListenerException {
+		_stagingModelListener.onAfterUpdate(wikiNode);
 	}
 
 	@Reference

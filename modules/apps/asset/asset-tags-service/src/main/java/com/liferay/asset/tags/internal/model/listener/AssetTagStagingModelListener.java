@@ -30,13 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetTagStagingModelListener extends BaseModelListener<AssetTag> {
 
 	@Override
-	public void onAfterCreate(AssetTag tag) throws ModelListenerException {
-		_stagingModelListener.onAfterCreate(tag);
+	public void onAfterCreate(AssetTag assetTag) throws ModelListenerException {
+		_stagingModelListener.onAfterCreate(assetTag);
 	}
 
 	@Override
-	public void onAfterUpdate(AssetTag tag) throws ModelListenerException {
-		_stagingModelListener.onAfterUpdate(tag);
+	public void onAfterUpdate(AssetTag assetTag) throws ModelListenerException {
+		_stagingModelListener.onAfterUpdate(assetTag);
 	}
 
 	@Reference

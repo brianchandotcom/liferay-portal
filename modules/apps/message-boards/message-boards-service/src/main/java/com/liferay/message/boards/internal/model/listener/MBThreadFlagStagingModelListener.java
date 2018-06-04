@@ -31,17 +31,17 @@ public class MBThreadFlagStagingModelListener
 	extends BaseModelListener<MBThreadFlag> {
 
 	@Override
-	public void onAfterCreate(MBThreadFlag threadFlag)
+	public void onAfterCreate(MBThreadFlag mbThreadFlag)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterCreate(threadFlag);
+		_stagingModelListener.onAfterCreate(mbThreadFlag);
 	}
 
 	@Override
-	public void onAfterUpdate(MBThreadFlag threadFlag)
+	public void onAfterUpdate(MBThreadFlag mbThreadFlag)
 		throws ModelListenerException {
 
-		_stagingModelListener.onAfterUpdate(threadFlag);
+		_stagingModelListener.onAfterUpdate(mbThreadFlag);
 	}
 
 	@Reference

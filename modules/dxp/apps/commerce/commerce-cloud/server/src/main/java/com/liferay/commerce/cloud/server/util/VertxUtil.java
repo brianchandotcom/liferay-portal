@@ -33,7 +33,6 @@ import io.vertx.serviceproxy.ServiceException;
  */
 public class VertxUtil {
 
-	@SuppressWarnings("unchecked")
 	public static <T> void handleHttpResponse(
 		AsyncResult<T> asyncResult, RoutingContext routingContext) {
 

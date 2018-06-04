@@ -33,7 +33,6 @@ import org.junit.Test;
  */
 public class JsonUtilTest {
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testToJsonArray() {
 		List<Forecast> forecasts = new ArrayList<>(2);

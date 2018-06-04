@@ -75,6 +75,7 @@ String dropdownMenuComponentId = randomNamespace + "socialBookmarksDropdownMenu"
 					componentId="<%= dropdownMenuComponentId %>"
 					dropdownItems="<%= SocialBookmarksTagUtil.getDropdownItems(request.getLocale(), remainingTypes, className, classPK, title, url) %>"
 					icon="share"
+					style="secondary"
 					triggerCssClasses="btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
 				/>
 

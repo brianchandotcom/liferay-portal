@@ -118,6 +118,7 @@ import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperU
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -3415,7 +3416,7 @@ public class StagingImpl implements Staging {
 				_layoutRevisionLocalService.getLayoutRevisions(
 					layoutSetBranchId, plid, true);
 
-			if (layoutRevisions != null) {
+			if (ListUtil.isNotEmpty(layoutRevisions)) {
 				LayoutRevision layoutRevision = layoutRevisions.get(0);
 
 				return layoutRevision.getLayoutRevisionId();

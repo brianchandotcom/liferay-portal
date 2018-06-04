@@ -974,45 +974,6 @@ public class BlogsEntryServiceHttp {
 	}
 
 	public static com.liferay.blogs.model.BlogsEntry updateEntry(
-		HttpPrincipal httpPrincipal, long entryId, long userId, String title,
-		String subtitle, String urlTitle, String description, String content,
-		java.util.Date displayDate, String coverImageCaption,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
-		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes29);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
-					userId, title, subtitle, urlTitle, description, content,
-					displayDate, coverImageCaption, coverImageImageSelector,
-					smallImageImageSelector, serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.blogs.model.BlogsEntry)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static com.liferay.blogs.model.BlogsEntry updateEntry(
 		HttpPrincipal httpPrincipal, long entryId, String title,
 		String description, String content, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
@@ -1023,7 +984,7 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes30);
+					"updateEntry", _updateEntryParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
 					title, description, content, displayDateMonth,
@@ -1066,13 +1027,52 @@ public class BlogsEntryServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes31);
+					"updateEntry", _updateEntryParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
 					title, subtitle, description, content, displayDateMonth,
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, allowPingbacks, allowTrackbacks,
 					trackbacks, coverImageCaption, coverImageImageSelector,
+					smallImageImageSelector, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.blogs.model.BlogsEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.blogs.model.BlogsEntry updateEntry(
+		HttpPrincipal httpPrincipal, long entryId, String title,
+		String subtitle, String urlTitle, String description, String content,
+		java.util.Date displayDate, String coverImageCaption,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector coverImageImageSelector,
+		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector smallImageImageSelector,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(BlogsEntryServiceUtil.class,
+					"updateEntry", _updateEntryParameterTypes31);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
+					title, subtitle, urlTitle, description, content,
+					displayDate, coverImageCaption, coverImageImageSelector,
 					smallImageImageSelector, serviceContext);
 
 			Object returnObj = null;
@@ -1257,23 +1257,23 @@ public class BlogsEntryServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateEntryParameterTypes29 = new Class[] {
-			long.class, long.class, String.class, String.class, String.class,
-			String.class, String.class, java.util.Date.class, String.class,
-			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
-			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _updateEntryParameterTypes30 = new Class[] {
 			long.class, String.class, String.class, String.class, int.class,
 			int.class, int.class, int.class, int.class, boolean.class,
 			boolean.class, String[].class, boolean.class, String.class,
 			String.class, java.io.InputStream.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateEntryParameterTypes31 = new Class[] {
+	private static final Class<?>[] _updateEntryParameterTypes30 = new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			int.class, int.class, int.class, int.class, int.class, boolean.class,
 			boolean.class, String[].class, String.class,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
+			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateEntryParameterTypes31 = new Class[] {
+			long.class, String.class, String.class, String.class, String.class,
+			String.class, java.util.Date.class, String.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

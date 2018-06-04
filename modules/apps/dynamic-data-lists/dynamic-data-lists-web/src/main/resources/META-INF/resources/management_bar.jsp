@@ -39,15 +39,24 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <aui:script sandbox="<%= true %>">
 	var deleteRecordSets = function() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-		var form = AUI.$(document.<portlet:namespace />fm);
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+			var form = document.getElementById('<portlet:namespace />fm');
 
-		var searchContainer = AUI.$('#<portlet:namespace />ddlRecordSet', form);
+			if (form) {
+				var searchContainer = form.querySelector('#<portlet:namespace />ddlRecordSet');
 
-		form.attr('method', 'post');
-		form.fm('recordSetIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+				if (searchContainer) {
+					form.setAttribute('method', 'post');
 
-		submitForm(form, '<portlet:actionURL name="deleteRecordSet"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+					var recordSetIds = form.queryString('#<portlet:namespace />recordSetIds');
+
+					if (recordSetIds) {
+						recordSetIds.setAttribute('value', Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+
+						submitForm(form, '<portlet:actionURL name="deleteRecordSet"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+					}
+				}
+			}
 		}
 	};
 

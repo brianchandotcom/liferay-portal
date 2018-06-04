@@ -66,23 +66,6 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 		return super.render(renderRequest, renderResponse);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	public void setDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
-	}
-
-	public void unsetDLMimeTypeDisplayContext(
-		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
-
-		_dlMimeTypeDisplayContext = null;
-	}
-
 	@Override
 	protected String getPath() {
 		return "/wiki/view.jsp";
@@ -95,7 +78,12 @@ public class ViewMVCRenderCommand extends BaseViewPageMVCRenderCommand {
 		_wikiEngineRenderer = wikiEngineRenderer;
 	}
 
-	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 
 	@Reference
 	private Portal _portal;

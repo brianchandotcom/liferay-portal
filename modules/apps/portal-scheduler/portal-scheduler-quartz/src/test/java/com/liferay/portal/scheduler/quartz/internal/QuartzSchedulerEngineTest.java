@@ -16,13 +16,8 @@ package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.SynchronousDestination;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
@@ -33,7 +28,6 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.Base64;
@@ -57,18 +51,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-
-import javax.servlet.ServletContext;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -107,12 +97,10 @@ public class QuartzSchedulerEngineTest {
 
 		_quartzSchedulerEngine = new QuartzSchedulerEngine();
 
-		_quartzSchedulerEngine.setJsonFactory(setUpJSONFactory());
-		_quartzSchedulerEngine.setMessageBus(setUpMessageBus());
-		_quartzSchedulerEngine.setPortletLocalService(
-			setUpPortletLocalService());
 		_quartzSchedulerEngine.setProps(setUpProps());
-		_quartzSchedulerEngine.setQuartzTriggerFactory(_quartzTriggerFactory);
+
+		ReflectionTestUtil.setFieldValue(
+			_quartzSchedulerEngine, "_jsonFactory", setUpJSONFactory());
 
 		ReflectionTestUtil.setFieldValue(
 			_quartzSchedulerEngine, "_memoryScheduler",
@@ -185,8 +173,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(
 			schedulerResponses.toString(), 2 * _DEFAULT_JOB_NUMBER,
 			schedulerResponses.size());
-		Assert.assertEquals(
-			0, _synchronousDestination.getMessageListenerCount());
 
 		Trigger trigger = _quartzTriggerFactory.createTrigger(
 			testJobName, _MEMORY_TEST_GROUP_NAME, null, null, _DEFAULT_INTERVAL,
@@ -317,9 +303,6 @@ public class QuartzSchedulerEngineTest {
 			schedulerResponses.toString(), _DEFAULT_JOB_NUMBER,
 			schedulerResponses.size());
 
-		Assert.assertEquals(
-			0, _synchronousDestination.getMessageListenerCount());
-
 		Trigger trigger = _quartzTriggerFactory.createTrigger(
 			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME, null,
 			null, _DEFAULT_INTERVAL, TimeUnit.SECOND);
@@ -346,9 +329,6 @@ public class QuartzSchedulerEngineTest {
 			schedulerResponses.toString(), _DEFAULT_JOB_NUMBER,
 			schedulerResponses.size());
 
-		Assert.assertEquals(
-			0, _synchronousDestination.getMessageListenerCount());
-
 		Trigger trigger = _quartzTriggerFactory.createTrigger(
 			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME, null,
 			null, _DEFAULT_INTERVAL, TimeUnit.SECOND);
@@ -363,9 +343,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(
 			schedulerResponses.toString(), _DEFAULT_JOB_NUMBER + 1,
 			schedulerResponses.size());
-
-		Assert.assertEquals(
-			0, _synchronousDestination.getMessageListenerCount());
 	}
 
 	@Test
@@ -476,9 +453,6 @@ public class QuartzSchedulerEngineTest {
 
 	@Test
 	public void testUnschedule3() throws Exception {
-		Assert.assertEquals(
-			0, _synchronousDestination.getMessageListenerCount());
-
 		String testJobName = _TEST_JOB_NAME_PREFIX + "memory";
 
 		Trigger trigger = _quartzTriggerFactory.createTrigger(
@@ -673,82 +647,6 @@ public class QuartzSchedulerEngineTest {
 		return _jsonFactory;
 	}
 
-	protected MessageBus setUpMessageBus() {
-		MessageBus messageBus = Mockito.mock(MessageBus.class);
-
-		_synchronousDestination = new SynchronousDestination();
-
-		_synchronousDestination.setName(_TEST_DESTINATION_NAME);
-
-		messageBus.addDestination(_synchronousDestination);
-
-		Mockito.when(
-			messageBus.getDestination(Matchers.anyString())
-		).then(
-			new Answer<Destination>() {
-
-				@Override
-				public Destination answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					String destinationName =
-						(String)invocationOnMock.getArguments()[0];
-
-					if (!Objects.equals(
-							_synchronousDestination.getName(),
-							destinationName)) {
-
-						throw new IllegalArgumentException(
-							"Invalid destination: " + destinationName);
-					}
-
-					return _synchronousDestination;
-				}
-
-			}
-		);
-
-		Mockito.when(
-			messageBus.registerMessageListener(
-				Matchers.anyString(), Matchers.any(MessageListener.class))
-		).then(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					_synchronousDestination.register(
-						(MessageListener)invocationOnMock.getArguments()[1]);
-
-					return true;
-				}
-
-			}
-		);
-
-		Mockito.when(
-			messageBus.unregisterMessageListener(
-				Matchers.anyString(), Matchers.any(MessageListener.class))
-		).then(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					_synchronousDestination.unregister(
-						(MessageListener)invocationOnMock.getArguments()[1]);
-
-					return true;
-				}
-
-			}
-		);
-
-		return messageBus;
-	}
-
 	protected void setUpPortalUUIDUtil() {
 		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
 
@@ -774,55 +672,6 @@ public class QuartzSchedulerEngineTest {
 		);
 
 		portalUUIDUtil.setPortalUUID(portalUUID);
-	}
-
-	protected PortletLocalService setUpPortletLocalService() {
-		PortletLocalService portletLocalService = Mockito.mock(
-			PortletLocalService.class);
-
-		Mockito.when(
-			portletLocalService.getPortletById(Mockito.anyString())
-		).then(
-			new Answer<Portlet>() {
-
-				@Override
-				public Portlet answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					Portlet portlet = Mockito.mock(Portlet.class);
-
-					PortletApp portletApp = Mockito.mock(PortletApp.class);
-
-					ServletContext servletContext = Mockito.mock(
-						ServletContext.class);
-
-					Thread currentThread = Thread.currentThread();
-
-					Mockito.when(
-						servletContext.getClassLoader()
-					).thenReturn(
-						currentThread.getContextClassLoader()
-					);
-
-					Mockito.when(
-						portletApp.getServletContext()
-					).thenReturn(
-						servletContext
-					);
-
-					Mockito.when(
-						portlet.getPortletApp()
-					).thenReturn(
-						portletApp
-					);
-
-					return portlet;
-				}
-
-			}
-		);
-
-		return portletLocalService;
 	}
 
 	protected Props setUpProps() {
@@ -858,7 +707,6 @@ public class QuartzSchedulerEngineTest {
 	private QuartzSchedulerEngine _quartzSchedulerEngine;
 	private final QuartzTriggerFactory _quartzTriggerFactory =
 		new QuartzTriggerFactory();
-	private SynchronousDestination _synchronousDestination;
 
 	private class MockScheduler implements Scheduler {
 

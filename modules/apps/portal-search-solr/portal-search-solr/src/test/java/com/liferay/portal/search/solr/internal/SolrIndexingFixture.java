@@ -16,6 +16,7 @@ package com.liferay.portal.search.solr.internal;
 
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.Localization;
@@ -204,11 +205,14 @@ public class SolrIndexingFixture implements IndexingFixture {
 	}
 
 	protected NGramQueryBuilderImpl createNGramQueryBuilder() {
-		return new NGramQueryBuilderImpl() {
-			{
-				setNGramHolderBuilder(new NGramHolderBuilderImpl());
-			}
-		};
+		NGramQueryBuilderImpl nGramQueryBuilderImpl =
+			new NGramQueryBuilderImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			nGramQueryBuilderImpl, "_nGramHolderBuilder",
+			new NGramHolderBuilderImpl());
+
+		return nGramQueryBuilderImpl;
 	}
 
 	protected Props createProps() {

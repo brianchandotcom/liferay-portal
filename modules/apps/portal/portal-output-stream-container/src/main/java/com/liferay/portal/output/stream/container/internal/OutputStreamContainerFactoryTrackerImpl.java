@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
@@ -52,7 +53,14 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 	@Override
 	public OutputStreamContainerFactory getOutputStreamContainerFactory() {
-		return _outputStreamContainerFactory;
+		OutputStreamContainerFactory outputStreamContainerFactory =
+			_outputStreamContainerFactory;
+
+		if (outputStreamContainerFactory != null) {
+			return outputStreamContainerFactory;
+		}
+
+		return _consoleOutputStreamContainerFactory;
 	}
 
 	@Override
@@ -79,8 +87,11 @@ public class OutputStreamContainerFactoryTrackerImpl
 
 	@Override
 	public void runWithSwappedLog(Runnable runnable, String outputStreamHint) {
+		OutputStreamContainerFactory outputStreamContainerFactory =
+			getOutputStreamContainerFactory();
+
 		OutputStreamContainer outputStreamContainer =
-			_outputStreamContainerFactory.create(outputStreamHint);
+			outputStreamContainerFactory.create(outputStreamHint);
 
 		runWithSwappedLog(
 			runnable, outputStreamContainer.getDescription(),
@@ -166,7 +177,7 @@ public class OutputStreamContainerFactoryTrackerImpl
 	protected void deactivate() {
 		Logger rootLogger = Logger.getRootLogger();
 
-		if (_outputStreamContainerFactory != null) {
+		if (_outputStreamContainerFactories != null) {
 			_outputStreamContainerFactories.close();
 		}
 
@@ -180,29 +191,20 @@ public class OutputStreamContainerFactoryTrackerImpl
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setOutputStreamContainerFactory(
-		OutputStreamContainerFactory outputStreamContainerFactory) {
-
-		_outputStreamContainerFactory = outputStreamContainerFactory;
-	}
-
-	protected void unsetOutputStreamContainerFactory(
-		OutputStreamContainerFactory outputStreamContainerFactory) {
-
-		_outputStreamContainerFactory = _consoleOutputStreamContainerFactory;
-	}
-
 	private final OutputStreamContainerFactory
 		_consoleOutputStreamContainerFactory =
 			new ConsoleOutputStreamContainerFactory();
 	private org.apache.felix.utils.log.Logger _logger;
 	private ServiceTrackerMap<String, OutputStreamContainerFactory>
 		_outputStreamContainerFactories;
-	private OutputStreamContainerFactory _outputStreamContainerFactory;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile OutputStreamContainerFactory _outputStreamContainerFactory;
+
 	private WriterAppender _writerAppender;
 	private final ThreadLocal<Writer> _writerThreadLocal = new ThreadLocal<>();
 

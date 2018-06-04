@@ -870,15 +870,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		return destination;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setAuditRouter(AuditRouter auditRouter) {
-		_auditRouter = auditRouter;
-	}
-
 	@Reference(unbind = "-")
 	protected void setDestinationFactory(
 		DestinationFactory destinationFactory) {
@@ -903,14 +894,16 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_schedulerEngine = schedulerEngine;
 	}
 
-	protected void unsetAuditRouter(AuditRouter auditRouter) {
-		_auditRouter = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEngineHelperImpl.class);
 
-	private AuditRouter _auditRouter;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile AuditRouter _auditRouter;
+
 	private volatile BundleContext _bundleContext;
 	private DestinationFactory _destinationFactory;
 	private final Set<ServiceRegistration<Destination>>

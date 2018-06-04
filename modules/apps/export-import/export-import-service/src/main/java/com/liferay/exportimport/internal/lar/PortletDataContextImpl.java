@@ -945,6 +945,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 			element.addAttribute("uuid", stagedModel.getUuid());
 		}
 
+		long groupIdAttribute = GetterUtil.getLong(
+			element.attributeValue("group-id"));
+
+		if (groupIdAttribute <= 0) {
+			long groupId = BeanPropertiesUtil.getLongSilent(
+				classedModel, "groupId");
+
+			if (groupId > 0) {
+				element.addAttribute("group-id", String.valueOf(groupId));
+			}
+		}
+
 		return element;
 	}
 

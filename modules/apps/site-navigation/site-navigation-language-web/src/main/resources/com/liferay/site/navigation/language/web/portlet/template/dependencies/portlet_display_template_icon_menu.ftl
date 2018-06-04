@@ -12,9 +12,10 @@
 		>
 			<#list entries as entry>
 				<#if !entry.isSelected() && !entry.isDisabled()>
+					<#assign entryLocale = entry.getLocale() />
+
 					<#assign
-						displayName = entry.getLongDisplayName() + "-" + locale.getDisplayCountry()
-						locale = entry.getLocale()
+						displayName = entry.getLongDisplayName() + "-" + entryLocale.getDisplayCountry(entryLocale)
 						normalizedDefaultLanguageId = stringUtil.toLowerCase(stringUtil.replace(entry.getLanguageId(), "_", "-"))
 					/>
 

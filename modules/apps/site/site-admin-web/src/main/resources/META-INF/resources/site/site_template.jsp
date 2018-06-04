@@ -65,7 +65,7 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(publicLayoutSetPrototype.getName(locale))} %>" key="this-site-was-cloned-from-site-template-x" translateArguments="<%= false %>" />
+				<liferay-ui:message arguments='<%= new Object[] {"<em>" + HtmlUtil.escape(publicLayoutSetPrototype.getName(locale)) + "</em>"} %>' key="these-pages-are-linked-to-site-template-x-without-propagation-of-changes" translateArguments="<%= false %>" />
 			</c:otherwise>
 		</c:choose>
 	</aui:fieldset>
@@ -88,7 +88,7 @@ if (Validator.isNotNull(publicLayoutSet.getLayoutSetPrototypeUuid())) {
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(privateLayoutSetPrototype.getName(locale))} %>" key="this-site-was-cloned-from-site-template-x" translateArguments="<%= false %>" />
+				<liferay-ui:message arguments='<%= new Object[] {"<em>" + HtmlUtil.escape(privateLayoutSetPrototype.getName(locale)) + "</em>"} %>' key="these-pages-are-linked-to-site-template-x-without-propagation-of-changes" translateArguments="<%= false %>" />
 			</c:otherwise>
 		</c:choose>
 	</aui:fieldset>

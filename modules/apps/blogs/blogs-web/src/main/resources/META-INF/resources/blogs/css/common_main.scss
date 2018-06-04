@@ -71,6 +71,16 @@
 		}
 	}
 
+	.entry-body {
+		[style~="float:"][style~="left;"] {
+			margin-right: 24px;
+		}
+
+		[style~="float:"][style~="right;"] {
+			margin-left: 24px;
+		}
+	}
+
 	.social-bookmarks {
 		.fb-like.fb_iframe_widget span {
 			vertical-align: top !important;

@@ -131,24 +131,21 @@ public class SearchPermissionCheckerFacetedSearcherTest
 		_articles.add(article);
 	}
 
-	protected ModelPermissions createModelPermissions() {
-		ModelPermissions modelPermissions = new ModelPermissions();
-
-		modelPermissions.addRolePermissions(
-			RoleConstants.OWNER, ActionKeys.VIEW);
-
-		return modelPermissions;
-	}
-
 	protected ServiceContext createServiceContext(Group group, User user)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		ModelPermissions modelPermissions = new ModelPermissions();
+
+		modelPermissions.addRolePermissions(
+			RoleConstants.OWNER, ActionKeys.VIEW);
+
+		serviceContext.setModelPermissions(modelPermissions);
+
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
 		serviceContext.setCompanyId(group.getCompanyId());
-		serviceContext.setModelPermissions(createModelPermissions());
 		serviceContext.setScopeGroupId(group.getGroupId());
 		serviceContext.setUserId(user.getUserId());
 

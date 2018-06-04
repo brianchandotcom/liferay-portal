@@ -248,6 +248,17 @@ public class FragmentsEditorDisplayContext {
 		return actionURL.toString();
 	}
 
+	private long _getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		_groupId = ParamUtil.getLong(
+			_request, "groupId", _themeDisplay.getScopeGroupId());
+
+		return _groupId;
+	}
+
 	private ItemSelectorCriterion _getImageItemSelectorCriterion() {
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -365,7 +376,7 @@ public class FragmentsEditorDisplayContext {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				_themeDisplay.getScopeGroupId(), _classNameId, _classPK);
+				_getGroupId(), _classNameId, _classPK);
 
 		addedSoyContext.put("enabled", !fragmentEntryLinks.isEmpty());
 
@@ -395,14 +406,12 @@ public class FragmentsEditorDisplayContext {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(
-				_themeDisplay.getScopeGroupId());
+			FragmentCollectionServiceUtil.getFragmentCollections(_getGroupId());
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =
 				FragmentEntryServiceUtil.getFragmentEntries(
-					_themeDisplay.getScopeGroupId(),
-					fragmentCollection.getFragmentCollectionId(),
+					_getGroupId(), fragmentCollection.getFragmentCollectionId(),
 					WorkflowConstants.STATUS_APPROVED);
 
 			if (ListUtil.isEmpty(fragmentEntries)) {
@@ -432,7 +441,7 @@ public class FragmentsEditorDisplayContext {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				_themeDisplay.getScopeGroupId(), _classNameId, _classPK);
+				_getGroupId(), _classNameId, _classPK);
 
 		boolean isolated = _themeDisplay.isIsolated();
 
@@ -493,6 +502,7 @@ public class FragmentsEditorDisplayContext {
 		_assetDisplayContributorTracker;
 	private final long _classNameId;
 	private final long _classPK;
+	private Long _groupId;
 	private final ItemSelector _itemSelector;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;

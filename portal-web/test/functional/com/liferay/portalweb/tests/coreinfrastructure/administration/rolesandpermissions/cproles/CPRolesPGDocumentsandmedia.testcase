@@ -514,7 +514,7 @@
 
 		<var method="StringUtil#upperCase('DM Folder Name')" name="dmFolderNameUpperCase" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderNameUpperCase}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderNameUpperCase}" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
@@ -584,6 +584,6 @@
 
 		<var method="StringUtil#upperCase('DM Folder Name')" name="dmFolderNameUpperCase" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderNameUpperCase}" />
+		<execute function="AssertTextEquals#assertTextCaseInsensitive" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderNameUpperCase}" />
 	</command>
 </definition>

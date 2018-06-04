@@ -7752,10 +7752,6 @@ public class JournalArticleLocalServiceImpl
 		String articleURL = getURLViewInContext(
 			article, portletId, serviceContext);
 
-		if (Validator.isNull(articleURL)) {
-			return;
-		}
-
 		JournalGroupServiceConfiguration journalGroupServiceConfiguration =
 			getJournalGroupServiceConfiguration(article.getGroupId());
 

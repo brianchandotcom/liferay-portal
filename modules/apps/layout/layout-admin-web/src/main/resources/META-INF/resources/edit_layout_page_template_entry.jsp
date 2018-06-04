@@ -33,7 +33,7 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 	editorName="alloyeditor"
 />
 
-<soy:template-renderer
+<soy:component-renderer
 	context="<%= fragmentsEditorDisplayContext.getEditorContext() %>"
 	module="layout-admin-web/js/fragments_editor/FragmentsEditor.es"
 	templateNamespace="com.liferay.layout.admin.web.FragmentsEditor.render"

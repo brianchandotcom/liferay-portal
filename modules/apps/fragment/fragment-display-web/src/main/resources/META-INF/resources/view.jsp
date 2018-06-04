@@ -45,7 +45,7 @@ if (fragmentEntryLink == null) {
 					editorName="alloyeditor"
 				/>
 
-				<soy:template-renderer
+				<soy:component-renderer
 					context="<%= fragmentEntryDisplayContext.getSoyContext() %>"
 					module="fragment-display-web/js/FragmentEntryDisplay.es"
 					templateNamespace="com.liferay.fragment.display.web.FragmentEntryDisplay.render"

@@ -23,8 +23,8 @@ public class StickerTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClaySticker");
-		super.setModuleBaseName("sticker");
+		setComponentBaseName("ClaySticker");
+		setModuleBaseName("sticker");
 
 		return super.doStartTag();
 	}

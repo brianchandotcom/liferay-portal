@@ -23,8 +23,8 @@ public class IconTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayIcon");
-		super.setModuleBaseName("icon");
+		setComponentBaseName("ClayIcon");
+		setModuleBaseName("icon");
 
 		return super.doStartTag();
 	}

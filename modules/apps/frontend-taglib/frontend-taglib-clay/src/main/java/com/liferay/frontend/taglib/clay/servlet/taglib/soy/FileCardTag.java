@@ -27,7 +27,7 @@ public class FileCardTag extends BaseClayCardTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayFileCard");
+		setComponentBaseName("ClayFileCard");
 
 		return super.doStartTag();
 	}

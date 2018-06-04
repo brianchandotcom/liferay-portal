@@ -29,8 +29,8 @@ public class BaseClayCardTag extends BaseClayTag {
 
 	@Override
 	public int doStartTag() {
-		super.setModuleBaseName("card");
-		super.setHydrate(true);
+		setHydrate(true);
+		setModuleBaseName("card");
 
 		Map<String, Object> context = getContext();
 

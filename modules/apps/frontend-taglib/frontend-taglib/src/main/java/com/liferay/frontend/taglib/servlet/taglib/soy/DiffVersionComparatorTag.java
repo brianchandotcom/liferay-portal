@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,7 +45,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Robert Frampton
  */
-public class DiffVersionComparatorTag extends TemplateRendererTag {
+public class DiffVersionComparatorTag extends ComponentRendererTag {
 
 	public JSONObject createDiffVersionJSONObject(
 			DiffVersion diffVersion, PortletURL sourceURL, PortletURL targetURL)

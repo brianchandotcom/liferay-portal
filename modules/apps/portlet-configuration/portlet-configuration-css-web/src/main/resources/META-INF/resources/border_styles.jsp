@@ -29,7 +29,7 @@
 			contextUseForAllWidth.put("name", renderResponse.getNamespace() + "useForAllWidth");
 			%>
 
-			<soy:template-renderer
+			<soy:component-renderer
 				context="<%= contextUseForAllWidth %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
@@ -86,7 +86,7 @@
 			contextUseForAllStyle.put("name", renderResponse.getNamespace() + "useForAllStyle");
 			%>
 
-			<soy:template-renderer
+			<soy:component-renderer
 				context="<%= contextUseForAllStyle %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
@@ -154,7 +154,7 @@
 			contextUseForAllColor.put("name", renderResponse.getNamespace() + "useForAllColor");
 			%>
 
-			<soy:template-renderer
+			<soy:component-renderer
 				context="<%= contextUseForAllColor %>"
 				module="portlet-configuration-css-web/js/ToggleDisableInputs.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ToggleDisableInputs.render"
@@ -170,7 +170,7 @@
 			contextBorderTop.put("name", renderResponse.getNamespace() + "borderColorTop");
 			%>
 
-			<soy:template-renderer
+			<soy:component-renderer
 				context="<%= contextBorderTop %>"
 				module="portlet-configuration-css-web/js/ColorPickerInput.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
@@ -188,7 +188,7 @@
 			contextBorderRight.put("name", renderResponse.getNamespace() + "borderColorRight");
 			%>
 
-			<soy:template-renderer
+			<soy:component-renderer
 				context="<%= contextBorderRight %>"
 				module="portlet-configuration-css-web/js/ColorPickerInput.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
@@ -206,7 +206,7 @@
 			contextBorderBottom.put("name", renderResponse.getNamespace() + "borderColorBottom");
 			%>
 
-			<soy:template-renderer
+			<soy:component-renderer
 				context="<%= contextBorderBottom %>"
 				module="portlet-configuration-css-web/js/ColorPickerInput.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"
@@ -224,7 +224,7 @@
 			contextBorderLeft.put("name", renderResponse.getNamespace() + "borderColorLeft");
 			%>
 
-			<soy:template-renderer
+			<soy:component-renderer
 				context="<%= contextBorderLeft %>"
 				module="portlet-configuration-css-web/js/ColorPickerInput.es"
 				templateNamespace="com.liferay.portlet.configuration.css.web.ColorPickerInput.render"

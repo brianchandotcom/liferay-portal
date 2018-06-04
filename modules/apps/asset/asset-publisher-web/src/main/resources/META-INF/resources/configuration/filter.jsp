@@ -60,7 +60,7 @@ context.put("tagSelectorURL", assetPublisherDisplayContext.getTagSelectorURL());
 context.put("vocabularyIds", assetPublisherDisplayContext.getVocabularyIds());
 %>
 
-<soy:template-renderer
+<soy:component-renderer
 	context="<%= context %>"
 	module="asset-publisher-web/js/AutoField.es"
 	templateNamespace="com.liferay.asset.publisher.web.AutoField.render"

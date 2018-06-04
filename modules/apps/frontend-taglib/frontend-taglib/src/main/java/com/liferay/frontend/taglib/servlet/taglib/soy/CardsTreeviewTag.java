@@ -14,14 +14,14 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.soy;
 
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 /**
  * @author Chema Balsas
  */
-public class CardsTreeviewTag extends TemplateRendererTag {
+public class CardsTreeviewTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {

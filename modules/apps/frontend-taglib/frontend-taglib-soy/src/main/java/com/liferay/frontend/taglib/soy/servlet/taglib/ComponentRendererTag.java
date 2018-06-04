@@ -12,45 +12,18 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
-
-import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
+package com.liferay.frontend.taglib.soy.servlet.taglib;
 
 /**
  * @author Chema Balsas
  */
-public class LabelTag extends BaseClayTag {
+public class ComponentRendererTag extends TemplateRendererTag {
 
 	@Override
 	public int doStartTag() {
-		setComponentBaseName("ClayLabel");
-		setModuleBaseName("label");
+		setHydrate(true);
 
 		return super.doStartTag();
-	}
-
-	public void setCloseable(Boolean closeable) {
-		putValue("closeable", closeable);
-	}
-
-	public void setHref(String href) {
-		putValue("href", href);
-	}
-
-	public void setLabel(String label) {
-		putValue("label", label);
-	}
-
-	public void setMessage(String message) {
-		putValue("message", message);
-	}
-
-	public void setSize(String size) {
-		putValue("size", size);
-	}
-
-	public void setStyle(String style) {
-		putValue("style", style);
 	}
 
 }

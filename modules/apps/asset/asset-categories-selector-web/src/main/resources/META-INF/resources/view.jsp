@@ -27,7 +27,7 @@ context.put("pathThemeImages", themeDisplay.getPathThemeImages());
 context.put("viewType", "tree");
 %>
 
-<soy:template-renderer
+<soy:component-renderer
 	context="<%= context %>"
 	module="asset-categories-selector-web/js/SelectCategory.es"
 	templateNamespace="com.liferay.asset.categories.selector.web.SelectCategory.render"

@@ -23,7 +23,7 @@ public class UserCardTag extends BaseClayCardTag {
 
 	@Override
 	public int doStartTag() {
-		super.setComponentBaseName("ClayUserCard");
+		setComponentBaseName("ClayUserCard");
 
 		return super.doStartTag();
 	}

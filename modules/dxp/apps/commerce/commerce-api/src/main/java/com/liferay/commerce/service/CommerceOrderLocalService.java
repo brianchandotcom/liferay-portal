@@ -299,6 +299,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		long billingAddressId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrdersByGroupId(long groupId,
+		int start, int end, OrderByComparator<CommerceOrder> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrdersByShippingAddress(
 		long shippingAddressId);
 
@@ -338,6 +342,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrdersCount(long groupId, long orderUserId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrdersCountByGroupId(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

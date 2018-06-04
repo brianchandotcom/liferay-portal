@@ -159,9 +159,23 @@ public class CommerceOrderServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceOrdersByGroupId(groupId, start, end,
+			orderByComparator);
+	}
+
 	public static int getCommerceOrdersCount(long groupId, long orderUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceOrdersCount(groupId, orderUserId);
+	}
+
+	public static int getCommerceOrdersCountByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrdersCountByGroupId(groupId);
 	}
 
 	/**

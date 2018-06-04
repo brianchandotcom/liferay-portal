@@ -360,6 +360,14 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().getCommerceOrdersByBillingAddress(billingAddressId);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
+		return getService()
+				   .getCommerceOrdersByGroupId(groupId, start, end,
+			orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByShippingAddress(
 		long shippingAddressId) {
 		return getService().getCommerceOrdersByShippingAddress(shippingAddressId);
@@ -406,6 +414,10 @@ public class CommerceOrderLocalServiceUtil {
 
 	public static int getCommerceOrdersCount(long groupId, long orderUserId) {
 		return getService().getCommerceOrdersCount(groupId, orderUserId);
+	}
+
+	public static int getCommerceOrdersCountByGroupId(long groupId) {
+		return getService().getCommerceOrdersCountByGroupId(groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(

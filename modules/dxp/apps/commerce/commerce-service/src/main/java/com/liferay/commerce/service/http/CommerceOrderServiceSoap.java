@@ -327,11 +327,43 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderSoap[] getCommerceOrdersByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceOrder> returnValue =
+				CommerceOrderServiceUtil.getCommerceOrdersByGroupId(groupId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getCommerceOrdersCount(long groupId, long orderUserId)
 		throws RemoteException {
 		try {
 			int returnValue = CommerceOrderServiceUtil.getCommerceOrdersCount(groupId,
 					orderUserId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceOrdersCountByGroupId(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceOrderServiceUtil.getCommerceOrdersCountByGroupId(groupId);
 
 			return returnValue;
 		}

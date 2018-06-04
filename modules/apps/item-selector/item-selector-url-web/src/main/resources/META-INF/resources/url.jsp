@@ -20,13 +20,15 @@
 ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelectorURLViewDisplayContext)request.getAttribute(ItemSelectorURLView.ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT);
 %>
 
-<aui:row cssClass="container-fluid-1280 lfr-item-viewer" id="itemSelectorUrlContainer">
-	<aui:col cssClass="url-view" width="<%= 60 %>">
-		<aui:input helpMessage='<%= LanguageUtil.format(request, "for-example-x", "http://www.liferay.com/liferay.png", false) %>' label='<%= LanguageUtil.get(resourceBundle, "image-url") %>' name="urlInput" placeholder="http://" />
+<div class="lfr-form-content">
+	<div class="sheet sheet-lg">
+		<div class="panel-group panel-group-flush">
+			<aui:input helpMessage='<%= LanguageUtil.format(request, "for-example-x", "http://www.liferay.com/liferay.png", false) %>' label='<%= LanguageUtil.get(resourceBundle, "image-url") %>' name="urlInput" placeholder="http://" />
 
-		<aui:button disabled="<%= true %>" name="previewBtn" value='<%= LanguageUtil.get(resourceBundle, "enter") %>' />
-	</aui:col>
-</aui:row>
+			<aui:button disabled="<%= true %>" name="previewBtn" value='<%= LanguageUtil.get(resourceBundle, "enter") %>' />
+		</div>
+	</div>
+</div>
 
 <aui:script use="liferay-item-selector-url">
 	new Liferay.ItemSelectorUrl(

@@ -34,159 +34,170 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.ServiceContext;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 import javax.ws.rs.ServerErrorException;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true)
 public class AddressNestedCollectionResource
-    implements
-        NestedCollectionResource<CommerceAddress, Long,
-                AddressIdentifier, Long, AccountIdentifier> {
+	implements
+		NestedCollectionResource<CommerceAddress, Long, AddressIdentifier, Long,
+			AccountIdentifier> {
 
-    @Override
-    public NestedCollectionRoutes<CommerceAddress, Long, Long> collectionRoutes(
-            NestedCollectionRoutes.Builder<CommerceAddress, Long, Long> builder) {
-        return builder.addGetter(
-            this::_getPageItems
-        ).addCreator(
-            this::_addCommerceAddress, _addressPermissionChecker.forAdding()::apply,
-            AddressForm::buildForm
-        ).build();
-    }
+	@Override
+	public NestedCollectionRoutes<CommerceAddress, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<CommerceAddress, Long, Long> builder) {
 
-    @Override
-    public String getName() {
-        return "address";
-    }
+		return builder.addGetter(
+			this::_getPageItems
+		).addCreator(
+			this::_addCommerceAddress,
+			_addressPermissionChecker.forAdding()::apply, AddressForm::buildForm
+		).build();
+	}
 
-    @Override
-    public Representor<CommerceAddress> representor(Representor.Builder<CommerceAddress, Long> builder) {
-        return builder.types(
-            "Address"
-        ).identifier(
-            CommerceAddress::getCommerceAddressId
-        ).addBidirectionalModel(
-            "account", "addresses", AccountIdentifier.class,
-            CommerceAddress::getClassPK
-        ).addString(
-            "name",
-            CommerceAddress::getName
-        ).addString(
-            "description",
-            CommerceAddress::getDescription
-        ).addString(
-            "street1",
-            CommerceAddress::getStreet1
-        ).addString(
-            "street2",
-            CommerceAddress::getStreet2
-        ).addString(
-            "street3",
-            CommerceAddress::getStreet3
-        ).addString(
-            "city",
-            CommerceAddress::getCity
-        ).addString(
-            "zip",
-            CommerceAddress::getZip
-        ).addLinkedModel(
-            "country",
-            CountryIdentifier.class,
-            CommerceAddress::getCommerceCountryId
-        ).addLinkedModel(
-            "region",
-            RegionIdentifier.class,
-            CommerceAddress::getCommerceRegionId
-        ).addNumber(
-            "latitude",
-            CommerceAddress::getLatitude
-        ).addNumber(
-            "longitude",
-            CommerceAddress::getLongitude
-        ).addString(
-            "phoneNumber",
-            CommerceAddress::getPhoneNumber
-        ).addBoolean(
-            "defaultBilling",
-            CommerceAddress::getDefaultBilling
-        ).addBoolean(
-            "defaultShipping",
-            CommerceAddress::getDefaultShipping
-        ).build();
-    }
+	@Override
+	public String getName() {
+		return "address";
+	}
 
-    @Override
-    public ItemRoutes<CommerceAddress, Long> itemRoutes(ItemRoutes.Builder<CommerceAddress, Long> builder) {
-        return builder.addGetter(
-            _commerceAddressService::getCommerceAddress
-        ).addRemover(
-            _commerceAddressService::deleteCommerceAddress,
-            _addressPermissionChecker.forDeleting()::apply
-        ).addUpdater(
-            this::_updateCommerceAddress,
-            _addressPermissionChecker.forUpdating()::apply,
-            AddressForm::buildForm
-        ).build();
-    }
+	@Override
+	public ItemRoutes<CommerceAddress, Long> itemRoutes(
+		ItemRoutes.Builder<CommerceAddress, Long> builder) {
 
-    private PageItems<CommerceAddress> _getPageItems(
-            Pagination pagination, Long organizationId) {
-        try {
-            Organization account = _commerceOrganizationService.getOrganization(organizationId);
-            Group group = account.getGroup();
+		return builder.addGetter(
+			_commerceAddressService::getCommerceAddress
+		).addRemover(
+			_commerceAddressService::deleteCommerceAddress,
+			_addressPermissionChecker.forDeleting()::apply
+		).addUpdater(
+			this::_updateCommerceAddress,
+			_addressPermissionChecker.forUpdating()::apply,
+			AddressForm::buildForm
+		).build();
+	}
 
-            List<CommerceAddress> addresses = _commerceAddressService.getCommerceAddresses(group.getGroupId(), group.getClassName(), group.getClassPK());
+	@Override
+	public Representor<CommerceAddress> representor(
+		Representor.Builder<CommerceAddress, Long> builder) {
 
-            int total = _commerceAddressService.getCommerceAddressesCount(group.getGroupId(), group.getClassName(), group.getClassPK());
+		return builder.types(
+			"Address"
+		).identifier(
+			CommerceAddress::getCommerceAddressId
+		).addBidirectionalModel(
+			"account", "addresses", AccountIdentifier.class,
+			CommerceAddress::getClassPK
+		).addString(
+			"name", CommerceAddress::getName
+		).addString(
+			"description", CommerceAddress::getDescription
+		).addString(
+			"street1", CommerceAddress::getStreet1
+		).addString(
+			"street2", CommerceAddress::getStreet2
+		).addString(
+			"street3", CommerceAddress::getStreet3
+		).addString(
+			"city", CommerceAddress::getCity
+		).addString(
+			"zip", CommerceAddress::getZip
+		).addLinkedModel(
+			"country", CountryIdentifier.class,
+			CommerceAddress::getCommerceCountryId
+		).addLinkedModel(
+			"region", RegionIdentifier.class,
+			CommerceAddress::getCommerceRegionId
+		).addNumber(
+			"latitude", CommerceAddress::getLatitude
+		).addNumber(
+			"longitude", CommerceAddress::getLongitude
+		).addString(
+			"phoneNumber", CommerceAddress::getPhoneNumber
+		).addBoolean(
+			"defaultBilling", CommerceAddress::getDefaultBilling
+		).addBoolean(
+			"defaultShipping", CommerceAddress::getDefaultShipping
+		).build();
+	}
 
-            return new PageItems<>(addresses, total);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+	private CommerceAddress _addCommerceAddress(
+			Long organizationId, AddressForm addressForm)
+		throws PortalException {
 
-    private CommerceAddress _addCommerceAddress(
-        Long organizationId, AddressForm addressForm) throws PortalException {
+		Organization account = _commerceOrganizationService.getOrganization(
+			organizationId);
 
-        Organization account = _commerceOrganizationService.getOrganization(organizationId);
-        Group group = account.getGroup();
+		Group group = account.getGroup();
 
-        ServiceContext serviceContext = _serviceContextHelper.getServiceContext(group.getGroupId());
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			group.getGroupId());
 
-        return _commerceAddressService.addCommerceAddress(group.getClassName(), group.getClassPK(),
-            addressForm.getName(), addressForm.getDescription(), addressForm.getStreet1(),
-            addressForm.getStreet2(), addressForm.getStreet3(), addressForm.getCity(),
-            addressForm.getZip(), addressForm.getRegionId(), addressForm.getCountryId(),
-            addressForm.getPhoneNumber(), addressForm.getDefaultBilling(), addressForm.getDefaultShipping(),
-            serviceContext);
-    }
+		return _commerceAddressService.addCommerceAddress(
+			group.getClassName(), group.getClassPK(), addressForm.getName(),
+			addressForm.getDescription(), addressForm.getStreet1(),
+			addressForm.getStreet2(), addressForm.getStreet3(),
+			addressForm.getCity(), addressForm.getZip(),
+			addressForm.getRegionId(), addressForm.getCountryId(),
+			addressForm.getPhoneNumber(), addressForm.getDefaultBilling(),
+			addressForm.getDefaultShipping(), serviceContext);
+	}
 
-    private CommerceAddress _updateCommerceAddress(Long commerceAddressId, AddressForm addressForm) throws PortalException {
-        return _commerceAddressService.updateCommerceAddress(commerceAddressId,
-            addressForm.getName(), addressForm.getDescription(), addressForm.getStreet1(),
-            addressForm.getStreet2(), addressForm.getStreet3(), addressForm.getCity(),
-            addressForm.getZip(), addressForm.getRegionId(), addressForm.getCountryId(),
-            addressForm.getPhoneNumber(), addressForm.getDefaultBilling(), addressForm.getDefaultShipping(),
-            new ServiceContext());
-    }
+	private PageItems<CommerceAddress> _getPageItems(
+		Pagination pagination, Long organizationId) {
 
-    @Reference
-    private CommerceAddressService _commerceAddressService;
+		try {
+			Organization account = _commerceOrganizationService.getOrganization(
+				organizationId);
 
-    @Reference
-    private CommerceOrganizationService _commerceOrganizationService;
+			Group group = account.getGroup();
 
-    @Reference
-    private AddressPermissionChecker _addressPermissionChecker;
+			List<CommerceAddress> addresses =
+				_commerceAddressService.getCommerceAddresses(
+					group.getGroupId(), group.getClassName(),
+					group.getClassPK());
 
-    @Reference
-    private ServiceContextHelper _serviceContextHelper;
+			int total = _commerceAddressService.getCommerceAddressesCount(
+				group.getGroupId(), group.getClassName(), group.getClassPK());
+
+			return new PageItems<>(addresses, total);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
+
+	private CommerceAddress _updateCommerceAddress(
+			Long commerceAddressId, AddressForm addressForm)
+		throws PortalException {
+
+		return _commerceAddressService.updateCommerceAddress(
+			commerceAddressId, addressForm.getName(),
+			addressForm.getDescription(), addressForm.getStreet1(),
+			addressForm.getStreet2(), addressForm.getStreet3(),
+			addressForm.getCity(), addressForm.getZip(),
+			addressForm.getRegionId(), addressForm.getCountryId(),
+			addressForm.getPhoneNumber(), addressForm.getDefaultBilling(),
+			addressForm.getDefaultShipping(), new ServiceContext());
+	}
+
+	@Reference
+	private AddressPermissionChecker _addressPermissionChecker;
+
+	@Reference
+	private CommerceAddressService _commerceAddressService;
+
+	@Reference
+	private CommerceOrganizationService _commerceOrganizationService;
+
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
 
 }

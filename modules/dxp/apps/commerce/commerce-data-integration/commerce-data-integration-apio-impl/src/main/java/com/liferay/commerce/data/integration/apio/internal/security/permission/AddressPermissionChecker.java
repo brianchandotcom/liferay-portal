@@ -18,20 +18,19 @@ import com.liferay.apio.architect.credentials.Credentials;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceAddress;
-import com.liferay.commerce.product.constants.CPActionKeys;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.function.BiFunction;
 
 import javax.ws.rs.NotFoundException;
-import java.util.function.BiFunction;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -50,7 +49,7 @@ public class AddressPermissionChecker {
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
 					permissionChecker,
-						commerceAddressTry.map(
+					commerceAddressTry.map(
 						CommerceAddress::getGroupId
 					).orElseThrow(
 						() -> new NotFoundException()
@@ -77,12 +76,12 @@ public class AddressPermissionChecker {
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
 					permissionChecker,
-						commerceAddressTry.map(
-								CommerceAddress::getGroupId
+					commerceAddressTry.map(
+						CommerceAddress::getGroupId
 					).orElseThrow(
 						() -> new NotFoundException()
 					),
-						CommerceActionKeys.MANAGE_COMMERCE_ADDRESSES)
+					CommerceActionKeys.MANAGE_COMMERCE_ADDRESSES)
 			).orElse(
 				false
 			);

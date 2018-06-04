@@ -21,171 +21,171 @@ import com.liferay.apio.architect.form.Form;
  */
 public class AddressForm {
 
-    public static Form<AddressForm> buildForm(
-            Form.Builder<AddressForm> formBuilder) {
+	public static Form<AddressForm> buildForm(
+		Form.Builder<AddressForm> formBuilder) {
 
-        return formBuilder.title(
-            __ -> "The address creator form"
-        ).description(
-            __ -> "This form can be used to create a address"
-        ).constructor(
-            AddressForm::new
-        ).addRequiredString(
-            "name", AddressForm::_setName
-        ).addOptionalString(
-            "description", AddressForm::_setDescription
-        ).addRequiredString(
-            "street1", AddressForm::_setStreet1
-        ).addOptionalString(
-            "street2", AddressForm::_setStreet2
-        ).addOptionalString(
-            "street3", AddressForm::_setStreet3
-        ).addRequiredString(
-            "city", AddressForm::_setCity
-        ).addOptionalString(
-            "zip", AddressForm::_setZip
-        ).addOptionalString(
-            "phoneNumber", AddressForm::_setPhoneNumber
-        ).addRequiredLong(
-            "countryId", AddressForm::_setCountryId
-        ).addOptionalLong(
-            "regionId", AddressForm::_setRegionId
-        ).addOptionalDouble(
-            "latitude", AddressForm::_setLatitude
-        ).addOptionalDouble(
-            "longitude", AddressForm::_setLongitude
-        ).addOptionalBoolean(
-            "_defaultBilling", AddressForm::_setDefaultBilling
-        ).addOptionalBoolean(
-            "defaultShipping", AddressForm::_setDefaultShipping
-        ).build();
-    }
+		return formBuilder.title(
+			__ -> "The address creator form"
+		).description(
+			__ -> "This form can be used to create a address"
+		).constructor(
+			AddressForm::new
+		).addRequiredString(
+			"name", AddressForm::_setName
+		).addOptionalString(
+			"description", AddressForm::_setDescription
+		).addRequiredString(
+			"street1", AddressForm::_setStreet1
+		).addOptionalString(
+			"street2", AddressForm::_setStreet2
+		).addOptionalString(
+			"street3", AddressForm::_setStreet3
+		).addRequiredString(
+			"city", AddressForm::_setCity
+		).addOptionalString(
+			"zip", AddressForm::_setZip
+		).addOptionalString(
+			"phoneNumber", AddressForm::_setPhoneNumber
+		).addRequiredLong(
+			"countryId", AddressForm::_setCountryId
+		).addOptionalLong(
+			"regionId", AddressForm::_setRegionId
+		).addOptionalDouble(
+			"latitude", AddressForm::_setLatitude
+		).addOptionalDouble(
+			"longitude", AddressForm::_setLongitude
+		).addOptionalBoolean(
+			"_defaultBilling", AddressForm::_setDefaultBilling
+		).addOptionalBoolean(
+			"defaultShipping", AddressForm::_setDefaultShipping
+		).build();
+	}
 
-    public String getName() {
-        return _name;
-    }
+	public String getCity() {
+		return _city;
+	}
 
-    public String getDescription() {
-        return _description;
-    }
+	public long getCountryId() {
+		return _countryId;
+	}
 
-    public String getStreet1() {
-        return _street1;
-    }
+	public boolean getDefaultBilling() {
+		return _defaultBilling;
+	}
 
-    public String getStreet2() {
-        return _street2;
-    }
+	public boolean getDefaultShipping() {
+		return _defaultShipping;
+	}
 
-    public String getStreet3() {
-        return _street3;
-    }
+	public String getDescription() {
+		return _description;
+	}
 
-    public String getCity() {
-        return _city;
-    }
+	public double getLatitude() {
+		return _latitude;
+	}
 
-    public String getZip() {
-        return _zip;
-    }
+	public double getLongitude() {
+		return _longitude;
+	}
 
-    public String getPhoneNumber() {
-        return _phoneNumber;
-    }
+	public String getName() {
+		return _name;
+	}
 
-    public long getCountryId() {
-        return _countryId;
-    }
+	public String getPhoneNumber() {
+		return _phoneNumber;
+	}
 
-    public long getRegionId() {
-        return _regionId;
-    }
+	public long getRegionId() {
+		return _regionId;
+	}
 
-    public double getLatitude() {
-        return _latitude;
-    }
+	public String getStreet1() {
+		return _street1;
+	}
 
-    public double getLongitude() {
-        return _longitude;
-    }
+	public String getStreet2() {
+		return _street2;
+	}
 
-    public boolean getDefaultBilling() {
-        return _defaultBilling;
-    }
+	public String getStreet3() {
+		return _street3;
+	}
 
-    public boolean getDefaultShipping() {
-        return _defaultShipping;
-    }
+	public String getZip() {
+		return _zip;
+	}
 
-    private void _setName(String name) {
-        _name = name;
-    }
+	private void _setCity(String city) {
+		_city = city;
+	}
 
-    private void _setDescription(String description) {
-        _description = description;
-    }
+	private void _setCountryId(long countryId) {
+		_countryId = countryId;
+	}
 
-    private void _setStreet1(String street1) {
-        _street1 = street1;
-    }
+	private void _setDefaultBilling(boolean defaultBilling) {
+		_defaultBilling = defaultBilling;
+	}
 
-    private void _setStreet2(String street2) {
-        _street2 = street2;
-    }
+	private void _setDefaultShipping(boolean defaultShipping) {
+		_defaultShipping = defaultShipping;
+	}
 
-    private void _setStreet3(String street3) {
-        _street3 = street3;
-    }
+	private void _setDescription(String description) {
+		_description = description;
+	}
 
-    private void _setCity(String city) {
-        _city = city;
-    }
+	private void _setLatitude(double latitude) {
+		_latitude = latitude;
+	}
 
-    private void _setZip(String zip) {
-        _zip = zip;
-    }
+	private void _setLongitude(double longitude) {
+		_longitude = longitude;
+	}
 
-    private void _setPhoneNumber(String phoneNumber) {
-        _phoneNumber = phoneNumber;
-    }
+	private void _setName(String name) {
+		_name = name;
+	}
 
-    private void _setCountryId(long countryId) {
-        _countryId = countryId;
-    }
+	private void _setPhoneNumber(String phoneNumber) {
+		_phoneNumber = phoneNumber;
+	}
 
-    private void _setRegionId(long regionId) {
-        _regionId = regionId;
-    }
+	private void _setRegionId(long regionId) {
+		_regionId = regionId;
+	}
 
-    private void _setLatitude(double latitude) {
-        _latitude = latitude;
-    }
+	private void _setStreet1(String street1) {
+		_street1 = street1;
+	}
 
-    private void _setLongitude(double longitude) {
-        _longitude = longitude;
-    }
+	private void _setStreet2(String street2) {
+		_street2 = street2;
+	}
 
-    private void _setDefaultBilling(boolean defaultBilling) {
-        _defaultBilling = defaultBilling;
-    }
+	private void _setStreet3(String street3) {
+		_street3 = street3;
+	}
 
-    private void _setDefaultShipping(boolean defaultShipping) {
-        _defaultShipping = defaultShipping;
-    }
+	private void _setZip(String zip) {
+		_zip = zip;
+	}
 
-    private String _name;
-    private String _description;
-    private String _street1;
-    private String _street2;
-    private String _street3;
-    private String _city;
-    private String _zip;
-    private String _phoneNumber;
-    private long _countryId;
-    private long _regionId;
-    private double _latitude;
-    private double _longitude;
-    private boolean _defaultBilling;
-    private boolean _defaultShipping;
+	private String _city;
+	private long _countryId;
+	private boolean _defaultBilling;
+	private boolean _defaultShipping;
+	private String _description;
+	private double _latitude;
+	private double _longitude;
+	private String _name;
+	private String _phoneNumber;
+	private long _regionId;
+	private String _street1;
+	private String _street2;
+	private String _street3;
+	private String _zip;
 
 }

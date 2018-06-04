@@ -25,93 +25,99 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.ws.rs.ServerErrorException;
 import java.util.List;
 import java.util.Locale;
+
+import javax.ws.rs.ServerErrorException;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true)
 public class CountryNestedCollectionResource
-        implements NestedCollectionResource<CommerceCountry, Long,
-                CountryIdentifier, Long, WebSiteIdentifier> {
+	implements NestedCollectionResource<CommerceCountry, Long,
+		CountryIdentifier, Long, WebSiteIdentifier> {
 
-    @Override
-    public NestedCollectionRoutes<CommerceCountry, Long, Long> collectionRoutes(NestedCollectionRoutes.Builder<CommerceCountry, Long, Long> builder) {
-        return builder.addGetter(
-            this::_getPageItems
-        ).build();
-    }
+	@Override
+	public NestedCollectionRoutes<CommerceCountry, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<CommerceCountry, Long, Long> builder) {
 
-    @Override
-    public String getName() {
-        return "countries";
-    }
+		return builder.addGetter(
+			this::_getPageItems
+		).build();
+	}
 
-    @Override
-    public Representor<CommerceCountry> representor(Representor.Builder<CommerceCountry, Long> builder) {
-        return builder.types(
-                "Country"
-        ).identifier(
-            CommerceCountry::getCommerceCountryId
-        ).addBidirectionalModel(
-            "webSite", "countries", WebSiteIdentifier.class,
-            CommerceCountry::getGroupId
-        ).addLocalizedStringByLocale(
-            "name",
-            this::_getName
-        ).addString(
-            "threeLettersISOCode",
-            CommerceCountry::getThreeLettersISOCode
-        ).addNumber(
-            "numericISOCode",
-            CommerceCountry::getNumericISOCode
-        ).addBoolean(
-            "billingAllowed",
-            CommerceCountry::getBillingAllowed
-        ).addBoolean(
-            "ShippingAllowed",
-            CommerceCountry::getShippingAllowed
-        ).build();
-    }
+	@Override
+	public String getName() {
+		return "countries";
+	}
 
-    private String _getName(CommerceCountry commerceCountry, Locale locale) {
-        return commerceCountry.getName(locale);
-    }
+	@Override
+	public ItemRoutes<CommerceCountry, Long> itemRoutes(
+		ItemRoutes.Builder<CommerceCountry, Long> builder) {
 
-    @Override
-    public ItemRoutes<CommerceCountry, Long> itemRoutes(ItemRoutes.Builder<CommerceCountry, Long> builder) {
-        return builder.addGetter(
-                this::_getCommerceCountry
-        ).build();
-    }
+		return builder.addGetter(
+			this::_getCommerceCountry
+		).build();
+	}
 
-    private PageItems<CommerceCountry> _getPageItems(
-            Pagination pagination, Long webSiteId) {
+	@Override
+	public Representor<CommerceCountry> representor(
+		Representor.Builder<CommerceCountry, Long> builder) {
 
-        List<CommerceCountry> countries = _commerceCountryService.getCommerceCountries(
-            webSiteId, pagination.getStartPosition(),
-            pagination.getEndPosition(), null);
+		return builder.types(
+			"Country"
+		).identifier(
+			CommerceCountry::getCommerceCountryId
+		).addBidirectionalModel(
+			"webSite", "countries", WebSiteIdentifier.class,
+			CommerceCountry::getGroupId
+		).addLocalizedStringByLocale(
+			"name", this::_getName
+		).addString(
+			"threeLettersISOCode", CommerceCountry::getThreeLettersISOCode
+		).addNumber(
+			"numericISOCode", CommerceCountry::getNumericISOCode
+		).addBoolean(
+			"billingAllowed", CommerceCountry::getBillingAllowed
+		).addBoolean(
+			"ShippingAllowed", CommerceCountry::getShippingAllowed
+		).build();
+	}
 
-        int count = _commerceCountryService.getCommerceCountriesCount(webSiteId);
+	private CommerceCountry _getCommerceCountry(Long commerceCountryId) {
+		try {
+			return _commerceCountryService.getCommerceCountry(
+				commerceCountryId);
+		}
+		catch (PortalException pe) {
+			throw new ServerErrorException(500, pe);
+		}
+	}
 
-        return new PageItems<>(countries, count);
-    }
+	private String _getName(CommerceCountry commerceCountry, Locale locale) {
+		return commerceCountry.getName(locale);
+	}
 
-    private CommerceCountry _getCommerceCountry(Long commerceCountryId) {
-        try {
-            return _commerceCountryService.getCommerceCountry(commerceCountryId);
-        }
-        catch (PortalException pe) {
-            throw new ServerErrorException(500, pe);
-        }
-    }
+	private PageItems<CommerceCountry> _getPageItems(
+		Pagination pagination, Long webSiteId) {
 
-    @Reference
-    private CommerceCountryService _commerceCountryService;
+		List<CommerceCountry> countries =
+			_commerceCountryService.getCommerceCountries(
+				webSiteId, pagination.getStartPosition(),
+				pagination.getEndPosition(), null);
+
+		int count = _commerceCountryService.getCommerceCountriesCount(
+			webSiteId);
+
+		return new PageItems<>(countries, count);
+	}
+
+	@Reference
+	private CommerceCountryService _commerceCountryService;
 
 }

@@ -326,12 +326,16 @@ AUI.add(
 
 					_onPaste: function(event) {
 						var instance = this;
+						var ev = event._event;
+						var pastedText = (ev.clipboardData || window.clipboardData).getData('text');
 
-						requestAnimationFrame(
-							function() {
-								instance.addEntries();
-							}
-						);
+						if (pastedText.indexOf(',') !== -1) {
+							requestAnimationFrame(
+								function() {
+									instance.addEntries();
+								}
+							);
+						}
 					},
 
 					_renderIcons: function() {

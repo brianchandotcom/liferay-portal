@@ -28,6 +28,6 @@ boolean checkedOut = GetterUtil.getBoolean(request.getAttribute("edit_file_entry
 
 		<aui:input checked="<%= !checkedOut %>" label="minor-version" name="versionDetailsMajorVersion" type="radio" value="<%= false %>" />
 
-		<aui:input label="version-notes" name="versionDetailsChangeLog" type="textarea" />
+		<aui:input label="version-notes" maxLength="75" name="versionDetailsChangeLog" />
 	</aui:fieldset>
 </div>

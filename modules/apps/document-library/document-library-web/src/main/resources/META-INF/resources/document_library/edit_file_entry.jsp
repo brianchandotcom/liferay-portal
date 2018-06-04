@@ -441,7 +441,7 @@ if (portletTitleBasedNavigation) {
 
 							<aui:model-context />
 
-							<aui:input label="version-notes" name="changeLog" type="textarea" />
+							<aui:input label="version-notes" maxLength="75" name="changeLog" />
 
 							<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 						</div>

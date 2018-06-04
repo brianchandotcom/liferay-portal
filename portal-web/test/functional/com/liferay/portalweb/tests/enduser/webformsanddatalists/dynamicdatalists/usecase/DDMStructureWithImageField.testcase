@@ -99,7 +99,7 @@
 		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
 
 		<execute macro="ItemSelector#uploadFile">
-			<var name="navTab" value="Documents and Media" />
+			<var name="navTab" value="Web Content Images" />
 			<var name="uploadFileName" value="Document_3.png" />
 		</execute>
 

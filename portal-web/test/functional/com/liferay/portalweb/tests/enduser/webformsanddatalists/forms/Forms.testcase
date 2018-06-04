@@ -1162,7 +1162,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Dynamic Data Mapping" />
+			<var name="configurationCategory" value="Forms" />
 			<var name="configurationName" value="Forms" />
 			<var name="configurationScope" value="Site Scope" />
 		</execute>
@@ -1912,7 +1912,7 @@
 
 		<execute macro="FormFields#selectSelectOption">
 			<var name="fieldName" value="defaultDisplayView" />
-			<var name="selectOption" value="Descriptive" />
+			<var name="selectOption" value="List" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -1931,7 +1931,7 @@
 
 		<execute macro="FormFields#viewSelectOption">
 			<var name="fieldName" value="defaultDisplayView" />
-			<var name="selectOption" value="Descriptive" />
+			<var name="selectOption" value="List" />
 		</execute>
 
 		<execute macro="SystemSettings#resetConfiguration">
@@ -2047,7 +2047,7 @@
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Frontend Infrastructure" />
+			<var name="configurationCategory" value="Infrastructure" />
 			<var name="configurationName" value="JavaScript Loader" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>
@@ -2086,7 +2086,7 @@
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Frontend Infrastructure" />
+			<var name="configurationCategory" value="Infrastructure" />
 			<var name="configurationName" value="JavaScript Loader" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>
@@ -2123,7 +2123,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Dynamic Data Mapping" />
+			<var name="configurationCategory" value="Forms" />
 			<var name="configurationName" value="Forms" />
 			<var name="configurationScope" value="Site Scope" />
 		</execute>
@@ -2157,7 +2157,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#gotoConfiguration">
-			<var name="configurationCategory" value="Dynamic Data Mapping" />
+			<var name="configurationCategory" value="Forms" />
 			<var name="configurationName" value="Forms" />
 			<var name="configurationScope" value="Site Scope" />
 		</execute>

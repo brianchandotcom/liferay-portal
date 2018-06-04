@@ -103,7 +103,7 @@
 		</execute>
 
 		<execute macro="PortletEntry#changeLocale">
-			<var name="fieldName" value="Titulo" />
+			<var name="fieldName" value="Título" />
 			<var name="locale" value="es-ES" />
 		</execute>
 
@@ -136,7 +136,7 @@
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="Titel" />
-			<var name="locale" value="nl-NL" />
+			<var name="locale" value="de-DE" />
 		</execute>
 
 		<execute macro="WebContent#viewCP">

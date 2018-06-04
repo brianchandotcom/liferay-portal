@@ -336,8 +336,6 @@
 
 		<execute macro="Button#clickDelete" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow deleted successfully." />
-
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="AssertElementNotPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" />
@@ -432,8 +430,6 @@
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Workflow#viewDefinitionPublicationStatus">
 			<var name="status" value="Published" />
@@ -689,8 +685,6 @@
 			<var name="key_menuItem" value="Unpublish" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow unpublished successfully." />
-
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -804,7 +798,7 @@
 
 		<execute function="AssertVisible" locator1="Message#SUCCESS" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_3" value1="Definition imported successfully." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Definition imported successfully." />
 
 		<execute macro="Alert#_closeMessage">
 			<var name="messageType" value="SUCCESS" />

@@ -2342,12 +2342,8 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="TestCase#getTestName">
-			<return from="testName" name="testName" />
-		</execute>
-
 		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="${testName}_WebContent_portlet.lar" />
+			<var name="larFileName" value="WebContent_portlet.lar" />
 		</execute>
 	</command>
 
@@ -2438,12 +2434,8 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="TestCase#getTestName">
-			<return from="testName" name="testName" />
-		</execute>
-
 		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="${testName}_WebContent_portlet.lar" />
+			<var name="larFileName" value="WebContent_portlet.lar" />
 		</execute>
 
 		<execute macro="WebContent#tearDownCP" />
@@ -2476,12 +2468,8 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="TestCase#getTestName">
-			<return from="testName" name="testName" />
-		</execute>
-
 		<execute macro="LAR#importPortlet">
-			<var name="larFileName" value="${testName}_WebContent_portlet.lar" />
+			<var name="larFileName" value="WebContent_portlet.lar" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -2625,12 +2613,8 @@
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
-		<execute macro="TestCase#getTestName">
-			<return from="testName" name="testName" />
-		</execute>
-
 		<execute macro="LAR#exportPortlet">
-			<var name="larFileName" value="${testName}_WebContent_portlet.lar" />
+			<var name="larFileName" value="WebContent_portlet.lar" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2651,7 +2635,7 @@
 
 		<execute macro="LAR#importPortlet">
 			<var name="importValidationMissingItem" value="Linked Page" />
-			<var name="larFileName" value="${testName}_WebContent_portlet.lar" />
+			<var name="larFileName" value="WebContent_portlet.lar" />
 			<var name="linkedPageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>

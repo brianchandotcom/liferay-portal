@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -102,6 +103,8 @@ public class UpgradeMySQL extends UpgradeProcess {
 		try (ResultSet rs = databaseMetaData.getColumns(
 				catalog, schemaPattern, tableName, null)) {
 
+			String modifyClause = StringPool.BLANK;
+
 			while (rs.next()) {
 				if (Types.TIMESTAMP != rs.getInt("DATA_TYPE")) {
 					continue;
@@ -116,25 +119,28 @@ public class UpgradeMySQL extends UpgradeProcess {
 					continue;
 				}
 
-				StringBundler sb = new StringBundler(5);
-
-				sb.append("ALTER TABLE ");
-				sb.append(tableName);
-				sb.append(" MODIFY ");
-				sb.append(columnName);
-				sb.append(" datetime(6)");
-
-				String sql = sb.toString();
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						StringBundler.concat(
-							"Updating table ", tableName, " column ",
-							columnName, " to datetime(6)"));
+				if (!modifyClause.equals(StringPool.BLANK)) {
+					modifyClause += StringPool.COMMA;
 				}
 
-				statement.executeUpdate(sql);
+				modifyClause +=
+					StringBundler.concat(
+						" MODIFY ", columnName, " datetime(6)");
 			}
+
+			if (modifyClause.equals(StringPool.BLANK)) {
+				return;
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Updating columns for table ", tableName,
+						" to datetime(6)"));
+			}
+
+			statement.executeUpdate(
+				StringBundler.concat("ALTER TABLE ", tableName, modifyClause));
 		}
 	}
 

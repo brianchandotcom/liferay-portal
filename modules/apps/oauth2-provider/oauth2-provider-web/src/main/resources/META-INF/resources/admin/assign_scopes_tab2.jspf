@@ -1,0 +1,73 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div aria-orientation="vertical" class="panel-group" id="<portlet:namespace />globalAccordion" role="tablist">
+
+	<%
+	for (Map.Entry<AssignableScopes, AssignScopesDisplayContext.Relations> scopeAliasAssignableScopesEntry : assignScopesDisplayContext.getGlobalAssignableScopesRelations().entrySet()) {
+		String scopeAlias = scopeAliasAssignableScopesEntry.getValue().getScopeAlias();
+	%>
+
+		<div class="panel panel-secondary" id="<portlet:namespace /><%= scopeAlias %>">
+			<div class="collapse-icon panel-header panel-header-link" id="<portlet:namespace />globalAccordionHeading<%= scopeAlias %>">
+				<div class="inline">
+					<aui:input checked="<%= assignedScopes.contains(scopeAlias) %>" id="<%= StringUtil.randomId() %>" label="<%= HtmlUtil.escape(scopeAlias) %>" name="scopeAliases" onChange='<%= renderResponse.getNamespace() + "recalculateDependants(this)" %>' type="checkbox" value="<%= scopeAlias %>" />
+				</div>
+
+				<a aria-controls="<portlet:namespace />globalAccordion<%= scopeAlias %>" aria-expanded="false" class="collapsed" data-parent="#<portlet:namespace />globalAccordion" data-toggle="collapse" href="#<portlet:namespace />globalAccordion<%= scopeAlias %>" role="tab">
+					<span>(<liferay-ui:message key="details" />)</span>
+
+					<span class="collapse-icon-closed">
+						<clay:icon
+							symbol="angle-right"
+						/>
+					</span>
+					<span class="collapse-icon-open">
+						<clay:icon
+							symbol="angle-down"
+						/>
+					</span>
+				</a>
+			</div>
+
+			<div aria-labelledby="<portlet:namespace />globalAccordionHeading<%= scopeAlias %>" class="collapse panel-collapse" id="<portlet:namespace />globalAccordion<%= scopeAlias %>" role="tabpanel">
+
+				<%
+				AssignableScopes assignableScopes = scopeAliasAssignableScopesEntry.getKey();
+
+				for (String applicationName : assignableScopes.getApplicationNames()) {
+				%>
+
+					<ul>
+						<li>
+							<%= HtmlUtil.escape(assignScopesDisplayContext.getApplicationDescription(applicationName)) %><br />
+
+							<font size="1">( <%= HtmlUtil.escape(StringUtil.merge(assignableScopes.getApplicationScopeDescription(applicationName))) %>)</font>
+						</li>
+					</ul>
+
+				<%
+				}
+				%>
+
+			</div>
+		</div>
+
+	<%
+	}
+	%>
+
+</div>

@@ -44,52 +44,92 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 	</div>
 </c:if>
 
-<aui:script>
-	function <portlet:namespace />activateAccount() {
-		var $ = AUI.$;
+<aui:script sandbox="<%= true %>">
+	var showStatusMessage = Liferay.lazyLoad(
+		'metal-dom/src/dom',
+		function(dom, type, message) {
+			var messageContainer = document.getElementById('<portlet:namespace />login-status-messages');
 
-		var form = $(document.<portlet:namespace />fm);
+			if (messageContainer) {
+				dom.removeClasses(messageContainer, 'alert-danger');
+				dom.removeClasses(messageContainer, 'alert-success');
 
-		function onError() {
-			var message = '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>';
+				dom.addClasses(messageContainer, 'alert alert-' + type);
 
-			<portlet:namespace />showStatusMessage('danger', message);
+				messageContainer.innerHTML(message);
 
-			$('.anonymous-account').addClass('hide');
+				dom.removeClasses(messageContainer, 'hide');
+			}
 		}
+	);
 
-		form.ajaxSubmit(
-			{
-				dataType: 'json',
-				error: onError,
-				success: function(responseData) {
-					var exception = responseData.exception;
+	window.<portlet:namespace />activateAccount = Liferay.lazyLoad(
+		'metal-dom/src/dom',
+		function(dom) {
+			var form = document.getElementById('<portlet:namespace />fm');
 
-					var message;
+			function onError() {
+				var message = '<liferay-ui:message key="your-request-failed-to-complete" />';
 
-					if (!exception) {
-						var userStatus = responseData.userStatus;
+				showStatusMessage('danger', message);
 
-						if (userStatus == 'user_added') {
-							message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account-your-password-was-sent-to-x", HtmlUtil.escape(emailAddress), false) %>';
-						}
-						else if (userStatus == 'user_pending') {
-							message = '<%= UnicodeLanguageUtil.format(request, "thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved", HtmlUtil.escape(emailAddress), false) %>';
-						}
+				var anonymousAccount = form.querySelector('.anonymous-account');
 
-						<portlet:namespace />showStatusMessage('success', message);
+				if (anonymousAccount) {
+					dom.addClasses(anonymousAccount, 'hide');
 
-						$('.anonymous-account').addClass('hide');
-					}
-					else {
-						onError();
-					}
+					dom.removeClasses(anonymousAccount, 'show');
 				}
 			}
-		);
-	}
 
-	function <portlet:namespace />closeDialog() {
+			fetch(
+				'<%= updateIncompleteUserURL %>',
+				{
+					body: new FormData(form),
+					credentials: 'include',
+					headers: new Headers(
+						{
+							'Content-Type': 'application/json'
+						}
+					),
+					method: 'POST'
+				}
+			).then(
+				response => {
+					return response.ok ? response.json() : Promise.reject();
+				}
+			).then(
+				data => {
+					return !data.exception ? data.userStatus : Promise.reject();
+				}
+			).then(
+				userStatus => {
+					var message = '';
+
+					if (userStatus == 'user_added') {
+						message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account-your-password-was-sent-to-x" translateArguments="<%= false %>" />';
+					}
+					else if (userStatus == 'user_pending') {
+						message = '<liferay-ui:message arguments="<%= emailAddress %>" key="thank-you-for-creating-an-account.-you-will-be-notified-via-email-at-x-when-your-account-has-been-approved" translateArguments="<%= false %>" />';
+					}
+
+					showStatusMessage('success', message);
+
+					var anonymousAccount = document.querySelector('.anonymous-account');
+
+					if (anonymousAccount) {
+						dom.addClasses(anonymousAccount, 'hide');
+
+						dom.removeClasses(anonymousAccount, 'show');
+					}
+				}
+			).catch(
+				onError
+			);
+		}
+	);
+
+	window.<portlet:namespace />closeDialog = function() {
 		var namespace = window.parent.namespace;
 
 		Liferay.fire(
@@ -98,17 +138,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 				id: namespace + 'signInDialog'
 			}
 		);
-	}
-
-	function <portlet:namespace />showStatusMessage(type, message) {
-		var messageContainer = AUI.$('#<portlet:namespace />login-status-messages');
-
-		messageContainer.removeClass('alert-danger').removeClass('alert-success');
-
-		messageContainer.addClass('alert alert-' + type);
-
-		messageContainer.html(message).removeClass('hide');
-	}
+	};
 
 	<c:if test="<%= !company.isStrangers() && (user == null) %>">
 		<portlet:namespace />closeDialog();

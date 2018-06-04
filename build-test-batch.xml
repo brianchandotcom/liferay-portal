@@ -176,7 +176,10 @@ lportal_BS
 				]]>
 			</beanshell>
 
-			<copy file="@{artifact.file}" tofile="${local.cache.artifact}" />
+			<copy
+				file="@{artifact.file}"
+				tofile="${local.cache.artifact}"
+			/>
 
 			<propertyfile file="${project.dir}/.gradle/gradle.properties">
 				<entry key="@{artifact.name}.version" value="@{artifact.version}" />

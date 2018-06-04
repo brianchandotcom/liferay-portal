@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(category = "security-tools")
+@ExtendedObjectClassDefinition(category = "audit")
 @Meta.OCD(
 	id = "com.liferay.portal.security.audit.configuration.AuditConfiguration",
 	localization = "content/Language", name = "audit-configuration-name"

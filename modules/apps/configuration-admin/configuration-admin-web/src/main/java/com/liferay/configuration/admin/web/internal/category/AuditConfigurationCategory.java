@@ -15,14 +15,19 @@
 package com.liferay.configuration.admin.web.internal.category;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
 @Component
-public class OpenIdConfigurationCategory implements ConfigurationCategory {
+public class AuditConfigurationCategory
+	implements ConfigurationCategory {
+
+	@Override
+	public String getCategoryIcon() {
+		return _CATEGORY_ICON;
+	}
 
 	@Override
 	public String getCategoryKey() {
@@ -34,7 +39,9 @@ public class OpenIdConfigurationCategory implements ConfigurationCategory {
 		return _CATEGORY_SECTION;
 	}
 
-	private static final String _CATEGORY_KEY = "open-id";
+	private static final String _CATEGORY_ICON = "view";
+
+	private static final String _CATEGORY_KEY = "audit";
 
 	private static final String _CATEGORY_SECTION = "security";
 

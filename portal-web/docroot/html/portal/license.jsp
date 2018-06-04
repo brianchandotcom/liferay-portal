@@ -17,23 +17,23 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <style type="text/css">
+	.alert-danger, .alert-success {
+		margin: 15px auto 5px;
+	}
+
 	.build-info {
 		color: #555;
 		font-size: 11px;
 		margin: 0 0 15px 0;
 	}
 
-	.license-table td, .license-table th {
-		padding: 0 5px;
-		vertical-align: top;
-	}
-
 	.license-form {
 		padding-bottom: 30px;
 	}
 
-	.alert-danger, .alert-success {
-		margin: 15px auto 5px;
+	.license-table td, .license-table th {
+		padding: 0 5px;
+		vertical-align: top;
 	}
 
 	.version-info {
@@ -124,6 +124,9 @@ dateFormatDateTime.setTimeZone(timeZone);
 									<th>
 										<liferay-ui:message key="mac-addresses" />
 									</th>
+									<th>
+										<liferay-ui:message key="processor-cores" />
+									</th>
 								</c:if>
 							</tr>
 							<tr>
@@ -162,6 +165,9 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 										</c:if>
 									</td>
+									<td>
+										<%= serverInfo.get("processorCores") %>
+									</td>
 								</c:if>
 							</tr>
 						</table>
@@ -185,6 +191,9 @@ dateFormatDateTime.setTimeZone(timeZone);
 									<liferay-ui:message key="type" />
 								</th>
 								<th>
+									<liferay-ui:message key="max-processor-cores" />
+								</th>
+								<th>
 									<liferay-ui:message key="start-date" />
 								</th>
 								<th>
@@ -206,6 +215,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 										long startDateTime = GetterUtil.getLong(curLicenseProperties.get("startDate"));
 										long expirationDateTime = GetterUtil.getLong(curLicenseProperties.get("expirationDate"));
 										int maxConcurrentUsers = GetterUtil.getInteger(curLicenseProperties.get("maxConcurrentUsers"));
+										String maxProcessorCores = curLicenseProperties.get("maxProcessorCores");
 										int maxUsers = GetterUtil.getInteger(curLicenseProperties.get("maxUsers"));
 									%>
 
@@ -240,6 +250,9 @@ dateFormatDateTime.setTimeZone(timeZone);
 											</td>
 											<td>
 												<liferay-ui:message key='<%= curLicenseProperties.get("type") %>' />
+											</td>
+											<td>
+												<%= maxProcessorCores %>
 											</td>
 											<td>
 												<%= dateFormatDateTime.format(new Date(startDateTime)) %>
@@ -348,6 +361,9 @@ dateFormatDateTime.setTimeZone(timeZone);
 										<th>
 											<liferay-ui:message key="mac-addresses" />
 										</th>
+										<th>
+											<liferay-ui:message key="processor-cores" />
+										</th>
 									</c:if>
 								</tr>
 								<tr>
@@ -356,6 +372,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 									<c:if test='<%= GetterUtil.getBoolean(PropsUtil.get("license.server.info.display"), true) %>'>
 										<td id="node_<%= clusterNode.getClusterNodeId() %>_ipAddresses"></td>
 										<td id="node_<%= clusterNode.getClusterNodeId() %>_macAddresses"></td>
+										<td id="node_<%= clusterNode.getClusterNodeId() %>_processorCores"></td>
 									</c:if>
 								</tr>
 							</table>
@@ -383,6 +400,9 @@ dateFormatDateTime.setTimeZone(timeZone);
 									</th>
 									<th>
 										<liferay-ui:message key="type" />
+									</th>
+									<th>
+										<liferay-ui:message key="max-processor-cores" />
 									</th>
 									<th>
 										<liferay-ui:message key="start-date" />
@@ -476,6 +496,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 							A.one('#node_<%= clusterNode.getClusterNodeId() %>_hostName').html(message.hostName + ':<%= clusterNode.getPortalPort() %><%= (clusterNode.getPortalPort() == -1) ? "*" : "" %>');
 							A.one('#node_<%= clusterNode.getClusterNodeId() %>_ipAddresses').html(message.ipAddresses.split(',').join('<br />'));
 							A.one('#node_<%= clusterNode.getClusterNodeId() %>_macAddresses').html(message.macAddresses.split(',').join('<br />'));
+							A.one('#node_<%= clusterNode.getClusterNodeId() %>_processorCores').html(message.processorCores);
 						}
 					);
 
@@ -517,6 +538,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 								addColumn(row, LString.escapeHTML(message[i].owner));
 								addColumn(row, LString.escapeHTML(message[i].description));
 								addColumn(row, message[i].type);
+								addColumn(row, message[i].maxProcessorCores);
 								addColumn(row, new Date(Number(message[i].startDate)).toLocaleDateString());
 								addColumn(row, new Date(Number(message[i].expirationDate)).toLocaleDateString());
 

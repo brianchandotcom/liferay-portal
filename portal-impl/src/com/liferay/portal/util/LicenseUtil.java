@@ -195,6 +195,7 @@ public class LicenseUtil {
 		serverInfo.put("hostName", PortalUtil.getComputerName());
 		serverInfo.put("ipAddresses", StringUtil.merge(getIpAddresses()));
 		serverInfo.put("macAddresses", StringUtil.merge(getMacAddresses()));
+		serverInfo.put("processorCores", String.valueOf(getProcessorCores()));
 
 		return serverInfo;
 	}
@@ -444,6 +445,7 @@ public class LicenseUtil {
 			jsonObject.put("hostName", PortalUtil.getComputerName());
 			jsonObject.put("ipAddresses", StringUtil.merge(getIpAddresses()));
 			jsonObject.put("macAddresses", StringUtil.merge(getMacAddresses()));
+			jsonObject.put("processorCores", getProcessorCores());
 			jsonObject.put("serverId", Arrays.toString(getServerIdBytes()));
 		}
 

@@ -363,7 +363,10 @@ public class FriendlyURLEntryLocalServiceImpl
 				Math.min(
 					maxLength - suffix.length(), normalizedUrlTitle.length()));
 
-			curUrlTitle = prefix + suffix;
+			String decodedUrlTitle = HttpUtil.decodePath(prefix + suffix);
+
+			curUrlTitle = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+				decodedUrlTitle);
 		}
 
 		return curUrlTitle;

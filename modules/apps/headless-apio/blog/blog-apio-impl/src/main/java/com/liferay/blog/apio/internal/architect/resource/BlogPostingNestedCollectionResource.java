@@ -37,13 +37,15 @@ import com.liferay.media.object.apio.architect.identifier.MediaObjectIdentifier;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.identifier.ClassNameClassPK;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.apio.user.CurrentUser;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,7 +71,7 @@ public class BlogPostingNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addBlogsEntry, CurrentUser.class,
+			this::_addBlogsEntry,
 			_hasPermission.forAddingIn(WebSiteIdentifier.class),
 			BlogPostingForm::buildForm
 		).build();
@@ -90,8 +92,8 @@ public class BlogPostingNestedCollectionResource
 			idempotent(_blogsEntryService::deleteEntry),
 			_hasPermission::forDeleting
 		).addUpdater(
-			this::_updateBlogsEntry, CurrentUser.class,
-			_hasPermission::forUpdating, BlogPostingForm::buildForm
+			this::_updateBlogsEntry, _hasPermission::forUpdating,
+			BlogPostingForm::buildForm
 		).build();
 	}
 
@@ -144,19 +146,36 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private BlogsEntry _addBlogsEntry(
-			long groupId, BlogPostingForm blogPostingForm,
-			CurrentUser currentUser)
+			long groupId, BlogPostingForm blogPostingForm)
 		throws PortalException {
 
+		Optional<Long> optional = blogPostingForm.getAuthorIdOptional();
+
+		ImageSelector imageSelector = blogPostingForm.getImageSelector(
+			_dlAppLocalService::getFileEntry);
+
+		ServiceContext serviceContext = blogPostingForm.getServiceContext(
+			groupId);
+
+		if (optional.isPresent()) {
+			return _blogsEntryService.importEntry(
+				optional.get(), blogPostingForm.getHeadline(),
+				blogPostingForm.getAlternativeHeadline(),
+				blogPostingForm.getSemanticUrl(),
+				blogPostingForm.getDescription(),
+				blogPostingForm.getArticleBody(),
+				blogPostingForm.getDisplayDate(),
+				blogPostingForm.getImageCaption(), imageSelector, null,
+				serviceContext);
+		}
+
 		return _blogsEntryService.addEntry(
-			blogPostingForm.getAuthorId(currentUser),
 			blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(),
 			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
 			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),
-			blogPostingForm.getImageCaption(),
-			blogPostingForm.getImageSelector(_dlAppLocalService::getFileEntry),
-			null, blogPostingForm.getServiceContext(groupId));
+			blogPostingForm.getImageCaption(), imageSelector, null,
+			serviceContext);
 	}
 
 	private List<String> _getBlogsEntryTags(BlogsEntry blogsEntry) {
@@ -179,15 +198,13 @@ public class BlogPostingNestedCollectionResource
 	}
 
 	private BlogsEntry _updateBlogsEntry(
-			long blogsEntryId, BlogPostingForm blogPostingForm,
-			CurrentUser currentUser)
+			long blogsEntryId, BlogPostingForm blogPostingForm)
 		throws PortalException {
 
 		BlogsEntry blogsEntry = _blogsEntryService.getEntry(blogsEntryId);
 
 		return _blogsEntryService.updateEntry(
-			blogsEntryId, blogPostingForm.getAuthorId(currentUser),
-			blogPostingForm.getHeadline(),
+			blogsEntryId, blogPostingForm.getHeadline(),
 			blogPostingForm.getAlternativeHeadline(),
 			blogPostingForm.getSemanticUrl(), blogPostingForm.getDescription(),
 			blogPostingForm.getArticleBody(), blogPostingForm.getDisplayDate(),

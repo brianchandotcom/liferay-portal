@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.facet.SearchFacet;
@@ -126,7 +127,9 @@ public class SearchDisplayContext {
 		}
 
 		if (luceneSyntax) {
-			searchContext.setAttribute("luceneSyntax", Boolean.TRUE);
+			searchContext.setAttribute(
+				SearchContextAttributes.ATTRIBUTE_KEY_LUCENE_SYNTAX,
+				Boolean.TRUE);
 		}
 
 		searchContext.setKeywords(_keywords.getKeywords());

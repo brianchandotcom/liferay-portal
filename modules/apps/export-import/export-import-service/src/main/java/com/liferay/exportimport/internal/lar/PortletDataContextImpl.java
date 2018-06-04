@@ -2342,14 +2342,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 		}
 
-		long groupId = BeanPropertiesUtil.getLongSilent(
-			classedModel, "groupId");
+		if (classedModel instanceof StagedGroupedModel) {
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)classedModel;
 
-		if (groupId > 0) {
-			referenceElement.addAttribute("group-id", String.valueOf(groupId));
+			referenceElement.addAttribute(
+				"group-id", String.valueOf(stagedGroupedModel.getGroupId()));
 
 			try {
-				Group group = GroupLocalServiceUtil.getGroup(groupId);
+				Group group = GroupLocalServiceUtil.getGroup(
+					stagedGroupedModel.getGroupId());
 
 				long liveGroupId = group.getLiveGroupId();
 
@@ -2383,7 +2385,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to find group " + groupId);
+					_log.warn(
+						"Unable to find group " +
+							stagedGroupedModel.getGroupId());
 				}
 			}
 		}

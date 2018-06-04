@@ -330,8 +330,9 @@ public class LayoutSetPrototypeStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean isSkipImportReferenceStagedModels() {
-		return true;
+	protected void importReferenceStagedModels(
+		PortletDataContext portletDataContext,
+		LayoutSetPrototype layoutSetPrototype) {
 	}
 
 	@Reference(unbind = "-")

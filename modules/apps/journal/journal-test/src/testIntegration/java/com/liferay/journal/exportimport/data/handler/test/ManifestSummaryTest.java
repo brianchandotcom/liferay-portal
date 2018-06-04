@@ -170,7 +170,7 @@ public class ManifestSummaryTest
 			manifestSummary.getModelAdditionCounters();
 
 		Assert.assertEquals(
-			modelAdditionCounters.toString(), 5, modelAdditionCounters.size());
+			modelAdditionCounters.toString(), 4, modelAdditionCounters.size());
 
 		Assert.assertEquals(
 			1,
@@ -223,7 +223,7 @@ public class ManifestSummaryTest
 			manifestSummary.getModelAdditionCounters();
 
 		Assert.assertEquals(
-			modelAdditionCounters.toString(), 5, modelAdditionCounters.size());
+			modelAdditionCounters.toString(), 4, modelAdditionCounters.size());
 
 		Assert.assertEquals(
 			1,

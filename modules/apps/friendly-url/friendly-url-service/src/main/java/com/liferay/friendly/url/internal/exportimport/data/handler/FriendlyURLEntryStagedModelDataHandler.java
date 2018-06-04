@@ -107,8 +107,7 @@ public class FriendlyURLEntryStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(className);
 
 		long classPK = MapUtil.getLong(
-			newPrimaryKeysMap, friendlyURLEntry.getClassPK(),
-			friendlyURLEntry.getClassPK());
+			newPrimaryKeysMap, friendlyURLEntry.getClassPK());
 
 		FriendlyURLEntry existingFriendlyURLEntry =
 			fetchStagedModelByUuidAndGroupId(

@@ -126,8 +126,8 @@ public class MBBanStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean isSkipImportReferenceStagedModels() {
-		return true;
+	protected void importReferenceStagedModels(
+		PortletDataContext portletDataContext, MBBan ban) {
 	}
 
 	@Reference(unbind = "-")

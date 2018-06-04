@@ -695,14 +695,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {
 
-		Assert.assertTrue(
-			stagedModel.getCreateDate() + " " +
-				importedStagedModel.getCreateDate(),
-			DateUtil.equals(
-				stagedModel.getCreateDate(),
-				importedStagedModel.getCreateDate()));
-		Assert.assertEquals(
-			stagedModel.getUuid(), importedStagedModel.getUuid());
+		super.validateImportedStagedModel(stagedModel, importedStagedModel);
 
 		JournalArticle article = (JournalArticle)stagedModel;
 		JournalArticle importedArticle = (JournalArticle)importedStagedModel;
@@ -710,6 +703,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		Assert.assertEquals(
 			(Double)article.getVersion(), (Double)importedArticle.getVersion());
 		Assert.assertEquals(article.getTitle(), importedArticle.getTitle());
+		Assert.assertEquals(
+			article.getUrlTitle(), importedArticle.getUrlTitle());
 		Assert.assertEquals(
 			article.getDescription(), importedArticle.getDescription());
 		Assert.assertEquals(article.getContent(), importedArticle.getContent());

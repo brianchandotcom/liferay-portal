@@ -653,10 +653,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		return 0;
 	}
 
-	protected String[] getSkipImportReferenceStagedModelNames() {
-		return null;
-	}
-
 	protected void importAssetCategories(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
@@ -821,10 +817,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (isSkipImportReferenceStagedModels()) {
-			return;
-		}
-
 		Element stagedModelElement =
 			portletDataContext.getImportDataStagedModelElement(stagedModel);
 
@@ -850,10 +842,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			if (className.equals(AssetCategory.class.getName()) ||
 				className.equals(RatingsEntry.class.getName()) ||
-				className.equals(stagedModelClassName) ||
-				ArrayUtil.contains(
-					getSkipImportReferenceStagedModelNames(), className,
-					false)) {
+				className.equals(stagedModelClassName)) {
 
 				continue;
 			}
@@ -864,10 +853,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, stagedModel, className, classPK);
 		}
-	}
-
-	protected boolean isSkipImportReferenceStagedModels() {
-		return false;
 	}
 
 	protected boolean isStagedModelInTrash(T stagedModel) {

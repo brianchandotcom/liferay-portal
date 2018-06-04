@@ -222,8 +222,8 @@ public class RepositoryStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean isSkipImportReferenceStagedModels() {
-		return true;
+	protected void importReferenceStagedModels(
+		PortletDataContext portletDataContext, Repository stagedModel) {
 	}
 
 	private long _getRepositoryClassNameId(

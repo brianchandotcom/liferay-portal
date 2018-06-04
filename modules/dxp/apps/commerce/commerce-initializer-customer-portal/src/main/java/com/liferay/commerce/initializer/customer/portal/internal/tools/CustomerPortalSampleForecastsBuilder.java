@@ -16,19 +16,15 @@ package com.liferay.commerce.initializer.customer.portal.internal.tools;
 
 import com.liferay.commerce.forecast.model.CommerceForecastEntryConstants;
 import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalGroupInitializer;
+import com.liferay.commerce.initializer.customer.portal.internal.tools.util.CustomerPortalToolsUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Time;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -56,7 +52,7 @@ public class CustomerPortalSampleForecastsBuilder {
 
 		Path outputDirPath = Paths.get(outputDirName);
 
-		String productsJSON = _read(
+		String productsJSON = CustomerPortalToolsUtil.read(
 			CustomerPortalGroupInitializer.DEPENDENCY_PATH + "products.json");
 
 		JSONArray productsJSONArray = new JSONArray(productsJSON);
@@ -235,38 +231,6 @@ public class CustomerPortalSampleForecastsBuilder {
 		return _random.nextDouble() * 10 + 2;
 	}
 
-	private String _read(String name) throws IOException {
-		StringBuilder sb = new StringBuilder();
-
-		ClassLoader classLoader =
-			CustomerPortalSampleForecastsBuilder.class.getClassLoader();
-
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(
-					classLoader.getResourceAsStream(name),
-					StandardCharsets.UTF_8))) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				sb.append(line);
-				sb.append(System.lineSeparator());
-			}
-		}
-
-		return sb.toString();
-	}
-
-	private void _write(Path path, JSONArray jsonArray) throws IOException {
-		String json = jsonArray.toString(StringPool.FOUR_SPACES.length());
-
-		json = json.replace(StringPool.FOUR_SPACES, StringPool.TAB);
-
-		Files.createDirectories(path.getParent());
-
-		Files.write(path, json.getBytes(StandardCharsets.UTF_8));
-	}
-
 	private void _writeForecasts(
 			Path outputDirPath, int customerId, int period, int target,
 			JSONArray productsJSONArray)
@@ -299,7 +263,7 @@ public class CustomerPortalSampleForecastsBuilder {
 		Path path = _getOutputPath(
 			outputDirPath, customerId, sku, period, target);
 
-		_write(path, jsonArray);
+		CustomerPortalToolsUtil.write(path, jsonArray);
 	}
 
 	private static final int _MAX_QUANTITY = 1000000;

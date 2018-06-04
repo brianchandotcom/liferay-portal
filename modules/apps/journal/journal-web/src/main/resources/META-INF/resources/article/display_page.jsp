@@ -47,7 +47,18 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 		<liferay-frontend:fieldset
 			id='<%= renderResponse.getNamespace() + "eventsContainer" %>'
 		>
-			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() %>" label='<%= LanguageUtil.format(request, "use-default-display-page-for-x-x", new Object[] {journalDisplayContext.getDDMStructureName(), editArticleDisplayPageDisplayContext.getDefaultAssetDisplayPageName()}, false) %>' name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />
+
+			<%
+			String defaultAssetDisplayPageName = editArticleDisplayPageDisplayContext.getDefaultAssetDisplayPageName();
+
+			String taglibLabelTypeDefault = LanguageUtil.format(request, "use-default-display-page-for-x-x", new Object[] {journalDisplayContext.getDDMStructureName(), Validator.isNotNull(defaultAssetDisplayPageName) ? defaultAssetDisplayPageName : LanguageUtil.get(request, "none")}, false);
+
+			if (Validator.isNull(defaultAssetDisplayPageName)) {
+				taglibLabelTypeDefault += " <span class=\"small text-muted\">" + LanguageUtil.get(request, "this-content-will-not-be-referenceable-with-an-url") + "</span>";
+			}
+			%>
+
+			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() %>" label="<%= taglibLabelTypeDefault %>" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_DEFAULT %>" />
 
 			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() %>" label="use-a-specific-display-page-for-the-web-content" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_SPECIFIC %>" />
 
@@ -86,9 +97,11 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 				</c:if>
 			</div>
 
-			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeNone() %>" label="no-display-page" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
+			<%
+			String taglibLabelTypeNone = LanguageUtil.get(request, "no-display-page") + " <span class=\"small text-muted\">" + LanguageUtil.get(request, "this-content-will-not-be-referenceable-with-an-url") + "</span>";
+			%>
 
-			<span class="small text-muted"><liferay-ui:message key="this-content-will-not-be-referenceable-with-an-url" /></span>
+			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeNone() %>" label="<%= taglibLabelTypeNone %>" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />
 		</liferay-frontend:fieldset>
 
 		<aui:script use="liferay-item-selector-dialog">

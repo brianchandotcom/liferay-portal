@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Serializable;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -51,9 +53,8 @@ public class ExportImportConfigurationFactory {
 		boolean privateLayout = ParamUtil.getBoolean(
 			portletRequest, "privateLayout");
 
-		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap();
+		Map<String, String[]> parameterMap = getDefaultPublishingParameters(
+			portletRequest);
 
 		return buildDefaultLocalPublishingExportImportConfiguration(
 			themeDisplay.getUser(), sourceGroupId, targetGroupId, privateLayout,
@@ -163,8 +164,16 @@ public class ExportImportConfigurationFactory {
 	public static Map<String, String[]> getDefaultPublishingParameters(
 		PortletRequest portletRequest) {
 
-		return ExportImportConfigurationParameterMapFactoryUtil.
-			buildParameterMap();
+		Map<String, String[]> parameterMapFromRequest = new LinkedHashMap<>(
+			portletRequest.getParameterMap());
+
+		Map<String, String[]> defaultParameterMap =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
+
+		MapUtil.merge(parameterMapFromRequest, defaultParameterMap);
+
+		return defaultParameterMap;
 	}
 
 	protected static ExportImportConfiguration

@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>TAG</td>
-	<td>//span/span[contains(.,'${key_tagName}')]</td>
+	<td>xpath=(//span//span[contains(.,'${key_tagName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

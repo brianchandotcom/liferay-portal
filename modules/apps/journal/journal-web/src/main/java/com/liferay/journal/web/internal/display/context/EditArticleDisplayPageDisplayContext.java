@@ -159,15 +159,10 @@ public class EditArticleDisplayPageDisplayContext {
 			return _defaultAssetDisplayPageName;
 		}
 
-		String defaultLayoutPageTemplateEntryName = LanguageUtil.get(
-			_request, "none");
-
 		AssetEntry assetEntry = _getAssetEntry();
 
 		if (assetEntry == null) {
-			_defaultAssetDisplayPageName = defaultLayoutPageTemplateEntryName;
-
-			return _defaultAssetDisplayPageName;
+			return null;
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -177,9 +172,7 @@ public class EditArticleDisplayPageDisplayContext {
 					assetEntry.getClassTypeId());
 
 		if (layoutPageTemplateEntry == null) {
-			_defaultAssetDisplayPageName = defaultLayoutPageTemplateEntryName;
-
-			return _defaultAssetDisplayPageName;
+			return null;
 		}
 
 		_defaultAssetDisplayPageName = layoutPageTemplateEntry.getName();

@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.upgrade;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.knowledge.base.internal.upgrade.v2_0_2.UpgradeKBArticle;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
@@ -68,7 +69,7 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.2.0", "1.3.0",
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_0.
-				UpgradeKBAttachments(),
+				UpgradeKBAttachments(_store),
 			new com.liferay.knowledge.base.internal.upgrade.v1_3_0.
 				UpgradePortletPreferences());
 
@@ -135,5 +136,8 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	private SettingsFactory _settingsFactory;
+
+	@Reference(target = "(dl.store.upgrade=true)")
+	private Store _store;
 
 }

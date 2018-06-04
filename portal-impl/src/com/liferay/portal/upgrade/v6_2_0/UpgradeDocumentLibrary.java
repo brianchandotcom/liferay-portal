@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v6_2_0;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,26 +58,6 @@ import java.util.Map;
  */
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
-	protected void deleteChecksumDirectory() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select distinct companyId from DLFileEntry");
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				long companyId = rs.getLong("companyId");
-
-				DLStoreUtil.deleteDirectory(companyId, 0, "checksum");
-			}
-		}
-	}
-
-	protected void deleteTempDirectory() {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			DLStoreUtil.deleteDirectory(0, 0, "liferay_temp/");
-		}
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
 
@@ -90,14 +69,6 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			new AlterColumnType("name", "STRING null"));
 
 		updateFileEntryTypes();
-
-		// Checksum directory
-
-		deleteChecksumDirectory();
-
-		// Temp directory
-
-		deleteTempDirectory();
 
 		// DLFolder
 

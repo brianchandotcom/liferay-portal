@@ -15,7 +15,7 @@
 package com.liferay.knowledge.base.internal.upgrade.v1_3_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.store.DLStoreUtil;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,9 +38,13 @@ import java.sql.ResultSet;
  */
 public class UpgradeKBAttachments extends UpgradeProcess {
 
+	public UpgradeKBAttachments(Store store) {
+		_store = store;
+	}
+
 	protected void deleteEmptyDirectories() throws Exception {
 		for (long companyId : PortalUtil.getCompanyIds()) {
-			DLStoreUtil.deleteDirectory(
+			_store.deleteDirectory(
 				companyId, CompanyConstants.SYSTEM, "knowledgebase/kbarticles");
 		}
 	}
@@ -57,8 +61,7 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 		String dirName = "knowledgebase/kbarticles/" + resourcePrimKey;
 
-		return DLStoreUtil.getFileNames(
-			companyId, CompanyConstants.SYSTEM, dirName);
+		return _store.getFileNames(companyId, CompanyConstants.SYSTEM, dirName);
 	}
 
 	/**
@@ -114,7 +117,7 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 		for (String attachment : getAttachments(companyId, resourcePrimKey)) {
 			try {
-				if (!DLStoreUtil.hasFile(
+				if (!_store.hasFile(
 						companyId, CompanyConstants.SYSTEM, attachment)) {
 
 					continue;
@@ -122,7 +125,7 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 				long folderId = getFolderId(groupId, userId, resourcePrimKey);
 
-				byte[] bytes = DLStoreUtil.getFileAsBytes(
+				byte[] bytes = _store.getFileAsBytes(
 					companyId, CompanyConstants.SYSTEM, attachment);
 
 				String title = FileUtil.getShortFileName(attachment);
@@ -136,7 +139,7 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 					groupId, userId, _KB_ARTICLE_CLASS_NAME, resourcePrimKey,
 					_PORTLET_ID, folderId, bytes, title, mimeType, false);
 
-				DLStoreUtil.deleteFile(
+				_store.deleteFile(
 					companyId, CompanyConstants.SYSTEM, attachment);
 			}
 			catch (PortalException pe) {
@@ -154,5 +157,7 @@ public class UpgradeKBAttachments extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeKBAttachments.class);
+
+	private final Store _store;
 
 }

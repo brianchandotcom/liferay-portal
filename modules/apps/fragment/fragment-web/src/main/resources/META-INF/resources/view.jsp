@@ -46,7 +46,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 												<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 													<liferay-ui:icon
 														icon="plus"
-														iconCssClass="btn btn-outline-borderless btn-outline-secondary btn-sm"
+														iconCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
 														markupView="lexicon"
 														url="<%= editFragmentCollectionURL %>"
 													/>

@@ -28,7 +28,7 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateDi
 	markupView="lexicon"
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
-	triggerCssClass="btn btn-monospaced btn-outline-borderless btn-outline-secondary"
+	triggerCssClass="btn btn-unstyled text-secondary"
 >
 	<c:if test="<%= LayoutPageTemplateCollectionPermission.contains(permissionChecker, layoutPageTemplateCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editLayoutPageTemplateCollectionURL">

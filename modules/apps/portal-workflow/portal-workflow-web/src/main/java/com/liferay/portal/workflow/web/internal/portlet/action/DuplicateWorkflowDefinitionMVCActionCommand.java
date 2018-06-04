@@ -49,6 +49,19 @@ import org.osgi.service.component.annotations.Component;
 public class DuplicateWorkflowDefinitionMVCActionCommand
 	extends DeployWorkflowDefinitionMVCActionCommand {
 
+	protected void addDefaultTitle(
+		ActionRequest actionRequest, Map<Locale, String> titleMap) {
+
+		String title = titleMap.get(LocaleUtil.getDefault());
+
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
+			title = ParamUtil.getString(
+				actionRequest, "defaultDuplicationTitle");
+
+			titleMap.put(LocaleUtil.getDefault(), title);
+		}
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -63,21 +76,13 @@ public class DuplicateWorkflowDefinitionMVCActionCommand
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, randomNamespace + "title");
 
-		String title = titleMap.get(LocaleUtil.getDefault());
-
-		if (titleMap.isEmpty() || Validator.isNull(title)) {
-			title = ParamUtil.getString(
-				actionRequest, "defaultDuplicationTitle");
-		}
-
 		String name = ParamUtil.getString(actionRequest, "name");
-
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.deployWorkflowDefinition(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(), title,
-				name, content.getBytes());
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				getTitle(actionRequest, titleMap), name, content.getBytes());
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
 

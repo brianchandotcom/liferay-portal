@@ -62,7 +62,7 @@ public class SaveWorkflowDefinitionMVCActionCommand
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.saveWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(titleMap), name, content.getBytes());
+				getTitle(actionRequest, titleMap), name, content.getBytes());
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
 

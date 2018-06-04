@@ -36,19 +36,6 @@ import java.util.TreeSet;
 public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public void preFormat() throws Exception {
-		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
-
-		_checkstyleLogger = new CheckstyleLogger(
-			new UnsyncByteArrayOutputStream(), true,
-			sourceFormatterArgs.getBaseDirName());
-		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
-			"checkstyle.xml", getPropertiesMap(), sourceFormatterArgs);
-
-		setCheckstyleConfiguration(_checkstyleConfiguration);
-	}
-
-	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		String[] includes = getIncludes();
 
@@ -101,6 +88,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			printError(fileName, sourceFormatterMessage.toString());
 		}
+	}
+
+	@Override
+	protected void preFormat() throws Exception {
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
+		_checkstyleLogger = new CheckstyleLogger(
+			new UnsyncByteArrayOutputStream(), true,
+			sourceFormatterArgs.getBaseDirName());
+		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
+			"checkstyle.xml", getPropertiesMap(), sourceFormatterArgs);
+
+		setCheckstyleConfiguration(_checkstyleConfiguration);
 	}
 
 	private String[] _getPluginExcludes(String pluginDirectoryName) {

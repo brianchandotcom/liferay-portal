@@ -195,10 +195,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public void preFormat() throws Exception {
-	}
-
-	@Override
 	public void setAllFileNames(List<String> allFileNames) {
 		_allFileNames = allFileNames;
 	}
@@ -424,6 +420,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void postFormat() throws Exception {
+	}
+
+	protected void preFormat() throws Exception {
 	}
 
 	protected void printError(String fileName, String message) {

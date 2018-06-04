@@ -47,20 +47,6 @@ import java.util.TreeSet;
 public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	public void preFormat() throws Exception {
-		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
-
-		_checkstyleLogger = new AlloyMVCCheckstyleLogger(
-			new UnsyncByteArrayOutputStream(), true,
-			sourceFormatterArgs.getBaseDirName());
-		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
-			"checkstyle-alloy-mvc.xml", getPropertiesMap(),
-			sourceFormatterArgs);
-
-		setCheckstyleConfiguration(_checkstyleConfiguration);
-	}
-
-	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = {"**/null.jsp", "**/tools/**"};
 
@@ -154,6 +140,20 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			printError(fileName, sourceFormatterMessage.toString());
 		}
+	}
+
+	@Override
+	protected void preFormat() throws Exception {
+		SourceFormatterArgs sourceFormatterArgs = getSourceFormatterArgs();
+
+		_checkstyleLogger = new AlloyMVCCheckstyleLogger(
+			new UnsyncByteArrayOutputStream(), true,
+			sourceFormatterArgs.getBaseDirName());
+		_checkstyleConfiguration = CheckstyleUtil.getConfiguration(
+			"checkstyle-alloy-mvc.xml", getPropertiesMap(),
+			sourceFormatterArgs);
+
+		setCheckstyleConfiguration(_checkstyleConfiguration);
 	}
 
 	private Map<String, String> _getDeletedContentsMap(String[] excludes)

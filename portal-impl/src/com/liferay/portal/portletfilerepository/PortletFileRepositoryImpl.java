@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -202,31 +203,31 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			String folderName, ServiceContext serviceContext)
 		throws PortalException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		return _run(
+			() -> {
+				LocalRepository localRepository =
+					RepositoryProviderUtil.getLocalRepository(repositoryId);
 
-		LocalRepository localRepository =
-			RepositoryProviderUtil.getLocalRepository(repositoryId);
+				try {
+					DLAppHelperThreadLocal.setEnabled(false);
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
+					return localRepository.getFolder(
+						parentFolderId, folderName);
+				}
+				catch (NoSuchFolderException nsfe) {
 
-			return localRepository.getFolder(parentFolderId, folderName);
-		}
-		catch (NoSuchFolderException nsfe) {
+					// LPS-52675
 
-			// LPS-52675
+					if (_log.isDebugEnabled()) {
+						_log.debug(nsfe, nsfe);
+					}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
-			}
+					return localRepository.addFolder(
+						userId, parentFolderId, folderName, StringPool.BLANK,
+						serviceContext);
+				}
 
-			return localRepository.addFolder(
-				userId, parentFolderId, folderName, StringPool.BLANK,
-				serviceContext);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+			});
 	}
 
 	@Override
@@ -264,20 +265,12 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
-
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
-
-			return RepositoryLocalServiceUtil.addRepository(
+		return _run(
+			() -> RepositoryLocalServiceUtil.addRepository(
 				user.getUserId(), groupId, classNameId,
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, portletId,
 				StringPool.BLANK, portletId, typeSettingsProperties, true,
-				serviceContext);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+				serviceContext));
 	}
 
 	/**
@@ -324,28 +317,24 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public void deletePortletFileEntry(long fileEntryId)
 		throws PortalException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		_run(
+			FileEntry.class,
+			() -> {
+				try {
+					LocalRepository localRepository =
+						RepositoryProviderUtil.getFileEntryLocalRepository(
+							fileEntryId);
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
+					localRepository.deleteFileEntry(fileEntryId);
+				}
+				catch (NoSuchFileEntryException nsfee) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(nsfee, nsfee);
+					}
+				}
 
-			SystemEventHierarchyEntryThreadLocal.push(FileEntry.class);
-
-			LocalRepository localRepository =
-				RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
-
-			localRepository.deleteFileEntry(fileEntryId);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsfee, nsfee);
-			}
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-
-			SystemEventHierarchyEntryThreadLocal.pop(FileEntry.class);
-		}
+				return null;
+			});
 	}
 
 	@Override
@@ -363,28 +352,24 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 	@Override
 	public void deletePortletFolder(long folderId) throws PortalException {
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		_run(
+			Folder.class,
+			() -> {
+				try {
+					LocalRepository localRepository =
+						RepositoryProviderUtil.getFolderLocalRepository(
+							folderId);
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
+					localRepository.deleteFolder(folderId);
+				}
+				catch (NoSuchFolderException nsfe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(nsfe, nsfe);
+					}
+				}
 
-			SystemEventHierarchyEntryThreadLocal.push(Folder.class);
-
-			LocalRepository localRepository =
-				RepositoryProviderUtil.getFolderLocalRepository(folderId);
-
-			localRepository.deleteFolder(folderId);
-		}
-		catch (NoSuchFolderException nsfe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsfe, nsfe);
-			}
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-
-			SystemEventHierarchyEntryThreadLocal.pop(Folder.class);
-		}
+				return null;
+			});
 	}
 
 	@Override
@@ -665,20 +650,15 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	public FileEntry movePortletFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		return _run(
+			() -> {
+				LocalRepository localRepository =
+					RepositoryProviderUtil.getFileEntryLocalRepository(
+						fileEntryId);
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
-
-			LocalRepository localRepository =
-				RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
-
-			return DLTrashLocalServiceUtil.moveFileEntryToTrash(
-				userId, localRepository.getRepositoryId(), fileEntryId);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+				return DLTrashLocalServiceUtil.moveFileEntryToTrash(
+					userId, localRepository.getRepositoryId(), fileEntryId);
+			});
 	}
 
 	@Override
@@ -700,40 +680,31 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		return _run(
+			() -> {
+				LocalRepository localRepository =
+					RepositoryProviderUtil.getLocalRepository(groupId);
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
-
-			LocalRepository localRepository =
-				RepositoryProviderUtil.getLocalRepository(groupId);
-
-			return localRepository.moveFolder(
-				userId, folderId, parentFolderId, serviceContext);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+				return localRepository.moveFolder(
+					userId, folderId, parentFolderId, serviceContext);
+			});
 	}
 
 	@Override
 	public void restorePortletFileEntryFromTrash(long userId, long fileEntryId)
 		throws PortalException {
 
-		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+		_run(
+			() -> {
+				LocalRepository localRepository =
+					RepositoryProviderUtil.getFileEntryLocalRepository(
+						fileEntryId);
 
-		try {
-			DLAppHelperThreadLocal.setEnabled(false);
+				DLTrashLocalServiceUtil.restoreFileEntryFromTrash(
+					userId, localRepository.getRepositoryId(), fileEntryId);
 
-			LocalRepository localRepository =
-				RepositoryProviderUtil.getFileEntryLocalRepository(fileEntryId);
-
-			DLTrashLocalServiceUtil.restoreFileEntryFromTrash(
-				userId, localRepository.getRepositoryId(), fileEntryId);
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
-		}
+				return null;
+			});
 	}
 
 	@Override
@@ -758,6 +729,36 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			RepositoryProviderUtil.getRepository(repositoryId);
 
 		return repository.search(searchContext);
+	}
+
+	private <T, E extends Throwable> T _run(
+			Class<?> clazz, UnsafeSupplier<T, E> unsafeSupplier)
+		throws E {
+
+		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
+
+		try {
+			DLAppHelperThreadLocal.setEnabled(false);
+
+			if (clazz != null) {
+				SystemEventHierarchyEntryThreadLocal.push(clazz);
+			}
+
+			return unsafeSupplier.get();
+		}
+		finally {
+			if (clazz != null) {
+				SystemEventHierarchyEntryThreadLocal.pop(clazz);
+			}
+
+			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
+		}
+	}
+
+	private <T, E extends Throwable> T _run(UnsafeSupplier<T, E> unsafeSupplier)
+		throws E {
+
+		return _run(null, unsafeSupplier);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -319,9 +319,12 @@
 			<var name="itemName" value="Liferay" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Liferay" />
+		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Home#PAGE" value1="Liferay">
+			<var name="key_pageName" value="Liferay" />
 		</execute>
 
 		<execute function="AssertLocation" value1="https://liferay.com" />

@@ -252,7 +252,9 @@ dateFormatDateTime.setTimeZone(timeZone);
 												<liferay-ui:message key='<%= curLicenseProperties.get("type") %>' />
 											</td>
 											<td>
-												<%= maxProcessorCores %>
+												<c:if test="<%= Validator.isNotNull(maxProcessorCores) %>">
+													<%= maxProcessorCores %>
+												</c:if>
 											</td>
 											<td>
 												<%= dateFormatDateTime.format(new Date(startDateTime)) %>
@@ -538,7 +540,15 @@ dateFormatDateTime.setTimeZone(timeZone);
 								addColumn(row, LString.escapeHTML(message[i].owner));
 								addColumn(row, LString.escapeHTML(message[i].description));
 								addColumn(row, message[i].type);
-								addColumn(row, message[i].maxProcessorCores);
+
+								var maxProcessorCores = '';
+
+								if (message[i].maxProcessorCores) {
+									maxProcessorCores = message[i].maxProcessorCores;
+								}
+
+								addColumn(row, maxProcessorCores);
+
 								addColumn(row, new Date(Number(message[i].startDate)).toLocaleDateString());
 								addColumn(row, new Date(Number(message[i].expirationDate)).toLocaleDateString());
 

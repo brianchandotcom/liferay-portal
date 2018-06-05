@@ -44,6 +44,48 @@ public class JobFactory {
 			return job;
 		}
 
+		if (jobName.contains("test-plugins-acceptance-pullrequest(")) {
+			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
+				new PortalAcceptancePullRequestJob(jobName, testSuiteName);
+
+			GitWorkingDirectory gitWorkingDirectory =
+				portalAcceptancePullRequestJob.getGitWorkingDirectory();
+
+			String subrepositoryModuleName = _getSubrepositoryModuleName(
+				gitWorkingDirectory);
+
+			RepositoryJob repositoryJob = null;
+
+			if (subrepositoryModuleName == null) {
+				repositoryJob = portalAcceptancePullRequestJob;
+			}
+			else {
+				repositoryJob = new SubrepositoryAcceptancePullRequestJob(
+					jobName);
+
+				Properties buildProperties = null;
+
+				try {
+					buildProperties =
+						JenkinsResultsParserUtil.getBuildProperties();
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(
+						"Unable to get build properties", ioe);
+				}
+
+				repositoryJob.setRepositoryDir(
+					new File(
+						JenkinsResultsParserUtil.combine(
+							buildProperties.getProperty("base.repository.dir"),
+							"/", subrepositoryModuleName)));
+			}
+
+			_jobs.put(jobName, repositoryJob);
+
+			return repositoryJob;
+		}
+
 		if (jobName.contains("test-portal-acceptance-pullrequest(")) {
 			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
 				new PortalAcceptancePullRequestJob(jobName, testSuiteName);

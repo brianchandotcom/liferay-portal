@@ -71,10 +71,14 @@ public class CustomerPortalSampleForecastsInitializer
 			if (jsonCustomerId <= accountOrganizationIds.length) {
 				customerId = accountOrganizationIds[jsonCustomerId - 1];
 			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Ignoring imported forecast for customer " +
-						jsonCustomerId);
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Ignoring imported forecast for customer " +
+							jsonCustomerId);
+				}
+
+				return;
 			}
 		}
 
@@ -86,8 +90,12 @@ public class CustomerPortalSampleForecastsInitializer
 			if (cpInstanceSKUsMap.containsKey(sku)) {
 				cpInstanceId = cpInstanceSKUsMap.get(sku);
 			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Ignoring imported forecast for SKU " + sku);
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Ignoring imported forecast for SKU " + sku);
+				}
+
+				return;
 			}
 		}
 

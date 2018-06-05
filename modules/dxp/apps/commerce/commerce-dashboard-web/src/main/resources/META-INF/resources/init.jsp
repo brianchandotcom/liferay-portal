@@ -27,7 +27,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardForecastsChartPortletInstanceConfiguration" %><%@
-page import="com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardInstanceSelectorPortletInstanceConfiguration" %><%@
 page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardDisplayContext" %><%@
 page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardForecastsChartDisplayContext" %><%@
 page import="com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardInstanceSelectorDisplayContext" %><%@

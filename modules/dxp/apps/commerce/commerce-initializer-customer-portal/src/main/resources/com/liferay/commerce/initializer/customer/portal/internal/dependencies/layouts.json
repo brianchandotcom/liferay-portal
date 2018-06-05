@@ -18,13 +18,11 @@
 				"layoutColumnId": "column-4",
 				"layoutColumnPos": 0,
 				"lookAndFeel": {
+					"portletSetupPortletDecoratorId": "borderless",
 					"portletSetupTitle": "products",
 					"portletSetupUseCustomTitle": true
 				},
-				"portletName": "com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardInstanceSelectorPortlet",
-				"portletPreferences": {
-					"showTitle": true
-				}
+				"portletName": "com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardInstanceSelectorPortlet"
 			},
 			{
 				"layoutColumnId": "column-5",

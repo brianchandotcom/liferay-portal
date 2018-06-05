@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -82,9 +84,26 @@ public class SPAUtil {
 		return _SPA_EXCLUDED_PATHS;
 	}
 
+	/**
+	 * @deprecated As of 2.0.0
+	 */
+	@Deprecated
 	public ResourceBundle getLanguageResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
+	}
+
+	public ResourceBundle getLanguageResourceBundle(
+		String servletContextName, Locale locale) {
+
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByServletContextName(servletContextName);
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
+
+		return resourceBundle;
 	}
 
 	public String getLoginRedirect(HttpServletRequest request) {

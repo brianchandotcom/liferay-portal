@@ -472,7 +472,7 @@ public class JavaClassParser {
 	}
 
 	private static final Pattern _anonymousClassPattern = Pattern.compile(
-		"\n\t+(\\S.* )?new ((.|\\(\n)*\\)) \\{\n\n");
+		"\n\t+(\\S.* )?new ((.|\\(\n|\\w\n)*\\)) \\{\n\n");
 	private static final Pattern _implementsPattern = Pattern.compile(
 		"(\\A|\\s)implements\\s");
 

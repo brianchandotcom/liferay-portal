@@ -7,9 +7,7 @@
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
 		"babel-preset-env": "^1.6.1",
-		"babel-preset-liferay-project": "^1.2.3",
-		"liferay-npm-bundler": "^1.2.2",
-		"liferay-npm-bundler-preset-standard": "^1.2.2"
+		"liferay-npm-bundler": "2.0.0-rc.4"
 	},
 	"name": "map-openstreetmap",
 	"private": true,

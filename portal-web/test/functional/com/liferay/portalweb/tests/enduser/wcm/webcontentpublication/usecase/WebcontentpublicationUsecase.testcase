@@ -2423,6 +2423,8 @@
 		</execute>
 
 		<execute macro="DMDocument#viewPGDetails">
+			<var name="searchTerm" value="DM Document Title" />
+			<var name="portletName" value="Documents and Media" />
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentRelatedAsset" value="true" />
@@ -2459,6 +2461,8 @@
 		</execute>
 
 		<execute macro="DMDocument#viewPGDetails">
+			<var name="searchTerm" value="DM Document Title" />
+			<var name="portletName" value="Documents and Media" />
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="dmDocumentDescription" value="DM Document Description Edit" />
 			<var name="dmDocumentRelatedAsset" value="true" />

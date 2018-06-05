@@ -2494,9 +2494,10 @@
 
 		<execute function="AssertTextPresent" locator1="DocumentsAndMedia#BREADCRUMB_HOME" value1="Home" />
 
-		<execute function="Type" locator1="DocumentsAndMedia#SEARCH_FIELD" value1="${dmDocumentTitle}" />
-
-		<execute function="Click" locator1="DocumentsAndMedia#SEARCH_BUTTON" />
+		<execute macro="Search#searchPG">
+			<var name="portletName" value="${portletName}" />
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="DocumentsAndMedia#SEARCH_TITLE" value1="${dmDocumentTitle}" />
 

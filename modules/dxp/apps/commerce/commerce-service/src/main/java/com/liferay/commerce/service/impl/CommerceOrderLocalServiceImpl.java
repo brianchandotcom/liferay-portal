@@ -104,6 +104,80 @@ import java.util.function.Function;
 public class CommerceOrderLocalServiceImpl
 	extends CommerceOrderLocalServiceBaseImpl {
 
+	@Override
+	public CommerceOrder addCommerceOrder(
+			long siteGroupId, long orderOrganizationId, long orderUserId,
+			long commerceCurrencyId, long billingAddressId,
+			long shippingAddressId, long commercePaymentMethodId,
+			long commerceShippingMethodId, String shippingOptionName,
+			String purchaseOrderNumber, BigDecimal subtotal,
+			BigDecimal shippingPrice, BigDecimal total, int paymentStatus,
+			int shippingStatus, int orderStatus, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Commerce order
+
+		long scopeGroupId = serviceContext.getScopeGroupId();
+		long userId = serviceContext.getUserId();
+
+		User user = userLocalService.getUser(userId);
+
+		if (user.isDefaultUser()) {
+			userId = 0;
+		}
+
+		validateGuestOrders();
+
+		if (commerceCurrencyId <= 0) {
+			CommerceCurrency commerceCurrency =
+				_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+					siteGroupId);
+
+			if (commerceCurrency != null) {
+				commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
+			}
+		}
+
+		long commerceOrderId = counterLocalService.increment();
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.create(
+			commerceOrderId);
+
+		commerceOrder.setUuid(serviceContext.getUuid());
+		commerceOrder.setGroupId(scopeGroupId);
+		commerceOrder.setCompanyId(user.getCompanyId());
+		commerceOrder.setUserId(userId);
+		commerceOrder.setUserName(user.getFullName());
+		commerceOrder.setSiteGroupId(siteGroupId);
+		commerceOrder.setOrderOrganizationId(orderOrganizationId);
+		commerceOrder.setOrderUserId(orderUserId);
+		commerceOrder.setCommerceCurrencyId(commerceCurrencyId);
+		commerceOrder.setBillingAddressId(billingAddressId);
+		commerceOrder.setShippingAddressId(shippingAddressId);
+		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
+		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
+		commerceOrder.setShippingOptionName(shippingOptionName);
+		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
+		commerceOrder.setSubtotal(subtotal);
+		commerceOrder.setShippingPrice(shippingPrice);
+		commerceOrder.setTotal(total);
+		commerceOrder.setPaymentStatus(paymentStatus);
+		commerceOrder.setShippingStatus(shippingStatus);
+		commerceOrder.setOrderStatus(orderStatus);
+		commerceOrder.setStatus(WorkflowConstants.STATUS_DRAFT);
+		commerceOrder.setStatusByUserId(user.getUserId());
+		commerceOrder.setStatusByUserName(user.getFullName());
+		commerceOrder.setStatusDate(serviceContext.getModifiedDate(null));
+		commerceOrder.setExpandoBridgeAttributes(serviceContext);
+
+		commerceOrderPersistence.update(commerceOrder);
+
+		// Workflow
+
+		return startWorkflowInstance(
+			user.getUserId(), commerceOrder, serviceContext);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder addOrganizationCommerceOrder(
@@ -931,79 +1005,6 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setUserName(user.getFullName());
 
 		return commerceOrderPersistence.update(commerceOrder);
-	}
-
-	protected CommerceOrder addCommerceOrder(
-			long siteGroupId, long orderOrganizationId, long orderUserId,
-			long commerceCurrencyId, long billingAddressId,
-			long shippingAddressId, long commercePaymentMethodId,
-			long commerceShippingMethodId, String shippingOptionName,
-			String purchaseOrderNumber, BigDecimal subtotal,
-			BigDecimal shippingPrice, BigDecimal total, int paymentStatus,
-			int shippingStatus, int orderStatus, ServiceContext serviceContext)
-		throws PortalException {
-
-		// Commerce order
-
-		long scopeGroupId = serviceContext.getScopeGroupId();
-		long userId = serviceContext.getUserId();
-
-		User user = userLocalService.getUser(userId);
-
-		if (user.isDefaultUser()) {
-			userId = 0;
-		}
-
-		validateGuestOrders();
-
-		if (commerceCurrencyId <= 0) {
-			CommerceCurrency commerceCurrency =
-				_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
-					siteGroupId);
-
-			if (commerceCurrency != null) {
-				commerceCurrencyId = commerceCurrency.getCommerceCurrencyId();
-			}
-		}
-
-		long commerceOrderId = counterLocalService.increment();
-
-		CommerceOrder commerceOrder = commerceOrderPersistence.create(
-			commerceOrderId);
-
-		commerceOrder.setUuid(serviceContext.getUuid());
-		commerceOrder.setGroupId(scopeGroupId);
-		commerceOrder.setCompanyId(user.getCompanyId());
-		commerceOrder.setUserId(userId);
-		commerceOrder.setUserName(user.getFullName());
-		commerceOrder.setSiteGroupId(siteGroupId);
-		commerceOrder.setOrderOrganizationId(orderOrganizationId);
-		commerceOrder.setOrderUserId(orderUserId);
-		commerceOrder.setCommerceCurrencyId(commerceCurrencyId);
-		commerceOrder.setBillingAddressId(billingAddressId);
-		commerceOrder.setShippingAddressId(shippingAddressId);
-		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
-		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
-		commerceOrder.setShippingOptionName(shippingOptionName);
-		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
-		commerceOrder.setSubtotal(subtotal);
-		commerceOrder.setShippingPrice(shippingPrice);
-		commerceOrder.setTotal(total);
-		commerceOrder.setPaymentStatus(paymentStatus);
-		commerceOrder.setShippingStatus(shippingStatus);
-		commerceOrder.setOrderStatus(orderStatus);
-		commerceOrder.setStatus(WorkflowConstants.STATUS_DRAFT);
-		commerceOrder.setStatusByUserId(user.getUserId());
-		commerceOrder.setStatusByUserName(user.getFullName());
-		commerceOrder.setStatusDate(serviceContext.getModifiedDate(null));
-		commerceOrder.setExpandoBridgeAttributes(serviceContext);
-
-		commerceOrderPersistence.update(commerceOrder);
-
-		// Workflow
-
-		return startWorkflowInstance(
-			user.getUserId(), commerceOrder, serviceContext);
 	}
 
 	protected String getCommerceOrderPaymentContent(

@@ -43,14 +43,15 @@ public class BaseManagementToolbarDisplayContext
 
 	public BaseManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
 
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
+		this.request = request;
 
 		currentURLObj = PortletURLUtil.getCurrent(
 			liferayPortletRequest, liferayPortletResponse);
-		request = liferayPortletRequest.getHttpServletRequest();
 	}
 
 	public List<DropdownItem> getFilterDropdownItems() {

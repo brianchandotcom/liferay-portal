@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Drew Brokke
  */
@@ -27,9 +29,9 @@ public class SearchContainerManagementToolbarDisplayContext
 	public SearchContainerManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer searchContainer) {
+		HttpServletRequest request, SearchContainer searchContainer) {
 
-		super(liferayPortletRequest, liferayPortletResponse);
+		super(liferayPortletRequest, liferayPortletResponse, request);
 
 		this.searchContainer = searchContainer;
 	}

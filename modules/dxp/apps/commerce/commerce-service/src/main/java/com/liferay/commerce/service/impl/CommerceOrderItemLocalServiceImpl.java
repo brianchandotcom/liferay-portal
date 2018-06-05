@@ -34,6 +34,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.base.CommerceOrderItemLocalServiceBaseImpl;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -446,19 +447,23 @@ public class CommerceOrderItemLocalServiceImpl
 			throw new CommerceOrderPriceException();
 		}
 
-		List<CommerceOrderValidatorResult> commerceCartValidatorResults =
-			_commerceOrderValidatorRegistry.validate(cpInstance, quantity);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			List<CommerceOrderValidatorResult> commerceCartValidatorResults =
+				_commerceOrderValidatorRegistry.validate(cpInstance, quantity);
 
-		if (!commerceCartValidatorResults.isEmpty()) {
-			throw new CommerceOrderValidatorException(
-				commerceCartValidatorResults);
+			if (!commerceCartValidatorResults.isEmpty()) {
+				throw new CommerceOrderValidatorException(
+					commerceCartValidatorResults);
+			}
 		}
 	}
 
 	protected void validateCommerceOrder(CommerceOrder commerceOrder)
 		throws PortalException {
 
-		if (!commerceOrder.isOpen()) {
+		if (!commerceOrder.isOpen() &&
+			!ExportImportThreadLocal.isImportInProcess()) {
+
 			throw new NoSuchOrderException();
 		}
 	}

@@ -17,6 +17,7 @@ package com.liferay.commerce.initializer.customer.portal.internal;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,53 +55,13 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseCustomerPortalSampleInitializer {
 
 	public void initialize(long groupId) throws Exception {
-		Log log = getLog();
+		ExportImportThreadLocal.setPortletImportInProcess(true);
 
-		Group group = groupLocalService.getGroup(groupId);
-
-		long[] accountOrganizationIds = _getAccountOrganizationIds(group);
-		Map<String, Long> cpInstanceSKUsMap = _getCPInstanceSKUsMap(group);
-
-		if (ArrayUtil.isEmpty(accountOrganizationIds) ||
-			cpInstanceSKUsMap.isEmpty()) {
-
-			if (log.isInfoEnabled()) {
-				log.info("Skipping import on group " + group.getGroupId());
-			}
-
-			return;
+		try {
+			_initialize(groupId);
 		}
-
-		cleanUp(group, accountOrganizationIds);
-
-		long now = System.currentTimeMillis();
-
-		Bundle bundle = _bundleContext.getBundle();
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			CustomerPortalGroupInitializer.DEPENDENCY_PATH + getName(),
-			"*.json", false);
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			String name = url.getFile();
-
-			name = name.substring(name.lastIndexOf(CharPool.SLASH) + 1);
-
-			try (LoggingTimer loggingTimer = new LoggingTimer(name)) {
-				String json = StringUtil.read(url.openStream());
-
-				JSONArray jsonArray = jsonFactory.createJSONArray(json);
-
-				for (int i = 0; i < jsonArray.length(); i++) {
-					JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-					importSample(
-						now, jsonObject, group, accountOrganizationIds,
-						cpInstanceSKUsMap);
-				}
-			}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 	}
 
@@ -191,6 +152,57 @@ public abstract class BaseCustomerPortalSampleInitializer {
 		actionableDynamicQuery.performActions();
 
 		return cpInstanceSKUsMap;
+	}
+
+	private void _initialize(long groupId) throws Exception {
+		Log log = getLog();
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		long[] accountOrganizationIds = _getAccountOrganizationIds(group);
+		Map<String, Long> cpInstanceSKUsMap = _getCPInstanceSKUsMap(group);
+
+		if (ArrayUtil.isEmpty(accountOrganizationIds) ||
+			cpInstanceSKUsMap.isEmpty()) {
+
+			if (log.isInfoEnabled()) {
+				log.info("Skipping import on group " + group.getGroupId());
+			}
+
+			return;
+		}
+
+		cleanUp(group, accountOrganizationIds);
+
+		long now = System.currentTimeMillis();
+
+		Bundle bundle = _bundleContext.getBundle();
+
+		Enumeration<URL> enumeration = bundle.findEntries(
+			CustomerPortalGroupInitializer.DEPENDENCY_PATH + getName(),
+			"*.json", false);
+
+		while (enumeration.hasMoreElements()) {
+			URL url = enumeration.nextElement();
+
+			String name = url.getFile();
+
+			name = name.substring(name.lastIndexOf(CharPool.SLASH) + 1);
+
+			try (LoggingTimer loggingTimer = new LoggingTimer(name)) {
+				String json = StringUtil.read(url.openStream());
+
+				JSONArray jsonArray = jsonFactory.createJSONArray(json);
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+					importSample(
+						now, jsonObject, group, accountOrganizationIds,
+						cpInstanceSKUsMap);
+				}
+			}
+		}
 	}
 
 	private BundleContext _bundleContext;

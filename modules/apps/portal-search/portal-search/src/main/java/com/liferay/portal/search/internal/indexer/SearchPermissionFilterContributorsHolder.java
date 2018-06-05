@@ -12,27 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.facet;
+package com.liferay.portal.search.internal.indexer;
 
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
+
+import java.util.stream.Stream;
 
 /**
- * @author     Raymond Augé
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.portal.search.facet.site.SiteFacetFactory}
+ * @author André de Oliveira
  */
-@Deprecated
-public class ScopeFacetFactory implements FacetFactory {
+public interface SearchPermissionFilterContributorsHolder {
 
-	@Override
-	public String getFacetClassName() {
-		return ScopeFacet.class.getName();
-	}
-
-	@Override
-	public Facet newInstance(SearchContext searchContext) {
-		return new ScopeFacet(searchContext);
-	}
+	public Stream<SearchPermissionFilterContributor> getAll();
 
 }

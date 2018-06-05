@@ -801,8 +801,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		SearchContext searchContext = createSearchContext(
 			companyId, userId, portletId, groupId, keywords, start, end);
 
-		addScopeFacet(searchContext);
-
 		try {
 			return facetedSearcher.search(searchContext);
 		}
@@ -1280,6 +1278,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	protected void addAssetEntriesFacet(SearchContext searchContext) {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	protected void addScopeFacet(SearchContext searchContext) {
 		Facet scopeFacet = new ScopeFacet(searchContext);
 

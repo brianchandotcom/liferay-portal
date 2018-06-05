@@ -37,6 +37,9 @@
 	</tear-down>
 
 	<command name="NavigateToSearchResultsViaURL" priority="4">
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
+		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -68,17 +71,17 @@
 			</execute>
 		</for>
 
-		<execute macro="SearchBarPortlet#configureParameterNamesPG">
+		<execute macro="SearchBarPortlet#configureParameterNames">
 			<var name="keywordsParameterName" value="keywordparameter" />
 			<var name="scopeParameterName" value="scopeparameter" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureScopePG">
+		<execute macro="SearchBarPortlet#configureScope">
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#selectScopeInputPG">
-			<var name="searchScope" value="All Sites" />
+		<execute macro="SearchBarPortlet#selectScopeInput">
+			<var name="searchScope" value="Everything" />
 		</execute>
 
 		<execute macro="SearchBarPortlet#searchPG">
@@ -180,16 +183,9 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Search" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute macro="SearchPortlet#configureSearchScopePG">
+		<execute macro="SearchPortlet#configureScope">
 			<var name="searchScope" value="Everything" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Apple" />
@@ -212,6 +208,9 @@
 	</command>
 
 	<command name="SearchAssetsViaSearchBarWithDifferentScopes" priority="4">
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
+		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />
@@ -276,8 +275,12 @@
 			</execute>
 		</for>
 
-		<execute macro="SearchBarPortlet#configureScopePG">
+		<execute macro="SearchBarPortlet#configureScope">
 			<var name="searchScope" value="Let the User Choose" />
+		</execute>
+
+		<execute macro="SearchBarPortlet#selectScopeInput">
+			<var name="searchScope" value="Everything" />
 		</execute>
 
 		<execute macro="SearchBarPortlet#searchPG">
@@ -299,7 +302,7 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#selectScopeInputPG">
+		<execute macro="SearchBarPortlet#selectScopeInput">
 			<var name="searchScope" value="This Site" />
 		</execute>
 
@@ -307,7 +310,7 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="SearchPortlet#viewSearchNoPG">
+		<execute macro="SearchResultPortlet#viewSearchResultNotPresent">
 			<var name="searchAssetTitle" value="Potato Blog" />
 			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>
@@ -808,10 +811,14 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute macro="SearchBarPortlet#configureScopePG">
-			<var name="searchScope" value="All Sites" />
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/guest/search" />
+		</execute>
+
+		<execute macro="SearchBarPortlet#configureScope">
+			<var name="searchScope" value="Everything" />
 		</execute>
 
 		<execute macro="SearchPortlet#searchPG">
@@ -875,17 +882,21 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute macro="SearchBarPortlet#configureScopePG">
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/guest/search" />
+		</execute>
+
+		<execute macro="SearchBarPortlet#configureScope">
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#selectScopeInputPG">
+		<execute macro="SearchBarPortlet#selectScopeInput">
 			<var name="searchScope" value="This Site" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchPG">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -902,11 +913,11 @@
 
 		<!-- LPS-80521 -->
 
-		<!-- <execute macro="SearchBarPortlet#selectScopeInputPG">
-			<var name="searchScope" value="All Sites" />
+		<!-- <execute macro="SearchBarPortlet#selectScopeInput">
+			<var name="searchScope" value="Everything" />
 		</execute>
 
-		<execute macro="SearchPortlet#searchPG">
+		<execute macro="SearchBarPortlet#searchPG">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 
@@ -923,7 +934,7 @@
 		</execute> -->
 	</command>
 
-	<command ignore="true" name="SearchTwiceScopeThisSite" priority="5">
+	<command name="SearchTwiceScopeThisSite" priority="5">
 		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
 		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
 
@@ -965,9 +976,13 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
-		<execute macro="SearchBarPortlet#configureScopePG">
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/guest/search" />
+		</execute>
+
+		<execute macro="SearchBarPortlet#configureScope">
 			<var name="searchScope" value="This Site" />
 		</execute>
 
@@ -1340,6 +1355,10 @@
 				<var name="portletName" value="${portletName}" />
 			</execute>
 		</for>
+
+		<execute macro="SearchBarPortlet#configureScope">
+			<var name="searchScope" value="Everything" />
+		</execute>
 
 		<execute macro="SearchBarPortlet#searchPG">
 			<var name="searchTerm" value="apple" />
@@ -1873,6 +1892,9 @@
 	</command>
 
 	<command name="ViewURLChangesWithUpdatedSearchAndScopeParameters" priority="4">
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.web.internal.configuration.SearchWebConfiguration.config" />
+		<property name="osgi.module.configurations" value="classicSearchPortletInFrontPage=&quot;false&quot;" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -1891,16 +1913,16 @@
 			<var name="portletName" value="Search Bar" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureParameterNamesPG">
+		<execute macro="SearchBarPortlet#configureParameterNames">
 			<var name="keywordsParameterName" value="keywordparameter" />
 			<var name="scopeParameterName" value="scopeparameter" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#configureScopePG">
+		<execute macro="SearchBarPortlet#configureScope">
 			<var name="searchScope" value="Let the User Choose" />
 		</execute>
 
-		<execute macro="SearchBarPortlet#selectScopeInputPG">
+		<execute macro="SearchBarPortlet#selectScopeInput">
 			<var name="searchScope" value="This Site" />
 		</execute>
 

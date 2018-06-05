@@ -49,7 +49,7 @@ SearchBarPortletPreferences searchBarPortletPreferences = new com.liferay.portal
 
 				<aui:select label="scope" name="<%= PortletPreferencesJspUtil.getInputName(SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE) %>" value="<%= searchBarPortletPreferences.getSearchScopePreferenceString() %>">
 					<aui:option label="this-site" value="this-site" />
-					<aui:option label="all-sites" value="everything" />
+					<aui:option label="everything" value="everything" />
 					<aui:option label="let-the-user-choose" value="let-the-user-choose" />
 				</aui:select>
 

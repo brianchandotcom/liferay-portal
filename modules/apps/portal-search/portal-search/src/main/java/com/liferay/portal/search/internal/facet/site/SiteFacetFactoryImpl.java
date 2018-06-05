@@ -12,27 +12,33 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.facet;
+package com.liferay.portal.search.internal.facet.site;
 
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+import com.liferay.portal.search.facet.Facet;
+import com.liferay.portal.search.facet.site.SiteFacetFactory;
+import com.liferay.portal.search.internal.facet.FacetImpl;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author     Raymond Augé
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.portal.search.facet.site.SiteFacetFactory}
+ * @author André de Oliveira
  */
-@Deprecated
-public class ScopeFacetFactory implements FacetFactory {
+@Component(
+	immediate = true, service = {FacetFactory.class, SiteFacetFactory.class}
+)
+public class SiteFacetFactoryImpl implements SiteFacetFactory {
 
 	@Override
 	public String getFacetClassName() {
-		return ScopeFacet.class.getName();
+		return Field.GROUP_ID;
 	}
 
 	@Override
 	public Facet newInstance(SearchContext searchContext) {
-		return new ScopeFacet(searchContext);
+		return new FacetImpl(Field.GROUP_ID, searchContext);
 	}
 
 }

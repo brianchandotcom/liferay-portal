@@ -23,22 +23,16 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author André de Oliveira
  */
+@Component(immediate = true, service = ModelPreFilterContributorsHolder.class)
 public class ModelPreFilterContributorsHolderImpl
 	implements ModelPreFilterContributorsHolder {
-
-	public ModelPreFilterContributorsHolderImpl(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, ModelPreFilterContributor.class,
-			"indexer.class.name");
-	}
-
-	public void close() {
-		_serviceTrackerMap.close();
-	}
 
 	@Override
 	public Stream<ModelPreFilterContributor> getByModel(String entryClassName) {
@@ -50,13 +44,25 @@ public class ModelPreFilterContributorsHolderImpl
 		return list.stream();
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, ModelPreFilterContributor.class,
+			"indexer.class.name");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	private static <T> void _addAll(List<T> list1, List<T> list2) {
 		if (list2 != null) {
 			list1.addAll(list2);
 		}
 	}
 
-	private final ServiceTrackerMap<String, List<ModelPreFilterContributor>>
+	private ServiceTrackerMap<String, List<ModelPreFilterContributor>>
 		_serviceTrackerMap;
 
 }

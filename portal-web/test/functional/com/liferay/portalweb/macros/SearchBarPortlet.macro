@@ -16,9 +16,8 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
-	<command name="configureParameterNamesPG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Search Bar" />
+	<command name="configureParameterNames">
+		<execute macro="SearchBarPortlet#gotoOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -43,15 +42,14 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
-	<command name="configureScopePG">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Search Bar" />
+	<command name="configureScope">
+		<execute macro="SearchBarPortlet#gotoOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<if>
 			<or>
-				<equals arg1="${searchScope}" arg2="All Sites" />
+				<equals arg1="${searchScope}" arg2="Everything" />
 				<equals arg1="${searchScope}" arg2="Let the User Choose" />
 				<equals arg1="${searchScope}" arg2="This Site" />
 			</or>
@@ -61,7 +59,7 @@
 				<execute function="Select" locator1="Select#SCOPE_CONFIGURATION" value1="${searchScope}" />
 			</then>
 			<else>
-				<fail message="Invalid search scope. Must be (All Sites|Let the User Choose|This Site)." />
+				<fail message="Invalid search scope. Must be (Everything|Let the User Choose|This Site)." />
 			</else>
 		</if>
 
@@ -89,23 +87,38 @@
 		<return name="searchURL" value="${searchURL}" />
 	</command>
 
+	<command name="gotoOptions">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#SEARCH_BAR_ELLIPSIS_ICON" />
+
+		<execute function="Click" locator1="Search#SEARCH_BAR_ELLIPSIS_ICON" />
+
+		<if>
+			<isset var="portletOption" />
+			<then>
+				<var name="key_menuItem" value="${portletOption}" />
+
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+			</then>
+		</if>
+	</command>
+
 	<command name="searchPG">
 		<execute function="Type" locator1="Search#SEARCH_BAR" value1="${searchTerm}" />
 
 		<execute function="KeyPress" locator1="Search#SEARCH_BAR" value1="\RETURN" />
 	</command>
 
-	<command name="selectScopeInputPG">
+	<command name="selectScopeInput">
 		<if>
 			<or>
-				<equals arg1="${searchScope}" arg2="All Sites" />
+				<equals arg1="${searchScope}" arg2="Everything" />
 				<equals arg1="${searchScope}" arg2="This Site" />
 			</or>
 			<then>
-				<execute function="Select" locator1="Select#SCOPE" value1="${searchScope}" />
+				<execute function="Select" locator1="Search#SEARCH_BAR_SCOPE_SELECT" value1="${searchScope}" />
 			</then>
 			<else>
-				<fail message="Invalid search scope. Must be (All Sites|This Site)." />
+				<fail message="Invalid search scope. Must be (Everything|This Site)." />
 			</else>
 		</if>
 	</command>

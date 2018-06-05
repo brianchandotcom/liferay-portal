@@ -17,15 +17,17 @@ package com.liferay.portal.search.web.internal.site.facet.portlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.ScopeFacetFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.facet.site.SiteFacetFactory;
 import com.liferay.portal.search.web.internal.facet.display.builder.ScopeSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.ScopeSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.site.facet.constants.SiteFacetPortletKeys;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.io.IOException;
 
@@ -113,6 +115,11 @@ public class SiteFacetPortlet extends MVCPortlet {
 			new ScopeSearchFacetDisplayBuilder();
 
 		scopeSearchFacetDisplayBuilder.setFacet(facet);
+
+		SearchOptionalUtil.copy(
+			() -> getFilteredGroupIdsOptional(portletSharedSearchResponse),
+			scopeSearchFacetDisplayBuilder::setFilteredGroupIds);
+
 		scopeSearchFacetDisplayBuilder.setFrequencyThreshold(
 			siteFacetConfiguration.getFrequencyThreshold());
 		scopeSearchFacetDisplayBuilder.setFrequenciesVisible(
@@ -127,19 +134,29 @@ public class SiteFacetPortlet extends MVCPortlet {
 
 		scopeSearchFacetDisplayBuilder.setParameterName(parameterName);
 
-		Optional<List<String>> sitesOptional = getParameterValues(
-			parameterName, portletSharedSearchResponse, renderRequest);
-
-		sitesOptional.ifPresent(
+		SearchOptionalUtil.copy(
+			() -> getParameterValuesOptional(
+				parameterName, portletSharedSearchResponse, renderRequest),
 			scopeSearchFacetDisplayBuilder::setParameterValues);
 
 		return scopeSearchFacetDisplayBuilder.build();
 	}
 
 	protected String getFieldName() {
-		Facet facet = scopeFacetFactory.newInstance(new SearchContext());
+		Facet facet = siteFacetFactory.newInstance(new SearchContext());
 
 		return facet.getFieldName();
+	}
+
+	protected Optional<long[]> getFilteredGroupIdsOptional(
+		PortletSharedSearchResponse portletSharedSearchResponse) {
+
+		SearchSettings searchSettings =
+			portletSharedSearchResponse.getSearchSettings();
+
+		SearchContext searchContext = searchSettings.getSearchContext();
+
+		return Optional.ofNullable(searchContext.getGroupIds());
 	}
 
 	protected Locale getLocale(
@@ -152,7 +169,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 		return themeDisplay.getLocale();
 	}
 
-	protected Optional<List<String>> getParameterValues(
+	protected Optional<List<String>> getParameterValuesOptional(
 		String parameterName,
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
@@ -171,6 +188,6 @@ public class SiteFacetPortlet extends MVCPortlet {
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
 	@Reference
-	protected ScopeFacetFactory scopeFacetFactory;
+	protected SiteFacetFactory siteFacetFactory;
 
 }

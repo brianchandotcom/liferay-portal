@@ -12,27 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.facet;
+package com.liferay.portal.search.facet.site;
 
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.search.facet.FacetFactory;
 
 /**
- * @author     Raymond Augé
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.portal.search.facet.site.SiteFacetFactory}
+ * @author André de Oliveira
  */
-@Deprecated
-public class ScopeFacetFactory implements FacetFactory {
-
-	@Override
-	public String getFacetClassName() {
-		return ScopeFacet.class.getName();
-	}
-
-	@Override
-	public Facet newInstance(SearchContext searchContext) {
-		return new ScopeFacet(searchContext);
-	}
-
+@ProviderType
+public interface SiteFacetFactory extends FacetFactory {
 }

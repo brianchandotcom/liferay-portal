@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.facet;
+package com.liferay.portal.search.internal.indexer;
 
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
+
+import java.util.Map;
 
 /**
- * @author     Raymond Augé
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.portal.search.facet.site.SiteFacetFactory}
+ * @author André de Oliveira
  */
-@Deprecated
-public class ScopeFacetFactory implements FacetFactory {
+public interface PreFilterContributorHelper {
 
-	@Override
-	public String getFacetClassName() {
-		return ScopeFacet.class.getName();
-	}
+	public void contribute(
+		BooleanFilter booleanFilter,
+		Map<String, Indexer<?>> entryClassNameIndexerMap,
+		SearchContext searchContext);
 
-	@Override
-	public Facet newInstance(SearchContext searchContext) {
-		return new ScopeFacet(searchContext);
-	}
+	public void contribute(
+		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
+		SearchContext searchContext);
 
 }

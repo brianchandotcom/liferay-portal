@@ -11,8 +11,36 @@
 		<execute function="AssertElementNotPresent" locator1="SearchResults#RESULTS_TABLE_GENERIC" />
 	</command>
 
-	<command name="configureSearchScopePG">
-		<var name="key_searchScope" value="${searchScope}" />
+	<command name="configureParameterNames">
+		<execute macro="SearchPortlet#gotoOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<if>
+			<isset var="keywordsParameterName" />
+			<then>
+				<execute function="Type" locator1="SearchBarConfiguration#KEYWORDS_PARAMETER_NAME" value1="${keywordsParameterName}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="scopeParameterName" />
+			<then>
+				<execute function="Type" locator1="SearchBarConfiguration#SCOPE_PARAMETER_NAME" value1="${scopeParameterName}" />
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
+	<command name="configureScope">
+		<execute macro="SearchPortlet#gotoOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
 
 		<if>
 			<or>
@@ -23,31 +51,37 @@
 			<then>
 				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-				<execute function="Select" locator1="Select#SCOPE" value1="${searchScope}" />
+				<execute function="Select" locator1="Select#SCOPE_CONFIGURATION" value1="${searchScope}" />
 			</then>
 			<else>
 				<fail message="Invalid search scope. Must be (Everything|Let the User Choose|This Site)." />
 			</else>
 		</if>
 
-		<if>
-			<isset var="uncheckDisplayFacet" />
-			<then>
-				<var name="key_facetName" value="${uncheckDisplayFacet}" />
-
-				<execute function="AssertClick" locator1="Search#FACET_CONFIGURE" value1="Configure" />
-
-				<execute function="Uncheck" locator1="Checkbox#DISPLAY_FACET" />
-			</then>
-		</if>
-
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
 	</command>
 
 	<command name="gotoModifiedRangeFacetPG">
 		<var name="key_searchModifiedRange" value="${searchModifiedRange}" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#MODIFIED_RANGE_FACET_TIME_RANGE" value1="${searchModifiedRange}" />
+	</command>
+
+	<command name="gotoOptions">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Search#TEMPLATE_SEARCH_BAR_ELLIPSIS_ICON" />
+
+		<execute function="Click" locator1="Search#TEMPLATE_SEARCH_BAR_ELLIPSIS_ICON" />
+
+		<if>
+			<isset var="portletOption" />
+			<then>
+				<var name="key_menuItem" value="${portletOption}" />
+
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+			</then>
+		</if>
 	</command>
 
 	<command name="gotoSearchResultPG">
@@ -111,6 +145,21 @@
 		</if>
 
 		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
+	</command>
+
+	<command name="selectScopeInput">
+		<if>
+			<or>
+				<equals arg1="${searchScope}" arg2="Everything" />
+				<equals arg1="${searchScope}" arg2="This Site" />
+			</or>
+			<then>
+				<execute function="Select" locator1="Search#TEMPLATE_SEARCH_BAR_SCOPE_SELECT" value1="${searchScope}" />
+			</then>
+			<else>
+				<fail message="Invalid search scope. Must be (Everything|This Site)." />
+			</else>
+		</if>
 	</command>
 
 	<command name="unscopeAssetFacetPG">

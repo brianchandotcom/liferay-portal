@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib.display.context;
 
+import com.liferay.frontend.taglib.clay.internal.servlet.taglib.ManagementToolbarDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
@@ -41,7 +42,7 @@ public interface ManagementToolbarDisplayContext {
 	}
 
 	public default String getContentRenderer() {
-		return null;
+		return ManagementToolbarDefaults.getContentRenderer();
 	}
 
 	public default CreationMenu getCreationMenu() {
@@ -85,7 +86,7 @@ public interface ManagementToolbarDisplayContext {
 	}
 
 	public default String getSearchFormMethod() {
-		return "POST";
+		return ManagementToolbarDefaults.getSearchFormMethod();
 	}
 
 	public default String getSearchFormName() {
@@ -93,7 +94,7 @@ public interface ManagementToolbarDisplayContext {
 	}
 
 	public default String getSearchInputName() {
-		return null;
+		return ManagementToolbarDefaults.getSearchInputName();
 	}
 
 	public default String getSearchValue() {
@@ -133,7 +134,7 @@ public interface ManagementToolbarDisplayContext {
 	}
 
 	public default Boolean isShowCreationMenu() {
-		return Validator.isNotNull(getCreationMenu());
+		return ManagementToolbarDefaults.isShowCreationMenu(getCreationMenu());
 	}
 
 	public default Boolean isShowFiltersDoneButton() {
@@ -141,7 +142,7 @@ public interface ManagementToolbarDisplayContext {
 	}
 
 	public default Boolean isShowInfoButton() {
-		return Validator.isNotNull(getInfoPanelId());
+		return ManagementToolbarDefaults.isShowInfoButton(getInfoPanelId());
 	}
 
 	public default Boolean isShowSearch() {

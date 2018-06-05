@@ -14,6 +14,9 @@
 
 package com.liferay.document.library.internal.exportimport.data.handler;
 
+import com.liferay.changeset.model.ChangesetCollection;
+import com.liferay.changeset.service.ChangesetCollectionLocalService;
+import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -45,6 +48,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
@@ -59,6 +63,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -119,6 +124,31 @@ public class FileEntryStagedModelDataHandler
 
 		if (fileEntry != null) {
 			deleteStagedModel(fileEntry);
+		}
+	}
+
+	@Override
+	public void exportStagedModel(
+			PortletDataContext portletDataContext, FileEntry fileEntry)
+		throws PortletDataException {
+
+		super.exportStagedModel(portletDataContext, fileEntry);
+
+		if (ExportImportThreadLocal.isStagingInProcess()) {
+			ChangesetCollection changesetCollection =
+				_changesetCollectionLocalService.fetchChangesetCollection(
+					portletDataContext.getScopeGroupId(),
+					StagingConstants.
+						RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
+
+			if (changesetCollection != null) {
+				long classNameId = _classNameLocalService.getClassNameId(
+					DLFileEntry.class);
+
+				_changesetEntryLocalService.deleteEntry(
+					changesetCollection.getChangesetCollectionId(), classNameId,
+					fileEntry.getFileEntryId());
+			}
 		}
 	}
 
@@ -947,6 +977,15 @@ public class FileEntryStagedModelDataHandler
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	@Reference
+	private ChangesetCollectionLocalService _changesetCollectionLocalService;
+
+	@Reference
+	private ChangesetEntryLocalService _changesetEntryLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues)"

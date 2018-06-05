@@ -84,6 +84,9 @@ public interface ChangesetEntryLocalService extends BaseLocalService,
 	@Transactional(enabled = false)
 	public ChangesetEntry createChangesetEntry(long changesetEntryId);
 
+	public void deleteChangesetEntries(long changesetCollectionId)
+		throws PortalException;
+
 	/**
 	* Deletes the changeset entry from the database. Also notifies the appropriate model listeners.
 	*
@@ -103,6 +106,8 @@ public interface ChangesetEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public ChangesetEntry deleteChangesetEntry(long changesetEntryId)
 		throws PortalException;
+
+	public void deleteEntry(long changesetId, long classNameId, long classPK);
 
 	/**
 	* @throws PortalException

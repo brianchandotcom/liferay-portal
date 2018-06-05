@@ -165,7 +165,7 @@ public class StagingLocalizationTest {
 
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap();
+				buildFullPublishParameterMap();
 
 		Map<String, Serializable> publishLayoutLocalSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.

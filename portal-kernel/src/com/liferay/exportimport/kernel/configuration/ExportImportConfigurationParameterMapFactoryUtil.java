@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -51,7 +52,9 @@ public class ExportImportConfigurationParameterMapFactoryUtil {
 		Boolean ignoreLastPublishDate, Boolean layoutSetPrototypeLinkEnabled,
 		Boolean layoutSetSettings, Boolean logo, Boolean permissions,
 		Boolean portletConfiguration, Boolean portletConfigurationAll,
-		Boolean portletData, Boolean portletDataAll, Boolean portletSetupAll,
+		List<String> portletConfigurationPortletIds, Boolean portletData,
+		Boolean portletDataAll, List<String> portletDataPortletIds,
+		Boolean portletSetupAll, List<String> portletSetupPortletIds,
 		String range, Boolean themeReference, Boolean updateLastPublishDate,
 		String userIdStrategy) {
 
@@ -59,9 +62,10 @@ public class ExportImportConfigurationParameterMapFactoryUtil {
 			dataStrategy, deleteMissingLayouts, deletePortletData, deletions,
 			ignoreLastPublishDate, layoutSetPrototypeLinkEnabled,
 			layoutSetSettings, logo, permissions, portletConfiguration,
-			portletConfigurationAll, portletData, portletDataAll,
-			portletSetupAll, range, themeReference, updateLastPublishDate,
-			userIdStrategy);
+			portletConfigurationAll, portletConfigurationPortletIds,
+			portletData, portletDataAll, portletDataPortletIds, portletSetupAll,
+			portletSetupPortletIds, range, themeReference,
+			updateLastPublishDate, userIdStrategy);
 	}
 
 	private static volatile ExportImportConfigurationParameterMapFactory

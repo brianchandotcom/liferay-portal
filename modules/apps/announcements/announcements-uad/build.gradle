@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
@@ -10,4 +12,12 @@ dependencies {
 	compileOnly project(":apps:user-associated-data:user-associated-data-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
+}
+
+mergeLang {
+	setting("../announcements-web/src/main/resources/content") {
+		transformKey "javax.portlet.title.com_liferay_announcements_web_portlet_AnnouncementsPortlet", "application.name.com.liferay.announcements.uad"
+	}
+
+	sourceDirs = ["../announcements-web/src/main/resources/content"]
 }

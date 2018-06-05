@@ -818,6 +818,16 @@ public class StagingUtil {
 			remoteGroupId);
 	}
 
+	public static void validateRemoteGroupIsSame(
+			long groupId, long remoteGroupId, String remoteAddress,
+			int remotePort, String remotePathContext, boolean secureConnection)
+		throws PortalException {
+
+		_staging.validateRemoteGroupIsSame(
+			groupId, remoteGroupId, remoteAddress, remotePort,
+			remotePathContext, secureConnection);
+	}
+
 	private static volatile Staging _staging =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			Staging.class, StagingUtil.class, "_staging", false);

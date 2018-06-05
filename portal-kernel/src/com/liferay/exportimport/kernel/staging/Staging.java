@@ -501,4 +501,9 @@ public interface Staging {
 			boolean secureConnection, long remoteGroupId)
 		throws PortalException;
 
+	public void validateRemoteGroupIsSame(
+			long groupId, long remoteGroupId, String remoteAddress,
+			int remotePort, String remotePathContext, boolean secureConnection)
+		throws PortalException;
+
 }

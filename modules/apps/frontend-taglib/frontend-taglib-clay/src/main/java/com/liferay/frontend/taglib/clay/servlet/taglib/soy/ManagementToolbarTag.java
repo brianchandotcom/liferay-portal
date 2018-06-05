@@ -16,13 +16,13 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
+import com.liferay.frontend.taglib.clay.internal.servlet.taglib.ManagementToolbarDefaults;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -51,13 +51,14 @@ public class ManagementToolbarTag extends BaseClayTag {
 		String searchInputName = (String)context.get("searchInputName");
 
 		if (Validator.isNull(searchInputName)) {
-			searchInputName = DisplayTerms.KEYWORDS;
+			searchInputName = ManagementToolbarDefaults.getSearchInputName();
 
 			setSearchInputName(searchInputName);
 		}
 
 		String searchFormMethod = GetterUtil.getString(
-			context.get("searchFormMethod"), "GET");
+			context.get("searchFormMethod"),
+			ManagementToolbarDefaults.getSearchFormMethod());
 
 		setSearchFormMethod(searchFormMethod);
 
@@ -71,7 +72,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 			putValue("searchData", searchData);
 
 			String contentRenderer = GetterUtil.getString(
-				context.get("contentRenderer"), "hiddenInputsForm");
+				context.get("contentRenderer"),
+				ManagementToolbarDefaults.getContentRenderer());
 
 			setContentRenderer(contentRenderer);
 		}
@@ -92,7 +94,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 		CreationMenu creationMenu = (CreationMenu)context.get("creationMenu");
 
 		boolean showCreationMenu = GetterUtil.getBoolean(
-			context.get("showCreationMenu"), Validator.isNotNull(creationMenu));
+			context.get("showCreationMenu"),
+			ManagementToolbarDefaults.isShowCreationMenu(creationMenu));
 
 		setShowCreationMenu(showCreationMenu);
 
@@ -104,7 +107,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 		String infoPanelId = (String)context.get("infoPanelId");
 
 		boolean showInfoButton = GetterUtil.getBoolean(
-			context.get("showInfoButton"), Validator.isNotNull(infoPanelId));
+			context.get("showInfoButton"),
+			ManagementToolbarDefaults.isShowInfoButton(infoPanelId));
 
 		setShowInfoButton(showInfoButton);
 

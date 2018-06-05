@@ -27,6 +27,12 @@
 	}
 }
 
+.modal-dialog {
+	@include sm {
+		max-width: none;
+	}
+}
+
 .modal-hidden {
 	display: none;
 }

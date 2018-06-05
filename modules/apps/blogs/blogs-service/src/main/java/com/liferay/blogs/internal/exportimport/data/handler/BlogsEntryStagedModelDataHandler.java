@@ -255,12 +255,22 @@ public class BlogsEntryStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			entry);
 
+		BlogsEntry existingEntry = fetchStagedModelByUuidAndGroupId(
+			entry.getUuid(), portletDataContext.getScopeGroupId());
+
+		long existingCoverImageFileEntryId = 0;
+		long existingSmallImageFileEntryId = 0;
+
+		if (existingEntry != null) {
+			existingCoverImageFileEntryId =
+				existingEntry.getCoverImageFileEntryId();
+			existingSmallImageFileEntryId =
+				existingEntry.getSmallImageFileEntryId();
+		}
+
 		BlogsEntry importedEntry = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			BlogsEntry existingEntry = fetchStagedModelByUuidAndGroupId(
-				entry.getUuid(), portletDataContext.getScopeGroupId());
-
 			if (existingEntry == null) {
 				serviceContext.setUuid(entry.getUuid());
 
@@ -297,26 +307,41 @@ public class BlogsEntryStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				FileEntry.class);
 
-		if (entry.getCoverImageFileEntryId() != 0) {
-			long coverImageFileEntryId = MapUtil.getLong(
-				fileEntryIds, entry.getCoverImageFileEntryId(), 0);
+		long coverImageFileEntryId = MapUtil.getLong(
+			fileEntryIds, entry.getCoverImageFileEntryId(), 0);
 
-			importedEntry.setCoverImageFileEntryId(coverImageFileEntryId);
+		importedEntry.setCoverImageFileEntryId(coverImageFileEntryId);
 
-			importedEntry = _blogsEntryLocalService.updateBlogsEntry(
-				importedEntry);
+		importedEntry = _blogsEntryLocalService.updateBlogsEntry(importedEntry);
+
+		if ((existingCoverImageFileEntryId != 0) &&
+			(entry.getCoverImageFileEntryId() == 0)) {
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				existingCoverImageFileEntryId);
 		}
 
 		// Small image
 
-		if (entry.isSmallImage() && (entry.getSmallImageFileEntryId() != 0)) {
+		if (entry.isSmallImage()) {
 			long smallImageFileEntryId = MapUtil.getLong(
 				fileEntryIds, entry.getSmallImageFileEntryId(), 0);
 
 			importedEntry.setSmallImageFileEntryId(smallImageFileEntryId);
 
+			if (smallImageFileEntryId == 0) {
+				importedEntry.setSmallImage(false);
+			}
+
 			importedEntry = _blogsEntryLocalService.updateBlogsEntry(
 				importedEntry);
+
+			if ((existingSmallImageFileEntryId != 0) &&
+				(entry.getSmallImageFileEntryId() == 0)) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					existingSmallImageFileEntryId);
+			}
 		}
 
 		Map<Long, Long> newPrimaryKeysMap =

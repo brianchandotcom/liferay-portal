@@ -31,22 +31,22 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_TABLE_NAME_1</td>
-	<td>xpath=(//tr/td[1]//a)[1]</td>
+	<td>xpath=(//*[@data-qa-id='row']//span[contains(@class,'title')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_TABLE_NAME_2</td>
-	<td>xpath=(//tr/td[1]//a)[2]</td>
+	<td>xpath=(//*[@data-qa-id='row']//span[contains(@class,'title')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_TABLE_NAME_3</td>
-	<td>xpath=(//tr/td[1]//a)[3]</td>
+	<td>xpath=(//*[@data-qa-id='row']//span[contains(@class,'title')])[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_TABLE_NAME_4</td>
-	<td>xpath=(//tr/td[1]//a)[4]</td>
+	<td>xpath=(//*[@data-qa-id='row']//span[contains(@class,'title')])[4]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,12 +71,12 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_TABLE_ACTIVE</td>
-	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[5]</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_pageTemplateName}')]//span[contains(@class,'workflow-text')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[6]//div/a</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_pageTemplateName}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

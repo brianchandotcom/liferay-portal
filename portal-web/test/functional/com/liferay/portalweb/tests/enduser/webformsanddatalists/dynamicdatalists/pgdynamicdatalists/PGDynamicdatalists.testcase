@@ -656,9 +656,7 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<execute macro="DDLRecord#deleteViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		</execute>
+		<execute macro="DDLRecord#deleteViaDDLDisplayPG" />
 	</command>
 
 	<command name="EditFormTemplateLabelAndViewRecord" priority="2">
@@ -2414,9 +2412,7 @@
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
-		<execute macro="DDLRecord#viewNoRecords">
-			<var name="ddlDataDefinitionName" value="To Do" />
-		</execute>
+		<execute macro="DDLRecord#viewNoRecords" />
 	</command>
 
 	<command name="ViewTextBoxFieldPredefinedValue" priority="3">

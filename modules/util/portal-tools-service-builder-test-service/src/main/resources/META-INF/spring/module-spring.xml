@@ -8,4 +8,15 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.BigDecimalEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.BigDecimalEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LocalizedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LocalizedEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LocalizedEntryLocalizationPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LocalizedEntryLocalizationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.LVEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.LVEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryLocalizationPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryLocalizationVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryLocalizationVersionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.LVEntryVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.LVEntryVersionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.impl.VersionedEntryLocalServiceImpl" id="com.liferay.portal.tools.service.builder.test.service.VersionedEntryLocalService" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.VersionedEntryPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.tools.service.builder.test.service.persistence.impl.VersionedEntryVersionPersistenceImpl" id="com.liferay.portal.tools.service.builder.test.service.persistence.VersionedEntryVersionPersistence" parent="basePersistence" />
 </beans>

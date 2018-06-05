@@ -905,10 +905,20 @@ public class GitWorkingDirectory {
 	}
 
 	public List<File> getModifiedFilesList() {
-		return getModifiedFilesList(null);
+		return getModifiedFilesList(null, false);
+	}
+
+	public List<File> getModifiedFilesList(boolean checkUnstagedFiles) {
+		return getModifiedFilesList(null, checkUnstagedFiles);
 	}
 
 	public List<File> getModifiedFilesList(String grepPredicateString) {
+		return getModifiedFilesList(grepPredicateString, false);
+	}
+
+	public List<File> getModifiedFilesList(
+		String grepPredicateString, boolean checkUnstagedFiles) {
+
 		List<File> modifiedFiles = new ArrayList<>();
 
 		Branch currentBranch = getCurrentBranch();
@@ -921,8 +931,12 @@ public class GitWorkingDirectory {
 		String bashCommand = JenkinsResultsParserUtil.combine(
 			"git diff --diff-filter=AM --name-only ",
 			_getMergeBaseCommitSHA(
-				currentBranch, getBranch(_upstreamBranchName, null, true)),
-			" ", currentBranch.getSHA());
+				currentBranch, getBranch(_upstreamBranchName, null, true)));
+
+		if (!checkUnstagedFiles) {
+			bashCommand = JenkinsResultsParserUtil.combine(
+				bashCommand, " ", currentBranch.getSHA());
+		}
 
 		if ((grepPredicateString != null) && !grepPredicateString.isEmpty()) {
 			bashCommand = JenkinsResultsParserUtil.combine(

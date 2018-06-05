@@ -14,7 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -41,11 +40,11 @@ public abstract class BaseJob implements Job {
 	}
 
 	protected Set<String> getSetFromString(String string) {
-		if (string == null) {
-			return Collections.emptySet();
-		}
-
 		Set<String> set = new TreeSet<>();
+
+		if (string == null) {
+			return set;
+		}
 
 		for (String item : StringUtils.split(string, ",")) {
 			if (item.startsWith("#")) {

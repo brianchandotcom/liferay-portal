@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 
 import java.math.BigDecimal;
 
@@ -55,13 +57,23 @@ import org.osgi.service.component.annotations.Reference;
 public abstract class BaseCustomerPortalSampleInitializer {
 
 	public void initialize(long groupId) throws Exception {
+		Group group = groupLocalService.getGroup(groupId);
+
 		ExportImportThreadLocal.setPortletImportInProcess(true);
+		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
+		WorkflowThreadLocal.setEnabled(false);
 
 		try {
-			_initialize(groupId);
+			_initialize(group);
 		}
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
+			IndexStatusManagerThreadLocal.setIndexReadOnly(false);
+			WorkflowThreadLocal.setEnabled(true);
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer("reindex")) {
+			reindex(group);
 		}
 	}
 
@@ -92,6 +104,9 @@ public abstract class BaseCustomerPortalSampleInitializer {
 			long now, JSONObject jsonObject, Group group,
 			long[] accountOrganizationIds, Map<String, Long> cpInstanceSKUsMap)
 		throws PortalException;
+
+	protected void reindex(Group group) throws PortalException {
+	}
 
 	@Reference
 	protected CPInstanceLocalService cpInstanceLocalService;
@@ -154,10 +169,8 @@ public abstract class BaseCustomerPortalSampleInitializer {
 		return cpInstanceSKUsMap;
 	}
 
-	private void _initialize(long groupId) throws Exception {
+	private void _initialize(Group group) throws Exception {
 		Log log = getLog();
-
-		Group group = groupLocalService.getGroup(groupId);
 
 		long[] accountOrganizationIds = _getAccountOrganizationIds(group);
 		Map<String, Long> cpInstanceSKUsMap = _getCPInstanceSKUsMap(group);

@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -135,6 +137,14 @@ public class CustomerPortalSampleOrdersInitializer
 		}
 	}
 
+	@Override
+	protected void reindex(Group group) throws PortalException {
+		Indexer<CommerceOrder> indexer = _indexerRegistry.nullSafeGetIndexer(
+			CommerceOrder.class);
+
+		indexer.reindex(new String[] {String.valueOf(group.getCompanyId())});
+	}
+
 	private void _importOrderItem(
 			JSONObject jsonObject, CommerceOrder commerceOrder,
 			Map<String, Long> cpInstanceSKUsMap, ServiceContext serviceContext)
@@ -176,6 +186,9 @@ public class CustomerPortalSampleOrdersInitializer
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

@@ -168,7 +168,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 			if (structure != null) {
 				localizeTitle = false;
-				title = structure.getName(locale);
+				title = LanguageUtil.format(request, "edit-x", structure.getName(locale), false);
 			}
 			else {
 				title = LanguageUtil.format(request, "new-x", ddmDisplay.getStructureName(locale), false);

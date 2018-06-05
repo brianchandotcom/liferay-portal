@@ -68,7 +68,7 @@ public class FragmentEntryLinkDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "propagate");
-						dropdownItem.setIcon("upload");
+						dropdownItem.setIcon("propagation");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "propagate"));
 						dropdownItem.setQuickAction(true);

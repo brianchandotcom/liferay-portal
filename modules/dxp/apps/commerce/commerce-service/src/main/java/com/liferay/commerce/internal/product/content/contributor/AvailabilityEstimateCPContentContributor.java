@@ -43,15 +43,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.AVAILABILITY_RANGE_NAME,
+	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.AVAILABILITY_ESTIMATE_NAME,
 	service = CPContentContributor.class
 )
-public class AvailabilityRangeCPContentContributor
+public class AvailabilityEstimateCPContentContributor
 	implements CPContentContributor {
 
 	@Override
 	public String getName() {
-		return CPContentContributorConstants.AVAILABILITY_RANGE_NAME;
+		return CPContentContributorConstants.AVAILABILITY_ESTIMATE_NAME;
 	}
 
 	@Override
@@ -90,25 +90,25 @@ public class AvailabilityRangeCPContentContributor
 			cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
 
 			jsonObject.put(
-				CPContentContributorConstants.AVAILABILITY_RANGE_NAME,
-				getAvailabilityRangeLabel(
+				CPContentContributorConstants.AVAILABILITY_ESTIMATE_NAME,
+				getAvailabilityEstimateLabel(
 					themeDisplay.getLocale(),
-					cpDefinitionInventoryEngine.getAvailabilityRange(
+					cpDefinitionInventoryEngine.getAvailabilityEstimate(
 						cpInstance, themeDisplay.getLocale())));
 		}
 
 		return jsonObject;
 	}
 
-	protected String getAvailabilityRangeLabel(
-		Locale locale, String availabilityRange) {
+	protected String getAvailabilityEstimateLabel(
+		Locale locale, String availabilityEstimate) {
 
-		if (Validator.isNull(availabilityRange)) {
+		if (Validator.isNull(availabilityEstimate)) {
 			return StringPool.BLANK;
 		}
 
 		return LanguageUtil.format(
-			locale, "product-will-be-available-in-x", availabilityRange);
+			locale, "product-will-be-available-in-x", availabilityEstimate);
 	}
 
 	@Reference

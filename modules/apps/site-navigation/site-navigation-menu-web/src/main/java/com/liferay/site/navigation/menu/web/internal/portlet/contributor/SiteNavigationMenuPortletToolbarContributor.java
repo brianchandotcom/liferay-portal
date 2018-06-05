@@ -17,21 +17,23 @@ package com.liferay.site.navigation.menu.web.internal.portlet.contributor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
+import com.liferay.site.navigation.menu.web.internal.display.context.SiteNavigationMenuDisplayContext;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,11 +59,71 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class SiteNavigationMenuPortletToolbarContributor
-	extends BasePortletToolbarContributor {
+	implements PortletToolbarContributor {
 
 	@Override
-	protected List<MenuItem> getPortletTitleMenuItems(
+	public List<Menu> getPortletTitleMenus(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if ((scopeGroup == null) || scopeGroup.isLayoutPrototype()) {
+			return Collections.emptyList();
+		}
+
+		List<Menu> menus = new ArrayList<>();
+
+		Menu menu = new Menu();
+
+		menu.setDirection("right");
+		menu.setExtended(false);
+		menu.setIcon("pencil");
+		menu.setMarkupView("lexicon");
+		menu.setMenuItems(_getPortletTitleMenuItems(portletRequest));
+		menu.setScroll(false);
+		menu.setShowArrow(false);
+		menu.setShowWhenSingleIcon(true);
+
+		menus.add(menu);
+
+		return menus;
+	}
+
+	private MenuItem _createMenuItem(
+			ThemeDisplay themeDisplay, PortletRequest portletRequest)
+		throws Exception {
+
+		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
+			new SiteNavigationMenuDisplayContext(
+				_portal.getHttpServletRequest(portletRequest));
+
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setLabel(
+			LanguageUtil.get(
+				_portal.getHttpServletRequest(portletRequest), "edit"));
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			portletRequest, SiteNavigationMenu.class.getName(),
+			PortletProvider.Action.EDIT);
+
+		portletURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"siteNavigationMenuId",
+			String.valueOf(
+				siteNavigationMenuDisplayContext.getSiteNavigationMenuId()));
+
+		urlMenuItem.setURL(portletURL.toString());
+
+		return urlMenuItem;
+	}
+
+	private List<MenuItem> _getPortletTitleMenuItems(
+		PortletRequest portletRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -78,45 +140,11 @@ public class SiteNavigationMenuPortletToolbarContributor
 				_createMenuItem(themeDisplay, portletRequest));
 		}
 		catch (Exception e) {
-			_log.error("Unable to set add layout to menu item", e);
+			_log.error(
+				"Unable to set edit site navigation menu to menu item", e);
 
 			return Collections.emptyList();
 		}
-	}
-
-	private MenuItem _createMenuItem(
-			ThemeDisplay themeDisplay, PortletRequest portletRequest)
-		throws Exception {
-
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setLabel(
-			LanguageUtil.get(
-				_portal.getHttpServletRequest(portletRequest), "add-page"));
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			portletRequest, Layout.class.getName(),
-			PortletProvider.Action.EDIT);
-
-		portletURL.setParameter(
-			"mvcPath", "/select_layout_page_template_entry.jsp");
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-
-		Layout layout = themeDisplay.getLayout();
-
-		portletURL.setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		portletURL.setParameter(
-			"portletResource", portletDisplay.getPortletName());
-
-		urlMenuItem.setURL(portletURL.toString());
-
-		return urlMenuItem;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

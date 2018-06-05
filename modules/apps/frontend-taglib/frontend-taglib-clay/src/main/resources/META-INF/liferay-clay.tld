@@ -1319,6 +1319,18 @@
 	</tag>
 	<tag>
 		<description></description>
+		<name>management-toolbar-wrapper</name>
+		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarWrapperTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description></description>
+			<name>displayContext</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description></description>
 		<name>navigation-bar</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.NavigationBarTag</tag-class>
 		<body-content>empty</body-content>

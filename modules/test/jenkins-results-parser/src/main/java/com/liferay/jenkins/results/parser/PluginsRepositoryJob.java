@@ -17,12 +17,13 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Properties;
 import java.util.Set;
 
 /**
- * @author Michael Hashimoto
+ * @author Peter Yoo
  */
-public abstract class PluginsRepositoryJob
+public class PluginsRepositoryJob
 	extends RepositoryJob implements PortalTestClassJob {
 
 	@Override
@@ -42,14 +43,32 @@ public abstract class PluginsRepositoryJob
 	}
 
 	@Override
-	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
-		if (!(gitWorkingDirectory instanceof PortalGitWorkingDirectory)) {
-			throw new RuntimeException("Invalid portal Git working directory");
+	public GitWorkingDirectory getGitWorkingDirectory() {
+		if (gitWorkingDirectory != null) {
+			return gitWorkingDirectory;
 		}
 
-		return (PortalGitWorkingDirectory)gitWorkingDirectory;
+		String pluginsBranchName = getBranchName();
+
+		String workingDirectoryPath = getBuildPropertyValue(
+			JenkinsResultsParserUtil.combine(
+				"plugins.dir[", pluginsBranchName, "]"));
+
+		try {
+			gitWorkingDirectory = new GitWorkingDirectory(
+				pluginsBranchName, workingDirectoryPath);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to create GitWorkingDirectory", ioe);
+		}
+
+		return gitWorkingDirectory;
+	}
+
+	@Override
+	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
+		return portalGitWorkingDirectory;
 	}
 
 	public String getPoshiQuery(String testBatchName) {
@@ -71,21 +90,49 @@ public abstract class PluginsRepositoryJob
 	protected PluginsRepositoryJob(String jobName) {
 		super(jobName);
 
-		try {
-			gitWorkingDirectory =
-				JenkinsResultsParserUtil.getPortalGitWorkingDirectory(
-					getBranchName());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
+		getGitWorkingDirectory();
 
 		setRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
 
 		checkRepositoryDir();
 
+		String portalBranchName = getBuildPropertyValue(
+			JenkinsResultsParserUtil.combine(
+				"plugins.portal.branch.name[", getBranchName(), "]"));
+
+		File portalRepositoryDir = new File(
+			getBuildPropertyValue(
+				JenkinsResultsParserUtil.combine(
+					"portal.dir[", portalBranchName, "]")));
+
 		jobProperties = JenkinsResultsParserUtil.getProperties(
-			new File(repositoryDir, "test.properties"));
+			new File(portalRepositoryDir, "test.properties"));
+
+		try {
+			portalGitWorkingDirectory = new PortalGitWorkingDirectory(
+				portalBranchName, portalRepositoryDir.getPath());
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to create portal Git working directory", ioe);
+		}
 	}
+
+	protected String getBuildPropertyValue(String buildPropertyName) {
+		if (buildProperties == null) {
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to get build properties", ioe);
+			}
+		}
+
+		return buildProperties.getProperty(buildPropertyName);
+	}
+
+	protected Properties buildProperties;
+	protected PortalGitWorkingDirectory portalGitWorkingDirectory;
 
 }

@@ -45,45 +45,12 @@ public class JobFactory {
 		}
 
 		if (jobName.contains("test-plugins-acceptance-pullrequest(")) {
-			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
-				new PortalAcceptancePullRequestJob(jobName, testSuiteName);
+			PluginsRepositoryJob pluginsRepositoryJob =
+				new PluginsRepositoryJob(jobName);
 
-			GitWorkingDirectory gitWorkingDirectory =
-				portalAcceptancePullRequestJob.getGitWorkingDirectory();
+			_jobs.put(jobName, pluginsRepositoryJob);
 
-			String subrepositoryModuleName = _getSubrepositoryModuleName(
-				gitWorkingDirectory);
-
-			RepositoryJob repositoryJob = null;
-
-			if (subrepositoryModuleName == null) {
-				repositoryJob = portalAcceptancePullRequestJob;
-			}
-			else {
-				repositoryJob = new SubrepositoryAcceptancePullRequestJob(
-					jobName);
-
-				Properties buildProperties = null;
-
-				try {
-					buildProperties =
-						JenkinsResultsParserUtil.getBuildProperties();
-				}
-				catch (IOException ioe) {
-					throw new RuntimeException(
-						"Unable to get build properties", ioe);
-				}
-
-				repositoryJob.setRepositoryDir(
-					new File(
-						JenkinsResultsParserUtil.combine(
-							buildProperties.getProperty("base.repository.dir"),
-							"/", subrepositoryModuleName)));
-			}
-
-			_jobs.put(jobName, repositoryJob);
-
-			return repositoryJob;
+			return pluginsRepositoryJob;
 		}
 
 		if (jobName.contains("test-portal-acceptance-pullrequest(")) {

@@ -64,18 +64,19 @@
 						{/let}
 
 						<input {$mainFieldAttributes} />
+
+						{if $_errorMessage}
+							<form class="form-feedback-item">
+								<span class="form-feedback-indicator">
+									<svg class="lexicon-icon">
+										<use xlink:href="{$spritemap}#exclamation-full"></use>
+									</svg>
+								</span>
+								{$_errorMessage}
+							</form>
+						{/if}
 					</div>
 
-					{if $_errorMessage}
-						<form class="form-feedback-item">
-							<span class="form-feedback-indicator">
-								<svg class="lexicon-icon">
-									<use xlink:href="{$spritemap}#exclamation-full"></use>
-								</svg>
-							</span>
-							{$_errorMessage}
-						</form>
-					{/if}
 
 					{if $checkboxFieldName and $checkboxFieldLabel}
 						<div class="form-check">

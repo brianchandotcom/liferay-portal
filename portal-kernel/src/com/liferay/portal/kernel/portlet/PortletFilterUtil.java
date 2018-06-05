@@ -39,14 +39,6 @@ import javax.portlet.filter.HeaderFilterChain;
 public class PortletFilterUtil {
 
 	public static void doFilter(
-			HeaderRequest headerRequest, HeaderResponse headerResponse,
-			HeaderFilterChain headerFilterChain)
-		throws IOException, PortletException {
-
-		headerFilterChain.doFilter(headerRequest, headerResponse);
-	}
-
-	public static void doFilter(
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			String lifecycle, FilterChain filterChain)
 		throws IOException, PortletException {
@@ -62,6 +54,15 @@ public class PortletFilterUtil {
 			EventResponse eventResponse = (EventResponse)portletResponse;
 
 			filterChain.doFilter(eventRequest, eventResponse);
+		}
+		else if (lifecycle.equals(PortletRequest.HEADER_PHASE)) {
+			HeaderRequest headerRequest = (HeaderRequest)portletRequest;
+			HeaderResponse headerResponse = (HeaderResponse)portletResponse;
+
+			HeaderFilterChain headerFilterChain =
+				(HeaderFilterChain)filterChain;
+
+			headerFilterChain.doFilter(headerRequest, headerResponse);
 		}
 		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 			RenderRequest renderRequest = (RenderRequest)portletRequest;

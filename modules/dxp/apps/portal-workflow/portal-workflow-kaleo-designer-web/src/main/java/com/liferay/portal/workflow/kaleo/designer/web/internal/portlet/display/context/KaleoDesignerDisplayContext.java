@@ -14,6 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,7 +26,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -33,19 +40,20 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDefinitionVersionConstants;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.util.KaleoDesignerRequestHelper;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearchTerms;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearch;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionActivePredicateFilter;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionViewPermissionPredicateFilter;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -57,6 +65,7 @@ import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionT
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -71,12 +80,12 @@ import javax.servlet.http.HttpServletRequest;
 public class KaleoDesignerDisplayContext {
 
 	public KaleoDesignerDisplayContext(
-			RenderRequest renderRequest,
-			KaleoDefinitionVersionLocalService
-				kaleoDefinitionVersionLocalService,
-			ResourceBundleLoader resourceBundleLoader,
-			UserLocalService userLocalService)
-		throws PortalException {
+		RenderRequest renderRequest,
+		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
+		ResourceBundleLoader resourceBundleLoader,
+		UserLocalService userLocalService) {
+
+		_renderRequest = renderRequest;
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -90,6 +99,16 @@ public class KaleoDesignerDisplayContext {
 			renderRequest);
 	}
 
+	public String getClearResultsURL() throws PortletException {
+		PortletURL clearResultsURL = PortletURLUtil.clone(
+			getPortletURL(),
+			_kaleoDesignerRequestHelper.getLiferayPortletResponse());
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
 	public Date getCreatedDate(KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws PortalException {
 
@@ -99,6 +118,41 @@ public class KaleoDesignerDisplayContext {
 				kaleoDefinitionVersion.getName());
 
 		return firstKaleoDefinitionVersion.getCreateDate();
+	}
+
+	public CreationMenu getCreationMenu() {
+		if (!isSaveKaleoDefinitionVersionButtonVisible(null)) {
+			return null;
+		}
+
+		return new CreationMenu() {
+			{
+				LiferayPortletResponse liferayPortletResponse =
+					_kaleoDesignerRequestHelper.getLiferayPortletResponse();
+
+				LiferayPortletURL liferayPortletURL =
+					liferayPortletResponse.createRenderURL(
+						KaleoDesignerPortletKeys.KALEO_DESIGNER);
+
+				liferayPortletURL.setParameter(
+					"mvcPath", "/designer/edit_kaleo_definition_version.jsp");
+				liferayPortletURL.setParameter(
+					"redirect",
+					PortalUtil.getCurrentURL(
+						_kaleoDesignerRequestHelper.getRequest()));
+				liferayPortletURL.setParameter("clearSessionMessage", "true");
+
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(liferayPortletURL);
+
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_kaleoDesignerRequestHelper.getRequest(),
+								"new-workflow"));
+					});
+			}
+		};
 	}
 
 	public String getCreatorUserName(
@@ -125,6 +179,30 @@ public class KaleoDesignerDisplayContext {
 		return LanguageUtil.format(
 			getResourceBundle(), "copy-of-x",
 			kaleoDefinition.getTitle(defaultLanguageId));
+	}
+
+	public List<DropdownItem> getFilterItemsDropdownItems() {
+		HttpServletRequest request = _kaleoDesignerRequestHelper.getRequest();
+
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "order-by"));
+					});
+			}
+		};
 	}
 
 	public KaleoDefinition getKaleoDefinition(
@@ -155,11 +233,9 @@ public class KaleoDesignerDisplayContext {
 
 	public OrderByComparator<KaleoDefinitionVersion>
 		getKaleoDefinitionVersionOrderByComparator(
-			SearchContainer searchContainer) {
+			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
-		String orderByCol = getOrderByCol(searchContainer);
-		String orderByType = getOrderByType(searchContainer);
 
 		if (orderByType.equals("asc")) {
 			orderByAsc = true;
@@ -180,14 +256,34 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public List<KaleoDefinitionVersion> getKaleoDefinitionVersions(
-			KaleoDefinitionVersion kaleoDefinitionVersion)
-		throws PortalException {
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
 		return _kaleoDefinitionVersionLocalService.getKaleoDefinitionVersions(
 			kaleoDefinitionVersion.getCompanyId(),
 			kaleoDefinitionVersion.getName(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
 			new KaleoDefinitionVersionModifiedDateComparator(false));
+	}
+
+	public KaleoDefinitionVersionSearch getKaleoDefinitionVersionSearch() {
+		KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch =
+			new KaleoDefinitionVersionSearch(
+				_kaleoDesignerRequestHelper.getLiferayPortletRequest(),
+				getPortletURL());
+
+		String orderByCol = getOrderByCol();
+		String orderByType = getOrderByType();
+
+		OrderByComparator<KaleoDefinitionVersion> orderByComparator =
+			getKaleoDefinitionVersionOrderByComparator(orderByCol, orderByType);
+
+		kaleoDefinitionVersionSearch.setOrderByCol(orderByCol);
+		kaleoDefinitionVersionSearch.setOrderByComparator(orderByComparator);
+		kaleoDefinitionVersionSearch.setOrderByType(orderByType);
+
+		setKaleoDefinitionVersionSearchResults(kaleoDefinitionVersionSearch);
+
+		return kaleoDefinitionVersionSearch;
 	}
 
 	public Object[] getMessageArguments(
@@ -268,26 +364,57 @@ public class KaleoDesignerDisplayContext {
 		return kaleoDefinitionVersion.getModifiedDate();
 	}
 
-	public String getOrderByCol(SearchContainer searchContainer) {
-		String orderByCol = searchContainer.getOrderByCol();
+	public String getOrderByCol() {
+		String orderByCol = ParamUtil.getString(
+			_kaleoDesignerRequestHelper.getRequest(), "orderByCol",
+			"last-modified");
 
-		if (orderByCol != null) {
-			return orderByCol;
-		}
-
-		return ParamUtil.getString(
-			_kaleoDesignerRequestHelper.getRequest(), "orderByCol", "title");
+		return orderByCol;
 	}
 
-	public String getOrderByType(SearchContainer searchContainer) {
-		String orderByType = searchContainer.getOrderByType();
+	public String getOrderByType() {
+		String orderByType = ParamUtil.getString(
+			_kaleoDesignerRequestHelper.getRequest(), "orderByType", "asc");
 
-		if (orderByType != null) {
-			return orderByType;
+		return orderByType;
+	}
+
+	public LiferayPortletURL getPortletURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			_kaleoDesignerRequestHelper.getLiferayPortletResponse();
+
+		LiferayPortletURL portletURL = liferayPortletResponse.createRenderURL(
+			KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW);
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter("navigation", getDefinitionsNavigation());
+
+		String delta = ParamUtil.getString(
+			_kaleoDesignerRequestHelper.getRequest(), "delta");
+
+		if (Validator.isNotNull(delta)) {
+			portletURL.setParameter("delta", delta);
 		}
 
-		return ParamUtil.getString(
-			_kaleoDesignerRequestHelper.getRequest(), "orderByType", "asc");
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
+		return portletURL;
 	}
 
 	public String getPublishKaleoDefinitionVersionButtonLabel(
@@ -303,45 +430,28 @@ public class KaleoDesignerDisplayContext {
 		return "publish";
 	}
 
-	public List<KaleoDefinitionVersion> getSearchContainerResults(
-			SearchContainer<KaleoDefinitionVersion> searchContainer, int status,
-			PermissionChecker permissionChecker)
-		throws PortalException {
+	public String getSearchActionURL() {
+		PortletURL portletURL = getPortletURL();
 
-		KaleoDefinitionVersionSearchTerms searchTerms =
-			(KaleoDefinitionVersionSearchTerms)searchContainer.getSearchTerms();
+		return portletURL.toString();
+	}
 
-		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
-			_kaleoDefinitionVersionLocalService.
-				getLatestKaleoDefinitionVersions(
-					_kaleoDesignerRequestHelper.getCompanyId(),
-					searchTerms.getKeywords(), WorkflowConstants.STATUS_ANY,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public String getSearchContainerId() {
+		return "kaleoDefinitionVersions";
+	}
 
-		kaleoDefinitionVersions = ListUtil.filter(
-			kaleoDefinitionVersions,
-			new KaleoDefinitionVersionActivePredicateFilter(status));
+	public String getSortingURL() throws Exception {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			getPortletURL(),
+			_kaleoDesignerRequestHelper.getLiferayPortletResponse());
 
-		kaleoDefinitionVersions = ListUtil.filter(
-			kaleoDefinitionVersions,
-			new KaleoDefinitionVersionViewPermissionPredicateFilter(
-				permissionChecker, _themeDisplay.getCompanyGroupId()));
+		String orderByType = ParamUtil.getString(
+			_kaleoDesignerRequestHelper.getRequest(), "orderByType");
 
-		searchContainer.setTotal(kaleoDefinitionVersions.size());
+		sortingURL.setParameter(
+			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
 
-		if (kaleoDefinitionVersions.size() >
-				(searchContainer.getEnd() - searchContainer.getStart())) {
-
-			kaleoDefinitionVersions = ListUtil.subList(
-				kaleoDefinitionVersions, searchContainer.getStart(),
-				searchContainer.getEnd());
-		}
-
-		kaleoDefinitionVersions = ListUtil.sort(
-			kaleoDefinitionVersions,
-			getKaleoDefinitionVersionOrderByComparator(searchContainer));
-
-		return kaleoDefinitionVersions;
+		return sortingURL.toString();
 	}
 
 	public String getTitle(KaleoDefinitionVersion kaleoDefinitionVersion) {
@@ -358,6 +468,12 @@ public class KaleoDesignerDisplayContext {
 
 		return HtmlUtil.escape(
 			kaleoDefinitionVersion.getTitle(themeDisplay.getLanguageId()));
+	}
+
+	public int getTotalItems() {
+		SearchContainer<?> searchContainer = getKaleoDefinitionVersionSearch();
+
+		return searchContainer.getTotal();
 	}
 
 	public String getUserName(KaleoDefinitionVersion kaleoDefinitionVersion) {
@@ -412,6 +528,18 @@ public class KaleoDesignerDisplayContext {
 		return true;
 	}
 
+	public boolean isDisabledManagementBar() {
+		if (hasResults()) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isPublishKaleoDefinitionVersionButtonVisible(
 		PermissionChecker permissionChecker,
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
@@ -428,8 +556,10 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public boolean isSaveKaleoDefinitionVersionButtonVisible(
-		PermissionChecker permissionChecker,
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
+
+		PermissionChecker permissionChecker =
+			_kaleoDesignerRequestHelper.getPermissionChecker();
 
 		if (kaleoDefinitionVersion != null) {
 			KaleoDefinition kaleoDefinition = getKaleoDefinition(
@@ -451,6 +581,11 @@ public class KaleoDesignerDisplayContext {
 		}
 	}
 
+	public void setKaleoDesignerRequestHelper(RenderRequest renderRequest) {
+		_kaleoDesignerRequestHelper = new KaleoDesignerRequestHelper(
+			renderRequest);
+	}
+
 	protected String getConfigureAssignementLink(HttpServletRequest request)
 		throws PortletException {
 
@@ -468,6 +603,41 @@ public class KaleoDesignerDisplayContext {
 			});
 	}
 
+	protected String getDefinitionsNavigation() {
+		return ParamUtil.getString(
+			_kaleoDesignerRequestHelper.getRequest(), "navigation", "all");
+	}
+
+	protected Consumer<DropdownItem> getFilterNavigationDropdownItem(
+		String definitionsNavigation) {
+
+		return dropdownItem -> {
+			dropdownItem.setActive(
+				definitionsNavigation.equals(getDefinitionsNavigation()));
+			dropdownItem.setHref(
+				getPortletURL(), "navigation", definitionsNavigation);
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(),
+					definitionsNavigation));
+		};
+	}
+
+	protected List<DropdownItem> getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(getFilterNavigationDropdownItem("all"));
+				add(getFilterNavigationDropdownItem("not-published"));
+				add(getFilterNavigationDropdownItem("published"));
+			}
+		};
+	}
+
+	protected String getKeywords() {
+		return ParamUtil.getString(
+			_kaleoDesignerRequestHelper.getRequest(), "keywords");
+	}
+
 	protected String getLanguage(String key) {
 		return LanguageUtil.get(getResourceBundle(), key);
 	}
@@ -475,6 +645,25 @@ public class KaleoDesignerDisplayContext {
 	protected String getLocalizedAssetName(String className) {
 		return ResourceActionsUtil.getModelResource(
 			_kaleoDesignerRequestHelper.getLocale(), className);
+	}
+
+	protected Consumer<DropdownItem> getOrderByDropdownItem(String orderByCol) {
+		return dropdownItem -> {
+			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
+			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_kaleoDesignerRequestHelper.getRequest(), orderByCol));
+		};
+	}
+
+	protected List<DropdownItem> getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(getOrderByDropdownItem("last-modified"));
+				add(getOrderByDropdownItem("title"));
+			}
+		};
 	}
 
 	protected ResourceBundle getResourceBundle() {
@@ -496,6 +685,68 @@ public class KaleoDesignerDisplayContext {
 		return portletURL;
 	}
 
+	protected boolean hasResults() {
+		if (getTotalItems() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void setKaleoDefinitionVersionSearchResults(
+		SearchContainer<KaleoDefinitionVersion> searchContainer) {
+
+		String definitionsNavigation = getDefinitionsNavigation();
+
+		int displayedStatus = KaleoDefinitionVersionConstants.STATUS_ALL;
+
+		if (StringUtil.equals(definitionsNavigation, "published")) {
+			displayedStatus = KaleoDefinitionVersionConstants.STATUS_PUBLISHED;
+		}
+		else if (StringUtil.equals(definitionsNavigation, "not-published")) {
+			displayedStatus =
+				KaleoDefinitionVersionConstants.STATUS_NOT_PUBLISHED;
+		}
+
+		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
+			_kaleoDefinitionVersionLocalService.
+				getLatestKaleoDefinitionVersions(
+					_kaleoDesignerRequestHelper.getCompanyId(), getKeywords(),
+					WorkflowConstants.STATUS_ANY, searchContainer.getStart(),
+					searchContainer.getEnd(),
+					searchContainer.getOrderByComparator());
+
+		kaleoDefinitionVersions = ListUtil.filter(
+			kaleoDefinitionVersions,
+			new KaleoDefinitionVersionActivePredicateFilter(displayedStatus));
+
+		kaleoDefinitionVersions = ListUtil.filter(
+			kaleoDefinitionVersions,
+			new KaleoDefinitionVersionViewPermissionPredicateFilter(
+				_kaleoDesignerRequestHelper.getPermissionChecker(),
+				_themeDisplay.getCompanyGroupId()));
+
+		searchContainer.setTotal(kaleoDefinitionVersions.size());
+
+		if (kaleoDefinitionVersions.size() >
+				(searchContainer.getEnd() - searchContainer.getStart())) {
+
+			kaleoDefinitionVersions = ListUtil.subList(
+				kaleoDefinitionVersions, searchContainer.getStart(),
+				searchContainer.getEnd());
+		}
+
+		searchContainer.setResults(kaleoDefinitionVersions);
+	}
+
 	private static final String _HTML =
 		"<a class='alert-link' href='[$RENDER_URL$]'>[$MESSAGE$]</a>";
 
@@ -504,7 +755,8 @@ public class KaleoDesignerDisplayContext {
 
 	private final KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
-	private final KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;
+	private KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;
+	private final RenderRequest _renderRequest;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;

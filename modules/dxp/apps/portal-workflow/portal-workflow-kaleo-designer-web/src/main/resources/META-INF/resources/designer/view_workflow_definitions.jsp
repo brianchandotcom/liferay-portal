@@ -16,25 +16,8 @@
 
 <%@ include file="/designer/init.jsp" %>
 
-<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" portletName="<%= KaleoDesignerPortletKeys.CONTROL_PANEL_WORKFLOW %>" varImpl="portletURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-</liferay-portlet:renderURL>
-
 <%
-String definitionsNavigation = ParamUtil.getString(request, "definitionsNavigation");
-
-portletURL.setParameter("definitionsNavigation", definitionsNavigation);
-
-int displayedStatus = KaleoDefinitionVersionConstants.STATUS_ALL;
-
-if (StringUtil.equals(definitionsNavigation, "published")) {
-	displayedStatus = KaleoDefinitionVersionConstants.STATUS_PUBLISHED;
-}
-else if (StringUtil.equals(definitionsNavigation, "not-published")) {
-	displayedStatus = KaleoDefinitionVersionConstants.STATUS_NOT_PUBLISHED;
-}
-
-KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionVersionSearch(renderRequest, portletURL);
+KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = kaleoDesignerDisplayContext.getKaleoDefinitionVersionSearch();
 %>
 
 <liferay-ui:success key='<%= KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed" %>' message='<%= (String)MultiSessionMessages.get(renderRequest, KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestProcessed") %>' translateMessage="<%= false %>" />
@@ -57,17 +40,13 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 <div class="container-fluid-1280 main-content-body">
 	<liferay-ui:search-container
 		emptyResultsMessage="no-workflow-definitions-are-defined"
-		id="kaleoDefinitionVersions"
+		id="<%= kaleoDesignerDisplayContext.getSearchContainerId() %>"
 		searchContainer="<%= kaleoDefinitionVersionSearch %>"
 	>
 
 		<%
 		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 		%>
-
-		<liferay-ui:search-container-results
-			results="<%= kaleoDesignerDisplayContext.getSearchContainerResults(searchContainer, displayedStatus, permissionChecker) %>"
-		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"

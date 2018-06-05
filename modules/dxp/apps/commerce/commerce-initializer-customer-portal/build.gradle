@@ -1,34 +1,55 @@
 import com.liferay.gradle.util.OSDetector
 
 configurations {
-	forecastsBuilder
+	builder
 
 	compileOnly {
-		extendsFrom forecastsBuilder
+		extendsFrom builder
 	}
 }
 
 task buildForecasts(type: JavaExec)
-task formatForecasts
+task buildOrders(type: JavaExec)
+task formatJSON
 
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-File forecastsDir = file("src/main/resources/com/liferay/commerce/initializer/customer/portal/internal/dependencies/forecasts")
+File dependenciesDir = file("src/main/resources/com/liferay/commerce/initializer/customer/portal/internal/dependencies")
+
+File forecastsDir = new File(dependenciesDir, "forecasts")
+File ordersDir = new File(dependenciesDir, "orders")
 
 buildForecasts {
 	args relativePath(forecastsDir)
-	classpath = sourceSets.main.output + configurations.forecastsBuilder
+	classpath = sourceSets.main.output + configurations.builder
 
 	doFirst {
 		delete forecastsDir
 	}
 
-	finalizedBy formatForecasts
+	finalizedBy formatJSON
 	main = "com.liferay.commerce.initializer.customer.portal.internal.tools.CustomerPortalSampleForecastsBuilder"
 }
 
+buildOrders {
+	args relativePath(ordersDir)
+	classpath = sourceSets.main.output + configurations.builder
+
+	doFirst {
+		delete ordersDir
+	}
+
+	finalizedBy formatJSON
+	main = "com.liferay.commerce.initializer.customer.portal.internal.tools.CustomerPortalSampleOrdersBuilder"
+}
+
 dependencies {
+	builder group: "com.liferay", name: "com.liferay.petra.string", version: "2.0.0-20180530.144920-1"
+	builder group: "com.liferay.portal", name: "com.liferay.portal.kernel", transitive: false, version: "3.0.0-20180518.171544-8"
+	builder group: "org.json", name: "json", version: "20180130"
+	builder project(":private:apps:commerce:commerce-forecast-api")
+
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "4.0.0-20180316.222213-1"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib", version: "3.0.0-20180521.175836-1"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
@@ -46,16 +67,11 @@ dependencies {
 	compileOnly project(":private:apps:commerce:commerce-forecast-api")
 	compileOnly project(":private:apps:commerce:commerce-organization-api")
 	compileOnly project(":private:apps:commerce:commerce-product-api")
-
-	forecastsBuilder group: "com.liferay", name: "com.liferay.petra.string", version: "2.0.0-20180530.144920-1"
-	forecastsBuilder group: "com.liferay.portal", name: "com.liferay.portal.kernel", transitive: false, version: "3.0.0-20180518.171544-8"
-	forecastsBuilder group: "org.json", name: "json", version: "20180130"
-	forecastsBuilder project(":private:apps:commerce:commerce-forecast-api")
 }
 
-formatForecasts {
+formatJSON {
 	doLast {
-		forecastsDir.eachFile {
+		Closure<Void> formatJSONClosure = {
 			String fileName = relativePath(it)
 
 			logger.lifecycle "Formatting ${fileName}"
@@ -75,6 +91,14 @@ formatForecasts {
 			json = json.trim()
 
 			it.setText json, "UTF-8"
+		}
+
+		if (forecastsDir.exists()) {
+			forecastsDir.eachFile formatJSONClosure
+		}
+
+		if (ordersDir.exists()) {
+			ordersDir.eachFile formatJSONClosure
 		}
 	}
 }

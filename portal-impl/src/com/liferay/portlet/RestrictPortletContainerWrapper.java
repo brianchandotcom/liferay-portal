@@ -182,9 +182,6 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		try {
 			renderable.render();
 		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
-		}
 		finally {
 			restrictPortletServletRequest.removeAttribute(WebKeys.RENDER_PATH);
 			restrictPortletServletRequest.removeAttribute(

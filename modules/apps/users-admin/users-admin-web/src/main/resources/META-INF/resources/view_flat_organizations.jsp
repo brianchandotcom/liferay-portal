@@ -52,6 +52,8 @@ if (filterManageableOrganizations) {
 		organizationParams.put("organizationsTree", userOrganizations);
 	}
 }
+
+organizationParams.put("portletName", portletName);
 %>
 
 <c:choose>

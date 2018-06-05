@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.search.OrganizationSearch;
 import com.liferay.portlet.usersadmin.search.OrganizationSearchTerms;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.search.OrganizationChecker;
 
 import java.util.LinkedHashMap;
@@ -211,7 +212,11 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 		String keywords = organizationSearchTerms.getKeywords();
 
-		if (Validator.isNotNull(keywords)) {
+		String portletName = (String)organizationParams.get("portletName");
+
+		if (Validator.isNotNull(keywords) ||
+			portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS)) {
+
 			parentOrganizationId =
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 		}

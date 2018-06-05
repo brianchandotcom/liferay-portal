@@ -42,36 +42,23 @@ portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
 	%>'
 />
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-
-		<portlet:renderURL var="addURL">
-			<portlet:param name="mvcRenderCommandName" value="/portal_instances/edit_instance" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu
-			inline="<%= true %>"
-		>
-			<liferay-frontend:add-menu-item
-				title='<%= LanguageUtil.get(request, "add") %>'
-				url="<%= addURL.toString() %>"
-			/>
-		</liferay-frontend:add-menu>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	creationMenu='<%=
+		new JSPCreationMenu(pageContext) {
+			{
+				addDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							renderResponse.createRenderURL(), "mvcRenderCommandName", "/portal_instances/edit_instance", "redirect", PortalUtil.getCurrentURL(request));
+						dropdownItem.setLabel(
+							LanguageUtil.get(request, "add"));
+					});
+			}
+		}
+	%>'
+	selectable="<%= false %>"
+	showSearch="<%= false %>"
+/>
 
 <portlet:renderURL var="redirectURL">
 	<portlet:param name="mvcRenderCommandName" value="/portal_instances/view" />

@@ -225,6 +225,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 		return JournalArticle.class;
 	}
 
+	@Override
 	protected void validateImportedStagedModel(
 			StagedModel stagedModel, StagedModel importedStagedModel)
 		throws Exception {

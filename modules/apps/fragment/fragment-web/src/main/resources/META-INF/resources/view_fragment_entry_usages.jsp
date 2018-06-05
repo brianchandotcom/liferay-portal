@@ -118,6 +118,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 					filterDropdownItems="<%= fragmentEntryLinkDisplayContext.getFilterItemsDropdownItems() %>"
 					itemsTotal="<%= fragmentEntry.getUsageCount() %>"
 					searchContainerId="fragmentEntryLinks"
+					selectable="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>"
 					showSearch="<%= false %>"
 					sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
 					sortingURL="<%= fragmentEntryLinkDisplayContext.getSortingURL() %>"

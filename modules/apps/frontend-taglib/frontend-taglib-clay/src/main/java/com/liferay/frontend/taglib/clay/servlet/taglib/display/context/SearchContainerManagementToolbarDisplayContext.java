@@ -35,15 +35,6 @@ public class SearchContainerManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean getDisabled() {
-		if (getItemsTotal() == 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public int getItemsTotal() {
 		return searchContainer.getTotal();
 	}
@@ -51,6 +42,15 @@ public class SearchContainerManagementToolbarDisplayContext
 	@Override
 	public String getSearchContainerId() {
 		return searchContainer.getId(request, getNamespace());
+	}
+
+	@Override
+	public Boolean isDisabled() {
+		if (getItemsTotal() == 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

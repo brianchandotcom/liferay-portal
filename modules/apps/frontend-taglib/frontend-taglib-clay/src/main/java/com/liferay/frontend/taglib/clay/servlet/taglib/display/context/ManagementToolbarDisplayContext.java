@@ -52,10 +52,6 @@ public interface ManagementToolbarDisplayContext {
 		return null;
 	}
 
-	public default Boolean getDisabled() {
-		return false;
-	}
-
 	public default String getElementClasses() {
 		return null;
 	}
@@ -104,32 +100,8 @@ public interface ManagementToolbarDisplayContext {
 		return null;
 	}
 
-	public default Boolean getSelectable() {
-		return true;
-	}
-
 	public default int getSelectedItems() {
 		return 0;
-	}
-
-	public default Boolean getShowAdvancedSearch() {
-		return GetterUtil.DEFAULT_BOOLEAN;
-	}
-
-	public default Boolean getShowCreationMenu() {
-		return Validator.isNotNull(getCreationMenu());
-	}
-
-	public default Boolean getShowFiltersDoneButton() {
-		return GetterUtil.DEFAULT_BOOLEAN;
-	}
-
-	public default Boolean getShowInfoButton() {
-		return Validator.isNotNull(getInfoPanelId());
-	}
-
-	public default Boolean getShowSearch() {
-		return Validator.isNotNull(getSearchActionURL());
 	}
 
 	public default String getSortingOrder() {
@@ -146,6 +118,34 @@ public interface ManagementToolbarDisplayContext {
 
 	public default List<ViewTypeItem> getViewTypeItems() {
 		return null;
+	}
+
+	public default Boolean isDisabled() {
+		return false;
+	}
+
+	public default Boolean isSelectable() {
+		return true;
+	}
+
+	public default Boolean isShowAdvancedSearch() {
+		return GetterUtil.DEFAULT_BOOLEAN;
+	}
+
+	public default Boolean isShowCreationMenu() {
+		return Validator.isNotNull(getCreationMenu());
+	}
+
+	public default Boolean isShowFiltersDoneButton() {
+		return GetterUtil.DEFAULT_BOOLEAN;
+	}
+
+	public default Boolean isShowInfoButton() {
+		return Validator.isNotNull(getInfoPanelId());
+	}
+
+	public default Boolean isShowSearch() {
+		return Validator.isNotNull(getSearchActionURL());
 	}
 
 }

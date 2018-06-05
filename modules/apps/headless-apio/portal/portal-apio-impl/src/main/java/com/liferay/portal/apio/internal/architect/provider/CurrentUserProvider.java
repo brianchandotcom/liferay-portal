@@ -14,9 +14,9 @@
 
 package com.liferay.portal.apio.internal.architect.provider;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.provider.Provider;
 import com.liferay.portal.apio.user.CurrentUser;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,15 +40,13 @@ public class CurrentUserProvider implements Provider<CurrentUser> {
 
 	@Override
 	public CurrentUser createContext(HttpServletRequest httpServletRequest) {
-		return () -> {
-			try {
-				return _portal.getUser(httpServletRequest);
-			}
-			catch (PortalException pe) {
-				throw new ForbiddenException(
-					"Unable to get authenticated user", pe);
-			}
-		};
+		return Try.fromFallible(
+			() -> _portal.getUser(httpServletRequest)
+		).map(
+			CurrentUser::new
+		).orElseThrow(
+			() -> new ForbiddenException("Unable to get authenticated user")
+		);
 	}
 
 	@Reference

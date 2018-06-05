@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.web.internal.portlet.util;
 
+import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
@@ -183,7 +184,10 @@ public class ImportUtil {
 
 	public boolean isValidFragmentCollectionsFile(ZipReader zipReader) {
 		for (String entry : zipReader.getEntries()) {
-			if (entry.endsWith("collection.json")) {
+			if (entry.endsWith(
+					FragmentExportImportConstants.
+						COLLECTION_CONFIG_FILE_NAME)) {
+
 				return true;
 			}
 		}
@@ -192,7 +196,9 @@ public class ImportUtil {
 	}
 
 	private boolean _isFragmentCollection(String entry) {
-		if (entry.endsWith("collection.json")) {
+		if (entry.endsWith(
+				FragmentExportImportConstants.COLLECTION_CONFIG_FILE_NAME)) {
+
 			return true;
 		}
 
@@ -200,7 +206,9 @@ public class ImportUtil {
 	}
 
 	private boolean _isFragmentEntry(String entry) {
-		if (entry.endsWith("fragment.json")) {
+		if (entry.endsWith(
+				FragmentExportImportConstants.FRAGMENT_CONFIG_FILE_NAME)) {
+
 			return true;
 		}
 

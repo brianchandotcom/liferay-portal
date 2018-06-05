@@ -75,6 +75,11 @@ public class DefaultLayoutPrototypesUtil {
 		return layout;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             LayoutPrototypeHelper#addLayoutPrototype}
+	 */
+	@Deprecated
 	public static Layout addLayoutPrototype(
 			long companyId, long defaultUserId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String layoutTemplateId,

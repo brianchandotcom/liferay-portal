@@ -14,12 +14,15 @@
 
 package com.liferay.user.associated.data.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.BaseManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Drew Brokke
@@ -29,9 +32,10 @@ public class UADExportProcessManagementToolbarDisplayContext
 
 	public UADExportProcessManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request) {
 
-		super(liferayPortletRequest, liferayPortletResponse);
+		super(liferayPortletRequest, liferayPortletResponse, request);
 	}
 
 	@Override
@@ -56,7 +60,7 @@ public class UADExportProcessManagementToolbarDisplayContext
 	}
 
 	@Override
-	public Boolean getSelectable() {
+	public Boolean isSelectable() {
 		return false;
 	}
 

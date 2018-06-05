@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.internal.servlet.taglib;
 
+import com.liferay.portal.kernel.dao.search.DisplayTerms;
+
 /**
  * @author Drew Brokke
  */
@@ -21,6 +23,10 @@ public class ManagementToolbarDefaults {
 
 	public static String getSearchFormMethod() {
 		return "GET";
+	}
+
+	public static String getSearchInputName() {
+		return DisplayTerms.KEYWORDS;
 	}
 
 }

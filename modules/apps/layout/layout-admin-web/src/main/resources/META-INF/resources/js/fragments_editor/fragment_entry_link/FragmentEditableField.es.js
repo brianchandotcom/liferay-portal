@@ -218,6 +218,10 @@ class FragmentEditableField extends Component {
 			else {
 				this._showTooltip = !this._showTooltip;
 			}
+
+			if (!this._showTooltip) {
+				this._handleEditableMouseEnter();
+			}
 		}
 	}
 
@@ -228,7 +232,7 @@ class FragmentEditableField extends Component {
 	 */
 
 	_handleEditableMouseEnter() {
-		if (this.editableValues.mappedField) {
+		if (this.editableValues.mappedField && !this._showTooltip) {
 			this._showTooltip = true;
 			this._tooltipLabel = this.editableValues.mappedField;
 		}

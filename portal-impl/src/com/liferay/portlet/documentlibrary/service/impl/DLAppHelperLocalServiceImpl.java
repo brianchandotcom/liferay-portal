@@ -1106,8 +1106,8 @@ public class DLAppHelperLocalServiceImpl
 					assetEntryLocalService.updateEntry(
 						assetEntry.getClassName(), assetEntry.getClassPK(),
 						assetEntry.getCreateDate(),
-						assetEntry.getExpirationDate(),
-						assetEntry.getListable(), true);
+						assetEntry.getExpirationDate(), assetEntry.isListable(),
+						true);
 				}
 			}
 

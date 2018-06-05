@@ -875,7 +875,7 @@
 			<var name="navItem" value="Users" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="20 Entries" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="20 Entries" />
 
 		<execute function="Click" locator1="Pagination#FIVE_ITEMS_PER_PAGE" />
 

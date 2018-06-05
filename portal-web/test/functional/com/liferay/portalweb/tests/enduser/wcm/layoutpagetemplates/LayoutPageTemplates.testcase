@@ -272,7 +272,7 @@
 			<var name="navItem" value="Page Templates" />
 		</execute>
 
-		<execute macro="Collection#addCollection">
+		<execute macro="LayoutPageTemplates#addCollection">
 			<var name="collectionName" value="Page Template Collection" />
 		</execute>
 

@@ -102,6 +102,21 @@ public interface FriendlyURLEntryModel extends AttachedModel,
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the default language ID of this friendly url entry.
+	 *
+	 * @return the default language ID of this friendly url entry
+	 */
+	@AutoEscape
+	public String getDefaultLanguageId();
+
+	/**
+	 * Sets the default language ID of this friendly url entry.
+	 *
+	 * @param defaultLanguageId the default language ID of this friendly url entry
+	 */
+	public void setDefaultLanguageId(String defaultLanguageId);
+
+	/**
 	 * Returns the friendly url entry ID of this friendly url entry.
 	 *
 	 * @return the friendly url entry ID of this friendly url entry
@@ -218,21 +233,6 @@ public interface FriendlyURLEntryModel extends AttachedModel,
 	 */
 	@Override
 	public void setClassPK(long classPK);
-
-	/**
-	 * Returns the default language ID of this friendly url entry.
-	 *
-	 * @return the default language ID of this friendly url entry
-	 */
-	@AutoEscape
-	public String getDefaultLanguageId();
-
-	/**
-	 * Sets the default language ID of this friendly url entry.
-	 *
-	 * @param defaultLanguageId the default language ID of this friendly url entry
-	 */
-	public void setDefaultLanguageId(String defaultLanguageId);
 
 	public String[] getAvailableLanguageIds();
 

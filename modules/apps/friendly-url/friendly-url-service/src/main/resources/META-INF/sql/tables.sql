@@ -1,14 +1,14 @@
 create table FriendlyURLEntry (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
+	defaultLanguageId VARCHAR(75) null,
 	friendlyURLEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,
-	classPK LONG,
-	defaultLanguageId VARCHAR(75) null
+	classPK LONG
 );
 
 create table FriendlyURLEntryLocalization (

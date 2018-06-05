@@ -62,6 +62,7 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("friendlyURLEntryId", getFriendlyURLEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -69,7 +70,6 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
-		attributes.put("defaultLanguageId", getDefaultLanguageId());
 
 		return attributes;
 	}
@@ -86,6 +86,12 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
 		}
 
 		Long friendlyURLEntryId = (Long)attributes.get("friendlyURLEntryId");
@@ -128,12 +134,6 @@ public class FriendlyURLEntryWrapper implements FriendlyURLEntry,
 
 		if (classPK != null) {
 			setClassPK(classPK);
-		}
-
-		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
-
-		if (defaultLanguageId != null) {
-			setDefaultLanguageId(defaultLanguageId);
 		}
 	}
 

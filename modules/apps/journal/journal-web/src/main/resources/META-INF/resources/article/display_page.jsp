@@ -98,7 +98,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 			</div>
 
 			<%
-			String taglibLabelTypeNone = LanguageUtil.get(request, "no-display-page") + " <span class=\"small text-muted\">" + LanguageUtil.get(request, "this-content-will-not-be-referenceable-with-an-url") + "</span>";
+			String taglibLabelTypeNone = LanguageUtil.get(request, "none") + " <span class=\"small text-muted\">" + LanguageUtil.get(request, "this-content-will-not-be-referenceable-with-an-url") + "</span>";
 			%>
 
 			<aui:input checked="<%= editArticleDisplayPageDisplayContext.isAssetDisplayPageTypeNone() %>" label="<%= taglibLabelTypeNone %>" name="displayPageType" type="radio" value="<%= AssetDisplayPageConstants.TYPE_NONE %>" />

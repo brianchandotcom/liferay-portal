@@ -259,18 +259,13 @@
 </tr>
 <!--PERSONAL_SITE-->
 <tr>
-	<td>PERSONAL_SITE_MY_PROFILE_LABEL</td>
-	<td>//div[contains(@id,'Content')]//label[contains(@for,'publicLayoutSetPrototypeId')]</td>
+	<td>PERSONAL_SITE_LABEL</td>
+	<td>//div[contains(@class,'sheet-section')]//h3[contains(.,'${key_subtitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERSONAL_SITE_MY_PROFILE</td>
 	<td>//div[contains(@id,'Content')]//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERSONAL_SITE_MY_DASHBOARD_LABEL</td>
-	<td>//div[contains(@class,'sheet-section')]//h3[contains(.,'${key_subtitle}')]</td>
 	<td></td>
 </tr>
 <tr>

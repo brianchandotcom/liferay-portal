@@ -419,13 +419,6 @@ public class RuntimePageImpl implements RuntimePage {
 			throw e;
 		}
 
-		boolean portletParallelRender = GetterUtil.getBoolean(
-			request.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER));
-
-		Lock lock = null;
-
-		Map<String, StringBundler> contentsMap = new HashMap<>();
-
 		Map<Integer, List<PortletRenderer>> portletRenderersMap =
 			processor.getPortletRenderers();
 
@@ -481,6 +474,13 @@ public class RuntimePageImpl implements RuntimePage {
 						" ms");
 			}
 		}
+
+		boolean portletParallelRender = GetterUtil.getBoolean(
+			request.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER));
+
+		Lock lock = null;
+
+		Map<String, StringBundler> contentsMap = new HashMap<>();
 
 		for (Map.Entry<Integer, List<PortletRenderer>> entry :
 				portletRenderersMap.entrySet()) {

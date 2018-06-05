@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch6.internal.document;
 
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -117,7 +116,7 @@ public class DefaultElasticsearchDocumentFactory
 			addField(xContentBuilder, field, name, values);
 
 			if (field.isSortable()) {
-				String sortFieldName = DocumentImpl.getSortableFieldName(name);
+				String sortFieldName = Field.getSortableFieldName(name);
 
 				addField(xContentBuilder, field, sortFieldName, values);
 			}
@@ -145,14 +144,13 @@ public class DefaultElasticsearchDocumentFactory
 					addField(xContentBuilder, field, name, value);
 				}
 
-				String localizedName = DocumentImpl.getLocalizedName(
-					languageId, name);
+				String localizedName = Field.getLocalizedName(languageId, name);
 
 				addField(xContentBuilder, field, localizedName, value);
 
 				if (field.isSortable()) {
-					String sortableFieldName =
-						DocumentImpl.getSortableFieldName(localizedName);
+					String sortableFieldName = Field.getSortableFieldName(
+						localizedName);
 
 					addField(xContentBuilder, field, sortableFieldName, value);
 				}

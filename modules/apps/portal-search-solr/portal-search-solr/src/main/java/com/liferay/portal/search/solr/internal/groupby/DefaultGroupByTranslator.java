@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.solr.internal.groupby;
 
-import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -53,7 +53,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 
 		solrQuery.addHighlightField(fieldName);
 
-		String localizedFieldName = DocumentImpl.getLocalizedName(
+		String localizedFieldName = Field.getLocalizedName(
 			queryConfig.getLocale(), fieldName);
 
 		solrQuery.addHighlightField(localizedFieldName);
@@ -89,8 +89,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 				continue;
 			}
 
-			String sortFieldName = DocumentImpl.getSortFieldName(
-				sort, "_score");
+			String sortFieldName = Field.getSortFieldName(sort, "_score");
 
 			if (sortFieldNames.contains(sortFieldName)) {
 				continue;

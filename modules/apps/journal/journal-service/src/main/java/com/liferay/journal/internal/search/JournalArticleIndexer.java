@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
@@ -415,7 +414,7 @@ public class JournalArticleIndexer
 			return Collections.emptyMap();
 		}
 
-		String localizedField = DocumentImpl.getLocalizedName(
+		String localizedField = Field.getLocalizedName(
 			searchContext.getLocale(), field);
 
 		Map<String, Query> queries = new HashMap<>();
@@ -609,8 +608,7 @@ public class JournalArticleIndexer
 
 		Locale snippetLocale = getSnippetLocale(document, locale);
 
-		String localizedTitleName = DocumentImpl.getLocalizedName(
-			locale, Field.TITLE);
+		String localizedTitleName = Field.getLocalizedName(locale, Field.TITLE);
 
 		if ((snippetLocale == null) &&
 			(document.getField(localizedTitleName) == null)) {

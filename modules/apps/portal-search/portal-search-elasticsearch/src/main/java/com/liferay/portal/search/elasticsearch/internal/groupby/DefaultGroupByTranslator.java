@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.groupby;
 
-import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GeoDistanceSort;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -75,7 +75,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			fieldName, queryConfig.getHighlightFragmentSize(),
 			queryConfig.getHighlightSnippetSize());
 
-		String localizedFieldName = DocumentImpl.getLocalizedName(
+		String localizedFieldName = Field.getLocalizedName(
 			queryConfig.getLocale(), fieldName);
 
 		topHitsBuilder.addHighlightedField(
@@ -114,8 +114,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 				continue;
 			}
 
-			String sortFieldName = DocumentImpl.getSortFieldName(
-				sort, "_score");
+			String sortFieldName = Field.getSortFieldName(sort, "_score");
 
 			if (sortFieldNames.contains(sortFieldName)) {
 				continue;

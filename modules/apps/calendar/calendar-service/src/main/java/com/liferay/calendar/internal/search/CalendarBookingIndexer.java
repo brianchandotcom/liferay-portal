@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -212,8 +211,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			document.get("defaultLanguageId"));
 
-		String localizedTitleName = DocumentImpl.getLocalizedName(
-			locale, Field.TITLE);
+		String localizedTitleName = Field.getLocalizedName(locale, Field.TITLE);
 
 		if ((snippetLocale == null) &&
 			(document.getField(localizedTitleName) == null)) {

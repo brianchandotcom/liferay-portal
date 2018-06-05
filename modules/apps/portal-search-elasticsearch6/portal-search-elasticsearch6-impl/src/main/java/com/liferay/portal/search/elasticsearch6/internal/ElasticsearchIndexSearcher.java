@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexSearcher;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GeoDistanceSort;
 import com.liferay.portal.kernel.search.GroupBy;
@@ -280,7 +279,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			fieldName, queryConfig.getHighlightFragmentSize(),
 			queryConfig.getHighlightSnippetSize());
 
-		String localizedFieldName = DocumentImpl.getLocalizedName(
+		String localizedFieldName = Field.getLocalizedName(
 			queryConfig.getLocale(), fieldName);
 
 		highlightBuilder.field(
@@ -358,8 +357,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		Document document, Map<String, HighlightField> highlightFields,
 		String fieldName, Locale locale) {
 
-		String snippetFieldName = DocumentImpl.getLocalizedName(
-			locale, fieldName);
+		String snippetFieldName = Field.getLocalizedName(locale, fieldName);
 
 		HighlightField highlightField = highlightFields.get(snippetFieldName);
 
@@ -632,7 +630,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return sortFieldName;
 		}
 
-		return DocumentImpl.getSortFieldName(sort, scoreFieldName);
+		return Field.getSortFieldName(sort, scoreFieldName);
 	}
 
 	protected Hits processResponse(

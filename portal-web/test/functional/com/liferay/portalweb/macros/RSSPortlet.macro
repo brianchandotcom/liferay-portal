@@ -88,7 +88,7 @@
 	<command name="updateFeedTime">
 		<execute function="Type" locator1="RSSFeed#FEED_TIME" value1="${feedTime}" />
 
-		<execute macro="Button#clickSave" />
+		<execute macro="SystemSettings#saveConfiguration" />
 	</command>
 
 	<command name="viewCorruptScript">

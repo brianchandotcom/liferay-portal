@@ -3707,6 +3707,8 @@ Java project.
 ## 5.4.25 - 2018-06-04
 
 ### Changed
+- [LPS-81795]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.27.
 - [LPS-81895]: Update the [Liferay Gradle Plugins Lang Merger] dependency to
 version 1.1.0.
 

@@ -122,13 +122,20 @@ public class DDMFormDisplayContext {
 	}
 
 	public String[] getAvailableLanguageIds() throws PortalException {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		Set<Locale> siteAvailablesLocales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId());
+
 		DDMForm ddmForm = getDDMForm();
 
 		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		Stream<Locale> localeStreams = availableLocales.stream();
 
-		return localeStreams.map(
+		return localeStreams.filter(
+			locale -> siteAvailablesLocales.contains(locale)
+		).map(
 			locale -> LanguageUtil.getLanguageId(locale)
 		).toArray(
 			String[]::new

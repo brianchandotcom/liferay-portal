@@ -87,7 +87,7 @@ public class OAuth2AdminPortletDisplayContext
 		super.themeDisplay = themeDisplay;
 	}
 
-	public ClientProfile[] getClientProfilesSorted() {
+	public ClientProfile[] getSortedClientProfiles() {
 		ClientProfile[] clientProfiles = ClientProfile.values();
 
 		Arrays.sort(clientProfiles, Comparator.comparingInt(ClientProfile::id));

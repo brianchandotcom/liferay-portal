@@ -51,7 +51,15 @@ public class DDMFormFieldOptionsFactoryImpl
 		String dataSourceType = GetterUtil.getString(
 			ddmFormField.getProperty("dataSourceType"), "manual");
 
-		if (Objects.equals(dataSourceType, "data-provider")) {
+		if (Objects.equals(dataSourceType, "from-autofill")) {
+			DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+			ddmFormFieldOptions.setDefaultLocale(
+				ddmFormFieldRenderingContext.getLocale());
+
+			return ddmFormFieldOptions;
+		}
+		else if (Objects.equals(dataSourceType, "data-provider")) {
 			return createDDMFormFieldOptionsFromDataProvider(
 				ddmFormField, ddmFormFieldRenderingContext);
 		}

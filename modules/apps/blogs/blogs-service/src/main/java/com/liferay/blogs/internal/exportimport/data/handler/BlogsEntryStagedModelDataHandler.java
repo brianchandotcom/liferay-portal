@@ -374,25 +374,6 @@ public class BlogsEntryStagedModelDataHandler
 		return _SKIP_IMPORT_REFERENCE_STAGED_MODEL_NAMES;
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntryLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
-
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setFriendlyURLEntryLocalService(
-		FriendlyURLEntryLocalService friendlyURLEntryLocalService) {
-
-		_friendlyURLEntryLocalService = friendlyURLEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setImageLocalService(ImageLocalService imageLocalService) {
-		_imageLocalService = imageLocalService;
-	}
-
 	private void _exportFriendlyURLEntries(
 			PortletDataContext portletDataContext, BlogsEntry blogsEntry)
 		throws PortletDataException {
@@ -447,6 +428,7 @@ public class BlogsEntryStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryStagedModelDataHandler.class);
 
+	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
@@ -460,7 +442,10 @@ public class BlogsEntryStagedModelDataHandler
 	private volatile ExportImportContentProcessor<String>
 		_exportImportContentProcessor;
 
+	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
 	private ImageLocalService _imageLocalService;
 
 	@Reference

@@ -3718,6 +3718,12 @@ version 1.1.0.
 - [LPS-67694]: Fix error when `-PsnapshotIfStale` is set and the latest snapshot
 of a module includes transitive dependencies.
 
+## 5.4.27 - 2018-06-04
+
+### Changed
+- [LPS-81336]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.28.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -4127,6 +4133,7 @@ of a module includes transitive dependencies.
 [LPS-80944]: https://issues.liferay.com/browse/LPS-80944
 [LPS-80950]: https://issues.liferay.com/browse/LPS-80950
 [LPS-81106]: https://issues.liferay.com/browse/LPS-81106
+[LPS-81336]: https://issues.liferay.com/browse/LPS-81336
 [LPS-81404]: https://issues.liferay.com/browse/LPS-81404
 [LPS-81555]: https://issues.liferay.com/browse/LPS-81555
 [LPS-81635]: https://issues.liferay.com/browse/LPS-81635

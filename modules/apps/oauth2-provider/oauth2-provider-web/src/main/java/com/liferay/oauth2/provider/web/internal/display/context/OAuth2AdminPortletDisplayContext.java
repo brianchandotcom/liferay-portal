@@ -87,14 +87,6 @@ public class OAuth2AdminPortletDisplayContext
 		super.themeDisplay = themeDisplay;
 	}
 
-	public ClientProfile[] getClientProfilesSorted() {
-		ClientProfile[] clientProfiles = ClientProfile.values();
-
-		Arrays.sort(clientProfiles, Comparator.comparingInt(ClientProfile::id));
-
-		return clientProfiles;
-	}
-
 	public List<GrantType> getGrantTypes(
 		PortletPreferences portletPreferences) {
 
@@ -168,6 +160,14 @@ public class OAuth2AdminPortletDisplayContext
 			oAuth2ApplicationScopeAliases.getScopeAliasesList();
 
 		return scopeAliasesList.size();
+	}
+
+	public ClientProfile[] getSortedClientProfiles() {
+		ClientProfile[] clientProfiles = ClientProfile.values();
+
+		Arrays.sort(clientProfiles, Comparator.comparingInt(ClientProfile::id));
+
+		return clientProfiles;
 	}
 
 	private static final Pattern _baseIdPattern = Pattern.compile(

@@ -40,7 +40,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 	<aui:select name="clientProfile">
 
 		<%
-		ClientProfile[] clientProfiles = oAuth2AdminPortletDisplayContext.getClientProfilesSorted();
+		ClientProfile[] clientProfiles = oAuth2AdminPortletDisplayContext.getSortedClientProfiles();
 
 		for (ClientProfile clientProfile : clientProfiles) {
 		%>

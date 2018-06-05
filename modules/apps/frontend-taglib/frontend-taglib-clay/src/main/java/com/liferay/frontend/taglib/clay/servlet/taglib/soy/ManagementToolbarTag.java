@@ -107,7 +107,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 		String infoPanelId = (String)context.get("infoPanelId");
 
 		boolean showInfoButton = GetterUtil.getBoolean(
-			context.get("showInfoButton"), Validator.isNotNull(infoPanelId));
+			context.get("showInfoButton"),
+			ManagementToolbarDefaults.isShowInfoButton(infoPanelId));
 
 		setShowInfoButton(showInfoButton);
 

@@ -111,14 +111,12 @@
 
 	@include display(flex);
 
-	padding: 3px 24px;
+	padding: 3px 12px 3px 24px;
 	position: relative;
 }
 
 .portlet-topper-toolbar {
-	margin-bottom: 0;
-	margin-left: 8px;
-	margin-top: 0;
+	margin: 0;
 	padding-left: 0;
 
 	> a, > span > a, .lfr-icon-menu > a {

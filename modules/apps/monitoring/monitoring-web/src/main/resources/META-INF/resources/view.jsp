@@ -23,37 +23,34 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/monitoring/view");
+
+PortletURL sortingURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+sortingURL.setParameter("orderByType", orderByType.equals("asc") ? "desc" : "asc");
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="live-sessions" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(LanguageUtil.get(request, "live-sessions"));
+					});
+			}
+		}
+	%>'
+/>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol='<%= "last-request" %>'
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"last-request"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= renderResponse.createRenderURL() %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	selectable="<%= false %>"
+	showSearch="<%= false %>"
+	sortingOrder="<%= orderByType %>"
+	sortingURL="<%= sortingURL.toString() %>"
+/>
 
 <div class="container-fluid-1280">
 	<c:choose>

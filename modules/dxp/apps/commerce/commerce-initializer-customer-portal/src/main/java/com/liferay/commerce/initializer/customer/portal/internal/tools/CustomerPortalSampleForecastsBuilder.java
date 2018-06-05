@@ -159,7 +159,7 @@ public class CustomerPortalSampleForecastsBuilder {
 			increment = Time.MONTH;
 		}
 
-		for (long time = Math.negateExact(_RANGE_TIME); time <= _RANGE_TIME;
+		for (long time = Math.negateExact(_TIME); time <= _TIME;
 			time += increment) {
 
 			value = _addRandomIncrement(value, valueVolatility, null);
@@ -268,7 +268,7 @@ public class CustomerPortalSampleForecastsBuilder {
 
 	private static final int _MAX_QUANTITY = 1000000;
 
-	private static final long _RANGE_TIME = 6 * Time.MONTH;
+	private static final long _TIME = 6 * Time.MONTH;
 
 	private static final Random _random = new Random();
 

@@ -22,7 +22,8 @@ import java.util.Set;
 /**
  * @author Leslie Wong
  */
-public class PortalUpstreamJob extends PortalRepositoryJob {
+public class PortalUpstreamJob
+	extends PortalRepositoryJob implements BatchDependentJob {
 
 	public PortalUpstreamJob(String jobName) {
 		super(jobName);
@@ -49,6 +50,14 @@ public class PortalUpstreamJob extends PortalRepositoryJob {
 		String testBatchNames = JenkinsResultsParserUtil.getProperty(
 			jobProperties,
 			"test.batch.names[portal-upstream(" + getBranchName() + ")]");
+
+		return getSetFromString(testBatchNames);
+	}
+
+	@Override
+	public Set<String> getDependentBatchNames() {
+		String testBatchNames = JenkinsResultsParserUtil.getProperty(
+			jobProperties, "test.batch.names.smoke[" + getBranchName() + "]");
 
 		return getSetFromString(testBatchNames);
 	}

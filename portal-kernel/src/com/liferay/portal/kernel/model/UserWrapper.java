@@ -100,6 +100,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("agreedToTermsOfUse", isAgreedToTermsOfUse());
 		attributes.put("emailAddressVerified", isEmailAddressVerified());
 		attributes.put("status", getStatus());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 
 		return attributes;
 	}
@@ -361,6 +362,13 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+				"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 	}
 
@@ -699,6 +707,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _user.getExpandoBridge();
+	}
+
+	/**
+	* Returns the external reference code of this user.
+	*
+	* @return the external reference code of this user
+	*/
+	@Override
+	public String getExternalReferenceCode() {
+		return _user.getExternalReferenceCode();
 	}
 
 	/**
@@ -1584,6 +1602,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_user.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the external reference code of this user.
+	*
+	* @param externalReferenceCode the external reference code of this user
+	*/
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_user.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

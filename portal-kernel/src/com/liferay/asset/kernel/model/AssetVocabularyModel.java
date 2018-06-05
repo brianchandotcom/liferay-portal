@@ -459,6 +459,21 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the external reference code of this asset vocabulary.
+	 *
+	 * @return the external reference code of this asset vocabulary
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this asset vocabulary.
+	 *
+	 * @param externalReferenceCode the external reference code of this asset vocabulary
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
 	@Override
 	public boolean isNew();
 

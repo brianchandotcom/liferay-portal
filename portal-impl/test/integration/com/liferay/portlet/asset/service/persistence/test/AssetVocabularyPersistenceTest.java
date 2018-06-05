@@ -142,6 +142,8 @@ public class AssetVocabularyPersistenceTest {
 
 		newAssetVocabulary.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newAssetVocabulary.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		_assetVocabularies.add(_persistence.update(newAssetVocabulary));
 
 		AssetVocabulary existingAssetVocabulary = _persistence.findByPrimaryKey(newAssetVocabulary.getPrimaryKey());
@@ -175,6 +177,8 @@ public class AssetVocabularyPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingAssetVocabulary.getLastPublishDate()),
 			Time.getShortTimestamp(newAssetVocabulary.getLastPublishDate()));
+		Assert.assertEquals(existingAssetVocabulary.getExternalReferenceCode(),
+			newAssetVocabulary.getExternalReferenceCode());
 	}
 
 	@Test
@@ -242,6 +246,15 @@ public class AssetVocabularyPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AssetVocabulary newAssetVocabulary = addAssetVocabulary();
 
@@ -274,7 +287,8 @@ public class AssetVocabularyPersistenceTest {
 			true, "vocabularyId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "title", true, "description",
-			true, "settings", true, "lastPublishDate", true);
+			true, "settings", true, "lastPublishDate", true,
+			"externalReferenceCode", true);
 	}
 
 	@Test
@@ -492,6 +506,14 @@ public class AssetVocabularyPersistenceTest {
 		Assert.assertTrue(Objects.equals(existingAssetVocabulary.getName(),
 				ReflectionTestUtil.invoke(existingAssetVocabulary,
 					"getOriginalName", new Class<?>[0])));
+
+		Assert.assertEquals(Long.valueOf(existingAssetVocabulary.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetVocabulary,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(Objects.equals(
+				existingAssetVocabulary.getExternalReferenceCode(),
+				ReflectionTestUtil.invoke(existingAssetVocabulary,
+					"getOriginalExternalReferenceCode", new Class<?>[0])));
 	}
 
 	protected AssetVocabulary addAssetVocabulary() throws Exception {
@@ -522,6 +544,8 @@ public class AssetVocabularyPersistenceTest {
 		assetVocabulary.setSettings(RandomTestUtil.randomString());
 
 		assetVocabulary.setLastPublishDate(RandomTestUtil.nextDate());
+
+		assetVocabulary.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		_assetVocabularies.add(_persistence.update(assetVocabulary));
 

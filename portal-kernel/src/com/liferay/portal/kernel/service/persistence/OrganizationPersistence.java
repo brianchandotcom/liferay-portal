@@ -1514,6 +1514,57 @@ public interface OrganizationPersistence extends BasePersistence<Organization> {
 		long parentOrganizationId);
 
 	/**
+	* Returns the organization where companyId = &#63; and externalReferenceCode = &#63; or throws a {@link NoSuchOrganizationException} if it could not be found.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the matching organization
+	* @throws NoSuchOrganizationException if a matching organization could not be found
+	*/
+	public Organization findByC_ERC(long companyId, String externalReferenceCode)
+		throws NoSuchOrganizationException;
+
+	/**
+	* Returns the organization where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the matching organization, or <code>null</code> if a matching organization could not be found
+	*/
+	public Organization fetchByC_ERC(long companyId,
+		String externalReferenceCode);
+
+	/**
+	* Returns the organization where companyId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching organization, or <code>null</code> if a matching organization could not be found
+	*/
+	public Organization fetchByC_ERC(long companyId,
+		String externalReferenceCode, boolean retrieveFromCache);
+
+	/**
+	* Removes the organization where companyId = &#63; and externalReferenceCode = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the organization that was removed
+	*/
+	public Organization removeByC_ERC(long companyId,
+		String externalReferenceCode) throws NoSuchOrganizationException;
+
+	/**
+	* Returns the number of organizations where companyId = &#63; and externalReferenceCode = &#63;.
+	*
+	* @param companyId the company ID
+	* @param externalReferenceCode the external reference code
+	* @return the number of matching organizations
+	*/
+	public int countByC_ERC(long companyId, String externalReferenceCode);
+
+	/**
 	* Caches the organization in the entity cache if it is enabled.
 	*
 	* @param organization the organization

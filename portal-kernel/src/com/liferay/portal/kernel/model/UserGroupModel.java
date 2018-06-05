@@ -270,6 +270,21 @@ public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
 	 */
 	public void setAddedByLDAPImport(boolean addedByLDAPImport);
 
+	/**
+	 * Returns the external reference code of this user group.
+	 *
+	 * @return the external reference code of this user group
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this user group.
+	 *
+	 * @param externalReferenceCode the external reference code of this user group
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
 	@Override
 	public boolean isNew();
 

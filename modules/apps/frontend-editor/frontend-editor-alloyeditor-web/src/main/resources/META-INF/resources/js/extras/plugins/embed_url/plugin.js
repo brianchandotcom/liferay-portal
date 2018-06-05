@@ -194,6 +194,39 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 		}
 	};
 
+	const selectWidget = function(editor) {
+		setTimeout(
+			() => {
+				const selection = editor.getSelection();
+
+				if (selection) {
+					const startElement = selection.getStartElement();
+
+					if (startElement) {
+						const wrapperElement = startElement.findOne('[data-cke-widget-wrapper]') ||
+							startElement.is('[data-cke-widget-wrapper]');
+
+						if (wrapperElement) {
+							const imageElement = wrapperElement.findOne('img');
+							const widgetElement = wrapperElement.findOne('[data-widget="embedurl"]');
+
+							if (imageElement && widgetElement) {
+								const range = editor.createRange();
+
+								range.setStart(widgetElement, 0);
+								range.setEnd(imageElement, 1);
+
+								selection.selectRanges([range]);
+								selection.selectElement(wrapperElement);
+							}
+						}
+					}
+				}
+			},
+			0
+		);
+	};
+
 	let currentAlignment = null;
 	let currentElement = null;
 	let resizer = null;
@@ -368,7 +401,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 							instance.wrapper.setAttribute('style', CKEDITOR.tools.writeCssText(styles));
 
 							if (editor._selectEmbedWidget === event.data.url) {
-								reselectSelection();
+								selectWidget();
 							}
 						},
 
@@ -393,7 +426,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 					'resize',
 					() => {
 						resizer.hide();
-						reselectSelection(editor);
+						selectWidget(editor);
 					},
 					false
 				);
@@ -491,45 +524,10 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 							if (currentAlignment && currentElement) {
 								setEmbedAlignment(currentElement, currentAlignment);
 							}
-							reselectSelection(editor);
+							selectWidget(editor);
 						}
 					}
 				);
-
-				const reselectSelection = function(editor) {
-					setTimeout(
-						() => {
-							const selection = editor.getSelection();
-
-							if (!selection) {
-								return;
-							}
-
-							const startElement = selection.getStartElement();
-
-							if (startElement) {
-								const wrapperElement = startElement.findOne('[data-cke-widget-wrapper]') ||
-									startElement.is('[data-cke-widget-wrapper]');
-
-								if (wrapperElement) {
-									const imageElement = wrapperElement.findOne('img');
-									const widgetElement = wrapperElement.findOne('[data-widget="embedurl"]');
-
-									if (imageElement && widgetElement) {
-										const range = editor.createRange();
-
-										range.setStart(widgetElement, 0);
-										range.setEnd(imageElement, 1);
-
-										selection.selectRanges([range]);
-										selection.selectElement(wrapperElement);
-									}
-								}
-							}
-						},
-						0
-					);
-				};
 
 				document.addEventListener('mousedown', mouseDownListener, false);
 			},
@@ -562,6 +560,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 											currentAlignment = getEmbedAlignment(selectedElement);
 
 											const imageElement = selectedElement.findOne('img');
+
 											if (imageElement) {
 												resizer.show(imageElement.$);
 											}

@@ -81,12 +81,14 @@ var AlignImageLeft = React.createClass({
 	render: function() {
 		var cssClass = 'ae-button ' + this.getStateClasses();
 
-		return (<button aria-label={AlloyEditor.Strings.alignLeft} aria-pressed={cssClass.indexOf('pressed') !== -1} className={cssClass} data-type="button-image-align-left" onClick={this.execCommand} tabIndex={this.props.tabIndex} title={AlloyEditor.Strings.alignLeft}>
-			<svg className="lexicon-icon lexicon-icon-align-image-left" focusable="false" role="image">
-				<use data-href={themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#align-image-left'} />
-				<title>align-image-left</title>
-			</svg>
-		</button>);
+		return (
+			<button aria-label={AlloyEditor.Strings.alignLeft} aria-pressed={cssClass.indexOf('pressed') !== -1} className={cssClass} data-type="button-image-align-left" onClick={this.execCommand} tabIndex={this.props.tabIndex} title={AlloyEditor.Strings.alignLeft}>
+				<svg className="lexicon-icon lexicon-icon-align-image-left" focusable="false" role="image">
+					<use data-href={themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#align-image-left'} />
+					<title>align-image-left</title>
+				</svg>
+			</button>
+		);
 	}
 });
 

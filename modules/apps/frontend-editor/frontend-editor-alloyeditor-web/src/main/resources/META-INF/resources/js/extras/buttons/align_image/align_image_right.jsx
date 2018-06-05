@@ -81,12 +81,14 @@ var AlignImageRight = React.createClass({
 	render: function() {
 		var cssClass = 'ae-button ' + this.getStateClasses();
 
-		return (<button aria-label={AlloyEditor.Strings.alignRight} aria-pressed={cssClass.indexOf('pressed') !== -1} className={cssClass} data-type="button-image-align-right" onClick={this.execCommand} tabIndex={this.props.tabIndex} title={AlloyEditor.Strings.alignRight}>
-			<svg className="lexicon-icon lexicon-icon-align-image-right" focusable="false" role="image">
-				<use data-href={themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#align-image-right'} />
-				<title>align-image-right</title>
-			</svg>
-		</button>);
+		return (
+			<button aria-label={AlloyEditor.Strings.alignRight} aria-pressed={cssClass.indexOf('pressed') !== -1} className={cssClass} data-type="button-image-align-right" onClick={this.execCommand} tabIndex={this.props.tabIndex} title={AlloyEditor.Strings.alignRight}>
+				<svg className="lexicon-icon lexicon-icon-align-image-right" focusable="false" role="image">
+					<use data-href={themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#align-image-right'} />
+					<title>align-image-right</title>
+				</svg>
+			</button>
+		);
 	}
 });
 

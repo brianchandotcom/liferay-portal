@@ -113,6 +113,8 @@ public class PersonCollectionResource
 			"honorificPrefix", _getContactField(Contact::getPrefixId)
 		).addLocalizedStringByLocale(
 			"honorificSuffix", _getContactField(Contact::getSuffixId)
+		).addRelativeURL(
+			"image", UserWrapper::getPortraitURL
 		).addString(
 			"additionalName", User::getMiddleName
 		).addString(
@@ -127,8 +129,6 @@ public class PersonCollectionResource
 			"gender", PersonCollectionResource::_getGender
 		).addString(
 			"givenName", User::getFirstName
-		).addString(
-			"image", UserWrapper::getPortraitURL
 		).addString(
 			"jobTitle", User::getJobTitle
 		).addString(

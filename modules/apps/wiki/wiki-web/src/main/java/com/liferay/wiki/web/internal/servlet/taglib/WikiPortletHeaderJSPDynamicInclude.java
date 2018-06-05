@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.model.WikiNode;
 
 import java.io.IOException;
 
@@ -67,6 +69,12 @@ public class WikiPortletHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 			!mvcRenderCommandName.equals("/wiki/view_tagged_pages") &&
 			!mvcRenderCommandName.equals("/wiki/view_page_activities")) {
 
+			return;
+		}
+
+		WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+
+		if (node == null) {
 			return;
 		}
 

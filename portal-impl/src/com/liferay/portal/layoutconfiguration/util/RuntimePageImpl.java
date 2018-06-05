@@ -480,6 +480,21 @@ public class RuntimePageImpl implements RuntimePage {
 					"Finished serial header phase in " + stopWatch.getTime() +
 						" ms");
 			}
+		}
+
+		for (Map.Entry<Integer, List<PortletRenderer>> entry :
+				portletRenderersMap.entrySet()) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Processing portlets with render weight " + entry.getKey());
+			}
+
+			List<PortletRenderer> portletRenderers = entry.getValue();
+
+			StopWatch stopWatch = new StopWatch();
+
+			stopWatch.start();
 
 			if (portletParallelRender && (portletRenderers.size() > 1)) {
 				if (_log.isDebugEnabled()) {

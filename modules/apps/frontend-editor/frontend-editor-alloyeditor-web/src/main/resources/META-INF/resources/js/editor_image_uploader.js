@@ -206,6 +206,12 @@ AUI.add(
 
 								imageContainer.remove();
 
+								var outernode = image._node.outerHTML;
+
+								outernode += '<br><br>';
+
+								image._node.outerHTML = outernode;
+
 								editor.fire(
 									'imageUploaded',
 									{

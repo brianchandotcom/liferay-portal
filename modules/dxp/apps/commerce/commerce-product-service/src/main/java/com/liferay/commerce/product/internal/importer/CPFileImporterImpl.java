@@ -659,12 +659,6 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 				value = String.valueOf(assetEntryId);
 			}
-			else if (key.equals("portletSetUpTitle")) {
-				setLocalizedValues(
-					portletPreferences, layout.getGroupId(), key, value);
-
-				continue;
-			}
 
 			portletPreferences.setValue(key, value);
 		}

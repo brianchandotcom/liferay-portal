@@ -269,7 +269,8 @@ public class MonitoringInvokerPortlet
 
 		_render(
 			renderRequest, renderResponse,
-			() -> _invokerPortlet.render(renderRequest, renderResponse), false);
+			() -> _invokerPortlet.render(renderRequest, renderResponse),
+			PortletRequestType.RENDER, _renderTimeout);
 	}
 
 	@Override
@@ -280,7 +281,7 @@ public class MonitoringInvokerPortlet
 		_render(
 			headerRequest, headerResponse,
 			() -> _invokerPortlet.renderHeaders(headerRequest, headerResponse),
-			true);
+			PortletRequestType.HEADER, _headerTimeout);
 	}
 
 	@Override
@@ -351,7 +352,8 @@ public class MonitoringInvokerPortlet
 
 	private void _render(
 			RenderRequest renderRequest, MimeResponse mimeResponse,
-			Renderable renderable, boolean headerPhase)
+			Renderable renderable, PortletRequestType portletRequestType,
+			long timeout)
 		throws IOException, PortletException {
 
 		DataSample dataSample = null;
@@ -359,15 +361,6 @@ public class MonitoringInvokerPortlet
 		try {
 			if (_portletMonitoringControl.isMonitorPortletHeaderRequest() ||
 				_portletMonitoringControl.isMonitorPortletRenderRequest()) {
-
-				PortletRequestType portletRequestType =
-					PortletRequestType.RENDER;
-				long timeout = _renderTimeout;
-
-				if (headerPhase) {
-					portletRequestType = PortletRequestType.HEADER;
-					timeout = _headerTimeout;
-				}
 
 				dataSample = _dataSampleFactory.createPortletRequestDataSample(
 					portletRequestType, renderRequest, mimeResponse);

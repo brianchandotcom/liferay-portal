@@ -16,10 +16,13 @@ package com.liferay.portal.search.web.internal.search.insights.portlet;
 
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.search.insights.constants.SearchInsightsPortletKeys;
 import com.liferay.portal.search.web.internal.search.insights.display.context.SearchInsightsDisplayContext;
+import com.liferay.portal.search.web.internal.util.SearchPortletPermissionUtil;
 import com.liferay.portal.search.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -80,6 +83,13 @@ public class SearchInsightsPortlet extends MVCPortlet {
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			buildDisplayContext(portletSharedSearchResponse, renderRequest));
 
+		if (!SearchPortletPermissionUtil.containsConfiguration(
+				portletPermission, renderRequest, portal)) {
+
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		}
+
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -115,6 +125,12 @@ public class SearchInsightsPortlet extends MVCPortlet {
 
 	@Reference
 	protected Language language;
+
+	@Reference
+	protected Portal portal;
+
+	@Reference
+	protected PortletPermission portletPermission;
 
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;

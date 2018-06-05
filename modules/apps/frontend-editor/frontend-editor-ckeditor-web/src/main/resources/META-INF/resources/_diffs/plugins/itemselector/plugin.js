@@ -397,8 +397,12 @@
 								}
 								else {
 									var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
+									var firstLineBreak = CKEDITOR.dom.element.createFromHtml('<br>');
+									var secondLineBreak = CKEDITOR.dom.element.createFromHtml('<br>');
 
 									editor.insertElement(el);
+									editor.insertElement(firstLineBreak);
+									editor.insertElement(secondLineBreak);
 
 									editor.focus();
 								}

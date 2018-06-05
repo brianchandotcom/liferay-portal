@@ -16,7 +16,6 @@ package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -51,14 +50,11 @@ public class CommerceTierPriceEntryDisplayContext
 	extends BaseCommercePriceListDisplayContext<CommerceTierPriceEntry> {
 
 	public CommerceTierPriceEntryDisplayContext(
-		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceTierPriceEntryService commerceTierPriceEntryService,
 		HttpServletRequest httpServletRequest) {
 
-		super(
-			commercePriceFormatter, commercePriceListActionHelper,
-			httpServletRequest);
+		super(commercePriceListActionHelper, httpServletRequest);
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 

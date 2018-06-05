@@ -127,9 +127,10 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 		String zip = ParamUtil.getString(actionRequest, "zip");
 		double weightFrom = ParamUtil.getDouble(actionRequest, "weightFrom");
 		double weightTo = ParamUtil.getDouble(actionRequest, "weightTo");
-		double fixedPrice = ParamUtil.getDouble(actionRequest, "fixedPrice");
-		double rateUnitWeightPrice = ParamUtil.getDouble(
-			actionRequest, "rateUnitWeightPrice");
+		BigDecimal fixedPrice = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "fixedPrice", BigDecimal.ZERO);
+		BigDecimal rateUnitWeightPrice = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "rateUnitWeightPrice", BigDecimal.ZERO);
 		double ratePercentage = ParamUtil.getDouble(
 			actionRequest, "ratePercentage");
 
@@ -141,17 +142,15 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 				updateCommerceShippingFixedOptionRel(
 					commerceShippingFixedOptionRelId, commerceWarehouseId,
 					commerceCountryId, commerceRegionId, zip, weightFrom,
-					weightTo, new BigDecimal(fixedPrice),
-					new BigDecimal(rateUnitWeightPrice), ratePercentage);
+					weightTo, fixedPrice, rateUnitWeightPrice, ratePercentage);
 		}
 		else {
 			_commerceShippingFixedOptionRelService.
 				addCommerceShippingFixedOptionRel(
 					commerceShippingMethodId, commerceShippingFixedOptionId,
 					commerceWarehouseId, commerceCountryId, commerceRegionId,
-					zip, weightFrom, weightTo, new BigDecimal(fixedPrice),
-					new BigDecimal(rateUnitWeightPrice), ratePercentage,
-					serviceContext);
+					zip, weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
+					ratePercentage, serviceContext);
 		}
 	}
 

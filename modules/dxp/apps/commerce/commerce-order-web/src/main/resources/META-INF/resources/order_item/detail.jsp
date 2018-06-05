@@ -40,7 +40,9 @@ CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 			<aui:input name="quantity" />
 
 			<c:if test="<%= !commerceOrder.isOpen() %>">
-				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceOrderEditDisplayContext.format(commerceOrderItem.getPrice()) %>" />
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceOrderItem.getPrice() %>">
+					<aui:validator name="number" />
+				</aui:input>
 			</c:if>
 		</aui:fieldset>
 	</aui:fieldset-group>

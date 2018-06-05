@@ -19,6 +19,7 @@
 <%
 CommerceShippingFixedOptionsDisplayContext commerceShippingFixedOptionsDisplayContext = (CommerceShippingFixedOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
+CommerceShippingMethod commerceShippingMethod = commerceShippingFixedOptionsDisplayContext.getCommerceShippingMethod();
 SearchContainer<CommerceShippingFixedOption> commerceShippingFixedOptionSearchContainer = commerceShippingFixedOptionsDisplayContext.getSearchContainer();
 
 boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
@@ -104,7 +105,7 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
+				cssClass="important table-cell-content"
 				href='<%= commerceShippingFixedOptionsDisplayContext.getEditURL("editCommerceShippingFixedOption", false, editCommerceShippingFixedOptionURL) %>'
 				name="name"
 			>
@@ -112,20 +113,20 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
 				name="description"
 			>
 				<%= HtmlUtil.escape(commerceShippingFixedOption.getDescription(languageId)) %>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="amount"
-				value="<%= HtmlUtil.escape(commerceShippingFixedOptionsDisplayContext.getCommerceShippingFixedOptionAmount(commerceShippingFixedOption.getAmount())) %>"
-			/>
+			<c:if test="<%= FixedCommerceShippingEngine.KEY.equals(commerceShippingMethod.getEngineKey()) %>">
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
+					name="amount"
+					value="<%= HtmlUtil.escape(commerceShippingFixedOptionsDisplayContext.getCommerceShippingFixedOptionAmount(commerceShippingFixedOption.getAmount())) %>"
+				/>
+			</c:if>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
 				property="priority"
 			/>
 

@@ -134,7 +134,8 @@ public class EditCommerceOrderItemMVCActionCommand
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
-		double price = ParamUtil.getDouble(actionRequest, "price");
+		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "price", BigDecimal.ZERO);
 
 		if (commerceOrder.isOpen()) {
 			_commerceOrderItemService.updateCommerceOrderItem(
@@ -143,7 +144,7 @@ public class EditCommerceOrderItemMVCActionCommand
 		else {
 			_commerceOrderItemService.updateCommerceOrderItem(
 				commerceOrderItemId, quantity, commerceOrderItem.getJson(),
-				BigDecimal.valueOf(price));
+				price);
 		}
 	}
 

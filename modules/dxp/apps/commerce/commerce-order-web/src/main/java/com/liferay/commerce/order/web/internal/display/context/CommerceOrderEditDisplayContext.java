@@ -51,8 +51,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.math.BigDecimal;
-
 import java.text.DateFormat;
 import java.text.Format;
 
@@ -109,11 +107,6 @@ public class CommerceOrderEditDisplayContext {
 			FastDateFormatFactoryUtil.getDateTime(
 				DateFormat.SHORT, DateFormat.SHORT, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
-	}
-
-	public String format(BigDecimal price) throws PortalException {
-		return _commercePriceFormatter.format(
-			price, _commerceOrderRequestHelper.getLocale());
 	}
 
 	public int[] getAvailableOrderStatuses() throws PortalException {

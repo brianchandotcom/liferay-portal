@@ -172,8 +172,10 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		long commercePriceEntryId = ParamUtil.getLong(
 			actionRequest, "commercePriceEntryId");
 
-		double price = ParamUtil.getDouble(actionRequest, "price");
-		double promoPrice = ParamUtil.getDouble(actionRequest, "promoPrice");
+		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "price", BigDecimal.ZERO);
+		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "promoPrice", BigDecimal.ZERO);
 		int minQuantity = ParamUtil.getInteger(actionRequest, "minQuantity");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -184,15 +186,13 @@ public class EditCommerceTierPriceEntryMVCActionCommand
 		if (commerceTierPriceEntryId <= 0) {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
-					commercePriceEntryId, BigDecimal.valueOf(price),
-					BigDecimal.valueOf(promoPrice), minQuantity,
+					commercePriceEntryId, price, promoPrice, minQuantity,
 					serviceContext);
 		}
 		else {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.updateCommerceTierPriceEntry(
-					commerceTierPriceEntryId, BigDecimal.valueOf(price),
-					BigDecimal.valueOf(promoPrice), minQuantity,
+					commerceTierPriceEntryId, price, promoPrice, minQuantity,
 					serviceContext);
 		}
 

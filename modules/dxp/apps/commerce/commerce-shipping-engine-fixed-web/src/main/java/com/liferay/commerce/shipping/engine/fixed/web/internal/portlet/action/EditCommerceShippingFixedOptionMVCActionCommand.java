@@ -125,7 +125,8 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		double amount = ParamUtil.getDouble(actionRequest, "amount");
+		BigDecimal amount = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "amount", BigDecimal.ZERO);
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -135,12 +136,12 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 			_commerceShippingFixedOptionService.
 				updateCommerceShippingFixedOption(
 					commerceShippingFixedOptionId, nameMap, descriptionMap,
-					new BigDecimal(amount), priority);
+					amount, priority);
 		}
 		else {
 			_commerceShippingFixedOptionService.addCommerceShippingFixedOption(
-				commerceShippingMethodId, nameMap, descriptionMap,
-				new BigDecimal(amount), priority, serviceContext);
+				commerceShippingMethodId, nameMap, descriptionMap, amount,
+				priority, serviceContext);
 		}
 	}
 

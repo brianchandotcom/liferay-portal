@@ -40,11 +40,17 @@ int orderStatus = BeanParamUtil.getInteger(commerceOrder, request, "orderStatus"
 					<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 
 					<aui:fieldset disabled="">
-						<aui:input name="subtotal" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrderEditDisplayContext.format(commerceOrder.getSubtotal()) %>" />
+						<aui:input name="subtotal" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrder.getSubtotal() %>">
+							<aui:validator name="number" />
+						</aui:input>
 
-						<aui:input name="shippingPrice" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrderEditDisplayContext.format(commerceOrder.getShippingPrice()) %>" />
+						<aui:input name="shippingPrice" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrder.getShippingPrice() %>">
+							<aui:validator name="number" />
+						</aui:input>
 
-						<aui:input name="total" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrderEditDisplayContext.format(commerceOrder.getTotal()) %>" />
+						<aui:input name="total" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrder.getTotal() %>">
+							<aui:validator name="number" />
+						</aui:input>
 
 						<aui:button-row>
 							<aui:icon cssClass="edit-form-link" image="edit" label="edit-totals" url="javascript:;" />

@@ -20,4 +20,6 @@
 SpentAmountCommerceDiscountRuleDisplayContext spentAmountCommerceDiscountRuleDisplayContext = (SpentAmountCommerceDiscountRuleDisplayContext)request.getAttribute("view.jsp-spentAmountCommerceDiscountRuleDisplayContext");
 %>
 
-<aui:input label="spent-amount" name="typeSettings" suffix="<%= spentAmountCommerceDiscountRuleDisplayContext.getDefaultCommerceCurrencyCode() %>" type="text" value="<%= spentAmountCommerceDiscountRuleDisplayContext.getTypeSettings() %>" />
+<aui:input label="spent-amount" name="typeSettings" suffix="<%= spentAmountCommerceDiscountRuleDisplayContext.getDefaultCommerceCurrencyCode() %>" type="text" value="<%= spentAmountCommerceDiscountRuleDisplayContext.getTypeSettings() %>">
+	<aui:validator name="number" />
+</aui:input>

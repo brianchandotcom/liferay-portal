@@ -15,7 +15,6 @@
 package com.liferay.commerce.price.list.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceMoney;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -38,8 +37,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
-import java.math.BigDecimal;
-
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -55,7 +52,6 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 
 	public CPInstanceCommerceTierPriceEntryDisplayContext(
 		ActionHelper actionHelper,
-		CommercePriceFormatter commercePriceFormatter,
 		CommercePriceListActionHelper commercePriceListActionHelper,
 		CommerceTierPriceEntryService commercePriceEntryService,
 		HttpServletRequest httpServletRequest) {
@@ -64,17 +60,11 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			actionHelper, httpServletRequest,
 			CommerceTierPriceEntry.class.getSimpleName());
 
-		_commercePriceFormatter = commercePriceFormatter;
 		_commercePriceListActionHelper = commercePriceListActionHelper;
 		_commerceTierPriceEntryService = commercePriceEntryService;
 
 		setDefaultOrderByCol("create-date");
 		setDefaultOrderByType("desc");
-	}
-
-	public String format(BigDecimal price) throws PortalException {
-		return _commercePriceFormatter.format(
-			price, cpRequestHelper.getLocale());
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() {
@@ -126,7 +116,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		CommercePriceList commercePriceList =
 			commercePriceEntry.getCommercePriceList();
 
-		CommerceMoney priceCommerceMoney = commercePriceEntry.getPriceMoney(
+		CommerceMoney priceCommerceMoney = commerceTierPriceEntry.getPriceMoney(
 			commercePriceList.getCommerceCurrencyId());
 
 		return priceCommerceMoney.format(cpRequestHelper.getLocale());
@@ -325,7 +315,6 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			getCommerceTierPriceEntryId(), null);
 	}
 
-	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;
 	private final CommerceTierPriceEntryService _commerceTierPriceEntryService;

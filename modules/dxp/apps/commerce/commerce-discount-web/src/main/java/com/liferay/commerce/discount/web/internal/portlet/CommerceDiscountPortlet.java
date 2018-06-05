@@ -15,7 +15,6 @@
 package com.liferay.commerce.discount.web.internal.portlet;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.constants.CommerceDiscountPortletKeys;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.commerce.discount.service.CommerceDiscountUserSegmentRelService;
@@ -79,8 +78,8 @@ public class CommerceDiscountPortlet extends MVCPortlet {
 			new CommerceDiscountDisplayContext(
 				_commerceCurrencyService, _commerceDiscountService,
 				_commerceDiscountTargetRegistry,
-				_commerceDiscountUserSegmentRelService, _commercePriceFormatter,
-				httpServletRequest, _itemSelector);
+				_commerceDiscountUserSegmentRelService, httpServletRequest,
+				_itemSelector);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceDiscountDisplayContext);
@@ -100,9 +99,6 @@ public class CommerceDiscountPortlet extends MVCPortlet {
 	@Reference
 	private CommerceDiscountUserSegmentRelService
 		_commerceDiscountUserSegmentRelService;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private ItemSelector _itemSelector;

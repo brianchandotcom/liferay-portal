@@ -100,7 +100,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 				%>
 
 				<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
-					<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? commerceCurrenciesDisplayContext.format(BigDecimal.ZERO) : commerceCurrenciesDisplayContext.format(commerceCurrency.getRate()) %>" />
+					<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? BigDecimal.ZERO : commerceCurrency.getRate() %>">
+						<aui:validator name="number" />
+					</aui:input>
 				</div>
 
 				<aui:input name="priority" />

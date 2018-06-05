@@ -35,6 +35,7 @@ page import="com.liferay.commerce.product.model.CPMeasurementUnitConstants" %><%
 page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel" %><%@
+page import="com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShippingEngine" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionRelsDisplayContext" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionsDisplayContext" %><%@
 page import="com.liferay.commerce.shipping.web.admin.ShippingMethodsCommerceAdminModule" %><%@

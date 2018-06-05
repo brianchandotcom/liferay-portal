@@ -169,9 +169,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 					</div>
 				</div>
 
-				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? commerceShippingFixedOptionRelsDisplayContext.format(BigDecimal.ZERO) : commerceShippingFixedOptionRelsDisplayContext.format(commerceShippingFixedOptionRel.getFixedPrice()) %>" />
+				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRel.getFixedPrice() %>">
+					<aui:validator name="number" />
+				</aui:input>
 
-				<aui:input name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? commerceShippingFixedOptionRelsDisplayContext.format(BigDecimal.ZERO) : commerceShippingFixedOptionRelsDisplayContext.format(commerceShippingFixedOptionRel.getRateUnitWeightPrice()) %>" />
+				<aui:input name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRel.getRateUnitWeightPrice() %>">
+					<aui:validator name="number" />
+				</aui:input>
 
 				<aui:input name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
 			</aui:fieldset>

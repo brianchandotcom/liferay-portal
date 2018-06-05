@@ -151,11 +151,14 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		String couponCode = ParamUtil.getString(actionRequest, "couponCode");
 		boolean usePercentage = ParamUtil.getBoolean(
 			actionRequest, "usePercentage");
-		double maximumDiscountAmount = ParamUtil.getDouble(
-			actionRequest, "maximumDiscountAmount");
-		double level1 = ParamUtil.getDouble(actionRequest, "level1");
-		double level2 = ParamUtil.getDouble(actionRequest, "level2");
-		double level3 = ParamUtil.getDouble(actionRequest, "level3");
+		BigDecimal maximumDiscountAmount = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "maximumDiscountAmount", BigDecimal.ZERO);
+		BigDecimal level1 = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "level1", BigDecimal.ZERO);
+		BigDecimal level2 = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "level2", BigDecimal.ZERO);
+		BigDecimal level3 = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "level3", BigDecimal.ZERO);
 		String limitationType = ParamUtil.getString(
 			actionRequest, "limitationType");
 		int limitationTimes = ParamUtil.getInteger(
@@ -208,26 +211,22 @@ public class EditCommerceDiscountMVCActionCommand extends BaseMVCActionCommand {
 		if (commerceDiscountId <= 0) {
 			commerceDiscount = _commerceDiscountService.addCommerceDiscount(
 				title, target, useCouponCode, couponCode, usePercentage,
-				BigDecimal.valueOf(maximumDiscountAmount),
-				BigDecimal.valueOf(level1), BigDecimal.valueOf(level2),
-				BigDecimal.valueOf(level3), limitationType, limitationTimes,
-				cumulative, active, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				maximumDiscountAmount, level1, level2, level3, limitationType,
+				limitationTimes, cumulative, active, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 		else {
 			commerceDiscount = _commerceDiscountService.updateCommerceDiscount(
 				commerceDiscountId, title, target, useCouponCode, couponCode,
-				usePercentage, BigDecimal.valueOf(maximumDiscountAmount),
-				BigDecimal.valueOf(level1), BigDecimal.valueOf(level2),
-				BigDecimal.valueOf(level3), limitationType, limitationTimes,
-				cumulative, active, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				usePercentage, maximumDiscountAmount, level1, level2, level3,
+				limitationType, limitationTimes, cumulative, active,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, expirationDateMonth,
+				expirationDateDay, expirationDateYear, expirationDateHour,
+				expirationDateMinute, neverExpire, serviceContext);
 		}
 
 		if (commerceDiscount != null) {

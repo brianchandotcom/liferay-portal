@@ -43,11 +43,17 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstancePricingInfo
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstancePricingInfoDisplayContext.format(cpInstance.getPrice()) %>" />
+			<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getPrice() %>">
+				<aui:validator name="number" />
+			</aui:input>
 
-			<aui:input name="promoPrice" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstancePricingInfoDisplayContext.format(cpInstance.getPromoPrice()) %>" />
+			<aui:input name="promoPrice" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getPromoPrice() %>">
+				<aui:validator name="number" />
+			</aui:input>
 
-			<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstancePricingInfoDisplayContext.format(cpInstance.getCost()) %>" />
+			<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getCost() %>">
+				<aui:validator name="number" />
+			</aui:input>
 		</aui:fieldset>
 	</aui:fieldset-group>
 

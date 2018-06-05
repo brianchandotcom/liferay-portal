@@ -127,21 +127,18 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
 						name="country"
 					>
 						<%= (commerceCountry == null) ? StringPool.STAR : HtmlUtil.escape(commerceCountry.getName(languageId)) %>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
 						name="region"
 					>
 						<%= (commerceRegion == null) ? StringPool.STAR : HtmlUtil.escape(commerceRegion.getName()) %>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
 						property="zip"
 					/>
 

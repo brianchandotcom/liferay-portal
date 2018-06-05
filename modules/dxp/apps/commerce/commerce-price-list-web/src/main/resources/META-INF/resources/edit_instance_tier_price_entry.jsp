@@ -78,9 +78,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 		<aui:fieldset-group>
 			<aui:fieldset>
-				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= (commerceTierPriceEntry == null) ? cpInstanceCommerceTierPriceEntryDisplayContext.format(BigDecimal.ZERO) : cpInstanceCommerceTierPriceEntryDisplayContext.format(commerceTierPriceEntry.getPrice()) %>" />
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= (commerceTierPriceEntry == null) ? BigDecimal.ZERO : commerceTierPriceEntry.getPrice() %>">
+					<aui:validator name="number" />
+				</aui:input>
 
-				<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= (commerceTierPriceEntry == null) ? cpInstanceCommerceTierPriceEntryDisplayContext.format(BigDecimal.ZERO) : cpInstanceCommerceTierPriceEntryDisplayContext.format(commerceTierPriceEntry.getPromoPrice()) %>" />
+				<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= (commerceTierPriceEntry == null) ? BigDecimal.ZERO : commerceTierPriceEntry.getPromoPrice() %>">
+					<aui:validator name="number" />
+				</aui:input>
 
 				<aui:input name="minQuantity" />
 			</aui:fieldset>

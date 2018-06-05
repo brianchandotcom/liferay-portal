@@ -55,9 +55,10 @@ public class CommerceShippingFixedOptionsDisplayContext
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(
-			commerceCurrencyService, commercePriceFormatter,
-			commerceShippingMethodService, renderRequest, renderResponse);
+			commerceCurrencyService, commerceShippingMethodService,
+			renderRequest, renderResponse);
 
+		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingFixedOptionService =
 			commerceShippingFixedOptionService;
 	}
@@ -92,7 +93,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return commercePriceFormatter.format(
+		return _commercePriceFormatter.format(
 			themeDisplay.getScopeGroupId(), amount, themeDisplay.getLocale());
 	}
 
@@ -172,6 +173,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 		return false;
 	}
 
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
 

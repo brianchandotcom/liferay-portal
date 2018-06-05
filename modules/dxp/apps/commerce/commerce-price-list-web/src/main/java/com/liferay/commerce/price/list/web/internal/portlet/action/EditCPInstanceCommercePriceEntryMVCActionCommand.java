@@ -162,16 +162,17 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		long commercePriceEntryId = ParamUtil.getLong(
 			actionRequest, "commercePriceEntryId");
 
-		double price = ParamUtil.getDouble(actionRequest, "price");
-		double promoPrice = ParamUtil.getDouble(actionRequest, "promoPrice");
+		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "price", BigDecimal.ZERO);
+		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "promoPrice", BigDecimal.ZERO);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommercePriceEntry.class.getName(), actionRequest);
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.updateCommercePriceEntry(
-				commercePriceEntryId, BigDecimal.valueOf(price),
-				BigDecimal.valueOf(promoPrice), serviceContext);
+				commercePriceEntryId, price, promoPrice, serviceContext);
 
 		return commercePriceEntry;
 	}

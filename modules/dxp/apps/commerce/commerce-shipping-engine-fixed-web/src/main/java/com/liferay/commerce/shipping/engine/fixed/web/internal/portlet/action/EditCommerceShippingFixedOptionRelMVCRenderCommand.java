@@ -16,7 +16,6 @@ package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
@@ -73,8 +72,7 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 				commerceShippingFixedOptionRelsDisplayContext =
 					new CommerceShippingFixedOptionRelsDisplayContext(
 						_commerceCountryService, _commerceCurrencyService,
-						_commercePriceFormatter, _commerceRegionService,
-						_commerceShippingMethodService,
+						_commerceRegionService, _commerceShippingMethodService,
 						_commerceShippingFixedOptionService,
 						_commerceWarehouseService,
 						_commerceShippingFixedOptionRelService,
@@ -114,9 +112,6 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommerceRegionService _commerceRegionService;

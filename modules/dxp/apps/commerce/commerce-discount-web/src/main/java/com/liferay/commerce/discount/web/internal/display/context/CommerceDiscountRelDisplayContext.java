@@ -16,7 +16,6 @@ package com.liferay.commerce.discount.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.commerce.discount.service.CommerceDiscountService;
@@ -63,15 +62,14 @@ public class CommerceDiscountRelDisplayContext
 		CommerceDiscountTargetRegistry commerceDiscountTargetRegistry,
 		CommerceDiscountUserSegmentRelService
 			commerceDiscountUserSegmentRelService,
-		CommercePriceFormatter commercePriceFormatter,
 		CPDefinitionService cpDefinitionService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		super(
 			commerceCurrencyService, commerceDiscountService,
 			commerceDiscountTargetRegistry,
-			commerceDiscountUserSegmentRelService, commercePriceFormatter,
-			httpServletRequest, itemSelector);
+			commerceDiscountUserSegmentRelService, httpServletRequest,
+			itemSelector);
 
 		_commerceDiscountRelService = commerceDiscountRelService;
 		_cpDefinitionService = cpDefinitionService;

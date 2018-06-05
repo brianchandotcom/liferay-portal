@@ -55,6 +55,12 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+		com.liferay.portal.kernel.model.LayoutPrototype layoutPrototype)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addLayoutPageTemplateEntry(layoutPrototype);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		long userId, long groupId, long layoutPageTemplateCollectionId,
 		String name, int type, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

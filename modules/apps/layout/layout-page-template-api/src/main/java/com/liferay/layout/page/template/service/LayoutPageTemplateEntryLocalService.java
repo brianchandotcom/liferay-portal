@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -71,6 +72,9 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 		LayoutPageTemplateEntry layoutPageTemplateEntry);
+
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+		LayoutPrototype layoutPrototype) throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,

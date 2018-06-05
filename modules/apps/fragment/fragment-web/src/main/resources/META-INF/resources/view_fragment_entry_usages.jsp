@@ -34,7 +34,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 				<ul class="nav nav-nested">
 					<li class="nav-item">
 						<strong class="text-uppercase">
-							<liferay-ui:message key="site-pages" />
+							<liferay-ui:message key="usages" />
 						</strong>
 
 						<ul class="nav nav-stacked">

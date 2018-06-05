@@ -215,6 +215,7 @@ public class GetterMethodCallCheck extends BaseCheck {
 		_serviceXMLElementsMap = new HashMap<>();
 
 		try {
+			_populateServiceXMLElements("modules/apps", 6);
 			_populateServiceXMLElements("portal-impl/src/com/liferay", 4);
 		}
 		catch (Exception e) {
@@ -271,6 +272,10 @@ public class GetterMethodCallCheck extends BaseCheck {
 
 			String packagePath = serviceXMLElement.attributeValue(
 				"api-package-path");
+
+			if (packagePath == null) {
+				packagePath = serviceXMLElement.attributeValue("package-path");
+			}
 
 			if (packagePath != null) {
 				_serviceXMLElementsMap.put(

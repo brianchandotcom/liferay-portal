@@ -46,6 +46,8 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 		<aui:form action="<%= searchBarPortletDisplayContext.getSearchURL() %>" method="get" name="fm">
 			<aui:fieldset>
 				<div class="input-group search-bar <%= searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope() ? "search-bar-scope" : "search-bar-simple" %>">
+					<aui:input cssClass="search-bar-empty-search-input" name="emptySearchEnabled" type="hidden" value="<%= searchBarPortletDisplayContext.isEmptySearchEnabled() %>" />
+
 					<c:choose>
 						<c:when test="<%= searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope() %>">
 							<aui:input autoFocus="<%= true %>" cssClass="search-bar-keywords-input" data-qa-id="searchInput" label="" name="<%= searchBarPortletDisplayContext.getKeywordsParameterName() %>" placeholder='<%= LanguageUtil.get(request, "search-...") %>' title="search" type="text" useNamespace="<%= false %>" value="<%= searchBarPortletDisplayContext.getKeywords() %>" wrapperCssClass="input-group-item input-group-prepend search-bar-keywords-input-wrapper" />

@@ -53,6 +53,8 @@ public class SearchBarPortletDisplayBuilder {
 			SearchScope.THIS_SITE.getParameterString());
 		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
 			SearchScope.EVERYTHING.getParameterString());
+		searchBarPortletDisplayContext.setEmptySearchEnabled(
+			_emptySearchEnabled);
 		searchBarPortletDisplayContext.setKeywords(getKeywords());
 		searchBarPortletDisplayContext.setKeywordsParameterName(
 			_keywordsParameterName);
@@ -90,6 +92,10 @@ public class SearchBarPortletDisplayBuilder {
 
 	public void setDestination(String destination) {
 		_destination = destination;
+	}
+
+	public void setEmptySearchEnabled(boolean emptySearchEnabled) {
+		_emptySearchEnabled = emptySearchEnabled;
 	}
 
 	public void setKeywords(String keywords) {
@@ -225,6 +231,7 @@ public class SearchBarPortletDisplayBuilder {
 		SearchBarPortletDisplayBuilder.class);
 
 	private String _destination;
+	private boolean _emptySearchEnabled;
 	private final Http _http;
 	private String _keywords;
 	private String _keywordsParameterName;

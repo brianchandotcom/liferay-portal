@@ -258,6 +258,9 @@ public class FragmentDisplayContext {
 	}
 
 	public List<DropdownItem> getFragmentEntryActionItemsDropdownItems() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		return new DropdownItemList() {
 			{
 				add(
@@ -270,15 +273,21 @@ public class FragmentDisplayContext {
 						dropdownItem.setQuickAction(true);
 					});
 
-				add(
-					dropdownItem -> {
-						dropdownItem.putData(
-							"action", "deleteSelectedFragmentEntries");
-						dropdownItem.setIcon("trash");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "delete"));
-						dropdownItem.setQuickAction(true);
-					});
+				if (FragmentPermission.contains(
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getScopeGroupId(),
+						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
+
+					add(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "deleteSelectedFragmentEntries");
+							dropdownItem.setIcon("trash");
+							dropdownItem.setLabel(
+								LanguageUtil.get(_request, "delete"));
+							dropdownItem.setQuickAction(true);
+						});
+				}
 			}
 		};
 	}

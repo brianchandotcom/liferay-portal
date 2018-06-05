@@ -32,5 +32,5 @@ String exportURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(re
 <liferay-ui:icon
 	message="export-users"
 	method="get"
-	url='<%= exportURLString %>'
+	url="<%= exportURLString %>"
 />

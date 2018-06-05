@@ -5,4 +5,60 @@
 		<field name="bigDecimalEntryId" type="long" />
 		<field name="bigDecimalValue" type="BigDecimal" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.LocalizedEntry">
+		<field name="localizedEntryId" type="long" />
+		<field name="defaultLanguageId" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.LocalizedEntryLocalization">
+		<field name="mvccVersion" type="long" />
+		<field name="localizedEntryLocalizationId" type="long" />
+		<field name="localizedEntryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="title" type="String" />
+		<field name="content" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.LVEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="lvEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="headId" type="long" />
+		<field name="defaultLanguageId" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.LVEntryLocalization">
+		<field name="mvccVersion" type="long" />
+		<field name="lvEntryLocalizationId" type="long" />
+		<field name="lvEntryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="title" type="String" />
+		<field name="content" type="String" />
+		<field name="headId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.LVEntryLocalizationVersion">
+		<field name="lvEntryLocalizationVersionId" type="long" />
+		<field name="version" type="int" />
+		<field name="lvEntryLocalizationId" type="long" />
+		<field name="lvEntryId" type="long" />
+		<field name="languageId" type="String" />
+		<field name="title" type="String" />
+		<field name="content" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.LVEntryVersion">
+		<field name="lvEntryVersionId" type="long" />
+		<field name="version" type="int" />
+		<field name="lvEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="defaultLanguageId" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.VersionedEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="versionedEntryId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="headId" type="long" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion">
+		<field name="versionedEntryVersionId" type="long" />
+		<field name="version" type="int" />
+		<field name="versionedEntryId" type="long" />
+		<field name="groupId" type="long" />
+	</model>
 </model-hints>

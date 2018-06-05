@@ -1,4 +1,16 @@
 {
-    "output": "classes/META-INF/resources",
-    "preset": "liferay-npm-bundler-preset-standard"
+	"config": {
+		"imports": {
+			"": {
+				"map-common": "^3.0.0"
+			},
+			"frontend-js-metal-web": {
+				"metal": "^2.0.0",
+				"metal-dom": "^2.0.0",
+				"metal-events": "^2.0.0",
+				"metal-state": "^2.0.0"
+			}
+		}
+	},
+	"output": "classes/META-INF/resources"
 }

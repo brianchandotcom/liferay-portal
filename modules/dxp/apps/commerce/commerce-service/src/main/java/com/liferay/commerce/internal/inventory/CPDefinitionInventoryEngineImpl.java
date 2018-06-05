@@ -17,12 +17,12 @@ package com.liferay.commerce.internal.inventory;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
-import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
+import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CommerceAvailabilityRange;
+import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService;
+import com.liferay.commerce.service.CPDAvailabilityEstimateLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
@@ -70,26 +70,26 @@ public class CPDefinitionInventoryEngineImpl
 	}
 
 	@Override
-	public String getAvailabilityRange(CPInstance cpInstance, Locale locale)
+	public String getAvailabilityEstimate(CPInstance cpInstance, Locale locale)
 		throws PortalException {
 
-		CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange =
-			_cpDefinitionAvailabilityRangeLocalService.
-				fetchCPDefinitionAvailabilityRangeByCPDefinitionId(
+		CPDAvailabilityEstimate cpDefinitionAvailabilityEstimate =
+			_cpdAvailabilityEstimateLocalService.
+				fetchCPDAvailabilityEstimateByCPDefinitionId(
 					cpInstance.getCPDefinitionId());
 
-		if (cpDefinitionAvailabilityRange == null) {
+		if (cpDefinitionAvailabilityEstimate == null) {
 			return StringPool.BLANK;
 		}
 
-		CommerceAvailabilityRange commerceAvailabilityRange =
-			cpDefinitionAvailabilityRange.getCommerceAvailabilityRange();
+		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
+			cpDefinitionAvailabilityEstimate.getCommerceAvailabilityEstimate();
 
-		if (commerceAvailabilityRange == null) {
+		if (commerceAvailabilityEstimate == null) {
 			return StringPool.BLANK;
 		}
 
-		return commerceAvailabilityRange.getTitle(locale);
+		return commerceAvailabilityEstimate.getTitle(locale);
 	}
 
 	@Override
@@ -251,8 +251,8 @@ public class CPDefinitionInventoryEngineImpl
 		_commerceWarehouseItemLocalService;
 
 	@Reference
-	private CPDefinitionAvailabilityRangeLocalService
-		_cpDefinitionAvailabilityRangeLocalService;
+	private CPDAvailabilityEstimateLocalService
+		_cpdAvailabilityEstimateLocalService;
 
 	@Reference
 	private CPDefinitionInventoryLocalService

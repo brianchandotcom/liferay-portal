@@ -20,8 +20,8 @@ import com.liferay.commerce.inventory.web.internal.portlet.action.CPDefinitionIn
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
-import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.service.CPDAvailabilityEstimateService;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -98,9 +98,9 @@ public class CPDefinitionInventoryScreenNavigationEntry
 				cpDefinitionInventoryDisplayContext =
 					new CPDefinitionInventoryDisplayContext(
 						_actionHelper, httpServletRequest,
-						_commerceAvailabilityRangeService,
+						_commerceAvailabilityEstimateService,
 						_commerceLowStockActivityRegistry,
-						_cpDefinitionAvailabilityRangeService,
+						_cpdAvailabilityEstimateService,
 						_cpDefinitionInventoryActionHelper,
 						_cpDefinitionInventoryEngineRegistry);
 
@@ -124,14 +124,14 @@ public class CPDefinitionInventoryScreenNavigationEntry
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
+	private CommerceAvailabilityEstimateService
+		_commerceAvailabilityEstimateService;
 
 	@Reference
 	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
 
 	@Reference
-	private CPDefinitionAvailabilityRangeService
-		_cpDefinitionAvailabilityRangeService;
+	private CPDAvailabilityEstimateService _cpdAvailabilityEstimateService;
 
 	@Reference
 	private CPDefinitionInventoryActionHelper

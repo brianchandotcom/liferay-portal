@@ -50,7 +50,7 @@
 
 					<div class="availability">${simpleCPTypeDisplayContext.getAvailabilityLabel()}</div>
 
-					<div class="availabilityRange">${simpleCPTypeDisplayContext.getAvailabilityRangeLabel()}</div>
+					<div class="availabilityEstimate">${simpleCPTypeDisplayContext.getAvailabilityEstimateLabel()}</div>
 
 					<div class="stockQuantity">${simpleCPTypeDisplayContext.getStockQuantityLabel()}</div>
 				<#else>
@@ -60,7 +60,7 @@
 
 					<div class="availability" data-text-cp-instance-availability="" ></div>
 
-					<div class="availabilityRange" data-text-cp-instance-availability-range="" ></div>
+					<div class="availabilityEstimate" data-text-cp-instance-availability-estimate="" ></div>
 
 					<div class="stockQuantity" data-text-cp-instance-stock-quantity="" ></div>
 				</#if>

@@ -17,7 +17,7 @@ package com.liferay.commerce.inventory.web.internal.portlet.action;
 import com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
+import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -87,8 +87,8 @@ public class EditCPDefinitionInventoryMVCActionCommand
 		long cpDefinitionInventoryId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionInventoryId");
 
-		long cpDefinitionAvailabilityRangeEntryId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionAvailabilityRangeEntryId");
+		long cpdAvailabilityEstimateEntryId = ParamUtil.getLong(
+			actionRequest, "cpdAvailabilityEstimateEntryId");
 
 		long cpDefinitionId = ParamUtil.getLong(
 			actionRequest, "cpDefinitionId");
@@ -97,8 +97,8 @@ public class EditCPDefinitionInventoryMVCActionCommand
 			actionRequest, "CPDefinitionInventoryEngine");
 		String lowStockActivity = ParamUtil.getString(
 			actionRequest, "lowStockActivity");
-		long commerceAvailabilityRangeId = ParamUtil.getLong(
-			actionRequest, "commerceAvailabilityRangeId");
+		long commerceAvailabilityEstimateId = ParamUtil.getLong(
+			actionRequest, "commerceAvailabilityEstimateId");
 		boolean displayAvailability = ParamUtil.getBoolean(
 			actionRequest, "displayAvailability");
 		boolean displayStockQuantity = ParamUtil.getBoolean(
@@ -138,15 +138,13 @@ public class EditCPDefinitionInventoryMVCActionCommand
 				serviceContext);
 		}
 
-		_cpDefinitionAvailabilityRangeService.
-			updateCPDefinitionAvailabilityRange(
-				cpDefinitionAvailabilityRangeEntryId, cpDefinitionId,
-				commerceAvailabilityRangeId, serviceContext);
+		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
+			cpdAvailabilityEstimateEntryId, cpDefinitionId,
+			commerceAvailabilityEstimateId, serviceContext);
 	}
 
 	@Reference
-	private CPDefinitionAvailabilityRangeService
-		_cpDefinitionAvailabilityRangeService;
+	private CPDAvailabilityEstimateService _cpdAvailabilityEstimateService;
 
 	@Reference
 	private CPDefinitionInventoryService _cpDefinitionInventoryService;

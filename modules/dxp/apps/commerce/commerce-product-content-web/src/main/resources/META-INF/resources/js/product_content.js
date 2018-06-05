@@ -242,7 +242,7 @@ AUI.add(
 						var skus = productContent.all('[data-text-cp-instance-sku]');
 						var prices = productContent.all('[data-text-cp-instance-price]');
 						var availabilities = productContent.all('[data-text-cp-instance-availability]');
-						var availabilityRanges = productContent.all('[data-text-cp-instance-availability-range]');
+						var availabilityEstimates = productContent.all('[data-text-cp-instance-availability-estimate]');
 						var stockQuantities = productContent.all('[data-text-cp-instance-stock-quantity]');
 						var gtins = productContent.all('[data-text-cp-instance-gtin]');
 						var manufacturerPartNumbers = productContent.all('[data-text-cp-instance-manufacturer-part-number]');
@@ -250,7 +250,7 @@ AUI.add(
 						var skusShow = productContent.all('[data-text-cp-instance-sku-show]');
 						var pricesShow = productContent.all('[data-text-cp-instance-price-show]');
 						var availabilitiesShow = productContent.all('[data-text-cp-instance-availability-show]');
-						var availabilityRangesShow = productContent.all('[data-text-cp-instance-availability-range-show]');
+						var availabilityEstimatesShow = productContent.all('[data-text-cp-instance-availability-estimate-show]');
 						var stockQuantitiesShow = productContent.all('[data-text-cp-instance-stock-quantity-show]');
 						var gtinsShow = productContent.all('[data-text-cp-instance-gtin-show]');
 						var manufacturerPartNumbersShow = productContent.all('[data-text-cp-instance-manufacturer-part-number-show]');
@@ -280,9 +280,9 @@ AUI.add(
 							availabilitiesShow.show();
 						}
 
-						if (cpInstance.availabilityRange) {
-							availabilityRanges.setHTML(cpInstance.availabilityRange);
-							availabilityRangesShow.show();
+						if (cpInstance.availabilityEstimate) {
+							availabilityEstimates.setHTML(cpInstance.availabilityEstimate);
+                            availabilityEstimatesShow.show();
 						}
 
 						if (cpInstance.stockQuantity) {

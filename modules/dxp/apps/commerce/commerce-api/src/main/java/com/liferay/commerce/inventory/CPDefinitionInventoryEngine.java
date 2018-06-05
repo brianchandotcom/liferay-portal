@@ -31,7 +31,7 @@ public interface CPDefinitionInventoryEngine {
 	public String[] getAllowedOrderQuantities(CPInstance cpInstance)
 		throws PortalException;
 
-	public String getAvailabilityRange(CPInstance cpInstance, Locale locale)
+	public String getAvailabilityEstimate(CPInstance cpInstance, Locale locale)
 		throws PortalException;
 
 	public String getKey();

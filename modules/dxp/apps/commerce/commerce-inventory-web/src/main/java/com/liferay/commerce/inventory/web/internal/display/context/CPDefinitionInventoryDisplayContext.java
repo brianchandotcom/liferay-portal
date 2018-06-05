@@ -18,18 +18,18 @@ import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.inventory.web.internal.portlet.action.CPDefinitionInventoryActionHelper;
-import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
+import com.liferay.commerce.model.CPDAvailabilityEstimate;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CommerceAvailabilityRange;
+import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.model.impl.CPDefinitionInventoryImpl;
 import com.liferay.commerce.product.definitions.web.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
-import com.liferay.commerce.service.CPDefinitionAvailabilityRangeService;
-import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.service.CPDAvailabilityEstimateService;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
-import com.liferay.commerce.util.comparator.CommerceAvailabilityRangePriorityComparator;
+import com.liferay.commerce.util.comparator.CommerceAvailabilityEstimatePriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -45,10 +45,10 @@ public class CPDefinitionInventoryDisplayContext
 
 	public CPDefinitionInventoryDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CommerceAvailabilityRangeService commerceAvailabilityRangeService,
+			CommerceAvailabilityEstimateService
+				commerceAvailabilityEstimateService,
 			CommerceLowStockActivityRegistry commerceLowStockActivityRegistry,
-			CPDefinitionAvailabilityRangeService
-				cpDefinitionAvailabilityRangeService,
+			CPDAvailabilityEstimateService cpdAvailabilityEstimateService,
 			CPDefinitionInventoryActionHelper cpDefinitionInventoryActionHelper,
 			CPDefinitionInventoryEngineRegistry
 				cpDefinitionInventoryEngineRegistry)
@@ -56,19 +56,22 @@ public class CPDefinitionInventoryDisplayContext
 
 		super(actionHelper, httpServletRequest);
 
-		_commerceAvailabilityRangeService = commerceAvailabilityRangeService;
+		_commerceAvailabilityEstimateService =
+			commerceAvailabilityEstimateService;
 		_commerceLowStockActivityRegistry = commerceLowStockActivityRegistry;
-		_cpDefinitionAvailabilityRangeService =
-			cpDefinitionAvailabilityRangeService;
+		_cpdAvailabilityEstimateService = cpdAvailabilityEstimateService;
 		_cpDefinitionInventoryActionHelper = cpDefinitionInventoryActionHelper;
 		_cpDefinitionInventoryEngineRegistry =
 			cpDefinitionInventoryEngineRegistry;
 	}
 
-	public List<CommerceAvailabilityRange> getCommerceAvailabilityRanges() {
-		return _commerceAvailabilityRangeService.getCommerceAvailabilityRanges(
-			getScopeGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new CommerceAvailabilityRangePriorityComparator(true));
+	public List<CommerceAvailabilityEstimate>
+		getCommerceAvailabilityEstimates() {
+
+		return _commerceAvailabilityEstimateService.
+			getCommerceAvailabilityEstimates(
+				getScopeGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new CommerceAvailabilityEstimatePriorityComparator(true));
 	}
 
 	public List<CommerceLowStockActivity> getCommerceLowStockActivities() {
@@ -76,12 +79,11 @@ public class CPDefinitionInventoryDisplayContext
 			_commerceLowStockActivityRegistry.getCommerceLowStockActivities();
 	}
 
-	public CPDefinitionAvailabilityRange getCPDefinitionAvailabilityRange()
+	public CPDAvailabilityEstimate getCPDAvailabilityEstimate()
 		throws PortalException {
 
-		return _cpDefinitionAvailabilityRangeService.
-			fetchCPDefinitionAvailabilityRangeByCPDefinitionId(
-				getCPDefinitionId());
+		return _cpdAvailabilityEstimateService.
+			fetchCPDAvailabilityEstimateByCPDefinitionId(getCPDefinitionId());
 	}
 
 	public CPDefinitionInventory getCPDefinitionInventory()
@@ -119,12 +121,12 @@ public class CPDefinitionInventoryDisplayContext
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_CONFIGURATION;
 	}
 
-	private final CommerceAvailabilityRangeService
-		_commerceAvailabilityRangeService;
+	private final CommerceAvailabilityEstimateService
+		_commerceAvailabilityEstimateService;
 	private final CommerceLowStockActivityRegistry
 		_commerceLowStockActivityRegistry;
-	private final CPDefinitionAvailabilityRangeService
-		_cpDefinitionAvailabilityRangeService;
+	private final CPDAvailabilityEstimateService
+		_cpdAvailabilityEstimateService;
 	private CPDefinitionInventory _cpDefinitionInventory;
 	private final CPDefinitionInventoryActionHelper
 		_cpDefinitionInventoryActionHelper;

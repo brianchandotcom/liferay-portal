@@ -48,7 +48,7 @@
 
 					<div class="availability">${virtualCPTypeDisplayContext.getAvailabilityLabel()}</div>
 
-					<div class="availabilityRange">${virtualCPTypeDisplayContext.getAvailabilityRangeLabel()}</div>
+					<div class="availabilityEstimate">${virtualCPTypeDisplayContext.getAvailabilityEstimateLabel()}</div>
 
 					<div class="stockQuantity">${virtualCPTypeDisplayContext.getStockQuantityLabel()}</div>
 				<#else>
@@ -58,7 +58,7 @@
 
 					<div class="availability" data-text-cp-instance-availability="" ></div>
 
-					<div class="availabilityRange" data-text-cp-instance-availability-range="" ></div>
+					<div class="availabilityEstimate" data-text-cp-instance-availability-estimate="" ></div>
 
 					<div class="stockQuantity" data-text-cp-instance-stock-quantity="" ></div>
 				</#if>

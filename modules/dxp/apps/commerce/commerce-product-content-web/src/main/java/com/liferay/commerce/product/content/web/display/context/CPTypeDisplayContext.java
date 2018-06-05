@@ -107,6 +107,19 @@ public class CPTypeDisplayContext {
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 	}
 
+	public String getAvailabilityEstimateLabel() throws Exception {
+		JSONObject availabilityEstimate =
+			(JSONObject)getCPContentContributorValue(
+				CPContentContributorConstants.AVAILABILITY_ESTIMATE_NAME);
+
+		if (availabilityEstimate == null) {
+			return StringPool.BLANK;
+		}
+
+		return availabilityEstimate.getString(
+			CPContentContributorConstants.AVAILABILITY_ESTIMATE_NAME);
+	}
+
 	public String getAvailabilityLabel() throws Exception {
 		JSONObject availability = (JSONObject)getCPContentContributorValue(
 			CPContentContributorConstants.AVAILABILITY_NAME);
@@ -117,18 +130,6 @@ public class CPTypeDisplayContext {
 
 		return availability.getString(
 			CPContentContributorConstants.AVAILABILITY_NAME);
-	}
-
-	public String getAvailabilityRangeLabel() throws Exception {
-		JSONObject availabilityRange = (JSONObject)getCPContentContributorValue(
-			CPContentContributorConstants.AVAILABILITY_RANGE_NAME);
-
-		if (availabilityRange == null) {
-			return StringPool.BLANK;
-		}
-
-		return availabilityRange.getString(
-			CPContentContributorConstants.AVAILABILITY_RANGE_NAME);
 	}
 
 	public List<CPDefinitionSpecificationOptionValue>

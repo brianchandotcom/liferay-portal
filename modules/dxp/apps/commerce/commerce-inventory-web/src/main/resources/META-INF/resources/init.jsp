@@ -22,11 +22,10 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.commerce.inventory.CPDefinitionInventoryEngine" %><%@
 page import="com.liferay.commerce.inventory.web.internal.display.context.CPDefinitionInventoryDisplayContext" %><%@
-page import="com.liferay.commerce.model.CPDefinitionAvailabilityRange" %><%@
+page import="com.liferay.commerce.model.CPDAvailabilityEstimate" %><%@
 page import="com.liferay.commerce.model.CPDefinitionInventory" %><%@
-page import="com.liferay.commerce.model.CommerceAvailabilityRange" %><%@
+page import="com.liferay.commerce.model.CommerceAvailabilityEstimate" %><%@
 page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
-page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.stock.activity.CommerceLowStockActivity" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

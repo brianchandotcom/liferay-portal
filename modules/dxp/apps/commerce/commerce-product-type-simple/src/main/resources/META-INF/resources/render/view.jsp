@@ -86,7 +86,7 @@ request.setAttribute("cpInstance", cpInstance);
 
 							<div class="availability"><%= cpTypeDisplayContext.getAvailabilityLabel() %></div>
 
-							<div class="availabilityRange"><%= cpTypeDisplayContext.getAvailabilityRangeLabel() %></div>
+							<div class="availabilityEstimate"><%= cpTypeDisplayContext.getAvailabilityEstimateLabel() %></div>
 
 							<div class="stockQuantity"><%= cpTypeDisplayContext.getStockQuantityLabel() %></div>
 						</c:when>
@@ -97,7 +97,7 @@ request.setAttribute("cpInstance", cpInstance);
 
 							<div class="availability" data-text-cp-instance-availability=""></div>
 
-							<div class="availabilityRange" data-text-cp-instance-availability-range=""></div>
+							<div class="availabilityEstimate" data-text-cp-instance-availability-estimate=""></div>
 
 							<div class="stockQuantity" data-text-cp-instance-stock-quantity=""></div>
 						</c:otherwise>

@@ -20,11 +20,7 @@
 CPDefinitionInventoryDisplayContext cpDefinitionInventoryDisplayContext = (CPDefinitionInventoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinitionInventory cpDefinitionInventory = cpDefinitionInventoryDisplayContext.getCPDefinitionInventory();
-
-CPDefinitionAvailabilityRange cpDefinitionAvailabilityRange = cpDefinitionInventoryDisplayContext.getCPDefinitionAvailabilityRange();
-
-CPDefinition cpDefinition = cpDefinitionInventoryDisplayContext.getCPDefinition();
-
+CPDAvailabilityEstimate cpdAvailabilityEstimate = cpDefinitionInventoryDisplayContext.getCPDAvailabilityEstimate();
 long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 %>
 
@@ -34,7 +30,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cpDefinitionInventory == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpDefinitionInventoryId" type="hidden" value="<%= (cpDefinitionInventory == null) ? StringPool.BLANK : cpDefinitionInventory.getCPDefinitionInventoryId() %>" />
-	<aui:input name="cpDefinitionAvailabilityRangeId" type="hidden" value="<%= (cpDefinitionAvailabilityRange == null) ? StringPool.BLANK : cpDefinitionAvailabilityRange.getCPDefinitionAvailabilityRangeId() %>" />
+	<aui:input name="cpdAvailabilityEstimateId" type="hidden" value="<%= (cpdAvailabilityEstimate == null) ? StringPool.BLANK : cpdAvailabilityEstimate.getCPDAvailabilityEstimateId() %>" />
 	<aui:input name="cpDefinitionId" type="hidden" value="<%= cpDefinitionId %>" />
 
 	<div class="lfr-form-content">
@@ -76,15 +72,15 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 
 				</aui:select>
 
-				<aui:select label="availability-estimate" name="commerceAvailabilityRangeId" showEmptyOption="<%= true %>">
+				<aui:select label="availability-estimate" name="commerceAvailabilityEstimateId" showEmptyOption="<%= true %>">
 
 					<%
-					List<CommerceAvailabilityRange> commerceAvailabilityRanges = cpDefinitionInventoryDisplayContext.getCommerceAvailabilityRanges();
+					List<CommerceAvailabilityEstimate> commerceAvailabilityEstimates = cpDefinitionInventoryDisplayContext.getCommerceAvailabilityEstimates();
 
-					for (CommerceAvailabilityRange commerceAvailabilityRange : commerceAvailabilityRanges) {
+					for (CommerceAvailabilityEstimate commerceAvailabilityEstimate : commerceAvailabilityEstimates) {
 					%>
 
-						<aui:option label="<%= commerceAvailabilityRange.getTitle(languageId) %>" selected="<%= (cpDefinitionAvailabilityRange != null) && (commerceAvailabilityRange.getCommerceAvailabilityRangeId() == cpDefinitionAvailabilityRange.getCommerceAvailabilityRangeId()) %>" value="<%= commerceAvailabilityRange.getCommerceAvailabilityRangeId() %>" />
+						<aui:option label="<%= commerceAvailabilityEstimate.getTitle(languageId) %>" selected="<%= (cpdAvailabilityEstimate != null) && (commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId() == cpdAvailabilityEstimate.getCommerceAvailabilityEstimateId()) %>" value="<%= commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId() %>" />
 
 					<%
 					}

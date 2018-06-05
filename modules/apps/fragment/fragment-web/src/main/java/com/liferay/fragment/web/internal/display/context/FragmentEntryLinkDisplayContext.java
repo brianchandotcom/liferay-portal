@@ -14,11 +14,13 @@
 
 package com.liferay.fragment.web.internal.display.context;
 
+import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentEntryLinkLastPropagationDateComparator;
+import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -66,7 +68,7 @@ public class FragmentEntryLinkDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "propagate");
-						dropdownItem.setIcon("upload");
+						dropdownItem.setIcon("propagation");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "propagate"));
 						dropdownItem.setQuickAction(true);
@@ -270,12 +272,21 @@ public class FragmentEntryLinkDisplayContext {
 			return _searchContainer;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		SearchContainer fragmentEntryLinksSearchContainer = new SearchContainer(
 			_renderRequest, _renderResponse.createRenderURL(), null,
 			"there-are-no-fragment-usages");
 
-		fragmentEntryLinksSearchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(_renderResponse));
+		if (FragmentPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
+
+			fragmentEntryLinksSearchContainer.setRowChecker(
+				new EmptyOnClickRowChecker(_renderResponse));
+		}
 
 		boolean orderByAsc = false;
 

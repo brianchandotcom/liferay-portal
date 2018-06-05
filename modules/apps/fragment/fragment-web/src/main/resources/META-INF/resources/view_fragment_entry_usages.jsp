@@ -34,7 +34,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 				<ul class="nav nav-nested">
 					<li class="nav-item">
 						<strong class="text-uppercase">
-							<liferay-ui:message key="site-pages" />
+							<liferay-ui:message key="usages" />
 						</strong>
 
 						<ul class="nav nav-stacked">
@@ -112,12 +112,13 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 				</h3>
 
 				<clay:management-toolbar
-					actionDropdownItems="<%= fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() %>"
+					actionDropdownItems="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) ? fragmentEntryLinkDisplayContext.getActionItemsDropdownItemList() : null %>"
 					componentId="fragmentEntryLinksManagementToolbar"
 					disabled="<%= fragmentEntry.getUsageCount() <= 0 %>"
 					filterDropdownItems="<%= fragmentEntryLinkDisplayContext.getFilterItemsDropdownItems() %>"
 					itemsTotal="<%= fragmentEntry.getUsageCount() %>"
 					searchContainerId="fragmentEntryLinks"
+					selectable="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>"
 					showSearch="<%= false %>"
 					sortingOrder="<%= fragmentEntryLinkDisplayContext.getOrderByType() %>"
 					sortingURL="<%= fragmentEntryLinkDisplayContext.getSortingURL() %>"

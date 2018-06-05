@@ -16,8 +16,6 @@
 				<action-key>VIEW</action-key>
 			</supports>
 			<site-member-defaults>
-				<action-key>MANAGE_FRAGMENT_ENTRIES</action-key>
-				<action-key>PERMISSIONS</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
 			<guest-defaults>

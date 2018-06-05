@@ -96,7 +96,7 @@ public class ExternalReferenceOrganizationLocalServiceImpl
 		return organization;
 	}
 
-	@ServiceReference
+	@ServiceReference(type = UserFileUploadsSettings.class)
 	private UserFileUploadsSettings _userFileUploadsSettings;
 
 }

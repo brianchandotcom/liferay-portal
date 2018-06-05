@@ -98,6 +98,12 @@ public class JobFactory {
 			return _jobs.get(jobName);
 		}
 
+		if (jobName.contains("test-portal-upstream(")) {
+			_jobs.put(jobName, new PortalUpstreamJob(jobName));
+
+			return _jobs.get(jobName);
+		}
+
 		if (jobName.contains("test-subrepository-acceptance-pullrequest(")) {
 			_jobs.put(
 				jobName, new SubrepositoryAcceptancePullRequestJob(jobName));

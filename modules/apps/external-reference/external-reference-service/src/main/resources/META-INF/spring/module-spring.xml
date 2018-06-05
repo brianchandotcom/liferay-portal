@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="com.liferay.external.reference.service.impl.ExternalReferenceAssetCategoryLocalServiceImpl" id="com.liferay.external.reference.service.ExternalReferenceAssetCategoryLocalService" />
+	<bean class="com.liferay.external.reference.service.impl.ExternalReferenceAssetVocabularyLocalServiceImpl" id="com.liferay.external.reference.service.ExternalReferenceAssetVocabularyLocalService" />
+	<bean class="com.liferay.external.reference.service.impl.ExternalReferenceOrganizationLocalServiceImpl" id="com.liferay.external.reference.service.ExternalReferenceOrganizationLocalService" />
+	<bean class="com.liferay.external.reference.service.impl.ExternalReferenceUserLocalServiceImpl" id="com.liferay.external.reference.service.ExternalReferenceUserLocalService" />
+	<bean class="com.liferay.external.reference.service.impl.ExternalReferenceUserGroupLocalServiceImpl" id="com.liferay.external.reference.service.ExternalReferenceUserGroupLocalService" />
+</beans>

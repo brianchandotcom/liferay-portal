@@ -256,7 +256,7 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public UserGroup fetchUserGroupByReferenceCode(long companyId,
 		String externalReferenceCode) {
-		return userGroupPersistence.C_ERC(companyId, null);
+		return userGroupPersistence.fetchByC_ERC(companyId, null);
 	}
 
 	/**

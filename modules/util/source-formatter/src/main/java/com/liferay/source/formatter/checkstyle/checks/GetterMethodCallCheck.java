@@ -14,19 +14,32 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.io.File;
+
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +48,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 /**
@@ -52,10 +64,6 @@ public class GetterMethodCallCheck extends BaseCheck {
 
 	public void setBaseDirName(String baseDirName) {
 		_baseDirName = baseDirName;
-	}
-
-	public void setPortalBranchName(String portalBranchName) {
-		_portalBranchName = portalBranchName;
 	}
 
 	@Override
@@ -99,17 +107,20 @@ public class GetterMethodCallCheck extends BaseCheck {
 			return;
 		}
 
-		Document serviceXMLDocument = _getServiceXMLDocument(
-			_getPackageName(variableTypeName, importNames));
+		String packageName = _getPackageName(variableTypeName, importNames);
 
-		if ((serviceXMLDocument == null) || !serviceXMLDocument.hasContent()) {
+		if (Validator.isNull(packageName)) {
 			return;
 		}
 
-		Element rootElement = serviceXMLDocument.getRootElement();
+		Element serviceXMLElement = _getServiceXMLElement(packageName);
+
+		if (serviceXMLElement == null) {
+			return;
+		}
 
 		for (Element entityElement :
-				(List<Element>)rootElement.elements("entity")) {
+				(List<Element>)serviceXMLElement.elements("entity")) {
 
 			if (!variableTypeName.equals(
 					entityElement.attributeValue("name"))) {
@@ -185,7 +196,9 @@ public class GetterMethodCallCheck extends BaseCheck {
 		String variableTypeName, List<String> importNames) {
 
 		for (String importName : importNames) {
-			if (importName.endsWith(".kernel.model." + variableTypeName)) {
+			if (importName.startsWith("com.liferay.") &&
+				importName.endsWith(".model." + variableTypeName)) {
+
 				return StringUtil.replaceLast(
 					importName, "." + variableTypeName, StringPool.BLANK);
 			}
@@ -194,47 +207,89 @@ public class GetterMethodCallCheck extends BaseCheck {
 		return StringPool.BLANK;
 	}
 
-	private Document _getServiceXMLDocument(String packageName) {
-		if (Validator.isNull(packageName)) {
-			return null;
+	private Element _getServiceXMLElement(String packageName) {
+		if (_serviceXMLElementsMap != null) {
+			return _serviceXMLElementsMap.get(packageName);
 		}
 
-		if (_serviceXMLDocumentsMap.containsKey(packageName)) {
-			return _serviceXMLDocumentsMap.get(packageName);
-		}
-
-		String fileLocation = StringBundler.concat(
-			"portal-impl/src/",
-			packageName.replace(CharPool.PERIOD, CharPool.SLASH),
-			"/service.xml");
-
-		fileLocation = StringUtil.replace(
-			fileLocation, "/kernel/model", StringPool.BLANK);
+		_serviceXMLElementsMap = new HashMap<>();
 
 		try {
-			Document serviceXMLDocument = SourceUtil.readXML(
-				SourceFormatterUtil.getPortalContent(
-					_baseDirName, _portalBranchName, fileLocation));
-
-			_serviceXMLDocumentsMap.put(packageName, serviceXMLDocument);
-
-			return serviceXMLDocument;
+			_populateServiceXMLElements("portal-impl/src/com/liferay", 4);
 		}
 		catch (Exception e) {
-			_serviceXMLDocumentsMap.put(
-				packageName, DocumentHelper.createDocument());
-
 			return null;
+		}
+
+		return _serviceXMLElementsMap.get(packageName);
+	}
+
+	private void _populateServiceXMLElements(String dirName, int maxDepth)
+		throws Exception {
+
+		File directory = SourceFormatterUtil.getFile(
+			_baseDirName, dirName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (directory == null) {
+			return;
+		}
+
+		final List<File> serviceXMLFiles = new ArrayList<>();
+
+		Files.walkFileTree(
+			directory.toPath(), EnumSet.noneOf(FileVisitOption.class), maxDepth,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+					Path dirPath, BasicFileAttributes basicFileAttributes) {
+
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (ArrayUtil.contains(_SKIP_DIR_NAMES, dirName)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					Path path = dirPath.resolve("service.xml");
+
+					if (Files.exists(path)) {
+						serviceXMLFiles.add(path.toFile());
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		for (File serviceXMLFile : serviceXMLFiles) {
+			Document serviceXMLDocument = SourceUtil.readXML(
+				FileUtil.read(serviceXMLFile));
+
+			Element serviceXMLElement = serviceXMLDocument.getRootElement();
+
+			String packagePath = serviceXMLElement.attributeValue(
+				"api-package-path");
+
+			if (packagePath != null) {
+				_serviceXMLElementsMap.put(
+					packagePath + ".model", serviceXMLElement);
+			}
 		}
 	}
 
 	private static final String _MSG_RENAME_METHOD_CALL = "method.call.rename";
 
+	private static final String[] _SKIP_DIR_NAMES = {
+		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
+		"classes", "dependencies", "node_modules", "sql", "src", "test",
+		"test-classes", "test-coverage", "test-results", "tmp"
+	};
+
 	private String _baseDirName;
 	private final Pattern _getterMethodNamePattern = Pattern.compile(
 		"^get([A-Z].*)");
-	private String _portalBranchName;
-	private final Map<String, Document> _serviceXMLDocumentsMap =
-		new HashMap<>();
+	private Map<String, Element> _serviceXMLElementsMap;
 
 }

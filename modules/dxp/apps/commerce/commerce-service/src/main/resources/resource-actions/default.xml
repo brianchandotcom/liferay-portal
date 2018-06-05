@@ -15,7 +15,7 @@
 		<permissions>
 			<supports>
 				<action-key>MANAGE_COMMERCE_ADDRESSES</action-key>
-				<action-key>MANAGE_COMMERCE_AVAILABILITY_RANGES</action-key>
+				<action-key>MANAGE_COMMERCE_AVAILABILITY_ESTIMATES</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
 				<action-key>MANAGE_COMMERCE_PAYMENT_METHODS</action-key>
 				<action-key>MANAGE_COMMERCE_PRICE_LISTS</action-key>
@@ -29,7 +29,7 @@
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>MANAGE_COMMERCE_ADDRESSES</action-key>
-				<action-key>MANAGE_COMMERCE_AVAILABILITY_RANGES</action-key>
+				<action-key>MANAGE_COMMERCE_AVAILABILITY_ESTIMATES</action-key>
 				<action-key>MANAGE_COMMERCE_COUNTRIES</action-key>
 				<action-key>MANAGE_COMMERCE_PAYMENT_METHODS</action-key>
 				<action-key>MANAGE_COMMERCE_PRICE_LISTS</action-key>

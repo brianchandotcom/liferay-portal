@@ -18,6 +18,7 @@
 
 <%
 String keywords = ParamUtil.getString(request, "keywords");
+String redirect = ParamUtil.getString(request, "redirect", String.valueOf(renderResponse.createRenderURL()));
 
 String category = ParamUtil.getString(request, "category", "all-categories");
 String state = ParamUtil.getString(request, "state", "all-statuses");
@@ -30,6 +31,10 @@ portletURL.setParameter("mvcPath", "/view_search_results.jsp");
 portletURL.setParameter("category", category);
 portletURL.setParameter("state", state);
 portletURL.setParameter("orderByType", orderByType);
+portletURL.setParameter("redirect", redirect);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), String.valueOf(renderResponse.createRenderURL()));
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-results"), null);

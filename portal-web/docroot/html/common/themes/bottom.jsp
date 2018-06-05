@@ -47,7 +47,7 @@ ScriptTag.flushScriptData(pageContext);
 <%-- Raw Text --%>
 
 <%
-StringBundler pageBottomSB = OutputTag.getData(request, WebKeys.PAGE_BOTTOM);
+com.liferay.petra.string.StringBundler pageBottomSB = OutputTag.getDataSB(request, WebKeys.PAGE_BOTTOM);
 %>
 
 <c:if test="<%= pageBottomSB != null %>">

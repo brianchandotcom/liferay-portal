@@ -16,6 +16,7 @@ package com.liferay.layout.taglib.servlet.taglib.soy;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -287,7 +287,7 @@ public class SelectLayoutTag extends ComponentRendererTag {
 		sb.append("/layout-taglib/select_layout/css/main.css");
 		sb.append("\" rel=\"stylesheet\">");
 
-		outputData.setData(
+		outputData.setDataSB(
 			SelectLayoutTag.class.getName() + "_CSS", WebKeys.PAGE_TOP, sb);
 	}
 

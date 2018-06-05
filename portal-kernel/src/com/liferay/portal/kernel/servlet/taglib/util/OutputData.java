@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.servlet.taglib.util;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Mergeable;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -28,9 +30,21 @@ import java.util.Set;
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public class OutputData implements Mergeable<OutputData>, Serializable {
 
-	public void addData(String outputKey, String webKey, StringBundler sb) {
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addDataSB(String, String, StringBundler)}
+	 */
+	@Deprecated
+	public void addData(
+		String outputKey, String webKey,
+		com.liferay.portal.kernel.util.StringBundler sb) {
+
+		addDataSB(outputKey, webKey, new StringBundler(sb.toString()));
+	}
+
+	public void addDataSB(String outputKey, String webKey, StringBundler sb) {
 		DataKey dataKey = new DataKey(outputKey, webKey);
 
 		StringBundler mergedSB = _dataMap.get(dataKey);
@@ -47,13 +61,39 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		return _outputKeys.add(outputKey);
 	}
 
-	public StringBundler getData(String outputKey, String webKey) {
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getDataSB(String, String)}
+	 */
+	@Deprecated
+	public com.liferay.portal.kernel.util.StringBundler getData(
+		String outputKey, String webKey) {
+
+		StringBundler dataSB = getDataSB(outputKey, webKey);
+
+		return new com.liferay.portal.kernel.util.StringBundler(
+			dataSB.toString());
+	}
+
+	public StringBundler getDataSB(String outputKey, String webKey) {
 		DataKey dataKey = new DataKey(outputKey, webKey);
 
 		return _dataMap.get(dataKey);
 	}
 
-	public StringBundler getMergedData(String webKey) {
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getMergedDataSB(String)}
+	 */
+	@Deprecated
+	public com.liferay.portal.kernel.util.StringBundler getMergedData(
+		String webKey) {
+
+		StringBundler mergedDataSB = getMergedDataSB(webKey);
+
+		return new com.liferay.portal.kernel.util.StringBundler(
+			mergedDataSB.toString());
+	}
+
+	public StringBundler getMergedDataSB(String webKey) {
 		StringBundler mergedSB = null;
 
 		for (Map.Entry<DataKey, StringBundler> entry : _dataMap.entrySet()) {
@@ -110,7 +150,18 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		return this;
 	}
 
-	public void setData(String outputKey, String webKey, StringBundler sb) {
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setDataSB(String, String, StringBundler)}
+	 */
+	@Deprecated
+	public void setData(
+		String outputKey, String webKey,
+		com.liferay.portal.kernel.util.StringBundler sb) {
+
+		setDataSB(outputKey, webKey, new StringBundler(sb.toString()));
+	}
+
+	public void setDataSB(String outputKey, String webKey, StringBundler sb) {
 		DataKey dataKey = new DataKey(outputKey, webKey);
 
 		_dataMap.put(dataKey, sb);

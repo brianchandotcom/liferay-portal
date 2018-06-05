@@ -14,7 +14,9 @@
 
 package com.liferay.frontend.taglib.clay.internal.servlet.taglib;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Drew Brokke
@@ -31,6 +33,10 @@ public class ManagementToolbarDefaults {
 
 	public static String getSearchInputName() {
 		return DisplayTerms.KEYWORDS;
+	}
+
+	public static Boolean isShowCreationMenu(CreationMenu creationMenu) {
+		return Validator.isNotNull(creationMenu);
 	}
 
 }

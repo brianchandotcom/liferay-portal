@@ -94,7 +94,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 		CreationMenu creationMenu = (CreationMenu)context.get("creationMenu");
 
 		boolean showCreationMenu = GetterUtil.getBoolean(
-			context.get("showCreationMenu"), Validator.isNotNull(creationMenu));
+			context.get("showCreationMenu"),
+			ManagementToolbarDefaults.isShowCreationMenu(creationMenu));
 
 		setShowCreationMenu(showCreationMenu);
 

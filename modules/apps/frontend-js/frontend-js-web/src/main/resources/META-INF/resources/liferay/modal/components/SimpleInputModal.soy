@@ -103,6 +103,17 @@
 			{param events: ['visibleChanged': $_handleModalVisibleChanged] /}
 
 			{param footer kind="html"}
+				{let $cancelButtonAttributes kind="attributes"}
+					{if $_loadingResponse}disabled{/if}
+					class="btn btn-secondary"
+					data-onclick="{$_handleCancelButtonClick}"
+					type="button"
+				{/let}
+
+				<button {$cancelButtonAttributes}>
+					{msg desc=""}cancel{/msg}
+				</button>
+
 				{let $submitButtonAttributes kind="attributes"}
 					{if $_loadingResponse}disabled{/if}
 					class="btn btn-primary"
@@ -116,18 +127,7 @@
 						</span>
 					{/if}
 
-					{msg desc=""}submit{/msg}
-				</button>
-
-				{let $cancelButtonAttributes kind="attributes"}
-					{if $_loadingResponse}disabled{/if}
-					class="btn btn-secondary"
-					data-onclick="{$_handleCancelButtonClick}"
-					type="button"
-				{/let}
-
-				<button {$cancelButtonAttributes}>
-					{msg desc=""}cancel{/msg}
+					{msg desc=""}save{/msg}
 				</button>
 			{/param}
 

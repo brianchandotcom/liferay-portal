@@ -250,7 +250,7 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	@Override
 	public AssetVocabulary fetchAssetVocabularyByReferenceCode(long companyId,
 		String externalReferenceCode) {
-		return assetVocabularyPersistence.C_ERC(companyId, null);
+		return assetVocabularyPersistence.fetchByC_ERC(companyId, null);
 	}
 
 	/**

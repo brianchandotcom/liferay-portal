@@ -56,6 +56,8 @@ public interface JSONFactory {
 
 	public String getNullJSON();
 
+	public Object getNullJSONObject();
+
 	public JSONObject getUnmodifiableJSONObject();
 
 	public Object looseDeserialize(String json);

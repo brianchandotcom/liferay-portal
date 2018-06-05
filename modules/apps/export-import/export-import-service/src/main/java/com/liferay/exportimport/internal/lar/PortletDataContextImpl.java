@@ -945,6 +945,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 			element.addAttribute("uuid", stagedModel.getUuid());
 		}
 
+		long groupIdAttribute = GetterUtil.getLong(
+			element.attributeValue("group-id"));
+
+		if (groupIdAttribute <= 0) {
+			long groupId = BeanPropertiesUtil.getLongSilent(
+				classedModel, "groupId");
+
+			if (groupId > 0) {
+				element.addAttribute("group-id", String.valueOf(groupId));
+			}
+		}
+
 		return element;
 	}
 
@@ -2342,16 +2354,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 		}
 
-		if (classedModel instanceof StagedGroupedModel) {
-			StagedGroupedModel stagedGroupedModel =
-				(StagedGroupedModel)classedModel;
+		long groupId = BeanPropertiesUtil.getLongSilent(
+			classedModel, "groupId");
 
-			referenceElement.addAttribute(
-				"group-id", String.valueOf(stagedGroupedModel.getGroupId()));
+		if (groupId > 0) {
+			referenceElement.addAttribute("group-id", String.valueOf(groupId));
 
 			try {
-				Group group = GroupLocalServiceUtil.getGroup(
-					stagedGroupedModel.getGroupId());
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 				long liveGroupId = group.getLiveGroupId();
 
@@ -2385,9 +2395,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to find group " +
-							stagedGroupedModel.getGroupId());
+					_log.warn("Unable to find group " + groupId);
 				}
 			}
 		}

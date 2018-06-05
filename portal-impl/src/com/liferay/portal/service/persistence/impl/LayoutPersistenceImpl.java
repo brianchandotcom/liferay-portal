@@ -54,6 +54,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -8332,64 +8333,29 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_LAYOUT_WHERE);
-
-			query.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
-
-			if (parentLayoutIds.length > 0) {
-				query.append("(");
-
-				query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
-
-				query.append(StringUtil.merge(parentLayoutIds));
-
-				query.append(")");
-
-				query.append(")");
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(LayoutModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(databaseInMaxParameters > 0) &&
+						(parentLayoutIds.length > databaseInMaxParameters)) {
+					list = new ArrayList<Layout>();
 
-				Query q = session.createQuery(sql);
+					long[][] parentLayoutIdsPages = (long[][])ArrayUtil.split(parentLayoutIds,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+					for (long[] parentLayoutIdsPage : parentLayoutIdsPages) {
+						list.addAll(_findByG_P_P(groupId, privateLayout,
+								parentLayoutIdsPage, start, end,
+								orderByComparator, pagination));
+					}
 
-				qPos.add(groupId);
-
-				qPos.add(privateLayout);
-
-				if (!pagination) {
-					list = (List<Layout>)QueryUtil.list(q, getDialect(), start,
-							end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Layout>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = _findByG_P_P(groupId, privateLayout,
+							parentLayoutIds, start, end, orderByComparator,
+							pagination);
 				}
 
 				cacheResult(list);
@@ -8403,9 +8369,80 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<Layout> _findByG_P_P(long groupId, boolean privateLayout,
+		long[] parentLayoutIds, int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean pagination) {
+		List<Layout> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
+
+		if (parentLayoutIds.length > 0) {
+			query.append("(");
+
+			query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
+
+			query.append(StringUtil.merge(parentLayoutIds));
+
+			query.append(")");
+
+			query.append(")");
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(LayoutModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			if (!pagination) {
+				list = (List<Layout>)QueryUtil.list(q, getDialect(), start,
+						end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<Layout>)QueryUtil.list(q, getDialect(), start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -8519,45 +8556,23 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_LAYOUT_WHERE);
-
-			query.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
-
-			if (parentLayoutIds.length > 0) {
-				query.append("(");
-
-				query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
-
-				query.append(StringUtil.merge(parentLayoutIds));
-
-				query.append(")");
-
-				query.append(")");
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+						(parentLayoutIds.length > databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					long[][] parentLayoutIdsPages = (long[][])ArrayUtil.split(parentLayoutIds,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(privateLayout);
-
-				count = (Long)q.uniqueResult();
+					for (long[] parentLayoutIdsPage : parentLayoutIdsPages) {
+						count += Long.valueOf(_countByG_P_P(groupId,
+								privateLayout, parentLayoutIdsPage));
+					}
+				}
+				else {
+					count = Long.valueOf(_countByG_P_P(groupId, privateLayout,
+								parentLayoutIds));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_G_P_P,
 					finderArgs, count);
@@ -8568,9 +8583,60 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByG_P_P(long groupId, boolean privateLayout,
+		long[] parentLayoutIds) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+		query.append(_FINDER_COLUMN_G_P_P_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_P_P_PRIVATELAYOUT_2);
+
+		if (parentLayoutIds.length > 0) {
+			query.append("(");
+
+			query.append(_FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7);
+
+			query.append(StringUtil.merge(parentLayoutIds));
+
+			query.append(")");
+
+			query.append(")");
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(privateLayout);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();

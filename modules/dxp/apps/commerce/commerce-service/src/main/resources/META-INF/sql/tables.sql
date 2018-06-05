@@ -1,6 +1,6 @@
-create table CPDefinitionAvailabilityRange (
+create table CPDAvailabilityEstimate (
 	uuid_ VARCHAR(75) null,
-	CPDAvailabilityRangeId LONG not null primary key,
+	CPDAvailabilityEstimateId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -8,7 +8,7 @@ create table CPDefinitionAvailabilityRange (
 	createDate DATE null,
 	modifiedDate DATE null,
 	CPDefinitionId LONG,
-	commerceAvailabilityRangeId LONG,
+	commerceAvailabilityEstimateId LONG,
 	lastPublishDate DATE null
 );
 
@@ -73,9 +73,9 @@ create table CommerceAddressRestriction (
 	commerceCountryId LONG
 );
 
-create table CommerceAvailabilityRange (
+create table CommerceAvailabilityEstimate (
 	uuid_ VARCHAR(75) null,
-	commerceAvailabilityRangeId LONG not null primary key,
+	commerceAvailabilityEstimateId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

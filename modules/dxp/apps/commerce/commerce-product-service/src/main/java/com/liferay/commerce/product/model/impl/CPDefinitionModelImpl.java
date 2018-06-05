@@ -84,6 +84,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	public static final String TABLE_NAME = "CPDefinition";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
+			{ "defaultLanguageId", Types.VARCHAR },
 			{ "CPDefinitionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -114,13 +115,13 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP },
-			{ "defaultLanguageId", Types.VARCHAR }
+			{ "statusDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -152,10 +153,9 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,CPTaxCategoryId LONG,taxExempt BOOLEAN,telcoOrElectronics BOOLEAN,DDMStructureKey VARCHAR(75) null,published BOOLEAN,externalReferenceCode VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,defaultLanguageId VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,CPTaxCategoryId LONG,taxExempt BOOLEAN,telcoOrElectronics BOOLEAN,DDMStructureKey VARCHAR(75) null,published BOOLEAN,externalReferenceCode VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
@@ -193,6 +193,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		CPDefinition model = new CPDefinitionImpl();
 
 		model.setUuid(soapModel.getUuid());
+		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
 		model.setCPDefinitionId(soapModel.getCPDefinitionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -224,7 +225,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
-		model.setDefaultLanguageId(soapModel.getDefaultLanguageId());
 
 		return model;
 	}
@@ -290,6 +290,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -321,7 +322,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
-		attributes.put("defaultLanguageId", getDefaultLanguageId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -335,6 +335,12 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
 		}
 
 		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
@@ -525,12 +531,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
-		}
-
-		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
-
-		if (defaultLanguageId != null) {
-			setDefaultLanguageId(defaultLanguageId);
 		}
 	}
 
@@ -901,6 +901,22 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	public String getOriginalUuid() {
 		return GetterUtil.getString(_originalUuid);
+	}
+
+	@JSON
+	@Override
+	public String getDefaultLanguageId() {
+		if (_defaultLanguageId == null) {
+			return "";
+		}
+		else {
+			return _defaultLanguageId;
+		}
+	}
+
+	@Override
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
 	}
 
 	@JSON
@@ -1415,22 +1431,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		_statusDate = statusDate;
 	}
 
-	@JSON
-	@Override
-	public String getDefaultLanguageId() {
-		if (_defaultLanguageId == null) {
-			return "";
-		}
-		else {
-			return _defaultLanguageId;
-		}
-	}
-
-	@Override
-	public void setDefaultLanguageId(String defaultLanguageId) {
-		_defaultLanguageId = defaultLanguageId;
-	}
-
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1680,6 +1680,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		CPDefinitionImpl cpDefinitionImpl = new CPDefinitionImpl();
 
 		cpDefinitionImpl.setUuid(getUuid());
+		cpDefinitionImpl.setDefaultLanguageId(getDefaultLanguageId());
 		cpDefinitionImpl.setCPDefinitionId(getCPDefinitionId());
 		cpDefinitionImpl.setGroupId(getGroupId());
 		cpDefinitionImpl.setCompanyId(getCompanyId());
@@ -1711,7 +1712,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setStatusByUserId(getStatusByUserId());
 		cpDefinitionImpl.setStatusByUserName(getStatusByUserName());
 		cpDefinitionImpl.setStatusDate(getStatusDate());
-		cpDefinitionImpl.setDefaultLanguageId(getDefaultLanguageId());
 
 		cpDefinitionImpl.resetOriginalValues();
 
@@ -1818,6 +1818,14 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			cpDefinitionCacheModel.uuid = null;
+		}
+
+		cpDefinitionCacheModel.defaultLanguageId = getDefaultLanguageId();
+
+		String defaultLanguageId = cpDefinitionCacheModel.defaultLanguageId;
+
+		if ((defaultLanguageId != null) && (defaultLanguageId.length() == 0)) {
+			cpDefinitionCacheModel.defaultLanguageId = null;
 		}
 
 		cpDefinitionCacheModel.CPDefinitionId = getCPDefinitionId();
@@ -1955,14 +1963,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			cpDefinitionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
-		cpDefinitionCacheModel.defaultLanguageId = getDefaultLanguageId();
-
-		String defaultLanguageId = cpDefinitionCacheModel.defaultLanguageId;
-
-		if ((defaultLanguageId != null) && (defaultLanguageId.length() == 0)) {
-			cpDefinitionCacheModel.defaultLanguageId = null;
-		}
-
 		return cpDefinitionCacheModel;
 	}
 
@@ -1972,6 +1972,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
+		sb.append(", defaultLanguageId=");
+		sb.append(getDefaultLanguageId());
 		sb.append(", CPDefinitionId=");
 		sb.append(getCPDefinitionId());
 		sb.append(", groupId=");
@@ -2034,8 +2036,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
-		sb.append(", defaultLanguageId=");
-		sb.append(getDefaultLanguageId());
 		sb.append("}");
 
 		return sb.toString();
@@ -2052,6 +2052,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(
 			"<column><column-name>uuid</column-name><column-value><![CDATA[");
 		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>defaultLanguageId</column-name><column-value><![CDATA[");
+		sb.append(getDefaultLanguageId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>CPDefinitionId</column-name><column-value><![CDATA[");
@@ -2177,10 +2181,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>defaultLanguageId</column-name><column-value><![CDATA[");
-		sb.append(getDefaultLanguageId());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -2193,6 +2193,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		};
 	private String _uuid;
 	private String _originalUuid;
+	private String _defaultLanguageId;
 	private long _CPDefinitionId;
 	private long _groupId;
 	private long _originalGroupId;
@@ -2234,7 +2235,6 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private String _defaultLanguageId;
 	private long _columnBitmask;
 	private CPDefinition _escapedModel;
 }

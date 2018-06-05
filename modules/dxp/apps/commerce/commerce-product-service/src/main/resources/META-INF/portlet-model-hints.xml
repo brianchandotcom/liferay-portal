@@ -31,6 +31,7 @@
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinition">
 		<field name="uuid" type="String" />
+		<field name="defaultLanguageId" type="String" />
 		<field name="CPDefinitionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -72,7 +73,6 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
-		<field name="defaultLanguageId" type="String" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDefinitionLink">
 		<field name="uuid" type="String" />

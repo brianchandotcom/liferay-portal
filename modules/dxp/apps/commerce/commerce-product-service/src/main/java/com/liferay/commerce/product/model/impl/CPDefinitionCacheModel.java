@@ -69,6 +69,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		sb.append("{uuid=");
 		sb.append(uuid);
+		sb.append(", defaultLanguageId=");
+		sb.append(defaultLanguageId);
 		sb.append(", CPDefinitionId=");
 		sb.append(CPDefinitionId);
 		sb.append(", groupId=");
@@ -131,8 +133,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
-		sb.append(", defaultLanguageId=");
-		sb.append(defaultLanguageId);
 		sb.append("}");
 
 		return sb.toString();
@@ -147,6 +147,13 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 		else {
 			cpDefinitionImpl.setUuid(uuid);
+		}
+
+		if (defaultLanguageId == null) {
+			cpDefinitionImpl.setDefaultLanguageId("");
+		}
+		else {
+			cpDefinitionImpl.setDefaultLanguageId(defaultLanguageId);
 		}
 
 		cpDefinitionImpl.setCPDefinitionId(CPDefinitionId);
@@ -250,13 +257,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 			cpDefinitionImpl.setStatusDate(new Date(statusDate));
 		}
 
-		if (defaultLanguageId == null) {
-			cpDefinitionImpl.setDefaultLanguageId("");
-		}
-		else {
-			cpDefinitionImpl.setDefaultLanguageId(defaultLanguageId);
-		}
-
 		cpDefinitionImpl.resetOriginalValues();
 
 		return cpDefinitionImpl;
@@ -265,6 +265,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+		defaultLanguageId = objectInput.readUTF();
 
 		CPDefinitionId = objectInput.readLong();
 
@@ -316,7 +317,6 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
-		defaultLanguageId = objectInput.readUTF();
 	}
 
 	@Override
@@ -327,6 +327,13 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (defaultLanguageId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(defaultLanguageId);
 		}
 
 		objectOutput.writeLong(CPDefinitionId);
@@ -412,16 +419,10 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		}
 
 		objectOutput.writeLong(statusDate);
-
-		if (defaultLanguageId == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(defaultLanguageId);
-		}
 	}
 
 	public String uuid;
+	public String defaultLanguageId;
 	public long CPDefinitionId;
 	public long groupId;
 	public long companyId;
@@ -453,5 +454,4 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-	public String defaultLanguageId;
 }

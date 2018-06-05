@@ -42,6 +42,7 @@ create table CPDSpecificationOptionValue (
 
 create table CPDefinition (
 	uuid_ VARCHAR(75) null,
+	defaultLanguageId VARCHAR(75) null,
 	CPDefinitionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -72,8 +73,7 @@ create table CPDefinition (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	defaultLanguageId VARCHAR(75) null
+	statusDate DATE null
 );
 
 create table CPDefinitionLink (

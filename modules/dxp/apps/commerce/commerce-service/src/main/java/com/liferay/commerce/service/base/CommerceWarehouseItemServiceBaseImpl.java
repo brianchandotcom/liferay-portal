@@ -16,11 +16,11 @@ package com.liferay.commerce.service.base;
 
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.service.CommerceWarehouseItemService;
-import com.liferay.commerce.service.persistence.CPDefinitionAvailabilityRangePersistence;
+import com.liferay.commerce.service.persistence.CPDAvailabilityEstimatePersistence;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressRestrictionPersistence;
-import com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence;
+import com.liferay.commerce.service.persistence.CommerceAvailabilityEstimatePersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderItemFinder;
@@ -190,60 +190,60 @@ public abstract class CommerceWarehouseItemServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce availability range local service.
+	 * Returns the commerce availability estimate local service.
 	 *
-	 * @return the commerce availability range local service
+	 * @return the commerce availability estimate local service
 	 */
-	public com.liferay.commerce.service.CommerceAvailabilityRangeLocalService getCommerceAvailabilityRangeLocalService() {
-		return commerceAvailabilityRangeLocalService;
+	public com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService getCommerceAvailabilityEstimateLocalService() {
+		return commerceAvailabilityEstimateLocalService;
 	}
 
 	/**
-	 * Sets the commerce availability range local service.
+	 * Sets the commerce availability estimate local service.
 	 *
-	 * @param commerceAvailabilityRangeLocalService the commerce availability range local service
+	 * @param commerceAvailabilityEstimateLocalService the commerce availability estimate local service
 	 */
-	public void setCommerceAvailabilityRangeLocalService(
-		com.liferay.commerce.service.CommerceAvailabilityRangeLocalService commerceAvailabilityRangeLocalService) {
-		this.commerceAvailabilityRangeLocalService = commerceAvailabilityRangeLocalService;
+	public void setCommerceAvailabilityEstimateLocalService(
+		com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService commerceAvailabilityEstimateLocalService) {
+		this.commerceAvailabilityEstimateLocalService = commerceAvailabilityEstimateLocalService;
 	}
 
 	/**
-	 * Returns the commerce availability range remote service.
+	 * Returns the commerce availability estimate remote service.
 	 *
-	 * @return the commerce availability range remote service
+	 * @return the commerce availability estimate remote service
 	 */
-	public com.liferay.commerce.service.CommerceAvailabilityRangeService getCommerceAvailabilityRangeService() {
-		return commerceAvailabilityRangeService;
+	public com.liferay.commerce.service.CommerceAvailabilityEstimateService getCommerceAvailabilityEstimateService() {
+		return commerceAvailabilityEstimateService;
 	}
 
 	/**
-	 * Sets the commerce availability range remote service.
+	 * Sets the commerce availability estimate remote service.
 	 *
-	 * @param commerceAvailabilityRangeService the commerce availability range remote service
+	 * @param commerceAvailabilityEstimateService the commerce availability estimate remote service
 	 */
-	public void setCommerceAvailabilityRangeService(
-		com.liferay.commerce.service.CommerceAvailabilityRangeService commerceAvailabilityRangeService) {
-		this.commerceAvailabilityRangeService = commerceAvailabilityRangeService;
+	public void setCommerceAvailabilityEstimateService(
+		com.liferay.commerce.service.CommerceAvailabilityEstimateService commerceAvailabilityEstimateService) {
+		this.commerceAvailabilityEstimateService = commerceAvailabilityEstimateService;
 	}
 
 	/**
-	 * Returns the commerce availability range persistence.
+	 * Returns the commerce availability estimate persistence.
 	 *
-	 * @return the commerce availability range persistence
+	 * @return the commerce availability estimate persistence
 	 */
-	public CommerceAvailabilityRangePersistence getCommerceAvailabilityRangePersistence() {
-		return commerceAvailabilityRangePersistence;
+	public CommerceAvailabilityEstimatePersistence getCommerceAvailabilityEstimatePersistence() {
+		return commerceAvailabilityEstimatePersistence;
 	}
 
 	/**
-	 * Sets the commerce availability range persistence.
+	 * Sets the commerce availability estimate persistence.
 	 *
-	 * @param commerceAvailabilityRangePersistence the commerce availability range persistence
+	 * @param commerceAvailabilityEstimatePersistence the commerce availability estimate persistence
 	 */
-	public void setCommerceAvailabilityRangePersistence(
-		CommerceAvailabilityRangePersistence commerceAvailabilityRangePersistence) {
-		this.commerceAvailabilityRangePersistence = commerceAvailabilityRangePersistence;
+	public void setCommerceAvailabilityEstimatePersistence(
+		CommerceAvailabilityEstimatePersistence commerceAvailabilityEstimatePersistence) {
+		this.commerceAvailabilityEstimatePersistence = commerceAvailabilityEstimatePersistence;
 	}
 
 	/**
@@ -1045,60 +1045,60 @@ public abstract class CommerceWarehouseItemServiceBaseImpl
 	}
 
 	/**
-	 * Returns the cp definition availability range local service.
+	 * Returns the cpd availability estimate local service.
 	 *
-	 * @return the cp definition availability range local service
+	 * @return the cpd availability estimate local service
 	 */
-	public com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService getCPDefinitionAvailabilityRangeLocalService() {
-		return cpDefinitionAvailabilityRangeLocalService;
+	public com.liferay.commerce.service.CPDAvailabilityEstimateLocalService getCPDAvailabilityEstimateLocalService() {
+		return cpdAvailabilityEstimateLocalService;
 	}
 
 	/**
-	 * Sets the cp definition availability range local service.
+	 * Sets the cpd availability estimate local service.
 	 *
-	 * @param cpDefinitionAvailabilityRangeLocalService the cp definition availability range local service
+	 * @param cpdAvailabilityEstimateLocalService the cpd availability estimate local service
 	 */
-	public void setCPDefinitionAvailabilityRangeLocalService(
-		com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService cpDefinitionAvailabilityRangeLocalService) {
-		this.cpDefinitionAvailabilityRangeLocalService = cpDefinitionAvailabilityRangeLocalService;
+	public void setCPDAvailabilityEstimateLocalService(
+		com.liferay.commerce.service.CPDAvailabilityEstimateLocalService cpdAvailabilityEstimateLocalService) {
+		this.cpdAvailabilityEstimateLocalService = cpdAvailabilityEstimateLocalService;
 	}
 
 	/**
-	 * Returns the cp definition availability range remote service.
+	 * Returns the cpd availability estimate remote service.
 	 *
-	 * @return the cp definition availability range remote service
+	 * @return the cpd availability estimate remote service
 	 */
-	public com.liferay.commerce.service.CPDefinitionAvailabilityRangeService getCPDefinitionAvailabilityRangeService() {
-		return cpDefinitionAvailabilityRangeService;
+	public com.liferay.commerce.service.CPDAvailabilityEstimateService getCPDAvailabilityEstimateService() {
+		return cpdAvailabilityEstimateService;
 	}
 
 	/**
-	 * Sets the cp definition availability range remote service.
+	 * Sets the cpd availability estimate remote service.
 	 *
-	 * @param cpDefinitionAvailabilityRangeService the cp definition availability range remote service
+	 * @param cpdAvailabilityEstimateService the cpd availability estimate remote service
 	 */
-	public void setCPDefinitionAvailabilityRangeService(
-		com.liferay.commerce.service.CPDefinitionAvailabilityRangeService cpDefinitionAvailabilityRangeService) {
-		this.cpDefinitionAvailabilityRangeService = cpDefinitionAvailabilityRangeService;
+	public void setCPDAvailabilityEstimateService(
+		com.liferay.commerce.service.CPDAvailabilityEstimateService cpdAvailabilityEstimateService) {
+		this.cpdAvailabilityEstimateService = cpdAvailabilityEstimateService;
 	}
 
 	/**
-	 * Returns the cp definition availability range persistence.
+	 * Returns the cpd availability estimate persistence.
 	 *
-	 * @return the cp definition availability range persistence
+	 * @return the cpd availability estimate persistence
 	 */
-	public CPDefinitionAvailabilityRangePersistence getCPDefinitionAvailabilityRangePersistence() {
-		return cpDefinitionAvailabilityRangePersistence;
+	public CPDAvailabilityEstimatePersistence getCPDAvailabilityEstimatePersistence() {
+		return cpdAvailabilityEstimatePersistence;
 	}
 
 	/**
-	 * Sets the cp definition availability range persistence.
+	 * Sets the cpd availability estimate persistence.
 	 *
-	 * @param cpDefinitionAvailabilityRangePersistence the cp definition availability range persistence
+	 * @param cpdAvailabilityEstimatePersistence the cpd availability estimate persistence
 	 */
-	public void setCPDefinitionAvailabilityRangePersistence(
-		CPDefinitionAvailabilityRangePersistence cpDefinitionAvailabilityRangePersistence) {
-		this.cpDefinitionAvailabilityRangePersistence = cpDefinitionAvailabilityRangePersistence;
+	public void setCPDAvailabilityEstimatePersistence(
+		CPDAvailabilityEstimatePersistence cpdAvailabilityEstimatePersistence) {
+		this.cpdAvailabilityEstimatePersistence = cpdAvailabilityEstimatePersistence;
 	}
 
 	/**
@@ -1369,12 +1369,12 @@ public abstract class CommerceWarehouseItemServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceAddressRestrictionService commerceAddressRestrictionService;
 	@BeanReference(type = CommerceAddressRestrictionPersistence.class)
 	protected CommerceAddressRestrictionPersistence commerceAddressRestrictionPersistence;
-	@BeanReference(type = com.liferay.commerce.service.CommerceAvailabilityRangeLocalService.class)
-	protected com.liferay.commerce.service.CommerceAvailabilityRangeLocalService commerceAvailabilityRangeLocalService;
-	@BeanReference(type = com.liferay.commerce.service.CommerceAvailabilityRangeService.class)
-	protected com.liferay.commerce.service.CommerceAvailabilityRangeService commerceAvailabilityRangeService;
-	@BeanReference(type = CommerceAvailabilityRangePersistence.class)
-	protected CommerceAvailabilityRangePersistence commerceAvailabilityRangePersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService.class)
+	protected com.liferay.commerce.service.CommerceAvailabilityEstimateLocalService commerceAvailabilityEstimateLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommerceAvailabilityEstimateService.class)
+	protected com.liferay.commerce.service.CommerceAvailabilityEstimateService commerceAvailabilityEstimateService;
+	@BeanReference(type = CommerceAvailabilityEstimatePersistence.class)
+	protected CommerceAvailabilityEstimatePersistence commerceAvailabilityEstimatePersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceCountryLocalService.class)
 	protected com.liferay.commerce.service.CommerceCountryLocalService commerceCountryLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceCountryService.class)
@@ -1459,12 +1459,12 @@ public abstract class CommerceWarehouseItemServiceBaseImpl
 	protected CommerceWarehouseItemPersistence commerceWarehouseItemPersistence;
 	@BeanReference(type = CommerceWarehouseItemFinder.class)
 	protected CommerceWarehouseItemFinder commerceWarehouseItemFinder;
-	@BeanReference(type = com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService.class)
-	protected com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService cpDefinitionAvailabilityRangeLocalService;
-	@BeanReference(type = com.liferay.commerce.service.CPDefinitionAvailabilityRangeService.class)
-	protected com.liferay.commerce.service.CPDefinitionAvailabilityRangeService cpDefinitionAvailabilityRangeService;
-	@BeanReference(type = CPDefinitionAvailabilityRangePersistence.class)
-	protected CPDefinitionAvailabilityRangePersistence cpDefinitionAvailabilityRangePersistence;
+	@BeanReference(type = com.liferay.commerce.service.CPDAvailabilityEstimateLocalService.class)
+	protected com.liferay.commerce.service.CPDAvailabilityEstimateLocalService cpdAvailabilityEstimateLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CPDAvailabilityEstimateService.class)
+	protected com.liferay.commerce.service.CPDAvailabilityEstimateService cpdAvailabilityEstimateService;
+	@BeanReference(type = CPDAvailabilityEstimatePersistence.class)
+	protected CPDAvailabilityEstimatePersistence cpdAvailabilityEstimatePersistence;
 	@BeanReference(type = com.liferay.commerce.service.CPDefinitionInventoryLocalService.class)
 	protected com.liferay.commerce.service.CPDefinitionInventoryLocalService cpDefinitionInventoryLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CPDefinitionInventoryService.class)

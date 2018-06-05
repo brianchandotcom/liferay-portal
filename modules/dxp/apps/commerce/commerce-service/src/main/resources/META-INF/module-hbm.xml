@@ -4,7 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.model.CommerceAddress" />
 	<import class="com.liferay.commerce.model.CommerceAddressRestriction" />
-	<import class="com.liferay.commerce.model.CommerceAvailabilityRange" />
+	<import class="com.liferay.commerce.model.CommerceAvailabilityEstimate" />
 	<import class="com.liferay.commerce.model.CommerceCountry" />
 	<import class="com.liferay.commerce.model.CommerceOrder" />
 	<import class="com.liferay.commerce.model.CommerceOrderItem" />
@@ -18,7 +18,7 @@
 	<import class="com.liferay.commerce.model.CommerceTaxMethod" />
 	<import class="com.liferay.commerce.model.CommerceWarehouse" />
 	<import class="com.liferay.commerce.model.CommerceWarehouseItem" />
-	<import class="com.liferay.commerce.model.CPDefinitionAvailabilityRange" />
+	<import class="com.liferay.commerce.model.CPDAvailabilityEstimate" />
 	<import class="com.liferay.commerce.model.CPDefinitionInventory" />
 	<class name="com.liferay.commerce.model.impl.CommerceAddressImpl" table="CommerceAddress">
 		<id name="commerceAddressId" type="long">
@@ -61,8 +61,8 @@
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commerceCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
-	<class name="com.liferay.commerce.model.impl.CommerceAvailabilityRangeImpl" table="CommerceAvailabilityRange">
-		<id name="commerceAvailabilityRangeId" type="long">
+	<class name="com.liferay.commerce.model.impl.CommerceAvailabilityEstimateImpl" table="CommerceAvailabilityEstimate">
+		<id name="commerceAvailabilityEstimateId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -320,8 +320,8 @@
 		<property name="CPInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
-	<class name="com.liferay.commerce.model.impl.CPDefinitionAvailabilityRangeImpl" table="CPDefinitionAvailabilityRange">
-		<id column="CPDAvailabilityRangeId" name="CPDefinitionAvailabilityRangeId" type="long">
+	<class name="com.liferay.commerce.model.impl.CPDAvailabilityEstimateImpl" table="CPDAvailabilityEstimate">
+		<id name="CPDAvailabilityEstimateId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -332,7 +332,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="CPDefinitionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="commerceAvailabilityRangeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceAvailabilityEstimateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CPDefinitionInventoryImpl" table="CPDefinitionInventory">

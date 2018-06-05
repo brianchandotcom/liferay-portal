@@ -87,6 +87,21 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the default language ID of this cp definition.
+	 *
+	 * @return the default language ID of this cp definition
+	 */
+	@AutoEscape
+	public String getDefaultLanguageId();
+
+	/**
+	 * Sets the default language ID of this cp definition.
+	 *
+	 * @param defaultLanguageId the default language ID of this cp definition
+	 */
+	public void setDefaultLanguageId(String defaultLanguageId);
+
+	/**
 	 * Returns the cp definition ID of this cp definition.
 	 *
 	 * @return the cp definition ID of this cp definition
@@ -634,21 +649,6 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
-
-	/**
-	 * Returns the default language ID of this cp definition.
-	 *
-	 * @return the default language ID of this cp definition
-	 */
-	@AutoEscape
-	public String getDefaultLanguageId();
-
-	/**
-	 * Sets the default language ID of this cp definition.
-	 *
-	 * @param defaultLanguageId the default language ID of this cp definition
-	 */
-	public void setDefaultLanguageId(String defaultLanguageId);
 
 	public String[] getAvailableLanguageIds();
 

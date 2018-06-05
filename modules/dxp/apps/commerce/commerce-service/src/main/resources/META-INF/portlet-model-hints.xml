@@ -48,9 +48,9 @@
 		<field name="classPK" type="long" />
 		<field name="commerceCountryId" type="long" />
 	</model>
-	<model name="com.liferay.commerce.model.CommerceAvailabilityRange">
+	<model name="com.liferay.commerce.model.CommerceAvailabilityEstimate">
 		<field name="uuid" type="String" />
-		<field name="commerceAvailabilityRangeId" type="long" />
+		<field name="commerceAvailabilityEstimateId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -310,9 +310,9 @@
 		<field name="CPInstanceId" type="long" />
 		<field name="quantity" type="int" />
 	</model>
-	<model name="com.liferay.commerce.model.CPDefinitionAvailabilityRange">
+	<model name="com.liferay.commerce.model.CPDAvailabilityEstimate">
 		<field name="uuid" type="String" />
-		<field name="CPDefinitionAvailabilityRangeId" type="long" />
+		<field name="CPDAvailabilityEstimateId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -320,7 +320,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="CPDefinitionId" type="long" />
-		<field name="commerceAvailabilityRangeId" type="long" />
+		<field name="commerceAvailabilityEstimateId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CPDefinitionInventory">

@@ -35,6 +35,7 @@ public class CPDefinitionSoap implements Serializable {
 		CPDefinitionSoap soapModel = new CPDefinitionSoap();
 
 		soapModel.setUuid(model.getUuid());
+		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -66,7 +67,6 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
-		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 
 		return soapModel;
 	}
@@ -125,6 +125,14 @@ public class CPDefinitionSoap implements Serializable {
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
+	}
+
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
 	}
 
 	public long getCPDefinitionId() {
@@ -407,15 +415,8 @@ public class CPDefinitionSoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
-	public String getDefaultLanguageId() {
-		return _defaultLanguageId;
-	}
-
-	public void setDefaultLanguageId(String defaultLanguageId) {
-		_defaultLanguageId = defaultLanguageId;
-	}
-
 	private String _uuid;
+	private String _defaultLanguageId;
 	private long _CPDefinitionId;
 	private long _groupId;
 	private long _companyId;
@@ -447,5 +448,4 @@ public class CPDefinitionSoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private String _defaultLanguageId;
 }

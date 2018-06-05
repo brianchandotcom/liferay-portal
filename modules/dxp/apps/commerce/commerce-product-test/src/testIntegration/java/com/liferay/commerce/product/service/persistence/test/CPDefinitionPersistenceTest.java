@@ -127,6 +127,8 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setUuid(RandomTestUtil.randomString());
 
+		newCPDefinition.setDefaultLanguageId(RandomTestUtil.randomString());
+
 		newCPDefinition.setGroupId(RandomTestUtil.nextLong());
 
 		newCPDefinition.setCompanyId(RandomTestUtil.nextLong());
@@ -187,14 +189,14 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setStatusDate(RandomTestUtil.nextDate());
 
-		newCPDefinition.setDefaultLanguageId(RandomTestUtil.randomString());
-
 		_cpDefinitions.add(_persistence.update(newCPDefinition));
 
 		CPDefinition existingCPDefinition = _persistence.findByPrimaryKey(newCPDefinition.getPrimaryKey());
 
 		Assert.assertEquals(existingCPDefinition.getUuid(),
 			newCPDefinition.getUuid());
+		Assert.assertEquals(existingCPDefinition.getDefaultLanguageId(),
+			newCPDefinition.getDefaultLanguageId());
 		Assert.assertEquals(existingCPDefinition.getCPDefinitionId(),
 			newCPDefinition.getCPDefinitionId());
 		Assert.assertEquals(existingCPDefinition.getGroupId(),
@@ -263,8 +265,6 @@ public class CPDefinitionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinition.getStatusDate()),
 			Time.getShortTimestamp(newCPDefinition.getStatusDate()));
-		Assert.assertEquals(existingCPDefinition.getDefaultLanguageId(),
-			newCPDefinition.getDefaultLanguageId());
 	}
 
 	@Test
@@ -369,9 +369,9 @@ public class CPDefinitionPersistenceTest {
 
 	protected OrderByComparator<CPDefinition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CPDefinition", "uuid",
-			true, "CPDefinitionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "productTypeName", true,
+			true, "defaultLanguageId", true, "CPDefinitionId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "productTypeName", true,
 			"availableIndividually", true, "ignoreSKUCombinations", true,
 			"shippable", true, "freeShipping", true, "shipSeparately", true,
 			"shippingExtraPrice", true, "width", true, "height", true, "depth",
@@ -379,8 +379,7 @@ public class CPDefinitionPersistenceTest {
 			"telcoOrElectronics", true, "DDMStructureKey", true, "published",
 			true, "externalReferenceCode", true, "displayDate", true,
 			"expirationDate", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true, "defaultLanguageId", true);
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -600,6 +599,8 @@ public class CPDefinitionPersistenceTest {
 
 		cpDefinition.setUuid(RandomTestUtil.randomString());
 
+		cpDefinition.setDefaultLanguageId(RandomTestUtil.randomString());
+
 		cpDefinition.setGroupId(RandomTestUtil.nextLong());
 
 		cpDefinition.setCompanyId(RandomTestUtil.nextLong());
@@ -659,8 +660,6 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setStatusByUserName(RandomTestUtil.randomString());
 
 		cpDefinition.setStatusDate(RandomTestUtil.nextDate());
-
-		cpDefinition.setDefaultLanguageId(RandomTestUtil.randomString());
 
 		_cpDefinitions.add(_persistence.update(cpDefinition));
 

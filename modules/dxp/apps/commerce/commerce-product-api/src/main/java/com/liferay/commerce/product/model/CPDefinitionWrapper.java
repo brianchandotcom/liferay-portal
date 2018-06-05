@@ -61,6 +61,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
+		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -92,7 +93,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
-		attributes.put("defaultLanguageId", getDefaultLanguageId());
 
 		return attributes;
 	}
@@ -103,6 +103,12 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
+
+		if (defaultLanguageId != null) {
+			setDefaultLanguageId(defaultLanguageId);
 		}
 
 		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
@@ -293,12 +299,6 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
-		}
-
-		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
-
-		if (defaultLanguageId != null) {
-			setDefaultLanguageId(defaultLanguageId);
 		}
 	}
 

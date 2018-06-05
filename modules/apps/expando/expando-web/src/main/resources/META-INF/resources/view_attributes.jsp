@@ -46,46 +46,14 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 	navigationItems='<%= expandoDisplayContext.getNavigationItems("fields") %>'
 />
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
+<clay:management-toolbar
+	actionDropdownItems="<%= expandoDisplayContext.getActionDropdownItems() %>"
+	creationMenu="<%= expandoDisplayContext.getCreationMenu() %>"
 	searchContainerId="customFields"
->
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
-			selectedDisplayStyle="<%= displayStyle %>"
-		/>
-
-		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, ExpandoPortletKeys.EXPANDO, ActionKeys.ADD_EXPANDO) %>">
-			<portlet:renderURL var="addExpandoURL">
-				<portlet:param name="mvcPath" value="/edit_expando.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="modelResource" value="<%= modelResource %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-custom-field") %>'
-					url="<%= addExpandoURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteCustomFields" />
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
+	selectable="<%= true %>"
+	showCreationMenu="<%= expandoDisplayContext.showCreationMenu() %>"
+	showSearch="<%= false %>"
+/>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -144,27 +112,20 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 </aui:form>
 
 <aui:script>
-	var deleteCustomFields = document.getElementById('<portlet:namespace />deleteCustomFields');
-
-	if (deleteCustomFields) {
+	function <portlet:namespace />deleteCustomFields() {
 		var form = document.getElementById('<portlet:namespace />fm');
 
-		deleteCustomFields.addEventListener(
-			'click',
-			function() {
-				if (form) {
-					var columnIds = form.querySelector('#<portlet:namespace />columnIds');
+		if (form) {
+			var columnIds = form.querySelector('#<portlet:namespace />columnIds');
 
-					if (columnIds) {
-						var checkedIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
+			if (columnIds) {
+				var checkedIds = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
-						columnIds.setAttribute('value', checkedIds);
+				columnIds.setAttribute('value', checkedIds);
 
-						submitForm(form, '<portlet:actionURL name="deleteExpandos" />');
-					}
-				}
+				submitForm(form, '<portlet:actionURL name="deleteExpandos" />');
 			}
-		);
+		}
 	}
 </aui:script>
 

@@ -354,7 +354,7 @@ public class BlogsEntryStagedModelDataHandler
 
 	@Override
 	protected String[] getSkipImportReferenceStagedModelNames() {
-		return _SKIPPING_REFERENCE_STAGED_MODEL_NAMES;
+		return _SKIP_IMPORT_REFERENCE_STAGED_MODEL_NAMES;
 	}
 
 	protected InputStream getSmallImageInputStream(
@@ -523,7 +523,7 @@ public class BlogsEntryStagedModelDataHandler
 		_blogsEntryLocalService.updateBlogsEntry(importedBlogsEntry);
 	}
 
-	private static final String[] _SKIPPING_REFERENCE_STAGED_MODEL_NAMES =
+	private static final String[] _SKIP_IMPORT_REFERENCE_STAGED_MODEL_NAMES =
 		{FriendlyURLEntry.class.getName()};
 
 	private static final Log _log = LogFactoryUtil.getLog(

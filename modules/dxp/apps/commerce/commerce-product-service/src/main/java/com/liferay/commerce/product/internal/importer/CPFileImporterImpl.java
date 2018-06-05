@@ -649,15 +649,15 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 			String value = jsonObject.getString(key);
 
-			if (key.equals("groupId")) {
-				value = String.valueOf(serviceContext.getScopeGroupId());
-			}
-			else if (key.equals("assetEntryId")) {
+			if (key.equals("assetEntryId")) {
 				String articleId = jsonObject.getString("articleId");
 
 				long assetEntryId = getAssetEntryId(articleId, serviceContext);
 
 				value = String.valueOf(assetEntryId);
+			}
+			else if (key.equals("groupId")) {
+				value = String.valueOf(serviceContext.getScopeGroupId());
 			}
 
 			portletPreferences.setValue(key, value);

@@ -1648,8 +1648,7 @@ public class LanguageImpl implements Language, Serializable {
 		catch (Exception e) {
 		}
 
-		LinkedHashMap<String, Locale> groupLanguageCodeLocalesMap =
-			new LinkedHashMap<>();
+		HashMap<String, Locale> groupLanguageCodeLocalesMap = new HashMap<>();
 		LinkedHashMap<String, Locale> groupLanguageIdLocalesMap =
 			new LinkedHashMap<>();
 
@@ -1998,7 +1997,7 @@ public class LanguageImpl implements Language, Serializable {
 		private final Set<Locale> _availableLocales;
 		private final Set<String> _duplicateLanguageCodes;
 		private final Map<String, Locale> _languageCodeLocalesMap =
-			new LinkedHashMap<>();
+			new HashMap<>();
 		private final Map<String, Locale> _languageIdLocalesMap =
 			new LinkedHashMap<>();
 		private final Set<Locale> _localesBetaSet = new HashSet<>();

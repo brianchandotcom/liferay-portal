@@ -1154,7 +1154,7 @@ public class CalEventImporter {
 			mbMessage.getRootMessageId(), mbMessage.getParentMessageId(),
 			mbMessage.getSubject(), mbMessage.getBody(), mbMessage.getFormat(),
 			mbMessage.isAnonymous(), mbMessage.getPriority(),
-			mbMessage.getAllowPingbacks(), mbMessage.isAnswer(),
+			mbMessage.isAllowPingbacks(), mbMessage.isAnswer(),
 			mbMessage.getStatus(), mbMessage.getStatusByUserId(),
 			mbMessage.getStatusByUserName(), mbMessage.getStatusDate(),
 			mbMessageIds);

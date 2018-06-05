@@ -182,7 +182,7 @@ public class WikiExportImportTest extends BasePortletExportImportTestCase {
 		Assert.assertEquals(page.getContent(), importedPage.getContent());
 		Assert.assertEquals(page.getSummary(), importedPage.getSummary());
 		Assert.assertEquals(page.getFormat(), importedPage.getFormat());
-		Assert.assertEquals(page.getHead(), importedPage.getHead());
+		Assert.assertEquals(page.isHead(), importedPage.isHead());
 		Assert.assertEquals(
 			page.getParentTitle(), importedPage.getParentTitle());
 		Assert.assertEquals(

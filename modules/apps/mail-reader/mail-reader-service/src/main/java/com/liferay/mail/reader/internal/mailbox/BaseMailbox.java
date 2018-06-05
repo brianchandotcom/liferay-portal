@@ -98,8 +98,8 @@ public abstract class BaseMailbox implements Mailbox {
 
 		validateAccount(
 			account.getIncomingHostName(), account.getIncomingPort(),
-			account.getIncomingSecure(), account.getOutgoingHostName(),
-			account.getOutgoingPort(), account.getOutgoingSecure(),
+			account.isIncomingSecure(), account.getOutgoingHostName(),
+			account.getOutgoingPort(), account.isOutgoingSecure(),
 			account.getLogin(), password);
 
 		return AccountLocalServiceUtil.updateAccount(

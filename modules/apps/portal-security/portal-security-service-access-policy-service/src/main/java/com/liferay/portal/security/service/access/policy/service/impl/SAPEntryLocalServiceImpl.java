@@ -246,7 +246,7 @@ public class SAPEntryLocalServiceImpl extends SAPEntryLocalServiceBaseImpl {
 			allowedServiceSignatures);
 
 		if (sapEntry.isSystem()) {
-			defaultSAPEntry = sapEntry.getDefaultSAPEntry();
+			defaultSAPEntry = sapEntry.isDefaultSAPEntry();
 			name = sapEntry.getName();
 		}
 

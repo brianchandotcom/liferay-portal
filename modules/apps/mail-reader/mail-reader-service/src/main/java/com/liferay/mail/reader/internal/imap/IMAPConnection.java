@@ -43,8 +43,8 @@ public class IMAPConnection {
 	public IMAPConnection(Account account, String password) {
 		this(
 			account.getIncomingHostName(), account.getIncomingPort(),
-			account.getIncomingSecure(), account.getOutgoingHostName(),
-			account.getOutgoingPort(), account.getOutgoingSecure(),
+			account.isIncomingSecure(), account.getOutgoingHostName(),
+			account.getOutgoingPort(), account.isOutgoingSecure(),
 			account.getLogin(), password);
 	}
 

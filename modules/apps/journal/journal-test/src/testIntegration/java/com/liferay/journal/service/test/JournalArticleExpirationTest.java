@@ -234,7 +234,7 @@ public class JournalArticleExpirationTest {
 				expirationDateCalendar.get(Calendar.YEAR),
 				expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
 				expirationDateCalendar.get(Calendar.MINUTE), false, 0, 0, 0, 0,
-				0, true, article.getIndexable(), article.isSmallImage(),
+				0, true, article.isIndexable(), article.isSmallImage(),
 				article.getSmallImageURL(), null, null, null, serviceContext);
 		}
 

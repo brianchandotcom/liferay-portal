@@ -136,7 +136,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 			Status buddyStatus = StatusLocalServiceUtil.getUserStatus(userId);
 
-			awake = buddyStatus.getAwake();
+			awake = buddyStatus.isAwake();
 
 			curUserJSONObject.put("awake", awake);
 

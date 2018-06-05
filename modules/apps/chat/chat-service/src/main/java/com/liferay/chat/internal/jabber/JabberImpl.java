@@ -381,7 +381,7 @@ public class JabberImpl implements Jabber {
 
 		Status status = StatusLocalServiceUtil.getUserStatus(userId);
 
-		if (status.getOnline()) {
+		if (status.isOnline()) {
 			updateStatus(userId, 1, connection);
 		}
 

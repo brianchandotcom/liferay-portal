@@ -10,6 +10,7 @@ dependencies {
 	compileInclude group: "org.jsoup", name: "jsoup", version: "1.10.2"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compileOnly project(":apps:adaptive-media:adaptive-media-api")

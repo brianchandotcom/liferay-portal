@@ -54,7 +54,7 @@ portletDisplay.setURLBack(redirect);
 							navigationItem.setActive(currentAppTab.equals("credentials"));
 
 							PortletURL portletURL = renderResponse.createRenderURL();
-							
+
 							portletURL.setParameter("mvcRenderCommandName", "/admin/update_oauth2_application");
 							portletURL.setParameter("appTab", "credentials");
 							portletURL.setParameter("redirect", redirect);

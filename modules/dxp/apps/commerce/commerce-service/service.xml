@@ -122,11 +122,11 @@
 			<finder-column name="commerceCountryId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceAvailabilityRange" remote-service="true" uuid="true">
+	<entity local-service="true" name="CommerceAvailabilityEstimate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="commerceAvailabilityRangeId" primary="true" type="long" />
+		<column name="commerceAvailabilityEstimateId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -809,11 +809,11 @@
 			<finder-column name="CPInstanceId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CPDefinitionAvailabilityRange" remote-service="true" uuid="true">
+	<entity local-service="true" name="CPDAvailabilityEstimate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column db-name="CPDAvailabilityRangeId" name="CPDefinitionAvailabilityRangeId" primary="true" type="long" />
+		<column name="CPDAvailabilityEstimateId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -830,16 +830,16 @@
 		<!-- Other fields -->
 
 		<column name="CPDefinitionId" type="long" />
-		<column name="commerceAvailabilityRangeId" type="long" />
+		<column name="commerceAvailabilityEstimateId" type="long" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
-		<finder name="CPDefinitionId" return-type="CPDefinitionAvailabilityRange" unique="true">
+		<finder name="CPDefinitionId" return-type="CPDAvailabilityEstimate" unique="true">
 			<finder-column name="CPDefinitionId" />
 		</finder>
-		<finder name="CommerceAvailabilityRangeId" return-type="Collection">
-			<finder-column name="commerceAvailabilityRangeId" />
+		<finder name="CommerceAvailabilityEstimateId" return-type="Collection">
+			<finder-column name="commerceAvailabilityEstimateId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CPDefinitionInventory" remote-service="true" uuid="true">

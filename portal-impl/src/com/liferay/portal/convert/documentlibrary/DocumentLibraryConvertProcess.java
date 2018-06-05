@@ -29,9 +29,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -102,6 +104,16 @@ public class DocumentLibraryConvertProcess
 		return new String[] {
 			sb.toString(), "delete-files-from-previous-repository=checkbox"
 		};
+	}
+
+	@Override
+	public Store getSourceStore() {
+		return _sourceStore;
+	}
+
+	@Override
+	public Store getTargetStore() {
+		return _targetStore;
 	}
 
 	@Override
@@ -221,10 +233,14 @@ public class DocumentLibraryConvertProcess
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-						"classNameId");
+					Property groupIdProperty = PropertyFactoryUtil.forName(
+						"groupId");
 
-					dynamicQuery.add(classNameIdProperty.eq(0L));
+					Property repositoryIdProperty = PropertyFactoryUtil.forName(
+						"repositoryId");
+
+					dynamicQuery.add(
+						groupIdProperty.eqProperty(repositoryIdProperty));
 				}
 
 			});

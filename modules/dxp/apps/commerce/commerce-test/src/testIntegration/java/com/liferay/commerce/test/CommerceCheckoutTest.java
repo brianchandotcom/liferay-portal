@@ -19,6 +19,7 @@ import com.liferay.commerce.internal.test.util.CommerceTestUtil;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommercePaymentMethod;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -101,6 +102,12 @@ public class CommerceCheckoutTest {
 
 		commerceOrder.setCommercePaymentMethodId(
 			commercePaymentMethod.getCommercePaymentMethodId());
+
+		CommerceShippingMethod commerceShippingMethod =
+			CommerceTestUtil.addCommerceShippingMethod(_group.getGroupId());
+
+		commerceOrder.setCommerceShippingMethodId(
+			commerceShippingMethod.getCommerceShippingMethodId());
 
 		_commerceOrderLocalService.updateCommerceOrder(commerceOrder);
 

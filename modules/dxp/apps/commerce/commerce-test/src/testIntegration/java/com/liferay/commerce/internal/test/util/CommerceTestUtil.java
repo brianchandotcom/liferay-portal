@@ -23,6 +23,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
@@ -31,6 +32,7 @@ import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.service.CommercePaymentMethodLocalServiceUtil;
 import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
+import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
@@ -84,6 +86,18 @@ public class CommerceTestUtil {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), null, "money-order",
 			Collections.<String, String>emptyMap(), 1, true, serviceContext);
+	}
+
+	public static CommerceShippingMethod addCommerceShippingMethod(long groupId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return CommerceShippingMethodLocalServiceUtil.addCommerceShippingMethod(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), null, "fixedPrice", 1, true,
+			serviceContext);
 	}
 
 	public static CommerceWarehouse addCommerceWarehouse(long groupId)

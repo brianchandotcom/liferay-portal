@@ -225,7 +225,7 @@ if (portletTitleBasedNavigation) {
 												</c:if>
 
 												<div class="autofit-col autofit-col-end">
-													<portlet:renderURL var="previousEntryBookmarksURL">
+													<liferay-portlet:renderURL varImpl="previousEntryBookmarksURL">
 														<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 
 														<c:choose>
@@ -236,7 +236,7 @@ if (portletTitleBasedNavigation) {
 																<portlet:param name="entryId" value="<%= String.valueOf(previousEntry.getEntryId()) %>" />
 															</c:otherwise>
 														</c:choose>
-													</portlet:renderURL>
+													</liferay-portlet:renderURL>
 
 													<liferay-social-bookmarks:bookmarks
 														className="<%= BlogsEntry.class.getName() %>"
@@ -245,7 +245,7 @@ if (portletTitleBasedNavigation) {
 														target="_blank"
 														title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry) %>"
 														types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"
-														url="<%= PortalUtil.getCanonicalURL(previousEntryBookmarksURL.toString(), themeDisplay, layout) %>"
+														urlImpl="<%= previousEntryBookmarksURL %>"
 													/>
 												</div>
 											</div>
@@ -386,7 +386,7 @@ if (portletTitleBasedNavigation) {
 												</c:if>
 
 												<div class="autofit-col autofit-col-end">
-													<portlet:renderURL var="nextEntryBookmarksURL">
+													<liferay-portlet:renderURL varImpl="nextEntryBookmarksURL">
 														<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 
 														<c:choose>
@@ -397,7 +397,7 @@ if (portletTitleBasedNavigation) {
 																<portlet:param name="entryId" value="<%= String.valueOf(nextEntry.getEntryId()) %>" />
 															</c:otherwise>
 														</c:choose>
-													</portlet:renderURL>
+													</liferay-portlet:renderURL>
 
 													<liferay-social-bookmarks:bookmarks
 														className="<%= BlogsEntry.class.getName() %>"
@@ -406,7 +406,7 @@ if (portletTitleBasedNavigation) {
 														target="_blank"
 														title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry) %>"
 														types="<%= SocialBookmarksUtil.getSocialBookmarksTypes(blogsPortletInstanceConfiguration) %>"
-														url="<%= PortalUtil.getCanonicalURL(nextEntryBookmarksURL.toString(), themeDisplay, layout) %>"
+														urlImpl="<%= nextEntryBookmarksURL %>"
 													/>
 												</div>
 											</div>

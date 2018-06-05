@@ -14,13 +14,21 @@
 
 package com.liferay.social.bookmarks.taglib.servlet.taglib;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarksRegistryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -96,6 +104,10 @@ public class SocialBookmarksTag extends IncludeTag {
 		_url = url;
 	}
 
+	public void setUrlImpl(PortletURL urlImpl) {
+		_urlImpl = urlImpl;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -108,6 +120,7 @@ public class SocialBookmarksTag extends IncludeTag {
 		_title = null;
 		_types = null;
 		_url = null;
+		_urlImpl = null;
 	}
 
 	@Override
@@ -142,10 +155,31 @@ public class SocialBookmarksTag extends IncludeTag {
 
 		request.setAttribute("liferay-social-bookmarks:bookmarks:types", types);
 
+		if ((_url == null) && (_urlImpl != null)) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			try {
+				_url = PortalUtil.getCanonicalURL(
+					_urlImpl.toString(), themeDisplay,
+					themeDisplay.getLayout());
+			}
+			catch (PortalException pe) {
+				_log.error("Unable to get canonical url " + _urlImpl, pe);
+			}
+		}
+
+		if (_url == null) {
+			throw new IllegalArgumentException();
+		}
+
 		request.setAttribute("liferay-social-bookmarks:bookmarks:url", _url);
 	}
 
 	private static final String _PAGE = "/bookmarks/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SocialBookmarksTag.class);
 
 	private String _className;
 	private long _classPK;
@@ -155,5 +189,6 @@ public class SocialBookmarksTag extends IncludeTag {
 	private String _title;
 	private String[] _types;
 	private String _url;
+	private PortletURL _urlImpl;
 
 }

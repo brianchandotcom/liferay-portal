@@ -16,6 +16,8 @@
 		<suppress checks="IndentationCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
 		<suppress checks="JSONNamingCheck" files="portal-impl/src/com/liferay/portal/action/JSONServiceAction\.java" />
 		<suppress checks="JSONNamingCheck" files="portal-kernel/src/com/liferay/portal/kernel/backgroundtask/display/BaseBackgroundTaskDisplay\.java" />
+		<suppress checks="JSONNamingCheck" files="portal-kernel/src/com/liferay/portal/kernel/json/JSONFactory\.java" />
+		<suppress checks="JSONNamingCheck" files="portal-kernel/src/com/liferay/portal/kernel/json/JSONFactoryUtil\.java" />
 		<suppress checks="JSONNamingCheck" files="util-java/src/com/liferay/util/Autocomplete\.java" />
 		<suppress checks="MemberNameCheck" files=".*ContextContributor\.java" />
 		<suppress checks="MemberNameCheck" files="portal-impl/src/com/liferay/portlet/trash/util/TrashImpl\.java" />

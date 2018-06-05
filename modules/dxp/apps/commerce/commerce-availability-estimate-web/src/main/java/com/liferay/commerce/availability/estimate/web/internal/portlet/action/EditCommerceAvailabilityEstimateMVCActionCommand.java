@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.availability.range.web.internal.portlet.action;
+package com.liferay.commerce.availability.estimate.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.exception.NoSuchAvailabilityRangeException;
-import com.liferay.commerce.model.CommerceAvailabilityRange;
-import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.exception.NoSuchAvailabilityEstimateException;
+import com.liferay.commerce.model.CommerceAvailabilityEstimate;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -46,37 +46,39 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=editCommerceAvailabilityRange"
+		"mvc.command.name=editCommerceAvailabilityEstimate"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCommerceAvailabilityRangeMVCActionCommand
+public class EditCommerceAvailabilityEstimateMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCommerceAvailabilityRanges(ActionRequest actionRequest)
+	protected void deleteCommerceAvailabilityEstimates(
+			ActionRequest actionRequest)
 		throws PortalException {
 
-		long[] deleteCommerceAvailabilityRangeIds = null;
+		long[] deleteCommerceAvailabilityEstimateIds = null;
 
-		long commerceAvailabilityRangeId = ParamUtil.getLong(
-			actionRequest, "commerceAvailabilityRangeId");
+		long commerceAvailabilityEstimateId = ParamUtil.getLong(
+			actionRequest, "commerceAvailabilityEstimateId");
 
-		if (commerceAvailabilityRangeId > 0) {
-			deleteCommerceAvailabilityRangeIds =
-				new long[] {commerceAvailabilityRangeId};
+		if (commerceAvailabilityEstimateId > 0) {
+			deleteCommerceAvailabilityEstimateIds =
+				new long[] {commerceAvailabilityEstimateId};
 		}
 		else {
-			deleteCommerceAvailabilityRangeIds = StringUtil.split(
+			deleteCommerceAvailabilityEstimateIds = StringUtil.split(
 				ParamUtil.getString(
-					actionRequest, "deleteCommerceAvailabilityRangeIds"),
+					actionRequest, "deleteCommerceAvailabilityEstimateIds"),
 				0L);
 		}
 
-		for (long deleteCommerceAvailabilityRangeId :
-				deleteCommerceAvailabilityRangeIds) {
+		for (long deleteCommerceAvailabilityEstimateId :
+				deleteCommerceAvailabilityEstimateIds) {
 
-			_commerceAvailabilityRangeService.deleteCommerceAvailabilityRange(
-				deleteCommerceAvailabilityRangeId);
+			_commerceAvailabilityEstimateService.
+				deleteCommerceAvailabilityEstimate(
+					deleteCommerceAvailabilityEstimateId);
 		}
 	}
 
@@ -89,16 +91,16 @@ public class EditCommerceAvailabilityRangeMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceAvailabilityRanges(actionRequest);
+				deleteCommerceAvailabilityEstimates(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
-				updateCommerceAvailabilityRange(actionRequest);
+				updateCommerceAvailabilityEstimate(actionRequest);
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchAvailabilityRangeException ||
+			if (e instanceof NoSuchAvailabilityEstimateException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -111,31 +113,35 @@ public class EditCommerceAvailabilityRangeMVCActionCommand
 		}
 	}
 
-	protected void updateCommerceAvailabilityRange(ActionRequest actionRequest)
+	protected void updateCommerceAvailabilityEstimate(
+			ActionRequest actionRequest)
 		throws PortalException {
 
-		long commerceAvailabilityRangeId = ParamUtil.getLong(
-			actionRequest, "commerceAvailabilityRangeId");
+		long commerceAvailabilityEstimateId = ParamUtil.getLong(
+			actionRequest, "commerceAvailabilityEstimateId");
 
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceAvailabilityRange.class.getName(), actionRequest);
+			CommerceAvailabilityEstimate.class.getName(), actionRequest);
 
-		if (commerceAvailabilityRangeId <= 0) {
-			_commerceAvailabilityRangeService.addCommerceAvailabilityRange(
-				titleMap, priority, serviceContext);
+		if (commerceAvailabilityEstimateId <= 0) {
+			_commerceAvailabilityEstimateService.
+				addCommerceAvailabilityEstimate(
+					titleMap, priority, serviceContext);
 		}
 		else {
-			_commerceAvailabilityRangeService.updateCommerceAvailabilityRange(
-				commerceAvailabilityRangeId, titleMap, priority,
-				serviceContext);
+			_commerceAvailabilityEstimateService.
+				updateCommerceAvailabilityEstimate(
+					commerceAvailabilityEstimateId, titleMap, priority,
+					serviceContext);
 		}
 	}
 
 	@Reference
-	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
+	private CommerceAvailabilityEstimateService
+		_commerceAvailabilityEstimateService;
 
 }

@@ -21,14 +21,14 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
 
-CommerceAvailabilityRangeDisplayContext commerceAvailabilityRangeDisplayContext = (CommerceAvailabilityRangeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayContext = (CommerceAvailabilityEstimateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceAvailabilityRange commerceAvailabilityRange = commerceAvailabilityRangeDisplayContext.getCommerceAvailabilityRange();
+CommerceAvailabilityEstimate commerceAvailabilityEstimate = commerceAvailabilityEstimateDisplayContext.getCommerceAvailabilityEstimate();
 
-String title = LanguageUtil.get(request, "add-availability-range");
+String title = LanguageUtil.get(request, "add-availability-estimate");
 
-if (commerceAvailabilityRange != null) {
-	title = LanguageUtil.format(request, "edit-x", commerceAvailabilityRange.getTitle(languageId), false);
+if (commerceAvailabilityEstimate != null) {
+	title = LanguageUtil.format(request, "edit-x", commerceAvailabilityEstimate.getTitle(languageId), false);
 }
 
 Map<String, Object> data = new HashMap<>();
@@ -45,15 +45,15 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 <%@ include file="/breadcrumb.jspf" %>
 
-<portlet:actionURL name="editCommerceAvailabilityRange" var="editCommerceAvailabilityRangeActionURL" />
+<portlet:actionURL name="editCommerceAvailabilityEstimate" var="editCommerceAvailabilityEstimateActionURL" />
 
-<aui:form action="<%= editCommerceAvailabilityRangeActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceAvailabilityRange == null) ? Constants.ADD : Constants.UPDATE %>" />
+<aui:form action="<%= editCommerceAvailabilityEstimateActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceAvailabilityEstimate == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commerceAvailabilityRangeId" type="hidden" value="<%= (commerceAvailabilityRange == null) ? 0 : commerceAvailabilityRange.getCommerceAvailabilityRangeId() %>" />
+	<aui:input name="commerceAvailabilityEstimateId" type="hidden" value="<%= (commerceAvailabilityEstimate == null) ? 0 : commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId() %>" />
 
 	<div class="lfr-form-content">
-		<aui:model-context bean="<%= commerceAvailabilityRange %>" model="<%= CommerceAvailabilityRange.class %>" />
+		<aui:model-context bean="<%= commerceAvailabilityEstimate %>" model="<%= CommerceAvailabilityEstimate.class %>" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>

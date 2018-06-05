@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.availability.range.web.internal.admin;
+package com.liferay.commerce.availability.estimate.web.internal.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext;
-import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.availability.estimate.web.internal.display.context.CommerceAvailabilityEstimateDisplayContext;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -45,19 +45,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + AvailabilityRangesCommerceAdminModule.KEY
+	property = "commerce.admin.module.key=" + AvailabilityEstimatesCommerceAdminModule.KEY
 )
-public class AvailabilityRangesCommerceAdminModule
+public class AvailabilityEstimatesCommerceAdminModule
 	implements CommerceAdminModule {
 
-	public static final String KEY = "availability-ranges";
+	public static final String KEY = "availability-estimates";
 
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "availability-ranges");
+		return LanguageUtil.get(resourceBundle, "availability-estimates");
 	}
 
 	@Override
@@ -77,15 +77,15 @@ public class AvailabilityRangesCommerceAdminModule
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		CommerceAvailabilityRangeDisplayContext
-			commerceAvailabilityRangeDisplayContext =
-				new CommerceAvailabilityRangeDisplayContext(
-					_commerceAvailabilityRangeService, renderRequest,
+		CommerceAvailabilityEstimateDisplayContext
+			commerceAvailabilityEstimateDisplayContext =
+				new CommerceAvailabilityEstimateDisplayContext(
+					_commerceAvailabilityEstimateService, renderRequest,
 					renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceAvailabilityRangeDisplayContext);
+			commerceAvailabilityEstimateDisplayContext);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -98,7 +98,8 @@ public class AvailabilityRangesCommerceAdminModule
 	}
 
 	@Reference
-	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
+	private CommerceAvailabilityEstimateService
+		_commerceAvailabilityEstimateService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
@@ -107,7 +108,7 @@ public class AvailabilityRangesCommerceAdminModule
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.range.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.estimate.web)"
 	)
 	private ServletContext _servletContext;
 

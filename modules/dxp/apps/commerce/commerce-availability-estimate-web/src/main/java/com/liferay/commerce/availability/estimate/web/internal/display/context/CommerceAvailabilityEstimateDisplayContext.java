@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.availability.range.web.internal.display.context;
+package com.liferay.commerce.availability.estimate.web.internal.display.context;
 
-import com.liferay.commerce.availability.range.web.internal.admin.AvailabilityRangesCommerceAdminModule;
-import com.liferay.commerce.availability.range.web.internal.util.CommerceAvailabilityRangeUtil;
-import com.liferay.commerce.model.CommerceAvailabilityRange;
-import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.availability.estimate.web.internal.admin.AvailabilityEstimatesCommerceAdminModule;
+import com.liferay.commerce.availability.estimate.web.internal.util.CommerceAvailabilityEstimateUtil;
+import com.liferay.commerce.model.CommerceAvailabilityEstimate;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -36,34 +36,36 @@ import javax.portlet.RenderResponse;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceAvailabilityRangeDisplayContext {
+public class CommerceAvailabilityEstimateDisplayContext {
 
-	public CommerceAvailabilityRangeDisplayContext(
-		CommerceAvailabilityRangeService commerceAvailabilityRangeService,
+	public CommerceAvailabilityEstimateDisplayContext(
+		CommerceAvailabilityEstimateService commerceAvailabilityEstimateService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		_commerceAvailabilityRangeService = commerceAvailabilityRangeService;
+		_commerceAvailabilityEstimateService =
+			commerceAvailabilityEstimateService;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
 
-	public CommerceAvailabilityRange getCommerceAvailabilityRange()
+	public CommerceAvailabilityEstimate getCommerceAvailabilityEstimate()
 		throws PortalException {
 
-		if (_commerceAvailabilityRange != null) {
-			return _commerceAvailabilityRange;
+		if (_commerceAvailabilityEstimate != null) {
+			return _commerceAvailabilityEstimate;
 		}
 
-		long commerceAvailabilityRangeId = ParamUtil.getLong(
-			_renderRequest, "commerceAvailabilityRangeId");
+		long commerceAvailabilityEstimateId = ParamUtil.getLong(
+			_renderRequest, "commerceAvailabilityEstimateId");
 
-		if (commerceAvailabilityRangeId > 0) {
-			_commerceAvailabilityRange =
-				_commerceAvailabilityRangeService.getCommerceAvailabilityRange(
-					commerceAvailabilityRangeId);
+		if (commerceAvailabilityEstimateId > 0) {
+			_commerceAvailabilityEstimate =
+				_commerceAvailabilityEstimateService.
+					getCommerceAvailabilityEstimate(
+						commerceAvailabilityEstimateId);
 		}
 
-		return _commerceAvailabilityRange;
+		return _commerceAvailabilityEstimate;
 	}
 
 	public String getOrderByCol() {
@@ -82,14 +84,14 @@ public class CommerceAvailabilityRangeDisplayContext {
 
 		portletURL.setParameter(
 			"commerceAdminModuleKey",
-			AvailabilityRangesCommerceAdminModule.KEY);
+			AvailabilityEstimatesCommerceAdminModule.KEY);
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 
 		return portletURL;
 	}
 
-	public SearchContainer<CommerceAvailabilityRange> getSearchContainer() {
+	public SearchContainer<CommerceAvailabilityEstimate> getSearchContainer() {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -97,7 +99,7 @@ public class CommerceAvailabilityRangeDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String emptyResultsMessage = "there-are-no-availability-ranges";
+		String emptyResultsMessage = "there-are-no-availability-estimates";
 
 		_searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, emptyResultsMessage);
@@ -105,9 +107,9 @@ public class CommerceAvailabilityRangeDisplayContext {
 		String orderByCol = getOrderByCol();
 		String orderByType = getOrderByType();
 
-		OrderByComparator<CommerceAvailabilityRange> orderByComparator =
-			CommerceAvailabilityRangeUtil.
-				getCommerceAvailabilityRangeOrderByComparator(
+		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator =
+			CommerceAvailabilityEstimateUtil.
+				getCommerceAvailabilityEstimateOrderByComparator(
 					orderByCol, orderByType);
 
 		_searchContainer.setOrderByCol(orderByCol);
@@ -116,14 +118,15 @@ public class CommerceAvailabilityRangeDisplayContext {
 		_searchContainer.setRowChecker(getRowChecker());
 
 		int total =
-			_commerceAvailabilityRangeService.
-				getCommerceAvailabilityRangesCount(
+			_commerceAvailabilityEstimateService.
+				getCommerceAvailabilityEstimatesCount(
 					themeDisplay.getScopeGroupId());
 
-		List<CommerceAvailabilityRange> results =
-			_commerceAvailabilityRangeService.getCommerceAvailabilityRanges(
-				themeDisplay.getScopeGroupId(), _searchContainer.getStart(),
-				_searchContainer.getEnd(), orderByComparator);
+		List<CommerceAvailabilityEstimate> results =
+			_commerceAvailabilityEstimateService.
+				getCommerceAvailabilityEstimates(
+					themeDisplay.getScopeGroupId(), _searchContainer.getStart(),
+					_searchContainer.getEnd(), orderByComparator);
 
 		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
@@ -139,12 +142,12 @@ public class CommerceAvailabilityRangeDisplayContext {
 		return _rowChecker;
 	}
 
-	private CommerceAvailabilityRange _commerceAvailabilityRange;
-	private final CommerceAvailabilityRangeService
-		_commerceAvailabilityRangeService;
+	private CommerceAvailabilityEstimate _commerceAvailabilityEstimate;
+	private final CommerceAvailabilityEstimateService
+		_commerceAvailabilityEstimateService;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private RowChecker _rowChecker;
-	private SearchContainer<CommerceAvailabilityRange> _searchContainer;
+	private SearchContainer<CommerceAvailabilityEstimate> _searchContainer;
 
 }

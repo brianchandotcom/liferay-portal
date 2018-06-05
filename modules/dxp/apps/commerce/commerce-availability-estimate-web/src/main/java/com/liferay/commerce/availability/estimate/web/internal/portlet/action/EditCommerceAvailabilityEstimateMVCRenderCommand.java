@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.availability.range.web.internal.portlet.action;
+package com.liferay.commerce.availability.estimate.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext;
-import com.liferay.commerce.exception.NoSuchAvailabilityRangeException;
-import com.liferay.commerce.service.CommerceAvailabilityRangeService;
+import com.liferay.commerce.availability.estimate.web.internal.display.context.CommerceAvailabilityEstimateDisplayContext;
+import com.liferay.commerce.exception.NoSuchAvailabilityEstimateException;
+import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -43,11 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=editCommerceAvailabilityRange"
+		"mvc.command.name=editCommerceAvailabilityEstimate"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCommerceAvailabilityRangeMVCRenderCommand
+public class EditCommerceAvailabilityEstimateMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -57,18 +57,18 @@ public class EditCommerceAvailabilityRangeMVCRenderCommand
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/edit_availability_range.jsp");
+				"/edit_availability_estimate.jsp");
 
 		try {
-			CommerceAvailabilityRangeDisplayContext
-				commerceAvailabilityRangeDisplayContext =
-					new CommerceAvailabilityRangeDisplayContext(
-						_commerceAvailabilityRangeService, renderRequest,
+			CommerceAvailabilityEstimateDisplayContext
+				commerceAvailabilityEstimateDisplayContext =
+					new CommerceAvailabilityEstimateDisplayContext(
+						_commerceAvailabilityEstimateService, renderRequest,
 						renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceAvailabilityRangeDisplayContext);
+				commerceAvailabilityEstimateDisplayContext);
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
@@ -78,7 +78,7 @@ public class EditCommerceAvailabilityRangeMVCRenderCommand
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchAvailabilityRangeException ||
+			if (e instanceof NoSuchAvailabilityEstimateException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
@@ -87,7 +87,7 @@ public class EditCommerceAvailabilityRangeMVCRenderCommand
 			}
 			else {
 				throw new PortletException(
-					"Unable to include edit_availability_range.jsp", e);
+					"Unable to include edit_availability_estimate.jsp", e);
 			}
 		}
 
@@ -95,13 +95,14 @@ public class EditCommerceAvailabilityRangeMVCRenderCommand
 	}
 
 	@Reference
-	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;
+	private CommerceAvailabilityEstimateService
+		_commerceAvailabilityEstimateService;
 
 	@Reference
 	private Portal _portal;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.range.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.availability.estimate.web)"
 	)
 	private ServletContext _servletContext;
 

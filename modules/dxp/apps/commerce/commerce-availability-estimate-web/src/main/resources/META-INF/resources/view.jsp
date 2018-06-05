@@ -17,41 +17,41 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceAvailabilityRangeDisplayContext commerceAvailabilityRangeDisplayContext = (CommerceAvailabilityRangeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayContext = (CommerceAvailabilityEstimateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer<CommerceAvailabilityRange> commerceAvailabilityRangeSearchContainer = commerceAvailabilityRangeDisplayContext.getSearchContainer();
+SearchContainer<CommerceAvailabilityEstimate> commerceAvailabilityEstimateSearchContainer = commerceAvailabilityEstimateDisplayContext.getSearchContainer();
 
-boolean hasManageCommerceAvailabilityRangesPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_RANGES);
+boolean hasManageCommerceAvailabilityEstimatesPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
 %>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
-	searchContainerId="commerceAvailabilityRanges"
+	searchContainerId="commerceAvailabilityEstimates"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
 			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= commerceAvailabilityRangeDisplayContext.getPortletURL() %>"
+			portletURL="<%= commerceAvailabilityEstimateDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceAvailabilityRangeDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceAvailabilityRangeDisplayContext.getOrderByType() %>"
+			orderByCol="<%= commerceAvailabilityEstimateDisplayContext.getOrderByCol() %>"
+			orderByType="<%= commerceAvailabilityEstimateDisplayContext.getOrderByType() %>"
 			orderColumns='<%= new String[] {"priority"} %>'
-			portletURL="<%= commerceAvailabilityRangeDisplayContext.getPortletURL() %>"
+			portletURL="<%= commerceAvailabilityEstimateDisplayContext.getPortletURL() %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= commerceAvailabilityRangeDisplayContext.getPortletURL() %>"
+			portletURL="<%= commerceAvailabilityEstimateDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="list"
 		/>
 
-		<c:if test="<%= hasManageCommerceAvailabilityRangesPermission %>">
-			<portlet:renderURL var="addCommerceAvailabilityRangeURL">
-				<portlet:param name="mvcRenderCommandName" value="editCommerceAvailabilityRange" />
+		<c:if test="<%= hasManageCommerceAvailabilityEstimatesPermission %>">
+			<portlet:renderURL var="addCommerceAvailabilityEstimateURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceAvailabilityEstimate" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
@@ -59,17 +59,17 @@ boolean hasManageCommerceAvailabilityRangesPermission = CommercePermission.conta
 				inline="<%= true %>"
 			>
 				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-availability-range") %>'
-					url="<%= addCommerceAvailabilityRangeURL.toString() %>"
+					title='<%= LanguageUtil.get(request, "add-availability-estimate") %>'
+					url="<%= addCommerceAvailabilityEstimateURL.toString() %>"
 				/>
 			</liferay-frontend:add-menu>
 		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
-	<c:if test="<%= hasManageCommerceAvailabilityRangesPermission %>">
+	<c:if test="<%= hasManageCommerceAvailabilityEstimatesPermission %>">
 		<liferay-frontend:management-bar-action-buttons>
 			<liferay-frontend:management-bar-button
-				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAvailabilityRanges();" %>'
+				href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceAvailabilityEstimates();" %>'
 				icon="trash"
 				label="delete"
 			/>
@@ -78,36 +78,36 @@ boolean hasManageCommerceAvailabilityRangesPermission = CommercePermission.conta
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
-	<portlet:actionURL name="editCommerceAvailabilityRange" var="editCommerceAvailabilityRangeActionURL" />
+	<portlet:actionURL name="editCommerceAvailabilityEstimate" var="editCommerceAvailabilityEstimateActionURL" />
 
-	<aui:form action="<%= editCommerceAvailabilityRangeActionURL %>" method="post" name="fm">
+	<aui:form action="<%= editCommerceAvailabilityEstimateActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="deleteCommerceAvailabilityRangeIds" type="hidden" />
+		<aui:input name="deleteCommerceAvailabilityEstimateIds" type="hidden" />
 
 		<liferay-ui:search-container
-			id="commerceAvailabilityRanges"
-			searchContainer="<%= commerceAvailabilityRangeSearchContainer %>"
+			id="commerceAvailabilityEstimates"
+			searchContainer="<%= commerceAvailabilityEstimateSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.commerce.model.CommerceAvailabilityRange"
-				keyProperty="commerceAvailabilityRangeId"
-				modelVar="commerceAvailabilityRange"
+				className="com.liferay.commerce.model.CommerceAvailabilityEstimate"
+				keyProperty="commerceAvailabilityEstimateId"
+				modelVar="commerceAvailabilityEstimate"
 			>
 
 				<%
 				PortletURL rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcRenderCommandName", "editCommerceAvailabilityRange");
+				rowURL.setParameter("mvcRenderCommandName", "editCommerceAvailabilityEstimate");
 				rowURL.setParameter("redirect", currentURL);
-				rowURL.setParameter("commerceAvailabilityRangeId", String.valueOf(commerceAvailabilityRange.getCommerceAvailabilityRangeId()));
+				rowURL.setParameter("commerceAvailabilityEstimateId", String.valueOf(commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId()));
 				%>
 
 				<liferay-ui:search-container-column-text
 					cssClass="important table-cell-content"
 					href="<%= rowURL %>"
 					name="title"
-					value="<%= HtmlUtil.escape(commerceAvailabilityRange.getTitle(languageId)) %>"
+					value="<%= HtmlUtil.escape(commerceAvailabilityEstimate.getTitle(languageId)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
@@ -135,11 +135,11 @@ boolean hasManageCommerceAvailabilityRangesPermission = CommercePermission.conta
 </div>
 
 <aui:script>
-	function <portlet:namespace />deleteCommerceAvailabilityRanges() {
-		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-availability-ranges" />')) {
+	function <portlet:namespace />deleteCommerceAvailabilityEstimates() {
+		if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-availability-estimates" />')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.fm('deleteCommerceAvailabilityRangeIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteCommerceAvailabilityEstimateIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 			submitForm(form);
 		}

@@ -19,7 +19,7 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceAvailabilityRange commerceAvailabilityRange = (CommerceAvailabilityRange)row.getObject();
+CommerceAvailabilityEstimate commerceAvailabilityEstimate = (CommerceAvailabilityEstimate)row.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -29,11 +29,11 @@ CommerceAvailabilityRange commerceAvailabilityRange = (CommerceAvailabilityRange
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_RANGES) %>">
+	<c:if test="<%= CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcRenderCommandName" value="editCommerceAvailabilityRange" />
+			<portlet:param name="mvcRenderCommandName" value="editCommerceAvailabilityEstimate" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="commerceAvailabilityRangeId" value="<%= String.valueOf(commerceAvailabilityRange.getCommerceAvailabilityRangeId()) %>" />
+			<portlet:param name="commerceAvailabilityEstimateId" value="<%= String.valueOf(commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -41,10 +41,10 @@ CommerceAvailabilityRange commerceAvailabilityRange = (CommerceAvailabilityRange
 			url="<%= editURL %>"
 		/>
 
-		<portlet:actionURL name="editCommerceAvailabilityRange" var="deleteURL">
+		<portlet:actionURL name="editCommerceAvailabilityEstimate" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="commerceAvailabilityRangeId" value="<%= String.valueOf(commerceAvailabilityRange.getCommerceAvailabilityRangeId()) %>" />
+			<portlet:param name="commerceAvailabilityEstimateId" value="<%= String.valueOf(commerceAvailabilityEstimate.getCommerceAvailabilityEstimateId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

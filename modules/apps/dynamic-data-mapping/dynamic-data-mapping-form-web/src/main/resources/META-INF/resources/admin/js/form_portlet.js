@@ -803,6 +803,12 @@ AUI.add(
 					_onFormButtonClick: function() {
 						var instance = this;
 
+						var ruleTab = instance.one('#showRules');
+
+						if (ruleTab.hasClass('disabled')) {
+							ruleTab.removeClass('disabled');
+						}
+
 						instance._hideRuleBuilder();
 
 						instance._showFormBuilder();
@@ -913,6 +919,12 @@ AUI.add(
 
 					_onRulesButtonClick: function() {
 						var instance = this;
+
+						var ruleTab = instance.one('#showRules');
+
+						if (ruleTab.hasClass('disabled')) {
+							return;
+						}
 
 						instance._hideFormBuilder();
 

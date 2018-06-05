@@ -26,7 +26,7 @@
 </c:if>
 
 <%
-Map<String, Object> contextObjects = new HashMap<String, Object>();
+Map<String, Object> contextObjects = new HashMap<>();
 
 contextObjects.put("blogsPortletInstanceConfiguration", blogsPortletInstanceConfiguration);
 contextObjects.put("blogsPortletInstanceSettingsHelper", blogsPortletInstanceSettingsHelper);
@@ -100,7 +100,7 @@ private List<BlogsEntry> _convertToBlogEntries(List results) throws PortalExcept
 		return results;
 	}
 
-	List<BlogsEntry> entries = new ArrayList<BlogsEntry>(results.size());
+	List<BlogsEntry> entries = new ArrayList<>(results.size());
 
 	for (Object result : results) {
 		AssetEntry assetEntry = (AssetEntry)result;

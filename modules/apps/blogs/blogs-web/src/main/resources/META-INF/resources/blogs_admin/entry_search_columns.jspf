@@ -36,9 +36,16 @@
 			</h5>
 
 			<h4>
-				<aui:a href="<%= rowURL.toString() %>">
-					<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>
-				</aui:a>
+				<c:choose>
+					<c:when test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
+						<aui:a href="<%= rowURL.toString() %>">
+							<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>
+					</c:otherwise>
+				</c:choose>
 			</h4>
 
 			<h5 class="text-default">
@@ -76,7 +83,7 @@
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
 						title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
-						url="<%= rowURL.toString() %>"
+						url="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) ? rowURL.toString() : null %>"
 					>
 						<%@ include file="/blogs_admin/entry_vertical_card.jspf" %>
 					</liferay-frontend:vertical-card>
@@ -89,7 +96,7 @@
 						resultRow="<%= row %>"
 						rowChecker="<%= searchContainer.getRowChecker() %>"
 						title="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"
-						url="<%= rowURL.toString() %>"
+						url="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) ? rowURL.toString() : null %>"
 					>
 						<%@ include file="/blogs_admin/entry_vertical_card.jspf" %>
 					</liferay-frontend:icon-vertical-card>
@@ -100,7 +107,7 @@
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
-			href="<%= rowURL %>"
+			href="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) ? rowURL : null %>"
 			name="title"
 			orderable="<%= false %>"
 			value="<%= BlogsEntryUtil.getDisplayTitle(resourceBundle, entry) %>"

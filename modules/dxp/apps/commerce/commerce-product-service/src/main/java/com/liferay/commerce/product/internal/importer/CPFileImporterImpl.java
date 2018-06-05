@@ -57,11 +57,15 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -78,6 +82,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -223,7 +228,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	protected void addLayoutPortlets(
 			JSONArray jsonArray, Layout layout, String layoutTemplateId,
-			ServiceContext serviceContext)
+			ClassLoader classLoader, ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutTypePortlet layoutTypePortlet =
@@ -244,7 +249,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 			setPortletLookAndFeel(
 				portletJSONObject.getJSONObject("lookAndFeel"), layout,
-				portletId);
+				portletId, classLoader);
 		}
 	}
 
@@ -372,7 +377,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		if ((portletsJSONArray != null) && (portletsJSONArray.length() > 0)) {
 			addLayoutPortlets(
-				portletsJSONArray, layout, layoutTemplateId, serviceContext);
+				portletsJSONArray, layout, layoutTemplateId, classLoader,
+				serviceContext);
 		}
 
 		layout = _layoutLocalService.updateLayout(
@@ -576,19 +582,24 @@ public class CPFileImporterImpl implements CPFileImporter {
 	}
 
 	protected void setLocalizedValues(
-			PortletPreferences portletPreferences, long groupId, String key,
+			PortletPreferences portletPreferences,
+			ResourceBundleLoader resourceBundleLoader, long groupId, String key,
 			String value)
 		throws PortletException {
 
 		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
+			ResourceBundle resourceBundle =
+				resourceBundleLoader.loadResourceBundle(locale);
+
 			portletPreferences.setValue(
 				key + StringPool.UNDERLINE + LanguageUtil.getLanguageId(locale),
-				LanguageUtil.get(locale, value));
+				LanguageUtil.get(resourceBundle, value));
 		}
 	}
 
 	protected void setPortletLookAndFeel(
-			JSONObject jsonObject, Layout layout, String portletId)
+			JSONObject jsonObject, Layout layout, String portletId,
+			ClassLoader classLoader)
 		throws Exception {
 
 		if (jsonObject == null) {
@@ -606,6 +617,12 @@ public class CPFileImporterImpl implements CPFileImporter {
 			_portletPreferencesLocalService.getPreferences(
 				portletPreferencesIds);
 
+		ResourceBundleLoader resourceBundleLoader =
+			new AggregateResourceBundleLoader(
+				ResourceBundleUtil.getResourceBundleLoader(
+					"content.Language", classLoader),
+				ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+
 		Iterator<String> iterator = jsonObject.keys();
 
 		while (iterator.hasNext()) {
@@ -615,7 +632,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 			if (key.equals("portletSetupTitle")) {
 				setLocalizedValues(
-					portletPreferences, layout.getGroupId(), key, value);
+					portletPreferences, resourceBundleLoader,
+					layout.getGroupId(), key, value);
 			}
 			else {
 				portletPreferences.setValue(key, value);

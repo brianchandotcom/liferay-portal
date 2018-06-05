@@ -26,9 +26,11 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.comparator.FormInstanceVersionVersionComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -40,6 +42,7 @@ import java.time.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -201,6 +204,11 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 		List<DDMFormInstanceVersion> formInstanceVersions =
 			ddmFormInstanceVersionLocalService.getFormInstanceVersions(
 				formInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		formInstanceVersions = ListUtil.copy(formInstanceVersions);
+
+		Collections.sort(
+			formInstanceVersions, new FormInstanceVersionVersionComparator());
 
 		List<DDMStructureVersion> ddmStructureVersions = new ArrayList<>();
 

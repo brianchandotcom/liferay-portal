@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -108,6 +110,11 @@ public class LoginPostAction extends Action {
 				UserLocalServiceUtil.addDefaultGroups(userId);
 				UserLocalServiceUtil.addDefaultRoles(userId);
 				UserLocalServiceUtil.addDefaultUserGroups(userId);
+
+				Indexer userIndexer = IndexerRegistryUtil.getIndexer(
+					User.class.getName());
+
+				userIndexer.reindex(User.class.getName(), userId);
 			}
 
 			User user = PortalUtil.getUser(request);

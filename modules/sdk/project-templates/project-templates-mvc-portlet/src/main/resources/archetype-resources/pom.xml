@@ -12,6 +12,18 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+#if (${liferayVersion.startsWith("7.1")})
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>nexus</name>
+			<url>https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+#end
 	<dependencies>
 #if (${liferayVersion.startsWith("7.0")})
 		<dependency>

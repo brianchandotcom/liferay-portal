@@ -15,14 +15,12 @@
 package com.liferay.commerce.data.integration.apio.internal.util;
 
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import javax.ws.rs.ServerErrorException;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -30,27 +28,33 @@ import javax.ws.rs.ServerErrorException;
 @Component(immediate = true, service = OrderHelper.class)
 public class OrderHelper {
 
-    public CommerceOrder updateCommerceOrder(Long commerceOrderId, Long orderStatus, Long paymentStatus) throws PortalException {
+	public CommerceOrder updateCommerceOrder(
+			Long commerceOrderId, Long orderStatus, Long paymentStatus)
+		throws PortalException {
 
-        CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(commerceOrderId);
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
 
-        ServiceContext serviceContext = _serviceContextHelper.getServiceContext(commerceOrder.getGroupId());
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			commerceOrder.getGroupId());
 
-        if (orderStatus != null) {
-            _commerceOrderService.updateOrderStatus(commerceOrderId, orderStatus.intValue());
-        }
+		if (orderStatus != null) {
+			_commerceOrderService.updateOrderStatus(
+				commerceOrderId, orderStatus.intValue());
+		}
 
-        if (paymentStatus != null) {
-            _commerceOrderService.updatePaymentStatus(commerceOrderId, paymentStatus.intValue(), serviceContext);
-        }
+		if (paymentStatus != null) {
+			_commerceOrderService.updatePaymentStatus(
+				commerceOrderId, paymentStatus.intValue(), serviceContext);
+		}
 
-        return _commerceOrderService.getCommerceOrder(commerceOrderId);
-    }
+		return _commerceOrderService.getCommerceOrder(commerceOrderId);
+	}
 
-    @Reference
-    private CommerceOrderService _commerceOrderService;
+	@Reference
+	private CommerceOrderService _commerceOrderService;
 
-    @Reference
-    private ServiceContextHelper _serviceContextHelper;
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
 
 }

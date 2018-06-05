@@ -35,6 +35,10 @@
 		</c:if>
 	</c:if>
 
+	<c:if test="<%= ree.getType() == RemoteExportException.SAME_GROUP %>">
+		<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="unable-to-activate-remote-staging-on-site-with-id-x.-the-remote-live-site-must-be-different-from-the-stage-site" translateArguments="<%= false %>" />
+	</c:if>
+
 	<c:if test="<%= ree.getType() == RemoteExportException.INVALID_GROUP %>">
 		<liferay-ui:message arguments='<%= "<em>" + ree.getGroupId() + "</em>" %>' key="unable-to-activate-remote-staging-on-site-with-id-x.-global-site-can-only-be-staged-to-another-global-site" translateArguments="<%= false %>" />
 	</c:if>

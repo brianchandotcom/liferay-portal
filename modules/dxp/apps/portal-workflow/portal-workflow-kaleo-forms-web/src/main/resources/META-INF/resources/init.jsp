@@ -53,7 +53,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
-page import="com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsWebKeys" %><%@
 page import="com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessException" %><%@

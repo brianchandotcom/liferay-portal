@@ -19,13 +19,7 @@
 <%
 String displayStyle = kaleoFormsAdminDisplayContext.getDisplayStyle();
 
-PortletURL portletURL = kaleoFormsAdminDisplayContext.getPortletURL();
-
-portletURL.setParameter("displayStyle", displayStyle);
-
-KaleoProcessSearch kaleoProcessSearch = kaleoFormsAdminDisplayContext.getKaleoProcessSearch(portletURL);
-
-DisplayTerms displayTerms = kaleoProcessSearch.getDisplayTerms();
+KaleoProcessSearch kaleoProcessSearch = kaleoFormsAdminDisplayContext.getKaleoProcessSearch();
 %>
 
 <liferay-util:include page="/admin/navigation_bar.jsp" servletContext="<%= application %>" />
@@ -33,20 +27,16 @@ DisplayTerms displayTerms = kaleoProcessSearch.getDisplayTerms();
 <liferay-util:include page="/admin/management_bar.jsp" servletContext="<%= application %>" />
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
-	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:form action="<%= kaleoFormsAdminDisplayContext.getSearchActionURL() %>" method="post" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= kaleoFormsAdminDisplayContext.getSearchActionURL() %>" />
 		<aui:input name="kaleoProcessIds" type="hidden" />
 
 		<liferay-ui:search-container
 			id="kaleoProcess"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= kaleoProcessSearch %>"
-			total="<%= KaleoProcessServiceUtil.searchCount(scopeGroupId, displayTerms.getKeywords()) %>"
+			total="<%= kaleoFormsAdminDisplayContext.getTotalItems() %>"
 		>
-			<liferay-ui:search-container-results
-				results="<%= KaleoProcessServiceUtil.search(scopeGroupId, displayTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-			/>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"
 				keyProperty="kaleoProcessId"
@@ -101,20 +91,6 @@ DisplayTerms displayTerms = kaleoProcessSearch.getDisplayTerms();
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<c:if test="<%= KaleoFormsPermission.contains(permissionChecker, scopeGroupId, KaleoFormsActionKeys.ADD_PROCESS) %>">
-	<portlet:renderURL var="addProcessURL">
-		<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item
-			title='<%= LanguageUtil.get(request, "add") %>'
-			url="<%= addProcessURL.toString() %>"
-		/>
-	</liferay-frontend:add-menu>
-</c:if>
 
 <%@ include file="/admin/export_kaleo_process.jspf" %>
 

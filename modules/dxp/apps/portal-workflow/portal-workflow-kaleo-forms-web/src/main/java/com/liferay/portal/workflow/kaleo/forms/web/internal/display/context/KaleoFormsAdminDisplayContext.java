@@ -19,23 +19,30 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
+import com.liferay.portal.workflow.kaleo.forms.service.KaleoProcessServiceUtil;
+import com.liferay.portal.workflow.kaleo.forms.service.permission.KaleoFormsPermission;
 import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessCreateDateComparator;
 import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.forms.web.configuration.KaleoFormsWebConfiguration;
@@ -46,10 +53,14 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.util.List;
+import java.util.function.Consumer;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
@@ -75,8 +86,55 @@ public class KaleoFormsAdminDisplayContext {
 			renderRequest);
 	}
 
-	public boolean changeableDefaultLanguage() {
-		return _kaleoFormsWebConfiguration.changeableDefaultLanguage();
+	public List<DropdownItem> getActionItemsDropdownItems() {
+		return new DropdownItemList() {
+
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.putData("action", "deleteKaleoProcess");
+						dropdownItem.setIcon("trash");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_kaleoFormsAdminRequestHelper.getRequest(),
+								"delete"));
+						dropdownItem.setQuickAction(true);
+					});
+			}
+
+		};
+	}
+
+	public String getClearResultsURL() throws PortletException {
+		PortletURL clearResultsURL = PortletURLUtil.clone(
+			getPortletURL(), _renderResponse);
+
+		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+
+		return clearResultsURL.toString();
+	}
+
+	public CreationMenu getCreationMenu() {
+		if (!isShowAddButton()) {
+			return null;
+		}
+
+		return new CreationMenu() {
+			{
+				HttpServletRequest request =
+					_kaleoFormsAdminRequestHelper.getRequest();
+
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.setHref(
+							_renderResponse.createRenderURL(), "mvcPath",
+							"/admin/edit_kaleo_process.jsp", "redirect",
+							PortalUtil.getCurrentURL(request));
+
+						dropdownItem.setLabel(LanguageUtil.get(request, "add"));
+					});
+			}
+		};
 	}
 
 	public DDMDisplay getDDMDisplay() {
@@ -127,6 +185,30 @@ public class KaleoFormsAdminDisplayContext {
 		return _DISPLAY_VIEWS;
 	}
 
+	public List<DropdownItem> getFilterItemsDropdownItems() {
+		HttpServletRequest request = _kaleoFormsAdminRequestHelper.getRequest();
+
+		return new DropdownItemList() {
+			{
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							getFilterNavigationDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "filter-by-navigation"));
+					});
+
+				addGroup(
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							getOrderByDropdownItems());
+						dropdownGroupItem.setLabel(
+							LanguageUtil.get(request, "order-by"));
+					});
+			}
+		};
+	}
+
 	public OrderByComparator<KaleoProcess> getKaleoProcessOrderByComparator(
 		String orderByCol, String orderByType) {
 
@@ -150,9 +232,9 @@ public class KaleoFormsAdminDisplayContext {
 		return orderByComparator;
 	}
 
-	public KaleoProcessSearch getKaleoProcessSearch(PortletURL portletURL) {
+	public KaleoProcessSearch getKaleoProcessSearch() {
 		KaleoProcessSearch kaleoProcessSearch = new KaleoProcessSearch(
-			_renderRequest, portletURL);
+			_renderRequest, getPortletURL());
 
 		String orderByCol = getOrderByCol();
 		String orderByType = getOrderByType();
@@ -163,6 +245,9 @@ public class KaleoFormsAdminDisplayContext {
 		kaleoProcessSearch.setOrderByCol(orderByCol);
 		kaleoProcessSearch.setOrderByComparator(orderByComparator);
 		kaleoProcessSearch.setOrderByType(orderByType);
+
+		setKaleoProcessSearchResults(kaleoProcessSearch);
+		setKaleoProcessSearchTotal(kaleoProcessSearch);
 
 		return kaleoProcessSearch;
 	}
@@ -202,12 +287,52 @@ public class KaleoFormsAdminDisplayContext {
 
 		portletURL.setParameter("mvcPath", "/admin/view.jsp");
 
+		String delta = ParamUtil.getString(_renderRequest, "delta");
+
+		if (Validator.isNotNull(delta)) {
+			portletURL.setParameter("delta", delta);
+		}
+
+		String displayStyle = ParamUtil.getString(
+			_renderRequest, "displayStyle");
+
+		if (Validator.isNotNull(displayStyle)) {
+			portletURL.setParameter("displayStyle", getDisplayStyle());
+		}
+
+		String keywords = getKeywords();
+
+		if (Validator.isNotNull(keywords)) {
+			portletURL.setParameter("keywords", keywords);
+		}
+
+		String orderByCol = getOrderByCol();
+
+		if (Validator.isNotNull(orderByCol)) {
+			portletURL.setParameter("orderByCol", orderByCol);
+		}
+
+		String orderByType = getOrderByType();
+
+		if (Validator.isNotNull(orderByType)) {
+			portletURL.setParameter("orderByType", orderByType);
+		}
+
 		return portletURL;
 	}
 
+	public String getSearchActionURL() {
+		PortletURL portletURL = getPortletURL();
+
+		return portletURL.toString();
+	}
+
+	public String getSearchContainerId() {
+		return "kaleoProcess";
+	}
+
 	public List<KaleoDefinitionVersion> getSearchContainerResults(
-			SearchContainer<KaleoDefinitionVersion> searchContainer, int status)
-		throws PortalException {
+		SearchContainer<KaleoDefinitionVersion> searchContainer, int status) {
 
 		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
 			_kaleoDefinitionVersionLocalService.
@@ -231,6 +356,119 @@ public class KaleoFormsAdminDisplayContext {
 		}
 
 		return kaleoDefinitionVersions;
+	}
+
+	public String getSortingURL() throws Exception {
+		PortletURL sortingURL = PortletURLUtil.clone(
+			getPortletURL(), _renderResponse);
+
+		String orderByType = ParamUtil.getString(_renderRequest, "orderByType");
+
+		sortingURL.setParameter(
+			"orderByType", orderByType.equals("asc") ? "desc" : "asc");
+
+		return sortingURL.toString();
+	}
+
+	public int getTotalItems() {
+		SearchContainer<?> searchContainer = getKaleoProcessSearch();
+
+		return searchContainer.getTotal();
+	}
+
+	public boolean isDisabledManagementBar() {
+		if (hasResults()) {
+			return false;
+		}
+
+		if (isSearch()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isShowAddButton() {
+		return KaleoFormsPermission.contains(
+			_kaleoFormsAdminRequestHelper.getPermissionChecker(),
+			_kaleoFormsAdminRequestHelper.getScopeGroupId(),
+			KaleoFormsActionKeys.ADD_PROCESS);
+	}
+
+	protected List<DropdownItem> getFilterNavigationDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(
+					dropdownItem -> {
+						dropdownItem.setActive(true);
+						dropdownItem.setHref(
+							getPortletURL(), "navigation", "all");
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_kaleoFormsAdminRequestHelper.getRequest(),
+								"all"));
+					});
+			}
+		};
+	}
+
+	protected String getKeywords() {
+		return ParamUtil.getString(_renderRequest, "keywords");
+	}
+
+	protected Consumer<DropdownItem> getOrderByDropdownItem(String orderByCol) {
+		return dropdownItem -> {
+			dropdownItem.setActive(orderByCol.equals(getOrderByCol()));
+			dropdownItem.setHref(getPortletURL(), "orderByCol", orderByCol);
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_kaleoFormsAdminRequestHelper.getRequest(), orderByCol));
+		};
+	}
+
+	protected List<DropdownItem> getOrderByDropdownItems() {
+		return new DropdownItemList() {
+			{
+				add(getOrderByDropdownItem("create-date"));
+				add(getOrderByDropdownItem("modified-date"));
+			}
+		};
+	}
+
+	protected boolean hasResults() {
+		if (getTotalItems() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void setKaleoProcessSearchResults(
+		KaleoProcessSearch kaleoProcessSearch) {
+
+		List<KaleoProcess> kaleoProcesses = KaleoProcessServiceUtil.search(
+			_kaleoFormsAdminRequestHelper.getScopeGroupId(), getKeywords(),
+			kaleoProcessSearch.getStart(), kaleoProcessSearch.getEnd(),
+			kaleoProcessSearch.getOrderByComparator());
+
+		kaleoProcessSearch.setResults(kaleoProcesses);
+	}
+
+	protected void setKaleoProcessSearchTotal(
+		KaleoProcessSearch kaleoProcessSearch) {
+
+		int total = KaleoProcessServiceUtil.searchCount(
+			_kaleoFormsAdminRequestHelper.getScopeGroupId(), getKeywords());
+
+		kaleoProcessSearch.setTotal(total);
 	}
 
 	private static final String[] _DISPLAY_VIEWS = {"list"};

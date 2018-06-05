@@ -16,47 +16,24 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<%
-PortletURL portletURL = kaleoFormsAdminDisplayContext.getPortletURL();
-%>
+<clay:management-toolbar
+	actionDropdownItems="<%= kaleoFormsAdminDisplayContext.getActionItemsDropdownItems() %>"
+	clearResultsURL="<%= kaleoFormsAdminDisplayContext.getClearResultsURL() %>"
+	componentId="kaleoFormsManagementToolbar"
+	creationMenu="<%= kaleoFormsAdminDisplayContext.getCreationMenu() %>"
+	disabled="<%= kaleoFormsAdminDisplayContext.isDisabledManagementBar() %>"
+	filterDropdownItems="<%= kaleoFormsAdminDisplayContext.getFilterItemsDropdownItems() %>"
+	itemsTotal="<%= kaleoFormsAdminDisplayContext.getTotalItems() %>"
+	namespace="<%= renderResponse.getNamespace() %>"
+	searchActionURL="<%= kaleoFormsAdminDisplayContext.getSearchActionURL() %>"
+	searchContainerId="<%= kaleoFormsAdminDisplayContext.getSearchContainerId() %>"
+	searchFormName="fm1"
+	sortingOrder="<%= kaleoFormsAdminDisplayContext.getOrderByType() %>"
+	sortingURL="<%= kaleoFormsAdminDisplayContext.getSortingURL() %>"
+/>
 
-<liferay-frontend:management-bar
-	includeCheckBox="<%= true %>"
-	searchContainerId="kaleoProcess"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews="<%= kaleoFormsAdminDisplayContext.getDisplayViews() %>"
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="<%= kaleoFormsAdminDisplayContext.getDisplayStyle() %>"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= kaleoFormsAdminDisplayContext.getOrderByCol() %>"
-			orderByType="<%= kaleoFormsAdminDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date", "modified-date"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button
-			href='<%= "javascript:" + renderResponse.getNamespace() + "deleteKaleoProcess();" %>'
-			icon="trash"
-			label="delete"
-		/>
-	</liferay-frontend:management-bar-action-buttons>
-</liferay-frontend:management-bar>
-
-<aui:script>
-	function <portlet:namespace />deleteKaleoProcess() {
+<aui:script sandbox="<%= true %>">
+	var deleteKaleoProcess = function() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
@@ -68,4 +45,24 @@ PortletURL portletURL = kaleoFormsAdminDisplayContext.getPortletURL();
 			submitForm(form, '<portlet:actionURL name="deleteKaleoProcess"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
 	}
+
+	var ACTIONS = {
+		'deleteKaleoProcess': deleteKaleoProcess
+	};
+
+	Liferay.componentReady('kaleoFormsManagementToolbar').then(
+		function(managementToolbar) {
+			managementToolbar.on(
+				['actionItemClicked'],
+					function(event) {
+						var itemData = event.data.item.data;
+
+						if (itemData && itemData.action && ACTIONS[itemData.action]) {
+							ACTIONS[itemData.action]();
+						}
+					}
+			);
+		}
+	);
+
 </aui:script>

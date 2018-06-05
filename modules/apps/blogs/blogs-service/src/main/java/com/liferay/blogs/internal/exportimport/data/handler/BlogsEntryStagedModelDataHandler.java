@@ -204,9 +204,8 @@ public class BlogsEntryStagedModelDataHandler
 
 	@Override
 	protected void doImportMissingReference(
-			PortletDataContext portletDataContext, String uuid, long groupId,
-			long entryId)
-		throws Exception {
+		PortletDataContext portletDataContext, String uuid, long groupId,
+		long entryId) {
 
 		BlogsEntry existingEntry = fetchMissingReference(uuid, groupId);
 

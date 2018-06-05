@@ -1,3 +1,5 @@
+apply plugin: "com.liferay.lang.merger"
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
@@ -15,4 +17,16 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly project(":private:apps:commerce:commerce-api")
 	compileOnly project(":private:apps:commerce:commerce-cloud-client-api")
+}
+
+mergeLang {
+	setting("../commerce-dashboard-web/src/main/resources/content") {
+		transformKey "period", "period"
+	}
+
+	sourceDirs = [
+		"../commerce-cloud-client-api/src/main/resources/content",
+		"../commerce-dashboard-web/src/main/resources/content",
+		"src/main/resources/content"
+	]
 }

@@ -16,6 +16,7 @@ package com.liferay.commerce.initializer.customer.portal.internal.osgi.commands;
 
 import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalLayoutsInitializer;
 import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalSampleForecastsInitializer;
+import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalSampleOrdersInitializer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -42,6 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.command.function=initCustomerPortalLayouts",
 		"osgi.command.function=initCustomerPortalSampleForecasts",
+		"osgi.command.function=initCustomerPortalSampleOrders",
 		"osgi.command.scope=commerce"
 	},
 	service = CustomerPortalOSGiCommands.class
@@ -77,6 +79,23 @@ public class CustomerPortalOSGiCommands {
 				public Void call() throws Exception {
 					_customerPortalSampleForecastsInitializer.initialize(
 						groupId);
+
+					return null;
+				}
+
+			});
+	}
+
+	public void initCustomerPortalSampleOrders(final long groupId)
+		throws Throwable {
+
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					_customerPortalSampleOrdersInitializer.initialize(groupId);
 
 					return null;
 				}
@@ -123,6 +142,10 @@ public class CustomerPortalOSGiCommands {
 	@Reference
 	private CustomerPortalSampleForecastsInitializer
 		_customerPortalSampleForecastsInitializer;
+
+	@Reference
+	private CustomerPortalSampleOrdersInitializer
+		_customerPortalSampleOrdersInitializer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

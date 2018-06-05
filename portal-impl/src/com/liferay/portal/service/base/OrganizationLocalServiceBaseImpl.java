@@ -271,7 +271,7 @@ public abstract class OrganizationLocalServiceBaseImpl
 	@Override
 	public Organization fetchOrganizationByReferenceCode(long companyId,
 		String externalReferenceCode) {
-		return organizationPersistence.C_ERC(companyId, null);
+		return organizationPersistence.fetchByC_ERC(companyId, null);
 	}
 
 	/**

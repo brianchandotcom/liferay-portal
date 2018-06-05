@@ -17,7 +17,6 @@ package com.liferay.site.teams.web.internal.exportimport.data.handler;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Team;
@@ -199,9 +198,8 @@ public class TeamStagedModelDataHandler
 	}
 
 	@Override
-	protected void importReferenceStagedModels(
-			PortletDataContext portletDataContext, Team team)
-		throws PortletDataException {
+	protected boolean isSkipImportReferenceStagedModels() {
+		return true;
 	}
 
 	@Reference(unbind = "-")

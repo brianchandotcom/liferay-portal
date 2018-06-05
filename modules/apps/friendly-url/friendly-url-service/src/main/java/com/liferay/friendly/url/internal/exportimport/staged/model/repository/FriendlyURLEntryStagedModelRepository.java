@@ -55,8 +55,8 @@ public class FriendlyURLEntryStagedModelRepository
 
 		return _friendlyURLEntryLocalService.addFriendlyURLEntry(
 			friendlyURLEntry.getGroupId(), friendlyURLEntry.getClassNameId(),
-			friendlyURLEntry.getClassPK(), friendlyURLEntry.getUrlTitle(),
-			serviceContext);
+			friendlyURLEntry.getClassPK(),
+			friendlyURLEntry.getLanguageIdToUrlTitleMap(), serviceContext);
 	}
 
 	@Override

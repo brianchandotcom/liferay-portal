@@ -21,7 +21,7 @@ ViewUADApplicationsSummaryDisplay viewUADApplicationsSummaryDisplay = (ViewUADAp
 
 SearchContainer<UADApplicationSummaryDisplay> uadApplicationsSummaryDisplaySearchContainer = viewUADApplicationsSummaryDisplay.getSearchContainer();
 
-UADApplicationsSummaryManagementToolbarDisplayContext uadApplicationsSummaryManagementToolbarDisplayContext = new UADApplicationsSummaryManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, uadApplicationsSummaryDisplaySearchContainer);
+UADApplicationsSummaryManagementToolbarDisplayContext uadApplicationsSummaryManagementToolbarDisplayContext = new UADApplicationsSummaryManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, uadApplicationsSummaryDisplaySearchContainer);
 
 portletDisplay.setShowBackIcon(true);
 
@@ -68,8 +68,8 @@ String statusLabelPending = StringUtil.toUpperCase(LanguageUtil.get(request, "pe
 			<clay:management-toolbar
 				filterDropdownItems="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 				searchContainerId="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSearchContainerId() %>"
-				selectable="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSelectable() %>"
-				showSearch="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getShowSearch() %>"
+				selectable="<%= uadApplicationsSummaryManagementToolbarDisplayContext.isSelectable() %>"
+				showSearch="<%= uadApplicationsSummaryManagementToolbarDisplayContext.isShowSearch() %>"
 				sortingOrder="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSortingOrder() %>"
 				sortingURL="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSortingURL() %>"
 			/>

@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.google.common.collect.Lists;
 
+import com.liferay.jenkins.results.parser.CentralMergePullRequestJob;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
@@ -282,6 +283,13 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
+
+		if (portalTestClassJob instanceof CentralMergePullRequestJob) {
+			_includeUnstagedTestClassFiles = true;
+		}
+		else {
+			_includeUnstagedTestClassFiles = false;
+		}
 
 		_setAutoBalanceTestFiles();
 
@@ -566,6 +574,11 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		List<File> modifiedJavaFilesList =
 			portalGitWorkingDirectory.getModifiedFilesList(".java");
 
+		if (_includeUnstagedTestClassFiles) {
+			modifiedJavaFilesList =
+				portalGitWorkingDirectory.getModifiedFilesList(".java", true);
+		}
+
 		if (!_autoBalanceTestFiles.isEmpty() &&
 			!modifiedJavaFilesList.isEmpty()) {
 
@@ -637,6 +650,7 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 
 	private final List<File> _autoBalanceTestFiles = new ArrayList<>();
 	private boolean _includeAutoBalanceTests;
+	private final boolean _includeUnstagedTestClassFiles;
 	private final Pattern _packagePathPattern = Pattern.compile(
 		".*/(?<packagePath>com/.*)");
 

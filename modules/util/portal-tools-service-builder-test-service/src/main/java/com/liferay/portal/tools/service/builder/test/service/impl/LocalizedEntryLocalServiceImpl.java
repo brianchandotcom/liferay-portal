@@ -21,5 +21,4 @@ import com.liferay.portal.tools.service.builder.test.service.base.LocalizedEntry
  */
 public class LocalizedEntryLocalServiceImpl
 	extends LocalizedEntryLocalServiceBaseImpl {
-
 }

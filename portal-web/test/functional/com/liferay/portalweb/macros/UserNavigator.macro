@@ -54,8 +54,6 @@
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Profile and Dashboard" />
 		</execute>
-
-		<execute function="Pause" locator1="3000" />
 	</command>
 
 	<command name="gotoRoles">

@@ -4,6 +4,7 @@
 	<model name="com.liferay.friendly.url.model.FriendlyURLEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="defaultLanguageId" type="String" />
 		<field name="friendlyURLEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -11,7 +12,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="defaultLanguageId" type="String" />
 	</model>
 	<model name="com.liferay.friendly.url.model.FriendlyURLEntryLocalization">
 		<field name="mvccVersion" type="long" />

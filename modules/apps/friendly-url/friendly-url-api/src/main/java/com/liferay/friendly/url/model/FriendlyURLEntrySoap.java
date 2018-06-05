@@ -35,6 +35,7 @@ public class FriendlyURLEntrySoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
+		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 		soapModel.setFriendlyURLEntryId(model.getFriendlyURLEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -42,7 +43,6 @@ public class FriendlyURLEntrySoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setDefaultLanguageId(model.getDefaultLanguageId());
 
 		return soapModel;
 	}
@@ -113,6 +113,14 @@ public class FriendlyURLEntrySoap implements Serializable {
 		_uuid = uuid;
 	}
 
+	public String getDefaultLanguageId() {
+		return _defaultLanguageId;
+	}
+
+	public void setDefaultLanguageId(String defaultLanguageId) {
+		_defaultLanguageId = defaultLanguageId;
+	}
+
 	public long getFriendlyURLEntryId() {
 		return _friendlyURLEntryId;
 	}
@@ -169,16 +177,9 @@ public class FriendlyURLEntrySoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public String getDefaultLanguageId() {
-		return _defaultLanguageId;
-	}
-
-	public void setDefaultLanguageId(String defaultLanguageId) {
-		_defaultLanguageId = defaultLanguageId;
-	}
-
 	private long _mvccVersion;
 	private String _uuid;
+	private String _defaultLanguageId;
 	private long _friendlyURLEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -186,5 +187,4 @@ public class FriendlyURLEntrySoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private String _defaultLanguageId;
 }

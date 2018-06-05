@@ -85,6 +85,8 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", defaultLanguageId=");
+		sb.append(defaultLanguageId);
 		sb.append(", friendlyURLEntryId=");
 		sb.append(friendlyURLEntryId);
 		sb.append(", groupId=");
@@ -99,8 +101,6 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", defaultLanguageId=");
-		sb.append(defaultLanguageId);
 		sb.append("}");
 
 		return sb.toString();
@@ -117,6 +117,13 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		}
 		else {
 			friendlyURLEntryImpl.setUuid(uuid);
+		}
+
+		if (defaultLanguageId == null) {
+			friendlyURLEntryImpl.setDefaultLanguageId("");
+		}
+		else {
+			friendlyURLEntryImpl.setDefaultLanguageId(defaultLanguageId);
 		}
 
 		friendlyURLEntryImpl.setFriendlyURLEntryId(friendlyURLEntryId);
@@ -140,13 +147,6 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		friendlyURLEntryImpl.setClassNameId(classNameId);
 		friendlyURLEntryImpl.setClassPK(classPK);
 
-		if (defaultLanguageId == null) {
-			friendlyURLEntryImpl.setDefaultLanguageId("");
-		}
-		else {
-			friendlyURLEntryImpl.setDefaultLanguageId(defaultLanguageId);
-		}
-
 		friendlyURLEntryImpl.resetOriginalValues();
 
 		return friendlyURLEntryImpl;
@@ -156,6 +156,7 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		defaultLanguageId = objectInput.readUTF();
 
 		friendlyURLEntryId = objectInput.readLong();
 
@@ -168,7 +169,6 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
-		defaultLanguageId = objectInput.readUTF();
 	}
 
 	@Override
@@ -183,6 +183,13 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 			objectOutput.writeUTF(uuid);
 		}
 
+		if (defaultLanguageId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(defaultLanguageId);
+		}
+
 		objectOutput.writeLong(friendlyURLEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -194,17 +201,11 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
-
-		if (defaultLanguageId == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(defaultLanguageId);
-		}
 	}
 
 	public long mvccVersion;
 	public String uuid;
+	public String defaultLanguageId;
 	public long friendlyURLEntryId;
 	public long groupId;
 	public long companyId;
@@ -212,5 +213,4 @@ public class FriendlyURLEntryCacheModel implements CacheModel<FriendlyURLEntry>,
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public String defaultLanguageId;
 }

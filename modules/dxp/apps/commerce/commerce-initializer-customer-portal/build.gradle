@@ -1,5 +1,7 @@
 import com.liferay.gradle.util.OSDetector
 
+apply plugin: "com.liferay.lang.merger"
+
 configurations {
 	builder
 
@@ -101,4 +103,15 @@ formatJSON {
 			ordersDir.eachFile formatJSONClosure
 		}
 	}
+}
+
+mergeLang {
+	setting("../commerce-lang/src/main/resources/content") {
+		transformKey "inventory", "inventory"
+	}
+
+	sourceDirs = [
+		"../commerce-lang/src/main/resources/content",
+		"src/main/resources/content"
+	]
 }

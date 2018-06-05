@@ -97,6 +97,46 @@
 		]
 	},
 	{
+		"icon": "icon-folder-open.png",
+		"layoutTemplateId": "1_column",
+		"name": "Reports",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 0,
+				"portletName": "com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardDateRangeSelectorPortlet"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 1,
+				"lookAndFeel": {
+					"portletSetupPortletDecoratorId": "borderless",
+					"portletSetupTitle": "sales-orders",
+					"portletSetupUseCustomTitle": true
+				},
+				"portletName": "com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardForecastsChartPortlet",
+				"portletPreferences": {
+					"period": 1,
+					"target": 2
+				}
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": 2,
+				"lookAndFeel": {
+					"portletSetupPortletDecoratorId": "borderless",
+					"portletSetupTitle": "inventory",
+					"portletSetupUseCustomTitle": true
+				},
+				"portletName": "com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardForecastsChartPortlet",
+				"portletPreferences": {
+					"period": 1,
+					"target": 1
+				}
+			}
+		]
+	},
+	{
 		"layoutTemplateId": "1_column",
 		"name": "My Downloads",
 		"portlets": [

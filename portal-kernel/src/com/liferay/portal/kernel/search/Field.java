@@ -219,6 +219,26 @@ public class Field implements Serializable {
 		return name.concat(StringPool.UNDERLINE).concat(SORTABLE_FIELD_SUFFIX);
 	}
 
+	public static String getSortFieldName(Sort sort, String scoreFieldName) {
+		if (sort.getType() == Sort.SCORE_TYPE) {
+			return scoreFieldName;
+		}
+
+		String fieldName = sort.getFieldName();
+
+		if (isSortableFieldName(fieldName)) {
+			return fieldName;
+		}
+
+		if ((sort.getType() == Sort.STRING_TYPE) &&
+			!DocumentImpl.isSortableTextField(fieldName)) {
+
+			return scoreFieldName;
+		}
+
+		return getSortableFieldName(fieldName);
+	}
+
 	public static String getUID(String portletId, String field1) {
 		return getUID(portletId, field1, null);
 	}
@@ -254,6 +274,10 @@ public class Field implements Serializable {
 		}
 
 		return uid;
+	}
+
+	public static boolean isSortableFieldName(String name) {
+		return name.endsWith(_SORTABLE_FIELD_SUFFIX);
 	}
 
 	public static boolean validateFieldName(String name) {
@@ -564,6 +588,8 @@ public class Field implements Serializable {
 					name));
 		}
 	}
+
+	private static final String _SORTABLE_FIELD_SUFFIX = "sortable";
 
 	private static final String _UID_FIELD = "_FIELD_";
 

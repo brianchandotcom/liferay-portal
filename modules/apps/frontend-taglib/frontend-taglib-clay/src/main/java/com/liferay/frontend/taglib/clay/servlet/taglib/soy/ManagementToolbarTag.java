@@ -72,7 +72,8 @@ public class ManagementToolbarTag extends BaseClayTag {
 			putValue("searchData", searchData);
 
 			String contentRenderer = GetterUtil.getString(
-				context.get("contentRenderer"), "hiddenInputsForm");
+				context.get("contentRenderer"),
+				ManagementToolbarDefaults.getContentRenderer());
 
 			setContentRenderer(contentRenderer);
 		}

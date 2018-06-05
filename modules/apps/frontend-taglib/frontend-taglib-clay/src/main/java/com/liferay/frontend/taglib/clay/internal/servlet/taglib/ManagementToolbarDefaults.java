@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.dao.search.DisplayTerms;
  */
 public class ManagementToolbarDefaults {
 
+	public static String getContentRenderer() {
+		return "hiddenInputsForm";
+	}
+
 	public static String getSearchFormMethod() {
 		return "GET";
 	}

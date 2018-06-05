@@ -1792,7 +1792,7 @@ public class CalendarBookingLocalServiceImpl
 				recurringCalendarBookingId, calendarBooking.getTitleMap(),
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(), calendarBooking.getStartTime(),
-				calendarBooking.getEndTime(), calendarBooking.getAllDay(),
+				calendarBooking.getEndTime(), calendarBooking.isAllDay(),
 				calendarBooking.getRecurrence(), firstReminder,
 				firstReminderType, secondReminder, secondReminderType,
 				serviceContext);
@@ -2015,7 +2015,7 @@ public class CalendarBookingLocalServiceImpl
 			unmodifiedAttributesNames.add("time");
 		}
 
-		if (allDay == calendarBooking.getAllDay()) {
+		if (allDay == calendarBooking.isAllDay()) {
 			unmodifiedAttributesNames.add("allDay");
 		}
 
@@ -2185,7 +2185,7 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getRecurringCalendarBookingId(),
 			calendarBooking.getTitleMap(), calendarBooking.getDescriptionMap(),
 			calendarBooking.getLocation(), startTime, endTime,
-			calendarBooking.getAllDay(),
+			calendarBooking.isAllDay(),
 			RecurrenceSerializer.serialize(recurrence),
 			calendarBooking.getFirstReminder(),
 			calendarBooking.getFirstReminderType(),
@@ -2309,7 +2309,7 @@ public class CalendarBookingLocalServiceImpl
 			}
 
 			if (unmodifiedAttributeNames.contains("allDay")) {
-				allDay = calendarBooking.getAllDay();
+				allDay = calendarBooking.isAllDay();
 			}
 
 			if (unmodifiedAttributeNames.contains("firstReminder")) {

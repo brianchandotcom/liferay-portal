@@ -323,8 +323,8 @@ public class MBMessageStagedModelDataHandler
 							parentCategoryId, threadId, parentMessageId,
 							message.getSubject(), message.getBody(),
 							message.getFormat(), inputStreamOVPs,
-							message.getAnonymous(), message.getPriority(),
-							message.getAllowPingbacks(), serviceContext);
+							message.isAnonymous(), message.getPriority(),
+							message.isAllowPingbacks(), serviceContext);
 					}
 				}
 				else {
@@ -378,7 +378,7 @@ public class MBMessageStagedModelDataHandler
 							userId, existingMessage.getMessageId(),
 							message.getSubject(), message.getBody(),
 							inputStreamOVPs, message.getPriority(),
-							message.getAllowPingbacks(), serviceContext);
+							message.isAllowPingbacks(), serviceContext);
 					}
 				}
 			}
@@ -394,8 +394,8 @@ public class MBMessageStagedModelDataHandler
 						portletDataContext.getScopeGroupId(), parentCategoryId,
 						threadId, parentMessageId, message.getSubject(),
 						message.getBody(), message.getFormat(), inputStreamOVPs,
-						message.getAnonymous(), message.getPriority(),
-						message.getAllowPingbacks(), serviceContext);
+						message.isAnonymous(), message.getPriority(),
+						message.isAllowPingbacks(), serviceContext);
 				}
 			}
 

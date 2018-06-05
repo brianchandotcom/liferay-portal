@@ -219,7 +219,7 @@ public class WikiPageStagedModelDataHandler
 				importedPage = _wikiPageLocalService.addPage(
 					userId, nodeId, page.getTitle(), page.getVersion(),
 					page.getContent(), page.getSummary(), page.isMinorEdit(),
-					page.getFormat(), page.getHead(), page.getParentTitle(),
+					page.getFormat(), page.isHead(), page.getParentTitle(),
 					page.getRedirectTitle(), serviceContext);
 
 				importedPageResource =

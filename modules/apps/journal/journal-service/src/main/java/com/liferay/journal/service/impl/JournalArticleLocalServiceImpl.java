@@ -5810,7 +5810,7 @@ public class JournalArticleLocalServiceImpl
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
 			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, neverReview, article.getIndexable(),
+			reviewDateMinute, neverReview, article.isIndexable(),
 			article.isSmallImage(), article.getSmallImageURL(), null, null,
 			null, serviceContext);
 	}
@@ -6087,8 +6087,8 @@ public class JournalArticleLocalServiceImpl
 			article.setDisplayDate(oldArticle.getDisplayDate());
 			article.setExpirationDate(oldArticle.getExpirationDate());
 			article.setReviewDate(oldArticle.getReviewDate());
-			article.setIndexable(oldArticle.getIndexable());
-			article.setSmallImage(oldArticle.getSmallImage());
+			article.setIndexable(oldArticle.isIndexable());
+			article.setSmallImage(oldArticle.isSmallImage());
 			article.setSmallImageId(oldArticle.getSmallImageId());
 
 			if (article.getSmallImageId() == 0) {

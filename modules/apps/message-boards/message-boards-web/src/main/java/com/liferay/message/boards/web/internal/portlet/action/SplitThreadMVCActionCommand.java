@@ -153,7 +153,7 @@ public class SplitThreadMVCActionCommand extends BaseMVCActionCommand {
 				mbGroupServiceSettings.getMessageFormat(),
 				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 				false, MBThreadConstants.PRIORITY_NOT_GIVEN,
-				message.getAllowPingbacks(), serviceContext);
+				message.isAllowPingbacks(), serviceContext);
 		}
 
 		PortletURL portletURL =

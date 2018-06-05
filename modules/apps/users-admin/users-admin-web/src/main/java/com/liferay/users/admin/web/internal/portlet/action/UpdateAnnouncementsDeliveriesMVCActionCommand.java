@@ -66,8 +66,7 @@ public class UpdateAnnouncementsDeliveriesMVCActionCommand
 
 			_announcementsDeliveryService.updateDelivery(
 				user.getUserId(), announcementsDelivery.getType(),
-				announcementsDelivery.getEmail(),
-				announcementsDelivery.getSms());
+				announcementsDelivery.isEmail(), announcementsDelivery.isSms());
 		}
 	}
 

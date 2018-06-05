@@ -227,7 +227,7 @@ public class BlogsEntryAtomCollectionAdapter
 		_blogsEntryService.updateEntry(
 			blogsEntry.getEntryId(), title, blogsEntry.getSubtitle(), summary,
 			content, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, blogsEntry.getAllowPingbacks(),
+			displayDateHour, displayDateMinute, blogsEntry.isAllowPingbacks(),
 			blogsEntry.isAllowTrackbacks(), trackbacks, StringPool.BLANK, null,
 			null, serviceContext);
 	}

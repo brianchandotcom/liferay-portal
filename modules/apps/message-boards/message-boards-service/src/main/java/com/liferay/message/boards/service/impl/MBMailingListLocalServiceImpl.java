@@ -224,10 +224,10 @@ public class MBMailingListLocalServiceImpl
 		mailingListRequest.setInProtocol(mailingList.getInProtocol());
 		mailingListRequest.setInServerName(mailingList.getInServerName());
 		mailingListRequest.setInServerPort(mailingList.getInServerPort());
-		mailingListRequest.setInUseSSL(mailingList.getInUseSSL());
+		mailingListRequest.setInUseSSL(mailingList.isInUseSSL());
 		mailingListRequest.setInUserName(mailingList.getInUserName());
 		mailingListRequest.setInPassword(mailingList.getInPassword());
-		mailingListRequest.setAllowAnonymous(mailingList.getAllowAnonymous());
+		mailingListRequest.setAllowAnonymous(mailingList.isAllowAnonymous());
 
 		SchedulerEngineHelperUtil.schedule(
 			trigger, StorageType.PERSISTED, null,

@@ -65,7 +65,7 @@ public class KaleoDefinitionLocalServiceTest {
 
 		deactivateKaleoDefinition(kaleoDefinition);
 
-		Assert.assertFalse(kaleoDefinition.getActive());
+		Assert.assertFalse(kaleoDefinition.isActive());
 	}
 
 	@Test(expected = WorkflowException.class)

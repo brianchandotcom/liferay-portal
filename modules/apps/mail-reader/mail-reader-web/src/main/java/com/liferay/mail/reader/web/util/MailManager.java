@@ -732,8 +732,8 @@ public class MailManager {
 			try {
 				mailbox.validateAccount(
 					account.getIncomingHostName(), account.getIncomingPort(),
-					account.getIncomingSecure(), account.getOutgoingHostName(),
-					account.getOutgoingPort(), account.getOutgoingSecure(),
+					account.isIncomingSecure(), account.getOutgoingHostName(),
+					account.getOutgoingPort(), account.isOutgoingSecure(),
 					account.getLogin(), password);
 
 				_passwordRetriever.setPassword(accountId, password);

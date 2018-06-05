@@ -98,6 +98,19 @@ public class CommerceDashboardForecastsChartDisplayContext
 					class);
 	}
 
+	@Override
+	public int getPeriod() {
+		int period =
+			_commerceDashboardForecastsChartPortletInstanceConfiguration.
+				period();
+
+		if (period <= 0) {
+			period = super.getPeriod();
+		}
+
+		return period;
+	}
+
 	public PredictiveChartConfig getPredictiveChartConfig()
 		throws PortalException {
 

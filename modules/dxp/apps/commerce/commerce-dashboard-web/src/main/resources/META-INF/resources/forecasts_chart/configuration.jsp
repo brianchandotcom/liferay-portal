@@ -41,6 +41,20 @@ String redirect = ParamUtil.getString(request, "redirect");
 			<liferay-frontend:fieldset>
 				<aui:input checked="<%= commerceDashboardForecastsChartPortletInstanceConfiguration.filterBySKU() %>" label="filter-by-sku" name="preferences--filterBySKU--" type="checkbox" />
 
+				<aui:select name="preferences--period--" showEmptyOption="<%= true %>">
+
+					<%
+					for (int curPeriod : CommerceForecastEntryConstants.PERIODS) {
+					%>
+
+						<aui:option label="<%= CommerceForecastEntryConstants.getPeriodLabel(curPeriod) %>" selected="<%= curPeriod == commerceDashboardForecastsChartPortletInstanceConfiguration.period() %>" value="<%= curPeriod %>" />
+
+					<%
+					}
+					%>
+
+				</aui:select>
+
 				<aui:select name="preferences--target--">
 
 					<%

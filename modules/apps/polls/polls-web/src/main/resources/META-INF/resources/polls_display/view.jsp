@@ -24,9 +24,13 @@ try {
 }
 catch (NoSuchQuestionException nsqe) {
 }
-%>
 
-<%@ include file="/polls_display/view_options.jspf" %>
+if (question != null) {
+	question = question.toEscapedModel();
+
+	renderResponse.setTitle(HtmlUtil.unescape(question.getTitle(locale)));
+}
+%>
 
 <c:choose>
 	<c:when test="<%= question == null %>">
@@ -54,8 +58,6 @@ catch (NoSuchQuestionException nsqe) {
 
 		<%
 		String redirect = StringPool.BLANK;
-
-		question = question.toEscapedModel();
 
 		List<PollsChoice> choices = question.getChoices();
 
@@ -116,3 +118,5 @@ catch (NoSuchQuestionException nsqe) {
 		</aui:form>
 	</c:otherwise>
 </c:choose>
+
+<%@ include file="/polls_display/view_options.jspf" %>

@@ -79,8 +79,7 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 		String portletTitle = _portal.getPortletTitle(
 			DLPortletKeys.MEDIA_GALLERY_DISPLAY, locale);
 
-		return portletTitle.concat(StringPool.SPACE).concat(
-			LanguageUtil.get(locale, "template"));
+		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override

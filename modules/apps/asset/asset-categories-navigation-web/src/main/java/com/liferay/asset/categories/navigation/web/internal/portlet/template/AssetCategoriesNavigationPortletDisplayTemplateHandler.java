@@ -64,8 +64,7 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,
 			resourceBundle);
 
-		return portletTitle.concat(StringPool.SPACE).concat(
-			LanguageUtil.get(locale, "template"));
+		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override

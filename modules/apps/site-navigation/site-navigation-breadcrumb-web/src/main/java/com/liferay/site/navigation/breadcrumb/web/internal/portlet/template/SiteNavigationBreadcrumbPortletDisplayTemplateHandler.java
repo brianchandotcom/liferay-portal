@@ -76,8 +76,7 @@ public class SiteNavigationBreadcrumbPortletDisplayTemplateHandler
 			SiteNavigationBreadcrumbPortletKeys.SITE_NAVIGATION_BREADCRUMB,
 			locale);
 
-		return portletTitle.concat(StringPool.SPACE).concat(
-			LanguageUtil.get(locale, "template"));
+		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override

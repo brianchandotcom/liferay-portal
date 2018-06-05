@@ -78,8 +78,7 @@ public class BlogsPortletDisplayTemplateHandler
 		String portletTitle = _portal.getPortletTitle(
 			BlogsPortletKeys.BLOGS, locale);
 
-		return portletTitle.concat(StringPool.SPACE).concat(
-			LanguageUtil.get(locale, "template"));
+		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override

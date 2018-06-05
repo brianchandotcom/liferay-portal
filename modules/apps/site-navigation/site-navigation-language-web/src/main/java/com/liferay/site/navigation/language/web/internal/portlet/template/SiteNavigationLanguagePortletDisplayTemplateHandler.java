@@ -63,8 +63,7 @@ public class SiteNavigationLanguagePortletDisplayTemplateHandler
 		String portletTitle = _portal.getPortletTitle(
 			SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE, locale);
 
-		return portletTitle.concat(StringPool.SPACE).concat(
-			LanguageUtil.get(locale, "template"));
+		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override

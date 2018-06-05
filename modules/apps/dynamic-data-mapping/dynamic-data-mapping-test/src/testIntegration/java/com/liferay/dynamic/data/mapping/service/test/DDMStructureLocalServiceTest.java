@@ -39,7 +39,10 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureIdComparator;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -193,6 +196,50 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 	@Test
 	public void testAddStructureWithReferencedDataProviderInstance2()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("Field", "select");
+
+		ddmFormField.setDataType("string");
+
+		long ddmDataProviderInstanceId = RandomTestUtil.randomLong();
+
+		ddmFormField.setProperty("dataSourceType", "data-provider");
+
+		JSONArray dataProviderInstanceIdJSONArray =
+			_jsonFactory.createJSONArray();
+
+		dataProviderInstanceIdJSONArray.put(ddmDataProviderInstanceId);
+
+		ddmFormField.setProperty(
+			"ddmDataProviderInstanceId", dataProviderInstanceIdJSONArray);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMStructure structure = ddmStructureTestHelper.addStructure(
+			ddmForm, StorageType.JSON.getValue());
+
+		DDMDataProviderInstanceLink dataProviderInstanceLink =
+			DDMDataProviderInstanceLinkLocalServiceUtil.
+				fetchDataProviderInstanceLink(
+					ddmDataProviderInstanceId, structure.getStructureId());
+
+		Assert.assertNotNull(dataProviderInstanceLink);
+
+		DDMStructureLocalServiceUtil.deleteStructure(structure);
+
+		dataProviderInstanceLink =
+			DDMDataProviderInstanceLinkLocalServiceUtil.
+				fetchDataProviderInstanceLink(
+					ddmDataProviderInstanceId, structure.getStructureId());
+
+		Assert.assertNull(dataProviderInstanceLink);
+	}
+
+	@Test
+	public void testAddStructureWithReferencedDataProviderInstance3()
 		throws Exception {
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Field1");
@@ -857,5 +904,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	private static long _classNameId;
+
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

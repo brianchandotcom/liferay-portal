@@ -17,21 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String keywords = ParamUtil.getString(request, "keywords");
 String redirect = ParamUtil.getString(request, "redirect", String.valueOf(renderResponse.createRenderURL()));
-
-String category = ParamUtil.getString(request, "category", "all-categories");
-String state = ParamUtil.getString(request, "state", "all-statuses");
-
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_search_results.jsp");
-portletURL.setParameter("category", category);
-portletURL.setParameter("state", state);
-portletURL.setParameter("orderByType", orderByType);
-portletURL.setParameter("redirect", redirect);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -47,40 +33,24 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "search") %>'
 />
 
-<liferay-frontend:management-bar
+<%
+AppManagerSearchResultsManagementToolbarDisplayContext
+	appManagerSearchResultsManagementToolbarDisplayContext = new AppManagerSearchResultsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
+
+SearchContainer searchContainer = appManagerSearchResultsManagementToolbarDisplayContext.getSearchContainer();
+%>
+
+<clay:management-toolbar
+	clearResultsURL="<%= redirect %>"
+	itemsTotal="<%= searchContainer.getTotal() %>"
+	searchActionURL="<%= appManagerSearchResultsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="appDisplays"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="descriptive"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-sort
-			orderByCol="title"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<li>
-			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcPath" value="/view_search_results.jsp" />
-			</liferay-portlet:renderURL>
-
-			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= appManagerSearchResultsManagementToolbarDisplayContext.getSortingURL() %>"
+/>
 
 <div class="container-fluid-1280">
 	<liferay-ui:breadcrumb
@@ -91,32 +61,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 	/>
 
 	<liferay-ui:search-container
-		emptyResultsMessage="no-results-were-found"
 		id="appDisplays"
-		iteratorURL="<%= portletURL %>"
+		searchContainer="<%= searchContainer %>"
+		var="appDisplaySearch"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			List<Bundle> bundles = BundleManagerUtil.getBundles();
-
-			results = MarketplaceAppManagerSearchUtil.getResults(bundles, keywords);
-
-			results = ListUtil.sort(results, new MarketplaceAppManagerComparator(orderByType));
-
-			int end = searchContainer.getEnd();
-
-			if (end > results.size()) {
-				end = results.size();
-			}
-
-			searchContainer.setResults(results.subList(searchContainer.getStart(), end));
-
-			searchContainer.setTotal(results.size());
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="Object"
 			modelVar="result"

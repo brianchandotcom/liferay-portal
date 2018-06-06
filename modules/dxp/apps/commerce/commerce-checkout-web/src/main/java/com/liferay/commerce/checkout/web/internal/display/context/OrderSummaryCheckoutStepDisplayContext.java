@@ -113,7 +113,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CommerceMoney subtotal = _commercePriceCalculation.getOrderSubtotal(
 			getCommerceOrder(), _commerceContext);
 
-		return subtotal.toString();
+		return subtotal.format(PortalUtil.getLocale(_httpServletRequest));
 	}
 
 	public Map<Long, List<CommerceOrderValidatorResult>>

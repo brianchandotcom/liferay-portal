@@ -61,7 +61,10 @@ class Utils {
 		);
 
 		Liferay.Portlet.readyCounter = 0;
+
+		Liferay.destroyAllComponents();
 	}
+
 }
 
 export default Utils;

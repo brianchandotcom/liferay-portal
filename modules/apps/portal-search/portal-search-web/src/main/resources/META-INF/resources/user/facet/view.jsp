@@ -99,7 +99,7 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 												autocomplete="off"
 												<%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 												class="custom-control-input facet-term"
-												data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getBucketText()) %>"
+												data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>"
 												disabled
 												id="<portlet:namespace />term_<%= i %>"name="<portlet:namespace />term_<%= i %>"
 												onChange="Liferay.Search.FacetUtil.changeSelection(event);"

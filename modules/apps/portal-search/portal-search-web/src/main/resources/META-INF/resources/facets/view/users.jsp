@@ -16,6 +16,7 @@ userSearchFacetDisplayContextBuilder.setFrequencyThreshold(dataJSONObject.getInt
 userSearchFacetDisplayContextBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10));
 userSearchFacetDisplayContextBuilder.setParamName(facet.getFieldId());
 userSearchFacetDisplayContextBuilder.setParamValue(fieldParam);
+userSearchFacetDisplayContextBuilder.setUserLocalService(UserLocalServiceUtil.getService());
 
 UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDisplayContextBuilder.build();
 %>

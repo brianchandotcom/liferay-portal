@@ -7,6 +7,7 @@ package com.liferay.portal.search.web.internal.user.facet.portlet;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -85,6 +86,9 @@ public class UserFacetPortlet extends MVCPortlet {
 	@Reference
 	protected PortletSharedSearchRequest portletSharedSearchRequest;
 
+	@Reference
+	protected UserLocalService userLocalService;
+
 	private UserSearchFacetDisplayContext _buildDisplayContext(
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
@@ -113,6 +117,9 @@ public class UserFacetPortlet extends MVCPortlet {
 
 		userSearchFacetDisplayContextBuilder.setPaginationStartParameterName(
 			_getPaginationStartParameterName(portletSharedSearchResponse));
+
+		userSearchFacetDisplayContextBuilder.setUserLocalService(
+			userLocalService);
 
 		String parameterName = userFacetPortletPreferences.getParameterName();
 

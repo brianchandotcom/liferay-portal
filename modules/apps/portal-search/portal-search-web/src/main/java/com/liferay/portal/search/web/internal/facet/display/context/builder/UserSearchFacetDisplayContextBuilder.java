@@ -6,10 +6,12 @@
 package com.liferay.portal.search.web.internal.facet.display.context.builder;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -121,19 +123,23 @@ public class UserSearchFacetDisplayContextBuilder {
 		_paramValues = ListUtil.fromArray(paramValues);
 	}
 
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected BucketDisplayContext buildBucketDisplayContext(
 		TermCollector termCollector) {
 
 		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
-		String term = GetterUtil.getString(termCollector.getTerm());
+		long userId = GetterUtil.getLong(termCollector.getTerm());
 
-		bucketDisplayContext.setBucketText(term);
-		bucketDisplayContext.setFilterValue(term);
+		bucketDisplayContext.setBucketText(_getDisplayName(userId));
+		bucketDisplayContext.setFilterValue(String.valueOf(userId));
 
 		bucketDisplayContext.setFrequency(termCollector.getFrequency());
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
-		bucketDisplayContext.setSelected(isSelected(term));
+		bucketDisplayContext.setSelected(isSelected(String.valueOf(userId)));
 
 		return bucketDisplayContext;
 	}
@@ -188,7 +194,8 @@ public class UserSearchFacetDisplayContextBuilder {
 
 		BucketDisplayContext bucketDisplayContext = new BucketDisplayContext();
 
-		bucketDisplayContext.setBucketText(_paramValues.get(0));
+		bucketDisplayContext.setBucketText(
+			_getDisplayName(GetterUtil.getLong(_paramValues.get(0))));
 		bucketDisplayContext.setFilterValue(_paramValues.get(0));
 		bucketDisplayContext.setFrequency(0);
 		bucketDisplayContext.setFrequencyVisible(_frequenciesVisible);
@@ -227,6 +234,16 @@ public class UserSearchFacetDisplayContextBuilder {
 		return false;
 	}
 
+	private String _getDisplayName(long userId) {
+		User user = _userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return "[" + userId + "]";
+		}
+
+		return user.getFullName();
+	}
+
 	private String _getFirstParamValue() {
 		if (_paramValues.isEmpty()) {
 			return StringPool.BLANK;
@@ -246,5 +263,6 @@ public class UserSearchFacetDisplayContextBuilder {
 	private final ThemeDisplay _themeDisplay;
 	private final UserFacetPortletInstanceConfiguration
 		_userFacetPortletInstanceConfiguration;
+	private UserLocalService _userLocalService;
 
 }

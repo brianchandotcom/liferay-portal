@@ -282,7 +282,7 @@ AUI.add(
 
 						if (cpInstance.availabilityEstimate) {
 							availabilityEstimates.setHTML(cpInstance.availabilityEstimate);
-                            availabilityEstimatesShow.show();
+							availabilityEstimatesShow.show();
 						}
 
 						if (cpInstance.stockQuantity) {

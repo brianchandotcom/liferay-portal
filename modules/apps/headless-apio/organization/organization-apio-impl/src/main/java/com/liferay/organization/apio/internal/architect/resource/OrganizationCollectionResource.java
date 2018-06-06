@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
 import java.util.List;
@@ -100,6 +103,8 @@ public class OrganizationCollectionResource
 			).build()
 		).addRelatedCollection(
 			"members", PersonIdentifier.class
+		).addRelativeURL(
+			"logo", this::_getLogoURL
 		).addString(
 			"name", Organization::getName
 		).build();
@@ -122,6 +127,21 @@ public class OrganizationCollectionResource
 			_countryService::getCountry
 		).map(
 			country -> country.getName(locale)
+		).orElse(
+			null
+		);
+	}
+
+	private String _getLogoURL(Organization organization) {
+		return Try.success(
+			organization.getLogoId()
+		).filter(
+			logoId -> logoId != 0
+		).map(
+			logoId -> StringBundler.concat(
+				_portal.getPathImage(), "/organization_logo?img_id=",
+				String.valueOf(logoId), "&t=",
+				WebServerServletTokenUtil.getToken(logoId))
 		).orElse(
 			null
 		);
@@ -174,6 +194,9 @@ public class OrganizationCollectionResource
 
 	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private RegionService _regionService;

@@ -121,8 +121,8 @@ public class KaleoProcessTestUtil {
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			structureId, resourceClassNameId);
 
-		ddmTemplate.setMode(mode);
 		ddmTemplate.setType(DDMTemplateConstants.TEMPLATE_TYPE_FORM);
+		ddmTemplate.setMode(mode);
 
 		return DDMTemplateLocalServiceUtil.updateDDMTemplate(ddmTemplate);
 	}

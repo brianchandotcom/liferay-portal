@@ -21,12 +21,12 @@ public class UserFacetFactoryImpl implements UserFacetFactory {
 
 	@Override
 	public String getFacetClassName() {
-		return Field.USER_NAME;
+		return Field.USER_ID;
 	}
 
 	@Override
 	public Facet newInstance(SearchContext searchContext) {
-		return new FacetImpl(Field.USER_NAME, searchContext);
+		return new FacetImpl(Field.USER_ID, searchContext);
 	}
 
 }

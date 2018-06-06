@@ -179,10 +179,10 @@ public class UpdateContactInformationMVCActionCommand
 				ContactConstants.DEFAULT_PARENT_CONTACT_ID);
 		}
 
+		contact.setSmsSn(smsSn);
 		contact.setFacebookSn(facebookSn);
 		contact.setJabberSn(jabberSn);
 		contact.setSkypeSn(skypeSn);
-		contact.setSmsSn(smsSn);
 		contact.setTwitterSn(twitterSn);
 
 		_contactLocalService.updateContact(contact);

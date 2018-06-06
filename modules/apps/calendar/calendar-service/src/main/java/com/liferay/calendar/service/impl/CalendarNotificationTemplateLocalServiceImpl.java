@@ -123,10 +123,10 @@ public class CalendarNotificationTemplateLocalServiceImpl
 
 		calendarNotificationTemplate.setModifiedDate(
 			serviceContext.getModifiedDate(null));
-		calendarNotificationTemplate.setSubject(subject);
-		calendarNotificationTemplate.setBody(body);
 		calendarNotificationTemplate.setNotificationTypeSettings(
 			notificationTypeSettings);
+		calendarNotificationTemplate.setSubject(subject);
+		calendarNotificationTemplate.setBody(body);
 
 		return calendarNotificationTemplatePersistence.update(
 			calendarNotificationTemplate);

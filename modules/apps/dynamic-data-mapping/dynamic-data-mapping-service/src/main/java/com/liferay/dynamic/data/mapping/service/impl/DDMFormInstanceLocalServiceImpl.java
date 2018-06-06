@@ -357,9 +357,9 @@ public class DDMFormInstanceLocalServiceImpl
 		ddmFormInstanceVersion.setFormInstanceId(
 			ddmFormInstance.getFormInstanceId());
 		ddmFormInstanceVersion.setStructureVersionId(ddmStructureVersionId);
-		ddmFormInstanceVersion.setVersion(version);
 		ddmFormInstanceVersion.setName(ddmFormInstance.getName());
 		ddmFormInstanceVersion.setDescription(ddmFormInstance.getDescription());
+		ddmFormInstanceVersion.setVersion(version);
 
 		int status = GetterUtil.getInteger(
 			serviceContext.getAttribute("status"),

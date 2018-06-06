@@ -112,9 +112,9 @@ public class GroupAwareRoleTaskAssignmentSelector
 		KaleoTaskAssignment kaleoTaskAssignment =
 			_kaleoTaskAssignmentFactory.createKaleoTaskAssignment();
 
+		kaleoTaskAssignment.setGroupId(groupId);
 		kaleoTaskAssignment.setAssigneeClassName(Role.class.getName());
 		kaleoTaskAssignment.setAssigneeClassPK(role.getRoleId());
-		kaleoTaskAssignment.setGroupId(groupId);
 
 		return kaleoTaskAssignment;
 	}

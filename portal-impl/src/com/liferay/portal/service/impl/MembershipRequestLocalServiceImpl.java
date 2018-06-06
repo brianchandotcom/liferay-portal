@@ -79,10 +79,10 @@ public class MembershipRequestLocalServiceImpl
 		MembershipRequest membershipRequest =
 			membershipRequestPersistence.create(membershipRequestId);
 
+		membershipRequest.setGroupId(groupId);
 		membershipRequest.setCompanyId(user.getCompanyId());
 		membershipRequest.setUserId(userId);
 		membershipRequest.setCreateDate(new Date());
-		membershipRequest.setGroupId(groupId);
 		membershipRequest.setComments(comments);
 		membershipRequest.setStatusId(
 			MembershipRequestConstants.STATUS_PENDING);

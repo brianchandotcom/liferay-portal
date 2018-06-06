@@ -218,8 +218,8 @@ public class CalEventImporter {
 				calendarBookingId);
 
 		calendarBooking.setUuid(uuid);
-		calendarBooking.setCompanyId(companyId);
 		calendarBooking.setGroupId(groupId);
+		calendarBooking.setCompanyId(companyId);
 		calendarBooking.setUserId(userId);
 		calendarBooking.setUserName(userName);
 		calendarBooking.setCreateDate(createDate);

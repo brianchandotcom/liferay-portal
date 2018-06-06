@@ -57,10 +57,10 @@ public class WorkflowInstanceLinkLocalServiceImpl
 		WorkflowInstanceLink workflowInstanceLink =
 			workflowInstanceLinkPersistence.create(workflowInstanceLinkId);
 
-		workflowInstanceLink.setUserId(userId);
-		workflowInstanceLink.setUserName(user.getFullName());
 		workflowInstanceLink.setGroupId(groupId);
 		workflowInstanceLink.setCompanyId(companyId);
+		workflowInstanceLink.setUserId(userId);
+		workflowInstanceLink.setUserName(user.getFullName());
 		workflowInstanceLink.setClassNameId(classNameId);
 		workflowInstanceLink.setClassPK(classPK);
 		workflowInstanceLink.setWorkflowInstanceId(workflowInstanceId);

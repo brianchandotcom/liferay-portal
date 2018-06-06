@@ -33,15 +33,15 @@ public class PasswordPolicyToolkitTest {
 
 		_passwordPolicy = new PasswordPolicyImpl();
 
-		_passwordPolicy.setAllowDictionaryWords(true);
 		_passwordPolicy.setChangeable(true);
 		_passwordPolicy.setCheckSyntax(true);
+		_passwordPolicy.setAllowDictionaryWords(true);
 		_passwordPolicy.setMinAlphanumeric(5);
 		_passwordPolicy.setMinLength(8);
 		_passwordPolicy.setMinLowerCase(2);
-		_passwordPolicy.setMinUpperCase(2);
 		_passwordPolicy.setMinNumbers(1);
 		_passwordPolicy.setMinSymbols(1);
+		_passwordPolicy.setMinUpperCase(2);
 		_passwordPolicy.setRegex(".{5,}");
 	}
 

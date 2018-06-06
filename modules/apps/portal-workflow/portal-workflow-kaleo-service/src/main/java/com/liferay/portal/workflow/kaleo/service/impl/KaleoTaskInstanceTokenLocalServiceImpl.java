@@ -81,12 +81,12 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		kaleoTaskInstanceToken.setUserName(user.getFullName());
 		kaleoTaskInstanceToken.setCreateDate(now);
 		kaleoTaskInstanceToken.setModifiedDate(now);
-		kaleoTaskInstanceToken.setDueDate(dueDate);
 		kaleoTaskInstanceToken.setKaleoDefinitionVersionId(
 			kaleoInstanceToken.getKaleoDefinitionVersionId());
 		kaleoTaskInstanceToken.setKaleoInstanceId(
 			kaleoInstanceToken.getKaleoInstanceId());
 		kaleoTaskInstanceToken.setKaleoInstanceTokenId(kaleoInstanceTokenId);
+		kaleoTaskInstanceToken.setDueDate(dueDate);
 
 		kaleoTaskInstanceToken.setKaleoTaskId(kaleoTaskId);
 		kaleoTaskInstanceToken.setKaleoTaskName(kaleoTaskName);

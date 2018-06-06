@@ -2386,10 +2386,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			dlFolder.setLastPostDate(lastPostDate);
 			dlFolder.setDefaultFileEntryTypeId(0);
 			dlFolder.setHidden(false);
+			dlFolder.setRestrictionType(0);
 			dlFolder.setStatus(WorkflowConstants.STATUS_APPROVED);
 			dlFolder.setStatusByUserId(0);
 			dlFolder.setStatusByUserName(StringPool.BLANK);
-			dlFolder.setRestrictionType(0);
 
 			_dlFolderLocalService.updateDLFolder(dlFolder);
 

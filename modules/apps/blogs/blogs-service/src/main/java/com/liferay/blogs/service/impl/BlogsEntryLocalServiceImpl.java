@@ -187,8 +187,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				entry.getUserId(), entry.getGroupId(), entryId, imageSelector);
 		}
 
-		entry.setCoverImageURL(coverImageURL);
 		entry.setCoverImageFileEntryId(coverImageFileEntryId);
+		entry.setCoverImageURL(coverImageURL);
 
 		blogsEntryPersistence.update(entry);
 	}

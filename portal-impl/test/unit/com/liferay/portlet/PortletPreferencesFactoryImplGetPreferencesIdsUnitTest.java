@@ -63,8 +63,8 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsUnitTest {
 		portletPreferencesFactoryUtil.setPortletPreferencesFactory(
 			new PortletPreferencesFactoryImpl());
 
-		_layout.setCompanyId(RandomTestUtil.randomLong());
 		_layout.setPlid(RandomTestUtil.randomLong());
+		_layout.setCompanyId(RandomTestUtil.randomLong());
 		_layout.setPrivateLayout(true);
 
 		ReflectionTestUtil.setFieldValue(

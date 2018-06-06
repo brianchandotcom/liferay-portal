@@ -101,8 +101,8 @@ public abstract class BaseSocialActivityManager
 				className, primaryKey, type);
 
 		if (lastSocialActivity != null) {
-			lastSocialActivity.setCreateDate(createDate.getTime());
 			lastSocialActivity.setUserId(userId);
+			lastSocialActivity.setCreateDate(createDate.getTime());
 
 			getSocialActivityLocalService().updateSocialActivity(
 				lastSocialActivity);

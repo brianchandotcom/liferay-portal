@@ -78,14 +78,20 @@ public class UpgradeDDLRecordSetVersion extends UpgradeProcess {
 					ddmFormInstanceVersion.setDescriptionMap(
 						LocalizationUtil.getLocalizationMap(
 							rs.getString("description")));
+					ddmFormInstanceVersion.setGroupId(rs.getLong("groupId"));
 					ddmFormInstanceVersion.setFormInstanceId(
 						rs.getLong("recordSetId"));
-					ddmFormInstanceVersion.setGroupId(rs.getLong("groupId"));
 					ddmFormInstanceVersion.setNameMap(
 						LocalizationUtil.getLocalizationMap(
 							rs.getString("name")));
+					ddmFormInstanceVersion.setUserId(rs.getLong("userId"));
+					ddmFormInstanceVersion.setUserName(
+						rs.getString("userName"));
+					ddmFormInstanceVersion.setStructureVersionId(
+						rs.getLong("DDMStructureVersionId"));
 					ddmFormInstanceVersion.setSettings(
 						rs.getString("settings_"));
+					ddmFormInstanceVersion.setVersion(rs.getString("version"));
 					ddmFormInstanceVersion.setStatus(rs.getInt("status"));
 					ddmFormInstanceVersion.setStatusByUserId(
 						rs.getLong("statusByUserId"));
@@ -93,12 +99,6 @@ public class UpgradeDDLRecordSetVersion extends UpgradeProcess {
 						rs.getString("statusByUserName"));
 					ddmFormInstanceVersion.setStatusDate(
 						rs.getTimestamp("statusDate"));
-					ddmFormInstanceVersion.setStructureVersionId(
-						rs.getLong("DDMStructureVersionId"));
-					ddmFormInstanceVersion.setUserId(rs.getLong("userId"));
-					ddmFormInstanceVersion.setUserName(
-						rs.getString("userName"));
-					ddmFormInstanceVersion.setVersion(rs.getString("version"));
 
 					deleteDDLRecordSetVersion(recordSetVersionId);
 

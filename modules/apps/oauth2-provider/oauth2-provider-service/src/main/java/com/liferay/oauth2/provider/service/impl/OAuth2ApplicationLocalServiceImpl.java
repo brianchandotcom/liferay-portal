@@ -107,10 +107,10 @@ public class OAuth2ApplicationLocalServiceImpl
 			oAuth2ApplicationPersistence.create(oAuth2ApplicationId);
 
 		oAuth2Application.setCompanyId(companyId);
-		oAuth2Application.setCreateDate(new Date());
-		oAuth2Application.setModifiedDate(new Date());
 		oAuth2Application.setUserId(userId);
 		oAuth2Application.setUserName(userName);
+		oAuth2Application.setCreateDate(new Date());
+		oAuth2Application.setModifiedDate(new Date());
 		oAuth2Application.setAllowedGrantTypesList(allowedGrantTypesList);
 		oAuth2Application.setClientId(clientId);
 		oAuth2Application.setClientProfile(clientProfile);

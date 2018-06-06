@@ -1044,8 +1044,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			dlFolder.setName(name);
 			dlFolder.setDescription(description);
 			dlFolder.setExpandoBridgeAttributes(serviceContext);
-			dlFolder.setRestrictionType(restrictionType);
 			dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
+			dlFolder.setRestrictionType(restrictionType);
 
 			dlFolderPersistence.update(dlFolder);
 

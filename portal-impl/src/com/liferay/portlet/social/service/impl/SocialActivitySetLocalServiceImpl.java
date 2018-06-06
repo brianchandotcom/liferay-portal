@@ -232,8 +232,8 @@ public class SocialActivitySetLocalServiceImpl
 		SocialActivity activity = socialActivityPersistence.findByPrimaryKey(
 			activityId);
 
-		activitySet.setModifiedDate(activity.getCreateDate());
 		activitySet.setUserId(activity.getUserId());
+		activitySet.setModifiedDate(activity.getCreateDate());
 
 		activitySet.setActivityCount(activitySet.getActivityCount() + 1);
 

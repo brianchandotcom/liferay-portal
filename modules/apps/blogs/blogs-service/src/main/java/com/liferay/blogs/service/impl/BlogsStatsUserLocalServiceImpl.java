@@ -158,8 +158,8 @@ public class BlogsStatsUserLocalServiceImpl
 
 			statsUser = blogsStatsUserPersistence.create(statsUserId);
 
-			statsUser.setCompanyId(group.getCompanyId());
 			statsUser.setGroupId(groupId);
+			statsUser.setCompanyId(group.getCompanyId());
 			statsUser.setUserId(userId);
 
 			blogsStatsUserPersistence.update(statsUser);

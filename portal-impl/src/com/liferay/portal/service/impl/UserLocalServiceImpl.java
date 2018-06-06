@@ -6597,8 +6597,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			mailService.deleteEmailAddress(user.getCompanyId(), userId);
 		}
 
-		user.setEmailAddress(emailAddress);
 		user.setDigest(StringPool.BLANK);
+		user.setEmailAddress(emailAddress);
 	}
 
 	protected void trackPassword(User user) throws PortalException {

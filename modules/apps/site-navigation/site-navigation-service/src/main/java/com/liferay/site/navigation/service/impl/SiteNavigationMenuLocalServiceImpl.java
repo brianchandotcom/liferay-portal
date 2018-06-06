@@ -249,10 +249,10 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		siteNavigationMenu.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenu.setUserId(userId);
 		siteNavigationMenu.setUserName(user.getFullName());
+		siteNavigationMenu.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenu.setType(type);
 		siteNavigationMenu.setAuto(auto);
 
@@ -272,10 +272,10 @@ public class SiteNavigationMenuLocalServiceImpl
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
 
-		siteNavigationMenu.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenu.setUserId(userId);
 		siteNavigationMenu.setUserName(user.getFullName());
+		siteNavigationMenu.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenu.setName(name);
 
 		return siteNavigationMenuPersistence.update(siteNavigationMenu);

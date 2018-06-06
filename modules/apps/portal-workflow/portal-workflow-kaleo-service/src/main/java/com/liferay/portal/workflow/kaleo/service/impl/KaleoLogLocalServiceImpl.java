@@ -263,10 +263,10 @@ public class KaleoLogLocalServiceImpl extends KaleoLogLocalServiceBaseImpl {
 			KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance =
 				kaleoTaskAssignmentInstances.get(0);
 
-			kaleoLog.setCurrentAssigneeClassPK(
-				kaleoTaskAssignmentInstance.getAssigneeClassPK());
 			kaleoLog.setCurrentAssigneeClassName(
 				kaleoTaskAssignmentInstance.getAssigneeClassName());
+			kaleoLog.setCurrentAssigneeClassPK(
+				kaleoTaskAssignmentInstance.getAssigneeClassPK());
 		}
 
 		kaleoLog.setComment(comment);

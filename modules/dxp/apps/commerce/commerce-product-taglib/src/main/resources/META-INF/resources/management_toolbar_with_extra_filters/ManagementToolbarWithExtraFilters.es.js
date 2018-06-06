@@ -2,7 +2,7 @@ import {
 	actionItemsValidator,
 	creationMenuItemsValidator,
 	filterItemsValidator
-} from 'clay-management-toolbar@2.0.0-rc.11/lib/validators';
+} from 'clay-management-toolbar@2.0.2-rc.11/lib/validators';
 import Component from 'metal-component@2.16.5/lib/Component';
 import Config from 'metal-state@2.7.0/lib/Config';
 import Soy from 'metal-soy@2.16.5/lib/Soy';

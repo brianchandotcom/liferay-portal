@@ -34,7 +34,11 @@ PortletURL viewCategoryURL = renderResponse.createRenderURL();
 viewCategoryURL.setParameter("mvcRenderCommandName", "/view_category");
 viewCategoryURL.setParameter("configurationCategory", configurationScreen.getCategoryKey());
 
-String categoryDisplayName = LanguageUtil.get(request, "category." + configurationScreen.getCategoryKey());
+ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = (ConfigurationCategoryMenuDisplay)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY);
+
+ConfigurationCategoryDisplay configurationCategoryDisplay = configurationCategoryMenuDisplay.getConfigurationCategoryDisplay();
+
+String categoryDisplayName = HtmlUtil.escape(configurationCategoryDisplay.getCategoryLabel(locale));
 
 PortalUtil.addPortletBreadcrumbEntry(request, categoryDisplayName, viewCategoryURL.toString());
 

@@ -15,6 +15,12 @@
 package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * @author Jorge Ferrer
@@ -33,6 +39,20 @@ public class ConfigurationCategoryDisplay {
 
 	public String getCategoryKey() {
 		return _configurationCategory.getCategoryKey();
+	}
+
+	public String getCategoryLabel(Locale locale) {
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					_configurationCategory.getBundleSymbolicName());
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
+
+		return LanguageUtil.get(
+			resourceBundle,
+			"category." + _configurationCategory.getCategoryKey());
 	}
 
 	public String getCategorySection() {

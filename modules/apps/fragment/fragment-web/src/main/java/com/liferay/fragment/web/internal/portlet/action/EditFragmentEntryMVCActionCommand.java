@@ -79,24 +79,21 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 
 		try {
-			FragmentEntry fragmentEntry =
-				_fragmentEntryService.updateFragmentEntry(
-					fragmentEntryId, name, css, html, js, status,
-					serviceContext);
-
 			if ((previewFileEntryId <= 0) &&
 				Validator.isNotNull(previewBase64)) {
 
 				FileEntry fileEntry = _updatePreviewFileEntry(
-					serviceContext.getUserId(), fragmentEntry.getGroupId(),
-					fragmentEntryId, previewBase64);
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(), fragmentEntryId,
+					previewBase64);
 
 				previewFileEntryId = fileEntry.getFileEntryId();
 			}
 
-			fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
-
-			_fragmentEntryLocalService.updateFragmentEntry(fragmentEntry);
+			FragmentEntry fragmentEntry =
+				_fragmentEntryService.updateFragmentEntry(
+					fragmentEntryId, name, css, html, js, previewFileEntryId,
+					status);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

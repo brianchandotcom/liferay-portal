@@ -31,6 +31,10 @@
 	@include sm {
 		max-width: none;
 	}
+
+	&.modal-dialog-sm {
+		max-width: $modal-md;
+	}
 }
 
 .modal-hidden {

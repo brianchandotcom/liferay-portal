@@ -370,7 +370,8 @@ public class LayoutRevisionLocalServiceImpl
 	public List<LayoutRevision> getLayoutRevisions(
 		long layoutSetBranchId, boolean head, int status) {
 
-		return layoutRevisionPersistence.findByL_H_S(layoutSetBranchId, head, status);
+		return layoutRevisionPersistence.findByL_H_S(
+			layoutSetBranchId, head, status);
 	}
 
 	@Override

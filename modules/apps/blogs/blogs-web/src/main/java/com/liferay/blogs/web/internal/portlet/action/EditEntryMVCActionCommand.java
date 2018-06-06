@@ -243,6 +243,16 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			else {
 				WindowState windowState = actionRequest.getWindowState();
 
+				if (Validator.isNotNull(redirect) &&
+					cmd.equals(Constants.UPDATE)) {
+
+					String namespace = actionResponse.getNamespace();
+
+					redirect = _http.setParameter(
+						redirect, namespace + "redirectToLastFriendlyURL",
+						false);
+				}
+
 				if (!windowState.equals(LiferayWindowState.POP_UP)) {
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}

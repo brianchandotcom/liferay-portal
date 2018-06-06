@@ -22,8 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Tomas Polesovsky
  */
 @ExtendedObjectClassDefinition(
-	category = "oauth2",
-	factoryInstanceLabelAttribute = "osgi.jaxrs.application.select"
+	category = "oauth2", factoryInstanceLabelAttribute = "osgi.jaxrs.name"
 )
 @Meta.OCD(
 	factory = true,
@@ -40,6 +39,13 @@ public interface ConfigurableScopeCheckerFeatureConfiguration {
 		name = "osgi-jaxrs-application-select", required = true
 	)
 	public String osgiJAXRSSelect();
+
+	@Meta.AD(
+		deflt = "Liferay.OAuth2.HTTP.configurable.request.checker",
+		description = "osgi-jaxrs-name-description", id = "osgi.jaxrs.name",
+		name = "osgi-jaxrs-name", required = true
+	)
+	public String osgiJAXRSName();
 
 	@Meta.AD(
 		deflt = "", description = "patterns-description", id = "patters",

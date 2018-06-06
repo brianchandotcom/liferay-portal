@@ -50,9 +50,9 @@ public class ReadingTimeEntryLocalServiceImpl
 
 		ReadingTimeEntry entry = readingTimeEntryPersistence.create(entryId);
 
+		entry.setGroupId(groupId);
 		entry.setClassNameId(classNameId);
 		entry.setClassPK(classPK);
-		entry.setGroupId(groupId);
 		entry.setReadingTime(readingTimeDuration.toMillis());
 
 		return readingTimeEntryPersistence.update(entry);

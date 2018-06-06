@@ -701,9 +701,9 @@ public class DDLRecordSetLocalServiceImpl
 		recordSetVersion.setCreateDate(recordSet.getModifiedDate());
 		recordSetVersion.setRecordSetId(recordSet.getRecordSetId());
 		recordSetVersion.setDDMStructureVersionId(ddmStructureVersionId);
-		recordSetVersion.setVersion(version);
 		recordSetVersion.setName(recordSet.getName());
 		recordSetVersion.setDescription(recordSet.getDescription());
+		recordSetVersion.setVersion(version);
 
 		int status = GetterUtil.getInteger(
 			serviceContext.getAttribute("status"),

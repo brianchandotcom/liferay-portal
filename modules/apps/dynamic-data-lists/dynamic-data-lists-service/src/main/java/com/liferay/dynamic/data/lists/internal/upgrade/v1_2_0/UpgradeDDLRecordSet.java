@@ -93,24 +93,24 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 
 					ddmFormInstance.setCompanyId(rs.getLong("companyId"));
 
-					ddmFormInstance.setCreateDate(
-						rs.getTimestamp("createDate"));
-					ddmFormInstance.setDescription(rs.getString("description"));
 					ddmFormInstance.setGroupId(rs.getLong("groupId"));
-					ddmFormInstance.setLastPublishDate(
-						rs.getTimestamp("lastPublishDate"));
-					ddmFormInstance.setModifiedDate(
-						rs.getTimestamp("modifiedDate"));
-					ddmFormInstance.setName(rs.getString("name"));
-					ddmFormInstance.setSettings(rs.getString("settings_"));
-					ddmFormInstance.setStructureId(ddmStructureId);
 					ddmFormInstance.setUserId(rs.getLong("userId"));
 					ddmFormInstance.setUserName(rs.getString("userName"));
-					ddmFormInstance.setVersion(rs.getString("version"));
 					ddmFormInstance.setVersionUserId(
 						rs.getLong("versionUserId"));
 					ddmFormInstance.setVersionUserName(
 						rs.getString("versionUserName"));
+					ddmFormInstance.setCreateDate(
+						rs.getTimestamp("createDate"));
+					ddmFormInstance.setModifiedDate(
+						rs.getTimestamp("modifiedDate"));
+					ddmFormInstance.setStructureId(ddmStructureId);
+					ddmFormInstance.setVersion(rs.getString("version"));
+					ddmFormInstance.setName(rs.getString("name"));
+					ddmFormInstance.setDescription(rs.getString("description"));
+					ddmFormInstance.setSettings(rs.getString("settings_"));
+					ddmFormInstance.setLastPublishDate(
+						rs.getTimestamp("lastPublishDate"));
 
 					updateDDMStructure(ddmStructureId);
 					updateDDMStructureLink(ddmStructureId);

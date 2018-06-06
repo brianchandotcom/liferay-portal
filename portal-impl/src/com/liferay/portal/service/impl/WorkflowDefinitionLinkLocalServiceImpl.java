@@ -58,10 +58,10 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.create(workflowDefinitionLinkId);
 
-		workflowDefinitionLink.setUserId(userId);
-		workflowDefinitionLink.setUserName(user.getFullName());
 		workflowDefinitionLink.setGroupId(groupId);
 		workflowDefinitionLink.setCompanyId(companyId);
+		workflowDefinitionLink.setUserId(userId);
+		workflowDefinitionLink.setUserName(user.getFullName());
 		workflowDefinitionLink.setClassNameId(classNameId);
 		workflowDefinitionLink.setClassPK(classPK);
 		workflowDefinitionLink.setTypePK(typePK);
@@ -311,10 +311,10 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 				workflowDefinitionName, workflowDefinitionVersion);
 		}
 
-		workflowDefinitionLink.setUserId(userId);
-		workflowDefinitionLink.setUserName(user.getFullName());
 		workflowDefinitionLink.setGroupId(groupId);
 		workflowDefinitionLink.setCompanyId(companyId);
+		workflowDefinitionLink.setUserId(userId);
+		workflowDefinitionLink.setUserName(user.getFullName());
 		workflowDefinitionLink.setClassNameId(classNameId);
 		workflowDefinitionLink.setClassPK(classPK);
 		workflowDefinitionLink.setTypePK(typePK);

@@ -66,20 +66,24 @@ public class UpgradeDDLRecordVersion extends UpgradeProcess {
 						_ddmFormInstanceRecordVersionLocalService.
 							createDDMFormInstanceRecordVersion(recordVersionId);
 
+					ddmFormInstanceRecordVersion.setGroupId(
+						rs.getLong("groupId"));
 					ddmFormInstanceRecordVersion.setCompanyId(
 						rs.getLong("companyId"));
+					ddmFormInstanceRecordVersion.setUserId(
+						rs.getLong("userId"));
+					ddmFormInstanceRecordVersion.setUserName(
+						rs.getString("userName"));
 					ddmFormInstanceRecordVersion.setCreateDate(
 						rs.getTimestamp("createDate"));
 					ddmFormInstanceRecordVersion.setFormInstanceId(
 						rs.getLong("recordSetId"));
-					ddmFormInstanceRecordVersion.setFormInstanceRecordId(
-						rs.getLong("recordId"));
 					ddmFormInstanceRecordVersion.setFormInstanceVersion(
 						rs.getString("recordSetVersion"));
-					ddmFormInstanceRecordVersion.setGroupId(
-						rs.getLong("groupId"));
-					ddmFormInstanceRecordVersion.setStorageId(
-						rs.getInt("DDMStorageId"));
+					ddmFormInstanceRecordVersion.setFormInstanceRecordId(
+						rs.getLong("recordId"));
+					ddmFormInstanceRecordVersion.setVersion(
+						rs.getString("version"));
 					ddmFormInstanceRecordVersion.setStatus(rs.getInt("status"));
 					ddmFormInstanceRecordVersion.setStatusByUserId(
 						rs.getLong("statusByUserId"));
@@ -87,12 +91,8 @@ public class UpgradeDDLRecordVersion extends UpgradeProcess {
 						rs.getString("statusByUserName"));
 					ddmFormInstanceRecordVersion.setStatusDate(
 						rs.getTimestamp("statusDate"));
-					ddmFormInstanceRecordVersion.setUserId(
-						rs.getLong("userId"));
-					ddmFormInstanceRecordVersion.setUserName(
-						rs.getString("userName"));
-					ddmFormInstanceRecordVersion.setVersion(
-						rs.getString("version"));
+					ddmFormInstanceRecordVersion.setStorageId(
+						rs.getInt("DDMStorageId"));
 
 					deleteDDLRecordVersion(recordVersionId);
 

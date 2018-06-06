@@ -439,18 +439,18 @@ public class DDMFormInstanceRecordLocalServiceImpl
 					formInstanceRecord.getVersion(),
 					formInstanceRecordVersion.getVersion()) <= 0) {
 
-				formInstanceRecord.setStorageId(
-					formInstanceRecordVersion.getStorageId());
-				formInstanceRecord.setVersion(
-					formInstanceRecordVersion.getVersion());
-				formInstanceRecord.setFormInstanceId(
-					formInstanceRecordVersion.getFormInstanceId());
-				formInstanceRecord.setVersion(
-					formInstanceRecordVersion.getVersion());
 				formInstanceRecord.setVersionUserId(
 					formInstanceRecordVersion.getUserId());
 				formInstanceRecord.setVersionUserName(
 					formInstanceRecordVersion.getUserName());
+				formInstanceRecord.setFormInstanceId(
+					formInstanceRecordVersion.getFormInstanceId());
+				formInstanceRecord.setStorageId(
+					formInstanceRecordVersion.getStorageId());
+				formInstanceRecord.setVersion(
+					formInstanceRecordVersion.getVersion());
+				formInstanceRecord.setVersion(
+					formInstanceRecordVersion.getVersion());
 
 				ddmFormInstanceRecordPersistence.update(formInstanceRecord);
 			}
@@ -507,13 +507,13 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstanceRecord.getFormInstanceVersion());
 		ddmFormInstanceRecordVersion.setFormInstanceRecordId(
 			ddmFormInstanceRecord.getFormInstanceRecordId());
-		ddmFormInstanceRecordVersion.setStorageId(ddmStorageId);
 		ddmFormInstanceRecordVersion.setVersion(version);
 		ddmFormInstanceRecordVersion.setStatus(status);
 		ddmFormInstanceRecordVersion.setStatusByUserId(user.getUserId());
 		ddmFormInstanceRecordVersion.setStatusByUserName(user.getFullName());
 		ddmFormInstanceRecordVersion.setStatusDate(
 			ddmFormInstanceRecord.getModifiedDate());
+		ddmFormInstanceRecordVersion.setStorageId(ddmStorageId);
 
 		ddmFormInstanceRecordVersionPersistence.update(
 			ddmFormInstanceRecordVersion);

@@ -62,27 +62,27 @@ public class UpgradeDDLRecord extends UpgradeProcess {
 						_ddmFormInstanceRecordLocalService.
 							createDDMFormInstanceRecord(recordId);
 
-					ddmFormInstanceRecord.setCompanyId(rs.getLong("companyId"));
-					ddmFormInstanceRecord.setCreateDate(
-						rs.getTimestamp("createDate"));
-					ddmFormInstanceRecord.setFormInstanceId(
-						rs.getLong("recordSetId"));
-					ddmFormInstanceRecord.setFormInstanceVersion(
-						rs.getString("recordSetVersion"));
 					ddmFormInstanceRecord.setGroupId(rs.getLong("groupId"));
-					ddmFormInstanceRecord.setLastPublishDate(
-						rs.getTimestamp("lastPublishDate"));
-					ddmFormInstanceRecord.setModifiedDate(
-						rs.getTimestamp("modifiedDate"));
-					ddmFormInstanceRecord.setStorageId(
-						rs.getLong("DDMStorageId"));
+					ddmFormInstanceRecord.setCompanyId(rs.getLong("companyId"));
 					ddmFormInstanceRecord.setUserId(rs.getLong("userId"));
 					ddmFormInstanceRecord.setUserName(rs.getString("userName"));
-					ddmFormInstanceRecord.setVersion(rs.getString("version"));
 					ddmFormInstanceRecord.setVersionUserId(
 						rs.getLong("versionUserId"));
 					ddmFormInstanceRecord.setVersionUserName(
 						rs.getString("versionUserName"));
+					ddmFormInstanceRecord.setCreateDate(
+						rs.getTimestamp("createDate"));
+					ddmFormInstanceRecord.setModifiedDate(
+						rs.getTimestamp("modifiedDate"));
+					ddmFormInstanceRecord.setFormInstanceId(
+						rs.getLong("recordSetId"));
+					ddmFormInstanceRecord.setFormInstanceVersion(
+						rs.getString("recordSetVersion"));
+					ddmFormInstanceRecord.setStorageId(
+						rs.getLong("DDMStorageId"));
+					ddmFormInstanceRecord.setVersion(rs.getString("version"));
+					ddmFormInstanceRecord.setLastPublishDate(
+						rs.getTimestamp("lastPublishDate"));
 
 					deleteDDLRecord(recordId);
 

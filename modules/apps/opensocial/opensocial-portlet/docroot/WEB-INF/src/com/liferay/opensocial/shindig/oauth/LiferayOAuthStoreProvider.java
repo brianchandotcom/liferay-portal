@@ -63,8 +63,8 @@ public class LiferayOAuthStoreProvider implements Provider<OAuthStore> {
 
 		OAuthConsumer oAuthConsumer = new OAuthConsumerImpl();
 
-		oAuthConsumer.setConsumerKey(_DEFAULT_CONSUMER_KEY);
 		oAuthConsumer.setServiceName(_DEFAULT_SERVICE_NAME);
+		oAuthConsumer.setConsumerKey(_DEFAULT_CONSUMER_KEY);
 
 		String consumerSecret = null;
 

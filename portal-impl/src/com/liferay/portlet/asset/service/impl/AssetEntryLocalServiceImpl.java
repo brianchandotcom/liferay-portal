@@ -945,9 +945,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		AssetEntry entry = assetEntryPersistence.findByC_C(
 			classNameId, classPK);
 
-		entry.setExpirationDate(expirationDate);
 		entry.setListable(listable);
 		entry.setPublishDate(publishDate);
+		entry.setExpirationDate(expirationDate);
 
 		return updateVisible(entry, visible);
 	}

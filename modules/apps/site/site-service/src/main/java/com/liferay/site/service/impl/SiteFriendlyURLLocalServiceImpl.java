@@ -51,10 +51,10 @@ public class SiteFriendlyURLLocalServiceImpl
 			siteFriendlyURL.setUuid(serviceContext.getUuid());
 		}
 
-		siteFriendlyURL.setGroupId(groupId);
 		siteFriendlyURL.setCompanyId(companyId);
 		siteFriendlyURL.setUserId(user.getUserId());
 		siteFriendlyURL.setUserName(user.getFullName());
+		siteFriendlyURL.setGroupId(groupId);
 		siteFriendlyURL.setFriendlyURL(friendlyURL);
 		siteFriendlyURL.setLanguageId(languageId);
 

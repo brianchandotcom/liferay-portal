@@ -277,10 +277,10 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		validateName(name);
 
-		siteNavigationMenuItem.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenuItem.setUserId(userId);
 		siteNavigationMenuItem.setUserName(user.getFullName());
+		siteNavigationMenuItem.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenuItem.setName(name);
 		siteNavigationMenuItem.setTypeSettings(typeSettings);
 

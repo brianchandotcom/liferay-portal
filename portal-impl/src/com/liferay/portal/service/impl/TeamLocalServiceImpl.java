@@ -68,8 +68,8 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		Team team = teamPersistence.create(teamId);
 
 		team.setUuid(serviceContext.getUuid());
-		team.setUserId(userId);
 		team.setCompanyId(user.getCompanyId());
+		team.setUserId(userId);
 		team.setUserName(user.getFullName());
 		team.setGroupId(groupId);
 		team.setName(name);

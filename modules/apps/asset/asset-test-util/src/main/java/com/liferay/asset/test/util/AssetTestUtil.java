@@ -55,10 +55,10 @@ public class AssetTestUtil {
 			assetEntryId);
 
 		assetEntry.setClassName(RandomTestUtil.randomString());
-		assetEntry.setClassPK(RandomTestUtil.randomLong());
 		assetEntry.setGroupId(groupId);
-		assetEntry.setPublishDate(publishDate);
+		assetEntry.setClassPK(RandomTestUtil.randomLong());
 		assetEntry.setVisible(true);
+		assetEntry.setPublishDate(publishDate);
 
 		return AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
 	}

@@ -54,8 +54,8 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 		KaleoTaskFormInstance kaleoTaskFormInstance =
 			kaleoTaskFormInstancePersistence.create(kaleoTaskFormInstanceId);
 
-		kaleoTaskFormInstance.setCompanyId(user.getCompanyId());
 		kaleoTaskFormInstance.setGroupId(groupId);
+		kaleoTaskFormInstance.setCompanyId(user.getCompanyId());
 		kaleoTaskFormInstance.setUserId(user.getUserId());
 		kaleoTaskFormInstance.setUserName(user.getFullName());
 		kaleoTaskFormInstance.setCreateDate(now);

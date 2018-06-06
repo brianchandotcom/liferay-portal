@@ -280,8 +280,8 @@ public class DDMIndexerImplTest {
 
 		ddmStructure.setDDMForm(ddmForm);
 
-		ddmStructure.setName(RandomTestUtil.randomString());
 		ddmStructure.setStructureId(RandomTestUtil.randomLong());
+		ddmStructure.setName(RandomTestUtil.randomString());
 
 		ddmFixture.whenDDMStructureLocalServiceFetchStructure(ddmStructure);
 

@@ -123,8 +123,7 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getSaveAndContinueRedirect(
-			ActionRequest actionRequest, FragmentEntry fragmentEntry)
-		throws Exception {
+		ActionRequest actionRequest, FragmentEntry fragmentEntry) {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			actionRequest, FragmentPortletKeys.FRAGMENT,

@@ -373,7 +373,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		// Add
 
 		if (commercePriceEntryId > 0) {
-			validate(commercePriceEntryId, minQuantity);
+			validate(0L, commercePriceEntryId, minQuantity);
 
 			CommercePriceEntry commercePriceEntry =
 				_commercePriceEntryPersistence.findByPrimaryKey(
@@ -390,7 +390,8 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				_commercePriceEntryPersistence.findByExternalReferenceCode(
 					priceEntryExternalReferenceCode);
 
-			validate(commercePriceEntry.getCommercePriceEntryId(), minQuantity);
+			validate(
+				0L, commercePriceEntry.getCommercePriceEntryId(), minQuantity);
 
 			return addCommerceTierPriceEntry(
 				commercePriceEntry.getCommercePriceEntryId(),

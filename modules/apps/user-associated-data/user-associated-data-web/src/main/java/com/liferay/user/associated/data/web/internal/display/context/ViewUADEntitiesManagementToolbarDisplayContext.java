@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringBundler;
@@ -25,6 +26,8 @@ import com.liferay.user.associated.data.web.internal.display.UADEntity;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Drew Brokke
  */
@@ -34,9 +37,12 @@ public class ViewUADEntitiesManagementToolbarDisplayContext
 	public ViewUADEntitiesManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request,
 		SearchContainer<UADEntity> searchContainer) {
 
-		super(liferayPortletRequest, liferayPortletResponse, searchContainer);
+		super(
+			liferayPortletRequest, liferayPortletResponse, request,
+			searchContainer);
 	}
 
 	@Override

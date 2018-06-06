@@ -14,9 +14,12 @@
 
 package com.liferay.user.associated.data.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Drew Brokke
@@ -27,13 +30,15 @@ public class UADApplicationsSummaryManagementToolbarDisplayContext
 	public UADApplicationsSummaryManagementToolbarDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
-		SearchContainer searchContainer) {
+		HttpServletRequest request, SearchContainer searchContainer) {
 
-		super(liferayPortletRequest, liferayPortletResponse, searchContainer);
+		super(
+			liferayPortletRequest, liferayPortletResponse, request,
+			searchContainer);
 	}
 
 	@Override
-	public Boolean getSelectable() {
+	public Boolean isSelectable() {
 		return false;
 	}
 

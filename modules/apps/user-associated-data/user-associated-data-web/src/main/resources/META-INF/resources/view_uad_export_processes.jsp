@@ -19,7 +19,7 @@
 <%
 UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportProcessDisplayContext(request, renderResponse);
 
-UADExportProcessManagementToolbarDisplayContext uadExportProcessManagementToolbarDisplayContext = new UADExportProcessManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse);
+UADExportProcessManagementToolbarDisplayContext uadExportProcessManagementToolbarDisplayContext = new UADExportProcessManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
 
 portletDisplay.setShowBackIcon(true);
 
@@ -49,9 +49,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 <clay:management-toolbar
 	creationMenu="<%= uadExportProcessManagementToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= uadExportProcessManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	selectable="<%= uadExportProcessManagementToolbarDisplayContext.getSelectable() %>"
-	showCreationMenu="<%= uadExportProcessManagementToolbarDisplayContext.getShowCreationMenu() %>"
-	showSearch="<%= uadExportProcessManagementToolbarDisplayContext.getShowSearch() %>"
+	selectable="<%= uadExportProcessManagementToolbarDisplayContext.isSelectable() %>"
+	showCreationMenu="<%= uadExportProcessManagementToolbarDisplayContext.isShowCreationMenu() %>"
+	showSearch="<%= uadExportProcessManagementToolbarDisplayContext.isShowSearch() %>"
 	sortingOrder="<%= uadExportProcessManagementToolbarDisplayContext.getSortingOrder() %>"
 	sortingURL="<%= uadExportProcessManagementToolbarDisplayContext.getSortingURL() %>"
 />

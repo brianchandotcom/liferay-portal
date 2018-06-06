@@ -84,7 +84,7 @@ public class AMThumbnailsOSGiCommands {
 					// See LPS-70788
 
 					String actualFileName = StringUtil.replace(
-						fileName, "//", StringPool.SLASH);
+						fileName, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 					for (ThumbnailConfiguration thumbnailConfiguration :
 							_getThumbnailConfigurations()) {

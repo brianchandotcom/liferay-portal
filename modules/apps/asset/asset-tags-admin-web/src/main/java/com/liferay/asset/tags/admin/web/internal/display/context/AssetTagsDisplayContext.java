@@ -80,7 +80,7 @@ public class AssetTagsDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "mergeTags");
-						dropdownItem.setIcon("change");
+						dropdownItem.setIcon("merge");
 						dropdownItem.setLabel(
 							LanguageUtil.get(_request, "merge"));
 						dropdownItem.setQuickAction(true);

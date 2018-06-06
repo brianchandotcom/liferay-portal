@@ -75,6 +75,9 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 
 		updateByQueryRequestBuilder.filter(queryBuilder);
 
+		updateByQueryRequestBuilder.refresh(
+			updateByQueryDocumentRequest.isRefresh());
+
 		JSONObject jsonObject =
 			updateByQueryDocumentRequest.getScriptJSONObject();
 

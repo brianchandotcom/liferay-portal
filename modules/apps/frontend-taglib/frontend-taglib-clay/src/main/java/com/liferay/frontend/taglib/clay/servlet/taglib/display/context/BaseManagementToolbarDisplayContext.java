@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -120,7 +120,7 @@ public class BaseManagementToolbarDisplayContext
 			return null;
 		}
 
-		Map<String, String> entriesMap = new HashMap<>();
+		Map<String, String> entriesMap = new LinkedHashMap<>();
 
 		for (String entryKey : entryKeys) {
 			entriesMap.put(entryKey, entryKey);

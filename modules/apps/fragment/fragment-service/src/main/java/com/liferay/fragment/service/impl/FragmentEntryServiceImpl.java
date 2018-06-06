@@ -270,7 +270,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
-			String js, int status, ServiceContext serviceContext)
+			String js, int status)
 		throws PortalException {
 
 		FragmentEntry fragmentEntry =
@@ -281,15 +281,13 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
 
 		return fragmentEntryLocalService.updateFragmentEntry(
-			getUserId(), fragmentEntryId, name, css, html, js, status,
-			serviceContext);
+			getUserId(), fragmentEntryId, name, css, html, js, status);
 	}
 
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
-			String js, long previewFileEntryId, int status,
-			ServiceContext serviceContext)
+			String js, long previewFileEntryId, int status)
 		throws PortalException {
 
 		FragmentEntry fragmentEntry =
@@ -301,7 +299,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryLocalService.updateFragmentEntry(
 			getUserId(), fragmentEntryId, name, css, html, js,
-			previewFileEntryId, status, serviceContext);
+			previewFileEntryId, status);
 	}
 
 	private static volatile PortletResourcePermission

@@ -162,7 +162,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 					results.push(
 						{
 							data: item.text().trim(),
-							node: item.ancestor()
+							node: item
 						}
 					);
 				}
@@ -179,7 +179,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			return noResultsNode;
 		};
 
-		var permissionNavigationItems = permissionNavigationDataContainer.all('.permission-navigation-item');
+		var permissionNavigationItems = permissionNavigationDataContainer.all('.permission-navigation-item-container');
 
 		var permissionNavigationSectionsNode = permissionNavigationDataContainer.all('.permission-navigation-section');
 
@@ -211,9 +211,10 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		permissionNavigationSearch.on(
 			'results',
 			function(event) {
+				debugger;
 				permissionNavigationItems.each(
 					function(item, index, collection) {
-						item.ancestor().addClass('hide');
+						item.addClass('hide');
 					}
 				);
 

@@ -424,11 +424,19 @@ public class FragmentEntryLocalServiceWrapper
 	@Override
 	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		long userId, long fragmentEntryId, String name, String css,
-		String html, String js, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		String html, String js, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryLocalService.updateFragmentEntry(userId,
-			fragmentEntryId, name, css, html, js, status, serviceContext);
+			fragmentEntryId, name, css, html, js, status);
+	}
+
+	@Override
+	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+		long userId, long fragmentEntryId, String name, String css,
+		String html, String js, long previewFileEntryId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryLocalService.updateFragmentEntry(userId,
+			fragmentEntryId, name, css, html, js, previewFileEntryId, status);
 	}
 
 	@Override

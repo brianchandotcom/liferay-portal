@@ -304,8 +304,12 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 		long previewFileEntryId) throws PortalException;
 
 	public FragmentEntry updateFragmentEntry(long userId, long fragmentEntryId,
-		String name, String css, String html, String js, int status,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String css, String html, String js, int status)
+		throws PortalException;
+
+	public FragmentEntry updateFragmentEntry(long userId, long fragmentEntryId,
+		String name, String css, String html, String js,
+		long previewFileEntryId, int status) throws PortalException;
 
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId, String name)
 		throws PortalException;

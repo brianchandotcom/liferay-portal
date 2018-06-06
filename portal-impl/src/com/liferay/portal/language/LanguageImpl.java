@@ -1002,6 +1002,13 @@ public class LanguageImpl implements Language, Serializable {
 		return getBCP47LanguageId(locale);
 	}
 
+	@Override
+	public Set<Locale> getCompanyAvailableLocales(long companyId) {
+		CompanyLocalesBag companyLocalesBag = _getCompanyLocalesBag(companyId);
+
+		return companyLocalesBag.getAvailableLocales();
+	}
+
 	/**
 	 * Returns the language ID that the request is served with. The language ID
 	 * is returned as a language code (e.g. <code>en</code>) or a specific

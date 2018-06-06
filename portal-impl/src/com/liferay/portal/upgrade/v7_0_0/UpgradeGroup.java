@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -66,39 +65,31 @@ public class UpgradeGroup extends UpgradeProcess {
 			}
 		}
 
-		long companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
+		for (Long companyId : companyIds) {
+			LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
 
-		try {
-			for (Long companyId : companyIds) {
-				LocalizedValuesMap localizedValuesMap =
-					new LocalizedValuesMap();
+			for (Locale locale :
+					LanguageUtil.getCompanyAvailableLocales(companyId)) {
 
-				CompanyThreadLocal.setCompanyId(companyId);
+				ResourceBundle resourceBundle =
+					LanguageResources.getResourceBundle(locale);
 
-				for (Locale locale : LanguageUtil.getAvailableLocales()) {
-					ResourceBundle resourceBundle =
-						LanguageResources.getResourceBundle(locale);
-
-					localizedValuesMap.put(
-						locale, LanguageUtil.get(resourceBundle, "global"));
-				}
-
-				String nameXML = LocalizationUtil.getXml(
-					localizedValuesMap, "global");
-
-				try (PreparedStatement ps = connection.prepareStatement(
-						"update Group_ set name = ? where companyId = ? and " +
-							"friendlyURL = '/global'")) {
-
-					ps.setString(1, nameXML);
-					ps.setLong(2, companyId);
-
-					ps.executeUpdate();
-				}
+				localizedValuesMap.put(
+					locale, LanguageUtil.get(resourceBundle, "global"));
 			}
-		}
-		finally {
-			CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
+
+			String nameXML = LocalizationUtil.getXml(
+				localizedValuesMap, "global");
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					"update Group_ set name = ? where companyId = ? and " +
+						"friendlyURL = '/global'")) {
+
+				ps.setString(1, nameXML);
+				ps.setLong(2, companyId);
+
+				ps.executeUpdate();
+			}
 		}
 	}
 

@@ -229,12 +229,15 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 
 		@Override
 		public void filter(ContainerRequestContext containerRequestContext) {
+			boolean anyMatch = false;
+			String path = StringPool.SLASH + _uriInfo.getPath();
 			Request request = containerRequestContext.getRequest();
 
-			String path = StringPool.SLASH + _uriInfo.getPath();
-
 			for (CheckPattern checkPattern : _checkPatterns) {
-				if (!matches(checkPattern, path, request)) {
+				if (matches(checkPattern, path, request)) {
+					anyMatch = true;
+				}
+				else {
 					continue;
 				}
 
@@ -263,7 +266,7 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 				}
 			}
 
-			if (!_allowUnmatched) {
+			if (!_allowUnmatched && !anyMatch) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
@@ -274,12 +277,15 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 
 				abortRequest(containerRequestContext);
 			}
-			else {
+			else if (_allowUnmatched) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Path " + path +
 							" was approved, does not match any patterns");
 				}
+			}
+			else {
+				abortRequest(containerRequestContext);
 			}
 		}
 

@@ -166,7 +166,9 @@
 			<var name="pollsQuestionTitle" value="Test Poll Title" />
 		</execute>
 
-		<execute macro="Polls#viewEmptyChoiceErrorMessage" />
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="Please enter valid choices." />
+		</execute>
 
 		<execute macro="Polls#addPollChoice">
 			<var name="choiceField" value="a" />

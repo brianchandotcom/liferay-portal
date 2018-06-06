@@ -218,6 +218,10 @@ public class LanguageUtil {
 		return getLanguage().getBCP47LanguageId(portletRequest);
 	}
 
+	public static Set<Locale> getCompanyAvailableLocales(long companyId) {
+		return getLanguage().getCompanyAvailableLocales(companyId);
+	}
+
 	public static Language getLanguage() {
 		PortalRuntimePermission.checkGetBeanProperty(LanguageUtil.class);
 

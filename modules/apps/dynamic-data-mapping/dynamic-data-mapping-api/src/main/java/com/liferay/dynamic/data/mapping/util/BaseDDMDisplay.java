@@ -168,8 +168,8 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 				TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
 
 			if (templateHandler != null) {
-				return LanguageUtil.get(locale, "new") + StringPool.SPACE +
-					templateHandler.getName(locale);
+				return LanguageUtil.format(
+					locale, "new-x", templateHandler.getName(locale), false);
 			}
 		}
 

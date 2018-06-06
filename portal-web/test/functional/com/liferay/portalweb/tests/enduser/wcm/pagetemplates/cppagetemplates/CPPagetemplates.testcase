@@ -450,10 +450,16 @@
 
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="ProductMenu#gotoLocalizedSite">
+			<var name="displayStyle" value="tabla" />
+			<var name="navItem" value="Mis Sitios" />
+			<var name="site" value="Global" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sitios web" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Plantillas de página" />
+			<var name="category" value="Estructuración" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Páginas del sitio web" />
 		</execute>
 
 		<execute macro="PageTemplate#viewDefaultLocalizedCP">

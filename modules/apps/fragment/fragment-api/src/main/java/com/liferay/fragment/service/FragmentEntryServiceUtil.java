@@ -199,12 +199,19 @@ public class FragmentEntryServiceUtil {
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		long fragmentEntryId, String name, String css, String html, String js,
-		int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		int status) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFragmentEntry(fragmentEntryId, name, css, html, js,
+			status);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+		long fragmentEntryId, String name, String css, String html, String js,
+		long previewFileEntryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateFragmentEntry(fragmentEntryId, name, css, html, js,
-			status, serviceContext);
+			previewFileEntryId, status);
 	}
 
 	public static FragmentEntryService getService() {

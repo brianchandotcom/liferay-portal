@@ -165,7 +165,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Unable to checkout with unpublished changes " +
+				"Cannot checkout with unpublished changes " +
 					draftLVEntry.getHeadId(),
 				iae.getMessage());
 		}
@@ -177,7 +177,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Unable to checkout with unpublished changes " +
+				"Cannot checkout with unpublished changes " +
 					draftLVEntry.getHeadId(),
 				iae.getMessage());
 		}
@@ -361,7 +361,7 @@ public class LVEntryTest {
 		}
 		catch (IllegalArgumentException iae) {
 			Assert.assertEquals(
-				"Unable to delete latest version 1", iae.getMessage());
+				"Cannot delete latest version 1", iae.getMessage());
 		}
 	}
 

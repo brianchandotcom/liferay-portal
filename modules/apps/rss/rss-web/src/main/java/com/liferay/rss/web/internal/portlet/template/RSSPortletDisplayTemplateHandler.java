@@ -14,7 +14,6 @@
 
 package com.liferay.rss.web.internal.portlet.template;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -57,8 +56,7 @@ public class RSSPortletDisplayTemplateHandler
 		String portletTitle = _portal.getPortletTitle(
 			RSSPortletKeys.RSS, resourceBundle);
 
-		return portletTitle.concat(StringPool.SPACE).concat(
-			LanguageUtil.get(locale, "template"));
+		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override

@@ -14,7 +14,6 @@
 
 package com.liferay.site.navigation.menu.web.internal.portlet.template;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -76,8 +75,7 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 		String portletTitle = _portal.getPortletTitle(
 			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU, locale);
 
-		return portletTitle.concat(StringPool.SPACE).concat(
-			LanguageUtil.get(locale, "template"));
+		return LanguageUtil.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override

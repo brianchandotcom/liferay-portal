@@ -199,8 +199,7 @@ public class FragmentDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		SearchContainer fragmentEntriesSearchContainer = new SearchContainer(
-			_renderRequest, _renderResponse.createRenderURL(), null,
-			"there-are-no-fragments");
+			_renderRequest, _getPortletURL(), null, "there-are-no-fragments");
 
 		fragmentEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

@@ -95,7 +95,11 @@ class FragmentEditableFieldTooltip extends Component {
 	 */
 
 	_handleDocumentClick(event) {
-		if (this.refs.tooltip && !this.refs.tooltip.contains(event.target)) {
+		if (
+			this.refs.tooltip &&
+			!this.refs.tooltip.contains(event.target) &&
+			!this.alignElement.contains(event.target)
+		) {
 			this.emit('outsideTooltipClick');
 		}
 	}

@@ -211,7 +211,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 		permissionNavigationSearch.on(
 			'results',
 			function(event) {
-				debugger;
 				permissionNavigationItems.each(
 					function(item, index, collection) {
 						item.addClass('hide');

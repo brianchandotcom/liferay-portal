@@ -78,7 +78,7 @@ public class SearchDisplayContextTest {
 
 	@Test
 	public void testSearchKeywordsBlank() throws Exception {
-		assertSearchSkipped(StringPool.BLANK, StringPool.BLANK);
+		assertSearchKeywords(StringPool.BLANK, StringPool.BLANK);
 	}
 
 	@Test
@@ -88,32 +88,10 @@ public class SearchDisplayContextTest {
 
 	@Test
 	public void testSearchKeywordsSpaces() throws Exception {
-		assertSearchSkipped(StringPool.DOUBLE_SPACE, StringPool.BLANK);
+		assertSearchKeywords(StringPool.DOUBLE_SPACE, StringPool.BLANK);
 	}
 
 	protected void assertSearchKeywords(
-			String requestKeywords, String searchDisplayContextKeywords)
-		throws Exception {
-
-		SearchDisplayContext searchDisplayContext = createSearchDisplayContext(
-			requestKeywords, renderRequest);
-
-		Assert.assertEquals(
-			searchDisplayContextKeywords, searchDisplayContext.getKeywords());
-
-		SearchContext searchContext = searchDisplayContext.getSearchContext();
-
-		Mockito.verify(
-			facetedSearcher
-		).search(
-			searchContext
-		);
-
-		Assert.assertEquals(
-			searchDisplayContextKeywords, searchContext.getKeywords());
-	}
-
-	protected void assertSearchSkipped(
 			String requestKeywords, String searchDisplayContextKeywords)
 		throws Exception {
 
@@ -127,7 +105,16 @@ public class SearchDisplayContextTest {
 		Assert.assertNotNull(searchDisplayContext.getSearchContainer());
 		Assert.assertNotNull(searchDisplayContext.getSearchContext());
 
-		Mockito.verifyZeroInteractions(facetedSearcher);
+		SearchContext searchContext = searchDisplayContext.getSearchContext();
+
+		Mockito.verify(
+			facetedSearcher
+		).search(
+			searchContext
+		);
+
+		Assert.assertEquals(
+			searchDisplayContextKeywords, searchContext.getKeywords());
 	}
 
 	protected void assertSearchSkippedAndNullResults(

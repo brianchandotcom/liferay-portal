@@ -227,20 +227,6 @@ public class BlogsEntryStagedModelDataHandler
 
 		entry.setContent(content);
 
-		Calendar displayDateCal = CalendarFactoryUtil.getCalendar();
-
-		displayDateCal.setTime(entry.getDisplayDate());
-
-		int displayDateMonth = displayDateCal.get(Calendar.MONTH);
-		int displayDateDay = displayDateCal.get(Calendar.DATE);
-		int displayDateYear = displayDateCal.get(Calendar.YEAR);
-		int displayDateHour = displayDateCal.get(Calendar.HOUR);
-		int displayDateMinute = displayDateCal.get(Calendar.MINUTE);
-
-		if (displayDateCal.get(Calendar.AM_PM) == Calendar.PM) {
-			displayDateHour += 12;
-		}
-
 		boolean allowPingbacks = entry.isAllowPingbacks();
 		boolean allowTrackbacks = entry.isAllowTrackbacks();
 		String[] trackbacks = StringUtil.split(entry.getTrackbacks());
@@ -270,8 +256,7 @@ public class BlogsEntryStagedModelDataHandler
 				importedEntry = _blogsEntryLocalService.addEntry(
 					userId, entry.getTitle(), entry.getSubtitle(),
 					entry.getDescription(), entry.getContent(),
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, allowPingbacks,
+					entry.getDisplayDate(), allowPingbacks,
 					allowTrackbacks, trackbacks, entry.getCoverImageCaption(),
 					null, null, serviceContext);
 			}
@@ -279,8 +264,7 @@ public class BlogsEntryStagedModelDataHandler
 				importedEntry = _blogsEntryLocalService.updateEntry(
 					userId, existingEntry.getEntryId(), entry.getTitle(),
 					entry.getSubtitle(), entry.getDescription(),
-					entry.getContent(), displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
+					entry.getContent(), entry.getDisplayDate(),
 					allowPingbacks, allowTrackbacks, trackbacks,
 					entry.getCoverImageCaption(), null, null, serviceContext);
 			}
@@ -288,10 +272,10 @@ public class BlogsEntryStagedModelDataHandler
 		else {
 			importedEntry = _blogsEntryLocalService.addEntry(
 				userId, entry.getTitle(), entry.getSubtitle(),
-				entry.getDescription(), entry.getContent(), displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				entry.getCoverImageCaption(), null, null, serviceContext);
+				entry.getDescription(), entry.getContent(),
+				entry.getDisplayDate(), allowPingbacks, allowTrackbacks,
+				trackbacks, entry.getCoverImageCaption(), null, null,
+				serviceContext);
 		}
 
 		serviceContext.setModifiedDate(importedEntry.getModifiedDate());

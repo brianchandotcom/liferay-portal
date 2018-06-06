@@ -356,9 +356,7 @@ public class JournalDisplayContext {
 				ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-				setHelpText(
-					"you-can-customize-this-menu-or-see-all-you-have-by-" +
-						"clicking-more");
+				setHelpText(LanguageUtil.get(_request, "you-can-customize-this-menu-or-see-all-you-have-by-clicking-more"));
 
 				if (JournalFolderPermission.contains(
 						themeDisplay.getPermissionChecker(),

@@ -22,6 +22,9 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface DocumentRequestExecutor {
 
+	public BulkDocumentResponse executeBulkDocumentRequest(
+		BulkDocumentRequest bulkDocumentRequest);
+
 	public DeleteByQueryDocumentResponse executeDocumentRequest(
 		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest);
 

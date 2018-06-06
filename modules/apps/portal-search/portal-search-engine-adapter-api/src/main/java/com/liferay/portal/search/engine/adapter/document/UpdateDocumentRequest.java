@@ -18,12 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.search.Document;
 
+import java.util.function.Consumer;
+
 /**
  * @author Michael C. Han
  */
 @ProviderType
 public class UpdateDocumentRequest
-	implements DocumentRequest<UpdateDocumentResponse> {
+	implements BulkableDocumentRequest<UpdateDocumentRequest>,
+			   DocumentRequest<UpdateDocumentResponse> {
 
 	public UpdateDocumentRequest(
 		String indexName, String uid, Document document) {
@@ -31,6 +34,11 @@ public class UpdateDocumentRequest
 		_indexName = indexName;
 		_uid = uid;
 		_document = document;
+	}
+
+	@Override
+	public void accept(Consumer<UpdateDocumentRequest> consumer) {
+		consumer.accept(this);
 	}
 
 	@Override

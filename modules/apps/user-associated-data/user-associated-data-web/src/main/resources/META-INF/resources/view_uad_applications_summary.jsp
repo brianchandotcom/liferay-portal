@@ -65,14 +65,7 @@ String statusLabelPending = StringUtil.toUpperCase(LanguageUtil.get(request, "pe
 		<div class="sheet-section">
 			<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
 
-			<clay:management-toolbar
-				filterDropdownItems="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-				searchContainerId="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSearchContainerId() %>"
-				selectable="<%= uadApplicationsSummaryManagementToolbarDisplayContext.isSelectable() %>"
-				showSearch="<%= uadApplicationsSummaryManagementToolbarDisplayContext.isShowSearch() %>"
-				sortingOrder="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSortingOrder() %>"
-				sortingURL="<%= uadApplicationsSummaryManagementToolbarDisplayContext.getSortingURL() %>"
-			/>
+			<clay:management-toolbar displayContext="<%= uadApplicationsSummaryManagementToolbarDisplayContext %>" />
 
 			<liferay-ui:search-container
 				searchContainer="<%= uadApplicationsSummaryDisplaySearchContainer %>"

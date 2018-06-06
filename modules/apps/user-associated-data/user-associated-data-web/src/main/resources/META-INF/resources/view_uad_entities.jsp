@@ -39,16 +39,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	navigationItems="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
 />
 
-<clay:management-toolbar
-	actionDropdownItems="<%= viewUADEntitiesManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	disabled="<%= viewUADEntitiesManagementToolbarDisplayContext.isDisabled() %>"
-	infoPanelId="<%= viewUADEntitiesManagementToolbarDisplayContext.getInfoPanelId() %>"
-	itemsTotal="<%= viewUADEntitiesManagementToolbarDisplayContext.getItemsTotal() %>"
-	searchContainerId="<%= viewUADEntitiesManagementToolbarDisplayContext.getSearchContainerId() %>"
-	selectable="<%= viewUADEntitiesManagementToolbarDisplayContext.isSelectable() %>"
-	showInfoButton="<%= viewUADEntitiesManagementToolbarDisplayContext.isShowInfoButton() %>"
-	showSearch="<%= viewUADEntitiesManagementToolbarDisplayContext.isShowSearch() %>"
-/>
+<clay:management-toolbar displayContext="<%= viewUADEntitiesManagementToolbarDisplayContext %>" />
 
 <aui:form method="post" name="viewUADEntitiesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

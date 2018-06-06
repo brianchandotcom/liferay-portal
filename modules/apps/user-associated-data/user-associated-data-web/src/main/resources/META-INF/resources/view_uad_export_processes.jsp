@@ -46,15 +46,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	%>'
 />
 
-<clay:management-toolbar
-	creationMenu="<%= uadExportProcessManagementToolbarDisplayContext.getCreationMenu() %>"
-	filterDropdownItems="<%= uadExportProcessManagementToolbarDisplayContext.getFilterDropdownItems() %>"
-	selectable="<%= uadExportProcessManagementToolbarDisplayContext.isSelectable() %>"
-	showCreationMenu="<%= uadExportProcessManagementToolbarDisplayContext.isShowCreationMenu() %>"
-	showSearch="<%= uadExportProcessManagementToolbarDisplayContext.isShowSearch() %>"
-	sortingOrder="<%= uadExportProcessManagementToolbarDisplayContext.getSortingOrder() %>"
-	sortingURL="<%= uadExportProcessManagementToolbarDisplayContext.getSortingURL() %>"
-/>
+<clay:management-toolbar displayContext="<%= uadExportProcessManagementToolbarDisplayContext %>" />
 
 <aui:form cssClass="container-fluid-1280">
 	<div id="<portlet:namespace />exportProcesses">

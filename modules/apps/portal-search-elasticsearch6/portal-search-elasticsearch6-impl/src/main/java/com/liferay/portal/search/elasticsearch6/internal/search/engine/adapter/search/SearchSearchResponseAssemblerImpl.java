@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GroupBy;
@@ -27,13 +26,13 @@ import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch6.internal.SearchHitDocumentTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetCollectorFactory;
+import com.liferay.portal.search.elasticsearch6.internal.facet.FacetUtil;
 import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -125,14 +124,6 @@ public class SearchSearchResponseAssemblerImpl
 		}
 	}
 
-	protected String getAggregationName(Facet facet) {
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
-
-		JSONObject data = facetConfiguration.getData();
-
-		return data.getString("aggregationName", facet.getFieldName());
-	}
-
 	protected FacetCollector getFacetCollector(
 		Facet facet, Map<String, Aggregation> aggregationsMap) {
 
@@ -140,7 +131,7 @@ public class SearchSearchResponseAssemblerImpl
 			new FacetCollectorFactory();
 
 		return facetCollectorFactory.getFacetCollector(
-			aggregationsMap.get(getAggregationName(facet)));
+			aggregationsMap.get(FacetUtil.getAggregationName(facet)));
 	}
 
 	protected Hits getHits(

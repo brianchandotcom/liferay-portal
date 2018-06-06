@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 
+import java.util.Optional;
+
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 
@@ -28,16 +31,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-@Component(immediate = true, property = "class.name=DEFAULT")
+@Component(
+	immediate = true, property = "class.name=DEFAULT",
+	service = FacetProcessor.class
+)
 public class DefaultFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
 
 	@Override
-	public void processFacet(
-		SearchRequestBuilder searchRequestBuilder, Facet facet) {
-
+	public Optional<AggregationBuilder> processFacet(Facet facet) {
 		TermsAggregationBuilder termsAggregationBuilder =
-			AggregationBuilders.terms(getAggregationName(facet));
+			AggregationBuilders.terms(FacetUtil.getAggregationName(facet));
 
 		termsAggregationBuilder.field(facet.getFieldName());
 
@@ -57,15 +61,7 @@ public class DefaultFacetProcessor
 			termsAggregationBuilder.size(size);
 		}
 
-		searchRequestBuilder.addAggregation(termsAggregationBuilder);
-	}
-
-	protected String getAggregationName(Facet facet) {
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
-
-		JSONObject data = facetConfiguration.getData();
-
-		return data.getString("aggregationName", facet.getFieldName());
+		return Optional.of(termsAggregationBuilder);
 	}
 
 }

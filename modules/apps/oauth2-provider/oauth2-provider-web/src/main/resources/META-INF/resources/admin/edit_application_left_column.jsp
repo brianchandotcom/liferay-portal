@@ -23,18 +23,18 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 <aui:model-context bean="<%= oAuth2Application %>" model="<%= OAuth2Application.class %>" />
 
 <aui:fieldset>
-	<aui:input name="name" required="<%= true %>" />
+	<aui:input helpMessage="application-name-help" label="application-name" name="name" required="<%= true %>" />
 
-	<aui:input name="homePageURL" />
+	<aui:input helpMessage="home-page-url-help" name="homePageURL" />
 
 	<c:if test="<%= oAuth2Application != null %>">
-		<aui:input name="description" type="textarea" />
+		<aui:input helpMessage="application-description-help" label="application-description" name="description" type="textarea" />
 	</c:if>
 
 	<aui:input helpMessage="redirect-uris-help" label="redirect-uris" name="redirectURIs" />
 
 	<c:if test="<%= oAuth2Application != null %>">
-		<aui:input name="privacyPolicyURL" />
+		<aui:input helpMessage="privacy-policy-url-help" name="privacyPolicyURL" />
 	</c:if>
 
 	<aui:select name="clientProfile">

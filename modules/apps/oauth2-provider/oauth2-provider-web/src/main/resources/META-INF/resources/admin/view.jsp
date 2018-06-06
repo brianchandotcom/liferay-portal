@@ -163,7 +163,7 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 			form.attr('method', 'post');
 			form.fm('oAuth2ApplicationIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="/admin/delete_oauth2_application" />');
+			submitForm(form, '<portlet:actionURL name="/admin/delete_oauth2_applications" />');
 		}
 	}
 </aui:script>

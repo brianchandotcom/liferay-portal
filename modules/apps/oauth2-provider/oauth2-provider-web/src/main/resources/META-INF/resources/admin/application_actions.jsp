@@ -62,7 +62,7 @@ String oAuth2ApplicationId = String.valueOf(oAuth2Application.getOAuth2Applicati
 	</c:if>
 
 	<c:if test="<%= oAuth2AdminPortletDisplayContext.hasDeletePermission(oAuth2Application) %>">
-		<portlet:actionURL name="/admin/delete_oauth2_application" var="deleteURL">
+		<portlet:actionURL name="/admin/delete_oauth2_applications" var="deleteURL">
 			<portlet:param name="oAuth2ApplicationIds" value="<%= oAuth2ApplicationId %>" />
 		</portlet:actionURL>
 

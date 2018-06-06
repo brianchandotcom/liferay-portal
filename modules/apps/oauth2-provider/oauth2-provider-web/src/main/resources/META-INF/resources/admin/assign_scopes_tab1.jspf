@@ -1,0 +1,121 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div aria-orientation="vertical" class="panel-group" id="appsAccordion" role="tablist">
+
+	<%
+	List<Map.Entry<String, String>> applicationsNamesDescriptionsList = assignScopesDisplayContext.getSortedApplicationNamesDescriptions();
+
+	for (Map.Entry<String, String> applicationNameDescriptionEntry : applicationsNamesDescriptionsList) {
+		String applicationName = applicationNameDescriptionEntry.getKey();
+		String applicationNameHtmlId = HtmlUtil.getAUICompatibleId(applicationNameDescriptionEntry.getKey());
+	%>
+
+		<div class="panel panel-secondary">
+			<a aria-controls="<portlet:namespace />appsAccordion<%= applicationNameHtmlId %>" aria-expanded="false" class="collapse-icon collapsed panel-header panel-header-link" data-parent="#<portlet:namespace />appsAccordion" data-toggle="collapse" href="#<portlet:namespace />appsAccordion<%= applicationNameHtmlId %>" id="<portlet:namespace />appsAccordionHeading<%= applicationNameHtmlId %>" role="tab">
+				<span class="panel-title"><%= HtmlUtil.escape(applicationNameDescriptionEntry.getValue()) %></span>
+
+				<span class="collapse-icon-closed">
+					<clay:icon
+						symbol="angle-right"
+					/>
+				</span>
+				<span class="collapse-icon-open">
+					<clay:icon
+						symbol="angle-down"
+					/>
+				</span>
+			</a>
+
+			<div aria-labelledby="<portlet:namespace />appsAccordionHeading<%= applicationNameHtmlId %>" class="collapse panel-collapse" id="<portlet:namespace />appsAccordion<%= applicationNameHtmlId %>" role="tabpanel">
+				<div class="panel-body">
+					<ul class="list-group">
+
+						<%
+						Map<AssignableScopes, AssignScopesDisplayContext.Relations> applicationAssignableScopesAssignModel = assignScopesDisplayContext.getAssignableScopesRelations(applicationName);
+
+						for (Map.Entry<AssignableScopes, AssignScopesDisplayContext.Relations> scopeAliasAssignableScopesEntry : applicationAssignableScopesAssignModel.entrySet()) {
+							AssignableScopes assignableScopes = scopeAliasAssignableScopesEntry.getKey();
+							AssignScopesDisplayContext.Relations relations = scopeAliasAssignableScopesEntry.getValue();
+
+							String scopeAlias = relations.getScopeAlias();
+
+							Set<String> globalScopeAliases = relations.getGlobalScopeAliases();
+
+							String globalScopeAliasesStr = StringUtil.merge(globalScopeAliases, StringPool.SPACE);
+
+							Map<String, Object> data = new HashMap<>();
+							data.put("slave", globalScopeAliasesStr);
+
+							String id = "scopeAlias" + StringUtil.randomId();
+						%>
+
+							<li class="list-group-item list-group-item-flex">
+								<div class="autofit-col">
+									<c:choose>
+										<c:when test="<%= Validator.isBlank(scopeAlias) %>">
+											<aui:input checked="<%= assignedScopes.contains(scopeAlias) %>" data="<%= data %>" disabled="<%= true %>" id="<%= id %>" label="" name="<%= id %>" onClick="return false;" title="<%= HtmlUtil.escapeAttribute(scopeAlias) %>" type="checkbox" />
+										</c:when>
+										<c:otherwise>
+											<aui:input checked="<%= assignedScopes.contains(scopeAlias) %>" data="<%= data %>" id="<%= id %>" label="" name="scopeAliases" onChange='<%= renderResponse.getNamespace() + "recalculateDependants(this)" %>' title="<%= HtmlUtil.escapeAttribute(scopeAlias) %>" type="checkbox" value="<%= HtmlUtil.escapeAttribute(scopeAlias) %>" />
+										</c:otherwise>
+									</c:choose>
+								</div>
+
+								<div class="autofit-col autofit-col-expand">
+									<h4 class="list-group-title text-truncate">
+										<label for="<portlet:namespace /><%= id %>">
+											<%= HtmlUtil.escape(StringUtil.merge(assignableScopes.getApplicationScopeDescription(applicationName))) %>
+										</label>
+									</h4>
+
+									<p class="list-group-subtitle text-truncate"><%= HtmlUtil.escapeAttribute(scopeAlias) %></p>
+
+									<c:if test="<%= globalScopeAliasesStr.length() > 0 %>">
+										<c:choose>
+											<c:when test="<%= scopeAlias.length() > 0 %>">
+												<span>
+													<aui:a data="<%= data %>" href="#1">
+														<liferay-ui:message key="can-be-assigned-via-a-global-scope" />
+													</aui:a>
+												</span>
+											</c:when>
+											<c:otherwise>
+												<span>
+													<aui:a data="<%= data %>" href="#1">
+														<liferay-ui:message key="must-be-assigned-via-a-global-scope" />
+													</aui:a>
+												</span>
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+								</div>
+							</li>
+
+						<%
+						}
+						%>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+
+	<%
+	}
+	%>
+
+</div>

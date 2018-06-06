@@ -1599,6 +1599,36 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/serviceoverride/Serviceoverride.java",
+			"package serviceoverride;",
+			"import com.liferay.portal.kernel.service.UserLocalServiceWrapper;",
+			"service = ServiceWrapper.class",
+			"public class Serviceoverride extends UserLocalServiceWrapper {",
+			"public Serviceoverride() {");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"service-wrapper", "serviceoverride", "com.test",
+			"-DclassName=Serviceoverride", "-Dpackage=serviceoverride",
+			"-DserviceWrapperClass=" +
+				"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
+
+		_buildProjects(gradleProjectDir, mavenProjectDir);
+	}
+
+	@Test
+	public void testBuildTemplateServiceWrapper71() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-wrapper", "serviceoverride", "--service",
+			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
+			"--liferayVersion", "7.1");
+
+		_testExists(gradleProjectDir, "bnd.bnd");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"",
 			"name: \"com.liferay.portal.kernel\", version: \"3.0.0");
 		_testContains(
@@ -1616,36 +1646,6 @@ public class ProjectTemplatesTest {
 			"-DserviceWrapperClass=" +
 				"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
 			"-DliferayVersion=7.1");
-
-		_buildProjects(gradleProjectDir, mavenProjectDir);
-	}
-
-	@Test
-	public void testBuildTemplateServiceWrapper71() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-wrapper", "serviceoverride", "--service",
-			"com.liferay.portal.kernel.service.UserLocalServiceWrapper",
-			"--liferayVersion", "7.1");
-
-		_testExists(gradleProjectDir, "bnd.bnd");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
-		_testContains(
-			gradleProjectDir,
-			"src/main/java/serviceoverride/Serviceoverride.java",
-			"package serviceoverride;",
-			"import com.liferay.portal.kernel.service.UserLocalServiceWrapper;",
-			"service = ServiceWrapper.class",
-			"public class Serviceoverride extends UserLocalServiceWrapper {",
-			"public Serviceoverride() {");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"service-wrapper", "serviceoverride", "com.test",
-			"-DclassName=Serviceoverride", "-Dpackage=serviceoverride",
-			"-DserviceWrapperClass=" +
-				"com.liferay.portal.kernel.service.UserLocalServiceWrapper");
 
 		_buildProjects(gradleProjectDir, mavenProjectDir);
 	}

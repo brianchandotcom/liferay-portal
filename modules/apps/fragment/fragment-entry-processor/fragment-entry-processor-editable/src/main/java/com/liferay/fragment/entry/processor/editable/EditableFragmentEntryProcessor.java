@@ -65,7 +65,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		for (Element element : document.select("lfr-editable")) {
+		for (Element element : document.select(_LFR_EDITABLE)) {
 			EditableElementParser editableElementParser =
 				_editableElementParsers.get(element.attr("type"));
 
@@ -96,7 +96,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		for (Element element : document.select("lfr-editable")) {
+		for (Element element : document.select(_LFR_EDITABLE)) {
 			EditableElementParser editableElementParser =
 				_editableElementParsers.get(element.attr("type"));
 
@@ -139,7 +139,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		if (Objects.equals(mode, FragmentEntryLinkConstants.VIEW)) {
-			for (Element element : document.select("lfr-editable")) {
+			for (Element element : document.select(_LFR_EDITABLE)) {
 				TextNode textNode = new TextNode(
 					element.html(), StringPool.BLANK);
 
@@ -239,7 +239,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		for (Element element : document.getElementsByTag("lfr-editable")) {
+		for (Element element : document.getElementsByTag(_LFR_EDITABLE)) {
 			for (String attribute : _REQUIRED_ATTRIBUTES) {
 				_validateAttribute(element, attribute);
 			}
@@ -253,7 +253,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		Elements elements = document.getElementsByTag("lfr-editable");
+		Elements elements = document.getElementsByTag(_LFR_EDITABLE);
 
 		Stream<Element> uniqueNodesStream = elements.stream();
 
@@ -283,7 +283,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Document document = _getDocument(html);
 
-		for (Element element : document.select("lfr-editable")) {
+		for (Element element : document.select(_LFR_EDITABLE)) {
 			EditableElementParser editableElementParser =
 				_editableElementParsers.get(element.attr("type"));
 
@@ -313,6 +313,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				resourceBundle,
 				"you-must-define-a-valid-type-for-each-editable-element"));
 	}
+
+	private static final String _LFR_EDITABLE = "lfr-editable";
 
 	private static final String[] _REQUIRED_ATTRIBUTES = {"id", "type"};
 

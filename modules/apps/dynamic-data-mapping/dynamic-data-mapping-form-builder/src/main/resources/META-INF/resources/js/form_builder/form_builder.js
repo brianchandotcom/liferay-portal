@@ -790,6 +790,23 @@ AUI.add(
 						var pageManager = instance.get('pageManager');
 
 						pageManager.set('editingLanguageId', event.newVal);
+
+						var container = instance.get('container');
+
+						var controlTrigger = container.one('.form-builder-page-header .form-builder-controls-trigger');
+
+						var controlTriggerButton = controlTrigger.one('.dropdown-toggle');
+
+						if (instance.isEditMode()) {
+							instance._destroySortable(instance.sortable1);
+							container.addClass('edit-mode');
+							controlTrigger.addClass('disabled');
+							controlTriggerButton.addClass('disabled');
+						}
+						else {
+							instance._applyDragAndDrop();
+							container.removeClass('edit-mode');
+						}
 					},
 
 					_afterFieldClick: function(event) {
@@ -1091,6 +1108,10 @@ AUI.add(
 
 						var field = event.currentTarget.ancestor('.' + CSS_FIELD).getData('field-instance');
 
+						if (!instance.isEditMode()) {
+							return;
+						}
+
 						return instance.duplicateField(field);
 					},
 
@@ -1104,6 +1125,10 @@ AUI.add(
 						var instance = this;
 
 						var field = event.currentTarget.ancestor('.' + CSS_FIELD).getData('field-instance');
+
+						if (instance.isEditMode()) {
+							return;
+						}
 
 						return instance._removeFieldCol(field);
 					},

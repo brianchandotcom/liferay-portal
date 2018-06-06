@@ -253,6 +253,92 @@ AUI.add(
 						A.one('#field-type-menu-content').html(instance._getFieldTypeMenuLayout(fieldType));
 					},
 
+					_configureEditMode: function() {
+						var instance = this;
+
+						var builder = instance.get('builder');
+
+						var settingsPanel = builder.getFieldSettingsPanel();
+
+						var settingsPanelNode = settingsPanel.get('contentBox');
+
+						var dropdownFieldToolbar = settingsPanelNode.one('.dropdown-action');
+						var fieldTypeButton = settingsPanelNode.one('#field-type-menu-content');
+						var sidebarBack = settingsPanelNode.one('.form-builder-sidebar-back');
+
+						var duplicateFieldButton = dropdownFieldToolbar.one('.dropdown-item[data-handler="duplicateField"]');
+						var removeFieldButton = dropdownFieldToolbar.one('.dropdown-item[data-handler="_removeFieldCol"]');
+
+						var contentBox = instance.get('contentBox');
+
+						var controlInputs = contentBox.all('.custom-control-input');
+						var switchers = contentBox.all('.toggle-switch');
+
+						var disabled = false;
+
+						if (builder.isEditMode()) {
+							disabled = true;
+
+							duplicateFieldButton.addClass('disabled');
+							removeFieldButton.addClass('disabled');
+							sidebarBack.addClass('disabled');
+
+							instance._configureKeyValueFieldEditMode();
+							instance._configureOptionsFieldEditMode();
+						}
+						else {
+							duplicateFieldButton.removeClass('disabled');
+
+							removeFieldButton.removeClass('disabled');
+							sidebarBack.removeClass('disabled');
+						}
+
+						fieldTypeButton.attr('disabled', disabled);
+
+						if (controlInputs) {
+							controlInputs.attr('disabled', disabled);
+						}
+
+						if (switchers) {
+							switchers.attr('disabled', disabled);
+						}
+					},
+
+					_configureKeyValueFieldEditMode: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						var keyValueFields = contentBox.all('.liferay-ddm-form-field-key-value');
+
+						keyValueFields.each(
+							function(keyValueField) {
+								var key = keyValueField.one('input.key-value-input');
+								var value = keyValueField.one('input.field');
+
+								key.attr('disabled', true);
+
+								if (key.val() === '') {
+									value.attr('disabled', true);
+								}
+							}
+						);
+					},
+
+					_configureOptionsFieldEditMode: function() {
+						var instance = this;
+
+						var contentBox = instance.get('contentBox');
+
+						var optionsField = contentBox.one('.liferay-ddm-form-field-options');
+
+						if (optionsField) {
+							var closeOptions = optionsField.all('button.close');
+
+							closeOptions.attr('disabled', true);
+						}
+					},
+
 					_configureSideBar: function(field) {
 						var instance = this;
 
@@ -278,6 +364,8 @@ AUI.add(
 						instance._enableSidebarHeader();
 
 						settingsForm.render();
+
+						instance._configureEditMode();
 
 						instance._setFocusToFirstPageField(settingsForm);
 

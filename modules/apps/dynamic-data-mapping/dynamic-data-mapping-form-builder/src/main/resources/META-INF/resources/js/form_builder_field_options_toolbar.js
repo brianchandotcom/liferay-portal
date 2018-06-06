@@ -105,13 +105,19 @@ AUI.add(
 
 						var target = event.currentTarget;
 
+						var dropdown = target.ancestor('.dropdown-menu');
+
 						var handlerName = target.getData('handler');
 
 						var formBuilder = instance.get('formBuilder');
 
 						var field = instance.get('field');
 
-						if (handlerName && formBuilder[handlerName]) {
+						var fieldSelected = dropdown.one('.dropdown-item[data-handler="' + handlerName + '"]');
+
+						var fieldSelectedDisabled = fieldSelected.hasClass('disabled');
+
+						if (handlerName && !fieldSelectedDisabled && formBuilder[handlerName]) {
 							formBuilder[handlerName](field, event);
 						}
 					}

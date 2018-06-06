@@ -65,7 +65,7 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -105,6 +105,8 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		sb.append(lastPropagationDate);
 		sb.append(", namespace=");
 		sb.append(namespace);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -197,6 +199,13 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 			fragmentEntryLinkImpl.setNamespace(namespace);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			fragmentEntryLinkImpl.setLastPublishDate(null);
+		}
+		else {
+			fragmentEntryLinkImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		fragmentEntryLinkImpl.resetOriginalValues();
 
 		return fragmentEntryLinkImpl;
@@ -232,6 +241,7 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		position = objectInput.readInt();
 		lastPropagationDate = objectInput.readLong();
 		namespace = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -307,6 +317,8 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 		else {
 			objectOutput.writeUTF(namespace);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -328,4 +340,5 @@ public class FragmentEntryLinkCacheModel implements CacheModel<FragmentEntryLink
 	public int position;
 	public long lastPropagationDate;
 	public String namespace;
+	public long lastPublishDate;
 }

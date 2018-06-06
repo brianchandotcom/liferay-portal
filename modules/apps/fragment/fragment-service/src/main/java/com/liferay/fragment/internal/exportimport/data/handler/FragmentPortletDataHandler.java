@@ -35,4 +35,9 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		return false;
 	}
 
+	@Override
+	public boolean isStaged() {
+		return false;
+	}
+
 }

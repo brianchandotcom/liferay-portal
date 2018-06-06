@@ -163,6 +163,7 @@
 		<column name="position" type="int" />
 		<column name="lastPropagationDate" type="Date" />
 		<column name="namespace" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

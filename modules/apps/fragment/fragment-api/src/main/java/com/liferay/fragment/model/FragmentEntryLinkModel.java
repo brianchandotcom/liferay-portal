@@ -22,9 +22,8 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
-import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -46,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface FragmentEntryLinkModel extends AttachedModel,
-	BaseModel<FragmentEntryLink>, GroupedModel, ShardedModel, StagedAuditedModel {
+	BaseModel<FragmentEntryLink>, ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -383,6 +382,22 @@ public interface FragmentEntryLinkModel extends AttachedModel,
 	 * @param namespace the namespace of this fragment entry link
 	 */
 	public void setNamespace(String namespace);
+
+	/**
+	 * Returns the last publish date of this fragment entry link.
+	 *
+	 * @return the last publish date of this fragment entry link
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this fragment entry link.
+	 *
+	 * @param lastPublishDate the last publish date of this fragment entry link
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

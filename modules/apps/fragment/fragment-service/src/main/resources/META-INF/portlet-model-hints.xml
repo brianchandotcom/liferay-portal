@@ -73,5 +73,6 @@
 		<field name="position" type="int" />
 		<field name="lastPropagationDate" type="Date" />
 		<field name="namespace" type="String" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

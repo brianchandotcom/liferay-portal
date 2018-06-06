@@ -70,6 +70,8 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.Collections;
@@ -438,7 +440,10 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public List<NavigationItem> getNavigationItems() {
-		Group group = getGroup();
+		Group group = _themeDisplay.getScopeGroup();
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
 
 		return new NavigationItemList() {
 			{
@@ -454,17 +459,21 @@ public class LayoutsAdminDisplayContext {
 						});
 				}
 
-				add(
-					navigationItem -> {
-						navigationItem.setActive(
-							Objects.equals(getTabs1(), "page-templates"));
-						navigationItem.setHref(
-							getPortletURL(), "tabs1", "page-templates");
-						navigationItem.setLabel(
-							LanguageUtil.get(_request, "page-templates"));
-					});
+				if (!stagingGroupHelper.isLocalStagingGroup(group)) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(
+								Objects.equals(getTabs1(), "page-templates"));
+							navigationItem.setHref(
+								getPortletURL(), "tabs1", "page-templates");
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "page-templates"));
+						});
+				}
 
-				if (!group.isCompany()) {
+				if (!group.isCompany() &&
+					!stagingGroupHelper.isLocalStagingGroup(group)) {
+
 					add(
 						navigationItem -> {
 							navigationItem.setActive(

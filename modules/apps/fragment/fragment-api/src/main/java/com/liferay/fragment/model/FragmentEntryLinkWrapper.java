@@ -80,6 +80,7 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 		attributes.put("position", getPosition());
 		attributes.put("lastPropagationDate", getLastPropagationDate());
 		attributes.put("namespace", getNamespace());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -199,6 +200,12 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 
 		if (namespace != null) {
 			setNamespace(namespace);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -345,6 +352,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	@Override
 	public Date getLastPropagationDate() {
 		return _fragmentEntryLink.getLastPropagationDate();
+	}
+
+	/**
+	* Returns the last publish date of this fragment entry link.
+	*
+	* @return the last publish date of this fragment entry link
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _fragmentEntryLink.getLastPublishDate();
 	}
 
 	/**
@@ -617,6 +634,16 @@ public class FragmentEntryLinkWrapper implements FragmentEntryLink,
 	@Override
 	public void setLastPropagationDate(Date lastPropagationDate) {
 		_fragmentEntryLink.setLastPropagationDate(lastPropagationDate);
+	}
+
+	/**
+	* Sets the last publish date of this fragment entry link.
+	*
+	* @param lastPublishDate the last publish date of this fragment entry link
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_fragmentEntryLink.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

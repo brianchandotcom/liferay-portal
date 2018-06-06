@@ -341,6 +341,8 @@ public abstract class FragmentEntryLinkLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<FragmentEntryLink>() {
 				@Override
 				public void performAction(FragmentEntryLink fragmentEntryLink)

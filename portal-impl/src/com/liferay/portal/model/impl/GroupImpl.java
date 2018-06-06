@@ -1088,6 +1088,8 @@ public class GroupImpl extends GroupBaseImpl {
 					return GetterUtil.getBoolean(entry.getValue());
 				}
 			}
+
+			return portletDataHandler.isStaged();
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {

@@ -51,5 +51,6 @@ create table FragmentEntryLink (
 	editableValues STRING null,
 	position INTEGER,
 	lastPropagationDate DATE null,
-	namespace VARCHAR(75) null
+	namespace VARCHAR(75) null,
+	lastPublishDate DATE null
 );

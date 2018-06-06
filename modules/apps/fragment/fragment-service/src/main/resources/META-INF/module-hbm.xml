@@ -63,5 +63,6 @@
 		<property name="position" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="lastPropagationDate" type="org.hibernate.type.TimestampType" />
 		<property name="namespace" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

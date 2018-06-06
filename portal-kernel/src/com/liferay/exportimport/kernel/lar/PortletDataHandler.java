@@ -302,6 +302,10 @@ public interface PortletDataHandler {
 	 */
 	public boolean isRollbackOnException();
 
+	public default boolean isStaged() {
+		return true;
+	}
+
 	public default boolean isSupportsDataStrategyCopyAsNew() {
 		return true;
 	}

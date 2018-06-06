@@ -1649,7 +1649,7 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		HashMap<String, Locale> groupLanguageCodeLocalesMap = new HashMap<>();
-		LinkedHashMap<String, Locale> groupLanguageIdLocalesMap =
+		HashMap<String, Locale> groupLanguageIdLocalesMap =
 			new LinkedHashMap<>();
 
 		for (String languageId : languageIds) {

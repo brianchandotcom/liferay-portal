@@ -108,7 +108,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 				<c:choose>
 					<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
 						<liferay-ui:search-container
-							id="layoutPageTemplateEntries"
 							total="<%= selectLayoutPageTemplateEntryDisplayContext.getLayoutPageTemplateEntriesCount() %>"
 						>
 							<liferay-ui:search-container-results
@@ -138,13 +137,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 									<c:choose>
 										<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
 											<liferay-frontend:vertical-card
-												actionJspServletContext="<%= application %>"
 												cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
 												data="<%= addLayoutData %>"
 												imageCSSClass="aspect-ratio-bg-contain"
 												imageUrl="<%= imagePreviewURL %>"
-												resultRow="<%= row %>"
-												rowChecker="<%= searchContainer.getRowChecker() %>"
 												title="<%= layoutPageTemplateEntry.getName() %>"
 												url="javascript:;"
 											>
@@ -155,12 +151,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 										</c:when>
 										<c:otherwise>
 											<liferay-frontend:icon-vertical-card
-												actionJspServletContext="<%= application %>"
 												cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
 												data="<%= addLayoutData %>"
 												icon='<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) ? "page-template" : "page" %>'
-												resultRow="<%= row %>"
-												rowChecker="<%= searchContainer.getRowChecker() %>"
 												title="<%= layoutPageTemplateEntry.getName() %>"
 												url="javascript:;"
 											>

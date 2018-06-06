@@ -74,6 +74,12 @@ public class SiteNavigationMenuPortletToolbarContributor
 			return Collections.emptyList();
 		}
 
+		List<MenuItem> menuItems = _getPortletTitleMenuItems(portletRequest);
+
+		if (menuItems.isEmpty()) {
+			return Collections.emptyList();
+		}
+
 		List<Menu> menus = new ArrayList<>();
 
 		Menu menu = new Menu();
@@ -82,7 +88,7 @@ public class SiteNavigationMenuPortletToolbarContributor
 		menu.setExtended(false);
 		menu.setIcon("pencil");
 		menu.setMarkupView("lexicon");
-		menu.setMenuItems(_getPortletTitleMenuItems(portletRequest));
+		menu.setMenuItems(menuItems);
 		menu.setScroll(false);
 		menu.setShowArrow(false);
 		menu.setShowWhenSingleIcon(true);
@@ -100,6 +106,13 @@ public class SiteNavigationMenuPortletToolbarContributor
 			new SiteNavigationMenuDisplayContext(
 				_portal.getHttpServletRequest(portletRequest));
 
+		long siteNavigationMenuId =
+			siteNavigationMenuDisplayContext.getSiteNavigationMenuId();
+
+		if (siteNavigationMenuId <= 0) {
+			return null;
+		}
+
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(
@@ -113,9 +126,7 @@ public class SiteNavigationMenuPortletToolbarContributor
 		portletURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter(
-			"siteNavigationMenuId",
-			String.valueOf(
-				siteNavigationMenuDisplayContext.getSiteNavigationMenuId()));
+			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
 
 		urlMenuItem.setURL(portletURL.toString());
 
@@ -136,8 +147,13 @@ public class SiteNavigationMenuPortletToolbarContributor
 				return Collections.emptyList();
 			}
 
-			return Collections.singletonList(
-				_createMenuItem(themeDisplay, portletRequest));
+			MenuItem menuItem = _createMenuItem(themeDisplay, portletRequest);
+
+			if (menuItem == null) {
+				return Collections.emptyList();
+			}
+
+			return Collections.singletonList(menuItem);
 		}
 		catch (Exception e) {
 			_log.error(

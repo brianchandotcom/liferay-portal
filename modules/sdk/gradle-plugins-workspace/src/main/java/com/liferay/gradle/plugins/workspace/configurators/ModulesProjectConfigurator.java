@@ -101,6 +101,12 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
+
+		addTaskDeploy(
+			project, jar, RootProjectConfigurator.DEPLOY_TO_CONTAINER_TASK_NAME,
+			workspaceExtension.getDockerDir(),
+			"Assembles the project and deploys it to Liferay docker container.",
+			RootProjectConfigurator.DOCKER_GROUP);
 	}
 
 	@Override

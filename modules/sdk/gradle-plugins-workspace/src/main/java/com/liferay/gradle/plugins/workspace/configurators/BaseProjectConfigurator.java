@@ -14,6 +14,9 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
+import com.bmuschko.gradle.docker.tasks.container.DockerCreateContainer;
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
+
 import com.liferay.gradle.plugins.workspace.ProjectConfigurator;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
@@ -25,10 +28,12 @@ import java.io.File;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.initialization.Settings;
+import org.gradle.api.tasks.Copy;
 
 /**
  * @author Andrea Di Giorgi
@@ -78,6 +83,48 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 			throw new GradleException(
 				"Unable to get project directories from " + rootDir, e);
 		}
+	}
+
+	protected Copy addTaskDeploy(
+		Project project, Object object, String name, File dir,
+		String description, String group) {
+
+		Copy copy = GradleUtil.addTask(project, name, Copy.class);
+
+		copy.from(object);
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(dir, "deploy");
+				}
+
+			});
+
+		copy.setDescription(description);
+		copy.setGroup(group);
+
+		if (name.equals(
+				RootProjectConfigurator.DEPLOY_TO_CONTAINER_TASK_NAME)) {
+
+			DockerBuildImage dockerBuildImage =
+				(DockerBuildImage)GradleUtil.getTask(
+					project.getRootProject(),
+					RootProjectConfigurator.BUILD_IMAGE_TASK_NAME);
+
+			dockerBuildImage.dependsOn(copy);
+
+			DockerCreateContainer dockerCreateContainer =
+				(DockerCreateContainer)GradleUtil.getTask(
+					project.getRootProject(),
+					RootProjectConfigurator.CREATE_CONTAINER_TASK_NAME);
+
+			dockerCreateContainer.dependsOn(copy);
+		}
+
+		return copy;
 	}
 
 	protected abstract Iterable<File> doGetProjectDirs(File rootDir)

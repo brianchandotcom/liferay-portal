@@ -73,6 +73,9 @@ public class WorkspaceExtension {
 		_configsDir = _getProperty(
 			settings, "configs.dir",
 			BundleSupportConstants.DEFAULT_CONFIGS_DIR_NAME);
+		_dockerImageLiferay = _getProperty(
+			settings, "docker.image.liferay", _DOCKER_IMAGE_LIFERAY);
+		_dockerDir = _getProperty(settings, "docker.dir", "build/docker");
 		_environment = _getProperty(
 			settings, "environment",
 			BundleSupportConstants.DEFAULT_ENVIRONMENT);
@@ -112,6 +115,14 @@ public class WorkspaceExtension {
 
 	public File getConfigsDir() {
 		return GradleUtil.toFile(_gradle.getRootProject(), _configsDir);
+	}
+
+	public File getDockerDir() {
+		return GradleUtil.toFile(_gradle.getRootProject(), _dockerDir);
+	}
+
+	public String getDockerImageLiferay() {
+		return GradleUtil.toString(_dockerImageLiferay);
 	}
 
 	public String getEnvironment() {
@@ -188,6 +199,14 @@ public class WorkspaceExtension {
 		_configsDir = configsDir;
 	}
 
+	public void setDockerDir(Object dockerDir) {
+		_dockerDir = dockerDir;
+	}
+
+	public void setDockerImageLiferay(Object dockerImageLiferay) {
+		_dockerImageLiferay = dockerImageLiferay;
+	}
+
 	public void setEnvironment(Object environment) {
 		_environment = environment;
 	}
@@ -247,6 +266,9 @@ public class WorkspaceExtension {
 
 	private static final String _BUNDLE_TOKEN_PASSWORD_FILE = null;
 
+	private static final String _DOCKER_IMAGE_LIFERAY =
+		"liferay/portal:7.1.1-ga2";
+
 	private Object _bundleCacheDir;
 	private Object _bundleDistRootDirName;
 	private Object _bundleTokenDownload;
@@ -256,6 +278,8 @@ public class WorkspaceExtension {
 	private Object _bundleTokenPasswordFile;
 	private Object _bundleUrl;
 	private Object _configsDir;
+	private Object _dockerDir;
+	private Object _dockerImageLiferay;
 	private Object _environment;
 	private final Gradle _gradle;
 	private Object _homeDir;

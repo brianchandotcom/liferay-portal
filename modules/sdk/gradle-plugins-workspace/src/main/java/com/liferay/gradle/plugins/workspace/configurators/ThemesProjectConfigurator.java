@@ -48,8 +48,10 @@ import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.bundling.War;
 
 /**
  * @author Andrea Di Giorgi
@@ -81,6 +83,16 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 			_configureTaskBuildTheme(project);
 			_configureWar(project);
+
+			War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
+
+			addTaskDeploy(
+				project, war,
+				RootProjectConfigurator.DEPLOY_TO_CONTAINER_TASK_NAME,
+				workspaceExtension.getDockerDir(),
+				"Assembles the project and deploys it to Liferay docker " +
+					"container.",
+				RootProjectConfigurator.DOCKER_GROUP);
 		}
 		else {
 			GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
@@ -91,6 +103,14 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 				project, BasePlugin.ASSEMBLE_TASK_NAME);
 
 			_configureRootTaskDistBundle(assembleTask);
+
+			addTaskDeploy(
+				project, _copyWar(project, assembleTask),
+				RootProjectConfigurator.DEPLOY_TO_CONTAINER_TASK_NAME,
+				workspaceExtension.getDockerDir(),
+				"Assembles the project and deploys it to Liferay docker " +
+					"container.",
+				RootProjectConfigurator.DOCKER_GROUP);
 		}
 	}
 
@@ -165,23 +185,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		copy.dependsOn(assembleTask);
 
-		copy.into(
-			"osgi/war",
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					Project project = assembleTask.getProject();
-
-					ConfigurableFileCollection configurableFileCollection =
-						project.files(_getWarFile(project));
-
-					configurableFileCollection.builtBy(assembleTask);
-
-					copySpec.from(_getWarFile(project));
-				}
-
-			});
+		copy.into("osgi/war", _copyWar(project, assembleTask));
 	}
 
 	private void _configureTaskBuildTheme(Project project) {
@@ -219,6 +223,24 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 			project, WarPluginConvention.class);
 
 		warPluginConvention.setWebAppDirName("src");
+	}
+
+	private Closure _copyWar(Project project, final Task assembleTask) {
+		return new Closure<Void>(project) {
+
+			@SuppressWarnings("unused")
+			public void doCall(CopySpec copySpec) {
+				Project project = assembleTask.getProject();
+
+				ConfigurableFileCollection configurableFileCollection =
+					project.files(_getWarFile(project));
+
+				configurableFileCollection.builtBy(assembleTask);
+
+				copySpec.from(_getWarFile(project));
+			}
+
+		};
 	}
 
 	private File _getWarFile(Project project) {

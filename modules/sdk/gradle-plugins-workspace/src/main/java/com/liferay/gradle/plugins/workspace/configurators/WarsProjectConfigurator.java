@@ -32,7 +32,6 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
@@ -71,7 +70,17 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
-		_addTaskDeploy(war, workspaceExtension);
+		addTaskDeploy(
+			project, war, LiferayBasePlugin.DEPLOY_TASK_NAME,
+			workspaceExtension.getHomeDir(),
+			"Assembles the project and deploys it to Liferay.",
+			BasePlugin.BUILD_GROUP);
+
+		addTaskDeploy(
+			project, war, RootProjectConfigurator.DEPLOY_TO_CONTAINER_TASK_NAME,
+			workspaceExtension.getDockerDir(),
+			"Assembles the project and deploys it to Liferay docker container.",
+			RootProjectConfigurator.DOCKER_GROUP);
 
 		_configureRootTaskDistBundle(war);
 	}
@@ -117,30 +126,6 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	protected static final String NAME = "wars";
-
-	private Copy _addTaskDeploy(
-		War war, final WorkspaceExtension workspaceExtension) {
-
-		Copy copy = GradleUtil.addTask(
-			war.getProject(), LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
-
-		copy.from(war);
-
-		copy.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(workspaceExtension.getHomeDir(), "deploy");
-				}
-
-			});
-
-		copy.setDescription("Assembles the project and deploys it to Liferay.");
-		copy.setGroup(BasePlugin.BUILD_GROUP);
-
-		return copy;
-	}
 
 	private void _configureRootTaskDistBundle(final War war) {
 		Project project = war.getProject();

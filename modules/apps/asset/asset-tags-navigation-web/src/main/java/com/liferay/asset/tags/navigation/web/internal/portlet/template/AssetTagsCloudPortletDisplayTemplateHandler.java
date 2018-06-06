@@ -15,7 +15,6 @@
 package com.liferay.asset.tags.navigation.web.internal.portlet.template;
 
 import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.Portal;

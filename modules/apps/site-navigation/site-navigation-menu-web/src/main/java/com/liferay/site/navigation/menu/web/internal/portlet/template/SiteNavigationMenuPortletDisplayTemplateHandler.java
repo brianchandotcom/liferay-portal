@@ -14,7 +14,6 @@
 
 package com.liferay.site.navigation.menu.web.internal.portlet.template;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;

@@ -26,7 +26,6 @@ import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherHelper;
 import com.liferay.asset.tag.stats.service.AssetTagStatsLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;

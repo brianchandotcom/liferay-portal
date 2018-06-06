@@ -14,7 +14,6 @@
 
 package com.liferay.site.navigation.site.map.web.internal.portlet.template;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;

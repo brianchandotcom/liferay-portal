@@ -83,6 +83,13 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			}
 		}
 
+		if (_initParametersMap.containsKey("guest.allowed")) {
+			_guestAllowed = GetterUtil.getBoolean(
+				_initParametersMap.get("guest.allowed"), true);
+
+			_initParametersMap.remove("guest.allowed");
+		}
+
 		if (_initParametersMap.containsKey("hosts.allowed")) {
 			String hostsAllowedString = (String)_initParametersMap.get(
 				"hosts.allowed");
@@ -149,7 +156,12 @@ public class AuthVerifierFilter extends BasePortalFilter {
 		else if (state == AuthVerifierResult.State.NOT_APPLICABLE) {
 			_log.error("Invalid state " + state);
 		}
-		else if (state == AuthVerifierResult.State.SUCCESS) {
+		else if (!_guestAllowed &&
+				 (state == AuthVerifierResult.State.UNSUCCESSFUL)) {
+
+			_log.error("Guest is not allowed");
+		}
+		else if (_guestAllowed || (state == AuthVerifierResult.State.SUCCESS)) {
 			long userId = authVerifierResult.getUserId();
 
 			AccessControlUtil.initContextUser(userId);
@@ -239,6 +251,7 @@ public class AuthVerifierFilter extends BasePortalFilter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AuthVerifierFilter.class.getName());
 
+	private boolean _guestAllowed = true;
 	private final Set<String> _hostsAllowed = new HashSet<>();
 	private boolean _httpsRequired;
 	private final Map<String, Object> _initParametersMap = new HashMap<>();

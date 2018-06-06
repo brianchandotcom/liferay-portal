@@ -176,10 +176,16 @@ public class FragmentsEditorDisplayContext {
 		}
 
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
-		soyContext.put(
-			"publishLayoutPageTemplateEntryURL",
-			_getFragmentEntryActionURL(
-				"/layout/publish_layout_page_template_entry"));
+
+		if (_classNameId ==
+				PortalUtil.getClassNameId(LayoutPageTemplateEntry.class)) {
+
+			soyContext.put(
+				"publishLayoutPageTemplateEntryURL",
+				_getFragmentEntryActionURL(
+					"/layout/publish_layout_page_template_entry"));
+		}
+
 		soyContext.put(
 			"renderFragmentEntryURL",
 			_getFragmentEntryActionURL("/layout/render_fragment_entry"));

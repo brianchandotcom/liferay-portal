@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -36,6 +35,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -55,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  * @author Gregory Amerson
+ * @author David Truong
  */
 @Component(
 	immediate = true,
@@ -167,7 +169,9 @@ public class GogoShellPortlet extends MVCPortlet {
 	protected void checkCommand(String command, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		if (StringUtil.startsWith(command, "exit")) {
+		Matcher matcher = _exitShutdownPattern.matcher(command);
+
+		if (matcher.find()) {
 			ResourceBundle resourceBundle =
 				_resourceBundleLoader.loadResourceBundle(
 					themeDisplay.getLocale());
@@ -245,6 +249,9 @@ public class GogoShellPortlet extends MVCPortlet {
 
 		return null;
 	}
+
+	private static final Pattern _exitShutdownPattern = Pattern.compile(
+		"(\\bexit\\b|\\bshutdown\\b)");
 
 	@Reference
 	private CommandProcessor _commandProcessor;

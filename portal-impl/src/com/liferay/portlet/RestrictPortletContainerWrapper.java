@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.ActionResult;
@@ -35,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public class RestrictPortletContainerWrapper implements PortletContainer {
 
 	public static PortletContainer createRestrictPortletContainerWrapper(
@@ -118,6 +121,45 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 			Portlet portlet)
 		throws PortletContainerException {
 
+		_render(
+			request,
+			() -> _portletContainer.render(request, response, portlet));
+	}
+
+	@Override
+	public void renderHeaders(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet)
+		throws PortletContainerException {
+
+		_render(
+			request,
+			() -> _portletContainer.renderHeaders(request, response, portlet));
+	}
+
+	@Override
+	public void serveResource(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet)
+		throws PortletContainerException {
+
+		RestrictPortletServletRequest restrictPortletServletRequest =
+			new RestrictPortletServletRequest(request);
+
+		try {
+			_portletContainer.serveResource(request, response, portlet);
+		}
+		catch (Exception e) {
+			throw new PortletContainerException(e);
+		}
+		finally {
+			restrictPortletServletRequest.mergeSharedAttributes();
+		}
+	}
+
+	private void _render(HttpServletRequest request, Renderable renderable)
+		throws PortletContainerException {
+
 		RestrictPortletServletRequest restrictPortletServletRequest = null;
 
 		if (request instanceof RestrictPortletServletRequest) {
@@ -138,10 +180,7 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		}
 
 		try {
-			_portletContainer.render(request, response, portlet);
-		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
+			renderable.render();
 		}
 		finally {
 			restrictPortletServletRequest.removeAttribute(WebKeys.RENDER_PATH);
@@ -168,26 +207,13 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 		}
 	}
 
-	@Override
-	public void serveResource(
-			HttpServletRequest request, HttpServletResponse response,
-			Portlet portlet)
-		throws PortletContainerException {
-
-		RestrictPortletServletRequest restrictPortletServletRequest =
-			new RestrictPortletServletRequest(request);
-
-		try {
-			_portletContainer.serveResource(request, response, portlet);
-		}
-		catch (Exception e) {
-			throw new PortletContainerException(e);
-		}
-		finally {
-			restrictPortletServletRequest.mergeSharedAttributes();
-		}
-	}
-
 	private final PortletContainer _portletContainer;
+
+	@FunctionalInterface
+	private interface Renderable {
+
+		public void render() throws PortletContainerException;
+
+	}
 
 }

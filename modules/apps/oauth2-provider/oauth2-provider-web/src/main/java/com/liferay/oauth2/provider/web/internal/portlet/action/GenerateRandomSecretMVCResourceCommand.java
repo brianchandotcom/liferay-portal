@@ -47,11 +47,12 @@ public class GenerateRandomSecretMVCResourceCommand
 		resourceResponse.setContentType("text/plain");
 
 		try {
+			PrintWriter printWriter = resourceResponse.getWriter();
+
 			String randomSecret =
 				OAuth2AdminPortletDisplayContext.generateRandomSecret();
-			PrintWriter writer = resourceResponse.getWriter();
 
-			writer.write(randomSecret);
+			printWriter.write(randomSecret);
 		}
 		catch (IOException ioe) {
 			throw new PortletException(ioe);

@@ -21,6 +21,7 @@ import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
+import org.elasticsearch.action.support.WriteRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -49,11 +50,27 @@ public class DeleteDocumentRequestExecutorTest {
 	}
 
 	@Test
-	public void testDocumentRequestTranslation() {
+	public void testDocumentRequestTranslationWithNoRefresh() {
+		doTestDocumentRequestTranslationTest(
+			false, WriteRequest.RefreshPolicy.NONE);
+	}
+
+	@Test
+	public void testDocumentRequestTranslationWithRefresh() {
+		doTestDocumentRequestTranslationTest(
+			true, WriteRequest.RefreshPolicy.IMMEDIATE);
+	}
+
+	protected void doTestDocumentRequestTranslationTest(
+		boolean refreshPolicy,
+		WriteRequest.RefreshPolicy expectedRefreshPolicy) {
+
 		String id = "1";
 
 		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
 			_INDEX_NAME, _MAPPING_NAME, id);
+
+		deleteDocumentRequest.setRefresh(refreshPolicy);
 
 		DeleteDocumentRequestExecutorImpl deleteDocumentRequestExecutorImpl =
 			new DeleteDocumentRequestExecutorImpl() {
@@ -69,6 +86,8 @@ public class DeleteDocumentRequestExecutorTest {
 
 		DeleteRequest deleteRequest = deleteRequestBuilder.request();
 
+		Assert.assertEquals(
+			expectedRefreshPolicy, deleteRequest.getRefreshPolicy());
 		Assert.assertEquals(_INDEX_NAME, deleteRequest.index());
 		Assert.assertEquals(_MAPPING_NAME, deleteRequest.type());
 		Assert.assertEquals(id, deleteRequest.id());

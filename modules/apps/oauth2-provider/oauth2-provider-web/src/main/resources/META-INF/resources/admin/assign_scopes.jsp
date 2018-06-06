@@ -36,10 +36,10 @@ if (oAuth2Application.getOAuth2ApplicationScopeAliasesId() > 0) {
 	<div class="row">
 		<div class="col-lg-12">
 			<portlet:actionURL name="/admin/assign_scopes" var="assignScopesURL">
-				<portlet:param name="appTab" value="assign_scopes" />
 				<portlet:param name="mvcRenderCommandName" value="/admin/assign_scopes" />
-				<portlet:param name="oAuth2ApplicationId" value="<%= String.valueOf(oAuth2Application.getOAuth2ApplicationId()) %>" />
+				<portlet:param name="appTab" value="assign_scopes" />
 				<portlet:param name="backURL" value="<%= redirect %>" />
+				<portlet:param name="oAuth2ApplicationId" value="<%= String.valueOf(oAuth2Application.getOAuth2ApplicationId()) %>" />
 			</portlet:actionURL>
 
 			<aui:form action="<%= assignScopesURL %>" name="fm">

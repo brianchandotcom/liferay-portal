@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.IOException;
 
 import java.util.Collections;
@@ -24,6 +26,9 @@ import javax.portlet.ActionResponse;
 import javax.portlet.EventPortlet;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -34,14 +39,18 @@ import javax.portlet.ResourceServingPortlet;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.HeaderFilter;
+import javax.portlet.filter.HeaderFilterChain;
 import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
-public class FilterChainImpl implements FilterChain {
+@ProviderType
+public class FilterChainImpl implements FilterChain, HeaderFilterChain {
 
 	public FilterChainImpl(
 		Portlet portlet, List<? extends PortletFilter> portletFilters) {
@@ -85,6 +94,24 @@ public class FilterChainImpl implements FilterChain {
 			EventPortlet eventPortlet = (EventPortlet)_portlet;
 
 			eventPortlet.processEvent(eventRequest, eventResponse);
+		}
+	}
+
+	@Override
+	public void doFilter(
+			HeaderRequest headerRequest, HeaderResponse headerResponse)
+		throws IOException, PortletException {
+
+		if (_portletFilters.size() > _pos) {
+			HeaderFilter headerFilter = (HeaderFilter)_portletFilters.get(
+				_pos++);
+
+			headerFilter.doFilter(headerRequest, headerResponse, this);
+		}
+		else {
+			HeaderPortlet headerPortlet = (HeaderPortlet)_portlet;
+
+			headerPortlet.renderHeaders(headerRequest, headerResponse);
 		}
 	}
 

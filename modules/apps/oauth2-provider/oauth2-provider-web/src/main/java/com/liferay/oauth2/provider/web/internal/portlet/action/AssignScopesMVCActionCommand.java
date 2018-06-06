@@ -63,8 +63,7 @@ public class AssignScopesMVCActionCommand implements MVCActionCommand {
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to load OAuth2Application with id " +
-						oAuth2ApplicationId,
+					"Unable to load OAuth 2 application " + oAuth2ApplicationId,
 					pe);
 			}
 		}

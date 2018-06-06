@@ -23,9 +23,9 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 
 long oAuth2ApplicationId = oAuth2Application.getOAuth2ApplicationId();
 
-OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManagementToolbarDisplayContext = new OAuth2AuthorizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
-
 int oAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getApplicationOAuth2AuthorizationsCount(oAuth2ApplicationId);
+
+OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManagementToolbarDisplayContext = new OAuth2AuthorizationsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, currentURLObj);
 %>
 
 <clay:management-toolbar
@@ -41,10 +41,10 @@ int oAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getApplicationOAu
 />
 
 <portlet:actionURL name="/admin/revoke_oauth2_authorizations" var="revokeOAuth2AuthorizationsURL">
-	<portlet:param name="appTab" value="application_authorizations" />
 	<portlet:param name="mvcRenderCommandName" value="/admin/view_oauth2_authorizations" />
-	<portlet:param name="oAuth2ApplicationId" value="<%= String.valueOf(oAuth2ApplicationId) %>" />
+	<portlet:param name="appTab" value="application_authorizations" />
 	<portlet:param name="backURL" value="<%= redirect %>" />
+	<portlet:param name="oAuth2ApplicationId" value="<%= String.valueOf(oAuth2ApplicationId) %>" />
 </portlet:actionURL>
 
 <div class="container-fluid-1280">

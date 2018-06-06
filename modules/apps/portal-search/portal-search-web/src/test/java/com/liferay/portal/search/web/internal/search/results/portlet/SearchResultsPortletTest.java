@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.search.web.internal.portlet.shared.task.PortletSharedR
 import com.liferay.portal.search.web.internal.result.display.builder.AssetRendererFactoryLookup;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
+import com.liferay.portal.search.web.search.request.SearchSettings;
 
 import java.io.IOException;
 
@@ -75,6 +77,7 @@ public class SearchResultsPortletTest {
 		setUpHtmlUtil();
 		setUpPortletSharedSearchResponse();
 		setUpProps();
+		setUpSearchSettings();
 
 		_portletURLFactory = createPortletURLFactory();
 		_renderRequest = createRenderRequest();
@@ -284,6 +287,12 @@ public class SearchResultsPortletTest {
 		);
 
 		Mockito.doReturn(
+			_searchSettings
+		).when(
+			_portletSharedSearchResponse
+		).getSearchSettings();
+
+		Mockito.doReturn(
 			new ThemeDisplay()
 		).when(
 			_portletSharedSearchResponse
@@ -302,6 +311,14 @@ public class SearchResultsPortletTest {
 		).when(
 			_portletSharedSearchResponse
 		).getDocuments();
+	}
+
+	protected void setUpSearchSettings() {
+		Mockito.when(
+			_searchSettings.getSearchContext()
+		).thenReturn(
+			_searchContext
+		);
 	}
 
 	private Indexer<?> _createIndexerWithSummary() throws SearchException {
@@ -344,6 +361,12 @@ public class SearchResultsPortletTest {
 	@Mock
 	private RenderResponse _renderResponse;
 
+	@Mock
+	private SearchContext _searchContext;
+
 	private SearchResultsPortlet _searchResultsPortlet;
+
+	@Mock
+	private SearchSettings _searchSettings;
 
 }

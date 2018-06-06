@@ -70,6 +70,9 @@ public class DefineObjectsTag extends TagSupport {
 			else if (lifecycle.equals(PortletRequest.EVENT_PHASE)) {
 				portletRequestAttrName = "eventRequest";
 			}
+			else if (lifecycle.equals(PortletRequest.HEADER_PHASE)) {
+				portletRequestAttrName = "headerRequest";
+			}
 			else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 				portletRequestAttrName = "renderRequest";
 			}
@@ -121,6 +124,9 @@ public class DefineObjectsTag extends TagSupport {
 		}
 		else if (lifecycle.equals(PortletRequest.EVENT_PHASE)) {
 			portletResponseAttrName = "eventResponse";
+		}
+		else if (lifecycle.equals(PortletRequest.HEADER_PHASE)) {
+			portletResponseAttrName = "headerResponse";
 		}
 		else if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 			portletResponseAttrName = "renderResponse";

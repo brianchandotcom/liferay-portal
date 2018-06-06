@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -55,6 +57,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Raymond Augé
  */
 @DoPrivileged
+@ProviderType
 public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	public static PortletContainer createSecurityPortletContainerWrapper(
@@ -139,6 +142,35 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			checkRender(request, portlet);
 
 			_portletContainer.render(request, response, portlet);
+		}
+		catch (PrincipalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			processRenderException(request, response, portlet);
+		}
+		catch (PortletContainerException pce) {
+			throw pce;
+		}
+		catch (Exception e) {
+			throw new PortletContainerException(e);
+		}
+	}
+
+	@Override
+	public void renderHeaders(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet)
+		throws PortletContainerException {
+
+		try {
+			checkRender(request, portlet);
+
+			_portletContainer.renderHeaders(request, response, portlet);
 		}
 		catch (PrincipalException pe) {
 

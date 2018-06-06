@@ -188,6 +188,23 @@ public abstract class PoshiElement
 
 	protected abstract String getBlockName();
 
+	protected String getBlockName(String poshiScriptBlock) {
+		StringBuilder sb = new StringBuilder();
+
+		for (char c : poshiScriptBlock.toCharArray()) {
+			if (isBalancedPoshiScript(sb.toString()) && (c == '{')) {
+				String blockName = sb.toString();
+
+				return blockName.trim();
+			}
+
+			sb.append(c);
+		}
+
+		throw new RuntimeException(
+			"Unable to get Poshi script block name from:\n" + poshiScriptBlock);
+	}
+
 	protected String getBracedContent(String poshiScript) {
 		return RegexUtil.getGroup(poshiScript, ".*?\\{(.*)\\}", 1);
 	}
@@ -253,7 +270,7 @@ public abstract class PoshiElement
 	}
 
 	protected boolean isBalancedPoshiScript(String poshiScript) {
-		poshiScript = poshiScript.replaceAll("<!--.*?-->", "");
+		poshiScript = poshiScript.replaceAll("/\\*.*?\\*/", "");
 
 		poshiScript = poshiScript.replaceAll("\'\'\'.*?\'\'\'", "\"\"");
 
@@ -357,6 +374,30 @@ public abstract class PoshiElement
 		return false;
 	}
 
+	protected boolean isValidPoshiScriptBlock(
+		Pattern poshiScriptBlockNamePattern, String poshiScript) {
+
+		poshiScript = poshiScript.trim();
+
+		if (!isBalancedPoshiScript(poshiScript)) {
+			return false;
+		}
+
+		Matcher poshiScriptBlockMatcher = _poshiScriptBlockPattern.matcher(
+			poshiScript);
+
+		if (poshiScriptBlockMatcher.find()) {
+			Matcher poshiScriptBlockNameMatcher =
+				poshiScriptBlockNamePattern.matcher(getBlockName(poshiScript));
+
+			if (poshiScriptBlockNameMatcher.find()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean isValidPoshiScriptSnippet(String poshiScript) {
 		poshiScript = poshiScript.trim();
 
@@ -431,6 +472,11 @@ public abstract class PoshiElement
 		return poshiElements;
 	}
 
+	protected static final String BLOCK_NAME_ANNOTATION_REGEX = "(@.*=.*|)";
+
+	protected static final String BLOCK_NAME_PARAMETER_REGEX =
+		"[\\s]*\\(.*?\\)$";
+
 	protected static final Set<String> functionFileNames = new TreeSet<>();
 	protected static final Pattern nestedVarAssignmentPattern = Pattern.compile(
 		"(\\w*? = \".*?\"|\\w*? = \'\'\'.*?\'\'\'|\\w*? = .*?\\(.*?\\))" +
@@ -458,6 +504,8 @@ public abstract class PoshiElement
 		new HashMap<>();
 	private static final Pattern _namespacedfunctionFileNamePattern =
 		Pattern.compile(".*?\\.(.*?)\\.function");
+	private static final Pattern _poshiScriptBlockPattern = Pattern.compile(
+		".*?\\{.*\\}$", Pattern.DOTALL);
 
 	static {
 		_codeBoundariesMap.put('\"', '\"');

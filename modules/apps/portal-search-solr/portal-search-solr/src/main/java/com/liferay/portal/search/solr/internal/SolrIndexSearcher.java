@@ -65,6 +65,7 @@ import com.liferay.portal.search.solr.stats.StatsTranslator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -533,6 +534,26 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		return solrClient.query(solrQuery, METHOD.POST);
 	}
 
+	protected FacetCollector getFacetCollector(
+		Facet facet, Map<String, FacetField> facetFieldsMap,
+		QueryResponse queryResponse) {
+
+		String fieldName = facet.getFieldName();
+
+		FacetCollector facetCollector = null;
+
+		if (facet instanceof RangeFacet) {
+			facetCollector = new SolrFacetQueryCollector(
+				fieldName, queryResponse.getFacetQuery());
+		}
+		else {
+			facetCollector = new SolrFacetFieldCollector(
+				fieldName, facetFieldsMap.get(fieldName));
+		}
+
+		return facetCollector;
+	}
+
 	protected String getSortFieldName(Sort sort, String scoreFieldName) {
 		String sortFieldName = sort.getFieldName();
 
@@ -669,29 +690,25 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	protected void updateFacetCollectors(
 		QueryResponse queryResponse, SearchContext searchContext) {
 
-		Map<String, Facet> facetsMap = searchContext.getFacets();
-
 		List<FacetField> facetFields = queryResponse.getFacetFields();
 
 		if (ListUtil.isEmpty(facetFields)) {
 			return;
 		}
 
+		Map<String, FacetField> facetFieldsMap = new HashMap<>();
+
 		for (FacetField facetField : facetFields) {
-			Facet facet = facetsMap.get(facetField.getName());
+			facetFieldsMap.put(facetField.getName(), facetField);
+		}
 
-			FacetCollector facetCollector = null;
+		Map<String, Facet> facetsMap = searchContext.getFacets();
 
-			if (facet instanceof RangeFacet) {
-				facetCollector = new SolrFacetQueryCollector(
-					facetField.getName(), queryResponse.getFacetQuery());
+		for (Facet facet : facetsMap.values()) {
+			if (!facet.isStatic()) {
+				facet.setFacetCollector(
+					getFacetCollector(facet, facetFieldsMap, queryResponse));
 			}
-			else {
-				facetCollector = new SolrFacetFieldCollector(
-					facetField.getName(), facetField);
-			}
-
-			facet.setFacetCollector(facetCollector);
 		}
 	}
 

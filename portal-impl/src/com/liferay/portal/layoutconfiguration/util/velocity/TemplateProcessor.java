@@ -175,6 +175,9 @@ public class TemplateProcessor implements ColumnProcessor {
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(_response);
 
+		PortletContainerUtil.renderHeaders(
+			_request, bufferCacheServletResponse, _portlet);
+
 		PortletContainerUtil.render(
 			_request, bufferCacheServletResponse, _portlet);
 

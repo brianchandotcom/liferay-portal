@@ -285,7 +285,9 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 			return clientDataRequest.getMethod();
 		}
 
-		if (_lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+		if (_lifecycle.equals(PortletRequest.HEADER_PHASE) ||
+			_lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+
 			return HttpMethods.GET;
 		}
 

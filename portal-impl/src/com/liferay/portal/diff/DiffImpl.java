@@ -444,7 +444,7 @@ public class DiffImpl implements com.liferay.portal.kernel.diff.Diff {
 		List<String> sourceList = _toList(source);
 		List<String> targetList = _toList(target);
 
-		Diff diff = new Diff(sourceList, targetList);
+		Diff<String> diff = new Diff<>(sourceList, targetList);
 
 		List<Difference> differences = diff.diff();
 

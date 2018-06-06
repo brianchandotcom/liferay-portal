@@ -26,8 +26,8 @@ OAuth2Authorization oAuth2Authorization = (OAuth2Authorization)row.getObject();
 
 <c:if test="<%= oAuth2AdminPortletDisplayContext.hasRevokeTokenPermission(oAuth2Application) %>">
 	<portlet:actionURL name="revokeOAuth2Authorization" var="revokeOAuth2AuthorizationURL">
-		<portlet:param name="oAuth2AuthorizationId" value="<%= String.valueOf(oAuth2Authorization.getOAuth2AuthorizationId()) %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="oAuth2AuthorizationId" value="<%= String.valueOf(oAuth2Authorization.getOAuth2AuthorizationId()) %>" />
 	</portlet:actionURL>
 
 	<aui:button onClick='<%= renderResponse.getNamespace() + "revokeOAuth2Authorization(" + oAuth2Authorization.getOAuth2AuthorizationId() + ")" %>' value="revoke" />

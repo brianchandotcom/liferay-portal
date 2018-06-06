@@ -542,6 +542,13 @@ public class PortletTracker
 		portletModel.setHeaderPortletJavaScript(
 			StringPlus.asList(
 				get(serviceReference, "header-portlet-javascript")));
+		portletModel.setHeaderRequestAttributePrefixes(
+			StringPlus.asList(
+				get(serviceReference, "header-request-attribute-prefix")));
+		portletModel.setHeaderTimeout(
+			GetterUtil.getInteger(
+				get(serviceReference, "header-timeout"),
+				portletModel.getHeaderTimeout()));
 		portletModel.setIcon(
 			GetterUtil.getString(
 				get(serviceReference, "icon"), portletModel.getIcon()));

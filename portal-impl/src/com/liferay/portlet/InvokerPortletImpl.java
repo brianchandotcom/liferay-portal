@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,6 +48,8 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.lang.reflect.Method;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -56,6 +58,10 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
+import javax.portlet.GenericPortlet;
+import javax.portlet.HeaderPortlet;
+import javax.portlet.HeaderRequest;
+import javax.portlet.HeaderResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -71,6 +77,7 @@ import javax.portlet.UnavailableException;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.FilterChain;
+import javax.portlet.filter.HeaderFilter;
 import javax.portlet.filter.PortletFilter;
 import javax.portlet.filter.RenderFilter;
 import javax.portlet.filter.ResourceFilter;
@@ -88,6 +95,7 @@ import org.apache.commons.lang.time.StopWatch;
  * @author Brian Wing Shun Chan
  * @author Brian Myunghun Kim
  * @author Raymond Augé
+ * @author Neil Griffin
  */
 public class InvokerPortletImpl
 	implements InvokerFilterContainer, InvokerPortlet {
@@ -145,6 +153,14 @@ public class InvokerPortletImpl
 			((PortletSessionImpl)portletSession).getHttpSession());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #InvokerPortletImpl(com.liferay.portal.kernel.model.Portlet,
+	 *             Portlet, PortletConfig, PortletContext,
+	 *             InvokerFilterContainer, boolean, boolean, boolean, boolean,
+	 *             boolean)}
+	 */
+	@Deprecated
 	public InvokerPortletImpl(
 		com.liferay.portal.kernel.model.Portlet portletModel, Portlet portlet,
 		PortletConfig portletConfig, PortletContext portletContext,
@@ -154,8 +170,21 @@ public class InvokerPortletImpl
 
 		_initialize(
 			portletModel, portlet, portletConfig, portletContext,
-			invokerFilterContainer, checkAuthToken, facesPortlet, strutsPortlet,
-			strutsBridgePortlet);
+			invokerFilterContainer, checkAuthToken, facesPortlet, false,
+			strutsPortlet, strutsBridgePortlet);
+	}
+
+	public InvokerPortletImpl(
+		com.liferay.portal.kernel.model.Portlet portletModel, Portlet portlet,
+		PortletConfig portletConfig, PortletContext portletContext,
+		InvokerFilterContainer invokerFilterContainer, boolean checkAuthToken,
+		boolean facesPortlet, boolean headerPortlet, boolean strutsPortlet,
+		boolean strutsBridgePortlet) {
+
+		_initialize(
+			portletModel, portlet, portletConfig, portletContext,
+			invokerFilterContainer, checkAuthToken, facesPortlet, headerPortlet,
+			strutsPortlet, strutsBridgePortlet);
 	}
 
 	public InvokerPortletImpl(
@@ -170,22 +199,42 @@ public class InvokerPortletImpl
 
 		boolean facesPortlet = false;
 
-		if (ClassUtil.isSubclass(
-				portlet.getClass(), PortletDeployer.JSF_STANDARD)) {
+		Class<? extends Portlet> portletClass = portlet.getClass();
 
+		if (ClassUtil.isSubclass(portletClass, PortletDeployer.JSF_STANDARD)) {
 			facesPortlet = true;
 		}
 
+		boolean headerPortlet = false;
+
+		if (portlet instanceof HeaderPortlet) {
+			headerPortlet = true;
+
+			try {
+				Method renderHeadersMethod = portletClass.getMethod(
+					"renderHeaders", HeaderRequest.class, HeaderResponse.class);
+
+				if (GenericPortlet.class ==
+						renderHeadersMethod.getDeclaringClass()) {
+
+					headerPortlet = false;
+				}
+			}
+			catch (NoSuchMethodException nsme) {
+				_log.error(nsme, nsme);
+			}
+		}
+
 		boolean strutsPortlet = ClassUtil.isSubclass(
-			portlet.getClass(), StrutsPortlet.class);
+			portletClass, StrutsPortlet.class);
 
 		boolean strutsBridgePortlet = ClassUtil.isSubclass(
-			portlet.getClass(),
-			"org.apache.portals.bridges.struts.StrutsPortlet");
+			portletClass, "org.apache.portals.bridges.struts.StrutsPortlet");
 
 		_initialize(
 			portletModel, portlet, null, portletContext, invokerFilterContainer,
-			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
+			checkAuthToken, facesPortlet, headerPortlet, strutsPortlet,
+			strutsBridgePortlet);
 	}
 
 	@Override
@@ -235,6 +284,11 @@ public class InvokerPortletImpl
 	@Override
 	public Integer getExpCache() {
 		return _expCache;
+	}
+
+	@Override
+	public List<HeaderFilter> getHeaderFilters() {
+		return _invokerFilterContainer.getHeaderFilters();
 	}
 
 	@Override
@@ -314,6 +368,11 @@ public class InvokerPortletImpl
 	}
 
 	@Override
+	public boolean isHeaderPortlet() {
+		return _headerPortlet;
+	}
+
+	@Override
 	public boolean isStrutsBridgePortlet() {
 		return _strutsBridgePortlet;
 	}
@@ -342,7 +401,7 @@ public class InvokerPortletImpl
 			_log.debug(
 				StringBundler.concat(
 					"processAction for ", _portletId, " takes ",
-					String.valueOf(stopWatch.getTime()), " ms"));
+					stopWatch.getTime(), " ms"));
 		}
 	}
 
@@ -365,7 +424,7 @@ public class InvokerPortletImpl
 			_log.debug(
 				StringBundler.concat(
 					"processEvent for ", _portletId, " takes ",
-					String.valueOf(stopWatch.getTime()), " ms"));
+					stopWatch.getTime(), " ms"));
 		}
 	}
 
@@ -375,8 +434,7 @@ public class InvokerPortletImpl
 		throws IOException, PortletException {
 
 		PortletException portletException =
-			(PortletException)renderRequest.getAttribute(
-				_portletId + PortletException.class.getName());
+			(PortletException)renderRequest.getAttribute(_errorKey);
 
 		if (portletException != null) {
 			throw portletException;
@@ -454,8 +512,78 @@ public class InvokerPortletImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"render for ", _portletId, " takes ",
-					String.valueOf(stopWatch.getTime()), " ms"));
+					"render for ", _portletId, " takes ", stopWatch.getTime(),
+					" ms"));
+		}
+	}
+
+	@Override
+	public void renderHeaders(
+			HeaderRequest headerRequest, HeaderResponse headerResponse)
+		throws IOException, PortletException {
+
+		PortletException portletException =
+			(PortletException)headerRequest.getAttribute(_errorKey);
+
+		if (portletException != null) {
+			throw portletException;
+		}
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		String remoteUser = headerRequest.getRemoteUser();
+
+		if ((remoteUser == null) || (_expCache == null) || (_expCache == 0)) {
+			invokeHeader(headerRequest, headerResponse);
+		}
+		else {
+			HeaderResponseImpl headerResponseImpl =
+				(HeaderResponseImpl)headerResponse;
+
+			BufferCacheServletResponse bufferCacheServletResponse =
+				(BufferCacheServletResponse)
+					headerResponseImpl.getHttpServletResponse();
+
+			PortletSession portletSession = headerRequest.getPortletSession();
+
+			long now = System.currentTimeMillis();
+
+			Layout layout = (Layout)headerRequest.getAttribute(WebKeys.LAYOUT);
+
+			Map<String, InvokerPortletResponse> sessionResponses = getResponses(
+				portletSession);
+
+			String sessionResponseId = encodeResponseKey(
+				layout.getPlid(), _portletId,
+				LanguageUtil.getLanguageId(headerRequest));
+
+			InvokerPortletResponse response = sessionResponses.get(
+				sessionResponseId);
+
+			if (response == null) {
+				invokeHeader(headerRequest, headerResponse);
+			}
+			else if ((response.getTime() < now) && (_expCache > 0)) {
+				invokeHeader(headerRequest, headerResponse);
+				response.setContent(bufferCacheServletResponse.getString());
+			}
+			else {
+				headerResponseImpl.setTitle(response.getTitle());
+
+				PrintWriter printWriter =
+					bufferCacheServletResponse.getWriter();
+
+				printWriter.print(response.getContent());
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"header for", _portletId, " takes ", stopWatch.getTime(),
+					" ms"));
 		}
 	}
 
@@ -478,7 +606,7 @@ public class InvokerPortletImpl
 			_log.debug(
 				StringBundler.concat(
 					"serveResource for ", _portletId, " takes ",
-					String.valueOf(stopWatch.getTime()), " ms"));
+					stopWatch.getTime(), " ms"));
 		}
 	}
 
@@ -593,6 +721,27 @@ public class InvokerPortletImpl
 			_invokerFilterContainer.getEventFilters());
 	}
 
+	protected void invokeHeader(
+			HeaderRequest headerRequest, HeaderResponse headerResponse)
+		throws IOException, PortletException {
+
+		LiferayPortletRequest portletRequest =
+			PortalUtil.getLiferayPortletRequest(headerRequest);
+		LiferayPortletResponse portletResponse =
+			PortalUtil.getLiferayPortletResponse(headerResponse);
+
+		try {
+			invoke(
+				portletRequest, portletResponse, PortletRequest.HEADER_PHASE,
+				_invokerFilterContainer.getHeaderFilters());
+		}
+		catch (Exception e) {
+			processException(e, headerRequest, headerResponse);
+
+			throw e;
+		}
+	}
+
 	protected String invokeRender(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
@@ -671,8 +820,7 @@ public class InvokerPortletImpl
 			}
 
 			if (!(portletRequest instanceof RenderRequest)) {
-				portletRequest.setAttribute(
-					_portletId + PortletException.class.getName(), e);
+				portletRequest.setAttribute(_errorKey, e);
 			}
 		}
 		else {
@@ -684,20 +832,23 @@ public class InvokerPortletImpl
 		com.liferay.portal.kernel.model.Portlet portletModel, Portlet portlet,
 		PortletConfig portletConfig, PortletContext portletContext,
 		InvokerFilterContainer invokerFilterContainer, boolean checkAuthToken,
-		boolean facesPortlet, boolean strutsPortlet,
+		boolean facesPortlet, boolean headerPortlet, boolean strutsPortlet,
 		boolean strutsBridgePortlet) {
 
 		_portletModel = portletModel;
 		_portlet = portlet;
-		_liferayPortletConfig = (LiferayPortletConfig)portletConfig;
-		_portletId = _portletModel.getPortletId();
-		_liferayPortletContext = (LiferayPortletContext)portletContext;
 		_invokerFilterContainer = invokerFilterContainer;
 		_checkAuthToken = checkAuthToken;
 		_facesPortlet = facesPortlet;
+		_headerPortlet = headerPortlet;
 		_strutsPortlet = strutsPortlet;
 		_strutsBridgePortlet = strutsBridgePortlet;
+
+		_errorKey = _portletId.concat(PortletException.class.getName());
 		_expCache = portletModel.getExpCache();
+		_liferayPortletConfig = (LiferayPortletConfig)portletConfig;
+		_liferayPortletContext = (LiferayPortletContext)portletContext;
+		_portletId = _portletModel.getPortletId();
 
 		if (_log.isDebugEnabled()) {
 			com.liferay.portal.kernel.model.Portlet portletContextPortet =
@@ -713,8 +864,10 @@ public class InvokerPortletImpl
 		InvokerPortletImpl.class);
 
 	private boolean _checkAuthToken;
+	private String _errorKey;
 	private Integer _expCache;
 	private boolean _facesPortlet;
+	private boolean _headerPortlet;
 	private InvokerFilterContainer _invokerFilterContainer;
 	private LiferayPortletConfig _liferayPortletConfig;
 	private LiferayPortletContext _liferayPortletContext;

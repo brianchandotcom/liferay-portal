@@ -70,9 +70,9 @@ public class PersonModel {
 
 			RandomService randomService = faker.random();
 
-			IntStream intStream = IntStream.range(0, randomService.nextInt(5));
-
-			List<String> jobTitles = intStream.mapToObj(
+			List<String> jobTitles = IntStream.range(
+				0, randomService.nextInt(5)
+			).mapToObj(
 				__ -> name.title()
 			).collect(
 				Collectors.toList()

@@ -110,7 +110,7 @@ else {
 }
 
 if (ufaBorderStyle) {
-	if (!_unitSet.contains(borderTopStyleValue)) {
+	if (Validator.isNotNull(borderTopStyleValue)) {
 		finalCSS.add("border-style: " + borderTopStyleValue);
 	}
 }

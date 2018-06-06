@@ -29,6 +29,8 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -37,6 +39,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Shuyang Zhou
+ * @author Neil Griffin
  */
 public class PortletRenderer {
 
@@ -57,9 +60,11 @@ public class PortletRenderer {
 	}
 
 	public Callable<StringBundler> getCallable(
-		HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest request, HttpServletResponse response,
+		Map<String, Object> headerRequestAttributes) {
 
-		return new PortletRendererCallable(request, response);
+		return new PortletRendererCallable(
+			request, response, headerRequestAttributes);
 	}
 
 	public Portlet getPortlet() {
@@ -67,11 +72,14 @@ public class PortletRenderer {
 	}
 
 	public StringBundler render(
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response,
+			Map<String, Object> headerRequestAttributes)
 		throws PortletContainerException {
 
 		request = PortletContainerUtil.setupOptionalRenderParameters(
 			request, null, _columnId, _columnPos, _columnCount);
+
+		_copyHeaderRequestAttributes(headerRequestAttributes, request);
 
 		return _render(request, response);
 	}
@@ -105,6 +113,59 @@ public class PortletRenderer {
 		}
 		finally {
 			request.removeAttribute(WebKeys.PARALLEL_RENDERING_TIMEOUT_ERROR);
+		}
+	}
+
+	public Map<String, Object> renderHeaders(
+			HttpServletRequest request, HttpServletResponse response,
+			List<String> attributePrefixes)
+		throws PortletContainerException {
+
+		request = PortletContainerUtil.setupOptionalRenderParameters(
+			request, null, _columnId, _columnPos, _columnCount);
+
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(response);
+
+		PortletContainerUtil.renderHeaders(
+			request, bufferCacheServletResponse, _portlet);
+
+		Map<String, Object> headerRequestAttributes = new HashMap<>();
+
+		Enumeration<String> attributeNames = request.getAttributeNames();
+
+		while (attributeNames.hasMoreElements()) {
+			String attributeName = attributeNames.nextElement();
+
+			if (attributeName.startsWith("javax.portlet.faces")) {
+				headerRequestAttributes.put(
+					attributeName, request.getAttribute(attributeName));
+			}
+			else if (attributePrefixes != null) {
+				for (String attributePrefix : attributePrefixes) {
+					if (attributeName.startsWith(attributePrefix)) {
+						headerRequestAttributes.put(
+							attributeName, request.getAttribute(attributeName));
+
+						break;
+					}
+				}
+			}
+		}
+
+		return headerRequestAttributes;
+	}
+
+	private void _copyHeaderRequestAttributes(
+		Map<String, Object> headerRequestAttributes,
+		HttpServletRequest request) {
+
+		if (headerRequestAttributes != null) {
+			for (Map.Entry<String, Object> entry :
+					headerRequestAttributes.entrySet()) {
+
+				request.setAttribute(entry.getKey(), entry.getValue());
+			}
 		}
 	}
 
@@ -221,7 +282,8 @@ public class PortletRenderer {
 		extends CopyThreadLocalCallable<StringBundler> {
 
 		public PortletRendererCallable(
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response,
+			Map<String, Object> headerRequestAttributes) {
 
 			super(
 				ParallelRenderThreadLocalBinderUtil.getThreadLocalBinder(),
@@ -229,6 +291,7 @@ public class PortletRenderer {
 
 			_request = request;
 			_response = response;
+			_headerRequestAttributes = headerRequestAttributes;
 		}
 
 		@Override
@@ -236,6 +299,8 @@ public class PortletRenderer {
 			HttpServletRequest request =
 				PortletContainerUtil.setupOptionalRenderParameters(
 					_request, null, _columnId, _columnPos, _columnCount);
+
+			_copyHeaderRequestAttributes(_headerRequestAttributes, request);
 
 			_restrictPortletServletRequest =
 				(RestrictPortletServletRequest)request;
@@ -286,6 +351,7 @@ public class PortletRenderer {
 			}
 		}
 
+		private final Map<String, Object> _headerRequestAttributes;
 		private final HttpServletRequest _request;
 		private final HttpServletResponse _response;
 

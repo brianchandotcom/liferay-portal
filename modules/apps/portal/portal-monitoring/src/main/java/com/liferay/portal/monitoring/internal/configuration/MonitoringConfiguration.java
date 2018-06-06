@@ -52,6 +52,12 @@ public interface MonitoringConfiguration {
 	public boolean monitorPortletEventRequest();
 
 	@Meta.AD(
+		deflt = "true", name = "monitor-portlet-header-request",
+		required = false
+	)
+	public boolean monitorPortletHeaderRequest();
+
+	@Meta.AD(
 		deflt = "true", name = "monitor-portlet-render-request",
 		required = false
 	)

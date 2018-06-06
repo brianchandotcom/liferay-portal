@@ -325,7 +325,7 @@ public class AssignScopesDisplayContext
 			AssignableScopes assignableScopes =
 				assignableScopesRelationsEntry.getKey();
 
-			// Preserve AssignableScopes that are assigned an alias
+			// Preserve assignable scopes that are assigned an alias
 
 			if (!Validator.isBlank(scopeAlias)) {
 				combinedAssignableScopesRelations.put(
@@ -334,9 +334,9 @@ public class AssignScopesDisplayContext
 				continue;
 			}
 
-			// Reduce other AssignableScopes down to individual
-			// application scopes. But keep the global AssignableScopes
-			// relations of each original AssignableScopes
+			// Reduce other assignable scopes down to individual
+			// application scopes but keep the global assignable scopes
+			// relations of each original assignable scopes
 
 			Set<AssignableScopes> applicationScopedAssignableScopesSet =
 				assignableScopes.splitByApplicationScopes();
@@ -354,13 +354,13 @@ public class AssignScopesDisplayContext
 			}
 		}
 
+		// Merge those with identical global assignable scopes relations
+
 		HashMap<Relations, AssignableScopes> relationsAssignableScopes =
 			new HashMap<>();
 
-		// Finally merge those by identical global AssignableScopes relations
-
-		for (Map.Entry<AssignableScopes, Relations>
-				entry : combinedAssignableScopesRelations.entrySet()) {
+		for (Map.Entry<AssignableScopes, Relations> entry :
+				combinedAssignableScopesRelations.entrySet()) {
 
 			relationsAssignableScopes.compute(
 				entry.getValue(),

@@ -21,7 +21,8 @@
 
 	for (Map.Entry<String, String> applicationNameDescriptionEntry : applicationsNamesDescriptionsList) {
 		String applicationName = applicationNameDescriptionEntry.getKey();
-		String applicationNameHtmlId = HtmlUtil.getAUICompatibleId(applicationNameDescriptionEntry.getKey());
+
+		String applicationNameHtmlId = HtmlUtil.getAUICompatibleId(applicationName);
 	%>
 
 		<div class="panel panel-secondary">
@@ -55,10 +56,11 @@
 
 							Set<String> globalScopeAliases = relations.getGlobalScopeAliases();
 
-							String globalScopeAliasesStr = StringUtil.merge(globalScopeAliases, StringPool.SPACE);
+							String globalScopeAliasesString = StringUtil.merge(globalScopeAliases, StringPool.SPACE);
 
 							Map<String, Object> data = new HashMap<>();
-							data.put("slave", globalScopeAliasesStr);
+
+							data.put("slave", globalScopeAliasesString);
 
 							String id = "scopeAlias" + StringUtil.randomId();
 						%>
@@ -84,7 +86,7 @@
 
 									<p class="list-group-subtitle text-truncate"><%= HtmlUtil.escapeAttribute(scopeAlias) %></p>
 
-									<c:if test="<%= globalScopeAliasesStr.length() > 0 %>">
+									<c:if test="<%= globalScopeAliasesString.length() > 0 %>">
 										<c:choose>
 											<c:when test="<%= scopeAlias.length() > 0 %>">
 												<span>

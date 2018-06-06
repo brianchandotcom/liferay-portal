@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Shuyang Zhou
+ * @author Neil Griffin
  */
 @ProviderType
 public interface PortletContainer {
@@ -52,6 +53,11 @@ public interface PortletContainer {
 		HttpServletRequest request, Layout layout, Portlet portlet);
 
 	public void render(
+			HttpServletRequest request, HttpServletResponse response,
+			Portlet portlet)
+		throws PortletContainerException;
+
+	public void renderHeaders(
 			HttpServletRequest request, HttpServletResponse response,
 			Portlet portlet)
 		throws PortletContainerException;

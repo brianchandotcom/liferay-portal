@@ -65,7 +65,7 @@ List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays =
 								/>
 
 								<span class="list-group-card-item-text">
-									<liferay-ui:message key='<%= "category." + configurationCategoryDisplay.getCategoryKey() %>' />
+									<%= HtmlUtil.escape(configurationCategoryDisplay.getCategoryLabel(locale)) %>
 								</span>
 							</a>
 						</li>

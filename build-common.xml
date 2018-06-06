@@ -210,7 +210,7 @@
 			<istrue value="${ee.override}" />
 			<resourcecontains
 				resource="${project.dir}/portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java"
-				substring=" DXP "
+				substring=" Digital Experience Platform"
 			/>
 		</or>
 	</condition>

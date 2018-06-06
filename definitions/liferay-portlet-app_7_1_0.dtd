@@ -36,8 +36,9 @@ private-request-attributes?, private-session-attributes?,
 autopropagated-parameters?, requires-namespaced-parameters?, action-timeout?,
 render-timeout?, render-weight?, ajaxable?, header-portal-css*,
 header-portlet-css*, header-portal-javascript*, header-portlet-javascript*,
-footer-portal-css*, footer-portlet-css*, footer-portal-javascript*,
-footer-portlet-javascript*, css-class-wrapper?, facebook-integration?,
+header-request-attribute-prefix*, header-timeout?, footer-portal-css*,
+footer-portlet-css*, footer-portal-javascript*, footer-portlet-javascript*,
+css-class-wrapper?, facebook-integration?,
 add-default-resource?, system?, active?, include?)>
 
 <!--
@@ -712,6 +713,24 @@ Set the path of JavaScript that will be referenced in the page's header relative
 to the portlet's context path.
 -->
 <!ELEMENT header-portlet-javascript (#PCDATA)>
+
+<!--
+Set the header-request-attribute-prefix that will be referenced after the
+HEADER_PHASE completes for each portlet. Header request attributes that have a
+name starting with the prefix will be copied from the header request to the
+subsequent render request.
+-->
+<!ELEMENT header-request-attribute-prefix (#PCDATA)>
+
+<!--
+The default value of header-timeout is 0. If set to a value greater than 0,
+and monitoring-spring.xml is enabled via the property "spring.configs" in
+portal.properties, and the property "monitoring.portlet.header.request" in
+portal.properties is set to true, then the portlet's header phase processing
+will be timed. If the execution time is longer than header-timeout, it will be
+recorded as a timeout request processing. The time unit is millisecond.
+-->
+<!ELEMENT header-timeout (#PCDATA)>
 
 <!--
 Set the path of CSS that will be referenced in the page's footer relative to the

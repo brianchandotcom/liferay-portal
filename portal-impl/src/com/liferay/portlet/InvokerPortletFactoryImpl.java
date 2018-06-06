@@ -26,6 +26,7 @@ import javax.portlet.PortletException;
 
 /**
  * @author Shuyang Zhou
+ * @author Neil Griffin
  */
 @OSGiBeanProperties(property = "service.ranking=1")
 public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
@@ -40,11 +41,27 @@ public class InvokerPortletFactoryImpl implements InvokerPortletFactory {
 			boolean strutsBridgePortlet)
 		throws PortletException {
 
+		return create(
+			portletModel, portlet, portletConfig, portletContext,
+			invokerFilterContainer, checkAuthToken, facesPortlet, false,
+			strutsPortlet, strutsBridgePortlet);
+	}
+
+	@Override
+	public InvokerPortlet create(
+			com.liferay.portal.kernel.model.Portlet portletModel,
+			Portlet portlet, PortletConfig portletConfig,
+			PortletContext portletContext,
+			InvokerFilterContainer invokerFilterContainer,
+			boolean checkAuthToken, boolean facesPortlet, boolean headerPortlet,
+			boolean strutsPortlet, boolean strutsBridgePortlet)
+		throws PortletException {
+
 		try {
 			return new InvokerPortletImpl(
 				portletModel, portlet, portletConfig, portletContext,
 				invokerFilterContainer, checkAuthToken, facesPortlet,
-				strutsPortlet, strutsBridgePortlet);
+				headerPortlet, strutsPortlet, strutsBridgePortlet);
 		}
 		catch (Exception e) {
 			throw new PortletException(e);

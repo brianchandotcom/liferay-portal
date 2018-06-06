@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_ENTER_A_UNIQUE_TITLE</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'The URL title is already in use. Please enter a unique URL title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_FIELD_REQUIRED</td>
 	<td>//div[@role='alert' and contains(.,'This field is required')] | //span[contains(@id,'title')]//div[contains(.,'This field is required.')]</td>
 	<td></td>

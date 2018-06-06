@@ -41,7 +41,7 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		String outputKey, String webKey,
 		com.liferay.portal.kernel.util.StringBundler sb) {
 
-		addDataSB(outputKey, webKey, new StringBundler(sb.toString()));
+		addDataSB(outputKey, webKey, _toPetraSB(sb));
 	}
 
 	public void addDataSB(String outputKey, String webKey, StringBundler sb) {
@@ -68,10 +68,7 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 	public com.liferay.portal.kernel.util.StringBundler getData(
 		String outputKey, String webKey) {
 
-		StringBundler dataSB = getDataSB(outputKey, webKey);
-
-		return new com.liferay.portal.kernel.util.StringBundler(
-			dataSB.toString());
+		return _toKernelSB(getDataSB(outputKey, webKey));
 	}
 
 	public StringBundler getDataSB(String outputKey, String webKey) {
@@ -87,10 +84,7 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 	public com.liferay.portal.kernel.util.StringBundler getMergedData(
 		String webKey) {
 
-		StringBundler mergedDataSB = getMergedDataSB(webKey);
-
-		return new com.liferay.portal.kernel.util.StringBundler(
-			mergedDataSB.toString());
+		return _toKernelSB(getMergedDataSB(webKey));
 	}
 
 	public StringBundler getMergedDataSB(String webKey) {
@@ -158,7 +152,7 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		String outputKey, String webKey,
 		com.liferay.portal.kernel.util.StringBundler sb) {
 
-		setDataSB(outputKey, webKey, new StringBundler(sb.toString()));
+		setDataSB(outputKey, webKey, _toPetraSB(sb));
 	}
 
 	public void setDataSB(String outputKey, String webKey, StringBundler sb) {
@@ -170,6 +164,36 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 	@Override
 	public OutputData split() {
 		return new OutputData();
+	}
+
+	private static com.liferay.portal.kernel.util.StringBundler _toKernelSB(
+		StringBundler petraSB) {
+
+		if (petraSB == null) {
+			return null;
+		}
+
+		com.liferay.portal.kernel.util.StringBundler kernelSB =
+			new com.liferay.portal.kernel.util.StringBundler(
+				petraSB.getStrings());
+
+		kernelSB.setIndex(petraSB.index());
+
+		return kernelSB;
+	}
+
+	private static StringBundler _toPetraSB(
+		com.liferay.portal.kernel.util.StringBundler kernelSB) {
+
+		if (kernelSB == null) {
+			return null;
+		}
+
+		StringBundler petraSB = new StringBundler(kernelSB.getStrings());
+
+		petraSB.setIndex(kernelSB.index());
+
+		return petraSB;
 	}
 
 	private static final long serialVersionUID = 1L;

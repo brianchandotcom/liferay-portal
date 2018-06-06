@@ -37,9 +37,19 @@ public class OutputTag extends PositionTagSupport {
 	public static com.liferay.portal.kernel.util.StringBundler getData(
 		ServletRequest servletRequest, String webKey) {
 
-		StringBundler sb = getDataSB(servletRequest, webKey);
+		StringBundler petraSB = getDataSB(servletRequest, webKey);
 
-		return new com.liferay.portal.kernel.util.StringBundler(sb.toString());
+		if (petraSB == null) {
+			return null;
+		}
+
+		com.liferay.portal.kernel.util.StringBundler sb =
+			new com.liferay.portal.kernel.util.StringBundler(
+				petraSB.getStrings());
+
+		sb.setIndex(petraSB.index());
+
+		return sb;
 	}
 
 	public static StringBundler getDataSB(

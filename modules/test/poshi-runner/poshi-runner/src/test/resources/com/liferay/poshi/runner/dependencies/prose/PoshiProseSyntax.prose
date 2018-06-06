@@ -77,3 +77,9 @@ Scenario: multiLineString
 		# a
 		## comment
 		### section
+
+Scenario: commentTest
+	@priority = "0"
+	# @ignore = "true"
+	When I visit the URL "https://www.google.com"
+	# Then I should close the window

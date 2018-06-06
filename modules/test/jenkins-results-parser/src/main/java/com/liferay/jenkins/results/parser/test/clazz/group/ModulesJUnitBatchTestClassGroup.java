@@ -57,16 +57,16 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				ioe);
 		}
 
-		String includedModules = getFirstPropertyValue(
-			"test.class.modules.includes");
+		String requiredModules = getFirstPropertyValue(
+			"modules.includes.required");
 
-		if (includedModules != null) {
+		if (requiredModules != null) {
 			File modulesDir = new File(
 				portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
-			for (String includedModule : includedModules.split(",")) {
+			for (String requiredModule : requiredModules.split(",")) {
 				modifiedModuleDirsList.add(
-					new File(modulesDir, includedModule));
+					new File(modulesDir, requiredModule));
 			}
 		}
 

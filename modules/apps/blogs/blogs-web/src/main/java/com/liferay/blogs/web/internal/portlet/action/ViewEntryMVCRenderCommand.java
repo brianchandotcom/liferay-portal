@@ -76,8 +76,12 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 			String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
 
+			boolean redirectToLastFriendlyURL = ParamUtil.getBoolean(
+				renderRequest, "redirectToLastFriendlyURL", true);
+
 			if (Validator.isNotNull(urlTitle) &&
-				!urlTitle.equals(mainFriendlyURLEntry.getUrlTitle())) {
+				!urlTitle.equals(mainFriendlyURLEntry.getUrlTitle()) &&
+				redirectToLastFriendlyURL) {
 
 				PortletURL portletURL = renderResponse.createRenderURL();
 

@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.verify;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -113,6 +114,11 @@ public class KaleoDesignerWebVerifyProcess extends VerifyProcess {
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.web)(release.schema.version=1.0.1))"
+	)
+	private Release _release;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

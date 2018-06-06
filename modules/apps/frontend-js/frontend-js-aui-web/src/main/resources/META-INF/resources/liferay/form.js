@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
+		var Lang = A.Lang;
+
 		var formConfig;
 
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
@@ -10,6 +12,10 @@ AUI.add(
 		var defaultAcceptFiles = DEFAULTS_FORM_VALIDATOR.RULES.acceptFiles;
 
 		var TABS_SECTION_STR = 'TabsSection';
+
+		var REGEX_NUMBER = /^[+\-]?(\d+)([.|,]\d+)*([eE][+-]?\d+)?$/;
+
+		var REGEX_URL = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(https?\:\/\/|www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))((.*):(\d*)\/?(.*))?)/;
 
 		var acceptFiles = function(val, node, ruleValue) {
 			if (ruleValue == '*') {
@@ -30,9 +36,11 @@ AUI.add(
 		};
 
 		var number = function(val, node, ruleValue) {
-			var regex = /^[+\-]?(\d+)([.|,]\d+)*([eE][+-]?\d+)?$/;
+			return REGEX_NUMBER && REGEX_NUMBER.test(val);
+		};
 
-			return regex && regex.test(val);
+		var url = function(val, node, ruleValue) {
+			return REGEX_URL && REGEX_URL.test(val);
 		};
 
 		A.mix(
@@ -40,7 +48,8 @@ AUI.add(
 			{
 				acceptFiles: acceptFiles,
 				maxFileSize: maxFileSize,
-				number: number
+				number: number,
+				url: url
 			},
 			true
 		);
@@ -92,7 +101,7 @@ AUI.add(
 						}
 					},
 					validateOnBlur: {
-						validator: A.Lang.isBoolean,
+						validator: Lang.isBoolean,
 						value: true
 					}
 				},

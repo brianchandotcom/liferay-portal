@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Remote JAXRS Whiteboard Debug
+Bundle-SymbolicName: com.liferay.portal.remote.jaxrs.whiteboard.debug
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Remote Service Engines

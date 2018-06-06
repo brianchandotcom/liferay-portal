@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.util.MaintenanceUtil;
@@ -264,6 +265,43 @@ public class DocumentLibraryConvertProcess
 		}
 	}
 
+	protected void migrateGeneratedFiles(String path) throws Exception {
+		MaintenanceUtil.appendStatus("Migrating files from " + path);
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			CompanyLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Company>() {
+
+				@Override
+				public void performAction(Company company)
+					throws PortalException {
+
+					long companyId = company.getCompanyId();
+
+					String[] fileNames = _sourceStore.getFileNames(
+						companyId, DLPreviewableProcessor.REPOSITORY_ID, path);
+
+					for (String fileName : fileNames) {
+
+						// See LPS-70788
+
+						String actualFileName = StringUtil.replace(
+							fileName, StringPool.DOUBLE_SLASH,
+							StringPool.SLASH);
+
+						migrateFile(
+							companyId, DLPreviewableProcessor.REPOSITORY_ID,
+							actualFileName, Store.VERSION_DEFAULT);
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+	}
+
 	protected void migrateFile(
 		long companyId, long repositoryId, String fileName,
 		String versionNumber) {
@@ -318,6 +356,8 @@ public class DocumentLibraryConvertProcess
 	protected void migratePortlets() throws Exception {
 		migrateImages();
 		migrateDL();
+		migrateGeneratedFiles(DLPreviewableProcessor.THUMBNAIL_PATH);
+		migrateGeneratedFiles(DLPreviewableProcessor.PREVIEW_PATH);
 
 		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
 			_getDLStoreConvertProcesses();

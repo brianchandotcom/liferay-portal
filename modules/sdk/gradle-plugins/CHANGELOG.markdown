@@ -4743,6 +4743,12 @@ version 1.0.223.
 
 ## 3.12.30 - 2018-06-05
 
+### Changed
+- [LPS-82001]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.180.
+- [LPS-82001]: Update the [Liferay Source Formatter] dependency to version
+1.0.653.
+
 ### Fixed
 - [LPS-75530]: Fix the log message for `ExecuteBndTask` so it displays the
 correct amount of time it took to build the file.
@@ -5141,4 +5147,5 @@ correct amount of time it took to build the file.
 [LPS-81555]: https://issues.liferay.com/browse/LPS-81555
 [LPS-81635]: https://issues.liferay.com/browse/LPS-81635
 [LPS-81795]: https://issues.liferay.com/browse/LPS-81795
+[LPS-82001]: https://issues.liferay.com/browse/LPS-82001
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

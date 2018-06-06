@@ -308,7 +308,7 @@
 
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${ddlDataDefinitionName}" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Edit ${ddlDataDefinitionName}" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${ddlDataDefinitionName}" />
 

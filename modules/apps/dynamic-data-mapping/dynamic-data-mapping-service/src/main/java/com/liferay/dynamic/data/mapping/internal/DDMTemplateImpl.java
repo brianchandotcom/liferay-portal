@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal;
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -25,6 +26,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -45,6 +47,27 @@ public class DDMTemplateImpl implements DDMTemplate {
 				_ddmTemplate.clone());
 
 		return ddmTemplateImpl;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMTemplate)) {
+			return false;
+		}
+
+		DDMTemplate ddmTemplate = (DDMTemplate)obj;
+
+		if ((getTemplateId() == ddmTemplate.getTemplateId()) &&
+			Objects.equals(getScript(), ddmTemplate.getScript())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -298,6 +321,13 @@ public class DDMTemplateImpl implements DDMTemplate {
 	}
 
 	@Override
+	public int hashCode() {
+		int hash = HashUtil.hash(0, getTemplateId());
+
+		return HashUtil.hash(hash, getScript());
+	}
+
+	@Override
 	public boolean isCacheable() {
 		return _ddmTemplate.isCacheable();
 	}
@@ -355,6 +385,11 @@ public class DDMTemplateImpl implements DDMTemplate {
 	@Override
 	public void setUuid(String uuid) {
 		_ddmTemplate.setUuid(uuid);
+	}
+
+	@Override
+	public String toString() {
+		return _ddmTemplate.toString();
 	}
 
 	@Override

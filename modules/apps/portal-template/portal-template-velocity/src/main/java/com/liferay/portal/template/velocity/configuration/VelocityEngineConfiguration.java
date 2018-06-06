@@ -36,7 +36,7 @@ public interface VelocityEngineConfiguration {
 	public boolean directiveIfToStringNullCheck();
 
 	@Meta.AD(
-		deflt = "60", name = "resource-modification-check-interval",
+		deflt = "60000", name = "resource-modification-check-interval",
 		required = false
 	)
 	public int resourceModificationCheckInterval();

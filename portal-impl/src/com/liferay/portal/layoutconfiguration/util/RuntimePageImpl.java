@@ -425,56 +425,6 @@ public class RuntimePageImpl implements RuntimePage {
 		Map<String, Map<String, Object>> portletHeaderRequestMap =
 			new HashMap<>();
 
-		for (Map.Entry<Integer, List<PortletRenderer>> entry :
-				portletRenderersMap.entrySet()) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Processing portlets with render weight " + entry.getKey());
-			}
-
-			List<PortletRenderer> portletRenderers = entry.getValue();
-
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Start serial header phase");
-			}
-
-			for (PortletRenderer portletRenderer : portletRenderers) {
-				Portlet portlet = portletRenderer.getPortlet();
-
-				Map<String, Object> headerRequestMap =
-					portletRenderer.renderHeaders(
-						request, response,
-						portlet.getHeaderRequestAttributePrefixes());
-				String rendererPortletId = portlet.getPortletId();
-
-				portletHeaderRequestMap.put(
-					rendererPortletId, headerRequestMap);
-
-				if (_log.isDebugEnabled()) {
-					StringBundler sb = new StringBundler(5);
-
-					sb.append("Serially rendered headers for portlet ");
-					sb.append(rendererPortletId);
-					sb.append(" in ");
-					sb.append(stopWatch.getTime());
-					sb.append(" ms");
-
-					_log.debug(sb.toString());
-				}
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Finished serial header phase in " + stopWatch.getTime() +
-						" ms");
-			}
-		}
-
 		boolean portletParallelRender = GetterUtil.getBoolean(
 			request.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER));
 

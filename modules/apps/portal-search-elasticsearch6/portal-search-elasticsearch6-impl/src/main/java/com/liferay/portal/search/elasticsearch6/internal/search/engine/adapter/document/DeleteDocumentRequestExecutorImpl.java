@@ -21,6 +21,7 @@ import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
 import org.elasticsearch.action.delete.DeleteAction;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.rest.RestStatus;
 
@@ -61,6 +62,12 @@ public class DeleteDocumentRequestExecutorImpl
 
 		deleteRequestBuilder.setId(deleteDocumentRequest.getUid());
 		deleteRequestBuilder.setIndex(deleteDocumentRequest.getIndexName());
+
+		if (deleteDocumentRequest.isRefresh()) {
+			deleteRequestBuilder.setRefreshPolicy(
+				WriteRequest.RefreshPolicy.IMMEDIATE);
+		}
+
 		deleteRequestBuilder.setType(deleteDocumentRequest.getType());
 
 		return deleteRequestBuilder;

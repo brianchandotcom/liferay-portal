@@ -28,6 +28,7 @@ import java.io.IOException;
 import org.elasticsearch.action.index.IndexAction;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.rest.RestStatus;
@@ -78,6 +79,12 @@ public class IndexDocumentRequestExecutorImpl
 		indexRequestBuilder.setId(document.getUID());
 
 		indexRequestBuilder.setIndex(indexDocumentRequest.getIndexName());
+
+		if (indexDocumentRequest.isRefresh()) {
+			indexRequestBuilder.setRefreshPolicy(
+				WriteRequest.RefreshPolicy.IMMEDIATE);
+		}
+
 		indexRequestBuilder.setType(document.get(Field.TYPE));
 
 		ElasticsearchDocumentFactory elasticsearchDocumentFactory =

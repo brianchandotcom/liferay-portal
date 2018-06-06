@@ -53,7 +53,16 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 	}
 
 	@Test
-	public void testDocumentRequestTranslation() {
+	public void testDocumentRequestTranslationWithNoRefresh() {
+		doTestDocumentRequestTranslation(false);
+	}
+
+	@Test
+	public void testDocumentRequestTranslationWithRefresh() {
+		doTestDocumentRequestTranslation(true);
+	}
+
+	protected void doTestDocumentRequestTranslation(boolean refresh) {
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		booleanQuery.addExactTerm(_FIELD_NAME, true);
@@ -63,6 +72,8 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 			new UpdateByQueryDocumentRequest(
 				booleanQuery, jsonObject, new String[] {_INDEX_NAME});
+
+		updateByQueryDocumentRequest.setRefresh(refresh);
 
 		UpdateByQueryDocumentRequestExecutorImpl
 			updateByQueryDocumentRequestExecutorImpl =
@@ -82,6 +93,10 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 
 		Assert.assertArrayEquals(
 			new String[] {_INDEX_NAME}, updateByQueryRequest.indices());
+
+		Assert.assertEquals(
+			updateByQueryDocumentRequest.isRefresh(),
+			updateByQueryRequest.isRefresh());
 
 		String queryString = String.valueOf(
 			updateByQueryRequest.getSearchRequest());

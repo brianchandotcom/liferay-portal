@@ -28,6 +28,7 @@ import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 import java.io.IOException;
 
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.common.xcontent.XContentHelper;
@@ -65,7 +66,24 @@ public class UpdateDocumentRequestExecutorTest {
 	}
 
 	@Test
-	public void testDocumentRequestTranslation() throws IOException {
+	public void testDocumentRequestTranslationWithNoRefresh()
+		throws IOException {
+
+		doTestDocumentRequestTranslation(
+			false, WriteRequest.RefreshPolicy.NONE);
+	}
+
+	@Test
+	public void testDocumentRequestTranslationWithRefresh() throws IOException {
+		doTestDocumentRequestTranslation(
+			true, WriteRequest.RefreshPolicy.IMMEDIATE);
+	}
+
+	protected void doTestDocumentRequestTranslation(
+			boolean refreshPolicy,
+			WriteRequest.RefreshPolicy expectedRefreshPolicy)
+		throws IOException {
+
 		String id = "1";
 
 		Document document = new DocumentImpl();
@@ -75,6 +93,8 @@ public class UpdateDocumentRequestExecutorTest {
 
 		UpdateDocumentRequest updateDocumentRequest = new UpdateDocumentRequest(
 			_INDEX_NAME, id, document);
+
+		updateDocumentRequest.setRefresh(refreshPolicy);
 
 		UpdateDocumentRequestExecutorImpl updateDocumentRequestExecutorImpl =
 			new UpdateDocumentRequestExecutorImpl() {
@@ -88,15 +108,17 @@ public class UpdateDocumentRequestExecutorTest {
 			updateDocumentRequestExecutorImpl.createUpdateRequestBuilder(
 				updateDocumentRequest);
 
-		UpdateRequest request = updateRequestBuilder.request();
+		UpdateRequest updateRequest = updateRequestBuilder.request();
 
-		Assert.assertEquals(_INDEX_NAME, request.index());
-		Assert.assertEquals(id, request.id());
+		Assert.assertEquals(
+			expectedRefreshPolicy, updateRequest.getRefreshPolicy());
+		Assert.assertEquals(_INDEX_NAME, updateRequest.index());
+		Assert.assertEquals(id, updateRequest.id());
 
 		ElasticsearchDocumentFactory elasticsearchDocumentFactory =
 			new DefaultElasticsearchDocumentFactory();
 
-		IndexRequest indexRequest = request.doc();
+		IndexRequest indexRequest = updateRequest.doc();
 
 		String source = XContentHelper.convertToJson(
 			indexRequest.source(), false, XContentType.JSON);

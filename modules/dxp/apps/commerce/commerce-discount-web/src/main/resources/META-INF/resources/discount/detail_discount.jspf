@@ -192,6 +192,11 @@ if ((commerceDiscount != null) && !Objects.equals(commerceDiscount.getLimitation
 				A.all('#<portlet:namespace />maximumDiscountAmountContainer .input-item-retractable').addClass('hide');
 				A.all('#<portlet:namespace />levelsContainer .input-group-item-shrink').addClass('hide');
 
+				A.one('#<portlet:namespace />levelsContainer .level2Container').addClass('hide');
+				A.one('#<portlet:namespace />level1MinusButton').addClass('hide');
+				A.one('#<portlet:namespace />levelsContainer .level3Container').addClass('hide');
+				A.one('#<portlet:namespace />level2MinusButton').addClass('hide');
+
 				A.all('#<portlet:namespace />levelsContainer .input-group-addon').html('<%= commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode() %>');
 				A.one('#<portlet:namespace />level1Label').html('<liferay-ui:message key="discount-amount" />');
 			}

@@ -110,8 +110,8 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 								long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
 
 								if (layoutSetBranchId > 0) {
-									List<LayoutRevision> approvedLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, WorkflowConstants.STATUS_APPROVED);
-									List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, WorkflowConstants.STATUS_PENDING);
+									List<LayoutRevision> approvedLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_APPROVED);
+									List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_PENDING);
 
 									layoutsCount = approvedLayoutRevisions.size() + pendingLayoutRevisions.size();
 								}

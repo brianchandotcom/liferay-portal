@@ -126,8 +126,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 <aui:script use="aui-io-request,aui-loading-mask-deprecated,aui-parse-content,aui-toggler,autocomplete-base,autocomplete-filters,liferay-notification">
 	var AParseContent = A.Plugin.ParseContent;
 
-	var notification;
-
 	var permissionNavigationDataContainer = A.one('#<portlet:namespace />permissionNavigationDataContainer');
 
 	var togglerDelegate;
@@ -318,7 +316,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 							originalSelectedValues = checkedNodes.val();
 						}
 					}
-				)
+				);
 			},
 			'.permission-navigation-link'
 		);

@@ -56,7 +56,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, factoryConfigurationModelName, nul
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(portletURL.toString());
 
-renderResponse.setTitle(LanguageUtil.get(request, "category." + configurationModel.getCategory()));
+renderResponse.setTitle(categoryDisplayName);
 %>
 
 <div class="container-fluid container-fluid-max-xl">

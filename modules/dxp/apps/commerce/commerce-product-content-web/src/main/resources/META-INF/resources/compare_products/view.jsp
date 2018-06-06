@@ -83,9 +83,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 
 									<c:if test="<%= cpInstance != null %>">
 										<div class="card-subtitle">
-											<liferay-ui:message arguments="<%= StringPool.BLANK %> " key="sku-x" />
-
-											<%= cpInstance.getSku() %>
+											<liferay-ui:message arguments="<%= cpInstance.getSku() %>" key="sku-x" />
 										</div>
 									</c:if>
 								</div>

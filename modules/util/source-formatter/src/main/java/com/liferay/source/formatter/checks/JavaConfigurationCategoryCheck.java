@@ -80,6 +80,12 @@ public class JavaConfigurationCategoryCheck extends BaseFileCheck {
 			getBaseDirName(), _CONFIGURATION_CATEGORIES_DIR_NAME,
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
+		if (configurationCategoriesDir == null) {
+			_categoryKeys = categoryKeys;
+
+			return _categoryKeys;
+		}
+
 		Files.walkFileTree(
 			configurationCategoriesDir.toPath(),
 			EnumSet.noneOf(FileVisitOption.class), 1,

@@ -49,7 +49,7 @@ import org.dom4j.Element;
 /**
  * @author Hugo Huijser
  */
-public class JavaGetterMethodCallCheck extends BaseJavaTermCheck {
+public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isPortalCheck() {

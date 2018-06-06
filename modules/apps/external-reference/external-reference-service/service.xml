@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_1_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.external.reference">
+	<namespace>ExternalReference</namespace>
+	<entity local-service="true" name="ExternalReferenceAssetCategory" remote-service="false">
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
+	</entity>
+	<entity local-service="true" name="ExternalReferenceAssetVocabulary" remote-service="false">
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="AssetVocabulary" package-path="com.liferay.portlet.asset" />
+	</entity>
+	<entity local-service="true" name="ExternalReferenceOrganization" remote-service="false">
+		<reference entity="Organization" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="ExternalReferenceUser" remote-service="false">
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="ExternalReferenceUserGroup" remote-service="false">
+		<reference entity="UserGroup" package-path="com.liferay.portal" />
+	</entity>
+</service-builder>

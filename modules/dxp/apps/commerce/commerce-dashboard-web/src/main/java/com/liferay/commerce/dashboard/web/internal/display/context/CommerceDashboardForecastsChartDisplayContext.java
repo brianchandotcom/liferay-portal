@@ -23,6 +23,7 @@ import com.liferay.commerce.forecast.model.CommerceForecastEntryConstants;
 import com.liferay.commerce.forecast.model.CommerceForecastValue;
 import com.liferay.commerce.forecast.service.CommerceForecastEntryLocalService;
 import com.liferay.commerce.forecast.service.CommerceForecastValueLocalService;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.frontend.taglib.chart.model.AxisY;
 import com.liferay.frontend.taglib.chart.model.MixedDataColumn;
 import com.liferay.frontend.taglib.chart.model.PositionLabel;
@@ -32,19 +33,17 @@ import com.liferay.ibm.icu.text.DateFormat;
 import com.liferay.ibm.icu.text.DateFormat.Field;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
-import com.liferay.portal.kernel.exception.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyService;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -77,17 +76,18 @@ public class CommerceDashboardForecastsChartDisplayContext
 	public CommerceDashboardForecastsChartDisplayContext(
 			CommerceForecastEntryLocalService commerceForecastEntryLocalService,
 			CommerceForecastValueLocalService commerceForecastValueLocalService,
+			CommerceOrganizationService commerceOrganizationService,
 			CompanyService companyService,
 			ConfigurationProvider configurationProvider,
-			GroupService groupService, RenderRequest renderRequest)
+			RenderRequest renderRequest)
 		throws PortalException {
 
 		super(configurationProvider, renderRequest);
 
 		_commerceForecastEntryLocalService = commerceForecastEntryLocalService;
 		_commerceForecastValueLocalService = commerceForecastValueLocalService;
+		_commerceOrganizationService = commerceOrganizationService;
 		_companyService = companyService;
-		_groupService = groupService;
 
 		PortletDisplay portletDisplay =
 			commerceDashboardRequestHelper.getPortletDisplay();
@@ -425,8 +425,8 @@ public class CommerceDashboardForecastsChartDisplayContext
 		_commerceForecastEntryLocalService;
 	private final CommerceForecastValueLocalService
 		_commerceForecastValueLocalService;
+	private final CommerceOrganizationService _commerceOrganizationService;
 	private final CompanyService _companyService;
-	private final GroupService _groupService;
 
 	private class ForecastChartEntry {
 
@@ -456,38 +456,37 @@ public class CommerceDashboardForecastsChartDisplayContext
 		private String _getId(CommerceForecastEntry commerceForecastEntry)
 			throws PortalException {
 
-			String id = String.valueOf(commerceForecastEntry.getCPInstanceId());
+			long cpInstanceId = commerceForecastEntry.getCPInstanceId();
 
-			if (Validator.isNull(id)) {
-				long customerId = commerceForecastEntry.getCustomerId();
-
-				if (customerId > 0) {
-					try {
-						Group group = _groupService.getGroup(customerId);
-
-						id = group.getDescriptiveName(
-							commerceDashboardRequestHelper.getLocale());
-					}
-					catch (NoSuchGroupException nsge) {
-						id = String.valueOf(customerId);
-					}
-				}
+			if (cpInstanceId > 0) {
+				return String.valueOf(cpInstanceId);
 			}
 
-			if (Validator.isNull(id)) {
-				long companyId = commerceForecastEntry.getCompanyId();
+			long customerId = commerceForecastEntry.getCustomerId();
 
+			if (customerId > 0) {
 				try {
-					Company company = _companyService.getCompanyById(companyId);
+					Organization organization =
+						_commerceOrganizationService.getOrganization(
+							customerId);
 
-					id = company.getName();
+					return organization.getName();
 				}
-				catch (NoSuchCompanyException nsce) {
-					id = String.valueOf(companyId);
+				catch (NoSuchOrganizationException nsoe) {
+					return String.valueOf(customerId);
 				}
 			}
 
-			return id;
+			long companyId = commerceForecastEntry.getCompanyId();
+
+			try {
+				Company company = _companyService.getCompanyById(companyId);
+
+				return company.getName();
+			}
+			catch (NoSuchCompanyException nsce) {
+				return String.valueOf(companyId);
+			}
 		}
 
 		private Collection<Object> _getMixedDataColumnValues(

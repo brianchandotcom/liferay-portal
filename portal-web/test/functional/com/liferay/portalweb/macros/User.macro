@@ -933,10 +933,9 @@
 			<then>
 				<var name="key_rowEntry" value="${userScreenName}" />
 
-				<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
-
-				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Deactivate">
-					<var name="key_menuItem" value="Deactivate" />
+				<execute macro="LexiconEntry#gotoEntryMenuItemNoError">
+					<var name="menuItem" value="Deactivate" />
+					<var name="rowEntry" value="${userFirstName}" />
 				</execute>
 
 				<execute function="Confirm" value1="Are you sure you want to deactivate this?" />

@@ -67,8 +67,11 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			return javaTerm.getContent();
 		}
 
-		return _formatGetterMethodCalls(
+		String javaTermContent = _formatGetterMethodCalls(
 			javaTerm.getContent(), fileContent, importNames);
+
+		return _formatSetterMethodCalls(
+			javaTermContent, fileContent, importNames);
 	}
 
 	@Override
@@ -103,6 +106,99 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 
 		return content;
+	}
+
+	private String _formatSetterMethodCalls(
+		String content, String fileContent, List<String> importNames) {
+
+		Matcher matcher1 = _setterCallsPattern.matcher(content);
+
+		while (matcher1.find()) {
+			String setterCallsCodeBlock = matcher1.group();
+
+			String packageName = null;
+			String previousMatch = null;
+			String previousSetterObjectName = null;
+			String previousVariableName = null;
+			String variableTypeName = null;
+
+			Matcher matcher2 = _setterCallPattern.matcher(setterCallsCodeBlock);
+
+			while (matcher2.find()) {
+				String match = matcher2.group();
+				String setterObjectName = TextFormatter.format(
+					matcher2.group(2), TextFormatter.I);
+				String variableName = matcher2.group(1);
+
+				if (!variableName.equals(previousVariableName)) {
+					previousMatch = match;
+					previousSetterObjectName = setterObjectName;
+					previousVariableName = variableName;
+
+					variableTypeName = _getVariableTypeName(
+						content, fileContent, variableName);
+
+					packageName = _getPackageName(
+						variableTypeName, importNames);
+
+					continue;
+				}
+
+				Element serviceXMLElement = _getServiceXMLElement(packageName);
+
+				if (serviceXMLElement != null) {
+					int index1 = _getColumnIndex(
+						serviceXMLElement, variableTypeName,
+						previousSetterObjectName);
+					int index2 = _getColumnIndex(
+						serviceXMLElement, variableTypeName, setterObjectName);
+
+					if ((index2 != -1) && (index1 > index2)) {
+						int x = matcher2.start();
+
+						int y = content.lastIndexOf(previousMatch, x);
+
+						content = StringUtil.replaceFirst(
+							content, match, previousMatch, x);
+
+						return StringUtil.replaceFirst(
+							content, previousMatch, match, y);
+					}
+				}
+
+				previousMatch = match;
+				previousSetterObjectName = setterObjectName;
+				previousVariableName = variableName;
+			}
+		}
+
+		return content;
+	}
+
+	private int _getColumnIndex(
+		Element serviceXMLElement, String entityName, String columnName) {
+
+		for (Element entityElement :
+				(List<Element>)serviceXMLElement.elements("entity")) {
+
+			if (!entityName.equals(entityElement.attributeValue("name"))) {
+				continue;
+			}
+
+			int i = 0;
+
+			for (Element columnElement :
+					(List<Element>)entityElement.elements("column")) {
+
+				if (columnName.equals(columnElement.attributeValue("name"))) {
+					return i;
+				}
+
+				i++;
+			}
+		}
+
+		return -1;
 	}
 
 	private List<String> _getImportNames(JavaTerm javaTerm) {
@@ -282,5 +378,10 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	private final Pattern _getterCallPattern = Pattern.compile(
 		"\\W(\\w+)\\.\\s*(get)([A-Z]\\w*)\\(\\)");
 	private Map<String, Element> _serviceXMLElementsMap;
+	private final Pattern _setterCallPattern = Pattern.compile(
+		"(\\w+)\\.\\s*set([A-Z]\\w*)\\([^;]+;");
+	private final Pattern _setterCallsPattern = Pattern.compile(
+		"(^[ \t]*\\w+\\.\\s*set[A-Z]\\w*\\([^;]+;\n)+",
+		Pattern.DOTALL | Pattern.MULTILINE);
 
 }

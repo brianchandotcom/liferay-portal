@@ -106,13 +106,21 @@ public class LiferayOAuth2OSGiFeature implements Feature {
 			(ContainerResponseFilter)(a, b) -> _scopeContext.clear(),
 			Priorities.AUTHORIZATION - 9);
 
-		registerAuthVerifierFilter(
-			MapUtil.getString(
-				applicationProperties,
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-				StringBundler.concat(
-					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
-					"=context.for", osgiJAXRSName, ")")));
+		if (!GetterUtil.getBoolean(
+				applicationProperties.get(
+					"com.liferay.auth.verifier.filter.enabled")) &&
+			!applicationProperties.containsKey(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT)) {
+
+			registerAuthVerifierFilter(
+				MapUtil.getString(
+					applicationProperties,
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+					StringBundler.concat(
+						"(",
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
+						"=context.for", osgiJAXRSName, ")")));
+		}
 
 		registerDescriptors(osgiJAXRSName);
 

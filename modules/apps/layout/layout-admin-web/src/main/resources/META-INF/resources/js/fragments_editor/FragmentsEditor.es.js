@@ -320,7 +320,16 @@ class FragmentsEditor extends Component {
 							);
 
 							if (index !== -1) {
-								this.fragmentEntryLinks[index].content = content;
+								const newFragmentEntryLinks = [...this.fragmentEntryLinks];
+
+								const newFragmentEntryLink = Object.assign(
+									{},
+									newFragmentEntryLinks[index],
+									{content}
+								);
+
+								newFragmentEntryLinks[index] = newFragmentEntryLink;
+								this.fragmentEntryLinks = newFragmentEntryLinks;
 							}
 						}
 					).then(

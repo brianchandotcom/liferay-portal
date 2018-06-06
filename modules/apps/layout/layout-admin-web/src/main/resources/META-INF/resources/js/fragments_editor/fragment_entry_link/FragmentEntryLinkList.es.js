@@ -30,8 +30,10 @@ class FragmentEntryLinkList extends Component {
 					'.fragment-entry-link-wrapper'
 				)[index];
 
-				fragmentEntryLinkElement.focus();
-				fragmentEntryLinkElement.scrollIntoView();
+				if (fragmentEntryLinkElement) {
+					fragmentEntryLinkElement.focus();
+					fragmentEntryLinkElement.scrollIntoView();
+				}
 			}
 		);
 	}

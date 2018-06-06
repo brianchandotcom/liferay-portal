@@ -8,6 +8,8 @@
 	{@param editableId: string}
 	{@param type: string}
 	{@param? _handleEditableClick: any}
+	{@param? _handleEditableMouseEnter: any}
+	{@param? _handleEditableMouseLeave: any}
 	{@param? _handleOutsideTooltipClick: any}
 	{@param? _handleTooltipButtonClick: any}
 	{@param? _showTooltip: bool}
@@ -16,9 +18,12 @@
 		id: string,
 		label: string
 	]>}
+	{@param? _tooltipLabel: string}
 
 	<lfr-editable
 		data-onclick="{$_handleEditableClick}"
+		data-onmouseenter="{$_handleEditableMouseEnter}"
+		data-onmouseleave="{$_handleEditableMouseLeave}"
 		id="{$editableId}"
 		ref="editable"
 		type="{$type}"
@@ -33,6 +38,7 @@
 					'buttonClick': $_handleTooltipButtonClick,
 					'outsideTooltipClick': $_handleOutsideTooltipClick
 				] /}
+				{param label: $_tooltipLabel /}
 				{param portalElement: 'body' /}
 			{/call}
 		{/if}

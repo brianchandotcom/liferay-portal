@@ -56,26 +56,20 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
-	 * After each render, script tags need to be reapended to the DOM
-	 * in order to trigger an execution (content changes do not trigger it).
+	 * Handle content changed
 	 * @inheritDoc
+	 * @param {string} newContent
 	 * @review
 	 */
 
-	rendered() {
-		if (this._editables) {
-			this._editables.forEach(
-				editable => editable.dispose()
-			);
-		}
-
-		if (this.refs.content) {
+	syncContent(newContent) {
+		if (newContent && this.refs.content) {
 			AUI().use(
 				'aui-parse-content',
 				A => {
 					const content = A.one(this.refs.content);
 					content.plug(A.Plugin.ParseContent);
-					content.setContent(this.content);
+					content.setContent(newContent);
 
 					this._createEditables();
 
@@ -90,14 +84,26 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
+	 * Handle editableValues changed
 	 * @inheritDoc
+	 * @param {object} newEditableValues
 	 * @review
 	 */
 
-	shouldUpdate(changes) {
-		return !!changes.content ||
-				!!changes.showMapping ||
-				!!changes.languageId;
+	syncEditableValues(newEditableValues) {
+		if (this._editables) {
+			this._editables.forEach(
+				editable => {
+					const editableValues = (
+						newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] &&
+						newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId]
+					) ? newEditableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.editableId] :
+						{defaultValue: editable.content};
+
+					editable.editableValues = editableValues;
+				}
+			);
+		}
 	}
 
 	/**

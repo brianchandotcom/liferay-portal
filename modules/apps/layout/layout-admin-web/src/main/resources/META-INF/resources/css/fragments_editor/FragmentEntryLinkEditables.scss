@@ -71,13 +71,17 @@ lfr-editable {
 	}
 
 	&.mapped,
-	&.mapped[type="image"]:after {
+	&.mapped[type="image"]:after,
+	.fragment-entry-link-list.mapping &.mapped,
+	.fragment-entry-link-list.mapping &.mapped[type="image"]:after {
 		background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($fragmentEditableFieldGridAccentColor, 0.7) 50%, transparent calc(50% + 1px), transparent 100%);
 		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.7);
 	}
 
 	&.mapped:hover,
-	&.mapped[type="image"]:hover:after {
+	&.mapped[type="image"]:hover:after,
+	.fragment-entry-link-list.mapping &.mapped:hover,
+	.fragment-entry-link-list.mapping &.mapped[type="image"]:hover:after {
 		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.4);
 	}
 }

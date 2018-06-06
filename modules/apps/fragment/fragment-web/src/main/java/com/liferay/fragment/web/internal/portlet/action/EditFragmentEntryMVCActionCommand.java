@@ -84,15 +84,17 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 					fragmentEntryId, name, css, html, js, status,
 					serviceContext);
 
-			if (previewFileEntryId > 0) {
-				fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
+			if ((previewFileEntryId <= 0) &&
+				Validator.isNotNull(previewBase64)) {
+
+				FileEntry fileEntry = _updatePreviewFileEntry(
+					serviceContext.getUserId(), fragmentEntry.getGroupId(),
+					fragmentEntryId, previewBase64);
+
+				previewFileEntryId = fileEntry.getFileEntryId();
 			}
-			else if (Validator.isNotNull(previewBase64)) {
-				fragmentEntry.setPreviewFileEntryId(
-					_updatePreviewFileEntryId(
-						serviceContext.getUserId(), fragmentEntry.getGroupId(),
-						fragmentEntryId, previewBase64));
-			}
+
+			fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
 
 			_fragmentEntryLocalService.updateFragmentEntry(fragmentEntry);
 
@@ -140,7 +142,7 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		return portletURL.toString();
 	}
 
-	private long _updatePreviewFileEntryId(
+	private FileEntry _updatePreviewFileEntry(
 			long userId, long groupId, long fragmentEntryId,
 			String previewBase64)
 		throws PortalException {
@@ -151,26 +153,23 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				groupId, FragmentPortletKeys.FRAGMENT);
 
-		FileEntry fileEntry = null;
-
 		if (repository != null) {
-			fileEntry = PortletFileRepositoryUtil.fetchPortletFileEntry(
-				groupId, repository.getDlFolderId(), fileName);
+			FileEntry fileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					groupId, repository.getDlFolderId(), fileName);
+
+			if (fileEntry != null) {
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					fileEntry.getFileEntryId());
+			}
 		}
 
-		if (fileEntry != null) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				fileEntry.getFileEntryId());
-		}
-
-		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, FragmentEntry.class.getName(), fragmentEntryId,
 			FragmentPortletKeys.FRAGMENT,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			Base64.decode(previewBase64), fileName, ContentTypes.IMAGE_PNG,
 			false);
-
-		return fileEntry.getFileEntryId();
 	}
 
 	@Reference

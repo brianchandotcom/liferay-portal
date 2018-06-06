@@ -1102,7 +1102,7 @@
 	</command>
 
 	<command name="viewRSS">
-		<var name="key_text" value="rss-full RSS" />
+		<var name="key_text" value="RSS" />
 
 		<execute function="AssertClick" locator1="Button#ANY" value1="rss-full RSS" />
 

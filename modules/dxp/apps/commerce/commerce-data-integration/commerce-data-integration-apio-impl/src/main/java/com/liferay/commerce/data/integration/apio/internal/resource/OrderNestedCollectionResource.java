@@ -10,6 +10,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.data.integration.apio.identifiers.AccountIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.AddressIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.OrderIdentifier;
+import com.liferay.commerce.data.integration.apio.identifiers.PaymentMethodIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.OrderUpdaterForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.OrderPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.OrderHelper;
@@ -78,6 +79,9 @@ public class OrderNestedCollectionResource
 		).addLinkedModel(
 			"account", AccountIdentifier.class,
 			CommerceOrder::getOrderOrganizationId
+		).addLinkedModel(
+			"paymentMethod", PaymentMethodIdentifier.class,
+			CommerceOrder::getCommercePaymentMethodId
 		).addString(
 			"purchaseOrderNumber", CommerceOrder::getPurchaseOrderNumber
 		).addNumber(

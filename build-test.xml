@@ -2909,12 +2909,7 @@ go</echo>
 					</then>
 				</elseif>
 				<elseif>
-					<or>
-						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.4" />
-						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.5" />
-						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.14" />
-						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.15" />
-					</or>
+					<contains string="@{liferay.portal.bundle}" substring="6.2" />
 					<then>
 						<var name="app.server.tomcat.version" value="7.0.62" />
 					</then>

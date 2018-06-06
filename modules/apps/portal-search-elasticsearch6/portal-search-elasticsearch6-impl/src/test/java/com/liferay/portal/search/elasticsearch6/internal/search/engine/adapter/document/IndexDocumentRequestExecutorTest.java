@@ -29,6 +29,7 @@ import java.io.IOException;
 
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.common.xcontent.XContentHelper;
 import org.elasticsearch.common.xcontent.XContentType;
 
@@ -64,7 +65,24 @@ public class IndexDocumentRequestExecutorTest {
 	}
 
 	@Test
-	public void testDocumentRequestTranslation() throws IOException {
+	public void testDocumentRequestTranslationWithNoRefresh()
+		throws IOException {
+
+		doTestDocumentRequestTranslation(
+			false, WriteRequest.RefreshPolicy.NONE);
+	}
+
+	@Test
+	public void testDocumentRequestTranslationWithRefresh() throws IOException {
+		doTestDocumentRequestTranslation(
+			true, WriteRequest.RefreshPolicy.IMMEDIATE);
+	}
+
+	protected void doTestDocumentRequestTranslation(
+			boolean refreshPolicy,
+			WriteRequest.RefreshPolicy expectedRefreshPolicy)
+		throws IOException {
+
 		String id = "1";
 
 		Document document = new DocumentImpl();
@@ -74,6 +92,8 @@ public class IndexDocumentRequestExecutorTest {
 
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			_INDEX_NAME, document);
+
+		indexDocumentRequest.setRefresh(refreshPolicy);
 
 		IndexDocumentRequestExecutorImpl indexDocumentRequestExecutorImpl =
 			new IndexDocumentRequestExecutorImpl() {
@@ -89,6 +109,8 @@ public class IndexDocumentRequestExecutorTest {
 
 		IndexRequest indexRequest = indexRequestBuilder.request();
 
+		Assert.assertEquals(
+			expectedRefreshPolicy, indexRequest.getRefreshPolicy());
 		Assert.assertEquals(_INDEX_NAME, indexRequest.index());
 		Assert.assertEquals(_MAPPING_NAME, indexRequest.type());
 		Assert.assertEquals(id, indexRequest.id());

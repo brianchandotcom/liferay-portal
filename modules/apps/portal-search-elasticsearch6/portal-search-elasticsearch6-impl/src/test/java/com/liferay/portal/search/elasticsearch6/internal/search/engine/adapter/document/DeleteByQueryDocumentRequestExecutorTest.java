@@ -51,7 +51,16 @@ public class DeleteByQueryDocumentRequestExecutorTest {
 	}
 
 	@Test
-	public void testDocumentRequestTranslation() {
+	public void testDocumentRequestTranslationWithNoRefresh() {
+		doTestDocumentRequestTranslation(false);
+	}
+
+	@Test
+	public void testDocumentRequestTranslationWithRefresh() {
+		doTestDocumentRequestTranslation(true);
+	}
+
+	protected void doTestDocumentRequestTranslation(boolean refresh) {
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		booleanQuery.addExactTerm(_FIELD_NAME, true);
@@ -59,6 +68,8 @@ public class DeleteByQueryDocumentRequestExecutorTest {
 		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
 			new DeleteByQueryDocumentRequest(
 				booleanQuery, new String[] {_INDEX_NAME});
+
+		deleteByQueryDocumentRequest.setRefresh(refresh);
 
 		DeleteByQueryDocumentRequestExecutorImpl
 			deleteByQueryDocumentRequestExecutorImpl =
@@ -78,6 +89,10 @@ public class DeleteByQueryDocumentRequestExecutorTest {
 
 		Assert.assertArrayEquals(
 			new String[] {_INDEX_NAME}, deleteByQueryRequest.indices());
+
+		Assert.assertEquals(
+			deleteByQueryDocumentRequest.isRefresh(),
+			deleteByQueryRequest.isRefresh());
 
 		String queryString = String.valueOf(
 			deleteByQueryRequest.getSearchRequest());

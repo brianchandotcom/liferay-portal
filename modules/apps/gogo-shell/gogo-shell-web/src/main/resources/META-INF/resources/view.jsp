@@ -43,15 +43,15 @@ String prompt = (String)SessionMessages.get(renderRequest, "prompt");
 			</aui:fieldset>
 		</aui:fieldset-group>
 
+		<aui:button-row>
+			<aui:button primary="<%= true %>" type="submit" value="execute" />
+		</aui:button-row>
+
 		<c:if test="<%= Validator.isNotNull(commandOutput) %>">
 			<b><liferay-ui:message key="output" /></b>
 
 			<pre><%= commandOutput %></pre>
 		</c:if>
-
-		<aui:button-row>
-			<aui:button primary="<%= true %>" type="submit" value="execute" />
-		</aui:button-row>
 	</aui:form>
 </div>
 

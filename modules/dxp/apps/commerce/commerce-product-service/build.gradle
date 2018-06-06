@@ -10,6 +10,7 @@ buildService {
 
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	compileOnly group: "com.liferay", name: "com.liferay.configuration.admin.api", version: "1.0.0-20180522.173919-4"
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "4.0.0-20180316.222213-1"
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.data.provider", version: "2.1.0-20170601.152559-12"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib.clay", version: "1.0.0-20180521.145402-7"

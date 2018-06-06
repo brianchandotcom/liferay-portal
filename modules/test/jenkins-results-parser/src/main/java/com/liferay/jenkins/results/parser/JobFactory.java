@@ -44,6 +44,15 @@ public class JobFactory {
 			return job;
 		}
 
+		if (jobName.contains("test-plugins-acceptance-pullrequest(")) {
+			PluginsRepositoryJob pluginsRepositoryJob =
+				new PluginsRepositoryJob(jobName);
+
+			_jobs.put(jobName, pluginsRepositoryJob);
+
+			return pluginsRepositoryJob;
+		}
+
 		if (jobName.contains("test-portal-acceptance-pullrequest(")) {
 			PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
 				new PortalAcceptancePullRequestJob(jobName, testSuiteName);

@@ -196,6 +196,10 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 <c:if test="<%= cpDefinition == null %>">
 	<aui:script sandbox="<%= true %>" use="aui-base">
+		function slugify(string) {
+			return string.toLowerCase().replace(/[^a-z1-9]+/g, '-');
+		}
+
 		var form = $(document.<portlet:namespace />fm);
 
 		var nameInput = form.fm('nameMapAsXML');
@@ -204,9 +208,10 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 
 		var onNameInput = _.debounce(
 			function(event) {
-				urlInput.val(nameInput.val());
+				var slug = slugify(nameInput.val());
+				urlInput.val(slug);
 
-				urlTitleInputLocalized.updateInputLanguage(nameInput.val());
+				urlTitleInputLocalized.updateInputLanguage(slug);
 			},
 			200
 		);

@@ -26,6 +26,9 @@ import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
+import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
@@ -35,6 +38,8 @@ import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalServiceUtil;
 import com.liferay.commerce.test.util.TestCommerceContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -50,6 +55,62 @@ import java.util.Collections;
  * @author Andrea Di Giorgi
  */
 public class CommerceTestUtil {
+
+	public static CommerceOrder addCheckoutDetailsToUserOrder(
+			CommerceOrder commerceOrder, long userId)
+		throws Exception {
+
+		long groupId = commerceOrder.getGroupId();
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(groupId);
+
+		BigDecimal price = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+
+		cpInstance.setPrice(price);
+
+		CPInstanceLocalServiceUtil.updateCPInstance(cpInstance);
+
+		CommerceWarehouse commerceWarehouse = addCommerceWarehouse(groupId);
+
+		addCommerceWarehouseItem(
+			commerceWarehouse, cpInstance.getCPInstanceId(), 10);
+
+		addCommerceOrderItem(
+			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
+			4);
+
+		CommerceAddress billingCommerceAddress = addUserCommerceAddress(
+			groupId, userId);
+		CommerceAddress shippingCommerceAddress = addUserCommerceAddress(
+			groupId, userId);
+
+		commerceOrder.setBillingAddressId(
+			billingCommerceAddress.getCommerceAddressId());
+		commerceOrder.setShippingAddressId(
+			shippingCommerceAddress.getCommerceAddressId());
+
+		CommercePaymentMethod commercePaymentMethod = addCommercePaymentMethod(
+			groupId);
+
+		commerceOrder.setCommercePaymentMethodId(
+			commercePaymentMethod.getCommercePaymentMethodId());
+
+		CommerceShippingMethod commerceShippingMethod =
+			addCommerceShippingMethod(groupId);
+
+		commerceOrder.setCommerceShippingMethodId(
+			commerceShippingMethod.getCommerceShippingMethodId());
+
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			addCommerceShippingFixedOption(commerceShippingMethod);
+
+		commerceOrder.setShippingOptionName(
+			commerceShippingFixedOption.getName());
+
+		commerceOrder.setShippingPrice(commerceShippingFixedOption.getAmount());
+
+		return CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
+	}
 
 	public static CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId)
@@ -86,6 +147,24 @@ public class CommerceTestUtil {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), null, "money-order",
 			Collections.<String, String>emptyMap(), 1, true, serviceContext);
+	}
+
+	public static CommerceShippingFixedOption addCommerceShippingFixedOption(
+			CommerceShippingMethod commerceShippingMethod)
+		throws Exception {
+
+		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.randomDouble());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				commerceShippingMethod.getGroupId());
+
+		return CommerceShippingFixedOptionLocalServiceUtil.
+			addCommerceShippingFixedOption(
+				commerceShippingMethod.getCommerceShippingMethodId(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), value, 1,
+				serviceContext);
 	}
 
 	public static CommerceShippingMethod addCommerceShippingMethod(long groupId)

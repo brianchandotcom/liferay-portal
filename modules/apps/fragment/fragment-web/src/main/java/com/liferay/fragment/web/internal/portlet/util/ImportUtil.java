@@ -173,7 +173,7 @@ public class ImportUtil {
 					zipReader.getEntryAsString(fragmentCssPath),
 					zipReader.getEntryAsString(fragmentHtmlPath),
 					zipReader.getEntryAsString(fragmentJsPath),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
+					WorkflowConstants.STATUS_APPROVED);
 			}
 			else {
 				throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);

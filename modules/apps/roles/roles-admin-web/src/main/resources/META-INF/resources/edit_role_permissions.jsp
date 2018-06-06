@@ -126,8 +126,6 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 <aui:script use="aui-io-request,aui-loading-mask-deprecated,aui-parse-content,aui-toggler,autocomplete-base,autocomplete-filters,liferay-notification">
 	var AParseContent = A.Plugin.ParseContent;
 
-	var notification;
-
 	var permissionNavigationDataContainer = A.one('#<portlet:namespace />permissionNavigationDataContainer');
 
 	var togglerDelegate;
@@ -162,7 +160,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 					results.push(
 						{
 							data: item.text().trim(),
-							node: item.ancestor()
+							node: item
 						}
 					);
 				}
@@ -179,7 +177,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			return noResultsNode;
 		};
 
-		var permissionNavigationItems = permissionNavigationDataContainer.all('.permission-navigation-item');
+		var permissionNavigationItems = permissionNavigationDataContainer.all('.permission-navigation-item-container');
 
 		var permissionNavigationSectionsNode = permissionNavigationDataContainer.all('.permission-navigation-section');
 
@@ -213,7 +211,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 			function(event) {
 				permissionNavigationItems.each(
 					function(item, index, collection) {
-						item.ancestor().addClass('hide');
+						item.addClass('hide');
 					}
 				);
 
@@ -318,7 +316,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 							originalSelectedValues = checkedNodes.val();
 						}
 					}
-				)
+				);
 			},
 			'.permission-navigation-link'
 		);

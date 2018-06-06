@@ -247,35 +247,29 @@ public class BlogsEntryStagedModelDataHandler
 				existingEntry.getSmallImageFileEntryId();
 		}
 
+		if (portletDataContext.isDataStrategyMirror() &&
+			(existingEntry == null)) {
+
+			serviceContext.setUuid(entry.getUuid());
+		}
+
 		BlogsEntry importedEntry = null;
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			if (existingEntry == null) {
-				serviceContext.setUuid(entry.getUuid());
-
-				importedEntry = _blogsEntryLocalService.addEntry(
-					userId, entry.getTitle(), entry.getSubtitle(),
-					entry.getDescription(), entry.getContent(),
-					entry.getDisplayDate(), allowPingbacks,
-					allowTrackbacks, trackbacks, entry.getCoverImageCaption(),
-					null, null, serviceContext);
-			}
-			else {
-				importedEntry = _blogsEntryLocalService.updateEntry(
-					userId, existingEntry.getEntryId(), entry.getTitle(),
-					entry.getSubtitle(), entry.getDescription(),
-					entry.getContent(), entry.getDisplayDate(),
-					allowPingbacks, allowTrackbacks, trackbacks,
-					entry.getCoverImageCaption(), null, null, serviceContext);
-			}
-		}
-		else {
+		if (existingEntry == null) {
 			importedEntry = _blogsEntryLocalService.addEntry(
 				userId, entry.getTitle(), entry.getSubtitle(),
 				entry.getDescription(), entry.getContent(),
 				entry.getDisplayDate(), allowPingbacks, allowTrackbacks,
 				trackbacks, entry.getCoverImageCaption(), null, null,
 				serviceContext);
+		}
+		else {
+			importedEntry = _blogsEntryLocalService.updateEntry(
+				userId, existingEntry.getEntryId(), entry.getTitle(),
+				entry.getSubtitle(), entry.getDescription(),
+				entry.getContent(), entry.getDisplayDate(), allowPingbacks,
+				allowTrackbacks, trackbacks, entry.getCoverImageCaption(),
+				null, null, serviceContext);
 		}
 
 		serviceContext.setModifiedDate(importedEntry.getModifiedDate());

@@ -279,7 +279,7 @@ public class JenkinsResultsParserUtil {
 
 		processBuilder.directory(baseDir.getAbsoluteFile());
 
-		Process process = new BufferedProcess(1000000, processBuilder.start());
+		Process process = new BufferedProcess(2000000, processBuilder.start());
 
 		long duration = 0;
 		long start = System.currentTimeMillis();

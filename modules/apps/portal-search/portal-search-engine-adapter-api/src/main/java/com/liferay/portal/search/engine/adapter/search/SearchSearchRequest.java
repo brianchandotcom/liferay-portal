@@ -17,6 +17,8 @@ package com.liferay.portal.search.engine.adapter.search;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.search.GroupBy;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.facet.Facet;
 
@@ -45,8 +47,20 @@ public class SearchSearchRequest
 		return _groupBy;
 	}
 
+	public String getPreference() {
+		return _preference;
+	}
+
+	public QueryConfig getQueryConfig() {
+		return _queryConfig;
+	}
+
 	public int getSize() {
 		return _size;
+	}
+
+	public Sort[] getSorts() {
+		return _sorts;
 	}
 
 	public int getStart() {
@@ -57,8 +71,12 @@ public class SearchSearchRequest
 		return _stats;
 	}
 
+	public boolean isLuceneSyntax() {
+		return _luceneSyntax;
+	}
+
 	public boolean isScoreEnabled() {
-		return _scoreEnabled;
+		return _queryConfig.isScoreEnabled();
 	}
 
 	public void putAllFacets(Map<String, Facet> faects) {
@@ -81,12 +99,24 @@ public class SearchSearchRequest
 		_groupBy = groupBy;
 	}
 
+	public void setLuceneSyntax(boolean luceneSyntax) {
+		_luceneSyntax = luceneSyntax;
+	}
+
+	public void setPreference(String preference) {
+		_preference = preference;
+	}
+
 	public void setScoreEnabled(boolean scoreEnabled) {
-		_scoreEnabled = scoreEnabled;
+		_queryConfig.setScoreEnabled(scoreEnabled);
 	}
 
 	public void setSize(int size) {
 		_size = size;
+	}
+
+	public void setSorts(Sort[] sorts) {
+		_sorts = sorts;
 	}
 
 	public void setStart(int start) {
@@ -99,8 +129,12 @@ public class SearchSearchRequest
 
 	private final Map<String, Facet> _facets = new HashMap<>();
 	private GroupBy _groupBy;
+	private boolean _luceneSyntax;
+	private String _preference;
+	private final QueryConfig _queryConfig = new QueryConfig();
 	private boolean _scoreEnabled;
 	private int _size;
+	private Sort[] _sorts;
 	private int _start;
 	private Map<String, Stats> _stats;
 

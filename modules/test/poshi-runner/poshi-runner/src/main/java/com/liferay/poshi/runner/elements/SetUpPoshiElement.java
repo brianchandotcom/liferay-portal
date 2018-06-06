@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.elements;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -38,7 +39,7 @@ public class SetUpPoshiElement extends CommandPoshiElement {
 	public PoshiElement clone(
 		PoshiElement parentPoshiElement, String poshiScript) {
 
-		if (_isElementType(poshiScript)) {
+		if (_isElementType(parentPoshiElement, poshiScript)) {
 			return new SetUpPoshiElement(parentPoshiElement, poshiScript);
 		}
 
@@ -67,34 +68,22 @@ public class SetUpPoshiElement extends CommandPoshiElement {
 		return "setUp";
 	}
 
-	private boolean _isElementType(String poshiScript) {
-		poshiScript = poshiScript.trim();
+	private boolean _isElementType(
+		PoshiElement parentPoshiElement, String poshiScript) {
 
-		if (!isBalancedPoshiScript(poshiScript)) {
+		if (!(parentPoshiElement instanceof DefinitionPoshiElement)) {
 			return false;
 		}
 
-		if (!poshiScript.endsWith("}")) {
-			return false;
-		}
-
-		for (String line : poshiScript.split("\n")) {
-			line = line.trim();
-
-			if (line.startsWith("@")) {
-				continue;
-			}
-
-			if (!line.equals("setUp {")) {
-				return false;
-			}
-
-			break;
-		}
-
-		return true;
+		return isValidPoshiScriptBlock(_blockNamePattern, poshiScript);
 	}
 
 	private static final String _ELEMENT_NAME = "set-up";
+
+	private static final String _POSHI_SCRIPT_KEYWORD = "setUp";
+
+	private static final Pattern _blockNamePattern = Pattern.compile(
+		"^" + BLOCK_NAME_ANNOTATION_REGEX + _POSHI_SCRIPT_KEYWORD,
+		Pattern.DOTALL);
 
 }

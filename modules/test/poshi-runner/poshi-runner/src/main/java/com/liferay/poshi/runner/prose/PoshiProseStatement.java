@@ -150,7 +150,7 @@ public class PoshiProseStatement extends BasePoshiProse {
 	}
 
 	protected static final String[] KEYWORDS =
-		{"#", "*", "And", "Given", "Then", "When"};
+		{"*", "And", "Given", "Then", "When"};
 
 	private static final String _LINE_SEPARATOR = System.lineSeparator();
 

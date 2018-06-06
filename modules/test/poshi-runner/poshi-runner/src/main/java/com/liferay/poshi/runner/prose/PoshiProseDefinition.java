@@ -36,6 +36,8 @@ public class PoshiProseDefinition extends BasePoshiProse {
 	public PoshiProseDefinition(String fileName, String fileContent) {
 		_fileName = fileName;
 
+		fileContent = filterCommentLines(fileContent);
+
 		Matcher matcher = _definitionPattern.matcher(fileContent);
 
 		if (matcher.find()) {

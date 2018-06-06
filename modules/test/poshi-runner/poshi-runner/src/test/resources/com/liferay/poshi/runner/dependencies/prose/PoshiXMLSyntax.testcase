@@ -80,4 +80,9 @@ Five
 Six]]></var>
 		</execute>
 	</command>
+	<command name="commentTest" priority="0">
+		<execute macro="LocalFile.PoshiXMLSyntax#visitURL">
+			<var name="url" value="https://www.google.com"/>
+		</execute>
+	</command>
 </definition>

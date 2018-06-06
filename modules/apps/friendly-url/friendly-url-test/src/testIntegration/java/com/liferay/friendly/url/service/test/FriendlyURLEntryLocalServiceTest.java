@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,6 +49,16 @@ public class FriendlyURLEntryLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
+	}
+
+	@After
+	public void tearDown() {
+		FriendlyURLEntryLocalServiceUtil.deleteGroupFriendlyURLEntries(
+			_group.getGroupId(),
+			ClassNameLocalServiceUtil.getClassNameId(User.class));
+		FriendlyURLEntryLocalServiceUtil.deleteGroupFriendlyURLEntries(
+			_group.getGroupId(),
+			ClassNameLocalServiceUtil.getClassNameId(User.class));
 	}
 
 	@Test

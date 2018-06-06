@@ -25,6 +25,7 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
 
 import java.io.IOException;
 
+import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.action.update.UpdateAction;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.action.update.UpdateResponse;
@@ -78,6 +79,12 @@ public class UpdateDocumentRequestExecutorImpl
 		updateRequestBuilder.setId(document.getUID());
 
 		updateRequestBuilder.setIndex(updateDocumentRequest.getIndexName());
+
+		if (updateDocumentRequest.isRefresh()) {
+			updateRequestBuilder.setRefreshPolicy(
+				WriteRequest.RefreshPolicy.IMMEDIATE);
+		}
+
 		updateRequestBuilder.setType(document.get(Field.TYPE));
 
 		ElasticsearchDocumentFactory elasticsearchDocumentFactory =

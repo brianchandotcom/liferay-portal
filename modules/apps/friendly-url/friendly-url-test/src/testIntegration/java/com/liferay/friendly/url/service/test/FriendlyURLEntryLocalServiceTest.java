@@ -17,6 +17,7 @@ package com.liferay.friendly.url.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,6 +49,37 @@ public class FriendlyURLEntryLocalServiceTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
+	}
+
+	@After
+	public void tearDown() {
+		FriendlyURLEntryLocalServiceUtil.deleteGroupFriendlyURLEntries(
+			_group.getGroupId(),
+			ClassNameLocalServiceUtil.getClassNameId(User.class));
+		FriendlyURLEntryLocalServiceUtil.deleteGroupFriendlyURLEntries(
+			_group.getGroupId(),
+			ClassNameLocalServiceUtil.getClassNameId(User.class));
+	}
+
+	@Test
+	public void testAddFriendlyURLEntryReusesOwnedUrlTitles() throws Exception {
+		long classNameId = ClassNameLocalServiceUtil.getClassNameId(User.class);
+		String urlTitle = "existing-url-title";
+
+		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+			urlTitle, _getServiceContext());
+
+		FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+			"existing-url-title-2", _getServiceContext());
+
+		FriendlyURLEntry finalFriendlyURL =
+			FriendlyURLEntryLocalServiceUtil.addFriendlyURLEntry(
+				_group.getGroupId(), classNameId, TestPropsValues.getUserId(),
+				urlTitle, _getServiceContext());
+
+		Assert.assertEquals(urlTitle, finalFriendlyURL.getUrlTitle());
 	}
 
 	@Test

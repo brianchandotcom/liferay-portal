@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -259,6 +260,13 @@ public class FriendlyURLEntryLocalServiceImpl
 				}
 
 			});
+
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	@Override
@@ -534,6 +542,12 @@ public class FriendlyURLEntryLocalServiceImpl
 			if ((existingFriendlyURLEntryLocalization != null) &&
 				(existingFriendlyURLEntryLocalization.getClassPK() ==
 					classPK)) {
+
+				existingFriendlyURLEntryLocalization.setFriendlyURLEntryId(
+					friendlyURLEntryId);
+
+				friendlyURLEntryLocalizationPersistence.update(
+					existingFriendlyURLEntryLocalization);
 
 				continue;
 			}

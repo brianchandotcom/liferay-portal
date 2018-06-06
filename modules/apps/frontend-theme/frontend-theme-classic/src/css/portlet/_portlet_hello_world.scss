@@ -1,16 +1,28 @@
 .portlet-hello-world .portlet-content {
-	background: url(../images/portlet_hello_world/welcome_bg.jpg) 50% 50%;
+	background: url(../images/portlet_hello_world/welcome_bg.jpg) bottom left;
 	background-size: cover;
 	min-height: 390px;
-	padding-top: 40px;
-	text-align: center;
+	padding-top: 30px;
+
+	@include sm {
+		padding-left: 50px;
+	}
+
+	.portlet-header {
+		margin-bottom: 0;
+	}
 
 	.portlet-title-text {
-		color: $bright-color;
-		font-size: 300%;
+		color: $dark-color;
+		font-size: 220%;
+		text-transform: none;
 	}
 
 	.portlet-body {
-		padding: 0 20%;
+		padding-right: 30%;
+
+		@include sm {
+			padding-right: 60%;
+		}
 	}
 }

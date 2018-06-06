@@ -90,14 +90,19 @@ public class RenderRequestPortletContainerTest
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
-			Assert.assertEquals(
-				loggingEvents.toString(), 1, loggingEvents.size());
-
-			LoggingEvent loggingEvent = loggingEvents.get(0);
+			int totalExpectedEvents = 2;
 
 			Assert.assertEquals(
-				"Invalid portlet ID '\"><script>alert(1)</script>",
-				loggingEvent.getMessage());
+				loggingEvents.toString(), totalExpectedEvents,
+				loggingEvents.size());
+
+			for (int i = 0; i < totalExpectedEvents; i++) {
+				LoggingEvent loggingEvent = loggingEvents.get(i);
+
+				Assert.assertEquals(
+					"Invalid portlet ID '\"><script>alert(1)</script>",
+					loggingEvent.getMessage());
+			}
 
 			Assert.assertEquals(200, response.getCode());
 		}

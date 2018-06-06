@@ -419,15 +419,18 @@ public class RuntimePageImpl implements RuntimePage {
 			throw e;
 		}
 
+		Map<Integer, List<PortletRenderer>> portletRenderersMap =
+			processor.getPortletRenderers();
+
+		Map<String, Map<String, Object>> portletHeaderRequestMap =
+			new HashMap<>();
+
 		boolean portletParallelRender = GetterUtil.getBoolean(
 			request.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER));
 
 		Lock lock = null;
 
 		Map<String, StringBundler> contentsMap = new HashMap<>();
-
-		Map<Integer, List<PortletRenderer>> portletRenderersMap =
-			processor.getPortletRenderers();
 
 		for (Map.Entry<Integer, List<PortletRenderer>> entry :
 				portletRenderersMap.entrySet()) {
@@ -461,7 +464,7 @@ public class RuntimePageImpl implements RuntimePage {
 				try {
 					parallelyRenderPortlets(
 						objectValuePair.getKey(), response, processor,
-						contentsMap, portletRenderers);
+						contentsMap, portletHeaderRequestMap, portletRenderers);
 				}
 				finally {
 					Closeable closeable = objectValuePair.getValue();
@@ -485,16 +488,20 @@ public class RuntimePageImpl implements RuntimePage {
 				for (PortletRenderer portletRenderer : portletRenderers) {
 					Portlet portlet = portletRenderer.getPortlet();
 
+					String rendererPortletId = portlet.getPortletId();
+
 					contentsMap.put(
-						portlet.getPortletId(),
-						portletRenderer.render(request, response));
+						rendererPortletId,
+						portletRenderer.render(
+							request, response,
+							portletHeaderRequestMap.get(rendererPortletId)));
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							StringBundler.concat(
-								"Serially rendered portlet ",
-								portlet.getPortletId(), " in ",
-								String.valueOf(stopWatch.getTime()), " ms"));
+								"Serially rendered portlet ", rendererPortletId,
+								" in ", String.valueOf(stopWatch.getTime()),
+								" ms"));
 					}
 				}
 
@@ -560,6 +567,7 @@ public class RuntimePageImpl implements RuntimePage {
 	protected void parallelyRenderPortlets(
 			HttpServletRequest request, HttpServletResponse response,
 			TemplateProcessor processor, Map<String, StringBundler> contentsMap,
+			Map<String, Map<String, Object>> portletHeaderRequestMap,
 			List<PortletRenderer> portletRenderers)
 		throws Exception {
 
@@ -571,16 +579,20 @@ public class RuntimePageImpl implements RuntimePage {
 			portletRenderers.size());
 
 		for (PortletRenderer portletRenderer : portletRenderers) {
-			if (_log.isDebugEnabled()) {
-				Portlet portlet = portletRenderer.getPortlet();
+			Portlet portlet = portletRenderer.getPortlet();
 
+			String rendererPortletId = portlet.getPortletId();
+
+			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Submit portlet " + portlet.getPortletId() +
+					"Submit portlet " + rendererPortletId +
 						" for parallel rendering");
 			}
 
 			Callable<StringBundler> renderCallable =
-				portletRenderer.getCallable(request, response);
+				portletRenderer.getCallable(
+					request, response,
+					portletHeaderRequestMap.get(rendererPortletId));
 
 			Future<StringBundler> future = null;
 

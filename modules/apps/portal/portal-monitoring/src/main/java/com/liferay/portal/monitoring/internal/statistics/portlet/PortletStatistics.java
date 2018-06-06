@@ -40,6 +40,7 @@ public class PortletStatistics
 
 		_actionRequestStatistics = new RequestStatistics(portletId);
 		_eventRequestStatistics = new RequestStatistics(portletId);
+		_headerRequestStatistics = new RequestStatistics(portletId);
 		_renderRequestStatistics = new RequestStatistics(portletId);
 		_resourceRequestStatistics = new RequestStatistics(portletId);
 
@@ -47,6 +48,8 @@ public class PortletStatistics
 			PortletRequestType.ACTION, _actionRequestStatistics);
 		_requestStatistics.put(
 			PortletRequestType.EVENT, _eventRequestStatistics);
+		_requestStatistics.put(
+			PortletRequestType.HEADER, _headerRequestStatistics);
 		_requestStatistics.put(
 			PortletRequestType.RENDER, _renderRequestStatistics);
 		_requestStatistics.put(
@@ -121,6 +124,7 @@ public class PortletStatistics
 	public void reset() {
 		_actionRequestStatistics.reset();
 		_eventRequestStatistics.reset();
+		_headerRequestStatistics.reset();
 		_renderRequestStatistics.reset();
 		_resourceRequestStatistics.reset();
 	}
@@ -128,6 +132,7 @@ public class PortletStatistics
 	private final RequestStatistics _actionRequestStatistics;
 	private final String _displayName;
 	private final RequestStatistics _eventRequestStatistics;
+	private final RequestStatistics _headerRequestStatistics;
 	private final String _portletId;
 	private final String _portletName;
 	private final RequestStatistics _renderRequestStatistics;

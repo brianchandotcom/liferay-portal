@@ -117,6 +117,11 @@ public class MonitoringConfigurationManager
 	}
 
 	@Override
+	public boolean isMonitorPortletHeaderRequest() {
+		return _portletMonitoringControl.isMonitorPortletHeaderRequest();
+	}
+
+	@Override
 	public boolean isMonitorPortletRenderRequest() {
 		return _portletMonitoringControl.isMonitorPortletRenderRequest();
 	}
@@ -165,6 +170,14 @@ public class MonitoringConfigurationManager
 	}
 
 	@Override
+	public void setMonitorPortletHeaderRequest(
+		boolean monitoringPortletHeaderRequest) {
+
+		_portletMonitoringControl.setMonitorPortletHeaderRequest(
+			monitoringPortletHeaderRequest);
+	}
+
+	@Override
 	public void setMonitorPortletRenderRequest(
 		boolean monitorPortletRenderRequest) {
 
@@ -176,6 +189,7 @@ public class MonitoringConfigurationManager
 	public void setMonitorPortletRequests(boolean monitorPortletRequests) {
 		setMonitorPortletActionRequest(monitorPortletRequests);
 		setMonitorPortletEventRequest(monitorPortletRequests);
+		setMonitorPortletHeaderRequest(monitorPortletRequests);
 		setMonitorPortletRenderRequest(monitorPortletRequests);
 		setMonitorPortletResourceRequest(monitorPortletRequests);
 	}
@@ -206,6 +220,8 @@ public class MonitoringConfigurationManager
 			_monitoringConfiguration.monitorPortletActionRequest());
 		setMonitorPortletEventRequest(
 			_monitoringConfiguration.monitorPortletEventRequest());
+		setMonitorPortletHeaderRequest(
+			_monitoringConfiguration.monitorPortletHeaderRequest());
 		setMonitorPortletRenderRequest(
 			_monitoringConfiguration.monitorPortletRenderRequest());
 		setMonitorPortletResourceRequest(

@@ -23,6 +23,8 @@ public interface PortletMonitoringControl {
 
 	public boolean isMonitorPortletEventRequest();
 
+	public boolean isMonitorPortletHeaderRequest();
+
 	public boolean isMonitorPortletRenderRequest();
 
 	public boolean isMonitorPortletResourceRequest();
@@ -32,6 +34,9 @@ public interface PortletMonitoringControl {
 
 	public void setMonitorPortletEventRequest(
 		boolean monitoringPortletEventRequest);
+
+	public void setMonitorPortletHeaderRequest(
+		boolean monitoringPortletHeaderRequest);
 
 	public void setMonitorPortletRenderRequest(
 		boolean monitoringPortletRenderRequest);

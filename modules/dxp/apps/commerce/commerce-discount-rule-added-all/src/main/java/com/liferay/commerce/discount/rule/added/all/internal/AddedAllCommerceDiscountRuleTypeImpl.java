@@ -18,8 +18,10 @@ import com.liferay.commerce.discount.model.CommerceDiscountRuleConstants;
 import com.liferay.commerce.discount.rule.type.CommerceDiscountRuleType;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -49,7 +51,10 @@ public class AddedAllCommerceDiscountRuleTypeImpl
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "has-all-of-these-products");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "has-all-of-these-products");
 	}
 
 }

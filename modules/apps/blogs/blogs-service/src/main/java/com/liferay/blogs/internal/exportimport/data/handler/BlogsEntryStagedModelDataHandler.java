@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -293,56 +294,68 @@ public class BlogsEntryStagedModelDataHandler
 				entry.getCoverImageCaption(), null, null, serviceContext);
 		}
 
-		// Cover image
+		serviceContext.setModifiedDate(importedEntry.getModifiedDate());
 
-		Map<Long, Long> fileEntryIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FileEntry.class);
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		long coverImageFileEntryId = MapUtil.getLong(
-			fileEntryIds, entry.getCoverImageFileEntryId(), 0);
+		try {
 
-		importedEntry.setCoverImageFileEntryId(coverImageFileEntryId);
+			// Cover image
 
-		importedEntry = _blogsEntryLocalService.updateBlogsEntry(importedEntry);
+			Map<Long, Long> fileEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					FileEntry.class);
 
-		if ((existingCoverImageFileEntryId != 0) &&
-			(entry.getCoverImageFileEntryId() == 0)) {
+			long coverImageFileEntryId = MapUtil.getLong(
+				fileEntryIds, entry.getCoverImageFileEntryId(), 0);
 
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				existingCoverImageFileEntryId);
-		}
-
-		// Small image
-
-		if (entry.isSmallImage()) {
-			long smallImageFileEntryId = MapUtil.getLong(
-				fileEntryIds, entry.getSmallImageFileEntryId(), 0);
-
-			importedEntry.setSmallImageFileEntryId(smallImageFileEntryId);
-
-			if (smallImageFileEntryId == 0) {
-				importedEntry.setSmallImage(false);
-			}
+			importedEntry.setCoverImageFileEntryId(coverImageFileEntryId);
 
 			importedEntry = _blogsEntryLocalService.updateBlogsEntry(
 				importedEntry);
 
-			if ((existingSmallImageFileEntryId != 0) &&
-				(entry.getSmallImageFileEntryId() == 0)) {
+			if ((existingCoverImageFileEntryId != 0) &&
+				(entry.getCoverImageFileEntryId() == 0)) {
 
 				PortletFileRepositoryUtil.deletePortletFileEntry(
-					existingSmallImageFileEntryId);
+					existingCoverImageFileEntryId);
 			}
+
+			// Small image
+
+			if (entry.isSmallImage()) {
+				long smallImageFileEntryId = MapUtil.getLong(
+					fileEntryIds, entry.getSmallImageFileEntryId(), 0);
+
+				importedEntry.setSmallImageFileEntryId(smallImageFileEntryId);
+
+				if (smallImageFileEntryId == 0) {
+					importedEntry.setSmallImage(false);
+				}
+
+				importedEntry = _blogsEntryLocalService.updateBlogsEntry(
+					importedEntry);
+
+				if ((existingSmallImageFileEntryId != 0) &&
+					(entry.getSmallImageFileEntryId() == 0)) {
+
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						existingSmallImageFileEntryId);
+				}
+			}
+
+			Map<Long, Long> newPrimaryKeysMap =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					BlogsEntry.class);
+
+			newPrimaryKeysMap.put(
+				entry.getEntryId(), importedEntry.getEntryId());
+
+			_importFriendlyURLEntries(portletDataContext, entry, importedEntry);
 		}
-
-		Map<Long, Long> newPrimaryKeysMap =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				BlogsEntry.class);
-
-		newPrimaryKeysMap.put(entry.getEntryId(), importedEntry.getEntryId());
-
-		_importFriendlyURLEntries(portletDataContext, entry, importedEntry);
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		portletDataContext.importClassedModel(entry, importedEntry);
 	}

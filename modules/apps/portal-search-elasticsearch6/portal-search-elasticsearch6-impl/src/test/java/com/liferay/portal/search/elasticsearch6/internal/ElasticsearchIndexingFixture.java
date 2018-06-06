@@ -45,6 +45,7 @@ import com.liferay.portal.search.elasticsearch6.internal.filter.TermFilterTransl
 import com.liferay.portal.search.elasticsearch6.internal.filter.TermsFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.filter.TermsSetFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.groupby.DefaultGroupByTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.highlight.DefaultHighlighterTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch6.internal.query.BooleanQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.query.DisMaxQueryTranslatorImpl;
@@ -59,6 +60,7 @@ import com.liferay.portal.search.elasticsearch6.internal.query.StringQueryTransl
 import com.liferay.portal.search.elasticsearch6.internal.query.TermQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.query.TermRangeQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.query.WildcardQueryTranslatorImpl;
+import com.liferay.portal.search.elasticsearch6.internal.sort.DefaultSortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.DefaultStatsTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.suggest.ElasticsearchSuggesterTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.suggest.PhraseSuggesterTranslatorImpl;
@@ -254,9 +256,11 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				facetProcessor = _facetProcessor;
 				filterTranslator = createElasticsearchFilterTranslator();
 				groupByTranslator = new DefaultGroupByTranslator();
+				highlighterTranslator = new DefaultHighlighterTranslator();
 				indexNameBuilder = indexNameBuilder1;
 				props = createProps();
 				queryTranslator = createElasticsearchQueryTranslator();
+				sortTranslator = new DefaultSortTranslator();
 				statsTranslator = new DefaultStatsTranslator();
 				searchHitDocumentTranslator =
 					new SearchHitDocumentTranslatorImpl();

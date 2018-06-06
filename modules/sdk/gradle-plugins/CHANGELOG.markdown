@@ -4753,6 +4753,12 @@ to version 2.3.180.
 - [LPS-75530]: Fix the log message for `ExecuteBndTask` so it displays the
 correct amount of time it took to build the file.
 
+## 3.12.31 - 2018-06-06
+
+### Changed
+- [LPS-81900]: Update the [Liferay Gradle Plugins Soy] dependency to version
+3.1.5.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -5147,5 +5153,6 @@ correct amount of time it took to build the file.
 [LPS-81555]: https://issues.liferay.com/browse/LPS-81555
 [LPS-81635]: https://issues.liferay.com/browse/LPS-81635
 [LPS-81795]: https://issues.liferay.com/browse/LPS-81795
+[LPS-81900]: https://issues.liferay.com/browse/LPS-81900
 [LPS-82001]: https://issues.liferay.com/browse/LPS-82001
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

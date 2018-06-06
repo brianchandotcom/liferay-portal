@@ -4733,7 +4733,7 @@ version 2.1.39.
 - [LPS-81336]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.222.
 
-## 3.12.29 - 2018-06-05
+## 3.12.30 - 2018-06-05
 
 ### Fixed
 - [LPS-75530]: Fix the log message for `ExecuteBndTask` so it displays the

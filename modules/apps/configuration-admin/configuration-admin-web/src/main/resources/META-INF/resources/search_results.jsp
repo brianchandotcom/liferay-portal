@@ -112,7 +112,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 
 				if (configurationCategory != null) {
 					categorySection = LanguageUtil.get(request, "category-section." + configurationCategory.getCategorySection());
-					category = LanguageUtil.get(request, "category." + configurationCategory.getCategoryKey());
+
+					ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = configurationEntryRetriever.getConfigurationCategoryMenuDisplay(configurationCategory.getCategoryKey(), themeDisplay.getLanguageId());
+
+					ConfigurationCategoryDisplay configurationCategoryDisplay = configurationCategoryMenuDisplay.getConfigurationCategoryDisplay();
+
+					category = HtmlUtil.escape(configurationCategoryDisplay.getCategoryLabel(locale));
 				}
 				else {
 					categorySection = LanguageUtil.get(request, "other");

@@ -12,22 +12,18 @@
  * details.
  */
 
-package com.liferay.source.formatter.checkstyle.checks;
+package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.SourceUtil;
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.parser.JavaClass;
+import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
-
-import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.io.File;
 
@@ -53,143 +49,74 @@ import org.dom4j.Element;
 /**
  * @author Hugo Huijser
  */
-public class GetterMethodCallCheck extends BaseCheck {
+public class JavaGetterMethodCallCheck extends BaseJavaTermCheck {
 
 	@Override
-	public int[] getDefaultTokens() {
-		return new int[] {
-			TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF
-		};
-	}
-
-	public void setBaseDirName(String baseDirName) {
-		_baseDirName = baseDirName;
+	public boolean isPortalCheck() {
+		return true;
 	}
 
 	@Override
-	protected void doVisitToken(DetailAST detailAST) {
-		DetailAST parentAST = detailAST.getParent();
+	protected String doProcess(
+		String fileName, String absolutePath, JavaTerm javaTerm,
+		String fileContent) {
 
-		if (parentAST != null) {
-			return;
+		List<String> importNames = _getImportNames(javaTerm);
+
+		if (importNames.isEmpty()) {
+			return javaTerm.getContent();
 		}
 
-		Map<DetailAST, String> getterMethodCallMap = _getGetterMethodCallMap(
-			detailAST);
-
-		if (getterMethodCallMap.isEmpty()) {
-			return;
-		}
-
-		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
-
-		for (Map.Entry<DetailAST, String> entry :
-				getterMethodCallMap.entrySet()) {
-
-			DetailAST variableNameAST = entry.getKey();
-
-			String variableName = variableNameAST.getText();
-
-			String variableTypeName = DetailASTUtil.getVariableTypeName(
-				variableNameAST, variableName, true);
-
-			_checkGetterCall(
-				entry.getValue(), variableName, variableTypeName, importNames,
-				variableNameAST.getLineNo());
-		}
+		return _formatGetterMethodCalls(
+			javaTerm.getContent(), fileContent, importNames);
 	}
 
-	private void _checkGetterCall(
-		String getterObjectName, String variableName, String variableTypeName,
-		List<String> importNames, int lineNo) {
-
-		if (!Validator.isVariableName(variableTypeName)) {
-			return;
-		}
-
-		String packageName = _getPackageName(variableTypeName, importNames);
-
-		if (Validator.isNull(packageName)) {
-			return;
-		}
-
-		Element serviceXMLElement = _getServiceXMLElement(packageName);
-
-		if (serviceXMLElement == null) {
-			return;
-		}
-
-		for (Element entityElement :
-				(List<Element>)serviceXMLElement.elements("entity")) {
-
-			if (!variableTypeName.equals(
-					entityElement.attributeValue("name"))) {
-
-				continue;
-			}
-
-			for (Element columnElement :
-					(List<Element>)entityElement.elements("column")) {
-
-				if (getterObjectName.equals(
-						columnElement.attributeValue("name")) &&
-					Objects.equals(
-						columnElement.attributeValue("type"), "boolean")) {
-
-					String s = TextFormatter.format(
-						getterObjectName, TextFormatter.G);
-
-					log(
-						lineNo, _MSG_RENAME_METHOD_CALL,
-						StringBundler.concat(variableName, ".is", s, "()"),
-						StringBundler.concat(variableName, ".get" + s, "()"));
-				}
-			}
-		}
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_METHOD};
 	}
 
-	private Map<DetailAST, String> _getGetterMethodCallMap(
-		DetailAST detailAST) {
+	private String _formatGetterMethodCalls(
+		String content, String fileContent, List<String> importNames) {
 
-		Map<DetailAST, String> getterMethodCallMap = new HashMap<>();
+		Matcher matcher = _getterCallPattern.matcher(content);
 
-		List<DetailAST> methodCallASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, true, TokenTypes.METHOD_CALL);
+		while (matcher.find()) {
+			String variableName = matcher.group(1);
 
-		for (DetailAST methodCallAST : methodCallASTList) {
-			DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
+			String variableTypeName = _getVariableTypeName(
+				content, fileContent, variableName);
 
-			if (dotAST == null) {
+			if (variableTypeName == null) {
 				continue;
 			}
 
-			DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+			String getterObjectName = TextFormatter.format(
+				matcher.group(3), TextFormatter.I);
 
-			if (elistAST.getChildCount() > 0) {
-				continue;
-			}
+			if (_isBooleanColumn(
+					variableTypeName, getterObjectName, importNames)) {
 
-			List<DetailAST> nameASTList = DetailASTUtil.getAllChildTokens(
-				dotAST, false, TokenTypes.IDENT);
-
-			if (nameASTList.size() != 2) {
-				continue;
-			}
-
-			DetailAST methodNameAST = nameASTList.get(1);
-
-			Matcher matcher = _getterMethodNamePattern.matcher(
-				methodNameAST.getText());
-
-			if (matcher.find()) {
-				String getterObjectName = TextFormatter.format(
-					matcher.group(1), TextFormatter.I);
-
-				getterMethodCallMap.put(nameASTList.get(0), getterObjectName);
+				return StringUtil.replaceFirst(
+					content, "get", "is", matcher.start(2));
 			}
 		}
 
-		return getterMethodCallMap;
+		return content;
+	}
+
+	private List<String> _getImportNames(JavaTerm javaTerm) {
+		JavaClass javaClass = javaTerm.getParentJavaClass();
+
+		while (true) {
+			JavaClass parentJavaClass = javaClass.getParentJavaClass();
+
+			if (parentJavaClass == null) {
+				return javaClass.getImports();
+			}
+
+			javaClass = parentJavaClass;
+		}
 	}
 
 	private String _getPackageName(
@@ -225,11 +152,73 @@ public class GetterMethodCallCheck extends BaseCheck {
 		return _serviceXMLElementsMap.get(packageName);
 	}
 
+	private String _getVariableTypeName(
+		String content, String fileContent, String variableName) {
+
+		if (variableName == null) {
+			return null;
+		}
+
+		Pattern pattern = Pattern.compile(
+			"\\W(\\w+)\\s+" + variableName + "\\W");
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		matcher = pattern.matcher(fileContent);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return null;
+	}
+
+	private boolean _isBooleanColumn(
+		String variableTypeName, String getterObjectName,
+		List<String> importNames) {
+
+		String packageName = _getPackageName(variableTypeName, importNames);
+
+		Element serviceXMLElement = _getServiceXMLElement(packageName);
+
+		if (serviceXMLElement == null) {
+			return false;
+		}
+
+		for (Element entityElement :
+				(List<Element>)serviceXMLElement.elements("entity")) {
+
+			if (!variableTypeName.equals(
+					entityElement.attributeValue("name"))) {
+
+				continue;
+			}
+
+			for (Element columnElement :
+					(List<Element>)entityElement.elements("column")) {
+
+				if (getterObjectName.equals(
+						columnElement.attributeValue("name")) &&
+					Objects.equals(
+						columnElement.attributeValue("type"), "boolean")) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private void _populateServiceXMLElements(String dirName, int maxDepth)
 		throws Exception {
 
 		File directory = SourceFormatterUtil.getFile(
-			_baseDirName, dirName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+			getBaseDirName(), dirName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
 		if (directory == null) {
 			return;
@@ -284,17 +273,14 @@ public class GetterMethodCallCheck extends BaseCheck {
 		}
 	}
 
-	private static final String _MSG_RENAME_METHOD_CALL = "method.call.rename";
-
 	private static final String[] _SKIP_DIR_NAMES = {
 		".git", ".gradle", ".idea", ".m2", ".settings", "bin", "build",
 		"classes", "dependencies", "node_modules", "sql", "src", "test",
 		"test-classes", "test-coverage", "test-results", "tmp"
 	};
 
-	private String _baseDirName;
-	private final Pattern _getterMethodNamePattern = Pattern.compile(
-		"^get([A-Z].*)");
+	private final Pattern _getterCallPattern = Pattern.compile(
+		"\\W(\\w+)\\.\\s*(get)([A-Z]\\w*)\\(\\)");
 	private Map<String, Element> _serviceXMLElementsMap;
 
 }

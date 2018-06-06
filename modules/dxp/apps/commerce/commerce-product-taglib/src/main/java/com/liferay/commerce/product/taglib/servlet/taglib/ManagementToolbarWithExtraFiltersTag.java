@@ -23,14 +23,16 @@ public class ManagementToolbarWithExtraFiltersTag extends ManagementToolbarTag {
 
 	public ManagementToolbarWithExtraFiltersTag() {
 		super(
-	"management-toolbar-with-extra-filters",
-	"com.liferay.commerce.product.taglib.ManagementToolbarWithExtraFilters",
-	true);
+			"management-toolbar-with-extra-filters",
+			"com.liferay.commerce.product.taglib." +
+				"ManagementToolbarWithExtraFilters",
+			true);
 	}
 
 	@Override
 	public String getModule() {
-		return "commerce-product-taglib/management_toolbar_with_extra_filters/ManagementToolbarWithExtraFilters.es";
+		return "commerce-product-taglib/management_toolbar_with_extra_filters" +
+			"/ManagementToolbarWithExtraFilters.es";
 	}
 
 	public void setCategorySelectorURL(String categorySelectorURL) {

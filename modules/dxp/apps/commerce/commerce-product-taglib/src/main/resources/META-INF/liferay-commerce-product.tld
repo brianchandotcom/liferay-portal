@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
 <taglib
-		version="2.1"
-		xmlns="http://java.sun.com/xml/ns/javaee"
+	version="2.1"
+	xmlns="http://java.sun.com/xml/ns/javaee"
 		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
@@ -16,7 +16,7 @@
 		<body-content>empty</body-content>
 		<attribute>
 			<description></description>
-			<name>actionItems</name>
+			<name>actionDropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -76,7 +76,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>filterItems</name>
+			<name>filterDropdownItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -95,6 +95,12 @@
 		<attribute>
 			<description></description>
 			<name>infoPanelId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>itemsTotal</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -202,13 +208,7 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>totalItems</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
-			<name>viewTypes</name>
+			<name>viewTypeItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -25,7 +25,12 @@ import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.*;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -45,17 +50,16 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-<<<<<<< HEAD
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-=======
-import com.liferay.portal.kernel.util.*;
->>>>>>> LPS-79926 Implement commercd management toolbar in product definitions
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
@@ -96,35 +100,28 @@ public class CPDefinitionsDisplayContext
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList(httpServletRequest) {
+		return new DropdownItemList() {
 			{
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
 				RenderResponse renderResponse =
-					(RenderResponse)httpServletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+					cpRequestHelper.getRenderResponse();
 
 				add(
-						SafeConsumer.ignore(
-								dropdownItem -> {
-									dropdownItem.setHref(
-											"javascript:" +
-													renderResponse.getNamespace() +
-													"deleteCPDefinitions();");
+					SafeConsumer.ignore(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								"javascript:" + renderResponse.getNamespace() +
+									"deleteCPDefinitions();");
 
-									boolean trashEnabled =
-										TrashUtil.isTrashEnabled(
-											themeDisplay.getScopeGroupId());
+							boolean trashEnabled = TrashUtil.isTrashEnabled(
+								getScopeGroupId());
 
-									dropdownItem.setIcon(
-										trashEnabled ? "trash" : "times");
-									dropdownItem.setLabel(
-											trashEnabled ? "recycle-bin" :
-												"delete");
+							dropdownItem.setIcon(
+								trashEnabled ? "trash" : "times");
+							dropdownItem.setLabel(
+								trashEnabled ? "recycle-bin" : "delete");
 
-									dropdownItem.setQuickAction(true);
-								}));
+							dropdownItem.setQuickAction(true);
+						}));
 			}
 		};
 	}
@@ -155,31 +152,28 @@ public class CPDefinitionsDisplayContext
 		return clearResultsURL.toString();
 	}
 
-	public CreationMenu getCreationMenu() throws PortalException {
-		return new CreationMenu(httpServletRequest) {
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
 			{
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
 				RenderResponse renderResponse =
-					(RenderResponse)httpServletRequest.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+					cpRequestHelper.getRenderResponse();
 
 				for (CPType curCPType : getCPTypes()) {
 					addPrimaryDropdownItem(
-							dropdownItem -> {
-								dropdownItem.setHref(renderResponse.createRenderURL(),
-										Constants.CMD, Constants.ADD,
-										"mvcRenderCommandName",
-										"editProductDefinition", "backURL",
-										PortalUtil.getCurrentCompleteURL(httpServletRequest),
-										"productTypeName", curCPType.getName(),
-										"toolbarItem",
-										"view-product-definition-details");
-								dropdownItem.setLabel(
-									curCPType.getLabel(
-										themeDisplay.getLocale()));
-							});
+						dropdownItem -> {
+							dropdownItem.setHref(
+								renderResponse.createRenderURL(), Constants.CMD,
+								Constants.ADD, "mvcRenderCommandName",
+								"editProductDefinition", "backURL",
+								PortalUtil.getCurrentCompleteURL(
+									httpServletRequest),
+								"productTypeName", curCPType.getName(),
+								"toolbarItem",
+								"view-product-definition-details");
+							dropdownItem.setLabel(
+								curCPType.getLabel(
+									cpRequestHelper.getLocale()));
+						});
 				}
 			}
 		};
@@ -206,6 +200,12 @@ public class CPDefinitionsDisplayContext
 			layoutItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
+	}
+
+	public int getItemsTotal() throws PortalException {
+		SearchContainer searchContainer = getSearchContainer();
+
+		return searchContainer.getTotal();
 	}
 
 	public String getLayoutBreadcrumb(Layout layout) throws Exception {
@@ -291,34 +291,35 @@ public class CPDefinitionsDisplayContext
 	}
 
 	public List<DropdownItem> getOrderByDropdownItems() {
-		return new DropdownItemList(httpServletRequest) {
+		return new DropdownItemList() {
 			{
 				addGroup(
-						dropdownGroupItem -> {
-							dropdownGroupItem.setDropdownItems(
-									new DropdownItemList(httpServletRequest) {
-										{
-											for (String orderColumn :
-													getOrderColumns()) {
+					dropdownGroupItem -> {
+						dropdownGroupItem.setDropdownItems(
+							new DropdownItemList() {
+								{
+									for (String orderColumn :
+											getOrderColumns()) {
 
-												add(
-														SafeConsumer.ignore(
-																dropdownItem -> {
-																	dropdownItem.setActive(
-																		orderColumn.equals(
-																			getOrderByCol()));
-																	dropdownItem.setHref(
-																		getPortletURL(),
-																		"orderByCol",
-																		orderColumn);
-																	dropdownItem.setLabel(
-																		orderColumn);
-																}));
-											}
-										}
-									});
-							dropdownGroupItem.setLabel("order-by");
-						});
+										add(
+											SafeConsumer.ignore(
+												dropdownItem -> {
+													dropdownItem.setActive(
+														orderColumn.equals(
+															getOrderByCol()));
+													dropdownItem.setHref(
+														getPortletURL(),
+														"orderByCol",
+														orderColumn);
+													dropdownItem.setLabel(
+														orderColumn);
+												}));
+									}
+								}
+							});
+
+						dropdownGroupItem.setLabel("order-by");
+					});
 			}
 		};
 	}
@@ -435,16 +436,10 @@ public class CPDefinitionsDisplayContext
 		PortletURL sortingURL = getPortletURL();
 
 		sortingURL.setParameter(
-				"orderByType",
-				Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
+			"orderByType",
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
 
 		return sortingURL.toString();
-	}
-
-	public int getTotalItems() throws PortalException {
-		SearchContainer searchContainer = getSearchContainer();
-
-		return searchContainer.getTotal();
 	}
 
 	public String getUrlTitleMapAsXML() throws PortalException {
@@ -458,9 +453,7 @@ public class CPDefinitionsDisplayContext
 	}
 
 	public List<ViewTypeItem> getViewTypeItems() throws PortalException {
-		return new ViewTypeItemList(
-				httpServletRequest, getPortletURL(), getDisplayStyle()) {
-
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
 				if (ArrayUtil.contains(getDisplayViews(), "icon")) {
 					addCardViewTypeItem();

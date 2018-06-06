@@ -2062,7 +2062,6 @@
 		</execute>
 
 		<execute macro="User#deactivateCP">
-			<var name="deactivateType" value="Deactivate Button" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userScreenName" value="usersn" />
 		</execute>

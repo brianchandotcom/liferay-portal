@@ -87,10 +87,12 @@
 									</#if>
 								<#else>
 									<div class="product-detail-thumbnail-container" id="<@portlet.namespace />thumbs-container">
+
 										<#--
 											`data-standard` value should be same as img value
 											`href` value should be the large version used for zoom
 										-->
+
 										<a class="thumb thumb-image" data-standard="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}" href="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}">
 											<img class="img-fluid" src="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}">
 										</a>
@@ -245,6 +247,7 @@
 						<div class="autofit-col autofit-col-expand">
 							<div class="autofit-section">
 								<#-- discount % and $ saved goes here -->
+
 							</div>
 						</div>
 					</div>
@@ -265,8 +268,9 @@
 								/>
 							</button>
 						</div>
+
 						<div class="modal-body">
-							<div id="carouselExampleFade" class="carousel" data-interval="false" data-ride="carousel">
+							<div class="carousel" data-interval="false" data-ride="carousel" id="carouselExampleFade">
 								<div class="carousel-inner">
 									<#assign
 										imageOverflowUrlsIndex = 1
@@ -287,6 +291,7 @@
 											<div class="carousel-item-image">
 												<img alt="Product Image" class="img-fluid" src="${url}">
 											</div>
+
 											<div class="carousel-index">${imageOverflowUrlsIndex}/${imageOverflowUrls?size}</div>
 										</div>
 
@@ -295,18 +300,21 @@
 										/>
 									</#list>
 
-									<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+									<a class="carousel-control-prev" data-slide="prev" href="#carouselExampleFade" role="button">
 										<@liferay_aui.icon
 											image="angle-left"
 											markupView="lexicon"
 										/>
+
 										<span class="sr-only">Previous</span>
 									</a>
-									<a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+
+									<a class="carousel-control-next" data-slide="next" href="#carouselExampleFade" role="button">
 										<@liferay_aui.icon
 											image="angle-right"
 											markupView="lexicon"
 										/>
+
 										<span class="sr-only">Next</span>
 									</a>
 								</div>
@@ -316,7 +324,6 @@
 				</div>
 			</div>
 		</#if>
-
 	</div>
 </div>
 

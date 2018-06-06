@@ -194,7 +194,7 @@ public class CommercePriceCalculationImpl implements CommercePriceCalculation {
 		CommerceCurrency commerceCurrency =
 			commerceContext.getCommerceCurrency();
 
-		if (commerceCurrency != null && !commerceCurrency.isPrimary()) {
+		if ((commerceCurrency != null) && !commerceCurrency.isPrimary()) {
 			price = price.multiply(commerceCurrency.getRate());
 		}
 

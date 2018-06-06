@@ -967,6 +967,10 @@
 			<var name="defaultSiteLanguage" value="English (United States)" />
 		</execute>
 
+		<execute macro="Navigator#gotoNavTab">
+			<var name="navTab" value="General" />
+		</execute>
+		
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Sites" />
 			<var name="panel" value="Control Panel" />

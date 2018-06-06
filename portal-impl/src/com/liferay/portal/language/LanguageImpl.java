@@ -68,7 +68,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -1182,20 +1181,15 @@ public class LanguageImpl implements Language, Serializable {
 		String value = null;
 
 		try {
-			int pos = description.indexOf(CharPool.SPACE);
+			String[] parts = description.split(StringPool.SPACE, 2);
 
-			String x = description.substring(0, pos);
+			String unit = StringUtil.toLowerCase(parts[1]);
 
-			String unit = get(
-				request,
-				StringUtil.toLowerCase(description.substring(pos + 1)));
-
-			if (Objects.equals(_getLocale(request), Locale.JAPAN)) {
-				value = x.concat(unit);
+			if (unit.equals("second")) {
+				unit += "[time]";
 			}
-			else {
-				value = x.concat(StringPool.SPACE).concat(unit);
-			}
+
+			value = format(request, "x-" + unit, parts[0]);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -1329,14 +1323,15 @@ public class LanguageImpl implements Language, Serializable {
 		String value = null;
 
 		try {
-			int pos = description.indexOf(CharPool.SPACE);
+			String[] parts = description.split(StringPool.SPACE, 2);
 
-			String x = description.substring(0, pos);
+			String unit = StringUtil.toLowerCase(parts[1]);
 
-			value = x.concat(StringPool.SPACE).concat(
-				get(
-					locale,
-					StringUtil.toLowerCase(description.substring(pos + 1))));
+			if (unit.equals("second")) {
+				unit += "[time]";
+			}
+
+			value = format(locale, "x-" + unit, parts[0]);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

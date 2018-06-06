@@ -33,6 +33,14 @@ public class ConfigurationCategoryDisplay {
 		_configurationCategory = configurationCategory;
 	}
 
+	public String getCategoryIcon() {
+		return _configurationCategory.getCategoryIcon();
+	}
+
+	public String getCategoryKey() {
+		return _configurationCategory.getCategoryKey();
+	}
+
 	public String getCategoryLabel(Locale locale) {
 		ResourceBundleLoader resourceBundleLoader =
 			ResourceBundleLoaderUtil.
@@ -45,14 +53,6 @@ public class ConfigurationCategoryDisplay {
 		return LanguageUtil.get(
 			resourceBundle,
 			"category." + _configurationCategory.getCategoryKey());
-	}
-
-	public String getCategoryIcon() {
-		return _configurationCategory.getCategoryIcon();
-	}
-
-	public String getCategoryKey() {
-		return _configurationCategory.getCategoryKey();
 	}
 
 	public String getCategorySection() {

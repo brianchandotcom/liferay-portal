@@ -15,9 +15,10 @@
 package com.liferay.portal.apio.user;
 
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserWrapper;
 
 /**
- * Provides the current {@code User}.
+ * This class serves as an alias for the current authenticated {@link User}.
  *
  * <p>
  * To use this class, add it as a parameter to the methods of the different
@@ -27,26 +28,12 @@ import com.liferay.portal.kernel.model.User;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @review
  */
-@FunctionalInterface
-public interface CurrentUser {
+public class CurrentUser extends UserWrapper {
 
-	/**
-	 * Returns the current user.
-	 *
-	 * @return the current user
-	 */
-	public User getUser();
-
-	/**
-	 * Returns the current user's ID.
-	 *
-	 * @return the current user's ID.
-	 */
-	public default long getUserId() {
-		User user = getUser();
-
-		return user.getUserId();
+	public CurrentUser(User user) {
+		super(user);
 	}
 
 }

@@ -106,7 +106,9 @@
 		<field name="shippingAddressId" type="long" />
 		<field name="commercePaymentMethodId" type="long" />
 		<field name="commerceShippingMethodId" type="long" />
-		<field name="shippingOptionName" type="String" />
+		<field name="shippingOptionName" type="String">
+			<hint name="max-length">255</hint>
+		</field>
 		<field name="purchaseOrderNumber" type="String" />
 		<field name="subtotal" type="BigDecimal" />
 		<field name="shippingPrice" type="BigDecimal" />

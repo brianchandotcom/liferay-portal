@@ -12,6 +12,7 @@
 		<field name="commerceShippingMethodId" type="long" />
 		<field localized="true" name="name" type="String">
 			<validator name="required" />
+			<hint name="max-length">255</hint>
 		</field>
 		<field localized="true" name="description" type="String" />
 		<field name="amount" type="BigDecimal" />

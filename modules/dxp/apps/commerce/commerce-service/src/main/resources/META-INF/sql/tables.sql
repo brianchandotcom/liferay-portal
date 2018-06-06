@@ -125,7 +125,7 @@ create table CommerceOrder (
 	shippingAddressId LONG,
 	commercePaymentMethodId LONG,
 	commerceShippingMethodId LONG,
-	shippingOptionName VARCHAR(75) null,
+	shippingOptionName VARCHAR(255) null,
 	purchaseOrderNumber VARCHAR(75) null,
 	subtotal DECIMAL(30, 16) null,
 	shippingPrice DECIMAL(30, 16) null,

@@ -77,13 +77,6 @@ public class BNDBundleCheck extends BaseFileCheck {
 					"true'"));
 		}
 
-		if (!content.matches("(?s).*Liferay-Releng-Suite:[^\\S\\n]*\\S+.*")) {
-			addMessage(
-				fileName,
-				"If the 'app.bnd' file contains 'Liferay-Releng-Bundle: " +
-					"true', it must define a 'Liferay-Releng-Suite'");
-		}
-
 		return content;
 	}
 

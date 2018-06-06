@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.ManagementToolbarDefaults;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -45,6 +46,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 			"com.liferay.frontend.taglib.clay.ManagementToolbar");
 		setHydrate(true);
 		setModuleBaseName("management-toolbar");
+
+		if (_displayContext != null) {
+			populateContext(_displayContext);
+		}
 
 		Map<String, Object> context = getContext();
 
@@ -115,6 +120,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		return super.doStartTag();
 	}
 
+	public ManagementToolbarDisplayContext getDisplayContext() {
+		return _displayContext;
+	}
+
 	@Override
 	public String getModule() {
 		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
@@ -145,6 +154,12 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setDisabled(Boolean disabled) {
 		putValue("disabled", disabled);
+	}
+
+	public void setDisplayContext(
+		ManagementToolbarDisplayContext managementToolbarDisplayContext) {
+
+		_displayContext = managementToolbarDisplayContext;
 	}
 
 	public void setFilterDropdownItems(List<DropdownItem> filterDropdownItems) {
@@ -224,8 +239,59 @@ public class ManagementToolbarTag extends BaseClayTag {
 	}
 
 	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_displayContext = null;
+	}
+
+	@Override
 	protected String[] getNamespacedParams() {
 		return _NAMESPACED_PARAMS;
+	}
+
+	protected void populateContext(
+		ManagementToolbarDisplayContext managementToolbarDisplayContext) {
+
+		if (managementToolbarDisplayContext == null) {
+			return;
+		}
+
+		setActionDropdownItems(
+			managementToolbarDisplayContext.getActionDropdownItems());
+		setClearResultsURL(
+			managementToolbarDisplayContext.getClearResultsURL());
+		setContentRenderer(
+			managementToolbarDisplayContext.getContentRenderer());
+		setCreationMenu(managementToolbarDisplayContext.getCreationMenu());
+		setDisabled(managementToolbarDisplayContext.isDisabled());
+		setFilterDropdownItems(
+			managementToolbarDisplayContext.getFilterDropdownItems());
+		setInfoPanelId(managementToolbarDisplayContext.getInfoPanelId());
+		setItemsTotal(managementToolbarDisplayContext.getItemsTotal());
+		setSearchActionURL(
+			managementToolbarDisplayContext.getSearchActionURL());
+		setSearchContainerId(
+			managementToolbarDisplayContext.getSearchContainerId());
+		setSearchFormMethod(
+			managementToolbarDisplayContext.getSearchFormMethod());
+		setSearchFormName(managementToolbarDisplayContext.getSearchFormName());
+		setSearchInputName(
+			managementToolbarDisplayContext.getSearchInputName());
+		setSearchValue(managementToolbarDisplayContext.getSearchValue());
+		setSelectable(managementToolbarDisplayContext.isSelectable());
+		setSelectedItems(managementToolbarDisplayContext.getSelectedItems());
+		setShowAdvancedSearch(
+			managementToolbarDisplayContext.isShowAdvancedSearch());
+		setShowCreationMenu(
+			managementToolbarDisplayContext.isShowCreationMenu());
+		setShowFiltersDoneButton(
+			managementToolbarDisplayContext.isShowFiltersDoneButton());
+		setShowInfoButton(managementToolbarDisplayContext.isShowInfoButton());
+		setShowSearch(managementToolbarDisplayContext.isShowSearch());
+		setSortingOrder(managementToolbarDisplayContext.getSortingOrder());
+		setSortingURL(managementToolbarDisplayContext.getSortingURL());
+		setViewTypeItems(managementToolbarDisplayContext.getViewTypeItems());
 	}
 
 	private Map<String, Object> _getSearchData(String searchActionURL) {
@@ -265,5 +331,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 	private static final String[] _NAMESPACED_PARAMS = {
 		"infoPanelId", "searchContainerId", "searchFormName", "searchInputName"
 	};
+
+	private ManagementToolbarDisplayContext _displayContext;
 
 }

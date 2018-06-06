@@ -64,18 +64,18 @@
 						{/let}
 
 						<input {$mainFieldAttributes} />
-					</div>
 
-					{if $_errorMessage}
-						<form class="form-feedback-item">
-							<span class="form-feedback-indicator">
-								<svg class="lexicon-icon">
-									<use xlink:href="{$spritemap}#exclamation-full"></use>
-								</svg>
-							</span>
-							{$_errorMessage}
-						</form>
-					{/if}
+						{if $_errorMessage}
+							<form class="form-feedback-item">
+								<span class="form-feedback-indicator">
+									<svg class="lexicon-icon">
+										<use xlink:href="{$spritemap}#exclamation-full"></use>
+									</svg>
+								</span>
+								{$_errorMessage}
+							</form>
+						{/if}
+					</div>
 
 					{if $checkboxFieldName and $checkboxFieldLabel}
 						<div class="form-check">
@@ -103,6 +103,17 @@
 			{param events: ['visibleChanged': $_handleModalVisibleChanged] /}
 
 			{param footer kind="html"}
+				{let $cancelButtonAttributes kind="attributes"}
+					{if $_loadingResponse}disabled{/if}
+					class="btn btn-secondary"
+					data-onclick="{$_handleCancelButtonClick}"
+					type="button"
+				{/let}
+
+				<button {$cancelButtonAttributes}>
+					{msg desc=""}cancel{/msg}
+				</button>
+
 				{let $submitButtonAttributes kind="attributes"}
 					{if $_loadingResponse}disabled{/if}
 					class="btn btn-primary"
@@ -116,18 +127,7 @@
 						</span>
 					{/if}
 
-					{msg desc=""}submit{/msg}
-				</button>
-
-				{let $cancelButtonAttributes kind="attributes"}
-					{if $_loadingResponse}disabled{/if}
-					class="btn btn-secondary"
-					data-onclick="{$_handleCancelButtonClick}"
-					type="button"
-				{/let}
-
-				<button {$cancelButtonAttributes}>
-					{msg desc=""}cancel{/msg}
+					{msg desc=""}save{/msg}
 				</button>
 			{/param}
 

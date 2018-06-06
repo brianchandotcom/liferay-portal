@@ -16,7 +16,7 @@
 			</then>
 		</if>
 
-		<execute macro="Modal#submit" />
+		<execute macro="Modal#save" />
 	</command>
 
 	<command name="_clickAddPage">

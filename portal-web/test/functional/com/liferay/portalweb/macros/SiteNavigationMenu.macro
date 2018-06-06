@@ -149,7 +149,7 @@
 			<var name="name" value="${menuName}" />
 		</execute>
 
-		<execute macro="Modal#submit" />
+		<execute macro="Modal#save" />
 	</command>
 
 	<command name="configureMenuFunction">

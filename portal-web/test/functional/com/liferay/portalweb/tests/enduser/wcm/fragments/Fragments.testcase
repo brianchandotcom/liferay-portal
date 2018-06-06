@@ -306,7 +306,7 @@
 			<var name="fragmentName" value="Rename Fragment" />
 		</execute>
 
-		<execute macro="Modal#submit" />
+		<execute macro="Modal#save" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />

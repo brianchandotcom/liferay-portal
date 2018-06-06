@@ -1,6 +1,6 @@
 <definition>
-	<command name="submit">
-		<execute macro="Button#clickModalSubmit" />
+	<command name="save">
+		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

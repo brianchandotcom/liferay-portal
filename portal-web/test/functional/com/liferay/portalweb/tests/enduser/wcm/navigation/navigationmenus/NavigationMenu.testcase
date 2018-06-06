@@ -475,7 +475,7 @@
 			<var name="name" value="Primary Menu Name 1 Edit" />
 		</execute>
 
-		<execute macro="Modal#submit" />
+		<execute macro="Modal#save" />
 
 		<execute macro="LexiconEntry#viewEntryName">
 			<var name="rowEntry" value="Primary Menu Name 1 Edit" />

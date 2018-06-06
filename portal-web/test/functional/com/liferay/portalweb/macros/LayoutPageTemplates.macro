@@ -22,7 +22,7 @@
 			<var name="name" value="${pageTemplateName}" />
 		</execute>
 
-		<execute macro="Button#clickModalSubmit" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="addCollection">
@@ -135,7 +135,7 @@
 			<var name="name" value="${pageTemplateName}" />
 		</execute>
 
-		<execute macro="Modal#submit" />
+		<execute macro="Modal#save" />
 	</command>
 
 	<command name="selectFragment">

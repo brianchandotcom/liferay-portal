@@ -82,7 +82,7 @@
 					<var name="name" value="${siteName}" />
 				</execute>
 
-				<execute macro="Modal#submit" />
+				<execute macro="Modal#save" />
 			</then>
 		</if>
 
@@ -1044,7 +1044,7 @@
 			<var name="name" value="${siteName}" />
 		</execute>
 
-		<execute macro="Button#clickModalSubmit" />
+		<execute macro="Button#clickSave" />
 
 		<if>
 			<equals arg1="${siteNameInvalid}" arg2="Duplicate" />

@@ -57,7 +57,7 @@
 			<var name="fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute macro="Button#clickModalSubmit" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="editFragment">

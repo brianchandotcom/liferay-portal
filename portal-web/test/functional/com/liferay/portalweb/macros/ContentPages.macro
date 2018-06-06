@@ -10,7 +10,7 @@
 			<var name="name" value="${pageName}" />
 		</execute>
 
-		<execute macro="Modal#submit" />
+		<execute macro="Modal#save" />
 	</command>
 
 	<command name="viewContentPG">

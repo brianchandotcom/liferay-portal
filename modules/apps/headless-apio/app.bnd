@@ -1,4 +1,4 @@
-Liferay-Releng-App-Description: Liferay Headless Apio is a suite of APIs built with the Apio Architect framework
+Liferay-Releng-App-Description:
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix}
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility

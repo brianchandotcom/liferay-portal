@@ -131,22 +131,45 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 									Map<String, Object> addLayoutData = new HashMap<>();
 
 									addLayoutData.put("layout-page-template-entry-id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+									String imagePreviewURL = layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
 									%>
 
-									<liferay-frontend:icon-vertical-card
-										actionJspServletContext="<%= application %>"
-										cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
-										data="<%= addLayoutData %>"
-										icon='<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) ? "page-template" : "page" %>'
-										resultRow="<%= row %>"
-										rowChecker="<%= searchContainer.getRowChecker() %>"
-										title="<%= layoutPageTemplateEntry.getName() %>"
-										url="javascript:;"
-									>
-										<liferay-frontend:vertical-card-header>
-											<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-										</liferay-frontend:vertical-card-header>
-									</liferay-frontend:icon-vertical-card>
+									<c:choose>
+										<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
+											<liferay-frontend:vertical-card
+												actionJspServletContext="<%= application %>"
+												cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
+												data="<%= addLayoutData %>"
+												imageCSSClass="aspect-ratio-bg-contain"
+												imageUrl="<%= imagePreviewURL %>"
+												resultRow="<%= row %>"
+												rowChecker="<%= searchContainer.getRowChecker() %>"
+												title="<%= layoutPageTemplateEntry.getName() %>"
+												url="javascript:;"
+											>
+												<liferay-frontend:vertical-card-header>
+													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+												</liferay-frontend:vertical-card-header>
+											</liferay-frontend:vertical-card>
+										</c:when>
+										<c:otherwise>
+											<liferay-frontend:icon-vertical-card
+												actionJspServletContext="<%= application %>"
+												cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
+												data="<%= addLayoutData %>"
+												icon='<%= Objects.equals(layoutPageTemplateEntry.getType(), LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) ? "page-template" : "page" %>'
+												resultRow="<%= row %>"
+												rowChecker="<%= searchContainer.getRowChecker() %>"
+												title="<%= layoutPageTemplateEntry.getName() %>"
+												url="javascript:;"
+											>
+												<liferay-frontend:vertical-card-header>
+													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+												</liferay-frontend:vertical-card-header>
+											</liferay-frontend:icon-vertical-card>
+										</c:otherwise>
+									</c:choose>
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>
 

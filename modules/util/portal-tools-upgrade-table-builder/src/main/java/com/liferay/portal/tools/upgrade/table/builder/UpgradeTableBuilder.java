@@ -145,7 +145,7 @@ public class UpgradeTableBuilder {
 			_upgradeTableDirName, upgradeFileVersion, upgradeFileName);
 
 		if (Files.notExists(upgradeFilePath)) {
-			if (!upgradeFileVersion.equals(_getSchemaVersion())) {
+			if (!_validateUpgradePackage(upgradeFileVersion)) {
 				return;
 			}
 
@@ -420,10 +420,6 @@ public class UpgradeTableBuilder {
 	}
 
 	private String _getSchemaVersion() throws IOException {
-		if (!_osgiModule) {
-			return _releaseInfoVersion;
-		}
-
 		Properties properties = new Properties();
 
 		Path path = Paths.get(_baseDirName, "bnd.bnd");
@@ -449,6 +445,25 @@ public class UpgradeTableBuilder {
 		String s = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 
 		return s.replace("\r\n", "\n");
+	}
+
+	private boolean _validateUpgradePackage(String upgradeFileVersion)
+		throws IOException {
+
+		String currentVersion;
+
+		if (_osgiModule) {
+			currentVersion = _getSchemaVersion();
+		}
+		else {
+			currentVersion = _releaseInfoVersion.substring(0, 3);
+		}
+
+		if (!upgradeFileVersion.startsWith(currentVersion)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _AUTHOR = "Brian Wing Shun Chan";

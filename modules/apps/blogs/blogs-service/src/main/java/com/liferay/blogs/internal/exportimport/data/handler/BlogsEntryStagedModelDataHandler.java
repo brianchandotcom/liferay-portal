@@ -227,8 +227,6 @@ public class BlogsEntryStagedModelDataHandler
 
 		entry.setContent(content);
 
-		boolean allowPingbacks = entry.isAllowPingbacks();
-		boolean allowTrackbacks = entry.isAllowTrackbacks();
 		String[] trackbacks = StringUtil.split(entry.getTrackbacks());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
@@ -259,17 +257,17 @@ public class BlogsEntryStagedModelDataHandler
 			importedEntry = _blogsEntryLocalService.addEntry(
 				userId, entry.getTitle(), entry.getSubtitle(),
 				entry.getDescription(), entry.getContent(),
-				entry.getDisplayDate(), allowPingbacks, allowTrackbacks,
-				trackbacks, entry.getCoverImageCaption(), null, null,
-				serviceContext);
+				entry.getDisplayDate(), entry.isAllowPingbacks(),
+				entry.isAllowTrackbacks(), trackbacks,
+				entry.getCoverImageCaption(), null, null, serviceContext);
 		}
 		else {
 			importedEntry = _blogsEntryLocalService.updateEntry(
 				userId, existingEntry.getEntryId(), entry.getTitle(),
 				entry.getSubtitle(), entry.getDescription(),
-				entry.getContent(), entry.getDisplayDate(), allowPingbacks,
-				allowTrackbacks, trackbacks, entry.getCoverImageCaption(),
-				null, null, serviceContext);
+				entry.getContent(), entry.getDisplayDate(),
+				entry.isAllowPingbacks(), entry.isAllowTrackbacks(), trackbacks,
+				entry.getCoverImageCaption(), null, null, serviceContext);
 		}
 
 		serviceContext.setModifiedDate(importedEntry.getModifiedDate());

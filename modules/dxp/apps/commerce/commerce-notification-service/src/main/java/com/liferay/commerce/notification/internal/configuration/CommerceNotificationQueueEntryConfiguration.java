@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Alessio Antonio Rendina
  */
-@ExtendedObjectClassDefinition(category = "commerce")
+@ExtendedObjectClassDefinition(category = "orders")
 @Meta.OCD(
 	id = "com.liferay.commerce.notification.internal.configuration.CommerceNotificationQueueEntryConfiguration",
 	localization = "content/Language",

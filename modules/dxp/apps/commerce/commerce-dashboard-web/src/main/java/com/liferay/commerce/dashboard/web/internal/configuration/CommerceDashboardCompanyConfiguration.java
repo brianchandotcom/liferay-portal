@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Andrea Di Giorgi
  */
 @ExtendedObjectClassDefinition(
-	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "cloud", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardCompanyConfiguration",

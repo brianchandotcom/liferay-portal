@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Marco Leo
  */
-@ExtendedObjectClassDefinition(category = "commerce")
+@ExtendedObjectClassDefinition(category = "orders")
 @Meta.OCD(
 	id = "com.liferay.commerce.configuration.CommerceOrderConfiguration",
 	localization = "content/Language", name = "orders-configuration-name"

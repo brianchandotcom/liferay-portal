@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Andrea Di Giorgi
  */
 @ExtendedObjectClassDefinition(
-	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "shipping", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.commerce.shipping.origin.locator.address.internal.configuration.AddressCommerceShippingOriginLocatorGroupServiceConfiguration",

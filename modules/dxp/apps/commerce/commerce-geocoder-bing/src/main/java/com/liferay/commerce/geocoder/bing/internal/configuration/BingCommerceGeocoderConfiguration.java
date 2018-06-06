@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Andrea Di Giorgi
  */
-@ExtendedObjectClassDefinition(category = "commerce")
+@ExtendedObjectClassDefinition(category = "shipping")
 @Meta.OCD(
 	id = "com.liferay.commerce.geocoder.bing.internal.configuration.BingCommerceGeocoderConfiguration",
 	localization = "content/Language",

@@ -21,7 +21,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Alessio Antonio Rendina
  */
-@ExtendedObjectClassDefinition(category = "commerce")
+@ExtendedObjectClassDefinition(category = "wish-list")
 @Meta.OCD(
 	id = "com.liferay.commerce.wish.list.internal.configuration.CommerceWishListConfiguration",
 	localization = "content/Language",

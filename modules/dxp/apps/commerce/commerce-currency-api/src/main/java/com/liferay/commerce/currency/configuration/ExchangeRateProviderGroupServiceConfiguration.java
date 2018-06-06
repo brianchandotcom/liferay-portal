@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Alessio Antonio Rendina
  */
 @ExtendedObjectClassDefinition(
-	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "pricing", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration",

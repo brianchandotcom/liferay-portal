@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Marco Leo
  */
 @ExtendedObjectClassDefinition(
-	category = "commerce", factoryInstanceLabelAttribute = "type",
+	category = "catalog", factoryInstanceLabelAttribute = "type",
 	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(

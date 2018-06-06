@@ -24,7 +24,7 @@ import java.math.RoundingMode;
  * @author Alessio Antonio Rendina
  */
 @ExtendedObjectClassDefinition(
-	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	category = "pricing", scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
 	id = "com.liferay.commerce.currency.configuration.RoundingTypeConfiguration",

@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Alessio Antonio Rendina
  */
 @ExtendedObjectClassDefinition(
-	category = "commerce", factoryInstanceLabelAttribute = "roleName",
+	category = "users", factoryInstanceLabelAttribute = "roleName",
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(

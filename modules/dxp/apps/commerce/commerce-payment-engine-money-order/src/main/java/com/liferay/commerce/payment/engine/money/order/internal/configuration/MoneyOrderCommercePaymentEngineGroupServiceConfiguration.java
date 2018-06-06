@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
  * @author Andrea Di Giorgi
  */
 @ExtendedObjectClassDefinition(
-	category = "commerce", scope = ExtendedObjectClassDefinition.Scope.GROUP
+	category = "payment", scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
 	id = "com.liferay.commerce.payment.engine.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration",

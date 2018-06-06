@@ -535,6 +535,12 @@ public class FriendlyURLEntryLocalServiceImpl
 				(existingFriendlyURLEntryLocalization.getClassPK() ==
 					classPK)) {
 
+				existingFriendlyURLEntryLocalization.setFriendlyURLEntryId(
+					friendlyURLEntryId);
+
+				friendlyURLEntryLocalizationPersistence.update(
+					existingFriendlyURLEntryLocalization);
+
 				continue;
 			}
 

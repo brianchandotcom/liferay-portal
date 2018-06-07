@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 
@@ -28,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class EventResponseImpl
 	extends StateAwareResponseImpl implements EventResponse {
 

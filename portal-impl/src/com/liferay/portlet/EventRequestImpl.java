@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
 import javax.portlet.PortletRequest;
@@ -21,6 +23,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class EventRequestImpl
 	extends PortletRequestImpl implements EventRequest {
 

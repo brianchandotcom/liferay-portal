@@ -94,7 +94,7 @@ public class LayoutPrototypeHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPrototypeHelper.class);
 
-	@org.osgi.service.component.annotations.Reference
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 

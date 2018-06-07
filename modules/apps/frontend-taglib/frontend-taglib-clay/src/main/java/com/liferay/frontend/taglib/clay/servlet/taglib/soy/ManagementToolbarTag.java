@@ -255,7 +255,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		Map<String, Object> context = getContext();
 
-		if (context.get("actionDropdownItems") == null) {
+		if (context.get("actionItems") == null) {
 			setActionDropdownItems(
 				managementToolbarDisplayContext.getActionDropdownItems());
 		}
@@ -278,7 +278,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setDisabled(managementToolbarDisplayContext.isDisabled());
 		}
 
-		if (context.get("filterDropdownItems") == null) {
+		if (context.get("filterItems") == null) {
 			setFilterDropdownItems(
 				managementToolbarDisplayContext.getFilterDropdownItems());
 		}
@@ -287,7 +287,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setInfoPanelId(managementToolbarDisplayContext.getInfoPanelId());
 		}
 
-		if (context.get("itemsTotal") == null) {
+		if (context.get("totalItems") == null) {
 			setItemsTotal(managementToolbarDisplayContext.getItemsTotal());
 		}
 
@@ -361,7 +361,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 			setSortingURL(managementToolbarDisplayContext.getSortingURL());
 		}
 
-		if (context.get("viewTypeItems") == null) {
+		if (context.get("viewTypes") == null) {
 			setViewTypeItems(
 				managementToolbarDisplayContext.getViewTypeItems());
 		}

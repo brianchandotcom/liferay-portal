@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 buildService {
 	apiDir = "../html-preview-api/src/main/java"
 	testDir = "../html-preview-test/src/testIntegration/java"

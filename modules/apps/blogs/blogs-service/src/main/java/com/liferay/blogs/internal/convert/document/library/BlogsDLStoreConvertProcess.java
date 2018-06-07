@@ -71,45 +71,38 @@ public class BlogsDLStoreConvertProcess implements DLStoreConvertProcess {
 			_blogsEntryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BlogsEntry>() {
+			(BlogsEntry entry) -> {
+				long coverImageFileEntryId =
+					entry.getCoverImageFileEntryId();
 
-				@Override
-				public void performAction(BlogsEntry entry)
-					throws PortalException {
+				if (coverImageFileEntryId > 0) {
+					FileEntry coverImageFileEntry =
+						PortletFileRepositoryUtil.getPortletFileEntry(
+							coverImageFileEntryId);
 
-					long coverImageFileEntryId =
-						entry.getCoverImageFileEntryId();
-
-					if (coverImageFileEntryId > 0) {
-						FileEntry coverImageFileEntry =
-							PortletFileRepositoryUtil.getPortletFileEntry(
-								coverImageFileEntryId);
-
-						dlStoreConverter.migrateDLFileEntry(
-							entry.getCompanyId(),
-							DLFolderConstants.getDataRepositoryId(
-								coverImageFileEntry.getRepositoryId(),
-								coverImageFileEntry.getFolderId()),
-							coverImageFileEntry);
-					}
-
-					long smallImageFileEntryId =
-						entry.getSmallImageFileEntryId();
-
-					if (smallImageFileEntryId > 0) {
-						FileEntry smallImageFileEntry =
-							PortletFileRepositoryUtil.getPortletFileEntry(
-								smallImageFileEntryId);
-
-						dlStoreConverter.migrateDLFileEntry(
-							entry.getCompanyId(),
-							DLFolderConstants.getDataRepositoryId(
-								smallImageFileEntry.getRepositoryId(),
-								smallImageFileEntry.getFolderId()),
-							smallImageFileEntry);
-					}
+					dlStoreConverter.migrateDLFileEntry(
+						entry.getCompanyId(),
+						DLFolderConstants.getDataRepositoryId(
+							coverImageFileEntry.getRepositoryId(),
+							coverImageFileEntry.getFolderId()),
+						coverImageFileEntry);
 				}
 
+				long smallImageFileEntryId =
+					entry.getSmallImageFileEntryId();
+
+				if (smallImageFileEntryId > 0) {
+					FileEntry smallImageFileEntry =
+						PortletFileRepositoryUtil.getPortletFileEntry(
+							smallImageFileEntryId);
+
+					dlStoreConverter.migrateDLFileEntry(
+						entry.getCompanyId(),
+						DLFolderConstants.getDataRepositoryId(
+							smallImageFileEntry.getRepositoryId(),
+							smallImageFileEntry.getFolderId()),
+						smallImageFileEntry);
+				}
 			});
 
 		actionableDynamicQuery.performActions();
@@ -125,58 +118,47 @@ public class BlogsDLStoreConvertProcess implements DLStoreConvertProcess {
 			_repositoryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property portletIdProperty = PropertyFactoryUtil.forName(
+					"portletId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property portletIdProperty = PropertyFactoryUtil.forName(
-						"portletId");
-
-					dynamicQuery.add(
-						portletIdProperty.eq(BlogsConstants.SERVICE_NAME));
-				}
-
+				dynamicQuery.add(
+					portletIdProperty.eq(BlogsConstants.SERVICE_NAME));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Repository>() {
+			(Repository repository) -> {
 
-				@Override
-				public void performAction(Repository repository)
-					throws PortalException {
+				LocalRepository localRepository =
+					RepositoryProviderUtil.getLocalRepository(
+						repository.getRepositoryId());
 
-					LocalRepository localRepository =
-						RepositoryProviderUtil.getLocalRepository(
-							repository.getRepositoryId());
+				Folder folder = null;
 
-					Folder folder = null;
-
-					try {
-						folder = localRepository.getFolder(
-							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-							BlogsConstants.SERVICE_NAME);
-					}
-					catch (NoSuchFolderException nsfe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(nsfe, nsfe);
-						}
-
-						return;
+				try {
+					folder = localRepository.getFolder(
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+						BlogsConstants.SERVICE_NAME);
+				}
+				catch (NoSuchFolderException nsfe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(nsfe, nsfe);
 					}
 
-					List<FileEntry> fileEntries =
-						PortletFileRepositoryUtil.getPortletFileEntries(
-							folder.getGroupId(), folder.getFolderId());
-
-					for (FileEntry fileEntry : fileEntries) {
-						dlStoreConverter.migrateDLFileEntry(
-							fileEntry.getCompanyId(),
-							DLFolderConstants.getDataRepositoryId(
-								fileEntry.getRepositoryId(),
-								fileEntry.getFolderId()),
-							fileEntry);
-					}
+					return;
 				}
 
+				List<FileEntry> fileEntries =
+					PortletFileRepositoryUtil.getPortletFileEntries(
+						folder.getGroupId(), folder.getFolderId());
+
+				for (FileEntry fileEntry : fileEntries) {
+					dlStoreConverter.migrateDLFileEntry(
+						fileEntry.getCompanyId(),
+						DLFolderConstants.getDataRepositoryId(
+							fileEntry.getRepositoryId(),
+							fileEntry.getFolderId()),
+						fileEntry);
+				}
 			});
 
 		actionableDynamicQuery.performActions();

@@ -50,32 +50,23 @@ public class OAuth2ApplicationsDLStoreConvertProcess
 			_oAuth2ApplicationLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<OAuth2Application>() {
+			(OAuth2Application oAuth2Application) -> {
+				long iconFileEntryId = oAuth2Application.getIconFileEntryId();
 
-				@Override
-				public void performAction(OAuth2Application oAuth2Application)
-					throws PortalException {
-
-					long iconFileEntryId =
-						oAuth2Application.getIconFileEntryId();
-
-					if (iconFileEntryId == 0) {
-						return;
-					}
-
-					FileEntry iconFileEntry =
-						PortletFileRepositoryUtil.getPortletFileEntry(
-							iconFileEntryId);
-
-					dlStoreConverter.migrateDLFileEntry(
-						oAuth2Application.getCompanyId(),
-						DLFolderConstants.getDataRepositoryId(
-							iconFileEntry.getRepositoryId(),
-							iconFileEntry.getFolderId()),
-						iconFileEntry);
+				if (iconFileEntryId == 0) {
+					return;
 				}
 
+				FileEntry iconFileEntry =
+					PortletFileRepositoryUtil.getPortletFileEntry(
+						iconFileEntryId);
+
+				dlStoreConverter.migrateDLFileEntry(
+					oAuth2Application.getCompanyId(),
+					DLFolderConstants.getDataRepositoryId(
+						iconFileEntry.getRepositoryId(),
+						iconFileEntry.getFolderId()),
+					iconFileEntry);
 			});
 
 		actionableDynamicQuery.performActions();

@@ -48,22 +48,15 @@ public class JournalDLStoreConvertProcess implements DLStoreConvertProcess {
 			_journalArticleLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<JournalArticle>() {
-
-				@Override
-				public void performAction(JournalArticle article)
-					throws PortalException {
-
-					for (FileEntry fileEntry : article.getImagesFileEntries()) {
-						dlStoreConverter.migrateDLFileEntry(
-							article.getCompanyId(),
-							DLFolderConstants.getDataRepositoryId(
-								fileEntry.getRepositoryId(),
-								fileEntry.getFolderId()),
-							fileEntry);
-					}
+			(JournalArticle article) -> {
+				for (FileEntry fileEntry : article.getImagesFileEntries()) {
+					dlStoreConverter.migrateDLFileEntry(
+						article.getCompanyId(),
+						DLFolderConstants.getDataRepositoryId(
+							fileEntry.getRepositoryId(),
+							fileEntry.getFolderId()),
+						fileEntry);
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();

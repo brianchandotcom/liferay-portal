@@ -49,24 +49,17 @@ public class HTMLPreviewDLStoreConvertProcess implements DLStoreConvertProcess {
 			_htmlPreviewEntryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<HtmlPreviewEntry>() {
+			(HtmlPreviewEntry entry) -> {
+				FileEntry fileEntry =
+					PortletFileRepositoryUtil.getPortletFileEntry(
+						entry.getFileEntryId());
 
-				@Override
-				public void performAction(HtmlPreviewEntry entry)
-					throws PortalException {
-
-					FileEntry fileEntry =
-						PortletFileRepositoryUtil.getPortletFileEntry(
-							entry.getFileEntryId());
-
-					dlStoreConverter.migrateDLFileEntry(
-						entry.getCompanyId(),
-						DLFolderConstants.getDataRepositoryId(
-							fileEntry.getRepositoryId(),
-							fileEntry.getFolderId()),
-						fileEntry);
-				}
-
+				dlStoreConverter.migrateDLFileEntry(
+					entry.getCompanyId(),
+					DLFolderConstants.getDataRepositoryId(
+						fileEntry.getRepositoryId(),
+						fileEntry.getFolderId()),
+					fileEntry);
 			});
 
 		actionableDynamicQuery.performActions();

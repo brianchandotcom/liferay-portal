@@ -59,14 +59,12 @@ public class HTMLPreviewDLStoreConvertProcess implements DLStoreConvertProcess {
 						PortletFileRepositoryUtil.getPortletFileEntry(
 							entry.getFileEntryId());
 
-					DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
 					dlStoreConverter.migrateDLFileEntry(
 						entry.getCompanyId(),
 						DLFolderConstants.getDataRepositoryId(
-							dlFileEntry.getRepositoryId(),
-							dlFileEntry.getFolderId()),
-						new LiferayFileEntry(dlFileEntry));
+							fileEntry.getRepositoryId(),
+							fileEntry.getFolderId()),
+						fileEntry);
 				}
 
 			});

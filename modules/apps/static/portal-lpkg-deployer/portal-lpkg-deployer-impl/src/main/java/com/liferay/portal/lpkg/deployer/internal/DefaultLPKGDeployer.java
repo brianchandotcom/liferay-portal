@@ -328,7 +328,12 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		List<File> lpkgFiles = _scanFiles(_deploymentDirPath, ".lpkg", false);
 
 		_lpkgIndexValidator.setLPKGDeployer(this);
+
 		_lpkgIndexValidator.setJarFiles(jarFiles);
+
+		if (lpkgFiles.isEmpty()) {
+			return;
+		}
 
 		boolean updateIntegrityProperties = _lpkgIndexValidator.validate(
 			lpkgFiles);

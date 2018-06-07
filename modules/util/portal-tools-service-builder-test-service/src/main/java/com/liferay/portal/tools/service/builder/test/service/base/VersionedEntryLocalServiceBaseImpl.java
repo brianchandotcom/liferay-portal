@@ -436,7 +436,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 		int version) throws PortalException {
 		if (publishedVersionedEntry.isDraft()) {
 			throw new IllegalArgumentException(
-				"Cannot checkout with unpublished changes " +
+				"Unable to checkout with unpublished changes " +
 				publishedVersionedEntry.getHeadId());
 		}
 
@@ -444,7 +444,7 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 
 		if (draftVersionedEntry != null) {
 			throw new IllegalArgumentException(
-				"Cannot checkout with unpublished changes " +
+				"Unable to checkout with unpublished changes " +
 				publishedVersionedEntry.getPrimaryKey());
 		}
 
@@ -518,7 +518,8 @@ public abstract class VersionedEntryLocalServiceBaseImpl
 				null);
 
 		if (latestVersionedEntryVersion.getVersion() == versionedEntryVersion.getVersion()) {
-			throw new IllegalArgumentException("Cannot delete latest version " +
+			throw new IllegalArgumentException(
+				"Unable to delete latest version " +
 				versionedEntryVersion.getVersion());
 		}
 

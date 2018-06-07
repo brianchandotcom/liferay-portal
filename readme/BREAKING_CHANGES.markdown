@@ -701,7 +701,7 @@ versions of Liferay Portal.
 
 There are three development use-cases to plan for:
 
-**JSP Considerations**
+##### JSP Considerations
 
 Portlet 3.0 is a binary-backward-compatible upgrade. This means that Java source
 that was built against `portlet-api-2.0.0.jar` is compatible at runtime. Since
@@ -725,7 +725,7 @@ to
 
     <aui:form action="<%= (PortletURL)renderResponse.createActionURL() %>" method="post" name="fm">
 
-**Upgrade Considerations**
+##### Upgrade Considerations
 
 To take advantage of new features in Portlet 3.0, you must rebuild portlet
 projects against the `portlet-api-3.0.0.jar` dependency and *opt-in* by
@@ -790,7 +790,7 @@ several of Liferay Portal's out-of-the-box portlets' `view.jsp`:
     }
     %>
 
-**JSF Considerations**
+##### JSF Considerations
 
 JSF Portlets must be upgraded to the latest version of Liferay Faces Bridge,
 which is planned for release in Q4, 2018. Download and upgrade instructions will

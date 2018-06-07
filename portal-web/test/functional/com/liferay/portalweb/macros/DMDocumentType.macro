@@ -152,7 +152,7 @@
 	</command>
 
 	<command name="selectPGMetadataSet">
-		<execute function="AssertClick" locator1="DocumentsAndMediaEditDocumentType#SELECT_METADATA_SET_BUTTON" value1="Select Metadata Set" />
+		<execute function="AssertClick" locator1="DocumentsAndMediaEditDocumentType#SELECT_METADATA_SET_BUTTON" value1="Select" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 

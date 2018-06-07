@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SELECT_METADATA_SET_BUTTON</td>
-	<td>//span[contains(.,'Select Metadata Set')]/a/span</td>
+	<td>//span[contains(.,'Select')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

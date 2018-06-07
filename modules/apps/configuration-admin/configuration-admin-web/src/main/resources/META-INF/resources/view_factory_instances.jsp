@@ -17,13 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-if (Validator.isNull(redirect)) {
-	redirect = portletURL.toString();
-}
+String redirect = ParamUtil.getString(request, "redirect", String.valueOf(renderResponse.createRenderURL()));
 
 ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
@@ -54,7 +48,7 @@ String factoryConfigurationModelName = (componentResourceBundle != null) ? Langu
 PortalUtil.addPortletBreadcrumbEntry(request, factoryConfigurationModelName, null);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(portletURL.toString());
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(categoryDisplayName);
 %>

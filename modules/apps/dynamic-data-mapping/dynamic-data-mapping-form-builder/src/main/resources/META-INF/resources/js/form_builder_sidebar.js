@@ -171,6 +171,8 @@ AUI.add(
 					open: function() {
 						var instance = this;
 
+						var boundingBox = instance.get('boundingBox');
+
 						if (!instance.isOpen()) {
 							instance.fire('open:start');
 						}
@@ -178,8 +180,8 @@ AUI.add(
 							instance.fire('open');
 						}
 
-						instance.get('boundingBox').removeClass('closed');
-						instance.get('boundingBox').addClass('open');
+						boundingBox.removeClass('closed');
+						boundingBox.addClass('open');
 					},
 
 					_afterClickBackButton: function(event) {
@@ -189,9 +191,11 @@ AUI.add(
 
 						event.preventDefault();
 
-						instance.close();
+						if (!formBuilder.isEditMode()) {
+							instance.close();
 
-						formBuilder.openSidebarByButton();
+							formBuilder.openSidebarByButton();
+						}
 					},
 
 					_afterClickCloseButton: function(event) {

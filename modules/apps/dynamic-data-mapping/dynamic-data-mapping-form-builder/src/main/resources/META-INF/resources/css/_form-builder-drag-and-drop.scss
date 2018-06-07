@@ -13,6 +13,27 @@
 		opacity: 1;
 	}
 
+	.edit-mode {
+		.lfr-duplicate-field, .lfr-delete-field {
+			display: none;
+		}
+
+		div.form-builder-field-list-container {
+			&.hovered-field {
+				border-color: $light-200;
+				box-shadow: inset 5px 0 0 #E7E7ED, inset -5px 0 0 #E7E7ED;
+
+				.form-builder-field {
+					cursor: pointer !important;
+				}
+			}
+		}
+
+		.form-builder-layout .layout-builder-resize-col-draggable-handle {
+			display: none !important;
+		}
+	}
+
 	.form-builder-layout .layout-row-container-row .layout-row {
 		.col.col-empty.col-empty-over, .col.lfr-initial-col {
 			background-color: $light-100;

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.groupby;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GeoDistanceSort;
 import com.liferay.portal.kernel.search.GroupBy;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +49,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
+ * @author Tibor Lipusz
  */
 @Component(immediate = true, service = GroupByTranslator.class)
 public class DefaultGroupByTranslator implements GroupByTranslator {
@@ -114,6 +117,21 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 			queryConfig.isHighlightRequireFieldMatch());
 
 		topHitsAggregationBuilder.highlighter(highlightBuilder);
+	}
+
+	protected void addSelectedFields(
+		TopHitsAggregationBuilder topHitsAggregationBuilder,
+		QueryConfig queryConfig) {
+
+		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
+
+		if (ArrayUtil.isEmpty(selectedFieldNames)) {
+			topHitsAggregationBuilder.storedField(StringPool.STAR);
+		}
+		else {
+			topHitsAggregationBuilder.storedFields(
+				Arrays.asList(selectedFieldNames));
+		}
 	}
 
 	protected void addSorts(
@@ -217,6 +235,8 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 		topHitsAggregationBuilder.size(groupBySize);
 
 		addHighlights(
+			topHitsAggregationBuilder, searchContext.getQueryConfig());
+		addSelectedFields(
 			topHitsAggregationBuilder, searchContext.getQueryConfig());
 		addSorts(topHitsAggregationBuilder, searchContext.getSorts());
 

@@ -126,6 +126,21 @@ SelectMappingDialog.STATE = {
 		.value(''),
 
 	/**
+	 * Editable type that is being mapped.
+	 * This should match the corresponding mappeableField type in order
+	 * to be available.
+	 * @default ''
+	 * @instance
+	 * @memberOf SelectMappingDialog
+	 * @review
+	 * @type {string}
+	 */
+
+	editableType: Config
+		.string()
+		.value(''),
+
+	/**
 	 * FragmentEntryLinkId of the field that is being mapped
 	 * @default ''
 	 * @instance
@@ -244,7 +259,8 @@ SelectMappingDialog.STATE = {
 			Config.shapeOf(
 				{
 					key: Config.string().required(),
-					label: Config.string().required()
+					label: Config.string().required(),
+					type: Config.string().required()
 				}
 			)
 		)

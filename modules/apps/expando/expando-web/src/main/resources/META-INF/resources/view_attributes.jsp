@@ -49,6 +49,7 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 <clay:management-toolbar
 	actionDropdownItems="<%= expandoDisplayContext.getActionDropdownItems() %>"
 	creationMenu="<%= expandoDisplayContext.getCreationMenu() %>"
+	disabled="<%= attributeNames.size() == 0 %>"
 	searchContainerId="customFields"
 	selectable="<%= true %>"
 	showCreationMenu="<%= expandoDisplayContext.showCreationMenu() %>"

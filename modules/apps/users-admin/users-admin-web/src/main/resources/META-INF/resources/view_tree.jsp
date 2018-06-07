@@ -180,7 +180,7 @@ if (organization != null) {
 	</c:otherwise>
 </c:choose>
 
-<aui:script sandbox="<%= true %>">
+<aui:script>
 	function <portlet:namespace />delete() {
 		<portlet:namespace />deleteOrganizations();
 	}

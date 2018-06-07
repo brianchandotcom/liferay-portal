@@ -20,6 +20,7 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -261,7 +261,8 @@ public class HeaderResponseImpl
 
 					if (existingSemVer.compareTo(semVer) < 0) {
 						iterator.remove();
-						outputData.setData(existingKey, WebKeys.PAGE_TOP, null);
+						outputData.setDataSB(
+							existingKey, WebKeys.PAGE_TOP, null);
 					}
 
 					break;
@@ -280,7 +281,7 @@ public class HeaderResponseImpl
 		String outputKey = sb.toString();
 
 		if (outputData.addOutputKey(outputKey)) {
-			outputData.addData(
+			outputData.addDataSB(
 				outputKey, WebKeys.PAGE_TOP, parsedElement.toStringBundler());
 		}
 	}

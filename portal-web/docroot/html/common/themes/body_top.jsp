@@ -19,7 +19,7 @@
 <%-- Raw Text --%>
 
 <%
-StringBundler bodyTopSB = OutputTag.getData(request, WebKeys.PAGE_BODY_TOP);
+com.liferay.petra.string.StringBundler bodyTopSB = OutputTag.getDataSB(request, WebKeys.PAGE_BODY_TOP);
 %>
 
 <c:if test="<%= bodyTopSB != null %>">

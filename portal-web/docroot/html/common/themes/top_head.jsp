@@ -163,7 +163,7 @@ if (markupHeaders != null) {
 	}
 }
 
-StringBundler pageTopSB = OutputTag.getData(request, WebKeys.PAGE_TOP);
+com.liferay.petra.string.StringBundler pageTopSB = OutputTag.getDataSB(request, WebKeys.PAGE_TOP);
 %>
 
 <c:if test="<%= pageTopSB != null %>">

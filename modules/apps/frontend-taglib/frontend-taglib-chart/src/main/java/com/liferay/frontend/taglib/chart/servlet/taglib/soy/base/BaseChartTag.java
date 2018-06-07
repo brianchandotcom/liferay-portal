@@ -18,10 +18,10 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.chart.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.chart.model.ChartConfig;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -118,7 +118,7 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		sb.append(cssPath);
 		sb.append("\" rel=\"stylesheet\">");
 
-		outputData.setData(_OUTPUT_CSS_KEY, WebKeys.PAGE_TOP, sb);
+		outputData.setDataSB(_OUTPUT_CSS_KEY, WebKeys.PAGE_TOP, sb);
 	}
 
 	private void _outputTilesSVG() {
@@ -140,7 +140,7 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		try {
 			String svg = StringUtil.read(url.openStream());
 
-			outputData.setData(
+			outputData.setDataSB(
 				_OUTPUT_SVG_KEY, WebKeys.PAGE_BODY_BOTTOM,
 				new StringBundler(svg));
 		}

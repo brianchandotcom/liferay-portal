@@ -32,9 +32,7 @@ public class ActionResponseImpl
 	extends StateAwareResponseImpl implements ActionResponse {
 
 	@Override
-	public RenderURL createRedirectURL(MimeResponse.Copy copy)
-		throws IllegalStateException {
-
+	public RenderURL createRedirectURL(MimeResponse.Copy copy) {
 		return createRenderURL(copy);
 	}
 

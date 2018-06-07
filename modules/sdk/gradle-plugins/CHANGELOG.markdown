@@ -4753,7 +4753,7 @@ to version 2.3.180.
 - [LPS-75530]: Fix the log message for `ExecuteBndTask` so it displays the
 correct amount of time it took to build the file.
 
-## 3.12.31 - 2018-06-06
+## 3.12.32 - *(Unreleased)*
 
 ### Changed
 - [LPS-81900]: Update the [Liferay Gradle Plugins Soy] dependency to version

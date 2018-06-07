@@ -10,7 +10,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceShippingMethodId" type="long" />
-		<field localized="true" name="name" type="String" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
 		<field localized="true" name="description" type="String" />
 		<field name="amount" type="BigDecimal" />
 		<field name="priority" type="double" />

@@ -27,6 +27,8 @@ import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -137,7 +139,29 @@ public class InputAssetLinksDisplayContext {
 		AssetRendererFactory<?> assetRendererFactory =
 			entry.getAssetRendererFactory();
 
-		return assetRendererFactory.getTypeName(_themeDisplay.getLocale());
+		String assetType = assetRendererFactory.getTypeName(
+			_themeDisplay.getLocale());
+
+		if (assetRendererFactory.isSupportsClassTypes()) {
+			long classTypeId = entry.getClassTypeId();
+
+			ClassTypeReader classTypeReader =
+				assetRendererFactory.getClassTypeReader();
+
+			try {
+				ClassType classType = classTypeReader.getClassType(
+					classTypeId, _themeDisplay.getLocale());
+
+				assetType = classType.getName();
+			}
+			catch (PortalException pe) {
+				_log.error(
+					"Unable to get ClassType for classTypeId=" + classTypeId,
+					pe);
+			}
+		}
+
+		return assetType;
 	}
 
 	public String getEventName() {
@@ -480,6 +504,9 @@ public class InputAssetLinksDisplayContext {
 
 		return _stagedReferrerPortlet;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InputAssetLinksDisplayContext.class);
 
 	private final long _assetEntryId;
 	private List<AssetLink> _assetLinks;

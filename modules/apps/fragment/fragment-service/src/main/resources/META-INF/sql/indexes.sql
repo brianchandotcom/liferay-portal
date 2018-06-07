@@ -8,6 +8,6 @@ create index IX_BD18F965 on FragmentEntry (groupId, fragmentCollectionId, status
 create unique index IX_7F3F0EB3 on FragmentEntry (groupId, fragmentEntryKey[$COLUMN_LENGTH:75$]);
 
 create index IX_2FB5437D on FragmentEntryLink (groupId, classNameId, classPK);
-create index IX_2040D4E9 on FragmentEntryLink (groupId, fragmentEntryId, classNameId);
+create index IX_4A9E751A on FragmentEntryLink (groupId, fragmentEntryId, classNameId, classPK);
 create index IX_9266C536 on FragmentEntryLink (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_AA2B2138 on FragmentEntryLink (uuid_[$COLUMN_LENGTH:75$], groupId);

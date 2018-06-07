@@ -165,8 +165,8 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 			_ddmStructureLocalService.getClassStructures(
 				companyId, classNameId);
 
-		for (com.liferay.dynamic.data.mapping.model.DDMStructure
-				structure : structures) {
+		for (com.liferay.dynamic.data.mapping.model.DDMStructure structure :
+				structures) {
 
 			ddmStructures.add(new DDMStructureImpl(structure));
 		}
@@ -180,11 +180,10 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
-		for (com.liferay.dynamic.data.mapping.model.DDMStructure
-				ddmStructure :
-					_ddmStructureLocalService.getClassStructures(
-						companyId, classNameId,
-						getStructureOrderByComparator(structureComparator))) {
+		for (com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure :
+				_ddmStructureLocalService.getClassStructures(
+					companyId, classNameId,
+					getStructureOrderByComparator(structureComparator))) {
 
 			ddmStructures.add(new DDMStructureImpl(ddmStructure));
 		}
@@ -198,10 +197,9 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
-		for (com.liferay.dynamic.data.mapping.model.DDMStructure
-				ddmStructure :
-					_ddmStructureLocalService.getClassStructures(
-						companyId, classNameId, start, end)) {
+		for (com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure :
+				_ddmStructureLocalService.getClassStructures(
+					companyId, classNameId, start, end)) {
 
 			ddmStructures.add(new DDMStructureImpl(ddmStructure));
 		}
@@ -282,10 +280,9 @@ public class DDMStructureManagerImpl implements DDMStructureManager {
 	public List<DDMStructure> getStructures(long[] groupIds, long classNameId) {
 		List<DDMStructure> ddmStructures = new ArrayList<>();
 
-		for (com.liferay.dynamic.data.mapping.model.DDMStructure
-				ddmStructure :
-					_ddmStructureLocalService.getStructures(
-						groupIds, classNameId)) {
+		for (com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure :
+				_ddmStructureLocalService.getStructures(
+					groupIds, classNameId)) {
 
 			ddmStructures.add(new DDMStructureImpl(ddmStructure));
 		}

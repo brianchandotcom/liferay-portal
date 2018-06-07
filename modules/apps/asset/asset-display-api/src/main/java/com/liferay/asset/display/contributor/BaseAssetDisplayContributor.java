@@ -49,8 +49,8 @@ public abstract class BaseAssetDisplayContributor<T>
 
 		// Default fields for asset entry
 
-		for (Map.Entry<String, String>
-				assetEntryModelField : _assetEntryModelFieldsMap.entrySet()) {
+		for (Map.Entry<String, String> assetEntryModelField :
+				_assetEntryModelFieldsMap.entrySet()) {
 
 			assetDisplayFields.add(
 				new AssetDisplayField(

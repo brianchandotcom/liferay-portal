@@ -655,8 +655,8 @@ public class MediaQueryProviderImplTest {
 					return Stream.empty();
 				}
 
-				for (AdaptiveMedia<AMImageProcessor>
-						adaptiveMedia : adaptiveMedias) {
+				for (AdaptiveMedia<AMImageProcessor> adaptiveMedia :
+						adaptiveMedias) {
 
 					Optional<String> optional = adaptiveMedia.getValueOptional(
 						AMAttribute.getConfigurationUuidAMAttribute());

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.google.common.collect.Lists;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,7 +28,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -377,43 +378,7 @@ public class GitWorkingDirectory {
 	}
 
 	public void deleteBranch(Branch branch) {
-		if (!branchExists(branch.getName(), branch.getRemote())) {
-			return;
-		}
-
-		Remote remote = branch.getRemote();
-
-		if (remote != null) {
-			if (pushToRemote(true, null, branch)) {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Deleted ", branch.getName(), " from ",
-						remote.getName()));
-			}
-			else {
-				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Unable to delete ", branch.getName(), " from ",
-						remote.getName()));
-			}
-
-			return;
-		}
-
-		ExecutionResult executionResult = executeBashCommands(
-			_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT,
-			"git branch -f -D " + branch.getName());
-
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to delete local branch ", branch.getName(), "\n",
-					executionResult.getStandardError()));
-		}
-
-		System.out.println(
-			JenkinsResultsParserUtil.combine(
-				"Deleted local branch ", branch.getName()));
+		deleteBranches(Arrays.asList(branch));
 	}
 
 	public void deleteBranch(String branchName, Remote remote) {
@@ -426,30 +391,49 @@ public class GitWorkingDirectory {
 		}
 	}
 
-	public void deleteBranches(List<Branch> branches, int threadCount) {
-		List<Callable<Object>> callables = new ArrayList<>(branches.size());
+	public void deleteBranches(List<Branch> branches) {
+		Map<Remote, List<String>> remoteBranchNameMap = new HashMap<>();
 
-		for (final Branch branch : branches) {
-			Callable<Object> callable = new Callable<Object>() {
+		for (Branch branch : branches) {
+			if (!remoteBranchNameMap.containsKey(branch.getRemote())) {
+				remoteBranchNameMap.put(
+					branch.getRemote(), new ArrayList<String>());
+			}
 
-				@Override
-				public Object call() {
-					deleteBranch(branch);
+			List<String> branchNames = remoteBranchNameMap.get(
+				branch.getRemote());
 
-					return null;
-				}
-
-			};
-
-			callables.add(callable);
+			branchNames.add(branch.getName());
 		}
 
-		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
-			callables,
-			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				threadCount, true));
+		for (Map.Entry<Remote, List<String>> remoteBranchNamesEntry :
+				remoteBranchNameMap.entrySet()) {
 
-		parallelExecutor.execute();
+			Remote remote = remoteBranchNamesEntry.getKey();
+
+			if (remote != null) {
+				for (List<String> branchNames :
+						Lists.partition(
+							remoteBranchNamesEntry.getValue(),
+							_DELETE_BRANCHES_BATCH_SIZE)) {
+
+					_deleteRemoteBranches(
+						remote,
+						branchNames.toArray(new String[branchNames.size()]));
+				}
+
+				continue;
+			}
+
+			for (List<String> branchNames :
+					Lists.partition(
+						remoteBranchNamesEntry.getValue(),
+						_DELETE_BRANCHES_BATCH_SIZE)) {
+
+				_deleteLocalBranches(
+					branchNames.toArray(new String[branchNames.size()]));
+			}
+		}
 	}
 
 	public void fetch(Branch localBranch, boolean noTags, Branch remoteBranch) {
@@ -1916,6 +1900,79 @@ public class GitWorkingDirectory {
 		}
 	}
 
+	private boolean _deleteLocalBranches(String... branchNames) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git branch -D -f");
+
+		String joinedBranchNames = JenkinsResultsParserUtil.join(
+			" ", branchNames);
+
+		sb.append(joinedBranchNames);
+
+		ExecutionResult executionResult = null;
+
+		try {
+			executionResult = executeBashCommands(
+				_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, sb.toString());
+		}
+		catch (RuntimeException re) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Unable to delete local branches:", "\n    ",
+					joinedBranchNames.replaceAll("\\s", "\n    "), "\n",
+					executionResult.getStandardError()));
+
+			return false;
+		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Deleted local branches:", "\n    ",
+				joinedBranchNames.replaceAll("\\s", "\n    ")));
+
+		return true;
+	}
+
+	private boolean _deleteRemoteBranches(
+		Remote remote, String... branchNames) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git push --delete ");
+		sb.append(remote.getName());
+
+		String joinedBranchNames = JenkinsResultsParserUtil.join(
+			" ", branchNames);
+
+		sb.append(joinedBranchNames);
+
+		ExecutionResult executionResult = null;
+
+		try {
+			executionResult = executeBashCommands(
+				_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, sb.toString());
+		}
+		catch (RuntimeException re) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Unable to delete remote branches:", "\n    ",
+					joinedBranchNames.replaceAll("\\s", "\n    "), " from ",
+					remote.getName(), "\n",
+					executionResult.getStandardError()));
+
+			return false;
+		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Deleted remote branches:", "\n    ",
+				joinedBranchNames.replaceAll("\\s", "\n    "), " from ",
+				remote.getName()));
+
+		return true;
+	}
+
 	private String _getMergeBaseCommitSHA(Branch... branches) {
 		if (branches.length < 2) {
 			throw new IllegalArgumentException(
@@ -1984,6 +2041,8 @@ public class GitWorkingDirectory {
 
 		return result.getStandardOut();
 	}
+
+	private static final int _DELETE_BRANCHES_BATCH_SIZE = 5;
 
 	private static final int _MAX_RETRIES = 1;
 

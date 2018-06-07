@@ -154,17 +154,6 @@ public class DocumentLibraryConvertProcess
 
 	@Override
 	public void validate() {
-		String sourceStoreClassName = getSourceStoreClassName();
-
-		if (!sourceStoreClassName.endsWith(_FILE_SYSTEM_STORE_SUFFIX)) {
-			return;
-		}
-
-		String targetStoreClassName = getTargetStoreClassName();
-
-		if (!targetStoreClassName.endsWith(_FILE_SYSTEM_STORE_SUFFIX)) {
-			return;
-		}
 	}
 
 	@Override
@@ -379,8 +368,6 @@ public class DocumentLibraryConvertProcess
 			throw new SystemException(e);
 		}
 	}
-
-	private static final String _FILE_SYSTEM_STORE_SUFFIX = "FileSystemStore";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentLibraryConvertProcess.class);

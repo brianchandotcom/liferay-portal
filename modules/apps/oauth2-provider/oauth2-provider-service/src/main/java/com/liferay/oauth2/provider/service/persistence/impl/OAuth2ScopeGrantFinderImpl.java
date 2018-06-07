@@ -18,12 +18,17 @@ import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.model.impl.OAuth2ScopeGrantImpl;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -38,6 +43,18 @@ public class OAuth2ScopeGrantFinderImpl
 
 	public static final String FIND_BY_C_A_B_A =
 		OAuth2ScopeGrantFinder.class.getName() + ".findByC_A_B_A";
+
+	public void afterPropertiesSet() {
+		DB db = DBManagerUtil.getDB();
+
+		DBType dbType = db.getDBType();
+
+		if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL) ||
+			(dbType == DBType.POSTGRESQL) || (dbType == DBType.SYBASE)) {
+
+			_supportsCLOB = false;
+		}
+	}
 
 	@Override
 	public Collection<OAuth2ScopeGrant> findByC_A_B_A(
@@ -56,7 +73,13 @@ public class OAuth2ScopeGrantFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			q.addEntity("OAuth2ScopeGrant", OAuth2ScopeGrantImpl.class);
-			q.addScalar("accessTokenContent", Type.MATERIALIZED_CLOB);
+
+			if (_supportsCLOB) {
+				q.addScalar("accessTokenContent", Type.MATERIALIZED_CLOB);
+			}
+			else {
+				q.addScalar("accessTokenContent", Type.TEXT);
+			}
 
 			qPos.add(companyId);
 			qPos.add(applicationName);
@@ -86,7 +109,12 @@ public class OAuth2ScopeGrantFinderImpl
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		OAuth2ScopeGrantFinderImpl.class);
+
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;
+
+	private boolean _supportsCLOB = true;
 
 }

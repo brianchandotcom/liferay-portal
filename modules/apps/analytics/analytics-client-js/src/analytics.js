@@ -1,15 +1,23 @@
 import {LocalStorageMechanism, Storage} from 'metal-storage';
 
+// Gateways
 import AsahClient from './AsahClient/AsahClient';
 import LCSClient from './LCSClient/LCSClient';
+
 import defaultPlugins from './plugins/defaults';
 import fingerprint from './utils/fingerprint';
+import hash from 'object-hash';
+import uuidv1 from 'uuid/v1';
 
+// Constants
 const ENV = window || global;
 const FLUSH_INTERVAL = 2000;
 const REQUEST_TIMEOUT = 5000;
+
+// Local Storage keys
 const STORAGE_KEY_EVENTS = 'lcs_client_batch';
 const STORAGE_KEY_USER_ID = 'lcs_client_user_id';
+const STORAGE_KEY_IDENTITY_HASH = 'lcs_client_identity';
 
 // Creates LocalStorage wrapper
 const storage = new Storage(new LocalStorageMechanism());
@@ -43,9 +51,8 @@ class Analytics {
 		};
 
 		instance.config = config;
-		instance.identityEndpoint = `https://contacts-prod.liferay.com/${
-			config.analyticsKey
-		}/identity`;
+		instance.identityEndpoint =
+			'https://ec-dev.liferay.com:8095/api/identitycontextgateway/send-identity-context';
 		instance.events = storage.get(STORAGE_KEY_EVENTS) || [];
 		instance.isFlushInProgress = false;
 
@@ -131,40 +138,64 @@ class Analytics {
 	}
 
 	/**
+	 * Returns an unique identifier for an user
+	 * @return {string} The generated id
+	 */
+	_generateUserId() {
+		return uuidv1();
+	}
+
+	/**
 	 * Gets the userId for the existing analytics user. Previously generated ids
-	 * are stored and retrieved before attempting to query the Identity Service
-	 * for a new id based on the current machine fingerprint.
+	 * are stored and retrieved before generating a new one and attempting to update
+	 * the Identity Service.
 	 * @return {Promise} A promise resolved with the stored or generated userId
 	 */
 	_getUserId() {
-		const userId = storage.get(STORAGE_KEY_USER_ID);
+		let userId = storage.get(STORAGE_KEY_USER_ID);
 
 		if (userId) {
 			return Promise.resolve(userId);
 		} else {
-			const bodyData = {
-				...this.config.identity,
-				...fingerprint(),
-			};
+			userId = this._generateUserId();
 
-			const body = JSON.stringify(bodyData);
-			const headers = new Headers();
+			this._persist(STORAGE_KEY_USER_ID, userId);
 
-			headers.append('Content-Type', 'application/json');
+			const identity = storage.get(STORAGE_KEY_IDENTITY_HASH);
 
-			const request = {
-				body,
-				cache: 'default',
-				credentials: 'same-origin',
-				headers,
-				method: 'POST',
-				mode: 'cors',
-			};
-
-			return fetch(this.identityEndpoint, request)
-				.then(resp => resp.text())
-				.then(userId => this._persist(STORAGE_KEY_USER_ID, userId));
+			return this._sendIdentity(identity, userId).then(() => userId);
 		}
+	}
+
+	/**
+	 * Sends the identity information and user id to the Identity Service.
+	 * @param {Object} identity The identity information about an user.
+	 * @param {String} userId The unique user id.
+	 * @return {Promise} A promise returned by the fetch request.
+	 */
+	_sendIdentity(identity, userId) {
+		const bodyData = {
+			...fingerprint(),
+			analyticsKey: this.config.analyticsKey,
+			identity,
+			userId,
+		};
+
+		const body = JSON.stringify(bodyData);
+		const headers = new Headers();
+
+		headers.append('Content-Type', 'application/json');
+
+		const request = {
+			body,
+			cache: 'default',
+			credentials: 'same-origin',
+			headers,
+			method: 'POST',
+			mode: 'cors',
+		};
+
+		return fetch(this.identityEndpoint, request);
 	}
 
 	/**
@@ -269,19 +300,25 @@ class Analytics {
 
 	/**
 	 * Sets the current user identity in the system. This is meant to be invoked
-	 * by consumers every time an identity change is detected. This will trigger
-	 * an automatic reconciliation between the previous identity and the new one
+	 * by consumers every time an identity change is detected. If the identity is
+	 * different than the previously stored one, we will save this new identity and
+	 * send a request updating the Identity Service.
 	 * @param {object} identity A key-value pair object that identifies the user
+	 * @return {Promise} A promise resolved with the generated identity hash
 	 */
 	setIdentity(identity) {
-		const userId = storage.get(STORAGE_KEY_USER_ID);
+		const storedIdentityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
+		const newIdentityHash = hash(identity);
 
-		storage.remove(STORAGE_KEY_USER_ID);
+		if (newIdentityHash !== storedIdentityHash) {
+			storage.set(STORAGE_KEY_IDENTITY_HASH, newIdentityHash);
 
-		instance.config.identity = {
-			identity,
-			userId,
-		};
+			return this._getUserId()
+				.then(userId => this._sendIdentity(identity, userId))
+				.then(() => newIdentityHash);
+		}
+
+		return Promise.resolve(storedIdentityHash);
 	}
 
 	/**

@@ -1,3 +1,5 @@
+task deployConfigs(type: Copy)
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
@@ -14,4 +16,17 @@ dependencies {
 	compileOnly project(":apps:headless-apio:portal:portal-apio-api")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
+}
+
+deploy {
+	finalizedBy deployConfigs
+}
+
+deployConfigs {
+	ext {
+		autoClean = false
+	}
+
+	from "configs"
+	into new File(liferay.liferayHome, "osgi/configs")
 }

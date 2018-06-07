@@ -84,7 +84,7 @@ public class CommerceOrganizationHelperImpl
 			return null;
 		}
 
-		return _commerceOrganizationService.getOrganization(
+		return _commerceOrganizationService.fetchOrganization(
 			currentOrganizationId);
 	}
 

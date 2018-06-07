@@ -83,7 +83,7 @@ public class SyncDLFileVersionDiffsDLStoreConvertProcess
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
+	@Reference
 	private SyncDLFileVersionDiffLocalService
 		_syncDLFileVersionDiffLocalService;
 

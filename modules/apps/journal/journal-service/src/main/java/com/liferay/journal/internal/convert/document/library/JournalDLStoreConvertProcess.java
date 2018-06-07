@@ -69,13 +69,7 @@ public class JournalDLStoreConvertProcess implements DLStoreConvertProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	public void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 }

@@ -81,7 +81,7 @@ public class OAuth2ApplicationsDLStoreConvertProcess
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
+	@Reference
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 }

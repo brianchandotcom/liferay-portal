@@ -81,10 +81,10 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
+	@Reference
 	private AMImageEntryLocalService _amImageEntryLocalService;
 
-	@Reference(unbind = "-")
+	@Reference
 	private DLAppService _dlAppService;
 
 }

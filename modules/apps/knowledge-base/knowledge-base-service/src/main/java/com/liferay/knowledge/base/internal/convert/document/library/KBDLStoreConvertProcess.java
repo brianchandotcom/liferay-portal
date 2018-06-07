@@ -71,13 +71,7 @@ public class KBDLStoreConvertProcess implements DLStoreConvertProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	public void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
-
-		_kbArticleLocalService = kbArticleLocalService;
-	}
-
+	@Reference
 	private KBArticleLocalService _kbArticleLocalService;
 
 }

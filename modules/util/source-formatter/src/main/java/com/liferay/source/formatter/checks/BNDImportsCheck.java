@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.source.formatter.BNDImportsFormatter;
@@ -32,10 +33,13 @@ public class BNDImportsCheck extends BaseFileCheck {
 		throws Exception {
 
 		_checkWildcardImports(
-			fileName, absolutePath, content, _conditionalPackagePattern);
+			fileName, absolutePath, content, "-conditionalpackage",
+			_conditionalPackagePattern);
 		_checkWildcardImports(
-			fileName, absolutePath, content, _exportContentsPattern);
-		_checkWildcardImports(fileName, absolutePath, content, _exportsPattern);
+			fileName, absolutePath, content, "-exportcontents",
+			_exportContentsPattern);
+		_checkWildcardImports(
+			fileName, absolutePath, content, "Export-Package", _exportsPattern);
 
 		ImportsFormatter importsFormatter = new BNDImportsFormatter();
 
@@ -53,7 +57,8 @@ public class BNDImportsCheck extends BaseFileCheck {
 	}
 
 	private void _checkWildcardImports(
-		String fileName, String absolutePath, String content, Pattern pattern) {
+		String fileName, String absolutePath, String content,
+		String instruction, Pattern pattern) {
 
 		if (absolutePath.contains("/portal-kernel/") ||
 			absolutePath.contains("/support-tomcat/") ||
@@ -80,10 +85,11 @@ public class BNDImportsCheck extends BaseFileCheck {
 			String wildcardImport = matcher.group(1);
 
 			if (wildcardImport.matches("^!?com\\.liferay\\..+")) {
-				addMessage(
-					fileName,
-					"Do not use wildcard in Export-Package '" + wildcardImport +
-						"'");
+				String message = StringBundler.concat(
+					"Do not use wildcard in ", instruction, ": '",
+					wildcardImport, "'");
+
+				addMessage(fileName, message);
 			}
 		}
 	}

@@ -56,6 +56,44 @@
 			}
 		}
 
+		.tabular-list-group {
+			padding-right: 16px;
+
+			> .list-group-item {
+				margin-bottom: 8px;
+				padding: 4px;
+
+				> .list-group-item-field {
+					padding-right: 4px;
+
+					.sticker, .user-icon {
+						margin: 0 auto;
+					}
+				}
+
+				> .list-group-item-content {
+					h4 {
+						font-size: 0.875rem;
+					}
+
+					h5, h6 {
+						color: #6B6C7E;
+						font-size: 0.875rem;
+						font-weight: 400;
+					}
+				}
+			}
+		}
+
+		.list-group-item > .list-unstyled {
+			padding-right: 16px;
+
+			.taglib-vertical-card-footer {
+				height: inherit;
+				min-height: inherit;
+			}
+		}
+
 		@include respond-to(phone) {
 			.lfr-drag-portlet-message {
 				display: none;

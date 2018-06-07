@@ -63,23 +63,8 @@ class FragmentEntryLink extends Component {
 	 */
 
 	syncContent(newContent) {
-		if (newContent && this.refs.content) {
-			AUI().use(
-				'aui-parse-content',
-				A => {
-					const content = A.one(this.refs.content);
-					content.plug(A.Plugin.ParseContent);
-					content.setContent(newContent);
-
-					this._createEditables();
-
-					this._update(
-						this.languageId,
-						this.defaultLanguageId,
-						[this._updateEditableStatus]
-					);
-				}
-			);
+		if (newContent) {
+			this._renderContent(newContent);
 		}
 	}
 
@@ -103,6 +88,18 @@ class FragmentEntryLink extends Component {
 					editable.editableValues = editableValues;
 				}
 			);
+		}
+	}
+
+	/**
+	 * Callback executed when languageId property has changed
+	 * @inheritDoc
+	 * @review
+	 */
+
+	syncLanguageId() {
+		if (this.content) {
+			this._renderContent(this.content);
 		}
 	}
 
@@ -316,6 +313,34 @@ class FragmentEntryLink extends Component {
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}
 		);
+	}
+
+	/**
+	 * Renders the FragmentEntryLink content parsing with AUI
+	 * @param {string} content
+	 * @private
+	 * @review
+	 */
+
+	_renderContent(content) {
+		if (this.refs.content) {
+			AUI().use(
+				'aui-parse-content',
+				A => {
+					const contentNode = A.one(this.refs.content);
+					contentNode.plug(A.Plugin.ParseContent);
+					contentNode.setContent(content);
+
+					this._createEditables();
+
+					this._update(
+						this.languageId,
+						this.defaultLanguageId,
+						[this._updateEditableStatus]
+					);
+				}
+			);
+		}
 	}
 
 	/**

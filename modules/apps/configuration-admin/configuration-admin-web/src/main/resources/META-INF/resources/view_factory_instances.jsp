@@ -125,8 +125,16 @@ renderResponse.setTitle(categoryDisplayName);
 					</span>
 				</h3>
 
+				<%
+				PortletURL iteratorURL = renderResponse.createRenderURL();
+
+				iteratorURL.setParameter("mvcRenderCommandName", "/view_factory_instances");
+				iteratorURL.setParameter("factoryPid", configurationModel.getFactoryPid());
+				%>
+
 				<liferay-ui:search-container
 					emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-for-x-have-been-added-yet", factoryConfigurationModelName) %>'
+					iteratorURL="<%= iteratorURL %>"
 					total="<%= configurationModelIterator.getTotal() %>"
 				>
 					<liferay-ui:search-container-results

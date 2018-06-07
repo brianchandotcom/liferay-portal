@@ -14,13 +14,22 @@
 
 package com.liferay.dynamic.data.lists.internal.upgrade.v1_2_1;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.ResourceBundle;
 
 /**
  * @author Pedro Queiroz
@@ -28,9 +37,34 @@ import java.sql.ResultSet;
 public class UpgradeDDLRecord extends UpgradeProcess {
 
 	public UpgradeDDLRecord(
+		AssetEntryLocalService assetEntryLocalService,
 		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService) {
 
+		_assetEntryLocalService = assetEntryLocalService;
 		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
+	}
+
+	protected void addAssetEntry(DDMFormInstanceRecord ddmFormInstanceRecord)
+		throws Exception {
+
+		DDMFormValues ddmFormValues = ddmFormInstanceRecord.getDDMFormValues();
+
+		DDMFormInstance formInstance = ddmFormInstanceRecord.getFormInstance();
+
+		String title = LanguageUtil.format(
+			getResourceBundle(ddmFormValues), "new-entry-for-form-x",
+			formInstance.getName(ddmFormValues.getDefaultLocale()), false);
+
+		_assetEntryLocalService.updateEntry(
+			ddmFormInstanceRecord.getUserId(),
+			ddmFormInstanceRecord.getGroupId(),
+			ddmFormInstanceRecord.getCreateDate(),
+			ddmFormInstanceRecord.getModifiedDate(),
+			DDMFormInstanceRecord.class.getName(),
+			ddmFormInstanceRecord.getFormInstanceRecordId(),
+			ddmFormInstanceRecord.getUuid(), 0, new long[0], new String[0],
+			true, true, null, null, null, null, ContentTypes.TEXT_HTML, title,
+			null, StringPool.BLANK, null, null, 0, 0, 0.0);
 	}
 
 	protected void deleteDDLRecord(long recordId) throws Exception {
@@ -86,13 +120,25 @@ public class UpgradeDDLRecord extends UpgradeProcess {
 
 					deleteDDLRecord(recordId);
 
-					_ddmFormInstanceRecordLocalService.addDDMFormInstanceRecord(
-						ddmFormInstanceRecord);
+					ddmFormInstanceRecord =
+						_ddmFormInstanceRecordLocalService.
+							addDDMFormInstanceRecord(ddmFormInstanceRecord);
+
+					addAssetEntry(ddmFormInstanceRecord);
 				}
 			}
 		}
 	}
 
+	protected ResourceBundle getResourceBundle(DDMFormValues ddmFormValues) {
+		Class<?> clazz = _ddmFormInstanceRecordLocalService.getClass();
+
+		return ResourceBundleUtil.getBundle(
+			"content.Language", ddmFormValues.getDefaultLocale(),
+			clazz.getClassLoader());
+	}
+
+	private final AssetEntryLocalService _assetEntryLocalService;
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
 

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -315,15 +317,15 @@ public class DDMFormInstanceRecordIndexer
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceLocalService.getFormInstance(ddmFormInstanceId);
 
-			DDMStructure ddmStructure = ddmFormInstance.getStructure();
-
-			String ddmStructureName = ddmStructure.getName(locale);
-
 			String ddmFormInstanceName = ddmFormInstance.getName(locale);
 
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale,
+				DDMFormInstanceRecordIndexer.class.getClassLoader());
+
 			return LanguageUtil.format(
-				locale, "new-x-for-form-x",
-				new Object[] {ddmStructureName, ddmFormInstanceName}, false);
+				resourceBundle, "new-entry-for-form-x", ddmFormInstanceName,
+				false);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

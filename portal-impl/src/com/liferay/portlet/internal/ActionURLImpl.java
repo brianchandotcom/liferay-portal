@@ -16,7 +16,6 @@ package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portlet.PortletURLImpl;
 
 import javax.portlet.ActionURL;
 import javax.portlet.MimeResponse;

@@ -81,7 +81,7 @@ import com.liferay.portal.template.TemplateControlContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletRequestImpl;
 import com.liferay.portlet.PortletResponseImpl;
-import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.internal.PortletURLImpl;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;

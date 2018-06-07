@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -32,6 +32,7 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import com.liferay.portlet.RenderParametersPool;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;

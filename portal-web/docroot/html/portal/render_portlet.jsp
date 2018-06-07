@@ -644,10 +644,10 @@ else {
 	urlMax.setWindowState(WindowState.MAXIMIZED);
 }
 
-if (urlMax instanceof PortletURLImpl) {
-	PortletURLImpl portletURLImpl = (PortletURLImpl)urlMax;
+if (urlMax instanceof LiferayPortletURL) {
+	LiferayPortletURL liferayPortletURL = (LiferayPortletURL)urlMax;
 
-	portletURLImpl.setWindowStateRestoreCurrentView(true);
+	liferayPortletURL.setWindowStateRestoreCurrentView(true);
 }
 else {
 	try {

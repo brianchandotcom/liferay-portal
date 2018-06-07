@@ -162,7 +162,6 @@ page import="com.liferay.portlet.HeaderRequestImpl" %><%@
 page import="com.liferay.portlet.HeaderResponseFactory" %><%@
 page import="com.liferay.portlet.HeaderResponseImpl" %><%@
 page import="com.liferay.portlet.PortletResponseImpl" %><%@
-page import="com.liferay.portlet.PortletURLImpl" %><%@
 page import="com.liferay.portlet.RenderParametersPool" %><%@
 page import="com.liferay.portlet.RenderRequestFactory" %><%@
 page import="com.liferay.portlet.RenderRequestImpl" %><%@

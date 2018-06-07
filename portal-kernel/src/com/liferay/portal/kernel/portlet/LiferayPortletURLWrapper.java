@@ -206,6 +206,14 @@ public class LiferayPortletURLWrapper
 	}
 
 	@Override
+	public void setWindowStateRestoreCurrentView(
+		boolean windowStateRestoreCurrentView) {
+
+		_liferayPortletURL.setWindowStateRestoreCurrentView(
+			windowStateRestoreCurrentView);
+	}
+
+	@Override
 	public void visitReservedParameters(BiConsumer<String, String> biConsumer) {
 		_liferayPortletURL.visitReservedParameters(biConsumer);
 	}

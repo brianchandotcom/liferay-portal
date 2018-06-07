@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portlet.internal.LiferayPortletResponseUtil;
 import com.liferay.portlet.internal.LiferayPortletURLPrivilegedAction;
+import com.liferay.portlet.internal.PortletURLImpl;
 
 import java.io.Writer;
 

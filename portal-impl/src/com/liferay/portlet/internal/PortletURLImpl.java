@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -55,6 +55,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.PortletURLListenerFactory;
+import com.liferay.portlet.RenderParametersPool;
 
 import java.io.IOException;
 import java.io.Serializable;

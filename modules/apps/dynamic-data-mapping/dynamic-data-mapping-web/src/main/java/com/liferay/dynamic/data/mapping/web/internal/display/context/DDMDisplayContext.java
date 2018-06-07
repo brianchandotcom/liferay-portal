@@ -157,7 +157,7 @@ public class DDMDisplayContext {
 				add(
 					dropdownItem -> {
 						dropdownItem.putData("action", action);
-						dropdownItem.setIcon("trash");
+						dropdownItem.setIcon("times");
 						dropdownItem.setLabel(
 							LanguageUtil.get(
 								_ddmWebRequestHelper.getRequest(), "delete"));

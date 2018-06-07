@@ -45,49 +45,47 @@ public class AuthVerifierGuestAllowBundleActivator implements BundleActivator {
 	public void start(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("auth.verifier.guest.allowed", false);
-		properties.put("com.liferay.auth.verifier.filter.enabled", true);
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
-			"/auth-verifier-no-allow-guest-test");
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
 			"auth-verifier-no-allow-guest-test");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
+			"/auth-verifier-no-allow-guest-test");
+		properties.put("auth.verifier.guest.allowed", false);
+		properties.put("com.liferay.auth.verifier.filter.enabled", true);
 		properties.put("test-servlet-context-helper", true);
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				ServletContextHelper.class,
-				new ServletContextHelper(bundleContext.getBundle()) {
-				},
+				new ServletContextHelper(bundleContext.getBundle()) {},
 				properties));
 
 		properties = new HashMapDictionary<>();
 
-		properties.put("com.liferay.auth.verifier.filter.enabled", true);
-		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
-			"/auth-verifier-allow-guest-test");
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
 			"auth-verifier-allow-guest-test");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
+			"/auth-verifier-allow-guest-test");
+		properties.put("com.liferay.auth.verifier.filter.enabled", true);
 		properties.put("test-servlet-context-helper", true);
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(
 				ServletContextHelper.class,
-				new ServletContextHelper(bundleContext.getBundle()) {
-				},
+				new ServletContextHelper(bundleContext.getBundle()) {},
 				properties));
 
 		properties = new HashMapDictionary<>();
 
 		properties.put(
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
-			"(test-servlet-context-helper=true)");
-		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 			"/getAccess");
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			"(test-servlet-context-helper=true)");
 
 		_serviceRegistrations.add(
 			bundleContext.registerService(
@@ -134,9 +132,9 @@ public class AuthVerifierGuestAllowBundleActivator implements BundleActivator {
 				HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
-			PrintWriter writer = response.getWriter();
+			PrintWriter printWriter = response.getWriter();
 
-			writer.write("GuestAllowHttpServlet");
+			printWriter.write("GuestAllowHttpServlet");
 		}
 
 	}

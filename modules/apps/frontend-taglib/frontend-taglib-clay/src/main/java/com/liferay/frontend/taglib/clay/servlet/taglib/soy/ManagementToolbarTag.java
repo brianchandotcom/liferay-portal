@@ -253,10 +253,6 @@ public class ManagementToolbarTag extends BaseClayTag {
 	protected void populateContext(
 		ManagementToolbarDisplayContext managementToolbarDisplayContext) {
 
-		if (managementToolbarDisplayContext == null) {
-			return;
-		}
-
 		setActionDropdownItems(
 			managementToolbarDisplayContext.getActionDropdownItems());
 		setClearResultsURL(

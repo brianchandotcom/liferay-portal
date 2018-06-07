@@ -1,3 +1,13 @@
+<#assign
+	accountName=languageUtil.get(request, "select-account")
+/>
+
+<#if currentOrganization?has_content>
+	<#assign
+		accountName=currentOrganization.getName()
+	/>
+</#if>
+
 <nav class="commerce-navigation navbar navbar-collapse-absolute navbar-expand-md navigation-bar navigation-bar-light">
 	<div class="container-fluid container-fluid-max-xl">
 		<div class="nav-link navbar-breakpoint-d-none">
@@ -51,7 +61,7 @@
 						<#if is_signed_in>
 							<li class="dropdown dropdown-wide nav-item">
 								<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle nav-link" data-toggle="dropdown" href="javascript:;" role="button">
-									<span class="commerce-navigation-icon inline-item inline-item-before"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-user" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#user" /></svg></span><span class="navbar-text-truncate"><@liferay.language key="my-account" /></span>
+									<span class="commerce-navigation-icon inline-item inline-item-before"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-user" focusable="false"><use xlink:href="${images_folder}/lexicon/icons.svg#user" /></svg></span><span class="navbar-text-truncate">${accountName}</span>
 								</a>
 
 								<div class="dropdown-menu dropdown-menu-right portlet-flush">

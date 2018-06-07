@@ -65,7 +65,9 @@ String statusLabelPending = StringUtil.toUpperCase(LanguageUtil.get(request, "pe
 		<div class="sheet-section">
 			<h3 class="sheet-subtitle"><liferay-ui:message key="applications" /></h3>
 
-			<clay:management-toolbar displayContext="<%= uadApplicationsSummaryManagementToolbarDisplayContext %>" />
+			<clay:management-toolbar
+				displayContext="<%= uadApplicationsSummaryManagementToolbarDisplayContext %>"
+			/>
 
 			<liferay-ui:search-container
 				searchContainer="<%= uadApplicationsSummaryDisplaySearchContainer %>"

@@ -55,15 +55,12 @@ public class JournalDLStoreConvertProcess implements DLStoreConvertProcess {
 					throws PortalException {
 
 					for (FileEntry fileEntry : article.getImagesFileEntries()) {
-						DLFileEntry dlFileEntry =
-							(DLFileEntry)fileEntry.getModel();
-
 						dlStoreConverter.migrateDLFileEntry(
 							article.getCompanyId(),
 							DLFolderConstants.getDataRepositoryId(
-								dlFileEntry.getRepositoryId(),
-								dlFileEntry.getFolderId()),
-							new LiferayFileEntry(dlFileEntry));
+								fileEntry.getRepositoryId(),
+								fileEntry.getFolderId()),
+							fileEntry);
 					}
 				}
 

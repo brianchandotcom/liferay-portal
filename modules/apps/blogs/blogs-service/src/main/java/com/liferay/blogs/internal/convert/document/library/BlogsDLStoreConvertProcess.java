@@ -168,15 +168,12 @@ public class BlogsDLStoreConvertProcess implements DLStoreConvertProcess {
 							folder.getGroupId(), folder.getFolderId());
 
 					for (FileEntry fileEntry : fileEntries) {
-						DLFileEntry dlFileEntry =
-							(DLFileEntry)fileEntry.getModel();
-
 						dlStoreConverter.migrateDLFileEntry(
 							fileEntry.getCompanyId(),
 							DLFolderConstants.getDataRepositoryId(
-								dlFileEntry.getRepositoryId(),
-								dlFileEntry.getFolderId()),
-							new LiferayFileEntry(dlFileEntry));
+								fileEntry.getRepositoryId(),
+								fileEntry.getFolderId()),
+							fileEntry);
 					}
 				}
 

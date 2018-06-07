@@ -57,15 +57,12 @@ public class KBDLStoreConvertProcess implements DLStoreConvertProcess {
 					for (FileEntry fileEntry :
 							kbArticle.getAttachmentsFileEntries()) {
 
-						DLFileEntry dlFileEntry =
-							(DLFileEntry)fileEntry.getModel();
-
 						dlStoreConverter.migrateDLFileEntry(
 							kbArticle.getCompanyId(),
 							DLFolderConstants.getDataRepositoryId(
-								dlFileEntry.getRepositoryId(),
-								dlFileEntry.getFolderId()),
-							new LiferayFileEntry(dlFileEntry));
+								fileEntry.getRepositoryId(),
+								fileEntry.getFolderId()),
+							fileEntry);
 					}
 				}
 

@@ -118,12 +118,44 @@ public class CommerceOrganizationServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.Organization fetchOrganization(
+		HttpPrincipal httpPrincipal, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceOrganizationServiceUtil.class,
+					"fetchOrganization", _fetchOrganizationParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					organizationId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.model.Organization)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Organization getOrganization(
 		HttpPrincipal httpPrincipal, long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrganizationServiceUtil.class,
-					"getOrganization", _getOrganizationParameterTypes2);
+					"getOrganization", _getOrganizationParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					organizationId);
@@ -156,7 +188,7 @@ public class CommerceOrganizationServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrganizationServiceUtil.class,
 					"getOrganizationPrimaryAddress",
-					_getOrganizationPrimaryAddressParameterTypes3);
+					_getOrganizationPrimaryAddressParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					organizationId);
@@ -189,7 +221,7 @@ public class CommerceOrganizationServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrganizationServiceUtil.class,
 					"getOrganizationPrimaryEmailAddress",
-					_getOrganizationPrimaryEmailAddressParameterTypes4);
+					_getOrganizationPrimaryEmailAddressParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					organizationId);
@@ -223,7 +255,7 @@ public class CommerceOrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrganizationServiceUtil.class,
-					"searchOrganizations", _searchOrganizationsParameterTypes5);
+					"searchOrganizations", _searchOrganizationsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					organizationId, type, keywords, start, end, sorts);
@@ -258,7 +290,7 @@ public class CommerceOrganizationServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrganizationServiceUtil.class,
 					"searchOrganizationsByGroup",
-					_searchOrganizationsByGroupParameterTypes6);
+					_searchOrganizationsByGroupParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					userId, type, keywords, start, end, sorts);
@@ -291,7 +323,7 @@ public class CommerceOrganizationServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrganizationServiceUtil.class,
 					"unsetOrganizationUsers",
-					_unsetOrganizationUsersParameterTypes7);
+					_unsetOrganizationUsersParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					organizationId, userIds);
@@ -323,7 +355,7 @@ public class CommerceOrganizationServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrganizationServiceUtil.class,
-					"updateOrganization", _updateOrganizationParameterTypes8);
+					"updateOrganization", _updateOrganizationParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					organizationId, name, emailAddressId, address, addressId,
@@ -361,25 +393,28 @@ public class CommerceOrganizationServiceHttp {
 			long.class, String[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _getOrganizationParameterTypes2 = new Class[] {
+	private static final Class<?>[] _fetchOrganizationParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getOrganizationPrimaryAddressParameterTypes3 =
+	private static final Class<?>[] _getOrganizationParameterTypes3 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getOrganizationPrimaryAddressParameterTypes4 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getOrganizationPrimaryEmailAddressParameterTypes4 =
+	private static final Class<?>[] _getOrganizationPrimaryEmailAddressParameterTypes5 =
 		new Class[] { long.class };
-	private static final Class<?>[] _searchOrganizationsParameterTypes5 = new Class[] {
+	private static final Class<?>[] _searchOrganizationsParameterTypes6 = new Class[] {
 			long.class, long.class, String.class, String.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort[].class
 		};
-	private static final Class<?>[] _searchOrganizationsByGroupParameterTypes6 = new Class[] {
+	private static final Class<?>[] _searchOrganizationsByGroupParameterTypes7 = new Class[] {
 			long.class, long.class, String.class, String.class, int.class,
 			int.class, com.liferay.portal.kernel.search.Sort[].class
 		};
-	private static final Class<?>[] _unsetOrganizationUsersParameterTypes7 = new Class[] {
+	private static final Class<?>[] _unsetOrganizationUsersParameterTypes8 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _updateOrganizationParameterTypes8 = new Class[] {
+	private static final Class<?>[] _updateOrganizationParameterTypes9 = new Class[] {
 			long.class, String.class, long.class, String.class, long.class,
 			String.class, String.class, String.class, String.class, String.class,
 			long.class, long.class, boolean.class, byte[].class,

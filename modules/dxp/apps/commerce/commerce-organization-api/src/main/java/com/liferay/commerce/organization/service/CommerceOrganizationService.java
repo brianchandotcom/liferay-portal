@@ -64,6 +64,10 @@ public interface CommerceOrganizationService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Organization fetchOrganization(long organizationId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Organization getOrganization(long organizationId)
 		throws PortalException;
 

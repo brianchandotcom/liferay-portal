@@ -86,6 +86,20 @@ public class CommerceOrganizationServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.Organization fetchOrganization(
+		long organizationId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.model.Organization returnValue = CommerceOrganizationServiceUtil.fetchOrganization(organizationId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Organization getOrganization(
 		long organizationId) throws RemoteException {
 		try {

@@ -53,6 +53,13 @@ public class CommerceOrganizationServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Organization fetchOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrganizationService.fetchOrganization(organizationId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Organization getOrganization(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {

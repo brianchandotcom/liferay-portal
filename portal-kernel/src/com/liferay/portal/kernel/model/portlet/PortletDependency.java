@@ -12,32 +12,34 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portal.kernel.model.portlet;
 
-import aQute.bnd.annotation.ProviderType;
+import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.portal.kernel.model.portlet.PortletDependency;
+import com.liferay.petra.string.StringBundler;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
 
 /**
  * @author Neil Griffin
  */
-@ProviderType
-public class HeaderResponseFactory {
+@ConsumerType
+public interface PortletDependency extends Serializable {
 
-	public static HeaderResponseImpl create(
-		RenderRequestImpl renderRequestImpl, HttpServletResponse response,
-		List<PortletDependency> portletDependencies) {
+	public String getName();
 
-		HeaderResponseImpl headerResponseImpl = new HeaderResponseImpl();
+	public String getScope();
 
-		headerResponseImpl.init(
-			renderRequestImpl, response, portletDependencies);
+	public Type getType();
 
-		return headerResponseImpl;
+	public String getVersion();
+
+	public StringBundler toStringBundler();
+
+	public enum Type {
+
+		CSS, JAVASCRIPT, OTHER
+
 	}
 
 }

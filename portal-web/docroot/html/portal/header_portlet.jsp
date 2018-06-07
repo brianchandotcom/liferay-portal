@@ -141,7 +141,7 @@ BufferCacheServletResponse bufferCacheServletResponse = new BufferCacheServletRe
 
 HeaderRequestImpl headerRequestImpl = HeaderRequestFactory.create(request, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);
 PortletRequest portletRequest = headerRequestImpl;
-HeaderResponseImpl headerResponseImpl = HeaderResponseFactory.create(headerRequestImpl, bufferCacheServletResponse);
+HeaderResponseImpl headerResponseImpl = HeaderResponseFactory.create(headerRequestImpl, bufferCacheServletResponse, portlet.getPortletDependencies());
 headerRequestImpl.defineObjects(portletConfig, headerResponseImpl);
 String responseContentType = headerRequestImpl.getResponseContentType();
 

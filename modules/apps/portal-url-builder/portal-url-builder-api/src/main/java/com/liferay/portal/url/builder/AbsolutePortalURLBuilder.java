@@ -14,6 +14,8 @@
 
 package com.liferay.portal.url.builder;
 
+import com.liferay.portal.kernel.model.portlet.PortletDependency;
+
 /**
  * A builder for constructing absolute URLs pointing to portal resources.
  * @author Iván Zaera Avellón
@@ -50,6 +52,20 @@ public interface AbsolutePortalURLBuilder {
 	 * @review
 	 */
 	public ModuleAbsolutePortalURLBuilder forModule(String relativeURL);
+
+	/**
+	 * Configure this builder to return URLs for portlet dependency resources.
+	 * Portlet dependency resources live in the root path of the portal.
+	 * @param portletDependency the portlet dependency resource
+	 * @param cssURN the URN for CSS portlet dependency resources.
+	 * @param javaScriptURN the URN for JavaScript portlet dependency resources.
+	 * @return a builder that returns arbitrary resource URLs
+	 * @see BuildableAbsolutePortalURLBuilder
+	 * @review
+	 */
+	public PortletDependencyAbsolutePortalURLBuilder forPortletDependency(
+		PortletDependency portletDependency, String cssURN,
+		String javaScriptURN);
 
 	/**
 	 * Configure this builder to return URLs for arbitrary resources. Arbitrary

@@ -1415,6 +1415,10 @@ public class PropsValues {
 
 	public static final boolean PORTLET_CSS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTLET_CSS_ENABLED));
 
+	public static final String PORTLET_DEPENDENCY_CSS_URN = PropsUtil.get(PropsKeys.PORTLET_DEPENDENCY_CSS_URN);
+
+	public static final String PORTLET_DEPENDENCY_JAVASCRIPT_URN = PropsUtil.get(PropsKeys.PORTLET_DEPENDENCY_JAVASCRIPT_URN);
+
 	public static final String PORTLET_EVENT_DISTRIBUTION = PropsUtil.get(PropsKeys.PORTLET_EVENT_DISTRIBUTION);
 
 	public static final boolean PORTLET_EVENT_DISTRIBUTION_LAYOUT = StringUtil.equalsIgnoreCase(PORTLET_EVENT_DISTRIBUTION, "layout");

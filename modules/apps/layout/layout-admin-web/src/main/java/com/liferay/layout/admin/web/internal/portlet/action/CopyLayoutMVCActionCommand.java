@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -118,7 +117,7 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 			Layout layout = _layoutService.addLayout(
 				groupId, privateLayout, copyLayout.getParentLayoutId(), nameMap,
 				new HashMap<>(), new HashMap<>(), copyLayout.getKeywordsMap(),
-				copyLayout.getRobotsMap(), LayoutConstants.TYPE_PORTLET,
+				copyLayout.getRobotsMap(), copyLayout.getType(),
 				typeSettingsProperties.toString(), false, new HashMap<>(),
 				serviceContext);
 

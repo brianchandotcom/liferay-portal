@@ -18,7 +18,9 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
@@ -49,11 +51,25 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		long layoutPageTemplateEntryId = ParamUtil.getLong(
 			actionRequest, "classPK");
 
+		String portletId = _portal.getPortletId(actionRequest);
+
+		if (SessionMessages.contains(
+				actionRequest,
+				portletId.concat(
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) &&
+			SessionMessages.contains(actionRequest, "addFragmentEntryLink")) {
+
+			SessionMessages.clear(actionRequest);
+		}
+
 		_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntryId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

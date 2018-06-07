@@ -41,23 +41,6 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 		/>
 	</c:if>
 
-	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
-		<liferay-security:permissionsURL
-			modelResource="<%= FragmentCollection.class.getName() %>"
-			modelResourceDescription="<%= fragmentCollection.getName() %>"
-			resourcePrimKey="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>"
-			var="fragmentCollectionPermissionsURL"
-			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-		/>
-
-		<liferay-ui:icon
-			message="permissions"
-			method="get"
-			url="<%= fragmentCollectionPermissionsURL %>"
-			useDialog="<%= true %>"
-		/>
-	</c:if>
-
 	<portlet:resourceURL id="/fragment/export_fragment_collections" var="exportFragmentCollectionsURL">
 		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 	</portlet:resourceURL>

@@ -132,13 +132,18 @@
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="createDate" />
+			<order-column name="modifiedDate" />
+			<order-column name="name" />
 		</order>
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_E" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="enabled" />
 		</finder>
 		<finder name="G_T_E" return-type="Collection">
 			<finder-column name="groupId" />

@@ -40,7 +40,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 <div class="table-responsive">
 	<table class="show-quick-actions-on-hover table table-autofit table-list">
 
-		<c:if test="<%= summary != null %>">
+		<c:if test="<%= Validator.isNotNull(summary) %>">
 			<caption class="sr-only"><%= summary %></caption>
 		</c:if>
 

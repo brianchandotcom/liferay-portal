@@ -63,7 +63,7 @@ if (iteratorURL != null) {
 	<div id="<%= namespace + id %>SearchContainer">
 		<table class="table table-bordered table-hover table-striped">
 
-		<c:if test="<%= summary != null %>">
+		<c:if test="<%= Validator.isNotNull(summary) %>">
 			<caption class="sr-only"><%= summary %></caption>
 		</c:if>
 

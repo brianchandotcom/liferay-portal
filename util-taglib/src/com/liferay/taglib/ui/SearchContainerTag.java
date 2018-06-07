@@ -157,7 +157,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 				_searchContainer.setRowChecker(_rowChecker);
 			}
 
-			if (_summary != null) {
+			if (Validator.isNotNull(_summary)) {
 				_searchContainer.setSummary(_summary);
 			}
 

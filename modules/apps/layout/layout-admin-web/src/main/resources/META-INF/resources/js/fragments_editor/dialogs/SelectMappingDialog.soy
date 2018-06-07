@@ -11,6 +11,7 @@
 	{@param? _handleVisibleChanged: any}
 	{@param? _loadingMappeableFields: bool}
 	{@param? _mappeableFields: list<[
+		enabled: bool,
 		label: string,
 		key: string
 	]>}
@@ -21,6 +22,7 @@
 				{if $_mappeableFields and not $_loadingMappeableFields}
 					{foreach $mappeableField in $_mappeableFields}
 						{call .mappeableField}
+							{param enabled: $mappeableField.enabled /}
 							{param handleLinkClick: $_handleMappeableFieldLinkClick /}
 							{param label: $mappeableField.label /}
 							{param key: $mappeableField.key /}
@@ -66,34 +68,61 @@
 {/template}
 
 {template .mappeableField}
+	{@param enabled: bool}
 	{@param label: string}
 	{@param key: string}
 	{@param spritemap: string}
 	{@param? handleLinkClick: any}
 
-	<a
-		class="list-group-item list-group-item-action list-group-item-flex"
-		data-key="{$key}"
-		data-onclick="{$handleLinkClick}"
-	>
-		<div class="autofit-col">
-			<div class="sticker sticker-secondary">
-				<svg class="lexicon-icon">
-					<use xlink:href="{$spritemap}#link"></use>
-				</svg>
-			</div>
-		</div>
+	{let $fieldClasses kind="text"}
+		list-group-item
+		{sp}list-group-item-action
+		{sp}list-group-item-flex
+	{/let}
 
-		<div class="autofit-col autofit-col-expand">
-			<section class="autofit-section">
-				<h4 class="list-group-title">
-					<div class="text-truncate-inline">
-						<span class="text-truncate">
-							{$label}
-						</span>
-					</div>
-				</h4>
-			</section>
+	{if $enabled}
+		<a
+			class="{$fieldClasses}"
+			data-key="{$key}"
+			data-onclick="{$handleLinkClick}"
+			href="javascript:;"
+		>
+			{call .mappeableFieldContent}
+				{param label: $label /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</a>
+	{else}
+		<span class="{$fieldClasses}">
+			{call .mappeableFieldContent}
+				{param label: $label /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</span>
+	{/if}
+{/template}
+
+{template .mappeableFieldContent}
+	{@param label: string}
+	{@param spritemap: string}
+
+	<div class="autofit-col">
+		<div class="sticker sticker-secondary">
+			<svg class="lexicon-icon">
+				<use xlink:href="{$spritemap}#link"></use>
+			</svg>
 		</div>
-	</a>
+	</div>
+
+	<div class="autofit-col autofit-col-expand">
+		<section class="autofit-section">
+			<h4 class="list-group-title">
+				<div class="text-truncate-inline">
+					<span class="text-truncate">
+						{$label}
+					</span>
+				</div>
+			</h4>
+		</section>
+	</div>
 {/template}

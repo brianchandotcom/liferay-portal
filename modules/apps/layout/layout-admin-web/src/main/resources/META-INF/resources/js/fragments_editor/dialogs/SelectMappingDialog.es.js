@@ -5,10 +5,54 @@ import Soy from 'metal-soy';
 import templates from './SelectMappingDialog.soy';
 
 /**
+ * List of editable types and their compatibilities
+ * with the corresponding mappeable types
+ * @review
+ * @see DDMStructureClassType.java for compatible types
+ * @type {!object}
+ */
+
+const COMPATIBLE_TYPES = {
+	html: ['ddm-text-html', 'text'],
+	image: ['ddm-image', 'image'],
+	text: ['text']
+};
+
+/**
  * SelectMappingDialog
  */
 
 class SelectMappingDialog extends PortletBase {
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	prepareStateForRender(state) {
+		const editableType = state.editableType;
+
+		const mappeableFields = state._mappeableFields ?
+			state._mappeableFields.map(
+				mappeableField => (
+					{
+						enabled: (
+							COMPATIBLE_TYPES[editableType] &&
+							COMPATIBLE_TYPES[editableType]
+								.indexOf(mappeableField.type) !== -1
+						),
+						key: mappeableField.key,
+						label: mappeableField.label
+					}
+				)
+			) : null;
+
+		return Object.assign(
+			{},
+			state,
+			{_mappeableFields: mappeableFields}
+		);
+	}
 
 	/**
 	 * @inheritDoc

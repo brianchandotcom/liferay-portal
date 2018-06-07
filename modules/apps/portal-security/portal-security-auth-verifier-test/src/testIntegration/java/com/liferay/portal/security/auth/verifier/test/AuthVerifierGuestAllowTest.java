@@ -17,6 +17,8 @@ package com.liferay.portal.security.auth.verifier.test;
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -40,11 +42,20 @@ public class AuthVerifierGuestAllowTest {
 		URL url = new URL(
 			_url, "/o/auth-verifier-no-allow-guest-test/getAccess");
 
-		Assert.assertEquals("", StringUtil.read(url.openStream()));
+		try (InputStream inputStream = url.openStream()) {
+			Assert.fail();
+		}
+		catch (IOException ioe) {
+			String message = ioe.getMessage();
+
+			Assert.assertTrue(
+				message.startsWith("Server returned HTTP response code: 403"));
+		}
 
 		url = new URL(_url, "/o/auth-verifier-allow-guest-test/getAccess");
 
-		Assert.assertNotEquals("", StringUtil.read(url.openStream()));
+		Assert.assertEquals(
+			"GuestAllowHttpServlet", StringUtil.read(url.openStream()));
 	}
 
 	@ArquillianResource

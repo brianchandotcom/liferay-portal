@@ -136,7 +136,7 @@ public class AuthVerifierGuestAllowBundleActivator implements BundleActivator {
 
 			PrintWriter writer = response.getWriter();
 
-			writer.write("true");
+			writer.write("GuestAllowHttpServlet");
 		}
 
 	}

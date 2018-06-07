@@ -164,6 +164,9 @@ public class AuthVerifierFilter extends BasePortalFilter {
 					"Guest is not allowed to access " +
 						request.getRequestURI());
 			}
+
+			response.sendError(
+				HttpServletResponse.SC_FORBIDDEN, "Authorization required");
 		}
 		else if (_guestAllowed || (state == AuthVerifierResult.State.SUCCESS)) {
 			long userId = authVerifierResult.getUserId();

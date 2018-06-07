@@ -339,7 +339,7 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 		FragmentEntryLink fragmentEntryLink);
 
 	public FragmentEntryLink updateFragmentEntryLink(long fragmentEntryLinkId,
-		int position);
+		int position) throws PortalException;
 
 	public FragmentEntryLink updateFragmentEntryLink(long userId,
 		long fragmentEntryLinkId, long originalFragmentEntryLinkId,
@@ -348,7 +348,7 @@ public interface FragmentEntryLinkLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	public FragmentEntryLink updateFragmentEntryLink(long fragmentEntryLinkId,
-		String editableValues);
+		String editableValues) throws PortalException;
 
 	public void updateFragmentEntryLinks(long userId, long groupId,
 		long classNameId, long classPK, long[] fragmentEntryIds,

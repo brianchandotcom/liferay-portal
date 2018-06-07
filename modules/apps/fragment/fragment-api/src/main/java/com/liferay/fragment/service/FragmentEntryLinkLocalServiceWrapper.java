@@ -426,7 +426,8 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
-		long fragmentEntryLinkId, int position) {
+		long fragmentEntryLinkId, int position)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(fragmentEntryLinkId,
 			position);
 	}
@@ -447,7 +448,8 @@ public class FragmentEntryLinkLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntryLink updateFragmentEntryLink(
-		long fragmentEntryLinkId, String editableValues) {
+		long fragmentEntryLinkId, String editableValues)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryLinkLocalService.updateFragmentEntryLink(fragmentEntryLinkId,
 			editableValues);
 	}

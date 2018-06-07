@@ -23,7 +23,6 @@ import com.liferay.marketplace.internal.bundle.BundleManagerUtil;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.base.AppLocalServiceBaseImpl;
-import com.liferay.marketplace.util.ContextUtil;
 import com.liferay.marketplace.util.comparator.AppTitleComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
@@ -271,22 +270,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 			FileUtil.write(file, inputStream);
 
-			List<Bundle> bundles = BundleManagerUtil.installLPKG(file);
-
-			moduleLocalService.deleteModules(app.getAppId());
-
-			for (int i = 1; i < bundles.size(); i++) {
-				Bundle bundle = bundles.get(i);
-
-				Dictionary<String, String> headers = bundle.getHeaders();
-
-				String contextName = ContextUtil.getContextName(
-					GetterUtil.getString(headers.get("Web-ContextPath")));
-
-				moduleLocalService.addModule(
-					app.getAppId(), bundle.getSymbolicName(),
-					String.valueOf(bundle.getVersion()), contextName);
-			}
+			BundleManagerUtil.installLPKG(file);
 		}
 		catch (IOException ioe) {
 			throw new PortalException(ioe);

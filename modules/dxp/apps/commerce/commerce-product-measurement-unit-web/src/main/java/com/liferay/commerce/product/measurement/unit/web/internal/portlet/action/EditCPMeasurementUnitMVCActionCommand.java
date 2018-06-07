@@ -86,12 +86,14 @@ public class EditCPMeasurementUnitMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCPMeasurementUnits(actionRequest);
-			}
-
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCPMeasurementUnit(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteCPMeasurementUnits(actionRequest);
+			}
+			else if (cmd.equals("setPrimary")) {
+				setPrimary(actionRequest);
 			}
 		}
 		catch (Exception e) {
@@ -115,6 +117,17 @@ public class EditCPMeasurementUnitMVCActionCommand
 				throw e;
 			}
 		}
+	}
+
+	protected void setPrimary(ActionRequest actionRequest)
+		throws PortalException {
+
+		long cpMeasurementUnitId = ParamUtil.getLong(
+			actionRequest, "cpMeasurementUnitId");
+
+		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
+
+		_cpMeasurementUnitService.setPrimary(cpMeasurementUnitId, primary);
 	}
 
 	protected CPMeasurementUnit updateCPMeasurementUnit(

@@ -51,7 +51,7 @@ CommerceShippingMethod commerceShippingMethod = (CommerceShippingMethod)row.getO
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message='<%= commerceShippingMethod.getActive() ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			message='<%= commerceShippingMethod.getActive() ? "deactivate" : "activate" %>'
 			url="<%= setActiveURL %>"
 		/>
 	</c:if>

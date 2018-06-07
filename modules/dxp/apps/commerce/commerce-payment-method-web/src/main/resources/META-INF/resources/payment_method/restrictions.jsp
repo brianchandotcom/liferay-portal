@@ -17,31 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
-
 CommercePaymentMethodRestrictionsDisplayContext commercePaymentMethodRestrictionsDisplayContext = (CommercePaymentMethodRestrictionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-CommercePaymentMethod commercePaymentMethod = commercePaymentMethodRestrictionsDisplayContext.getCommercePaymentMethod();
 
 SearchContainer<CommerceAddressRestriction> commerceAddressRestrictionSearchContainer = commercePaymentMethodRestrictionsDisplayContext.getSearchContainer();
 
 boolean hasManageCommercePaymentMethodsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
-
-String title = commercePaymentMethod.getName(locale) + StringPool.SPACE + LanguageUtil.get(request, "restrictions");
-
-Map<String, Object> data = new HashMap<>();
-
-data.put("direction-right", StringPool.TRUE);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
-
-<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
-	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
-</liferay-util:include>
-
-<%@ include file="/breadcrumb.jspf" %>
 
 <div class="container-fluid-1280">
 	<liferay-frontend:management-bar
@@ -127,14 +108,46 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="billing-allowed"
-					value='<%= LanguageUtil.get(request, commerceCountry.isBillingAllowed() ? "yes" : "no") %>'
-				/>
+				>
+					<c:choose>
+						<c:when test="<%= commerceCountry.isBillingAllowed() %>">
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-check"
+								icon="check"
+								markupView="lexicon"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-times"
+								icon="times"
+								markupView="lexicon"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="shipping-allowed"
-					value='<%= LanguageUtil.get(request, commerceCountry.isShippingAllowed() ? "yes" : "no") %>'
-				/>
+				>
+					<c:choose>
+						<c:when test="<%= commerceCountry.isShippingAllowed() %>">
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-check"
+								icon="check"
+								markupView="lexicon"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-times"
+								icon="times"
+								markupView="lexicon"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"

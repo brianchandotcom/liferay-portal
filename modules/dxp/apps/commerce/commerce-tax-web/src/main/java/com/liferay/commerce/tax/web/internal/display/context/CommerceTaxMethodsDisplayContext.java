@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CommerceTaxEngine;
 import com.liferay.commerce.model.CommerceTaxMethod;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.util.CommerceTaxEngineRegistry;
+import com.liferay.commerce.util.comparator.CommerceTaxMethodNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -144,6 +145,9 @@ public class CommerceTaxMethodsDisplayContext {
 		if ((active == null) || !active) {
 			results = addDefaultCommerceTaxMethods(results);
 		}
+
+		results.sort(
+			new CommerceTaxMethodNameComparator(themeDisplay.getLocale()));
 
 		_searchContainer.setTotal(results.size());
 		_searchContainer.setResults(results);

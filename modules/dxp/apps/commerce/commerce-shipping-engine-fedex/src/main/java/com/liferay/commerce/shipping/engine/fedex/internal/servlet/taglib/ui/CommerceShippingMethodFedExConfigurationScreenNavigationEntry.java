@@ -19,6 +19,7 @@ import com.liferay.commerce.shipping.engine.fedex.internal.FedExCommerceShipping
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -47,21 +48,28 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=20",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=20",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CommerceShippingMethodFedExConfigurationScreenNavigationEntry
-	implements ScreenNavigationEntry<CommerceShippingMethod> {
+	implements ScreenNavigationCategory,
+			   ScreenNavigationEntry<CommerceShippingMethod> {
+
+	public static final String CATEGORY_KEY = "fedex-configuration";
+
+	public static final String ENTRY_KEY = "fedex-configuration";
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceShippingScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
+		return CATEGORY_KEY;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return "fedex-configuration";
+		return ENTRY_KEY;
 	}
 
 	@Override

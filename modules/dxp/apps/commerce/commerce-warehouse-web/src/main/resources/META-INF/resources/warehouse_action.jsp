@@ -60,7 +60,7 @@ CommerceWarehouse commerceWarehouse = (CommerceWarehouse)row.getObject();
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message='<%= commerceWarehouse.getActive() ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			message='<%= commerceWarehouse.getActive() ? "deactivate" : "activate" %>'
 			url="<%= setActiveURL %>"
 		/>
 

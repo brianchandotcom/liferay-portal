@@ -30,6 +30,7 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.util.CommerceShippingEngineFixedUtil;
+import com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.ui.CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -188,8 +189,9 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationEntryKey() {
-		return "shipping-option-settings";
+	public String getScreenNavigationCategoryKey() {
+		return CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry.
+			CATEGORY_KEY;
 	}
 
 	@Override

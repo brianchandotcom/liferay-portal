@@ -43,6 +43,18 @@ CommerceRegion commerceRegion = (CommerceRegion)row.getObject();
 			url="<%= editURL %>"
 		/>
 
+		<portlet:actionURL name="editCommerceRegion" var="setActiveURL">
+			<portlet:param name="<%= Constants.CMD %>" value="setActive" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceRegionId" value="<%= String.valueOf(commerceRegion.getCommerceRegionId()) %>" />
+			<portlet:param name="active" value="<%= String.valueOf(!commerceRegion.getActive()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message='<%= commerceRegion.getActive() ? "deactivate" : "activate" %>'
+			url="<%= setActiveURL %>"
+		/>
+
 		<portlet:actionURL name="editCommerceRegion" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

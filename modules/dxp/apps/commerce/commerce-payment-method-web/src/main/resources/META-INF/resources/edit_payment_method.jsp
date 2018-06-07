@@ -23,8 +23,6 @@ CommercePaymentMethodsDisplayContext commercePaymentMethodsDisplayContext = (Com
 
 CommercePaymentMethod commercePaymentMethod = commercePaymentMethodsDisplayContext.getCommercePaymentMethod();
 
-long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId();
-
 String title = LanguageUtil.format(request, "edit-x", commercePaymentMethod.getName(locale), false);
 
 Map<String, Object> data = new HashMap<>();
@@ -32,7 +30,8 @@ Map<String, Object> data = new HashMap<>();
 data.put("direction-right", StringPool.TRUE);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commercePaymentMethodsDisplayContext.getSelectedScreenNavigationCategoryKey()), StringPool.BLANK, data);
 %>
 
 <liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
@@ -41,23 +40,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 <%@ include file="/breadcrumb.jspf" %>
 
-<portlet:actionURL name="editCommercePaymentMethod" var="editCommercePaymentMethodActionURL" />
-
-<aui:form action="<%= editCommercePaymentMethodActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommercePaymentMethod();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commercePaymentMethodId <= 0) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commercePaymentMethodId" type="hidden" value="<%= commercePaymentMethodId %>" />
-	<aui:input name="engineKey" type="hidden" value="<%= commercePaymentMethod.getEngineKey() %>" />
-
-	<liferay-ui:form-navigator
-		formModelBean="<%= commercePaymentMethod %>"
-		id="<%= CommercePaymentMethodFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PAYMENT_METHOD %>"
-		markupView="lexicon"
-	/>
-</aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveCommercePaymentMethod() {
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>
+<liferay-frontend:screen-navigation
+	containerCssClass="col-md-10"
+	key="<%= CommercePaymentScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_PAYMENT_METHOD %>"
+	modelBean="<%= commercePaymentMethod %>"
+	navCssClass="col-md-2"
+	portletURL="<%= currentURLObj %>"
+/>

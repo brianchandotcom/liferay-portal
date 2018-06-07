@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String notificationNavigationItem = ParamUtil.getString(request, "notificationNavigationItem", "view-all-notification-templates");
+String notificationNavigationItem = ParamUtil.getString(request, "notificationNavigationItem", "view-all-notification-queue-entries");
 
-CommerceNotificationTemplatesDisplayContext commerceNotificationTemplatesDisplayContext = (CommerceNotificationTemplatesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceNotificationQueueEntriesDisplayContext commerceNotificationQueueEntriesDisplayContext = (CommerceNotificationQueueEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-PortletURL portletURL = commerceNotificationTemplatesDisplayContext.getPortletURL();
+PortletURL portletURL = commerceNotificationQueueEntriesDisplayContext.getPortletURL();
 
 portletURL.setParameter("notificationNavigationItem", notificationNavigationItem);
 %>
@@ -29,7 +29,7 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 <%@ include file="/navbar.jspf" %>
 
 <liferay-frontend:management-bar
-	searchContainerId="commerceNotificationTemplates"
+	searchContainerId="commerceNotificationQueueEntries"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
@@ -38,9 +38,9 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 		/>
 
 		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceNotificationTemplatesDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceNotificationTemplatesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"create-date"} %>'
+			orderByCol="<%= commerceNotificationQueueEntriesDisplayContext.getOrderByCol() %>"
+			orderByType="<%= commerceNotificationQueueEntriesDisplayContext.getOrderByType() %>"
+			orderColumns='<%= new String[] {"priority"} %>'
 			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
@@ -51,81 +51,64 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="list"
 		/>
-
-		<c:if test="<%= commerceNotificationTemplatesDisplayContext.isShowAddButton() %>">
-			<portlet:renderURL var="addCommerceNotificationTemplateURL">
-				<portlet:param name="mvcRenderCommandName" value="editCommerceNotificationTemplate" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(resourceBundle, "add-notification-template") %>'
-					url="<%= addCommerceNotificationTemplateURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
-		</c:if>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container
-		id="commerceNotificationTemplates"
-		searchContainer="<%= commerceNotificationTemplatesDisplayContext.getSearchContainer() %>"
+		id="commerceNotificationQueueEntries"
+		searchContainer="<%= commerceNotificationQueueEntriesDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.notification.model.CommerceNotificationTemplate"
-			keyProperty="commerceNotificationTemplateId"
-			modelVar="commerceNotificationTemplate"
+			className="com.liferay.commerce.notification.model.CommerceNotificationQueueEntry"
+			keyProperty="commerceNotificationQueueEntryId"
+			modelVar="commerceNotificationQueueEntry"
 		>
-			<c:choose>
-				<c:when test="<%= CommerceNotificationTemplatePermission.contains(permissionChecker, commerceNotificationTemplate, ActionKeys.UPDATE) %>">
-
-					<%
-					PortletURL rowURL = renderResponse.createRenderURL();
-
-					rowURL.setParameter("mvcRenderCommandName", "editCommerceNotificationTemplate");
-					rowURL.setParameter("redirect", currentURL);
-					rowURL.setParameter("commerceNotificationTemplateId", String.valueOf(commerceNotificationTemplate.getCommerceNotificationTemplateId()));
-					%>
-
-					<liferay-ui:search-container-column-text
-						cssClass="important table-cell-content"
-						href="<%= rowURL %>"
-						property="name"
-					/>
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
-						property="name"
-					/>
-				</c:otherwise>
-			</c:choose>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="from"
+				property="fromName"
+			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="enabled"
-				value='<%= LanguageUtil.get(request, commerceNotificationTemplate.isEnabled() ? "yes" : "no") %>'
+				name="to"
+				property="toName"
 			/>
 
-			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
-				name="create-date"
-				property="createDate"
+			<liferay-ui:search-container-column-text
+				name="type"
+				value="<%= HtmlUtil.escape(commerceNotificationQueueEntriesDisplayContext.getCommerceNotificationType(commerceNotificationQueueEntry.getCommerceNotificationTemplateId())) %>"
 			/>
 
-			<liferay-ui:search-container-column-date
-				cssClass="table-cell-content"
-				name="modified-date"
-				property="modifiedDate"
+			<liferay-ui:search-container-column-text
+				name="sent"
+			>
+				<c:choose>
+					<c:when test="<%= commerceNotificationQueueEntry.isSent() %>">
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-check"
+							icon="check"
+							markupView="lexicon"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-times"
+							icon="times"
+							markupView="lexicon"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				property="priority"
 			/>
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"
-				path="/notification_template_action.jsp"
+				path="/notification_queue_entry_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

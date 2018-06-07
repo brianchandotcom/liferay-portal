@@ -56,6 +56,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 	<div class="col-md-8 offset-md-2">
 		<liferay-ui:form-navigator
+			backURL="<%= redirect %>"
 			formModelBean="<%= commerceNotificationTemplate %>"
 			id="<%= CommerceNotificationTemplateFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_NOTIFICATION_TEMPLATE %>"
 			markupView="lexicon"

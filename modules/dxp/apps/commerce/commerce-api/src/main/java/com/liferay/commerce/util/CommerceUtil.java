@@ -22,6 +22,7 @@ import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.util.comparator.CommerceAddressCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceAddressRestrictionCreateDateComparator;
+import com.liferay.commerce.util.comparator.CommerceCountryNameComparator;
 import com.liferay.commerce.util.comparator.CommerceCountryPriorityComparator;
 import com.liferay.commerce.util.comparator.CommerceRegionNameComparator;
 import com.liferay.commerce.util.comparator.CommerceRegionPriorityComparator;
@@ -111,7 +112,10 @@ public class CommerceUtil {
 
 		OrderByComparator<CommerceCountry> orderByComparator = null;
 
-		if (orderByCol.equals("priority")) {
+		if (orderByCol.equals("name")) {
+			orderByComparator = new CommerceCountryNameComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("priority")) {
 			orderByComparator = new CommerceCountryPriorityComparator(
 				orderByAsc);
 		}
@@ -130,7 +134,11 @@ public class CommerceUtil {
 
 		Sort sort = null;
 
-		if (orderByCol.equals("priority")) {
+		if (orderByCol.equals("name")) {
+			sort = SortFactoryUtil.create(
+				Field.NAME, Sort.STRING_TYPE, reverse);
+		}
+		else if (orderByCol.equals("priority")) {
 			sort = SortFactoryUtil.create(
 				Field.PRIORITY + "_Number_sortable", reverse);
 		}

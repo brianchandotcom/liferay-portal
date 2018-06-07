@@ -23,6 +23,7 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.util.CommerceShippingEngineFixedUtil;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShippingEngine;
+import com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.ui.CommerceShippingMethodFixedOptionsScreenNavigationEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -116,8 +117,9 @@ public class CommerceShippingFixedOptionsDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationEntryKey() {
-		return "shipping-options";
+	public String getScreenNavigationCategoryKey() {
+		return CommerceShippingMethodFixedOptionsScreenNavigationEntry.
+			CATEGORY_KEY;
 	}
 
 	@Override

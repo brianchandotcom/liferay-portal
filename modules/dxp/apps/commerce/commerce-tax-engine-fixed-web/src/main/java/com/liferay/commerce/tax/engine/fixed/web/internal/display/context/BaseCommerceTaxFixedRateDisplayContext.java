@@ -120,7 +120,8 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editCommerceTaxMethod");
 		portletURL.setParameter(
-			"screenNavigationEntryKey", getSelectedScreenNavigationEntryKey());
+			"screenNavigationCategoryKey",
+			getSelectedScreenNavigationCategoryKey());
 
 		CommerceTaxMethod commerceTaxMethod = getCommerceTaxMethod();
 
@@ -159,13 +160,28 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 		return _rowChecker;
 	}
 
-	public String getScreenNavigationEntryKey() {
+	public String getScreenNavigationCategoryKey() {
 		return CommerceTaxScreenNavigationConstants.
-			ENTRY_KEY_COMMERCE_TAX_METHOD_DETAIL;
+			CATEGORY_KEY_COMMERCE_TAX_METHOD_DETAIL;
 	}
 
 	public abstract SearchContainer<T> getSearchContainer()
 		throws PortalException;
+
+	public String getTaxCategoriesURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			commerceTaxFixedRateRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"commerceAdminModuleKey",
+			CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY);
+		portletURL.setParameter(
+			"screenNavigationCategoryKey", "tax-categories");
+
+		return portletURL.toString();
+	}
 
 	public void setDefaultOrderByCol(String defaultOrderByCol) {
 		_defaultOrderByCol = defaultOrderByCol;
@@ -175,10 +191,10 @@ public abstract class BaseCommerceTaxFixedRateDisplayContext<T> {
 		_defaultOrderByType = defaultOrderByType;
 	}
 
-	protected String getSelectedScreenNavigationEntryKey() {
+	protected String getSelectedScreenNavigationCategoryKey() {
 		return ParamUtil.getString(
 			commerceTaxFixedRateRequestHelper.getRequest(),
-			"screenNavigationEntryKey", getScreenNavigationEntryKey());
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
 	}
 
 	protected final CommerceCurrencyService commerceCurrencyService;

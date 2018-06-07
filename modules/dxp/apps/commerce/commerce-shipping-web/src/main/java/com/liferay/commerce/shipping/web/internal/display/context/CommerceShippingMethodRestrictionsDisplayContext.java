@@ -132,7 +132,7 @@ public class CommerceShippingMethodRestrictionsDisplayContext {
 		}
 
 		portletURL.setParameter(
-			"screenNavigationEntryKey", getScreenNavigationEntryKey());
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
 
 		return portletURL;
 	}
@@ -145,9 +145,9 @@ public class CommerceShippingMethodRestrictionsDisplayContext {
 		return _rowChecker;
 	}
 
-	public String getScreenNavigationEntryKey() {
+	public String getScreenNavigationCategoryKey() {
 		return CommerceShippingScreenNavigationConstants.
-			ENTRY_KEY_COMMERCE_SHIPPING_METHOD_RESTRICTIONS;
+			CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_RESTRICTIONS;
 	}
 
 	public SearchContainer<CommerceAddressRestriction> getSearchContainer()

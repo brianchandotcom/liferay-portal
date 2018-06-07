@@ -118,7 +118,8 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "editCommerceShippingMethod");
 		portletURL.setParameter(
-			"screenNavigationEntryKey", getSelectedScreenNavigationEntryKey());
+			"screenNavigationCategoryKey",
+			getSelectedScreenNavigationCategoryKey());
 
 		CommerceShippingMethod commerceShippingMethod =
 			getCommerceShippingMethod();
@@ -156,9 +157,9 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 		return _rowChecker;
 	}
 
-	public String getScreenNavigationEntryKey() {
+	public String getScreenNavigationCategoryKey() {
 		return CommerceShippingScreenNavigationConstants.
-			ENTRY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
+			CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
 	}
 
 	public abstract SearchContainer<T> getSearchContainer()
@@ -172,10 +173,18 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 		_defaultOrderByType = defaultOrderByType;
 	}
 
-	protected String getSelectedScreenNavigationEntryKey() {
+	protected CommerceCurrency getCommerceCurrency() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return commerceCurrencyService.fetchPrimaryCommerceCurrency(
+			themeDisplay.getScopeGroupId());
+	}
+
+	protected String getSelectedScreenNavigationCategoryKey() {
 		return ParamUtil.getString(
-			renderRequest, "screenNavigationEntryKey",
-			getScreenNavigationEntryKey());
+			renderRequest, "screenNavigationCategoryKey",
+			getScreenNavigationCategoryKey());
 	}
 
 	protected final CommerceCurrencyService commerceCurrencyService;

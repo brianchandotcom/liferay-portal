@@ -26,6 +26,7 @@ import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedO
 import com.liferay.commerce.shipping.engine.fixed.web.internal.ByWeightCommerceShippingEngine;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionRelsDisplayContext;
 import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -53,21 +54,28 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=30",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=30",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
-	implements ScreenNavigationEntry<CommerceShippingMethod> {
+	implements ScreenNavigationCategory,
+			   ScreenNavigationEntry<CommerceShippingMethod> {
+
+	public static final String CATEGORY_KEY = "shipping-option-settings";
+
+	public static final String ENTRY_KEY = "shipping-option-settings";
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceShippingScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
+		return CATEGORY_KEY;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return "shipping-option-settings";
+		return ENTRY_KEY;
 	}
 
 	@Override
@@ -75,7 +83,7 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "shipping-option-settings");
+		return LanguageUtil.get(resourceBundle, ENTRY_KEY);
 	}
 
 	@Override

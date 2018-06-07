@@ -31,7 +31,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
 page import="com.liferay.commerce.notification.constants.CommerceNotificationActionKeys" %><%@
 page import="com.liferay.commerce.notification.exception.CommerceNotificationTemplateFromException" %><%@
-page import="com.liferay.commerce.notification.exception.CommerceNotificationTemplateFromNameException" %><%@
 page import="com.liferay.commerce.notification.exception.CommerceNotificationTemplateNameException" %><%@
 page import="com.liferay.commerce.notification.exception.CommerceNotificationTemplateTypeException" %><%@
 page import="com.liferay.commerce.notification.model.CommerceNotificationQueueEntry" %><%@

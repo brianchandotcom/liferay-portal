@@ -15,7 +15,7 @@
 package com.liferay.commerce.health.status.web.internal.display.context;
 
 import com.liferay.commerce.health.status.CommerceHealthStatus;
-import com.liferay.commerce.health.status.web.internal.admin.HealthStatusCommerceAdminModule;
+import com.liferay.commerce.health.status.web.internal.admin.HealthCheckCommerceAdminModule;
 import com.liferay.commerce.health.status.web.internal.util.CommerceHealthStatusRegistry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 
@@ -47,7 +47,7 @@ public class CommerceHealthStatusDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"commerceAdminModuleKey", HealthStatusCommerceAdminModule.KEY);
+			"commerceAdminModuleKey", HealthCheckCommerceAdminModule.KEY);
 
 		return portletURL;
 	}

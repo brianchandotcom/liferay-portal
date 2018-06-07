@@ -17,8 +17,10 @@ package com.liferay.commerce.payment.method.web.internal.display.context;
 import com.liferay.commerce.model.CommercePaymentEngine;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.web.internal.admin.PaymentMethodsCommerceAdminModule;
+import com.liferay.commerce.payment.method.web.internal.servlet.taglib.ui.CommercePaymentScreenNavigationConstants;
 import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
+import com.liferay.commerce.util.comparator.CommercePaymentMethodNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -158,10 +160,20 @@ public class CommercePaymentMethodsDisplayContext {
 			results = addDefaultCommercePaymentMethods(results);
 		}
 
+		results.sort(
+			new CommercePaymentMethodNameComparator(themeDisplay.getLocale()));
+
 		_searchContainer.setTotal(results.size());
 		_searchContainer.setResults(results);
 
 		return _searchContainer;
+	}
+
+	public String getSelectedScreenNavigationCategoryKey() {
+		return ParamUtil.getString(
+			_renderRequest, "screenNavigationCategoryKey",
+			CommercePaymentScreenNavigationConstants.
+				CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS);
 	}
 
 	protected List<CommercePaymentMethod> addDefaultCommercePaymentMethods(

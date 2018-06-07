@@ -23,6 +23,7 @@ import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelService;
 import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.CommerceTaxFixedRateAddressRelsDisplayContext;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -50,18 +51,23 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=30",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=30",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CommerceTaxMethodAddressRateRelsScreenNavigationEntry
-	implements ScreenNavigationEntry<CommerceTaxMethod> {
+	implements ScreenNavigationCategory,
+			   ScreenNavigationEntry<CommerceTaxMethod> {
+
+	public static final String CATEGORY_KEY = "tax-rate-settings";
 
 	public static final String ENTRY_KEY = "tax-rate-settings";
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceTaxScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_TAX_METHOD_DETAIL;
+		return CATEGORY_KEY;
 	}
 
 	@Override

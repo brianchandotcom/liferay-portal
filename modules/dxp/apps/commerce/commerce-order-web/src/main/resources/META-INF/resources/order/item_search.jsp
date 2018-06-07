@@ -33,6 +33,6 @@ CommerceOrderItemDisplayTerms commerceOrderItemDisplayTerms = (CommerceOrderItem
 	<aui:fieldset>
 		<aui:input name="sku" value="<%= commerceOrderItemDisplayTerms.getSku() %>" />
 
-		<aui:input name="title" value="<%= commerceOrderItemDisplayTerms.getTitle() %>" />
+		<aui:input name="name" value="<%= commerceOrderItemDisplayTerms.getName() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>

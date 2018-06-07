@@ -22,11 +22,16 @@ import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateService;
 import com.liferay.commerce.tax.engine.fixed.util.CommerceTaxEngineFixedUtil;
 import com.liferay.commerce.tax.engine.fixed.web.internal.servlet.taglib.ui.CommerceTaxMethodFixedRatesScreenNavigationEntry;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -60,8 +65,8 @@ public class CommerceTaxFixedRatesDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationEntryKey() {
-		return CommerceTaxMethodFixedRatesScreenNavigationEntry.ENTRY_KEY;
+	public String getScreenNavigationCategoryKey() {
+		return CommerceTaxMethodFixedRatesScreenNavigationEntry.CATEGORY_KEY;
 	}
 
 	@Override
@@ -74,9 +79,7 @@ public class CommerceTaxFixedRatesDisplayContext
 
 		searchContainer = new SearchContainer<>(
 			commerceTaxFixedRateRequestHelper.getLiferayPortletRequest(),
-			getPortletURL(), null, null);
-
-		searchContainer.setEmptyResultsMessage("there-are-no-tax-categories");
+			getPortletURL(), null, getEmptyResultsMessage());
 
 		OrderByComparator<CPTaxCategory> orderByComparator =
 			CommerceTaxEngineFixedUtil.getCPTaxCategoryOrderByComparator(
@@ -99,6 +102,30 @@ public class CommerceTaxFixedRatesDisplayContext
 		searchContainer.setResults(results);
 
 		return searchContainer;
+	}
+
+	protected String getEmptyResultsMessage() {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", commerceTaxFixedRateRequestHelper.getLocale(),
+			getClass());
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append(
+			LanguageUtil.get(resourceBundle, "there-are-no-tax-categories"));
+		sb.append(StringPool.SPACE);
+		sb.append(
+			LanguageUtil.get(
+				resourceBundle,
+				"to-add-a-fixed-tax-rate-you-must-add-a-tax-category"));
+		sb.append(StringPool.SPACE);
+		sb.append("<a data-senna-off target=\"_parent\" href=\"");
+		sb.append(getTaxCategoriesURL());
+		sb.append("\">");
+		sb.append(LanguageUtil.get(resourceBundle, "manage-tax-categories"));
+		sb.append("</a>");
+
+		return sb.toString();
 	}
 
 	private final CommerceTaxFixedRateService _commerceTaxFixedRateService;

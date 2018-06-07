@@ -19,6 +19,7 @@ import com.liferay.commerce.exception.CommerceRegionNameException;
 import com.liferay.commerce.exception.NoSuchRegionException;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceRegionService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -85,6 +86,9 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceRegions(actionRequest);
 			}
+			else if (cmd.equals("setActive")) {
+				setActive(actionRequest);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchRegionException ||
@@ -107,6 +111,17 @@ public class EditCommerceRegionMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 		}
+	}
+
+	protected void setActive(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceRegionId = ParamUtil.getLong(
+			actionRequest, "commerceRegionId");
+
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+
+		_commerceRegionService.setActive(commerceRegionId, active);
 	}
 
 	protected CommerceRegion updateCommerceRegion(ActionRequest actionRequest)

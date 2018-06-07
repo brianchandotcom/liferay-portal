@@ -34,8 +34,6 @@ boolean autoUpdate = exchangeRateProviderGroupServiceConfiguration.autoUpdate();
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input id="exchangeRateConfiguration--autoUpdate--" name="exchangeRateConfiguration--autoUpdate--" type="checkbox" value="<%= autoUpdate %>" />
-
 				<aui:select id="exchangeRateConfiguration--defaultExchangeRateProviderKey--" label="exchange-rate-provider" name="exchangeRateConfiguration--defaultExchangeRateProviderKey--" showEmptyOption="<%= true %>">
 
 					<%
@@ -49,6 +47,8 @@ boolean autoUpdate = exchangeRateProviderGroupServiceConfiguration.autoUpdate();
 					%>
 
 				</aui:select>
+
+				<aui:input id="exchangeRateConfiguration--autoUpdate--" name="exchangeRateConfiguration--autoUpdate--" type="toggle-switch" value="<%= autoUpdate %>" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

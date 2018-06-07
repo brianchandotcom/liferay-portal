@@ -91,12 +91,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 						</aui:select>
 
-						<liferay-portlet:renderURL var="taxCategoriesURL">
-							<portlet:param name="commerceAdminModuleKey" value="<%= CommerceConstants.TAXES_COMMERCE_ADMIN_MODULE_KEY %>" />
-							<portlet:param name="screenNavigationEntryKey" value="tax-categories" />
-						</liferay-portlet:renderURL>
-
-						<a data-senna-off target="_parent" href="<%= taxCategoriesURL %>"><liferay-ui:message key="manage-tax-categories" /></a>
+						<a data-senna-off target="_parent" href="<%= commerceTaxFixedRateAddressRelsDisplayContext.getTaxCategoriesURL() %>"><liferay-ui:message key="manage-tax-categories" /></a>
 					</div>
 
 					<div class="col-md-6">

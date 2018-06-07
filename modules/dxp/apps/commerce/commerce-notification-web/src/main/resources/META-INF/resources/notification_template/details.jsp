@@ -38,7 +38,6 @@ CommerceNotificationType commerceNotificationType = commerceNotificationTemplate
 />
 
 <liferay-ui:error exception="<%= CommerceNotificationTemplateFromException.class %>" message="please-enter-a-valid-email-address" />
-<liferay-ui:error exception="<%= CommerceNotificationTemplateFromNameException.class %>" message="please-enter-a-valid-from-name" />
 <liferay-ui:error exception="<%= CommerceNotificationTemplateNameException.class %>" message="please-enter-a-valid-name" />
 <liferay-ui:error exception="<%= CommerceNotificationTemplateTypeException.class %>" message="please-select-a-valid-type" />
 

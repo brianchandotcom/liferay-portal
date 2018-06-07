@@ -15,14 +15,23 @@
 package com.liferay.commerce.payment.method.web.internal.servlet.taglib.ui;
 
 /**
- * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
-public class CommercePaymentMethodFormNavigatorConstants {
+public class CommercePaymentScreenNavigationConstants {
 
-	public static final String CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_GENERAL =
-		"general";
+	public static final String CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS =
+		"details";
 
-	public static final String FORM_NAVIGATOR_ID_COMMERCE_PAYMENT_METHOD =
-		"commerce.payment.method.form";
+	public static final String
+		CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS = "restrictions";
+
+	public static final String ENTRY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS =
+		"details";
+
+	public static final String ENTRY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS =
+		"restrictions";
+
+	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_PAYMENT_METHOD =
+		"commerce.payment.method";
 
 }

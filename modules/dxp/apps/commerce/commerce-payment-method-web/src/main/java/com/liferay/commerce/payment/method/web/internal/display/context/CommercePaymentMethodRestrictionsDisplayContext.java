@@ -18,6 +18,7 @@ import com.liferay.commerce.item.selector.criterion.CommerceCountryItemSelectorC
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.web.internal.admin.PaymentMethodsCommerceAdminModule;
+import com.liferay.commerce.payment.method.web.internal.servlet.taglib.ui.CommercePaymentScreenNavigationConstants;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
 import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.CommerceUtil;
@@ -118,14 +119,20 @@ public class CommercePaymentMethodRestrictionsDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
-	public PortletURL getPortletURL() {
+	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter(
 			"commerceAdminModuleKey", PaymentMethodsCommerceAdminModule.KEY);
 		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"viewCommercePaymentMethodAddressRestriction");
+			"mvcRenderCommandName", "editCommercePaymentMethod");
+		portletURL.setParameter(
+			"commercePaymentMethodId",
+			String.valueOf(getCommercePaymentMethodId()));
+		portletURL.setParameter(
+			"screenNavigationEntryKey",
+			CommercePaymentScreenNavigationConstants.
+				ENTRY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS);
 
 		String delta = ParamUtil.getString(_renderRequest, "delta");
 

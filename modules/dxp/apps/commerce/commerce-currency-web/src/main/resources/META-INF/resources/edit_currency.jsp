@@ -71,9 +71,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 				<aui:input name="formatPattern" value="<%= commerceCurrenciesDisplayContext.getDefaultFormatPattern() %>" />
 
-				<aui:input label="maximum-fraction-digits" name="maxFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMaxFractionDigits()) %>" />
+				<aui:input label="maximum-decimal-places" name="maxFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMaxFractionDigits()) %>" />
 
-				<aui:input name="minimum-fraction-digits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMinFractionDigits()) %>" />
+				<aui:input label="minimum-decimal-places" name="minFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMinFractionDigits()) %>" />
 
 				<aui:select name="roundingMode">
 
@@ -81,7 +81,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 					for (RoundingMode curRoundingMode : RoundingMode.values()) {
 					%>
 
-						<aui:option label="<%= curRoundingMode.name() %>" selected="<%= roundingMode.equals(curRoundingMode.name()) %>" value="<%= curRoundingMode.name() %>" />
+						<aui:option label="<%= commerceCurrenciesDisplayContext.getRoundingModeLabel(curRoundingMode.name()) %>" selected="<%= roundingMode.equals(curRoundingMode.name()) %>" value="<%= curRoundingMode.name() %>" />
 
 					<%
 					}

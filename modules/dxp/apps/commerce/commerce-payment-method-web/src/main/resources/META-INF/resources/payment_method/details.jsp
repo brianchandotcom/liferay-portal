@@ -20,41 +20,76 @@
 CommercePaymentMethodsDisplayContext commercePaymentMethodsDisplayContext = (CommercePaymentMethodsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommercePaymentMethod commercePaymentMethod = commercePaymentMethodsDisplayContext.getCommercePaymentMethod();
+
+long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId();
 %>
 
-<liferay-ui:error-marker
-	key="<%= WebKeys.ERROR_SECTION %>"
-	value="details"
-/>
+<portlet:actionURL name="editCommercePaymentMethod" var="editCommercePaymentMethodActionURL" />
 
-<liferay-ui:error exception="<%= CommercePaymentMethodNameException.class %>" message="please-enter-a-valid-name" />
+<aui:form action="<%= editCommercePaymentMethodActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommercePaymentMethod();" %>'>
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commercePaymentMethodId <= 0) ? Constants.ADD : Constants.UPDATE %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="commercePaymentMethodId" type="hidden" value="<%= commercePaymentMethodId %>" />
+	<aui:input name="engineKey" type="hidden" value="<%= commercePaymentMethod.getEngineKey() %>" />
 
-<aui:model-context bean="<%= commercePaymentMethod %>" model="<%= CommercePaymentMethod.class %>" />
+	<liferay-ui:error-marker
+		key="<%= WebKeys.ERROR_SECTION %>"
+		value="details"
+	/>
 
-<aui:fieldset>
-	<aui:input name="name" />
+	<liferay-ui:error exception="<%= CommercePaymentMethodNameException.class %>" message="please-enter-a-valid-name" />
 
-	<aui:input name="description" />
+	<aui:model-context bean="<%= commercePaymentMethod %>" model="<%= CommercePaymentMethod.class %>" />
 
-	<%
-	String thumbnailSrc = StringPool.BLANK;
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<aui:input name="name" />
 
-	if (commercePaymentMethod != null) {
-		thumbnailSrc = commercePaymentMethod.getImageURL(themeDisplay);
+			<aui:input name="description" />
+
+			<%
+			String thumbnailSrc = StringPool.BLANK;
+
+			if (commercePaymentMethod != null) {
+				thumbnailSrc = commercePaymentMethod.getImageURL(themeDisplay);
+			}
+			%>
+
+			<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+				<div class="row">
+					<div class="col-md-4">
+						<img class="w-100" src="<%= thumbnailSrc %>" />
+					</div>
+				</div>
+			</c:if>
+
+			<aui:input label="icon" name="imageFile" type="file" />
+
+			<aui:input name="priority" />
+
+			<aui:input name="active" />
+		</aui:fieldset>
+
+		<aui:fieldset>
+
+			<%
+			CommercePaymentEngine commercePaymentEngine = commercePaymentMethodsDisplayContext.getCommercePaymentEngine();
+
+			commercePaymentEngine.renderConfiguration(renderRequest, renderResponse);
+			%>
+
+		</aui:fieldset>
+	</aui:fieldset-group>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
+</aui:form>
+
+<aui:script>
+	function <portlet:namespace />saveCommercePaymentMethod() {
+		submitForm(document.<portlet:namespace />fm);
 	}
-	%>
-
-	<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
-		<div class="row">
-			<div class="col-md-4">
-				<img class="w-100" src="<%= thumbnailSrc %>" />
-			</div>
-		</div>
-	</c:if>
-
-	<aui:input label="image" name="imageFile" type="file" />
-
-	<aui:input name="priority" />
-
-	<aui:input name="active" />
-</aui:fieldset>
+</aui:script>

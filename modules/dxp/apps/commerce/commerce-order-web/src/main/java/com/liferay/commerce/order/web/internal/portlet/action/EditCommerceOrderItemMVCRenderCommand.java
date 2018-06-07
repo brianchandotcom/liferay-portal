@@ -15,7 +15,6 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderEditDisplayContext;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -55,10 +54,9 @@ public class EditCommerceOrderItemMVCRenderCommand implements MVCRenderCommand {
 		try {
 			CommerceOrderEditDisplayContext commerceOrderEditDisplayContext =
 				new CommerceOrderEditDisplayContext(
-					_commerceCurrencyService, _commerceOrderService,
-					_commerceOrderItemService, _commerceOrderNoteService,
-					_commercePaymentMethodService, _itemSelector,
-					renderRequest);
+					_commerceOrderService, _commerceOrderItemService,
+					_commerceOrderNoteService, _commercePaymentMethodService,
+					_itemSelector, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -79,9 +77,6 @@ public class EditCommerceOrderItemMVCRenderCommand implements MVCRenderCommand {
 
 		return "/edit_order_item.jsp";
 	}
-
-	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
 	private CommerceOrderItemService _commerceOrderItemService;

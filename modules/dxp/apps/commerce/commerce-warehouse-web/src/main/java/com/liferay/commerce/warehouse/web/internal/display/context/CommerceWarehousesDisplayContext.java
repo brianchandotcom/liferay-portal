@@ -131,6 +131,7 @@ public class CommerceWarehousesDisplayContext {
 		}
 
 		portletURL.setParameter("keywords", getKeywords());
+		portletURL.setParameter("navigation", getNavigation());
 		portletURL.setParameter("orderByCol", getOrderByCol());
 		portletURL.setParameter("orderByType", getOrderByType());
 
@@ -144,10 +145,21 @@ public class CommerceWarehousesDisplayContext {
 			return _searchContainer;
 		}
 
+		Boolean active = null;
 		long commerceCountryId = getCommerceCountryId();
+		String emptyResultsMessage = "there-are-no-warehouses";
 		boolean search = isSearch();
 
-		String emptyResultsMessage = "there-are-no-warehouses";
+		String navigation = getNavigation();
+
+		if (navigation.equals("active")) {
+			active = Boolean.TRUE;
+			emptyResultsMessage = "there-are-no-active-warehouses";
+		}
+		else if (navigation.equals("inactive")) {
+			active = Boolean.FALSE;
+			emptyResultsMessage = "there-are-no-inactive-warehouses";
+		}
 
 		if (search) {
 			emptyResultsMessage = "no-warehouses-were-found";
@@ -190,21 +202,31 @@ public class CommerceWarehousesDisplayContext {
 
 		if (_searchContainer.isSearch()) {
 			total = _commerceWarehouseService.searchCount(
-				_cpRequestHelper.getScopeGroupId(), getKeywords(), true,
+				_cpRequestHelper.getScopeGroupId(), getKeywords(), active,
 				commerceCountryId);
 			results = _commerceWarehouseService.search(
-				_cpRequestHelper.getScopeGroupId(), getKeywords(), true,
+				_cpRequestHelper.getScopeGroupId(), getKeywords(), active,
 				commerceCountryId, _searchContainer.getStart(),
-				_searchContainer.getEnd(),
-				_searchContainer.getOrderByComparator());
+				_searchContainer.getEnd(), orderByComparator);
 		}
 		else {
-			total = _commerceWarehouseService.getCommerceWarehousesCount(
-				_cpRequestHelper.getScopeGroupId(), commerceCountryId);
-			results = _commerceWarehouseService.getCommerceWarehouses(
-				_cpRequestHelper.getScopeGroupId(), commerceCountryId,
-				_searchContainer.getStart(), _searchContainer.getEnd(),
-				_searchContainer.getOrderByComparator());
+			if (active == null) {
+				total = _commerceWarehouseService.getCommerceWarehousesCount(
+					_cpRequestHelper.getScopeGroupId(), commerceCountryId);
+				results = _commerceWarehouseService.getCommerceWarehouses(
+					_cpRequestHelper.getScopeGroupId(), commerceCountryId,
+					_searchContainer.getStart(), _searchContainer.getEnd(),
+					orderByComparator);
+			}
+			else {
+				total = _commerceWarehouseService.getCommerceWarehousesCount(
+					_cpRequestHelper.getScopeGroupId(), active,
+					commerceCountryId);
+				results = _commerceWarehouseService.getCommerceWarehouses(
+					_cpRequestHelper.getScopeGroupId(), active,
+					commerceCountryId, _searchContainer.getStart(),
+					_searchContainer.getEnd(), orderByComparator);
+			}
 		}
 
 		_searchContainer.setTotal(total);
@@ -250,6 +272,11 @@ public class CommerceWarehousesDisplayContext {
 		return new ManagementBarFilterItem(
 			active, String.valueOf(commerceCountryId), label,
 			portletURL.toString());
+	}
+
+	protected String getNavigation() {
+		return ParamUtil.getString(
+			_cpRequestHelper.getRenderRequest(), "navigation");
 	}
 
 	protected boolean isSearch() {

@@ -12,22 +12,17 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.ui;
+package com.liferay.commerce.payment.method.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
-import com.liferay.commerce.shipping.engine.fixed.web.internal.ByWeightCommerceShippingEngine;
-import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShippingEngine;
-import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionsDisplayContext;
-import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
+import com.liferay.commerce.model.CommercePaymentMethod;
+import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodRestrictionsDisplayContext;
+import com.liferay.commerce.service.CommerceAddressRestrictionService;
+import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -52,27 +47,25 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"screen.navigation.category.order:Integer=20",
+		"screen.navigation.category.order:Integer=100",
 		"screen.navigation.entry.order:Integer=10"
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CommerceShippingMethodFixedOptionsScreenNavigationEntry
+public class CommercePaymentMethodCountryRestrictionScreenNavigationEntry
 	implements ScreenNavigationCategory,
-			   ScreenNavigationEntry<CommerceShippingMethod> {
-
-	public static final String CATEGORY_KEY = "shipping-options";
-
-	public static final String ENTRY_KEY = "shipping-options";
+			   ScreenNavigationEntry<CommercePaymentMethod> {
 
 	@Override
 	public String getCategoryKey() {
-		return CATEGORY_KEY;
+		return CommercePaymentScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return ENTRY_KEY;
+		return CommercePaymentScreenNavigationConstants.
+			ENTRY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS;
 	}
 
 	@Override
@@ -80,28 +73,16 @@ public class CommerceShippingMethodFixedOptionsScreenNavigationEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, ENTRY_KEY);
+		return LanguageUtil.get(
+			resourceBundle,
+			CommercePaymentScreenNavigationConstants.
+				ENTRY_KEY_COMMERCE_PAYMENT_METHOD_RESTRICTIONS);
 	}
 
 	@Override
 	public String getScreenNavigationKey() {
-		return CommerceShippingScreenNavigationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_METHOD;
-	}
-
-	@Override
-	public boolean isVisible(
-		User user, CommerceShippingMethod commerceShippingMethod) {
-
-		String engineKey = commerceShippingMethod.getEngineKey();
-
-		if (engineKey.equals(FixedCommerceShippingEngine.KEY) ||
-			engineKey.equals(ByWeightCommerceShippingEngine.KEY)) {
-
-			return true;
-		}
-
-		return false;
+		return CommercePaymentScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_COMMERCE_PAYMENT_METHOD;
 	}
 
 	@Override
@@ -117,41 +98,37 @@ public class CommerceShippingMethodFixedOptionsScreenNavigationEntry
 			(RenderResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		CommerceShippingFixedOptionsDisplayContext
-			commerceShippingFixedOptionsDisplayContext =
-				new CommerceShippingFixedOptionsDisplayContext(
-					_commerceCurrencyService, _commercePriceFormatter,
-					_commerceShippingMethodService,
-					_commerceShippingFixedOptionService, renderRequest,
+		CommercePaymentMethodRestrictionsDisplayContext
+			commercePaymentMethodRestrictionsDisplayContext =
+				new CommercePaymentMethodRestrictionsDisplayContext(
+					_commerceAddressRestrictionService,
+					_commercePaymentMethodService, _itemSelector, renderRequest,
 					renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceShippingFixedOptionsDisplayContext);
+			commercePaymentMethodRestrictionsDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/shipping_options.jsp");
+			"/payment_method/restrictions.jsp");
 	}
 
 	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
+	private CommerceAddressRestrictionService
+		_commerceAddressRestrictionService;
 
 	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
+	private CommercePaymentMethodService _commercePaymentMethodService;
 
 	@Reference
-	private CommerceShippingFixedOptionService
-		_commerceShippingFixedOptionService;
-
-	@Reference
-	private CommerceShippingMethodService _commerceShippingMethodService;
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.engine.fixed.web)"
+		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.method.web)"
 	)
 	private ServletContext _servletContext;
 

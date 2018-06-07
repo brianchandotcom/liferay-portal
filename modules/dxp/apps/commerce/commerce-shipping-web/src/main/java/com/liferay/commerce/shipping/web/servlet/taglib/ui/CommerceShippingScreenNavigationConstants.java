@@ -22,6 +22,9 @@ public class CommerceShippingScreenNavigationConstants {
 	public static final String CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS =
 		"details";
 
+	public static final String
+		CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_RESTRICTIONS = "restrictions";
+
 	public static final String ENTRY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS =
 		"details";
 

@@ -60,14 +60,14 @@ SearchContainer<CommercePaymentMethod> commercePaymentMethodSearchContainer = co
 				<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
 					<liferay-ui:search-container-column-image
 						cssClass="table-cell-content"
-						name="logo"
+						name="icon"
 						src="<%= thumbnailSrc %>"
 					/>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-icon
 						icon="documents-and-media"
-						name="logo"
+						name="icon"
 					/>
 				</c:otherwise>
 			</c:choose>
@@ -94,13 +94,27 @@ SearchContainer<CommercePaymentMethod> commercePaymentMethodSearchContainer = co
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
 				name="active"
-				value='<%= LanguageUtil.get(request, commercePaymentMethod.isActive() ? "yes" : "no") %>'
-			/>
+			>
+				<c:choose>
+					<c:when test="<%= commercePaymentMethod.isActive() %>">
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-check"
+							icon="check"
+							markupView="lexicon"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-times"
+							icon="times"
+							markupView="lexicon"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
 				property="priority"
 			/>
 

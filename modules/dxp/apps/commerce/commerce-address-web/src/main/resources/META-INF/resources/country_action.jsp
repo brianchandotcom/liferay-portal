@@ -42,6 +42,18 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 			url="<%= editURL %>"
 		/>
 
+		<portlet:actionURL name="editCommerceCountry" var="setActiveURL">
+			<portlet:param name="<%= Constants.CMD %>" value="setActive" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceCountryId" value="<%= String.valueOf(commerceCountry.getCommerceCountryId()) %>" />
+			<portlet:param name="active" value="<%= String.valueOf(!commerceCountry.getActive()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message='<%= commerceCountry.getActive() ? "deactivate" : "activate" %>'
+			url="<%= setActiveURL %>"
+		/>
+
 		<portlet:actionURL name="editCommerceCountry" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

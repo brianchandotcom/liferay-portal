@@ -119,7 +119,6 @@ boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.cont
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					property="key"
 				/>
 
@@ -130,13 +129,27 @@ boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.cont
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					name="primary"
-					value='<%= LanguageUtil.get(request, cpMeasurementUnit.isPrimary() ? "yes" : "no") %>'
-				/>
+				>
+					<c:choose>
+						<c:when test="<%= cpMeasurementUnit.isPrimary() %>">
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-check"
+								icon="check"
+								markupView="lexicon"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-times"
+								icon="times"
+								markupView="lexicon"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					property="priority"
 				/>
 

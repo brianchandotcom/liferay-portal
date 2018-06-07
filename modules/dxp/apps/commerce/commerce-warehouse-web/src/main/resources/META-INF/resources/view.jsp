@@ -41,6 +41,11 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 	searchContainerId="commerceWarehouses"
 >
 	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
+			portletURL="<%= commerceWarehousesDisplayContext.getPortletURL() %>"
+		/>
+
 		<liferay-frontend:management-bar-filter
 			label="country"
 			managementBarFilterItems="<%= managementBarFilterItems %>"
@@ -122,8 +127,24 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="active"
-				value='<%= LanguageUtil.get(request, commerceWarehouse.isActive() ? "yes" : "no") %>'
-			/>
+			>
+				<c:choose>
+					<c:when test="<%= commerceWarehouse.isActive() %>">
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-check"
+							icon="check"
+							markupView="lexicon"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-times"
+							icon="times"
+							markupView="lexicon"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"

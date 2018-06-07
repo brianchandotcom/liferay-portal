@@ -60,7 +60,7 @@ long commerceShippingMethodId = commerceShippingMethod.getCommerceShippingMethod
 				</div>
 			</c:if>
 
-			<aui:input label="" name="imageFile" type="file" />
+			<aui:input label="icon" name="imageFile" type="file" />
 
 			<aui:input name="priority" />
 

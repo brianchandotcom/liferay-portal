@@ -31,7 +31,7 @@ Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", StringPool.TRUE);
 
-String selectedScreenNavigationEntryKey = commerceShippingMethodsDisplayContext.getSelectedScreenNavigationEntryKey();
+String selectedScreenNavigationEntryKey = commerceShippingMethodsDisplayContext.getSelectedScreenNavigationCategoryKey();
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL, data);

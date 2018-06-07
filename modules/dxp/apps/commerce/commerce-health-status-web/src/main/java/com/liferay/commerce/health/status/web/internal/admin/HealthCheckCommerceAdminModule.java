@@ -45,18 +45,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "commerce.admin.module.key=" + HealthStatusCommerceAdminModule.KEY
+	property = "commerce.admin.module.key=" + HealthCheckCommerceAdminModule.KEY
 )
-public class HealthStatusCommerceAdminModule implements CommerceAdminModule {
+public class HealthCheckCommerceAdminModule implements CommerceAdminModule {
 
-	public static final String KEY = "health-status";
+	public static final String KEY = "health-check";
 
 	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "health-status");
+		return LanguageUtil.get(resourceBundle, KEY);
 	}
 
 	@Override

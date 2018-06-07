@@ -21,6 +21,7 @@ import com.liferay.commerce.exception.CommerceCountryTwoLettersISOCodeException;
 import com.liferay.commerce.exception.NoSuchCountryException;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceCountryService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -100,6 +101,9 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceCountries(actionRequest);
 			}
+			else if (cmd.equals("setActive")) {
+				setActive(actionRequest);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchCountryException ||
@@ -148,6 +152,17 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return portletURL.toString();
+	}
+
+	protected void setActive(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceCountryId = ParamUtil.getLong(
+			actionRequest, "commerceCountryId");
+
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+
+		_commerceCountryService.setActive(commerceCountryId, active);
 	}
 
 	protected CommerceCountry updateCommerceCountry(ActionRequest actionRequest)

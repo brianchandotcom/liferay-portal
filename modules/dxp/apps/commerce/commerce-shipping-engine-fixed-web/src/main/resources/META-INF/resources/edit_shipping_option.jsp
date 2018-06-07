@@ -32,7 +32,7 @@ if (commerceShippingFixedOption != null) {
 
 <portlet:actionURL name="editCommerceShippingFixedOption" var="editCommerceShippingFixedOptionActionURL" />
 
-<aui:form action="<%= editCommerceShippingFixedOptionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editCommerceShippingFixedOptionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceShippingFixedOption();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingFixedOption == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
 	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
@@ -54,16 +54,17 @@ if (commerceShippingFixedOption != null) {
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= true %>" value="save" />
+		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= true %>" type="submit" value="save" />
 
 		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,aui-io-request">
-	A.one('#<portlet:namespace/>saveButton').on(
-		'click',
-		function(event) {
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveCommerceShippingFixedOption',
+		function() {
 			var A = AUI();
 
 			var url = '<%= editCommerceShippingFixedOptionActionURL.toString() %>';
@@ -83,9 +84,12 @@ if (commerceShippingFixedOption != null) {
 					}
 				}
 			);
-		}
+		},
+		['aui-base', 'aui-io-request']
 	);
+</aui:script>
 
+<aui:script use="aui-base">
 	A.one('#<portlet:namespace/>cancelButton').on(
 		'click',
 		function(event) {

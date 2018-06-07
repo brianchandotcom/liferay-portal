@@ -169,7 +169,7 @@ public class CommerceNotificationTemplatesDisplayContext {
 	public String getOrderByCol() {
 		return ParamUtil.getString(
 			_commerceNotificationsRequestHelper.getRequest(),
-			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "create-date");
+			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, "modified-date");
 	}
 
 	public String getOrderByType() {
@@ -184,6 +184,8 @@ public class CommerceNotificationTemplatesDisplayContext {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewCommerceNotificationTemplates");
 		portletURL.setParameter(
 			"commerceAdminModuleKey", NotificationsCommerceAdminModule.KEY);
 
@@ -207,9 +209,24 @@ public class CommerceNotificationTemplatesDisplayContext {
 			return _searchContainer;
 		}
 
+		Boolean enabled = null;
+		String emptyResultsMessage = "there-are-no-notification-templates";
+
+		String navigation = getNavigation();
+
+		if (navigation.equals("enabled")) {
+			enabled = Boolean.TRUE;
+			emptyResultsMessage = "there-are-no-enabled-notification-templates";
+		}
+		else if (navigation.equals("disabled")) {
+			enabled = Boolean.FALSE;
+			emptyResultsMessage =
+				"there-are-no-disabled-notification-templates";
+		}
+
 		_searchContainer = new SearchContainer<>(
 			_commerceNotificationsRequestHelper.getLiferayPortletRequest(),
-			getPortletURL(), null, "there-are-no-notification-templates");
+			getPortletURL(), null, emptyResultsMessage);
 
 		if (isShowAddButton()) {
 			_searchContainer.setEmptyResultsMessageCssClass(
@@ -228,16 +245,35 @@ public class CommerceNotificationTemplatesDisplayContext {
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(orderByType);
 
-		int total =
-			_commerceNotificationTemplateService.
-				getCommerceNotificationTemplatesCount(
-					_commerceNotificationsRequestHelper.getScopeGroupId());
-		List<CommerceNotificationTemplate> results =
-			_commerceNotificationTemplateService.
-				getCommerceNotificationTemplates(
-					_commerceNotificationsRequestHelper.getScopeGroupId(),
-					_searchContainer.getStart(), _searchContainer.getEnd(),
-					orderByComparator);
+		int total;
+		List<CommerceNotificationTemplate> results;
+
+		if (enabled == null) {
+			total =
+				_commerceNotificationTemplateService.
+					getCommerceNotificationTemplatesCount(
+						_commerceNotificationsRequestHelper.getScopeGroupId());
+			results =
+				_commerceNotificationTemplateService.
+					getCommerceNotificationTemplates(
+						_commerceNotificationsRequestHelper.getScopeGroupId(),
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						orderByComparator);
+		}
+		else {
+			total =
+				_commerceNotificationTemplateService.
+					getCommerceNotificationTemplatesCount(
+						_commerceNotificationsRequestHelper.getScopeGroupId(),
+						enabled);
+
+			results =
+				_commerceNotificationTemplateService.
+					getCommerceNotificationTemplates(
+						_commerceNotificationsRequestHelper.getScopeGroupId(),
+						enabled, _searchContainer.getStart(),
+						_searchContainer.getEnd(), orderByComparator);
+		}
 
 		_searchContainer.setTotal(total);
 		_searchContainer.setResults(results);
@@ -270,6 +306,11 @@ public class CommerceNotificationTemplatesDisplayContext {
 			CommerceNotificationTemplateUserSegmentRel::
 				getCommerceNotificationTemplateUserSegmentRelId
 		).toArray();
+	}
+
+	protected String getNavigation() {
+		return ParamUtil.getString(
+			_commerceNotificationsRequestHelper.getRequest(), "navigation");
 	}
 
 	private final CommerceNotificationsRequestHelper

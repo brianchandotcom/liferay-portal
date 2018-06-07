@@ -173,11 +173,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 					<aui:validator name="number" />
 				</aui:input>
 
-				<aui:input name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRel.getRateUnitWeightPrice() %>">
+				<aui:input label="price-per-unit-of-weight" name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRel.getRateUnitWeightPrice() %>">
 					<aui:validator name="number" />
 				</aui:input>
 
-				<aui:input name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
+				<aui:input label="subtotal-percentage-price" name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

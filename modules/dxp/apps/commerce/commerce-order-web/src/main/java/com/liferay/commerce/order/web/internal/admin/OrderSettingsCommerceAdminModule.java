@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -55,7 +57,10 @@ public class OrderSettingsCommerceAdminModule implements CommerceAdminModule {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "order");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(resourceBundle, "order-workflows");
 	}
 
 	@Override

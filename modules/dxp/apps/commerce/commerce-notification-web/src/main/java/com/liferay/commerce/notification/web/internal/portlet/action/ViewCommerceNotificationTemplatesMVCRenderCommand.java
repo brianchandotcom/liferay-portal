@@ -17,10 +17,12 @@ package com.liferay.commerce.notification.web.internal.portlet.action;
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateException;
-import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateUserSegmentRelService;
 import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
-import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationQueueEntriesDisplayContext;
+import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationTemplatesDisplayContext;
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -47,11 +49,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=viewCommerceNotificationQueueEntries"
+		"mvc.command.name=viewCommerceNotificationTemplates"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewCommerceNotificationQueueEntriesMVCRenderCommand
+public class ViewCommerceNotificationTemplatesMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -61,7 +63,7 @@ public class ViewCommerceNotificationQueueEntriesMVCRenderCommand
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
-				"/view_notification_queue_entries.jsp");
+				"/view_notification_templates.jsp");
 
 		try {
 			HttpServletRequest httpServletRequest =
@@ -69,17 +71,18 @@ public class ViewCommerceNotificationQueueEntriesMVCRenderCommand
 			HttpServletResponse httpServletResponse =
 				_portal.getHttpServletResponse(renderResponse);
 
-			CommerceNotificationQueueEntriesDisplayContext
-				commerceNotificationQueueEntriesDisplayContext =
-					new CommerceNotificationQueueEntriesDisplayContext(
-						_commerceNotificationQueueEntryService,
+			CommerceNotificationTemplatesDisplayContext
+				commerceNotificationTemplatesDisplayContext =
+					new CommerceNotificationTemplatesDisplayContext(
 						_commerceNotificationTemplateService,
-						_commerceNotificationTypeRegistry, httpServletRequest,
-						_portletResourcePermission);
+						_commerceNotificationTemplateUserSegmentRelService,
+						_commerceNotificationTypeRegistry,
+						_commerceUserSegmentEntryService, httpServletRequest,
+						_itemSelector, _portletResourcePermission);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceNotificationQueueEntriesDisplayContext);
+				commerceNotificationTemplatesDisplayContext);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -93,7 +96,7 @@ public class ViewCommerceNotificationQueueEntriesMVCRenderCommand
 			}
 			else {
 				throw new PortletException(
-					"Unable to include view_notification_queue_entries.jsp", e);
+					"Unable to include view_notification_templates.jsp", e);
 			}
 		}
 
@@ -101,15 +104,21 @@ public class ViewCommerceNotificationQueueEntriesMVCRenderCommand
 	}
 
 	@Reference
-	private CommerceNotificationQueueEntryService
-		_commerceNotificationQueueEntryService;
-
-	@Reference
 	private CommerceNotificationTemplateService
 		_commerceNotificationTemplateService;
 
 	@Reference
+	private CommerceNotificationTemplateUserSegmentRelService
+		_commerceNotificationTemplateUserSegmentRelService;
+
+	@Reference
 	private CommerceNotificationTypeRegistry _commerceNotificationTypeRegistry;
+
+	@Reference
+	private CommerceUserSegmentEntryService _commerceUserSegmentEntryService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private Portal _portal;

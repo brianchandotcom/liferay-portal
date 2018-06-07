@@ -127,8 +127,9 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationEntryKey() {
-		return CommerceTaxMethodAddressRateRelsScreenNavigationEntry.ENTRY_KEY;
+	public String getScreenNavigationCategoryKey() {
+		return
+			CommerceTaxMethodAddressRateRelsScreenNavigationEntry.CATEGORY_KEY;
 	}
 
 	@Override

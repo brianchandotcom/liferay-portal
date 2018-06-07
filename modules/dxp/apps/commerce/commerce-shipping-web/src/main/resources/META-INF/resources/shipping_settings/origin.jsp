@@ -23,7 +23,7 @@ CommerceShippingGroupServiceConfiguration commerceShippingGroupServiceConfigurat
 Map<String, CommerceShippingOriginLocator> commerceShippingOriginLocators = commerceShippingSettingsDisplayContext.getCommerceShippingOriginLocators();
 %>
 
-<liferay-ui:error exception="<%= CommerceWarehouseActiveException.class %>" message="please-geolocate-warehouse-to-set-as-active" />
+<liferay-ui:error exception="<%= CommerceWarehouseActiveException.class %>" message="please-geolocate-warehouse-to-activate" />
 <liferay-ui:error exception="<%= CommerceWarehouseNameException.class %>" message="please-enter-a-valid-name" />
 
 <aui:fieldset>

@@ -16,7 +16,6 @@ package com.liferay.commerce.notification.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.notification.exception.CommerceNotificationTemplateFromException;
-import com.liferay.commerce.notification.exception.CommerceNotificationTemplateFromNameException;
 import com.liferay.commerce.notification.exception.CommerceNotificationTemplateNameException;
 import com.liferay.commerce.notification.exception.CommerceNotificationTemplateTypeException;
 import com.liferay.commerce.notification.exception.NoSuchNotificationTemplateException;
@@ -114,9 +113,7 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
 			else if (e instanceof CommerceNotificationTemplateFromException ||
-					e instanceof
-						CommerceNotificationTemplateFromNameException ||
-					e instanceof CommerceNotificationTemplateNameException ||
+					 e instanceof CommerceNotificationTemplateNameException ||
 					 e instanceof CommerceNotificationTemplateTypeException) {
 
 				hideDefaultErrorMessage(actionRequest);
@@ -143,7 +140,8 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String from = ParamUtil.getString(actionRequest, "from");
-		String fromName = ParamUtil.getString(actionRequest, "fromName");
+		Map<Locale, String> fromNameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "fromName");
 		String cc = ParamUtil.getString(actionRequest, "cc");
 		String bcc = ParamUtil.getString(actionRequest, "bcc");
 		String type = ParamUtil.getString(actionRequest, "type");
@@ -162,7 +160,7 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 			commerceNotificationTemplate =
 				_commerceNotificationTemplateService.
 					addCommerceNotificationTemplate(
-						name, description, from, fromName, cc, bcc, type,
+						name, description, from, fromNameMap, cc, bcc, type,
 						enabled, subjectMap, bodyMap, serviceContext);
 		}
 		else {
@@ -170,8 +168,8 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 				_commerceNotificationTemplateService.
 					updateCommerceNotificationTemplate(
 						commerceNotificationTemplateId, name, description, from,
-						fromName, cc, bcc, type, enabled, subjectMap, bodyMap,
-						serviceContext);
+						fromNameMap, cc, bcc, type, enabled, subjectMap,
+						bodyMap, serviceContext);
 		}
 
 		if (commerceNotificationTemplate != null) {

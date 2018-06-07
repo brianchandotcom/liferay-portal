@@ -107,14 +107,46 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="billing-allowed"
-				value='<%= LanguageUtil.get(request, commerceCountry.isBillingAllowed() ? "yes" : "no") %>'
-			/>
+			>
+				<c:choose>
+					<c:when test="<%= commerceCountry.isBillingAllowed() %>">
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-check"
+							icon="check"
+							markupView="lexicon"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-times"
+							icon="times"
+							markupView="lexicon"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="shipping-allowed"
-				value='<%= LanguageUtil.get(request, commerceCountry.isShippingAllowed() ? "yes" : "no") %>'
-			/>
+			>
+				<c:choose>
+					<c:when test="<%= commerceCountry.isShippingAllowed() %>">
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-check"
+							icon="check"
+							markupView="lexicon"
+						/>
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:icon
+							cssClass="commerce-admin-icon-times"
+							icon="times"
+							markupView="lexicon"
+						/>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"

@@ -123,7 +123,7 @@ boolean hasManageCommerceAvailabilityEstimatesPermission = CommercePermission.co
 
 				<liferay-ui:search-container-column-jsp
 					cssClass="entry-action-column"
-					path="/availability_range_action.jsp"
+					path="/availability_estimate_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
 

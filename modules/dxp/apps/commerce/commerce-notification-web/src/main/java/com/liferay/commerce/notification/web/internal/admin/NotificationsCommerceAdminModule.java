@@ -17,13 +17,11 @@ package com.liferay.commerce.notification.web.internal.admin;
 import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationConstants;
+import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryService;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateService;
-import com.liferay.commerce.notification.service.CommerceNotificationTemplateUserSegmentRelService;
 import com.liferay.commerce.notification.type.CommerceNotificationTypeRegistry;
-import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationTemplatesDisplayContext;
-import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryService;
+import com.liferay.commerce.notification.web.internal.display.context.CommerceNotificationQueueEntriesDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -96,56 +94,49 @@ public class NotificationsCommerceAdminModule implements CommerceAdminModule {
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(renderResponse);
 
-		setCommerceEmailNotificationsDisplayContext(httpServletRequest);
+		setCommerceNotificationQueueEntriesDisplayContext(httpServletRequest);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/view.jsp");
 	}
 
-	protected CommerceNotificationTemplatesDisplayContext
-		setCommerceEmailNotificationsDisplayContext(
+	protected CommerceNotificationQueueEntriesDisplayContext
+		setCommerceNotificationQueueEntriesDisplayContext(
 			HttpServletRequest httpServletRequest) {
 
-		CommerceNotificationTemplatesDisplayContext
-			commerceNotificationTemplatesDisplayContext =
-				(CommerceNotificationTemplatesDisplayContext)
+		CommerceNotificationQueueEntriesDisplayContext
+			commerceNotificationQueueEntriesDisplayContext =
+				(CommerceNotificationQueueEntriesDisplayContext)
 					httpServletRequest.getAttribute(
 						WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-		if (commerceNotificationTemplatesDisplayContext == null) {
-			commerceNotificationTemplatesDisplayContext =
-				new CommerceNotificationTemplatesDisplayContext(
+		if (commerceNotificationQueueEntriesDisplayContext == null) {
+			commerceNotificationQueueEntriesDisplayContext =
+				new CommerceNotificationQueueEntriesDisplayContext(
+					_commerceNotificationQueueEntryService,
 					_commerceNotificationTemplateService,
-					_commerceNotificationTemplateUserSegmentRelService,
-					_commerceNotificationTypeRegistry,
-					_commerceUserSegmentEntryService, httpServletRequest,
-					_itemSelector, _portletResourcePermission);
+					_commerceNotificationTypeRegistry, httpServletRequest,
+					_portletResourcePermission);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceNotificationTemplatesDisplayContext);
+				commerceNotificationQueueEntriesDisplayContext);
 		}
 
-		return commerceNotificationTemplatesDisplayContext;
+		return commerceNotificationQueueEntriesDisplayContext;
 	}
+
+	@Reference
+	private CommerceNotificationQueueEntryService
+		_commerceNotificationQueueEntryService;
 
 	@Reference
 	private CommerceNotificationTemplateService
 		_commerceNotificationTemplateService;
 
 	@Reference
-	private CommerceNotificationTemplateUserSegmentRelService
-		_commerceNotificationTemplateUserSegmentRelService;
-
-	@Reference
 	private CommerceNotificationTypeRegistry _commerceNotificationTypeRegistry;
-
-	@Reference
-	private CommerceUserSegmentEntryService _commerceUserSegmentEntryService;
-
-	@Reference
-	private ItemSelector _itemSelector;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.tax.web.internal.servlet.taglib.ui;
+package com.liferay.commerce.payment.method.web.internal.servlet.taglib.ui;
 
-import com.liferay.commerce.admin.CommerceAdminModule;
-import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
-import com.liferay.commerce.service.CommerceTaxMethodService;
-import com.liferay.commerce.tax.web.internal.display.context.CommerceTaxMethodsDisplayContext;
-import com.liferay.commerce.util.CommerceTaxEngineRegistry;
+import com.liferay.commerce.model.CommercePaymentMethod;
+import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodsDisplayContext;
+import com.liferay.commerce.service.CommercePaymentMethodService;
+import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -26,13 +25,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -54,34 +51,34 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class CommerceTaxesTaxMethodsScreenNavigationEntry
+public class CommercePaymentMethodDetailsScreenNavigationEntry
 	implements ScreenNavigationCategory,
-			   ScreenNavigationEntry<CommerceAdminModule> {
+			   ScreenNavigationEntry<CommercePaymentMethod> {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceTaxScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_TAXES_TAX_METHODS;
+		return CommercePaymentScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return CommerceTaxScreenNavigationConstants.
-			ENTRY_KEY_COMMERCE_TAXES_TAX_METHODS;
+		return CommercePaymentScreenNavigationConstants.
+			ENTRY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "tax-calculations");
+		return LanguageUtil.get(
+			locale,
+			CommercePaymentScreenNavigationConstants.
+				ENTRY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS);
 	}
 
 	@Override
 	public String getScreenNavigationKey() {
-		return CommerceTaxScreenNavigationConstants.
-			SCREEN_NAVIGATION_KEY_COMMERCE_TAXES;
+		return CommercePaymentScreenNavigationConstants.
+			SCREEN_NAVIGATION_KEY_COMMERCE_PAYMENT_METHOD;
 	}
 
 	@Override
@@ -98,14 +95,16 @@ public class CommerceTaxesTaxMethodsScreenNavigationEntry
 				(RenderResponse)httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-			CommerceTaxMethodsDisplayContext commerceTaxMethodsDisplayContext =
-				new CommerceTaxMethodsDisplayContext(
-					_commerceTaxEngineRegistry, _commerceTaxMethodService,
-					renderRequest, renderResponse);
+			CommercePaymentMethodsDisplayContext
+				commercePaymentMethodsDisplayContext =
+					new CommercePaymentMethodsDisplayContext(
+						_commercePaymentEngineRegistry,
+						_commercePaymentMethodService, renderRequest,
+						renderResponse);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceTaxMethodsDisplayContext);
+				commercePaymentMethodsDisplayContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -113,22 +112,24 @@ public class CommerceTaxesTaxMethodsScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/view_tax_methods.jsp");
+			"/payment_method/details.jsp");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceTaxesTaxMethodsScreenNavigationEntry.class);
+		CommercePaymentMethodDetailsScreenNavigationEntry.class);
 
 	@Reference
-	private CommerceTaxEngineRegistry _commerceTaxEngineRegistry;
+	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
 
 	@Reference
-	private CommerceTaxMethodService _commerceTaxMethodService;
+	private CommercePaymentMethodService _commercePaymentMethodService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.tax.web)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.method.web)"
+	)
 	private ServletContext _servletContext;
 
 }

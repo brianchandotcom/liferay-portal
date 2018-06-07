@@ -20,6 +20,7 @@ import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.admin.ShippingMethodsCommerceAdminModule;
 import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
+import com.liferay.commerce.util.comparator.CommerceShippingMethodNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -94,14 +95,14 @@ public class CommerceShippingMethodsDisplayContext {
 
 		portletURL.setParameter("navigation", getNavigation());
 		portletURL.setParameter(
-			"screenNavigationEntryKey", getScreenNavigationEntryKey());
+			"screenNavigationCategoryKey", getScreenNavigationCategoryKey());
 
 		return portletURL;
 	}
 
-	public String getScreenNavigationEntryKey() {
+	public String getScreenNavigationCategoryKey() {
 		return CommerceShippingScreenNavigationConstants.
-			ENTRY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
+			CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
 	}
 
 	public SearchContainer<CommerceShippingMethod> getSearchContainer()
@@ -146,16 +147,19 @@ public class CommerceShippingMethodsDisplayContext {
 			results = addDefaultCommerceShippingMethods(results);
 		}
 
+		results.sort(
+			new CommerceShippingMethodNameComparator(themeDisplay.getLocale()));
+
 		_searchContainer.setTotal(results.size());
 		_searchContainer.setResults(results);
 
 		return _searchContainer;
 	}
 
-	public String getSelectedScreenNavigationEntryKey() {
+	public String getSelectedScreenNavigationCategoryKey() {
 		return ParamUtil.getString(
-			_renderRequest, "screenNavigationEntryKey",
-			getScreenNavigationEntryKey());
+			_renderRequest, "screenNavigationCategoryKey",
+			getScreenNavigationCategoryKey());
 	}
 
 	protected List<CommerceShippingMethod> addDefaultCommerceShippingMethods(

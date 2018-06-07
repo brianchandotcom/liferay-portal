@@ -37,7 +37,7 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= commerceCountriesDisplayContext.getOrderByCol() %>"
 			orderByType="<%= commerceCountriesDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"priority"} %>'
+			orderColumns='<%= new String[] {"name", "priority"} %>'
 			portletURL="<%= commerceCountriesDisplayContext.getPortletURL() %>"
 		/>
 
@@ -120,14 +120,46 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="billing-allowed"
-					value='<%= LanguageUtil.get(request, commerceCountry.isBillingAllowed() ? "yes" : "no") %>'
-				/>
+				>
+					<c:choose>
+						<c:when test="<%= commerceCountry.isBillingAllowed() %>">
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-check"
+								icon="check"
+								markupView="lexicon"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-times"
+								icon="times"
+								markupView="lexicon"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
 					name="shipping-allowed"
-					value='<%= LanguageUtil.get(request, commerceCountry.isShippingAllowed() ? "yes" : "no") %>'
-				/>
+				>
+					<c:choose>
+						<c:when test="<%= commerceCountry.isShippingAllowed() %>">
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-check"
+								icon="check"
+								markupView="lexicon"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-times"
+								icon="times"
+								markupView="lexicon"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
@@ -136,13 +168,27 @@ boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permi
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					name="active"
-					value='<%= LanguageUtil.get(request, commerceCountry.isActive() ? "yes" : "no") %>'
-				/>
+				>
+					<c:choose>
+						<c:when test="<%= commerceCountry.isActive() %>">
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-check"
+								icon="check"
+								markupView="lexicon"
+							/>
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:icon
+								cssClass="commerce-admin-icon-times"
+								icon="times"
+								markupView="lexicon"
+							/>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
 					property="priority"
 				/>
 

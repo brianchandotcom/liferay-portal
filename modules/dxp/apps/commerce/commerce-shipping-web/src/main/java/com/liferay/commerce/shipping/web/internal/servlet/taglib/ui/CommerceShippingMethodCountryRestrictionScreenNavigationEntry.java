@@ -19,6 +19,7 @@ import com.liferay.commerce.service.CommerceAddressRestrictionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodRestrictionsDisplayContext;
 import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
@@ -46,16 +47,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alessio Antonio Rendina
  */
 @Component(
-	property = "screen.navigation.entry.order:Integer=100",
-	service = ScreenNavigationEntry.class
+	property = {
+		"screen.navigation.category.order:Integer=100",
+		"screen.navigation.entry.order:Integer=10"
+	},
+	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CommerceShippingMethodCountryRestrictionScreenNavigationEntry
-	implements ScreenNavigationEntry<CommerceShippingMethod> {
+	implements ScreenNavigationCategory,
+			   ScreenNavigationEntry<CommerceShippingMethod> {
 
 	@Override
 	public String getCategoryKey() {
 		return CommerceShippingScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
+			CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_RESTRICTIONS;
 	}
 
 	@Override

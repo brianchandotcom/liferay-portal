@@ -53,32 +53,8 @@ long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId(
 		</portlet:actionURL>
 
 		<liferay-ui:icon
-			message='<%= commercePaymentMethod.getActive() ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			message='<%= commercePaymentMethod.getActive() ? "deactivate" : "activate" %>'
 			url="<%= setActiveURL %>"
 		/>
-
-		<portlet:actionURL name="editCommercePaymentMethod" var="viewRestrictionsURL">
-			<portlet:param name="<%= Constants.CMD %>" value="viewRestrictions" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="commercePaymentMethodId" value="<%= String.valueOf(commercePaymentMethodId) %>" />
-			<portlet:param name="engineKey" value="<%= commercePaymentMethod.getEngineKey() %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon
-			message="restrictions"
-			url="<%= viewRestrictionsURL %>"
-		/>
-
-		<c:if test="<%= commercePaymentMethodId > 0 %>">
-			<portlet:actionURL name="editCommercePaymentMethod" var="deleteURL">
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="commercePaymentMethodId" value="<%= String.valueOf(commercePaymentMethod.getCommercePaymentMethodId()) %>" />
-			</portlet:actionURL>
-
-			<liferay-ui:icon-delete
-				url="<%= deleteURL %>"
-			/>
-		</c:if>
 	</c:if>
 </liferay-ui:icon-menu>

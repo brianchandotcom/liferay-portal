@@ -42,6 +42,18 @@ CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)row.getObject();
 			url="<%= editURL %>"
 		/>
 
+		<portlet:actionURL name="editCPMeasurementUnit" var="setPrimaryURL">
+			<portlet:param name="<%= Constants.CMD %>" value="setPrimary" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="cpMeasurementUnitId" value="<%= String.valueOf(cpMeasurementUnit.getCPMeasurementUnitId()) %>" />
+			<portlet:param name="primary" value="<%= String.valueOf(!cpMeasurementUnit.getPrimary()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message='<%= cpMeasurementUnit.getPrimary() ? "unset-as-primary" : "set-as-primary" %>'
+			url="<%= setPrimaryURL %>"
+		/>
+
 		<portlet:actionURL name="editCPMeasurementUnit" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -18,6 +18,10 @@
 					<template-path>/layouttpl/custom/catalog_1_2_columns.tpl</template-path>
 					<thumbnail-path>/layouttpl/custom/catalog_1_2_columns.png</thumbnail-path>
 				</layout-template>
+				<layout-template id="dashboard_1_3_2_columns" name="Dashboard 1-3-2 Columns">
+					<template-path>/layouttpl/custom/dashboard_1_3_2_columns.tpl</template-path>
+					<thumbnail-path>/layouttpl/custom/dashboard_1_3_2_columns.png</thumbnail-path>
+				</layout-template>
 			</custom>
 		</layout-templates>
 		<portlet-decorator id="barebone" name="Barebone">

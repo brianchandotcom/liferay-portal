@@ -68,6 +68,8 @@
 				<arg value="refs/tags/git-tag-portal-private-apps" />
 				<arg value="--" />
 				<arg line="${checkout.private.apps.dirs.git}" />
+				<arg value=":!*/app.changelog" />
+				<arg value=":!*/app.properties" />
 			</exec>
 
 			<exec executable="git">

@@ -39,7 +39,9 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	navigationItems="<%= viewUADEntitiesDisplay.getNavigationItems() %>"
 />
 
-<clay:management-toolbar displayContext="<%= viewUADEntitiesManagementToolbarDisplayContext %>" />
+<clay:management-toolbar
+	displayContext="<%= viewUADEntitiesManagementToolbarDisplayContext %>"
+/>
 
 <aui:form method="post" name="viewUADEntitiesFm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

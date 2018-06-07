@@ -1150,7 +1150,7 @@ describe(
 					}
 				);
 
-				it(
+				xit(
 					'is passed a type parameter with value "portlet.onStateChange"',
 					done => {
 						const handle = hubA.addEventListener(eventType, onStateChange);

@@ -93,9 +93,9 @@ public class CacheFilter extends BasePortalFilter {
 	}
 
 	protected String getCacheKey(HttpServletRequest request) {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(10);
 
-		//Method
+		// Method
 
 		sb.append(request.getMethod());
 

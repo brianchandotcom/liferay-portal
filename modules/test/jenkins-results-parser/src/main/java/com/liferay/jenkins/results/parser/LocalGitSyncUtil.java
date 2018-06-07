@@ -224,6 +224,9 @@ public class LocalGitSyncUtil {
 
 				long branchAge = timestamp - remoteBranchTimestamp;
 
+				List<GitWorkingDirectory.Branch> branchesToBeDeleted =
+					new ArrayList<>();
+
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
 					String remoteRepositoryBaseBranchName =
 						remoteBranchName.replace("-" + lastBlock, "");
@@ -232,19 +235,19 @@ public class LocalGitSyncUtil {
 						remoteBranches.get(remoteRepositoryBaseBranchName);
 
 					if (remoteRepositoryBaseCacheBranch != null) {
-						deleteRemoteRepositoryCacheBranch(
-							gitWorkingDirectory,
+						branchesToBeDeleted.add(
 							remoteRepositoryBaseCacheBranch);
 					}
 
-					deleteRemoteRepositoryCacheBranch(
-						gitWorkingDirectory, remoteBranch);
+					branchesToBeDeleted.add(remoteBranch);
 
 					deleteCount++;
 				}
 				else {
 					oldestBranchAge = Math.max(oldestBranchAge, branchAge);
 				}
+
+				gitWorkingDirectory.deleteBranches(branchesToBeDeleted, 5);
 			}
 		}
 

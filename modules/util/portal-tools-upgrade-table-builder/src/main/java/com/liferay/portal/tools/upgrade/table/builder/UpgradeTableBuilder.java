@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.upgrade.table.builder;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
@@ -159,6 +160,7 @@ public class UpgradeTableBuilder {
 		String content = _read(path);
 
 		String packagePath = _getPackagePath(content);
+
 		String className = fileName.substring(0, fileName.length() - 5);
 
 		String upgradeFileContent = _read(upgradeFilePath);
@@ -245,7 +247,7 @@ public class UpgradeTableBuilder {
 			int y = content.indexOf("*", x + 1);
 
 			if (y != -1) {
-				return content.substring(x + 10, y).trim();
+				return StringUtil.trim(content.substring(x + 10, y));
 			}
 		}
 
@@ -465,7 +467,6 @@ public class UpgradeTableBuilder {
 
 		return s.replace("\r\n", "\n");
 	}
-
 
 	private static final String _AUTHOR = "Brian Wing Shun Chan";
 

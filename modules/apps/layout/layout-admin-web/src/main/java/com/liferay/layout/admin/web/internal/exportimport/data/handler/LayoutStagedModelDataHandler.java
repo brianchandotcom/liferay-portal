@@ -1182,6 +1182,11 @@ public class LayoutStagedModelDataHandler
 			Layout importedLayout)
 		throws Exception {
 
+		_fragmentEntryLinkLocalService.
+			deleteLayoutPageTemplateEntryFragmentEntryLinks(
+				portletDataContext.getScopeGroupId(),
+				_portal.getClassNameId(Layout.class), importedLayout.getPlid());
+
 		List<Element> fragmentEntryLinkElements =
 			portletDataContext.getReferenceDataElements(
 				layout, FragmentEntryLink.class);

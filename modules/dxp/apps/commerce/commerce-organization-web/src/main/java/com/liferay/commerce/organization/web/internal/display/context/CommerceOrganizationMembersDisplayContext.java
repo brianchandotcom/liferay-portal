@@ -36,10 +36,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -179,19 +181,44 @@ public class CommerceOrganizationMembersDisplayContext
 			new EmptyOnClickRowChecker(
 				commerceOrganizationRequestHelper.getLiferayPortletResponse()));
 
-		Sort sort = CommerceOrganizationPortletUtil.getUserSort(
-			getOrderByCol(), getOrderByType());
+		int total;
+		List<User> results;
 
-		BaseModelSearchResult<User> userBaseModelSearchResult =
-			UserLocalServiceUtil.searchUsers(
-				commerceOrganizationRequestHelper.getCompanyId(), getKeywords(),
-				WorkflowConstants.STATUS_ANY, params,
-				_searchContainer.getStart(), _searchContainer.getEnd(), sort);
+		if (isSearch()) {
+			Sort sort = CommerceOrganizationPortletUtil.getUserSort(
+				getOrderByCol(), getOrderByType());
 
-		_searchContainer.setTotal(userBaseModelSearchResult.getLength());
-		_searchContainer.setResults(userBaseModelSearchResult.getBaseModels());
+			BaseModelSearchResult<User> userBaseModelSearchResult =
+				UserLocalServiceUtil.searchUsers(
+					commerceOrganizationRequestHelper.getCompanyId(),
+					getKeywords(), WorkflowConstants.STATUS_ANY, params,
+					_searchContainer.getStart(), _searchContainer.getEnd(),
+					sort);
+
+			total = userBaseModelSearchResult.getLength();
+			results = userBaseModelSearchResult.getBaseModels();
+		}
+		else {
+			total = UserLocalServiceUtil.getOrganizationUsersCount(
+				organization.getOrganizationId());
+
+			results = UserLocalServiceUtil.getOrganizationUsers(
+				organization.getOrganizationId(), _searchContainer.getStart(),
+				_searchContainer.getEnd(), orderByComparator);
+		}
+
+		_searchContainer.setTotal(total);
+		_searchContainer.setResults(results);
 
 		return _searchContainer;
+	}
+
+	protected boolean isSearch() {
+		if (Validator.isNotNull(getKeywords())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _keywords;

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.util.MaintenanceUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import org.osgi.service.component.annotations.Component;
@@ -65,15 +66,20 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 
 					Store sourceStore = dlStoreConverter.getSourceStore();
 
-					InputStream is = sourceStore.getFileAsStream(
-						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,
-						fileVersionPath);
+					try (InputStream is = sourceStore.getFileAsStream(
+							amImageEntry.getCompanyId(),
+							CompanyConstants.SYSTEM, fileVersionPath)) {
 
-					Store targetStore = dlStoreConverter.getTargetStore();
+						Store targetStore = dlStoreConverter.getTargetStore();
 
-					targetStore.addFile(
-						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,
-						fileVersionPath, is);
+						targetStore.addFile(
+							amImageEntry.getCompanyId(),
+							CompanyConstants.SYSTEM,
+							fileVersionPath, is);
+					}
+					catch (IOException ioe) {
+						throw new PortalException(ioe);
+					}
 				}
 
 			});

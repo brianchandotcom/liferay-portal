@@ -563,8 +563,7 @@ public class LayoutPageTemplateDisplayContext {
 			"/layout/add_layout_page_template_entry");
 		actionURL.setParameter(
 			"mvcRenderCommandName", "/layout/edit_layout_page_template_entry");
-		actionURL.setParameter(
-			"redirect", String.valueOf(_renderResponse.createRenderURL()));
+		actionURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 		actionURL.setParameter(
 			"layoutPageTemplateCollectionId",
 			String.valueOf(getLayoutPageTemplateCollectionId()));

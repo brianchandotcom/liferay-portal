@@ -214,9 +214,7 @@ public class AMThumbnailsOSGiCommands {
 		);
 	}
 
-	private FileVersion _getFileVersion(long fileVersionId)
-		throws PortalException {
-
+	private FileVersion _getFileVersion(long fileVersionId) {
 		try {
 			if (fileVersionId == 0) {
 				return null;

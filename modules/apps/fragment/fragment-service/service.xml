@@ -192,6 +192,12 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="G_F_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 
 		<!-- References -->
 

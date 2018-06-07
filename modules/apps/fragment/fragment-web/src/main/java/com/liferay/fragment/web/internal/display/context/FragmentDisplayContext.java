@@ -27,10 +27,15 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -444,7 +449,7 @@ public class FragmentDisplayContext {
 		return redirect;
 	}
 
-	public long getRenderLayoutPlid() {
+	public long getRenderLayoutPlid() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -464,7 +469,15 @@ public class FragmentDisplayContext {
 			return renderLayout.getPlid();
 		}
 
-		return themeDisplay.getPlid();
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (scopeGroup.isStagingGroup()) {
+			scopeGroup = scopeGroup.getLiveGroup();
+		}
+
+		Layout layout = _getAssetDisplayLayout(scopeGroup);
+
+		return layout.getPlid();
 	}
 
 	public boolean isDisabledFragmentEntriesManagementBar() {
@@ -477,6 +490,28 @@ public class FragmentDisplayContext {
 		}
 
 		return true;
+	}
+
+	private Layout _getAssetDisplayLayout(Group group) throws PortalException {
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+			group.getGroupId(), false, "asset_display");
+
+		if (!ListUtil.isEmpty(layouts)) {
+			return layouts.get(0);
+		}
+
+		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+			group.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		return LayoutLocalServiceUtil.addLayout(
+			defaultUserId, group.getGroupId(), false, 0, "Asset Display Page",
+			null, null, "asset_display", true, null, serviceContext);
 	}
 
 	private List<DropdownItem>

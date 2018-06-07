@@ -26,8 +26,6 @@ import com.liferay.commerce.forecast.service.CommerceForecastValueLocalService;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.frontend.taglib.chart.model.AxisY;
 import com.liferay.frontend.taglib.chart.model.MixedDataColumn;
-import com.liferay.frontend.taglib.chart.model.PositionLabel;
-import com.liferay.frontend.taglib.chart.model.PositionLabel.Position;
 import com.liferay.frontend.taglib.chart.model.predictive.PredictiveChartConfig;
 import com.liferay.ibm.icu.text.DateFormat;
 import com.liferay.ibm.icu.text.DateFormat.Field;
@@ -209,9 +207,7 @@ public class CommerceDashboardForecastsChartDisplayContext
 			CommerceCurrency commerceCurrency =
 				commerceContext.getCommerceCurrency();
 
-			axisY.setPositionLabel(
-				new PositionLabel(
-					Position.OUTER_TOP, commerceCurrency.getCode()));
+			axisY.setLabel(commerceCurrency.getCode());
 		}
 
 		return commerceDashboardPredictiveChartConfig;

@@ -4763,7 +4763,7 @@ to version 2.3.181.
 - [LPS-82001]: Update the [Liferay Source Formatter] dependency to version
 1.0.654.
 
-## 3.12.32 - *(Unreleased)*
+## 3.12.32 - 2018-06-07
 
 ### Changed
 - [LPS-81900]: Update the [Liferay Gradle Plugins Soy] dependency to version

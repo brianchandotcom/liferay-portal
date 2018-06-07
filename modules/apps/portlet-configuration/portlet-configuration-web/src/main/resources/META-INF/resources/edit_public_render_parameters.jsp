@@ -57,7 +57,7 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 					<liferay-ui:error key="duplicateMapping" message="several-shared-parameters-are-mapped-to-the-same-parameter" />
 
 					<div class="alert alert-info">
-						<liferay-ui:message arguments='<%= "http://www.liferay.com/community/wiki/-/wiki/Main/Portlet+Communication+Configuration" %>' key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" translateArguments="<%= false %>" />
+						<liferay-ui:message arguments='<%= "https://dev.liferay.com/ja/discover/portal/-/knowledge_base/7-0/communication-between-apps" %>' key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" translateArguments="<%= false %>" />
 					</div>
 
 					<liferay-ui:search-container

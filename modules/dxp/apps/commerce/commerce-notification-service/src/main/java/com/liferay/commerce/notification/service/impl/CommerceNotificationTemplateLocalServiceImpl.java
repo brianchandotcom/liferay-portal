@@ -163,6 +163,15 @@ public class CommerceNotificationTemplateLocalServiceImpl
 
 	@Override
 	public List<CommerceNotificationTemplate> getCommerceNotificationTemplates(
+		long groupId, boolean enabled, int start, int end,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
+
+		return commerceNotificationTemplatePersistence.findByG_E(
+			groupId, enabled, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceNotificationTemplate> getCommerceNotificationTemplates(
 		long groupId, int start, int end,
 		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
 
@@ -181,6 +190,14 @@ public class CommerceNotificationTemplateLocalServiceImpl
 	@Override
 	public int getCommerceNotificationTemplatesCount(long groupId) {
 		return commerceNotificationTemplatePersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getCommerceNotificationTemplatesCount(
+		long groupId, boolean enabled) {
+
+		return commerceNotificationTemplatePersistence.countByG_E(
+			groupId, enabled);
 	}
 
 	@Override

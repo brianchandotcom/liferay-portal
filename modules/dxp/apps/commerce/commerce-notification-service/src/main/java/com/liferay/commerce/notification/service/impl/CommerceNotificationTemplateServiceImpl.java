@@ -83,6 +83,22 @@ public class CommerceNotificationTemplateServiceImpl
 
 	@Override
 	public List<CommerceNotificationTemplate> getCommerceNotificationTemplates(
+			long groupId, boolean enabled, int start, int end,
+			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceNotificationActionKeys.
+				VIEW_COMMERCE_NOTIFICATION_TEMPLATES);
+
+		return commerceNotificationTemplateLocalService.
+			getCommerceNotificationTemplates(
+				groupId, enabled, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceNotificationTemplate> getCommerceNotificationTemplates(
 			long groupId, int start, int end,
 			OrderByComparator<CommerceNotificationTemplate> orderByComparator)
 		throws PortalException {
@@ -108,6 +124,20 @@ public class CommerceNotificationTemplateServiceImpl
 
 		return commerceNotificationTemplateLocalService.
 			getCommerceNotificationTemplatesCount(groupId);
+	}
+
+	@Override
+	public int getCommerceNotificationTemplatesCount(
+			long groupId, boolean enabled)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceNotificationActionKeys.
+				VIEW_COMMERCE_NOTIFICATION_TEMPLATES);
+
+		return commerceNotificationTemplateLocalService.
+			getCommerceNotificationTemplatesCount(groupId, enabled);
 	}
 
 	@Override

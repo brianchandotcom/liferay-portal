@@ -164,7 +164,8 @@ public class DLFileEntryModelDocumentContributor
 					CharPool.UNDERLINE));
 			document.addKeyword("path", dlFileEntry.getTitle());
 			document.addKeyword("readCount", dlFileEntry.getReadCount());
-			document.addKeyword("size", dlFileEntry.getSize());
+
+			document.addNumber("size", dlFileEntry.getSize());
 
 			//todo is this necessary? duplicates extractDDMContent
 			addFileEntryTypeAttributes(document, dlFileVersion);

@@ -38,6 +38,13 @@ public class DDMTemplateStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(DDMTemplate ddmTemplate)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(ddmTemplate);
+	}
+
+	@Override
 	public void onAfterUpdate(DDMTemplate ddmTemplate)
 		throws ModelListenerException {
 

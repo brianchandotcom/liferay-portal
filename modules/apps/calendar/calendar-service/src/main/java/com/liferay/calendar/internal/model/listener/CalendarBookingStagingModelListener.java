@@ -38,6 +38,13 @@ public class CalendarBookingStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(CalendarBooking calendarBooking)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(calendarBooking);
+	}
+
+	@Override
 	public void onAfterUpdate(CalendarBooking calendarBooking)
 		throws ModelListenerException {
 

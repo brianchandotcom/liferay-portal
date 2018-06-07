@@ -38,6 +38,13 @@ public class MDRActionStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(MDRAction mdrAction)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(mdrAction);
+	}
+
+	@Override
 	public void onAfterUpdate(MDRAction mdrAction)
 		throws ModelListenerException {
 

@@ -38,6 +38,13 @@ public class DDMDataProviderInstanceStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(DDMDataProviderInstance ddmDataProviderInstance)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(ddmDataProviderInstance);
+	}
+
+	@Override
 	public void onAfterUpdate(DDMDataProviderInstance ddmDataProviderInstance)
 		throws ModelListenerException {
 

@@ -38,6 +38,13 @@ public class DLFileShortcutStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(DLFileShortcut dlFileShortcut)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(dlFileShortcut);
+	}
+
+	@Override
 	public void onAfterUpdate(DLFileShortcut dlFileShortcut)
 		throws ModelListenerException {
 

@@ -35,6 +35,11 @@ public class LayoutStagingModelListener extends BaseModelListener<Layout> {
 	}
 
 	@Override
+	public void onAfterRemove(Layout layout) throws ModelListenerException {
+		_stagingModelListener.onAfterRemove(layout);
+	}
+
+	@Override
 	public void onAfterUpdate(Layout layout) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(layout);
 	}

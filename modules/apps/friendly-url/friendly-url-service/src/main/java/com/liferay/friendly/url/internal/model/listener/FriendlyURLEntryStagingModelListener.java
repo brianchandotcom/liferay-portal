@@ -38,6 +38,13 @@ public class FriendlyURLEntryStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(FriendlyURLEntry friendlyURLEntry)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(friendlyURLEntry);
+	}
+
+	@Override
 	public void onAfterUpdate(FriendlyURLEntry friendlyURLEntry)
 		throws ModelListenerException {
 

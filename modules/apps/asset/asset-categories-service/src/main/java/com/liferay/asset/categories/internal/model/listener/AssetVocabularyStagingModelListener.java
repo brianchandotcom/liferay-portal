@@ -38,6 +38,13 @@ public class AssetVocabularyStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(AssetVocabulary assetVocabulary)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(assetVocabulary);
+	}
+
+	@Override
 	public void onAfterUpdate(AssetVocabulary assetVocabulary)
 		throws ModelListenerException {
 

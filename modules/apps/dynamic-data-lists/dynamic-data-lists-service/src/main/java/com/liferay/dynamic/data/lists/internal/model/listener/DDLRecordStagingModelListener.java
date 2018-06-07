@@ -38,6 +38,13 @@ public class DDLRecordStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(DDLRecord ddlRecord)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(ddlRecord);
+	}
+
+	@Override
 	public void onAfterUpdate(DDLRecord ddlRecord)
 		throws ModelListenerException {
 

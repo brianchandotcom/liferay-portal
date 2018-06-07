@@ -38,6 +38,13 @@ public class MBThreadFlagStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(MBThreadFlag mbThreadFlag)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(mbThreadFlag);
+	}
+
+	@Override
 	public void onAfterUpdate(MBThreadFlag mbThreadFlag)
 		throws ModelListenerException {
 

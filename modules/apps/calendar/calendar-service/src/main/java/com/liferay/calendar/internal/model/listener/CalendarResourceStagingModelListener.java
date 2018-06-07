@@ -38,6 +38,13 @@ public class CalendarResourceStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(CalendarResource calendarResource)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(calendarResource);
+	}
+
+	@Override
 	public void onAfterUpdate(CalendarResource calendarResource)
 		throws ModelListenerException {
 

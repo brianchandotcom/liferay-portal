@@ -38,6 +38,13 @@ public class KBCommentStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(KBComment kbComment)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(kbComment);
+	}
+
+	@Override
 	public void onAfterUpdate(KBComment kbComment)
 		throws ModelListenerException {
 

@@ -14,24 +14,22 @@
 
 package com.liferay.document.library.internal.model.listener;
 
-import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.exportimport.data.handler.DLExportableRepositoryPublisher;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
-import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner;
-import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepositoryDefiner;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.model.listener.StagingModelListener;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -43,36 +41,65 @@ import org.osgi.service.component.annotations.Reference;
  * @author Akos Thurzo
  */
 @Component(immediate = true, service = ModelListener.class)
-public class RepositoryStagingModelListener
-	extends BaseModelListener<Repository> {
+public class DLFileVersionStagingModelListener
+	extends BaseModelListener<DLFileVersion> {
 
 	@Override
-	public void onAfterCreate(Repository repository)
+	public void onAfterCreate(DLFileVersion dlFileVersion)
 		throws ModelListenerException {
 
-		if (!_isRepositoryExportable(repository)) {
+		if (dlFileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			return;
 		}
 
-		_stagingModelListener.onAfterCreate(repository);
-	}
+		DLFileEntry dlFileEntry = null;
 
-	@Override
-	public void onAfterRemove(Repository repository)
-		throws ModelListenerException {
+		try {
+			dlFileEntry = dlFileVersion.getFileEntry();
+		}
+		catch (PortalException pe) {
+			_log.error(pe);
 
-		_stagingModelListener.onAfterRemove(repository);
-	}
-
-	@Override
-	public void onAfterUpdate(Repository repository)
-		throws ModelListenerException {
-
-		if (!_isRepositoryExportable(repository)) {
 			return;
 		}
 
-		_stagingModelListener.onAfterUpdate(repository);
+		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
+			dlFileEntry.getGroupId());
+
+		if (!exportableRepositoryIds.contains(dlFileEntry.getRepositoryId())) {
+			return;
+		}
+
+		_stagingModelListener.onAfterCreate(dlFileEntry);
+	}
+
+	@Override
+	public void onAfterUpdate(DLFileVersion dlFileVersion)
+		throws ModelListenerException {
+
+		if (dlFileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			return;
+		}
+
+		DLFileEntry dlFileEntry = null;
+
+		try {
+			dlFileEntry = dlFileVersion.getFileEntry();
+		}
+		catch (PortalException pe) {
+			_log.error(pe);
+
+			return;
+		}
+
+		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
+			dlFileEntry.getGroupId());
+
+		if (!exportableRepositoryIds.contains(dlFileEntry.getRepositoryId())) {
+			return;
+		}
+
+		_stagingModelListener.onAfterUpdate(dlFileEntry);
 	}
 
 	@Activate
@@ -103,44 +130,14 @@ public class RepositoryStagingModelListener
 		return exportableRepositoryIds;
 	}
 
-	private boolean _isRepositoryExportable(Repository repository) {
-		long liferayRepositoryClassNameId = _portal.getClassNameId(
-			LiferayRepositoryDefiner.CLASS_NAME);
-
-		if (repository.getClassNameId() == liferayRepositoryClassNameId) {
-			return false;
-		}
-
-		long tempFileRepositoryClassNameId = _portal.getClassNameId(
-			TemporaryFileEntryRepositoryDefiner.CLASS_NAME);
-
-		if (repository.getClassNameId() == tempFileRepositoryClassNameId) {
-			return false;
-		}
-
-		Collection<Long> exportableRepositoryIds = _getExportableRepositoryIds(
-			repository.getGroupId());
-		String portletId = repository.getPortletId();
-
-		if (!Validator.isBlank(portletId) &&
-			!Objects.equals(portletId, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN) &&
-			!StringUtil.startsWith(portletId, DLPortletKeys.DOCUMENT_LIBRARY) &&
-			!exportableRepositoryIds.contains(repository.getRepositoryId())) {
-
-			return false;
-		}
-
-		return true;
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFileVersionStagingModelListener.class);
 
 	private ServiceTrackerList
 		<DLExportableRepositoryPublisher, DLExportableRepositoryPublisher>
 			_dlExportableRepositoryPublishers;
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
-	private StagingModelListener<Repository> _stagingModelListener;
+	private StagingModelListener<DLFileEntry> _stagingModelListener;
 
 }

@@ -38,6 +38,13 @@ public class BookmarksEntryStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(BookmarksEntry bookmarksEntry)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(bookmarksEntry);
+	}
+
+	@Override
 	public void onAfterUpdate(BookmarksEntry bookmarksEntry)
 		throws ModelListenerException {
 

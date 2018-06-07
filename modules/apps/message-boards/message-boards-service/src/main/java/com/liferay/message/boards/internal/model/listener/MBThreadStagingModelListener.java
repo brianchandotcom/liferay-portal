@@ -35,6 +35,11 @@ public class MBThreadStagingModelListener extends BaseModelListener<MBThread> {
 	}
 
 	@Override
+	public void onAfterRemove(MBThread mbThread) throws ModelListenerException {
+		_stagingModelListener.onAfterRemove(mbThread);
+	}
+
+	@Override
 	public void onAfterUpdate(MBThread mbThread) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(mbThread);
 	}

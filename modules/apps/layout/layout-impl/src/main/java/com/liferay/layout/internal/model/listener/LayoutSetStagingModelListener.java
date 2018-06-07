@@ -38,6 +38,13 @@ public class LayoutSetStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(LayoutSet layoutSet)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(layoutSet);
+	}
+
+	@Override
 	public void onAfterUpdate(LayoutSet layoutSet)
 		throws ModelListenerException {
 

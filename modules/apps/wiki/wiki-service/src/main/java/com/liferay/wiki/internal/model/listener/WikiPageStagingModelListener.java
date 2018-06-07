@@ -35,6 +35,11 @@ public class WikiPageStagingModelListener extends BaseModelListener<WikiPage> {
 	}
 
 	@Override
+	public void onAfterRemove(WikiPage wikiPage) throws ModelListenerException {
+		_stagingModelListener.onAfterRemove(wikiPage);
+	}
+
+	@Override
 	public void onAfterUpdate(WikiPage wikiPage) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(wikiPage);
 	}

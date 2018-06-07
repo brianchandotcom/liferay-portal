@@ -35,6 +35,11 @@ public class AssetTagStagingModelListener extends BaseModelListener<AssetTag> {
 	}
 
 	@Override
+	public void onAfterRemove(AssetTag assetTag) throws ModelListenerException {
+		_stagingModelListener.onAfterRemove(assetTag);
+	}
+
+	@Override
 	public void onAfterUpdate(AssetTag assetTag) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(assetTag);
 	}

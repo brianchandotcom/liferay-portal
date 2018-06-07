@@ -17,6 +17,7 @@ package com.liferay.exportimport.internal.staging;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.changeset.model.ChangesetCollection;
+import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
@@ -57,6 +58,7 @@ import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -213,6 +215,14 @@ public class StagingImpl implements Staging {
 
 				return;
 			}
+		}
+
+		if (_stagedModelRepositoryHelper.isStagedModelInTrash(
+				stagedGroupedModel)) {
+
+			removeModelFromChangesetCollection(model);
+
+			return;
 		}
 
 		long classNameId = _classNameLocalService.getClassNameId(
@@ -2761,6 +2771,43 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
+	public <T extends BaseModel> void removeModelFromChangesetCollection(
+			T model)
+		throws PortalException {
+
+		if (!(model instanceof StagedGroupedModel)) {
+			return;
+		}
+
+		StagedGroupedModel stagedGroupedModel = (StagedGroupedModel)model;
+
+		ChangesetCollection changesetCollection =
+			_changesetCollectionLocalService.fetchChangesetCollection(
+				stagedGroupedModel.getGroupId(),
+				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
+
+		if (changesetCollection == null) {
+			return;
+		}
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			stagedGroupedModel.getModelClassName());
+		long classPK = (long)stagedGroupedModel.getPrimaryKeyObj();
+
+		ChangesetEntry changesetEntry =
+			_changesetEntryLocalService.fetchChangesetEntry(
+				changesetCollection.getChangesetCollectionId(), classNameId,
+				classPK);
+
+		if (changesetEntry == null) {
+			return;
+		}
+
+		_changesetEntryLocalService.deleteChangesetEntry(
+			changesetEntry.getChangesetEntryId());
+	}
+
+	@Override
 	public void scheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException {
 
@@ -4007,6 +4054,9 @@ public class StagingImpl implements Staging {
 	@Reference
 	private RecentLayoutSetBranchLocalService
 		_recentLayoutSetBranchLocalService;
+
+	@Reference
+	private StagedModelRepositoryHelper _stagedModelRepositoryHelper;
 
 	@Reference
 	private StagingLocalService _stagingLocalService;

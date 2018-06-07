@@ -35,6 +35,11 @@ public class TeamStagingModelListener extends BaseModelListener<Team> {
 	}
 
 	@Override
+	public void onAfterRemove(Team team) throws ModelListenerException {
+		_stagingModelListener.onAfterRemove(team);
+	}
+
+	@Override
 	public void onAfterUpdate(Team team) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(team);
 	}

@@ -35,6 +35,11 @@ public class CalendarStagingModelListener extends BaseModelListener<Calendar> {
 	}
 
 	@Override
+	public void onAfterRemove(Calendar calendar) throws ModelListenerException {
+		_stagingModelListener.onAfterRemove(calendar);
+	}
+
+	@Override
 	public void onAfterUpdate(Calendar calendar) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(calendar);
 	}

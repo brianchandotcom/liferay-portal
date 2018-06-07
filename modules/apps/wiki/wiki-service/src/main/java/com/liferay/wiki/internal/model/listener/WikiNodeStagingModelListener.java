@@ -35,6 +35,11 @@ public class WikiNodeStagingModelListener extends BaseModelListener<WikiNode> {
 	}
 
 	@Override
+	public void onAfterRemove(WikiNode wikiNode) throws ModelListenerException {
+		_stagingModelListener.onAfterRemove(wikiNode);
+	}
+
+	@Override
 	public void onAfterUpdate(WikiNode wikiNode) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(wikiNode);
 	}

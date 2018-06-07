@@ -38,6 +38,13 @@ public class JournalFolderStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(JournalFolder journalFolder)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(journalFolder);
+	}
+
+	@Override
 	public void onAfterUpdate(JournalFolder journalFolder)
 		throws ModelListenerException {
 

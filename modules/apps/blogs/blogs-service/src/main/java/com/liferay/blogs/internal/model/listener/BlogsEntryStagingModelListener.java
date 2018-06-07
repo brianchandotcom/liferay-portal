@@ -38,6 +38,13 @@ public class BlogsEntryStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(BlogsEntry blogsEntry)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(blogsEntry);
+	}
+
+	@Override
 	public void onAfterUpdate(BlogsEntry blogsEntry)
 		throws ModelListenerException {
 

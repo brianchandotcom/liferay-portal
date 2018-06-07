@@ -27,6 +27,8 @@ public interface StagingModelListener<T extends BaseModel<T>> {
 
 	public void onAfterCreate(T model) throws ModelListenerException;
 
+	public void onAfterRemove(T model) throws ModelListenerException;
+
 	public void onAfterUpdate(T model) throws ModelListenerException;
 
 }

@@ -39,6 +39,14 @@ public class CalendarNotificationTemplateStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(
+			CalendarNotificationTemplate calendarNotificationTemplate)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(calendarNotificationTemplate);
+	}
+
+	@Override
 	public void onAfterUpdate(
 			CalendarNotificationTemplate calendarNotificationTemplate)
 		throws ModelListenerException {

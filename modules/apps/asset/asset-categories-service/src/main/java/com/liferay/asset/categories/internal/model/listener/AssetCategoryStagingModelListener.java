@@ -38,6 +38,13 @@ public class AssetCategoryStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(AssetCategory assetCategory)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(assetCategory);
+	}
+
+	@Override
 	public void onAfterUpdate(AssetCategory assetCategory)
 		throws ModelListenerException {
 

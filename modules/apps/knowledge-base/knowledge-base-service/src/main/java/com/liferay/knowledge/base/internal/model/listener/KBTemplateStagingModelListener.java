@@ -38,6 +38,13 @@ public class KBTemplateStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(KBTemplate kbTemplate)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(kbTemplate);
+	}
+
+	@Override
 	public void onAfterUpdate(KBTemplate kbTemplate)
 		throws ModelListenerException {
 

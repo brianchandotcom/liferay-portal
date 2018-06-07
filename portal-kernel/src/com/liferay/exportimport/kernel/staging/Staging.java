@@ -367,6 +367,10 @@ public interface Staging {
 	public long publishToRemote(PortletRequest portletRequest)
 		throws PortalException;
 
+	public <T extends BaseModel> void removeModelFromChangesetCollection(
+			T model)
+		throws PortalException;
+
 	public void scheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException;
 

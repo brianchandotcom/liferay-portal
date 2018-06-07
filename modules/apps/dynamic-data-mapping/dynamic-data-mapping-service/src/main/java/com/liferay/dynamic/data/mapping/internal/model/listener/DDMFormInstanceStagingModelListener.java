@@ -38,6 +38,13 @@ public class DDMFormInstanceStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(DDMFormInstance ddmFormInstance)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(ddmFormInstance);
+	}
+
+	@Override
 	public void onAfterUpdate(DDMFormInstance ddmFormInstance)
 		throws ModelListenerException {
 

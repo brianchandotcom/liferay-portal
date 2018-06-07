@@ -38,6 +38,13 @@ public class MBDiscussionStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(MBDiscussion mbDiscussion)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(mbDiscussion);
+	}
+
+	@Override
 	public void onAfterUpdate(MBDiscussion mbDiscussion)
 		throws ModelListenerException {
 

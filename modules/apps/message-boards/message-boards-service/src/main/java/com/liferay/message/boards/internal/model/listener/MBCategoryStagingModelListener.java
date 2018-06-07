@@ -38,6 +38,13 @@ public class MBCategoryStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(MBCategory mbCategory)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(mbCategory);
+	}
+
+	@Override
 	public void onAfterUpdate(MBCategory mbCategory)
 		throws ModelListenerException {
 

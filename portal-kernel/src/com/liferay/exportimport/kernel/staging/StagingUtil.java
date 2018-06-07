@@ -593,6 +593,13 @@ public class StagingUtil {
 		return _staging.publishToRemote(portletRequest);
 	}
 
+	public static <T extends BaseModel> void removeModelFromChangesetCollection(
+			T model)
+		throws PortalException {
+
+		_staging.removeModelFromChangesetCollection(model);
+	}
+
 	public static void scheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException {
 

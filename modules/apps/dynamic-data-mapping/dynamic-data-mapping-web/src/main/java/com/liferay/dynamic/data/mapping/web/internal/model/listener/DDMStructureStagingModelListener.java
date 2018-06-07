@@ -38,6 +38,13 @@ public class DDMStructureStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(DDMStructure ddmStructure)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(ddmStructure);
+	}
+
+	@Override
 	public void onAfterUpdate(DDMStructure ddmStructure)
 		throws ModelListenerException {
 

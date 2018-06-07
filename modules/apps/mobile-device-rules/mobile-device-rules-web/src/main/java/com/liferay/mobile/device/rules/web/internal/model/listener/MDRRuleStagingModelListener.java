@@ -35,6 +35,11 @@ public class MDRRuleStagingModelListener extends BaseModelListener<MDRRule> {
 	}
 
 	@Override
+	public void onAfterRemove(MDRRule mdrRule) throws ModelListenerException {
+		_stagingModelListener.onAfterRemove(mdrRule);
+	}
+
+	@Override
 	public void onAfterUpdate(MDRRule mdrRule) throws ModelListenerException {
 		_stagingModelListener.onAfterUpdate(mdrRule);
 	}

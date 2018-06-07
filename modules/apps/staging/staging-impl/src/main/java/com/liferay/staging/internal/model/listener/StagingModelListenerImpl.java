@@ -43,6 +43,16 @@ public class StagingModelListenerImpl<T extends BaseModel<T>>
 	}
 
 	@Override
+	public void onAfterRemove(T model) throws ModelListenerException {
+		try {
+			_staging.removeModelFromChangesetCollection(model);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to remove model from the changeset", pe);
+		}
+	}
+
+	@Override
 	public void onAfterUpdate(T model) throws ModelListenerException {
 		try {
 			_staging.addModelToChangesetCollection(model);

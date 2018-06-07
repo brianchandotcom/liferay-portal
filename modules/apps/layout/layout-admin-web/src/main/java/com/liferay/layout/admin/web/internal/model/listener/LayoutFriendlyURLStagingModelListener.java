@@ -38,6 +38,13 @@ public class LayoutFriendlyURLStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(LayoutFriendlyURL layoutFriendlyURL)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(layoutFriendlyURL);
+	}
+
+	@Override
 	public void onAfterUpdate(LayoutFriendlyURL layoutFriendlyURL)
 		throws ModelListenerException {
 

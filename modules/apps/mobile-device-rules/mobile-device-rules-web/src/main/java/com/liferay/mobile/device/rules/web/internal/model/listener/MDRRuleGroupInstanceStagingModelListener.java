@@ -38,6 +38,13 @@ public class MDRRuleGroupInstanceStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(MDRRuleGroupInstance mdrRuleGroupInstance)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(mdrRuleGroupInstance);
+	}
+
+	@Override
 	public void onAfterUpdate(MDRRuleGroupInstance mdrRuleGroupInstance)
 		throws ModelListenerException {
 

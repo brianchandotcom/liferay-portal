@@ -38,6 +38,13 @@ public class JournalFeedStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(JournalFeed journalFeed)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(journalFeed);
+	}
+
+	@Override
 	public void onAfterUpdate(JournalFeed journalFeed)
 		throws ModelListenerException {
 

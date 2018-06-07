@@ -38,6 +38,13 @@ public class PollsChoiceStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(PollsChoice pollsChoice)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(pollsChoice);
+	}
+
+	@Override
 	public void onAfterUpdate(PollsChoice pollsChoice)
 		throws ModelListenerException {
 

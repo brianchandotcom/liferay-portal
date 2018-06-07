@@ -38,6 +38,13 @@ public class RepositoryEntryStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(RepositoryEntry repositoryEntry)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(repositoryEntry);
+	}
+
+	@Override
 	public void onAfterUpdate(RepositoryEntry repositoryEntry)
 		throws ModelListenerException {
 

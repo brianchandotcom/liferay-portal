@@ -190,7 +190,7 @@ public class ActionURLTag
 	@Override
 	public void addParam(String name, String type, String value) {
 		if ("render".equals(type) && Validator.isNotNull(name)) {
-			name = PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE + name;
+			name = PortletQName.PRIVATE_RENDER_PARAMETER_NAMESPACE.concat(name);
 		}
 
 		super.addParam(name, value);

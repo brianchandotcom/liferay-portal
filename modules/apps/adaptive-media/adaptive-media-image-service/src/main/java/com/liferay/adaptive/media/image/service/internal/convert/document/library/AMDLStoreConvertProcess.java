@@ -14,7 +14,7 @@
 
 package com.liferay.adaptive.media.image.service.internal.convert.document.library;
 
-import com.liferay.adaptive.media.image.internal.util.AMImageUtil;
+import com.liferay.adaptive.media.image.internal.util.AMStoreUtil;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -60,7 +60,7 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 					FileVersion fileVersion = _dlAppService.getFileVersion(
 						amImageEntry.getFileVersionId());
 
-					String fileVersionPath = AMImageUtil.getFileVersionPath(
+					String fileVersionPath = AMStoreUtil.getFileVersionPath(
 						fileVersion, amImageEntry.getConfigurationUuid());
 
 					Store sourceStore = dlStoreConverter.getSourceStore();

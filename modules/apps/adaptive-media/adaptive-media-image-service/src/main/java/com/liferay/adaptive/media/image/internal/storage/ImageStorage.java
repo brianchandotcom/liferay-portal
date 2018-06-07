@@ -15,7 +15,7 @@
 package com.liferay.adaptive.media.image.internal.storage;
 
 import com.liferay.adaptive.media.exception.AMRuntimeException;
-import com.liferay.adaptive.media.image.internal.util.AMImageUtil;
+import com.liferay.adaptive.media.image.internal.util.AMStoreUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -34,20 +34,20 @@ public class ImageStorage {
 	public void delete(FileVersion fileVersion, String configurationUuid) {
 		DLStoreUtil.deleteDirectory(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
-			AMImageUtil.getFileVersionPath(fileVersion, configurationUuid));
+			AMStoreUtil.getFileVersionPath(fileVersion, configurationUuid));
 	}
 
 	public void delete(long companyId, String configurationUuid) {
 		DLStoreUtil.deleteDirectory(
 			companyId, CompanyConstants.SYSTEM,
-			AMImageUtil.getConfigurationEntryPath(configurationUuid));
+			AMStoreUtil.getConfigurationEntryPath(configurationUuid));
 	}
 
 	public InputStream getContentStream(
 		FileVersion fileVersion, String configurationUuid) {
 
 		try {
-			String fileVersionPath = AMImageUtil.getFileVersionPath(
+			String fileVersionPath = AMStoreUtil.getFileVersionPath(
 				fileVersion, configurationUuid);
 
 			return DLStoreUtil.getFileAsStream(
@@ -64,7 +64,7 @@ public class ImageStorage {
 		InputStream inputStream) {
 
 		try {
-			String fileVersionPath = AMImageUtil.getFileVersionPath(
+			String fileVersionPath = AMStoreUtil.getFileVersionPath(
 				fileVersion, configurationUuid);
 
 			DLStoreUtil.addFile(

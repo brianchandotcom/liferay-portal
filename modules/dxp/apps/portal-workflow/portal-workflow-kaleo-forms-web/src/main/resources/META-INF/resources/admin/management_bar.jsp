@@ -21,7 +21,6 @@
 	clearResultsURL="<%= kaleoFormsAdminDisplayContext.getClearResultsURL() %>"
 	componentId="kaleoFormsManagementToolbar"
 	creationMenu="<%= kaleoFormsAdminDisplayContext.getCreationMenu() %>"
-	disabled="<%= kaleoFormsAdminDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= kaleoFormsAdminDisplayContext.getFilterItemsDropdownItems() %>"
 	itemsTotal="<%= kaleoFormsAdminDisplayContext.getTotalItems() %>"
 	namespace="<%= renderResponse.getNamespace() %>"

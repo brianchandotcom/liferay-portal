@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
@@ -97,6 +99,46 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	}
 
 	@Test
+	public void testIsFormAvailableForGuest() throws Exception {
+		when(
+			_ddmFormInstanceLocalService.fetchFormInstance(Matchers.anyLong())
+		).thenReturn(
+			mock(DDMFormInstance.class)
+		);
+
+		when(
+			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
+		).thenReturn(
+			null
+		);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			createDDMFormDisplayContext();
+
+		Assert.assertFalse(ddmFormDisplayContext.isFormAvailable());
+	}
+
+	@Test
+	public void testIsFormAvailableForLoggedUser() throws Exception {
+		when(
+			_ddmFormInstanceLocalService.fetchFormInstance(Matchers.anyLong())
+		).thenReturn(
+			mock(DDMFormInstance.class)
+		);
+
+		when(
+			_ddmFormInstanceService.fetchFormInstance(Matchers.anyLong())
+		).thenReturn(
+			mock(DDMFormInstance.class)
+		);
+
+		DDMFormDisplayContext ddmFormDisplayContext =
+			createDDMFormDisplayContext();
+
+		Assert.assertTrue(ddmFormDisplayContext.isFormAvailable());
+	}
+
+	@Test
 	public void testIsSharedFormWithoutPortletSession() throws Exception {
 		MockRenderRequest renderRequest = mockRenderRequest();
 
@@ -149,8 +191,9 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 		return new DDMFormDisplayContext(
 			renderRequest, new MockRenderResponse(),
+			_ddmFormInstanceLocalService,
 			mock(DDMFormInstanceRecordVersionLocalService.class),
-			mock(DDMFormInstanceService.class),
+			_ddmFormInstanceService,
 			mock(DDMFormInstanceVersionLocalService.class),
 			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
 			mock(DDMFormValuesMerger.class), mock(GroupLocalService.class),
@@ -208,6 +251,12 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 			_request
 		);
 	}
+
+	@Mock
+	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
+
+	@Mock
+	private DDMFormInstanceService _ddmFormInstanceService;
 
 	@Mock
 	private Language _language;

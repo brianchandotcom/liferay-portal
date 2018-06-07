@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
@@ -81,6 +82,7 @@ public class DDMFormDisplayContext {
 
 	public DDMFormDisplayContext(
 			RenderRequest renderRequest, RenderResponse renderResponse,
+			DDMFormInstanceLocalService ddmFormInstanceLocalService,
 			DDMFormInstanceRecordVersionLocalService
 				ddmFormInstanceRecordVersionLocalService,
 			DDMFormInstanceService ddmFormInstanceService,
@@ -96,6 +98,7 @@ public class DDMFormDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
 		_ddmFormInstanceRecordVersionLocalService =
 			ddmFormInstanceRecordVersionLocalService;
 		_ddmFormInstanceService = ddmFormInstanceService;
@@ -114,7 +117,9 @@ public class DDMFormDisplayContext {
 			return;
 		}
 
-		DDMFormInstance ddmFormInstance = getFormInstance();
+		DDMFormInstance ddmFormInstance =
+			_ddmFormInstanceLocalService.fetchDDMFormInstance(
+				getFormInstanceId());
 
 		if ((ddmFormInstance == null) || !hasViewPermission()) {
 			renderRequest.setAttribute(
@@ -680,6 +685,7 @@ public class DDMFormDisplayContext {
 	private final String _containerId;
 	private DDMFormInstance _ddmFormInstance;
 	private long _ddmFormInstanceId;
+	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 	private final DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
 	private final DDMFormInstanceService _ddmFormInstanceService;

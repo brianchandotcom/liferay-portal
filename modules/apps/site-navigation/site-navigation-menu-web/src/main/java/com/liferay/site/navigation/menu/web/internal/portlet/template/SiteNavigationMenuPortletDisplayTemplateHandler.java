@@ -16,13 +16,12 @@ package com.liferay.site.navigation.menu.web.internal.portlet.template;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
@@ -141,11 +140,13 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 		return templateVariableGroup;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationMenuPortletDisplayTemplateHandler.class);
-
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.site.navigation.lang)"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	private volatile SiteNavigationMenuWebTemplateConfiguration
 		_siteNavigationMenuWebTemplateConfiguration;

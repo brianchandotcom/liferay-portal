@@ -154,6 +154,20 @@ public class CommerceRegionLocalServiceImpl
 	}
 
 	@Override
+	public CommerceRegion setActive(long commerceRegionId, boolean active)
+		throws PortalException {
+
+		CommerceRegion commerceRegion =
+			commerceRegionPersistence.findByPrimaryKey(commerceRegionId);
+
+		commerceRegion.setActive(active);
+
+		commerceRegionPersistence.update(commerceRegion);
+
+		return commerceRegion;
+	}
+
+	@Override
 	public CommerceRegion updateCommerceRegion(
 			long commerceRegionId, String name, String code, double priority,
 			boolean active, ServiceContext serviceContext)

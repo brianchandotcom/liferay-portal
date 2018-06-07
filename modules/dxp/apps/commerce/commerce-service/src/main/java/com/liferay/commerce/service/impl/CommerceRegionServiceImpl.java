@@ -109,6 +109,20 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceRegion setActive(long commerceRegionId, boolean active)
+		throws PortalException {
+
+		CommerceRegion commerceRegion =
+			commerceRegionPersistence.findByPrimaryKey(commerceRegionId);
+
+		CommercePermission.check(
+			getPermissionChecker(), commerceRegion.getGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
+
+		return commerceRegionLocalService.setActive(commerceRegionId, active);
+	}
+
+	@Override
 	public CommerceRegion updateCommerceRegion(
 			long commerceRegionId, String name, String code, double priority,
 			boolean active, ServiceContext serviceContext)

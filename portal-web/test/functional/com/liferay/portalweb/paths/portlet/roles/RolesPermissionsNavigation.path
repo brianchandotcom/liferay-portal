@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PERMISSIONS_NAVITEM</td>
-	<td>//div[contains(@class,'permission-navigation-section')]//span[contains(.,'${key_navItem}')]</td>
+	<td>//div[contains(@class,'lfr-permission-navigation')]//li[contains(@class,'permission-navigation-section')]//a[contains(.,'${key_navItem}')]</td>
 	<td></td>
 </tr>
 <tr>

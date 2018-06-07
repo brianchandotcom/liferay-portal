@@ -95,6 +95,8 @@ public class MySitesPortlet extends MVCPortlet {
 			SessionMessages.add(actionRequest, "membershipRequestSent");
 
 			addSuccessMessage(actionRequest, actionResponse);
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 
 		sendRedirect(actionRequest, actionResponse);

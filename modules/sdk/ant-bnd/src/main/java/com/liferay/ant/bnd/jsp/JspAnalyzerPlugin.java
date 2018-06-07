@@ -570,10 +570,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 				return;
 			}
 
-			String value = new String(chars, start, length);
-
-			_hasURI = _uri.equals(
-				value.replaceAll("^\\s*([^\\s]*)\\s*$", "$1"));
+			_hasURI = _uri.equals(_trim(chars, start, length));
 
 			_inURI = false;
 		}
@@ -591,6 +588,30 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			if (qName.equals("uri")) {
 				_inURI = true;
 			}
+		}
+
+		private String _trim(char[] chars, int start, int length) {
+			int end = start + length;
+
+			for (int i = start; i < end; i++) {
+				if (Character.isWhitespace(chars[i])) {
+					start++;
+				}
+				else {
+					break;
+				}
+			}
+
+			for (int i = end - 1; i >= start; i--) {
+				if (Character.isWhitespace(chars[i])) {
+					end--;
+				}
+				else {
+					break;
+				}
+			}
+
+			return new String(chars, start, end - start);
 		}
 
 		private boolean _hasURI;

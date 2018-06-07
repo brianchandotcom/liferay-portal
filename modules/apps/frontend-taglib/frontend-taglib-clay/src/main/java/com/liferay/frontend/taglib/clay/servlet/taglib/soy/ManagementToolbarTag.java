@@ -253,41 +253,118 @@ public class ManagementToolbarTag extends BaseClayTag {
 	protected void populateContext(
 		ManagementToolbarDisplayContext managementToolbarDisplayContext) {
 
-		setActionDropdownItems(
-			managementToolbarDisplayContext.getActionDropdownItems());
-		setClearResultsURL(
-			managementToolbarDisplayContext.getClearResultsURL());
-		setContentRenderer(
-			managementToolbarDisplayContext.getContentRenderer());
-		setCreationMenu(managementToolbarDisplayContext.getCreationMenu());
-		setDisabled(managementToolbarDisplayContext.isDisabled());
-		setFilterDropdownItems(
-			managementToolbarDisplayContext.getFilterDropdownItems());
-		setInfoPanelId(managementToolbarDisplayContext.getInfoPanelId());
-		setItemsTotal(managementToolbarDisplayContext.getItemsTotal());
-		setSearchActionURL(
-			managementToolbarDisplayContext.getSearchActionURL());
-		setSearchContainerId(
-			managementToolbarDisplayContext.getSearchContainerId());
-		setSearchFormMethod(
-			managementToolbarDisplayContext.getSearchFormMethod());
-		setSearchFormName(managementToolbarDisplayContext.getSearchFormName());
-		setSearchInputName(
-			managementToolbarDisplayContext.getSearchInputName());
-		setSearchValue(managementToolbarDisplayContext.getSearchValue());
-		setSelectable(managementToolbarDisplayContext.isSelectable());
-		setSelectedItems(managementToolbarDisplayContext.getSelectedItems());
-		setShowAdvancedSearch(
-			managementToolbarDisplayContext.isShowAdvancedSearch());
-		setShowCreationMenu(
-			managementToolbarDisplayContext.isShowCreationMenu());
-		setShowFiltersDoneButton(
-			managementToolbarDisplayContext.isShowFiltersDoneButton());
-		setShowInfoButton(managementToolbarDisplayContext.isShowInfoButton());
-		setShowSearch(managementToolbarDisplayContext.isShowSearch());
-		setSortingOrder(managementToolbarDisplayContext.getSortingOrder());
-		setSortingURL(managementToolbarDisplayContext.getSortingURL());
-		setViewTypeItems(managementToolbarDisplayContext.getViewTypeItems());
+		Map<String, Object> context = getContext();
+
+		if (context.get("actionDropdownItems") != null) {
+			setActionDropdownItems(
+				managementToolbarDisplayContext.getActionDropdownItems());
+		}
+
+		if (context.get("clearResultsURL") != null) {
+			setClearResultsURL(
+				managementToolbarDisplayContext.getClearResultsURL());
+		}
+
+		if (context.get("contentRenderer") != null) {
+			setContentRenderer(
+				managementToolbarDisplayContext.getContentRenderer());
+		}
+
+		if (context.get("creationMenu") != null) {
+			setCreationMenu(managementToolbarDisplayContext.getCreationMenu());
+		}
+
+		if (context.get("disabled") != null) {
+			setDisabled(managementToolbarDisplayContext.isDisabled());
+		}
+
+		if (context.get("filterDropdownItems") != null) {
+			setFilterDropdownItems(
+				managementToolbarDisplayContext.getFilterDropdownItems());
+		}
+
+		if (context.get("infoPanelId") != null) {
+			setInfoPanelId(managementToolbarDisplayContext.getInfoPanelId());
+		}
+
+		if (context.get("itemsTotal") != null) {
+			setItemsTotal(managementToolbarDisplayContext.getItemsTotal());
+		}
+
+		if (context.get("searchActionURL") != null) {
+			setSearchActionURL(
+				managementToolbarDisplayContext.getSearchActionURL());
+		}
+
+		if (context.get("searchContainerId") != null) {
+			setSearchContainerId(
+				managementToolbarDisplayContext.getSearchContainerId());
+		}
+
+		if (context.get("searchFormMethod") != null) {
+			setSearchFormMethod(
+				managementToolbarDisplayContext.getSearchFormMethod());
+		}
+
+		if (context.get("searchFormName") != null) {
+			setSearchFormName(
+				managementToolbarDisplayContext.getSearchFormName());
+		}
+
+		if (context.get("searchInputName") != null) {
+			setSearchInputName(
+				managementToolbarDisplayContext.getSearchInputName());
+		}
+
+		if (context.get("searchValue") != null) {
+			setSearchValue(managementToolbarDisplayContext.getSearchValue());
+		}
+
+		if (context.get("selectable") != null) {
+			setSelectable(managementToolbarDisplayContext.isSelectable());
+		}
+
+		if (context.get("selectedItems") != null) {
+			setSelectedItems(
+				managementToolbarDisplayContext.getSelectedItems());
+		}
+
+		if (context.get("showAdvancedSearch") != null) {
+			setShowAdvancedSearch(
+				managementToolbarDisplayContext.isShowAdvancedSearch());
+		}
+
+		if (context.get("showCreationMenu") != null) {
+			setShowCreationMenu(
+				managementToolbarDisplayContext.isShowCreationMenu());
+		}
+
+		if (context.get("showFiltersDoneButton") != null) {
+			setShowFiltersDoneButton(
+				managementToolbarDisplayContext.isShowFiltersDoneButton());
+		}
+
+		if (context.get("showInfoButton") != null) {
+			setShowInfoButton(
+				managementToolbarDisplayContext.isShowInfoButton());
+		}
+
+		if (context.get("showSearch") != null) {
+			setShowSearch(managementToolbarDisplayContext.isShowSearch());
+		}
+
+		if (context.get("sortingOrder") != null) {
+			setSortingOrder(managementToolbarDisplayContext.getSortingOrder());
+		}
+
+		if (context.get("sortingURL") != null) {
+			setSortingURL(managementToolbarDisplayContext.getSortingURL());
+		}
+
+		if (context.get("viewTypeItems") != null) {
+			setViewTypeItems(
+				managementToolbarDisplayContext.getViewTypeItems());
+		}
 	}
 
 	private Map<String, Object> _getSearchData(String searchActionURL) {

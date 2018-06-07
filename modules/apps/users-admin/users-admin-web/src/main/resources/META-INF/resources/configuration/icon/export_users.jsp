@@ -26,6 +26,7 @@ int status = GetterUtil.getInteger(request.getAttribute(UsersAdminWebKeys.STATUS
 
 <%
 exportURL = exportURL + "&compress=0&etag=0&strip=0";
+
 String exportURLString = "javascript:if (confirm('" + UnicodeLanguageUtil.get(request, "csv-warning-message") + "')) {submitForm(document.hrefFm, '"+ exportURL +"');}";
 %>
 

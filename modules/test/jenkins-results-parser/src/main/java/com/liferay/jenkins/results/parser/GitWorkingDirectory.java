@@ -928,23 +928,26 @@ public class GitWorkingDirectory {
 				"Unable to determine the current branch");
 		}
 
-		String bashCommand = JenkinsResultsParserUtil.combine(
-			"git diff --diff-filter=AM --name-only ",
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git diff --diff-filter=AM --name-only ");
+
+		sb.append(
 			_getMergeBaseCommitSHA(
 				currentBranch, getBranch(_upstreamBranchName, null, true)));
 
 		if (!checkUnstagedFiles) {
-			bashCommand = JenkinsResultsParserUtil.combine(
-				bashCommand, " ", currentBranch.getSHA());
+			sb.append(" ");
+			sb.append(currentBranch.getSHA());
 		}
 
 		if ((grepPredicateString != null) && !grepPredicateString.isEmpty()) {
-			bashCommand = JenkinsResultsParserUtil.combine(
-				bashCommand, " | grep ", grepPredicateString);
+			sb.append(" | grep ");
+			sb.append(grepPredicateString);
 		}
 
 		ExecutionResult executionResult = executeBashCommands(
-			_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT, bashCommand);
+			_MAX_RETRIES, _RETRY_DELAY, _TIMEOUT, sb.toString());
 
 		if (executionResult.getExitValue() == 1) {
 			return modifiedFiles;

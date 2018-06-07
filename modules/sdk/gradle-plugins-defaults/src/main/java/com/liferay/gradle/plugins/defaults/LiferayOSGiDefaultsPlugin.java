@@ -3725,7 +3725,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private File _getSuiteBndFile(File appBndFile, File portalRootDir) {
-		if (appBndFile == null) {
+		if (portalRootDir == null) {
 			return null;
 		}
 

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LiferayHeaderRequest;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;
@@ -32,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public class HeaderRequestFactory {
 
-	public static HeaderRequestImpl create(
+	public static LiferayHeaderRequest create(
 		HttpServletRequest request, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,

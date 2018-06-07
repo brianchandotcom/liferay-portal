@@ -28,7 +28,13 @@ import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LiferayActionRequest;
+import com.liferay.portal.kernel.portlet.LiferayActionResponse;
+import com.liferay.portal.kernel.portlet.LiferayEventRequest;
+import com.liferay.portal.kernel.portlet.LiferayEventResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletMode;
+import com.liferay.portal.kernel.portlet.LiferayResourceRequest;
+import com.liferay.portal.kernel.portlet.LiferayResourceResponse;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
@@ -452,47 +458,52 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 
 		try {
-			ActionRequestImpl actionRequestImpl = ActionRequestFactory.create(
-				request, portlet, invokerPortlet, portletContext, windowState,
-				portletMode, portletPreferences, layout.getPlid());
+			LiferayActionRequest liferayActionRequest =
+				ActionRequestFactory.create(
+					request, portlet, invokerPortlet, portletContext,
+					windowState, portletMode, portletPreferences,
+					layout.getPlid());
 
 			User user = PortalUtil.getUser(request);
 
-			ActionResponseImpl actionResponseImpl =
+			LiferayActionResponse liferayActionResponse =
 				ActionResponseFactory.create(
-					actionRequestImpl, response, user, layout);
+					liferayActionRequest, response, user, layout);
 
-			actionRequestImpl.defineObjects(portletConfig, actionResponseImpl);
+			liferayActionRequest.defineObjects(
+				portletConfig, liferayActionResponse);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequestImpl);
+				liferayActionRequest);
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			invokerPortlet.processAction(actionRequestImpl, actionResponseImpl);
+			invokerPortlet.processAction(
+				liferayActionRequest, liferayActionResponse);
 
-			actionResponseImpl.transferHeaders(response);
+			liferayActionResponse.transferHeaders(response);
 
 			RenderParametersPool.clear(
 				request, layout.getPlid(), portlet.getPortletId());
 
 			RenderParametersPool.put(
 				request, layout.getPlid(), portlet.getPortletId(),
-				actionResponseImpl.getRenderParameterMap());
+				liferayActionResponse.getRenderParameterMap());
 
-			List<Event> events = actionResponseImpl.getEvents();
+			List<Event> events = liferayActionResponse.getEvents();
 
-			String redirectLocation = actionResponseImpl.getRedirectLocation();
+			String redirectLocation =
+				liferayActionResponse.getRedirectLocation();
 
 			if (Validator.isNull(redirectLocation) &&
 				portlet.isActionURLRedirect()) {
 
 				PortletURL portletURL = PortletURLFactoryUtil.create(
-					actionRequestImpl, portlet, layout,
+					liferayActionRequest, portlet, layout,
 					PortletRequest.RENDER_PHASE);
 
 				Map<String, String[]> renderParameters =
-					actionResponseImpl.getRenderParameterMap();
+					liferayActionResponse.getRenderParameterMap();
 
 				for (Map.Entry<String, String[]> entry :
 						renderParameters.entrySet()) {
@@ -597,29 +608,30 @@ public class PortletContainerImpl implements PortletContainer {
 			PortletPreferencesFactoryUtil.getPortletSetup(
 				scopeGroupId, layout, portlet.getPortletId(), null);
 
-		EventRequestImpl eventRequestImpl = EventRequestFactory.create(
+		LiferayEventRequest liferayEventRequest = EventRequestFactory.create(
 			request, portlet, invokerPortlet, portletContext, windowState,
 			portletMode, portletPreferences, layout.getPlid());
 
-		eventRequestImpl.setEvent(
+		liferayEventRequest.setEvent(
 			serializeEvent(event, invokerPortlet.getPortletClassLoader()));
 
 		User user = PortalUtil.getUser(request);
 		Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
-		EventResponseImpl eventResponseImpl = EventResponseFactory.create(
-			eventRequestImpl, response, user, requestLayout);
+		LiferayEventResponse liferayEventResponse = EventResponseFactory.create(
+			liferayEventRequest, response, user, requestLayout);
 
-		eventRequestImpl.defineObjects(portletConfig, eventResponseImpl);
+		liferayEventRequest.defineObjects(portletConfig, liferayEventResponse);
 
 		try {
-			invokerPortlet.processEvent(eventRequestImpl, eventResponseImpl);
+			invokerPortlet.processEvent(
+				liferayEventRequest, liferayEventResponse);
 
-			eventResponseImpl.transferHeaders(response);
+			liferayEventResponse.transferHeaders(response);
 
-			if (eventResponseImpl.isCalledSetRenderParameter()) {
+			if (liferayEventResponse.isCalledSetRenderParameter()) {
 				Map<String, String[]> renderParameterMap =
-					eventResponseImpl.getRenderParameterMap();
+					liferayEventResponse.getRenderParameterMap();
 
 				if (!renderParameterMap.isEmpty()) {
 					RenderParametersPool.put(
@@ -629,10 +641,10 @@ public class PortletContainerImpl implements PortletContainer {
 				}
 			}
 
-			return eventResponseImpl.getEvents();
+			return liferayEventResponse.getEvents();
 		}
 		finally {
-			eventRequestImpl.cleanUp();
+			liferayEventRequest.cleanUp();
 		}
 	}
 
@@ -949,25 +961,27 @@ public class PortletContainerImpl implements PortletContainer {
 			portletDisplay.setWebDAVEnabled(false);
 		}
 
-		ResourceRequestImpl resourceRequestImpl = ResourceRequestFactory.create(
-			request, portlet, invokerPortlet, portletContext, windowState,
-			portletMode, portletPreferences, layout.getPlid());
+		LiferayResourceRequest liferayResourceRequest =
+			ResourceRequestFactory.create(
+				request, portlet, invokerPortlet, portletContext, windowState,
+				portletMode, portletPreferences, layout.getPlid());
 
-		ResourceResponseImpl resourceResponseImpl =
-			ResourceResponseFactory.create(resourceRequestImpl, response);
+		LiferayResourceResponse liferayResourceResponse =
+			ResourceResponseFactory.create(liferayResourceRequest, response);
 
-		resourceRequestImpl.defineObjects(portletConfig, resourceResponseImpl);
+		liferayResourceRequest.defineObjects(
+			portletConfig, liferayResourceResponse);
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				resourceRequestImpl);
+				liferayResourceRequest);
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			invokerPortlet.serveResource(
-				resourceRequestImpl, resourceResponseImpl);
+				liferayResourceRequest, liferayResourceResponse);
 
-			resourceResponseImpl.transferHeaders(response);
+			liferayResourceResponse.transferHeaders(response);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

@@ -15,17 +15,18 @@
 package com.liferay.portlet;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.portlet.LiferayEventRequest;
 
 import javax.portlet.Event;
-import javax.portlet.EventRequest;
 import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
 @ProviderType
 public class EventRequestImpl
-	extends PortletRequestImpl implements EventRequest {
+	extends PortletRequestImpl implements LiferayEventRequest {
 
 	@Override
 	public Event getEvent() {
@@ -37,6 +38,7 @@ public class EventRequestImpl
 		return PortletRequest.EVENT_PHASE;
 	}
 
+	@Override
 	public void setEvent(Event event) {
 		_event = event;
 	}

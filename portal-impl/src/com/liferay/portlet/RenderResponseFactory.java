@@ -14,19 +14,38 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.filter.RenderRequestWrapper;
+
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
+@ProviderType
 public class RenderResponseFactory {
 
-	public static RenderResponseImpl create(
-		RenderRequestImpl renderRequestImpl, HttpServletResponse response) {
+	public static LiferayRenderResponse create(
+		RenderRequest renderRequest, HttpServletResponse response) {
+
+		while (true) {
+			if (renderRequest instanceof RenderRequestWrapper) {
+				renderRequest =
+					((RenderRequestWrapper)renderRequest).getRequest();
+			}
+			else {
+				break;
+			}
+		}
 
 		RenderResponseImpl renderResponseImpl = new RenderResponseImpl();
 
-		renderResponseImpl.init(renderRequestImpl, response);
+		renderResponseImpl.init((RenderRequestImpl)renderRequest, response);
 
 		return renderResponseImpl;
 	}

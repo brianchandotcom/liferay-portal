@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LiferayResourceRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -50,7 +51,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ProviderType
 public class ResourceRequestImpl
-	extends ClientDataRequestImpl implements ResourceRequest {
+	extends ClientDataRequestImpl implements LiferayResourceRequest {
 
 	@Override
 	public String getCacheability() {

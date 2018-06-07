@@ -14,17 +14,15 @@
 
 package com.liferay.portlet;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.portlet.LiferayHeaderRequest;
 
-import javax.portlet.HeaderRequest;
 import javax.portlet.PortletRequest;
 
 /**
  * @author Neil Griffin
  */
-@ProviderType
 public class HeaderRequestImpl
-	extends RenderRequestImpl implements HeaderRequest {
+	extends RenderRequestImpl implements LiferayHeaderRequest {
 
 	@Override
 	public String getLifecycle() {

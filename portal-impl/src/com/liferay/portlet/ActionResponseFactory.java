@@ -14,27 +14,44 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
+import javax.portlet.filter.ActionRequestWrapper;
 
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
+@ProviderType
 public class ActionResponseFactory {
 
-	public static ActionResponseImpl create(
-			ActionRequestImpl actionRequestImpl, HttpServletResponse response,
+	public static LiferayActionResponse create(
+			ActionRequest actionRequest, HttpServletResponse response,
 			User user, Layout layout)
 		throws PortletException {
+
+		while (true) {
+			if (actionRequest instanceof ActionRequestWrapper) {
+				actionRequest =
+					((ActionRequestWrapper)actionRequest).getRequest();
+			}
+			else {
+				break;
+			}
+		}
 
 		ActionResponseImpl actionResponseImpl = new ActionResponseImpl();
 
 		actionResponseImpl.init(
-			actionRequestImpl, response, user, layout, true);
+			(ActionRequestImpl)actionRequest, response, user, layout, true);
 
 		return actionResponseImpl;
 	}

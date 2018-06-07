@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.servlet.URLEncoder;
 
 import java.util.Map;
 
@@ -89,6 +90,8 @@ public interface LiferayPortletResponse extends PortletResponse {
 
 	public HttpServletResponse getHttpServletResponse();
 
+	public String getLifecycle();
+
 	public Portlet getPortlet();
 
 	public Map<String, String[]> getProperties();
@@ -98,6 +101,10 @@ public interface LiferayPortletResponse extends PortletResponse {
 	public void setHeader(String name, String value);
 
 	public void setIntHeader(String name, int value);
+
+	public void setURLEncoder(URLEncoder urlEncoder);
+
+	public void transferHeaders(HttpServletResponse response);
 
 	public void transferMarkupHeadElements();
 

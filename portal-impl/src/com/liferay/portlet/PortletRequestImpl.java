@@ -128,6 +128,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		return (PortletRequestImpl)portletRequest;
 	}
 
+	@Override
 	public void cleanUp() {
 		_request.removeAttribute(JavaConstants.JAVAX_PORTLET_CONFIG);
 		_request.removeAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
@@ -226,6 +227,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		return _request;
 	}
 
+	@Override
 	public abstract String getLifecycle();
 
 	@Override
@@ -332,6 +334,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		return _portletName;
 	}
 
+	@Override
 	public HttpServletRequest getPortletRequestDispatcherRequest() {
 		return _portletRequestDispatcherRequest;
 	}
@@ -583,6 +586,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		return _windowState;
 	}
 
+	@Override
 	public void invalidateSession() {
 		_invalidSession = true;
 	}
@@ -703,6 +707,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_portletMode = portletMode;
 	}
 
+	@Override
 	public void setPortletRequestDispatcherRequest(HttpServletRequest request) {
 		_portletRequestDispatcherRequest = request;
 	}

@@ -12,29 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 
-import javax.portlet.PortletRequest;
+import javax.portlet.EventResponse;
 
 /**
- * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
 @ProviderType
-public class RenderRequestImpl
-	extends PortletRequestImpl implements LiferayRenderRequest {
-
-	@Override
-	public String getETag() {
-		return null;
-	}
-
-	@Override
-	public String getLifecycle() {
-		return PortletRequest.RENDER_PHASE;
-	}
-
+public interface LiferayEventResponse
+	extends LiferayStateAwareResponse, EventResponse {
 }

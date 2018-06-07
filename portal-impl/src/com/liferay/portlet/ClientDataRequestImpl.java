@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.LiferayClientDataRequest;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadRequest;
@@ -36,7 +37,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.ClientDataRequest;
 import javax.portlet.PortletException;
 
 import javax.servlet.ServletRequestWrapper;
@@ -48,7 +48,7 @@ import javax.servlet.http.Part;
  */
 @ProviderType
 public abstract class ClientDataRequestImpl
-	extends PortletRequestImpl implements ClientDataRequest {
+	extends PortletRequestImpl implements LiferayClientDataRequest {
 
 	@Override
 	public String getCharacterEncoding() {

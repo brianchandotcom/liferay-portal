@@ -14,15 +14,17 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.portlet.LiferayActionRequest;
+
 import javax.portlet.ActionParameters;
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
 public class ActionRequestImpl
-	extends ClientDataRequestImpl implements ActionRequest {
+	extends ClientDataRequestImpl implements LiferayActionRequest {
 
 	@Override
 	public ActionParameters getActionParameters() {

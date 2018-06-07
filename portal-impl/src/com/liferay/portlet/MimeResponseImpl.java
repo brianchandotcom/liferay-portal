@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.LiferayMimeResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.internal.CacheControlImpl;
@@ -28,7 +29,6 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import javax.portlet.CacheControl;
-import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
@@ -38,7 +38,7 @@ import javax.portlet.WindowState;
  */
 @ProviderType
 public abstract class MimeResponseImpl
-	extends PortletResponseImpl implements MimeResponse {
+	extends PortletResponseImpl implements LiferayMimeResponse {
 
 	@Override
 	public void flushBuffer() throws IOException {

@@ -407,6 +407,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		return response;
 	}
 
+	@Override
 	public abstract String getLifecycle();
 
 	@Override
@@ -538,10 +539,12 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		setHeader(key, value);
 	}
 
+	@Override
 	public void setURLEncoder(URLEncoder urlEncoder) {
 		_urlEncoder = urlEncoder;
 	}
 
+	@Override
 	public void transferHeaders(HttpServletResponse response) {
 		TransferHeadersHelperUtil.transferHeaders(_headers, response);
 	}

@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayEventResponse;
 
 import javax.portlet.EventRequest;
-import javax.portlet.EventResponse;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowStateException;
@@ -29,10 +29,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
 @ProviderType
 public class EventResponseImpl
-	extends StateAwareResponseImpl implements EventResponse {
+	extends StateAwareResponseImpl implements LiferayEventResponse {
 
 	@Override
 	public String getLifecycle() {

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -25,6 +23,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayHeaderResponse;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -47,7 +46,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.HeaderRequest;
-import javax.portlet.HeaderResponse;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,9 +58,8 @@ import javax.xml.stream.XMLStreamReader;
 /**
  * @author Neil Griffin
  */
-@ProviderType
 public class HeaderResponseImpl
-	extends MimeResponseImpl implements HeaderResponse {
+	extends MimeResponseImpl implements LiferayHeaderResponse {
 
 	@Override
 	public void addDependency(String name, String scope, String version) {
@@ -203,6 +200,7 @@ public class HeaderResponseImpl
 		portletDisplay.setTitle(title);
 	}
 
+	@Override
 	public void writeToHead() {
 		if (_portletOutputStream != null) {
 			_addXMLToHead(

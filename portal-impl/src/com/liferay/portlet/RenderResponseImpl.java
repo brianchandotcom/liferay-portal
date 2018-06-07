@@ -47,10 +47,12 @@ public class RenderResponseImpl
 		return _resourceName;
 	}
 
+	@Override
 	public String getTitle() {
 		return _title;
 	}
 
+	@Override
 	public boolean getUseDefaultTemplate() {
 		if (_useDefaultTemplate == null) {
 			Portlet portlet = getPortlet();
@@ -99,6 +101,7 @@ public class RenderResponseImpl
 		portletDisplay.setTitle(_title);
 	}
 
+	@Override
 	public void setUseDefaultTemplate(Boolean useDefaultTemplate) {
 		_useDefaultTemplate = useDefaultTemplate;
 	}

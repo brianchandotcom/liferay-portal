@@ -7,8 +7,6 @@ import Component from 'metal-component@2.16.5/lib/Component';
 import Config from 'metal-state@2.7.0/lib/Config';
 import Soy from 'metal-soy@2.16.5/lib/Soy';
 
-import {ManagementToolbar} from 'frontend-taglib-clay@1.0.0/management_toolbar/ManagementToolbar.es';
-
 import templates from './ManagementToolbarWithExtraFilters.soy';
 
 /**
@@ -23,8 +21,8 @@ class ManagementToolbarWithExtraFilters extends Component {
 	}
 
 	/**
-     * @inheritDoc
-     */
+	 * @inheritDoc
+	 */
 
 	rendered() {
 		AUI().use(
@@ -290,288 +288,292 @@ class ManagementToolbarWithExtraFilters extends Component {
 ManagementToolbarWithExtraFilters.STATE = {
 
 	/**
-     * List of items to display in the actions menu on active state.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(array|undefined)}
-     */
+	 * List of items to display in the actions menu on active state.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(array|undefined)}
+	 */
 
 	actionItems: actionItemsValidator,
 
 	/**
-     * Url for clear results link.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * Url for clear results link.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	clearResultsURL: Config.string(),
 
 	/**
-     * Name of the content renderer to use template variants.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * Name of the content renderer to use template variants.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	contentRenderer: Config.string(),
 
 	/**
-     * Configuration of the creation menu.
-     * Set `true` to render a plain button that will emit an event onclick.
-     * Set `string` to use it as link href to render a link styled button.
-     * Set `object` to render a dropdown menu with items.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(object|string|bool|undefined)}
-     */
+	 * Configuration of the creation menu.
+	 * Set `true` to render a plain button that will emit an event onclick.
+	 * Set `string` to use it as link href to render a link styled button.
+	 * Set `object` to render a dropdown menu with items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(object|string|bool|undefined)}
+	 */
 
-	creationMenu: Config.shapeOf({
-		caption: Config.string(),
-		helpText: Config.string(),
-		maxPrimaryItems: Config.number(),
-		maxSecondaryItems: Config.number(),
-		maxTotalItems: Config.number(),
-		primaryItems: creationMenuItemsValidator,
-		secondaryItems: creationMenuItemsValidator,
-		viewMoreURL: Config.string()
-	}),
+	creationMenu: Config.shapeOf(
+		{
+			caption: Config.string(),
+			helpText: Config.string(),
+			maxPrimaryItems: Config.number(),
+			maxSecondaryItems: Config.number(),
+			maxTotalItems: Config.number(),
+			primaryItems: creationMenuItemsValidator,
+			secondaryItems: creationMenuItemsValidator,
+			viewMoreURL: Config.string()
+		}
+	),
 
 	/**
-     * Flag to indicate if the managment toolbar is disabled or not.
-     * @default false
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?bool}
-     */
+	 * Flag to indicate if the managment toolbar is disabled or not.
+	 * @default false
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?bool}
+	 */
 
 	disabled: Config.bool().value(false),
 
 	/**
-     * CSS classes to be applied to the element.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * CSS classes to be applied to the element.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	elementClasses: Config.string(),
 
 	/**
-     * List of filter menu items.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(array|undefined)}
-     */
+	 * List of filter menu items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(array|undefined)}
+	 */
 
 	filterItems: filterItemsValidator,
 
 	/**
-     * Id to be applied to the element.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * Id to be applied to the element.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	id: Config.string(),
 
 	/**
-     * Id to get the infoPanel node.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @review
-     * @type {?string|undefined}
-     */
+	 * Id to get the infoPanel node.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @review
+	 * @type {?string|undefined}
+	 */
 
 	infoPanelId: Config.string(),
 
 	/**
-     * URL of the search form action
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * URL of the search form action
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	searchActionURL: Config.string(),
 
 	/**
-     * Id to get a instance of the searchContainer.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @review
-     * @type {?string|undefined}
-     */
+	 * Id to get a instance of the searchContainer.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @review
+	 * @type {?string|undefined}
+	 */
 
 	searchContainerId: Config.string(),
 
 	/**
-     * Name of the search form.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * Name of the search form.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	searchFormName: Config.string(),
 
 	/**
-     * Name of the search input.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * Name of the search input.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	searchInputName: Config.string(),
 
 	/**
-     * Value of the search input.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * Value of the search input.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	searchValue: Config.string(),
 
 	/**
-     * Flag to indicate if the managment toolbar will control the selection of
-     * elements.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(bool|undefined)}
-     */
+	 * Flag to indicate if the managment toolbar will control the selection of
+	 * elements.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(bool|undefined)}
+	 */
 
 	selectable: Config.bool().value(false),
 
 	/**
-     * Number of selected items.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(number|undefined)}
-     */
+	 * Number of selected items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(number|undefined)}
+	 */
 
 	selectedItems: Config.number(),
 
 	/**
-     * Flag to indicate if advanced search should be shown or not.
-     * @default false
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?bool}
-     */
+	 * Flag to indicate if advanced search should be shown or not.
+	 * @default false
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?bool}
+	 */
 
 	showAdvancedSearch: Config.bool().value(false),
 
 	/**
-     * Flag to indicate if creation menu button should be shown or not.
-     * @default true
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?bool}
-     */
+	 * Flag to indicate if creation menu button should be shown or not.
+	 * @default true
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?bool}
+	 */
 
 	showCreationMenu: Config.bool().value(true),
 
 	/**
-     * Flag to indicate if the `Done` button in filter dropdown should be shown or
-     * not.
-     * @default true
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?bool}
-     */
+	 * Flag to indicate if the `Done` button in filter dropdown should be shown or
+	 * not.
+	 * @default true
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?bool}
+	 */
 
 	showFiltersDoneButton: Config.bool().value(true),
 
 	/**
-     * Flag to indicate if the Info button should be shown or not.
-     * @default false
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?bool}
-     */
+	 * Flag to indicate if the Info button should be shown or not.
+	 * @default false
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?bool}
+	 */
 
 	showInfoButton: Config.bool().value(false),
 
 	/**
-     * Flag to indicate if search should be shown or not.
-     * @default true
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?bool}
-     */
+	 * Flag to indicate if search should be shown or not.
+	 * @default true
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?bool}
+	 */
 
 	showSearch: Config.bool().value(true),
 
 	/**
-     * Sorting url.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * Sorting url.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	sortingURL: Config.string(),
 
 	/**
-     * Sorting order.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * Sorting order.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	sortingOrder: Config.oneOf(['asc', 'desc']),
 
 	/**
-     * The path to the SVG spritemap file containing the icons.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(string|undefined)}
-     */
+	 * The path to the SVG spritemap file containing the icons.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(string|undefined)}
+	 */
 
 	spritemap: Config.string().required(),
 
 	/**
-     * Total number of items. If totalItems is 0 most of the elements in the bar
-     * will appear disabled.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(number|undefined)}
-     */
+	 * Total number of items. If totalItems is 0 most of the elements in the bar
+	 * will appear disabled.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(number|undefined)}
+	 */
 
 	totalItems: Config.number(),
 
 	/**
-     * List of view items.
-     * @default undefined
-     * @instance
-     * @memberof ManagementToolbarWithExtraFilters
-     * @type {?(array|undefined)}
-     */
+	 * List of view items.
+	 * @default undefined
+	 * @instance
+	 * @memberof ManagementToolbarWithExtraFilters
+	 * @type {?(array|undefined)}
+	 */
 
 	viewTypes: Config.arrayOf(
-		Config.shapeOf({
-			active: Config.bool().value(false),
-			disabled: Config.bool().value(false),
-			href: Config.string(),
-			icon: Config.string().required(),
-			label: Config.string().required()
-		})
+		Config.shapeOf(
+			{
+				active: Config.bool().value(false),
+				disabled: Config.bool().value(false),
+				href: Config.string(),
+				icon: Config.string().required(),
+				label: Config.string().required()
+			}
+		)
 	),
 
 	categorySelectorURL: Config.string().required(),

@@ -169,8 +169,10 @@ public class BNDBundleCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final String[] _SUITES =
-		{"collaboration", "forms-and-workflow", "foundation", "web-experience"};
+	private static final String[] _SUITES = {
+		"collaboration", "forms-and-workflow", "foundation", "static",
+		"web-experience"
+	};
 
 	private final List<String> _allowedFileNames = new ArrayList<>();
 

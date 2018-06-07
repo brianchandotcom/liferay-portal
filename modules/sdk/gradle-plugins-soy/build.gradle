@@ -28,5 +28,16 @@ gradleTest {
 }
 
 pluginBundle {
+	plugins {
+		soyTranslationPlugin {
+			description = "The Soy Translation Gradle plugin lets you use a custom localization mechanism in the generated .soy.js files"
+			displayName = "Liferay Gradle Plugins Soy Translation"
+		}
+
+		soyPlugin {
+			displayName = "Liferay Gradle Plugins Soy"
+		}
+	}
+
 	tags = ["javascript", "js", "soy"]
 }

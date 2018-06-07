@@ -20,6 +20,8 @@ import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.marketplace.util.ContextUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,18 +36,22 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
+ * @author Ryan Park
  */
 @Component(immediate = true)
 public class LPKGDeployerRegistrar {
 
 	@Activate
-	public void activate() throws Exception {
+	public void activate(BundleContext bundleContext) throws Exception {
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
 			_lpkgDeployer.getDeployedLPKGBundles();
 
@@ -54,12 +60,28 @@ public class LPKGDeployerRegistrar {
 
 			_register(entry.getKey(), entry.getValue());
 		}
+
+		bundleContext.addBundleListener(
+			new SynchronousBundleListener() {
+
+				@Override
+				public void bundleChanged(BundleEvent bundleEvent) {
+					if (bundleEvent.getType() != BundleEvent.STARTED) {
+						_register(bundleEvent.getBundle(), null);
+					}
+				}
+
+			});
 	}
 
-	private void _register(Bundle lpkgBundle, List<Bundle> bundles)
+	private void _doRegister(Bundle lpkgBundle, List<Bundle> bundles)
 		throws Exception {
 
 		URL url = lpkgBundle.getEntry("liferay-marketplace.properties");
+
+		if (url == null) {
+			return;
+		}
 
 		Properties properties = PropertiesUtil.load(
 			url.openStream(), StringPool.ISO_8859_1);
@@ -85,7 +107,7 @@ public class LPKGDeployerRegistrar {
 
 		_moduleLocalService.deleteModules(app.getAppId());
 
-		if (!bundles.isEmpty()) {
+		if ((bundles != null) && !bundles.isEmpty()) {
 			for (Bundle bundle : bundles) {
 				Dictionary<String, String> headers = bundle.getHeaders();
 
@@ -123,6 +145,21 @@ public class LPKGDeployerRegistrar {
 			}
 		}
 	}
+
+	private void _register(Bundle lpkgBundle, List<Bundle> bundles) {
+		try {
+			_doRegister(lpkgBundle, bundles);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to track installed app " +
+					lpkgBundle.getSymbolicName() + " with Marketplace",
+				e);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LPKGDeployerRegistrar.class);
 
 	@Reference
 	private AppLocalService _appLocalService;

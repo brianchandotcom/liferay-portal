@@ -14,7 +14,6 @@
 
 package com.liferay.html.preview.internal.convert.document.library;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.util.MaintenanceUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -57,8 +55,7 @@ public class HTMLPreviewDLStoreConvertProcess implements DLStoreConvertProcess {
 				dlStoreConverter.migrateDLFileEntry(
 					entry.getCompanyId(),
 					DLFolderConstants.getDataRepositoryId(
-						fileEntry.getRepositoryId(),
-						fileEntry.getFolderId()),
+						fileEntry.getRepositoryId(), fileEntry.getFolderId()),
 					fileEntry);
 			});
 

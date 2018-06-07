@@ -22,7 +22,6 @@ import com.liferay.document.library.kernel.util.comparator.FileVersionVersionCom
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.BaseConvertProcess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -230,47 +229,15 @@ public class DocumentLibraryConvertProcess
 					groupIdProperty.eqProperty(repositoryIdProperty));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(DLFileEntry dlFileEntry) ->
-				migrateDLFileEntry(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(),
-					new LiferayFileEntry(dlFileEntry)));
+			(DLFileEntry dlFileEntry) -> migrateDLFileEntry(
+				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+				new LiferayFileEntry(dlFileEntry)));
 
 		actionableDynamicQuery.performActions();
 
 		if (isDeleteFilesFromSourceStore()) {
 			DLPreviewableProcessor.deleteFiles();
 		}
-	}
-
-	protected void migrateGeneratedFiles(String path) throws Exception {
-		MaintenanceUtil.appendStatus("Migrating files from " + path);
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			CompanyLocalServiceUtil.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setPerformActionMethod(
-			(Company company) -> {
-				long companyId = company.getCompanyId();
-
-				String[] fileNames = _sourceStore.getFileNames(
-					companyId, DLPreviewableProcessor.REPOSITORY_ID, path);
-
-				for (String fileName : fileNames) {
-
-					// See LPS-70788
-
-					String actualFileName = StringUtil.replace(
-						fileName, StringPool.DOUBLE_SLASH,
-						StringPool.SLASH);
-
-					migrateFile(
-						companyId, DLPreviewableProcessor.REPOSITORY_ID,
-						actualFileName, Store.VERSION_DEFAULT);
-				}
-			});
-
-		actionableDynamicQuery.performActions();
 	}
 
 	protected void migrateFile(
@@ -299,6 +266,35 @@ public class DocumentLibraryConvertProcess
 		}
 	}
 
+	protected void migrateGeneratedFiles(String path) throws Exception {
+		MaintenanceUtil.appendStatus("Migrating files from " + path);
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			CompanyLocalServiceUtil.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(Company company) -> {
+				long companyId = company.getCompanyId();
+
+				String[] fileNames = _sourceStore.getFileNames(
+					companyId, DLPreviewableProcessor.REPOSITORY_ID, path);
+
+				for (String fileName : fileNames) {
+
+					// See LPS-70788
+
+					String actualFileName = StringUtil.replace(
+						fileName, StringPool.DOUBLE_SLASH, StringPool.SLASH);
+
+					migrateFile(
+						companyId, DLPreviewableProcessor.REPOSITORY_ID,
+						actualFileName, Store.VERSION_DEFAULT);
+				}
+			});
+
+		actionableDynamicQuery.performActions();
+	}
+
 	protected void migrateImages() throws PortalException {
 		int count = ImageLocalServiceUtil.getImagesCount();
 
@@ -310,8 +306,7 @@ public class DocumentLibraryConvertProcess
 		actionableDynamicQuery.setPerformActionMethod(
 			(Image image) -> {
 				String fileName =
-					image.getImageId() + StringPool.PERIOD +
-						image.getType();
+					image.getImageId() + StringPool.PERIOD + image.getType();
 
 				migrateFile(0, 0, fileName, Store.VERSION_DEFAULT);
 			});

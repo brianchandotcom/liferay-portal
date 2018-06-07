@@ -18,12 +18,10 @@ import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.convert.documentlibrary.DLStoreConverter;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,7 +34,6 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.util.MaintenanceUtil;
 
 import java.util.List;
@@ -72,8 +69,7 @@ public class BlogsDLStoreConvertProcess implements DLStoreConvertProcess {
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(BlogsEntry entry) -> {
-				long coverImageFileEntryId =
-					entry.getCoverImageFileEntryId();
+				long coverImageFileEntryId = entry.getCoverImageFileEntryId();
 
 				if (coverImageFileEntryId > 0) {
 					FileEntry coverImageFileEntry =
@@ -88,8 +84,7 @@ public class BlogsDLStoreConvertProcess implements DLStoreConvertProcess {
 						coverImageFileEntry);
 				}
 
-				long smallImageFileEntryId =
-					entry.getSmallImageFileEntryId();
+				long smallImageFileEntryId = entry.getSmallImageFileEntryId();
 
 				if (smallImageFileEntryId > 0) {
 					FileEntry smallImageFileEntry =

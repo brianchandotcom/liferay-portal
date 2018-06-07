@@ -17,13 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-if (Validator.isNull(redirect)) {
-	redirect = portletURL.toString();
-}
+String redirect = ParamUtil.getString(request, "redirect", String.valueOf(renderResponse.createRenderURL()));
 
 ConfigurationModel configurationModel = (ConfigurationModel)request.getAttribute(ConfigurationAdminWebKeys.FACTORY_CONFIGURATION_MODEL);
 ConfigurationModelIterator configurationModelIterator = (ConfigurationModelIterator)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_MODEL_ITERATOR);
@@ -54,7 +48,7 @@ String factoryConfigurationModelName = (componentResourceBundle != null) ? Langu
 PortalUtil.addPortletBreadcrumbEntry(request, factoryConfigurationModelName, null);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(portletURL.toString());
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(categoryDisplayName);
 %>
@@ -125,8 +119,16 @@ renderResponse.setTitle(categoryDisplayName);
 					</span>
 				</h3>
 
+				<%
+				PortletURL iteratorURL = renderResponse.createRenderURL();
+
+				iteratorURL.setParameter("mvcRenderCommandName", "/view_factory_instances");
+				iteratorURL.setParameter("factoryPid", configurationModel.getFactoryPid());
+				%>
+
 				<liferay-ui:search-container
 					emptyResultsMessage='<%= LanguageUtil.format(request, "no-entries-for-x-have-been-added-yet", factoryConfigurationModelName) %>'
+					iteratorURL="<%= iteratorURL %>"
 					total="<%= configurationModelIterator.getTotal() %>"
 				>
 					<liferay-ui:search-container-results

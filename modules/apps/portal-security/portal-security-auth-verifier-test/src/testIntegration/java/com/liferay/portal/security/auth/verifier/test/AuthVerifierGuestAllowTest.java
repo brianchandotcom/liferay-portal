@@ -14,8 +14,10 @@
 
 package com.liferay.portal.security.auth.verifier.test;
 
+import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
@@ -31,23 +33,31 @@ import org.junit.runner.RunWith;
 /**
  * @author Marta Medio
  */
+@BndFile("bnd-guest.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AuthVerifierTrackerTest {
+public class AuthVerifierGuestAllowTest {
 
 	@Test
-	public void testRemoteUser() throws Exception {
-		URL url = new URL(_url, "/o/auth-verifier-filter-test/remoteUser");
+	public void testAllowGuest() throws Exception {
+		URL url = new URL(
+			_url, "/o/auth-verifier-no-allow-guest-test/getAccess");
+
+		try (InputStream inputStream = url.openStream()) {
+			Assert.fail();
+		}
+		catch (IOException ioe) {
+			String message = ioe.getMessage();
+
+			Assert.assertTrue(
+				message.startsWith("Server returned HTTP response code: 403"));
+		}
+
+		url = new URL(_url, "/o/auth-verifier-allow-guest-test/getAccess");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals(
-				"remote-user-set", StringUtil.read(inputStream));
-		}
-
-		url = new URL(_url, "/o/no-auth-verifier-filter-test/remoteUser");
-
-		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
+				"GuestAllowHttpServlet", StringUtil.read(inputStream));
 		}
 	}
 

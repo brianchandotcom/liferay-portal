@@ -83,7 +83,7 @@ public class AuthVerifierResult {
 
 	public enum State {
 
-		INVALID_CREDENTIALS, NOT_APPLICABLE, SUCCESS
+		INVALID_CREDENTIALS, NOT_APPLICABLE, SUCCESS, UNSUCCESSFUL
 
 	}
 

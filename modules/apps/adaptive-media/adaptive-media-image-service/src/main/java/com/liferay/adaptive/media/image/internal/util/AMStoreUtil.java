@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 /**
  * @author Roberto Díaz
  */
-public class AMImageUtil {
+public class AMStoreUtil {
 
 	public static String getConfigurationEntryPath(String configurationUuid) {
 		return String.format("adaptive/%s", configurationUuid);

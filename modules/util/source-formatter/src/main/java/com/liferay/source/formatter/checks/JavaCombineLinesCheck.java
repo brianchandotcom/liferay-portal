@@ -704,7 +704,7 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		if (trimmedPreviousLine.matches("for \\(\\w+")) {
+		if (trimmedPreviousLine.matches("for \\(.*(?<!\\) \\{)$")) {
 			int x = trimmedLine.indexOf(" :");
 
 			if ((x != -1) &&

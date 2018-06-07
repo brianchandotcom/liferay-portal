@@ -418,6 +418,26 @@ message.
 					<arg value="-Dbuild.profile=${build.profile}" />
 					<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 				</gradle-execute>
+
+				<if>
+					<isset property="env.JENKINS_HOME" />
+					<then>
+						<if>
+							<resourcecount count="0" when="gt">
+								<fileset
+									dir="${project.dir}/modules"
+									includes="**/.lfrbuild-ci"
+								/>
+							</resourcecount>
+							<then>
+								<gradle-execute dir="${project.dir}/modules" task="deploy">
+									<arg value="--parallel" />
+									<arg value="-Ddeploy.only.profile=ci" />
+								</gradle-execute>
+							</then>
+						</if>
+					</then>
+				</if>
 			</then>
 			<else>
 				<gradle-execute dir="${project.dir}/modules/core" task="deploy">
@@ -481,26 +501,6 @@ message.
 							<arg value="-Dbuild.profile=${build.profile}" />
 						</gradle-execute>
 					</else>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<isset property="env.JENKINS_HOME" />
-			<then>
-				<if>
-					<resourcecount count="0" when="gt">
-						<fileset
-							dir="${project.dir}/modules"
-							includes="**/.lfrbuild-ci"
-						/>
-					</resourcecount>
-					<then>
-						<gradle-execute dir="${project.dir}/modules" task="deploy">
-							<arg value="--parallel" />
-							<arg value="-Ddeploy.only.profile=ci" />
-						</gradle-execute>
-					</then>
 				</if>
 			</then>
 		</if>

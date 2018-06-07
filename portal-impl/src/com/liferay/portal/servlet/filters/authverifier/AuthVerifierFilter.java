@@ -159,7 +159,11 @@ public class AuthVerifierFilter extends BasePortalFilter {
 		else if (!_guestAllowed &&
 				 (state == AuthVerifierResult.State.UNSUCCESSFUL)) {
 
-			_log.error("Guest is not allowed");
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Guest is not allowed to access " +
+						request.getRequestURI());
+			}
 		}
 		else if (_guestAllowed || (state == AuthVerifierResult.State.SUCCESS)) {
 			long userId = authVerifierResult.getUserId();

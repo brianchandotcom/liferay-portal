@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -23,6 +25,7 @@ import com.liferay.portlet.extra.config.ExtraPortletAppConfigRegistry;
 
 import java.util.Locale;
 
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -33,7 +36,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
+@ProviderType
 public class ResourceResponseImpl
 	extends MimeResponseImpl implements ResourceResponse {
 
@@ -61,7 +66,7 @@ public class ResourceResponseImpl
 
 	@Override
 	public LiferayPortletURL createLiferayPortletURL(
-		long plid, String portletName, String lifecycle,
+		long plid, String portletName, String lifecycle, MimeResponse.Copy copy,
 		boolean includeLinkToLayoutUuid) {
 
 		ResourceRequest resourceRequest = (ResourceRequest)getPortletRequest();
@@ -82,7 +87,7 @@ public class ResourceResponseImpl
 		}
 
 		return super.createLiferayPortletURL(
-			plid, portletName, lifecycle, includeLinkToLayoutUuid);
+			plid, portletName, lifecycle, copy, includeLinkToLayoutUuid);
 	}
 
 	@Override
@@ -92,7 +97,7 @@ public class ResourceResponseImpl
 
 	@Override
 	public int getStatus() {
-		throw new UnsupportedOperationException();
+		return response.getStatus();
 	}
 
 	@Override
@@ -109,7 +114,7 @@ public class ResourceResponseImpl
 
 	@Override
 	public void setContentLengthLong(long length) {
-		throw new UnsupportedOperationException();
+		response.setContentLengthLong(length);
 	}
 
 	@Override
@@ -164,7 +169,7 @@ public class ResourceResponseImpl
 
 	@Override
 	public void setStatus(int statusCode) {
-		throw new UnsupportedOperationException();
+		response.setStatus(statusCode);
 	}
 
 	private boolean _canSetLocaleEncoding = true;

@@ -18,7 +18,6 @@ import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
@@ -72,7 +71,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			return value;
 		}
 
-		return commerceCurrency.getCode() + StringPool.SPACE + value;
+		return value;
 	}
 
 	@Override

@@ -217,6 +217,7 @@ public class CommerceCurrencyLocalServiceImpl
 			String name = jsonObject.getString("name");
 			boolean primary = jsonObject.getBoolean("primary");
 			double priority = jsonObject.getDouble("priority");
+			String symbol = jsonObject.getString("symbol");
 
 			RoundingTypeConfiguration roundingTypeConfiguration =
 				_configurationProvider.getConfiguration(
@@ -230,7 +231,7 @@ public class CommerceCurrencyLocalServiceImpl
 			nameMap.put(serviceContext.getLocale(), name);
 			formatPatternMap.put(
 				serviceContext.getLocale(),
-				roundingTypeConfiguration.formatPattern());
+				symbol + roundingTypeConfiguration.formatPattern());
 
 			RoundingMode roundingMode =
 				roundingTypeConfiguration.roundingMode();

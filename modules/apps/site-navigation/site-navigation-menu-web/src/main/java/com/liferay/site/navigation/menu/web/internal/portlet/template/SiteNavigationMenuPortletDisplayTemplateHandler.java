@@ -16,8 +16,6 @@ package com.liferay.site.navigation.menu.web.internal.portlet.template;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
@@ -141,9 +139,6 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 
 		return templateVariableGroup;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationMenuPortletDisplayTemplateHandler.class);
 
 	@Reference
 	private Portal _portal;

@@ -45,7 +45,7 @@
 	</command>
 
 	<command name="addAttachmentViaPageEdit">
-		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="Link#WIKI_EDIT" value1="Edit" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panel" value="Attachments" />
@@ -742,7 +742,7 @@
 	</command>
 
 	<command name="editFrontPagePG">
-		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="Link#WIKI_EDIT" value1="Edit" />
 
 		<execute function="Pause" locator1="3000" />
 

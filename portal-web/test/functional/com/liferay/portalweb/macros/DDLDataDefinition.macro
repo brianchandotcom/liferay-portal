@@ -5,21 +5,10 @@
 
 	<command name="_add">
 		<if>
-			<condition function="IsElementNotPresent" locator1="Portlet#H3_MODAL_TITLE" />
+			<condition function="IsTextNotEqual" locator1="Portlet#HEADER" value1="Data Definitions" />
 			<then>
-				<var name="key_iframeTitle" value="Data Definitions" />
-
-				<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Data Definitions" />
-
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-				<var name="key_assetTitle" value="Data Definitions" />
-
-				<execute function="AssertTextEquals" locator1="NavBar#ASSET_TITLE" value1="Data Definitions" />
-			</then>
-			<else>
 				<execute function="AssertTextEquals" locator1="Portlet#H3_MODAL_TITLE" value1="Data Definitions" />
-			</else>
+			</then>
 		</if>
 
 		<execute macro="LexiconEntry#gotoAdd" />

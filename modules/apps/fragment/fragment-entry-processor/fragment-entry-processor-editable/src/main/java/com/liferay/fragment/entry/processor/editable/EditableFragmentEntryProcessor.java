@@ -41,7 +41,6 @@ import java.util.stream.Stream;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import org.osgi.service.component.annotations.Component;
@@ -140,10 +139,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		if (Objects.equals(mode, FragmentEntryLinkConstants.VIEW)) {
 			for (Element element : document.select(_LFR_EDITABLE)) {
-				TextNode textNode = new TextNode(
-					element.html(), StringPool.BLANK);
+				Document elementDocument = _getDocument(element.html());
 
-				element.replaceWith(textNode);
+				element.replaceWith(elementDocument.body());
 			}
 		}
 

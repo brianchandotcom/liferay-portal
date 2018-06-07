@@ -1,7 +1,7 @@
 task deployConfigs(type: Copy)
 
 dependencies {
-	compileInclude group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "0.0.1-20180605.092313-86"
+	compileInclude group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "0.0.1-20180606.152016-87"
 	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-soap", version: "3.2.4"
 	compileInclude group: "org.apache.cxf", name: "cxf-rt-bindings-xml", version: "3.2.4"
 	compileInclude group: "org.apache.cxf", name: "cxf-rt-wsdl", version: "3.2.4"

@@ -40,14 +40,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 />
 
 <clay:management-toolbar
-	actionDropdownItems="<%= viewUADEntitiesManagementToolbarDisplayContext.getActionDropdownItems() %>"
-	disabled="<%= viewUADEntitiesManagementToolbarDisplayContext.isDisabled() %>"
-	infoPanelId="<%= viewUADEntitiesManagementToolbarDisplayContext.getInfoPanelId() %>"
-	itemsTotal="<%= viewUADEntitiesManagementToolbarDisplayContext.getItemsTotal() %>"
-	searchContainerId="<%= viewUADEntitiesManagementToolbarDisplayContext.getSearchContainerId() %>"
-	selectable="<%= viewUADEntitiesManagementToolbarDisplayContext.isSelectable() %>"
-	showInfoButton="<%= viewUADEntitiesManagementToolbarDisplayContext.isShowInfoButton() %>"
-	showSearch="<%= viewUADEntitiesManagementToolbarDisplayContext.isShowSearch() %>"
+	displayContext="<%= viewUADEntitiesManagementToolbarDisplayContext %>"
 />
 
 <aui:form method="post" name="viewUADEntitiesFm">

@@ -5,33 +5,15 @@ Liferay.Loader.require.apply(
 			function(Component) {
 				var context = $CONTEXT;
 
-				var portletRefreshedHandler;
+				var destroyConfig = {
+					destroyOnNavigate: true,
+					portletId: context.portletId
+				};
 
-				var screenFlipHandler;
-
-				Liferay.component('$ID', new Component.default(context, '#$ID'));
-
-				if (context.portletId) {
-					portletRefreshedHandler = Liferay.once(
-						context.portletId + ':portletRefreshed',
-						function() {
-							if (screenFlipHandler) {
-								screenFlipHandler.detach();
-							}
-						}
-					);
-				}
-
-				screenFlipHandler = Liferay.once(
-					'beforeScreenFlip',
-					function() {
-						Liferay.component('$ID').dispose();
-						Liferay.component('$ID', null);
-
-						if (portletRefreshedHandler) {
-							portletRefreshedHandler.detach();
-						}
-					}
+				Liferay.component(
+					'$ID',
+					new Component.default(context, '#$ID'),
+					destroyConfig
 				);
 			},
 			function(error) {

@@ -297,7 +297,7 @@ Liferay = window.Liferay || {};
 		return promiseWrapper;
 	};
 
-	Liferay.component = function(id, value) {
+	Liferay.component = function(id, value, destroyConfig) {
 		var retVal;
 
 		if (arguments.length === 1) {
@@ -339,6 +339,10 @@ Liferay = window.Liferay || {};
 			}
 		}
 
+		if (retVal) {
+			retVal.__destroyConfig__ = destroyConfig;
+		}
+
 		return retVal;
 	};
 
@@ -377,6 +381,36 @@ Liferay = window.Liferay || {};
 		}
 
 		return componentPromise;
+	};
+
+	Liferay.destroyComponent = function(id) {
+		var component = components[id];
+
+		if (component) {
+			var destroyFn = component.destroy || component.dispose;
+
+			if (destroyFn) {
+				destroyFn.call(component);
+			}
+
+			delete componentPromiseWrappers[id];
+			delete componentsFn[id];
+			delete components[id];
+		}
+	};
+
+	Liferay.destroyAllComponents = function(filterFn) {
+		var componentIds = Object.keys(components);
+
+		if (filterFn) {
+			componentIds = componentIds.filter(
+				function(componentId) {
+					return filterFn(components[componentId].__destroyConfig__ || {});
+				}
+			)
+		}
+
+		componentIds.forEach(Liferay.destroyComponent);
 	};
 
 	Liferay._components = components;

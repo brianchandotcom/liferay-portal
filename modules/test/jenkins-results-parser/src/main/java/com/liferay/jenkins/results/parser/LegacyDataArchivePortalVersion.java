@@ -48,6 +48,11 @@ public class LegacyDataArchivePortalVersion {
 
 		_portalVersionTestDirectory = new File(_portalVersionDirectory, "test");
 
+		if (!_portalVersionTestDirectory.exists()) {
+			throw new RuntimeException(
+				_portalVersionDirectory + " does not exist.");
+		}
+
 		_dataArchiveTypes = _getDataArchiveTypes();
 		_databaseNames = _getDatabaseNames();
 		_latestTestCommit = _getLatestTestCommit();

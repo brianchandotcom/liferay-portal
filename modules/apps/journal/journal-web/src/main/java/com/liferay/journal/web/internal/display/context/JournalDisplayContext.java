@@ -806,7 +806,9 @@ public class JournalDisplayContext {
 							LanguageUtil.get(_request, "templates"));
 					});
 
-				if (PortalUtil.isRSSFeedsEnabled()) {
+				if (_journalWebConfiguration.showFeeds() &&
+					PortalUtil.isRSSFeedsEnabled()) {
+
 					add(
 						navigationItem -> {
 							navigationItem.setActive(

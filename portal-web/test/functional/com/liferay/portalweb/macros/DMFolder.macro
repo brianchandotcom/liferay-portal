@@ -26,6 +26,22 @@
 		</if>
 
 		<execute macro="PortletEntry#save" />
+
+		<if>
+			<isset var="siteName" />
+			<then>
+				<execute macro="ProductMenu#gotoSite">
+					<var name="site" value="${siteName}" />
+				</execute>
+
+				<execute macro="ProductMenu#gotoPortlet">
+					<var name="category" value="Content" />
+					<var name="panel" value="Site Administration" />
+					<var name="portlet" value="Documents and Media" />
+				</execute>
+			</then>
+		</if>
+
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />

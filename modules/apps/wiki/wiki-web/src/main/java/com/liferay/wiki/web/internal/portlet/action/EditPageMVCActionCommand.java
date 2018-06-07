@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.struts.StrutsActionPortletURL;
 import com.liferay.portlet.PortletResponseImpl;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
@@ -63,6 +63,7 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+import javax.portlet.filter.ActionResponseWrapper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -241,21 +242,32 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 
 		Layout layout = themeDisplay.getLayout();
 
-		PortletURLImpl portletURL = new StrutsActionPortletURL(
+		while (true) {
+			if (actionResponse instanceof ActionResponseWrapper) {
+				actionResponse =
+					((ActionResponseWrapper)actionResponse).getResponse();
+			}
+			else {
+				break;
+			}
+		}
+
+		LiferayPortletURL liferayPortletURL = new StrutsActionPortletURL(
 			(PortletResponseImpl)actionResponse, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
-		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
-		portletURL.setParameter("redirect", redirect, false);
-		portletURL.setParameter(
+		liferayPortletURL.setParameter(
+			"mvcRenderCommandName", "/wiki/edit_page");
+		liferayPortletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
+		liferayPortletURL.setParameter("redirect", redirect, false);
+		liferayPortletURL.setParameter(
 			"groupId", String.valueOf(layout.getGroupId()), false);
-		portletURL.setParameter(
+		liferayPortletURL.setParameter(
 			"nodeId", String.valueOf(page.getNodeId()), false);
-		portletURL.setParameter("title", page.getTitle(), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
+		liferayPortletURL.setParameter("title", page.getTitle(), false);
+		liferayPortletURL.setWindowState(actionRequest.getWindowState());
 
-		return portletURL.toString();
+		return liferayPortletURL.toString();
 	}
 
 	protected void restorePage(ActionRequest actionRequest) throws Exception {

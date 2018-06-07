@@ -214,10 +214,12 @@ if (Validator.isNotNull(keywords)) {
 											</div>
 										</c:when>
 										<c:otherwise>
-											<liferay-ui:icon
-												icon="<%= assetRenderer.getIconCssClass() %>"
-												markupView="lexicon"
-											/>
+											<span class="sticker sticker-secondary">
+												<liferay-ui:icon
+													icon="<%= assetRenderer.getIconCssClass() %>"
+													markupView="lexicon"
+												/>
+											</span>
 										</c:otherwise>
 									</c:choose>
 								</div>

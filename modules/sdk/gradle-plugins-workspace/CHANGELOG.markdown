@@ -195,7 +195,7 @@ Gradle plugin to the root project if the `target.platform.version` property in
 - [LPS-80281]: Update the [Liferay Gradle Plugins] dependency to version
 3.11.27.
 
-## 1.10.0 - *(Unreleased)*
+## 1.10.0 - 2018-05-26
 
 ### Added
 - [LPS-79453]: Add support for Ext OSGi modules.

@@ -151,6 +151,20 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceCountry setActive(long commerceCountryId, boolean active)
+		throws PortalException {
+
+		CommerceCountry commerceCountry =
+			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
+
+		CommercePermission.check(
+			getPermissionChecker(), commerceCountry.getGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
+
+		return commerceCountryLocalService.setActive(commerceCountryId, active);
+	}
+
+	@Override
 	public CommerceCountry updateCommerceCountry(
 			long commerceCountryId, Map<Locale, String> nameMap,
 			boolean billingAllowed, boolean shippingAllowed,

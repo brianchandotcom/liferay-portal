@@ -287,6 +287,20 @@ public class CommerceCountryLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
+	@Override
+	public CommerceCountry setActive(long commerceCountryId, boolean active)
+		throws PortalException {
+
+		CommerceCountry commerceCountry =
+			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
+
+		commerceCountry.setActive(active);
+
+		commerceCountryPersistence.update(commerceCountry);
+
+		return commerceCountry;
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceCountry updateCommerceCountry(

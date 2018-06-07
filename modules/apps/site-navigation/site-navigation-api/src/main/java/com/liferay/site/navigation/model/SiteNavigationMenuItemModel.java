@@ -21,8 +21,8 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SiteNavigationMenuItemModel extends BaseModel<SiteNavigationMenuItem>,
-	GroupedModel, ShardedModel {
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +64,23 @@ public interface SiteNavigationMenuItemModel extends BaseModel<SiteNavigationMen
 	 * @param primaryKey the primary key of this site navigation menu item
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this site navigation menu item.
+	 *
+	 * @return the uuid of this site navigation menu item
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this site navigation menu item.
+	 *
+	 * @param uuid the uuid of this site navigation menu item
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the site navigation menu item ID of this site navigation menu item.
@@ -279,6 +296,22 @@ public interface SiteNavigationMenuItemModel extends BaseModel<SiteNavigationMen
 	 * @param order the order of this site navigation menu item
 	 */
 	public void setOrder(int order);
+
+	/**
+	 * Returns the last publish date of this site navigation menu item.
+	 *
+	 * @return the last publish date of this site navigation menu item
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this site navigation menu item.
+	 *
+	 * @param lastPublishDate the last publish date of this site navigation menu item
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

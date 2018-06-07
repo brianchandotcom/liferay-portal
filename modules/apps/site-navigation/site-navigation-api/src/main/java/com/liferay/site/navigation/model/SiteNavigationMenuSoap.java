@@ -34,6 +34,7 @@ public class SiteNavigationMenuSoap implements Serializable {
 	public static SiteNavigationMenuSoap toSoapModel(SiteNavigationMenu model) {
 		SiteNavigationMenuSoap soapModel = new SiteNavigationMenuSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setSiteNavigationMenuId(model.getSiteNavigationMenuId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -44,6 +45,7 @@ public class SiteNavigationMenuSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
 		soapModel.setAuto(model.isAuto());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -97,6 +99,14 @@ public class SiteNavigationMenuSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setSiteNavigationMenuId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getSiteNavigationMenuId() {
@@ -183,6 +193,15 @@ public class SiteNavigationMenuSoap implements Serializable {
 		_auto = auto;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _siteNavigationMenuId;
 	private long _groupId;
 	private long _companyId;
@@ -193,4 +212,5 @@ public class SiteNavigationMenuSoap implements Serializable {
 	private String _name;
 	private int _type;
 	private boolean _auto;
+	private Date _lastPublishDate;
 }

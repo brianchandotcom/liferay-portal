@@ -65,9 +65,11 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(31);
 
-		sb.append("{siteNavigationMenuItemId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", siteNavigationMenuItemId=");
 		sb.append(siteNavigationMenuItemId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -93,6 +95,8 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		sb.append(typeSettings);
 		sb.append(", order=");
 		sb.append(order);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -101,6 +105,13 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 	@Override
 	public SiteNavigationMenuItem toEntityModel() {
 		SiteNavigationMenuItemImpl siteNavigationMenuItemImpl = new SiteNavigationMenuItemImpl();
+
+		if (uuid == null) {
+			siteNavigationMenuItemImpl.setUuid("");
+		}
+		else {
+			siteNavigationMenuItemImpl.setUuid(uuid);
+		}
 
 		siteNavigationMenuItemImpl.setSiteNavigationMenuItemId(siteNavigationMenuItemId);
 		siteNavigationMenuItemImpl.setGroupId(groupId);
@@ -154,6 +165,14 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 
 		siteNavigationMenuItemImpl.setOrder(order);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			siteNavigationMenuItemImpl.setLastPublishDate(null);
+		}
+		else {
+			siteNavigationMenuItemImpl.setLastPublishDate(new Date(
+					lastPublishDate));
+		}
+
 		siteNavigationMenuItemImpl.resetOriginalValues();
 
 		return siteNavigationMenuItemImpl;
@@ -161,6 +180,8 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		siteNavigationMenuItemId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -180,11 +201,19 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		typeSettings = objectInput.readUTF();
 
 		order = objectInput.readInt();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(siteNavigationMenuItemId);
 
 		objectOutput.writeLong(groupId);
@@ -229,8 +258,10 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		}
 
 		objectOutput.writeInt(order);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long siteNavigationMenuItemId;
 	public long groupId;
 	public long companyId;
@@ -244,4 +275,5 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 	public String type;
 	public String typeSettings;
 	public int order;
+	public long lastPublishDate;
 }

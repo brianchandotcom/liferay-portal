@@ -21,8 +21,8 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SiteNavigationMenuModel extends BaseModel<SiteNavigationMenu>,
-	GroupedModel, ShardedModel {
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +64,23 @@ public interface SiteNavigationMenuModel extends BaseModel<SiteNavigationMenu>,
 	 * @param primaryKey the primary key of this site navigation menu
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this site navigation menu.
+	 *
+	 * @return the uuid of this site navigation menu
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this site navigation menu.
+	 *
+	 * @param uuid the uuid of this site navigation menu
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the site navigation menu ID of this site navigation menu.
@@ -241,6 +258,22 @@ public interface SiteNavigationMenuModel extends BaseModel<SiteNavigationMenu>,
 	 * @param auto the auto of this site navigation menu
 	 */
 	public void setAuto(boolean auto);
+
+	/**
+	 * Returns the last publish date of this site navigation menu.
+	 *
+	 * @return the last publish date of this site navigation menu
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this site navigation menu.
+	 *
+	 * @param lastPublishDate the last publish date of this site navigation menu
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

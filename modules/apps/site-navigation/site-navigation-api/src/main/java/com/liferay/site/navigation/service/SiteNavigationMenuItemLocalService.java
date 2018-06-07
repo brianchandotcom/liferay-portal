@@ -16,8 +16,11 @@ package com.liferay.site.navigation.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -122,6 +125,8 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 
 	public void deleteSiteNavigationMenuItems(long siteNavigationMenuId);
 
+	public void deleteSiteNavigationMenuItemsByGroupId(long groupId);
+
 	public DynamicQuery dynamicQuery();
 
 	/**
@@ -185,8 +190,23 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	public SiteNavigationMenuItem fetchSiteNavigationMenuItem(
 		long siteNavigationMenuItemId);
 
+	/**
+	* Returns the site navigation menu item matching the UUID and group.
+	*
+	* @param uuid the site navigation menu item's UUID
+	* @param groupId the primary key of the group
+	* @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenuItem fetchSiteNavigationMenuItemByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -215,6 +235,18 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 		long siteNavigationMenuItemId) throws PortalException;
 
 	/**
+	* Returns the site navigation menu item matching the UUID and group.
+	*
+	* @param uuid the site navigation menu item's UUID
+	* @param groupId the primary key of the group
+	* @return the matching site navigation menu item
+	* @throws PortalException if a matching site navigation menu item could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SiteNavigationMenuItem getSiteNavigationMenuItemByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException;
+
+	/**
 	* Returns a range of all the site navigation menu items.
 	*
 	* <p>
@@ -238,6 +270,32 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 		long siteNavigationMenuId, long parentSiteNavigationMenuItemId);
 
 	/**
+	* Returns all the site navigation menu items matching the UUID and company.
+	*
+	* @param uuid the UUID of the site navigation menu items
+	* @param companyId the primary key of the company
+	* @return the matching site navigation menu items, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItemsByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	* Returns a range of site navigation menu items matching the UUID and company.
+	*
+	* @param uuid the UUID of the site navigation menu items
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of site navigation menu items
+	* @param end the upper bound of the range of site navigation menu items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching site navigation menu items, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItemsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator);
+
+	/**
 	* Returns the number of site navigation menu items.
 	*
 	* @return the number of site navigation menu items
@@ -248,6 +306,11 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 		int order) throws PortalException;
+
+	public SiteNavigationMenuItem updateSiteNavigationMenuItem(long userId,
+		long siteNavigationMenuItemId, long groupId, long siteNavigationMenuId,
+		long parentSiteNavigationMenuItemId, String type, int order,
+		String typeSettings) throws PortalException;
 
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(long userId,
 		long siteNavigationMenuItemId, String typeSettings,

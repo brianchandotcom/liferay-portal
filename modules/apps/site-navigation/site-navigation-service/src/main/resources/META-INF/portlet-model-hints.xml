@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.site.navigation.model.SiteNavigationMenu">
+		<field name="uuid" type="String" />
 		<field name="siteNavigationMenuId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -14,8 +15,10 @@
 		</field>
 		<field name="type" type="int" />
 		<field name="auto" type="boolean" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.site.navigation.model.SiteNavigationMenuItem">
+		<field name="uuid" type="String" />
 		<field name="siteNavigationMenuItemId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -33,5 +36,6 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="order" type="int" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

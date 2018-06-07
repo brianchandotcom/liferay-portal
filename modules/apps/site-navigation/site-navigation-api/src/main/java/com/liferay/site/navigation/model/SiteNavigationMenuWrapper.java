@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -58,6 +60,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("siteNavigationMenuId", getSiteNavigationMenuId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -68,12 +71,19 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 		attributes.put("auto", isAuto());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long siteNavigationMenuId = (Long)attributes.get("siteNavigationMenuId");
 
 		if (siteNavigationMenuId != null) {
@@ -133,6 +143,12 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		if (auto != null) {
 			setAuto(auto);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -188,6 +204,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public long getGroupId() {
 		return _siteNavigationMenu.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this site navigation menu.
+	*
+	* @return the last publish date of this site navigation menu
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _siteNavigationMenu.getLastPublishDate();
 	}
 
 	/**
@@ -278,6 +304,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public String getUserUuid() {
 		return _siteNavigationMenu.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this site navigation menu.
+	*
+	* @return the uuid of this site navigation menu
+	*/
+	@Override
+	public String getUuid() {
+		return _siteNavigationMenu.getUuid();
 	}
 
 	@Override
@@ -382,6 +418,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	/**
+	* Sets the last publish date of this site navigation menu.
+	*
+	* @param lastPublishDate the last publish date of this site navigation menu
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_siteNavigationMenu.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
 	* Sets the modified date of this site navigation menu.
 	*
 	* @param modifiedDate the modified date of this site navigation menu
@@ -471,6 +517,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		_siteNavigationMenu.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this site navigation menu.
+	*
+	* @param uuid the uuid of this site navigation menu
+	*/
+	@Override
+	public void setUuid(String uuid) {
+		_siteNavigationMenu.setUuid(uuid);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<SiteNavigationMenu> toCacheModel() {
 		return _siteNavigationMenu.toCacheModel();
@@ -514,6 +570,11 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _siteNavigationMenu.getStagedModelType();
 	}
 
 	@Override

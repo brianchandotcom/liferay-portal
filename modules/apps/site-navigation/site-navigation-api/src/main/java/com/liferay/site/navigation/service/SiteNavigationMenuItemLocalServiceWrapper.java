@@ -123,6 +123,11 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteSiteNavigationMenuItemsByGroupId(long groupId) {
+		_siteNavigationMenuItemLocalService.deleteSiteNavigationMenuItemsByGroupId(groupId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _siteNavigationMenuItemLocalService.dynamicQuery();
 	}
@@ -214,9 +219,29 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 		return _siteNavigationMenuItemLocalService.fetchSiteNavigationMenuItem(siteNavigationMenuItemId);
 	}
 
+	/**
+	* Returns the site navigation menu item matching the UUID and group.
+	*
+	* @param uuid the site navigation menu item's UUID
+	* @param groupId the primary key of the group
+	* @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
+	*/
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenuItem fetchSiteNavigationMenuItemByUuidAndGroupId(
+		String uuid, long groupId) {
+		return _siteNavigationMenuItemLocalService.fetchSiteNavigationMenuItemByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _siteNavigationMenuItemLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _siteNavigationMenuItemLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
@@ -256,6 +281,22 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	}
 
 	/**
+	* Returns the site navigation menu item matching the UUID and group.
+	*
+	* @param uuid the site navigation menu item's UUID
+	* @param groupId the primary key of the group
+	* @return the matching site navigation menu item
+	* @throws PortalException if a matching site navigation menu item could not be found
+	*/
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenuItem getSiteNavigationMenuItemByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItemByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
 	* Returns a range of all the site navigation menu items.
 	*
 	* <p>
@@ -287,6 +328,38 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	}
 
 	/**
+	* Returns all the site navigation menu items matching the UUID and company.
+	*
+	* @param uuid the UUID of the site navigation menu items
+	* @param companyId the primary key of the company
+	* @return the matching site navigation menu items, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getSiteNavigationMenuItemsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of site navigation menu items matching the UUID and company.
+	*
+	* @param uuid the UUID of the site navigation menu items
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of site navigation menu items
+	* @param end the upper bound of the range of site navigation menu items (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching site navigation menu items, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.site.navigation.model.SiteNavigationMenuItem> getSiteNavigationMenuItemsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.site.navigation.model.SiteNavigationMenuItem> orderByComparator) {
+		return _siteNavigationMenuItemLocalService.getSiteNavigationMenuItemsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of site navigation menu items.
 	*
 	* @return the number of site navigation menu items
@@ -302,6 +375,17 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 		int order) throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(siteNavigationMenuItemId,
 			parentSiteNavigationMenuItemId, order);
+	}
+
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
+		long userId, long siteNavigationMenuItemId, long groupId,
+		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+		String type, int order, String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(userId,
+			siteNavigationMenuItemId, groupId, siteNavigationMenuId,
+			parentSiteNavigationMenuItemId, type, order, typeSettings);
 	}
 
 	@Override

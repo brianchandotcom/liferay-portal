@@ -1,4 +1,5 @@
 create table SiteNavigationMenu (
+	uuid_ VARCHAR(75) null,
 	siteNavigationMenuId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -8,10 +9,12 @@ create table SiteNavigationMenu (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	type_ INTEGER,
-	auto_ BOOLEAN
+	auto_ BOOLEAN,
+	lastPublishDate DATE null
 );
 
 create table SiteNavigationMenuItem (
+	uuid_ VARCHAR(75) null,
 	siteNavigationMenuItemId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -24,5 +27,6 @@ create table SiteNavigationMenuItem (
 	name VARCHAR(255) null,
 	type_ VARCHAR(75) null,
 	typeSettings TEXT null,
-	order_ INTEGER
+	order_ INTEGER,
+	lastPublishDate DATE null
 );

@@ -65,9 +65,11 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{siteNavigationMenuId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", siteNavigationMenuId=");
 		sb.append(siteNavigationMenuId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -87,6 +89,8 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		sb.append(type);
 		sb.append(", auto=");
 		sb.append(auto);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -95,6 +99,13 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 	@Override
 	public SiteNavigationMenu toEntityModel() {
 		SiteNavigationMenuImpl siteNavigationMenuImpl = new SiteNavigationMenuImpl();
+
+		if (uuid == null) {
+			siteNavigationMenuImpl.setUuid("");
+		}
+		else {
+			siteNavigationMenuImpl.setUuid(uuid);
+		}
 
 		siteNavigationMenuImpl.setSiteNavigationMenuId(siteNavigationMenuId);
 		siteNavigationMenuImpl.setGroupId(groupId);
@@ -132,6 +143,13 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		siteNavigationMenuImpl.setType(type);
 		siteNavigationMenuImpl.setAuto(auto);
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			siteNavigationMenuImpl.setLastPublishDate(null);
+		}
+		else {
+			siteNavigationMenuImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		siteNavigationMenuImpl.resetOriginalValues();
 
 		return siteNavigationMenuImpl;
@@ -139,6 +157,8 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		siteNavigationMenuId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -154,11 +174,19 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		type = objectInput.readInt();
 
 		auto = objectInput.readBoolean();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(siteNavigationMenuId);
 
 		objectOutput.writeLong(groupId);
@@ -187,8 +215,10 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		objectOutput.writeInt(type);
 
 		objectOutput.writeBoolean(auto);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long siteNavigationMenuId;
 	public long groupId;
 	public long companyId;
@@ -199,4 +229,5 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 	public String name;
 	public int type;
 	public boolean auto;
+	public long lastPublishDate;
 }

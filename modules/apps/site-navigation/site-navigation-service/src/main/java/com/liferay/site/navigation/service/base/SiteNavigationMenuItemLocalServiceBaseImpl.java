@@ -16,6 +16,12 @@ package com.liferay.site.navigation.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -25,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,6 +51,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.persistence.SiteNavigationMenuItemPersistence;
+import com.liferay.site.navigation.service.persistence.SiteNavigationMenuPersistence;
 
 import java.io.Serializable;
 
@@ -218,6 +226,19 @@ public abstract class SiteNavigationMenuItemLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the site navigation menu item matching the UUID and group.
+	 *
+	 * @param uuid the site navigation menu item's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
+	 */
+	@Override
+	public SiteNavigationMenuItem fetchSiteNavigationMenuItemByUuidAndGroupId(
+		String uuid, long groupId) {
+		return siteNavigationMenuItemPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the site navigation menu item with the primary key.
 	 *
 	 * @param siteNavigationMenuItemId the primary key of the site navigation menu item
@@ -268,6 +289,61 @@ public abstract class SiteNavigationMenuItemLocalServiceBaseImpl
 			"siteNavigationMenuItemId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<SiteNavigationMenuItem>() {
+				@Override
+				public void performAction(
+					SiteNavigationMenuItem siteNavigationMenuItem)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						siteNavigationMenuItem);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(
+					SiteNavigationMenuItem.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -281,6 +357,51 @@ public abstract class SiteNavigationMenuItemLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return siteNavigationMenuItemPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns all the site navigation menu items matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the site navigation menu items
+	 * @param companyId the primary key of the company
+	 * @return the matching site navigation menu items, or an empty list if no matches were found
+	 */
+	@Override
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItemsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return siteNavigationMenuItemPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of site navigation menu items matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the site navigation menu items
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of site navigation menu items
+	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching site navigation menu items, or an empty list if no matches were found
+	 */
+	@Override
+	public List<SiteNavigationMenuItem> getSiteNavigationMenuItemsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
+		return siteNavigationMenuItemPersistence.findByUuid_C(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the site navigation menu item matching the UUID and group.
+	 *
+	 * @param uuid the site navigation menu item's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching site navigation menu item
+	 * @throws PortalException if a matching site navigation menu item could not be found
+	 */
+	@Override
+	public SiteNavigationMenuItem getSiteNavigationMenuItemByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException {
+		return siteNavigationMenuItemPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -436,6 +557,44 @@ public abstract class SiteNavigationMenuItemLocalServiceBaseImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the site navigation menu local service.
+	 *
+	 * @return the site navigation menu local service
+	 */
+	public com.liferay.site.navigation.service.SiteNavigationMenuLocalService getSiteNavigationMenuLocalService() {
+		return siteNavigationMenuLocalService;
+	}
+
+	/**
+	 * Sets the site navigation menu local service.
+	 *
+	 * @param siteNavigationMenuLocalService the site navigation menu local service
+	 */
+	public void setSiteNavigationMenuLocalService(
+		com.liferay.site.navigation.service.SiteNavigationMenuLocalService siteNavigationMenuLocalService) {
+		this.siteNavigationMenuLocalService = siteNavigationMenuLocalService;
+	}
+
+	/**
+	 * Returns the site navigation menu persistence.
+	 *
+	 * @return the site navigation menu persistence
+	 */
+	public SiteNavigationMenuPersistence getSiteNavigationMenuPersistence() {
+		return siteNavigationMenuPersistence;
+	}
+
+	/**
+	 * Sets the site navigation menu persistence.
+	 *
+	 * @param siteNavigationMenuPersistence the site navigation menu persistence
+	 */
+	public void setSiteNavigationMenuPersistence(
+		SiteNavigationMenuPersistence siteNavigationMenuPersistence) {
+		this.siteNavigationMenuPersistence = siteNavigationMenuPersistence;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.site.navigation.model.SiteNavigationMenuItem",
 			siteNavigationMenuItemLocalService);
@@ -500,6 +659,10 @@ public abstract class SiteNavigationMenuItemLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@BeanReference(type = com.liferay.site.navigation.service.SiteNavigationMenuLocalService.class)
+	protected com.liferay.site.navigation.service.SiteNavigationMenuLocalService siteNavigationMenuLocalService;
+	@BeanReference(type = SiteNavigationMenuPersistence.class)
+	protected SiteNavigationMenuPersistence siteNavigationMenuPersistence;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

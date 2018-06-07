@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -55,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -122,6 +124,8 @@ public class SiteNavigationMenuPersistenceTest {
 
 		SiteNavigationMenu newSiteNavigationMenu = _persistence.create(pk);
 
+		newSiteNavigationMenu.setUuid(RandomTestUtil.randomString());
+
 		newSiteNavigationMenu.setGroupId(RandomTestUtil.nextLong());
 
 		newSiteNavigationMenu.setCompanyId(RandomTestUtil.nextLong());
@@ -140,10 +144,14 @@ public class SiteNavigationMenuPersistenceTest {
 
 		newSiteNavigationMenu.setAuto(RandomTestUtil.randomBoolean());
 
+		newSiteNavigationMenu.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_siteNavigationMenus.add(_persistence.update(newSiteNavigationMenu));
 
 		SiteNavigationMenu existingSiteNavigationMenu = _persistence.findByPrimaryKey(newSiteNavigationMenu.getPrimaryKey());
 
+		Assert.assertEquals(existingSiteNavigationMenu.getUuid(),
+			newSiteNavigationMenu.getUuid());
 		Assert.assertEquals(existingSiteNavigationMenu.getSiteNavigationMenuId(),
 			newSiteNavigationMenu.getSiteNavigationMenuId());
 		Assert.assertEquals(existingSiteNavigationMenu.getGroupId(),
@@ -166,6 +174,36 @@ public class SiteNavigationMenuPersistenceTest {
 			newSiteNavigationMenu.getType());
 		Assert.assertEquals(existingSiteNavigationMenu.isAuto(),
 			newSiteNavigationMenu.isAuto());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingSiteNavigationMenu.getLastPublishDate()),
+			Time.getShortTimestamp(newSiteNavigationMenu.getLastPublishDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -230,9 +268,10 @@ public class SiteNavigationMenuPersistenceTest {
 
 	protected OrderByComparator<SiteNavigationMenu> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SiteNavigationMenu",
-			"siteNavigationMenuId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "type", true, "auto", true);
+			"uuid", true, "siteNavigationMenuId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "type", true, "auto",
+			true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -430,11 +469,30 @@ public class SiteNavigationMenuPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		SiteNavigationMenu newSiteNavigationMenu = addSiteNavigationMenu();
+
+		_persistence.clearCache();
+
+		SiteNavigationMenu existingSiteNavigationMenu = _persistence.findByPrimaryKey(newSiteNavigationMenu.getPrimaryKey());
+
+		Assert.assertTrue(Objects.equals(existingSiteNavigationMenu.getUuid(),
+				ReflectionTestUtil.invoke(existingSiteNavigationMenu,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingSiteNavigationMenu.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteNavigationMenu,
+				"getOriginalGroupId", new Class<?>[0]));
+	}
+
 	protected SiteNavigationMenu addSiteNavigationMenu()
 		throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		SiteNavigationMenu siteNavigationMenu = _persistence.create(pk);
+
+		siteNavigationMenu.setUuid(RandomTestUtil.randomString());
 
 		siteNavigationMenu.setGroupId(RandomTestUtil.nextLong());
 
@@ -453,6 +511,8 @@ public class SiteNavigationMenuPersistenceTest {
 		siteNavigationMenu.setType(RandomTestUtil.nextInt());
 
 		siteNavigationMenu.setAuto(RandomTestUtil.randomBoolean());
+
+		siteNavigationMenu.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_siteNavigationMenus.add(_persistence.update(siteNavigationMenu));
 

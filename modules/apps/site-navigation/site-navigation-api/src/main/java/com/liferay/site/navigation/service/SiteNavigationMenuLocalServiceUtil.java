@@ -133,6 +133,10 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().deleteSiteNavigationMenu(siteNavigationMenu);
 	}
 
+	public static void deleteSiteNavigationMenus(long groupId) {
+		getService().deleteSiteNavigationMenus(groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}
@@ -226,6 +230,19 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().fetchSiteNavigationMenu(groupId, type);
 	}
 
+	/**
+	* Returns the site navigation menu matching the UUID and group.
+	*
+	* @param uuid the site navigation menu's UUID
+	* @param groupId the primary key of the group
+	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	*/
+	public static com.liferay.site.navigation.model.SiteNavigationMenu fetchSiteNavigationMenuByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService()
+				   .fetchSiteNavigationMenuByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -233,6 +250,11 @@ public class SiteNavigationMenuLocalServiceUtil {
 	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getAutoSiteNavigationMenus(
 		long groupId) {
 		return getService().getAutoSiteNavigationMenus(groupId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -265,6 +287,20 @@ public class SiteNavigationMenuLocalServiceUtil {
 		long siteNavigationMenuId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSiteNavigationMenu(siteNavigationMenuId);
+	}
+
+	/**
+	* Returns the site navigation menu matching the UUID and group.
+	*
+	* @param uuid the site navigation menu's UUID
+	* @param groupId the primary key of the group
+	* @return the matching site navigation menu
+	* @throws PortalException if a matching site navigation menu could not be found
+	*/
+	public static com.liferay.site.navigation.model.SiteNavigationMenu getSiteNavigationMenuByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSiteNavigationMenuByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -305,6 +341,37 @@ public class SiteNavigationMenuLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the site navigation menus matching the UUID and company.
+	*
+	* @param uuid the UUID of the site navigation menus
+	* @param companyId the primary key of the company
+	* @return the matching site navigation menus, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenusByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return getService()
+				   .getSiteNavigationMenusByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of site navigation menus matching the UUID and company.
+	*
+	* @param uuid the UUID of the site navigation menus
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of site navigation menus
+	* @param end the upper bound of the range of site navigation menus (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching site navigation menus, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.site.navigation.model.SiteNavigationMenu> getSiteNavigationMenusByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.site.navigation.model.SiteNavigationMenu> orderByComparator) {
+		return getService()
+				   .getSiteNavigationMenusByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of site navigation menus.
 	*
 	* @return the number of site navigation menus
@@ -328,6 +395,15 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService()
 				   .updateSiteNavigationMenu(userId, siteNavigationMenuId,
 			type, auto, serviceContext);
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
+		long userId, long siteNavigationMenuId, long groupId, String name,
+		int type, boolean auto)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSiteNavigationMenu(userId, siteNavigationMenuId,
+			groupId, name, type, auto);
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(

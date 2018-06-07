@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -59,6 +61,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("siteNavigationMenuItemId", getSiteNavigationMenuItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -73,12 +76,19 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("order", getOrder());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long siteNavigationMenuItemId = (Long)attributes.get(
 				"siteNavigationMenuItemId");
 
@@ -158,6 +168,12 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		if (order != null) {
 			setOrder(order);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -203,6 +219,16 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	@Override
 	public long getGroupId() {
 		return _siteNavigationMenuItem.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this site navigation menu item.
+	*
+	* @return the last publish date of this site navigation menu item
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _siteNavigationMenuItem.getLastPublishDate();
 	}
 
 	/**
@@ -330,6 +356,16 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		return _siteNavigationMenuItem.getUserUuid();
 	}
 
+	/**
+	* Returns the uuid of this site navigation menu item.
+	*
+	* @return the uuid of this site navigation menu item
+	*/
+	@Override
+	public String getUuid() {
+		return _siteNavigationMenuItem.getUuid();
+	}
+
 	@Override
 	public int hashCode() {
 		return _siteNavigationMenuItem.hashCode();
@@ -404,6 +440,16 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	@Override
 	public void setGroupId(long groupId) {
 		_siteNavigationMenuItem.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this site navigation menu item.
+	*
+	* @param lastPublishDate the last publish date of this site navigation menu item
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_siteNavigationMenuItem.setLastPublishDate(lastPublishDate);
 	}
 
 	/**
@@ -537,6 +583,16 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		_siteNavigationMenuItem.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this site navigation menu item.
+	*
+	* @param uuid the uuid of this site navigation menu item
+	*/
+	@Override
+	public void setUuid(String uuid) {
+		_siteNavigationMenuItem.setUuid(uuid);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<SiteNavigationMenuItem> toCacheModel() {
 		return _siteNavigationMenuItem.toCacheModel();
@@ -580,6 +636,11 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _siteNavigationMenuItem.getStagedModelType();
 	}
 
 	@Override

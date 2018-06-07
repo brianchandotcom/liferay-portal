@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -70,6 +73,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	 */
 	public static final String TABLE_NAME = "SiteNavigationMenuItem";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "siteNavigationMenuItemId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -82,11 +86,13 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 			{ "name", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB },
-			{ "order_", Types.INTEGER }
+			{ "order_", Types.INTEGER },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("siteNavigationMenuItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -100,9 +106,10 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("order_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenuItem (siteNavigationMenuItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentSiteNavigationMenuItemId LONG,name VARCHAR(255) null,type_ VARCHAR(75) null,typeSettings TEXT null,order_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenuItem (uuid_ VARCHAR(75) null,siteNavigationMenuItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentSiteNavigationMenuItemId LONG,name VARCHAR(255) null,type_ VARCHAR(75) null,typeSettings TEXT null,order_ INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenuItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY siteNavigationMenuItem.siteNavigationMenuItemId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SiteNavigationMenuItem.siteNavigationMenuItemId ASC";
@@ -118,10 +125,13 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.site.navigation.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.site.navigation.model.SiteNavigationMenuItem"),
 			true);
-	public static final long NAME_COLUMN_BITMASK = 1L;
-	public static final long PARENTSITENAVIGATIONMENUITEMID_COLUMN_BITMASK = 2L;
-	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 4L;
-	public static final long SITENAVIGATIONMENUITEMID_COLUMN_BITMASK = 8L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long PARENTSITENAVIGATIONMENUITEMID_COLUMN_BITMASK = 8L;
+	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long SITENAVIGATIONMENUITEMID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -137,6 +147,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 		SiteNavigationMenuItem model = new SiteNavigationMenuItemImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setSiteNavigationMenuItemId(soapModel.getSiteNavigationMenuItemId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -150,6 +161,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		model.setType(soapModel.getType());
 		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setOrder(soapModel.getOrder());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -215,6 +227,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("siteNavigationMenuItemId", getSiteNavigationMenuItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -229,6 +242,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("order", getOrder());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -238,6 +252,12 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long siteNavigationMenuItemId = (Long)attributes.get(
 				"siteNavigationMenuItemId");
 
@@ -317,6 +337,36 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		if (order != null) {
 			setOrder(order);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -338,7 +388,19 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@JSON
@@ -349,7 +411,19 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -539,6 +613,23 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		_order = order;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				SiteNavigationMenuItem.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -570,6 +661,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	public Object clone() {
 		SiteNavigationMenuItemImpl siteNavigationMenuItemImpl = new SiteNavigationMenuItemImpl();
 
+		siteNavigationMenuItemImpl.setUuid(getUuid());
 		siteNavigationMenuItemImpl.setSiteNavigationMenuItemId(getSiteNavigationMenuItemId());
 		siteNavigationMenuItemImpl.setGroupId(getGroupId());
 		siteNavigationMenuItemImpl.setCompanyId(getCompanyId());
@@ -583,6 +675,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		siteNavigationMenuItemImpl.setType(getType());
 		siteNavigationMenuItemImpl.setTypeSettings(getTypeSettings());
 		siteNavigationMenuItemImpl.setOrder(getOrder());
+		siteNavigationMenuItemImpl.setLastPublishDate(getLastPublishDate());
 
 		siteNavigationMenuItemImpl.resetOriginalValues();
 
@@ -645,6 +738,16 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	public void resetOriginalValues() {
 		SiteNavigationMenuItemModelImpl siteNavigationMenuItemModelImpl = this;
 
+		siteNavigationMenuItemModelImpl._originalUuid = siteNavigationMenuItemModelImpl._uuid;
+
+		siteNavigationMenuItemModelImpl._originalGroupId = siteNavigationMenuItemModelImpl._groupId;
+
+		siteNavigationMenuItemModelImpl._setOriginalGroupId = false;
+
+		siteNavigationMenuItemModelImpl._originalCompanyId = siteNavigationMenuItemModelImpl._companyId;
+
+		siteNavigationMenuItemModelImpl._setOriginalCompanyId = false;
+
 		siteNavigationMenuItemModelImpl._setModifiedDate = false;
 
 		siteNavigationMenuItemModelImpl._originalSiteNavigationMenuId = siteNavigationMenuItemModelImpl._siteNavigationMenuId;
@@ -663,6 +766,14 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	@Override
 	public CacheModel<SiteNavigationMenuItem> toCacheModel() {
 		SiteNavigationMenuItemCacheModel siteNavigationMenuItemCacheModel = new SiteNavigationMenuItemCacheModel();
+
+		siteNavigationMenuItemCacheModel.uuid = getUuid();
+
+		String uuid = siteNavigationMenuItemCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			siteNavigationMenuItemCacheModel.uuid = null;
+		}
 
 		siteNavigationMenuItemCacheModel.siteNavigationMenuItemId = getSiteNavigationMenuItemId();
 
@@ -728,14 +839,25 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 		siteNavigationMenuItemCacheModel.order = getOrder();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			siteNavigationMenuItemCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			siteNavigationMenuItemCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return siteNavigationMenuItemCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(31);
 
-		sb.append("{siteNavigationMenuItemId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", siteNavigationMenuItemId=");
 		sb.append(getSiteNavigationMenuItemId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -761,6 +883,8 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		sb.append(getTypeSettings());
 		sb.append(", order=");
 		sb.append(getOrder());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -768,12 +892,16 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.site.navigation.model.SiteNavigationMenuItem");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>siteNavigationMenuItemId</column-name><column-value><![CDATA[");
 		sb.append(getSiteNavigationMenuItemId());
@@ -826,6 +954,10 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 			"<column><column-name>order</column-name><column-value><![CDATA[");
 		sb.append(getOrder());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -836,9 +968,15 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			SiteNavigationMenuItem.class, ModelWrapper.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _siteNavigationMenuItemId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -855,6 +993,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	private String _type;
 	private String _typeSettings;
 	private int _order;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private SiteNavigationMenuItem _escapedModel;
 }

@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.site.navigation">
 	<namespace>SiteNavigation</namespace>
-	<entity local-service="true" name="SiteNavigationMenu" remote-service="true">
+	<entity local-service="true" name="SiteNavigationMenu" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -26,6 +26,7 @@
 		<column accessor="true" name="name" type="String" />
 		<column name="type" type="int" />
 		<column name="auto" type="boolean" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -52,7 +53,7 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="SiteNavigationMenuItem" package-path="com.liferay.site.navigation" />
 	</entity>
-	<entity local-service="true" name="SiteNavigationMenuItem" remote-service="true">
+	<entity local-service="true" name="SiteNavigationMenuItem" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -78,6 +79,7 @@
 		<column name="type" type="String" />
 		<column name="typeSettings" type="String" />
 		<column name="order" type="int" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Finder methods -->
 
@@ -100,6 +102,7 @@
 
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="SiteNavigationMenu" package-path="com.liferay.site.navigation" />
 	</entity>
 	<exceptions>
 		<exception>InvalidSiteNavigationMenuItemOrder</exception>

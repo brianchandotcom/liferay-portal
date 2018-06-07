@@ -2423,8 +2423,6 @@
 		</execute>
 
 		<execute macro="DMDocument#viewPGDetails">
-			<var name="searchTerm" value="DM Document Title" />
-			<var name="portletName" value="Documents and Media" />
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentRelatedAsset" value="true" />
@@ -2432,7 +2430,9 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 			<var name="dmDocumentUploader" value="Test Test" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
-			<var name="workflow" value="Approved" />
+			<var name="portletName" value="Documents and Media" />
+			<var name="searchTerm" value="DM Document Title" />
+			<var name="workflow" value="APPROVED" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2461,8 +2461,6 @@
 		</execute>
 
 		<execute macro="DMDocument#viewPGDetails">
-			<var name="searchTerm" value="DM Document Title" />
-			<var name="portletName" value="Documents and Media" />
 			<var name="assetTitle" value="Blogs Entry Title" />
 			<var name="dmDocumentDescription" value="DM Document Description Edit" />
 			<var name="dmDocumentRelatedAsset" value="true" />
@@ -2470,7 +2468,9 @@
 			<var name="dmDocumentTitle" value="DM Document Title Edit" />
 			<var name="dmDocumentUploader" value="Test Test" />
 			<var name="dmDocumentVersionNumber" value="1.1" />
-			<var name="workflow" value="Approved" />
+			<var name="portletName" value="Documents and Media" />
+			<var name="searchTerm" value="DM Document Title" />
+			<var name="workflow" value="APPROVED" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

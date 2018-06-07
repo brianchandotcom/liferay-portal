@@ -350,17 +350,19 @@ public class FragmentEntryLinkLocalServiceImpl
 	private void _updateBaseModel(long classNameId, long classPK)
 		throws PortalException {
 
-		if (classNameId == _portal.getClassNameId(Layout.class)) {
-			Layout layout = _layoutLocalService.fetchLayout(classPK);
-
-			if (layout == null) {
-				return;
-			}
-
-			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getTypeSettings());
+		if (classNameId != _portal.getClassNameId(Layout.class)) {
+			return;
 		}
+
+		Layout layout = _layoutLocalService.fetchLayout(classPK);
+
+		if (layout == null) {
+			return;
+		}
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 	@ServiceReference(type = FragmentEntryProcessorRegistry.class)

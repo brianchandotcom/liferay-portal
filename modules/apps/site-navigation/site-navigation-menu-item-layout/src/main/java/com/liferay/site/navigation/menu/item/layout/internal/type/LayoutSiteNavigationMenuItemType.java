@@ -21,7 +21,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutType;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -182,6 +185,18 @@ public class LayoutSiteNavigationMenuItemType
 		Layout layout = _getLayout(siteNavigationMenuItem);
 
 		return layout.getName(languageId);
+	}
+
+	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws PortalException {
+
+		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		return LayoutPermissionUtil.contains(
+			permissionChecker, layout.getPlid(), ActionKeys.VIEW);
 	}
 
 	@Override

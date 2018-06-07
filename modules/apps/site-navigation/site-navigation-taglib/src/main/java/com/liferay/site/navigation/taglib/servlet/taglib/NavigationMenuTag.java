@@ -34,6 +34,7 @@ import com.liferay.site.navigation.taglib.internal.portlet.display.template.Port
 import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItem;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -239,9 +240,27 @@ public class NavigationMenuTag extends IncludeTag {
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {
 
-			navItems.add(
-				new SiteNavigationMenuNavItem(
-					request, themeDisplay, siteNavigationMenuItem));
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				ServletContextUtil.getSiteNavigationMenuItemType(
+					siteNavigationMenuItem.getType());
+
+			try {
+				if (!siteNavigationMenuItemType.hasPermission(
+						themeDisplay.getPermissionChecker(),
+						siteNavigationMenuItem)) {
+
+					continue;
+				}
+
+				navItems.add(
+					new SiteNavigationMenuNavItem(
+						request, themeDisplay, siteNavigationMenuItem));
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
 		}
 
 		return navItems;

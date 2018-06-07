@@ -255,113 +255,113 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 		Map<String, Object> context = getContext();
 
-		if (context.get("actionDropdownItems") != null) {
+		if (context.get("actionDropdownItems") == null) {
 			setActionDropdownItems(
 				managementToolbarDisplayContext.getActionDropdownItems());
 		}
 
-		if (context.get("clearResultsURL") != null) {
+		if (context.get("clearResultsURL") == null) {
 			setClearResultsURL(
 				managementToolbarDisplayContext.getClearResultsURL());
 		}
 
-		if (context.get("contentRenderer") != null) {
+		if (context.get("contentRenderer") == null) {
 			setContentRenderer(
 				managementToolbarDisplayContext.getContentRenderer());
 		}
 
-		if (context.get("creationMenu") != null) {
+		if (context.get("creationMenu") == null) {
 			setCreationMenu(managementToolbarDisplayContext.getCreationMenu());
 		}
 
-		if (context.get("disabled") != null) {
+		if (context.get("disabled") == null) {
 			setDisabled(managementToolbarDisplayContext.isDisabled());
 		}
 
-		if (context.get("filterDropdownItems") != null) {
+		if (context.get("filterDropdownItems") == null) {
 			setFilterDropdownItems(
 				managementToolbarDisplayContext.getFilterDropdownItems());
 		}
 
-		if (context.get("infoPanelId") != null) {
+		if (context.get("infoPanelId") == null) {
 			setInfoPanelId(managementToolbarDisplayContext.getInfoPanelId());
 		}
 
-		if (context.get("itemsTotal") != null) {
+		if (context.get("itemsTotal") == null) {
 			setItemsTotal(managementToolbarDisplayContext.getItemsTotal());
 		}
 
-		if (context.get("searchActionURL") != null) {
+		if (context.get("searchActionURL") == null) {
 			setSearchActionURL(
 				managementToolbarDisplayContext.getSearchActionURL());
 		}
 
-		if (context.get("searchContainerId") != null) {
+		if (context.get("searchContainerId") == null) {
 			setSearchContainerId(
 				managementToolbarDisplayContext.getSearchContainerId());
 		}
 
-		if (context.get("searchFormMethod") != null) {
+		if (context.get("searchFormMethod") == null) {
 			setSearchFormMethod(
 				managementToolbarDisplayContext.getSearchFormMethod());
 		}
 
-		if (context.get("searchFormName") != null) {
+		if (context.get("searchFormName") == null) {
 			setSearchFormName(
 				managementToolbarDisplayContext.getSearchFormName());
 		}
 
-		if (context.get("searchInputName") != null) {
+		if (context.get("searchInputName") == null) {
 			setSearchInputName(
 				managementToolbarDisplayContext.getSearchInputName());
 		}
 
-		if (context.get("searchValue") != null) {
+		if (context.get("searchValue") == null) {
 			setSearchValue(managementToolbarDisplayContext.getSearchValue());
 		}
 
-		if (context.get("selectable") != null) {
+		if (context.get("selectable") == null) {
 			setSelectable(managementToolbarDisplayContext.isSelectable());
 		}
 
-		if (context.get("selectedItems") != null) {
+		if (context.get("selectedItems") == null) {
 			setSelectedItems(
 				managementToolbarDisplayContext.getSelectedItems());
 		}
 
-		if (context.get("showAdvancedSearch") != null) {
+		if (context.get("showAdvancedSearch") == null) {
 			setShowAdvancedSearch(
 				managementToolbarDisplayContext.isShowAdvancedSearch());
 		}
 
-		if (context.get("showCreationMenu") != null) {
+		if (context.get("showCreationMenu") == null) {
 			setShowCreationMenu(
 				managementToolbarDisplayContext.isShowCreationMenu());
 		}
 
-		if (context.get("showFiltersDoneButton") != null) {
+		if (context.get("showFiltersDoneButton") == null) {
 			setShowFiltersDoneButton(
 				managementToolbarDisplayContext.isShowFiltersDoneButton());
 		}
 
-		if (context.get("showInfoButton") != null) {
+		if (context.get("showInfoButton") == null) {
 			setShowInfoButton(
 				managementToolbarDisplayContext.isShowInfoButton());
 		}
 
-		if (context.get("showSearch") != null) {
+		if (context.get("showSearch") == null) {
 			setShowSearch(managementToolbarDisplayContext.isShowSearch());
 		}
 
-		if (context.get("sortingOrder") != null) {
+		if (context.get("sortingOrder") == null) {
 			setSortingOrder(managementToolbarDisplayContext.getSortingOrder());
 		}
 
-		if (context.get("sortingURL") != null) {
+		if (context.get("sortingURL") == null) {
 			setSortingURL(managementToolbarDisplayContext.getSortingURL());
 		}
 
-		if (context.get("viewTypeItems") != null) {
+		if (context.get("viewTypeItems") == null) {
 			setViewTypeItems(
 				managementToolbarDisplayContext.getViewTypeItems());
 		}

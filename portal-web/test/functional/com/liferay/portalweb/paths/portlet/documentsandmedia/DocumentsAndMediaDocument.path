@@ -92,12 +92,12 @@
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RELATED_ASSETS_HEADER</td>
-	<td>//h2[contains(@class,'asset-links-title')]</td>
+	<td>//div[contains(@class,'document-info')]//h2[contains(@class,'asset-links-title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_INFO_RELATED_ASSETS_TITLE</td>
-	<td>//li[@class='asset-links-list-item']//a</td>
+	<td>//div[contains(@class,'document-info')]//li[@class='asset-links-list-item']//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -168,7 +168,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_DOWNLOAD</td>
-	<td>//span[@class='download-document']/span/a/span[contains(.,'Download (${key_dmDocumentSize})')]</td>
+	<td>//div[@class='sidebar-section']//a[@title='Download (${key_dmDocumentSize})']</td>
 	<td></td>
 </tr>
 <tr>
@@ -193,12 +193,12 @@
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_UPLOADER</td>
-	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Created')]/../../..//dd[contains(.,'${key_dmDocumentUploader}')]</td>
+	<td>//div[contains(@class,'sidebar-body')]//dt[contains(.,'Created')]/following-sibling::dd[contains(.,'${key_dmDocumentUploader}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DOCUMENT_DETAILS_URL</td>
-	<td>//div[contains(@class,'sidebar-body')]//span[@class='webdav-url']</td>
+	<td>//div[contains(@class,'sidebar-section')]//label[contains(.,'URL')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -212,8 +212,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_DETAILS_WEBDAV_URL</td>
+	<td>//div[contains(@class,'sidebar-section')]//label[contains(.,'WebDAV URL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_DETAILS_WORKFLOW</td>
-	<td>//div[contains(@class,'sidebar-body')]//span[contains(@class,'workflow-status')]</td>
+	<td>//div[contains(@class,'sidebar-header')]//span[contains(@class,'workflow-status')]</td>
 	<td></td>
 </tr>
 <tr>

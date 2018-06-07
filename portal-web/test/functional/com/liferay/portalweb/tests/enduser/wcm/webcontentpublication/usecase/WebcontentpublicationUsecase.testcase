@@ -2430,7 +2430,9 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 			<var name="dmDocumentUploader" value="Test Test" />
 			<var name="dmDocumentVersionNumber" value="1.0" />
-			<var name="workflow" value="Approved" />
+			<var name="portletName" value="Documents and Media" />
+			<var name="searchTerm" value="DM Document Title" />
+			<var name="workflow" value="APPROVED" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2443,8 +2445,8 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Portlet#changeDisplayStyle">
-			<var name="displayStyle" value="descriptive" />
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
 		</execute>
 
 		<execute macro="DMDocument#editPG">
@@ -2466,7 +2468,9 @@
 			<var name="dmDocumentTitle" value="DM Document Title Edit" />
 			<var name="dmDocumentUploader" value="Test Test" />
 			<var name="dmDocumentVersionNumber" value="1.1" />
-			<var name="workflow" value="Approved" />
+			<var name="portletName" value="Documents and Media" />
+			<var name="searchTerm" value="DM Document Title" />
+			<var name="workflow" value="APPROVED" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

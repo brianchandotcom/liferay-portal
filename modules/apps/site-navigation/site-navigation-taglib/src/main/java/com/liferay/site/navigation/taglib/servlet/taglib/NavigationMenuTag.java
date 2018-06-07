@@ -34,6 +34,7 @@ import com.liferay.site.navigation.taglib.internal.portlet.display.template.Port
 import com.liferay.site.navigation.taglib.internal.servlet.NavItemClassNameIdUtil;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.site.navigation.taglib.internal.util.SiteNavigationMenuNavItem;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -224,7 +225,7 @@ public class NavigationMenuTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	protected List<NavItem> getMenuItems() {
+	protected List<NavItem> getMenuItems() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -238,6 +239,17 @@ public class NavigationMenuTag extends IncludeTag {
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {
+
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				ServletContextUtil.getSiteNavigationMenuItemType(
+					siteNavigationMenuItem.getType());
+
+			if (!siteNavigationMenuItemType.hasPermission(
+					themeDisplay.getPermissionChecker(),
+					siteNavigationMenuItem)) {
+
+				continue;
+			}
 
 			navItems.add(
 				new SiteNavigationMenuNavItem(

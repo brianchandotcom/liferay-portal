@@ -309,8 +309,8 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPSpecificationOption> searchCPSpecificationOptions(
-		long companyId, long groupId, String keywords, int start, int end,
-		Sort sort) throws PortalException;
+		long companyId, long groupId, Boolean facetable, String keywords,
+		int start, int end, Sort sort) throws PortalException;
 
 	public CPSpecificationOption updateCPOptionCategoryId(
 		long cpSpecificationOptionId, long cpOptionCategoryId)

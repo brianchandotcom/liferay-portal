@@ -80,10 +80,11 @@ public interface CommerceNotificationTemplateLocalService
 		CommerceNotificationTemplate commerceNotificationTemplate);
 
 	public CommerceNotificationTemplate addCommerceNotificationTemplate(
-		String name, String description, String from, String fromName,
-		String cc, String bcc, String type, boolean enabled,
-		Map<Locale, String> subjectMap, Map<Locale, String> bodyMap,
-		ServiceContext serviceContext) throws PortalException;
+		String name, String description, String from,
+		Map<Locale, String> fromNameMap, String cc, String bcc, String type,
+		boolean enabled, Map<Locale, String> subjectMap,
+		Map<Locale, String> bodyMap, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce notification template with the primary key. Does not add the commerce notification template to the database.
@@ -246,6 +247,11 @@ public interface CommerceNotificationTemplateLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceNotificationTemplate> getCommerceNotificationTemplates(
+		long groupId, boolean enabled, int start, int end,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceNotificationTemplate> getCommerceNotificationTemplates(
 		long groupId, int start, int end,
 		OrderByComparator<CommerceNotificationTemplate> orderByComparator);
 
@@ -291,6 +297,10 @@ public interface CommerceNotificationTemplateLocalService
 	public int getCommerceNotificationTemplatesCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceNotificationTemplatesCount(long groupId,
+		boolean enabled);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -321,8 +331,8 @@ public interface CommerceNotificationTemplateLocalService
 
 	public CommerceNotificationTemplate updateCommerceNotificationTemplate(
 		long commerceNotificationTemplateId, String name, String description,
-		String from, String fromName, String cc, String bcc, String type,
-		boolean enabled, Map<Locale, String> subjectMap,
+		String from, Map<Locale, String> fromNameMap, String cc, String bcc,
+		String type, boolean enabled, Map<Locale, String> subjectMap,
 		Map<Locale, String> bodyMap, ServiceContext serviceContext)
 		throws PortalException;
 }

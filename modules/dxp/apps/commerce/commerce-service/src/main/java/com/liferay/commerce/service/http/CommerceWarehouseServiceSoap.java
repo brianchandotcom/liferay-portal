@@ -245,11 +245,11 @@ public class CommerceWarehouseServiceSoap {
 		}
 	}
 
-	public static int searchCount(long groupId, String keywords, boolean all,
-		long commerceCountryId) throws RemoteException {
+	public static int searchCount(long groupId, String keywords,
+		Boolean active, long commerceCountryId) throws RemoteException {
 		try {
 			int returnValue = CommerceWarehouseServiceUtil.searchCount(groupId,
-					keywords, all, commerceCountryId);
+					keywords, active, commerceCountryId);
 
 			return returnValue;
 		}

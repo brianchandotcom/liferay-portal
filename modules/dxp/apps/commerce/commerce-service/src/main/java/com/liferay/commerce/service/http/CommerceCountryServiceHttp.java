@@ -420,6 +420,38 @@ public class CommerceCountryServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceCountry setActive(
+		HttpPrincipal httpPrincipal, long commerceCountryId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCountryServiceUtil.class,
+					"setActive", _setActiveParameterTypes12);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCountryId, active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceCountry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
 		HttpPrincipal httpPrincipal, long commerceCountryId,
 		java.util.Map<java.util.Locale, String> nameMap,
@@ -432,7 +464,7 @@ public class CommerceCountryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCountryServiceUtil.class,
 					"updateCommerceCountry",
-					_updateCommerceCountryParameterTypes12);
+					_updateCommerceCountryParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCountryId, nameMap, billingAllowed,
@@ -501,7 +533,10 @@ public class CommerceCountryServiceHttp {
 	private static final Class<?>[] _searchCommerceCountriesParameterTypes11 = new Class[] {
 			com.liferay.portal.kernel.search.SearchContext.class
 		};
-	private static final Class<?>[] _updateCommerceCountryParameterTypes12 = new Class[] {
+	private static final Class<?>[] _setActiveParameterTypes12 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateCommerceCountryParameterTypes13 = new Class[] {
 			long.class, java.util.Map.class, boolean.class, boolean.class,
 			String.class, String.class, int.class, boolean.class, double.class,
 			boolean.class,

@@ -320,18 +320,18 @@ public class CommerceWarehouseLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> search(
-		long groupId, String keywords, boolean all, long commerceCountryId,
+		long groupId, String keywords, Boolean active, long commerceCountryId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
 		return getService()
-				   .search(groupId, keywords, all, commerceCountryId, start,
+				   .search(groupId, keywords, active, commerceCountryId, start,
 			end, orderByComparator);
 	}
 
-	public static int searchCount(long groupId, String keywords, boolean all,
-		long commerceCountryId) {
+	public static int searchCount(long groupId, String keywords,
+		Boolean active, long commerceCountryId) {
 		return getService()
-				   .searchCount(groupId, keywords, all, commerceCountryId);
+				   .searchCount(groupId, keywords, active, commerceCountryId);
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouse setActive(

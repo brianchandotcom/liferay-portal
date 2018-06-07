@@ -237,6 +237,38 @@ public class CPMeasurementUnitServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPMeasurementUnit setPrimary(
+		HttpPrincipal httpPrincipal, long cpMeasurementUnitId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPMeasurementUnitServiceUtil.class,
+					"setPrimary", _setPrimaryParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpMeasurementUnitId, primary);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.product.model.CPMeasurementUnit)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
 		HttpPrincipal httpPrincipal, long cpMeasurementUnitId,
 		java.util.Map<java.util.Locale, String> nameMap, String key,
@@ -246,7 +278,7 @@ public class CPMeasurementUnitServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPMeasurementUnitServiceUtil.class,
 					"updateCPMeasurementUnit",
-					_updateCPMeasurementUnitParameterTypes6);
+					_updateCPMeasurementUnitParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpMeasurementUnitId, nameMap, key, rate, primary, priority,
@@ -295,7 +327,10 @@ public class CPMeasurementUnitServiceHttp {
 	private static final Class<?>[] _getCPMeasurementUnitsCountParameterTypes5 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _updateCPMeasurementUnitParameterTypes6 = new Class[] {
+	private static final Class<?>[] _setPrimaryParameterTypes6 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateCPMeasurementUnitParameterTypes7 = new Class[] {
 			long.class, java.util.Map.class, String.class, double.class,
 			boolean.class, double.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

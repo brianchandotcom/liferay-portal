@@ -137,11 +137,11 @@ public class CommerceWarehouseServiceUtil {
 			end, orderByComparator);
 	}
 
-	public static int searchCount(long groupId, String keywords, boolean all,
-		long commerceCountryId)
+	public static int searchCount(long groupId, String keywords,
+		Boolean active, long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchCount(groupId, keywords, all, commerceCountryId);
+				   .searchCount(groupId, keywords, active, commerceCountryId);
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouse setActive(

@@ -284,7 +284,7 @@ public class CPSpecificationOptionServiceHttp {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
-		String keywords, int start, int end,
+		Boolean facetable, String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -293,7 +293,7 @@ public class CPSpecificationOptionServiceHttp {
 					_searchCPSpecificationOptionsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					companyId, groupId, keywords, start, end, sort);
+					companyId, groupId, facetable, keywords, start, end, sort);
 
 			Object returnObj = null;
 
@@ -381,8 +381,8 @@ public class CPSpecificationOptionServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _searchCPSpecificationOptionsParameterTypes7 =
 		new Class[] {
-			long.class, long.class, String.class, int.class, int.class,
-			com.liferay.portal.kernel.search.Sort.class
+			long.class, long.class, Boolean.class, String.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCPSpecificationOptionParameterTypes8 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,

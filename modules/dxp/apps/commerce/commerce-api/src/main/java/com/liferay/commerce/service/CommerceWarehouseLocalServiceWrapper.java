@@ -340,18 +340,18 @@ public class CommerceWarehouseLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> search(
-		long groupId, String keywords, boolean all, long commerceCountryId,
+		long groupId, String keywords, Boolean active, long commerceCountryId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
-		return _commerceWarehouseLocalService.search(groupId, keywords, all,
+		return _commerceWarehouseLocalService.search(groupId, keywords, active,
 			commerceCountryId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int searchCount(long groupId, String keywords, boolean all,
+	public int searchCount(long groupId, String keywords, Boolean active,
 		long commerceCountryId) {
 		return _commerceWarehouseLocalService.searchCount(groupId, keywords,
-			all, commerceCountryId);
+			active, commerceCountryId);
 	}
 
 	@Override

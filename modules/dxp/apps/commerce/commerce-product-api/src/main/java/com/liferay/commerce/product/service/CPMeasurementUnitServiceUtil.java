@@ -89,6 +89,12 @@ public class CPMeasurementUnitServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.commerce.product.model.CPMeasurementUnit setPrimary(
+		long cpMeasurementUnitId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setPrimary(cpMeasurementUnitId, primary);
+	}
+
 	public static com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
 		long cpMeasurementUnitId,
 		java.util.Map<java.util.Locale, String> nameMap, String key,

@@ -411,14 +411,14 @@ public class CommerceWarehouseServiceHttp {
 	}
 
 	public static int searchCount(HttpPrincipal httpPrincipal, long groupId,
-		String keywords, boolean all, long commerceCountryId)
+		String keywords, Boolean active, long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseServiceUtil.class,
 					"searchCount", _searchCountParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					keywords, all, commerceCountryId);
+					keywords, active, commerceCountryId);
 
 			Object returnObj = null;
 
@@ -592,7 +592,7 @@ public class CommerceWarehouseServiceHttp {
 			int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _searchCountParameterTypes11 = new Class[] {
-			long.class, String.class, boolean.class, long.class
+			long.class, String.class, Boolean.class, long.class
 		};
 	private static final Class<?>[] _setActiveParameterTypes12 = new Class[] {
 			long.class, boolean.class

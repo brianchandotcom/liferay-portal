@@ -70,13 +70,16 @@ import java.util.Map;
 @ProviderType
 public class CommerceNotificationTemplateServiceSoap {
 	public static com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap addCommerceNotificationTemplate(
-		String name, String description, String from, String fromName,
-		String cc, String bcc, String type, boolean enabled,
+		String name, String description, String from,
+		String[] fromNameMapLanguageIds, String[] fromNameMapValues, String cc,
+		String bcc, String type, boolean enabled,
 		String[] subjectMapLanguageIds, String[] subjectMapValues,
 		String[] bodyMapLanguageIds, String[] bodyMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
+			Map<Locale, String> fromNameMap = LocalizationUtil.getLocalizationMap(fromNameMapLanguageIds,
+					fromNameMapValues);
 			Map<Locale, String> subjectMap = LocalizationUtil.getLocalizationMap(subjectMapLanguageIds,
 					subjectMapValues);
 			Map<Locale, String> bodyMap = LocalizationUtil.getLocalizationMap(bodyMapLanguageIds,
@@ -84,7 +87,7 @@ public class CommerceNotificationTemplateServiceSoap {
 
 			com.liferay.commerce.notification.model.CommerceNotificationTemplate returnValue =
 				CommerceNotificationTemplateServiceUtil.addCommerceNotificationTemplate(name,
-					description, from, fromName, cc, bcc, type, enabled,
+					description, from, fromNameMap, cc, bcc, type, enabled,
 					subjectMap, bodyMap, serviceContext);
 
 			return com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap.toSoapModel(returnValue);
@@ -115,6 +118,24 @@ public class CommerceNotificationTemplateServiceSoap {
 				CommerceNotificationTemplateServiceUtil.getCommerceNotificationTemplate(commerceNotificationTemplateId);
 
 			return com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap[] getCommerceNotificationTemplates(
+		long groupId, boolean enabled, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.notification.model.CommerceNotificationTemplate> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.notification.model.CommerceNotificationTemplate> returnValue =
+				CommerceNotificationTemplateServiceUtil.getCommerceNotificationTemplates(groupId,
+					enabled, start, end, orderByComparator);
+
+			return com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -155,15 +176,33 @@ public class CommerceNotificationTemplateServiceSoap {
 		}
 	}
 
+	public static int getCommerceNotificationTemplatesCount(long groupId,
+		boolean enabled) throws RemoteException {
+		try {
+			int returnValue = CommerceNotificationTemplateServiceUtil.getCommerceNotificationTemplatesCount(groupId,
+					enabled);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap updateCommerceNotificationTemplate(
 		long commerceNotificationTemplateId, String name, String description,
-		String from, String fromName, String cc, String bcc, String type,
+		String from, String[] fromNameMapLanguageIds,
+		String[] fromNameMapValues, String cc, String bcc, String type,
 		boolean enabled, String[] subjectMapLanguageIds,
 		String[] subjectMapValues, String[] bodyMapLanguageIds,
 		String[] bodyMapValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
+			Map<Locale, String> fromNameMap = LocalizationUtil.getLocalizationMap(fromNameMapLanguageIds,
+					fromNameMapValues);
 			Map<Locale, String> subjectMap = LocalizationUtil.getLocalizationMap(subjectMapLanguageIds,
 					subjectMapValues);
 			Map<Locale, String> bodyMap = LocalizationUtil.getLocalizationMap(bodyMapLanguageIds,
@@ -171,8 +210,8 @@ public class CommerceNotificationTemplateServiceSoap {
 
 			com.liferay.commerce.notification.model.CommerceNotificationTemplate returnValue =
 				CommerceNotificationTemplateServiceUtil.updateCommerceNotificationTemplate(commerceNotificationTemplateId,
-					name, description, from, fromName, cc, bcc, type, enabled,
-					subjectMap, bodyMap, serviceContext);
+					name, description, from, fromNameMap, cc, bcc, type,
+					enabled, subjectMap, bodyMap, serviceContext);
 
 			return com.liferay.commerce.notification.model.CommerceNotificationTemplateSoap.toSoapModel(returnValue);
 		}

@@ -311,6 +311,9 @@ public interface CommerceRegionLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public CommerceRegion setActive(long commerceRegionId, boolean active)
+		throws PortalException;
+
 	/**
 	* Updates the commerce region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

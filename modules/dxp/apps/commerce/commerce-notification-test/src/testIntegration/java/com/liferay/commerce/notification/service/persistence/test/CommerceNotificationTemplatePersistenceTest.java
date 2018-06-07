@@ -240,6 +240,14 @@ public class CommerceNotificationTemplatePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_E() throws Exception {
+		_persistence.countByG_E(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_E(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_T_E() throws Exception {
 		_persistence.countByG_T_E(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.randomBoolean());

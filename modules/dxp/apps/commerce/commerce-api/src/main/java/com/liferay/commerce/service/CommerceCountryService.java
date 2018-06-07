@@ -116,6 +116,9 @@ public interface CommerceCountryService extends BaseService {
 	public BaseModelSearchResult<CommerceCountry> searchCommerceCountries(
 		SearchContext searchContext) throws PortalException;
 
+	public CommerceCountry setActive(long commerceCountryId, boolean active)
+		throws PortalException;
+
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
 		Map<Locale, String> nameMap, boolean billingAllowed,
 		boolean shippingAllowed, String twoLettersISOCode,

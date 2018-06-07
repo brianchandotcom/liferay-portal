@@ -36,14 +36,15 @@ public class CommerceNotificationTemplateServiceWrapper
 
 	@Override
 	public com.liferay.commerce.notification.model.CommerceNotificationTemplate addCommerceNotificationTemplate(
-		String name, String description, String from, String fromName,
-		String cc, String bcc, String type, boolean enabled,
+		String name, String description, String from,
+		java.util.Map<java.util.Locale, String> fromNameMap, String cc,
+		String bcc, String type, boolean enabled,
 		java.util.Map<java.util.Locale, String> subjectMap,
 		java.util.Map<java.util.Locale, String> bodyMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceNotificationTemplateService.addCommerceNotificationTemplate(name,
-			description, from, fromName, cc, bcc, type, enabled, subjectMap,
+			description, from, fromNameMap, cc, bcc, type, enabled, subjectMap,
 			bodyMap, serviceContext);
 	}
 
@@ -63,6 +64,15 @@ public class CommerceNotificationTemplateServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.notification.model.CommerceNotificationTemplate> getCommerceNotificationTemplates(
+		long groupId, boolean enabled, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.notification.model.CommerceNotificationTemplate> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceNotificationTemplateService.getCommerceNotificationTemplates(groupId,
+			enabled, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.notification.model.CommerceNotificationTemplate> getCommerceNotificationTemplates(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.notification.model.CommerceNotificationTemplate> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -74,6 +84,14 @@ public class CommerceNotificationTemplateServiceWrapper
 	public int getCommerceNotificationTemplatesCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceNotificationTemplateService.getCommerceNotificationTemplatesCount(groupId);
+	}
+
+	@Override
+	public int getCommerceNotificationTemplatesCount(long groupId,
+		boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceNotificationTemplateService.getCommerceNotificationTemplatesCount(groupId,
+			enabled);
 	}
 
 	/**
@@ -89,13 +107,14 @@ public class CommerceNotificationTemplateServiceWrapper
 	@Override
 	public com.liferay.commerce.notification.model.CommerceNotificationTemplate updateCommerceNotificationTemplate(
 		long commerceNotificationTemplateId, String name, String description,
-		String from, String fromName, String cc, String bcc, String type,
-		boolean enabled, java.util.Map<java.util.Locale, String> subjectMap,
+		String from, java.util.Map<java.util.Locale, String> fromNameMap,
+		String cc, String bcc, String type, boolean enabled,
+		java.util.Map<java.util.Locale, String> subjectMap,
 		java.util.Map<java.util.Locale, String> bodyMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceNotificationTemplateService.updateCommerceNotificationTemplate(commerceNotificationTemplateId,
-			name, description, from, fromName, cc, bcc, type, enabled,
+			name, description, from, fromNameMap, cc, bcc, type, enabled,
 			subjectMap, bodyMap, serviceContext);
 	}
 

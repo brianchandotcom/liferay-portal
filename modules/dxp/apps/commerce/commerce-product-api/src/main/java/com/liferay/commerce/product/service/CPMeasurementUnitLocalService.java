@@ -311,6 +311,9 @@ public interface CPMeasurementUnitLocalService extends BaseLocalService,
 	public void importDefaultValues(ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPMeasurementUnit setPrimary(long cpMeasurementUnitId,
+		boolean primary) throws PortalException;
+
 	/**
 	* Updates the cp measurement unit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

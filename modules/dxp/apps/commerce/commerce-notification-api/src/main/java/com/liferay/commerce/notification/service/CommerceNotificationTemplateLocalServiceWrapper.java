@@ -48,14 +48,15 @@ public class CommerceNotificationTemplateLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.notification.model.CommerceNotificationTemplate addCommerceNotificationTemplate(
-		String name, String description, String from, String fromName,
-		String cc, String bcc, String type, boolean enabled,
+		String name, String description, String from,
+		java.util.Map<java.util.Locale, String> fromNameMap, String cc,
+		String bcc, String type, boolean enabled,
 		java.util.Map<java.util.Locale, String> subjectMap,
 		java.util.Map<java.util.Locale, String> bodyMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceNotificationTemplateLocalService.addCommerceNotificationTemplate(name,
-			description, from, fromName, cc, bcc, type, enabled, subjectMap,
+			description, from, fromNameMap, cc, bcc, type, enabled, subjectMap,
 			bodyMap, serviceContext);
 	}
 
@@ -276,6 +277,14 @@ public class CommerceNotificationTemplateLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.notification.model.CommerceNotificationTemplate> getCommerceNotificationTemplates(
+		long groupId, boolean enabled, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.notification.model.CommerceNotificationTemplate> orderByComparator) {
+		return _commerceNotificationTemplateLocalService.getCommerceNotificationTemplates(groupId,
+			enabled, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.notification.model.CommerceNotificationTemplate> getCommerceNotificationTemplates(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.notification.model.CommerceNotificationTemplate> orderByComparator) {
 		return _commerceNotificationTemplateLocalService.getCommerceNotificationTemplates(groupId,
@@ -337,6 +346,13 @@ public class CommerceNotificationTemplateLocalServiceWrapper
 	}
 
 	@Override
+	public int getCommerceNotificationTemplatesCount(long groupId,
+		boolean enabled) {
+		return _commerceNotificationTemplateLocalService.getCommerceNotificationTemplatesCount(groupId,
+			enabled);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return _commerceNotificationTemplateLocalService.getExportActionableDynamicQuery(portletDataContext);
@@ -379,13 +395,14 @@ public class CommerceNotificationTemplateLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.notification.model.CommerceNotificationTemplate updateCommerceNotificationTemplate(
 		long commerceNotificationTemplateId, String name, String description,
-		String from, String fromName, String cc, String bcc, String type,
-		boolean enabled, java.util.Map<java.util.Locale, String> subjectMap,
+		String from, java.util.Map<java.util.Locale, String> fromNameMap,
+		String cc, String bcc, String type, boolean enabled,
+		java.util.Map<java.util.Locale, String> subjectMap,
 		java.util.Map<java.util.Locale, String> bodyMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceNotificationTemplateLocalService.updateCommerceNotificationTemplate(commerceNotificationTemplateId,
-			name, description, from, fromName, cc, bcc, type, enabled,
+			name, description, from, fromNameMap, cc, bcc, type, enabled,
 			subjectMap, bodyMap, serviceContext);
 	}
 

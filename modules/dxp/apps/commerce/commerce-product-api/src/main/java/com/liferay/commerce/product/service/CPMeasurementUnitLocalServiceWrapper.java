@@ -377,6 +377,14 @@ public class CPMeasurementUnitLocalServiceWrapper
 		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPMeasurementUnit setPrimary(
+		long cpMeasurementUnitId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMeasurementUnitLocalService.setPrimary(cpMeasurementUnitId,
+			primary);
+	}
+
 	/**
 	* Updates the cp measurement unit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

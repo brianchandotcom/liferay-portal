@@ -57,8 +57,9 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class CommerceNotificationTemplateServiceHttp {
 	public static com.liferay.commerce.notification.model.CommerceNotificationTemplate addCommerceNotificationTemplate(
 		HttpPrincipal httpPrincipal, String name, String description,
-		String from, String fromName, String cc, String bcc, String type,
-		boolean enabled, java.util.Map<java.util.Locale, String> subjectMap,
+		String from, java.util.Map<java.util.Locale, String> fromNameMap,
+		String cc, String bcc, String type, boolean enabled,
+		java.util.Map<java.util.Locale, String> subjectMap,
 		java.util.Map<java.util.Locale, String> bodyMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -68,7 +69,7 @@ public class CommerceNotificationTemplateServiceHttp {
 					_addCommerceNotificationTemplateParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					description, from, fromName, cc, bcc, type, enabled,
+					description, from, fromNameMap, cc, bcc, type, enabled,
 					subjectMap, bodyMap, serviceContext);
 
 			Object returnObj = null;
@@ -156,13 +157,48 @@ public class CommerceNotificationTemplateServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.notification.model.CommerceNotificationTemplate> getCommerceNotificationTemplates(
-		HttpPrincipal httpPrincipal, long groupId, int start, int end,
+		HttpPrincipal httpPrincipal, long groupId, boolean enabled, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.notification.model.CommerceNotificationTemplate> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceNotificationTemplateServiceUtil.class,
 					"getCommerceNotificationTemplates",
 					_getCommerceNotificationTemplatesParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					enabled, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.notification.model.CommerceNotificationTemplate>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.commerce.notification.model.CommerceNotificationTemplate> getCommerceNotificationTemplates(
+		HttpPrincipal httpPrincipal, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.notification.model.CommerceNotificationTemplate> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceNotificationTemplateServiceUtil.class,
+					"getCommerceNotificationTemplates",
+					_getCommerceNotificationTemplatesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -195,7 +231,7 @@ public class CommerceNotificationTemplateServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceNotificationTemplateServiceUtil.class,
 					"getCommerceNotificationTemplatesCount",
-					_getCommerceNotificationTemplatesCountParameterTypes4);
+					_getCommerceNotificationTemplatesCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -221,10 +257,44 @@ public class CommerceNotificationTemplateServiceHttp {
 		}
 	}
 
+	public static int getCommerceNotificationTemplatesCount(
+		HttpPrincipal httpPrincipal, long groupId, boolean enabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceNotificationTemplateServiceUtil.class,
+					"getCommerceNotificationTemplatesCount",
+					_getCommerceNotificationTemplatesCountParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					enabled);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.notification.model.CommerceNotificationTemplate updateCommerceNotificationTemplate(
 		HttpPrincipal httpPrincipal, long commerceNotificationTemplateId,
-		String name, String description, String from, String fromName,
-		String cc, String bcc, String type, boolean enabled,
+		String name, String description, String from,
+		java.util.Map<java.util.Locale, String> fromNameMap, String cc,
+		String bcc, String type, boolean enabled,
 		java.util.Map<java.util.Locale, String> subjectMap,
 		java.util.Map<java.util.Locale, String> bodyMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -232,11 +302,11 @@ public class CommerceNotificationTemplateServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceNotificationTemplateServiceUtil.class,
 					"updateCommerceNotificationTemplate",
-					_updateCommerceNotificationTemplateParameterTypes5);
+					_updateCommerceNotificationTemplateParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceNotificationTemplateId, name, description, from,
-					fromName, cc, bcc, type, enabled, subjectMap, bodyMap,
+					fromNameMap, cc, bcc, type, enabled, subjectMap, bodyMap,
 					serviceContext);
 
 			Object returnObj = null;
@@ -264,9 +334,9 @@ public class CommerceNotificationTemplateServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CommerceNotificationTemplateServiceHttp.class);
 	private static final Class<?>[] _addCommerceNotificationTemplateParameterTypes0 =
 		new Class[] {
-			String.class, String.class, String.class, String.class, String.class,
-			String.class, String.class, boolean.class, java.util.Map.class,
-			java.util.Map.class,
+			String.class, String.class, String.class, java.util.Map.class,
+			String.class, String.class, String.class, boolean.class,
+			java.util.Map.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceNotificationTemplateParameterTypes1 =
@@ -275,16 +345,23 @@ public class CommerceNotificationTemplateServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _getCommerceNotificationTemplatesParameterTypes3 =
 		new Class[] {
+			long.class, boolean.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommerceNotificationTemplatesParameterTypes4 =
+		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceNotificationTemplatesCountParameterTypes4 =
+	private static final Class<?>[] _getCommerceNotificationTemplatesCountParameterTypes5 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCommerceNotificationTemplateParameterTypes5 =
+	private static final Class<?>[] _getCommerceNotificationTemplatesCountParameterTypes6 =
+		new Class[] { long.class, boolean.class };
+	private static final Class<?>[] _updateCommerceNotificationTemplateParameterTypes7 =
 		new Class[] {
-			long.class, String.class, String.class, String.class, String.class,
-			String.class, String.class, String.class, boolean.class,
-			java.util.Map.class, java.util.Map.class,
+			long.class, String.class, String.class, String.class,
+			java.util.Map.class, String.class, String.class, String.class,
+			boolean.class, java.util.Map.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

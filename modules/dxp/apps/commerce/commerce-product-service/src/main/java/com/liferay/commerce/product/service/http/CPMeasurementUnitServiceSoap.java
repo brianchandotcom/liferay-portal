@@ -164,6 +164,21 @@ public class CPMeasurementUnitServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPMeasurementUnitSoap setPrimary(
+		long cpMeasurementUnitId, boolean primary) throws RemoteException {
+		try {
+			com.liferay.commerce.product.model.CPMeasurementUnit returnValue = CPMeasurementUnitServiceUtil.setPrimary(cpMeasurementUnitId,
+					primary);
+
+			return com.liferay.commerce.product.model.CPMeasurementUnitSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPMeasurementUnitSoap updateCPMeasurementUnit(
 		long cpMeasurementUnitId, String[] nameMapLanguageIds,
 		String[] nameMapValues, String key, double rate, boolean primary,

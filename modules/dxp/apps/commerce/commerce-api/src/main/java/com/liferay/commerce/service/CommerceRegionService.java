@@ -93,6 +93,9 @@ public interface CommerceRegionService extends BaseService {
 	*/
 	public String getOSGiServiceIdentifier();
 
+	public CommerceRegion setActive(long commerceRegionId, boolean active)
+		throws PortalException;
+
 	public CommerceRegion updateCommerceRegion(long commerceRegionId,
 		String name, String code, double priority, boolean active,
 		ServiceContext serviceContext) throws PortalException;

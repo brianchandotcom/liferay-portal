@@ -113,7 +113,7 @@ public interface CommerceWarehouseService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, String keywords, boolean all,
+	public int searchCount(long groupId, String keywords, Boolean active,
 		long commerceCountryId) throws PortalException;
 
 	public CommerceWarehouse setActive(long commerceWarehouseId, boolean active)

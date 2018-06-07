@@ -102,6 +102,12 @@ public class CommerceRegionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.commerce.model.CommerceRegion setActive(
+		long commerceRegionId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setActive(commerceRegionId, active);
+	}
+
 	public static com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
 		long commerceRegionId, String name, String code, double priority,
 		boolean active,

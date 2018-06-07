@@ -88,6 +88,13 @@ public class CPMeasurementUnitServiceWrapper implements CPMeasurementUnitService
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPMeasurementUnit setPrimary(
+		long cpMeasurementUnitId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpMeasurementUnitService.setPrimary(cpMeasurementUnitId, primary);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPMeasurementUnit updateCPMeasurementUnit(
 		long cpMeasurementUnitId,
 		java.util.Map<java.util.Locale, String> nameMap, String key,

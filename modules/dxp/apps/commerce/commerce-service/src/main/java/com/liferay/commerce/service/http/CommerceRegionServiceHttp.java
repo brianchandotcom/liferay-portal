@@ -291,6 +291,38 @@ public class CommerceRegionServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceRegion setActive(
+		HttpPrincipal httpPrincipal, long commerceRegionId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
+					"setActive", _setActiveParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceRegionId, active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceRegion)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
 		HttpPrincipal httpPrincipal, long commerceRegionId, String name,
 		String code, double priority, boolean active,
@@ -298,7 +330,7 @@ public class CommerceRegionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceRegionServiceUtil.class,
-					"updateCommerceRegion", _updateCommerceRegionParameterTypes8);
+					"updateCommerceRegion", _updateCommerceRegionParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceRegionId, name, code, priority, active,
@@ -354,7 +386,10 @@ public class CommerceRegionServiceHttp {
 	private static final Class<?>[] _getCommerceRegionsCountParameterTypes7 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _updateCommerceRegionParameterTypes8 = new Class[] {
+	private static final Class<?>[] _setActiveParameterTypes8 = new Class[] {
+			long.class, boolean.class
+		};
+	private static final Class<?>[] _updateCommerceRegionParameterTypes9 = new Class[] {
 			long.class, String.class, String.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

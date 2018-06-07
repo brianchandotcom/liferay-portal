@@ -265,8 +265,58 @@ public interface CommerceNotificationTemplateModel extends BaseModel<CommerceNot
 	 *
 	 * @return the from name of this commerce notification template
 	 */
-	@AutoEscape
 	public String getFromName();
+
+	/**
+	 * Returns the localized from name of this commerce notification template in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized from name of this commerce notification template
+	 */
+	@AutoEscape
+	public String getFromName(Locale locale);
+
+	/**
+	 * Returns the localized from name of this commerce notification template in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized from name of this commerce notification template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getFromName(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized from name of this commerce notification template in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized from name of this commerce notification template
+	 */
+	@AutoEscape
+	public String getFromName(String languageId);
+
+	/**
+	 * Returns the localized from name of this commerce notification template in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized from name of this commerce notification template
+	 */
+	@AutoEscape
+	public String getFromName(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getFromNameCurrentLanguageId();
+
+	@AutoEscape
+	public String getFromNameCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized from names of this commerce notification template.
+	 *
+	 * @return the locales and localized from names of this commerce notification template
+	 */
+	public Map<Locale, String> getFromNameMap();
 
 	/**
 	 * Sets the from name of this commerce notification template.
@@ -274,6 +324,41 @@ public interface CommerceNotificationTemplateModel extends BaseModel<CommerceNot
 	 * @param fromName the from name of this commerce notification template
 	 */
 	public void setFromName(String fromName);
+
+	/**
+	 * Sets the localized from name of this commerce notification template in the language.
+	 *
+	 * @param fromName the localized from name of this commerce notification template
+	 * @param locale the locale of the language
+	 */
+	public void setFromName(String fromName, Locale locale);
+
+	/**
+	 * Sets the localized from name of this commerce notification template in the language, and sets the default locale.
+	 *
+	 * @param fromName the localized from name of this commerce notification template
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setFromName(String fromName, Locale locale, Locale defaultLocale);
+
+	public void setFromNameCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized from names of this commerce notification template from the map of locales and localized from names.
+	 *
+	 * @param fromNameMap the locales and localized from names of this commerce notification template
+	 */
+	public void setFromNameMap(Map<Locale, String> fromNameMap);
+
+	/**
+	 * Sets the localized from names of this commerce notification template from the map of locales and localized from names, and sets the default locale.
+	 *
+	 * @param fromNameMap the locales and localized from names of this commerce notification template
+	 * @param defaultLocale the default locale
+	 */
+	public void setFromNameMap(Map<Locale, String> fromNameMap,
+		Locale defaultLocale);
 
 	/**
 	 * Returns the cc of this commerce notification template.

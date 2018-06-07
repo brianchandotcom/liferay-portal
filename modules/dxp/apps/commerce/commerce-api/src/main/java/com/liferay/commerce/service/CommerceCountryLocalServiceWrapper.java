@@ -421,6 +421,13 @@ public class CommerceCountryLocalServiceWrapper
 		return _commerceCountryLocalService.searchCommerceCountries(searchContext);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceCountry setActive(
+		long commerceCountryId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCountryLocalService.setActive(commerceCountryId, active);
+	}
+
 	/**
 	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

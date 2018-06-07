@@ -267,11 +267,11 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouse> search(long groupId, String keywords,
-		boolean all, long commerceCountryId, int start, int end,
+		Boolean active, long commerceCountryId, int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, String keywords, boolean all,
+	public int searchCount(long groupId, String keywords, Boolean active,
 		long commerceCountryId);
 
 	public CommerceWarehouse setActive(long commerceWarehouseId, boolean active)

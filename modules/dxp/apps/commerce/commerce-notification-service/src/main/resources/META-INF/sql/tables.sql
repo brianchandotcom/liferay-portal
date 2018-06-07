@@ -58,7 +58,7 @@ create table CommerceNotificationTemplate (
 	name VARCHAR(75) null,
 	description STRING null,
 	from_ VARCHAR(75) null,
-	fromName VARCHAR(75) null,
+	fromName STRING null,
 	cc VARCHAR(255) null,
 	bcc VARCHAR(255) null,
 	type_ VARCHAR(75) null,

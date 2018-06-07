@@ -637,6 +637,11 @@ public class CommerceCurrencyWrapper implements CommerceCurrency,
 		_commerceCurrency.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
+	@Override
+	public BigDecimal round(BigDecimal value) {
+		return _commerceCurrency.round(value);
+	}
+
 	/**
 	* Sets whether this commerce currency is active.
 	*

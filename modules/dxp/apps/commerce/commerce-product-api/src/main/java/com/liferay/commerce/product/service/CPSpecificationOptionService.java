@@ -98,8 +98,8 @@ public interface CPSpecificationOptionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPSpecificationOption> searchCPSpecificationOptions(
-		long companyId, long groupId, String keywords, int start, int end,
-		Sort sort) throws PortalException;
+		long companyId, long groupId, Boolean facetable, String keywords,
+		int start, int end, Sort sort) throws PortalException;
 
 	public CPSpecificationOption updateCPSpecificationOption(
 		long cpSpecificationOptionId, long cpOptionCategoryId,

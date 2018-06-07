@@ -123,10 +123,10 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceNotificationTemplate (uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,from_ VARCHAR(75) null,fromName VARCHAR(75) null,cc VARCHAR(255) null,bcc VARCHAR(255) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceNotificationTemplate (uuid_ VARCHAR(75) null,commerceNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,from_ VARCHAR(75) null,fromName STRING null,cc VARCHAR(255) null,bcc VARCHAR(255) null,type_ VARCHAR(75) null,enabled BOOLEAN,subject STRING null,body TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceNotificationTemplate";
-	public static final String ORDER_BY_JPQL = " ORDER BY commerceNotificationTemplate.createDate DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY CommerceNotificationTemplate.createDate DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY commerceNotificationTemplate.modifiedDate DESC, commerceNotificationTemplate.name DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY CommerceNotificationTemplate.modifiedDate DESC, CommerceNotificationTemplate.name DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -144,7 +144,8 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 	public static final long TYPE_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 32L;
+	public static final long NAME_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -514,8 +515,6 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 	@Override
 	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
-
 		_createDate = createDate;
 	}
 
@@ -533,6 +532,8 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 	public void setModifiedDate(Date modifiedDate) {
 		_setModifiedDate = true;
 
+		_columnBitmask = -1L;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -549,6 +550,8 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask = -1L;
+
 		_name = name;
 	}
 
@@ -596,8 +599,93 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 	}
 
 	@Override
+	public String getFromName(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getFromName(languageId);
+	}
+
+	@Override
+	public String getFromName(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getFromName(languageId, useDefault);
+	}
+
+	@Override
+	public String getFromName(String languageId) {
+		return LocalizationUtil.getLocalization(getFromName(), languageId);
+	}
+
+	@Override
+	public String getFromName(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(getFromName(), languageId,
+			useDefault);
+	}
+
+	@Override
+	public String getFromNameCurrentLanguageId() {
+		return _fromNameCurrentLanguageId;
+	}
+
+	@JSON
+	@Override
+	public String getFromNameCurrentValue() {
+		Locale locale = getLocale(_fromNameCurrentLanguageId);
+
+		return getFromName(locale);
+	}
+
+	@Override
+	public Map<Locale, String> getFromNameMap() {
+		return LocalizationUtil.getLocalizationMap(getFromName());
+	}
+
+	@Override
 	public void setFromName(String fromName) {
 		_fromName = fromName;
+	}
+
+	@Override
+	public void setFromName(String fromName, Locale locale) {
+		setFromName(fromName, locale, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setFromName(String fromName, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(fromName)) {
+			setFromName(LocalizationUtil.updateLocalization(getFromName(),
+					"FromName", fromName, languageId, defaultLanguageId));
+		}
+		else {
+			setFromName(LocalizationUtil.removeLocalization(getFromName(),
+					"FromName", languageId));
+		}
+	}
+
+	@Override
+	public void setFromNameCurrentLanguageId(String languageId) {
+		_fromNameCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setFromNameMap(Map<Locale, String> fromNameMap) {
+		setFromNameMap(fromNameMap, LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	public void setFromNameMap(Map<Locale, String> fromNameMap,
+		Locale defaultLocale) {
+		if (fromNameMap == null) {
+			return;
+		}
+
+		setFromName(LocalizationUtil.updateLocalization(fromNameMap,
+				getFromName(), "FromName",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -913,6 +1001,17 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<String>();
 
+		Map<Locale, String> fromNameMap = getFromNameMap();
+
+		for (Map.Entry<Locale, String> entry : fromNameMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
 		Map<Locale, String> subjectMap = getSubjectMap();
 
 		for (Map.Entry<Locale, String> entry : subjectMap.entrySet()) {
@@ -940,7 +1039,7 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 
 	@Override
 	public String getDefaultLanguageId() {
-		String xml = getSubject();
+		String xml = getFromName();
 
 		if (xml == null) {
 			return "";
@@ -970,6 +1069,15 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String fromName = getFromName(defaultLocale);
+
+		if (Validator.isNull(fromName)) {
+			setFromName(getFromName(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setFromName(getFromName(defaultLocale), defaultLocale, defaultLocale);
+		}
 
 		String subject = getSubject(defaultLocale);
 
@@ -1033,8 +1141,16 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 		CommerceNotificationTemplate commerceNotificationTemplate) {
 		int value = 0;
 
-		value = DateUtil.compareTo(getCreateDate(),
-				commerceNotificationTemplate.getCreateDate());
+		value = DateUtil.compareTo(getModifiedDate(),
+				commerceNotificationTemplate.getModifiedDate());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
+		}
+
+		value = getName().compareTo(commerceNotificationTemplate.getName());
 
 		value = value * -1;
 
@@ -1386,6 +1502,7 @@ public class CommerceNotificationTemplateModelImpl extends BaseModelImpl<Commerc
 	private String _description;
 	private String _from;
 	private String _fromName;
+	private String _fromNameCurrentLanguageId;
 	private String _cc;
 	private String _bcc;
 	private String _type;

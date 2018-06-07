@@ -337,6 +337,9 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 	public BaseModelSearchResult<CommerceCountry> searchCommerceCountries(
 		SearchContext searchContext) throws PortalException;
 
+	public CommerceCountry setActive(long commerceCountryId, boolean active)
+		throws PortalException;
+
 	/**
 	* Updates the commerce country in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

@@ -190,6 +190,21 @@ public class CommerceRegionServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceRegionSoap setActive(
+		long commerceRegionId, boolean active) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceRegion returnValue = CommerceRegionServiceUtil.setActive(commerceRegionId,
+					active);
+
+			return com.liferay.commerce.model.CommerceRegionSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceRegionSoap updateCommerceRegion(
 		long commerceRegionId, String name, String code, double priority,
 		boolean active,

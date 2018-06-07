@@ -133,6 +133,13 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceCountry setActive(
+		long commerceCountryId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCountryService.setActive(commerceCountryId, active);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
 		long commerceCountryId,
 		java.util.Map<java.util.Locale, String> nameMap,

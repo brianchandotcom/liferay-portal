@@ -251,6 +251,21 @@ public class CommerceCountryServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceCountrySoap setActive(
+		long commerceCountryId, boolean active) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceCountry returnValue = CommerceCountryServiceUtil.setActive(commerceCountryId,
+					active);
+
+			return com.liferay.commerce.model.CommerceCountrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCountrySoap updateCommerceCountry(
 		long commerceCountryId, String[] nameMapLanguageIds,
 		String[] nameMapValues, boolean billingAllowed,

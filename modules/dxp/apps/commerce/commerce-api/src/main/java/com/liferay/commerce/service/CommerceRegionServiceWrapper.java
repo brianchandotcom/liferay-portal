@@ -101,6 +101,13 @@ public class CommerceRegionServiceWrapper implements CommerceRegionService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceRegion setActive(
+		long commerceRegionId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceRegionService.setActive(commerceRegionId, active);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceRegion updateCommerceRegion(
 		long commerceRegionId, String name, String code, double priority,
 		boolean active,

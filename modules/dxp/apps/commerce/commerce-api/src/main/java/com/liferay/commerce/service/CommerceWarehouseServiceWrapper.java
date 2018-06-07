@@ -135,10 +135,10 @@ public class CommerceWarehouseServiceWrapper implements CommerceWarehouseService
 	}
 
 	@Override
-	public int searchCount(long groupId, String keywords, boolean all,
+	public int searchCount(long groupId, String keywords, Boolean active,
 		long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceWarehouseService.searchCount(groupId, keywords, all,
+		return _commerceWarehouseService.searchCount(groupId, keywords, active,
 			commerceCountryId);
 	}
 

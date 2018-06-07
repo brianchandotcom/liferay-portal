@@ -356,6 +356,12 @@ public class CommerceRegionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.commerce.model.CommerceRegion setActive(
+		long commerceRegionId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setActive(commerceRegionId, active);
+	}
+
 	/**
 	* Updates the commerce region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

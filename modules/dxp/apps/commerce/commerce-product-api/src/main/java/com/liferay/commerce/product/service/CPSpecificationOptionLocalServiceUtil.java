@@ -336,12 +336,12 @@ public class CPSpecificationOptionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPSpecificationOption> searchCPSpecificationOptions(
-		long companyId, long groupId, String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort sort)
+		long companyId, long groupId, Boolean facetable, String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchCPSpecificationOptions(companyId, groupId, keywords,
-			start, end, sort);
+				   .searchCPSpecificationOptions(companyId, groupId, facetable,
+			keywords, start, end, sort);
 	}
 
 	public static com.liferay.commerce.product.model.CPSpecificationOption updateCPOptionCategoryId(

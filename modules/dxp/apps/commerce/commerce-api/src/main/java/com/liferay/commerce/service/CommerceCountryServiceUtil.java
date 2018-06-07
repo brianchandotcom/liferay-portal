@@ -129,6 +129,12 @@ public class CommerceCountryServiceUtil {
 		return getService().searchCommerceCountries(searchContext);
 	}
 
+	public static com.liferay.commerce.model.CommerceCountry setActive(
+		long commerceCountryId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setActive(commerceCountryId, active);
+	}
+
 	public static com.liferay.commerce.model.CommerceCountry updateCommerceCountry(
 		long commerceCountryId,
 		java.util.Map<java.util.Locale, String> nameMap,

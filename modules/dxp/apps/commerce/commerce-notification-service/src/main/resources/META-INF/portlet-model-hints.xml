@@ -61,7 +61,7 @@
 		<field name="from" type="String">
 			<validator name="required" />
 		</field>
-		<field name="fromName" type="String">
+		<field localized="true" name="fromName" type="String">
 			<validator name="required" />
 		</field>
 		<field name="cc" type="String">

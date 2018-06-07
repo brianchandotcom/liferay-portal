@@ -88,6 +88,9 @@ public interface CPMeasurementUnitService extends BaseService {
 	*/
 	public String getOSGiServiceIdentifier();
 
+	public CPMeasurementUnit setPrimary(long cpMeasurementUnitId,
+		boolean primary) throws PortalException;
+
 	public CPMeasurementUnit updateCPMeasurementUnit(long cpMeasurementUnitId,
 		Map<Locale, String> nameMap, String key, double rate, boolean primary,
 		double priority, int type, ServiceContext serviceContext)

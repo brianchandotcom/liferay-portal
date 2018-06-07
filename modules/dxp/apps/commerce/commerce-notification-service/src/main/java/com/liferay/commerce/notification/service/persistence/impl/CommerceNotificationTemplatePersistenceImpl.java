@@ -115,7 +115,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
 			CommerceNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CommerceNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -924,7 +925,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			new String[] { String.class.getName(), Long.class.getName() },
 			CommerceNotificationTemplateModelImpl.UUID_COLUMN_BITMASK |
 			CommerceNotificationTemplateModelImpl.COMPANYID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CommerceNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -1526,7 +1528,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
 			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CommerceNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -2394,6 +2397,952 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "commerceNotificationTemplate.groupId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_E = new FinderPath(CommerceNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+			CommerceNotificationTemplateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_E",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_E = new FinderPath(CommerceNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+			CommerceNotificationTemplateImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_E",
+			new String[] { Long.class.getName(), Boolean.class.getName() },
+			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.ENABLED_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_E = new FinderPath(CommerceNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_E",
+			new String[] { Long.class.getName(), Boolean.class.getName() });
+
+	/**
+	 * Returns all the commerce notification templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @return the matching commerce notification templates
+	 */
+	@Override
+	public List<CommerceNotificationTemplate> findByG_E(long groupId,
+		boolean enabled) {
+		return findByG_E(groupId, enabled, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce notification templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param start the lower bound of the range of commerce notification templates
+	 * @param end the upper bound of the range of commerce notification templates (not inclusive)
+	 * @return the range of matching commerce notification templates
+	 */
+	@Override
+	public List<CommerceNotificationTemplate> findByG_E(long groupId,
+		boolean enabled, int start, int end) {
+		return findByG_E(groupId, enabled, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce notification templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param start the lower bound of the range of commerce notification templates
+	 * @param end the upper bound of the range of commerce notification templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce notification templates
+	 */
+	@Override
+	public List<CommerceNotificationTemplate> findByG_E(long groupId,
+		boolean enabled, int start, int end,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
+		return findByG_E(groupId, enabled, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce notification templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param start the lower bound of the range of commerce notification templates
+	 * @param end the upper bound of the range of commerce notification templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce notification templates
+	 */
+	@Override
+	public List<CommerceNotificationTemplate> findByG_E(long groupId,
+		boolean enabled, int start, int end,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_E;
+			finderArgs = new Object[] { groupId, enabled };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_E;
+			finderArgs = new Object[] {
+					groupId, enabled,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceNotificationTemplate> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceNotificationTemplate>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceNotificationTemplate commerceNotificationTemplate : list) {
+					if ((groupId != commerceNotificationTemplate.getGroupId()) ||
+							(enabled != commerceNotificationTemplate.isEnabled())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_E_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_E_ENABLED_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(enabled);
+
+				if (!pagination) {
+					list = (List<CommerceNotificationTemplate>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceNotificationTemplate>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce notification template
+	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
+	 */
+	@Override
+	public CommerceNotificationTemplate findByG_E_First(long groupId,
+		boolean enabled,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator)
+		throws NoSuchNotificationTemplateException {
+		CommerceNotificationTemplate commerceNotificationTemplate = fetchByG_E_First(groupId,
+				enabled, orderByComparator);
+
+		if (commerceNotificationTemplate != null) {
+			return commerceNotificationTemplate;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", enabled=");
+		msg.append(enabled);
+
+		msg.append("}");
+
+		throw new NoSuchNotificationTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
+	 */
+	@Override
+	public CommerceNotificationTemplate fetchByG_E_First(long groupId,
+		boolean enabled,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
+		List<CommerceNotificationTemplate> list = findByG_E(groupId, enabled,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce notification template
+	 * @throws NoSuchNotificationTemplateException if a matching commerce notification template could not be found
+	 */
+	@Override
+	public CommerceNotificationTemplate findByG_E_Last(long groupId,
+		boolean enabled,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator)
+		throws NoSuchNotificationTemplateException {
+		CommerceNotificationTemplate commerceNotificationTemplate = fetchByG_E_Last(groupId,
+				enabled, orderByComparator);
+
+		if (commerceNotificationTemplate != null) {
+			return commerceNotificationTemplate;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", enabled=");
+		msg.append(enabled);
+
+		msg.append("}");
+
+		throw new NoSuchNotificationTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce notification template, or <code>null</code> if a matching commerce notification template could not be found
+	 */
+	@Override
+	public CommerceNotificationTemplate fetchByG_E_Last(long groupId,
+		boolean enabled,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
+		int count = countByG_E(groupId, enabled);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceNotificationTemplate> list = findByG_E(groupId, enabled,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce notification template
+	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
+	 */
+	@Override
+	public CommerceNotificationTemplate[] findByG_E_PrevAndNext(
+		long commerceNotificationTemplateId, long groupId, boolean enabled,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator)
+		throws NoSuchNotificationTemplateException {
+		CommerceNotificationTemplate commerceNotificationTemplate = findByPrimaryKey(commerceNotificationTemplateId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceNotificationTemplate[] array = new CommerceNotificationTemplateImpl[3];
+
+			array[0] = getByG_E_PrevAndNext(session,
+					commerceNotificationTemplate, groupId, enabled,
+					orderByComparator, true);
+
+			array[1] = commerceNotificationTemplate;
+
+			array[2] = getByG_E_PrevAndNext(session,
+					commerceNotificationTemplate, groupId, enabled,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceNotificationTemplate getByG_E_PrevAndNext(
+		Session session,
+		CommerceNotificationTemplate commerceNotificationTemplate,
+		long groupId, boolean enabled,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_E_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_E_ENABLED_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(enabled);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceNotificationTemplate);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceNotificationTemplate> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the commerce notification templates that the user has permission to view where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @return the matching commerce notification templates that the user has permission to view
+	 */
+	@Override
+	public List<CommerceNotificationTemplate> filterFindByG_E(long groupId,
+		boolean enabled) {
+		return filterFindByG_E(groupId, enabled, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce notification templates that the user has permission to view where groupId = &#63; and enabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param start the lower bound of the range of commerce notification templates
+	 * @param end the upper bound of the range of commerce notification templates (not inclusive)
+	 * @return the range of matching commerce notification templates that the user has permission to view
+	 */
+	@Override
+	public List<CommerceNotificationTemplate> filterFindByG_E(long groupId,
+		boolean enabled, int start, int end) {
+		return filterFindByG_E(groupId, enabled, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce notification templates that the user has permissions to view where groupId = &#63; and enabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceNotificationTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param start the lower bound of the range of commerce notification templates
+	 * @param end the upper bound of the range of commerce notification templates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce notification templates that the user has permission to view
+	 */
+	@Override
+	public List<CommerceNotificationTemplate> filterFindByG_E(long groupId,
+		boolean enabled, int start, int end,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_E(groupId, enabled, start, end, orderByComparator);
+		}
+
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_E_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_E_ENABLED_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
+					orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CommerceNotificationTemplateModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceNotificationTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				q.addEntity(_FILTER_ENTITY_ALIAS,
+					CommerceNotificationTemplateImpl.class);
+			}
+			else {
+				q.addEntity(_FILTER_ENTITY_TABLE,
+					CommerceNotificationTemplateImpl.class);
+			}
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(enabled);
+
+			return (List<CommerceNotificationTemplate>)QueryUtil.list(q,
+				getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the commerce notification templates before and after the current commerce notification template in the ordered set of commerce notification templates that the user has permission to view where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param commerceNotificationTemplateId the primary key of the current commerce notification template
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce notification template
+	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
+	 */
+	@Override
+	public CommerceNotificationTemplate[] filterFindByG_E_PrevAndNext(
+		long commerceNotificationTemplateId, long groupId, boolean enabled,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator)
+		throws NoSuchNotificationTemplateException {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_E_PrevAndNext(commerceNotificationTemplateId,
+				groupId, enabled, orderByComparator);
+		}
+
+		CommerceNotificationTemplate commerceNotificationTemplate = findByPrimaryKey(commerceNotificationTemplateId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceNotificationTemplate[] array = new CommerceNotificationTemplateImpl[3];
+
+			array[0] = filterGetByG_E_PrevAndNext(session,
+					commerceNotificationTemplate, groupId, enabled,
+					orderByComparator, true);
+
+			array[1] = commerceNotificationTemplate;
+
+			array[2] = filterGetByG_E_PrevAndNext(session,
+					commerceNotificationTemplate, groupId, enabled,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceNotificationTemplate filterGetByG_E_PrevAndNext(
+		Session session,
+		CommerceNotificationTemplate commerceNotificationTemplate,
+		long groupId, boolean enabled,
+		OrderByComparator<CommerceNotificationTemplate> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE);
+		}
+		else {
+			query.append(_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		query.append(_FINDER_COLUMN_G_E_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_E_ENABLED_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			query.append(_FILTER_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					query.append(_ORDER_BY_ENTITY_ALIAS);
+				}
+				else {
+					query.append(_ORDER_BY_ENTITY_TABLE);
+				}
+
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				query.append(CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				query.append(CommerceNotificationTemplateModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceNotificationTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			q.addEntity(_FILTER_ENTITY_ALIAS,
+				CommerceNotificationTemplateImpl.class);
+		}
+		else {
+			q.addEntity(_FILTER_ENTITY_TABLE,
+				CommerceNotificationTemplateImpl.class);
+		}
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(enabled);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceNotificationTemplate);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceNotificationTemplate> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce notification templates where groupId = &#63; and enabled = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 */
+	@Override
+	public void removeByG_E(long groupId, boolean enabled) {
+		for (CommerceNotificationTemplate commerceNotificationTemplate : findByG_E(
+				groupId, enabled, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceNotificationTemplate);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce notification templates where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @return the number of matching commerce notification templates
+	 */
+	@Override
+	public int countByG_E(long groupId, boolean enabled) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_E;
+
+		Object[] finderArgs = new Object[] { groupId, enabled };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_E_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_E_ENABLED_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(enabled);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of commerce notification templates that the user has permission to view where groupId = &#63; and enabled = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param enabled the enabled
+	 * @return the number of matching commerce notification templates that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_E(long groupId, boolean enabled) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_E(groupId, enabled);
+		}
+
+		StringBundler query = new StringBundler(3);
+
+		query.append(_FILTER_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_E_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_E_ENABLED_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
+				CommerceNotificationTemplate.class.getName(),
+				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME,
+				com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+
+			qPos.add(enabled);
+
+			Long count = (Long)q.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_E_GROUPID_2 = "commerceNotificationTemplate.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_E_ENABLED_2 = "commerceNotificationTemplate.enabled = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_T_E = new FinderPath(CommerceNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
 			CommerceNotificationTemplateImpl.class,
@@ -2416,7 +3365,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 			CommerceNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK |
 			CommerceNotificationTemplateModelImpl.TYPE_COLUMN_BITMASK |
 			CommerceNotificationTemplateModelImpl.ENABLED_COLUMN_BITMASK |
-			CommerceNotificationTemplateModelImpl.CREATEDATE_COLUMN_BITMASK);
+			CommerceNotificationTemplateModelImpl.MODIFIEDDATE_COLUMN_BITMASK |
+			CommerceNotificationTemplateModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_G_T_E = new FinderPath(CommerceNotificationTemplateModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceNotificationTemplateModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
@@ -3866,6 +4816,15 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 			args = new Object[] {
 					commerceNotificationTemplateModelImpl.getGroupId(),
+					commerceNotificationTemplateModelImpl.isEnabled()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_E, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_E,
+				args);
+
+			args = new Object[] {
+					commerceNotificationTemplateModelImpl.getGroupId(),
 					commerceNotificationTemplateModelImpl.getType(),
 					commerceNotificationTemplateModelImpl.isEnabled()
 				};
@@ -3936,6 +4895,27 @@ public class CommerceNotificationTemplatePersistenceImpl
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+					args);
+			}
+
+			if ((commerceNotificationTemplateModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_E.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceNotificationTemplateModelImpl.getOriginalGroupId(),
+						commerceNotificationTemplateModelImpl.getOriginalEnabled()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_E, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_E,
+					args);
+
+				args = new Object[] {
+						commerceNotificationTemplateModelImpl.getGroupId(),
+						commerceNotificationTemplateModelImpl.isEnabled()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_E, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_E,
 					args);
 			}
 

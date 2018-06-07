@@ -56,4 +56,6 @@ public interface CommerceCurrency extends CommerceCurrencyModel, PersistedModel 
 		};
 
 	public CommerceMoney getZero();
+
+	public java.math.BigDecimal round(java.math.BigDecimal value);
 }

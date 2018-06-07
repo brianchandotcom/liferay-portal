@@ -219,33 +219,22 @@ public class DocumentLibraryConvertProcess
 			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property groupIdProperty = PropertyFactoryUtil.forName(
+					"groupId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property groupIdProperty = PropertyFactoryUtil.forName(
-						"groupId");
+				Property repositoryIdProperty = PropertyFactoryUtil.forName(
+					"repositoryId");
 
-					Property repositoryIdProperty = PropertyFactoryUtil.forName(
-						"repositoryId");
-
-					dynamicQuery.add(
-						groupIdProperty.eqProperty(repositoryIdProperty));
-				}
-
+				dynamicQuery.add(
+					groupIdProperty.eqProperty(repositoryIdProperty));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
-
-				@Override
-				public void performAction(DLFileEntry dlFileEntry) {
-					migrateDLFileEntry(
-						dlFileEntry.getCompanyId(),
-						dlFileEntry.getDataRepositoryId(),
-						new LiferayFileEntry(dlFileEntry));
-				}
-
-			});
+			(DLFileEntry dlFileEntry) ->
+				migrateDLFileEntry(
+					dlFileEntry.getCompanyId(),
+					dlFileEntry.getDataRepositoryId(),
+					new LiferayFileEntry(dlFileEntry)));
 
 		actionableDynamicQuery.performActions();
 
@@ -261,31 +250,24 @@ public class DocumentLibraryConvertProcess
 			CompanyLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Company>() {
+			(Company company) -> {
+				long companyId = company.getCompanyId();
 
-				@Override
-				public void performAction(Company company)
-					throws PortalException {
+				String[] fileNames = _sourceStore.getFileNames(
+					companyId, DLPreviewableProcessor.REPOSITORY_ID, path);
 
-					long companyId = company.getCompanyId();
+				for (String fileName : fileNames) {
 
-					String[] fileNames = _sourceStore.getFileNames(
-						companyId, DLPreviewableProcessor.REPOSITORY_ID, path);
+					// See LPS-70788
 
-					for (String fileName : fileNames) {
+					String actualFileName = StringUtil.replace(
+						fileName, StringPool.DOUBLE_SLASH,
+						StringPool.SLASH);
 
-						// See LPS-70788
-
-						String actualFileName = StringUtil.replace(
-							fileName, StringPool.DOUBLE_SLASH,
-							StringPool.SLASH);
-
-						migrateFile(
-							companyId, DLPreviewableProcessor.REPOSITORY_ID,
-							actualFileName, Store.VERSION_DEFAULT);
-					}
+					migrateFile(
+						companyId, DLPreviewableProcessor.REPOSITORY_ID,
+						actualFileName, Store.VERSION_DEFAULT);
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -326,17 +308,12 @@ public class DocumentLibraryConvertProcess
 			ImageLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Image>() {
+			(Image image) -> {
+				String fileName =
+					image.getImageId() + StringPool.PERIOD +
+						image.getType();
 
-				@Override
-				public void performAction(Image image) {
-					String fileName =
-						image.getImageId() + StringPool.PERIOD +
-							image.getType();
-
-					migrateFile(0, 0, fileName, Store.VERSION_DEFAULT);
-				}
-
+				migrateFile(0, 0, fileName, Store.VERSION_DEFAULT);
 			});
 
 		actionableDynamicQuery.performActions();

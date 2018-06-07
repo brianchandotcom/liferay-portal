@@ -52,36 +52,29 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 			_amImageEntryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<AMImageEntry>() {
+			(AMImageEntry amImageEntry) -> {
+				FileVersion fileVersion = _dlAppService.getFileVersion(
+					amImageEntry.getFileVersionId());
 
-				@Override
-				public void performAction(AMImageEntry amImageEntry)
-					throws PortalException {
+				String fileVersionPath = AMStoreUtil.getFileVersionPath(
+					fileVersion, amImageEntry.getConfigurationUuid());
 
-					FileVersion fileVersion = _dlAppService.getFileVersion(
-						amImageEntry.getFileVersionId());
+				Store sourceStore = dlStoreConverter.getSourceStore();
 
-					String fileVersionPath = AMStoreUtil.getFileVersionPath(
-						fileVersion, amImageEntry.getConfigurationUuid());
+				try (InputStream is = sourceStore.getFileAsStream(
+						amImageEntry.getCompanyId(),
+						CompanyConstants.SYSTEM, fileVersionPath)) {
 
-					Store sourceStore = dlStoreConverter.getSourceStore();
+					Store targetStore = dlStoreConverter.getTargetStore();
 
-					try (InputStream is = sourceStore.getFileAsStream(
-							amImageEntry.getCompanyId(),
-							CompanyConstants.SYSTEM, fileVersionPath)) {
-
-						Store targetStore = dlStoreConverter.getTargetStore();
-
-						targetStore.addFile(
-							amImageEntry.getCompanyId(),
-							CompanyConstants.SYSTEM,
-							fileVersionPath, is);
-					}
-					catch (IOException ioe) {
-						throw new PortalException(ioe);
-					}
+					targetStore.addFile(
+						amImageEntry.getCompanyId(),
+						CompanyConstants.SYSTEM,
+						fileVersionPath, is);
 				}
-
+				catch (IOException ioe) {
+					throw new PortalException(ioe);
+				}
 			});
 
 		actionableDynamicQuery.performActions();

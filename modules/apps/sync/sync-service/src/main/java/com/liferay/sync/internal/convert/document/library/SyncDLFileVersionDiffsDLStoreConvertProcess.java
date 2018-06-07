@@ -51,33 +51,24 @@ public class SyncDLFileVersionDiffsDLStoreConvertProcess
 			_syncDLFileVersionDiffLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<SyncDLFileVersionDiff>() {
+			(SyncDLFileVersionDiff syncDLFileVersionDiff) -> {
+				long dataFileEntryId =
+					syncDLFileVersionDiff.getDataFileEntryId();
 
-				@Override
-				public void performAction(
-						SyncDLFileVersionDiff syncDLFileVersionDiff)
-					throws PortalException {
-
-					long dataFileEntryId =
-						syncDLFileVersionDiff.getDataFileEntryId();
-
-					if (dataFileEntryId == 0) {
-						return;
-					}
-
-					FileEntry fileEntry =
-						PortletFileRepositoryUtil.getPortletFileEntry(
-							dataFileEntryId);
-
-					dlStoreConverter.migrateDLFileEntry(
-						fileEntry.getCompanyId(),
-						DLFolderConstants.getDataRepositoryId(
-							fileEntry.getRepositoryId(),
-							fileEntry.getFolderId()),
-						fileEntry);
+				if (dataFileEntryId == 0) {
+					return;
 				}
 
+				FileEntry fileEntry =
+					PortletFileRepositoryUtil.getPortletFileEntry(
+						dataFileEntryId);
+
+				dlStoreConverter.migrateDLFileEntry(
+					fileEntry.getCompanyId(),
+					DLFolderConstants.getDataRepositoryId(
+						fileEntry.getRepositoryId(),
+						fileEntry.getFolderId()),
+					fileEntry);
 			});
 
 		actionableDynamicQuery.performActions();

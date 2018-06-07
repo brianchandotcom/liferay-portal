@@ -48,24 +48,17 @@ public class KBDLStoreConvertProcess implements DLStoreConvertProcess {
 			_kbArticleLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<KBArticle>() {
+			(KBArticle kbArticle) -> {
+				for (FileEntry fileEntry :
+						kbArticle.getAttachmentsFileEntries()) {
 
-				@Override
-				public void performAction(KBArticle kbArticle)
-					throws PortalException {
-
-					for (FileEntry fileEntry :
-							kbArticle.getAttachmentsFileEntries()) {
-
-						dlStoreConverter.migrateDLFileEntry(
-							kbArticle.getCompanyId(),
-							DLFolderConstants.getDataRepositoryId(
-								fileEntry.getRepositoryId(),
-								fileEntry.getFolderId()),
-							fileEntry);
-					}
+					dlStoreConverter.migrateDLFileEntry(
+						kbArticle.getCompanyId(),
+						DLFolderConstants.getDataRepositoryId(
+							fileEntry.getRepositoryId(),
+							fileEntry.getFolderId()),
+						fileEntry);
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();

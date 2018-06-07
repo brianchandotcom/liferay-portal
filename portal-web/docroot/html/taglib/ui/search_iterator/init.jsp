@@ -39,6 +39,7 @@ Map orderableHeaders = searchContainer.getOrderableHeaders();
 RowChecker rowChecker = searchContainer.getRowChecker();
 RowMover rowMover = searchContainer.getRowMover();
 List resultRows = searchContainer.getResultRows();
+String summary = searchContainer.getSummary();
 
 JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 %>

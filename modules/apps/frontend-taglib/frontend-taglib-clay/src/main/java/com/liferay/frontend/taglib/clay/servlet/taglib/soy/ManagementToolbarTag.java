@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.display.context.ManagementToolbarDefaults;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -45,6 +46,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 			"com.liferay.frontend.taglib.clay.ManagementToolbar");
 		setHydrate(true);
 		setModuleBaseName("management-toolbar");
+
+		if (_displayContext != null) {
+			populateContext(_displayContext);
+		}
 
 		Map<String, Object> context = getContext();
 
@@ -115,6 +120,10 @@ public class ManagementToolbarTag extends BaseClayTag {
 		return super.doStartTag();
 	}
 
+	public ManagementToolbarDisplayContext getDisplayContext() {
+		return _displayContext;
+	}
+
 	@Override
 	public String getModule() {
 		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
@@ -145,6 +154,12 @@ public class ManagementToolbarTag extends BaseClayTag {
 
 	public void setDisabled(Boolean disabled) {
 		putValue("disabled", disabled);
+	}
+
+	public void setDisplayContext(
+		ManagementToolbarDisplayContext managementToolbarDisplayContext) {
+
+		_displayContext = managementToolbarDisplayContext;
 	}
 
 	public void setFilterDropdownItems(List<DropdownItem> filterDropdownItems) {
@@ -224,8 +239,132 @@ public class ManagementToolbarTag extends BaseClayTag {
 	}
 
 	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_displayContext = null;
+	}
+
+	@Override
 	protected String[] getNamespacedParams() {
 		return _NAMESPACED_PARAMS;
+	}
+
+	protected void populateContext(
+		ManagementToolbarDisplayContext managementToolbarDisplayContext) {
+
+		Map<String, Object> context = getContext();
+
+		if (context.get("actionItems") == null) {
+			setActionDropdownItems(
+				managementToolbarDisplayContext.getActionDropdownItems());
+		}
+
+		if (context.get("clearResultsURL") == null) {
+			setClearResultsURL(
+				managementToolbarDisplayContext.getClearResultsURL());
+		}
+
+		if (context.get("contentRenderer") == null) {
+			setContentRenderer(
+				managementToolbarDisplayContext.getContentRenderer());
+		}
+
+		if (context.get("creationMenu") == null) {
+			setCreationMenu(managementToolbarDisplayContext.getCreationMenu());
+		}
+
+		if (context.get("disabled") == null) {
+			setDisabled(managementToolbarDisplayContext.isDisabled());
+		}
+
+		if (context.get("filterItems") == null) {
+			setFilterDropdownItems(
+				managementToolbarDisplayContext.getFilterDropdownItems());
+		}
+
+		if (context.get("infoPanelId") == null) {
+			setInfoPanelId(managementToolbarDisplayContext.getInfoPanelId());
+		}
+
+		if (context.get("totalItems") == null) {
+			setItemsTotal(managementToolbarDisplayContext.getItemsTotal());
+		}
+
+		if (context.get("searchActionURL") == null) {
+			setSearchActionURL(
+				managementToolbarDisplayContext.getSearchActionURL());
+		}
+
+		if (context.get("searchContainerId") == null) {
+			setSearchContainerId(
+				managementToolbarDisplayContext.getSearchContainerId());
+		}
+
+		if (context.get("searchFormMethod") == null) {
+			setSearchFormMethod(
+				managementToolbarDisplayContext.getSearchFormMethod());
+		}
+
+		if (context.get("searchFormName") == null) {
+			setSearchFormName(
+				managementToolbarDisplayContext.getSearchFormName());
+		}
+
+		if (context.get("searchInputName") == null) {
+			setSearchInputName(
+				managementToolbarDisplayContext.getSearchInputName());
+		}
+
+		if (context.get("searchValue") == null) {
+			setSearchValue(managementToolbarDisplayContext.getSearchValue());
+		}
+
+		if (context.get("selectable") == null) {
+			setSelectable(managementToolbarDisplayContext.isSelectable());
+		}
+
+		if (context.get("selectedItems") == null) {
+			setSelectedItems(
+				managementToolbarDisplayContext.getSelectedItems());
+		}
+
+		if (context.get("showAdvancedSearch") == null) {
+			setShowAdvancedSearch(
+				managementToolbarDisplayContext.isShowAdvancedSearch());
+		}
+
+		if (context.get("showCreationMenu") == null) {
+			setShowCreationMenu(
+				managementToolbarDisplayContext.isShowCreationMenu());
+		}
+
+		if (context.get("showFiltersDoneButton") == null) {
+			setShowFiltersDoneButton(
+				managementToolbarDisplayContext.isShowFiltersDoneButton());
+		}
+
+		if (context.get("showInfoButton") == null) {
+			setShowInfoButton(
+				managementToolbarDisplayContext.isShowInfoButton());
+		}
+
+		if (context.get("showSearch") == null) {
+			setShowSearch(managementToolbarDisplayContext.isShowSearch());
+		}
+
+		if (context.get("sortingOrder") == null) {
+			setSortingOrder(managementToolbarDisplayContext.getSortingOrder());
+		}
+
+		if (context.get("sortingURL") == null) {
+			setSortingURL(managementToolbarDisplayContext.getSortingURL());
+		}
+
+		if (context.get("viewTypes") == null) {
+			setViewTypeItems(
+				managementToolbarDisplayContext.getViewTypeItems());
+		}
 	}
 
 	private Map<String, Object> _getSearchData(String searchActionURL) {
@@ -265,5 +404,7 @@ public class ManagementToolbarTag extends BaseClayTag {
 	private static final String[] _NAMESPACED_PARAMS = {
 		"infoPanelId", "searchContainerId", "searchFormName", "searchInputName"
 	};
+
+	private ManagementToolbarDisplayContext _displayContext;
 
 }

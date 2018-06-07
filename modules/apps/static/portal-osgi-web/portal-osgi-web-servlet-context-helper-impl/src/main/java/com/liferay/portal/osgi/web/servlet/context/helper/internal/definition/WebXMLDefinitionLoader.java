@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -953,9 +954,14 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			return;
 		}
 
-		String className = classResource.replaceAll("\\.class$", "");
+		String className = classResource;
 
-		className = className.replaceAll("/", ".");
+		if (classResource.endsWith(".class")) {
+			className = classResource.substring(0, classResource.length() - 6);
+		}
+
+		className = StringUtil.replace(
+			className, CharPool.SLASH, CharPool.PERIOD);
 
 		Class<?> clazz = null;
 

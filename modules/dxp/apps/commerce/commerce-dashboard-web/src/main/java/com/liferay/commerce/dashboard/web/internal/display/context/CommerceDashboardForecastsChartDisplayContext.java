@@ -186,8 +186,12 @@ public class CommerceDashboardForecastsChartDisplayContext
 			_getColors(forecastChartEntries));
 		commerceDashboardPredictiveChartConfig.setLegend(
 			Collections.singletonMap("show", false));
-		commerceDashboardPredictiveChartConfig.setPredictionDate(
-			_dateFormat.format(predictionDate));
+
+		if (predictionDate != null) {
+			commerceDashboardPredictiveChartConfig.setPredictionDate(
+				_dateFormat.format(predictionDate));
+		}
+
 		commerceDashboardPredictiveChartConfig.setTimeseries(
 			_getTimeseries(timeseriesDatesList));
 

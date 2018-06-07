@@ -470,7 +470,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			boolean count)
 		throws Exception {
 
-		QueryConfig queryConfig = query.getQueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		SolrQuery solrQuery = new SolrQuery();
 

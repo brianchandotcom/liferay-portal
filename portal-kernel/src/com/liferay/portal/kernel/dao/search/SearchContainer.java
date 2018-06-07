@@ -330,6 +330,10 @@ public class SearchContainer<R> {
 		return _searchTerms;
 	}
 
+	public String getSummary() {
+		return _summary;
+	}
+
 	public int getStart() {
 		return _start;
 	}
@@ -484,6 +488,10 @@ public class SearchContainer<R> {
 		_search = search;
 	}
 
+	public void setSummary(String summary) {
+		_summary = summary;
+	}
+
 	public void setTotal(int total) {
 		_total = total;
 
@@ -578,6 +586,7 @@ public class SearchContainer<R> {
 	private RowChecker _rowChecker;
 	private RowMover _rowMover;
 	private boolean _search;
+	private String _summary;
 	private final DisplayTerms _searchTerms;
 	private int _start;
 	private int _total;

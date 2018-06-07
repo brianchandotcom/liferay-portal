@@ -2475,6 +2475,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>summary</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The total number of objects in the search container.</description>
 			<name>total</name>
 			<required>false</required>

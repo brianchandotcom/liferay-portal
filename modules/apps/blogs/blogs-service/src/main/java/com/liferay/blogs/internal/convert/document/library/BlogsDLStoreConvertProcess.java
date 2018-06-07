@@ -185,10 +185,10 @@ public class BlogsDLStoreConvertProcess implements DLStoreConvertProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsDLStoreConvertProcess.class);
 
-	@Reference(unbind = "-")
+	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
-	@Reference(unbind = "-")
+	@Reference
 	private RepositoryLocalService _repositoryLocalService;
 
 }

@@ -72,13 +72,7 @@ public class HTMLPreviewDLStoreConvertProcess implements DLStoreConvertProcess {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	public void setHtmlPreviewEntryLocalService(
-		HtmlPreviewEntryLocalService htmlPreviewEntryLocalService) {
-
-		_htmlPreviewEntryLocalService = htmlPreviewEntryLocalService;
-	}
-
+	@Reference
 	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;
 
 }

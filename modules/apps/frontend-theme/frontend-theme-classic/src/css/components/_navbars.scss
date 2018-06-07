@@ -5,7 +5,10 @@
 
 .navbar-classic {
 	background-color: #FFF;
-	border-bottom: 1px solid $light-color;
+
+	&.navbar-light {
+		border-bottom: 1px solid $light-color;
+	}
 
 	.navbar-blank {
 		@include media-query(null, $screen-xs-max) {
@@ -26,8 +29,10 @@
 		}
 	}
 
-	.portlet-navigation {
-		margin-left: auto;
+	.portlet-search-bar {
+		@include media-breakpoint-down(md) {
+			width: 100%;
+		}
 	}
 
 	.logo:hover {
@@ -38,21 +43,15 @@
 		.nav-item:not(:last-of-type) {
 			.nav-link {
 				@include lg {
-					padding-right: 16px;
+					margin-right: 16px;
 				}
-			}
-		}
-
-		.nav-link {
-			@include lg {
-				padding-left: 16px;
 			}
 		}
 	}
 
 	.nav-link {
 		color: #6B6C7E;
-		font-size: 0.875rem;
+		font-size: 0.9375rem;
 		font-weight: 600;
 	}
 }

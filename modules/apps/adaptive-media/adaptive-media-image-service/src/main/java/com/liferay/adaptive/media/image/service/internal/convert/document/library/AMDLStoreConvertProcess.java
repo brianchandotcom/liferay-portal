@@ -62,14 +62,13 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 				Store sourceStore = dlStoreConverter.getSourceStore();
 
 				try (InputStream is = sourceStore.getFileAsStream(
-						amImageEntry.getCompanyId(),
-						CompanyConstants.SYSTEM, fileVersionPath)) {
+						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,
+						fileVersionPath)) {
 
 					Store targetStore = dlStoreConverter.getTargetStore();
 
 					targetStore.addFile(
-						amImageEntry.getCompanyId(),
-						CompanyConstants.SYSTEM,
+						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,
 						fileVersionPath, is);
 				}
 				catch (IOException ioe) {

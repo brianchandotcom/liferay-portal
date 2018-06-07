@@ -14,7 +14,6 @@
 
 package com.liferay.sync.internal.convert.document.library;
 
-import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.convert.documentlibrary.DLStoreConverter;
@@ -22,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
 import com.liferay.sync.service.SyncDLFileVersionDiffLocalService;
@@ -66,8 +64,7 @@ public class SyncDLFileVersionDiffsDLStoreConvertProcess
 				dlStoreConverter.migrateDLFileEntry(
 					fileEntry.getCompanyId(),
 					DLFolderConstants.getDataRepositoryId(
-						fileEntry.getRepositoryId(),
-						fileEntry.getFolderId()),
+						fileEntry.getRepositoryId(), fileEntry.getFolderId()),
 					fileEntry);
 			});
 

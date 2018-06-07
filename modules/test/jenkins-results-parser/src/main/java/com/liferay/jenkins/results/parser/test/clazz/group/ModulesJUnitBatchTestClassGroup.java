@@ -57,6 +57,19 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				ioe);
 		}
 
+		String requiredModules = getFirstPropertyValue(
+			"modules.includes.required");
+
+		if (requiredModules != null) {
+			File modulesDir = new File(
+				portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
+			for (String requiredModule : requiredModules.split(",")) {
+				modifiedModuleDirsList.add(
+					new File(modulesDir, requiredModule));
+			}
+		}
+
 		for (File modifiedModuleDir : modifiedModuleDirsList) {
 			String modifiedModuleAbsolutePath =
 				modifiedModuleDir.getAbsolutePath();

@@ -27,51 +27,16 @@ import java.util.List;
 /**
  * @author Leslie Wong
  */
-public class ModulesCompileBatchTestClassGroup extends BatchTestClassGroup {
-
-	public static class ModulesCompileBatchTestClass extends BaseTestClass {
-
-		protected static ModulesCompileBatchTestClass getInstance(
-			String batchName, File moduleBaseDir) {
-
-			return new ModulesCompileBatchTestClass(batchName, moduleBaseDir);
-		}
-
-		protected ModulesCompileBatchTestClass(
-			String batchName, File moduleBaseDir) {
-
-			super(moduleBaseDir);
-
-			addTestMethod(batchName);
-		}
-
-	}
+public class ModulesCompileBatchTestClassGroup
+	extends ModulesBatchTestClassGroup {
 
 	protected ModulesCompileBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
-
-		try {
-			excludesPathMatchers.addAll(
-				getPathMatchers(
-					getFirstPropertyValue("modules.excludes"),
-					portalGitWorkingDirectory.getWorkingDirectory()));
-
-			includesPathMatchers.addAll(
-				getPathMatchers(
-					getFirstPropertyValue("modules.includes"),
-					portalGitWorkingDirectory.getWorkingDirectory()));
-
-			setTestClasses();
-
-			setAxisTestClassGroups();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
 	}
 
+	@Override
 	protected void setTestClasses() throws IOException {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
@@ -99,7 +64,7 @@ public class ModulesCompileBatchTestClassGroup extends BatchTestClassGroup {
 
 		for (File moduleDir : moduleDirsList) {
 			testClasses.add(
-				ModulesCompileBatchTestClass.getInstance(batchName, moduleDir));
+				ModulesBatchTestClass.getInstance(batchName, moduleDir));
 		}
 	}
 

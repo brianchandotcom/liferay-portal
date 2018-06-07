@@ -31,6 +31,7 @@ import java.util.Map;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.BodyTag;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -40,7 +41,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Adolfo Pérez
  */
-public class AMImageImgTag extends AttributesTagSupport {
+public class AMImageImgTag extends AttributesTagSupport implements BodyTag {
 
 	@Override
 	public int doEndTag() throws JspException {

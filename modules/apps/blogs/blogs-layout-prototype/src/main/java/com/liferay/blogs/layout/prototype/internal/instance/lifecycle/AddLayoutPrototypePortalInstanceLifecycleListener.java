@@ -18,6 +18,7 @@ import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKey
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.recent.bloggers.constants.RecentBloggersPortletKeys;
+import com.liferay.layout.page.template.util.LayoutPrototypeHelper;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -80,7 +81,7 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 		Map<Locale, String> nameMap = ResourceBundleUtil.getLocalizationMap(
 			resourceBundleLoader, "layout-prototype-blog-title");
 
-		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
+		Layout layout = _layoutPrototypeHelper.addLayoutPrototype(
 			companyId, defaultUserId, nameMap, descriptionMap, "2_columns_iii",
 			layoutPrototypes);
 
@@ -146,6 +147,9 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
+
+	@Reference
+	private LayoutPrototypeHelper _layoutPrototypeHelper;
 
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -54,8 +55,10 @@ public class AuthVerifierGuestAllowTest {
 
 		url = new URL(_url, "/o/auth-verifier-allow-guest-test/getAccess");
 
-		Assert.assertEquals(
-			"GuestAllowHttpServlet", StringUtil.read(url.openStream()));
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals(
+				"GuestAllowHttpServlet", StringUtil.read(inputStream));
+		}
 	}
 
 	@ArquillianResource

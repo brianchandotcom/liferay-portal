@@ -16,6 +16,8 @@ package com.liferay.portal.security.auth.verifier.test;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.InputStream;
+
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -37,13 +39,16 @@ public class AuthVerifierTrackerTest {
 	public void testRemoteUser() throws Exception {
 		URL url = new URL(_url, "/o/auth-verifier-filter-test/remoteUser");
 
-		Assert.assertEquals(
-			"remote-user-set", StringUtil.read(url.openStream()));
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals(
+				"remote-user-set", StringUtil.read(inputStream));
+		}
 
 		url = new URL(_url, "/o/no-auth-verifier-filter-test/remoteUser");
 
-		Assert.assertEquals(
-			"no-remote-user", StringUtil.read(url.openStream()));
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
+		}
 	}
 
 	@ArquillianResource

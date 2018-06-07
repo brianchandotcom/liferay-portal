@@ -36,5 +36,10 @@ pageContext.setAttribute(WebKeys.THEME_DEFINE_OBJECTS, Boolean.FALSE);
 		document.execCommand('ClearAuthenticationCache');
 	</c:if>
 
-	location.href = '<%= HtmlUtil.escapeJS(referer) %>';
+	<%
+	referer = HtmlUtil.escapeJSLink(referer);
+	referer = HtmlUtil.escapeJS(referer);
+	%>
+
+	location.href = '<%= referer %>';
 </script>

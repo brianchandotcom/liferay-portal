@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -42,6 +43,16 @@ public class IconDeleteTag extends IconTag {
 
 	public void setTrash(boolean trash) {
 		_trash = trash;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_confirmation = null;
+		_resourceBundle = null;
+		_showIcon = false;
+		_trash = false;
 	}
 
 	@Override
@@ -75,10 +86,12 @@ public class IconDeleteTag extends IconTag {
 
 		if (Validator.isNull(getMessage())) {
 			if (_trash) {
-				setMessage("move-to-recycle-bin");
+				setMessage(
+					LanguageUtil.get(
+						_getResourceBundle(), "move-to-recycle-bin"));
 			}
 			else {
-				setMessage("delete");
+				setMessage(LanguageUtil.get(_getResourceBundle(), "delete"));
 			}
 		}
 
@@ -104,18 +117,17 @@ public class IconDeleteTag extends IconTag {
 
 			sb.append("javascript:if (confirm('");
 
-			ResourceBundle resourceBundle =
-				TagResourceBundleUtil.getResourceBundle(pageContext);
-
 			if (Validator.isNotNull(_confirmation)) {
 				sb.append(
-					UnicodeLanguageUtil.get(resourceBundle, _confirmation));
+					UnicodeLanguageUtil.get(
+						_getResourceBundle(), _confirmation));
 			}
 			else {
 				String confirmation = "are-you-sure-you-want-to-delete-this";
 
 				sb.append(
-					UnicodeLanguageUtil.get(resourceBundle, confirmation));
+					UnicodeLanguageUtil.get(
+						_getResourceBundle(), confirmation));
 			}
 
 			sb.append("')) { ");
@@ -133,9 +145,19 @@ public class IconDeleteTag extends IconTag {
 		return super.getPage();
 	}
 
+	private ResourceBundle _getResourceBundle() {
+		if (_resourceBundle == null) {
+			_resourceBundle = TagResourceBundleUtil.getResourceBundle(
+				pageContext);
+		}
+
+		return _resourceBundle;
+	}
+
 	private static final String _PAGE = "/html/taglib/ui/icon_delete/page.jsp";
 
 	private String _confirmation;
+	private ResourceBundle _resourceBundle;
 	private boolean _showIcon;
 	private boolean _trash;
 

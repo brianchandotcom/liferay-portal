@@ -225,7 +225,7 @@ public class NavigationMenuTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	protected List<NavItem> getMenuItems() throws PortalException {
+	protected List<NavItem> getMenuItems() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -244,16 +244,23 @@ public class NavigationMenuTag extends IncludeTag {
 				ServletContextUtil.getSiteNavigationMenuItemType(
 					siteNavigationMenuItem.getType());
 
-			if (!siteNavigationMenuItemType.hasPermission(
-					themeDisplay.getPermissionChecker(),
-					siteNavigationMenuItem)) {
+			try {
+				if (!siteNavigationMenuItemType.hasPermission(
+						themeDisplay.getPermissionChecker(),
+						siteNavigationMenuItem)) {
 
-				continue;
+					continue;
+				}
+
+				navItems.add(
+					new SiteNavigationMenuNavItem(
+						request, themeDisplay, siteNavigationMenuItem));
 			}
-
-			navItems.add(
-				new SiteNavigationMenuNavItem(
-					request, themeDisplay, siteNavigationMenuItem));
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
 		}
 
 		return navItems;

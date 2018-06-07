@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -315,6 +316,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		return _portlet;
 	}
 
+	@Override
 	public PortletContext getPortletContext() {
 		return _portletContext;
 	}
@@ -556,7 +558,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public String getUserAgent() {
-		throw new UnsupportedOperationException();
+		return _request.getHeader(HttpHeaders.USER_AGENT);
 	}
 
 	public LinkedHashMap<String, String> getUserInfo() {

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.display.context;
 
+import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
@@ -188,6 +189,10 @@ public class DDMFormDisplayContext {
 
 		ddmFormRenderingContext.setSubmitLabel(submitLabel);
 
+		if (!hasAddFormInstanceRecordPermission()) {
+			ddmFormRenderingContext.setReadOnly(true);
+		}
+
 		return _ddmFormRenderer.render(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
@@ -249,6 +254,27 @@ public class DDMFormDisplayContext {
 			ddmFormInstance.getSettingsModel();
 
 		return ddmFormInstanceSettings.redirectURL();
+	}
+
+	public boolean hasAddFormInstanceRecordPermission() throws PortalException {
+		if (_hasAddFormInstanceRecordPermission != null) {
+			return _hasAddFormInstanceRecordPermission;
+		}
+
+		_hasAddFormInstanceRecordPermission = true;
+
+		DDMFormInstance ddmFormInstance = getFormInstance();
+
+		if (ddmFormInstance != null) {
+			ThemeDisplay themeDisplay = getThemeDisplay();
+
+			_hasAddFormInstanceRecordPermission =
+				DDMFormInstancePermission.contains(
+					themeDisplay.getPermissionChecker(), ddmFormInstance,
+					DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
+		}
+
+		return _hasAddFormInstanceRecordPermission;
 	}
 
 	public boolean isAutosaveEnabled() {
@@ -663,6 +689,7 @@ public class DDMFormDisplayContext {
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final GroupLocalService _groupLocalService;
+	private Boolean _hasAddFormInstanceRecordPermission;
 	private Boolean _hasViewPermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

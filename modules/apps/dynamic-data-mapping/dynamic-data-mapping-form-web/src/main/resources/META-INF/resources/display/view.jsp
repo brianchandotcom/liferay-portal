@@ -115,6 +115,18 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 							</div>
 						</c:if>
 
+						<c:if test="<%= !ddmFormDisplayContext.hasAddFormInstanceRecordPermission() %>">
+							<div class="ddm-form-basic-info">
+								<div class="container-fluid-1280">
+									<clay:alert
+										message='<%= LanguageUtil.get(resourceBundle, "you-do-not-have-the-permission-to-submit-this-form") %>'
+										style="warning"
+										title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+									/>
+								</div>
+							</div>
+						</c:if>
+
 						<div class="ddm-form-basic-info">
 							<div class="container-fluid-1280">
 								<h1 class="ddm-form-name"><%= HtmlUtil.escape(formInstance.getName(displayLocale)) %></h1>

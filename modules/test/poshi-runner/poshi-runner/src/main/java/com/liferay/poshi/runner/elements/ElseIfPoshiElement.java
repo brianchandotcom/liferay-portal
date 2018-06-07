@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.elements;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
 import org.dom4j.Element;
@@ -96,23 +97,18 @@ public class ElseIfPoshiElement extends IfPoshiElement {
 	}
 
 	private boolean _isElementType(String poshiScript) {
-		poshiScript = poshiScript.trim();
-
-		if (!isBalancedPoshiScript(poshiScript)) {
-			return false;
-		}
-
-		if (!poshiScript.startsWith("else if (")) {
-			return false;
-		}
-
-		if (!poshiScript.endsWith("}")) {
-			return false;
-		}
-
-		return true;
+		return isValidPoshiScriptBlock(_blockNamePattern, poshiScript);
 	}
 
 	private static final String _ELEMENT_NAME = "elseif";
+
+	private static final String _POSHI_SCRIPT_KEYWORD = "else if";
+
+	private static final String _POSHI_SCRIPT_KEYWORD_REGEX =
+		_POSHI_SCRIPT_KEYWORD.replace(" ", "[\\s]*");
+
+	private static final Pattern _blockNamePattern = Pattern.compile(
+		"^" + _POSHI_SCRIPT_KEYWORD_REGEX + BLOCK_NAME_PARAMETER_REGEX,
+		Pattern.DOTALL);
 
 }

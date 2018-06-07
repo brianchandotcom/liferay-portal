@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.sample.internal.activator;
 
+import static java.util.concurrent.CompletableFuture.runAsync;
+
 import com.liferay.apio.architect.sample.internal.model.BlogPostingCommentModel;
 import com.liferay.apio.architect.sample.internal.model.BlogPostingModel;
 import com.liferay.apio.architect.sample.internal.model.PersonModel;
@@ -23,7 +25,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * Initiates the in-memory databases by calling the different {@code compute}
- * methods in each model class.
+ * methods in each model class asynchronously.
  *
  * @author Alejandro Hernández
  * @review
@@ -32,11 +34,14 @@ public class ApioSampleBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		PersonModel.compute();
+		runAsync(
+			() -> {
+				PersonModel.compute();
 
-		BlogPostingModel.compute();
+				BlogPostingModel.compute();
 
-		BlogPostingCommentModel.compute();
+				BlogPostingCommentModel.compute();
+			});
 	}
 
 	@Override

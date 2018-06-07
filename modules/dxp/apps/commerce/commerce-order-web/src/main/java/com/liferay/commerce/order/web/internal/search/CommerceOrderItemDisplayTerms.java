@@ -24,26 +24,26 @@ import javax.portlet.PortletRequest;
  */
 public class CommerceOrderItemDisplayTerms extends DisplayTerms {
 
-	public static final String SKU = "sku";
+	public static final String NAME = "name";
 
-	public static final String TITLE = "title";
+	public static final String SKU = "sku";
 
 	public CommerceOrderItemDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
 		sku = ParamUtil.getString(portletRequest, SKU);
-		title = ParamUtil.getString(portletRequest, TITLE);
+		name = ParamUtil.getString(portletRequest, NAME);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public String getSku() {
 		return sku;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
+	protected String name;
 	protected String sku;
-	protected String title;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.commerce.order.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderNote;
@@ -71,7 +70,6 @@ public class CommerceOrderEditDisplayContext {
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderNoteService commerceOrderNoteService,
 			CommercePaymentMethodService commercePaymentMethodService,
-			CommercePriceFormatter commercePriceFormatter,
 			ItemSelector itemSelector, RenderRequest renderRequest)
 		throws PortalException {
 
@@ -79,7 +77,6 @@ public class CommerceOrderEditDisplayContext {
 		_commerceOrderItemService = commerceOrderItemService;
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commercePaymentMethodService = commercePaymentMethodService;
-		_commercePriceFormatter = commercePriceFormatter;
 		_itemSelector = itemSelector;
 
 		long commerceOrderId = ParamUtil.getLong(
@@ -159,14 +156,6 @@ public class CommerceOrderEditDisplayContext {
 		return _commerceOrderItem;
 	}
 
-	public String getCommerceOrderItemPrice(CommerceOrderItem commerceOrderItem)
-		throws PortalException {
-
-		return _commercePriceFormatter.format(
-			_commerceOrder.getCommerceCurrency(), commerceOrderItem.getPrice(),
-			_commerceOrderRequestHelper.getLocale());
-	}
-
 	public PortletURL getCommerceOrderItemsPortletURL() throws PortalException {
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceOrderRequestHelper.getLiferayPortletResponse();
@@ -211,7 +200,7 @@ public class CommerceOrderEditDisplayContext {
 		if (commerceOrderItemSearchTerms.isAdvancedSearch()) {
 			baseModelSearchResult = _commerceOrderItemService.search(
 				getCommerceOrderId(), commerceOrderItemSearchTerms.getSku(),
-				commerceOrderItemSearchTerms.getTitle(),
+				commerceOrderItemSearchTerms.getName(),
 				commerceOrderItemSearchTerms.isAndOperator(),
 				_itemSearchContainer.getStart(), _itemSearchContainer.getEnd(),
 				sort);
@@ -298,7 +287,6 @@ public class CommerceOrderEditDisplayContext {
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
 	private final CommerceOrderService _commerceOrderService;
 	private final CommercePaymentMethodService _commercePaymentMethodService;
-	private final CommercePriceFormatter _commercePriceFormatter;
 	private SearchContainer<CommerceOrderItem> _itemSearchContainer;
 	private final ItemSelector _itemSelector;
 

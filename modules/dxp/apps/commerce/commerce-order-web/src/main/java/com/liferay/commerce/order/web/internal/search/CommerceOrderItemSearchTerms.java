@@ -28,7 +28,7 @@ public class CommerceOrderItemSearchTerms
 		super(portletRequest);
 
 		sku = DAOParamUtil.getString(portletRequest, SKU);
-		title = DAOParamUtil.getString(portletRequest, TITLE);
+		name = DAOParamUtil.getString(portletRequest, NAME);
 	}
 
 }

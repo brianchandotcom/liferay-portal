@@ -53,8 +53,8 @@ public class CommerceOrderItemSearch
 			CommerceOrderItemDisplayTerms.SKU,
 			commerceOrderItemDisplayTerms.getSku());
 		iteratorURL.setParameter(
-			CommerceOrderItemDisplayTerms.TITLE,
-			commerceOrderItemDisplayTerms.getTitle());
+			CommerceOrderItemDisplayTerms.NAME,
+			commerceOrderItemDisplayTerms.getName());
 
 		try {
 			PortalPreferences preferences =
@@ -106,12 +106,12 @@ public class CommerceOrderItemSearch
 
 	static {
 		_headerNames.add("sku");
-		_headerNames.add("title");
+		_headerNames.add("name");
 		_headerNames.add("quantity");
 		_headerNames.add("price");
 
 		_orderableHeaders.put("sku", "sku");
-		_orderableHeaders.put("title", "title");
+		_orderableHeaders.put("name", "name");
 		_orderableHeaders.put("quantity", "quantity");
 		_orderableHeaders.put("price", "price");
 	}

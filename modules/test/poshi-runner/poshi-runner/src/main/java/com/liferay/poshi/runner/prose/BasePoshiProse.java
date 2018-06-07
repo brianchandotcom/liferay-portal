@@ -23,8 +23,13 @@ import org.dom4j.Element;
  */
 public abstract class BasePoshiProse {
 
+	public String filterCommentLines(String content) {
+		return content.replaceAll(commentLinePattern.pattern(), "");
+	}
+
 	public abstract Element toElement();
 
+	protected final Pattern commentLinePattern = Pattern.compile("\\s*#.*");
 	protected final Pattern tagPattern = Pattern.compile(
 		"\\@\\s*(?<tagName>.*?)\\s*\\=\\s*\"(?<tagValue>.*)\"");
 

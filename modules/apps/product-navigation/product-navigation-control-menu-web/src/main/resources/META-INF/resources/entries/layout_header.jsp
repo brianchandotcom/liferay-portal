@@ -23,5 +23,5 @@ ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle("content.
 %>
 
 <li class="align-items-center control-menu-nav-item control-menu-nav-item-content">
-	<span class="control-menu-level-1-heading truncate-text" data-qa-id="headerTitle"><%= layout.getName(locale) %></span>&nbsp;<span class="text-muted">(<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + layout.getType()) %>)</span>
+	<span class="control-menu-level-1-heading truncate-text" data-qa-id="headerTitle"><%= layout.getName(locale) %></span>&nbsp;<span class="text-muted truncate-text">(<%= LanguageUtil.get(request, layoutTypeResourceBundle, "layout.types." + layout.getType()) %>)</span>
 </li>

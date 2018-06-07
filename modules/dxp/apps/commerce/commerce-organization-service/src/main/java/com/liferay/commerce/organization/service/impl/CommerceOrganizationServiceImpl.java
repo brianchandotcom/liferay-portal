@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
@@ -26,6 +27,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
@@ -42,6 +46,18 @@ public class CommerceOrganizationServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		if (parentOrganizationId ==
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+			PortalPermissionUtil.check(
+				getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
+		}
+		else {
+			OrganizationPermissionUtil.check(
+				getPermissionChecker(), parentOrganizationId,
+				ActionKeys.ADD_ORGANIZATION);
+		}
+
 		return commerceOrganizationLocalService.addOrganization(
 			parentOrganizationId, name, type, serviceContext);
 	}
@@ -52,8 +68,26 @@ public class CommerceOrganizationServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		GroupPermissionUtil.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ASSIGN_MEMBERS);
+
 		commerceOrganizationLocalService.addOrganizationUsers(
 			organizationId, emailAddresses, serviceContext);
+	}
+
+	@Override
+	public Organization fetchOrganization(long organizationId)
+		throws PortalException {
+
+		Organization organization = organizationLocalService.fetchOrganization(
+			organizationId);
+
+		if (organization != null) {
+			_checkOrganization(organization.getOrganizationId());
+		}
+
+		return organization;
 	}
 
 	@Override
@@ -69,6 +103,8 @@ public class CommerceOrganizationServiceImpl
 	public Address getOrganizationPrimaryAddress(long organizationId)
 		throws PortalException {
 
+		_checkOrganization(organizationId);
+
 		return commerceOrganizationLocalService.getOrganizationPrimaryAddress(
 			organizationId);
 	}
@@ -76,6 +112,8 @@ public class CommerceOrganizationServiceImpl
 	@Override
 	public EmailAddress getOrganizationPrimaryEmailAddress(long organizationId)
 		throws PortalException {
+
+		_checkOrganization(organizationId);
 
 		return
 			commerceOrganizationLocalService.getOrganizationPrimaryEmailAddress(
@@ -105,6 +143,13 @@ public class CommerceOrganizationServiceImpl
 	@Override
 	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException {
+
+		Organization organization = organizationLocalService.getOrganization(
+			organizationId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), organization.getGroupId(),
+			ActionKeys.ASSIGN_MEMBERS);
 
 		commerceOrganizationLocalService.unsetOrganizationUsers(
 			organizationId, userIds);

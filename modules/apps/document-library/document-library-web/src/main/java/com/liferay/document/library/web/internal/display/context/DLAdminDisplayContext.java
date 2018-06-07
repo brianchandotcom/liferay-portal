@@ -158,6 +158,13 @@ public class DLAdminDisplayContext {
 	public String getOrderByCol() {
 		String orderByCol = ParamUtil.getString(_request, "orderByCol");
 
+		long fileEntryTypeId = ParamUtil.getLong(
+			_request, "fileEntryTypeId", -1);
+
+		if (orderByCol.equals("downloads") && (fileEntryTypeId >= 0)) {
+			orderByCol = "modifiedDate";
+		}
+
 		if (Validator.isNotNull(orderByCol)) {
 			_portalPreferences.setValue(
 				DLPortletKeys.DOCUMENT_LIBRARY, "order-by-col", orderByCol);
@@ -427,18 +434,24 @@ public class DLAdminDisplayContext {
 			searchContext.setAttribute("paginationType", "none");
 			searchContext.setEnd(dlSearchContainer.getEnd());
 
+			int type = Sort.STRING_TYPE;
+			String fieldName = orderByCol;
+
 			if (orderByCol.equals("creationDate")) {
-				orderByCol = "createDate";
-			}
-			else if (orderByCol.equals("readCount")) {
-				orderByCol = "downloads";
+				fieldName = Field.CREATE_DATE;
+				type = Sort.LONG_TYPE;
 			}
 			else if (orderByCol.equals("modifiedDate")) {
-				orderByCol = "modified";
+				fieldName = Field.MODIFIED_DATE;
+				type = Sort.LONG_TYPE;
+			}
+			else if (orderByCol.equals("size")) {
+				type = Sort.LONG_TYPE;
 			}
 
 			Sort sort = new Sort(
-				orderByCol, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
+				fieldName, type,
+				!StringUtil.equalsIgnoreCase(orderByType, "asc"));
 
 			searchContext.setSorts(sort);
 

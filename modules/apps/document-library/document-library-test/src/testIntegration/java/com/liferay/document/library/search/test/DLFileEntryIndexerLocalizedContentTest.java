@@ -15,6 +15,7 @@
 package com.liferay.document.library.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -40,7 +42,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 
 import java.io.File;
 import java.io.InputStream;
@@ -77,8 +78,6 @@ public class DLFileEntryIndexerLocalizedContentTest {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
-
-		_indexer = new DLFileEntryIndexer();
 	}
 
 	@Test
@@ -260,7 +259,10 @@ public class DLFileEntryIndexerLocalizedContentTest {
 			SearchContext searchContext = _getSearchContext(
 				searchTerm, locale, groupId);
 
-			Hits hits = _indexer.search(searchContext);
+			Indexer indexer = IndexerRegistryUtil.getIndexer(
+				DLFileEntryConstants.getClassName());
+
+			Hits hits = indexer.search(searchContext);
 
 			return _getSingleDocument(searchTerm, hits);
 		}
@@ -274,7 +276,5 @@ public class DLFileEntryIndexerLocalizedContentTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private Indexer<?> _indexer;
 
 }

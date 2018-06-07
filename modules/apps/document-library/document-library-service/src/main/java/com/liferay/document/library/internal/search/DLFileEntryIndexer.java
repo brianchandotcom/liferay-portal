@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.internal.search;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -20,15 +20,14 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
-import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
@@ -55,9 +54,9 @@ import com.liferay.portal.kernel.search.DocumentHelper;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
-import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistryUtil;
+import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
@@ -67,14 +66,13 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -94,15 +92,18 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Alexander Chow
- *
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.document.library.internal.search.DLFileEntryIndexer}
  */
-@Deprecated
+@Component(
+	property = "related.entry.indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntry",
+	service = {Indexer.class, RelatedEntryIndexer.class}
+)
 public class DLFileEntryIndexer
 	extends BaseIndexer<DLFileEntry> implements RelatedEntryIndexer {
 
@@ -135,8 +136,7 @@ public class DLFileEntryIndexer
 		FileEntry fileEntry = null;
 
 		try {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				comment.getClassPK());
+			fileEntry = _dlAppLocalService.getFileEntry(comment.getClassPK());
 		}
 		catch (Exception e) {
 			return;
@@ -170,7 +170,7 @@ public class DLFileEntryIndexer
 
 	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(classPK);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -182,13 +182,13 @@ public class DLFileEntryIndexer
 		throws Exception {
 
 		try {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(classPK);
 
 			if (fileEntry instanceof LiferayFileEntry) {
 				DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 				if (dlFileEntry.isInHiddenFolder()) {
-					Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
+					Indexer<?> indexer = _indexerRegistry.getIndexer(
 						dlFileEntry.getClassName());
 
 					return indexer.isVisible(dlFileEntry.getClassPK(), status);
@@ -240,7 +240,7 @@ public class DLFileEntryIndexer
 				ddmStructureFieldName,
 				DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
 
-			DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
+			DDMStructure ddmStructure = _ddmStructureManager.getStructure(
 				GetterUtil.getLong(ddmStructureFieldNameParts[2]));
 
 			String fieldName = StringUtil.replaceLast(
@@ -251,7 +251,7 @@ public class DLFileEntryIndexer
 
 			try {
 				ddmStructureFieldValue =
-					DDMStructureManagerUtil.getIndexedFieldValue(
+					_ddmStructureManager.getIndexedFieldValue(
 						ddmStructureFieldValue,
 						ddmStructure.getFieldType(fieldName));
 			}
@@ -334,7 +334,7 @@ public class DLFileEntryIndexer
 		throws PortalException {
 
 		List<DLFileEntryMetadata> dlFileEntryMetadatas =
-			DLFileEntryMetadataLocalServiceUtil.
+			_dlFileEntryMetadataLocalServiceUtil.
 				getFileVersionFileEntryMetadatas(
 					dlFileVersion.getFileVersionId());
 
@@ -342,14 +342,14 @@ public class DLFileEntryIndexer
 			DDMFormValues ddmFormValues = null;
 
 			try {
-				ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
+				ddmFormValues = _storageEngineManager.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
 			}
 
 			if (ddmFormValues != null) {
-				DDMStructureManagerUtil.addAttributes(
+				_ddmStructureManager.addAttributes(
 					dlFileEntryMetadata.getDDMStructureId(), document,
 					ddmFormValues);
 			}
@@ -417,7 +417,7 @@ public class DLFileEntryIndexer
 			if (indexContent) {
 				if (is != null) {
 					try {
-						Locale defaultLocale = PortalUtil.getSiteDefaultLocale(
+						Locale defaultLocale = _portal.getSiteDefaultLocale(
 							dlFileEntry.getGroupId());
 
 						String localizedField =
@@ -475,7 +475,8 @@ public class DLFileEntryIndexer
 					CharPool.UNDERLINE));
 			document.addKeyword("path", dlFileEntry.getTitle());
 			document.addKeyword("readCount", dlFileEntry.getReadCount());
-			document.addKeyword("size", dlFileEntry.getSize());
+
+			document.addNumber("size", dlFileEntry.getSize());
 
 			ExpandoBridge expandoBridge =
 				ExpandoBridgeFactoryUtil.getExpandoBridge(
@@ -488,7 +489,7 @@ public class DLFileEntryIndexer
 
 			if (dlFileEntry.isInHiddenFolder()) {
 				List<RelatedEntryIndexer> relatedEntryIndexers =
-					RelatedEntryIndexerRegistryUtil.getRelatedEntryIndexers(
+					_relatedEntryIndexerRegistry.getRelatedEntryIndexers(
 						dlFileEntry.getClassName());
 
 				if (relatedEntryIndexers != null) {
@@ -502,8 +503,7 @@ public class DLFileEntryIndexer
 							document);
 
 						documentHelper.setAttachmentOwnerKey(
-							PortalUtil.getClassNameId(
-								dlFileEntry.getClassName()),
+							_portal.getClassNameId(dlFileEntry.getClassName()),
 							dlFileEntry.getClassPK());
 
 						document.addKeyword(Field.RELATED_ENTRY, true);
@@ -576,7 +576,7 @@ public class DLFileEntryIndexer
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 			classPK);
 
 		doReindex(dlFileEntry);
@@ -604,7 +604,7 @@ public class DLFileEntryIndexer
 		throws Exception {
 
 		List<DLFileEntryMetadata> dlFileEntryMetadatas =
-			DLFileEntryMetadataLocalServiceUtil.
+			_dlFileEntryMetadataLocalServiceUtil.
 				getFileVersionFileEntryMetadatas(
 					dlFileVersion.getFileVersionId());
 
@@ -614,7 +614,7 @@ public class DLFileEntryIndexer
 			DDMFormValues ddmFormValues = null;
 
 			try {
-				ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(
+				ddmFormValues = _storageEngineManager.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
 			}
 			catch (Exception e) {
@@ -622,7 +622,7 @@ public class DLFileEntryIndexer
 
 			if (ddmFormValues != null) {
 				sb.append(
-					DDMStructureManagerUtil.extractAttributes(
+					_ddmStructureManager.extractAttributes(
 						dlFileEntryMetadata.getDDMStructureId(), ddmFormValues,
 						locale));
 			}
@@ -636,7 +636,7 @@ public class DLFileEntryIndexer
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			DLFileEntryLocalServiceUtil.getIndexableActionableDynamicQuery();
+			_dlFileEntryLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -684,7 +684,7 @@ public class DLFileEntryIndexer
 
 	protected void reindexFolders(final long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			DLFolderLocalServiceUtil.getActionableDynamicQuery();
+			_dlFolderLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -712,7 +712,7 @@ public class DLFileEntryIndexer
 
 	protected void reindexRoot(final long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			GroupLocalServiceUtil.getActionableDynamicQuery();
+			_groupLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -740,14 +740,44 @@ public class DLFileEntryIndexer
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryIndexer.class);
 
-	private static volatile ModelResourcePermission<DLFileEntry>
-		_dlFileEntryModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, DLFileEntryIndexer.class,
-				"_dlFileEntryModelResourcePermission",
-				"(model.class.name=" + DLFileEntry.class.getName() + ")", true);
+	@Reference
+	private DDMStructureManager _ddmStructureManager;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFileEntryMetadataLocalService
+		_dlFileEntryMetadataLocalServiceUtil;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntry)"
+	)
+	private ModelResourcePermission<DLFileEntry>
+		_dlFileEntryModelResourcePermission;
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private Portal _portal;
 
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();
+
+	@Reference
+	private RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;
+
+	@Reference
+	private StorageEngineManager _storageEngineManager;
 
 }

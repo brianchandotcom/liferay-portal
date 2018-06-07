@@ -12,31 +12,22 @@
  * details.
  */
 
-package com.liferay.message.boards.internal.search;
+package com.liferay.message.boards.search.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.BaseSearchEngine;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelper;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.TestIndexerRegistry;
-import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
-import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -46,7 +37,6 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -60,26 +50,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareOnlyThisForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 /**
  * @author André de Oliveira
  */
-@PrepareOnlyThisForTest(SearchEngineHelperUtil.class)
-@RunWith(PowerMockRunner.class)
-public class MBIndexerGetFullQueryTest extends PowerMockito {
+@RunWith(Arquillian.class)
+public class MBIndexerGetFullQueryTest {
 
 	@Before
-	public void setUp() throws Exception {
-		setUpJSONFactoryUtil();
-		setUpPropsUtil();
-		setUpRegistryUtil();
+	public void setUp() {
 		setUpIndexerRegistry();
-		setUpSearchEngineHelperUtil();
 
 		_indexer = new TestIndexer();
 	}
@@ -138,80 +117,6 @@ public class MBIndexerGetFullQueryTest extends PowerMockito {
 		registry.registerService(
 			RelatedEntryIndexerRegistry.class,
 			new TestRelatedEntryIndexerRegistry());
-	}
-
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		JSONFactory jsonFactory = mock(JSONFactory.class);
-
-		when(
-			jsonFactory.createJSONObject()
-		).thenReturn(
-			mock(JSONObject.class)
-		);
-
-		jsonFactoryUtil.setJSONFactory(jsonFactory);
-	}
-
-	protected void setUpPropsUtil() {
-		Props props = mock(Props.class);
-
-		PropsUtil.setProps(props);
-	}
-
-	protected void setUpRegistryUtil() throws Exception {
-		Registry registry = new BasicRegistryImpl();
-
-		RegistryUtil.setRegistry(registry);
-
-		DLFileEntryIndexer dlFileEntryIndexer = new DLFileEntryIndexer();
-
-		registry.registerService(Indexer.class, dlFileEntryIndexer);
-
-		Map<String, Object> dlFileEntryProperties = new HashMap<>();
-
-		dlFileEntryProperties.put(
-			"related.entry.indexer.class.name", DLFileEntry.class.getName());
-
-		registry.registerService(
-			RelatedEntryIndexer.class, dlFileEntryIndexer,
-			dlFileEntryProperties);
-
-		MBMessageIndexer mbMessageIndexer = new MBMessageIndexer();
-
-		registry.registerService(Indexer.class, mbMessageIndexer);
-
-		Map<String, Object> mbMessageProperties = new HashMap<>();
-
-		mbMessageProperties.put(
-			"related.entry.indexer.class.name", MBMessage.class.getName());
-
-		registry.registerService(
-			RelatedEntryIndexer.class, mbMessageIndexer, mbMessageProperties);
-	}
-
-	protected void setUpSearchEngineHelperUtil() {
-		mockStatic(SearchEngineHelperUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(SearchEngineHelperUtil.class, "getDefaultSearchEngineId")
-		).toReturn(
-			SearchEngineHelper.SYSTEM_ENGINE_ID
-		);
-
-		stub(
-			method(SearchEngineHelperUtil.class, "getEntryClassNames")
-		).toReturn(
-			new String[0]
-		);
-
-		stub(
-			method(
-				SearchEngineHelperUtil.class, "getSearchEngine", String.class)
-		).toReturn(
-			new BaseSearchEngine()
-		);
 	}
 
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();

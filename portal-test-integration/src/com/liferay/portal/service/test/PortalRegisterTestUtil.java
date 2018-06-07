@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.workflow.UserWorkflowHandler;
 import com.liferay.portlet.asset.util.AssetEntryIndexer;
-import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
-import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.usersadmin.util.ContactIndexer;
 import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
 
@@ -35,8 +33,6 @@ public class PortalRegisterTestUtil {
 
 		IndexerRegistryUtil.register(new AssetEntryIndexer());
 		IndexerRegistryUtil.register(new ContactIndexer());
-		IndexerRegistryUtil.register(new DLFileEntryIndexer());
-		IndexerRegistryUtil.register(new DLFolderIndexer());
 		IndexerRegistryUtil.register(new OrganizationIndexer());
 
 		_indexersRegistered = true;

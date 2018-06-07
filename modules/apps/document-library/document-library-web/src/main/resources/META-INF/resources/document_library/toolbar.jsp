@@ -91,11 +91,12 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 		);
 	};
 
-	<portlet:renderURL var="viewFileEntryTypeURL">
-		<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
-		<portlet:param name="browseBy" value="file-entry-type" />
-		<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-	</portlet:renderURL>
+	<%
+	PortletURL viewFileEntryTypeURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+	viewFileEntryTypeURL.setParameter("browseBy", "file-entry-type");
+	viewFileEntryTypeURL.setParameter("fileEntryTypeId", (String)null);
+	%>
 
 	var openDocumentTypesSelector = function() {
 		var A = AUI();
@@ -148,48 +149,5 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 				}
 			);
 		}
-	);
-</aui:script>
-
-<aui:script>
-
-	<%
-	PortletURL viewFileEntryTypeURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
-
-	viewFileEntryTypeURL.setParameter("browseBy", "file-entry-type");
-	viewFileEntryTypeURL.setParameter("fileEntryTypeId", (String)null);
-	%>
-
-	Liferay.provide(
-		window,
-		'<portlet:namespace />openDocumentTypesSelector',
-		function() {
-			var A = AUI();
-
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-				{
-					eventName: '<portlet:namespace />selectFileEntryType',
-					on: {
-						selectedItemChange: function(event) {
-							var selectedItem = event.newVal;
-
-							if (selectedItem) {
-								var uri = '<%= viewFileEntryTypeURL %>';
-
-								uri = Liferay.Util.addParams('<portlet:namespace />fileEntryTypeId=' + selectedItem, uri);
-
-								location.href = uri;
-							}
-						}
-					},
-					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="select-document-type" />',
-					url: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_file_entry_type.jsp" /><portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryTypeId) %>" /></portlet:renderURL>'
-				}
-			);
-
-			itemSelectorDialog.open();
-		},
-		['aui-base', 'liferay-item-selector-dialog']
 	);
 </aui:script>

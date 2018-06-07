@@ -52,7 +52,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 							size = 12,
 							value = {
 								"requireAuthentication", "requireCaptcha",
-								"redirectURL", "storageType",
+								"autosaveEnabled", "redirectURL", "storageType",
 								"workflowDefinition"
 							}
 						)
@@ -81,6 +81,12 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 )
 @ProviderType
 public interface DDMFormInstanceSettings {
+
+	@DDMFormField(
+		label = "%save-answers-automatically", predefinedValue = "true",
+		properties = "showAsSwitcher=true"
+	)
+	public boolean autosaveEnabled();
 
 	@DDMFormField(
 		label = "%from-address",

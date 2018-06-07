@@ -282,7 +282,7 @@ public class DDMFormDisplayContext {
 		return _hasAddFormInstanceRecordPermission;
 	}
 
-	public boolean isAutosaveEnabled() {
+	public boolean isAutosaveEnabled() throws PortalException {
 		if (_autosaveEnabled != null) {
 			return _autosaveEnabled;
 		}
@@ -291,7 +291,12 @@ public class DDMFormDisplayContext {
 			_autosaveEnabled = Boolean.FALSE;
 		}
 		else {
-			_autosaveEnabled = Boolean.TRUE;
+			DDMFormInstance formInstance = getFormInstance();
+
+			DDMFormInstanceSettings formInstanceSettings =
+				formInstance.getSettingsModel();
+
+			_autosaveEnabled = formInstanceSettings.autosaveEnabled();
 		}
 
 		return _autosaveEnabled;

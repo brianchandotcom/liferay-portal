@@ -137,10 +137,17 @@ public class CommerceNotificationHelperImpl
 
 		User user = _userLocalService.getUser(userId);
 
+		String fromName = commerceNotificationTemplate.getFromName(
+			user.getLanguageId());
 		String subject = commerceNotificationTemplate.getSubject(
 			user.getLanguageId());
 		String body = commerceNotificationTemplate.getBody(
 			user.getLanguageId());
+
+		if (Validator.isNull(fromName)) {
+			fromName = commerceNotificationTemplate.getFromName(
+				_portal.getSiteDefaultLocale(groupId));
+		}
 
 		if (Validator.isNull(subject)) {
 			subject = commerceNotificationTemplate.getSubject(
@@ -158,9 +165,9 @@ public class CommerceNotificationHelperImpl
 		_commerceNotificationQueueEntryLocalService.addCommerceNotificationQueueEntry(
 			user.getUserId(), groupId,
 			commerceNotificationTemplate.getCommerceNotificationTemplateId(),
-			commerceNotificationTemplate.getFrom(),
-			commerceNotificationTemplate.getFromName(), user.getEmailAddress(),
-			user.getFullName(), commerceNotificationTemplate.getCc(),
+			commerceNotificationTemplate.getFrom(), fromName,
+			user.getEmailAddress(), user.getFullName(),
+			commerceNotificationTemplate.getCc(),
 			commerceNotificationTemplate.getBcc(), subject, body, 0);
 	}
 

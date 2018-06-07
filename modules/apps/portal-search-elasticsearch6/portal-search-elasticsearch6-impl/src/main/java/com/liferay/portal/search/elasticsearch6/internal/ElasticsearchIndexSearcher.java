@@ -530,7 +530,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 		Client client = elasticsearchConnectionManager.getClient();
 
-		QueryConfig queryConfig = query.getQueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		SearchRequestBuilder searchRequestBuilder = client.prepareSearch(
 			getSelectedIndexNames(queryConfig, searchContext));

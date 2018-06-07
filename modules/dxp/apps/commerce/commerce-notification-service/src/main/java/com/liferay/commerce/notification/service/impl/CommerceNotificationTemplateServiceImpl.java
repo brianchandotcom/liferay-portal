@@ -39,10 +39,10 @@ public class CommerceNotificationTemplateServiceImpl
 
 	@Override
 	public CommerceNotificationTemplate addCommerceNotificationTemplate(
-			String name, String description, String from, String fromName,
-			String cc, String bcc, String type, boolean enabled,
-			Map<Locale, String> subjectMap, Map<Locale, String> bodyMap,
-			ServiceContext serviceContext)
+			String name, String description, String from,
+			Map<Locale, String> fromNameMap, String cc, String bcc, String type,
+			boolean enabled, Map<Locale, String> subjectMap,
+			Map<Locale, String> bodyMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -51,7 +51,7 @@ public class CommerceNotificationTemplateServiceImpl
 
 		return commerceNotificationTemplateLocalService.
 			addCommerceNotificationTemplate(
-				name, description, from, fromName, cc, bcc, type, enabled,
+				name, description, from, fromNameMap, cc, bcc, type, enabled,
 				subjectMap, bodyMap, serviceContext);
 	}
 
@@ -143,8 +143,8 @@ public class CommerceNotificationTemplateServiceImpl
 	@Override
 	public CommerceNotificationTemplate updateCommerceNotificationTemplate(
 			long commerceNotificationTemplateId, String name,
-			String description, String from, String fromName, String cc,
-			String bcc, String type, boolean enabled,
+			String description, String from, Map<Locale, String> fromNameMap,
+			String cc, String bcc, String type, boolean enabled,
 			Map<Locale, String> subjectMap, Map<Locale, String> bodyMap,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -156,7 +156,7 @@ public class CommerceNotificationTemplateServiceImpl
 		return commerceNotificationTemplateLocalService.
 			updateCommerceNotificationTemplate(
 				commerceNotificationTemplateId, name, description, from,
-				fromName, cc, bcc, type, enabled, subjectMap, bodyMap,
+				fromNameMap, cc, bcc, type, enabled, subjectMap, bodyMap,
 				serviceContext);
 	}
 

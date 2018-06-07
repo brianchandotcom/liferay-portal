@@ -1016,7 +1016,6 @@
 		<execute macro="User#deactivateCP">
 			<var name="deactivateType" value="Actions" />
 			<var name="userFirstName" value="userfn2" />
-			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

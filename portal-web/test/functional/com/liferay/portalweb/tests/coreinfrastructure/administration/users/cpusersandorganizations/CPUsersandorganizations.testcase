@@ -1295,7 +1295,6 @@
 		<execute macro="User#deactivateCP">
 			<var name="deactivateType" value="Actions" />
 			<var name="userFirstName" value="userfn" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1958,7 +1957,6 @@
 		<execute macro="User#deactivateCP">
 			<var name="deactivateType" value="Actions" />
 			<var name="userFirstName" value="userfn" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -2008,7 +2006,6 @@
 		<execute macro="User#deactivateCP">
 			<var name="deactivateType" value="Actions" />
 			<var name="userFirstName" value="userfn" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="User#activateCP">
@@ -2063,7 +2060,6 @@
 
 		<execute macro="User#deactivateCP">
 			<var name="userFirstName" value="userfn" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">

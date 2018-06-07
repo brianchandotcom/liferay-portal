@@ -33,26 +33,21 @@ page import="com.liferay.marketplace.app.manager.web.internal.display.context.Ap
 page import="com.liferay.marketplace.app.manager.web.internal.display.context.AppManagerSearchResultsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.marketplace.app.manager.web.internal.display.context.ViewAppsManagerManagementToolbarDisplayContext" %><%@
 page import="com.liferay.marketplace.app.manager.web.internal.display.context.ViewModuleGroupsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.marketplace.app.manager.web.internal.display.context.ViewModuleManagementToolbarDisplayContext" %><%@
 page import="com.liferay.marketplace.app.manager.web.internal.display.context.ViewModulesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.marketplace.app.manager.web.internal.util.AppDisplay" %><%@
-page import="com.liferay.marketplace.app.manager.web.internal.util.AppDisplayFactoryUtil" %><%@
-page import="com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil" %><%@
 page import="com.liferay.marketplace.app.manager.web.internal.util.MarketplaceAppManagerUtil" %><%@
 page import="com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplay" %><%@
-page import="com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplayFactoryUtil" %><%@
-page import="com.liferay.marketplace.app.manager.web.internal.util.comparator.ModuleServiceReferenceComparator" %><%@
 page import="com.liferay.marketplace.exception.FileExtensionException" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.service.CompanyLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.upload.UploadException" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
@@ -60,18 +55,12 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Collection" %><%@
-page import="java.util.Collections" %><%@
-page import="java.util.Dictionary" %><%@
+<%@ page import="java.util.Dictionary" %><%@
 page import="java.util.List" %>
 
-<%@ page import="javax.portlet.Portlet" %><%@
-page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.PortletURL" %>
 
-<%@ page import="org.osgi.framework.Bundle" %><%@
-page import="org.osgi.framework.BundleContext" %><%@
-page import="org.osgi.framework.ServiceReference" %>
+<%@ page import="org.osgi.framework.Bundle" %>
 
 <liferay-frontend:defineObjects />
 

@@ -87,7 +87,7 @@ public class AuthVerifierPipeline {
 
 		AuthVerifierResult authVerifierResult = new AuthVerifierResult();
 
-		authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
+		authVerifierResult.setState(AuthVerifierResult.State.UNSUCCESSFUL);
 
 		HttpServletRequest request = accessControlContext.getRequest();
 

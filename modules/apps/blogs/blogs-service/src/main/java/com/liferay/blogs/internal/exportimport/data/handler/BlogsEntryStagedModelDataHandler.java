@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -48,7 +47,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -264,9 +262,9 @@ public class BlogsEntryStagedModelDataHandler
 		else {
 			importedEntry = _blogsEntryLocalService.updateEntry(
 				userId, existingEntry.getEntryId(), entry.getTitle(),
-				entry.getSubtitle(), entry.getDescription(),
-				entry.getContent(), entry.getDisplayDate(),
-				entry.isAllowPingbacks(), entry.isAllowTrackbacks(), trackbacks,
+				entry.getSubtitle(), entry.getDescription(), entry.getContent(),
+				entry.getDisplayDate(), entry.isAllowPingbacks(),
+				entry.isAllowTrackbacks(), trackbacks,
 				entry.getCoverImageCaption(), null, null, serviceContext);
 		}
 

@@ -77,7 +77,7 @@ String searchContainerId = "exportLayoutProcesses";
 		<portlet:param name="searchContainerId" value="<%= searchContainerId %>" />
 	</liferay-portlet:resourceURL>
 
-	new Liferay.ExportImport(
+	var exportImport = new Liferay.ExportImport(
 		{
 			exportLAR: true,
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
@@ -87,4 +87,14 @@ String searchContainerId = "exportLayoutProcesses";
 			processesResourceURL: '<%= HtmlUtil.escapeJS(exportProcessesURL.toString()) %>'
 		}
 	);
+
+	var destroyInstance = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			exportImport.destroy();
+
+			Liferay.detach('destroyPortlet', destroyInstance);
+		}
+	};
+
+	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>

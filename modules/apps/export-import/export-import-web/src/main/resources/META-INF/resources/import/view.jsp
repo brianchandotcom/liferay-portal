@@ -74,7 +74,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 		<portlet:param name="searchContainerId" value="<%= searchContainerId %>" />
 	</liferay-portlet:resourceURL>
 
-	new Liferay.ExportImport(
+	var exportImport = new Liferay.ExportImport(
 		{
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
 			locale: '<%= locale.toLanguageTag() %>',
@@ -84,4 +84,14 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 			timeZoneOffset: <%= timeZoneOffset %>
 		}
 	);
+
+	var destroyInstance = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			exportImport.destroy();
+
+			Liferay.detach('destroyPortlet', destroyInstance);
+		}
+	};
+
+	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>

@@ -106,7 +106,7 @@ public class LayoutPageTemplatePortletResourcePermission
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (stagingGroupHelper.isLocalStagingGroup(groupId)) {
+		if (stagingGroupHelper.isLocalLiveGroup(groupId)) {
 			Group stagingGroup = group.getStagingGroup();
 
 			return stagingGroup.getGroupId();

@@ -1970,6 +1970,10 @@ public interface PropsKeys {
 
 	public static final String PORTLET_CSS_ENABLED = "portlet.css.enabled";
 
+	public static final String PORTLET_DEPENDENCY_CSS_URN = "portlet.dependency.css.urn";
+
+	public static final String PORTLET_DEPENDENCY_JAVASCRIPT_URN = "portlet.dependency.javascript.urn";
+
 	public static final String PORTLET_DISPLAY_TEMPLATES_ERROR = "portlet.display.templates.error";
 
 	public static final String PORTLET_DISPLAY_TEMPLATES_HELP = "portlet.display.templates.help";

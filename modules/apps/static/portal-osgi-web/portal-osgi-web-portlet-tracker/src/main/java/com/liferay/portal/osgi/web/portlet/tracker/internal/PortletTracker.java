@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
+import com.liferay.portal.kernel.model.portlet.PortletDependencyFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -470,6 +471,7 @@ public class PortletTracker
 		collectInitParams(serviceReference, portletModel);
 		collectListeners(serviceReference, portletModel);
 		collectMultipartConfig(serviceReference, portletModel);
+		collectPortletDependencies(serviceReference, portletModel);
 		collectPortletInfo(serviceReference, portletModel);
 		collectPortletModes(serviceReference, portletModel);
 		collectPortletPreferences(serviceReference, portletModel);
@@ -583,6 +585,14 @@ public class PortletTracker
 			GetterUtil.getBoolean(
 				get(serviceReference, "pop-up-print"),
 				portletModel.isPopUpPrint()));
+		portletModel.setPortletDependencyCssEnabled(
+			GetterUtil.getBoolean(
+				get(serviceReference, "portlet-dependency-css-enabled"),
+				portletModel.isPortletDependencyCssEnabled()));
+		portletModel.setPortletDependencyJavaScriptEnabled(
+			GetterUtil.getBoolean(
+				get(serviceReference, "portlet-dependency-javascript-enabled"),
+				portletModel.isPortletDependencyJavaScriptEnabled()));
 		portletModel.setPreferencesCompanyWide(
 			GetterUtil.getBoolean(
 				get(serviceReference, "preferences-company-wide"),
@@ -727,6 +737,22 @@ public class PortletTracker
 				serviceReference.getProperty(
 					"javax.portlet.multipart.max-request-size"),
 				-1L));
+	}
+
+	protected void collectPortletDependencies(
+		ServiceReference<Portlet> serviceReference,
+		com.liferay.portal.kernel.model.Portlet portletModel) {
+
+		List<String> dependencies = StringPlus.asList(
+			serviceReference.getProperty("javax.portlet.dependency"));
+
+		for (String dependency : dependencies) {
+			String[] parts = StringUtil.split(dependency, CharPool.SEMICOLON);
+
+			portletModel.addPortletDependency(
+				PortletDependencyFactoryUtil.createPortletDependency(
+					parts[0], parts[1], parts[2]));
+		}
 	}
 
 	protected void collectPortletInfo(

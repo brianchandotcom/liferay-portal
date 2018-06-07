@@ -74,15 +74,9 @@
 	{@param spritemap: string}
 	{@param? handleLinkClick: any}
 
-	{let $fieldClasses kind="text"}
-		list-group-item
-		{sp}list-group-item-action
-		{sp}list-group-item-flex
-	{/let}
-
 	{if $enabled}
 		<a
-			class="{$fieldClasses}"
+			class="list-group-item list-group-item-action list-group-item-flex"
 			data-key="{$key}"
 			data-onclick="{$handleLinkClick}"
 			href="javascript:;"
@@ -93,7 +87,7 @@
 			{/call}
 		</a>
 	{else}
-		<span class="{$fieldClasses}">
+		<span class="list-group-item list-group-item-flex list-group-item-light">
 			{call .mappeableFieldContent}
 				{param label: $label /}
 				{param spritemap: $spritemap /}

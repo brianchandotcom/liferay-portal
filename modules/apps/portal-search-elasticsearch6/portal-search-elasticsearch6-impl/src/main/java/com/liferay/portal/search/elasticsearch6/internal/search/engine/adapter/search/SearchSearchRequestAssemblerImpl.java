@@ -14,8 +14,18 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.search.engine.adapter.search;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.GroupBy;
+import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Stats;
+import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch6.internal.facet.FacetsTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.groupby.GroupByTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.highlight.HighlighterTranslator;
+import com.liferay.portal.search.elasticsearch6.internal.sort.SortTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 
@@ -49,13 +59,97 @@ public class SearchSearchRequestAssemblerImpl
 					searchRequestBuilder, stat));
 		}
 
-		searchRequestBuilder.setTrackScores(
-			searchSearchRequest.isScoreEnabled());
+		addFacets(searchRequestBuilder, searchSearchRequest);
+		addGroupBy(searchRequestBuilder, searchSearchRequest);
+
+		QueryConfig queryConfig = searchSearchRequest.getQueryConfig();
+
+		highlighterTranslator.translate(
+			searchRequestBuilder, queryConfig,
+			searchSearchRequest.isLuceneSyntax());
+
+		addPagination(
+			searchRequestBuilder, searchSearchRequest.getStart(),
+			searchSearchRequest.getSize());
+		addPreference(searchRequestBuilder, searchSearchRequest);
+		addSelectedFields(searchRequestBuilder, queryConfig);
+
+		sortTranslator.translate(
+			searchRequestBuilder, searchSearchRequest.getSorts());
+
+		searchRequestBuilder.setTrackScores(queryConfig.isScoreEnabled());
+	}
+
+	protected void addFacets(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		Map<String, Facet> facetsMap = searchSearchRequest.getFacets();
+
+		facetsTranslator.translate(
+			searchRequestBuilder, facetsMap.values(),
+			searchSearchRequest.isBasicFacetSelection());
+	}
+
+	protected void addGroupBy(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		GroupBy groupBy = searchSearchRequest.getGroupBy();
+
+		if (groupBy == null) {
+			return;
+		}
+
+		groupByTranslator.translate(searchRequestBuilder, searchSearchRequest);
+	}
+
+	protected void addPagination(
+		SearchRequestBuilder searchRequestBuilder, int start, int end) {
+
+		searchRequestBuilder.setFrom(start);
+		searchRequestBuilder.setSize(end - start);
+	}
+
+	protected void addPreference(
+		SearchRequestBuilder searchRequestBuilder,
+		SearchSearchRequest searchSearchRequest) {
+
+		String preference = searchSearchRequest.getPreference();
+
+		if (!Validator.isBlank(preference)) {
+			searchRequestBuilder.setPreference(preference);
+		}
+	}
+
+	protected void addSelectedFields(
+		SearchRequestBuilder searchRequestBuilder, QueryConfig queryConfig) {
+
+		String[] selectedFieldNames = queryConfig.getSelectedFieldNames();
+
+		if (ArrayUtil.isEmpty(selectedFieldNames)) {
+			searchRequestBuilder.addStoredField(StringPool.STAR);
+		}
+		else {
+			searchRequestBuilder.storedFields(selectedFieldNames);
+		}
 	}
 
 	@Reference
 	protected CommonSearchRequestBuilderAssembler
 		commonSearchRequestBuilderAssembler;
+
+	@Reference
+	protected FacetsTranslator facetsTranslator;
+
+	@Reference
+	protected GroupByTranslator groupByTranslator;
+
+	@Reference
+	protected HighlighterTranslator highlighterTranslator;
+
+	@Reference
+	protected SortTranslator sortTranslator;
 
 	@Reference
 	protected StatsTranslator statsTranslator;

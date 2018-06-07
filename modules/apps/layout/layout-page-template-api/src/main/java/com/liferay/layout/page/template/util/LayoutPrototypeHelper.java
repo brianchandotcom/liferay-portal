@@ -14,9 +14,7 @@
 
 package com.liferay.layout.page.template.util;
 
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -68,27 +66,6 @@ public class LayoutPrototypeHelper {
 		layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);
 
 		return layout;
-	}
-
-	private void _addLayoutPageTemplateEntry(LayoutPrototype layoutPrototype) {
-		try {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchFirstLayoutPageTemplateEntry(
-						layoutPrototype.getLayoutPrototypeId());
-
-			if (layoutPageTemplateEntry != null) {
-				return;
-			}
-
-			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				layoutPrototype);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

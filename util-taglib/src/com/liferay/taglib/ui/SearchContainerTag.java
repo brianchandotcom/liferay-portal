@@ -65,6 +65,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_rowChecker = null;
 		_searchContainer = null;
 		_searchTerms = null;
+		_summary = null;
 		_total = 0;
 		_totalVar = SearchContainer.DEFAULT_TOTAL_VAR;
 		_var = SearchContainer.DEFAULT_VAR;
@@ -156,6 +157,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 				_searchContainer.setRowChecker(_rowChecker);
 			}
 
+			if (_summary != null) {
+				_searchContainer.setSummary(_summary);
+			}
+
 			if (_total != 0) {
 				_searchContainer.setTotal(_total);
 			}
@@ -237,6 +242,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
 	public DisplayTerms getSearchTerms() {
 		return _searchTerms;
+	}
+
+	public String getSummary() {
+		return _summary;
 	}
 
 	public int getTotal() {
@@ -343,6 +352,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_searchTerms = searchTerms;
 	}
 
+	public void setSummary(String summary) {
+		_summary = summary;
+	}
+
 	public void setTotal(int total) {
 		_total = total;
 	}
@@ -378,6 +391,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 	private RowChecker _rowChecker;
 	private SearchContainer<R> _searchContainer;
 	private DisplayTerms _searchTerms;
+	private String _summary;
 	private int _total;
 	private String _totalVar = SearchContainer.DEFAULT_TOTAL_VAR;
 	private String _var = SearchContainer.DEFAULT_VAR;

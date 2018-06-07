@@ -116,6 +116,17 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Adds a portlet JS/CSS resource dependency.
+	*
+	* @param portletDependency a portlet JS/CSS resource dependency
+	*/
+	@Override
+	public void addPortletDependency(
+		com.liferay.portal.kernel.model.portlet.PortletDependency portletDependency) {
+		_portlet.addPortletDependency(portletDependency);
+	}
+
+	/**
 	* Adds a processing event.
 	*/
 	@Override
@@ -1009,6 +1020,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public com.liferay.exportimport.kernel.lar.PortletDataHandler getPortletDataHandlerInstance() {
 		return _portlet.getPortletDataHandlerInstance();
+	}
+
+	/**
+	* Returns the list of portlet JS/CSS resource dependencies.
+	*
+	* @return the list of portlet JS/CSS resource dependencies.
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.portlet.PortletDependency> getPortletDependencies() {
+		return _portlet.getPortletDependencies();
 	}
 
 	/**
@@ -2054,6 +2075,34 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns <code>true</code> if CSS resource dependencies added via
+	* portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	* to the head of the portal page.
+	*
+	* @return <code>true</code> if CSS resource dependencies added via
+	portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	to the head of the portal page
+	*/
+	@Override
+	public boolean isPortletDependencyCssEnabled() {
+		return _portlet.isPortletDependencyCssEnabled();
+	}
+
+	/**
+	* Returns <code>true</code> if JavaScript resource dependencies added via
+	* portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	* to the head of the portal page.
+	*
+	* @return <code>true</code> if JavaScript resource dependencies added via
+	portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	to the head of the portal page
+	*/
+	@Override
+	public boolean isPortletDependencyJavaScriptEnabled() {
+		return _portlet.isPortletDependencyJavaScriptEnabled();
+	}
+
+	/**
 	* Returns <code>true</code> if preferences are shared across the entire
 	* company.
 	*
@@ -2974,6 +3023,38 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setPortletDataHandlerClass(String portletDataHandlerClass) {
 		_portlet.setPortletDataHandlerClass(portletDataHandlerClass);
+	}
+
+	/**
+	* Set to <code>true</code> if the CSS resource dependencies added via
+	* portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	* to the head of the portal page.
+	*
+	* @param portletDependencyCssEnabled boolean value for whether the
+	CSS resource dependencies added via portlet.xml, @Dependency, or
+	HeaderResponse.addDependency are to be added to the head of the
+	portal page
+	*/
+	@Override
+	public void setPortletDependencyCssEnabled(
+		boolean portletDependencyCssEnabled) {
+		_portlet.setPortletDependencyCssEnabled(portletDependencyCssEnabled);
+	}
+
+	/**
+	* Set to <code>true</code> if the JavaScript resource dependencies added
+	* via portlet.xml, @Dependency, or HeaderResponse.addDependency are to be
+	* added to the head of the portal page.
+	*
+	* @param portletDependencyJavaScriptEnabled boolean value for whether
+	the JavaScript resource dependencies added via portlet.xml,
+	* @Dependency, or HeaderResponse.addDependency are to be added to
+	the head of the portal page
+	*/
+	@Override
+	public void setPortletDependencyJavaScriptEnabled(
+		boolean portletDependencyJavaScriptEnabled) {
+		_portlet.setPortletDependencyJavaScriptEnabled(portletDependencyJavaScriptEnabled);
 	}
 
 	/**

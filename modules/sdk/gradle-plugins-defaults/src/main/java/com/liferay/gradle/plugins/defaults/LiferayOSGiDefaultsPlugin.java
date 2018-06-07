@@ -3725,6 +3725,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private File _getSuiteBndFile(File appBndFile, File portalRootDir) {
+		if (portalRootDir == null) {
+			return null;
+		}
+
 		Properties properties = GUtil.loadProperties(appBndFile);
 
 		String liferayRelengSuite = properties.getProperty(

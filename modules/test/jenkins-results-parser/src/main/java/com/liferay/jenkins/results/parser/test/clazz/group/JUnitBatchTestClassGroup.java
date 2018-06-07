@@ -572,12 +572,8 @@ public class JUnitBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		List<File> modifiedJavaFilesList =
-			portalGitWorkingDirectory.getModifiedFilesList(".java");
-
-		if (_includeUnstagedTestClassFiles) {
-			modifiedJavaFilesList =
-				portalGitWorkingDirectory.getModifiedFilesList(".java", true);
-		}
+			portalGitWorkingDirectory.getModifiedFilesList(
+				".java", _includeUnstagedTestClassFiles);
 
 		if (!_autoBalanceTestFiles.isEmpty() &&
 			!modifiedJavaFilesList.isEmpty()) {

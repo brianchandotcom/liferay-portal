@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -380,8 +381,21 @@ public class GitWorkingDirectory {
 			return;
 		}
 
-		if (branch.getRemote() != null) {
-			pushToRemote(true, null, branch);
+		Remote remote = branch.getRemote();
+
+		if (remote != null) {
+			if (pushToRemote(true, null, branch)) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Deleted ", branch.getName(), " from ",
+						remote.getName()));
+			}
+			else {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Unable to delete ", branch.getName(), " from ",
+						remote.getName()));
+			}
 
 			return;
 		}
@@ -396,6 +410,10 @@ public class GitWorkingDirectory {
 					"Unable to delete local branch ", branch.getName(), "\n",
 					executionResult.getStandardError()));
 		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Deleted local branch ", branch.getName()));
 	}
 
 	public void deleteBranch(String branchName, Remote remote) {
@@ -406,6 +424,32 @@ public class GitWorkingDirectory {
 		if (branch != null) {
 			deleteBranch(branch);
 		}
+	}
+
+	public void deleteBranches(List<Branch> branches, int threadCount) {
+		List<Callable<Object>> callables = new ArrayList<>(branches.size());
+
+		for (final Branch branch : branches) {
+			Callable<Object> callable = new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					deleteBranch(branch);
+
+					return null;
+				}
+
+			};
+
+			callables.add(callable);
+		}
+
+		ParallelExecutor<Object> parallelExecutor = new ParallelExecutor<>(
+			callables,
+			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
+				threadCount, true));
+
+		parallelExecutor.execute();
 	}
 
 	public void fetch(Branch localBranch, boolean noTags, Branch remoteBranch) {

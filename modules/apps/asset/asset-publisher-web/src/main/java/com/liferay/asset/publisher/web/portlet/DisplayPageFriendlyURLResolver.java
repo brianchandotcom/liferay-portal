@@ -17,6 +17,7 @@ package com.liferay.asset.publisher.web.portlet;
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.display.contributor.constants.AssetDisplayWebKeys;
+import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
@@ -378,7 +379,16 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 				fetchAssetDisplayPageEntryByAssetEntryId(
 					assetEntry.getEntryId());
 
-		if (assetDisplayPageEntry != null) {
+		if ((assetDisplayPageEntry == null) ||
+			(assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_NONE)) {
+
+			return false;
+		}
+
+		if (assetDisplayPageEntry.getType() ==
+				AssetDisplayPageConstants.TYPE_SPECIFIC) {
+
 			return true;
 		}
 

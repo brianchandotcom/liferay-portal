@@ -96,4 +96,7 @@ public interface JournalWebConfiguration {
 	)
 	public boolean showAncestorScopesByDefault();
 
+	@Meta.AD(deflt = "false", name = "show-feeds", required = false)
+	public boolean showFeeds();
+
 }

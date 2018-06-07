@@ -95,6 +95,22 @@ public class CPMeasurementUnitServiceImpl
 	}
 
 	@Override
+	public CPMeasurementUnit setPrimary(
+			long cpMeasurementUnitId, boolean primary)
+		throws PortalException {
+
+		CPMeasurementUnit cpMeasurementUnit =
+			cpMeasurementUnitPersistence.findByPrimaryKey(cpMeasurementUnitId);
+
+		CPMeasurementUnitPermission.check(
+			getPermissionChecker(), cpMeasurementUnit.getGroupId(),
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
+
+		return cpMeasurementUnitLocalService.setPrimary(
+			cpMeasurementUnitId, primary);
+	}
+
+	@Override
 	public CPMeasurementUnit updateCPMeasurementUnit(
 			long cpMeasurementUnitId, Map<Locale, String> nameMap, String key,
 			double rate, boolean primary, double priority, int type,

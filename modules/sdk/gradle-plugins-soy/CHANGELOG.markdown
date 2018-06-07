@@ -65,7 +65,7 @@ version 3.0.2.
 - [LPS-75554]: Update the [Liferay Portal Tools Soy Builder] dependency to
 version 3.0.3.
 
-## 3.1.5 - 2018-06-06
+## 3.1.5 - *(Unreleased)*
 
 ### Changed
 - [LPS-81900]: Update the [Liferay Portal Tools Soy Builder] dependency to

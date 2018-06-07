@@ -568,7 +568,7 @@
 		<execute function="AssertTextEquals" locator1="Button#ANY" value1="New Entry" />
 		<execute function="AssertTextEquals" locator1="Blogs#SUBSCRIBE_LINK" value1="Subscribe" />
 
-		<var name="key_text" value="rss-full RSS" />
+		<var name="key_text" value="RSS" />
 
 		<execute function="AssertTextEquals" locator1="Button#ANY" value1="rss-full RSS" />
 	</command>

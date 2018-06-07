@@ -1179,6 +1179,7 @@
 
 		<execute macro="DMFolder#addCP">
 			<var name="dmFolderName" value="Unit 1 - Moon Rock Chemistry" />
+			<var name="siteName" value="Moon Rocks 101" />
 		</execute>
 
 		<execute macro="DMFolder#viewCP">

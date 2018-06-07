@@ -127,37 +127,32 @@ public class BlogsDLStoreConvertProcess implements DLStoreConvertProcess {
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(Repository repository) -> {
-
-				LocalRepository localRepository =
-					RepositoryProviderUtil.getLocalRepository(
-						repository.getRepositoryId());
-
-				Folder folder = null;
-
 				try {
-					folder = localRepository.getFolder(
+					LocalRepository localRepository =
+						RepositoryProviderUtil.getLocalRepository(
+							repository.getRepositoryId());
+
+					Folder folder = localRepository.getFolder(
 						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 						BlogsConstants.SERVICE_NAME);
+
+					List<FileEntry> fileEntries =
+						PortletFileRepositoryUtil.getPortletFileEntries(
+							folder.getGroupId(), folder.getFolderId());
+
+					for (FileEntry fileEntry : fileEntries) {
+						dlStoreConverter.migrateDLFileEntry(
+							fileEntry.getCompanyId(),
+							DLFolderConstants.getDataRepositoryId(
+								fileEntry.getRepositoryId(),
+								fileEntry.getFolderId()),
+							fileEntry);
+					}
 				}
 				catch (NoSuchFolderException nsfe) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(nsfe, nsfe);
 					}
-
-					return;
-				}
-
-				List<FileEntry> fileEntries =
-					PortletFileRepositoryUtil.getPortletFileEntries(
-						folder.getGroupId(), folder.getFolderId());
-
-				for (FileEntry fileEntry : fileEntries) {
-					dlStoreConverter.migrateDLFileEntry(
-						fileEntry.getCompanyId(),
-						DLFolderConstants.getDataRepositoryId(
-							fileEntry.getRepositoryId(),
-							fileEntry.getFolderId()),
-						fileEntry);
 				}
 			});
 

@@ -21,20 +21,22 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceNotificationTemplateCreateDateComparator
+public class CommerceNotificationTemplateModifiedDateComparator
 	extends OrderByComparator<CommerceNotificationTemplate> {
 
-	public static final String ORDER_BY_ASC = "createDate ASC";
+	public static final String ORDER_BY_ASC = "modifiedDate ASC";
 
-	public static final String ORDER_BY_DESC = "createDate DESC";
+	public static final String ORDER_BY_DESC = "modifiedDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
-	public CommerceNotificationTemplateCreateDateComparator() {
+	public CommerceNotificationTemplateModifiedDateComparator() {
 		this(false);
 	}
 
-	public CommerceNotificationTemplateCreateDateComparator(boolean ascending) {
+	public CommerceNotificationTemplateModifiedDateComparator(
+		boolean ascending) {
+
 		_ascending = ascending;
 	}
 
@@ -44,8 +46,8 @@ public class CommerceNotificationTemplateCreateDateComparator
 		CommerceNotificationTemplate commerceNotificationTemplate2) {
 
 		int value = DateUtil.compareTo(
-			commerceNotificationTemplate1.getCreateDate(),
-			commerceNotificationTemplate2.getCreateDate());
+			commerceNotificationTemplate1.getModifiedDate(),
+			commerceNotificationTemplate2.getModifiedDate());
 
 		if (_ascending) {
 			return value;

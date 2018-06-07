@@ -14,6 +14,11 @@
 
 package com.liferay.layout.page.template.util;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -64,6 +69,34 @@ public class LayoutPrototypeHelper {
 
 		return layout;
 	}
+
+	private void _addLayoutPageTemplateEntry(LayoutPrototype layoutPrototype) {
+		try {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchFirstLayoutPageTemplateEntry(
+						layoutPrototype.getLayoutPrototypeId());
+
+			if (layoutPageTemplateEntry != null) {
+				return;
+			}
+
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				layoutPrototype);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPrototypeHelper.class);
+
+	@org.osgi.service.component.annotations.Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

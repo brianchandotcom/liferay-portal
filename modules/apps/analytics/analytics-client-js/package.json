@@ -27,7 +27,7 @@
 		"fetch-mock": "^5.13.1",
 		"isomorphic-fetch": "^2.2.1",
 		"istanbul-instrumenter-loader": "^3.0.0",
-		"karma": "^1.7.1",
+		"karma": "^2.0.2",
 		"karma-chai": "^0.1.0",
 		"karma-chrome-launcher": "^2.2.0",
 		"karma-commonjs": "^1.0.0",

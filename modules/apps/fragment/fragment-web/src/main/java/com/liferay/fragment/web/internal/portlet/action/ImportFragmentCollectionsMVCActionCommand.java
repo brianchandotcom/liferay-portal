@@ -15,7 +15,6 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.exception.InvalidFragmentCollectionFileException;
 import com.liferay.fragment.web.internal.portlet.util.ImportUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -24,8 +23,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 
 import java.io.File;
 
@@ -63,14 +60,7 @@ public class ImportFragmentCollectionsMVCActionCommand
 			actionRequest, "overwrite", true);
 
 		try {
-			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
-
-			if (!_importUtil.isValidFragmentCollectionsFile(zipReader)) {
-				throw new InvalidFragmentCollectionFileException();
-			}
-
-			_importUtil.importFragmentCollections(
-				actionRequest, zipReader, overwrite);
+			_importUtil.importFile(actionRequest, file, 0, overwrite);
 
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");

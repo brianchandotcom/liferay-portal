@@ -15,9 +15,7 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.exception.InvalidFragmentEntryFileException;
 import com.liferay.fragment.web.internal.portlet.util.ImportUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -25,8 +23,6 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.zip.ZipReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 
 import java.io.File;
 
@@ -67,15 +63,8 @@ public class ImportFragmentEntriesMVCActionCommand
 		File file = uploadPortletRequest.getFile("file");
 
 		try {
-			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
-
-			if (_importUtil.isValidFragmentCollectionsFile(zipReader)) {
-				throw new InvalidFragmentEntryFileException();
-			}
-
-			_importUtil.importFragmentEntries(
-				actionRequest, zipReader, fragmentCollectionId,
-				StringPool.BLANK, overwrite);
+			_importUtil.importFile(
+				actionRequest, file, fragmentCollectionId, overwrite);
 
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");

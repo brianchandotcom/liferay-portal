@@ -196,7 +196,7 @@ renderResponse.setTitle(categoryDisplayName);
 					<%
 					ConfigurationFormRenderer configurationFormRenderer = (ConfigurationFormRenderer)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_FORM_RENDERER);
 
-					configurationFormRenderer.render(request, response);
+					configurationFormRenderer.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
 					%>
 
 					<aui:button-row>

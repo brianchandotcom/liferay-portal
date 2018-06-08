@@ -82,8 +82,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
@@ -135,8 +135,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
@@ -195,8 +195,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
@@ -252,8 +252,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
@@ -363,8 +363,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">
@@ -449,8 +449,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="LayoutPageTemplates#selectFragment">

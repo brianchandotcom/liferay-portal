@@ -1,4 +1,14 @@
 <definition>
+	<command name="add">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${displayPageName}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="assertAssetTypeUnselectable">
 		<execute macro="LayoutPageTemplates#_gotoTab">
 			<var name="tabName" value="Mapping" />

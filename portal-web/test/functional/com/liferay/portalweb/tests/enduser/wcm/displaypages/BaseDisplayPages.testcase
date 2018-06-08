@@ -44,8 +44,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -62,8 +62,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="DisplayPages#selectAssetType">
@@ -87,8 +87,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -121,8 +121,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -156,8 +156,8 @@
 			<var name="navItem" value="Display Pages" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Display Page Name" />
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
 		</execute>
 
 		<execute macro="DisplayPages#selectAssetType">

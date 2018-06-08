@@ -15,11 +15,13 @@
 package com.liferay.portal.store.s3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
@@ -71,8 +73,8 @@ public class S3StoreTest extends BaseStoreTestCase {
 	}
 
 	@Override
-	protected String getStoreType() {
-		return "com.liferay.portal.store.s3.S3Store";
+	protected Store getStore() {
+		return _store;
 	}
 
 	protected void updateFileShouldNotUpdateFile() throws Exception {
@@ -83,5 +85,11 @@ public class S3StoreTest extends BaseStoreTestCase {
 
 		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
 	}
+
+	@Inject(
+		filter = "store.type=com.liferay.portal.store.s3.S3Store",
+		type = Store.class
+	)
+	private Store _store;
 
 }

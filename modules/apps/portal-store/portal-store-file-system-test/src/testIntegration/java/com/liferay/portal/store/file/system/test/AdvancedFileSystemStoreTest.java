@@ -15,7 +15,9 @@
 package com.liferay.portal.store.file.system.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
@@ -35,11 +37,14 @@ public class AdvancedFileSystemStoreTest extends BaseStoreTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Override
-	protected String getStoreType() {
-		return _STORE_TYPE;
+	protected Store getStore() {
+		return _store;
 	}
 
-	private static final String _STORE_TYPE =
-		"com.liferay.portal.store.file.system.AdvancedFileSystemStore";
+	@Inject(
+		filter = "store.type=com.liferay.portal.store.file.system.AdvancedFileSystemStore",
+		type = Store.class
+	)
+	private Store _store;
 
 }

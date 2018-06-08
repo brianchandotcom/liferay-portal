@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.tools.deploy.PortletDeployer;
+import com.liferay.portlet.internal.FilterChainImpl;
 
 import java.io.Closeable;
 import java.io.IOException;

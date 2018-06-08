@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import java.util.Collections;
 import java.util.Enumeration;

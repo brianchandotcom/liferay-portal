@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portlet.InvokerFilterContainerImpl;
 import com.liferay.portlet.PortletBagFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

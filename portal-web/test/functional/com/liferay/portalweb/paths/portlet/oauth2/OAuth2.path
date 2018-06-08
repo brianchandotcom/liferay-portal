@@ -10,6 +10,16 @@
 <tbody>
 <!--ADMIN-->
 <tr>
+	<td>ADMIN_AUTHORIZATIONS_REVOKE_BUTTON</td>
+	<td>//tr[@data-qa-id='row' and contains(.,'${key_rowEntry}')]//button[contains(@onclick,'revokeOAuth2Authorization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_AUTHORIZATIONS_USER_NAME</td>
+	<td>//td[@class=' lfr-username-column'][contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_INPUT_FORM_CHECKBOX</td>
 	<td>//label[normalize-space()='${key_checkboxName}']/input[@type='checkbox']</td>
 	<td></td>
@@ -67,6 +77,22 @@
 <tr>
 	<td>ADMIN_TABLE_APP_SCOPES_COUNT</td>
 	<td>//tr[td[@class=' lfr-name-column' and contains(.,'${key_tableName}')]]/td[@class=' lfr-scopes-column']</td>
+	<td></td>
+</tr>
+<!--USER-->
+<tr>
+	<td>USER_CONNECTED_APP_REMOVE_ACCESS_BUTTON</td>
+	<td>//button[contains(@id,'removeAccess')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_CONNECTED_APP_TABLE_NAME</td>
+	<td>//div[contains(@id,'oAuth2ConnectedApplicationsSearchContainer')][contains(.,'${key_appName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_CONNECTED_APP_VIEW_NAME</td>
+	<td>//form[contains(@id,'OAuth2ConnectedApplicationsPortlet')]//h1[@class='name']</td>
 	<td></td>
 </tr>
 <tr>

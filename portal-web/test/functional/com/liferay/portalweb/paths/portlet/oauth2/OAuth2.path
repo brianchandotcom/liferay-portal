@@ -20,6 +20,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADMIN_GLOBAL_SCOPE_CHECKBOX</td>
+	<td>//div[contains(@id,'navGlobalScopes')]//div[normalize-space()='Everything']//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_INPUT_FORM_CHECKBOX</td>
 	<td>//label[normalize-space()='${key_checkboxName}']/input[@type='checkbox']</td>
 	<td></td>
@@ -57,6 +62,21 @@
 <tr>
 	<td>ADMIN_INPUT_FORM_GENERATE_NEW_SECRET</td>
 	<td>//button[contains(.,'Generate New Secret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_RESOURCE_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'panel')]//a[contains(.,'${key_panel}')][contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_RESOURCE_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'panel')]//a[contains(.,'${key_panel}')][@aria-expanded='true' and not(contains(@class,'collapsed'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_RESOURCE_SCOPE_CHECKBOX</td>
+	<td>//li[.//p[normalize-space()='${key_scopeName}']]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

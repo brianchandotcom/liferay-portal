@@ -359,6 +359,13 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
+	public void setPortletDataHandlerInstances(
+		List<PortletDataHandler> portletDataHandlerInstances) {
+
+		_portletDataHandlerInstances = portletDataHandlerInstances;
+	}
+
+	@Override
 	public void setPortletInstance(Portlet portletInstance) {
 		_portletInstance = portletInstance;
 	}
@@ -393,7 +400,7 @@ public class PortletBagImpl implements PortletBag {
 	private final List<PermissionPropagator> _permissionPropagatorInstances;
 	private final List<PollerProcessor> _pollerProcessorInstances;
 	private final List<MessageListener> _popMessageListenerInstances;
-	private final List<PortletDataHandler> _portletDataHandlerInstances;
+	private List<PortletDataHandler> _portletDataHandlerInstances;
 	private Portlet _portletInstance;
 	private final List<PortletLayoutListener> _portletLayoutListenerInstances;
 	private String _portletName;

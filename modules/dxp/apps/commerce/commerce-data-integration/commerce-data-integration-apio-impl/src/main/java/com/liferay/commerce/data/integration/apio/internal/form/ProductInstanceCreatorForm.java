@@ -65,7 +65,7 @@ public class ProductInstanceCreatorForm {
 			"neverExpire", ProductInstanceCreatorForm::_setNeverExpire
 		).addRequiredString(
 			"externalReferenceCode",
-				ProductInstanceCreatorForm::_setExternalReferenceCode
+			ProductInstanceCreatorForm::_setExternalReferenceCode
 		).build();
 	}
 

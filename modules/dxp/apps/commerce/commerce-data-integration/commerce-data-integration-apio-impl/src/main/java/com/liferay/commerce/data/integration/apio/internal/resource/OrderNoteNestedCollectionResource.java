@@ -26,11 +26,13 @@ import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 import javax.ws.rs.ServerErrorException;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza

@@ -32,7 +32,6 @@ import com.liferay.commerce.data.integration.apio.internal.util.ProductInstanceH
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;

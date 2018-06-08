@@ -118,7 +118,7 @@ public class ProductInstanceHelper {
 			double height, double depth, double weight, double cost,
 			double price, double promoPrice, boolean published,
 			Date displayDate, Date expirationDate, boolean neverExpire,
-            String externalReference)
+			String externalReference)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
@@ -180,11 +180,12 @@ public class ProductInstanceHelper {
 		return _cpInstanceService.upsertCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
 			null, width, height, depth, weight, new BigDecimal(price),
-			new BigDecimal(promoPrice), new BigDecimal(cost), published, externalReference,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
+			new BigDecimal(promoPrice), new BigDecimal(cost), published,
+			externalReference, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Reference

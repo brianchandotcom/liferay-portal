@@ -14,6 +14,16 @@
 		<execute macro="Upgrade#resetTestUserPassword" />
 	</command>
 
+	<command name="ResetTestUserPasswordAfterUpgrade621021" priority="5">
+		<description message="This is a use case for LPS-73277." />
+
+		<property name="data.archive.type" value="data-archive-portal" />
+		<property name="portal.version" value="6.2.10.21" />
+		<property name="setup.wizard.enabled" value="true" />
+
+		<execute macro="Upgrade#resetTestUserPassword" />
+	</command>
+
 	<command name="ResetTestUserPasswordAfterUpgrade625" priority="5">
 		<description message="This is a use case for LPS-73277." />
 

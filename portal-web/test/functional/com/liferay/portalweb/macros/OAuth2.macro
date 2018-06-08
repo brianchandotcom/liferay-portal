@@ -59,6 +59,151 @@
 		<return name="newGeneratedClientSecret" value="${newGeneratedClientSecret}" />
 	</command>
 
+	<command name="editScopes">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${applicationName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="Scopes">
+			<var name="key_navItem" value="Scopes" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
+			<var name="key_navItem" value="Scopes" />
+		</execute>
+
+		<if>
+			<or>
+				<isset var="resourceCheckList" />
+				<isset var="resourceUncheckList" />
+			</or>
+			<then>
+				<if>
+					<condition function="IsElementPresent#isVisible" locator1="NavUnderline#NAV_UNDERLINE_LINK">
+						<var name="key_navUnderline" value="Resource scopes" />
+					</condition>
+
+					<then>
+						<execute macro="Navigator#gotoNavUnderline">
+							<var name="navUnderline" value="Resource scopes" />
+						</execute>
+					</then>
+				</if>
+
+				<for list="${resourcePanels}" param="resourcePanel">
+					<execute macro="OAuth2#expandResourcePanel">
+						<var name="resourcePanel" value="${resourcePanel}" />
+					</execute>
+				</for>
+
+				<if>
+					<isset var="resourceCheckList" />
+					<then>
+						<for list="${resourceCheckList}" param="scopeName">
+							<if>
+								<condition function="IsNotChecked" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
+									<var name="key_scopeName" value="${scopeName}" />
+								</condition>
+
+								<then>
+									<execute function="Check" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
+										<var name="key_scopeName" value="${scopeName}" />
+									</execute>
+								</then>
+							</if>
+						</for>
+					</then>
+				</if>
+
+				<if>
+					<isset var="resourceUncheckList" />
+					<then>
+						<for list="${resourceUncheckList}" param="scopeName">
+							<if>
+								<condition function="IsChecked" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
+									<var name="key_scopeName" value="${scopeName}" />
+								</condition>
+
+								<then>
+									<execute function="Uncheck" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
+										<var name="key_scopeName" value="${scopeName}" />
+									</execute>
+								</then>
+							</if>
+						</for>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<isset var="checkGlobalScope" />
+				<isset var="uncheckGlobalScope" />
+			</or>
+			<then>
+				<execute macro="Navigator#gotoNavUnderline">
+					<var name="navUnderline" value="Global scopes" />
+				</execute>
+
+				<if>
+					<isset var="checkGlobalScope" />
+					<then>
+						<if>
+							<condition function="IsNotChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+								<var name="key_scopeName" value="${checkGlobalScope}" />
+							</condition>
+
+							<then>
+								<execute function="Check" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+									<var name="key_scopeName" value="${checkGlobalScope}" />
+								</execute>
+							</then>
+						</if>
+					</then>
+				</if>
+
+				<if>
+					<isset var="uncheckGlobalScope" />
+					<then>
+						<if>
+							<condition function="IsChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+								<var name="key_scopeName" value="${checkGlobalScope}" />
+							</condition>
+
+							<then>
+								<execute function="Uncheck" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+									<var name="key_scopeName" value="${uncheckGlobalScope}" />
+								</execute>
+							</then>
+						</if>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#gotoBack" />
+	</command>
+
+	<command name="expandResourcePanel">
+		<var name="key_panel" value="${resourcePanel}" />
+
+		<if>
+			<and>
+				<condition function="IsElementPresent" locator1="OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED" />
+				<condition function="IsVisible" locator1="OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED" />
+			</and>
+			<then>
+				<execute function="Click" locator1="OAuth2#ADMIN_RESOURCE_PANEL_COLLAPSED" />
+			</then>
+		</if>
+
+		<execute function="AssertElementPresent" locator1="OAuth2#ADMIN_RESOURCE_PANEL_EXPANDED" />
+	</command>
+
 	<command name="inputApplicationValues" returns="newGeneratedClientSecret">
 		<if>
 			<isset var="clientId" />
@@ -397,5 +542,100 @@
 				<execute function="AssertTextEquals" locator1="OAuth2#USER_CONNECTED_APP_VIEW_NAME" value1="${applicationName}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewScopes">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${applicationName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="Scopes">
+			<var name="key_navItem" value="Scopes" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
+			<var name="key_navItem" value="Scopes" />
+		</execute>
+
+		<if>
+			<or>
+				<isset var="resourceCheckedList" />
+				<isset var="resourceUncheckedList" />
+			</or>
+			<then>
+				<if>
+					<condition function="IsElementPresent#isVisible" locator1="NavUnderline#NAV_UNDERLINE_LINK">
+						<var name="key_navUnderline" value="Resource scopes" />
+					</condition>
+
+					<then>
+						<execute macro="Navigator#gotoNavUnderline">
+							<var name="navUnderline" value="Resource scopes" />
+						</execute>
+					</then>
+				</if>
+
+				<for list="${resourcePanels}" param="resourcePanel">
+					<execute macro="OAuth2#expandResourcePanel">
+						<var name="resourcePanel" value="${resourcePanel}" />
+					</execute>
+				</for>
+
+				<if>
+					<isset var="resourceCheckedList" />
+					<then>
+						<for list="${resourceCheckedList}" param="scopeName">
+							<execute function="AssertChecked" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
+								<var name="key_scopeName" value="${scopeName}" />
+							</execute>
+						</for>
+					</then>
+				</if>
+
+				<if>
+					<isset var="resourceUncheckedList" />
+					<then>
+						<for list="${resourceUncheckedList}" param="scopeName">
+							<execute function="AssertNotChecked" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
+								<var name="key_scopeName" value="${scopeName}" />
+							</execute>
+						</for>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<isset var="checkedGlobalScope" />
+				<isset var="uncheckedGlobalScope" />
+			</or>
+			<then>
+				<execute macro="Navigator#gotoNavUnderline">
+					<var name="navUnderline" value="Global scopes" />
+				</execute>
+
+				<if>
+					<isset var="checkedGlobalScope" />
+					<then>
+						<execute function="AssertChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+							<var name="key_scopeName" value="${scopeName}" />
+						</execute>
+					</then>
+				</if>
+
+				<if>
+					<isset var="uncheckedGlobalScope" />
+					<then>
+						<execute function="AssertNotChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+							<var name="key_scopeName" value="${scopeName}" />
+						</execute>
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<execute macro="Navigator#gotoBack" />
 	</command>
 </definition>

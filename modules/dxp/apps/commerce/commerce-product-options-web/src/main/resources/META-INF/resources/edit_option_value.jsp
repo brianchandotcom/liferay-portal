@@ -78,6 +78,10 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 
 		<c:if test="<%= cpOptionValue == null %>">
 			<aui:script sandbox="<%= true %>">
+				function slugify(string) {
+					return string.toLowerCase().replace(/[^a-z1-9]+/g, '-');
+				}
+
 				var form = $(document.<portlet:namespace />optionValueFm);
 
 				var keyInput = form.fm('key');
@@ -85,7 +89,7 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 
 				var onNameInput = _.debounce(
 					function(event) {
-						keyInput.val(nameInput.val());
+						keyInput.val(slugify(nameInput.val()));
 					},
 					200
 				);

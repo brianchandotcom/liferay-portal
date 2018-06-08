@@ -1903,7 +1903,7 @@ public class GitWorkingDirectory {
 	private boolean _deleteLocalBranches(String... branchNames) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git branch -D -f");
+		sb.append("git branch -D -f ");
 
 		String joinedBranchNames = JenkinsResultsParserUtil.join(
 			" ", branchNames);
@@ -1941,6 +1941,7 @@ public class GitWorkingDirectory {
 
 		sb.append("git push --delete ");
 		sb.append(remote.getName());
+		sb.append(" ");
 
 		String joinedBranchNames = JenkinsResultsParserUtil.join(
 			" ", branchNames);

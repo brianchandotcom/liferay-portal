@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Portal Search Elasticsearch Shield fragment
-Bundle-SymbolicName: com.liferay.portal.search.elasticsearch.shield.fragment
-Bundle-Version: 2.0.0
-Fragment-Host: com.liferay.portal.search.elasticsearch
-Import-Package: !*

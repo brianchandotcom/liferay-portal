@@ -202,6 +202,9 @@ public class LocalGitSyncUtil {
 			remoteBranches.put(remoteBranch.getName(), remoteBranch);
 		}
 
+		List<GitWorkingDirectory.Branch> branchesToBeDeleted =
+			new ArrayList<>();
+
 		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
 				remoteBranches.entrySet()) {
 
@@ -224,9 +227,6 @@ public class LocalGitSyncUtil {
 
 				long branchAge = timestamp - remoteBranchTimestamp;
 
-				List<GitWorkingDirectory.Branch> branchesToBeDeleted =
-					new ArrayList<>();
-
 				if (branchAge > _BRANCH_EXPIRE_AGE_MILLIS) {
 					String remoteRepositoryBaseBranchName =
 						remoteBranchName.replace("-" + lastBlock, "");
@@ -246,10 +246,15 @@ public class LocalGitSyncUtil {
 				else {
 					oldestBranchAge = Math.max(oldestBranchAge, branchAge);
 				}
-
-				gitWorkingDirectory.deleteBranches(branchesToBeDeleted, 5);
 			}
 		}
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Deleting ", String.valueOf(branchesToBeDeleted.size()),
+				" branches from ", remote.getName()));
+
+		gitWorkingDirectory.deleteBranches(branchesToBeDeleted);
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
@@ -960,6 +965,6 @@ public class LocalGitSyncUtil {
 	private static final Pattern _cacheBranchPattern = Pattern.compile(
 		"cache(-([^-]+))+");
 	private static final ThreadPoolExecutor _threadPoolExecutor =
-		JenkinsResultsParserUtil.getNewThreadPoolExecutor(5, true);
+		JenkinsResultsParserUtil.getNewThreadPoolExecutor(16, true);
 
 }

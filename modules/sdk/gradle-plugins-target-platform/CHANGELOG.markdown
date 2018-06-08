@@ -16,9 +16,8 @@
 ## 1.1.0 - *(Unreleased)*
 
 ### Added
-- [LPS-81530]: Add the ability to add additional configurations to configure the
-BOMs that are imported to manage Java dependencies and the various artifacts
-used in resolving OSGi dependencies.
+- [LPS-81530]: Add the ability to configure imported BOMs to manage Java
+dependencies and the various artifacts used in resolving OSGi dependencies.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Test Integration]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-test-integration

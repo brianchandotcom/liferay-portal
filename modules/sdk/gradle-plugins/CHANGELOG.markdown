@@ -4586,12 +4586,12 @@ to version 2.3.164.
 ## 3.12.14 - 2018-05-21
 
 ### Changed
-- [LPS-78986]: Update the default value of the `app.server.websphere.version`
-property to `9.0.0.0`.
-- [LPS-79742]: Update the default value of the `app.server.tcserver.version`
-property to `4.0.0`.
-- [LPS-80347]: Update the default value of the `app.server.weblogic.version`
-property to `12.2.1`.
+- [LPS-78986]: Update the `app.server.websphere.version` property's default
+value to `9.0.0.0`.
+- [LPS-79742]: Update the `app.server.tcserver.version` property's default value
+to `4.0.0`.
+- [LPS-80347]: Update the `app.server.weblogic.version` property's default value
+to `12.2.1`.
 - [LPS-81106]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.3.165.
 - [LPS-81106]: Update the [Liferay Source Formatter] dependency to version
@@ -4751,7 +4751,7 @@ to version 2.3.180.
 
 ### Fixed
 - [LPS-75530]: Fix the log message for `ExecuteBndTask` so it displays the
-correct amount of time it took to build the file.
+file's correct build time.
 
 ## 3.12.31 - 2018-06-06
 

@@ -3579,8 +3579,8 @@ version 2.2.4.
 ## 5.4.4 - 2018-05-16
 
 ### Added
-- [LPS-80944]: The `com.liferay.spring.boot.defaults` plugin now automatically
-adds the local Maven and [Liferay CDN] repositories to the project.
+- [LPS-80944]: Configure the `com.liferay.spring.boot.defaults` plugin to
+automatically add local Maven and [Liferay CDN] repositories to the project.
 
 ## 5.4.5 - 2018-05-16
 

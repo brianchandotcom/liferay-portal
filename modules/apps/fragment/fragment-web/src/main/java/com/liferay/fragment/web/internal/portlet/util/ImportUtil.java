@@ -58,12 +58,6 @@ public class ImportUtil {
 			ActionRequest actionRequest, File file, boolean overwrite)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		ZipFile zipFile = new ZipFile(file);
 
 		_isValidFile(zipFile);
@@ -104,26 +98,9 @@ public class ImportUtil {
 				throw new FragmentCollectionNameException();
 			}
 
-			FragmentCollection fragmentCollection =
-				_fragmentCollectionLocalService.fetchFragmentCollection(
-					themeDisplay.getScopeGroupId(), fragmentCollectionKey);
-
-			if (fragmentCollection == null) {
-				fragmentCollection =
-					_fragmentCollectionService.addFragmentCollection(
-						themeDisplay.getScopeGroupId(), fragmentCollectionKey,
-						fragmentCollectionName, fragmentCollectionDescription,
-						serviceContext);
-			}
-			else if (overwrite) {
-				_fragmentCollectionService.updateFragmentCollection(
-					fragmentCollection.getFragmentCollectionId(),
-					fragmentCollectionName, fragmentCollectionDescription);
-			}
-			else {
-				throw new DuplicateFragmentCollectionKeyException(
-					fragmentCollectionKey);
-			}
+			FragmentCollection fragmentCollection = _addFragmentCollection(
+				actionRequest, fragmentCollectionKey, fragmentCollectionName,
+				fragmentCollectionDescription, overwrite);
 
 			importFragmentEntries(
 				actionRequest, zipFile,
@@ -136,12 +113,6 @@ public class ImportUtil {
 			ActionRequest actionRequest, ZipFile zipFile,
 			long fragmentCollectionId, String path, boolean overwrite)
 		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
 
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
@@ -178,30 +149,78 @@ public class ImportUtil {
 				fragmentJsPath = jsonObject.getString("jsPath");
 			}
 
-			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.fetchFragmentEntry(
-					themeDisplay.getScopeGroupId(), fragmentEntryKey);
+			_addFragmentEntry(
+				actionRequest, fragmentCollectionId, fragmentEntryKey,
+				fragmentEntryName, _getContent(zipFile, fragmentCssPath),
+				_getContent(zipFile, fragmentHtmlPath),
+				_getContent(zipFile, fragmentJsPath), overwrite);
+		}
+	}
 
-			if (fragmentEntry == null) {
-				_fragmentEntryService.addFragmentEntry(
-					themeDisplay.getScopeGroupId(), fragmentCollectionId,
-					fragmentEntryKey, fragmentEntryName,
-					_getContent(zipFile, fragmentCssPath),
-					_getContent(zipFile, fragmentHtmlPath),
-					_getContent(zipFile, fragmentJsPath),
-					WorkflowConstants.STATUS_DRAFT, serviceContext);
-			}
-			else if (overwrite) {
-				_fragmentEntryService.updateFragmentEntry(
-					fragmentEntry.getFragmentEntryId(), fragmentEntryName,
-					_getContent(zipFile, fragmentCssPath),
-					_getContent(zipFile, fragmentHtmlPath),
-					_getContent(zipFile, fragmentJsPath),
-					WorkflowConstants.STATUS_APPROVED);
-			}
-			else {
-				throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
-			}
+	private FragmentCollection _addFragmentCollection(
+			ActionRequest actionRequest, String fragmentCollectionKey,
+			String name, String description, boolean overwrite)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.fetchFragmentCollection(
+				themeDisplay.getScopeGroupId(), fragmentCollectionKey);
+
+		if (fragmentCollection == null) {
+			fragmentCollection =
+				_fragmentCollectionService.addFragmentCollection(
+					themeDisplay.getScopeGroupId(), fragmentCollectionKey, name,
+					description, serviceContext);
+		}
+		else if (overwrite) {
+			fragmentCollection =
+				_fragmentCollectionService.updateFragmentCollection(
+					fragmentCollection.getFragmentCollectionId(), name,
+					description);
+		}
+		else {
+			throw new DuplicateFragmentCollectionKeyException(
+				fragmentCollectionKey);
+		}
+
+		return fragmentCollection;
+	}
+
+	private void _addFragmentEntry(
+			ActionRequest actionRequest, long fragmentCollectionId,
+			String fragmentEntryKey, String name, String css, String html,
+			String js, boolean overwrite)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				themeDisplay.getScopeGroupId(), fragmentEntryKey);
+
+		if (fragmentEntry == null) {
+			_fragmentEntryService.addFragmentEntry(
+				themeDisplay.getScopeGroupId(), fragmentCollectionId,
+				fragmentEntryKey, name, css, html, js,
+				WorkflowConstants.STATUS_DRAFT, serviceContext);
+		}
+		else if (overwrite) {
+			_fragmentEntryService.updateFragmentEntry(
+				fragmentEntry.getFragmentEntryId(), name, css, html, js,
+				WorkflowConstants.STATUS_APPROVED);
+		}
+		else {
+			throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
 		}
 	}
 

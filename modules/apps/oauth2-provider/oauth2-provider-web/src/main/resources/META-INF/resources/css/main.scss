@@ -34,14 +34,16 @@ $grayTextColor: #6B6C7E;
 		}
 		.user-icon, .app-icon {
 			display: inline-block;
-			height: 88px;
+			height: 64px;
 			margin-bottom: 1.25rem;
 			position: relative;
-			width: 88px;
+			width: 64px;
 		}
 
 		.user-icon {
+			font-size: 1.75rem;
 			left: -16px;
+			line-height: 64px;
 			z-index: 1;
 		}
 

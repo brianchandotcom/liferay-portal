@@ -54,7 +54,7 @@ String replyTo = PortalUtil.escapeRedirect(oAuth2Parameters.get("reply_to"));
 						</h1>
 
 						<p class="application-wants-permissions text-truncate">
-							<liferay-ui:message key="application-wants-permissions-to-access" />:
+							<liferay-ui:message key="application-wants-permissions-to-access" />
 						</p>
 
 						<ul class="list-group">

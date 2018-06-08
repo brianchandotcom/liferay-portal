@@ -27,19 +27,19 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.commerce.product.model.CPOptionCategory",
+	property = "model.class.name=com.liferay.commerce.product.model.CPSpecificationOption",
 	service = {
 		EditPortletProvider.class, ManagePortletProvider.class,
 		ViewPortletProvider.class
 	}
 )
-public class CPOptionCategoriesPortletProvider
+public class CPSpecificationOptionsPortletProvider
 	extends BasePortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletName() {
-		return CPPortletKeys.CP_OPTION_CATEGORIES;
+		return CPPortletKeys.CP_SPECIFICATION_OPTIONS;
 	}
 
 }

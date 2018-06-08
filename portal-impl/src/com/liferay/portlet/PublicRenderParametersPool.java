@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
  */
 public class PublicRenderParametersPool {
 
-	protected static Map<String, String[]> get(
+	public static Map<String, String[]> get(
 		HttpServletRequest request, long plid) {
 
 		if (PropsValues.PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION_LAYOUT) {

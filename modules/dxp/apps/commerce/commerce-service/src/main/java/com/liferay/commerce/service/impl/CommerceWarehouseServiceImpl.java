@@ -160,11 +160,12 @@ public class CommerceWarehouseServiceImpl
 
 	@Override
 	public int searchCount(
-			long groupId, String keywords, boolean all, long commerceCountryId)
+			long groupId, String keywords, Boolean active,
+			long commerceCountryId)
 		throws PortalException {
 
 		return commerceWarehouseLocalService.searchCount(
-			groupId, keywords, all, commerceCountryId);
+			groupId, keywords, active, commerceCountryId);
 	}
 
 	@Override

@@ -234,21 +234,21 @@ public class CommerceWarehouseLocalServiceImpl
 
 	@Override
 	public List<CommerceWarehouse> search(
-		long groupId, String keywords, boolean all, long commerceCountryId,
+		long groupId, String keywords, Boolean active, long commerceCountryId,
 		int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator) {
 
 		return commerceWarehouseFinder.findByKeywords(
-			groupId, keywords, all, commerceCountryId, start, end,
+			groupId, keywords, active, commerceCountryId, start, end,
 			orderByComparator);
 	}
 
 	@Override
 	public int searchCount(
-		long groupId, String keywords, boolean all, long commerceCountryId) {
+		long groupId, String keywords, Boolean active, long commerceCountryId) {
 
 		return commerceWarehouseFinder.countByKeywords(
-			groupId, keywords, all, commerceCountryId);
+			groupId, keywords, active, commerceCountryId);
 	}
 
 	@Override

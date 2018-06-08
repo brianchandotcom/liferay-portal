@@ -39,7 +39,7 @@ String selectedScreenNavigationCategoryKey = cpDefinitionsDisplayContext.getSele
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, selectedScreenNavigationCategoryKey, StringPool.BLANK, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, selectedScreenNavigationCategoryKey), StringPool.BLANK, data);
 
 request.setAttribute("view.jsp-cpDefinition", cpDefinition);
 request.setAttribute("view.jsp-cpType", cpDefinitionsDisplayContext.getCPType());

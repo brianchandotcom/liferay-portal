@@ -293,8 +293,6 @@
 			<var name="portlet" value="Announcements and Alerts" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Dropdown#FILTER_AND_ORDER" value1="General" />
-
 		<execute macro="AnnouncementsPortlet#configurePaginationCP">
 			<var name="itemsPerPage" value="5" />
 		</execute>

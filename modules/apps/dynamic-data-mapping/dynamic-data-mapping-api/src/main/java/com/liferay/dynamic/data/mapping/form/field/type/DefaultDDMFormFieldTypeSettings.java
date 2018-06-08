@@ -29,9 +29,10 @@ import com.liferay.petra.string.StringPool;
  */
 @DDMForm
 @DDMFormLayout(
-	{
+	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
+	value = {
 		@DDMFormLayoutPage(
-			title = "basic",
+			title = "%basic",
 			value = {
 				@DDMFormLayoutRow(
 					{
@@ -45,15 +46,15 @@ import com.liferay.petra.string.StringPool;
 			}
 		),
 		@DDMFormLayoutPage(
-			title = "properties",
+			title = "%properties",
 			value = {
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(
 							size = 12,
 							value = {
-								"showLabel", "repeatable", "validation",
-								"visibilityExpression"
+								"dataType", "name", "showLabel", "repeatable",
+								"type", "validation", "visibilityExpression"
 							}
 						)
 					}

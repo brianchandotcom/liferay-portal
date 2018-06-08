@@ -37,6 +37,7 @@
 		</execute>
 
 		<execute macro="DMDocument#addContractCP">
+			<var name="contractType" value="NDA" />
 			<var name="dmContractDealName" value="DM Contract Deal Name" />
 			<var name="dmContractDescription" value="DM Contract Description" />
 			<var name="dmContractFile" value="Document_1.pdf" />
@@ -45,6 +46,7 @@
 			<var name="dmContractTitle" value="DM Contract Title" />
 			<var name="effectiveDate" value="06/01/2017" />
 			<var name="expirationDate" value="06/15/2017" />
+			<var name="status" value="Draft" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentCP">

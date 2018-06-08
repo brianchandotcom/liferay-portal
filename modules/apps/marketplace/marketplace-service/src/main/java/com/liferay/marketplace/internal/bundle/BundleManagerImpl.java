@@ -110,8 +110,6 @@ public class BundleManagerImpl implements BundleManager {
 	}
 
 	public void installLPKG(File file) throws Exception {
-		_lpkgVerifier.verify(file);
-
 		File installFile = new File(getInstallDirName(), file.getName());
 
 		Files.move(

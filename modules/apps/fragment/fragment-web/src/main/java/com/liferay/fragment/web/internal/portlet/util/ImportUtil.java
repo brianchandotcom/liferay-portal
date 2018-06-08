@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -57,15 +58,21 @@ import org.osgi.service.component.annotations.Reference;
 public class ImportUtil {
 
 	public void importFile(
-			ActionRequest actionRequest, File file, boolean overwrite)
+			ActionRequest actionRequest, File file, long fragmentCollectionId,
+			boolean overwrite)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		ZipFile zipFile = new ZipFile(file);
 
 		_isValidFile(zipFile);
 
+		Map<String, String> orphanFragmentEntries = new HashMap<>();
+
 		Map<String, FragmentCollectionFolder> fragmentCollectionFolderMap =
-			_getFragmentCollectionFolderMap(zipFile);
+			_getFragmentCollectionFolderMap(zipFile, orphanFragmentEntries);
 
 		for (Map.Entry<String, FragmentCollectionFolder> entry :
 				fragmentCollectionFolderMap.entrySet()) {
@@ -99,6 +106,30 @@ public class ImportUtil {
 				fragmentCollection.getFragmentCollectionId(),
 				fragmentCollectionFolder.getFragmentEntries(), overwrite);
 		}
+
+		if (MapUtil.isEmpty(orphanFragmentEntries)) {
+			return;
+		}
+
+		if (fragmentCollectionId < 0) {
+			FragmentCollection fragmentCollection =
+				_fragmentCollectionLocalService.fetchFragmentCollection(
+					themeDisplay.getScopeGroupId(),
+					_DEFAULT_FRAGMENT_COLLECTION_KEY);
+
+			if (fragmentCollection == null) {
+				fragmentCollection = _addFragmentCollection(
+					actionRequest, _DEFAULT_FRAGMENT_COLLECTION_KEY,
+					_DEFAULT_FRAGMENT_COLLECTION_KEY, StringPool.BLANK,
+					overwrite);
+			}
+
+			fragmentCollectionId = fragmentCollection.getFragmentCollectionId();
+		}
+
+		importFragmentEntries(
+			actionRequest, zipFile, fragmentCollectionId, orphanFragmentEntries,
+			overwrite);
 	}
 
 	public void importFragmentEntries(
@@ -211,7 +242,8 @@ public class ImportUtil {
 	}
 
 	private Map<String, FragmentCollectionFolder>
-		_getFragmentCollectionFolderMap(ZipFile zipFile) {
+		_getFragmentCollectionFolderMap(
+			ZipFile zipFile, Map<String, String> orphanFragmentEntries) {
 
 		Map<String, FragmentCollectionFolder> fragmentCollectionFolderMap =
 			new HashMap<>();
@@ -253,6 +285,8 @@ public class ImportUtil {
 			String[] paths = fileName.split(StringPool.SLASH);
 
 			if (paths.length < 3) {
+				orphanFragmentEntries.put(_getKey(fileName), fileName);
+
 				continue;
 			}
 
@@ -262,6 +296,8 @@ public class ImportUtil {
 				fragmentCollectionFolderMap.get(fragmentCollectionKey);
 
 			if (fragmentCollectionFolder == null) {
+				orphanFragmentEntries.put(_getKey(fileName), fileName);
+
 				continue;
 			}
 
@@ -314,6 +350,8 @@ public class ImportUtil {
 
 		throw new PortalException();
 	}
+
+	private static final String _DEFAULT_FRAGMENT_COLLECTION_KEY = "imported";
 
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

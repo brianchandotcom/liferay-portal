@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.PortletContainer;
+import com.liferay.portlet.internal.PortletContainerImpl;
 
 import org.junit.Assert;
 import org.junit.Test;

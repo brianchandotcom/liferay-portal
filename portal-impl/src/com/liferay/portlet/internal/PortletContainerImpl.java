@@ -71,7 +71,6 @@ import com.liferay.portlet.ActionRequestFactory;
 import com.liferay.portlet.ActionRequestImpl;
 import com.liferay.portlet.ActionResponseFactory;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.EventImpl;
 import com.liferay.portlet.EventRequestFactory;
 import com.liferay.portlet.EventRequestImpl;
 import com.liferay.portlet.EventResponseFactory;

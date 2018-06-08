@@ -17,19 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String category = ParamUtil.getString(request, "category", "all-categories");
-String state = ParamUtil.getString(request, "state", "all-statuses");
+ViewAppsManagerManagementToolbarDisplayContext
+	viewAppsManagerManagementToolbarDisplayContext = new ViewAppsManagerManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
 
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-List<App> apps = AppLocalServiceUtil.getApps(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-List<Bundle> bundles = BundleManagerUtil.getBundles();
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("category", category);
-portletURL.setParameter("state", state);
-portletURL.setParameter("orderByType", orderByType);
+SearchContainer searchContainer = viewAppsManagerManagementToolbarDisplayContext.getSearchContainer();
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-manager"), null);
 %>
@@ -41,52 +32,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "apps") %>'
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	filterDropdownItems="<%= viewAppsManagerManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= viewAppsManagerManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="appDisplays"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="descriptive"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys="<%= MarketplaceAppManagerUtil.getCategories(apps, bundles) %>"
-			navigationParam="category"
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
-			navigationParam="state"
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="title"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<li>
-			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcPath" value="/view_search_results.jsp" />
-			</liferay-portlet:renderURL>
-
-			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewAppsManagerManagementToolbarDisplayContext.getSortingURL() %>"
+/>
 
 <div class="container-fluid-1280">
 	<liferay-ui:breadcrumb
@@ -97,34 +52,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 	/>
 
 	<liferay-ui:search-container
-		emptyResultsMessage="no-apps-were-found"
 		id="appDisplays"
-		iteratorURL="<%= portletURL %>"
+		searchContainer="<%= searchContainer %>"
+		var="appDisplaySearch"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			if (category.equals("all-categories")) {
-				category = StringPool.BLANK;
-			}
-
-			List<AppDisplay> appDisplays = AppDisplayFactoryUtil.getAppDisplays(bundles, category, BundleStateConstants.getState(state));
-
-			appDisplays = ListUtil.sort(appDisplays, new AppDisplayComparator(orderByType));
-
-			int end = searchContainer.getEnd();
-
-			if (end > appDisplays.size()) {
-				end = appDisplays.size();
-			}
-
-			searchContainer.setResults(appDisplays.subList(searchContainer.getStart(), end));
-
-			searchContainer.setTotal(appDisplays.size());
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.marketplace.app.manager.web.internal.util.AppDisplay"
 			modelVar="appDisplay"

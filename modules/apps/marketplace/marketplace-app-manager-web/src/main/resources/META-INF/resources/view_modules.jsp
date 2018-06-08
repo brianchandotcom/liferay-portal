@@ -18,40 +18,16 @@
 
 <%
 String app = ParamUtil.getString(request, "app");
-
-AppDisplay appDisplay = null;
-
-List<Bundle> allBundles = BundleManagerUtil.getBundles();
-
-if (Validator.isNumber(app)) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(allBundles, Long.parseLong(app));
-}
-
-if (appDisplay == null) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(allBundles, app);
-}
-
 String moduleGroup = ParamUtil.getString(request, "moduleGroup");
 
-ModuleGroupDisplay moduleGroupDisplay = null;
+ViewModulesManagementToolbarDisplayContext
+	viewModulesManagementToolbarDisplayContext = new ViewModulesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
 
-if (Validator.isNotNull(moduleGroup)) {
-	moduleGroupDisplay = ModuleGroupDisplayFactoryUtil.getModuleGroupDisplay(appDisplay, moduleGroup);
-}
+AppDisplay appDisplay = viewModulesManagementToolbarDisplayContext.getAppDisplay();
 
-String state = ParamUtil.getString(request, "state", "all-statuses");
+ModuleGroupDisplay moduleGroupDisplay = viewModulesManagementToolbarDisplayContext.getModuleGroupDisplay();
 
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_modules.jsp");
-portletURL.setParameter("app", app);
-portletURL.setParameter("moduleGroup", moduleGroup);
-portletURL.setParameter("state", state);
-portletURL.setParameter("orderByType", orderByType);
-
-portletDisplay.setShowBackIcon(true);
+SearchContainer searchContainer = viewModulesManagementToolbarDisplayContext.getSearchContainer();
 
 PortletURL backURL = renderResponse.createRenderURL();
 
@@ -63,6 +39,7 @@ else {
 	backURL.setParameter("mvcPath", "/view.jsp");
 }
 
+portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle((moduleGroupDisplay != null) ? moduleGroupDisplay.getTitle() : appDisplay.getTitle());
@@ -80,46 +57,16 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "modules") %>'
 />
 
-<liferay-frontend:management-bar
-	searchContainerId="appDisplays"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="descriptive"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
-			navigationParam="state"
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="title"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<li>
-			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcPath" value="/view_search_results.jsp" />
-			</liferay-portlet:renderURL>
-
-			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<clay:management-toolbar
+	filterDropdownItems="<%= viewModulesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= viewModulesManagementToolbarDisplayContext.getSearchActionURL() %>"
+	searchContainerId="bundles"
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewModulesManagementToolbarDisplayContext.getSortingURL() %>"
+/>
 
 <div class="container-fluid-1280">
 	<liferay-ui:breadcrumb
@@ -130,39 +77,10 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDispl
 	/>
 
 	<liferay-ui:search-container
-		emptyResultsMessage="no-modules-were-found"
 		id="bundles"
-		iteratorURL="<%= portletURL %>"
+		searchContainer="<%= searchContainer %>"
+		var="bundleSearch"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			List<Bundle> bundles = null;
-
-			if (moduleGroupDisplay != null) {
-				bundles = moduleGroupDisplay.getBundles();
-			}
-			else {
-				bundles = appDisplay.getBundles();
-			}
-
-			BundleUtil.filterBundles(bundles, BundleStateConstants.getState(state));
-
-			bundles = ListUtil.sort(bundles, new BundleComparator(orderByType));
-
-			int end = searchContainer.getEnd();
-
-			if (end > bundles.size()) {
-				end = bundles.size();
-			}
-
-			searchContainer.setResults(bundles.subList(searchContainer.getStart(), end));
-
-			searchContainer.setTotal(bundles.size());
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="org.osgi.framework.Bundle"
 			modelVar="bundle"

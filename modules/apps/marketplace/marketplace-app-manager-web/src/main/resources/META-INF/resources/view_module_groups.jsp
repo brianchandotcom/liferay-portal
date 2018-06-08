@@ -17,37 +17,18 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String app = ParamUtil.getString(request, "app");
+ViewModuleGroupsManagementToolbarDisplayContext
+	viewModuleGroupsManagementToolbarDisplayContext = new ViewModuleGroupsManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request);
 
-AppDisplay appDisplay = null;
+AppDisplay appDisplay = viewModuleGroupsManagementToolbarDisplayContext.getAppDisplay();
 
-List<Bundle> bundles = BundleManagerUtil.getBundles();
-
-if (Validator.isNumber(app)) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(bundles, Long.parseLong(app));
-}
-
-if (appDisplay == null) {
-	appDisplay = AppDisplayFactoryUtil.getAppDisplay(bundles, app);
-}
-
-String state = ParamUtil.getString(request, "state", "all-statuses");
-
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view_module_groups.jsp");
-portletURL.setParameter("app", app);
-portletURL.setParameter("state", state);
-portletURL.setParameter("orderByType", orderByType);
-
-portletDisplay.setShowBackIcon(true);
+SearchContainer searchContainer = viewModuleGroupsManagementToolbarDisplayContext.getSearchContainer();
 
 PortletURL backURL = renderResponse.createRenderURL();
 
 backURL.setParameter("mvcPath", "/view.jsp");
 
+portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle(appDisplay.getTitle());
@@ -64,46 +45,16 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 	navigationItems='<%= appManagerDisplayContext.getNavigationItems(viewURL, "apps") %>'
 />
 
-<liferay-frontend:management-bar
+<clay:management-toolbar
+	filterDropdownItems="<%= viewModuleGroupsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchActionURL="<%= viewModuleGroupsManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="moduleGroupDisplays"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"descriptive"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-			selectedDisplayStyle="descriptive"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all-statuses", BundleStateConstants.ACTIVE_LABEL, BundleStateConstants.RESOLVED_LABEL, BundleStateConstants.INSTALLED_LABEL} %>'
-			navigationParam="state"
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="title"
-			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title"} %>'
-			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
-		/>
-
-		<li>
-			<liferay-portlet:renderURL varImpl="searchURL">
-				<portlet:param name="mvcPath" value="/view_search_results.jsp" />
-			</liferay-portlet:renderURL>
-
-			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-				<liferay-ui:input-search
-					markupView="lexicon"
-				/>
-			</aui:form>
-		</li>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+	searchFormName="searchFm"
+	selectable="<%= false %>"
+	showSearch="<%= true %>"
+	sortingOrder="<%= searchContainer.getOrderByType() %>"
+	sortingURL="<%= viewModuleGroupsManagementToolbarDisplayContext.getSortingURL() %>"
+/>
 
 <div class="container-fluid-1280">
 	<liferay-ui:breadcrumb
@@ -114,30 +65,10 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 	/>
 
 	<liferay-ui:search-container
-		emptyResultsMessage="no-apps-were-found"
 		id="moduleGroupDisplays"
-		iteratorURL="<%= portletURL %>"
+		searchContainer="<%= searchContainer %>"
+		var="moduleGroupDisplaySearch"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			List<ModuleGroupDisplay> moduleGroupDisplays = ModuleGroupDisplayFactoryUtil.getModuleGroupDisplays(appDisplay, BundleStateConstants.getState(state));
-
-			moduleGroupDisplays = ListUtil.sort(moduleGroupDisplays, new ModuleGroupDisplayComparator(orderByType));
-
-			int end = searchContainer.getEnd();
-
-			if (end > moduleGroupDisplays.size()) {
-				end = moduleGroupDisplays.size();
-			}
-
-			searchContainer.setResults(moduleGroupDisplays.subList(searchContainer.getStart(), end));
-
-			searchContainer.setTotal(moduleGroupDisplays.size());
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.marketplace.app.manager.web.internal.util.ModuleGroupDisplay"
 			modelVar="moduleGroupDisplay"

@@ -5,6 +5,7 @@
 	<activity>
 		<model-name>com.liferay.document.library.kernel.model.DLFileEntry</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_ADD_COMMENT}</activity-type>
+		<language-key>ADD_COMMENT</language-key>
 		<log-activity>true</log-activity>
 	</activity>
 	<activity>

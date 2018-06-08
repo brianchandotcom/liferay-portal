@@ -20,7 +20,6 @@
 	actionDropdownItems="<%= exportImportToolbarDisplayContext.getActionDropdownItems() %>"
 	creationMenu="<%= exportImportToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= exportImportToolbarDisplayContext.getFilterDropdownItems() %>"
-	id="<portlet:namespace/>exportLayoutProcessesToolbar"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= exportImportToolbarDisplayContext.getSortingOrder() %>"

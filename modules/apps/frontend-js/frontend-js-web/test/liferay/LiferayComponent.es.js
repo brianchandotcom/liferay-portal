@@ -125,7 +125,7 @@ describe(
 					}
 				);
 
-				it(
+				xit(
 					'should warn through console when a component is registered twice',
 					() => {
 						let msg = '';

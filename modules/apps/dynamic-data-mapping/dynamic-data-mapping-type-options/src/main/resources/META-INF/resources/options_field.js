@@ -9,7 +9,7 @@ AUI.add(
 
 		var TPL_DRAG_PLACEHOLDER = '<div class="drag-placeholder"></div>';
 
-		var TPL_REMOVE_BUTTON = '<button class="close close-modal" type="button"><span aria-hidden="true">×</span></button>';
+		var TPL_REMOVE_BUTTON = '<button class="close close-modal" type="button">' + Liferay.Util.getLexiconIconTpl('times') + '</button>';
 
 		var OptionsField = A.Component.create(
 			{

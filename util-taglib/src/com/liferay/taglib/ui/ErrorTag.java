@@ -267,11 +267,8 @@ public class ErrorTag extends IncludeTag implements BodyTag {
 	}
 
 	private String _getBodyContentString() {
-		Object bodyContent = request.getAttribute(
-			"liferay-ui:error:bodyContent");
-
 		if (bodyContent != null) {
-			return bodyContent.toString();
+			return bodyContent.getString();
 		}
 
 		return StringPool.BLANK;

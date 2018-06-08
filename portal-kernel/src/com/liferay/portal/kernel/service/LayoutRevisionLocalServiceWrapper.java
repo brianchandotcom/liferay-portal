@@ -359,6 +359,13 @@ public class LayoutRevisionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutRevision> getLayoutRevisions(
+		long layoutSetBranchId, boolean head, int status) {
+		return _layoutRevisionLocalService.getLayoutRevisions(layoutSetBranchId,
+			head, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.LayoutRevision> getLayoutRevisions(
 		long layoutSetBranchId, int status) {
 		return _layoutRevisionLocalService.getLayoutRevisions(layoutSetBranchId,
 			status);

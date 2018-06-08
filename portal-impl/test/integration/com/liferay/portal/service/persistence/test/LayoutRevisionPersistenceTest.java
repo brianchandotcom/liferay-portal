@@ -278,6 +278,14 @@ public class LayoutRevisionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByL_H_S() throws Exception {
+		_persistence.countByL_H_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+
+		_persistence.countByL_H_S(0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
 	public void testCountByH_P() throws Exception {
 		_persistence.countByH_P(RandomTestUtil.randomBoolean(),
 			RandomTestUtil.nextLong());

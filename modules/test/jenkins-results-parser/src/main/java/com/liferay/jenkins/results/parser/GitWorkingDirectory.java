@@ -1912,11 +1912,17 @@ public class GitWorkingDirectory {
 
 		ExecutionResult executionResult = null;
 
+		boolean exceptionThrown = false;
+
 		try {
 			executionResult = executeBashCommands(
 				_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, sb.toString());
 		}
 		catch (RuntimeException re) {
+			exceptionThrown = true;
+		}
+
+		if (exceptionThrown || (executionResult._exitValue != 0)) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Unable to delete local branches:", "\n    ",
@@ -1950,11 +1956,17 @@ public class GitWorkingDirectory {
 
 		ExecutionResult executionResult = null;
 
+		boolean exceptionThrown = false;
+
 		try {
 			executionResult = executeBashCommands(
 				_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, sb.toString());
 		}
 		catch (RuntimeException re) {
+			exceptionThrown = true;
+		}
+
+		if (exceptionThrown || (executionResult._exitValue != 0)) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Unable to delete remote branches:", "\n    ",

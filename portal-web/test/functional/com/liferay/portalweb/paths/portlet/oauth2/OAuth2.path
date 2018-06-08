@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>OAuth2</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">OAuth2</td></tr>
+</thead>
+<tbody>
+<!--ADMIN-->
+<tr>
+	<td>ADMIN_INPUT_FORM_CHECKBOX</td>
+	<td>//label[normalize-space()='${key_checkboxName}']/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_INPUT_FORM_CLIENT_ID</td>
+	<td>//input[contains(@id,'clientId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_INPUT_FORM_CLIENT_ID_EDIT_BUTTON</td>
+	<td>//button[contains(@onclick,'ClientIdModal')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_INPUT_FORM_CLIENT_ID_EDIT_FIELD</td>
+	<td>//input[contains(@id,'newClientId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_INPUT_FORM_CLIENT_SECRET</td>
+	<td>//input[contains(@id,'clientSecret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_BUTTON</td>
+	<td>//button[contains(@onclick,'ClientSecretModal')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_INPUT_FORM_CLIENT_SECRET_EDIT_FIELD</td>
+	<td>//input[contains(@id,'newClientSecret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_INPUT_FORM_GENERATE_NEW_SECRET</td>
+	<td>//button[contains(.,'Generate New Secret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_TABLE_APP_CLIENT_ID</td>
+	<td>//tr[td[@class=' lfr-name-column' and contains(.,'${key_tableName}')]]/td[@class=' lfr-client-id-column']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_TABLE_APP_DESCRIPTION</td>
+	<td>//tr[td[@class=' lfr-name-column' and contains(.,'${key_tableName}')]]/td[@class=' lfr-description-column']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_TABLE_APP_NAME</td>
+	<td>//td[@class=' lfr-name-column' and contains(.,'${key_tableName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_TABLE_APP_SCOPES_COUNT</td>
+	<td>//tr[td[@class=' lfr-name-column' and contains(.,'${key_tableName}')]]/td[@class=' lfr-scopes-column']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

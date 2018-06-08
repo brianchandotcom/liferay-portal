@@ -60,8 +60,6 @@ public class LiferayAccessTokenServiceRegistrator {
 		_bundleContext = bundleContext;
 
 		_updateLiferayAccessTokenService(bundleContext);
-
-		_activated = true;
 	}
 
 	@Reference(
@@ -79,15 +77,9 @@ public class LiferayAccessTokenServiceRegistrator {
 
 	@Deactivate
 	protected void deactivate() {
-		if (!_activated) {
-			return;
-		}
+		_enabled = false;
 
-		_activated = false;
-
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
+		unregister();
 	}
 
 	protected void removeAccessTokenGrantHandler(
@@ -98,12 +90,18 @@ public class LiferayAccessTokenServiceRegistrator {
 		_updateLiferayAccessTokenService(_bundleContext);
 	}
 
+	protected void unregister() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
+		}
+	}
+
 	private void _updateLiferayAccessTokenService(BundleContext bundleContext) {
 		if (!_enabled || (bundleContext == null)) {
 			return;
 		}
-
-		deactivate();
 
 		LiferayAccessTokenService liferayAccessTokenService =
 			new LiferayAccessTokenService();
@@ -123,6 +121,8 @@ public class LiferayAccessTokenServiceRegistrator {
 			"(osgi.jaxrs.name=Liferay.OAuth2.Application)");
 		liferayAccessTokenServiceProperties.put("osgi.jaxrs.resource", true);
 
+		unregister();
+
 		_serviceRegistration = bundleContext.registerService(
 			Object.class, liferayAccessTokenService,
 			liferayAccessTokenServiceProperties);
@@ -130,15 +130,14 @@ public class LiferayAccessTokenServiceRegistrator {
 
 	private final List<AccessTokenGrantHandler> _accessTokenGrantHandlers =
 		new ArrayList<>();
-	private volatile boolean _activated;
 	private boolean _blockUnsecureRequests;
 	private BundleContext _bundleContext;
 	private boolean _canSupportPublicClients;
-	private boolean _enabled;
+	private volatile boolean _enabled;
 
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
 
-	private ServiceRegistration<Object> _serviceRegistration;
+	private volatile ServiceRegistration<Object> _serviceRegistration;
 
 }

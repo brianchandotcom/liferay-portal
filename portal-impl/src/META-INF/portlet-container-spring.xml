@@ -14,7 +14,7 @@
 			</bean>
 		</property>
 	</bean>
-	<bean class="com.liferay.portlet.PortletContextFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletContextFactory" />
+	<bean class="com.liferay.portlet.internal.PortletContextFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletContextFactory" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil">
 		<property name="portletContextFactory" ref="com.liferay.portal.kernel.portlet.PortletContextFactory" />
 	</bean>

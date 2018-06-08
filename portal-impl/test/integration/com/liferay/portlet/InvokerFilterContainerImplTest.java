@@ -30,6 +30,7 @@ import com.liferay.portlet.bundle.invokerfiltercontainerimpl.TestEventFilter;
 import com.liferay.portlet.bundle.invokerfiltercontainerimpl.TestRenderFilter;
 import com.liferay.portlet.bundle.invokerfiltercontainerimpl.TestResourceFilter;
 import com.liferay.portlet.internal.InvokerFilterContainerImpl;
+import com.liferay.portlet.internal.PortletContextFactoryImpl;
 
 import java.util.List;
 

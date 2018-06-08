@@ -66,7 +66,7 @@ public class LPKGDeployerRegistrar {
 
 				@Override
 				public void bundleChanged(BundleEvent bundleEvent) {
-					if (bundleEvent.getType() != BundleEvent.STARTED) {
+					if (bundleEvent.getType() == BundleEvent.STARTED) {
 						_register(bundleEvent.getBundle(), null);
 					}
 				}

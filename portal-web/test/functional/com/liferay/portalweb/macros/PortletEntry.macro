@@ -73,6 +73,26 @@
 		<execute function="Type" locator1="TextInput#NAME" value1="${name}" />
 	</command>
 
+	<command name="inputText">
+		<execute function="Click" locator1="TextInput#GENERIC_TEXT_INPUT">
+			<var name="key_fieldLabel" value="${fieldLabel}" />
+		</execute>
+
+		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="${text}">
+			<var name="key_fieldLabel" value="${fieldLabel}" />
+		</execute>
+	</command>
+
+	<command name="inputTextArea">
+		<execute function="Click" locator1="TextArea#ANY">
+			<var name="key_text" value="${fieldId}" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#ANY" value1="${text}">
+			<var name="key_text" value="${fieldId}" />
+		</execute>
+	</command>
+
 	<command name="inputTitle">
 		<execute function="Click" locator1="TextInput#TITLE" />
 

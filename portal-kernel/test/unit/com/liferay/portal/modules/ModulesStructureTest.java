@@ -106,7 +106,7 @@ public class ModulesStructureTest {
 					String dirName = String.valueOf(dirPath.getFileName());
 
 					if ((dirName.charAt(0) == '.') ||
-						dirName.equals("node_modules")) {
+						_excludedDirNames.contains(dirName)) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
@@ -234,7 +234,7 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (dirName.equals("node_modules")) {
+					if (_excludedDirNames.contains(dirName)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -474,7 +474,7 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (dirName.equals("node_modules")) {
+					if (_excludedDirNames.contains(dirName)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -1363,6 +1363,9 @@ public class ModulesStructureTest {
 
 	private static String _branchName;
 	private static Properties _buildProperties;
+	private static final Set<String> _excludedDirNames = SetUtil.fromList(
+		Arrays.asList(
+			"bin", "build", "classes", "node_modules", "test-classes", "tmp"));
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =

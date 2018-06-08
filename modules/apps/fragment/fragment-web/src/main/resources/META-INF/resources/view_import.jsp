@@ -31,8 +31,6 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 	name="fm"
 >
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:success key='<%= portletDisplay.getId() + "filesImported" %>' message='<%= LanguageUtil.get(resourceBundle, "the-files-were-imported-correctly") %>' />
-
 		<liferay-ui:error exception="<%= DuplicateFragmentCollectionKeyException.class %>">
 
 			<%

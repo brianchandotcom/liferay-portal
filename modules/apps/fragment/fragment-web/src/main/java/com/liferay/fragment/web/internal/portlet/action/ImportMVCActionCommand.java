@@ -16,6 +16,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.web.internal.portlet.util.ImportUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -46,6 +47,17 @@ import org.osgi.service.component.annotations.Reference;
 public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		String successMessage = LanguageUtil.get(
+			_portal.getHttpServletRequest(actionRequest),
+			"the-files-were-imported-correctly");
+
+		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
+	}
+
+	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -65,13 +77,7 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 			_importUtil.importFile(
 				actionRequest, file, fragmentCollectionId, overwrite);
 
-			String portletResource = ParamUtil.getString(
-				actionRequest, "portletResource");
-
-			SessionMessages.add(
-				actionRequest, portletResource + "filesImported");
-
-			addSuccessMessage(actionRequest, actionResponse);
+			SessionMessages.add(actionRequest, "success");
 		}
 		catch (Exception e) {
 			SessionErrors.add(actionRequest, e.getClass(), e);

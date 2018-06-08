@@ -202,8 +202,7 @@ public class LocalGitSyncUtil {
 			remoteBranches.put(remoteBranch.getName(), remoteBranch);
 		}
 
-		List<GitWorkingDirectory.Branch> branchesToBeDeleted =
-			new ArrayList<>();
+		List<GitWorkingDirectory.Branch> expiredBranches = new ArrayList<>();
 
 		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
 				remoteBranches.entrySet()) {
@@ -235,11 +234,10 @@ public class LocalGitSyncUtil {
 						remoteBranches.get(remoteRepositoryBaseBranchName);
 
 					if (remoteRepositoryBaseCacheBranch != null) {
-						branchesToBeDeleted.add(
-							remoteRepositoryBaseCacheBranch);
+						expiredBranches.add(remoteRepositoryBaseCacheBranch);
 					}
 
-					branchesToBeDeleted.add(remoteBranch);
+					expiredBranches.add(remoteBranch);
 
 					deleteCount++;
 				}
@@ -251,10 +249,10 @@ public class LocalGitSyncUtil {
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Deleting ", String.valueOf(branchesToBeDeleted.size()),
+				"Deleting ", String.valueOf(expiredBranches.size()),
 				" branches from ", remote.getName()));
 
-		gitWorkingDirectory.deleteBranches(branchesToBeDeleted);
+		gitWorkingDirectory.deleteBranches(expiredBranches);
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(

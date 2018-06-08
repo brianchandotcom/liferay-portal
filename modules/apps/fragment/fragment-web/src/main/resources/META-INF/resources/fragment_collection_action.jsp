@@ -51,17 +51,9 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 	/>
 
 	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
-
-		<%
-		Map<String, Object> importFragmentEntriesData = new HashMap<String, Object>();
-
-		importFragmentEntriesData.put("fragment-collection-id", String.valueOf(fragmentCollection.getFragmentCollectionId()));
-		%>
-
 		<liferay-ui:icon
-			cssClass='<%= renderResponse.getNamespace() + "import-fragment-entries-action-option" %>'
-			data="<%= importFragmentEntriesData %>"
 			message="import"
+			onClick='<%= "openImportCollectionView();" %>'
 			url="javascript:;"
 		/>
 
@@ -81,47 +73,26 @@ FragmentCollection fragmentCollection = fragmentDisplayContext.getFragmentCollec
 </liferay-ui:icon-menu>
 
 <c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
-	<aui:script require="metal-dom/src/all/dom as dom">
-		var importFragmentEntriesActionClickHandler = dom.delegate(
-			document.body,
-			'click',
-			'.<portlet:namespace />import-fragment-entries-action-option > a',
-			function(event) {
-				var data = event.delegateTarget.dataset;
-
-				event.preventDefault();
-
-				uri = '<portlet:renderURL var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/view_import.jsp" /></portlet:renderURL>';
-
-				uri = Liferay.Util.addParams('<portlet:namespace />fragmentCollectionId=' + data.fragmentCollectionId, uri);
-
-				Liferay.Util.openWindow(
-					{
-						dialog: {
-							after: {
-								destroy: function(event) {
-									window.location.reload();
-								}
-							},
-							destroyOnHide: true
+	<aui:script>
+		var openImportCollectionView = function() {
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						after: {
+							destroy: function(event) {
+								window.location.reload();
+							}
 						},
-						dialogIframe: {
-							bodyCssClass: 'dialog-with-footer'
-						},
-						id: '<portlet:namespace />openInstallFromURLView',
-						title: '<liferay-ui:message key="import" />',
-						uri: uri
-					}
-				);
-			}
-		);
-
-		function handleDestroyPortlet() {
-			importFragmentEntriesActionClickHandler.removeListener();
-
-			Liferay.detach('destroyPortlet', handleDestroyPortlet);
+						destroyOnHide: true
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					},
+					id: '<portlet:namespace />openImportCollectionView',
+					title: '<liferay-ui:message key="import" />',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import" /><portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" /></portlet:renderURL>'
+				}
+			);
 		}
-
-		Liferay.on('destroyPortlet', handleDestroyPortlet);
 	</aui:script>
 </c:if>

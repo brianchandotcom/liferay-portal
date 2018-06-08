@@ -29,18 +29,17 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/view_import_fragment_collections"
+		"mvc.command.name=/fragment/view_import"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewImportFragmentCollectionsMVCRenderCommand
-	implements MVCRenderCommand {
+public class ViewImportMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/view_import_fragment_collections.jsp";
+		return "/view_import.jsp";
 	}
 
 }

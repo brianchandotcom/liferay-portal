@@ -20,18 +20,27 @@
 long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 %>
 
-<portlet:actionURL name="/fragment/import_fragment_entries" var="importFragmentEntriesURL">
+<portlet:actionURL name="/fragment/import" var="importURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
 	<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollectionId) %>" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form
-	action="<%= importFragmentEntriesURL %>"
+	action="<%= importURL %>"
 	name="fm"
 >
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:success key='<%= portletDisplay.getId() + "filesImported" %>' message='<%= LanguageUtil.get(resourceBundle, "the-files-were-imported-correctly") %>' />
+
+		<liferay-ui:error exception="<%= DuplicateFragmentCollectionKeyException.class %>">
+
+			<%
+			DuplicateFragmentCollectionKeyException dfcke = (DuplicateFragmentCollectionKeyException)errorException;
+			%>
+
+			<liferay-ui:message arguments="<%= dfcke.getMessage() %>" key="a-fragment-collection-with-the-key-x-already-exists" />
+		</liferay-ui:error>
 
 		<liferay-ui:error exception="<%= DuplicateFragmentEntryKeyException.class %>">
 
@@ -41,6 +50,8 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 
 			<liferay-ui:message arguments="<%= dfeke.getMessage() %>" key="a-fragment-entry-with-the-key-x-already-exists" />
 		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= InvalidFragmentCollectionFileException.class %>" message="selected-file-does-not-contain-fragment-collections" />
 
 		<liferay-ui:error exception="<%= InvalidFragmentEntryFileException.class %>" message="fragment-collection-cannot-be-imported-into-an-existing-fragment-collection" />
 

@@ -207,8 +207,8 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 					bodyCssClass: 'dialog-with-footer'
 				},
 				id: '<portlet:namespace />openImportView',
-				title: '<liferay-ui:message key="import-collections" />',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import_fragment_collections" /></portlet:renderURL>'
+				title: '<liferay-ui:message key="import" />',
+				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/fragment/view_import" /></portlet:renderURL>'
 			}
 		);
 	};
@@ -247,10 +247,6 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 		submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_collections" />');
 	}
 
-	<portlet:renderURL var="importFragmentEntriesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/view_import_fragment_entries.jsp" />
-	</portlet:renderURL>
-
 	var importFragmentEntriesActionClickHandler = dom.delegate(
 		document.body,
 		'click',
@@ -260,7 +256,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 
 			event.preventDefault();
 
-			uri = '<%= importFragmentEntriesURL %>';
+			uri = '<portlet:renderURL var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/view_import.jsp" /></portlet:renderURL>';
 
 			uri = Liferay.Util.addParams('<portlet:namespace />fragmentCollectionId=' + data.fragmentCollectionId, uri);
 
@@ -278,7 +274,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 						bodyCssClass: 'dialog-with-footer'
 					},
 					id: '<portlet:namespace />openInstallFromURLView',
-					title: '<liferay-ui:message key="import-fragments" />',
+					title: '<liferay-ui:message key="import" />',
 					uri: uri
 				}
 			);

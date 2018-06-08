@@ -39,12 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=/fragment/import_fragment_entries"
+		"mvc.command.name=/fragment/import"
 	},
 	service = MVCActionCommand.class
 )
-public class ImportFragmentEntriesMVCActionCommand
-	extends BaseMVCActionCommand {
+public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

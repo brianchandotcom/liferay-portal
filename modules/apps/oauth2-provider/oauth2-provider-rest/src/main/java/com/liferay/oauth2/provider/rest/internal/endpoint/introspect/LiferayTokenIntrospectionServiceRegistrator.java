@@ -64,6 +64,8 @@ public class LiferayTokenIntrospectionServiceRegistrator {
 				"osgi.jaxrs.application.select",
 				"(osgi.jaxrs.name=Liferay.OAuth2.Application)");
 			liferayTokenIntrospectionProperties.put(
+				"osgi.jaxrs.name", "Liferay.Token.Introspection.Service");
+			liferayTokenIntrospectionProperties.put(
 				"osgi.jaxrs.resource", true);
 
 			_serviceRegistration = bundleContext.registerService(

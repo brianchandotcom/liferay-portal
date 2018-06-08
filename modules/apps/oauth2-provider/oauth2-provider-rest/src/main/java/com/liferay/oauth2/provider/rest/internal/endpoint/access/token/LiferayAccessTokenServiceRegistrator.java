@@ -121,6 +121,8 @@ public class LiferayAccessTokenServiceRegistrator {
 		liferayAccessTokenServiceProperties.put(
 			"osgi.jaxrs.application.select",
 			"(osgi.jaxrs.name=Liferay.OAuth2.Application)");
+		liferayAccessTokenServiceProperties.put(
+			"osgi.jaxrs.name", "Liferay.Access.Token.Service.");
 		liferayAccessTokenServiceProperties.put("osgi.jaxrs.resource", true);
 
 		_serviceRegistration = bundleContext.registerService(

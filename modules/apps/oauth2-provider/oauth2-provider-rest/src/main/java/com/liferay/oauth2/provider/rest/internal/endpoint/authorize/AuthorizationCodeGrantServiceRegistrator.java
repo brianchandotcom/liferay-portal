@@ -70,6 +70,8 @@ public class AuthorizationCodeGrantServiceRegistrator {
 		authorizationCodeGrantProperties.put(
 			"osgi.jaxrs.application.select",
 			"(osgi.jaxrs.name=Liferay.OAuth2.Application)");
+		authorizationCodeGrantProperties.put(
+			"osgi.jaxrs.name", "Liferay.Authorization.Code.Grant.Service");
 		authorizationCodeGrantProperties.put("osgi.jaxrs.resource", true);
 
 		_serviceRegistration = bundleContext.registerService(

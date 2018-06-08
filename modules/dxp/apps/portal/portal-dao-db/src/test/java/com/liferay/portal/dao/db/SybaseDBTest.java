@@ -19,13 +19,11 @@ import com.liferay.portal.kernel.dao.db.DB;
 import java.io.IOException;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author Miguel Pastor
  */
-@Ignore
 public class SybaseDBTest extends BaseDBTestCase {
 
 	@Test

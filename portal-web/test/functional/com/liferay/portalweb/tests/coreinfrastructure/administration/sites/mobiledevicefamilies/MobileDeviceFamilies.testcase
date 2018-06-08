@@ -155,6 +155,8 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute function="Refresh" />
+
 		<execute macro="Page#selectMobileDeviceFamily">
 			<var name="deviceFamilyName" value="Windows Device Family Name" />
 		</execute>

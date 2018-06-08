@@ -23,6 +23,8 @@ import aQute.bnd.annotation.ProviderType;
 public interface FilterVisitor<T>
 	extends com.liferay.portal.kernel.search.filter.FilterVisitor<T> {
 
+	public T visit(DateRangeFilter dateRangeFilter);
+
 	public T visit(TermsSetFilter termsSetFilter);
 
 }

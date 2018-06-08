@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.directory.web.internal.asset;
+package com.liferay.contacts.web.internal.asset;
 
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.portal.kernel.model.User;

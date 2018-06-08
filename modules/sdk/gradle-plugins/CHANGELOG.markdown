@@ -4766,6 +4766,14 @@ to version 2.3.181.
 ## 3.12.32 - 2018-06-07
 
 ### Changed
+- [LPS-78940]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.41.
+- [LPS-78940]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.224.
+- [LPS-79679]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.182.
+- [LPS-79679]: Update the [Liferay Source Formatter] dependency to version
+1.0.655.
 - [LPS-81900]: Update the [Liferay Gradle Plugins Soy] dependency to version
 3.1.5.
 
@@ -5109,6 +5117,7 @@ to version 2.3.181.
 [LPS-78854]: https://issues.liferay.com/browse/LPS-78854
 [LPS-78901]: https://issues.liferay.com/browse/LPS-78901
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
+[LPS-78940]: https://issues.liferay.com/browse/LPS-78940
 [LPS-78971]: https://issues.liferay.com/browse/LPS-78971
 [LPS-78986]: https://issues.liferay.com/browse/LPS-78986
 [LPS-79131]: https://issues.liferay.com/browse/LPS-79131

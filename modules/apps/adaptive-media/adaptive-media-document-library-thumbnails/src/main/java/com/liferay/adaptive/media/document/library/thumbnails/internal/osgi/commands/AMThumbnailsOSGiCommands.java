@@ -84,7 +84,7 @@ public class AMThumbnailsOSGiCommands {
 					// See LPS-70788
 
 					String actualFileName = StringUtil.replace(
-						fileName, "//", StringPool.SLASH);
+						fileName, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 					for (ThumbnailConfiguration thumbnailConfiguration :
 							_getThumbnailConfigurations()) {
@@ -214,9 +214,7 @@ public class AMThumbnailsOSGiCommands {
 		);
 	}
 
-	private FileVersion _getFileVersion(long fileVersionId)
-		throws PortalException {
-
+	private FileVersion _getFileVersion(long fileVersionId) {
 		try {
 			if (fileVersionId == 0) {
 				return null;

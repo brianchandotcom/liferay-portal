@@ -188,6 +188,16 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 						_resourceBundle,
 						"there-is-no-widget-available-for-alias-x", alias));
 			}
+
+			if (Validator.isNotNull(element.id()) &&
+				!Validator.isAlphanumericName(element.id())) {
+
+				throw new FragmentEntryContentException(
+					LanguageUtil.format(
+						_resourceBundle,
+						"widget-id-must-contain-only-alphanumeric-characters",
+						alias));
+			}
 		}
 	}
 
@@ -248,7 +258,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getInstanceId(String namespace, String id) {
-		return namespace + StringPool.UNDERLINE + id;
+		if (Validator.isNull(namespace)) {
+			namespace = StringUtil.randomId();
+		}
+
+		return namespace + id;
 	}
 
 	private Element _getPortletMenuElement(

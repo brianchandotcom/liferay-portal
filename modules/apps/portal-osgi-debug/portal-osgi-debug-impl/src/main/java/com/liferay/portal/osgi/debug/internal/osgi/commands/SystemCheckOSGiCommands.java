@@ -60,17 +60,34 @@ public class SystemCheckOSGiCommands {
 						"\"system:check\" in gogo shell.");
 			}
 
-			check();
+			_check(false);
 		}
 	}
 
 	public void check() {
+		_check(true);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
+	}
+
+	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	private void _check(boolean useSystemOut) {
 		Map<ServiceReference<SystemChecker>, SystemChecker> systemCheckerMap =
 			_serviceTracker.getTracked();
 
 		Collection<SystemChecker> systemCheckers = systemCheckerMap.values();
 
-		if (_log.isInfoEnabled()) {
+		if (useSystemOut) {
+			System.out.println("Available checkers :" + systemCheckers);
+		}
+		else if (_log.isInfoEnabled()) {
 			_log.info("Available checkers :" + systemCheckers);
 		}
 
@@ -83,36 +100,38 @@ public class SystemCheckOSGiCommands {
 			sb.append(systemChecker.getOSGiCommand());
 			sb.append("\" in gogo shell.");
 
-			if (_log.isInfoEnabled()) {
+			if (useSystemOut) {
+				System.out.println(sb.toString());
+			}
+			else if (_log.isInfoEnabled()) {
 				_log.info(sb.toString());
 			}
 
 			String result = systemChecker.check();
 
 			if (Validator.isNull(result)) {
-				if (_log.isInfoEnabled()) {
+				if (useSystemOut) {
+					System.out.println(
+						systemChecker.getName() +
+							" check result: No issue is found.");
+				}
+				else if (_log.isInfoEnabled()) {
 					_log.info(
 						systemChecker.getName() +
 							" check result: No issue is found.");
 				}
 			}
 			else {
-				if (_log.isWarnEnabled()) {
+				if (useSystemOut) {
+					System.out.println(
+						systemChecker.getName() + " check result: " + result);
+				}
+				else if (_log.isWarnEnabled()) {
 					_log.warn(
 						systemChecker.getName() + " check result: " + result);
 				}
 			}
 		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTracker.close();
-	}
-
-	@Reference(target = ModuleServiceLifecycle.SYSTEM_CHECK, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

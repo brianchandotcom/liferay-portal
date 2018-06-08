@@ -30,7 +30,7 @@
 	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletQNameUtil" id="com.liferay.portal.kernel.portlet.PortletQNameUtil">
 		<property name="portletQName">
-			<bean class="com.liferay.portlet.PortletQNameImpl" />
+			<bean class="com.liferay.portlet.internal.PortletQNameImpl" />
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil">

@@ -18,6 +18,7 @@ import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentCollectionNameException;
+import com.liferay.fragment.exception.InvalidFileException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
@@ -392,7 +393,7 @@ public class ImportUtil {
 			}
 		}
 
-		throw new PortalException();
+		throw new InvalidFileException();
 	}
 
 	private static final String _DEFAULT_FRAGMENT_COLLECTION_KEY = "imported";

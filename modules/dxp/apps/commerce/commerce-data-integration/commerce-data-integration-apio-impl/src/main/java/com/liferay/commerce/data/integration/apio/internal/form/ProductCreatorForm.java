@@ -61,8 +61,6 @@ public class ProductCreatorForm {
 		).addRequiredString(
 			"externalReferenceCode",
 			ProductCreatorForm::_setExternalReferenceCode
-		).addOptionalString(
-			"defaultSku", ProductCreatorForm::_setDefaultSku
 		).build();
 	}
 
@@ -72,10 +70,6 @@ public class ProductCreatorForm {
 		}
 
 		return _assetCategoryIds;
-	}
-
-	public String getDefaultSku() {
-		return _defaultSku;
 	}
 
 	public Map<Locale, String> getDescriptionMap() {
@@ -102,10 +96,6 @@ public class ProductCreatorForm {
 		_assetCategoryIds = assetCategoryIds;
 	}
 
-	private void _setDefaultSku(String defaultSku) {
-		_defaultSku = defaultSku;
-	}
-
 	private void _setDescription(String description) {
 		_description = description;
 	}
@@ -127,7 +117,6 @@ public class ProductCreatorForm {
 	}
 
 	private List<Long> _assetCategoryIds;
-	private String _defaultSku;
 	private String _description;
 	private String _externalReferenceCode;
 	private String _productTypeName;

@@ -99,7 +99,8 @@ public class ProductDefinitionHelper {
 			CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME,
 			CPDefinitionIndexer.FIELD_SKUS, Field.CREATE_DATE,
 			Field.ENTRY_CLASS_PK, Field.DESCRIPTION, Field.GROUP_ID,
-			Field.MODIFIED_DATE, Field.TITLE, Field.USER_ID);
+			Field.MODIFIED_DATE, Field.TITLE, Field.USER_ID,
+			CPDefinitionIndexer.FIELD_EXTERNAL_REFERENCE_CODE);
 
 		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);
@@ -112,12 +113,11 @@ public class ProductDefinitionHelper {
 		return searchContext;
 	}
 
-	public CPDefinition createCPDefinition(
+	public CPDefinition upsertCPDefinition(
 			long groupId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap,
 			Map<Locale, String> shortDescriptionMap, String productTypeName,
-			long[] assetCategoryIds, String externalReferenceCode,
-			String defaultSku)
+			long[] assetCategoryIds, String externalReferenceCode)
 		throws PortalException {
 
 		ServiceContext serviceContext = _productIndexerHelper.getServiceContext(
@@ -161,7 +161,7 @@ public class ProductDefinitionHelper {
 			0, false, false, null, true, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, true, defaultSku,
+			expirationDateHour, expirationDateMinute, true, null,
 			externalReferenceCode, serviceContext);
 	}
 

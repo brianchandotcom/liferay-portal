@@ -150,15 +150,14 @@ public class ProductNestedCollectionResource
 
 		try {
 			CPDefinition cpDefinition =
-				_productDefinitionHelper.createCPDefinition(
+				_productDefinitionHelper.upsertCPDefinition(
 					webSiteId, productCreatorForm.getTitleMap(),
 					productCreatorForm.getDescriptionMap(),
 					productCreatorForm.getShortDescriptionMap(),
 					productCreatorForm.getProductTypeName(),
 					ArrayUtil.toLongArray(
 						productCreatorForm.getAssetCategoryIds()),
-					productCreatorForm.getExternalReferenceCode(),
-					productCreatorForm.getDefaultSku());
+					productCreatorForm.getExternalReferenceCode());
 
 			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
 				CPDefinition.class);

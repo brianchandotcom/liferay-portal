@@ -639,7 +639,7 @@ public class DataModelHelperImpl implements DataModelHelper
             sb.append(")");
             appendVersion(sb, VersionRange.parseVersionRange(clauses[0].getAttribute(Constants.BUNDLE_VERSION_ATTRIBUTE)));
             sb.append(")");
-            r.setFilter(sb.toString());
+            r.setFilterFast(sb.toString());
             r.addText("Required Host " + clauses[0].getName());
             r.setExtend(true);
             r.setOptional(false);
@@ -669,7 +669,7 @@ public class DataModelHelperImpl implements DataModelHelper
             sb.append(")");
             appendVersion(sb, v);
             sb.append(")");
-            r.setFilter(sb.toString());
+            r.setFilterFast(sb.toString());
 
             r.addText("Require Bundle " + clauses[i].getName() + "; " + v);
             r.setOptional(Constants.RESOLUTION_OPTIONAL.equalsIgnoreCase(clauses[i].getDirective(Constants.RESOLUTION_DIRECTIVE)));
@@ -772,7 +772,7 @@ public class DataModelHelperImpl implements DataModelHelper
             filter.append(")");
         }
         filter.append(")");
-        requirement.setFilter(filter.toString());
+        requirement.setFilterFast(filter.toString());
     }
 
     private static Set doImportPackageAttributes(RequirementImpl requirement, StringBuffer filter, Attribute[] attributes)
@@ -824,7 +824,7 @@ public class DataModelHelperImpl implements DataModelHelper
             }
             sb.append(")");
             RequirementImpl req = new RequirementImpl(Capability.EXECUTIONENVIRONMENT);
-            req.setFilter(sb.toString());
+            req.setFilterFast(sb.toString());
             req.addText("Execution Environment " + sb.toString());
             resource.addRequire(req);
         }
@@ -1035,3 +1035,4 @@ public class DataModelHelperImpl implements DataModelHelper
         return RepositoryParser.getParser().parseProperty(reader);
     }
 }
+/* @generated */

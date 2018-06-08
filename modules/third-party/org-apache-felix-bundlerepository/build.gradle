@@ -21,7 +21,9 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "org/apache/felix/bundlerepository/impl/DataModelHelperImpl.java"
 	fileNames "org/apache/felix/bundlerepository/impl/LocalRepositoryImpl.java"
+	fileNames "org/apache/felix/bundlerepository/impl/RequirementImpl.java"
 
 	originalLibModuleName = "org.apache.felix.bundlerepository"
 }

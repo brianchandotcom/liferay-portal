@@ -104,6 +104,19 @@ public class RequirementImpl implements Requirement
         }
     }
 
+    public void setFilterFast(String filter) {
+        try {
+            m_filter = FilterImpl.newInstance(filter, true);
+        }
+        catch (InvalidSyntaxException e) {
+            IllegalArgumentException ex = new IllegalArgumentException();
+
+            ex.initCause(e);
+
+            throw ex;
+        }
+    }
+
     public boolean isSatisfied(Capability capability)
     {
         return m_name.equals(capability.getName()) && m_filter.matchCase(capability.getPropertiesAsMap())
@@ -178,4 +191,4 @@ public class RequirementImpl implements Requirement
     {
         return m_name + ":" + getFilter();
     }
-}
+}/* @generated */

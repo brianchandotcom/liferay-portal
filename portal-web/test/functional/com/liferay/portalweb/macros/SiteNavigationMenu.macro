@@ -4,8 +4,6 @@
 	</command>
 
 	<command name="_addItemPage">
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
-
 		<execute macro="IFrame#selectConfigurationFrame" />
 
 		<if>

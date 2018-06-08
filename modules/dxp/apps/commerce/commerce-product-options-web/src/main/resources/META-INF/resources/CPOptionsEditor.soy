@@ -11,6 +11,7 @@
 	{@param? optionValuesURL: string}
 	{@param? optionValueURL: string}
 	{@param? pathThemeImages: string}
+	{@param? successMessage: string}
 	{@param? _currentOption: string}
 	{@param? _handleAddOption: any }
 	{@param? _handleCancelEditing: any }
@@ -68,6 +69,7 @@
 					{param optionValueURL: $optionValueURL /}
 					{param namespace: $namespace /}
 					{param pathThemeImages: $pathThemeImages /}
+					{param successMessage: $successMessage /}
 					{param events: ['close': $_handleCloseValueEditor] /}
 				{/call}
 			{/if}

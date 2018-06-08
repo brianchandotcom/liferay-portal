@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -143,7 +144,11 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 		catch (Exception e) {
 			_log.error(e);
 
-			jsonObject.put("message", e.getMessage());
+			jsonObject.put(
+				"message",
+				LanguageUtil.get(
+					actionRequest.getLocale(),
+					"your-request-failed-to-complete"));
 			jsonObject.put("success", false);
 		}
 

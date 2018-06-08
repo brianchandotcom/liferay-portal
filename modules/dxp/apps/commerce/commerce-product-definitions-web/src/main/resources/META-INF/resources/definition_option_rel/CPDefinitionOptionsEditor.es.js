@@ -19,6 +19,7 @@ class CPDefinitionOptionsEditor extends Component {
 
 	created() {
 		this.loadOptions();
+        this._handleKeyUpForModal = this._handleKeyUpForModal.bind(this);
 	}
 
 	_handleAddOption() {
@@ -97,6 +98,13 @@ class CPDefinitionOptionsEditor extends Component {
 		this._currentOption = event.cpDefinitionOptionRelId;
 
 		this.loadOptions();
+
+		if (event.success) {
+			this._showNotification(this.successMessage, 'success');
+		}
+		else {
+			this._showNotification(event.message, 'danger');
+		}
 	}
 
 	_handleoptionDeleted(event) {
@@ -111,14 +119,37 @@ class CPDefinitionOptionsEditor extends Component {
 		this.loadOptions();
 	}
 
-	_handleEditValues(cpDefinitionOptionRelId) {
-		this._currentOption = cpDefinitionOptionRelId;
+    _handleKeyUpForModal(evt) {
+        if (evt.code === 'Escape') {
+            this._handleCloseValueEditor();
+        }
+    }
 
-		this._showValues = true;
-	}
+    _handleEditValues(cpOptionId) {
+        this._currentOption = cpOptionId;
+        this._showValues = true;
+        document.addEventListener('keyup', this._handleKeyUpForModal);
+    }
 
-	_handleCloseValueEditor() {
-		this._showValues = false;
+    _handleCloseValueEditor() {
+        this._showValues = false;
+        document.removeEventListener('keyup', this._handleKeyUpForModal);
+    }
+
+	_showNotification(message, type) {
+		AUI().use(
+			'liferay-notification',
+			() => {
+				new Liferay.Notification(
+					{
+						message: message,
+						render: true,
+						title: '',
+						type: type
+					}
+				);
+			}
+		);
 	}
 }
 
@@ -138,6 +169,7 @@ CPDefinitionOptionsEditor.STATE = {
 	optionsItemSelectorURL: Config.string().required(),
 	optionURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
+	successMessage: Config.string().required(),
 	_cpDefinitionOptions: Config.array().value([])
 };
 

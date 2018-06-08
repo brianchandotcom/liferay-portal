@@ -76,6 +76,13 @@ class CPOptionValuesEditor extends Component {
 		this._currentOptionValue = event.cpOptionValueId;
 
 		this.loadOptionValues();
+
+		if (event.success) {
+			this._showNotification(this.successMessage, 'success');
+		}
+		else {
+			this._showNotification(event.message, 'danger');
+		}
 	}
 
 	_handleOptionValueDelated(event) {
@@ -98,6 +105,22 @@ class CPOptionValuesEditor extends Component {
 			this._newOptionValueName = '';
 		}
 	}
+
+	_showNotification(message, type) {
+		AUI().use(
+			'liferay-notification',
+			() => {
+				new Liferay.Notification(
+					{
+						message: message,
+						render: true,
+						title: '',
+						type: type
+					}
+				);
+			}
+  	);
+	}
 }
 
 /**
@@ -113,6 +136,7 @@ CPOptionValuesEditor.STATE = {
 	optionValueURL: Config.string().required(),
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),
+	successMessage: Config.string().required(),
 	_newOptionValueName: Config.string().value(''),
 	_optionValues: Config.array().value([])
 };

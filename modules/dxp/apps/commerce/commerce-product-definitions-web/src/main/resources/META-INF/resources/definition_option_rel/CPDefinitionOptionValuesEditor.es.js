@@ -76,6 +76,13 @@ class CPDefinitionOptionValuesEditor extends Component {
 		this._currentCPDefinitionOptionValueRelId = event.cpDefinitionOptionValueRelId;
 
 		this.loadOptionValues();
+
+		if (event.success) {
+			this._showNotification(this.successMessage, 'success');
+		}
+		else {
+			this._showNotification(event.message, 'danger');
+		}
 	}
 
 	_handleOptionValueDelated(event) {
@@ -98,6 +105,22 @@ class CPDefinitionOptionValuesEditor extends Component {
 			this._newCPDefinitionOptionValueRelName = '';
 		}
 	}
+
+	_showNotification(message, type) {
+		AUI().use(
+			'liferay-notification',
+			() => {
+				new Liferay.Notification(
+					{
+						message: message,
+						render: true,
+						title: '',
+						type: type
+					}
+				);
+  		}
+  	);
+	}
 }
 
 /**
@@ -113,6 +136,7 @@ CPDefinitionOptionValuesEditor.STATE = {
 	namespace: Config.string().required(),
 	pathThemeImages: Config.string().required(),
 	show: Config.bool().value(false),
+	successMessage: Config.string().required(),
 	_cpDefinitionOptionValueRels: Config.array().value([]),
 	_newCPDefinitionOptionValueRelName: Config.string().value('')
 };

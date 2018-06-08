@@ -16,10 +16,12 @@ package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
+import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyException;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -94,7 +96,14 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		catch (Exception e) {
 			_log.error(e);
 
-			jsonObject.put("message", e.getMessage());
+			String key = "your-request-failed-to-complete";
+
+			if (e instanceof CPDefinitionOptionValueRelKeyException) {
+				key = "that-key-is-already-being-used";
+			}
+
+			jsonObject.put(
+				"message", LanguageUtil.get(actionRequest.getLocale(), key));
 			jsonObject.put("success", false);
 		}
 

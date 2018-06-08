@@ -15,10 +15,12 @@
 package com.liferay.commerce.product.options.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPOptionValueKeyException;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -113,7 +115,14 @@ public class EditCPOptionValueMVCActionCommand extends BaseMVCActionCommand {
 		catch (Exception e) {
 			_log.error(e);
 
-			jsonObject.put("message", e.getMessage());
+			String key = "your-request-failed-to-complete";
+
+			if (e instanceof CPOptionValueKeyException) {
+				key = "that-key-is-already-being-used";
+			}
+
+			jsonObject.put(
+				"message", LanguageUtil.get(actionRequest.getLocale(), key));
 			jsonObject.put("success", false);
 		}
 

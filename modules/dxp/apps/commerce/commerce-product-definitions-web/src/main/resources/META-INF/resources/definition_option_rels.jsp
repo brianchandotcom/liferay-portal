@@ -53,6 +53,7 @@ context.put("namespace", liferayPortletResponse.getNamespace());
 context.put("optionsItemSelectorURL", cpDefinitionOptionRelDisplayContext.getItemSelectorUrl());
 context.put("optionURL", cpDefinitionOptionRelURL);
 context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+context.put("successMessage", LanguageUtil.get(request, "your-request-completed-successfully"));
 %>
 
 <div class="container-fluid-1280" id="<portlet:namespace />CPOptionsEditor">

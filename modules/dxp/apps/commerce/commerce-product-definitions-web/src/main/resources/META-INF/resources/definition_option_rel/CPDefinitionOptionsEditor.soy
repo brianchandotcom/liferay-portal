@@ -11,6 +11,7 @@
 	{@param? cpDefinitionOptionValueRelsURL: string}
 	{@param? cpDefinitionOptionValueRelURL: string}
 	{@param? pathThemeImages: string}
+	{@param? successMessage: string}
 	{@param? _currentOption: string}
 	{@param? _cpDefinitionOptions: ?}
 	{@param? _handleAddOption: any }
@@ -70,6 +71,7 @@
 					{param cpDefinitionOptionValueRelURL: $cpDefinitionOptionValueRelURL /}
 					{param namespace: $namespace /}
 					{param pathThemeImages: $pathThemeImages /}
+					{param successMessage: $successMessage /}
 					{param events: ['close': $_handleCloseValueEditor] /}
 				{/call}
 			{/if}

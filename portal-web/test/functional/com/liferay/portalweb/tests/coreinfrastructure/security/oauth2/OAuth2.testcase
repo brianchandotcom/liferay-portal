@@ -116,4 +116,65 @@
 			<var name="applicationName" value="OAuth Application Edited" />
 		</execute>
 	</command>
+
+	<command name="viewAndRevokeGrantedAuthorizations">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="OAuth2 Administration" />
+		</execute>
+
+		<execute macro="OAuth2#addApplication">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="checkboxUncheckList" value="Authorization Code" />
+		</execute>
+
+		<var method="selenium#getElementValue(OAuth2#ADMIN_INPUT_FORM_CLIENT_ID)" name="generatedClientId" />
+
+		<var method="selenium#getElementValue(OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET)" name="generatedClientSecret" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<var name="curl">
+			${portalURL}/o/oauth2/token \
+				--data grant_type=client_credentials&amp;client_id=${generatedClientId}&amp;client_secret=${generatedClientSecret}
+		</var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="OAuth2#viewGrantedAuthViaAdmin">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="OAuth2#revokeGrantedAuthViaAdmin">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="userName" value="Test Test" />
+		</execute>
+
+		<execute macro="OAuth2#viewGrantedAuthViaAdmin">
+			<var name="applicationName" value="OAuth Application" />
+			<var name="noAuthorizations" value="true" />
+		</execute>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
+			<arg value="${curl}" />
+		</execute>
+
+		<execute macro="OAuth2#viewGrantedAuthViaUser">
+			<var name="applicationName" value="OAuth Application" />
+		</execute>
+
+		<execute macro="OAuth2#revokeGrantedAuthViaUser">
+			<var name="applicationName" value="OAuth Application" />
+		</execute>
+
+		<execute macro="OAuth2#viewGrantedAuthViaUser">
+			<var name="noAuthorizations" value="true" />
+		</execute>
+	</command>
 </definition>

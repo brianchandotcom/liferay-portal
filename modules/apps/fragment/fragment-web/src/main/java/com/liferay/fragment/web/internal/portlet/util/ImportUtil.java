@@ -26,6 +26,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.zip.ZipReader;
 
 import java.io.File;
 
@@ -65,6 +65,8 @@ public class ImportUtil {
 			actionRequest);
 
 		ZipFile zipFile = new ZipFile(file);
+
+		_isValidFile(zipFile);
 
 		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
@@ -203,19 +205,6 @@ public class ImportUtil {
 		}
 	}
 
-	public boolean isValidFragmentCollectionsFile(ZipReader zipReader) {
-		for (String entry : zipReader.getEntries()) {
-			if (entry.endsWith(
-					FragmentExportImportConstants.
-						COLLECTION_CONFIG_FILE_NAME)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private String _getContent(ZipFile zipFile, String fileName)
 		throws Exception {
 
@@ -246,6 +235,22 @@ public class ImportUtil {
 		}
 
 		return false;
+	}
+
+	private void _isValidFile(ZipFile zipFile) throws PortalException {
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			if (_isFragmentCollection(zipEntry.getName()) ||
+				_isFragmentEntry(zipEntry.getName())) {
+
+				return;
+			}
+		}
+
+		throw new PortalException();
 	}
 
 	@Reference

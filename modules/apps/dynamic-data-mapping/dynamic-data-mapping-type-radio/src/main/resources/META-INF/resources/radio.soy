@@ -44,12 +44,6 @@
 					{/if}
 				</label>
 			{/if}
-
-			{if $showLabel}
-				{if $tip}
-					<span class="form-text">{$tip}</span>
-				{/if}
-			{/if}
 		</div>
 
 		{foreach $option in $options}
@@ -70,5 +64,11 @@
 				</label>
 			</div>
 		{/foreach}
+		
+		{if $showLabel}
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
+		{/if}
 	</div>
 {/template}

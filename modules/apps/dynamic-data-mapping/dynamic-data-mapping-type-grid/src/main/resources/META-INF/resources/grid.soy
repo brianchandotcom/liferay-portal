@@ -41,12 +41,6 @@
 			</label>
 		{/if}
 
-		{if $showLabel}
-			{if $tip}
-				<span class="form-text">{$tip}</span>
-			{/if}
-		{/if}
-
 		<div class="liferay-ddm-form-field-grid table-responsive">
 			{if not $readOnly}
 				{call .hidden_grid data="all"}
@@ -89,6 +83,12 @@
 				</tbody>
 			</table>
 		</div>
+		
+		{if $showLabel}
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
+		{/if}
 	</div>
 {/template}
 

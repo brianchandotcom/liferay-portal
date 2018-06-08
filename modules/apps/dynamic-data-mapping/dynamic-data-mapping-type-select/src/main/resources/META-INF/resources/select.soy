@@ -140,6 +140,12 @@
 					</div>
 				{/if}
 			</div>
+			
+			{if $showLabel}
+				{if $tip}
+					<span class="form-text">{$tip}</span>
+				{/if}
+			{/if}
 		</div>
 	</div>
 {/template}
@@ -185,7 +191,6 @@
 	{@param? label: string}
 	{@param? required: bool}
 	{@param? showLabel: bool}
-	{@param? tip: string}
 
 	{if $showLabel or $required}
 		<label for="{$name}">
@@ -202,11 +207,6 @@
 		</label>
 	{/if}
 
-	{if $showLabel}
-		{if $tip}
-			<span class="form-text">{$tip}</span>
-		{/if}
-	{/if}
 {/template}
 
 /**

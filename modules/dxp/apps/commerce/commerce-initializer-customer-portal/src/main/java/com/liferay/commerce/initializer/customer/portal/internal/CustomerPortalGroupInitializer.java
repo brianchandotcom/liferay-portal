@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -996,14 +997,69 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet)"
+	)
+	private Portlet _commerceCheckoutPortlet;
+
 	@Reference
 	private CommerceCountryLocalService _commerceCountryLocalService;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardDateRangeSelectorPortlet)"
+	)
+	private Portlet _commerceDashboardDateRangeSelectorPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardForecastsChartPortlet)"
+	)
+	private Portlet _commerceDashboardForecastsChartPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardInstanceSelectorPortlet)"
+	)
+	private Portlet _commerceDashboardInstanceSelectorPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardKPIPortlet)"
+	)
+	private Portlet _commerceDashboardKPIPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_dashboard_web_internal_portlet_CommerceDashboardPeriodSelectorPortlet)"
+	)
+	private Portlet _commerceDashboardPeriodSelectorPortlet;
 
 	@Reference
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
 
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_organization_order_web_internal_portlet_CommerceOrganizationOrderPortlet)"
+	)
+	private Portlet _commerceOrganizationOrderPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet)"
+	)
+	private Portlet _commerceOrganizationPortlet;
+
 	@Reference
 	private CommerceRegionLocalService _commerceRegionLocalService;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet)"
+	)
+	private Portlet _commerceShipmentPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_user_web_internal_portlet_CommerceUserPortlet)"
+	)
+	private Portlet _commerceUserPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_product_type_virtual_order_content_web_internal_portlet_CommerceVirtualOrderItemContentPortlet)"
+	)
+	private Portlet _commerceVirtualOrderItemContentPortlet;
 
 	@Reference
 	private CommerceWarehouseItemLocalService
@@ -1018,6 +1074,21 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 	@Reference
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet)"
+	)
+	private Portlet _cpCompareContentMiniPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet)"
+	)
+	private Portlet _cpCompareContentPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet)"
+	)
+	private Portlet _cpContentPortlet;
 
 	@Reference
 	private CPDefinitionInventoryLocalService
@@ -1038,6 +1109,16 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet)"
+	)
+	private Portlet _cpSearchResultsPortlet;
+
+	@Reference(
+		target = "(javax.portlet.name=com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet)"
+	)
+	private Portlet _cpSpecificationOptionFacetsPortlet;
 
 	@Reference
 	private CPSpecificationOptionLocalService
@@ -1074,6 +1155,11 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 
 	@Reference
 	private ThemeLocalService _themeLocalService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=commerce-theme-customer-portal)"
+	)
+	private ServletContext _themeServletContext;
 
 	@Reference
 	private UserLocalService _userLocalService;

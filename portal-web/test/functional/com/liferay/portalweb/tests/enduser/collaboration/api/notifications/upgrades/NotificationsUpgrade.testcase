@@ -29,6 +29,13 @@
 		<execute macro="Upgrade#viewNotifications" />
 	</command>
 
+	<command name="ViewNotifications621021" priority="5">
+		<property name="data.archive.type" value="data-archive-notifications" />
+		<property name="portal.version" value="6.2.10.21" />
+
+		<execute macro="Upgrade#viewNotifications" />
+	</command>
+
 	<command name="ViewNotifications625" priority="5">
 		<property name="data.archive.type" value="data-archive-notifications" />
 		<property name="portal.version" value="6.2.5" />

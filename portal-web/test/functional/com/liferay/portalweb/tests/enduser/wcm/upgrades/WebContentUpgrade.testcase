@@ -36,6 +36,21 @@
 		<execute function="AssertTextNotPresent" value1="There was an unexpected error. Please refresh the current page." />
 	</command>
 
+	<command name="ViewLayoutArchive621021" priority="5">
+		<description message="This is a use case for LPS-75561." />
+
+		<property name="data.archive.type" value="data-archive-pages-administration" />
+		<property name="portal.version" value="6.2.10.21" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute function="AssertTextNotPresent" value1="There was an unexpected error. Please refresh the current page." />
+	</command>
+
 	<command name="ViewLayoutArchive625" priority="5">
 		<description message="This is a use case for LPS-75561." />
 
@@ -72,6 +87,15 @@
 	<command name="ViewWebContentArchive621015" priority="5">
 		<property name="data.archive.type" value="data-archive-web-content-draft" />
 		<property name="portal.version" value="6.2.10.15" />
+
+		<execute macro="Upgrade#addWCStructureAndTemplate" />
+
+		<execute macro="Upgrade#publishWCDraft" />
+	</command>
+
+	<command name="ViewWebContentArchive621021" priority="5">
+		<property name="data.archive.type" value="data-archive-web-content-draft" />
+		<property name="portal.version" value="6.2.10.21" />
 
 		<execute macro="Upgrade#addWCStructureAndTemplate" />
 

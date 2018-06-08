@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
-import com.liferay.portlet.PortletRequestDispatcherImpl;
 
 import java.io.InputStream;
 

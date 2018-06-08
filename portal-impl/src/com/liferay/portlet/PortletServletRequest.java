@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.internal.PortletRequestDispatcherImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;

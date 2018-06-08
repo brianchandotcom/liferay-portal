@@ -188,12 +188,12 @@ public class CPSpecificationOptionLocalServiceImpl
 	@Override
 	public BaseModelSearchResult<CPSpecificationOption>
 			searchCPSpecificationOptions(
-				long companyId, long groupId, String keywords, int start,
-				int end, Sort sort)
+				long companyId, long groupId, Boolean facetable,
+				String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
-			companyId, groupId, keywords, start, end, sort);
+			companyId, groupId, facetable, keywords, start, end, sort);
 
 		return searchCPSpecificationOptions(searchContext);
 	}
@@ -245,8 +245,8 @@ public class CPSpecificationOptionLocalServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		long companyId, long groupId, String keywords, int start, int end,
-		Sort sort) {
+		long companyId, long groupId, Boolean facetable, String keywords,
+		int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -265,6 +265,12 @@ public class CPSpecificationOptionLocalServiceImpl
 		attributes.put(Field.TITLE, keywords);
 		attributes.put(Field.DESCRIPTION, keywords);
 		attributes.put(Field.CONTENT, keywords);
+
+		if (facetable != null) {
+			attributes.put(
+				CPSpecificationOptionIndexer.FIELD_FACETABLE, facetable);
+		}
+
 		attributes.put(CPSpecificationOptionIndexer.FIELD_KEY, keywords);
 		attributes.put("params", params);
 

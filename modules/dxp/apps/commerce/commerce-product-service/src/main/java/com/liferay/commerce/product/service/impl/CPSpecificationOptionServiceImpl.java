@@ -131,12 +131,12 @@ public class CPSpecificationOptionServiceImpl
 	@Override
 	public BaseModelSearchResult<CPSpecificationOption>
 			searchCPSpecificationOptions(
-				long companyId, long groupId, String keywords, int start,
-				int end, Sort sort)
+				long companyId, long groupId, Boolean facetable,
+				String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		return cpSpecificationOptionLocalService.searchCPSpecificationOptions(
-			companyId, groupId, keywords, start, end, sort);
+			companyId, groupId, facetable, keywords, start, end, sort);
 	}
 
 	@Override

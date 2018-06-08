@@ -82,7 +82,7 @@
 			@include transition(all ease 0.3s);
 
 			button:first-child {
-				margin-right: 5px;
+				margin-right: 8px;
 			}
 		}
 
@@ -97,6 +97,12 @@
 			.form-builder-field:hover .lfr-ddm-field-actions-container {
 				opacity: 1;
 				visibility: visible;
+				
+				.label-primary:hover {
+					background-color: #f7f8f9;
+					border-color: #80acff;
+					color: #0053f0;
+				}
 			}
 		}
 	}

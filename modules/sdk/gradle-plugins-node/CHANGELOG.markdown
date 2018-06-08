@@ -240,6 +240,11 @@ task's `useNpmCI` property is set to `true`.
 ### Added
 - [LPS-75530]: Define task inputs and outputs for `NpmInstallTask`.
 
+## 4.3.5 - 2018-06-08
+
+### Fixed
+- [LPS-82130]: Fix broken `npm` symbolic link.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -265,3 +270,4 @@ task's `useNpmCI` property is set to `true`.
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965
 [LPS-77996]: https://issues.liferay.com/browse/LPS-77996
 [LPS-78741]: https://issues.liferay.com/browse/LPS-78741
+[LPS-82130]: https://issues.liferay.com/browse/LPS-82130

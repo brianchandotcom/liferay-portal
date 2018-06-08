@@ -1392,6 +1392,20 @@ this task.
 					<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
 					<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
 				</replace>
+
+				<replace
+					file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
+				>
+					<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">
+								<configuration>
+									<jsp-configuration development="true" source-vm="1.8" target-vm="1.8" />
+								</configuration>
+						]]>
+					</replacevalue>
+				</replace>
 			</then>
 			<elseif>
 				<equals arg1="${app.server.jboss.version}" arg2="7.1.0" />
@@ -1406,7 +1420,7 @@ this task.
 					<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=512m"]]></echo>
 
 					<replace
-						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+						file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
 					>
 						<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:security:2.0">
             <security-domains>]]></replacetoken>
@@ -1433,6 +1447,15 @@ this task.
 						<replacetoken><![CDATA[<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>]]></replacetoken>
 						<replacevalue><![CDATA[<!--<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>-->]]></replacevalue>
 					</replace>
+
+					<replace
+						file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+					>
+						<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
+						<replacevalue>
+							<![CDATA[<jsp-config development="true" source-vm="1.8" target-vm="1.8" />]]>
+						</replacevalue>
+					</replace>
 				</then>
 			</elseif>
 		</if>
@@ -1457,20 +1480,6 @@ this task.
 					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=384m"
 
 					:JAVA_OPTS_SET
-				]]>
-			</replacevalue>
-		</replace>
-
-		<replace
-			file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
-		>
-			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">]]></replacetoken>
-			<replacevalue>
-				<![CDATA[
-					<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">
-						<configuration>
-							<jsp-configuration development="true" source-vm="1.8" target-vm="1.8" />
-						</configuration>
 				]]>
 			</replacevalue>
 		</replace>
@@ -3490,7 +3499,7 @@ this task.
 		>
 			<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
 			<replacevalue>
-				<![CDATA[<jsp-config development="true" />]]>
+				<![CDATA[<jsp-config development="true" source-vm="1.8" target-vm="1.8" />]]>
 			</replacevalue>
 		</replace>
 

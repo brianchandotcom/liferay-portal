@@ -31,10 +31,17 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipReader;
+
+import java.io.File;
+
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import javax.portlet.ActionRequest;
 
@@ -48,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ImportUtil {
 
 	public void importFragmentCollections(
-			ActionRequest actionRequest, ZipReader zipReader, boolean overwrite)
+			ActionRequest actionRequest, File file, boolean overwrite)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -57,13 +64,21 @@ public class ImportUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		for (String entry : zipReader.getEntries()) {
-			if (!_isFragmentCollection(entry)) {
+		ZipFile zipFile = new ZipFile(file);
+
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			String fileName = zipEntry.getName();
+
+			if (!_isFragmentCollection(fileName)) {
 				continue;
 			}
 
-			String collectionPath = entry.substring(
-				0, entry.lastIndexOf(CharPool.SLASH));
+			String collectionPath = fileName.substring(
+				0, fileName.lastIndexOf(CharPool.SLASH));
 
 			String fragmentCollectionKey = collectionPath.substring(
 				collectionPath.lastIndexOf(CharPool.SLASH) + 1);
@@ -72,7 +87,7 @@ public class ImportUtil {
 
 			String fragmentCollectionDescription = StringPool.BLANK;
 
-			String collectionJSON = zipReader.getEntryAsString(entry);
+			String collectionJSON = _getContent(zipFile, fileName);
 
 			if (Validator.isNotNull(collectionJSON)) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -109,14 +124,14 @@ public class ImportUtil {
 			}
 
 			importFragmentEntries(
-				actionRequest, zipReader,
+				actionRequest, zipFile,
 				fragmentCollection.getFragmentCollectionId(), collectionPath,
 				overwrite);
 		}
 	}
 
 	public void importFragmentEntries(
-			ActionRequest actionRequest, ZipReader zipReader,
+			ActionRequest actionRequest, ZipFile zipFile,
 			long fragmentCollectionId, String path, boolean overwrite)
 		throws Exception {
 
@@ -126,13 +141,19 @@ public class ImportUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		for (String entry : zipReader.getEntries()) {
-			if (!entry.startsWith(path) || !_isFragmentEntry(entry)) {
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			String fileName = zipEntry.getName();
+
+			if (!fileName.startsWith(path) || !_isFragmentEntry(fileName)) {
 				continue;
 			}
 
-			String fragmentEntryPath = entry.substring(
-				0, entry.lastIndexOf(CharPool.SLASH));
+			String fragmentEntryPath = fileName.substring(
+				0, fileName.lastIndexOf(CharPool.SLASH));
 
 			String fragmentEntryKey = fragmentEntryPath.substring(
 				fragmentEntryPath.lastIndexOf(CharPool.SLASH) + 1);
@@ -143,7 +164,7 @@ public class ImportUtil {
 			String fragmentHtmlPath = fragmentEntryPath + "/src/index.html";
 			String fragmentJsPath = fragmentEntryPath + "/src/index.js";
 
-			String fragmentJSON = zipReader.getEntryAsString(entry);
+			String fragmentJSON = _getContent(zipFile, fileName);
 
 			if (Validator.isNotNull(fragmentJSON)) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -163,17 +184,17 @@ public class ImportUtil {
 				_fragmentEntryService.addFragmentEntry(
 					themeDisplay.getScopeGroupId(), fragmentCollectionId,
 					fragmentEntryKey, fragmentEntryName,
-					zipReader.getEntryAsString(fragmentCssPath),
-					zipReader.getEntryAsString(fragmentHtmlPath),
-					zipReader.getEntryAsString(fragmentJsPath),
+					_getContent(zipFile, fragmentCssPath),
+					_getContent(zipFile, fragmentHtmlPath),
+					_getContent(zipFile, fragmentJsPath),
 					WorkflowConstants.STATUS_DRAFT, serviceContext);
 			}
 			else if (overwrite) {
 				_fragmentEntryService.updateFragmentEntry(
 					fragmentEntry.getFragmentEntryId(), fragmentEntryName,
-					zipReader.getEntryAsString(fragmentCssPath),
-					zipReader.getEntryAsString(fragmentHtmlPath),
-					zipReader.getEntryAsString(fragmentJsPath),
+					_getContent(zipFile, fragmentCssPath),
+					_getContent(zipFile, fragmentHtmlPath),
+					_getContent(zipFile, fragmentJsPath),
 					WorkflowConstants.STATUS_APPROVED);
 			}
 			else {
@@ -195,8 +216,20 @@ public class ImportUtil {
 		return false;
 	}
 
-	private boolean _isFragmentCollection(String entry) {
-		if (entry.endsWith(
+	private String _getContent(ZipFile zipFile, String fileName)
+		throws Exception {
+
+		ZipEntry zipEntry = zipFile.getEntry(fileName);
+
+		if (zipEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return StringUtil.read(zipFile.getInputStream(zipEntry));
+	}
+
+	private boolean _isFragmentCollection(String fileName) {
+		if (fileName.endsWith(
 				FragmentExportImportConstants.COLLECTION_CONFIG_FILE_NAME)) {
 
 			return true;
@@ -205,8 +238,8 @@ public class ImportUtil {
 		return false;
 	}
 
-	private boolean _isFragmentEntry(String entry) {
-		if (entry.endsWith(
+	private boolean _isFragmentEntry(String fileName) {
+		if (fileName.endsWith(
 				FragmentExportImportConstants.FRAGMENT_CONFIG_FILE_NAME)) {
 
 			return true;

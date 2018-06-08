@@ -51,9 +51,7 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 			<liferay-ui:message arguments="<%= dfeke.getMessage() %>" key="a-fragment-entry-with-the-key-x-already-exists" />
 		</liferay-ui:error>
 
-		<liferay-ui:error exception="<%= InvalidFragmentCollectionFileException.class %>" message="selected-file-does-not-contain-fragment-collections" />
-
-		<liferay-ui:error exception="<%= InvalidFragmentEntryFileException.class %>" message="fragment-collection-cannot-be-imported-into-an-existing-fragment-collection" />
+		<liferay-ui:error exception="<%= InvalidFileException.class %>" message="the-selected-file-is-not-a-valid-zip-file" />
 
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>

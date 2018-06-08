@@ -509,4 +509,36 @@
 			<var name="itemName" value="Liferay" />
 		</execute>
 	</command>
+
+	<command name="ViewSuccessMessageAfterAddingMenuItem" priority="4">
+		<description message="This is a test case for LPS-77912." />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Navigation Menus" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Primary Menu Name 1" />
+		</execute>
+
+		<execute macro="SiteNavigationMenu#addItem">
+			<var name="item" value="Page" />
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
 </definition>

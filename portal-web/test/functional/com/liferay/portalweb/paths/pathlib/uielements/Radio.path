@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>MINOR_VERSION</td>
-	<td>//input[contains(@id,'MajorVersion_3')]</td>
+	<td>//label[contains(.,'Minor Version')]/input</td>
 	<td></td>
 </tr>
 <tr>

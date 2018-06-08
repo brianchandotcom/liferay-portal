@@ -1766,12 +1766,12 @@
 			<condition function="IsElementPresent" locator1="Radio#MAJOR_VERSION" />
 			<then>
 				<if>
-					<equals arg1="${revision}" arg2="Major" />
+					<equals arg1="${revision}" arg2="Major Version" />
 					<then>
 						<execute function="Click" locator1="Radio#MAJOR_VERSION" />
 					</then>
 					<elseif>
-						<equals arg1="${revision}" arg2="Minor" />
+						<equals arg1="${revision}" arg2="Minor Version" />
 						<then>
 							<execute function="Click" locator1="Radio#MINOR_VERSION" />
 						</then>

@@ -33,15 +33,15 @@ import org.junit.runner.RunWith;
 /**
  * @author Marta Medio
  */
-@BndFile("bnd-guest.bnd")
+@BndFile("bnd-guest-allowed.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AuthVerifierGuestAllowTest {
+public class AuthVerifierGuestAllowedTest {
 
 	@Test
 	public void testAllowGuest() throws Exception {
 		URL url = new URL(
-			_url, "/o/auth-verifier-no-allow-guest-test/getAccess");
+			_url, "/o/auth-verifier-guest-allowed-false-test/guestAllowed");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.fail();
@@ -53,11 +53,18 @@ public class AuthVerifierGuestAllowTest {
 				message.startsWith("Server returned HTTP response code: 403"));
 		}
 
-		url = new URL(_url, "/o/auth-verifier-allow-guest-test/getAccess");
+		url = new URL(
+			_url, "/o/auth-verifier-guest-allowed-true-test/guestAllowed");
 
 		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals(
-				"GuestAllowHttpServlet", StringUtil.read(inputStream));
+			Assert.assertEquals("guest-allowed", StringUtil.read(inputStream));
+		}
+
+		url = new URL(
+			_url, "/o/auth-verifier-guest-allowed-default-test/guestAllowed");
+
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals("guest-allowed", StringUtil.read(inputStream));
 		}
 	}
 

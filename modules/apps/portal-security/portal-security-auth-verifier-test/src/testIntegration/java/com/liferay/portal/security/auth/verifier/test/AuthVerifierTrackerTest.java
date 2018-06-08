@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth.verifier.test;
 
+import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
@@ -31,20 +32,30 @@ import org.junit.runner.RunWith;
 /**
  * @author Marta Medio
  */
+@BndFile("bnd-tracker.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
 public class AuthVerifierTrackerTest {
 
 	@Test
 	public void testRemoteUser() throws Exception {
-		URL url = new URL(_url, "/o/auth-verifier-filter-test/remoteUser");
+		URL url = new URL(
+			_url, "/o/auth-verifier-filter-tracker-enabled-test/remoteUser");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals(
 				"remote-user-set", StringUtil.read(inputStream));
 		}
 
-		url = new URL(_url, "/o/no-auth-verifier-filter-test/remoteUser");
+		url = new URL(
+			_url, "/o/auth-verifier-filter-tracker-disabled-test/remoteUser");
+
+		try (InputStream inputStream = url.openStream()) {
+			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));
+		}
+
+		url = new URL(
+			_url, "/o/auth-verifier-filter-tracker-default-test/remoteUser");
 
 		try (InputStream inputStream = url.openStream()) {
 			Assert.assertEquals("no-remote-user", StringUtil.read(inputStream));

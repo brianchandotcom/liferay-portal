@@ -15,7 +15,9 @@
 package com.liferay.portal.store.db.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
@@ -37,8 +39,14 @@ public class DBStoreTest extends BaseStoreTestCase {
 		new LiferayIntegrationTestRule();
 
 	@Override
-	protected String getStoreType() {
-		return "com.liferay.portal.store.db.DBStore";
+	protected Store getStore() {
+		return _store;
 	}
+
+	@Inject(
+		filter = "store.type=com.liferay.portal.store.db.DBStore",
+		type = Store.class
+	)
+	private Store _store;
 
 }

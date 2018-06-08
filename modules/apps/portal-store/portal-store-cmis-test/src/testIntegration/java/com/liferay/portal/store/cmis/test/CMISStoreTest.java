@@ -15,6 +15,7 @@
 package com.liferay.portal.store.cmis.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.store.cmis.test.activator.configuration.ConfigurationAdminBundleActivator;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
@@ -117,8 +119,14 @@ public class CMISStoreTest extends BaseStoreTestCase {
 	}
 
 	@Override
-	protected String getStoreType() {
-		return "com.liferay.portal.store.cmis.CMISStore";
+	protected Store getStore() {
+		return _store;
 	}
+
+	@Inject(
+		filter = "store.type=com.liferay.portal.store.cmis.CMISStore",
+		type = Store.class
+	)
+	private Store _store;
 
 }

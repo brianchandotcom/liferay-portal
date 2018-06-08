@@ -18,17 +18,13 @@ import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.document.library.kernel.store.StoreWrapper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.ExpectedLog;
 import com.liferay.portal.test.rule.ExpectedLogs;
 import com.liferay.portal.test.rule.ExpectedType;
-import com.liferay.portlet.documentlibrary.store.StoreFactory;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -40,8 +36,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
@@ -56,43 +50,7 @@ public abstract class BaseStoreTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		StoreFactory storeFactory = StoreFactory.getInstance();
-
-		ServiceTrackerMap<String, List<StoreWrapper>> serviceTrackerMap =
-			ReflectionTestUtil.getAndSetFieldValue(
-				storeFactory, "_storeWrapperServiceTrackerMap",
-				new ServiceTrackerMap<String, List<StoreWrapper>>() {
-
-					@Override
-					public void close() {
-					}
-
-					@Override
-					public boolean containsKey(String key) {
-						return false;
-					}
-
-					@Override
-					public List<StoreWrapper> getService(String key) {
-						return Collections.emptyList();
-					}
-
-					@Override
-					public Set<String> keySet() {
-						return Collections.emptySet();
-					}
-
-				});
-
-		try {
-			store = storeFactory.getStore(getStoreType());
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				storeFactory, "_storeWrapperServiceTrackerMap",
-				serviceTrackerMap);
-		}
-
+		store = getStore();
 		companyId = RandomTestUtil.nextLong();
 		repositoryId = RandomTestUtil.nextLong();
 	}
@@ -774,7 +732,7 @@ public abstract class BaseStoreTestCase {
 		return file;
 	}
 
-	protected abstract String getStoreType();
+	protected abstract Store getStore();
 
 	protected long companyId;
 	protected long repositoryId;

@@ -101,7 +101,7 @@ public class ImportUtil {
 			FragmentCollection fragmentCollection = _addFragmentCollection(
 				actionRequest, entry.getKey(), name, description, overwrite);
 
-			importFragmentEntries(
+			_importFragmentEntries(
 				actionRequest, zipFile,
 				fragmentCollection.getFragmentCollectionId(),
 				fragmentCollectionFolder.getFragmentEntries(), overwrite);
@@ -127,39 +127,9 @@ public class ImportUtil {
 			fragmentCollectionId = fragmentCollection.getFragmentCollectionId();
 		}
 
-		importFragmentEntries(
+		_importFragmentEntries(
 			actionRequest, zipFile, fragmentCollectionId, orphanFragmentEntries,
 			overwrite);
-	}
-
-	public void importFragmentEntries(
-			ActionRequest actionRequest, ZipFile zipFile,
-			long fragmentCollectionId, Map<String, String> fragmentEntries,
-			boolean overwrite)
-		throws Exception {
-
-		for (Map.Entry<String, String> entry : fragmentEntries.entrySet()) {
-			String name = entry.getKey();
-			String css = StringPool.BLANK;
-			String html = StringPool.BLANK;
-			String js = StringPool.BLANK;
-
-			String fragmentJSON = _getContent(zipFile, entry.getValue());
-
-			if (Validator.isNotNull(fragmentJSON)) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					fragmentJSON);
-
-				name = jsonObject.getString("name");
-				css = _getContent(zipFile, jsonObject.getString("cssPath"));
-				html = _getContent(zipFile, jsonObject.getString("htmlPath"));
-				js = _getContent(zipFile, jsonObject.getString("jsPath"));
-			}
-
-			_addFragmentEntry(
-				actionRequest, fragmentCollectionId, entry.getKey(), name, css,
-				html, js, overwrite);
-		}
 	}
 
 	private FragmentCollection _addFragmentCollection(
@@ -313,6 +283,36 @@ public class ImportUtil {
 			0, fileName.lastIndexOf(CharPool.SLASH));
 
 		return path.substring(path.lastIndexOf(CharPool.SLASH) + 1);
+	}
+
+	private void _importFragmentEntries(
+			ActionRequest actionRequest, ZipFile zipFile,
+			long fragmentCollectionId, Map<String, String> fragmentEntries,
+			boolean overwrite)
+		throws Exception {
+
+		for (Map.Entry<String, String> entry : fragmentEntries.entrySet()) {
+			String name = entry.getKey();
+			String css = StringPool.BLANK;
+			String html = StringPool.BLANK;
+			String js = StringPool.BLANK;
+
+			String fragmentJSON = _getContent(zipFile, entry.getValue());
+
+			if (Validator.isNotNull(fragmentJSON)) {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					fragmentJSON);
+
+				name = jsonObject.getString("name");
+				css = _getContent(zipFile, jsonObject.getString("cssPath"));
+				html = _getContent(zipFile, jsonObject.getString("htmlPath"));
+				js = _getContent(zipFile, jsonObject.getString("jsPath"));
+			}
+
+			_addFragmentEntry(
+				actionRequest, fragmentCollectionId, entry.getKey(), name, css,
+				html, js, overwrite);
+		}
 	}
 
 	private boolean _isFragmentCollection(String fileName) {

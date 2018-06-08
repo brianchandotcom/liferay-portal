@@ -61,21 +61,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 		<liferay-ui:error exception="<%= CommerceCurrencyCodeException.class %>" message="please-enter-a-valid-code" />
 		<liferay-ui:error exception="<%= CommerceCurrencyNameException.class %>" message="please-enter-a-valid-name" />
 
-		<aui:model-context bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" />
-
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="name" />
+				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="name" />
 
-				<aui:input name="code" />
+				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="code" />
 
-				<aui:input name="formatPattern" value="<%= commerceCurrenciesDisplayContext.getDefaultFormatPattern() %>" />
+				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="formatPattern" value="<%= commerceCurrenciesDisplayContext.getDefaultFormatPattern() %>" />
 
-				<aui:input label="maximum-decimal-places" name="maxFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMaxFractionDigits()) %>" />
+				<aui:input bean="<%= commerceCurrency %>" label="maximum-decimal-places" model="<%= CommerceCurrency.class %>" name="maxFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMaxFractionDigits()) %>" />
 
-				<aui:input label="minimum-decimal-places" name="minFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMinFractionDigits()) %>" />
+				<aui:input bean="<%= commerceCurrency %>" label="minimum-decimal-places" model="<%= CommerceCurrency.class %>" name="minFractionDigits" value="<%= String.valueOf(commerceCurrenciesDisplayContext.getDefaultMinFractionDigits()) %>" />
 
-				<aui:select name="roundingMode">
+				<aui:select bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="roundingMode">
 
 					<%
 					for (RoundingMode curRoundingMode : RoundingMode.values()) {
@@ -89,7 +87,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 				</aui:select>
 
-				<aui:input name="primary" value="<%= primary %>" />
+				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="primary" value="<%= primary %>" />
 
 				<%
 				String taglibLabel = "exchange-rate";
@@ -100,14 +98,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 				%>
 
 				<div class="<%= primary ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />rateOptions">
-					<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? BigDecimal.ZERO : commerceCurrency.getRate() %>">
+					<aui:input label="<%= taglibLabel %>" name="rate" type="text" value="<%= (commerceCurrency == null) ? BigDecimal.ZERO : commerceCurrency.round(commerceCurrency.getRate()) %>">
 						<aui:validator name="number" />
 					</aui:input>
 				</div>
 
-				<aui:input name="priority" />
+				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="priority" />
 
-				<aui:input name="active" />
+				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="active" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

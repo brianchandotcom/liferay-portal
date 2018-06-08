@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
+import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -302,6 +304,18 @@ public class CommerceDiscountDisplayContext {
 		return CustomAttributesUtil.hasCustomAttributes(
 			commerceDiscountRequestHelper.getCompanyId(),
 			CommerceDiscount.class.getName(), getCommerceDiscountId(), null);
+	}
+
+	public BigDecimal round(BigDecimal value) {
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyService.fetchPrimaryCommerceCurrency(
+				commerceDiscountRequestHelper.getScopeGroupId());
+
+		if (commerceCurrency == null) {
+			return value;
+		}
+
+		return commerceCurrency.round(value);
 	}
 
 	protected long[] getCheckedCommerceUserSegmentEntryIds()

@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -54,12 +56,7 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 	}
 
 	public String getCommerceCurrencyCode() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		CommerceCurrency commerceCurrency =
-			commerceCurrencyService.fetchPrimaryCommerceCurrency(
-				themeDisplay.getScopeGroupId());
+		CommerceCurrency commerceCurrency = getCommerceCurrency();
 
 		if (commerceCurrency != null) {
 			return commerceCurrency.getCode();
@@ -164,6 +161,16 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 
 	public abstract SearchContainer<T> getSearchContainer()
 		throws PortalException;
+
+	public BigDecimal round(BigDecimal value) {
+		CommerceCurrency commerceCurrency = getCommerceCurrency();
+
+		if (commerceCurrency == null) {
+			return value;
+		}
+
+		return commerceCurrency.round(value);
+	}
 
 	public void setDefaultOrderByCol(String defaultOrderByCol) {
 		_defaultOrderByCol = defaultOrderByCol;

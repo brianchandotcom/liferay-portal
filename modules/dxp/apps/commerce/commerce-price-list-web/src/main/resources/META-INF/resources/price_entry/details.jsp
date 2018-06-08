@@ -33,8 +33,6 @@ else {
 CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 
 CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
-
-String currencyCode = commerceCurrency.getCode();
 %>
 
 <liferay-ui:error-marker
@@ -42,14 +40,12 @@ String currencyCode = commerceCurrency.getCode();
 	value="details"
 />
 
-<aui:model-context bean="<%= commercePriceEntry %>" model="<%= CommercePriceEntry.class %>" />
-
 <aui:fieldset>
-	<aui:input name="price" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntry.getPrice() %>">
+	<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceCurrency.round(commercePriceEntry.getPrice()) %>">
 		<aui:validator name="number" />
 	</aui:input>
 
-	<aui:input name="promoPrice" suffix="<%= currencyCode %>" type="text" value="<%= commercePriceEntry.getPromoPrice() %>">
+	<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceCurrency.round(commercePriceEntry.getPromoPrice()) %>">
 		<aui:validator name="number" />
 	</aui:input>
 </aui:fieldset>

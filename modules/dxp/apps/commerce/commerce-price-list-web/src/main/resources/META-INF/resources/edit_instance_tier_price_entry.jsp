@@ -20,27 +20,19 @@
 CPInstanceCommerceTierPriceEntryDisplayContext cpInstanceCommerceTierPriceEntryDisplayContext = (CPInstanceCommerceTierPriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceTierPriceEntry commerceTierPriceEntry = cpInstanceCommerceTierPriceEntryDisplayContext.getCommerceTierPriceEntry();
-
 CommercePriceEntry commercePriceEntry = cpInstanceCommerceTierPriceEntryDisplayContext.getCommercePriceEntry();
+CPDefinition cpDefinition = cpInstanceCommerceTierPriceEntryDisplayContext.getCPDefinition();
+CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInstance();
+long commercePriceEntryId = cpInstanceCommerceTierPriceEntryDisplayContext.getCommercePriceEntryId();
+long commerceTierPriceEntryId = cpInstanceCommerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryId();
+PortletURL productSkusURL = cpInstanceCommerceTierPriceEntryDisplayContext.getProductSkusURL();
+PortletURL instancePriceListsURL = cpInstanceCommerceTierPriceEntryDisplayContext.getInstancePriceListURL();
+PortletURL instanceTierPriceEntriesURL = cpInstanceCommerceTierPriceEntryDisplayContext.getInstanceTierPriceEntriesURL();
+String title = cpInstanceCommerceTierPriceEntryDisplayContext.getContextTitle();
 
 CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 
 CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
-
-CPDefinition cpDefinition = cpInstanceCommerceTierPriceEntryDisplayContext.getCPDefinition();
-
-CPInstance cpInstance = cpInstanceCommerceTierPriceEntryDisplayContext.getCPInstance();
-
-long commercePriceEntryId = cpInstanceCommerceTierPriceEntryDisplayContext.getCommercePriceEntryId();
-long commerceTierPriceEntryId = cpInstanceCommerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryId();
-
-PortletURL productSkusURL = cpInstanceCommerceTierPriceEntryDisplayContext.getProductSkusURL();
-
-PortletURL instancePriceListsURL = cpInstanceCommerceTierPriceEntryDisplayContext.getInstancePriceListURL();
-
-PortletURL instanceTierPriceEntriesURL = cpInstanceCommerceTierPriceEntryDisplayContext.getInstanceTierPriceEntriesURL();
-
-String title = cpInstanceCommerceTierPriceEntryDisplayContext.getContextTitle();
 
 Map<String, Object> data = new HashMap<>();
 
@@ -72,21 +64,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 	<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstance.getCPInstanceId() %>" />
 
 	<div class="lfr-form-content">
-		<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
-
 		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
 
 		<aui:fieldset-group>
 			<aui:fieldset>
-				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= (commerceTierPriceEntry == null) ? BigDecimal.ZERO : commerceTierPriceEntry.getPrice() %>">
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= (commerceTierPriceEntry == null) ? BigDecimal.ZERO : commerceCurrency.round(commerceTierPriceEntry.getPrice()) %>">
 					<aui:validator name="number" />
 				</aui:input>
 
-				<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= (commerceTierPriceEntry == null) ? BigDecimal.ZERO : commerceTierPriceEntry.getPromoPrice() %>">
+				<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= (commerceTierPriceEntry == null) ? BigDecimal.ZERO : commerceCurrency.round(commerceTierPriceEntry.getPromoPrice()) %>">
 					<aui:validator name="number" />
 				</aui:input>
 
-				<aui:input name="minQuantity" />
+				<aui:input bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" name="minQuantity" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

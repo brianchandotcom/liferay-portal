@@ -23,6 +23,9 @@ CommerceTierPriceEntry commerceTierPriceEntry = commerceTierPriceEntryDisplayCon
 CommercePriceList commercePriceList = commerceTierPriceEntryDisplayContext.getCommercePriceList();
 CommercePriceEntry commercePriceEntry = commerceTierPriceEntryDisplayContext.getCommercePriceEntry();
 CommerceCurrency commerceCurrency = commerceTierPriceEntryDisplayContext.getCommercePriceListCurrency();
+long commercePriceEntryId = commerceTierPriceEntryDisplayContext.getCommercePriceEntryId();
+long commercePriceListId = commerceTierPriceEntryDisplayContext.getCommercePriceListId();
+long commerceTierPriceEntryId = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryId();
 
 BigDecimal price = BigDecimal.ZERO;
 BigDecimal promoPrice = BigDecimal.ZERO;
@@ -34,10 +37,6 @@ if (commerceTierPriceEntry != null) {
 
 CPInstance cpInstance = commercePriceEntry.getCPInstance();
 CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
-long commercePriceEntryId = commerceTierPriceEntryDisplayContext.getCommercePriceEntryId();
-long commercePriceListId = commerceTierPriceEntryDisplayContext.getCommercePriceListId();
-long commerceTierPriceEntryId = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryId();
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-tier-price-entries");
 
@@ -88,21 +87,19 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 	<aui:input name="commerceTierPriceEntryId" type="hidden" value="<%= commerceTierPriceEntryId %>" />
 
 	<div class="lfr-form-content">
-		<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
-
 		<liferay-ui:error exception="<%= DuplicateCommerceTierPriceEntryException.class %>" message="there-is-already-a-tier-price-entry-with-the-same-minimum-quantity" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= price %>">
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceCurrency.round(price) %>">
 					<aui:validator name="number" />
 				</aui:input>
 
-				<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= promoPrice %>">
+				<aui:input name="promoPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceCurrency.round(promoPrice) %>">
 					<aui:validator name="number" />
 				</aui:input>
 
-				<aui:input name="minQuantity" />
+				<aui:input bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" name="minQuantity" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 

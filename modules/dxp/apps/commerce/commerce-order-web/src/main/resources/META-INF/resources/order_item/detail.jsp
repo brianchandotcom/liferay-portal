@@ -33,14 +33,12 @@ CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderId() %>" />
 	<aui:input name="commerceOrderItemId" type="hidden" value="<%= commerceOrderItem.getCommerceOrderItemId() %>" />
 
-	<aui:model-context bean="<%= commerceOrderItem %>" model="<%= CommerceOrderItem.class %>" />
-
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="quantity" />
+			<aui:input bean="<%= commerceOrderItem %>" name="quantity" />
 
 			<c:if test="<%= !commerceOrder.isOpen() %>">
-				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceOrderItem.getPrice() %>">
+				<aui:input name="price" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceCurrency.round(commerceOrderItem.getPrice()) %>">
 					<aui:validator name="number" />
 				</aui:input>
 			</c:if>

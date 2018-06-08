@@ -73,13 +73,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 	</div>
 
 	<div class="lfr-form-content">
-		<aui:model-context bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" />
-
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<div class="row">
 					<div class="col-md-6">
-						<aui:select label="shipping-option" name="commerceShippingFixedOptionId" required="<%= true %>">
+						<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="shipping-option" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceShippingFixedOptionId" required="<%= true %>">
 
 							<%
 							List<CommerceShippingFixedOption> commerceShippingFixedOptions = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptions();
@@ -97,7 +95,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 					</div>
 
 					<div class="col-md-6">
-						<aui:select label="warehouse" name="commerceWarehouseId" showEmptyOption="<%= true %>">
+						<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="warehouse" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceWarehouseId" showEmptyOption="<%= true %>">
 
 							<%
 							List<CommerceWarehouse> commerceWarehouses = commerceShippingFixedOptionRelsDisplayContext.getCommerceWarehouses();
@@ -117,7 +115,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 				<div class="row">
 					<div class="col-md-4">
-						<aui:select label="country" name="commerceCountryId" showEmptyOption="<%= true %>">
+						<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="country" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceCountryId" showEmptyOption="<%= true %>">
 
 							<%
 							List<CommerceCountry> commerceCountries = commerceShippingFixedOptionRelsDisplayContext.getCommerceCountries();
@@ -135,7 +133,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 					</div>
 
 					<div class="col-md-4">
-						<aui:select label="region" name="commerceRegionId" showEmptyOption="<%= true %>">
+						<aui:select bean="<%= commerceShippingFixedOptionRel %>" label="region" model="<%= CommerceShippingFixedOptionRel.class %>" name="commerceRegionId" showEmptyOption="<%= true %>">
 
 							<%
 							List<CommerceRegion> commerceRegions = commerceShippingFixedOptionRelsDisplayContext.getCommerceRegions();
@@ -153,7 +151,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 					</div>
 
 					<div class="col-md-4">
-						<aui:input name="zip" />
+						<aui:input bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" name="zip" />
 					</div>
 				</div>
 			</aui:fieldset>
@@ -161,23 +159,23 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 			<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="settings">
 				<div class="row">
 					<div class="col-md-6">
-						<aui:input name="weightFrom" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
+						<aui:input bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" name="weightFrom" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
 					</div>
 
 					<div class="col-md-6">
-						<aui:input name="weightTo" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
+						<aui:input bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" name="weightTo" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
 					</div>
 				</div>
 
-				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRel.getFixedPrice() %>">
+				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRelsDisplayContext.round(commerceShippingFixedOptionRel.getFixedPrice()) %>">
 					<aui:validator name="number" />
 				</aui:input>
 
-				<aui:input label="price-per-unit-of-weight" name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRel.getRateUnitWeightPrice() %>">
+				<aui:input label="price-per-unit-of-weight" name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOptionRel == null) ? BigDecimal.ZERO : commerceShippingFixedOptionRelsDisplayContext.round(commerceShippingFixedOptionRel.getRateUnitWeightPrice()) %>">
 					<aui:validator name="number" />
 				</aui:input>
 
-				<aui:input label="subtotal-percentage-price" name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
+				<aui:input bean="<%= commerceShippingFixedOptionRel %>" label="subtotal-percentage-price" model="<%= CommerceShippingFixedOptionRel.class %>" name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

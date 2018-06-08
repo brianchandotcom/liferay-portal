@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -51,19 +53,32 @@ public class CPInstancePricingInfoDisplayContext
 	}
 
 	public String getCommerceCurrencyCode() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyService.fetchPrimaryCommerceCurrency(
-				themeDisplay.getScopeGroupId());
+		CommerceCurrency commerceCurrency = getCommerceCurrency();
 
 		if (commerceCurrency != null) {
 			return commerceCurrency.getCode();
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public BigDecimal round(BigDecimal value) {
+		CommerceCurrency commerceCurrency = getCommerceCurrency();
+
+		if (commerceCurrency == null) {
+			return value;
+		}
+
+		return commerceCurrency.round(value);
+	}
+
+	protected CommerceCurrency getCommerceCurrency() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _commerceCurrencyService.fetchPrimaryCommerceCurrency(
+			themeDisplay.getScopeGroupId());
 	}
 
 	private final CommerceCurrencyService _commerceCurrencyService;

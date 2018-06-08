@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.math.BigDecimal;
+
+import java.text.DecimalFormat;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -62,13 +66,7 @@ public class CartTotalCommerceDiscountRuleDisplayContext {
 	}
 
 	public String getDefaultCommerceCurrencyCode() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyService.fetchPrimaryCommerceCurrency(
-				themeDisplay.getScopeGroupId());
+		CommerceCurrency commerceCurrency = getCommerceCurrency();
 
 		if (commerceCurrency == null) {
 			return StringPool.BLANK;
@@ -77,7 +75,7 @@ public class CartTotalCommerceDiscountRuleDisplayContext {
 		return commerceCurrency.getCode();
 	}
 
-	public String getTypeSettings() throws PortalException {
+	public String getTypeSettings() throws Exception {
 		CommerceDiscountRule commerceDiscountRule = getCommerceDiscountRule();
 
 		if (commerceDiscountRule == null) {
@@ -87,7 +85,33 @@ public class CartTotalCommerceDiscountRuleDisplayContext {
 		String type = BeanParamUtil.getString(
 			commerceDiscountRule, _httpServletRequest, "type");
 
-		return commerceDiscountRule.getSettingsProperty(type);
+		String typeSettings = commerceDiscountRule.getSettingsProperty(type);
+
+		CommerceCurrency commerceCurrency = getCommerceCurrency();
+
+		if (commerceCurrency == null) {
+			return typeSettings;
+		}
+
+		DecimalFormat decimalFormat = new DecimalFormat(
+			commerceCurrency.getFormatPattern());
+
+		decimalFormat.setParseBigDecimal(true);
+
+		BigDecimal value = (BigDecimal)decimalFormat.parse(typeSettings);
+
+		value = commerceCurrency.round(value);
+
+		return value.toPlainString();
+	}
+
+	protected CommerceCurrency getCommerceCurrency() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _commerceCurrencyService.fetchPrimaryCommerceCurrency(
+			themeDisplay.getScopeGroupId());
 	}
 
 	private final CommerceCurrencyService _commerceCurrencyService;

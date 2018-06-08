@@ -20,9 +20,7 @@
 CPInstancePricingInfoDisplayContext cpInstancePricingInfoDisplayContext = (CPInstancePricingInfoDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpInstancePricingInfoDisplayContext.getCPDefinition();
-
 CPInstance cpInstance = cpInstancePricingInfoDisplayContext.getCPInstance();
-
 long cpInstanceId = cpInstancePricingInfoDisplayContext.getCPInstanceId();
 
 PortletURL productSkusURL = renderResponse.createRenderURL();
@@ -39,19 +37,17 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstancePricingInfo
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstanceId %>" />
 
-	<aui:model-context bean="<%= cpInstance %>" model="<%= CPInstance.class %>" />
-
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getPrice() %>">
+			<aui:input name="price" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstancePricingInfoDisplayContext.round(cpInstance.getPrice()) %>">
 				<aui:validator name="number" />
 			</aui:input>
 
-			<aui:input name="promoPrice" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getPromoPrice() %>">
+			<aui:input name="promoPrice" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstancePricingInfoDisplayContext.round(cpInstance.getPromoPrice()) %>">
 				<aui:validator name="number" />
 			</aui:input>
 
-			<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstance.getCost() %>">
+			<aui:input name="cost" suffix="<%= cpInstancePricingInfoDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= cpInstancePricingInfoDisplayContext.round(cpInstance.getCost()) %>">
 				<aui:validator name="number" />
 			</aui:input>
 		</aui:fieldset>

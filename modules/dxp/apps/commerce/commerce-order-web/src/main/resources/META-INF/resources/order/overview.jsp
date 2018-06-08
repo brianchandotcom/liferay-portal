@@ -23,6 +23,8 @@ int[] availableOrderStatuses = commerceOrderEditDisplayContext.getAvailableOrder
 CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 
+CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
+
 int orderStatus = BeanParamUtil.getInteger(commerceOrder, request, "orderStatus");
 %>
 
@@ -37,18 +39,16 @@ int orderStatus = BeanParamUtil.getInteger(commerceOrder, request, "orderStatus"
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 					<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderId %>" />
 
-					<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
-
 					<aui:fieldset disabled="">
-						<aui:input name="subtotal" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrder.getSubtotal() %>">
+						<aui:input name="subtotal" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceCurrency.round(commerceOrder.getSubtotal()) %>">
 							<aui:validator name="number" />
 						</aui:input>
 
-						<aui:input name="shippingPrice" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrder.getShippingPrice() %>">
+						<aui:input name="shippingPrice" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceCurrency.round(commerceOrder.getShippingPrice()) %>">
 							<aui:validator name="number" />
 						</aui:input>
 
-						<aui:input name="total" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= commerceOrder.getTotal() %>">
+						<aui:input name="total" suffix="<%= commerceCurrency.getCode() %>" type="text" value="<%= commerceCurrency.round(commerceOrder.getTotal()) %>">
 							<aui:validator name="number" />
 						</aui:input>
 
@@ -71,10 +71,8 @@ int orderStatus = BeanParamUtil.getInteger(commerceOrder, request, "orderStatus"
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 					<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderId %>" />
 
-					<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
-
 					<aui:fieldset disabled="">
-						<aui:select label="order-status" name="orderStatus">
+						<aui:select bean="<%= commerceOrder %>" label="order-status" model="<%= CommerceOrder.class %>" name="orderStatus">
 
 							<%
 							for (int availableOrderStatus : availableOrderStatuses) {
@@ -88,7 +86,7 @@ int orderStatus = BeanParamUtil.getInteger(commerceOrder, request, "orderStatus"
 
 						</aui:select>
 
-						<aui:input label="created" name="createDate" readonly="<%= true %>" type="textbox" value="<%= commerceOrderEditDisplayContext.getCommerceOrderDateTime() %>" />
+						<aui:input bean="<%= commerceOrder %>" label="created" model="<%= CommerceOrder.class %>" name="createDate" readonly="<%= true %>" type="textbox" value="<%= commerceOrderEditDisplayContext.getCommerceOrderDateTime() %>" />
 
 						<aui:button-row>
 							<aui:icon cssClass="edit-form-link" image="edit" label="edit-order-status" url="javascript:;" />

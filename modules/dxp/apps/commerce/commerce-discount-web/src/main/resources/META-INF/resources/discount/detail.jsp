@@ -51,19 +51,17 @@ if ((commerceDiscount != null) && (commerceDiscount.getExpirationDate() != null)
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<div class="lfr-form-content">
-		<aui:model-context bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" />
-
 		<c:if test="<%= (commerceDiscount != null) && !commerceDiscount.isNew() %>">
 			<liferay-frontend:info-bar>
-				<aui:workflow-status id="<%= String.valueOf(commerceDiscountId) %>" markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceDiscount.getStatus() %>" />
+				<aui:workflow-status bean="<%= commerceDiscount %>" id="<%= String.valueOf(commerceDiscountId) %>" markupView="lexicon" model="<%= CommerceDiscount.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceDiscount.getStatus() %>" />
 			</liferay-frontend:info-bar>
 		</c:if>
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:input autoFocus="<%= true %>" name="title" />
+				<aui:input autoFocus="<%= true %>" bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="title" />
 
-				<aui:select name="target">
+				<aui:select bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="target">
 
 					<%
 					for (CommerceDiscountTarget commerceDiscountTarget : commerceDiscountTargets) {
@@ -88,7 +86,7 @@ if ((commerceDiscount != null) && (commerceDiscount.getExpirationDate() != null)
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="schedule">
-				<aui:input formName="fm" name="displayDate" />
+				<aui:input bean="<%= commerceDiscount %>" formName="fm" model="<%= CommerceDiscount.class %>" name="displayDate" />
 
 				<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
 			</aui:fieldset>

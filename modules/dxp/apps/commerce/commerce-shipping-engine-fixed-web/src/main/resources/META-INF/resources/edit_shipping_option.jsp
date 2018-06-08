@@ -38,19 +38,17 @@ if (commerceShippingFixedOption != null) {
 	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
 	<div class="lfr-form-content sheet">
-		<aui:model-context bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" />
+		<aui:input autoFocus="<%= true %>" bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="name" />
 
-		<aui:input autoFocus="<%= true %>" name="name" />
-
-		<aui:input name="description" />
+		<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="description" />
 
 		<c:if test="<%= commerceShippingFixedOptionsDisplayContext.isFixed() %>">
-			<aui:input name="amount" suffix="<%= commerceShippingFixedOptionsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOption == null) ? BigDecimal.ZERO : commerceShippingFixedOption.getAmount() %>">
+			<aui:input name="amount" suffix="<%= commerceShippingFixedOptionsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOption == null) ? BigDecimal.ZERO : commerceShippingFixedOptionsDisplayContext.round(commerceShippingFixedOption.getAmount()) %>">
 				<aui:validator name="number" />
 			</aui:input>
 		</c:if>
 
-		<aui:input name="priority" />
+		<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="priority" />
 	</div>
 
 	<aui:button-row>

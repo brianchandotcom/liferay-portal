@@ -1,7 +1,7 @@
 task deployConfigs(type: Copy)
 
 dependencies {
-	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.jaxb.json", version: "0.0.1-20180605.092421-7"
+	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.jaxb.json", version: "0.0.1-20180608.092312-9"
 }
 
 deployDependencies {

@@ -61,10 +61,6 @@
 		</execute>
 	</command>
 
-	<command name="clickModalSubmit">
-		<execute function="Click" locator1="Button#MODAL_CONTENT_SUBMIT" />
-	</command>
-
 	<command name="clickNext">
 		<execute macro="Button#click">
 			<var name="button" value="Next" />

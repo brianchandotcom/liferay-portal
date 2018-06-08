@@ -37,8 +37,7 @@ import org.gradle.internal.authentication.DefaultBasicAuthentication;
 public class GradlePluginsDefaultsUtil {
 
 	public static final String DEFAULT_REPOSITORY_URL =
-		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
-			"/public";
+		"https://repository-cdn.liferay.com/nexus/content/groups/public";
 
 	public static final String[] JSON_VERSION_FILE_NAMES =
 		{"npm-shrinkwrap.json", "package-lock.json", "package.json"};

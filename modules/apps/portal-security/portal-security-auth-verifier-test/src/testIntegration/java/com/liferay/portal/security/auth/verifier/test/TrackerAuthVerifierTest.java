@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
 @BndFile("bnd-tracker.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AuthVerifierTrackerTest {
+public class TrackerAuthVerifierTest {
 
 	@Test
 	public void testRemoteUser() throws Exception {

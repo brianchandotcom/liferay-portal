@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
 @BndFile("bnd-guest-allowed.bnd")
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AuthVerifierGuestAllowedTest {
+public class GuestAllowedAuthVerifierTest {
 
 	@Test
 	public void testAllowGuest() throws Exception {

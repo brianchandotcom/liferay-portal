@@ -45,13 +45,10 @@ import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence;
-import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder;
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
-
-import com.liferay.trash.kernel.service.persistence.TrashEntryPersistence;
 
 import javax.sql.DataSource;
 
@@ -468,44 +465,6 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the workflow instance link local service.
-	 *
-	 * @return the workflow instance link local service
-	 */
-	public com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService getWorkflowInstanceLinkLocalService() {
-		return workflowInstanceLinkLocalService;
-	}
-
-	/**
-	 * Sets the workflow instance link local service.
-	 *
-	 * @param workflowInstanceLinkLocalService the workflow instance link local service
-	 */
-	public void setWorkflowInstanceLinkLocalService(
-		com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
-		this.workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
-	}
-
-	/**
-	 * Returns the workflow instance link persistence.
-	 *
-	 * @return the workflow instance link persistence
-	 */
-	public WorkflowInstanceLinkPersistence getWorkflowInstanceLinkPersistence() {
-		return workflowInstanceLinkPersistence;
-	}
-
-	/**
-	 * Sets the workflow instance link persistence.
-	 *
-	 * @param workflowInstanceLinkPersistence the workflow instance link persistence
-	 */
-	public void setWorkflowInstanceLinkPersistence(
-		WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence) {
-		this.workflowInstanceLinkPersistence = workflowInstanceLinkPersistence;
-	}
-
-	/**
 	 * Returns the asset entry local service.
 	 *
 	 * @return the asset entry local service
@@ -578,25 +537,6 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setAssetEntryFinder(AssetEntryFinder assetEntryFinder) {
 		this.assetEntryFinder = assetEntryFinder;
-	}
-
-	/**
-	 * Returns the dl app helper local service.
-	 *
-	 * @return the dl app helper local service
-	 */
-	public com.liferay.document.library.kernel.service.DLAppHelperLocalService getDLAppHelperLocalService() {
-		return dlAppHelperLocalService;
-	}
-
-	/**
-	 * Sets the dl app helper local service.
-	 *
-	 * @param dlAppHelperLocalService the dl app helper local service
-	 */
-	public void setDLAppHelperLocalService(
-		com.liferay.document.library.kernel.service.DLAppHelperLocalService dlAppHelperLocalService) {
-		this.dlAppHelperLocalService = dlAppHelperLocalService;
 	}
 
 	/**
@@ -958,67 +898,6 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 		this.ratingsStatsFinder = ratingsStatsFinder;
 	}
 
-	/**
-	 * Returns the trash entry local service.
-	 *
-	 * @return the trash entry local service
-	 */
-	@SuppressWarnings("deprecation")
-	public com.liferay.trash.kernel.service.TrashEntryLocalService getTrashEntryLocalService() {
-		return trashEntryLocalService;
-	}
-
-	/**
-	 * Sets the trash entry local service.
-	 *
-	 * @param trashEntryLocalService the trash entry local service
-	 */
-	@SuppressWarnings("deprecation")
-	public void setTrashEntryLocalService(
-		com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService) {
-		this.trashEntryLocalService = trashEntryLocalService;
-	}
-
-	/**
-	 * Returns the trash entry remote service.
-	 *
-	 * @return the trash entry remote service
-	 */
-	@SuppressWarnings("deprecation")
-	public com.liferay.trash.kernel.service.TrashEntryService getTrashEntryService() {
-		return trashEntryService;
-	}
-
-	/**
-	 * Sets the trash entry remote service.
-	 *
-	 * @param trashEntryService the trash entry remote service
-	 */
-	@SuppressWarnings("deprecation")
-	public void setTrashEntryService(
-		com.liferay.trash.kernel.service.TrashEntryService trashEntryService) {
-		this.trashEntryService = trashEntryService;
-	}
-
-	/**
-	 * Returns the trash entry persistence.
-	 *
-	 * @return the trash entry persistence
-	 */
-	public TrashEntryPersistence getTrashEntryPersistence() {
-		return trashEntryPersistence;
-	}
-
-	/**
-	 * Sets the trash entry persistence.
-	 *
-	 * @param trashEntryPersistence the trash entry persistence
-	 */
-	public void setTrashEntryPersistence(
-		TrashEntryPersistence trashEntryPersistence) {
-		this.trashEntryPersistence = trashEntryPersistence;
-	}
-
 	public void afterPropertiesSet() {
 	}
 
@@ -1109,10 +988,6 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService;
 	@BeanReference(type = WorkflowDefinitionLinkPersistence.class)
 	protected WorkflowDefinitionLinkPersistence workflowDefinitionLinkPersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService.class)
-	protected com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService;
-	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
-	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@BeanReference(type = com.liferay.asset.kernel.service.AssetEntryLocalService.class)
 	protected com.liferay.asset.kernel.service.AssetEntryLocalService assetEntryLocalService;
 	@BeanReference(type = com.liferay.asset.kernel.service.AssetEntryService.class)
@@ -1121,8 +996,6 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLAppHelperLocalService.class)
-	protected com.liferay.document.library.kernel.service.DLAppHelperLocalService dlAppHelperLocalService;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileEntryLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLFileEntryLocalService dlFileEntryLocalService;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileEntryService.class)
@@ -1161,12 +1034,4 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 	protected RatingsStatsPersistence ratingsStatsPersistence;
 	@BeanReference(type = RatingsStatsFinder.class)
 	protected RatingsStatsFinder ratingsStatsFinder;
-	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryLocalService.class)
-	@SuppressWarnings("deprecation")
-	protected com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService;
-	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryService.class)
-	@SuppressWarnings("deprecation")
-	protected com.liferay.trash.kernel.service.TrashEntryService trashEntryService;
-	@BeanReference(type = TrashEntryPersistence.class)
-	protected TrashEntryPersistence trashEntryPersistence;
 }

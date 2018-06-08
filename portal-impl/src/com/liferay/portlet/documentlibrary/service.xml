@@ -20,11 +20,6 @@
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Image" package-path="com.liferay.portal" />
-		<reference entity="Layout" package-path="com.liferay.portal" />
-		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
-		<reference entity="Repository" package-path="com.liferay.portal" />
-		<reference entity="WebDAVProps" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
@@ -36,8 +31,6 @@
 		<reference entity="DLFileShortcut" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="ExpandoValue" package-path="com.liferay.portlet.expando" />
-		<reference entity="RatingsEntry" package-path="com.liferay.portlet.ratings" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
@@ -179,10 +172,7 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WebDAVProps" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
-		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntryMetadata" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntryType" package-path="com.liferay.portlet.documentlibrary" />
@@ -191,7 +181,6 @@
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="ExpandoTable" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity human-name="document library file entry metadata" local-service="true" name="DLFileEntryMetadata" remote-service="false" uuid="true">
 
@@ -565,16 +554,13 @@
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WebDAVProps" package-path="com.liferay.portal" />
 		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
-		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntryType" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileShortcut" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity local-service="true" name="DLTrash" remote-service="true">
 		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />

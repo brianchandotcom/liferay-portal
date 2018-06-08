@@ -16,14 +16,8 @@ package com.liferay.portlet.documentlibrary.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.asset.kernel.service.persistence.AssetCategoryFinder;
-import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetEntryFinder;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
-import com.liferay.asset.kernel.service.persistence.AssetLinkFinder;
-import com.liferay.asset.kernel.service.persistence.AssetLinkPersistence;
-import com.liferay.asset.kernel.service.persistence.AssetTagFinder;
-import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -83,8 +77,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder;
 import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
-
-import com.liferay.trash.kernel.service.persistence.TrashEntryPersistence;
 
 import java.io.Serializable;
 
@@ -877,62 +869,6 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the asset category local service.
-	 *
-	 * @return the asset category local service
-	 */
-	public com.liferay.asset.kernel.service.AssetCategoryLocalService getAssetCategoryLocalService() {
-		return assetCategoryLocalService;
-	}
-
-	/**
-	 * Sets the asset category local service.
-	 *
-	 * @param assetCategoryLocalService the asset category local service
-	 */
-	public void setAssetCategoryLocalService(
-		com.liferay.asset.kernel.service.AssetCategoryLocalService assetCategoryLocalService) {
-		this.assetCategoryLocalService = assetCategoryLocalService;
-	}
-
-	/**
-	 * Returns the asset category persistence.
-	 *
-	 * @return the asset category persistence
-	 */
-	public AssetCategoryPersistence getAssetCategoryPersistence() {
-		return assetCategoryPersistence;
-	}
-
-	/**
-	 * Sets the asset category persistence.
-	 *
-	 * @param assetCategoryPersistence the asset category persistence
-	 */
-	public void setAssetCategoryPersistence(
-		AssetCategoryPersistence assetCategoryPersistence) {
-		this.assetCategoryPersistence = assetCategoryPersistence;
-	}
-
-	/**
-	 * Returns the asset category finder.
-	 *
-	 * @return the asset category finder
-	 */
-	public AssetCategoryFinder getAssetCategoryFinder() {
-		return assetCategoryFinder;
-	}
-
-	/**
-	 * Sets the asset category finder.
-	 *
-	 * @param assetCategoryFinder the asset category finder
-	 */
-	public void setAssetCategoryFinder(AssetCategoryFinder assetCategoryFinder) {
-		this.assetCategoryFinder = assetCategoryFinder;
-	}
-
-	/**
 	 * Returns the asset entry local service.
 	 *
 	 * @return the asset entry local service
@@ -986,117 +922,6 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 */
 	public void setAssetEntryFinder(AssetEntryFinder assetEntryFinder) {
 		this.assetEntryFinder = assetEntryFinder;
-	}
-
-	/**
-	 * Returns the asset link local service.
-	 *
-	 * @return the asset link local service
-	 */
-	public com.liferay.asset.kernel.service.AssetLinkLocalService getAssetLinkLocalService() {
-		return assetLinkLocalService;
-	}
-
-	/**
-	 * Sets the asset link local service.
-	 *
-	 * @param assetLinkLocalService the asset link local service
-	 */
-	public void setAssetLinkLocalService(
-		com.liferay.asset.kernel.service.AssetLinkLocalService assetLinkLocalService) {
-		this.assetLinkLocalService = assetLinkLocalService;
-	}
-
-	/**
-	 * Returns the asset link persistence.
-	 *
-	 * @return the asset link persistence
-	 */
-	public AssetLinkPersistence getAssetLinkPersistence() {
-		return assetLinkPersistence;
-	}
-
-	/**
-	 * Sets the asset link persistence.
-	 *
-	 * @param assetLinkPersistence the asset link persistence
-	 */
-	public void setAssetLinkPersistence(
-		AssetLinkPersistence assetLinkPersistence) {
-		this.assetLinkPersistence = assetLinkPersistence;
-	}
-
-	/**
-	 * Returns the asset link finder.
-	 *
-	 * @return the asset link finder
-	 */
-	public AssetLinkFinder getAssetLinkFinder() {
-		return assetLinkFinder;
-	}
-
-	/**
-	 * Sets the asset link finder.
-	 *
-	 * @param assetLinkFinder the asset link finder
-	 */
-	public void setAssetLinkFinder(AssetLinkFinder assetLinkFinder) {
-		this.assetLinkFinder = assetLinkFinder;
-	}
-
-	/**
-	 * Returns the asset tag local service.
-	 *
-	 * @return the asset tag local service
-	 */
-	public com.liferay.asset.kernel.service.AssetTagLocalService getAssetTagLocalService() {
-		return assetTagLocalService;
-	}
-
-	/**
-	 * Sets the asset tag local service.
-	 *
-	 * @param assetTagLocalService the asset tag local service
-	 */
-	public void setAssetTagLocalService(
-		com.liferay.asset.kernel.service.AssetTagLocalService assetTagLocalService) {
-		this.assetTagLocalService = assetTagLocalService;
-	}
-
-	/**
-	 * Returns the asset tag persistence.
-	 *
-	 * @return the asset tag persistence
-	 */
-	public AssetTagPersistence getAssetTagPersistence() {
-		return assetTagPersistence;
-	}
-
-	/**
-	 * Sets the asset tag persistence.
-	 *
-	 * @param assetTagPersistence the asset tag persistence
-	 */
-	public void setAssetTagPersistence(AssetTagPersistence assetTagPersistence) {
-		this.assetTagPersistence = assetTagPersistence;
-	}
-
-	/**
-	 * Returns the asset tag finder.
-	 *
-	 * @return the asset tag finder
-	 */
-	public AssetTagFinder getAssetTagFinder() {
-		return assetTagFinder;
-	}
-
-	/**
-	 * Sets the asset tag finder.
-	 *
-	 * @param assetTagFinder the asset tag finder
-	 */
-	public void setAssetTagFinder(AssetTagFinder assetTagFinder) {
-		this.assetTagFinder = assetTagFinder;
 	}
 
 	/**
@@ -1248,46 +1073,6 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	 */
 	public void setRatingsStatsFinder(RatingsStatsFinder ratingsStatsFinder) {
 		this.ratingsStatsFinder = ratingsStatsFinder;
-	}
-
-	/**
-	 * Returns the trash entry local service.
-	 *
-	 * @return the trash entry local service
-	 */
-	@SuppressWarnings("deprecation")
-	public com.liferay.trash.kernel.service.TrashEntryLocalService getTrashEntryLocalService() {
-		return trashEntryLocalService;
-	}
-
-	/**
-	 * Sets the trash entry local service.
-	 *
-	 * @param trashEntryLocalService the trash entry local service
-	 */
-	@SuppressWarnings("deprecation")
-	public void setTrashEntryLocalService(
-		com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService) {
-		this.trashEntryLocalService = trashEntryLocalService;
-	}
-
-	/**
-	 * Returns the trash entry persistence.
-	 *
-	 * @return the trash entry persistence
-	 */
-	public TrashEntryPersistence getTrashEntryPersistence() {
-		return trashEntryPersistence;
-	}
-
-	/**
-	 * Sets the trash entry persistence.
-	 *
-	 * @param trashEntryPersistence the trash entry persistence
-	 */
-	public void setTrashEntryPersistence(
-		TrashEntryPersistence trashEntryPersistence) {
-		this.trashEntryPersistence = trashEntryPersistence;
 	}
 
 	/**
@@ -1591,30 +1376,12 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService;
 	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
 	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
-	@BeanReference(type = com.liferay.asset.kernel.service.AssetCategoryLocalService.class)
-	protected com.liferay.asset.kernel.service.AssetCategoryLocalService assetCategoryLocalService;
-	@BeanReference(type = AssetCategoryPersistence.class)
-	protected AssetCategoryPersistence assetCategoryPersistence;
-	@BeanReference(type = AssetCategoryFinder.class)
-	protected AssetCategoryFinder assetCategoryFinder;
 	@BeanReference(type = com.liferay.asset.kernel.service.AssetEntryLocalService.class)
 	protected com.liferay.asset.kernel.service.AssetEntryLocalService assetEntryLocalService;
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
-	@BeanReference(type = com.liferay.asset.kernel.service.AssetLinkLocalService.class)
-	protected com.liferay.asset.kernel.service.AssetLinkLocalService assetLinkLocalService;
-	@BeanReference(type = AssetLinkPersistence.class)
-	protected AssetLinkPersistence assetLinkPersistence;
-	@BeanReference(type = AssetLinkFinder.class)
-	protected AssetLinkFinder assetLinkFinder;
-	@BeanReference(type = com.liferay.asset.kernel.service.AssetTagLocalService.class)
-	protected com.liferay.asset.kernel.service.AssetTagLocalService assetTagLocalService;
-	@BeanReference(type = AssetTagPersistence.class)
-	protected AssetTagPersistence assetTagPersistence;
-	@BeanReference(type = AssetTagFinder.class)
-	protected AssetTagFinder assetTagFinder;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLAppHelperLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLAppHelperLocalService dlAppHelperLocalService;
 	@BeanReference(type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class)
@@ -1631,11 +1398,6 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 	protected RatingsStatsPersistence ratingsStatsPersistence;
 	@BeanReference(type = RatingsStatsFinder.class)
 	protected RatingsStatsFinder ratingsStatsFinder;
-	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryLocalService.class)
-	@SuppressWarnings("deprecation")
-	protected com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService;
-	@BeanReference(type = TrashEntryPersistence.class)
-	protected TrashEntryPersistence trashEntryPersistence;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
 	@BeanReference(type = DLFileEntryMetadataPersistence.class)

@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.File;
 
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -54,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ImportUtil.class)
 public class ImportUtil {
 
-	public void importFragmentCollections(
+	public void importFile(
 			ActionRequest actionRequest, File file, boolean overwrite)
 		throws Exception {
 
@@ -62,91 +64,70 @@ public class ImportUtil {
 
 		_isValidFile(zipFile);
 
-		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+		Map<String, FragmentCollectionFolder> fragmentCollectionFolderMap =
+			_getFragmentCollectionFolderMap(zipFile);
 
-		while (enumeration.hasMoreElements()) {
-			ZipEntry zipEntry = enumeration.nextElement();
+		for (Map.Entry<String, FragmentCollectionFolder> entry :
+				fragmentCollectionFolderMap.entrySet()) {
 
-			String fileName = zipEntry.getName();
+			FragmentCollectionFolder fragmentCollectionFolder =
+				entry.getValue();
 
-			if (!_isFragmentCollection(fileName)) {
-				continue;
-			}
+			String name = entry.getKey();
+			String description = StringPool.BLANK;
 
-			String collectionPath = fileName.substring(
-				0, fileName.lastIndexOf(CharPool.SLASH));
-
-			String fragmentCollectionName = _getKey(fileName);
-			String fragmentCollectionDescription = StringPool.BLANK;
-
-			String collectionJSON = _getContent(zipFile, fileName);
+			String collectionJSON = _getContent(
+				zipFile, fragmentCollectionFolder.getFileName());
 
 			if (Validator.isNotNull(collectionJSON)) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					collectionJSON);
 
-				fragmentCollectionName = jsonObject.getString("name");
-				fragmentCollectionDescription = jsonObject.getString(
-					"description");
+				name = jsonObject.getString("name");
+				description = jsonObject.getString("description");
 			}
 
-			if (Validator.isNull(fragmentCollectionName)) {
+			if (Validator.isNull(name)) {
 				throw new FragmentCollectionNameException();
 			}
 
 			FragmentCollection fragmentCollection = _addFragmentCollection(
-				actionRequest, _getKey(fileName), fragmentCollectionName,
-				fragmentCollectionDescription, overwrite);
+				actionRequest, entry.getKey(), name, description, overwrite);
 
 			importFragmentEntries(
 				actionRequest, zipFile,
-				fragmentCollection.getFragmentCollectionId(), collectionPath,
-				overwrite);
+				fragmentCollection.getFragmentCollectionId(),
+				fragmentCollectionFolder.getFragmentEntries(), overwrite);
 		}
 	}
 
 	public void importFragmentEntries(
 			ActionRequest actionRequest, ZipFile zipFile,
-			long fragmentCollectionId, String path, boolean overwrite)
+			long fragmentCollectionId, Map<String, String> fragmentEntries,
+			boolean overwrite)
 		throws Exception {
 
-		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+		for (Map.Entry<String, String> entry : fragmentEntries.entrySet()) {
+			String name = entry.getKey();
+			String css = StringPool.BLANK;
+			String html = StringPool.BLANK;
+			String js = StringPool.BLANK;
 
-		while (enumeration.hasMoreElements()) {
-			ZipEntry zipEntry = enumeration.nextElement();
-
-			String fileName = zipEntry.getName();
-
-			if (!fileName.startsWith(path) || !_isFragmentEntry(fileName)) {
-				continue;
-			}
-
-			String fragmentEntryPath = fileName.substring(
-				0, fileName.lastIndexOf(CharPool.SLASH));
-
-			String fragmentEntryName = _getKey(fileName);
-
-			String fragmentCssPath = fragmentEntryPath + "/src/index.css";
-			String fragmentHtmlPath = fragmentEntryPath + "/src/index.html";
-			String fragmentJsPath = fragmentEntryPath + "/src/index.js";
-
-			String fragmentJSON = _getContent(zipFile, fileName);
+			String fragmentJSON = _getContent(zipFile, entry.getValue());
 
 			if (Validator.isNotNull(fragmentJSON)) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					fragmentJSON);
 
-				fragmentEntryName = jsonObject.getString("name");
-				fragmentCssPath = jsonObject.getString("cssPath");
-				fragmentHtmlPath = jsonObject.getString("htmlPath");
-				fragmentJsPath = jsonObject.getString("jsPath");
+				name = jsonObject.getString("name");
+				css = _getContent(zipFile, jsonObject.getString("cssPath"));
+				html = _getContent(zipFile, jsonObject.getString("htmlPath"));
+				js = _getContent(zipFile, jsonObject.getString("jsPath"));
 			}
 
 			_addFragmentEntry(
-				actionRequest, fragmentCollectionId, _getKey(fileName),
-				fragmentEntryName, _getContent(zipFile, fragmentCssPath),
-				_getContent(zipFile, fragmentHtmlPath),
-				_getContent(zipFile, fragmentJsPath), overwrite);
+				actionRequest, fragmentCollectionId, entry.getKey(), name, css,
+				html, js, overwrite);
 		}
 	}
 
@@ -229,6 +210,68 @@ public class ImportUtil {
 		return StringUtil.read(zipFile.getInputStream(zipEntry));
 	}
 
+	private Map<String, FragmentCollectionFolder>
+		_getFragmentCollectionFolderMap(ZipFile zipFile) {
+
+		Map<String, FragmentCollectionFolder> fragmentCollectionFolderMap =
+			new HashMap<>();
+
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			if (zipEntry.isDirectory()) {
+				continue;
+			}
+
+			String fileName = zipEntry.getName();
+
+			if (!_isFragmentCollection(fileName)) {
+				continue;
+			}
+
+			fragmentCollectionFolderMap.put(
+				_getKey(fileName), new FragmentCollectionFolder(fileName));
+		}
+
+		enumeration = zipFile.entries();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			if (zipEntry.isDirectory()) {
+				continue;
+			}
+
+			String fileName = zipEntry.getName();
+
+			if (!_isFragmentEntry(fileName)) {
+				continue;
+			}
+
+			String[] paths = fileName.split(StringPool.SLASH);
+
+			if (paths.length < 3) {
+				continue;
+			}
+
+			String fragmentCollectionKey = paths[paths.length - 3];
+
+			FragmentCollectionFolder fragmentCollectionFolder =
+				fragmentCollectionFolderMap.get(fragmentCollectionKey);
+
+			if (fragmentCollectionFolder == null) {
+				continue;
+			}
+
+			fragmentCollectionFolder.addFragmentEntry(
+				_getKey(fileName), fileName);
+		}
+
+		return fragmentCollectionFolderMap;
+	}
+
 	private String _getKey(String fileName) {
 		String path = fileName.substring(
 			0, fileName.lastIndexOf(CharPool.SLASH));
@@ -283,5 +326,30 @@ public class ImportUtil {
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	private class FragmentCollectionFolder {
+
+		public FragmentCollectionFolder(String fileName) {
+			_fileName = fileName;
+
+			_fragmentEntries = new HashMap<>();
+		}
+
+		public void addFragmentEntry(String key, String fileName) {
+			_fragmentEntries.put(key, fileName);
+		}
+
+		public String getFileName() {
+			return _fileName;
+		}
+
+		public Map<String, String> getFragmentEntries() {
+			return _fragmentEntries;
+		}
+
+		private final String _fileName;
+		private final Map<String, String> _fragmentEntries;
+
+	}
 
 }

@@ -1240,6 +1240,22 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
+		// FriendlyURL
+
+		long classNameId = classNameLocalService.getClassNameId(
+			JournalArticle.class);
+
+		List<FriendlyURLEntry> friendlyURLEntries =
+			friendlyURLEntryLocalService.getFriendlyURLEntries(
+				article.getGroupId(), classNameId,
+				article.getResourcePrimKey());
+
+		if (!friendlyURLEntries.isEmpty()) {
+			friendlyURLEntryLocalService.deleteFriendlyURLEntry(
+				article.getGroupId(), JournalArticle.class,
+				article.getResourcePrimKey());
+		}
+
 		// Article
 
 		journalArticlePersistence.remove(article);

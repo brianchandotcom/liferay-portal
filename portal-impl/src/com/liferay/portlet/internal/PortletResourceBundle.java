@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.util.JavaConstants;

@@ -9,7 +9,7 @@
 	<bean class="com.liferay.portlet.InvokerPortletFactoryImpl" id="com.liferay.portal.kernel.portlet.InvokerPortletFactory" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil">
 		<property name="portletConfigFactory">
-			<bean class="com.liferay.portlet.PortletConfigFactoryImpl">
+			<bean class="com.liferay.portlet.internal.PortletConfigFactoryImpl">
 				<property name="portletContextFactory" ref="com.liferay.portal.kernel.portlet.PortletContextFactory" />
 			</bean>
 		</property>

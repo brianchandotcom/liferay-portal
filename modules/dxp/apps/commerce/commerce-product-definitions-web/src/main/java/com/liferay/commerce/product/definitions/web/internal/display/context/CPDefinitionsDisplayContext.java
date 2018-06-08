@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -124,12 +123,6 @@ public class CPDefinitionsDisplayContext
 			layoutItemSelectorCriterion);
 
 		return itemSelectorURL.toString();
-	}
-
-	public int getItemsTotal() throws PortalException {
-		SearchContainer searchContainer = getSearchContainer();
-
-		return searchContainer.getTotal();
 	}
 
 	public String getLayoutBreadcrumb(Layout layout) throws Exception {

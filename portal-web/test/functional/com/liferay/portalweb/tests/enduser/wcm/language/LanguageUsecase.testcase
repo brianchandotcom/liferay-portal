@@ -286,11 +286,11 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesAbsent">
-			<var name="missingLocales" value="fr-fr,hu-hu,iw-il,ja-jp,pt-br,zh-cn" />
+			<var name="missingLocales" value="français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland" />
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesPresent">
-			<var name="currentLocales" value="de-de,es-es" />
+			<var name="currentLocales" value="Deutsch-Deutschland,español-España" />
 		</execute>
 	</command>
 
@@ -357,7 +357,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguageCurrent">
-			<var name="locale" value="nl-nl" />
+			<var name="locale" value="en-us" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -450,11 +450,11 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesAbsent">
-			<var name="missingLocales" value="de-de,es-es,hu-hu,iw-il,ja-jp,pt-br" />
+			<var name="missingLocales" value="magyar-Magyarország,日本語-日本,português-Brasil,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland,Deutsch-Deutschland,español-España" />
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesPresent">
-			<var name="currentLocales" value="fr-fr,zh-cn" />
+			<var name="currentLocales" value="français-France,中文-中国" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -505,11 +505,11 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesAbsent">
-			<var name="missingLocales" value="fr-fr,hu-hu,ja-jp,pt-br,zh-cn" />
+			<var name="missingLocales" value="français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,Nederlands-Nederland" />
 		</execute>
 
 		<execute macro="LanguagePortlet#viewLanguagesPresent">
-			<var name="currentLocales" value="de-de,es-es" />
+			<var name="currentLocales" value="Deutsch-Deutschland,español-España" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">

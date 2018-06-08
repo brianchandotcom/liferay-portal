@@ -278,6 +278,24 @@ public class ImportUtil {
 		return fragmentCollectionFolderMap;
 	}
 
+	private String _getFragmentEntryContent(
+			ZipFile zipFile, String fileName, String contentPath)
+		throws Exception {
+
+		if (contentPath.startsWith(StringPool.SLASH)) {
+			return _getContent(zipFile, contentPath.substring(1));
+		}
+
+		if (contentPath.startsWith("./")) {
+			contentPath = contentPath.substring(2);
+		}
+
+		String path = fileName.substring(
+			0, fileName.lastIndexOf(StringPool.SLASH));
+
+		return _getContent(zipFile, path + StringPool.SLASH + contentPath);
+	}
+
 	private String _getKey(String fileName) {
 		String path = fileName.substring(
 			0, fileName.lastIndexOf(CharPool.SLASH));
@@ -304,9 +322,13 @@ public class ImportUtil {
 					fragmentJSON);
 
 				name = jsonObject.getString("name");
-				css = _getContent(zipFile, jsonObject.getString("cssPath"));
-				html = _getContent(zipFile, jsonObject.getString("htmlPath"));
-				js = _getContent(zipFile, jsonObject.getString("jsPath"));
+				css = _getFragmentEntryContent(
+					zipFile, entry.getValue(), jsonObject.getString("cssPath"));
+				html = _getFragmentEntryContent(
+					zipFile, entry.getValue(),
+					jsonObject.getString("htmlPath"));
+				js = _getFragmentEntryContent(
+					zipFile, entry.getValue(), jsonObject.getString("jsPath"));
 			}
 
 			_addFragmentEntry(

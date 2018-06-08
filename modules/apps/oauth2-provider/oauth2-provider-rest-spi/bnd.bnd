@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.oauth2.provider.rest.spi
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.oauth2.provider.rest.spi.bearer.token.provider,\
-	com.liferay.oauth2.provider.rest.spi.request.scope.checker.filter
+	com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter

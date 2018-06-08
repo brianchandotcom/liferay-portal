@@ -14,10 +14,9 @@
 
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
+import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
-
-import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,7 +33,6 @@ import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
 import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.framework.BundleContext;
@@ -68,7 +66,8 @@ public class HttpMethodFeature implements Feature {
 		contracts.put(
 			ContainerRequestFilter.class, Priorities.AUTHORIZATION - 8);
 
-		context.register((ContainerRequestFilter)this::filter, contracts);
+		context.register(
+			new HttpScopeCheckerContainerRequestFilter(), contracts);
 
 		Configuration configuration = context.getConfiguration();
 
@@ -83,19 +82,6 @@ public class HttpMethodFeature implements Feature {
 					"osgi.jaxrs.application.serviceProperties")));
 
 		return true;
-	}
-
-	public void filter(ContainerRequestContext containerRequestContext)
-		throws IOException {
-
-		Request request = containerRequestContext.getRequest();
-
-		if (!_scopeChecker.checkScope(request.getMethod())) {
-			containerRequestContext.abortWith(
-				Response.status(
-					Response.Status.FORBIDDEN
-				).build());
-		}
 	}
 
 	@Activate
@@ -116,5 +102,22 @@ public class HttpMethodFeature implements Feature {
 	private ScopeChecker _scopeChecker;
 
 	private ServiceRegistration<ScopeFinder> _serviceRegistration;
+
+	private class HttpScopeCheckerContainerRequestFilter
+		extends BaseScopeCheckerContainerRequestFilter {
+
+		public boolean isContainerRequestContextAllowed(
+			ContainerRequestContext containerRequestContext) {
+
+			Request request = containerRequestContext.getRequest();
+
+			if (_scopeChecker.checkScope(request.getMethod())) {
+				return true;
+			}
+
+			return false;
+		}
+
+	}
 
 }

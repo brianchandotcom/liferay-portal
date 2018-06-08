@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.rest.internal.jaxrs.feature;
 
+import com.liferay.oauth2.provider.rest.spi.scope.checker.container.request.filter.BaseScopeCheckerContainerRequestFilter;
 import com.liferay.oauth2.provider.scope.RequiresNoScope;
 import com.liferay.oauth2.provider.scope.RequiresScope;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
@@ -30,14 +31,12 @@ import java.util.Map;
 
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.FeatureContext;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.framework.BundleContext;
@@ -75,7 +74,7 @@ public class AnnotationFeature implements Feature {
 					resourceInfo.getResourceClass())));
 
 		context.register(
-			new AnnotationContainerRequestFilter(),
+			new AnnotationContainerScopeCheckerContainerRequestFilter(),
 			Priorities.AUTHORIZATION - 8);
 
 		Map<String, Object> applicationProperties =
@@ -108,10 +107,12 @@ public class AnnotationFeature implements Feature {
 
 	private ServiceRegistration<ScopeFinder> _serviceRegistration;
 
-	private class AnnotationContainerRequestFilter
-		implements ContainerRequestFilter {
+	private class AnnotationContainerScopeCheckerContainerRequestFilter
+		extends BaseScopeCheckerContainerRequestFilter {
 
-		public void filter(ContainerRequestContext containerRequestContext) {
+		public boolean isContainerRequestContextAllowed(
+			ContainerRequestContext containerRequestContext) {
+
 			Method resourceMethod = _resourceInfo.getResourceMethod();
 
 			RequiresNoScope requiresNoScope = resourceMethod.getAnnotation(
@@ -136,11 +137,11 @@ public class AnnotationFeature implements Feature {
 			}
 
 			if (requiresNoScope != null) {
-				return;
+				return true;
 			}
 
-			if (checkRequiresScope(containerRequestContext, requiresScope)) {
-				return;
+			if (checkRequiresScope(requiresScope)) {
+				return true;
 			}
 
 			Class<?> resourceClass = _resourceInfo.getResourceClass();
@@ -162,11 +163,11 @@ public class AnnotationFeature implements Feature {
 			}
 
 			if (requiresNoScope != null) {
-				return;
+				return true;
 			}
 
-			if (checkRequiresScope(containerRequestContext, requiresScope)) {
-				return;
+			if (checkRequiresScope(requiresScope)) {
+				return true;
 			}
 
 			requiresNoScope = AnnotationLocator.locate(
@@ -186,43 +187,23 @@ public class AnnotationFeature implements Feature {
 			}
 
 			if (requiresNoScope != null) {
-				return;
+				return true;
 			}
 
-			if (checkRequiresScope(containerRequestContext, requiresScope)) {
-				return;
+			if (checkRequiresScope(requiresScope)) {
+				return true;
 			}
 
-			containerRequestContext.abortWith(
-				Response.status(
-					Response.Status.FORBIDDEN
-				).build());
+			return false;
 		}
 
-		protected boolean checkRequiresScope(
-			ContainerRequestContext containerRequestContext,
-			RequiresScope requiresScope) {
-
+		protected boolean checkRequiresScope(RequiresScope requiresScope) {
 			if (requiresScope != null) {
-				boolean allowed;
-
 				if (requiresScope.allNeeded()) {
-					allowed = _scopeChecker.checkAllScopes(
-						requiresScope.value());
+					return _scopeChecker.checkAllScopes(requiresScope.value());
 				}
 				else {
-					allowed = _scopeChecker.checkAnyScope(
-						requiresScope.value());
-				}
-
-				if (allowed) {
-					return true;
-				}
-				else {
-					containerRequestContext.abortWith(
-						Response.status(
-							Response.Status.FORBIDDEN
-						).build());
+					return _scopeChecker.checkAnyScope(requiresScope.value());
 				}
 			}
 

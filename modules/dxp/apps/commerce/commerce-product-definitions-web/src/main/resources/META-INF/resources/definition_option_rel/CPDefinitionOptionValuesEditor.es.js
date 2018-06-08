@@ -118,8 +118,8 @@ class CPDefinitionOptionValuesEditor extends Component {
 						type: type
 					}
 				);
-  		}
-  	);
+ 		}
+ 	);
 	}
 }
 

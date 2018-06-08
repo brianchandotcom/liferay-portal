@@ -119,19 +119,19 @@ class CPDefinitionOptionsEditor extends Component {
 		this.loadOptions();
 	}
 
-    _handleKeyUpForModal(evt) {
+	_handleKeyUpForModal(evt) {
         if (evt.code === 'Escape') {
             this._handleCloseValueEditor();
         }
     }
 
-    _handleEditValues(cpOptionId) {
+	_handleEditValues(cpOptionId) {
         this._currentOption = cpOptionId;
         this._showValues = true;
         document.addEventListener('keyup', this._handleKeyUpForModal);
     }
 
-    _handleCloseValueEditor() {
+	_handleCloseValueEditor() {
         this._showValues = false;
         document.removeEventListener('keyup', this._handleKeyUpForModal);
     }

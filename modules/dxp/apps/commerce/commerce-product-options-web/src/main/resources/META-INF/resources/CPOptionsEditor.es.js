@@ -119,8 +119,8 @@ class CPOptionsEditor extends Component {
 						type: type
 					}
 				);
-  		}
-  	);
+ 		}
+ 	);
 	}
 }
 

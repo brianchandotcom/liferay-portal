@@ -243,10 +243,6 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 </aui:script>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-	window.<portlet:namespace />exportSelectedFragmentCollections = function() {
-		submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_collections" />');
-	}
-
 	var importFragmentEntriesActionClickHandler = dom.delegate(
 		document.body,
 		'click',

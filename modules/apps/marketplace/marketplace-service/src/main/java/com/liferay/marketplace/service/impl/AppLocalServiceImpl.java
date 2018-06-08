@@ -50,6 +50,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -414,6 +415,29 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		try (ZipFile zipFile = new ZipFile(liferayPackageFile)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"liferay-marketplace.properties");
+
+			if (zipEntry == null) {
+				Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
+
+				ZipEntry subsystemZipEntry = zipEntries.nextElement();
+
+				if (StringUtil.endsWith(subsystemZipEntry.getName(), ".lpkg")) {
+					File file = null;
+
+					try (InputStream subsystemInputStream =
+							zipFile.getInputStream(subsystemZipEntry)) {
+
+						file = FileUtil.createTempFile(subsystemInputStream);
+
+						return getMarketplaceProperties(file);
+					}
+					finally {
+						FileUtil.delete(file);
+					}
+				}
+
+				return null;
+			}
 
 			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
 				String propertiesString = StringUtil.read(inputStream);

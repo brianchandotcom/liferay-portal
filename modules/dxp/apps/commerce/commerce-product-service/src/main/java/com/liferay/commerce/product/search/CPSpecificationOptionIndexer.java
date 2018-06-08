@@ -36,8 +36,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -61,6 +64,8 @@ public class CPSpecificationOptionIndexer
 	public static final String FIELD_CP_OPTION_CATEGORY_TITLE =
 		"cpOptionCategoryTitle";
 
+	public static final String FIELD_FACETABLE = "facetable";
+
 	public static final String FIELD_KEY = "key";
 
 	public CPSpecificationOptionIndexer() {
@@ -75,6 +80,21 @@ public class CPSpecificationOptionIndexer
 	@Override
 	public String getClassName() {
 		return CLASS_NAME;
+	}
+
+	@Override
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		Map<String, Serializable> attributes = searchContext.getAttributes();
+
+		if (attributes.containsKey(FIELD_FACETABLE)) {
+			boolean facetable = GetterUtil.getBoolean(
+				attributes.get(FIELD_FACETABLE));
+
+			contextBooleanFilter.addRequiredTerm(FIELD_FACETABLE, facetable);
+		}
 	}
 
 	@Override
@@ -163,6 +183,8 @@ public class CPSpecificationOptionIndexer
 					cpOptionCategory.getCPOptionCategoryId());
 			}
 
+			document.addKeyword(
+				FIELD_FACETABLE, cpSpecificationOption.getFacetable());
 			document.addText(FIELD_KEY, cpSpecificationOption.getKey());
 			document.addText(Field.CONTENT, title);
 		}

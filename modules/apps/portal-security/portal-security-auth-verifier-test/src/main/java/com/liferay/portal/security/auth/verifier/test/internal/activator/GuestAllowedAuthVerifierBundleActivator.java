@@ -31,7 +31,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 /**
  * @author Marta Medio
  */
-public class AuthVerifierGuestAllowedBundleActivator
+public class GuestAllowedAuthVerifierBundleActivator
 	extends BaseAuthVerifierBundleActivator {
 
 	@Override

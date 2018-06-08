@@ -32,7 +32,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 /**
  * @author Marta Medio
  */
-public class AuthVerifierTrackerBundleActivator
+public class TrackerAuthVerifierBundleActivator
 	extends BaseAuthVerifierBundleActivator {
 
 	@Override

@@ -3751,6 +3751,12 @@ of a module includes transitive dependencies.
 ### Fixed
 - [LPS-80332]: Fix `suite.bnd` inclusion when running in sub-repositories.
 
+## 5.4.32 - 2018-06-08
+
+### Changed
+- [LPS-82178]: Update the [Liferay Gradle Plugins Patcher] dependency to version
+1.0.13.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3762,6 +3768,7 @@ of a module includes transitive dependencies.
 [Liferay Gradle Plugins JSDoc]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-jsdoc
 [Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
+[Liferay Gradle Plugins Patcher]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-patcher
 [Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter
@@ -4168,6 +4175,7 @@ of a module includes transitive dependencies.
 [LPS-81895]: https://issues.liferay.com/browse/LPS-81895
 [LPS-81900]: https://issues.liferay.com/browse/LPS-81900
 [LPS-82001]: https://issues.liferay.com/browse/LPS-82001
+[LPS-82178]: https://issues.liferay.com/browse/LPS-82178
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

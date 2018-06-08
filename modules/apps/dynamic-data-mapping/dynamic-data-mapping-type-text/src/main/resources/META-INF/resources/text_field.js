@@ -9,7 +9,9 @@ AUI.add(
 
 		new A.TooltipDelegate(
 			{
-				position: 'left',
+				cssClass: 'clay-tooltip',
+				opacity: 1,
+				position: 'right',
 				trigger: '.liferay-ddm-form-field-text .trigger-tooltip',
 				triggerHideEvent: ['blur', 'mouseleave'],
 				triggerShowEvent: ['focus', 'mouseover'],

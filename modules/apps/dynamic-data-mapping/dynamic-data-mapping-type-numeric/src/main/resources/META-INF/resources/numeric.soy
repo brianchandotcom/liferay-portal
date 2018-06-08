@@ -47,6 +47,17 @@
 			{/if}
 		{/if}
 
+		{if $tooltip}
+			<button class="btn btn-monospaced btn-unstyled trigger-tooltip"
+					data-original-title="{$tooltip}"
+					data-toggle="popover"
+					title="{$tooltip}" type="button">
+				<svg class="lexicon-icon lexicon-icon-question-circle-full">
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#question-circle-full"></use>
+				</svg>
+			</button>
+		{/if}
+
 		<div class="input-group input-group-container {if $tooltip}input-group-default{/if}">
 			<div class="input-group-item">
 				<input class="field form-control"
@@ -57,18 +68,6 @@
 				type="text"
 				value="{$displayValue}">
 			</div>
-			{if $tooltip}
-				<div class="input-group-item input-group-item-shrink">
-					<button class="btn btn-monospaced btn-unstyled trigger-tooltip"
-							data-original-title="{$tooltip}"
-							data-toggle="popover"
-							title="{$tooltip}" type="button">
-						<span class="help-icon rounded-circle sticker sticker-secondary">
-							<span class="icon-question"></span>
-						</span>
-					</button>
-				</div>
-			{/if}
 		</div>
 	</div>
 {/template}

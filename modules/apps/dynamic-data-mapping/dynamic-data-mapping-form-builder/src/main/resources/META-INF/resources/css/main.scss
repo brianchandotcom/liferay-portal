@@ -11,12 +11,115 @@
 
 @import "form-builder-drag-and-drop";
 
+.clay-tooltip {
+	padding-top: 10px;
+}
+
+.clay-tooltip .tooltip-inner {
+	text-align: left;
+}
+
+.clay-tooltip.tooltip {
+	max-width: 280px;
+}
+
+.clay-tooltip.right.tooltip {
+	padding-left: 6px;
+}
+
+.clay-tooltip.left.tooltip {
+	padding-right: 6px;
+}
+
+.clay-tooltip.top.tooltip {
+	padding-bottom: 6px;
+}
+
+.clay-tooltip.bottom.tooltip {
+	padding-top: 6px;
+}
+
+.tooltip {
+	.tooltip-arrow:before {
+		border-color: transparent;
+		border-style: solid;
+		content: '';
+		position: absolute;
+	}
+}
+
+.clay-tooltip.right .tooltip-arrow {
+	height: 0.8rem;
+	left: 0;
+	margin-top: -0.4rem;
+	top: 50%;
+	width: 0.4rem;
+
+	&:before {
+		border-right-color: #272833;
+		border-width: 0.4rem 0.4rem 0.4rem 0;
+		right: 0;
+	}
+}
+
+.clay-tooltip.left .tooltip-arrow {
+	height: 0.8rem;
+	margin-top: -0.4rem;
+	right: 0;
+	top: 50%;
+	width: 0.4rem;
+
+	&:before {
+		border-right-color: #272833;
+		border-width: 0.4rem 0 0.4rem 0.4rem;
+		left: 0;
+	}
+}
+
+.clay-tooltip.top .tooltip-arrow {
+	bottom: 0;
+	left: 50%;
+	margin-left: -0.4rem;
+
+	&:before {
+		border-top-color: #272833;
+		border-width: 0.4rem 0.4rem 0;
+		top: 0;
+	}
+}
+
+.clay-tooltip.bottom .tooltip-arrow {
+	left: 50%;
+	margin-left: -0.4rem;
+	top: 0;
+
+	&:before {
+		border-right-color: #272833;
+		border-width: 0 0.4rem 0.4rem;
+		bottom: 0;
+	}
+}
+
+.clay-tooltip .tooltip-arrow {
+	display: block;
+	height: 0.4rem;
+	position: absolute;
+	width: 0.8rem;
+}
+
 .ddm-form-export-modal-content.modal-content {
 	max-height: fit-content;
 
 	.modal-body {
 		height: auto !important;
 	}
+}
+
+.form-group .trigger-tooltip {
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	padding-top: 0;
+	width: initial;
 }
 
 .multi-step-item.success-page {

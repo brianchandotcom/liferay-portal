@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>GENERIC_SELECT_FIELD</td>
-	<td>//div[label[contains(.,'${key_fieldLabel}')]]//select</td>
+	<td>//div[label[contains(.,'${key_fieldLabel}')]]/select</td>
 	<td></td>
 </tr>
 <tr>

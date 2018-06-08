@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.options.web.internal.util;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.model.CPOptionCategory;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.util.CPNavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = CPNavigationItem.class
 )
-public class CPOptionCategoryNavigationItem implements CPNavigationItem {
+public class CPSpecificationOptionNavigationItem implements CPNavigationItem {
 
 	public NavigationItem getNavigationItem(PortletRequest portletRequest)
 		throws PortalException {
@@ -64,7 +64,8 @@ public class CPOptionCategoryNavigationItem implements CPNavigationItem {
 
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			portletRequest, themeDisplay.getScopeGroup(),
-			CPOptionCategory.class.getName(), PortletProvider.Action.MANAGE);
+			CPSpecificationOption.class.getName(),
+			PortletProvider.Action.MANAGE);
 
 		navigationItem.setHref(portletURL.toString());
 

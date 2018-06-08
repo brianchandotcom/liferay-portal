@@ -7,6 +7,8 @@ import Component from 'metal-component@2.16.5/lib/Component';
 import Config from 'metal-state@2.7.0/lib/Config';
 import Soy from 'metal-soy@2.16.5/lib/Soy';
 
+import {ManagementToolbar} from 'frontend-taglib-clay@1.0.0/management_toolbar/ManagementToolbar.es';
+
 import templates from './ManagementToolbarWithExtraFilters.soy';
 
 /**

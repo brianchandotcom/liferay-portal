@@ -14,30 +14,30 @@
  */
 --%>
 
-<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_OPTION_CATEGORIES %>" varImpl="viewProductOptionCategoriesURL">
-	<portlet:param name="mvcPath" value="/view_option_categories.jsp" />
-</liferay-portlet:renderURL>
-
 <liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_SPECIFICATION_OPTIONS %>" varImpl="viewProductSpecificationOptionsURL">
 	<portlet:param name="mvcPath" value="/view_specification_options.jsp" />
+</liferay-portlet:renderURL>
+
+<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_OPTION_CATEGORIES %>" varImpl="viewProductOptionCategoriesURL">
+	<portlet:param name="mvcPath" value="/view_option_categories.jsp" />
 </liferay-portlet:renderURL>
 
 <%
 List<NavigationItem> navigationItems = new ArrayList<>();
 
-NavigationItem cpOptionCategoriesNavigationItem = new NavigationItem();
 NavigationItem cpSpecificationOptionsNavigationItem = new NavigationItem();
-
-cpOptionCategoriesNavigationItem.setActive(portletName.equals(CPPortletKeys.CP_OPTION_CATEGORIES));
-cpOptionCategoriesNavigationItem.setHref(viewProductOptionCategoriesURL.toString());
-cpOptionCategoriesNavigationItem.setLabel(LanguageUtil.get(request, "specification-groups"));
+NavigationItem cpOptionCategoriesNavigationItem = new NavigationItem();
 
 cpSpecificationOptionsNavigationItem.setActive(portletName.equals(CPPortletKeys.CP_SPECIFICATION_OPTIONS));
 cpSpecificationOptionsNavigationItem.setHref(viewProductSpecificationOptionsURL.toString());
 cpSpecificationOptionsNavigationItem.setLabel(LanguageUtil.get(request, "specification-labels"));
 
-navigationItems.add(cpOptionCategoriesNavigationItem);
+cpOptionCategoriesNavigationItem.setActive(portletName.equals(CPPortletKeys.CP_OPTION_CATEGORIES));
+cpOptionCategoriesNavigationItem.setHref(viewProductOptionCategoriesURL.toString());
+cpOptionCategoriesNavigationItem.setLabel(LanguageUtil.get(request, "specification-groups"));
+
 navigationItems.add(cpSpecificationOptionsNavigationItem);
+navigationItems.add(cpOptionCategoriesNavigationItem);
 %>
 
 <clay:navigation-bar

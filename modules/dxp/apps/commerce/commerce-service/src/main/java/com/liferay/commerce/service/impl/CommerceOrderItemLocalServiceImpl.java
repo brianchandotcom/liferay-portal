@@ -20,7 +20,6 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.exception.CommerceOrderPriceException;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.GuestCartItemMaxAllowedException;
-import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -130,8 +129,6 @@ public class CommerceOrderItemLocalServiceImpl
 	public CommerceOrderItem deleteCommerceOrderItem(
 			CommerceOrderItem commerceOrderItem)
 		throws PortalException {
-
-		validateCommerceOrder(commerceOrderItem.getCommerceOrder());
 
 		// Commerce order item
 
@@ -421,8 +418,6 @@ public class CommerceOrderItemLocalServiceImpl
 			CPInstance cpInstance, int quantity, BigDecimal price)
 		throws PortalException {
 
-		validateCommerceOrder(commerceOrder);
-
 		if (commerceOrder.getUserId() == 0) {
 			int count = commerceOrderItemPersistence.countByCommerceOrderId(
 				commerceOrder.getCommerceOrderId());
@@ -455,16 +450,6 @@ public class CommerceOrderItemLocalServiceImpl
 				throw new CommerceOrderValidatorException(
 					commerceCartValidatorResults);
 			}
-		}
-	}
-
-	protected void validateCommerceOrder(CommerceOrder commerceOrder)
-		throws PortalException {
-
-		if (!commerceOrder.isOpen() &&
-			!ExportImportThreadLocal.isImportInProcess()) {
-
-			throw new NoSuchOrderException();
 		}
 	}
 

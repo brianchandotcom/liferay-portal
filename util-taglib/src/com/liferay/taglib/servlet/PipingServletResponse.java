@@ -117,7 +117,7 @@ public class PipingServletResponse extends HttpServletResponseWrapper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #createPipingServletResponseIfNeeded(PageContext)}
+	 *             #createPipingServletResponse(PageContext)}
 	 */
 	@Deprecated
 	public PipingServletResponse(PageContext pageContext) {

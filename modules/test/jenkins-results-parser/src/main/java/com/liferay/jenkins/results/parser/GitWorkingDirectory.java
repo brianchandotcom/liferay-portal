@@ -1969,19 +1969,17 @@ public class GitWorkingDirectory {
 		if (exceptionThrown || (executionResult._exitValue != 0)) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Unable to delete remote branches:", "\n    ",
-					joinedBranchNames.replaceAll("\\s", "\n    "), " from ",
-					remote.getName(), "\n",
-					executionResult.getStandardError()));
+					"Unable to delete ", remote.getName(), " branches:",
+					"\n    ", joinedBranchNames.replaceAll("\\s", "\n    "),
+					"\n", executionResult.getStandardError()));
 
 			return false;
 		}
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Deleted remote branches:", "\n    ",
-				joinedBranchNames.replaceAll("\\s", "\n    "), " from ",
-				remote.getName()));
+				"Deleted ", remote.getName(), " branches:", "\n    ",
+				joinedBranchNames.replaceAll("\\s", "\n    ")));
 
 		return true;
 	}

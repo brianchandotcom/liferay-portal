@@ -29,8 +29,37 @@ public class PropertiesEmptyLinesCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		content = _fixMissingEmptyLinesAroundCategory(content);
+
 		if (!fileName.endsWith("/liferay-plugin-package.properties")) {
 			content = _fixMissingEmptyLinesAroundMultiLineProperty(content);
+		}
+
+		return content;
+	}
+
+	private String _fixMissingEmptyLinesAroundCategory(String content) {
+		Matcher matcher = _missingEmptyLineAfterCategoryPattern.matcher(
+			content);
+
+		while (matcher.find()) {
+			String nextLine = matcher.group(1);
+
+			if (!nextLine.matches("## .*")) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start(1) - 1);
+			}
+		}
+
+		matcher = _missingEmptyLineBeforeCategoryPattern.matcher(content);
+
+		while (matcher.find()) {
+			String previousLine = matcher.group(1);
+
+			if (!previousLine.matches("## .*")) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
+			}
 		}
 
 		return content;
@@ -57,9 +86,13 @@ public class PropertiesEmptyLinesCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private final Pattern _missingEmptyLineAfterCategoryPattern =
+		Pattern.compile("\n## \\w.*\n##\n([^\n]+)");
 	private final Pattern _missingEmptyLineAfterMultiLinePattern =
 		Pattern.compile(
 			"\n *[^ #\n].*\\\\\n *[^ #\n][^#\n]*([^\\\\\n])\n[^\n]");
+	private final Pattern _missingEmptyLineBeforeCategoryPattern =
+		Pattern.compile("([^\n]+)\n##\n");
 	private final Pattern _missingEmptyLineBeforeMultiLinePattern =
 		Pattern.compile("[^#\n\\\\]\n *[^ #\n].*\\\\\n");
 

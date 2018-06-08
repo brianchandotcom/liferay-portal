@@ -29,10 +29,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -112,17 +114,24 @@ public class ImportUtil {
 			return;
 		}
 
-		if (fragmentCollectionId < 0) {
+		if (fragmentCollectionId <= 0) {
 			FragmentCollection fragmentCollection =
 				_fragmentCollectionLocalService.fetchFragmentCollection(
 					themeDisplay.getScopeGroupId(),
 					_DEFAULT_FRAGMENT_COLLECTION_KEY);
 
 			if (fragmentCollection == null) {
-				fragmentCollection = _addFragmentCollection(
-					actionRequest, _DEFAULT_FRAGMENT_COLLECTION_KEY,
-					_DEFAULT_FRAGMENT_COLLECTION_KEY, StringPool.BLANK,
-					overwrite);
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(actionRequest);
+
+				fragmentCollection =
+					_fragmentCollectionService.addFragmentCollection(
+						themeDisplay.getScopeGroupId(),
+						_DEFAULT_FRAGMENT_COLLECTION_KEY,
+						LanguageUtil.get(
+							_portal.getHttpServletRequest(actionRequest),
+							_DEFAULT_FRAGMENT_COLLECTION_KEY),
+						StringPool.BLANK, serviceContext);
 			}
 
 			fragmentCollectionId = fragmentCollection.getFragmentCollectionId();
@@ -399,6 +408,9 @@ public class ImportUtil {
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	@Reference
+	private Portal _portal;
 
 	private class FragmentCollectionFolder {
 

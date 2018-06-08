@@ -76,11 +76,7 @@ public class ImportUtil {
 			String collectionPath = fileName.substring(
 				0, fileName.lastIndexOf(CharPool.SLASH));
 
-			String fragmentCollectionKey = collectionPath.substring(
-				collectionPath.lastIndexOf(CharPool.SLASH) + 1);
-
-			String fragmentCollectionName = fragmentCollectionKey;
-
+			String fragmentCollectionName = _getKey(fileName);
 			String fragmentCollectionDescription = StringPool.BLANK;
 
 			String collectionJSON = _getContent(zipFile, fileName);
@@ -99,7 +95,7 @@ public class ImportUtil {
 			}
 
 			FragmentCollection fragmentCollection = _addFragmentCollection(
-				actionRequest, fragmentCollectionKey, fragmentCollectionName,
+				actionRequest, _getKey(fileName), fragmentCollectionName,
 				fragmentCollectionDescription, overwrite);
 
 			importFragmentEntries(
@@ -128,10 +124,7 @@ public class ImportUtil {
 			String fragmentEntryPath = fileName.substring(
 				0, fileName.lastIndexOf(CharPool.SLASH));
 
-			String fragmentEntryKey = fragmentEntryPath.substring(
-				fragmentEntryPath.lastIndexOf(CharPool.SLASH) + 1);
-
-			String fragmentEntryName = fragmentEntryKey;
+			String fragmentEntryName = _getKey(fileName);
 
 			String fragmentCssPath = fragmentEntryPath + "/src/index.css";
 			String fragmentHtmlPath = fragmentEntryPath + "/src/index.html";
@@ -150,7 +143,7 @@ public class ImportUtil {
 			}
 
 			_addFragmentEntry(
-				actionRequest, fragmentCollectionId, fragmentEntryKey,
+				actionRequest, fragmentCollectionId, _getKey(fileName),
 				fragmentEntryName, _getContent(zipFile, fragmentCssPath),
 				_getContent(zipFile, fragmentHtmlPath),
 				_getContent(zipFile, fragmentJsPath), overwrite);
@@ -234,6 +227,13 @@ public class ImportUtil {
 		}
 
 		return StringUtil.read(zipFile.getInputStream(zipEntry));
+	}
+
+	private String _getKey(String fileName) {
+		String path = fileName.substring(
+			0, fileName.lastIndexOf(CharPool.SLASH));
+
+		return path.substring(path.lastIndexOf(CharPool.SLASH) + 1);
 	}
 
 	private boolean _isFragmentCollection(String fileName) {

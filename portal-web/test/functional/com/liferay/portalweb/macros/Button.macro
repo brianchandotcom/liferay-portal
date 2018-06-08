@@ -55,9 +55,9 @@
 		</execute>
 	</command>
 
-	<command name="clickMapTo">
+	<command name="clickMap">
 		<execute macro="Button#click">
-			<var name="button" value="Map To" />
+			<var name="button" value="Map" />
 		</execute>
 	</command>
 

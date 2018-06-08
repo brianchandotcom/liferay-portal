@@ -77,6 +77,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			FragmentEntryLink fragmentEntryLink, String html, String mode)
 		throws PortalException {
 
+		validateFragmentEntryHTML(html);
+
 		Document document = _getDocument(html);
 
 		for (Element element : document.select("*")) {

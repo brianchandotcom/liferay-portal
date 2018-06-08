@@ -352,6 +352,8 @@ public class StagingBarPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		updateParentLayoutsRevisions(layoutRevision, serviceContext);
+
 		LayoutRevision enableLayoutRevision =
 			_layoutRevisionLocalService.updateLayoutRevision(
 				serviceContext.getUserId(), layoutRevisionId,
@@ -520,6 +522,53 @@ public class StagingBarPortlet extends MVCPortlet {
 		LayoutSetLocalService layoutSetLocalService) {
 
 		_layoutSetLocalService = null;
+	}
+
+	protected void updateParentLayoutsRevisions(
+			LayoutRevision layoutRevision, ServiceContext serviceContext)
+		throws Exception {
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutRevision.getPlid());
+
+		if (layout == null) {
+			return;
+		}
+
+		long parentPlid = layout.getParentPlid();
+
+		Layout parentLayout = null;
+
+		while (true) {
+			parentLayout = _layoutLocalService.fetchLayout(parentPlid);
+
+			if (parentLayout == null) {
+				break;
+			}
+
+			LayoutRevision parentLayoutsRevision =
+				_layoutRevisionLocalService.fetchLatestLayoutRevision(
+					layoutRevision.getLayoutSetBranchId(),
+					parentLayout.getPlid());
+
+			_layoutRevisionLocalService.updateLayoutRevision(
+				serviceContext.getUserId(),
+				parentLayoutsRevision.getLayoutRevisionId(),
+				parentLayoutsRevision.getLayoutBranchId(),
+				parentLayoutsRevision.getName(),
+				parentLayoutsRevision.getTitle(),
+				parentLayoutsRevision.getDescription(),
+				parentLayoutsRevision.getKeywords(),
+				parentLayoutsRevision.getRobots(),
+				parentLayoutsRevision.getTypeSettings(),
+				parentLayoutsRevision.getIconImage(),
+				parentLayoutsRevision.getIconImageId(),
+				parentLayoutsRevision.getThemeId(),
+				parentLayoutsRevision.getColorSchemeId(),
+				parentLayoutsRevision.getCss(), serviceContext);
+
+			parentPlid = parentLayout.getParentPlid();
+		}
 	}
 
 	private void _deleteUnusedLayoutIconImage(LayoutRevision layoutRevision)

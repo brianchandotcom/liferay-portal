@@ -42,6 +42,13 @@
 		<execute macro="Upgrade#viewAssetPublisher" />
 	</command>
 
+	<command name="ViewAssetPublisherArchive621021" priority="5">
+		<property name="data.archive.type" value="data-archive-asset-publisher" />
+		<property name="portal.version" value="6.2.10.21" />
+
+		<execute macro="Upgrade#viewAssetPublisher" />
+	</command>
+
 	<command name="ViewAssetPublisherArchive625" priority="5">
 		<property name="data.archive.type" value="data-archive-asset-publisher" />
 		<property name="portal.version" value="6.2.5" />

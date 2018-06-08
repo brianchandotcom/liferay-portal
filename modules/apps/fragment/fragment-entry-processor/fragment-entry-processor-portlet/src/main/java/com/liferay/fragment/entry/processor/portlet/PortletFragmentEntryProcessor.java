@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -120,6 +122,13 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				portletPreferences = _getPreferences(
 					portletName, fragmentEntryLink, instanceId,
 					defaultPreferences);
+			}
+
+			if (Validator.isNull(portletPreferences)) {
+				Portlet portlet = _portletLocalService.getPortletById(
+					portletName);
+
+				portletPreferences = portlet.getDefaultPreferences();
 			}
 
 			runtimeTagElement.attr("defaultPreferences", portletPreferences);
@@ -344,6 +353,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

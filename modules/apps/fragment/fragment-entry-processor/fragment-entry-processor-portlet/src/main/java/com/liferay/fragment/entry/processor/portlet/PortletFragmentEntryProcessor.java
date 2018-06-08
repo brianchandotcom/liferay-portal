@@ -131,7 +131,12 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				portletPreferences = portlet.getDefaultPreferences();
 			}
 
+			Document preferencesDocument = Jsoup.parse(portletPreferences);
+
+			portletPreferences = preferencesDocument.html();
+
 			runtimeTagElement.attr("defaultPreferences", portletPreferences);
+
 			runtimeTagElement.attr("instanceId", instanceId);
 			runtimeTagElement.attr("persistSettings=false", true);
 			runtimeTagElement.attr("portletName", portletName);

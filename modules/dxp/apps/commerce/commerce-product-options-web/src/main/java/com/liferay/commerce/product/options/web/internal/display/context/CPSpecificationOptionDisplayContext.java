@@ -28,9 +28,12 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -82,6 +85,15 @@ public class CPSpecificationOptionDisplayContext
 	}
 
 	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter("navigation", getNavigation());
+
+		return portletURL;
+	}
+
+	@Override
 	public SearchContainer<CPSpecificationOption> getSearchContainer()
 		throws PortalException {
 
@@ -104,38 +116,37 @@ public class CPSpecificationOptionDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		List<CPSpecificationOption> results;
-		int total;
+		Sort sort = CPOptionsPortletUtil.getCPSpecificationOptionSort(
+			getOrderByCol(), getOrderByType());
 
-		if (isSearch()) {
-			Sort sort = CPOptionsPortletUtil.getCPSpecificationOptionSort(
-				getOrderByCol(), getOrderByType());
+		Boolean facetable = null;
 
-			BaseModelSearchResult<CPSpecificationOption>
-				cpSpecificationOptionBaseModelSearchResult =
-					_cpSpecificationOptionService.searchCPSpecificationOptions(
-						cpRequestHelper.getCompanyId(), getScopeGroupId(),
-						getKeywords(), searchContainer.getStart(),
-						searchContainer.getEnd(), sort);
+		String navigation = getNavigation();
 
-			total = cpSpecificationOptionBaseModelSearchResult.getLength();
-			results =
-				cpSpecificationOptionBaseModelSearchResult.getBaseModels();
+		if (navigation.equals("no")) {
+			facetable = false;
 		}
-		else {
-			total =
-				_cpSpecificationOptionService.getCPSpecificationOptionsCount(
-					getScopeGroupId());
-
-			results = _cpSpecificationOptionService.getCPSpecificationOptions(
-				getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+		else if (navigation.equals("yes")) {
+			facetable = true;
 		}
 
-		searchContainer.setTotal(total);
-		searchContainer.setResults(results);
+		BaseModelSearchResult<CPSpecificationOption>
+			cpSpecificationOptionBaseModelSearchResult =
+				_cpSpecificationOptionService.searchCPSpecificationOptions(
+					cpRequestHelper.getCompanyId(), getScopeGroupId(),
+					facetable, getKeywords(), searchContainer.getStart(),
+					searchContainer.getEnd(), sort);
+
+		searchContainer.setTotal(
+			cpSpecificationOptionBaseModelSearchResult.getLength());
+		searchContainer.setResults(
+			cpSpecificationOptionBaseModelSearchResult.getBaseModels());
 
 		return searchContainer;
+	}
+
+	protected String getNavigation() {
+		return ParamUtil.getString(httpServletRequest, "navigation");
 	}
 
 	private final CPOptionCategoryService _cpOptionCategoryService;

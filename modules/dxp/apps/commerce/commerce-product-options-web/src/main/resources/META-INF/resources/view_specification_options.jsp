@@ -73,14 +73,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
+			label="use-in-faceted-navigation"
+			navigationKeys='<%= new String[] {"all", "yes", "no"} %>'
 			portletURL="<%= cpSpecificationOptionDisplayContext.getPortletURL() %>"
 		/>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= cpSpecificationOptionDisplayContext.getOrderByCol() %>"
 			orderByType="<%= cpSpecificationOptionDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"label", "modified-date"} %>'
+			orderColumns='<%= new String[] {"group", "label", "modified-date"} %>'
 			portletURL="<%= cpSpecificationOptionDisplayContext.getPortletURL() %>"
 		/>
 
@@ -157,7 +158,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-content"
-								name="group"
+								name="default-group"
 								value="<%= HtmlUtil.escape(cpSpecificationOptionDisplayContext.getCPOptionCategoryTitle(cpSpecificationOption)) %>"
 							/>
 

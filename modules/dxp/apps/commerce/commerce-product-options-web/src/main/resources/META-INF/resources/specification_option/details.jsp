@@ -36,7 +36,7 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 <liferay-ui:error exception="<%= CPSpecificationOptionKeyException.MustNotBeNull.class %>" message="please-enter-a-valid-key" />
 
 <aui:fieldset>
-	<aui:input autoFocus="<%= true %>" name="title" />
+	<aui:input autoFocus="<%= true %>" label="label" name="title" />
 
 	<aui:input name="description" />
 

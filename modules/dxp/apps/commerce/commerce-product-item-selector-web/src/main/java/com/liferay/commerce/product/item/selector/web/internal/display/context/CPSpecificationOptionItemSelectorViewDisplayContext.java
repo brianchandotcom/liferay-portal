@@ -83,7 +83,7 @@ public class CPSpecificationOptionItemSelectorViewDisplayContext
 			BaseModelSearchResult<CPSpecificationOption>
 				cpSpecificationOptionBaseModelSearchResult =
 					_cpSpecificationOptionService.searchCPSpecificationOptions(
-						themeDisplay.getCompanyId(), getScopeGroupId(),
+						themeDisplay.getCompanyId(), getScopeGroupId(), null,
 						getKeywords(), searchContainer.getStart(),
 						searchContainer.getEnd(), sort);
 

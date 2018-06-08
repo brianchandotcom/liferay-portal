@@ -4,9 +4,9 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.external.data.source.test.model.TestEntity" />
 	<class name="com.liferay.external.data.source.test.model.impl.TestEntityImpl" table="TestEntity">
-		<id column="id_" name="id" type="long">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="id_" name="id" type="long">
 			<generator class="assigned" />
 		</id>
-		<property column="data_" name="data" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="data_" name="data" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

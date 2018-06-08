@@ -43,14 +43,14 @@
 
 		<execute macro="SitePages#addPublicPage">
 			<var name="pageName" value="Site Page Name" />
-			<var name="pageTemplateName" value="Content Display Page" />
+			<var name="pageTemplateName" value="Wiki" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Site Page Name" />
 		</execute>
 
-		<for list="Tags Navigation,Categories Navigation,Asset Publisher" param="portletName">
+		<for list="Tags Navigation,Categories Navigation,Wiki" param="portletName">
 			<execute macro="Portlet#viewSpecificPG">
 				<var name="portletName" value="${portletName}" />
 			</execute>

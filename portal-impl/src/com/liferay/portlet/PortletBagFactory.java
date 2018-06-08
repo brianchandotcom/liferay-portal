@@ -68,6 +68,7 @@ import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.internal.FriendlyURLMapperTrackerImpl;
+import com.liferay.portlet.internal.PortletBagImpl;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

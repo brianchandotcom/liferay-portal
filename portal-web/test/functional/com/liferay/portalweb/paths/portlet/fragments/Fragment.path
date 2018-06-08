@@ -72,12 +72,12 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT</td>
-	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT_CK_EDITOR</td>
-	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]//div[contains(@class,'cke_editable_inline')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]//div[contains(@class,'cke_editable_inline')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,17 +107,17 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_NAVIGATION_PORTLET</td>
-	<td>//div[contains(@class,'fragment-entry-links')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_NAVIGATION_PORTLET_DISPLAY_CLASS</td>
-	<td>//div[contains(@class,'fragment-entry-links')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]//ul[contains(@class,'${key_displayTemplateClass}')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]//ul[contains(@class,'${key_displayTemplateClass}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_PORTLET_CONFIGURE</td>
-	<td>//div[contains(@class,'fragment-entry-links')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')]//button[contains(.,'Configure')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')]//button[contains(.,'Configure')]</td>
 	<td></td>
 </tr>
 <tr>

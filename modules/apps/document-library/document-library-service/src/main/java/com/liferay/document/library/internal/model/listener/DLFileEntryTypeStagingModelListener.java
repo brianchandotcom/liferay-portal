@@ -45,16 +45,16 @@ public class DLFileEntryTypeStagingModelListener
 	public void onAfterRemove(DLFileEntryType dlFileEntryType)
 		throws ModelListenerException {
 
-		if (!dlFileEntryType.isExportable()) {
-			return;
-		}
-
 		_stagingModelListener.onAfterRemove(dlFileEntryType);
 	}
 
 	@Override
 	public void onAfterUpdate(DLFileEntryType dlFileEntryType)
 		throws ModelListenerException {
+
+		if (!dlFileEntryType.isExportable()) {
+			return;
+		}
 
 		_stagingModelListener.onAfterUpdate(dlFileEntryType);
 	}

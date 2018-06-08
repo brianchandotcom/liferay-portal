@@ -50,7 +50,7 @@ public class CommerceWarehouseFinderImpl
 
 	@Override
 	public int countByKeywords(
-		long groupId, String keywords, boolean all, long commerceCountryId) {
+		long groupId, String keywords, Boolean active, long commerceCountryId) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -71,14 +71,14 @@ public class CommerceWarehouseFinderImpl
 		}
 
 		return countByG_N_D_S_C_Z_C(
-			groupId, names, descriptions, streets, cities, zips, all,
+			groupId, names, descriptions, streets, cities, zips, active,
 			commerceCountryId, andOperator);
 	}
 
 	@Override
 	public int countByG_N_D_S_C_Z_C(
 		long groupId, String name, String description, String street,
-		String city, String zip, boolean all, long commerceCountryId,
+		String city, String zip, Boolean active, long commerceCountryId,
 		boolean andOperator) {
 
 		String[] names = _customSQL.keywords(name);
@@ -88,14 +88,14 @@ public class CommerceWarehouseFinderImpl
 		String[] zips = _customSQL.keywords(zip);
 
 		return countByG_N_D_S_C_Z_C(
-			groupId, names, descriptions, streets, cities, zips, all,
+			groupId, names, descriptions, streets, cities, zips, active,
 			commerceCountryId, andOperator);
 	}
 
 	@Override
 	public int countByG_N_D_S_C_Z_C(
 		long groupId, String[] names, String[] descriptions, String[] streets,
-		String[] cities, String[] zips, boolean all, long commerceCountryId,
+		String[] cities, String[] zips, Boolean active, long commerceCountryId,
 		boolean andOperator) {
 
 		names = _customSQL.keywords(names);
@@ -133,7 +133,7 @@ public class CommerceWarehouseFinderImpl
 				sql, "lower(CommerceWarehouse.zips)", StringPool.LIKE, false,
 				zips);
 
-			if (all) {
+			if (active == null) {
 				sql = StringUtil.replace(sql, _ALL_SQL, StringPool.BLANK);
 			}
 			else {
@@ -162,6 +162,10 @@ public class CommerceWarehouseFinderImpl
 
 			if (commerceCountryId >= 0) {
 				qPos.add(commerceCountryId);
+			}
+
+			if (active != null) {
+				qPos.add(active);
 			}
 
 			Iterator<Long> itr = q.iterate();
@@ -216,7 +220,7 @@ public class CommerceWarehouseFinderImpl
 
 	@Override
 	public List<CommerceWarehouse> findByKeywords(
-		long groupId, String keywords, boolean all, long commerceCountryId,
+		long groupId, String keywords, Boolean active, long commerceCountryId,
 		int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator) {
 
@@ -239,14 +243,14 @@ public class CommerceWarehouseFinderImpl
 		}
 
 		return findByG_N_D_S_C_Z_C(
-			groupId, names, descriptions, streets, cities, zips, all,
+			groupId, names, descriptions, streets, cities, zips, active,
 			commerceCountryId, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<CommerceWarehouse> findByG_N_D_S_C_Z_C(
 		long groupId, String name, String description, String street,
-		String city, String zip, boolean all, long commerceCountryId,
+		String city, String zip, Boolean active, long commerceCountryId,
 		boolean andOperator, int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator) {
 
@@ -257,14 +261,14 @@ public class CommerceWarehouseFinderImpl
 		String[] zips = _customSQL.keywords(zip);
 
 		return findByG_N_D_S_C_Z_C(
-			groupId, names, descriptions, streets, cities, zips, all,
+			groupId, names, descriptions, streets, cities, zips, active,
 			commerceCountryId, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<CommerceWarehouse> findByG_N_D_S_C_Z_C(
 		long groupId, String[] names, String[] descriptions, String[] streets,
-		String[] cities, String[] zips, boolean all, long commerceCountryId,
+		String[] cities, String[] zips, Boolean active, long commerceCountryId,
 		boolean andOperator, int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator) {
 
@@ -303,7 +307,7 @@ public class CommerceWarehouseFinderImpl
 				sql, "lower(CommerceWarehouse.zips)", StringPool.LIKE, false,
 				zips);
 
-			if (all) {
+			if (active == null) {
 				sql = StringUtil.replace(sql, _ALL_SQL, StringPool.BLANK);
 			}
 			else {
@@ -335,6 +339,10 @@ public class CommerceWarehouseFinderImpl
 				qPos.add(commerceCountryId);
 			}
 
+			if (active != null) {
+				qPos.add(active);
+			}
+
 			return (List<CommerceWarehouse>)QueryUtil.list(
 				q, getDialect(), start, end);
 		}
@@ -347,7 +355,7 @@ public class CommerceWarehouseFinderImpl
 	}
 
 	private static final String _ACTIVE_SQL =
-		"AND (CommerceWarehouse.active_ = true)";
+		"AND (CommerceWarehouse.active_ = ?)";
 
 	private static final String _ALL_SQL = "[$ALL$]";
 

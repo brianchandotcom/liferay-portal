@@ -399,7 +399,7 @@ while (manageableCalendarsIterator.hasNext()) {
 					<aui:row cssClass="calendar-booking-invitations">
 						<aui:col width="<%= (calendarBooking != null) ? 25 : 33 %>">
 							<label class="field-label">
-								<liferay-ui:message key="pending" /> (<span id="<portlet:namespace />pendingCounter"><%= pendingCalendarsJSONArray.length() %></span>)
+								<liferay-ui:message key="pending-calendar" /> (<span id="<portlet:namespace />pendingCounter"><%= pendingCalendarsJSONArray.length() %></span>)
 							</label>
 
 							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListPending"></div>

@@ -16,7 +16,3 @@ dependencies {
 	soyCompile project(":apps:frontend-js:frontend-js-web")
 	soyCompile project(":apps:frontend-taglib:frontend-taglib")
 }
-
-replaceSoyTranslation {
-	dependsOn transpileJS
-}

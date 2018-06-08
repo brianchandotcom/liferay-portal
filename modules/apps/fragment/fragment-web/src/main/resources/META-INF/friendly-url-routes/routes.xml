@@ -10,7 +10,6 @@
 	</route>
 	<route>
 		<pattern>/fragment_collection/{fragmentCollectionId:\d+}/fragment_entry/{fragmentEntryId:\d+}/usages</pattern>
-		<ignored-parameter name="redirect" />
 		<implicit-parameter name="mvcRenderCommandName">/fragment/view_fragment_entry_usages</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>

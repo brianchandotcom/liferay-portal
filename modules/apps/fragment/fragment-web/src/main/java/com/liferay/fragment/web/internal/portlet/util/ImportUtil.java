@@ -43,6 +43,7 @@ import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -211,6 +212,16 @@ public class ImportUtil {
 		return StringUtil.read(zipFile.getInputStream(zipEntry));
 	}
 
+	private String _getFileName(String path) {
+		int pos = path.lastIndexOf(CharPool.SLASH);
+
+		if (pos > 0) {
+			return path.substring(pos + 1);
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private Map<String, FragmentCollectionFolder>
 		_getFragmentCollectionFolderMap(
 			ZipFile zipFile, Map<String, String> orphanFragmentEntries) {
@@ -338,7 +349,8 @@ public class ImportUtil {
 	}
 
 	private boolean _isFragmentCollection(String fileName) {
-		if (fileName.endsWith(
+		if (Objects.equals(
+				_getFileName(fileName),
 				FragmentExportImportConstants.COLLECTION_CONFIG_FILE_NAME)) {
 
 			return true;
@@ -348,7 +360,8 @@ public class ImportUtil {
 	}
 
 	private boolean _isFragmentEntry(String fileName) {
-		if (fileName.endsWith(
+		if (Objects.equals(
+				_getFileName(fileName),
 				FragmentExportImportConstants.FRAGMENT_CONFIG_FILE_NAME)) {
 
 			return true;

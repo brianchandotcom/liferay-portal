@@ -2299,7 +2299,7 @@
 		</execute>
 
 		<execute macro="Portlet#viewEmptyMessage">
-			<var name="message" value="There are no results." />
+			<var name="message" value="There are no templates." />
 		</execute>
 	</command>
 

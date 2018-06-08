@@ -92,6 +92,11 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
+	public boolean isSupportsClob() {
+		return _SUPPORTS_CLOB;
+	}
+
+	@Override
 	public boolean isSupportsUpdateWithInnerJoin() {
 		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
 	}
@@ -203,6 +208,8 @@ public class MySQLDB extends BaseDB {
 		" tinyint", " datetime(6)", " double", " integer", " bigint",
 		" longtext", " longtext", " varchar", "  auto_increment", "commit"
 	};
+
+	private static final boolean _SUPPORTS_CLOB = false;
 
 	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
 

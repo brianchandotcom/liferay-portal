@@ -152,6 +152,11 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	public boolean isSupportsClob() {
+		return _SUPPORTS_CLOB;
+	}
+
+	@Override
 	public boolean isSupportsQueryingAfterException() {
 		return _SUPPORTS_QUERYING_AFTER_EXCEPTION;
 	}
@@ -273,6 +278,8 @@ public class PostgreSQLDB extends BaseDB {
 		" bytea", " bool", " timestamp", " double precision", " integer",
 		" bigint", " text", " text", " varchar", "", "commit"
 	};
+
+	private static final boolean _SUPPORTS_CLOB = false;
 
 	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;
 

@@ -98,7 +98,8 @@ public class ProductInstanceHelper {
 			Field.ENTRY_CLASS_PK, CPInstanceIndexer.FIELD_SKU,
 			Field.MODIFIED_DATE,
 			CPInstanceIndexer.FIELD_MANUFACTURER_PART_NUMBER,
-			CPInstanceIndexer.FIELD_GTIN);
+			CPInstanceIndexer.FIELD_GTIN,
+			CPInstanceIndexer.FIELD_EXTERNAL_REFERENCE_CODE);
 
 		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);
@@ -111,12 +112,13 @@ public class ProductInstanceHelper {
 		return searchContext;
 	}
 
-	public CPInstance createCPInstance(
+	public CPInstance upsertCPInstance(
 			long cpDefinitionId, String sku, String gtin,
 			String manufacturerPartNumber, boolean purchasable, double width,
 			double height, double depth, double weight, double cost,
 			double price, double promoPrice, boolean published,
-			Date displayDate, Date expirationDate, boolean neverExpire)
+			Date displayDate, Date expirationDate, boolean neverExpire,
+            String externalReference)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
@@ -175,90 +177,10 @@ public class ProductInstanceHelper {
 			expirationDateHour += 12;
 		}
 
-		return _cpInstanceService.addCPInstance(
+		return _cpInstanceService.upsertCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
 			null, width, height, depth, weight, new BigDecimal(price),
-			new BigDecimal(promoPrice), new BigDecimal(cost), published, null,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
-	}
-
-	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, double cost,
-			double price, double promoPrice, boolean published,
-			Date displayDate, Date expirationDate, boolean neverExpire)
-		throws PortalException {
-
-		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
-
-		User user = userLocalService.getUserById(
-			PrincipalThreadLocal.getUserId());
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setCompanyId(user.getCompanyId());
-		serviceContext.setScopeGroupId(cpInstance.getGroupId());
-		serviceContext.setTimeZone(user.getTimeZone());
-		serviceContext.setUserId(user.getUserId());
-
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		if (displayDate != null) {
-			displayCalendar.setTime(displayDate);
-		}
-		else if (cpInstance.getDisplayDate() != null) {
-			displayCalendar.setTime(cpInstance.getDisplayDate());
-		}
-		else {
-			displayCalendar.add(Calendar.YEAR, -1);
-		}
-
-		int displayDateMonth = displayCalendar.get(Calendar.MONTH);
-		int displayDateDay = displayCalendar.get(Calendar.DAY_OF_MONTH);
-		int displayDateYear = displayCalendar.get(Calendar.YEAR);
-		int displayDateHour = displayCalendar.get(Calendar.HOUR);
-		int displayDateMinute = displayCalendar.get(Calendar.MINUTE);
-		int displayDateAmPm = displayCalendar.get(Calendar.AM_PM);
-
-		if (displayDateAmPm == Calendar.PM) {
-			displayDateHour += 12;
-		}
-
-		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		if (expirationDate != null) {
-			expirationCalendar.setTime(expirationDate);
-		}
-		else if (cpInstance.getExpirationDate() != null) {
-			expirationCalendar.setTime(cpInstance.getExpirationDate());
-		}
-		else {
-			expirationCalendar.add(Calendar.YEAR, -1);
-		}
-
-		int expirationDateMonth = expirationCalendar.get(Calendar.MONTH);
-		int expirationDateDay = expirationCalendar.get(Calendar.DAY_OF_MONTH);
-		int expirationDateYear = expirationCalendar.get(Calendar.YEAR);
-		int expirationDateHour = expirationCalendar.get(Calendar.HOUR);
-		int expirationDateMinute = expirationCalendar.get(Calendar.MINUTE);
-		int expirationDateAmPm = expirationCalendar.get(Calendar.AM_PM);
-
-		if (expirationDateAmPm == Calendar.PM) {
-			expirationDateHour += 12;
-		}
-
-		return _cpInstanceService.updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable, width,
-			height, depth, weight, new BigDecimal(price),
-			new BigDecimal(promoPrice), new BigDecimal(cost), published,
+			new BigDecimal(promoPrice), new BigDecimal(cost), published, externalReference,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

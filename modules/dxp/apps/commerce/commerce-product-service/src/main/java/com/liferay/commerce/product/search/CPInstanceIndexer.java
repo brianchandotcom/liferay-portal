@@ -210,6 +210,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 		document.addKeyword(
 			FIELD_CP_DEFINITION_ID, cpInstance.getCPDefinitionId());
 		document.addKeyword(FIELD_PURCHASABLE, cpInstance.getPurchasable());
+		document.addKeyword(FIELD_EXTERNAL_REFERENCE_CODE, cpInstance.getExternalReferenceCode());
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelListMap =

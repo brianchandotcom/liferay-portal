@@ -32,6 +32,7 @@ import com.liferay.commerce.data.integration.apio.internal.util.ProductInstanceH
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
 import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -89,10 +90,6 @@ public class ProductInstanceNestedCollectionResource
 
 		return builder.addGetter(
 			this::_getCPInstance
-		).addUpdater(
-			this::_updateCPInstance,
-			_productInstancePermissionChecker.forUpdating()::apply,
-			ProductInstanceCreatorForm::buildForm
 		).addRemover(
 			idempotent(_cpInstanceService::deleteCPInstance),
 			_productInstancePermissionChecker.forDeleting()::apply
@@ -122,6 +119,10 @@ public class ProductInstanceNestedCollectionResource
 				() -> document.getDate(Field.MODIFIED_DATE)
 			).getUnchecked()
 		).addString(
+			"externalReferenceCode",
+			document -> document.get(
+				CPInstanceIndexer.FIELD_EXTERNAL_REFERENCE_CODE)
+		).addString(
 			"sku", document -> document.get(CPInstanceIndexer.FIELD_SKU)
 		).build();
 	}
@@ -131,14 +132,14 @@ public class ProductInstanceNestedCollectionResource
 		throws PortalException {
 
 		try {
-			CPInstance cpInstance = _productInstanceHelper.createCPInstance(
+			CPInstance cpInstance = _productInstanceHelper.upsertCPInstance(
 				cpDefinitionId, form.getSku(), form.getGtin(),
 				form.getManufacturerPartNumber(), form.getPurchasable(),
 				form.getWidth(), form.getHeight(), form.getDepth(),
 				form.getWeight(), form.getCost(), form.getPrice(),
 				form.getPromoPrice(), form.getPublished(),
 				form.getDisplayDate(), form.getExpirationDate(),
-				form.getNeverExpire());
+				form.getNeverExpire(), form.getExternalReferenceCode());
 
 			Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
 				CPInstance.class);
@@ -229,34 +230,6 @@ public class ProductInstanceNestedCollectionResource
 			}
 
 			return new PageItems<>(documents, hits.getLength());
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
-	private Document _updateCPInstance(
-		Long cpInstanceId, ProductInstanceCreatorForm form) {
-
-		try {
-			CPInstance cpInstance = _productInstanceHelper.updateCPInstance(
-				cpInstanceId, form.getSku(), form.getGtin(),
-				form.getManufacturerPartNumber(), form.getPurchasable(),
-				form.getWidth(), form.getHeight(), form.getDepth(),
-				form.getWeight(), form.getCost(), form.getPrice(),
-				form.getPromoPrice(), form.getPublished(),
-				form.getDisplayDate(), form.getExpirationDate(),
-				form.getNeverExpire());
-
-			Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
-				CPInstance.class);
-
-			return indexer.getDocument(cpInstance);
-		}
-		catch (CPInstanceDisplayDateException cpidde) {
-			throw new BadRequestException(
-				"Display Date not defined on Product Instance " + form.getSku(),
-				cpidde);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

@@ -63,6 +63,9 @@ public class ProductInstanceCreatorForm {
 			"expirationDate", ProductInstanceCreatorForm::_setExpirationDate
 		).addOptionalBoolean(
 			"neverExpire", ProductInstanceCreatorForm::_setNeverExpire
+		).addRequiredString(
+			"externalReferenceCode",
+				ProductInstanceCreatorForm::_setExternalReferenceCode
 		).build();
 	}
 
@@ -80,6 +83,10 @@ public class ProductInstanceCreatorForm {
 
 	public Date getExpirationDate() {
 		return _expirationDate;
+	}
+
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
 	}
 
 	public String getGtin() {
@@ -142,6 +149,10 @@ public class ProductInstanceCreatorForm {
 		_expirationDate = expirationDate;
 	}
 
+	private void _setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	private void _setGtin(String gtin) {
 		_gtin = gtin;
 	}
@@ -190,6 +201,7 @@ public class ProductInstanceCreatorForm {
 	private double _depth;
 	private Date _displayDate;
 	private Date _expirationDate;
+	private String _externalReferenceCode;
 	private String _gtin;
 	private double _height;
 	private String _manufacturerPartNumber;

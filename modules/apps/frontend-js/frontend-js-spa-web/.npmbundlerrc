@@ -19,11 +19,19 @@
 		}
 	},
 	"exclude": {
-		"url": true,
+		"bootstrap": [
+			"Gruntfile.js",
+			"grunt/**/*"
+		],
 		"path-browserify": true,
 		"punycode": true,
 		"querystring": true,
-		"senna": ["build/**", "src/**", "test/**"]
+		"senna": [
+			"build/**",
+			"src/**",
+			"test/**"
+		],
+		"url": true
 	},
 	"output": "classes/META-INF/resources"
 }

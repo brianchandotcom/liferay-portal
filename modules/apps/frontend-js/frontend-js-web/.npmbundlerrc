@@ -22,6 +22,10 @@
 	"exclude": {
 		"*": true
 	},
-	"ignore": ["**/*.js", "!**/*.es.js", "!**/*.soy.js"],
+	"ignore": [
+		"**/*.js",
+		"!**/*.es.js",
+		"!**/*.soy.js"
+	],
 	"output": "classes/META-INF/resources/"
 }

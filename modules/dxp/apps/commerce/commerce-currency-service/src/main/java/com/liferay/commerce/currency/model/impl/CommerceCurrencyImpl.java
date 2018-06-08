@@ -20,6 +20,7 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * @author Marco Leo
@@ -34,6 +35,12 @@ public class CommerceCurrencyImpl extends CommerceCurrencyBaseImpl {
 	@Override
 	public CommerceMoney getZero() {
 		return CommerceMoneyFactoryUtil.create(this, BigDecimal.ZERO);
+	}
+
+	@Override
+	public BigDecimal round(BigDecimal value) {
+		return value.setScale(
+			getMaxFractionDigits(), RoundingMode.valueOf(getRoundingMode()));
 	}
 
 }

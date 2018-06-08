@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.internal.storage.StorageEngineAccessor;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -50,6 +49,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * @author Leonardo Barros
@@ -593,6 +594,13 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		Class<?> clazz = getClass();
+
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, clazz.getClassLoader());
+	}
+
 	protected boolean isKeepFormInstanceRecordVersionLabel(
 			DDMFormInstanceRecordVersion lastDDMFormInstanceRecordVersion,
 			DDMFormInstanceRecordVersion latestDDMFormInstanceRecordVersion,
@@ -672,15 +680,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 		DDMFormInstance formInstance = formInstanceRecord.getFormInstance();
 
-		DDMStructure ddmStructure = formInstance.getStructure();
-
-		String ddmStructureName = ddmStructure.getName(locale);
-
-		String recordSetName = formInstance.getName(locale);
-
 		String title = LanguageUtil.format(
-			locale, "new-x-for-list-x",
-			new Object[] {ddmStructureName, recordSetName}, false);
+			getResourceBundle(locale), "new-entry-for-form-x",
+			formInstance.getName(locale), false);
 
 		if (addDraftAssetEntry) {
 			assetEntryLocalService.updateEntry(
@@ -690,7 +692,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				DDMFormInstanceRecord.class.getName(),
 				formInstanceRecordVersion.getFormInstanceRecordVersionId(),
 				formInstanceRecord.getUuid(), 0, assetCategoryIds,
-				assetTagNames, true, false, null, null, null, null,
+				assetTagNames, true, true, null, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
 				null, 0, 0, priority);
 		}
@@ -702,7 +704,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				DDMFormInstanceRecord.class.getName(),
 				formInstanceRecord.getFormInstanceRecordId(),
 				formInstanceRecord.getUuid(), 0, assetCategoryIds,
-				assetTagNames, true, false, null, null, null, null,
+				assetTagNames, true, true, null, null, null, null,
 				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
 				null, 0, 0, priority);
 		}

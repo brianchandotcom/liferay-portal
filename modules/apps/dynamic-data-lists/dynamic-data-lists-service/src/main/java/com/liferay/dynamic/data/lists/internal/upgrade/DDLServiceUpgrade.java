@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.internal.upgrade;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeKernelPackage;
 import com.liferay.dynamic.data.lists.internal.upgrade.v1_0_0.UpgradeLastPublishDate;
@@ -102,8 +103,13 @@ public class DDLServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.2.0", "1.2.1",
 			new com.liferay.dynamic.data.lists.internal.upgrade.v1_2_1.
-				UpgradeDDLRecord(_ddmFormInstanceRecordLocalService));
+				UpgradeDDLRecord(
+					_assetEntryLocalService,
+					_ddmFormInstanceRecordLocalService));
 	}
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

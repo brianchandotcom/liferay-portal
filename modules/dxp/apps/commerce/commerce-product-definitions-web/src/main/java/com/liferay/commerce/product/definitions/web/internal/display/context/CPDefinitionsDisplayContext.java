@@ -23,14 +23,7 @@ import com.liferay.commerce.product.definitions.web.portlet.action.ActionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -50,8 +43,6 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -62,16 +53,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.CustomAttributesUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -99,33 +87,6 @@ public class CPDefinitionsDisplayContext
 		_itemSelector = itemSelector;
 	}
 
-	public List<DropdownItem> getActionDropdownItems() {
-		return new DropdownItemList() {
-			{
-				RenderResponse renderResponse =
-					cpRequestHelper.getRenderResponse();
-
-				add(
-					SafeConsumer.ignore(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								"javascript:" + renderResponse.getNamespace() +
-									"deleteCPDefinitions();");
-
-							boolean trashEnabled = TrashUtil.isTrashEnabled(
-								getScopeGroupId());
-
-							dropdownItem.setIcon(
-								trashEnabled ? "trash" : "times");
-							dropdownItem.setLabel(
-								trashEnabled ? "recycle-bin" : "delete");
-
-							dropdownItem.setQuickAction(true);
-						}));
-			}
-		};
-	}
-
 	public String getCategorySelectorURL(String eventName) throws Exception {
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			httpServletRequest, AssetCategory.class.getName(),
@@ -142,45 +103,6 @@ public class CPDefinitionsDisplayContext
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
-	}
-
-	public String getClearResultsURL() throws PortalException {
-		PortletURL clearResultsURL = getPortletURL();
-
-		clearResultsURL.setParameter("keywords", StringPool.BLANK);
-
-		return clearResultsURL.toString();
-	}
-
-	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				RenderResponse renderResponse =
-					cpRequestHelper.getRenderResponse();
-
-				for (CPType curCPType : getCPTypes()) {
-					addPrimaryDropdownItem(
-						dropdownItem -> {
-							dropdownItem.setHref(
-								renderResponse.createRenderURL(), Constants.CMD,
-								Constants.ADD, "mvcRenderCommandName",
-								"editProductDefinition", "backURL",
-								PortalUtil.getCurrentCompleteURL(
-									httpServletRequest),
-								"productTypeName", curCPType.getName(),
-								"toolbarItem",
-								"view-product-definition-details");
-							dropdownItem.setLabel(
-								curCPType.getLabel(
-									cpRequestHelper.getLocale()));
-						});
-				}
-			}
-		};
-	}
-
-	public String[] getDisplayViews() {
-		return new String[] {"icon", "descriptive", "list"};
 	}
 
 	public String getItemSelectorUrl() {
@@ -290,44 +212,6 @@ public class CPDefinitionsDisplayContext
 		return managementBarFilterItems;
 	}
 
-	public List<DropdownItem> getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							new DropdownItemList() {
-								{
-									for (String orderColumn :
-											getOrderColumns()) {
-
-										add(
-											SafeConsumer.ignore(
-												dropdownItem -> {
-													dropdownItem.setActive(
-														orderColumn.equals(
-															getOrderByCol()));
-													dropdownItem.setHref(
-														getPortletURL(),
-														"orderByCol",
-														orderColumn);
-													dropdownItem.setLabel(
-														orderColumn);
-												}));
-									}
-								}
-							});
-
-						dropdownGroupItem.setLabel("order-by");
-					});
-			}
-		};
-	}
-
-	public String[] getOrderColumns() {
-		return new String[] {"display-date", "modified-date", "title"};
-	}
-
 	@Override
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = super.getPortletURL();
@@ -432,16 +316,6 @@ public class CPDefinitionsDisplayContext
 		return searchContainer;
 	}
 
-	public String getSortingURL() throws PortalException {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
-	}
-
 	public String getUrlTitleMapAsXML() throws PortalException {
 		long cpDefinitionId = getCPDefinitionId();
 
@@ -450,25 +324,6 @@ public class CPDefinitionsDisplayContext
 		}
 
 		return _cpDefinitionService.getUrlTitleMapAsXML(cpDefinitionId);
-	}
-
-	public List<ViewTypeItem> getViewTypeItems() throws PortalException {
-		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
-			{
-				if (ArrayUtil.contains(getDisplayViews(), "icon")) {
-					addCardViewTypeItem();
-				}
-
-				if (ArrayUtil.contains(getDisplayViews(), "descriptive")) {
-					addListViewTypeItem();
-				}
-
-				if (ArrayUtil.contains(getDisplayViews(), "list")) {
-					addTableViewTypeItem();
-				}
-			}
-
-		};
 	}
 
 	public String getVocabularyIds() throws Exception {

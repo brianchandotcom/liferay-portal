@@ -320,6 +320,9 @@ public class LocalGitSyncUtil {
 		String cacheBranchName, GitWorkingDirectory gitWorkingDirectory,
 		Map<String, GitWorkingDirectory.Branch> remoteBranches) {
 
+		List<GitWorkingDirectory.Branch> remoteCacheBranches = new ArrayList<>(
+			2);
+
 		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
 				remoteBranches.entrySet()) {
 
@@ -329,28 +332,11 @@ public class LocalGitSyncUtil {
 				continue;
 			}
 
-			deleteRemoteRepositoryCacheBranch(
-				gitWorkingDirectory, entry.getValue());
+			remoteCacheBranches.add(entry.getValue());
 		}
-	}
 
-	protected static void deleteRemoteRepositoryCacheBranch(
-		GitWorkingDirectory gitWorkingDirectory,
-		GitWorkingDirectory.Branch remoteBranch) {
-
-		GitWorkingDirectory.Remote remote = remoteBranch.getRemote();
-
-		if (gitWorkingDirectory.pushToRemote(true, null, remoteBranch)) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Deleted ", remoteBranch.getName(), " from ",
-					remote.getName()));
-		}
-		else {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Unable to delete ", remoteBranch.getName(), " from ",
-					remote.getName()));
+		if (!remoteCacheBranches.isEmpty()) {
+			gitWorkingDirectory.deleteBranches(remoteCacheBranches);
 		}
 	}
 

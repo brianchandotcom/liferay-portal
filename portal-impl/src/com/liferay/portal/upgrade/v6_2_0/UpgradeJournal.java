@@ -195,6 +195,26 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		entryElement.addCDATA(value);
 	}
 
+	protected void addResourcePermissionToBatch(
+		PreparedStatement ps, long companyId, String primKey, long roleId) {
+
+		try {
+			ps.setLong(1, increment());
+			ps.setLong(2, companyId);
+			ps.setString(3, "com.liferay.portlet.journal");
+			ps.setInt(4, 4);
+			ps.setString(5, primKey);
+			ps.setLong(6, roleId);
+			ps.setLong(7, 0);
+			ps.setLong(8, 1);
+
+			ps.addBatch();
+		}
+		catch (Exception e) {
+			_log.error("Unable to insert ResourcePermission", e);
+		}
+	}
+
 	protected String decodeURL(String url) {
 		try {
 			return HttpUtil.decodeURL(url);
@@ -219,6 +239,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		upgradeURLTitle();
 
 		updateAssetEntryClassTypeId();
+		updateJournalResourcePermission();
 
 		super.doUpgrade();
 	}
@@ -359,6 +380,22 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		return new String[] {
 			"56_INSTANCE_%", "62_INSTANCE_%", "101_INSTANCE_%"
 		};
+	}
+
+	protected long getRoleId(String roleName) throws Exception {
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select roleId from Role_ where name = ?")) {
+
+			ps.setString(1, roleName);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					return rs.getLong("roleId");
+				}
+
+				return 0;
+			}
+		}
 	}
 
 	protected void removeAttribute(Element element, String attributeName) {
@@ -534,6 +571,133 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		if (type.equals("link_to_layout")) {
 			updateLinkToLayoutElements(groupId, element);
+		}
+	}
+
+	protected void updateJournalResourcePermission() throws Exception {
+		long guestRoleId = getRoleId("Guest");
+		long ownerRoleId = getRoleId("Owner");
+		long siteMemberRoleId = getRoleId("Site Member");
+
+		StringBundler updateSB = new StringBundler(10);
+
+		updateSB.append("update ResourcePermission set actionIds = actionIds ");
+		updateSB.append("+ 1 where name = 'com.liferay.portlet.journal' and ");
+		updateSB.append("roleId in (");
+		updateSB.append(guestRoleId);
+		updateSB.append(",");
+		updateSB.append(ownerRoleId);
+		updateSB.append(",");
+		updateSB.append(siteMemberRoleId);
+		updateSB.append(") and ownerId = 0 and actionIds % 2 = 0 and scope = ");
+		updateSB.append("4");
+
+		runSQL(updateSB.toString());
+
+		StringBundler selectSB = new StringBundler(10);
+
+		selectSB.append("select companyId, primKey, roleId from ");
+		selectSB.append("ResourcePermission where name = ");
+		selectSB.append("'com.liferay.portlet.journal' and ownerId = 0 and ");
+		selectSB.append("scope = 4 and roleId in (");
+		selectSB.append(guestRoleId);
+		selectSB.append(",");
+		selectSB.append(ownerRoleId);
+		selectSB.append(",");
+		selectSB.append(siteMemberRoleId);
+		selectSB.append(") order by companyId, primKey, roleId");
+
+		StringBundler insertSB = new StringBundler(4);
+
+		insertSB.append("insert into ResourcePermission ");
+		insertSB.append("(resourcePermissionId, companyId, name, scope, ");
+		insertSB.append("primKey, roleId, ownerId, actionIds) values (?, ?, ");
+		insertSB.append("?, ?, ?, ?, ?, ?)");
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement selectPS = connection.prepareStatement(
+				selectSB.toString());
+			PreparedStatement insertPS =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(insertSB.toString()));
+			ResultSet rs = selectPS.executeQuery()) {
+
+			long currentCompanyId = 0;
+			String currentPrimKey = null;
+			boolean hasGuestResourcePermissions = false;
+			boolean hasOwnerResourcePermissions = false;
+			boolean hasSiteMemberResourcePermissions = false;
+
+			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
+				String primKey = rs.getString("primKey");
+				long roleId = rs.getLong("roleId");
+
+				if ((currentPrimKey != null) &&
+					!primKey.equals(currentPrimKey)) {
+
+					if (!hasGuestResourcePermissions) {
+						addResourcePermissionToBatch(
+							insertPS, currentCompanyId, currentPrimKey,
+							guestRoleId);
+					}
+
+					if (!hasOwnerResourcePermissions) {
+						addResourcePermissionToBatch(
+							insertPS, currentCompanyId, currentPrimKey,
+							ownerRoleId);
+					}
+
+					if (!hasSiteMemberResourcePermissions) {
+						addResourcePermissionToBatch(
+							insertPS, currentCompanyId, currentPrimKey,
+							siteMemberRoleId);
+					}
+
+					currentPrimKey = primKey;
+					currentCompanyId = companyId;
+					hasGuestResourcePermissions = false;
+					hasOwnerResourcePermissions = false;
+					hasSiteMemberResourcePermissions = false;
+				}
+
+				if (currentPrimKey == null) {
+					currentCompanyId = companyId;
+					currentPrimKey = primKey;
+				}
+
+				if (guestRoleId == roleId) {
+					hasGuestResourcePermissions = true;
+				}
+				else if (ownerRoleId == roleId) {
+					hasOwnerResourcePermissions = true;
+				}
+				else if (siteMemberRoleId == roleId) {
+					hasSiteMemberResourcePermissions = true;
+				}
+			}
+
+			if (currentPrimKey != null) {
+				if (!hasGuestResourcePermissions) {
+					addResourcePermissionToBatch(
+						insertPS, currentCompanyId, currentPrimKey,
+						guestRoleId);
+				}
+
+				if (!hasOwnerResourcePermissions) {
+					addResourcePermissionToBatch(
+						insertPS, currentCompanyId, currentPrimKey,
+						ownerRoleId);
+				}
+
+				if (!hasSiteMemberResourcePermissions) {
+					addResourcePermissionToBatch(
+						insertPS, currentCompanyId, currentPrimKey,
+						siteMemberRoleId);
+				}
+			}
+
+			insertPS.executeBatch();
 		}
 	}
 

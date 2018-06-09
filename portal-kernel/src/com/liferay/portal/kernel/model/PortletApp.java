@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.xml.QName;
 
 import java.io.Serializable;
@@ -28,6 +30,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public interface PortletApp extends Serializable {
 
 	public void addEventDefinition(EventDefinition eventDefinition);

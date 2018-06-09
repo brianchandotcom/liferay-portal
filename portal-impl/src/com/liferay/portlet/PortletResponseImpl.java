@@ -53,11 +53,9 @@ import javax.portlet.ActionURL;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
-import javax.portlet.filter.PortletResponseWrapper;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -82,26 +80,6 @@ import org.w3c.dom.Element;
  */
 @ProviderType
 public abstract class PortletResponseImpl implements LiferayPortletResponse {
-
-	public static PortletResponseImpl getPortletResponseImpl(
-		PortletResponse portletResponse) {
-
-		while (!(portletResponse instanceof PortletResponseImpl)) {
-			if (portletResponse instanceof PortletResponseWrapper) {
-				PortletResponseWrapper portletResponseWrapper =
-					(PortletResponseWrapper)portletResponse;
-
-				portletResponse = portletResponseWrapper.getResponse();
-			}
-			else {
-				throw new RuntimeException(
-					"Unable to unwrap the portlet response from " +
-						portletResponse.getClass());
-			}
-		}
-
-		return (PortletResponseImpl)portletResponse;
-	}
 
 	@Override
 	public void addDateHeader(String name, long date) {

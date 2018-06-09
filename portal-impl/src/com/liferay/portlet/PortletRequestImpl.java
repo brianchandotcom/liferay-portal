@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.servlet.SharedSessionServletRequest;
@@ -85,7 +84,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderParameters;
 import javax.portlet.WindowState;
-import javax.portlet.filter.PortletRequestWrapper;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -100,33 +98,6 @@ import javax.servlet.http.HttpSession;
  */
 @ProviderType
 public abstract class PortletRequestImpl implements LiferayPortletRequest {
-
-	public static PortletRequestImpl getPortletRequestImpl(
-		PortletRequest portletRequest) {
-
-		while (!(portletRequest instanceof PortletRequestImpl)) {
-			if (portletRequest instanceof DoPrivilegedBean) {
-				DoPrivilegedBean doPrivilegedBean =
-					(DoPrivilegedBean)portletRequest;
-
-				portletRequest =
-					(PortletRequest)doPrivilegedBean.getActualBean();
-			}
-			else if (portletRequest instanceof PortletRequestWrapper) {
-				PortletRequestWrapper portletRequestWrapper =
-					(PortletRequestWrapper)portletRequest;
-
-				portletRequest = portletRequestWrapper.getRequest();
-			}
-			else {
-				throw new RuntimeException(
-					"Unable to unwrap the portlet request from " +
-						portletRequest.getClass());
-			}
-		}
-
-		return (PortletRequestImpl)portletRequest;
-	}
 
 	@Override
 	public void cleanUp() {

@@ -18,6 +18,7 @@
 
 <%
 List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays = (List<ConfigurationCategorySectionDisplay>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_SECTION_DISPLAYS);
+ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRetriever)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_ENTRY_RETRIEVER);
 %>
 
 <portlet:renderURL var="redirectURL" />
@@ -50,15 +51,26 @@ List<ConfigurationCategorySectionDisplay> configurationCategorySectionDisplays =
 
 					<%
 					for (ConfigurationCategoryDisplay configurationCategoryDisplay : configurationCategorySectionDisplay.getConfigurationCategoryDisplays()) {
+						ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = configurationEntryRetriever.getConfigurationCategoryMenuDisplay(configurationCategoryDisplay.getCategoryKey(), themeDisplay.getLanguageId());
+
+						String viewCategoryURL = null;
+
+						if (!configurationCategoryMenuDisplay.isEmpty()) {
+							ConfigurationEntry configurationEntry =
+								configurationCategoryMenuDisplay.
+									getFirstConfigurationEntry();
+
+							viewCategoryURL = configurationEntry.getEditURL(renderRequest, renderResponse);
+						}
+						else {
+							PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+							viewCategoryURL = portletURL.toString();
+						}
 					%>
 
-						<portlet:renderURL var="categoryURL">
-							<portlet:param name="mvcRenderCommandName" value="/view_category" />
-							<portlet:param name="configurationCategory" value="<%= configurationCategoryDisplay.getCategoryKey() %>" />
-						</portlet:renderURL>
-
 						<li class="list-group-card-item">
-							<a href="<%= categoryURL %>">
+							<a href="<%= viewCategoryURL.toString() %>">
 								<clay:icon
 									elementClasses="user-icon-sm"
 									symbol="<%= configurationCategoryDisplay.getCategoryIcon() %>"

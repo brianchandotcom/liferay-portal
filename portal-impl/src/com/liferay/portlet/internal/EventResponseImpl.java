@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -40,6 +40,14 @@ public class EventResponseImpl
 		return PortletRequest.EVENT_PHASE;
 	}
 
+	public void init(
+			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
+			User user, Layout layout)
+		throws PortletModeException, WindowStateException {
+
+		init(portletRequestImpl, response, user, layout, false);
+	}
+
 	@Override
 	public void setRenderParameters(EventRequest eventRequest) {
 		if (eventRequest == null) {
@@ -47,14 +55,6 @@ public class EventResponseImpl
 		}
 
 		setRenderParameters(eventRequest.getParameterMap());
-	}
-
-	protected void init(
-			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
-			User user, Layout layout)
-		throws PortletModeException, WindowStateException {
-
-		init(portletRequestImpl, response, user, layout, false);
 	}
 
 }

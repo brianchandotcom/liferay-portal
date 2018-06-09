@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayActionResponse;
+import com.liferay.portlet.internal.ActionRequestImpl;
+import com.liferay.portlet.internal.ActionResponseImpl;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;

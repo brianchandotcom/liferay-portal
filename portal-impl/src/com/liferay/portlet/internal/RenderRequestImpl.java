@@ -12,28 +12,30 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
-import com.liferay.portal.kernel.portlet.LiferayActionRequest;
+import aQute.bnd.annotation.ProviderType;
 
-import javax.portlet.ActionParameters;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+
 import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-public class ActionRequestImpl
-	extends ClientDataRequestImpl implements LiferayActionRequest {
+@ProviderType
+public class RenderRequestImpl
+	extends PortletRequestImpl implements LiferayRenderRequest {
 
 	@Override
-	public ActionParameters getActionParameters() {
-		throw new UnsupportedOperationException();
+	public String getETag() {
+		return null;
 	}
 
 	@Override
 	public String getLifecycle() {
-		return PortletRequest.ACTION_PHASE;
+		return PortletRequest.RENDER_PHASE;
 	}
 
 }

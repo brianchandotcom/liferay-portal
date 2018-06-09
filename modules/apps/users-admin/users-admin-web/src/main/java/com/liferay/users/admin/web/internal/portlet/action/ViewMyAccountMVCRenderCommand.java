@@ -16,10 +16,11 @@ package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portlet.RenderRequestImpl;
+import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.PortletException;
@@ -59,12 +60,12 @@ public class ViewMyAccountMVCRenderCommand implements MVCRenderCommand {
 		try {
 			User user = _portal.getUser(renderRequest);
 
-			RenderRequestImpl renderRequestImpl =
-				(RenderRequestImpl)renderRequest;
+			LiferayPortletRequest liferayPortletRequest =
+				LiferayPortletUtil.getLiferayPortletRequest(renderRequest);
 
 			DynamicServletRequest dynamicRequest =
 				(DynamicServletRequest)
-					renderRequestImpl.getHttpServletRequest();
+					liferayPortletRequest.getHttpServletRequest();
 
 			dynamicRequest.setParameter(
 				"p_u_i_d", String.valueOf(user.getUserId()));

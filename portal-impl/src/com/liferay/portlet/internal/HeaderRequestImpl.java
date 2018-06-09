@@ -12,37 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-import com.liferay.portal.kernel.portlet.LiferayEventRequest;
+import com.liferay.portal.kernel.portlet.LiferayHeaderRequest;
 
-import javax.portlet.Event;
 import javax.portlet.PortletRequest;
 
 /**
- * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
-public class EventRequestImpl
-	extends PortletRequestImpl implements LiferayEventRequest {
-
-	@Override
-	public Event getEvent() {
-		return _event;
-	}
+public class HeaderRequestImpl
+	extends RenderRequestImpl implements LiferayHeaderRequest {
 
 	@Override
 	public String getLifecycle() {
-		return PortletRequest.EVENT_PHASE;
+		return PortletRequest.HEADER_PHASE;
 	}
-
-	@Override
-	public void setEvent(Event event) {
-		_event = event;
-	}
-
-	private Event _event;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -34,9 +34,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
-import com.liferay.portlet.internal.LiferayPortletResponseUtil;
-import com.liferay.portlet.internal.LiferayPortletURLPrivilegedAction;
-import com.liferay.portlet.internal.PortletURLImpl;
 
 import java.io.Writer;
 
@@ -453,6 +450,21 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		return _urlEncoder;
 	}
 
+	public void init(
+		PortletRequestImpl portletRequestImpl, HttpServletResponse response) {
+
+		this.portletRequestImpl = portletRequestImpl;
+		this.response = response;
+
+		_portlet = portletRequestImpl.getPortlet();
+
+		portletName = _portlet.getPortletId();
+
+		_companyId = _portlet.getCompanyId();
+
+		setPlid(portletRequestImpl.getPlid());
+	}
+
 	@Override
 	public void setDateHeader(String name, long date) {
 		if (Validator.isNull(name)) {
@@ -571,21 +583,6 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 				}
 			}
 		}
-	}
-
-	protected void init(
-		PortletRequestImpl portletRequestImpl, HttpServletResponse response) {
-
-		this.portletRequestImpl = portletRequestImpl;
-		this.response = response;
-
-		_portlet = portletRequestImpl.getPortlet();
-
-		portletName = _portlet.getPortletId();
-
-		_companyId = _portlet.getCompanyId();
-
-		setPlid(portletRequestImpl.getPlid());
 	}
 
 	protected String portletName;

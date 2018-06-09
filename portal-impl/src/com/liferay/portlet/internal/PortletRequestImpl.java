@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -52,7 +52,12 @@ import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.servlet.SharedSessionServletRequest;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.internal.PortalContextImpl;
+import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portlet.PortletPreferencesWrapper;
+import com.liferay.portlet.PortletSessionImpl;
+import com.liferay.portlet.PublicRenderParametersPool;
+import com.liferay.portlet.RenderParametersPool;
+import com.liferay.portlet.UserInfoFactory;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
 
 import java.security.Principal;
@@ -557,137 +562,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		return _windowState;
 	}
 
-	@Override
-	public void invalidateSession() {
-		_invalidSession = true;
-	}
-
-	public boolean isInvalidParameter(String name) {
-		if (Validator.isNull(name) ||
-			name.startsWith(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
-			name.startsWith(
-				PortletQName.REMOVE_PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
-			PortalUtil.isReservedParameter(name)) {
-
-			return true;
-		}
-
-		if (_strutsPortlet) {
-			Matcher matcher = _strutsPortletIgnoredParamtersPattern.matcher(
-				name);
-
-			if (matcher.matches()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isPortletModeAllowed(PortletMode portletMode) {
-		if ((portletMode == null) || Validator.isNull(portletMode.toString())) {
-			return true;
-		}
-		else {
-			return _portlet.hasPortletMode(
-				getResponseContentType(), portletMode);
-		}
-	}
-
-	public boolean isPrivateRequestAttributes() {
-		return _portlet.isPrivateRequestAttributes();
-	}
-
-	@Override
-	public boolean isRequestedSessionIdValid() {
-		if (_session.isInvalidated() || _invalidSession) {
-			return false;
-		}
-
-		return _request.isRequestedSessionIdValid();
-	}
-
-	@Override
-	public boolean isSecure() {
-		return _request.isSecure();
-	}
-
-	public boolean isTriggeredByActionURL() {
-		return _triggeredByActionURL;
-	}
-
-	@Override
-	public boolean isUserInRole(String role) {
-		if (_remoteUserId <= 0) {
-			return false;
-		}
-
-		try {
-			long companyId = PortalUtil.getCompanyId(_request);
-
-			Map<String, String> roleMappersMap = _portlet.getRoleMappers();
-
-			String roleLink = roleMappersMap.get(role);
-
-			if (Validator.isNotNull(roleLink)) {
-				return RoleLocalServiceUtil.hasUserRole(
-					_remoteUserId, companyId, roleLink, true);
-			}
-			else {
-				return RoleLocalServiceUtil.hasUserRole(
-					_remoteUserId, companyId, role, true);
-			}
-		}
-		catch (Exception e) {
-			_log.error("Unable to check if a user is in role " + role, e);
-		}
-
-		return _request.isUserInRole(role);
-	}
-
-	@Override
-	public boolean isWindowStateAllowed(WindowState windowState) {
-		return PortalContextImpl.isSupportedWindowState(windowState);
-	}
-
-	@Override
-	public void removeAttribute(String name) {
-		if (name == null) {
-			throw new IllegalArgumentException();
-		}
-
-		_request.removeAttribute(name);
-	}
-
-	@Override
-	public void setAttribute(String name, Object obj) {
-		if (name == null) {
-			throw new IllegalArgumentException();
-		}
-
-		if (obj == null) {
-			_request.removeAttribute(name);
-		}
-		else {
-			_request.setAttribute(name, obj);
-		}
-	}
-
-	public void setPortletMode(PortletMode portletMode) {
-		_portletMode = portletMode;
-	}
-
-	@Override
-	public void setPortletRequestDispatcherRequest(HttpServletRequest request) {
-		_portletRequestDispatcherRequest = request;
-	}
-
-	public void setWindowState(WindowState windowState) {
-		_windowState = windowState;
-	}
-
-	protected void init(
+	public void init(
 		HttpServletRequest request, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
@@ -792,7 +667,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				if (getLifecycle().equals(PortletRequest.ACTION_PHASE)) {
 
 					// Request was triggered by an action URL and is being
-					// processed by com.liferay.portlet.ActionRequestImpl
+					// processed by
+					// com.liferay.portlet.internal.ActionRequestImpl
 
 					portletFocus = true;
 				}
@@ -936,6 +812,136 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		_locale = themeDisplay.getLocale();
 		_plid = plid;
+	}
+
+	@Override
+	public void invalidateSession() {
+		_invalidSession = true;
+	}
+
+	public boolean isInvalidParameter(String name) {
+		if (Validator.isNull(name) ||
+			name.startsWith(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
+			name.startsWith(
+				PortletQName.REMOVE_PUBLIC_RENDER_PARAMETER_NAMESPACE) ||
+			PortalUtil.isReservedParameter(name)) {
+
+			return true;
+		}
+
+		if (_strutsPortlet) {
+			Matcher matcher = _strutsPortletIgnoredParamtersPattern.matcher(
+				name);
+
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isPortletModeAllowed(PortletMode portletMode) {
+		if ((portletMode == null) || Validator.isNull(portletMode.toString())) {
+			return true;
+		}
+		else {
+			return _portlet.hasPortletMode(
+				getResponseContentType(), portletMode);
+		}
+	}
+
+	public boolean isPrivateRequestAttributes() {
+		return _portlet.isPrivateRequestAttributes();
+	}
+
+	@Override
+	public boolean isRequestedSessionIdValid() {
+		if (_session.isInvalidated() || _invalidSession) {
+			return false;
+		}
+
+		return _request.isRequestedSessionIdValid();
+	}
+
+	@Override
+	public boolean isSecure() {
+		return _request.isSecure();
+	}
+
+	public boolean isTriggeredByActionURL() {
+		return _triggeredByActionURL;
+	}
+
+	@Override
+	public boolean isUserInRole(String role) {
+		if (_remoteUserId <= 0) {
+			return false;
+		}
+
+		try {
+			long companyId = PortalUtil.getCompanyId(_request);
+
+			Map<String, String> roleMappersMap = _portlet.getRoleMappers();
+
+			String roleLink = roleMappersMap.get(role);
+
+			if (Validator.isNotNull(roleLink)) {
+				return RoleLocalServiceUtil.hasUserRole(
+					_remoteUserId, companyId, roleLink, true);
+			}
+			else {
+				return RoleLocalServiceUtil.hasUserRole(
+					_remoteUserId, companyId, role, true);
+			}
+		}
+		catch (Exception e) {
+			_log.error("Unable to check if a user is in role " + role, e);
+		}
+
+		return _request.isUserInRole(role);
+	}
+
+	@Override
+	public boolean isWindowStateAllowed(WindowState windowState) {
+		return PortalContextImpl.isSupportedWindowState(windowState);
+	}
+
+	@Override
+	public void removeAttribute(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException();
+		}
+
+		_request.removeAttribute(name);
+	}
+
+	@Override
+	public void setAttribute(String name, Object obj) {
+		if (name == null) {
+			throw new IllegalArgumentException();
+		}
+
+		if (obj == null) {
+			_request.removeAttribute(name);
+		}
+		else {
+			_request.setAttribute(name, obj);
+		}
+	}
+
+	public void setPortletMode(PortletMode portletMode) {
+		_portletMode = portletMode;
+	}
+
+	@Override
+	public void setPortletRequestDispatcherRequest(HttpServletRequest request) {
+		_portletRequestDispatcherRequest = request;
+	}
+
+	public void setWindowState(WindowState windowState) {
+		_windowState = windowState;
 	}
 
 	protected String removePortletNamespace(

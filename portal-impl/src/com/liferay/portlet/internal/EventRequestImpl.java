@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 
+import com.liferay.portal.kernel.portlet.LiferayEventRequest;
+
+import javax.portlet.Event;
 import javax.portlet.PortletRequest;
 
 /**
@@ -24,17 +26,24 @@ import javax.portlet.PortletRequest;
  * @author Neil Griffin
  */
 @ProviderType
-public class RenderRequestImpl
-	extends PortletRequestImpl implements LiferayRenderRequest {
+public class EventRequestImpl
+	extends PortletRequestImpl implements LiferayEventRequest {
 
 	@Override
-	public String getETag() {
-		return null;
+	public Event getEvent() {
+		return _event;
 	}
 
 	@Override
 	public String getLifecycle() {
-		return PortletRequest.RENDER_PHASE;
+		return PortletRequest.EVENT_PHASE;
 	}
+
+	@Override
+	public void setEvent(Event event) {
+		_event = event;
+	}
+
+	private Event _event;
 
 }

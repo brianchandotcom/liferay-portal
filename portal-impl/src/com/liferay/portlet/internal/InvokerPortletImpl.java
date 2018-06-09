@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -39,11 +39,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.tools.deploy.PortletDeployer;
-import com.liferay.portlet.internal.FilterChainImpl;
+import com.liferay.portlet.InvokerPortletResponse;
+import com.liferay.portlet.InvokerPortletUtil;
+import com.liferay.portlet.StrutsPortlet;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -53,7 +54,6 @@ import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -88,7 +88,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -100,59 +99,6 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class InvokerPortletImpl
 	implements InvokerFilterContainer, InvokerPortlet {
-
-	public static void clearResponse(
-		HttpSession session, long plid, String portletId, String languageId) {
-
-		String sesResponseId = encodeResponseKey(plid, portletId, languageId);
-
-		getResponses(session).remove(sesResponseId);
-	}
-
-	public static void clearResponses(HttpSession session) {
-		getResponses(session).clear();
-	}
-
-	public static void clearResponses(PortletSession session) {
-		getResponses(session).clear();
-	}
-
-	public static String encodeResponseKey(
-		long plid, String portletId, String languageId) {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(StringUtil.toHexString(plid));
-		sb.append(StringPool.UNDERLINE);
-		sb.append(portletId);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(languageId);
-
-		return sb.toString();
-	}
-
-	public static Map<String, InvokerPortletResponse> getResponses(
-		HttpSession session) {
-
-		Map<String, InvokerPortletResponse> responses =
-			(Map<String, InvokerPortletResponse>)session.getAttribute(
-				WebKeys.CACHE_PORTLET_RESPONSES);
-
-		if (responses == null) {
-			responses = new ConcurrentHashMap<>();
-
-			session.setAttribute(WebKeys.CACHE_PORTLET_RESPONSES, responses);
-		}
-
-		return responses;
-	}
-
-	public static Map<String, InvokerPortletResponse> getResponses(
-		PortletSession portletSession) {
-
-		return getResponses(
-			((PortletSessionImpl)portletSession).getHttpSession());
-	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
@@ -466,10 +412,10 @@ public class InvokerPortletImpl
 
 			Layout layout = (Layout)renderRequest.getAttribute(WebKeys.LAYOUT);
 
-			Map<String, InvokerPortletResponse> sessionResponses = getResponses(
-				portletSession);
+			Map<String, InvokerPortletResponse> sessionResponses =
+				InvokerPortletUtil.getResponses(portletSession);
 
-			String sessionResponseId = encodeResponseKey(
+			String sessionResponseId = InvokerPortletUtil.encodeResponseKey(
 				layout.getPlid(), _portletId,
 				LanguageUtil.getLanguageId(renderRequest));
 
@@ -553,10 +499,10 @@ public class InvokerPortletImpl
 
 			Layout layout = (Layout)headerRequest.getAttribute(WebKeys.LAYOUT);
 
-			Map<String, InvokerPortletResponse> sessionResponses = getResponses(
-				portletSession);
+			Map<String, InvokerPortletResponse> sessionResponses =
+				InvokerPortletUtil.getResponses(portletSession);
 
-			String sessionResponseId = encodeResponseKey(
+			String sessionResponseId = InvokerPortletUtil.encodeResponseKey(
 				layout.getPlid(), _portletId,
 				LanguageUtil.getLanguageId(headerRequest));
 

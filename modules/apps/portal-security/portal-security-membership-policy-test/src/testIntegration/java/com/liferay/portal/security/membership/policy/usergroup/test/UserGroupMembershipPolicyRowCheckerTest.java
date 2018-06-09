@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.membership.policy.usergroup.BaseUserGroupMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.RenderResponseImpl;
+import com.liferay.portlet.internal.RenderResponseImpl;
 import com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker;
 import com.liferay.portlet.usergroupsadmin.search.UnsetUserUserGroupChecker;
 

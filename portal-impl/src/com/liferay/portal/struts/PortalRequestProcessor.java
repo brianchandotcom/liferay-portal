@@ -65,8 +65,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.RenderRequestFactory;
-import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.RenderResponseFactory;
 
 import java.io.IOException;
@@ -223,12 +223,13 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		// Clean up portlet objects that may have been created by defineObjects
 		// for portlets that are called directly from a Struts path
 
-		RenderRequestImpl renderRequestImpl =
-			(RenderRequestImpl)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
+		LiferayRenderRequest liferayRenderRequest =
+			(LiferayRenderRequest)LiferayPortletUtil.getLiferayPortletRequest(
+				(PortletRequest)request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST));
 
-		if (renderRequestImpl != null) {
-			renderRequestImpl.cleanUp();
+		if (liferayRenderRequest != null) {
+			liferayRenderRequest.cleanUp();
 		}
 	}
 

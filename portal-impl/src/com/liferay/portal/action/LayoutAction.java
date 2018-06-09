@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -42,7 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.PortletRequestImpl;
+import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.RenderParametersPool;
 import com.liferay.portlet.internal.RenderData;
 import com.liferay.portlet.internal.RenderStateUtil;
@@ -414,11 +415,11 @@ public class LayoutAction extends Action {
 						JavaConstants.JAVAX_PORTLET_REQUEST);
 
 				if (portletRequest != null) {
-					PortletRequestImpl portletRequestImpl =
-						PortletRequestImpl.getPortletRequestImpl(
+					LiferayPortletRequest liferayPortletRequest =
+						LiferayPortletUtil.getLiferayPortletRequest(
 							portletRequest);
 
-					portletRequestImpl.cleanUp();
+					liferayPortletRequest.cleanUp();
 				}
 			}
 		}

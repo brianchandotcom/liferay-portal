@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.portlet.LiferayStateAwareResponse;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portlet.internal.EventImpl;
+import com.liferay.portlet.PublicRenderParametersPool;
 
 import java.io.Serializable;
 
@@ -101,6 +101,30 @@ public abstract class StateAwareResponseImpl
 	@Override
 	public WindowState getWindowState() {
 		return _windowState;
+	}
+
+	public void init(
+			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
+			User user, Layout layout, boolean setWindowStateAndPortletMode)
+		throws PortletModeException, WindowStateException {
+
+		super.init(portletRequestImpl, response);
+
+		_user = user;
+		_layout = layout;
+
+		_publicRenderParameters = PublicRenderParametersPool.get(
+			getHttpServletRequest(), layout.getPlid());
+
+		if (setWindowStateAndPortletMode) {
+			setWindowState(portletRequestImpl.getWindowState());
+			setPortletMode(portletRequestImpl.getPortletMode());
+		}
+
+		// Set _calledSetRenderParameter to false because setWindowState and
+		// setPortletMode sets it to true
+
+		_calledSetRenderParameter = false;
 	}
 
 	@Override
@@ -287,30 +311,6 @@ public abstract class StateAwareResponseImpl
 		}
 
 		_calledSetRenderParameter = true;
-	}
-
-	protected void init(
-			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
-			User user, Layout layout, boolean setWindowStateAndPortletMode)
-		throws PortletModeException, WindowStateException {
-
-		super.init(portletRequestImpl, response);
-
-		_user = user;
-		_layout = layout;
-
-		_publicRenderParameters = PublicRenderParametersPool.get(
-			getHttpServletRequest(), layout.getPlid());
-
-		if (setWindowStateAndPortletMode) {
-			setWindowState(portletRequestImpl.getWindowState());
-			setPortletMode(portletRequestImpl.getPortletMode());
-		}
-
-		// Set _calledSetRenderParameter to false because setWindowState and
-		// setPortletMode sets it to true
-
-		_calledSetRenderParameter = false;
 	}
 
 	protected void reset() {

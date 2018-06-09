@@ -14,12 +14,13 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayPortletURLWrapper;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.internal.PortletResponseImpl;
 
 import javax.portlet.PortletResponse;
-import javax.portlet.filter.PortletResponseWrapper;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,13 +38,11 @@ public class PortletURLImplWrapper extends LiferayPortletURLWrapper {
 	private static LiferayPortletURL _createLiferayPortletURL(
 		PortletResponse portletResponse, String lifecycle) {
 
-		while (portletResponse instanceof PortletResponseWrapper) {
-			portletResponse =
-				((PortletResponseWrapper)portletResponse).getResponse();
-		}
+		LiferayPortletResponse liferayPortletResponse =
+			LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
 
 		PortletResponseImpl portletResponseImpl = (PortletResponseImpl)
-			portletResponse;
+			liferayPortletResponse;
 
 		return PortletURLFactoryUtil.create(
 			portletResponseImpl.getPortletRequest(),

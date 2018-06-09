@@ -16,7 +16,6 @@ package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.servlet.Header;
 import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
-import com.liferay.portlet.MimeResponseImpl;
 
 import java.util.Collection;
 import java.util.HashMap;

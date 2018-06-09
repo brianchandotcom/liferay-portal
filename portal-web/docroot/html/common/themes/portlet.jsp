@@ -31,14 +31,14 @@ Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
 
 PortletPreferences portletSetup = portletDisplay.getPortletSetup();
 
-RenderResponseImpl renderResponseImpl = (RenderResponseImpl)PortletResponseImpl.getPortletResponseImpl(renderResponse);
+LiferayRenderResponse liferayRenderResponse = (LiferayRenderResponse)LiferayPortletUtil.getLiferayPortletResponse(renderResponse);
 
 // Portlet title
 
 String portletTitle = PortletConfigurationUtil.getPortletTitle(portletSetup, themeDisplay.getLanguageId());
 
 if (portletDisplay.isAccess() && portletDisplay.isActive() && Validator.isNull(portletTitle)) {
-	portletTitle = renderResponseImpl.getTitle();
+	portletTitle = liferayRenderResponse.getTitle();
 }
 
 if (Validator.isNull(portletTitle)) {

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+import com.liferay.portlet.internal.RenderRequestImpl;
 
 import javax.portlet.PortletContext;
 import javax.portlet.PortletMode;

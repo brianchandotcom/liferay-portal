@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 
 import java.io.IOException;

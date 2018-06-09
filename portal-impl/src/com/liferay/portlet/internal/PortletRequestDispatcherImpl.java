@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortletContext;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequestDispatcher;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -31,9 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.DynamicServletRequestUtil;
 import com.liferay.portal.struts.StrutsURLEncoder;
-import com.liferay.portlet.MimeResponseImpl;
-import com.liferay.portlet.PortletRequestImpl;
-import com.liferay.portlet.PortletResponseImpl;
+import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.PortletServletRequest;
 import com.liferay.portlet.PortletServletResponse;
 
@@ -169,12 +168,12 @@ public class PortletRequestDispatcherImpl
 
 	protected HttpServletRequest createDynamicServletRequest(
 		HttpServletRequest httpServletRequest,
-		PortletRequestImpl portletRequestImpl,
+		LiferayPortletRequest liferayPortletRequest,
 		Map<String, String[]> parameterMap) {
 
 		return DynamicServletRequestUtil.createDynamicServletRequest(
-			httpServletRequest, portletRequestImpl.getPortlet(), parameterMap,
-			true);
+			httpServletRequest, liferayPortletRequest.getPortlet(),
+			parameterMap, true);
 	}
 
 	protected void dispatch(
@@ -184,10 +183,10 @@ public class PortletRequestDispatcherImpl
 
 		checkCalledFlushBuffer(include, portletResponse);
 
-		PortletRequestImpl portletRequestImpl =
-			PortletRequestImpl.getPortletRequestImpl(portletRequest);
-		PortletResponseImpl portletResponseImpl =
-			PortletResponseImpl.getPortletResponseImpl(portletResponse);
+		LiferayPortletRequest liferayPortletRequest =
+			LiferayPortletUtil.getLiferayPortletRequest(portletRequest);
+		LiferayPortletResponse liferayPortletResponse =
+			LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(portletRequest);
@@ -212,11 +211,11 @@ public class PortletRequestDispatcherImpl
 				queryString = _path.substring(pos + 1);
 
 				httpServletRequest = createDynamicServletRequest(
-					httpServletRequest, portletRequestImpl,
+					httpServletRequest, liferayPortletRequest,
 					toParameterMap(queryString));
 			}
 
-			Portlet portlet = portletRequestImpl.getPortlet();
+			Portlet portlet = liferayPortletRequest.getPortlet();
 
 			PortletApp portletApp = portlet.getPortletApp();
 
@@ -265,7 +264,7 @@ public class PortletRequestDispatcherImpl
 		URLEncoder urlEncoder = _portlet.getURLEncoderInstance();
 
 		if (urlEncoder != null) {
-			portletResponseImpl.setURLEncoder(urlEncoder);
+			liferayPortletResponse.setURLEncoder(urlEncoder);
 		}
 		else if (strutsURLEncoder) {
 			ThemeDisplay themeDisplay =
@@ -277,9 +276,9 @@ public class PortletRequestDispatcherImpl
 				themeDisplay.getPathMain(),
 				(String)_liferayPortletContext.getAttribute(
 					Globals.SERVLET_KEY),
-				(LiferayPortletURL)portletResponseImpl.createRenderURL());
+				liferayPortletResponse.createRenderURL());
 
-			portletResponseImpl.setURLEncoder(strutsURLEncoderObj);
+			liferayPortletResponse.setURLEncoder(strutsURLEncoderObj);
 		}
 
 		try {
@@ -302,7 +301,7 @@ public class PortletRequestDispatcherImpl
 			throw new PortletException(se);
 		}
 		finally {
-			portletRequestImpl.setPortletRequestDispatcherRequest(null);
+			liferayPortletRequest.setPortletRequestDispatcherRequest(null);
 		}
 	}
 
@@ -313,18 +312,18 @@ public class PortletRequestDispatcherImpl
 
 		HttpServletRequest oldPortletRequestDispatcherRequest = null;
 
-		PortletRequestImpl portletRequestImpl = null;
+		LiferayPortletRequest liferayPortletRequest = null;
 
 		if (servletRequest instanceof PortletServletRequest) {
 			PortletRequest portletRequest =
 				(PortletRequest)servletRequest.getAttribute(
 					"javax.portlet.request");
 
-			portletRequestImpl = PortletRequestImpl.getPortletRequestImpl(
+			liferayPortletRequest = LiferayPortletUtil.getLiferayPortletRequest(
 				portletRequest);
 
 			oldPortletRequestDispatcherRequest =
-				portletRequestImpl.getPortletRequestDispatcherRequest();
+				liferayPortletRequest.getPortletRequestDispatcherRequest();
 
 			PortletServletRequest portletServletRequest =
 				(PortletServletRequest)servletRequest;
@@ -339,7 +338,7 @@ public class PortletRequestDispatcherImpl
 					String queryString = _path.substring(pos + 1);
 
 					httpServletRequest = createDynamicServletRequest(
-						httpServletRequest, portletRequestImpl,
+						httpServletRequest, liferayPortletRequest,
 						toParameterMap(queryString));
 				}
 			}
@@ -370,8 +369,8 @@ public class PortletRequestDispatcherImpl
 			throw new ServletException(se);
 		}
 		finally {
-			if (portletRequestImpl != null) {
-				portletRequestImpl.setPortletRequestDispatcherRequest(
+			if (liferayPortletRequest != null) {
+				liferayPortletRequest.setPortletRequestDispatcherRequest(
 					oldPortletRequestDispatcherRequest);
 			}
 		}

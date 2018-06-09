@@ -17,6 +17,8 @@ package com.liferay.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.portlet.LiferayResourceResponse;
+import com.liferay.portlet.internal.ResourceRequestImpl;
+import com.liferay.portlet.internal.ResourceResponseImpl;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.filter.ResourceRequestWrapper;

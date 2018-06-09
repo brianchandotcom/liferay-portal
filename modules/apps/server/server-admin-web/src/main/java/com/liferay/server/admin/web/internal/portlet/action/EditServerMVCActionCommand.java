@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scripting.Scripting;
@@ -70,7 +71,6 @@ import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
-import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
 import com.liferay.portlet.admin.util.CleanUpPortletPreferencesUtil;
 
@@ -229,8 +229,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			String cmd)
 		throws Exception {
 
-		ActionResponseImpl actionResponseImpl =
-			(ActionResponseImpl)actionResponse;
+		LiferayActionResponse liferayActionResponse =
+			(LiferayActionResponse)actionResponse;
 
 		PortletSession portletSession = actionRequest.getPortletSession();
 
@@ -275,7 +275,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String path = convertProcess.getPath();
 
 		if (path != null) {
-			PortletURL portletURL = actionResponseImpl.createRenderURL();
+			PortletURL portletURL = liferayActionResponse.createRenderURL();
 
 			portletURL.setParameter("mvcRenderCommandName", path);
 			portletURL.setWindowState(WindowState.MAXIMIZED);

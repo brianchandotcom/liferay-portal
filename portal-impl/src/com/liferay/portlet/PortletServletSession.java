@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
 
 import java.lang.ref.Reference;
@@ -27,25 +28,27 @@ import javax.servlet.http.HttpSession;
 public class PortletServletSession extends HttpSessionWrapper {
 
 	public PortletServletSession(
-		HttpSession session, PortletRequestImpl portletRequestImpl) {
+		HttpSession session, LiferayPortletRequest liferayPortletRequest) {
 
 		super(session);
 
-		_portletRequestImplReference = new WeakReference<>(portletRequestImpl);
+		_liferayPortletRequestReference = new WeakReference<>(
+			liferayPortletRequest);
 	}
 
 	@Override
 	public void invalidate() {
 		super.invalidate();
 
-		PortletRequestImpl portletRequestImpl =
-			_portletRequestImplReference.get();
+		LiferayPortletRequest liferayPortletRequest =
+			_liferayPortletRequestReference.get();
 
-		if (portletRequestImpl != null) {
-			portletRequestImpl.invalidateSession();
+		if (liferayPortletRequest != null) {
+			liferayPortletRequest.invalidateSession();
 		}
 	}
 
-	private final Reference<PortletRequestImpl> _portletRequestImplReference;
+	private final Reference<LiferayPortletRequest>
+		_liferayPortletRequestReference;
 
 }

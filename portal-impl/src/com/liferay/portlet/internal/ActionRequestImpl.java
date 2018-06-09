@@ -12,21 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
-import com.liferay.portal.kernel.portlet.LiferayHeaderRequest;
+import com.liferay.portal.kernel.portlet.LiferayActionRequest;
 
+import javax.portlet.ActionParameters;
 import javax.portlet.PortletRequest;
 
 /**
+ * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-public class HeaderRequestImpl
-	extends RenderRequestImpl implements LiferayHeaderRequest {
+public class ActionRequestImpl
+	extends ClientDataRequestImpl implements LiferayActionRequest {
+
+	@Override
+	public ActionParameters getActionParameters() {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public String getLifecycle() {
-		return PortletRequest.HEADER_PHASE;
+		return PortletRequest.ACTION_PHASE;
 	}
 
 }

@@ -26,6 +26,8 @@ import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portlet.internal.PortletContextImpl;
 import com.liferay.portlet.internal.PortletRequestDispatcherImpl;
+import com.liferay.portlet.internal.RenderRequestImpl;
+import com.liferay.portlet.internal.RenderResponseImpl;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 

@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.membership.policy.site.BaseSiteMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.portlet.RenderResponseImpl;
+import com.liferay.portlet.internal.RenderResponseImpl;
 import com.liferay.portlet.sites.search.UserGroupRoleRoleChecker;
 import com.liferay.portlet.sites.search.UserGroupRoleUserChecker;
 import com.liferay.portlet.sitesadmin.search.SiteMembershipChecker;

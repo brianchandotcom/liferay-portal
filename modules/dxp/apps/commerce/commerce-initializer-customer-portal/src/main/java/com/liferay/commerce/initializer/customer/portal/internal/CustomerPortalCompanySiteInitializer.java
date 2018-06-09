@@ -56,44 +56,34 @@ public class CustomerPortalCompanySiteInitializer
 	public void portalInstanceRegistered(Company company)
 		throws PortalException {
 
-		if (_SITE_INITIALIZER_ENABLED == Boolean.FALSE) {
+		if (!_SITE_INITIALIZER_ENABLED) {
 			return;
 		}
 
 		long companyId = company.getCompanyId();
 
-		Group guestGroup = _groupLocalService.getGroup(
+		Group group = _groupLocalService.getGroup(
 			companyId, GroupConstants.GUEST);
 
-		ExpandoBridge groupExpandoBridge = guestGroup.getExpandoBridge();
+		ExpandoBridge expandoBridge = group.getExpandoBridge();
 
-		if (!groupExpandoBridge.hasAttribute(
+		if (!expandoBridge.hasAttribute(
 				_RUN_CUSTOMER_PORTAL_COMPANY_SITE_INITIALIZER)) {
 
-			groupExpandoBridge.addAttribute(
+			expandoBridge.addAttribute(
 				_RUN_CUSTOMER_PORTAL_COMPANY_SITE_INITIALIZER,
-				ExpandoColumnConstants.BOOLEAN, Boolean.TRUE, Boolean.FALSE);
+				ExpandoColumnConstants.BOOLEAN, true, false);
 		}
-		else if (groupExpandoBridge.getAttribute(
-					_RUN_CUSTOMER_PORTAL_COMPANY_SITE_INITIALIZER,
-					Boolean.FALSE) == Boolean.FALSE) {
+		else if (!(boolean)expandoBridge.getAttribute(
+					_RUN_CUSTOMER_PORTAL_COMPANY_SITE_INITIALIZER, false)) {
 
 			return;
 		}
 
-		_initializeSite(companyId, guestGroup.getGroupId());
+		_initializeSite(companyId, group.getGroupId());
 
-		groupExpandoBridge.setAttribute(
-			_RUN_CUSTOMER_PORTAL_COMPANY_SITE_INITIALIZER, Boolean.FALSE,
-			Boolean.FALSE);
-	}
-
-	@Reference(
-		target = "(group.initializer.key=" + CustomerPortalGroupInitializer.KEY + ")",
-		unbind = "-"
-	)
-	protected void setGroupInitializer(GroupInitializer groupInitializer) {
-		_groupInitializer = groupInitializer;
+		expandoBridge.setAttribute(
+			_RUN_CUSTOMER_PORTAL_COMPANY_SITE_INITIALIZER, false, false);
 	}
 
 	@Reference(unbind = "-")
@@ -133,12 +123,12 @@ public class CustomerPortalCompanySiteInitializer
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			_setPermissionChecker(companyId, adminUser);
+			_setPermissionChecker(adminUser);
 
 			_groupInitializer.initialize(groupId);
 		}
 		catch (Exception e) {
-			_log.error("Could not initialize company site", e);
+			_log.error("Unable to initialize company site", e);
 		}
 		finally {
 			CompanyThreadLocal.setCompanyId(threadCompanyId);
@@ -147,16 +137,13 @@ public class CustomerPortalCompanySiteInitializer
 		}
 	}
 
-	private void _setPermissionChecker(long companyId, User user)
-		throws Exception {
-
-		CompanyThreadLocal.setCompanyId(companyId);
-
-		PrincipalThreadLocal.setName(user.getUserId());
-
+	private void _setPermissionChecker(User user) throws Exception {
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
+		CompanyThreadLocal.setCompanyId(user.getCompanyId());
+
+		PrincipalThreadLocal.setName(user.getUserId());
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
 
@@ -174,7 +161,11 @@ public class CustomerPortalCompanySiteInitializer
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomerPortalCompanySiteInitializer.class);
 
+	@Reference(
+		target = "(group.initializer.key=" + CustomerPortalGroupInitializer.KEY + ")"
+	)
 	private GroupInitializer _groupInitializer;
+
 	private GroupLocalService _groupLocalService;
 	private RoleLocalService _roleLocalService;
 	private UserLocalService _userLocalService;

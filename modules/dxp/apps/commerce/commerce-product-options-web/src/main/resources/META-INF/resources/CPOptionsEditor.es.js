@@ -4,7 +4,7 @@ import './CPOptionValuesEditor.es';
 import './CPOptionValueDetail.es';
 import './CPOptionValueList.es';
 import Component from 'metal-component';
-import { Config } from 'metal-state';
+import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
 import templates from './CPOptionsEditor.soy';
@@ -18,7 +18,7 @@ class CPOptionsEditor extends Component {
 
 	created() {
 		this.loadOptions();
-        this._handleKeyUpForModal = this._handleKeyUpForModal.bind(this);
+		this._handleKeyUpForModal = this._handleKeyUpForModal.bind(this);
 	}
 
 	_handleAddOption() {
@@ -90,22 +90,24 @@ class CPOptionsEditor extends Component {
 		}
 	}
 
-    _handleKeyUpForModal(evt) {
-        if (evt.code === 'Escape') {
-            this._handleCloseValueEditor();
-        }
-    }
+	_handleKeyUpForModal(evt) {
+		if (evt.code === 'Escape') {
+			this._handleCloseValueEditor();
+		}
+	}
 
-    _handleEditValues(cpOptionId) {
-        this._currentOption = cpOptionId;
-        this._showValues = true;
-        document.addEventListener('keyup', this._handleKeyUpForModal);
-    }
+	_handleEditValues(cpOptionId) {
+		this._currentOption = cpOptionId;
+		this._showValues = true;
 
-    _handleCloseValueEditor() {
-        this._showValues = false;
-        document.removeEventListener('keyup', this._handleKeyUpForModal);
-    }
+		document.addEventListener('keyup', this._handleKeyUpForModal);
+	}
+
+	_handleCloseValueEditor() {
+		this._showValues = false;
+
+		document.removeEventListener('keyup', this._handleKeyUpForModal);
+	}
 
 	_showNotification(message, type) {
 		AUI().use(
@@ -119,8 +121,8 @@ class CPOptionsEditor extends Component {
 						type: type
 					}
 				);
- 		}
- 	);
+			}
+		);
 	}
 }
 

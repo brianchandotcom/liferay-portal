@@ -19,7 +19,7 @@ class CPDefinitionOptionsEditor extends Component {
 
 	created() {
 		this.loadOptions();
-        this._handleKeyUpForModal = this._handleKeyUpForModal.bind(this);
+		this._handleKeyUpForModal = this._handleKeyUpForModal.bind(this);
 	}
 
 	_handleAddOption() {
@@ -120,21 +120,23 @@ class CPDefinitionOptionsEditor extends Component {
 	}
 
 	_handleKeyUpForModal(evt) {
-        if (evt.code === 'Escape') {
-            this._handleCloseValueEditor();
-        }
-    }
+		if (evt.code === 'Escape') {
+			this._handleCloseValueEditor();
+		}
+	}
 
 	_handleEditValues(cpOptionId) {
-        this._currentOption = cpOptionId;
-        this._showValues = true;
-        document.addEventListener('keyup', this._handleKeyUpForModal);
-    }
+		this._currentOption = cpOptionId;
+		this._showValues = true;
+
+		document.addEventListener('keyup', this._handleKeyUpForModal);
+	}
 
 	_handleCloseValueEditor() {
-        this._showValues = false;
-        document.removeEventListener('keyup', this._handleKeyUpForModal);
-    }
+		this._showValues = false;
+
+		document.removeEventListener('keyup', this._handleKeyUpForModal);
+	}
 
 	_showNotification(message, type) {
 		AUI().use(

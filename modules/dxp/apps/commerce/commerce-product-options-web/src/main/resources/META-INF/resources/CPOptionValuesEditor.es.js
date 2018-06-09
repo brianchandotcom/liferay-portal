@@ -119,7 +119,7 @@ class CPOptionValuesEditor extends Component {
 					}
 				);
 			}
- 	);
+		);
 	}
 }
 

@@ -48,6 +48,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -105,7 +106,7 @@ public class ModulesStructureTest {
 					String dirName = String.valueOf(dirPath.getFileName());
 
 					if ((dirName.charAt(0) == '.') ||
-						dirName.equals("node_modules")) {
+						_excludedDirNames.contains(dirName)) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
@@ -233,7 +234,7 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (dirName.equals("node_modules")) {
+					if (_excludedDirNames.contains(dirName)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -327,7 +328,7 @@ public class ModulesStructureTest {
 						Files.exists(dirPath.resolve(_GIT_REPO_FILE_NAME))) {
 
 						_testGitRepoIgnoreFiles(
-							dirPath, gitRepoGitIgnoreTemplate);
+							dirPath, gitRepoGitIgnoreTemplateLines);
 					}
 					else if (!dirPath.equals(_modulesDirPath) &&
 							 Files.exists(dirPath.resolve("build.xml"))) {
@@ -473,7 +474,7 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
-					if (dirName.equals("node_modules")) {
+					if (_excludedDirNames.contains(dirName)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
@@ -558,11 +559,12 @@ public class ModulesStructureTest {
 		return gradleDependency;
 	}
 
-	private String _getAntPluginsGitIgnore(final Path dirPath, String gitIgnore)
+	private String _getAntPluginsGitIgnore(
+			final Path dirPath, SortedSet<String> gitIgnoreLines)
 		throws IOException {
 
 		if (dirPath.equals(_modulesDirPath)) {
-			return gitIgnore;
+			return StringUtil.merge(gitIgnoreLines, StringPool.NEW_LINE);
 		}
 
 		final Set<String> pluginDirNames = new TreeSet<>();
@@ -601,14 +603,18 @@ public class ModulesStructureTest {
 			});
 
 		if (pluginDirNames.isEmpty()) {
-			return gitIgnore;
+			return StringUtil.merge(gitIgnoreLines, StringPool.NEW_LINE);
 		}
 
-		StringBundler sb = new StringBundler(pluginDirNames.size() * 14 + 2);
+		StringBundler sb = new StringBundler(
+			gitIgnoreLines.size() * 2 + pluginDirNames.size() * 14);
 
-		if (Validator.isNotNull(gitIgnore)) {
-			sb.append(gitIgnore);
-			sb.append(CharPool.NEW_LINE);
+		if (SetUtil.isNotEmpty(gitIgnoreLines)) {
+			for (String line : gitIgnoreLines) {
+				sb.append(line);
+				sb.append(CharPool.NEW_LINE);
+			}
+
 			sb.append(CharPool.NEW_LINE);
 		}
 
@@ -828,7 +834,8 @@ public class ModulesStructureTest {
 
 			_testEquals(
 				parentDirPath.resolve(".gitignore"),
-				_getAntPluginsGitIgnore(parentDirPath, null));
+				_getAntPluginsGitIgnore(
+					parentDirPath, Collections.emptySortedSet()));
 		}
 	}
 
@@ -1089,7 +1096,8 @@ public class ModulesStructureTest {
 			settingsGradle);
 	}
 
-	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)
+	private void _testGitRepoIgnoreFiles(
+			Path dirPath, Set<String> gitIgnoreTemplateLines)
 		throws IOException {
 
 		if (_isEmptyGitRepo(dirPath)) {
@@ -1100,9 +1108,20 @@ public class ModulesStructureTest {
 
 		String gitIgnore = ModulesStructureTestUtil.read(gitIgnorePath);
 
+		SortedSet<String> gitIgnoreLines = new TreeSet<>(
+			gitIgnoreTemplateLines);
+
+		for (String line : StringUtil.splitLines(gitIgnore)) {
+			for (String prefix : _GIT_IGNORE_LINE_PREFIXES) {
+				if (line.startsWith(prefix)) {
+					gitIgnoreLines.add(line);
+				}
+			}
+		}
+
 		Assert.assertEquals(
 			"Incorrect " + gitIgnorePath,
-			_getAntPluginsGitIgnore(dirPath, gitIgnoreTemplate), gitIgnore);
+			_getAntPluginsGitIgnore(dirPath, gitIgnoreLines), gitIgnore);
 	}
 
 	private void _testGitRepoProjectGroup(
@@ -1312,6 +1331,8 @@ public class ModulesStructureTest {
 	private static final String _APP_BUILD_GRADLE =
 		"apply plugin: \"com.liferay.app.defaults.plugin\"";
 
+	private static final String[] _GIT_IGNORE_LINE_PREFIXES = {"/wedeploy/"};
+
 	private static final String _GIT_REPO_FILE_NAME = ".gitrepo";
 
 	private static final String _GIT_REPO_GRADLE_PROJECT_GROUP_KEY =
@@ -1342,6 +1363,9 @@ public class ModulesStructureTest {
 
 	private static String _branchName;
 	private static Properties _buildProperties;
+	private static final Set<String> _excludedDirNames = SetUtil.fromList(
+		Arrays.asList(
+			"bin", "build", "classes", "node_modules", "test-classes", "tmp"));
 	private static final Pattern _gitRepoGradleProjectGroupPattern =
 		Pattern.compile("com\\.liferay(?:\\.[a-z]+)+");
 	private static final Set<String> _gitRepoGradlePropertiesKeys =

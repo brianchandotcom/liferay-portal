@@ -407,11 +407,22 @@ Liferay = window.Liferay || {};
 				function(componentId) {
 					return filterFn(components[componentId].__destroyConfig__ || {});
 				}
-			)
+			);
 		}
 
 		componentIds.forEach(Liferay.destroyComponent);
 	};
+
+	Liferay.on(
+		'*:portletRefreshed',
+		function(event) {
+			Liferay.destroyAllComponents(
+				function(destroyConfig) {
+					return destroyConfig.portletId === event.portletId;
+				}
+			);
+		}
+	);
 
 	Liferay._components = components;
 	Liferay._componentsFn = components;

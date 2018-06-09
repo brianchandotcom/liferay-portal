@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.utils.SoyContext;
 import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
@@ -59,6 +60,13 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 			if (locale == null) {
 				context.put("locale", LocaleUtil.getMostRelevantLocale());
+			}
+
+			String portletId = (String)context.get("portletId");
+
+			if (Validator.isNull(portletId)) {
+				context.put(
+					"portletId", request.getAttribute(WebKeys.PORTLET_ID));
 			}
 
 			if (isRenderTemplate()) {

@@ -4777,6 +4777,16 @@ to version 2.3.182.
 - [LPS-81900]: Update the [Liferay Gradle Plugins Soy] dependency to version
 3.1.5.
 
+## 3.12.33 - 2018-06-08
+
+### Changed
+- [LPS-82130]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.31.
+- [LPS-82130]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.32.
+- [LPS-82130]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.4.11.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -5175,4 +5185,5 @@ to version 2.3.182.
 [LPS-81900]: https://issues.liferay.com/browse/LPS-81900
 [LPS-81944]: https://issues.liferay.com/browse/LPS-81944
 [LPS-82001]: https://issues.liferay.com/browse/LPS-82001
+[LPS-82130]: https://issues.liferay.com/browse/LPS-82130
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

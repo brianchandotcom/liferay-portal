@@ -3751,6 +3751,14 @@ of a module includes transitive dependencies.
 ### Fixed
 - [LPS-80332]: Fix `suite.bnd` inclusion when running in sub-repositories.
 
+## 5.4.32 - 2018-06-08
+
+### Changed
+- [LPS-75530]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.7.
+- [LPS-82130]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.33.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -4168,6 +4176,7 @@ of a module includes transitive dependencies.
 [LPS-81895]: https://issues.liferay.com/browse/LPS-81895
 [LPS-81900]: https://issues.liferay.com/browse/LPS-81900
 [LPS-82001]: https://issues.liferay.com/browse/LPS-82001
+[LPS-82130]: https://issues.liferay.com/browse/LPS-82130
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

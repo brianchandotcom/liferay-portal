@@ -68,7 +68,7 @@ renderResponse.setTitle(categoryDisplayName);
 		<div class="col-md-9">
 
 			<%
-			configurationScreen.render(request, response);
+			configurationScreen.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
 			%>
 
 		</div>

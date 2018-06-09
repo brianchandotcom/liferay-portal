@@ -95,7 +95,7 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 		<div class="<%= (screenNavigationEntries.size() > 1) ? containerCssClass : fullContainerCssClass %>">
 
 			<%
-			selectedScreenNavigationEntry.render(request, response);
+			selectedScreenNavigationEntry.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
 			%>
 
 		</div>

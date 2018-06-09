@@ -479,7 +479,8 @@ public class AssetUtil {
 		}
 
 		if (addPortletURL instanceof LiferayPortletURL) {
-			LiferayPortletURL liferayPortletURL = (LiferayPortletURL)addPortletURL;
+			LiferayPortletURL liferayPortletURL =
+				(LiferayPortletURL)addPortletURL;
 
 			liferayPortletURL.setRefererPlid(plid);
 

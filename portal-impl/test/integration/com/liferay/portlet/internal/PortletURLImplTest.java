@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.RenderParametersPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,6 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import com.liferay.portlet.RenderParametersPool;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;

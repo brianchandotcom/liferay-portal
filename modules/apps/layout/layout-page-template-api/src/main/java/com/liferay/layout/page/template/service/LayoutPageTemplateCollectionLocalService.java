@@ -16,10 +16,13 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -179,8 +182,23 @@ public interface LayoutPageTemplateCollectionLocalService
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
 		long layoutPageTemplateCollectionId);
 
+	/**
+	* Returns the layout page template collection matching the UUID and group.
+	*
+	* @param uuid the layout page template collection's UUID
+	* @param groupId the primary key of the group
+	* @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -195,6 +213,18 @@ public interface LayoutPageTemplateCollectionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateCollection getLayoutPageTemplateCollection(
 		long layoutPageTemplateCollectionId) throws PortalException;
+
+	/**
+	* Returns the layout page template collection matching the UUID and group.
+	*
+	* @param uuid the layout page template collection's UUID
+	* @param groupId the primary key of the group
+	* @return the matching layout page template collection
+	* @throws PortalException if a matching layout page template collection could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateCollection getLayoutPageTemplateCollectionByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the layout page template collections.
@@ -223,6 +253,32 @@ public interface LayoutPageTemplateCollectionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, String name, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
+
+	/**
+	* Returns all the layout page template collections matching the UUID and company.
+	*
+	* @param uuid the UUID of the layout page template collections
+	* @param companyId the primary key of the company
+	* @return the matching layout page template collections, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollectionsByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	* Returns a range of layout page template collections matching the UUID and company.
+	*
+	* @param uuid the UUID of the layout page template collections
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of layout page template collections
+	* @param end the upper bound of the range of layout page template collections (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching layout page template collections, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollectionsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
 
 	/**

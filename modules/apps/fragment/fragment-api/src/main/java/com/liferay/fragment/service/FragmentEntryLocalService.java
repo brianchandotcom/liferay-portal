@@ -16,10 +16,13 @@ package com.liferay.fragment.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.fragment.model.FragmentEntry;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -212,8 +215,23 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	public FragmentEntry fetchFragmentEntry(long groupId,
 		String fragmentEntryKey);
 
+	/**
+	* Returns the fragment entry matching the UUID and group.
+	*
+	* @param uuid the fragment entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntry fetchFragmentEntryByUuidAndGroupId(String uuid,
+		long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	/**
 	* Returns a range of all the fragment entries.
@@ -251,6 +269,32 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 		OrderByComparator<FragmentEntry> orderByComparator);
 
 	/**
+	* Returns all the fragment entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment entries
+	* @param companyId the primary key of the company
+	* @return the matching fragment entries, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	* Returns a range of fragment entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of fragment entries
+	* @param end the upper bound of the range of fragment entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching fragment entries, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator);
+
+	/**
 	* Returns the number of fragment entries.
 	*
 	* @return the number of fragment entries
@@ -271,6 +315,18 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntry getFragmentEntry(long fragmentEntryId)
 		throws PortalException;
+
+	/**
+	* Returns the fragment entry matching the UUID and group.
+	*
+	* @param uuid the fragment entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment entry
+	* @throws PortalException if a matching fragment entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntry getFragmentEntryByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

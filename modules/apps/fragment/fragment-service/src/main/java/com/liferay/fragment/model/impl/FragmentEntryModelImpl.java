@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryModel;
 import com.liferay.fragment.model.FragmentEntrySoap;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -71,6 +74,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	 */
 	public static final String TABLE_NAME = "FragmentEntry";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "fragmentEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -88,11 +92,13 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fragmentEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -111,9 +117,10 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null,previewFileEntryId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (uuid_ VARCHAR(75) null,fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentEntryKey VARCHAR(75) null,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null,previewFileEntryId LONG,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntry.name ASC";
@@ -129,11 +136,13 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.fragment.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.fragment.model.FragmentEntry"),
 			true);
-	public static final long FRAGMENTCOLLECTIONID_COLUMN_BITMASK = 1L;
-	public static final long FRAGMENTENTRYKEY_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long NAME_COLUMN_BITMASK = 8L;
-	public static final long STATUS_COLUMN_BITMASK = 16L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long FRAGMENTCOLLECTIONID_COLUMN_BITMASK = 2L;
+	public static final long FRAGMENTENTRYKEY_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
+	public static final long STATUS_COLUMN_BITMASK = 32L;
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -148,6 +157,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 		FragmentEntry model = new FragmentEntryImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setFragmentEntryId(soapModel.getFragmentEntryId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -166,6 +176,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -230,6 +241,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -248,6 +260,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -257,6 +270,12 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long fragmentEntryId = (Long)attributes.get("fragmentEntryId");
 
 		if (fragmentEntryId != null) {
@@ -364,6 +383,36 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -408,7 +457,19 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -693,6 +754,23 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		_statusDate = statusDate;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				FragmentEntry.class.getName()));
+	}
+
 	@Override
 	public boolean isApproved() {
 		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
@@ -804,6 +882,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	public Object clone() {
 		FragmentEntryImpl fragmentEntryImpl = new FragmentEntryImpl();
 
+		fragmentEntryImpl.setUuid(getUuid());
 		fragmentEntryImpl.setFragmentEntryId(getFragmentEntryId());
 		fragmentEntryImpl.setGroupId(getGroupId());
 		fragmentEntryImpl.setCompanyId(getCompanyId());
@@ -822,6 +901,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		fragmentEntryImpl.setStatusByUserId(getStatusByUserId());
 		fragmentEntryImpl.setStatusByUserName(getStatusByUserName());
 		fragmentEntryImpl.setStatusDate(getStatusDate());
+		fragmentEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		fragmentEntryImpl.resetOriginalValues();
 
@@ -882,9 +962,15 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	public void resetOriginalValues() {
 		FragmentEntryModelImpl fragmentEntryModelImpl = this;
 
+		fragmentEntryModelImpl._originalUuid = fragmentEntryModelImpl._uuid;
+
 		fragmentEntryModelImpl._originalGroupId = fragmentEntryModelImpl._groupId;
 
 		fragmentEntryModelImpl._setOriginalGroupId = false;
+
+		fragmentEntryModelImpl._originalCompanyId = fragmentEntryModelImpl._companyId;
+
+		fragmentEntryModelImpl._setOriginalCompanyId = false;
 
 		fragmentEntryModelImpl._setModifiedDate = false;
 
@@ -906,6 +992,14 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	@Override
 	public CacheModel<FragmentEntry> toCacheModel() {
 		FragmentEntryCacheModel fragmentEntryCacheModel = new FragmentEntryCacheModel();
+
+		fragmentEntryCacheModel.uuid = getUuid();
+
+		String uuid = fragmentEntryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			fragmentEntryCacheModel.uuid = null;
+		}
 
 		fragmentEntryCacheModel.fragmentEntryId = getFragmentEntryId();
 
@@ -1006,14 +1100,25 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			fragmentEntryCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			fragmentEntryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			fragmentEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return fragmentEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(41);
 
-		sb.append("{fragmentEntryId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", fragmentEntryId=");
 		sb.append(getFragmentEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -1049,6 +1154,8 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1056,12 +1163,16 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(64);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.fragment.model.FragmentEntry");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>fragmentEntryId</column-name><column-value><![CDATA[");
 		sb.append(getFragmentEntryId());
@@ -1134,6 +1245,10 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1144,11 +1259,15 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			FragmentEntry.class, ModelWrapper.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _fragmentEntryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1171,6 +1290,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private FragmentEntry _escapedModel;
 }

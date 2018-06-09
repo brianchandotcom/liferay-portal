@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.fragment.internal.exportimport.data.handler;
+package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -22,10 +22,10 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.portlet.data.handler.helper.PortletDataHandlerHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
@@ -43,12 +43,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
+	property = "javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
 	service = PortletDataHandler.class
 )
-public class FragmentPortletDataHandler extends BasePortletDataHandler {
+public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "fragments";
+	public static final String NAMESPACE = "page-template";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
 
@@ -59,7 +59,7 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public String getServiceName() {
-		return FragmentConstants.SERVICE_NAME;
+		return LayoutPageTemplateConstants.SERVICE_NAME;
 	}
 
 	@Override
@@ -72,6 +72,7 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		return false;
 	}
 
+	@Override
 	public boolean validateSchemaVersion(String schemaVersion) {
 		return _portletDataHandlerHelper.validateSchemaVersion(
 			schemaVersion, getSchemaVersion());
@@ -80,12 +81,12 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(
-			new StagedModelType(FragmentCollection.class),
-			new StagedModelType(FragmentEntry.class));
+			new StagedModelType(LayoutPageTemplateCollection.class),
+			new StagedModelType(LayoutPageTemplateEntry.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "entries", true, false, null,
-				FragmentEntry.class.getName()));
+				LayoutPageTemplateEntry.class.getName()));
 		setImportControls(getExportControls());
 	}
 
@@ -96,15 +97,10 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		if (portletDataContext.addPrimaryKey(
-				FragmentPortletDataHandler.class, "deleteData")) {
+				GroupPagesPortletDataHandler.class, "deleteData")) {
 
 			return portletPreferences;
 		}
-
-		_fragmentEntryStagedModelRepository.deleteStagedModels(
-			portletDataContext);
-		_fragmentCollectionStagedModelRepository.deleteStagedModels(
-			portletDataContext);
 
 		return portletPreferences;
 	}
@@ -122,22 +118,24 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.addPortletPermissions(
-			FragmentConstants.RESOURCE_NAME);
+			LayoutPageTemplateConstants.RESOURCE_NAME);
 
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery fragmentCollectionExportActionableDynamicQuery =
-			_fragmentCollectionStagedModelRepository.
+		ActionableDynamicQuery
+			layoutPageTemplateCollectionExportActionableDynamicQuery =
+				_layoutPageTemplateCollectionStagedModelRepository.
+					getExportActionableDynamicQuery(portletDataContext);
+
+		layoutPageTemplateCollectionExportActionableDynamicQuery.
+			performActions();
+
+		ActionableDynamicQuery layoutPageTemplateEntryActionableDynamicQuery =
+			_layoutPageTemplateEntryStagedModelRepository.
 				getExportActionableDynamicQuery(portletDataContext);
 
-		fragmentCollectionExportActionableDynamicQuery.performActions();
-
-		ActionableDynamicQuery fragmentEntryActionableDynamicQuery =
-			_fragmentEntryStagedModelRepository.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		fragmentEntryActionableDynamicQuery.performActions();
+		layoutPageTemplateEntryActionableDynamicQuery.performActions();
 
 		return getExportDataRootElementString(rootElement);
 	}
@@ -153,28 +151,34 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		portletDataContext.importPortletPermissions(
-			FragmentConstants.RESOURCE_NAME);
+			LayoutPageTemplateConstants.RESOURCE_NAME);
 
-		Element fragmentCollectionsElement =
+		Element layoutPageTemplateCollectionsElement =
 			portletDataContext.getImportDataGroupElement(
-				FragmentCollection.class);
+				LayoutPageTemplateCollection.class);
 
-		List<Element> fragmentCollectionElements =
-			fragmentCollectionsElement.elements();
+		List<Element> layoutPageTemplateCollectionElements =
+			layoutPageTemplateCollectionsElement.elements();
 
-		for (Element fragmentCollectionElement : fragmentCollectionElements) {
+		for (Element layoutPageTemplateCollectionElement :
+				layoutPageTemplateCollectionElements) {
+
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, fragmentCollectionElement);
+				portletDataContext, layoutPageTemplateCollectionElement);
 		}
 
 		Element fragmentEntriesElement =
-			portletDataContext.getImportDataGroupElement(FragmentEntry.class);
+			portletDataContext.getImportDataGroupElement(
+				LayoutPageTemplateEntry.class);
 
-		List<Element> fragmentEntryElements = fragmentEntriesElement.elements();
+		List<Element> layoutPageTemplateEntryElements =
+			fragmentEntriesElement.elements();
 
-		for (Element fragmentEntryElement : fragmentEntryElements) {
+		for (Element layoutPageTemplateEntryElement :
+				layoutPageTemplateEntryElements) {
+
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, fragmentEntryElement);
+				portletDataContext, layoutPageTemplateEntryElement);
 		}
 
 		return null;
@@ -186,17 +190,19 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ActionableDynamicQuery fragmentCollectionExportActionableDynamicQuery =
-			_fragmentCollectionStagedModelRepository.
-				getExportActionableDynamicQuery(portletDataContext);
+		ActionableDynamicQuery
+			layoutPageTemplateCollectionExportActionableDynamicQuery =
+				_layoutPageTemplateCollectionStagedModelRepository.
+					getExportActionableDynamicQuery(portletDataContext);
 
-		fragmentCollectionExportActionableDynamicQuery.performCount();
+		layoutPageTemplateCollectionExportActionableDynamicQuery.performCount();
 
-		ActionableDynamicQuery fragmentEntryExportActionableDynamicQuery =
-			_fragmentEntryStagedModelRepository.getExportActionableDynamicQuery(
-				portletDataContext);
+		ActionableDynamicQuery
+			layoutPageTemplateEntryExportActionableDynamicQuery =
+				_layoutPageTemplateEntryStagedModelRepository.
+					getExportActionableDynamicQuery(portletDataContext);
 
-		fragmentEntryExportActionableDynamicQuery.performCount();
+		layoutPageTemplateEntryExportActionableDynamicQuery.performCount();
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -205,18 +211,18 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.fragment.model.FragmentCollection)",
+		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateCollection)",
 		unbind = "-"
 	)
-	private StagedModelRepository<FragmentCollection>
-		_fragmentCollectionStagedModelRepository;
+	private StagedModelRepository<LayoutPageTemplateCollection>
+		_layoutPageTemplateCollectionStagedModelRepository;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.fragment.model.FragmentEntry)",
+		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)",
 		unbind = "-"
 	)
-	private StagedModelRepository<FragmentEntry>
-		_fragmentEntryStagedModelRepository;
+	private StagedModelRepository<LayoutPageTemplateEntry>
+		_layoutPageTemplateEntryStagedModelRepository;
 
 	@Reference
 	private PortletDataHandlerHelper _portletDataHandlerHelper;

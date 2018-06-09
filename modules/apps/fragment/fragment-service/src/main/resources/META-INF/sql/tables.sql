@@ -1,4 +1,5 @@
 create table FragmentCollection (
+	uuid_ VARCHAR(75) null,
 	fragmentCollectionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -8,10 +9,12 @@ create table FragmentCollection (
 	modifiedDate DATE null,
 	fragmentCollectionKey VARCHAR(75) null,
 	name VARCHAR(75) null,
-	description STRING null
+	description STRING null,
+	lastPublishDate DATE null
 );
 
 create table FragmentEntry (
+	uuid_ VARCHAR(75) null,
 	fragmentEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -29,7 +32,8 @@ create table FragmentEntry (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	lastPublishDate DATE null
 );
 
 create table FragmentEntryLink (

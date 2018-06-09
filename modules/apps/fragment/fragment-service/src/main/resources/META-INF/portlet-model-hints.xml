@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.fragment.model.FragmentCollection">
+		<field name="uuid" type="String" />
 		<field name="fragmentCollectionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -16,8 +17,10 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.fragment.model.FragmentEntry">
+		<field name="uuid" type="String" />
 		<field name="fragmentEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -44,6 +47,7 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.fragment.model.FragmentEntryLink">
 		<field name="uuid" type="String" />

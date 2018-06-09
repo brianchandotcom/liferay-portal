@@ -124,6 +124,8 @@ public class FragmentCollectionPersistenceTest {
 
 		FragmentCollection newFragmentCollection = _persistence.create(pk);
 
+		newFragmentCollection.setUuid(RandomTestUtil.randomString());
+
 		newFragmentCollection.setGroupId(RandomTestUtil.nextLong());
 
 		newFragmentCollection.setCompanyId(RandomTestUtil.nextLong());
@@ -142,10 +144,14 @@ public class FragmentCollectionPersistenceTest {
 
 		newFragmentCollection.setDescription(RandomTestUtil.randomString());
 
+		newFragmentCollection.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_fragmentCollections.add(_persistence.update(newFragmentCollection));
 
 		FragmentCollection existingFragmentCollection = _persistence.findByPrimaryKey(newFragmentCollection.getPrimaryKey());
 
+		Assert.assertEquals(existingFragmentCollection.getUuid(),
+			newFragmentCollection.getUuid());
 		Assert.assertEquals(existingFragmentCollection.getFragmentCollectionId(),
 			newFragmentCollection.getFragmentCollectionId());
 		Assert.assertEquals(existingFragmentCollection.getGroupId(),
@@ -168,6 +174,36 @@ public class FragmentCollectionPersistenceTest {
 			newFragmentCollection.getName());
 		Assert.assertEquals(existingFragmentCollection.getDescription(),
 			newFragmentCollection.getDescription());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingFragmentCollection.getLastPublishDate()),
+			Time.getShortTimestamp(newFragmentCollection.getLastPublishDate()));
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -219,10 +255,10 @@ public class FragmentCollectionPersistenceTest {
 
 	protected OrderByComparator<FragmentCollection> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FragmentCollection",
-			"fragmentCollectionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "fragmentCollectionKey", true, "name", true,
-			"description", true);
+			"uuid", true, "fragmentCollectionId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "fragmentCollectionKey", true, "name",
+			true, "description", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -428,6 +464,14 @@ public class FragmentCollectionPersistenceTest {
 
 		FragmentCollection existingFragmentCollection = _persistence.findByPrimaryKey(newFragmentCollection.getPrimaryKey());
 
+		Assert.assertTrue(Objects.equals(existingFragmentCollection.getUuid(),
+				ReflectionTestUtil.invoke(existingFragmentCollection,
+					"getOriginalUuid", new Class<?>[0])));
+		Assert.assertEquals(Long.valueOf(
+				existingFragmentCollection.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingFragmentCollection,
+				"getOriginalGroupId", new Class<?>[0]));
+
 		Assert.assertEquals(Long.valueOf(
 				existingFragmentCollection.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingFragmentCollection,
@@ -443,6 +487,8 @@ public class FragmentCollectionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		FragmentCollection fragmentCollection = _persistence.create(pk);
+
+		fragmentCollection.setUuid(RandomTestUtil.randomString());
 
 		fragmentCollection.setGroupId(RandomTestUtil.nextLong());
 
@@ -461,6 +507,8 @@ public class FragmentCollectionPersistenceTest {
 		fragmentCollection.setName(RandomTestUtil.randomString());
 
 		fragmentCollection.setDescription(RandomTestUtil.randomString());
+
+		fragmentCollection.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_fragmentCollections.add(_persistence.update(fragmentCollection));
 

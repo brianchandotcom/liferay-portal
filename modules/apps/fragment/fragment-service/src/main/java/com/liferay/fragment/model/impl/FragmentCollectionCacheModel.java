@@ -65,9 +65,11 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{fragmentCollectionId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", fragmentCollectionId=");
 		sb.append(fragmentCollectionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -87,6 +89,8 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -95,6 +99,13 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 	@Override
 	public FragmentCollection toEntityModel() {
 		FragmentCollectionImpl fragmentCollectionImpl = new FragmentCollectionImpl();
+
+		if (uuid == null) {
+			fragmentCollectionImpl.setUuid("");
+		}
+		else {
+			fragmentCollectionImpl.setUuid(uuid);
+		}
 
 		fragmentCollectionImpl.setFragmentCollectionId(fragmentCollectionId);
 		fragmentCollectionImpl.setGroupId(groupId);
@@ -143,6 +154,13 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 			fragmentCollectionImpl.setDescription(description);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			fragmentCollectionImpl.setLastPublishDate(null);
+		}
+		else {
+			fragmentCollectionImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		fragmentCollectionImpl.resetOriginalValues();
 
 		return fragmentCollectionImpl;
@@ -150,6 +168,8 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		fragmentCollectionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -163,11 +183,19 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		fragmentCollectionKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(fragmentCollectionId);
 
 		objectOutput.writeLong(groupId);
@@ -206,8 +234,11 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long fragmentCollectionId;
 	public long groupId;
 	public long companyId;
@@ -218,4 +249,5 @@ public class FragmentCollectionCacheModel implements CacheModel<FragmentCollecti
 	public String fragmentCollectionKey;
 	public String name;
 	public String description;
+	public long lastPublishDate;
 }

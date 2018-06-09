@@ -16,10 +16,13 @@ package com.liferay.layout.page.template.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -206,8 +209,23 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId);
 
+	/**
+	* Returns the layout page template entry matching the UUID and group.
+	*
+	* @param uuid the layout page template entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry fetchLayoutPageTemplateEntryByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -268,6 +286,32 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
 
 	/**
+	* Returns all the layout page template entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the layout page template entries
+	* @param companyId the primary key of the company
+	* @return the matching layout page template entries, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntriesByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	* Returns a range of layout page template entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the layout page template entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of layout page template entries
+	* @param end the upper bound of the range of layout page template entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching layout page template entries, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<LayoutPageTemplateEntry> orderByComparator);
+
+	/**
 	* Returns the number of layout page template entries.
 	*
 	* @return the number of layout page template entries
@@ -285,6 +329,18 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateEntry getLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId) throws PortalException;
+
+	/**
+	* Returns the layout page template entry matching the UUID and group.
+	*
+	* @param uuid the layout page template entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching layout page template entry
+	* @throws PortalException if a matching layout page template entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutPageTemplateEntry getLayoutPageTemplateEntryByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

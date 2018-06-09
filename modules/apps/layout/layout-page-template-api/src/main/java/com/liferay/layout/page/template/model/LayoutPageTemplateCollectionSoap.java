@@ -35,6 +35,7 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 		LayoutPageTemplateCollection model) {
 		LayoutPageTemplateCollectionSoap soapModel = new LayoutPageTemplateCollectionSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setLayoutPageTemplateCollectionId(model.getLayoutPageTemplateCollectionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -44,6 +45,7 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -97,6 +99,14 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setLayoutPageTemplateCollectionId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getLayoutPageTemplateCollectionId() {
@@ -172,6 +182,15 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 		_description = description;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _layoutPageTemplateCollectionId;
 	private long _groupId;
 	private long _companyId;
@@ -181,4 +200,5 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
+	private Date _lastPublishDate;
 }

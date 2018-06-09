@@ -17,6 +17,8 @@ package com.liferay.fragment.internal.xstream.configurator;
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
+import com.liferay.fragment.model.impl.FragmentCollectionImpl;
+import com.liferay.fragment.model.impl.FragmentEntryImpl;
 import com.liferay.fragment.model.impl.FragmentEntryLinkImpl;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.xstream.configurator.XStreamConfigurator;
@@ -50,6 +52,9 @@ public class FragmentXStreamConfigurator implements XStreamConfigurator {
 	@Activate
 	protected void activate() {
 		_xStreamAliases = new XStreamAlias[] {
+			new XStreamAlias(
+				FragmentCollectionImpl.class, "FragmentCollection"),
+			new XStreamAlias(FragmentEntryImpl.class, "FragmentEntry"),
 			new XStreamAlias(FragmentEntryLinkImpl.class, "FragmentEntryLink")
 		};
 	}

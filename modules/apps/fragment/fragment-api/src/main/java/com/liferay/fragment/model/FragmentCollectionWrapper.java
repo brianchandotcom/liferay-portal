@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -58,6 +60,7 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("fragmentCollectionId", getFragmentCollectionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -68,12 +71,19 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 		attributes.put("fragmentCollectionKey", getFragmentCollectionKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long fragmentCollectionId = (Long)attributes.get("fragmentCollectionId");
 
 		if (fragmentCollectionId != null) {
@@ -133,6 +143,12 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -212,6 +228,16 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	}
 
 	/**
+	* Returns the last publish date of this fragment collection.
+	*
+	* @return the last publish date of this fragment collection
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _fragmentCollection.getLastPublishDate();
+	}
+
+	/**
 	* Returns the modified date of this fragment collection.
 	*
 	* @return the modified date of this fragment collection
@@ -274,6 +300,16 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	@Override
 	public String getUserUuid() {
 		return _fragmentCollection.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this fragment collection.
+	*
+	* @return the uuid of this fragment collection
+	*/
+	@Override
+	public String getUuid() {
+		return _fragmentCollection.getUuid();
 	}
 
 	@Override
@@ -390,6 +426,16 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	}
 
 	/**
+	* Sets the last publish date of this fragment collection.
+	*
+	* @param lastPublishDate the last publish date of this fragment collection
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_fragmentCollection.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
 	* Sets the modified date of this fragment collection.
 	*
 	* @param modifiedDate the modified date of this fragment collection
@@ -459,6 +505,16 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 		_fragmentCollection.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this fragment collection.
+	*
+	* @param uuid the uuid of this fragment collection
+	*/
+	@Override
+	public void setUuid(String uuid) {
+		_fragmentCollection.setUuid(uuid);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<FragmentCollection> toCacheModel() {
 		return _fragmentCollection.toCacheModel();
@@ -502,6 +558,11 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _fragmentCollection.getStagedModelType();
 	}
 
 	@Override

@@ -21,8 +21,8 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface FragmentCollectionModel extends BaseModel<FragmentCollection>,
-	GroupedModel, ShardedModel {
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +64,23 @@ public interface FragmentCollectionModel extends BaseModel<FragmentCollection>,
 	 * @param primaryKey the primary key of this fragment collection
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this fragment collection.
+	 *
+	 * @return the uuid of this fragment collection
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this fragment collection.
+	 *
+	 * @param uuid the uuid of this fragment collection
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the fragment collection ID of this fragment collection.
@@ -236,6 +253,22 @@ public interface FragmentCollectionModel extends BaseModel<FragmentCollection>,
 	 * @param description the description of this fragment collection
 	 */
 	public void setDescription(String description);
+
+	/**
+	 * Returns the last publish date of this fragment collection.
+	 *
+	 * @return the last publish date of this fragment collection
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this fragment collection.
+	 *
+	 * @param lastPublishDate the last publish date of this fragment collection
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

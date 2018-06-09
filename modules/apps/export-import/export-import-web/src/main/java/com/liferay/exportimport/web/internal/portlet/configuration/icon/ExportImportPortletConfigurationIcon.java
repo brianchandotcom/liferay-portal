@@ -14,12 +14,10 @@
 
 package com.liferay.exportimport.web.internal.portlet.configuration.icon;
 
-import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -114,18 +112,6 @@ public class ExportImportPortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (!portletDisplay.isShowExportImportIcon()) {
-			return false;
-		}
-
-		Portlet portlet = _portletLocalService.getPortletById(
-			portletDisplay.getId());
-
-		PortletDataHandler portletDataHandler =
-			portlet.getPortletDataHandlerInstance();
-
-		if ((portletDataHandler != null) &&
-			!portletDataHandler.isConfigurationEnabled()) {
-
 			return false;
 		}
 

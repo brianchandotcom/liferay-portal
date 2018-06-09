@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -60,6 +62,7 @@ public class LayoutPageTemplateCollectionWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("layoutPageTemplateCollectionId",
 			getLayoutPageTemplateCollectionId());
 		attributes.put("groupId", getGroupId());
@@ -70,12 +73,19 @@ public class LayoutPageTemplateCollectionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long layoutPageTemplateCollectionId = (Long)attributes.get(
 				"layoutPageTemplateCollectionId");
 
@@ -129,6 +139,12 @@ public class LayoutPageTemplateCollectionWrapper
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -186,6 +202,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public long getGroupId() {
 		return _layoutPageTemplateCollection.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this layout page template collection.
+	*
+	* @return the last publish date of this layout page template collection
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _layoutPageTemplateCollection.getLastPublishDate();
 	}
 
 	/**
@@ -261,6 +287,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public String getUserUuid() {
 		return _layoutPageTemplateCollection.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this layout page template collection.
+	*
+	* @return the uuid of this layout page template collection
+	*/
+	@Override
+	public String getUuid() {
+		return _layoutPageTemplateCollection.getUuid();
 	}
 
 	@Override
@@ -350,6 +386,16 @@ public class LayoutPageTemplateCollectionWrapper
 	}
 
 	/**
+	* Sets the last publish date of this layout page template collection.
+	*
+	* @param lastPublishDate the last publish date of this layout page template collection
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_layoutPageTemplateCollection.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
 	* Sets the layout page template collection ID of this layout page template collection.
 	*
 	* @param layoutPageTemplateCollectionId the layout page template collection ID of this layout page template collection
@@ -430,6 +476,16 @@ public class LayoutPageTemplateCollectionWrapper
 		_layoutPageTemplateCollection.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this layout page template collection.
+	*
+	* @param uuid the uuid of this layout page template collection
+	*/
+	@Override
+	public void setUuid(String uuid) {
+		_layoutPageTemplateCollection.setUuid(uuid);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.CacheModel<LayoutPageTemplateCollection> toCacheModel() {
 		return _layoutPageTemplateCollection.toCacheModel();
@@ -473,6 +529,11 @@ public class LayoutPageTemplateCollectionWrapper
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _layoutPageTemplateCollection.getStagedModelType();
 	}
 
 	@Override

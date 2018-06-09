@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollectionModel;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollectionSoap;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -70,6 +73,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 	 */
 	public static final String TABLE_NAME = "LayoutPageTemplateCollection";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "layoutPageTemplateCollectionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -78,11 +82,13 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "description", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutPageTemplateCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -92,9 +98,10 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateCollection (layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateCollection (uuid_ VARCHAR(75) null,layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutPageTemplateCollection";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutPageTemplateCollection.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutPageTemplateCollection.name ASC";
@@ -110,8 +117,10 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.layout.page.template.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.layout.page.template.model.LayoutPageTemplateCollection"),
 			true);
-	public static final long GROUPID_COLUMN_BITMASK = 1L;
-	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -127,6 +136,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 
 		LayoutPageTemplateCollection model = new LayoutPageTemplateCollectionImpl();
 
+		model.setUuid(soapModel.getUuid());
 		model.setLayoutPageTemplateCollectionId(soapModel.getLayoutPageTemplateCollectionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -136,6 +146,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -201,6 +212,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("layoutPageTemplateCollectionId",
 			getLayoutPageTemplateCollectionId());
 		attributes.put("groupId", getGroupId());
@@ -211,6 +223,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -220,6 +233,12 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long layoutPageTemplateCollectionId = (Long)attributes.get(
 				"layoutPageTemplateCollectionId");
 
@@ -274,6 +293,36 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		if (description != null) {
 			setDescription(description);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -319,7 +368,19 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@JSON
@@ -435,6 +496,23 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		_description = description;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				LayoutPageTemplateCollection.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -466,6 +544,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 	public Object clone() {
 		LayoutPageTemplateCollectionImpl layoutPageTemplateCollectionImpl = new LayoutPageTemplateCollectionImpl();
 
+		layoutPageTemplateCollectionImpl.setUuid(getUuid());
 		layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionId(getLayoutPageTemplateCollectionId());
 		layoutPageTemplateCollectionImpl.setGroupId(getGroupId());
 		layoutPageTemplateCollectionImpl.setCompanyId(getCompanyId());
@@ -475,6 +554,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		layoutPageTemplateCollectionImpl.setModifiedDate(getModifiedDate());
 		layoutPageTemplateCollectionImpl.setName(getName());
 		layoutPageTemplateCollectionImpl.setDescription(getDescription());
+		layoutPageTemplateCollectionImpl.setLastPublishDate(getLastPublishDate());
 
 		layoutPageTemplateCollectionImpl.resetOriginalValues();
 
@@ -537,9 +617,15 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		LayoutPageTemplateCollectionModelImpl layoutPageTemplateCollectionModelImpl =
 			this;
 
+		layoutPageTemplateCollectionModelImpl._originalUuid = layoutPageTemplateCollectionModelImpl._uuid;
+
 		layoutPageTemplateCollectionModelImpl._originalGroupId = layoutPageTemplateCollectionModelImpl._groupId;
 
 		layoutPageTemplateCollectionModelImpl._setOriginalGroupId = false;
+
+		layoutPageTemplateCollectionModelImpl._originalCompanyId = layoutPageTemplateCollectionModelImpl._companyId;
+
+		layoutPageTemplateCollectionModelImpl._setOriginalCompanyId = false;
 
 		layoutPageTemplateCollectionModelImpl._setModifiedDate = false;
 
@@ -552,6 +638,14 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 	public CacheModel<LayoutPageTemplateCollection> toCacheModel() {
 		LayoutPageTemplateCollectionCacheModel layoutPageTemplateCollectionCacheModel =
 			new LayoutPageTemplateCollectionCacheModel();
+
+		layoutPageTemplateCollectionCacheModel.uuid = getUuid();
+
+		String uuid = layoutPageTemplateCollectionCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			layoutPageTemplateCollectionCacheModel.uuid = null;
+		}
 
 		layoutPageTemplateCollectionCacheModel.layoutPageTemplateCollectionId = getLayoutPageTemplateCollectionId();
 
@@ -603,14 +697,25 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 			layoutPageTemplateCollectionCacheModel.description = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			layoutPageTemplateCollectionCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			layoutPageTemplateCollectionCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return layoutPageTemplateCollectionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{layoutPageTemplateCollectionId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", layoutPageTemplateCollectionId=");
 		sb.append(getLayoutPageTemplateCollectionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -628,6 +733,8 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -635,13 +742,17 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append(
 			"com.liferay.layout.page.template.model.LayoutPageTemplateCollection");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>layoutPageTemplateCollectionId</column-name><column-value><![CDATA[");
 		sb.append(getLayoutPageTemplateCollectionId());
@@ -678,6 +789,10 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -688,11 +803,15 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			LayoutPageTemplateCollection.class, ModelWrapper.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _layoutPageTemplateCollectionId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -701,6 +820,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 	private String _name;
 	private String _originalName;
 	private String _description;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private LayoutPageTemplateCollection _escapedModel;
 }

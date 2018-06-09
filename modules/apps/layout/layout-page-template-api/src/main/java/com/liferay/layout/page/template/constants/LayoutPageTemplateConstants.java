@@ -22,4 +22,7 @@ public class LayoutPageTemplateConstants {
 	public static final String RESOURCE_NAME =
 		"com.liferay.layout.page.template";
 
+	public static final String SERVICE_NAME =
+		"com.liferay.layout.page.template";
+
 }

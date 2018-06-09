@@ -21,8 +21,8 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface LayoutPageTemplateCollectionModel extends BaseModel<LayoutPageTemplateCollection>,
-	GroupedModel, ShardedModel {
+	ShardedModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +64,23 @@ public interface LayoutPageTemplateCollectionModel extends BaseModel<LayoutPageT
 	 * @param primaryKey the primary key of this layout page template collection
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this layout page template collection.
+	 *
+	 * @return the uuid of this layout page template collection
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this layout page template collection.
+	 *
+	 * @param uuid the uuid of this layout page template collection
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the layout page template collection ID of this layout page template collection.
@@ -222,6 +239,22 @@ public interface LayoutPageTemplateCollectionModel extends BaseModel<LayoutPageT
 	 * @param description the description of this layout page template collection
 	 */
 	public void setDescription(String description);
+
+	/**
+	 * Returns the last publish date of this layout page template collection.
+	 *
+	 * @return the last publish date of this layout page template collection
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this layout page template collection.
+	 *
+	 * @param lastPublishDate the last publish date of this layout page template collection
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	@Override
 	public boolean isNew();

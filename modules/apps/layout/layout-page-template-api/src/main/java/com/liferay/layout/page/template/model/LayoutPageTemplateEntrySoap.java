@@ -35,6 +35,7 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		LayoutPageTemplateEntry model) {
 		LayoutPageTemplateEntrySoap soapModel = new LayoutPageTemplateEntrySoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setLayoutPageTemplateEntryId(model.getLayoutPageTemplateEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -54,6 +55,7 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -107,6 +109,14 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setLayoutPageTemplateEntryId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getLayoutPageTemplateEntryId() {
@@ -266,6 +276,15 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _layoutPageTemplateEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -285,4 +304,5 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private Date _lastPublishDate;
 }

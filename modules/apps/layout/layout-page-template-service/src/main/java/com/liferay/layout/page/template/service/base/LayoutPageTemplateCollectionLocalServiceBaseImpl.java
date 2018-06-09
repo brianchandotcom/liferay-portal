@@ -16,6 +16,12 @@ package com.liferay.layout.page.template.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
@@ -30,6 +36,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -222,6 +229,20 @@ public abstract class LayoutPageTemplateCollectionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the layout page template collection matching the UUID and group.
+	 *
+	 * @param uuid the layout page template collection's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	 */
+	@Override
+	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByUuidAndGroupId(
+		String uuid, long groupId) {
+		return layoutPageTemplateCollectionPersistence.fetchByUUID_G(uuid,
+			groupId);
+	}
+
+	/**
 	 * Returns the layout page template collection with the primary key.
 	 *
 	 * @param layoutPageTemplateCollectionId the primary key of the layout page template collection
@@ -272,6 +293,61 @@ public abstract class LayoutPageTemplateCollectionLocalServiceBaseImpl
 			"layoutPageTemplateCollectionId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<LayoutPageTemplateCollection>() {
+				@Override
+				public void performAction(
+					LayoutPageTemplateCollection layoutPageTemplateCollection)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						layoutPageTemplateCollection);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(
+					LayoutPageTemplateCollection.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -285,6 +361,53 @@ public abstract class LayoutPageTemplateCollectionLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return layoutPageTemplateCollectionPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns all the layout page template collections matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout page template collections
+	 * @param companyId the primary key of the company
+	 * @return the matching layout page template collections, or an empty list if no matches were found
+	 */
+	@Override
+	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollectionsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return layoutPageTemplateCollectionPersistence.findByUuid_C(uuid,
+			companyId);
+	}
+
+	/**
+	 * Returns a range of layout page template collections matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the layout page template collections
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of layout page template collections
+	 * @param end the upper bound of the range of layout page template collections (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching layout page template collections, or an empty list if no matches were found
+	 */
+	@Override
+	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollectionsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
+		return layoutPageTemplateCollectionPersistence.findByUuid_C(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the layout page template collection matching the UUID and group.
+	 *
+	 * @param uuid the layout page template collection's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching layout page template collection
+	 * @throws PortalException if a matching layout page template collection could not be found
+	 */
+	@Override
+	public LayoutPageTemplateCollection getLayoutPageTemplateCollectionByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException {
+		return layoutPageTemplateCollectionPersistence.findByUUID_G(uuid,
+			groupId);
 	}
 
 	/**

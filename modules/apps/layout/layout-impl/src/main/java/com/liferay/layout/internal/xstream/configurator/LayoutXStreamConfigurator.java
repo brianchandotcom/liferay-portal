@@ -18,6 +18,8 @@ import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.layout.internal.model.adapter.StagedLayoutSetImpl;
+import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl;
+import com.liferay.layout.page.template.model.impl.LayoutPageTemplateEntryImpl;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
@@ -61,6 +63,11 @@ public class LayoutXStreamConfigurator implements XStreamConfigurator {
 	protected void activate() {
 		_xStreamAliases = new XStreamAlias[] {
 			new XStreamAlias(LayoutImpl.class, "Layout"),
+			new XStreamAlias(
+				LayoutPageTemplateCollectionImpl.class,
+				"LayoutPageTemplateCollection"),
+			new XStreamAlias(
+				LayoutPageTemplateEntryImpl.class, "LayoutPageTemplateEntry"),
 			new XStreamAlias(StagedLayoutSetImpl.class, "StagedLayoutSet")
 		};
 

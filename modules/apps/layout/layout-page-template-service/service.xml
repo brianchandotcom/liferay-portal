@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.layout.page.template">
 	<namespace>Layout</namespace>
-	<entity local-service="true" name="LayoutPageTemplateCollection" remote-service="true">
+	<entity local-service="true" name="LayoutPageTemplateCollection" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -25,6 +25,7 @@
 
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
@@ -52,7 +53,7 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutPageTemplateEntry" remote-service="true">
+	<entity local-service="true" name="LayoutPageTemplateEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -84,6 +85,7 @@
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
+		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 

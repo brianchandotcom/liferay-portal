@@ -65,9 +65,11 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(41);
 
-		sb.append("{fragmentEntryId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", fragmentEntryId=");
 		sb.append(fragmentEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -103,6 +105,8 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -111,6 +115,13 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 	@Override
 	public FragmentEntry toEntityModel() {
 		FragmentEntryImpl fragmentEntryImpl = new FragmentEntryImpl();
+
+		if (uuid == null) {
+			fragmentEntryImpl.setUuid("");
+		}
+		else {
+			fragmentEntryImpl.setUuid(uuid);
+		}
 
 		fragmentEntryImpl.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryImpl.setGroupId(groupId);
@@ -193,6 +204,13 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 			fragmentEntryImpl.setStatusDate(new Date(statusDate));
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			fragmentEntryImpl.setLastPublishDate(null);
+		}
+		else {
+			fragmentEntryImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		fragmentEntryImpl.resetOriginalValues();
 
 		return fragmentEntryImpl;
@@ -200,6 +218,8 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		fragmentEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -225,11 +245,19 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(fragmentEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -299,8 +327,10 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public String uuid;
 	public long fragmentEntryId;
 	public long groupId;
 	public long companyId;
@@ -319,4 +349,5 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long lastPublishDate;
 }

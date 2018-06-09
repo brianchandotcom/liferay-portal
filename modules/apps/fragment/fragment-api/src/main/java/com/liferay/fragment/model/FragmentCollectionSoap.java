@@ -34,6 +34,7 @@ public class FragmentCollectionSoap implements Serializable {
 	public static FragmentCollectionSoap toSoapModel(FragmentCollection model) {
 		FragmentCollectionSoap soapModel = new FragmentCollectionSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setFragmentCollectionId(model.getFragmentCollectionId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -44,6 +45,7 @@ public class FragmentCollectionSoap implements Serializable {
 		soapModel.setFragmentCollectionKey(model.getFragmentCollectionKey());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -97,6 +99,14 @@ public class FragmentCollectionSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setFragmentCollectionId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getFragmentCollectionId() {
@@ -179,6 +189,15 @@ public class FragmentCollectionSoap implements Serializable {
 		_description = description;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	private String _uuid;
 	private long _fragmentCollectionId;
 	private long _groupId;
 	private long _companyId;
@@ -189,4 +208,5 @@ public class FragmentCollectionSoap implements Serializable {
 	private String _fragmentCollectionKey;
 	private String _name;
 	private String _description;
+	private Date _lastPublishDate;
 }

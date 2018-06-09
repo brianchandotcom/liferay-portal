@@ -197,8 +197,27 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 				   .fetchLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
 	}
 
+	/**
+	* Returns the layout page template collection matching the UUID and group.
+	*
+	* @param uuid the layout page template collection's UUID
+	* @param groupId the primary key of the group
+	* @return the matching layout page template collection, or <code>null</code> if a matching layout page template collection could not be found
+	*/
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService()
+				   .fetchLayoutPageTemplateCollectionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -217,6 +236,22 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
+	}
+
+	/**
+	* Returns the layout page template collection matching the UUID and group.
+	*
+	* @param uuid the layout page template collection's UUID
+	* @param groupId the primary key of the group
+	* @return the matching layout page template collection
+	* @throws PortalException if a matching layout page template collection could not be found
+	*/
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection getLayoutPageTemplateCollectionByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getLayoutPageTemplateCollectionByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**
@@ -254,6 +289,38 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 		return getService()
 				   .getLayoutPageTemplateCollections(groupId, name, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns all the layout page template collections matching the UUID and company.
+	*
+	* @param uuid the UUID of the layout page template collections
+	* @param companyId the primary key of the company
+	* @return the matching layout page template collections, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollectionsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return getService()
+				   .getLayoutPageTemplateCollectionsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of layout page template collections matching the UUID and company.
+	*
+	* @param uuid the UUID of the layout page template collections
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of layout page template collections
+	* @param end the upper bound of the range of layout page template collections (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching layout page template collections, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> getLayoutPageTemplateCollectionsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> orderByComparator) {
+		return getService()
+				   .getLayoutPageTemplateCollectionsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

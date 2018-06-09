@@ -214,9 +214,29 @@ public class FragmentCollectionLocalServiceWrapper
 			fragmentCollectionKey);
 	}
 
+	/**
+	* Returns the fragment collection matching the UUID and group.
+	*
+	* @param uuid the fragment collection's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment collection, or <code>null</code> if a matching fragment collection could not be found
+	*/
+	@Override
+	public com.liferay.fragment.model.FragmentCollection fetchFragmentCollectionByUuidAndGroupId(
+		String uuid, long groupId) {
+		return _fragmentCollectionLocalService.fetchFragmentCollectionByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _fragmentCollectionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _fragmentCollectionLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	/**
@@ -231,6 +251,22 @@ public class FragmentCollectionLocalServiceWrapper
 		long fragmentCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentCollectionLocalService.getFragmentCollection(fragmentCollectionId);
+	}
+
+	/**
+	* Returns the fragment collection matching the UUID and group.
+	*
+	* @param uuid the fragment collection's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment collection
+	* @throws PortalException if a matching fragment collection could not be found
+	*/
+	@Override
+	public com.liferay.fragment.model.FragmentCollection getFragmentCollectionByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentCollectionLocalService.getFragmentCollectionByUuidAndGroupId(uuid,
+			groupId);
 	}
 
 	/**
@@ -271,6 +307,38 @@ public class FragmentCollectionLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
 		return _fragmentCollectionLocalService.getFragmentCollections(groupId,
 			name, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns all the fragment collections matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment collections
+	* @param companyId the primary key of the company
+	* @return the matching fragment collections, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollectionsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return _fragmentCollectionLocalService.getFragmentCollectionsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of fragment collections matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment collections
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of fragment collections
+	* @param end the upper bound of the range of fragment collections (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching fragment collections, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentCollection> getFragmentCollectionsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentCollection> orderByComparator) {
+		return _fragmentCollectionLocalService.getFragmentCollectionsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
 	}
 
 	/**

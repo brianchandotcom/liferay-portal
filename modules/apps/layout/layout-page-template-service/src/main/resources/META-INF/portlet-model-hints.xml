@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateCollection">
+		<field name="uuid" type="String" />
 		<field name="layoutPageTemplateCollectionId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -15,8 +16,10 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateEntry">
+		<field name="uuid" type="String" />
 		<field name="layoutPageTemplateEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -36,5 +39,6 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

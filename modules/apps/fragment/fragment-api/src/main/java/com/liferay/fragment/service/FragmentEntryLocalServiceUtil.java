@@ -273,8 +273,25 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().fetchFragmentEntry(groupId, fragmentEntryKey);
 	}
 
+	/**
+	* Returns the fragment entry matching the UUID and group.
+	*
+	* @param uuid the fragment entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
+	*/
+	public static com.liferay.fragment.model.FragmentEntry fetchFragmentEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchFragmentEntryByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	/**
@@ -327,6 +344,36 @@ public class FragmentEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the fragment entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment entries
+	* @param companyId the primary key of the company
+	* @return the matching fragment entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return getService().getFragmentEntriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of fragment entries matching the UUID and company.
+	*
+	* @param uuid the UUID of the fragment entries
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of fragment entries
+	* @param end the upper bound of the range of fragment entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching fragment entries, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.fragment.model.FragmentEntry> orderByComparator) {
+		return getService()
+				   .getFragmentEntriesByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of fragment entries.
 	*
 	* @return the number of fragment entries
@@ -350,6 +397,20 @@ public class FragmentEntryLocalServiceUtil {
 		long fragmentEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFragmentEntry(fragmentEntryId);
+	}
+
+	/**
+	* Returns the fragment entry matching the UUID and group.
+	*
+	* @param uuid the fragment entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching fragment entry
+	* @throws PortalException if a matching fragment entry could not be found
+	*/
+	public static com.liferay.fragment.model.FragmentEntry getFragmentEntryByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFragmentEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

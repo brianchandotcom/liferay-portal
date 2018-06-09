@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,12 +46,7 @@ public class DeleteFormInstanceMVCActionCommand
 	protected void doDeleteFormInstance(long formInstanceId)
 		throws PortalException {
 
-		DDMFormInstance formInstance = _formInstanceService.getFormInstance(
-			formInstanceId);
-
 		_formInstanceService.deleteFormInstance(formInstanceId);
-
-		_ddmStructureService.deleteStructure(formInstance.getStructureId());
 	}
 
 	@Override

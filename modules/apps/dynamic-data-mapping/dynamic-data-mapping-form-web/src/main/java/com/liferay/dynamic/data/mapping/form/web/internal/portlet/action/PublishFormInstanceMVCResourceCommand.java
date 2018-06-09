@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFact
 import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.BaseDDMFormMVCResourceCommand;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -105,10 +106,13 @@ public class PublishFormInstanceMVCResourceCommand
 					"status", latestFormInstanceVersion.getStatus());
 			}
 
-			formInstance = _formInstanceService.updateFormInstance(
-				formInstanceId, formInstance.getStructureId(),
-				formInstance.getNameMap(), formInstance.getDescriptionMap(),
-				settingsDDMFormValues, serviceContext);
+			DDMStructure ddmStructure = formInstance.getStructure();
+
+			_formInstanceService.updateFormInstance(
+				formInstanceId, formInstance.getNameMap(),
+				formInstance.getDescriptionMap(), ddmStructure.getDDMForm(),
+				ddmStructure.getDDMFormLayout(), settingsDDMFormValues,
+				serviceContext);
 
 			writeResponse(resourceRequest, resourceResponse, formInstance);
 		}

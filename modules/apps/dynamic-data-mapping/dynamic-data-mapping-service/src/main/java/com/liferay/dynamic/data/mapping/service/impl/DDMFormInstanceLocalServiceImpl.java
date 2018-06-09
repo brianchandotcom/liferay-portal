@@ -22,10 +22,13 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
@@ -129,6 +132,26 @@ public class DDMFormInstanceLocalServiceImpl
 	}
 
 	@Override
+	public DDMFormInstance addFormInstance(
+			long userId, long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			DDMFormLayout ddmFormLayout, DDMFormValues settingsDDMFormValues,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddmStructureLocalService.addStructure(
+			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			classNameLocalService.getClassNameId(DDMFormInstance.class),
+			StringPool.BLANK, nameMap, descriptionMap, ddmForm, ddmFormLayout,
+			getStorageType(settingsDDMFormValues),
+			DDMStructureConstants.TYPE_AUTO, serviceContext);
+
+		return addFormInstance(
+			userId, groupId, ddmStructure.getStructureId(), nameMap,
+			descriptionMap, settingsDDMFormValues, serviceContext);
+	}
+
+	@Override
 	public void addFormInstanceResources(
 			DDMFormInstance ddmFormInstance, boolean addGroupPermissions,
 			boolean addGuestPermissions)
@@ -163,6 +186,12 @@ public class DDMFormInstanceLocalServiceImpl
 		throws PortalException {
 
 		deleteDDMFormInstance(ddmFormInstance);
+
+		long structureId = ddmFormInstance.getStructureId();
+
+		if (ddmStructureLocalService.fetchDDMStructure(structureId) != null) {
+			ddmStructureLocalService.deleteDDMStructure(structureId);
+		}
 
 		resourceLocalService.deleteResource(
 			ddmFormInstance.getCompanyId(), DDMFormInstance.class.getName(),
@@ -306,16 +335,22 @@ public class DDMFormInstanceLocalServiceImpl
 
 	@Override
 	public DDMFormInstance updateFormInstance(
-			long ddmFormInstanceId, long ddmStructureId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
+			long userId, long ddmFormInstanceId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			DDMFormLayout ddmFormLayout, DDMFormValues settingsDDMFormValues,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
 
+		ddmStructureLocalService.updateStructure(
+			serviceContext.getUserId(), ddmFormInstance.getStructureId(),
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, nameMap,
+			descriptionMap, ddmForm, ddmFormLayout, serviceContext);
+
 		return doUpdateFormInstance(
-			serviceContext.getUserId(), ddmStructureId, nameMap, descriptionMap,
+			userId, ddmFormInstance.getStructureId(), nameMap, descriptionMap,
 			settingsDDMFormValues, serviceContext, ddmFormInstance);
 	}
 
@@ -323,15 +358,11 @@ public class DDMFormInstanceLocalServiceImpl
 	public DDMFormInstance updateFormInstance(
 			long ddmFormInstanceId, long ddmStructureId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String serializedSettingsDDMFormValues,
-			ServiceContext serviceContext)
+			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
 		DDMFormInstance ddmFormInstance =
 			ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
-
-		DDMFormValues settingsDDMFormValues = getFormInstanceSettingsFormValues(
-			serializedSettingsDDMFormValues);
 
 		return doUpdateFormInstance(
 			serviceContext.getUserId(), ddmStructureId, nameMap, descriptionMap,
@@ -389,10 +420,6 @@ public class DDMFormInstanceLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		long oldDDMStructureId = ddmFormInstance.getStructureId();
-
-		ddmFormInstance.setStructureId(ddmStructureId);
-
 		DDMFormInstanceVersion latestDDMFormInstanceVersion =
 			ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
 				ddmFormInstance.getFormInstanceId());
@@ -446,11 +473,6 @@ public class DDMFormInstanceLocalServiceImpl
 				serviceContext);
 		}
 
-		if (oldDDMStructureId != ddmStructureId) {
-			ddmFormInstanceRecordLocalService.deleteFormInstanceRecords(
-				ddmFormInstance.getFormInstanceId());
-		}
-
 		return updatedDDMFormInstance;
 	}
 
@@ -497,6 +519,20 @@ public class DDMFormInstanceLocalServiceImpl
 		}
 
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	protected String getStorageType(DDMFormValues settingsDDMFormValues) {
+		DDMFormInstanceSettings ddmFormInstanceSettings =
+			DDMFormInstanceFactory.create(
+				DDMFormInstanceSettings.class, settingsDDMFormValues);
+
+		String storageType = ddmFormInstanceSettings.storageType();
+
+		if (Validator.isNotNull(storageType)) {
+			return storageType;
+		}
+
+		return StorageType.JSON.toString();
 	}
 
 	protected long getStructureVersionId(long ddmStructureId)

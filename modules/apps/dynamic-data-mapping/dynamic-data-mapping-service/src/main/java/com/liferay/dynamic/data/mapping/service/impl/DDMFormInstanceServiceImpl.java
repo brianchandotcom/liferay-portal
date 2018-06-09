@@ -16,7 +16,9 @@ package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,6 +53,22 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 		return ddmFormInstanceLocalService.addFormInstance(
 			getUserId(), groupId, ddmStructureId, nameMap, descriptionMap,
 			settingsDDMFormValues, serviceContext);
+	}
+
+	@Override
+	public DDMFormInstance addFormInstance(
+			long groupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			DDMFormLayout ddmFormLayout, DDMFormValues settingsDDMFormValues,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, DDMActionKeys.ADD_FORM_INSTANCE);
+
+		return ddmFormInstanceLocalService.addFormInstance(
+			getUserId(), groupId, nameMap, descriptionMap, ddmForm,
+			ddmFormLayout, settingsDDMFormValues, serviceContext);
 	}
 
 	@Override
@@ -163,17 +181,18 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 
 	@Override
 	public DDMFormInstance updateFormInstance(
-			long ddmFormInstanceId, long ddmStructureId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
+			long ddmFormInstanceId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, DDMForm ddmForm,
+			DDMFormLayout ddmFormLayout, DDMFormValues settingsDDMFormValues,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), ddmFormInstanceId, ActionKeys.UPDATE);
 
 		return ddmFormInstanceLocalService.updateFormInstance(
-			ddmFormInstanceId, ddmStructureId, nameMap, descriptionMap,
-			settingsDDMFormValues, serviceContext);
+			getUserId(), ddmFormInstanceId, nameMap, descriptionMap, ddmForm,
+			ddmFormLayout, settingsDDMFormValues, serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<DDMFormInstance>

@@ -146,6 +146,7 @@
 		<reference entity="DDMFormInstanceRecord" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="DDMFormInstanceVersion" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="DDMStructure" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />

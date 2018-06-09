@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.exportimport.staged.model.repository;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceNameComparator;
@@ -184,18 +185,24 @@ public class DDMFormInstanceStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ddmFormInstance);
 
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
+
 		return _ddmFormInstanceLocalService.updateFormInstance(
-			ddmFormInstance.getFormInstanceId(),
-			ddmFormInstance.getStructureId(), ddmFormInstance.getNameMap(),
-			ddmFormInstance.getDescriptionMap(), ddmFormInstance.getSettings(),
-			serviceContext);
+			serviceContext.getUserId(), ddmFormInstance.getFormInstanceId(),
+			ddmFormInstance.getNameMap(), ddmFormInstance.getDescriptionMap(),
+			ddmStructure.getDDMForm(), ddmStructure.getDDMFormLayout(),
+			ddmFormInstance.getSettingsDDMFormValues(), serviceContext);
 	}
 
 	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
 		throws PortalException {
 
 		for (Long ddmStructureId : ddmStructureIds) {
-			_ddmStructureLocalService.deleteStructure(ddmStructureId);
+			if (_ddmStructureLocalService.fetchDDMStructure(ddmStructureId) !=
+					null) {
+
+				_ddmStructureLocalService.deleteStructure(ddmStructureId);
+			}
 		}
 	}
 

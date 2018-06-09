@@ -56,17 +56,6 @@ import org.osgi.service.component.annotations.Reference;
 public class CopyFormInstanceMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
-	protected DDMStructure copyFormInstanceDDMStructure(
-			ActionRequest actionRequest, DDMFormInstance formInstance)
-		throws Exception {
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), actionRequest);
-
-		return ddmStructureService.copyStructure(
-			formInstance.getStructureId(), serviceContext);
-	}
-
 	protected DDMFormValues createFormInstanceSettingsDDMFormValues(
 			DDMFormInstance formInstance)
 		throws Exception {
@@ -90,24 +79,24 @@ public class CopyFormInstanceMVCActionCommand
 		DDMFormInstance formInstance = ddmFormInstanceService.getFormInstance(
 			formInstanceId);
 
-		DDMStructure ddmStructureCopy = copyFormInstanceDDMStructure(
-			actionRequest, formInstance);
+		DDMStructure ddmStructure = formInstance.getStructure();
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
-			ddmStructureCopy.getDefaultLanguageId());
+			ddmStructure.getDefaultLanguageId());
 
-		DDMFormInstance formInstanceCopy =
-			saveFormInstanceMVCCommandHelper.addFormInstance(
-				actionRequest, ddmStructureCopy.getStructureId(),
-				getNameMap(formInstance, defaultLocale),
-				formInstance.getDescriptionMap(),
-				formInstance.getSettingsDDMFormValues());
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDMFormInstance.class.getName(), actionRequest);
 
 		DDMFormValues settingsDDMFormValues =
 			createFormInstanceSettingsDDMFormValues(formInstance);
 
-		ddmFormInstanceService.updateFormInstance(
-			formInstanceCopy.getFormInstanceId(), settingsDDMFormValues);
+		ddmFormInstanceService.addFormInstance(
+			groupId, getNameMap(formInstance, defaultLocale),
+			formInstance.getDescriptionMap(), ddmStructure.getDDMForm(),
+			ddmStructure.getDDMFormLayout(), settingsDDMFormValues,
+			serviceContext);
 	}
 
 	protected Map<Locale, String> getNameMap(

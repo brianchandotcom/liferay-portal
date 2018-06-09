@@ -95,6 +95,33 @@ public class DDMFormInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap addFormInstance(
+		long groupId, String[] nameMapLanguageIds, String[] nameMapValues,
+		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.dynamic.data.mapping.model.DDMFormInstance returnValue = DDMFormInstanceServiceUtil.addFormInstance(groupId,
+					nameMap, descriptionMap, ddmForm, ddmFormLayout,
+					settingsDDMFormValues, serviceContext);
+
+			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteFormInstance(long ddmFormInstanceId)
 		throws RemoteException {
 		try {
@@ -262,9 +289,11 @@ public class DDMFormInstanceServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap updateFormInstance(
-		long ddmFormInstanceId, long ddmStructureId,
-		String[] nameMapLanguageIds, String[] nameMapValues,
-		String[] descriptionMapLanguageIds, String[] descriptionMapValues,
+		long ddmFormInstanceId, String[] nameMapLanguageIds,
+		String[] nameMapValues, String[] descriptionMapLanguageIds,
+		String[] descriptionMapValues,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -275,7 +304,7 @@ public class DDMFormInstanceServiceSoap {
 					descriptionMapValues);
 
 			com.liferay.dynamic.data.mapping.model.DDMFormInstance returnValue = DDMFormInstanceServiceUtil.updateFormInstance(ddmFormInstanceId,
-					ddmStructureId, nameMap, descriptionMap,
+					nameMap, descriptionMap, ddmForm, ddmFormLayout,
 					settingsDDMFormValues, serviceContext);
 
 			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceSoap.toSoapModel(returnValue);

@@ -54,6 +54,19 @@ public class DDMFormInstanceServiceUtil {
 			descriptionMap, settingsDDMFormValues, serviceContext);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstance addFormInstance(
+		long groupId, java.util.Map<java.util.Locale, String> nameMap,
+		java.util.Map<java.util.Locale, String> descriptionMap,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFormInstance(groupId, nameMap, descriptionMap, ddmForm,
+			ddmFormLayout, settingsDDMFormValues, serviceContext);
+	}
+
 	public static void deleteFormInstance(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteFormInstance(ddmFormInstanceId);
@@ -136,15 +149,18 @@ public class DDMFormInstanceServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstance updateFormInstance(
-		long ddmFormInstanceId, long ddmStructureId,
+		long ddmFormInstanceId,
 		java.util.Map<java.util.Locale, String> nameMap,
 		java.util.Map<java.util.Locale, String> descriptionMap,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues settingsDDMFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateFormInstance(ddmFormInstanceId, ddmStructureId,
-			nameMap, descriptionMap, settingsDDMFormValues, serviceContext);
+				   .updateFormInstance(ddmFormInstanceId, nameMap,
+			descriptionMap, ddmForm, ddmFormLayout, settingsDDMFormValues,
+			serviceContext);
 	}
 
 	public static DDMFormInstanceService getService() {

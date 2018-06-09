@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -90,6 +92,12 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 		long ddmStructureId, Map<Locale, String> nameMap,
 		Map<Locale, String> descriptionMap,
 		String serializedSettingsDDMFormValues, ServiceContext serviceContext)
+		throws PortalException;
+
+	public DDMFormInstance addFormInstance(long userId, long groupId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void addFormInstanceResources(DDMFormInstance ddmFormInstance,
@@ -367,15 +375,15 @@ public interface DDMFormInstanceLocalService extends BaseLocalService,
 	public DDMFormInstance updateFormInstance(long formInstanceId,
 		DDMFormValues settingsDDMFormValues) throws PortalException;
 
-	public DDMFormInstance updateFormInstance(long ddmFormInstanceId,
-		long ddmStructureId, Map<Locale, String> nameMap,
-		Map<Locale, String> descriptionMap,
-		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
-		throws PortalException;
+	public DDMFormInstance updateFormInstance(long userId,
+		long ddmFormInstanceId, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, DDMForm ddmForm,
+		DDMFormLayout ddmFormLayout, DDMFormValues settingsDDMFormValues,
+		ServiceContext serviceContext) throws PortalException;
 
 	public DDMFormInstance updateFormInstance(long ddmFormInstanceId,
 		long ddmStructureId, Map<Locale, String> nameMap,
 		Map<Locale, String> descriptionMap,
-		String serializedSettingsDDMFormValues, ServiceContext serviceContext)
+		DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException;
 }

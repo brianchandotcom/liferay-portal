@@ -42,6 +42,7 @@ import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ResolvableDependencies;
@@ -71,6 +72,27 @@ public class PatchTask extends DefaultTask {
 	public static final String PATCHED_SRC_DIR_MAPPING_DEFAULT_EXTENSION = "*";
 
 	public PatchTask() {
+		_originalLibConfigurationName = new Callable<String>() {
+
+			@Override
+			public String call() throws Exception {
+				Project project = getProject();
+
+				ConfigurationContainer configurationContainer =
+					project.getConfigurations();
+
+				Configuration configuration = configurationContainer.findByName(
+					"compileClasspath");
+
+				if (configuration != null) {
+					return configuration.getName();
+				}
+
+				return JavaPlugin.COMPILE_CONFIGURATION_NAME;
+			}
+
+		};
+
 		_originalLibFile = new Callable<File>() {
 
 			@Override
@@ -564,8 +586,7 @@ public class PatchTask extends DefaultTask {
 	private final List<Object> _args = new ArrayList<>();
 	private boolean _copyOriginalLibClasses = true;
 	private final List<Object> _fileNames = new ArrayList<>();
-	private Object _originalLibConfigurationName =
-		JavaPlugin.COMPILE_CONFIGURATION_NAME;
+	private Object _originalLibConfigurationName;
 	private Object _originalLibFile;
 	private Object _originalLibModuleName;
 	private Object _originalLibSrcBaseUrl;

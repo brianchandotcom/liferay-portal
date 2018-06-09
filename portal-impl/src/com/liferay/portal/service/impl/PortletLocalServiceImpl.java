@@ -2044,6 +2044,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getBoolean(
 				portletElement.elementText("include"),
 				portletModel.isInclude()));
+		portletModel.setPartialActionServeResource(
+			GetterUtil.getBoolean(
+				portletElement.elementText("partial-action-serve-resource"),
+				portletModel.isPartialActionServeResource()));
 		portletModel.setPortletDependencyCssEnabled(
 			GetterUtil.getBoolean(
 				portletElement.elementText("portlet-dependency-css-enabled"),

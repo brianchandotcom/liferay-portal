@@ -585,6 +585,10 @@ public class PortletTracker
 			GetterUtil.getBoolean(
 				get(serviceReference, "pop-up-print"),
 				portletModel.isPopUpPrint()));
+		portletModel.setPartialActionServeResource(
+			GetterUtil.getBoolean(
+				get(serviceReference, "partial-action-serve-resource"),
+				portletModel.isPartialActionServeResource()));
 		portletModel.setPortletDependencyCssEnabled(
 			GetterUtil.getBoolean(
 				get(serviceReference, "portlet-dependency-css-enabled"),

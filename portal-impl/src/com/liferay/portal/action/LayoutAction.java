@@ -233,7 +233,8 @@ public class LayoutAction extends Action {
 
 	protected String getRenderStateJSON(
 			HttpServletRequest request, HttpServletResponse response,
-			ThemeDisplay themeDisplay, LayoutTypePortlet layoutTypePortlet)
+			ThemeDisplay themeDisplay, String portletId,
+			LayoutTypePortlet layoutTypePortlet)
 		throws Exception {
 
 		Map<String, RenderData> renderDataMap = new HashMap<>();
@@ -241,19 +242,25 @@ public class LayoutAction extends Action {
 		List<Portlet> allPortlets = layoutTypePortlet.getAllPortlets();
 
 		for (Portlet curPortlet : allPortlets) {
-			BufferCacheServletResponse bufferCacheServletResponse =
-				new BufferCacheServletResponse(response);
+			String curPortletId = curPortlet.getPortletId();
 
-			PortletContainerUtil.preparePortlet(request, curPortlet);
+			if (curPortletId.equals(portletId) ||
+				curPortlet.isPartialActionServeResource()) {
 
-			PortletContainerUtil.serveResource(
-				request, bufferCacheServletResponse, curPortlet);
+				BufferCacheServletResponse bufferCacheServletResponse =
+					new BufferCacheServletResponse(response);
 
-			RenderData renderData = new RenderData(
-				bufferCacheServletResponse.getContentType(),
-				bufferCacheServletResponse.getString());
+				PortletContainerUtil.preparePortlet(request, curPortlet);
 
-			renderDataMap.put(curPortlet.getPortletId(), renderData);
+				PortletContainerUtil.serveResource(
+					request, bufferCacheServletResponse, curPortlet);
+
+				RenderData renderData = new RenderData(
+					bufferCacheServletResponse.getContentType(),
+					bufferCacheServletResponse.getString());
+
+				renderDataMap.put(curPortletId, renderData);
+			}
 		}
 
 		return RenderStateUtil.generateJSON(
@@ -355,7 +362,7 @@ public class LayoutAction extends Action {
 						if (layoutTypePortlet != null) {
 							renderStateJSON = getRenderStateJSON(
 								request, response, themeDisplay,
-								layoutTypePortlet);
+								portlet.getPortletId(), layoutTypePortlet);
 						}
 					}
 

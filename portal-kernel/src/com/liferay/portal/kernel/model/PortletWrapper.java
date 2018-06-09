@@ -2063,6 +2063,22 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns <code>true</code> if the portlet's
+	* serveResource(ResourceRequest,ResourceResponse) method should be invoked
+	* during a partial action triggered by a different portlet on the same
+	* portal page.
+	*
+	* @return <code>true</code> if the portlet's
+	serveResource(ResourceRequest,ResourceResponse) method should be
+	invoked during a partial action triggered by a different portlet
+	on the same portal page
+	*/
+	@Override
+	public boolean isPartialActionServeResource() {
+		return _portlet.isPartialActionServeResource();
+	}
+
+	/**
 	* Returns <code>true</code> if the portlet goes into the pop up state when
 	* the user goes into the print mode.
 	*
@@ -2939,6 +2955,23 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setParentStrutsPath(String parentStrutsPath) {
 		_portlet.setParentStrutsPath(parentStrutsPath);
+	}
+
+	/**
+	* Set to <code>true</code> if the portlet's
+	* serveResource(ResourceRequest,ResourceResponse) method should be invoked
+	* during a partial action triggered by a different portlet on the same
+	* portal page.
+	*
+	* @param partialActionServeResource boolean value for whether the portlet's
+	serveResource(ResourceRequest,ResourceResponse) method should be
+	invoked during a partial action triggered by a different portlet
+	on the same portal page
+	*/
+	@Override
+	public void setPartialActionServeResource(
+		boolean partialActionServeResource) {
+		_portlet.setPartialActionServeResource(partialActionServeResource);
 	}
 
 	/**

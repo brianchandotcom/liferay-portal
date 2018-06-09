@@ -199,7 +199,8 @@ public class PortletImpl extends PortletBaseImpl {
 		List<String> footerPortletJavaScript, String cssClassWrapper,
 		boolean addDefaultResource, String roles, Set<String> unlinkedRoles,
 		Map<String, String> roleMappers, boolean system, boolean active,
-		boolean include, boolean portletDependencyCssEnabled,
+		boolean include, boolean partialActionServeResource,
+		boolean portletDependencyCssEnabled,
 		boolean portletDependencyJavaScriptEnabled,
 		List<PortletDependency> portletDependencies,
 		Map<String, String> initParams, Integer expCache,
@@ -304,6 +305,7 @@ public class PortletImpl extends PortletBaseImpl {
 		_roleMappers = roleMappers;
 		_system = system;
 		_include = include;
+		_partialActionServeResource = partialActionServeResource;
 		_portletDependencyCssEnabled = portletDependencyCssEnabled;
 		_portletDependencyJavaScriptEnabled =
 			portletDependencyJavaScriptEnabled;
@@ -445,7 +447,8 @@ public class PortletImpl extends PortletBaseImpl {
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
 			getCssClassWrapper(), isAddDefaultResource(), getRoles(),
 			getUnlinkedRoles(), getRoleMappers(), isSystem(), isActive(),
-			isInclude(), isPortletDependencyCssEnabled(),
+			isInclude(), isPartialActionServeResource(),
+			isPortletDependencyCssEnabled(),
 			isPortletDependencyJavaScriptEnabled(), getPortletDependencies(),
 			getInitParams(), getExpCache(), isAsyncSupported(),
 			getMultipartFileSizeThreshold(), getMultipartLocation(),
@@ -2629,6 +2632,21 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Returns <code>true</code> if the portlet's
+	 * serveResource(ResourceRequest,ResourceResponse) method should be invoked
+	 * during a partial action triggered by a different portlet on the same
+	 * portal page.
+	 *
+	 * @return <code>true</code> if the portlet's
+	 *         serveResource(ResourceRequest,ResourceResponse) method should be
+	 *         invoked during a partial action triggered by a different portlet
+	 *         on the same portal page
+	 */
+	public boolean isPartialActionServeResource() {
+		return _partialActionServeResource;
+	}
+
+	/**
 	 * Returns <code>true</code> if the portlet goes into the pop up state when
 	 * the user goes into the print mode.
 	 *
@@ -3471,6 +3489,24 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public void setParentStrutsPath(String parentStrutsPath) {
 		_parentStrutsPath = parentStrutsPath;
+	}
+
+	/**
+	 * Set to <code>true</code> if the portlet's
+	 * serveResource(ResourceRequest,ResourceResponse) method should be invoked
+	 * during a partial action triggered by a different portlet on the same
+	 * portal page.
+	 *
+	 * @param partialActionServeResource boolean value for whether the portlet's
+	 *        serveResource(ResourceRequest,ResourceResponse) method should be
+	 *        invoked during a partial action triggered by a different portlet
+	 *        on the same portal page
+	 */
+	@Override
+	public void setPartialActionServeResource(
+		boolean partialActionServeResource) {
+
+		_partialActionServeResource = partialActionServeResource;
 	}
 
 	/**
@@ -4551,6 +4587,14 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The parent struts path of the portlet.
 	 */
 	private String _parentStrutsPath;
+
+	/**
+	 * <code>True</code> if the portlet's
+	 * serveResource(ResourceRequest,ResourceResponse) method should be invoked
+	 * during a partial action triggered by a different portlet on the same
+	 * portal page.
+	 */
+	private boolean _partialActionServeResource;
 
 	/**
 	 * The name of the permission propagator class of the portlet.

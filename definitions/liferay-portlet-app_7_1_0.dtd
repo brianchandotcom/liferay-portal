@@ -40,7 +40,8 @@ header-request-attribute-prefix*, header-timeout?, footer-portal-css*,
 footer-portlet-css*, footer-portal-javascript*, footer-portlet-javascript*,
 css-class-wrapper?, facebook-integration?,
 add-default-resource?, system?, active?, include?,
-portlet-dependency-css-enabled?, portlet-dependency-javascript-enabled?)>
+partial-action-serve-resource?, portlet-dependency-css-enabled?,
+portlet-dependency-javascript-enabled?)>
 
 <!--
 The portlet-name element contains the unique name of the portlet. This name must
@@ -828,6 +829,14 @@ and memory usage is a cheap price to pay in order to provide an easy
 installation and upgrade path.
 -->
 <!ELEMENT include (#PCDATA)>
+
+<!--
+The default value of partial-action-serve-resource is false. If set to true,
+then the portlet's serveResource(ResourceRequest,ResourceResponse) method will
+be invoked during a partial action triggered by a different portlet on the same
+portal page.
+-->
+<!ELEMENT partial-action-serve-resource (#PCDATA)>
 
 <!--
 The default value of portlet-dependency-css-enabled is true. If set to false,

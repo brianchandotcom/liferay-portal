@@ -31,6 +31,13 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 	}
 
 	@Override
+	public User updateActive(long userId, boolean active)
+		throws PortalException {
+
+		return commerceUserLocalService.updateActive(userId, active);
+	}
+
+	@Override
 	public User updatePassword(
 			long userId, String password1, String password2,
 			boolean passwordReset)

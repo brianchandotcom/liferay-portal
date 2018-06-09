@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.HashSet;
@@ -36,6 +37,20 @@ import java.util.Set;
  */
 public class CommerceUserLocalServiceImpl
 	extends CommerceUserLocalServiceBaseImpl {
+
+	@Override
+	public User updateActive(long userId, boolean active)
+		throws PortalException {
+
+		int status = WorkflowConstants.STATUS_INACTIVE;
+
+		if (active) {
+			status = WorkflowConstants.STATUS_APPROVED;
+		}
+
+		return userLocalService.updateStatus(
+			userId, status, new ServiceContext());
+	}
 
 	@Override
 	public User updatePassword(

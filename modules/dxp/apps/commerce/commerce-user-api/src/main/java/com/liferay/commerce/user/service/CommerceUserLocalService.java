@@ -53,6 +53,9 @@ public interface CommerceUserLocalService extends BaseLocalService {
 	*/
 	public String getOSGiServiceIdentifier();
 
+	public User updateActive(long userId, boolean active)
+		throws PortalException;
+
 	public User updatePassword(long userId, String password1, String password2,
 		boolean passwordReset) throws PortalException;
 

@@ -63,6 +63,9 @@ public interface CommerceUserService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User getUser(long userId) throws PortalException;
 
+	public User updateActive(long userId, boolean active)
+		throws PortalException;
+
 	public User updatePassword(long userId, String password1, String password2,
 		boolean passwordReset) throws PortalException;
 

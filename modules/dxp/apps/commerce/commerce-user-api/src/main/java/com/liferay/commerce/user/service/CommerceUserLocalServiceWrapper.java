@@ -44,6 +44,13 @@ public class CommerceUserLocalServiceWrapper implements CommerceUserLocalService
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.User updateActive(long userId,
+		boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserLocalService.updateActive(userId, active);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.User updatePassword(long userId,
 		String password1, String password2, boolean passwordReset)
 		throws com.liferay.portal.kernel.exception.PortalException {

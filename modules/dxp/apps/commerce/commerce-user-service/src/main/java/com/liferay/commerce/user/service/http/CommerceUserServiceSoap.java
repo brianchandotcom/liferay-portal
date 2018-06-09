@@ -68,6 +68,21 @@ public class CommerceUserServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.User updateActive(
+		long userId, boolean active) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.model.User returnValue = CommerceUserServiceUtil.updateActive(userId,
+					active);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.User updatePassword(
 		long userId, String password1, String password2, boolean passwordReset)
 		throws RemoteException {

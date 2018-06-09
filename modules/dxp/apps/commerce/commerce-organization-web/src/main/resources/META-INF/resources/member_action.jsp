@@ -42,6 +42,32 @@ String editURL = commerceOrganizationMembersDisplayContext.getEditURL(organizati
 		/>
 	</c:if>
 
+	<c:choose>
+		<c:when test="<%= organizationUser.isActive() %>">
+			<portlet:actionURL name="editUser" var="deactivateURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DEACTIVATE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="userId" value="<%= String.valueOf(organizationUser.getUserId()) %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon-deactivate
+				url="<%= deactivateURL %>"
+			/>
+		</c:when>
+		<c:otherwise>
+			<portlet:actionURL name="editUser" var="restoreURL">
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="userId" value="<%= String.valueOf(organizationUser.getUserId()) %>" />
+			</portlet:actionURL>
+
+			<liferay-ui:icon
+				message="activate"
+				url="<%= restoreURL %>"
+			/>
+		</c:otherwise>
+	</c:choose>
+
 	<portlet:actionURL name="inviteUser" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REMOVE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />

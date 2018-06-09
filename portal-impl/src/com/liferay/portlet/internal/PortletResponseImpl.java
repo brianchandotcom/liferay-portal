@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.servlet.URLEncoder;
@@ -279,12 +280,10 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			(ThemeDisplay)portletRequestImpl.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Layout layout = LiferayPortletResponseUtil.getLayout(
-			portletRequestImpl, themeDisplay);
+		Layout layout = getLayout(portletRequestImpl, themeDisplay);
 
 		if (_portletSetup == null) {
-			_portletSetup = LiferayPortletResponseUtil.getPortletSetup(
-				themeDisplay, layout, portletName);
+			_portletSetup = getPortletSetup(themeDisplay, layout, portletName);
 		}
 
 		return DoPrivilegedUtil.wrap(
@@ -582,6 +581,31 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 					_log.warn(e, e);
 				}
 			}
+		}
+	}
+
+	protected Layout getLayout(
+		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
+
+		Layout layout = (Layout)portletRequest.getAttribute(WebKeys.LAYOUT);
+
+		if ((layout == null) && (themeDisplay != null)) {
+			layout = themeDisplay.getLayout();
+		}
+
+		return layout;
+	}
+
+	protected PortletPreferences getPortletSetup(
+		ThemeDisplay themeDisplay, Layout layout, String portletName) {
+
+		if (themeDisplay == null) {
+			return PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+				layout, portletName);
+		}
+		else {
+			return themeDisplay.getStrictLayoutPortletSetup(
+				layout, portletName);
 		}
 	}
 

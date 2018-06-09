@@ -157,7 +157,7 @@ public class InputAssetLinksDisplayContext {
 		}
 		catch (PortalException pe) {
 			_log.error(
-				"Unable to get ClassType for classTypeId=" +
+				"Unable to get asset type for class type primary key " +
 					entry.getClassTypeId(),
 				pe);
 		}

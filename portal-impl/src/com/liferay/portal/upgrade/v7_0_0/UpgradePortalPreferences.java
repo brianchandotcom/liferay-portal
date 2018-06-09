@@ -54,7 +54,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			String preferenceName = preferenceElement.elementText("name");
 
 			if (!preferenceName.contains(
-					"com.liferay.portlet.kernel.staging.Staging")) {
+					"com.liferay.portal.kernel.staging.Staging")) {
 
 				newRootElement.add(preferenceElement.createCopy());
 			}

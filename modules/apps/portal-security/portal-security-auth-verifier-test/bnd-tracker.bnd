@@ -1,0 +1,5 @@
+Bundle-Activator: com.liferay.portal.security.auth.verifier.test.internal.activator.TrackerAuthVerifierBundleActivator
+Bundle-Name: Liferay Portal Security Auth Verifier Test Tracker
+Bundle-SymbolicName: com.liferay.portal.security.auth.verifier.test.tracker
+Bundle-Version: 1.0.0
+Private-Package: com.liferay.portal.security.auth.verifier.test.internal.activator

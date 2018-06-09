@@ -16,8 +16,8 @@ package com.liferay.portal.apache.bridges.struts;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portlet.PortletResponseImpl;
 import com.liferay.portlet.PortletURLImplWrapper;
 
 import org.apache.portals.bridges.struts.StrutsPortletURL;
@@ -28,9 +28,10 @@ import org.apache.portals.bridges.struts.StrutsPortletURL;
 public class LiferayStrutsPortletURLImpl extends PortletURLImplWrapper {
 
 	public LiferayStrutsPortletURLImpl(
-		PortletResponseImpl portletResponseImpl, long plid, String lifecycle) {
+		LiferayPortletResponse liferayPortletResponse, long plid,
+		String lifecycle) {
 
-		super(portletResponseImpl, plid, lifecycle);
+		super(liferayPortletResponse, plid, lifecycle);
 	}
 
 	@Override

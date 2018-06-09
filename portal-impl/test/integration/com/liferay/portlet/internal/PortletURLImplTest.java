@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.RenderParametersPool;
 
 import java.util.HashMap;
 import java.util.Map;

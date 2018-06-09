@@ -17,7 +17,7 @@ package com.liferay.portal.struts;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portlet.PortletResponseImpl;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portlet.PortletURLImplWrapper;
 
 import java.util.Map;
@@ -28,11 +28,12 @@ import java.util.Map;
 public class StrutsActionPortletURL extends PortletURLImplWrapper {
 
 	public StrutsActionPortletURL(
-		PortletResponseImpl portletResponseImpl, long plid, String lifecycle) {
+		LiferayPortletResponse liferayPortletResponse, long plid,
+		String lifecycle) {
 
-		super(portletResponseImpl, plid, lifecycle);
+		super(liferayPortletResponse, plid, lifecycle);
 
-		_portlet = portletResponseImpl.getPortlet();
+		_portlet = liferayPortletResponse.getPortlet();
 
 		_strutsPath =
 			StringPool.SLASH + _portlet.getStrutsPath() + StringPool.SLASH;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.internal.ActionURLImpl;
-import com.liferay.portlet.internal.RenderURLImpl;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;

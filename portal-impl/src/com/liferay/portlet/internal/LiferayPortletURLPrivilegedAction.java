@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.struts.StrutsActionPortletURL;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletResponseImpl;
-import com.liferay.portlet.PortletURLImpl;
 
 import java.lang.reflect.Constructor;
 

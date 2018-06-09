@@ -28,7 +28,6 @@ import javax.portlet.ResourceURL;
  * Represents a URL pointing to a portlet.
  *
  * @author Brian Wing Shun Chan
- * @see    com.liferay.portlet.PortletURLImpl
  */
 @ProviderType
 public interface LiferayPortletURL
@@ -297,6 +296,16 @@ public interface LiferayPortletURL
 	public void setRefererPlid(long refererPlid);
 
 	public void setRemovedParameterNames(Set<String> removedParamNames);
+
+	/**
+	 * Sets whether this portlet restores to the current view when toggling
+	 * between maximized and normal states.
+	 *
+	 * @param windowStateRestoreCurrentView whether this portlet restores to the
+	 *        current view when toggling between maximized and normal states.
+	 */
+	public void setWindowStateRestoreCurrentView(
+		boolean windowStateRestoreCurrentView);
 
 	public void visitReservedParameters(BiConsumer<String, String> biConsumer);
 

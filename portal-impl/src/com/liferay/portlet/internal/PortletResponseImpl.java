@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -76,7 +74,6 @@ import org.w3c.dom.Element;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 	@Override

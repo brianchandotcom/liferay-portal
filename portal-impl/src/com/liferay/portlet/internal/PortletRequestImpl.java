@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.ccpp.PortalProfileFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -101,7 +99,6 @@ import javax.servlet.http.HttpSession;
  * @author Raymond Augé
  * @author Neil Griffin
  */
-@ProviderType
 public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override

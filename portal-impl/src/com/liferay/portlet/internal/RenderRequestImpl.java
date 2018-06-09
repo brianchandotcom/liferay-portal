@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 
 import javax.portlet.PortletRequest;
@@ -24,7 +22,6 @@ import javax.portlet.PortletRequest;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public class RenderRequestImpl
 	extends PortletRequestImpl implements LiferayRenderRequest {
 

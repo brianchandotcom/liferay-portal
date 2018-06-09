@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 
 import java.io.IOException;
@@ -28,7 +26,6 @@ import javax.portlet.RenderURL;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public class ActionResponseImpl
 	extends StateAwareResponseImpl implements LiferayActionResponse {
 

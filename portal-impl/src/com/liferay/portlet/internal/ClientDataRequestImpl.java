@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayClientDataRequest;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -46,7 +44,6 @@ import javax.servlet.http.Part;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public abstract class ClientDataRequestImpl
 	extends PortletRequestImpl implements LiferayClientDataRequest {
 

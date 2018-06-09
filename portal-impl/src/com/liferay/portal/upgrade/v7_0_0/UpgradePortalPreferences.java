@@ -14,11 +14,16 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
@@ -26,6 +31,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * @author Joshua Gok
@@ -83,9 +89,29 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			while (rs.next()) {
 				long portalPreferencesId = rs.getLong("portalPreferencesId");
 
-				String preferences = rs.getString("preferences");
+				String oldPreferences = rs.getString("preferences");
 
-				ps2.setString(1, convertStagingPreferencesToJSON(preferences));
+				String newPreferences = null;
+
+				try {
+					newPreferences = convertStagingPreferencesToJSON(
+						oldPreferences);
+				}
+				catch (DocumentException de) {
+					_log.error(
+						StringBundler.concat(
+							"PortalPreferences ",
+							String.valueOf(portalPreferencesId),
+							" contains invalid XML, resetting to default"));
+
+					newPreferences = PortletConstants.DEFAULT_PREFERENCES;
+				}
+
+				if (Objects.equals(oldPreferences, newPreferences)) {
+					continue;
+				}
+
+				ps2.setString(1, newPreferences);
 
 				ps2.setLong(2, portalPreferencesId);
 
@@ -95,5 +121,8 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 			ps2.executeBatch();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradePortalPreferences.class);
 
 }

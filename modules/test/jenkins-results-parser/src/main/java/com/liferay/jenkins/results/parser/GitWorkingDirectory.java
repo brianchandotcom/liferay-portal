@@ -1903,7 +1903,7 @@ public class GitWorkingDirectory {
 	private boolean _deleteLocalBranches(String... branchNames) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("git branch -D -f");
+		sb.append("git branch -D -f ");
 
 		String joinedBranchNames = JenkinsResultsParserUtil.join(
 			" ", branchNames);
@@ -1912,11 +1912,17 @@ public class GitWorkingDirectory {
 
 		ExecutionResult executionResult = null;
 
+		boolean exceptionThrown = false;
+
 		try {
 			executionResult = executeBashCommands(
 				_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, sb.toString());
 		}
 		catch (RuntimeException re) {
+			exceptionThrown = true;
+		}
+
+		if (exceptionThrown || (executionResult._exitValue != 0)) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
 					"Unable to delete local branches:", "\n    ",
@@ -1941,6 +1947,7 @@ public class GitWorkingDirectory {
 
 		sb.append("git push --delete ");
 		sb.append(remote.getName());
+		sb.append(" ");
 
 		String joinedBranchNames = JenkinsResultsParserUtil.join(
 			" ", branchNames);
@@ -1949,26 +1956,30 @@ public class GitWorkingDirectory {
 
 		ExecutionResult executionResult = null;
 
+		boolean exceptionThrown = false;
+
 		try {
 			executionResult = executeBashCommands(
 				_MAX_RETRIES, _RETRY_DELAY, 1000 * 60 * 10, sb.toString());
 		}
 		catch (RuntimeException re) {
+			exceptionThrown = true;
+		}
+
+		if (exceptionThrown || (executionResult._exitValue != 0)) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Unable to delete remote branches:", "\n    ",
-					joinedBranchNames.replaceAll("\\s", "\n    "), " from ",
-					remote.getName(), "\n",
-					executionResult.getStandardError()));
+					"Unable to delete ", remote.getName(), " branches:",
+					"\n    ", joinedBranchNames.replaceAll("\\s", "\n    "),
+					"\n", executionResult.getStandardError()));
 
 			return false;
 		}
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
-				"Deleted remote branches:", "\n    ",
-				joinedBranchNames.replaceAll("\\s", "\n    "), " from ",
-				remote.getName()));
+				"Deleted ", remote.getName(), " branches:", "\n    ",
+				joinedBranchNames.replaceAll("\\s", "\n    ")));
 
 		return true;
 	}

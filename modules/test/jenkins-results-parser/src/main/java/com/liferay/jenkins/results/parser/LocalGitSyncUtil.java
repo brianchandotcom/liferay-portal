@@ -308,7 +308,7 @@ public class LocalGitSyncUtil {
 		for (String localBranchName :
 				gitWorkingDirectory.getLocalBranchNames()) {
 
-			if (localBranchName.matches(_CACHE_BRANCH_REGEX) &&
+			if (localBranchName.matches(_cacheBranchPattern.pattern()) &&
 				!localBranchName.equals(excludeBranchName)) {
 
 				gitWorkingDirectory.deleteBranch(localBranchName, null);
@@ -320,6 +320,9 @@ public class LocalGitSyncUtil {
 		String cacheBranchName, GitWorkingDirectory gitWorkingDirectory,
 		Map<String, GitWorkingDirectory.Branch> remoteBranches) {
 
+		List<GitWorkingDirectory.Branch> remoteCacheBranches = new ArrayList<>(
+			2);
+
 		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
 				remoteBranches.entrySet()) {
 
@@ -329,28 +332,11 @@ public class LocalGitSyncUtil {
 				continue;
 			}
 
-			deleteRemoteRepositoryCacheBranch(
-				gitWorkingDirectory, entry.getValue());
+			remoteCacheBranches.add(entry.getValue());
 		}
-	}
 
-	protected static void deleteRemoteRepositoryCacheBranch(
-		GitWorkingDirectory gitWorkingDirectory,
-		GitWorkingDirectory.Branch remoteBranch) {
-
-		GitWorkingDirectory.Remote remote = remoteBranch.getRemote();
-
-		if (gitWorkingDirectory.pushToRemote(true, null, remoteBranch)) {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Deleted ", remoteBranch.getName(), " from ",
-					remote.getName()));
-		}
-		else {
-			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Unable to delete ", remoteBranch.getName(), " from ",
-					remote.getName()));
+		if (!remoteCacheBranches.isEmpty()) {
+			gitWorkingDirectory.deleteBranches(remoteCacheBranches);
 		}
 	}
 
@@ -430,7 +416,7 @@ public class LocalGitSyncUtil {
 
 			String remoteBranchName = entry.getKey();
 
-			if (remoteBranchName.matches(_CACHE_BRANCH_REGEX)) {
+			if (remoteBranchName.matches(_cacheBranchPattern.pattern())) {
 				if (hasTimestampBranch(remoteBranchName, remoteBranches)) {
 					remoteCacheBranches.add(entry.getValue());
 				}
@@ -957,8 +943,6 @@ public class LocalGitSyncUtil {
 
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =
 		1000 * 60 * 60 * 24 * 2;
-
-	private static final String _CACHE_BRANCH_REGEX = ".*cache-.+-.+-.+-[^-]+";
 
 	private static final Pattern _cacheBranchPattern = Pattern.compile(
 		"cache(-([^-]+))+");

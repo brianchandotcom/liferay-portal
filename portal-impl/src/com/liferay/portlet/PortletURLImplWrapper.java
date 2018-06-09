@@ -37,14 +37,9 @@ public class PortletURLImplWrapper extends LiferayPortletURLWrapper {
 	private static LiferayPortletURL _createLiferayPortletURL(
 		PortletResponse portletResponse, String lifecycle) {
 
-		while (true) {
-			if (portletResponse instanceof PortletResponseWrapper) {
-				portletResponse =
-					((PortletResponseWrapper)portletResponse).getResponse();
-			}
-			else {
-				break;
-			}
+		while (portletResponse instanceof PortletResponseWrapper) {
+			portletResponse =
+				((PortletResponseWrapper)portletResponse).getResponse();
 		}
 
 		PortletResponseImpl portletResponseImpl = (PortletResponseImpl)

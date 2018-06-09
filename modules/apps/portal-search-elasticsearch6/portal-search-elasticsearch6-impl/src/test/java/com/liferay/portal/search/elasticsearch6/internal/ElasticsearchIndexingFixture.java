@@ -30,6 +30,7 @@ import com.liferay.portal.search.elasticsearch6.internal.document.ElasticsearchU
 import com.liferay.portal.search.elasticsearch6.internal.facet.DefaultFacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch6.internal.filter.BooleanFilterTranslatorImpl;
+import com.liferay.portal.search.elasticsearch6.internal.filter.DateRangeFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.filter.DateRangeTermFilterTranslatorImpl;
 import com.liferay.portal.search.elasticsearch6.internal.filter.ElasticsearchFilterTranslator;
 import com.liferay.portal.search.elasticsearch6.internal.filter.ExistsFilterTranslatorImpl;
@@ -144,6 +145,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		return new ElasticsearchFilterTranslator() {
 			{
 				booleanFilterTranslator = new BooleanFilterTranslatorImpl();
+				dateRangeFilterTranslator = new DateRangeFilterTranslatorImpl();
 				dateRangeTermFilterTranslator =
 					new DateRangeTermFilterTranslatorImpl();
 				existsFilterTranslator = new ExistsFilterTranslatorImpl();

@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.filter;
+package com.liferay.portal.search.elasticsearch6.internal.filter;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.filter.DateRangeFilter;
+
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface FilterBuilders {
+public interface DateRangeFilterTranslator {
 
-	public DateRangeFilterBuilder dateRangeFilterBuilder();
-
-	public TermsSetFilterBuilder termsSetFilterBuilder();
+	public QueryBuilder translate(DateRangeFilter dateRangeFilter);
 
 }

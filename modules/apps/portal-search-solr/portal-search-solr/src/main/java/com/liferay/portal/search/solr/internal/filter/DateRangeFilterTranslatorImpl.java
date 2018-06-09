@@ -12,28 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.filter;
+package com.liferay.portal.search.solr.internal.filter;
 
-import com.liferay.portal.search.filter.DateRangeFilterBuilder;
-import com.liferay.portal.search.filter.FilterBuilders;
-import com.liferay.portal.search.filter.TermsSetFilterBuilder;
+import com.liferay.portal.search.filter.DateRangeFilter;
+
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermRangeQuery;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = FilterBuilders.class)
-public class FilterBuildersImpl implements FilterBuilders {
+@Component(immediate = true, service = DateRangeFilterTranslator.class)
+public class DateRangeFilterTranslatorImpl
+	implements DateRangeFilterTranslator {
 
 	@Override
-	public DateRangeFilterBuilder dateRangeFilterBuilder() {
-		return new DateRangeFilterBuilderImpl();
-	}
-
-	@Override
-	public TermsSetFilterBuilder termsSetFilterBuilder() {
-		return new TermsSetFilterBuilderImpl();
+	public Query translate(DateRangeFilter dateRangeFilter) {
+		return TermRangeQuery.newStringRange(
+			dateRangeFilter.getFieldName(), dateRangeFilter.getFrom(),
+			dateRangeFilter.getTo(), dateRangeFilter.isIncludeLower(),
+			dateRangeFilter.isIncludeUpper());
 	}
 
 }

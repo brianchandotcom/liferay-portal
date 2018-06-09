@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.filter;
+package com.liferay.portal.search.solr.internal.filter;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.search.filter.DateRangeFilter;
+
+import org.apache.lucene.search.Query;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface FilterBuilders {
+public interface DateRangeFilterTranslator {
 
-	public DateRangeFilterBuilder dateRangeFilterBuilder();
-
-	public TermsSetFilterBuilder termsSetFilterBuilder();
+	public Query translate(DateRangeFilter dateRangeFilter);
 
 }

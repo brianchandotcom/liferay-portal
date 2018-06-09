@@ -20,10 +20,22 @@ import aQute.bnd.annotation.ProviderType;
  * @author André de Oliveira
  */
 @ProviderType
-public interface FilterBuilders {
+public interface DateRangeFilterBuilder {
 
-	public DateRangeFilterBuilder dateRangeFilterBuilder();
+	public DateRangeFilter build();
 
-	public TermsSetFilterBuilder termsSetFilterBuilder();
+	public void setFieldName(String fieldName);
+
+	public void setFormat(String format);
+
+	public void setFrom(String from);
+
+	public void setIncludeLower(boolean includeLower);
+
+	public void setIncludeUpper(boolean includeUpper);
+
+	public void setTimeZoneId(String timeZoneId);
+
+	public void setTo(String to);
 
 }

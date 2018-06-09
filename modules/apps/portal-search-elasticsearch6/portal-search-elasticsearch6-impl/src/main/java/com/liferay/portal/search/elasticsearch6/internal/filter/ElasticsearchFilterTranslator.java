@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.TermsSetFilter;
 
@@ -57,6 +58,11 @@ public class ElasticsearchFilterTranslator
 	@Override
 	public QueryBuilder visit(BooleanFilter booleanFilter) {
 		return booleanFilterTranslator.translate(booleanFilter, this);
+	}
+
+	@Override
+	public QueryBuilder visit(DateRangeFilter dateRangeFilter) {
+		return dateRangeFilterTranslator.translate(dateRangeFilter);
 	}
 
 	@Override
@@ -127,6 +133,9 @@ public class ElasticsearchFilterTranslator
 
 	@Reference
 	protected BooleanFilterTranslator booleanFilterTranslator;
+
+	@Reference
+	protected DateRangeFilterTranslator dateRangeFilterTranslator;
 
 	@Reference
 	protected DateRangeTermFilterTranslator dateRangeTermFilterTranslator;

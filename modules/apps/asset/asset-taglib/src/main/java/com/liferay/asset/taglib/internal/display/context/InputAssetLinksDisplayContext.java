@@ -142,23 +142,24 @@ public class InputAssetLinksDisplayContext {
 		String assetType = assetRendererFactory.getTypeName(
 			_themeDisplay.getLocale());
 
-		if (assetRendererFactory.isSupportsClassTypes()) {
-			long classTypeId = entry.getClassTypeId();
+		if (!assetRendererFactory.isSupportsClassTypes()) {
+			return assetType;
+		}
 
-			ClassTypeReader classTypeReader =
-				assetRendererFactory.getClassTypeReader();
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
 
-			try {
-				ClassType classType = classTypeReader.getClassType(
-					classTypeId, _themeDisplay.getLocale());
+		try {
+			ClassType classType = classTypeReader.getClassType(
+				entry.getClassTypeId(), _themeDisplay.getLocale());
 
-				assetType = classType.getName();
-			}
-			catch (PortalException pe) {
-				_log.error(
-					"Unable to get ClassType for classTypeId=" + classTypeId,
-					pe);
-			}
+			assetType = classType.getName();
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to get ClassType for classTypeId=" +
+					entry.getClassTypeId(),
+				pe);
 		}
 
 		return assetType;

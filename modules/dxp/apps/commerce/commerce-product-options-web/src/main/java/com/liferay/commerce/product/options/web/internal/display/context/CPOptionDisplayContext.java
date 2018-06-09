@@ -21,10 +21,20 @@ import com.liferay.commerce.product.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
  * @author Marco Leo
@@ -53,6 +63,33 @@ public class CPOptionDisplayContext {
 		return _cpOption.getCPOptionId();
 	}
 
+	public String getDDMFormFieldTypeLabel(
+		DDMFormFieldType ddmFormFieldType, Locale locale) {
+
+		Map<String, Object> ddmFormFieldTypeProperties =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+				ddmFormFieldType.getName());
+
+		String label = MapUtil.getString(
+			ddmFormFieldTypeProperties, "ddm.form.field.type.label");
+
+		try {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, ddmFormFieldType.getClass());
+
+			if (Validator.isNotNull(label)) {
+				return LanguageUtil.get(resourceBundle, label);
+			}
+		}
+		catch (MissingResourceException mre) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(mre, mre);
+			}
+		}
+
+		return ddmFormFieldType.getName();
+	}
+
 	public List<DDMFormFieldType> getDDMFormFieldTypes()
 		throws PortalException {
 
@@ -70,6 +107,9 @@ public class CPOptionDisplayContext {
 		return DDMFormFieldTypeUtil.getDDMFormFieldTypesAllowed(
 			ddmFormFieldTypes, ddmFormFieldTypesAllowed);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPOptionDisplayContext.class);
 
 	private final ConfigurationProvider _configurationProvider;
 	private CPOption _cpOption;

@@ -31,6 +31,9 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -38,12 +41,19 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -98,6 +108,33 @@ public class CPDefinitionOptionRelDisplayContext extends
 		}
 
 		return cpDefinitionOptionRel.getCPDefinitionOptionRelId();
+	}
+
+	public String getDDMFormFieldTypeLabel(
+		DDMFormFieldType ddmFormFieldType, Locale locale) {
+
+		Map<String, Object> ddmFormFieldTypeProperties =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+				ddmFormFieldType.getName());
+
+		String label = MapUtil.getString(
+			ddmFormFieldTypeProperties, "ddm.form.field.type.label");
+
+		try {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, ddmFormFieldType.getClass());
+
+			if (Validator.isNotNull(label)) {
+				return LanguageUtil.get(resourceBundle, label);
+			}
+		}
+		catch (MissingResourceException mre) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(mre, mre);
+			}
+		}
+
+		return ddmFormFieldType.getName();
 	}
 
 	public List<DDMFormFieldType> getDDMFormFieldTypes()
@@ -224,6 +261,9 @@ public class CPDefinitionOptionRelDisplayContext extends
 			themeDisplay.getCompanyId(), CPDefinitionOptionRel.class.getName(),
 			getCPDefinitionOptionRelId(), null);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPDefinitionOptionRelDisplayContext.class);
 
 	private final ConfigurationProvider _configurationProvider;
 	private CPDefinitionOptionRel _cpDefinitionOptionRel;

@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.internal.model.listener;
 
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -22,11 +21,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -58,29 +55,8 @@ public class LayoutPrototypeModelListener
 				return;
 			}
 
-			Company company = _companyLocalService.getCompany(
-				layoutPrototype.getCompanyId());
-
-			String nameXML = layoutPrototype.getName();
-
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				nameXML);
-
-			Locale defaultLocale = LocaleUtil.fromLanguageId(
-				LocalizationUtil.getDefaultLanguageId(nameXML));
-
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			if (!layoutPrototype.isActive()) {
-				status = WorkflowConstants.STATUS_INACTIVE;
-			}
-
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				layoutPrototype.getUserId(), company.getGroupId(), 0,
-				nameMap.get(defaultLocale),
-				LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE,
-				layoutPrototype.getLayoutPrototypeId(), status,
-				new ServiceContext());
+				layoutPrototype);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

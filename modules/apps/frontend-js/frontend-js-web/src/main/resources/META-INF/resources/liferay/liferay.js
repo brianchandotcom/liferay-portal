@@ -267,6 +267,7 @@ Liferay = window.Liferay || {};
 
 	Liferay.Service = Service;
 
+	var componentDestroyConfigs = {};
 	var componentPromiseWrappers = {};
 	var components = {};
 	var componentsFn = {};
@@ -315,6 +316,7 @@ Liferay = window.Liferay || {};
 		}
 		else {
 			if (components[id] && value !== null) {
+				delete componentDestroyConfigs[id];
 				delete componentPromiseWrappers[id];
 
 				console.warn('Component with id "' + id + '" is being registered twice. This can lead to unexpected behaviour in the "Liferay.component" and "Liferay.componentReady" APIs, as well as in the "*:registered" events.');
@@ -323,9 +325,12 @@ Liferay = window.Liferay || {};
 			retVal = (components[id] = value);
 
 			if (value === null) {
+				delete componentDestroyConfigs[id];
 				delete componentPromiseWrappers[id];
 			}
 			else {
+				componentDestroyConfigs[id] = destroyConfig;
+
 				Liferay.fire(id + ':registered');
 
 				var componentPromiseWrapper = componentPromiseWrappers[id];
@@ -337,10 +342,6 @@ Liferay = window.Liferay || {};
 					componentPromiseWrappers[id] = _createPromiseWrapper(value);
 				}
 			}
-		}
-
-		if (retVal) {
-			retVal.__destroyConfig__ = destroyConfig;
 		}
 
 		return retVal;
@@ -411,6 +412,7 @@ Liferay = window.Liferay || {};
 				destroyFn.call(component);
 			}
 
+			delete componentDestroyConfigs[componentId];
 			delete componentPromiseWrappers[componentId];
 			delete componentsFn[componentId];
 			delete components[componentId];
@@ -432,11 +434,9 @@ Liferay = window.Liferay || {};
 		if (filterFn) {
 			componentIds = componentIds.filter(
 				function(componentId) {
-					var component = components[componentId];
-
 					return filterFn(
-						component,
-						component.__destroyConfig__ || {}
+						components[componentId],
+						componentDestroyConfigs[componentId] || {}
 					);
 				}
 			);

@@ -346,6 +346,15 @@ Liferay = window.Liferay || {};
 		return retVal;
 	};
 
+	/**
+	 * Retrieves a list of component instances after they've been registered.
+	 *
+	 * @param {...string} componentId The ids of the components to be received
+	 * @return {Promise} A promise to be resolved with all the requested component
+	 * instances after they've been successfully registered
+	 * @review
+	 */
+
 	Liferay.componentReady = function() {
 		var component;
 		var componentPromise;
@@ -383,8 +392,17 @@ Liferay = window.Liferay || {};
 		return componentPromise;
 	};
 
-	Liferay.destroyComponent = function(id) {
-		var component = components[id];
+	/**
+	 * Destroys the component registered by the provided component id. Invokes the
+	 * component's own destroy lifecycle methods (destroy or dispose) and deletes
+	 * the internal references to the component in the component registry.
+	 *
+	 * @param {string} componentId The id of the component to destroy
+	 * @review
+	 */
+
+	Liferay.destroyComponent = function(componentId) {
+		var component = components[componentId];
 
 		if (component) {
 			var destroyFn = component.destroy || component.dispose;
@@ -393,36 +411,39 @@ Liferay = window.Liferay || {};
 				destroyFn.call(component);
 			}
 
-			delete componentPromiseWrappers[id];
-			delete componentsFn[id];
-			delete components[id];
+			delete componentPromiseWrappers[componentId];
+			delete componentsFn[componentId];
+			delete components[componentId];
 		}
 	};
 
-	Liferay.destroyAllComponents = function(filterFn) {
+	/**
+	 * Destroys registered components matching the provided filter function. If
+	 * no filter function is provided, it will destroy all registered components.
+	 *
+	 * @param {Function} filterFn A method that receives a component destroy options
+	 * and the component itself and returns true if the component should be destroyed
+	 * @review
+	 */
+
+	Liferay.destroyComponents = function(filterFn) {
 		var componentIds = Object.keys(components);
 
 		if (filterFn) {
 			componentIds = componentIds.filter(
 				function(componentId) {
-					return filterFn(components[componentId].__destroyConfig__ || {});
+					var component = components[componentId];
+
+					return filterFn(
+						component,
+						component.__destroyConfig__ || {}
+					);
 				}
 			);
 		}
 
 		componentIds.forEach(Liferay.destroyComponent);
 	};
-
-	Liferay.on(
-		'*:portletRefreshed',
-		function(event) {
-			Liferay.destroyAllComponents(
-				function(destroyConfig) {
-					return destroyConfig.portletId === event.portletId;
-				}
-			);
-		}
-	);
 
 	Liferay._components = components;
 	Liferay._componentsFn = components;

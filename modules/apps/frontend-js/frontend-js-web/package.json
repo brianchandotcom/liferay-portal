@@ -38,7 +38,7 @@
 		"babel-loader": "^7.1.4",
 		"babel-preset-env": "^1.6.1",
 		"check-source-formatting": "^2.0.4",
-		"jest": "^20.0.4",
+		"jest": "^22.0.0",
 		"liferay-jest-junit-reporter": "0.0.3",
 		"liferay-npm-bridge-generator": "2.0.0-rc.3",
 		"liferay-npm-bundler": "2.0.0-rc.3",

@@ -19,7 +19,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHelper;
-import com.liferay.commerce.price.CommercePriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -49,7 +49,7 @@ public class ServletContextUtil {
 		return _instance._getCommerceOrderModelResourcePermission();
 	}
 
-	public static final CommercePriceCalculation getCommercePriceCalculation() {
+	public static final CommerceProductPriceCalculation getCommercePriceCalculation() {
 		return _instance._getCommercePriceCalculation();
 	}
 
@@ -110,9 +110,9 @@ public class ServletContextUtil {
 
 	@Reference(unbind = "-")
 	protected void setCommercePriceCalculation(
-		CommercePriceCalculation commercePriceCalculation) {
+		CommerceProductPriceCalculation commerceProductPriceCalculation) {
 
-		_commercePriceCalculation = commercePriceCalculation;
+		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 	}
 
 	@Reference(unbind = "-")
@@ -167,8 +167,8 @@ public class ServletContextUtil {
 		return _commerceOrderModelResourcePermission;
 	}
 
-	private CommercePriceCalculation _getCommercePriceCalculation() {
-		return _commercePriceCalculation;
+	private CommerceProductPriceCalculation _getCommercePriceCalculation() {
+		return _commerceProductPriceCalculation;
 	}
 
 	private CommercePriceFormatter _getCommercePriceFormatter() {
@@ -200,7 +200,7 @@ public class ServletContextUtil {
 	private CommerceOrderHelper _commerceOrderHelper;
 	private ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission;
-	private CommercePriceCalculation _commercePriceCalculation;
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 	private CommercePriceFormatter _commercePriceFormatter;
 	private CPInstanceHelper _cpInstanceHelper;
 	private PortletResourcePermission _cpPortletResourcePermission;

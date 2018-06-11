@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public interface CommercePriceCalculation {
+public interface CommerceProductPriceCalculation {
 
 	public CommerceMoney getFinalPrice(
 			long cpInstanceId, int quantity, boolean includeDiscounts,

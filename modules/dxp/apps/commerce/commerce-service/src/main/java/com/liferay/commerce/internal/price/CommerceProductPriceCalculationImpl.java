@@ -21,7 +21,7 @@ import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.price.CommercePriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component
-public class CommercePriceCalculationImpl implements CommercePriceCalculation {
+public class CommerceProductPriceCalculationImpl implements CommerceProductPriceCalculation {
 
 	@Override
 	public CommerceMoney getFinalPrice(

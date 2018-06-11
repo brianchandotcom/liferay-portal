@@ -20,7 +20,7 @@ import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil;
-import com.liferay.commerce.price.CommercePriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
@@ -67,7 +67,7 @@ import org.junit.runner.RunWith;
  * @author Luca Pellizzon
  */
 @RunWith(Arquillian.class)
-public class CommercePriceCalculationTest {
+public class CommerceProductPriceCalculationTest {
 
 	@ClassRule
 	@Rule
@@ -170,7 +170,7 @@ public class CommercePriceCalculationTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
+		CommerceMoney commerceMoney = _commerceProductPriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
 
 		Assert.assertEquals(
@@ -273,7 +273,7 @@ public class CommercePriceCalculationTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
+		CommerceMoney commerceMoney = _commerceProductPriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
 
 		Assert.assertEquals(
@@ -347,7 +347,7 @@ public class CommercePriceCalculationTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
+		CommerceMoney commerceMoney = _commerceProductPriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
 
 		Assert.assertEquals(
@@ -440,7 +440,7 @@ public class CommercePriceCalculationTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
+		CommerceMoney commerceMoney = _commerceProductPriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), 1, false, false, commerceContext);
 
 		BigDecimal commercePrice = commercePriceEntry.getPrice();
@@ -526,7 +526,7 @@ public class CommercePriceCalculationTest {
 		CommerceContext commerceContext = new TestCommerceContext(
 			commerceCurrency, _buyerUser1, _organization, null);
 
-		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
+		CommerceMoney commerceMoney = _commerceProductPriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(), quantity, false, false,
 			commerceContext);
 
@@ -557,7 +557,7 @@ public class CommercePriceCalculationTest {
 	private CommerceContextFactory _commerceContextFactory;
 
 	@Inject
-	private CommercePriceCalculation _commercePriceCalculation;
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@Inject
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;

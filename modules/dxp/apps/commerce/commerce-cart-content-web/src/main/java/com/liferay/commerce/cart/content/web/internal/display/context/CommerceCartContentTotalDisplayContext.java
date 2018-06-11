@@ -17,7 +17,7 @@ package com.liferay.commerce.cart.content.web.internal.display.context;
 import com.liferay.commerce.cart.content.web.internal.portlet.configuration.CommerceCartContentTotalPortletInstanceConfiguration;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
-import com.liferay.commerce.price.CommercePriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -43,14 +43,14 @@ public class CommerceCartContentTotalDisplayContext
 			HttpServletRequest httpServletRequest,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
-			CommercePriceCalculation commercePriceCalculation,
+			CommerceProductPriceCalculation commerceProductPriceCalculation,
 			CPDefinitionHelper cpDefinitionHelper,
 			CPInstanceHelper cpInstanceHelper, Portal portal)
 		throws PortalException {
 
 		super(
 			httpServletRequest, commerceOrderItemService,
-			commerceOrderValidatorRegistry, commercePriceCalculation,
+			commerceOrderValidatorRegistry, commerceProductPriceCalculation,
 			cpDefinitionHelper, cpInstanceHelper);
 
 		_portal = portal;

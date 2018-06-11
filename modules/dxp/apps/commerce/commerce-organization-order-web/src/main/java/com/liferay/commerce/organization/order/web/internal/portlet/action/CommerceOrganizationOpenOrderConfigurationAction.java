@@ -17,7 +17,7 @@ package com.liferay.commerce.organization.order.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.organization.order.web.internal.display.context.CommerceOrganizationOrderDisplayContext;
-import com.liferay.commerce.price.CommercePriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderItemService;
@@ -66,7 +66,7 @@ public class CommerceOrganizationOpenOrderConfigurationAction
 					new CommerceOrganizationOrderDisplayContext(
 						_commerceAddressService, _commerceOrderItemService,
 						_commerceOrderLocalService, _commerceOrderNoteService,
-						_commerceOrderService, _commercePriceCalculation,
+						_commerceOrderService, _commerceProductPriceCalculation,
 						_commerceShipmentItemService,
 						_commerceShippingEngineRegistry, _cpInstanceHelper,
 						_jsonFactory, _modelResourcePermission, renderRequest);
@@ -110,7 +110,7 @@ public class CommerceOrganizationOpenOrderConfigurationAction
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
-	private CommercePriceCalculation _commercePriceCalculation;
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;

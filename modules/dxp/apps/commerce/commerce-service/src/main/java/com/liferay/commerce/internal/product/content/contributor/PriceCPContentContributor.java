@@ -20,7 +20,7 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.price.CommercePriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPContentContributor;
@@ -75,7 +75,7 @@ public class PriceCPContentContributor implements CPContentContributor {
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		CommerceMoney commerceMoney = _commercePriceCalculation.getFinalPrice(
+		CommerceMoney commerceMoney = _commerceProductPriceCalculation.getFinalPrice(
 			cpInstance.getCPInstanceId(),
 			cpDefinitionInventoryEngine.getMinOrderQuantity(cpInstance), true,
 			true, commerceContext);
@@ -88,7 +88,7 @@ public class PriceCPContentContributor implements CPContentContributor {
 	}
 
 	@Reference
-	private CommercePriceCalculation _commercePriceCalculation;
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@Reference
 	private CPContentContributorRegistry _cpContentContributorRegistry;

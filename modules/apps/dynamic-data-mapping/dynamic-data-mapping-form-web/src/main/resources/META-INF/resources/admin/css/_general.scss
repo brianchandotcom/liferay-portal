@@ -16,6 +16,24 @@
 	margin-left: 10px;
 }
 
+.ddm-form-builder-buttons {
+	.btn-default {
+		margin-left: 12px;
+
+		&.btn-link {
+			font-weight: 600;
+
+			&:focus {
+				box-shadow: none;
+			}
+		}
+
+		&.btn-primary {
+			margin-left: 0px;
+		}
+	}
+}
+
 .ddm-form-body-content {
 	margin-top: $baseline * 4;
 }

@@ -102,9 +102,10 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteFormInstanceRecord(long ddmFormInstanceRecordId)
+	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord deleteFormInstanceRecord(
+		long ddmFormInstanceRecordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_ddmFormInstanceRecordLocalService.deleteFormInstanceRecord(ddmFormInstanceRecordId);
+		return _ddmFormInstanceRecordLocalService.deleteFormInstanceRecord(ddmFormInstanceRecordId);
 	}
 
 	@Override

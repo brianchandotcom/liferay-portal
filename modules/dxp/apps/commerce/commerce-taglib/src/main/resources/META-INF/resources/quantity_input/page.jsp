@@ -35,7 +35,10 @@ if (Validator.isNull(name)) {
 int[] allowedOrderQuantities = null;
 
 if (Validator.isNotNull(allowedOrderQuantity)) {
-	allowedOrderQuantities = StringUtil.split(allowedOrderQuantity, 0);
+	String allowedOrderQuantitiesString =
+			allowedOrderQuantity.replaceAll(" *(, *)|(\\. *)|( +)", StringPool.COMMA);
+
+	allowedOrderQuantities = StringUtil.split(allowedOrderQuantitiesString, 0);
 
 	Arrays.sort(allowedOrderQuantities);
 }

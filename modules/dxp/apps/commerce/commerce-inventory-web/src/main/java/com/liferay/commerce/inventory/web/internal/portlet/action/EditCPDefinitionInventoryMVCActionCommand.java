@@ -121,9 +121,6 @@ public class EditCPDefinitionInventoryMVCActionCommand
 		String allowedOrderQuantities = ParamUtil.getString(
 			actionRequest, "allowedOrderQuantities");
 
-		allowedOrderQuantities = allowedOrderQuantities.replaceAll(
-			StringPool.SPACE, StringPool.BLANK);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionInventory.class.getName(), actionRequest);
 

@@ -1,13 +1,13 @@
 Liferay-Releng-App-Description: The Static app contains an important group of extenders and utilities that Liferay statically installs before installing any dynamic OSGi modules. The app's functionality includes a log4j extender, an OSGi WAB extender, configuration utilities, OSGi deployment utilities, target platform indexing, and more.<br /><br />This suite is available in the ${liferay.releng.app.title.prefix} bundle.
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Static
-Liferay-Releng-Bundle: true
+Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: false
-Liferay-Releng-Fix-Delivery-Method: core
+Liferay-Releng-Fix-Delivery-Method:
 Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true
-Liferay-Releng-Portal-Required: true
+Liferay-Releng-Portal-Required: false
 Liferay-Releng-Public: ${liferay.releng.public}
 Liferay-Releng-Restart-Required: true
 Liferay-Releng-Suite:

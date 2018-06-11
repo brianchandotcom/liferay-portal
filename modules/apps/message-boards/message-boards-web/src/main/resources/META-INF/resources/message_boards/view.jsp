@@ -130,6 +130,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator
+					markupView="lexicon"
 					type="more"
 				/>
 			</liferay-ui:search-container>

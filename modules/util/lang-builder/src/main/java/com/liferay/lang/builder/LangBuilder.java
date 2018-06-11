@@ -738,6 +738,9 @@ public class LangBuilder {
 					if (line.equals(StringPool.BLANK)) {
 						begin = !begin;
 					}
+					else if (line.startsWith("##")) {
+						begin = false;
+					}
 
 					if (firstLine) {
 						firstLine = false;

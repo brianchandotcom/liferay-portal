@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 
@@ -34,14 +35,12 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Carlos Sierra Andrés
  */
-@Ignore("TODO: We still need to fix this one")
 @RunAsClient
 @RunWith(Arquillian.class)
 public class ScopeMapperNarrowDownClientTest extends BaseClientTestCase {
@@ -65,12 +64,43 @@ public class ScopeMapperNarrowDownClientTest extends BaseClientTestCase {
 		Assert.assertEquals(
 			"everything.readonly", invocationBuilder.get(String.class));
 
-		String scopeString = getToken(
+		String errorString = getToken(
 			"oauthTestApplication", null,
+			getClientCredentials("everything.readonly"), this::parseError);
+
+		Assert.assertEquals("invalid_grant", errorString);
+
+		String scopeString = getToken(
+			"oauthTestApplicationNarrowed", null,
+			getClientCredentials("everything"), this::parseScopeString);
+
+		Assert.assertEquals("everything", scopeString);
+
+		invocationBuilder = authorize(
+			webTarget.request(),
+			getToken(
+				"oauthTestApplicationNarrowed", null,
+				getClientCredentials("everything"), this::parseTokenString));
+
+		Assert.assertEquals(
+			"everything.readonly", invocationBuilder.get(String.class));
+
+		scopeString = getToken(
+			"oauthTestApplicationNarrowed", null,
 			getClientCredentials("everything.readonly"),
 			this::parseScopeString);
 
 		Assert.assertEquals("everything.readonly", scopeString);
+
+		invocationBuilder = authorize(
+			webTarget.request(),
+			getToken(
+				"oauthTestApplicationNarrowed", null,
+				getClientCredentials("everything.readonly"),
+				this::parseTokenString));
+
+		Assert.assertEquals(
+			"everything.readonly", invocationBuilder.get(String.class));
 	}
 
 	public static class ScopeMapperNarrowDownClientTestPreparatorBundleActivator
@@ -82,10 +112,10 @@ public class ScopeMapperNarrowDownClientTest extends BaseClientTestCase {
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
-			Dictionary<String, Object> annotatedApplicationProperties =
+			Dictionary<String, Object> applicationProperties =
 				new HashMapDictionary<>();
 
-			annotatedApplicationProperties.put(
+			applicationProperties.put(
 				"oauth2.scopechecker.type", "annotations");
 
 			Dictionary<String, Object> scopeMapperProperties =
@@ -99,20 +129,17 @@ public class ScopeMapperNarrowDownClientTest extends BaseClientTestCase {
 					"ConfigurableScopeMapperConfiguration",
 				scopeMapperProperties);
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put("osgi.jaxrs.name", TestApplication.class.getName());
-
 			registerJaxRsApplication(
 				new TestAnnotatedApplication(), "annotated",
-				annotatedApplicationProperties);
-
-			registerJaxRsApplication(
-				new TestApplication(), "methods", properties);
+				applicationProperties);
 
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplication",
 				Collections.singletonList("everything"));
+
+			createOAuth2Application(
+				defaultCompanyId, user, "oauthTestApplicationNarrowed",
+				Arrays.asList("everything", "everything.readonly"));
 		}
 
 	}

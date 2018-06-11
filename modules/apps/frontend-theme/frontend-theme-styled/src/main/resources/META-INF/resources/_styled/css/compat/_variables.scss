@@ -96,32 +96,32 @@ $management-bar-toggle-height: 2.5rem + $management-bar-border-bottom-width + $m
 $management-bar-collapse-bg: $dropdown-bg !default;
 $management-bar-collapse-border: transparent !default;
 
-$management-bar-default-bg: darken($body-bg, 3%) !default;
-$management-bar-default-border: darken($body-bg, 6.5%) !default;
+$management-bar-default-bg: #FFF !default;
+$management-bar-default-border: transparent !default;
 $management-bar-default-box-shadow: null !default;
-$management-bar-default-color: $navbar-light-color !default;
+$management-bar-default-color: $secondary !default;
 
 $management-bar-default-collapse-bg: $management-bar-default-bg !default;
 $management-bar-default-collapse-border: $management-bar-default-border !default;
 
-$management-bar-default-link-color: $navbar-light-color !default;
+$management-bar-default-link-color: $secondary !default;
 
-$management-bar-default-link-hover-bg: darken($management-bar-default-bg, 10%) !default;
+$management-bar-default-link-hover-bg: rgba(39,40,51,0.03) !default;
 $management-bar-default-link-hover-color: $navbar-light-hover-color !default;
 
 $management-bar-default-link-active-bg: darken($body-bg, 6.5%) !default;
-$management-bar-default-link-active-color: $navbar-light-active-color !default;
+$management-bar-default-link-active-color: $body-color !default;
 
 $management-bar-default-link-disabled-bg: transparent !default;
 $management-bar-default-link-disabled-color: $navbar-light-disabled-color !default;
 
-$management-bar-default-btn-default-bg: $management-bar-default-bg !default;
-$management-bar-default-btn-default-border: $management-bar-default-border !default;
+$management-bar-default-btn-default-bg: transparent !default;
+$management-bar-default-btn-default-border: transparent !default;
 $management-bar-default-btn-default-color: $management-bar-default-link-color !default;
 
-$management-bar-default-btn-default-hover-bg: darken($management-bar-default-btn-default-bg, 10%) !default;
-$management-bar-default-btn-default-hover-border: darken($management-bar-default-btn-default-border, 12%) !default;
-$management-bar-default-btn-default-hover-color: $management-bar-default-btn-default-color !default;
+$management-bar-default-btn-default-hover-bg: $management-bar-default-link-hover-bg !default;
+$management-bar-default-btn-default-hover-border: $management-bar-default-btn-default-border !default;
+$management-bar-default-btn-default-hover-color: $body-color !default;
 
 $management-bar-default-btn-default-active-bg: $management-bar-default-btn-default-hover-bg !default;
 $management-bar-default-btn-default-active-border: $management-bar-default-btn-default-hover-border !default;

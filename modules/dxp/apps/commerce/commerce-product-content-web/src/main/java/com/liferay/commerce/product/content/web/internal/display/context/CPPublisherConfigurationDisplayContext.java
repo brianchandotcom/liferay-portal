@@ -174,7 +174,7 @@ public class CPPublisherConfigurationDisplayContext
 				JSONArray categoryIdsTitles = JSONFactoryUtil.createJSONArray();
 
 				List<AssetCategory> categories = _filterAssetCategories(
-					GetterUtil.getLongValues(queryValues.split(",")));
+					GetterUtil.getLongValues(StringUtil.split(queryValues)));
 
 				for (AssetCategory category : categories) {
 					categoryIdsTitles.put(
@@ -184,7 +184,7 @@ public class CPPublisherConfigurationDisplayContext
 				List<Long> categoryIds = ListUtil.toList(
 					categories, AssetCategory.CATEGORY_ID_ACCESSOR);
 
-				queryValues = StringUtil.merge(categoryIds, ",");
+				queryValues = StringUtil.merge(categoryIds);
 
 				ruleJSONObject.put("categoryIdsTitles", categoryIdsTitles);
 			}

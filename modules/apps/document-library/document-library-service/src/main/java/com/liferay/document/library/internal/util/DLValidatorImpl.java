@@ -206,7 +206,7 @@ public final class DLValidatorImpl implements DLValidator {
 	public void validateFileSize(String fileName, long size)
 		throws FileSizeException {
 
-		long maxSize = _dlConfiguration.fileMaxSize();
+		long maxSize = getMaxAllowableSize();
 
 		if ((maxSize > 0) && (size > maxSize)) {
 			throw new FileSizeException(

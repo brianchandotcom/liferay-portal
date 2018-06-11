@@ -161,7 +161,7 @@ public class LiferayConnectionProperties
 
 		wizardForm.addRow(userId);
 
-		wizardForm.addColumn(password);
+		wizardForm.addRow(password);
 
 		wizardForm.addRow(anonymousLogin);
 
@@ -180,7 +180,7 @@ public class LiferayConnectionProperties
 
 		mainForm.addRow(userId);
 
-		mainForm.addColumn(password);
+		mainForm.addRow(password);
 
 		mainForm.addRow(anonymousLogin);
 
@@ -206,13 +206,13 @@ public class LiferayConnectionProperties
 
 		advancedForm.addRow(connectTimeout);
 
-		advancedForm.addColumn(readTimeout);
+		advancedForm.addRow(readTimeout);
 
 		advancedForm.addRow(itemsPerPage);
 
 		advancedForm.addRow(followRedirects);
 
-		advancedForm.addColumn(forceHttps);
+		advancedForm.addRow(forceHttps);
 	}
 
 	@Override

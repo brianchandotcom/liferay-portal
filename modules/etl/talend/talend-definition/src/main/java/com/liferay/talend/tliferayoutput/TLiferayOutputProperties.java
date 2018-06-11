@@ -97,7 +97,7 @@ public class TLiferayOutputProperties
 
 	public ValidationResult afterCalculateSchema() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resource.resourceURL.getValue());
+			_log.debug("Resource URL: " + resource.resource.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -259,7 +259,7 @@ public class TLiferayOutputProperties
 
 	public ValidationResult validateOperations() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resource.resourceURL.getValue());
+			_log.debug("Resource URL: " + resource.resource.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -319,7 +319,7 @@ public class TLiferayOutputProperties
 	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");
 
 	/**
-	 * Have to use an explicit class to get the override of afterResourceURL(),
+	 * Have to use an explicit class to get the override of afterResource(),
 	 * an anonymous class cannot be public and thus cannot be called via
 	 * Talend's reflection mechanism.
 	 */
@@ -330,9 +330,9 @@ public class TLiferayOutputProperties
 		}
 
 		@Override
-		public ValidationResult afterResourceURL() throws Exception {
+		public ValidationResult afterResource() throws Exception {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Resource URL: " + resourceURL.getValue());
+				_log.debug("Resource URL: " + resource.getValue());
 			}
 
 			refreshLayout(getForm(Form.MAIN));
@@ -412,7 +412,7 @@ public class TLiferayOutputProperties
 
 		supportedOperations.addAll(
 			liferaySourceOrSinkRuntime.getResourceSupportedOperations(
-				resource.resourceURL.getStringValue()));
+				resource.resource.getStringValue()));
 
 		Supplier<Stream<Operation>> operationStreamSupplier =
 			() -> supportedOperations.stream();

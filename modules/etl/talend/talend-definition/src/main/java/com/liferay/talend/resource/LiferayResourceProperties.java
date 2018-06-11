@@ -56,9 +56,9 @@ public class LiferayResourceProperties
 		super(name);
 	}
 
-	public ValidationResult afterResourceURL() throws Exception {
+	public ValidationResult afterResource() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resourceURL.getValue());
+			_log.debug("Resource: " + resource.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -89,7 +89,7 @@ public class LiferayResourceProperties
 				try {
 					Schema schema =
 						liferaySourceOrSinkRuntime.getEndpointSchema(
-							null, resourceURL.getStringValue());
+							null, resource.getStringValue());
 
 					main.schema.setValue(schema);
 				}
@@ -108,7 +108,7 @@ public class LiferayResourceProperties
 		if (validationResultMutable.getStatus() ==
 				ValidationResult.Result.ERROR) {
 
-			resourceURL.setValue("");
+			resource.setValue("");
 		}
 
 		refreshLayout(getForm(Form.MAIN));
@@ -117,21 +117,21 @@ public class LiferayResourceProperties
 		return validationResultMutable;
 	}
 
-	public void afterUseWebSiteRelatedResource() {
-		resourceURL.setValue("");
+	public void afterSiteFilter() {
+		resource.setValue("");
 
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
-	public void afterWebSiteURL() {
-		resourceURL.setValue("");
+	public void afterWebSite() {
+		resource.setValue("");
 
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
-	public ValidationResult beforeResourceURL() throws Exception {
+	public ValidationResult beforeResource() throws Exception {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -155,10 +155,10 @@ public class LiferayResourceProperties
 				try {
 					List<NamedThing> resourceNames = null;
 
-					if (useWebSiteRelatedResource.getValue()) {
+					if (siteFilter.getValue()) {
 						resourceNames =
 							liferaySourceOrSinkRuntime.getResourceList(
-								webSiteURL.getValue());
+								webSite.getValue());
 					}
 					else {
 						resourceNames =
@@ -172,7 +172,7 @@ public class LiferayResourceProperties
 						validationResultMutable.setStatus(Result.ERROR);
 					}
 
-					resourceURL.setPossibleNamedThingValues(resourceNames);
+					resource.setPossibleNamedThingValues(resourceNames);
 				}
 				catch (Exception e) {
 					return ExceptionUtils.exceptionToValidationResult(e);
@@ -183,7 +183,7 @@ public class LiferayResourceProperties
 		}
 	}
 
-	public ValidationResult beforeWebSiteURL() {
+	public ValidationResult beforeWebSite() {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -215,7 +215,7 @@ public class LiferayResourceProperties
 						validationResultMutable.setStatus(Result.ERROR);
 					}
 
-					webSiteURL.setPossibleNamedThingValues(webSites);
+					webSite.setPossibleNamedThingValues(webSites);
 				}
 				catch (Exception e) {
 					return ExceptionUtils.exceptionToValidationResult(e);
@@ -238,8 +238,7 @@ public class LiferayResourceProperties
 		String formName = form.getName();
 
 		if (formName.equals(Form.MAIN) || formName.equals(Form.REFERENCE)) {
-			PropertiesUtils.setHidden(
-				form, webSiteURL, !useWebSiteRelatedResource.getValue());
+			PropertiesUtils.setHidden(form, webSite, !siteFilter.getValue());
 		}
 	}
 
@@ -255,21 +254,23 @@ public class LiferayResourceProperties
 
 		Form resourceSelectionForm = Form.create(this, Form.MAIN);
 
-		resourceSelectionForm.addRow(useWebSiteRelatedResource);
+		resourceSelectionForm.addRow(siteFilter);
 
-		Widget webSitesWidget = Widget.widget(webSiteURL);
+		Widget webSitesWidget = Widget.widget(webSite);
 
 		webSitesWidget.setCallAfter(true);
 		webSitesWidget.setWidgetType(Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
 
-		resourceSelectionForm.addColumn(webSitesWidget);
+		resourceSelectionForm.addRow(webSitesWidget);
 
-		Widget resourcesWidget = Widget.widget(resourceURL);
+		Widget resourcesWidget = Widget.widget(resource);
 
 		resourcesWidget.setCallAfter(true);
 		resourcesWidget.setWidgetType(Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
 
 		resourceSelectionForm.addRow(resourcesWidget);
+
+		resourceSelectionForm.addRow(resourceFilter);
 
 		refreshLayout(resourceSelectionForm);
 
@@ -277,18 +278,18 @@ public class LiferayResourceProperties
 
 		Form referenceForm = Form.create(this, Form.REFERENCE);
 
-		referenceForm.addRow(useWebSiteRelatedResource);
+		referenceForm.addRow(siteFilter);
 
-		Widget webSitesReferenceWidget = Widget.widget(webSiteURL);
+		Widget webSitesReferenceWidget = Widget.widget(webSite);
 
 		webSitesReferenceWidget.setCallAfter(true);
 		webSitesReferenceWidget.setLongRunning(true);
 		webSitesReferenceWidget.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 
-		referenceForm.addColumn(webSitesReferenceWidget);
+		referenceForm.addRow(webSitesReferenceWidget);
 
-		Widget resourcesReferenceWidget = Widget.widget(resourceURL);
+		Widget resourcesReferenceWidget = Widget.widget(resource);
 
 		resourcesReferenceWidget.setCallAfter(true);
 		resourcesReferenceWidget.setLongRunning(true);
@@ -296,6 +297,8 @@ public class LiferayResourceProperties
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
 
 		referenceForm.addRow(resourcesReferenceWidget);
+
+		referenceForm.addRow(resourceFilter);
 
 		referenceForm.addRow(main.getForm(Form.REFERENCE));
 
@@ -306,9 +309,10 @@ public class LiferayResourceProperties
 	public void setupProperties() {
 		super.setupProperties();
 
-		resourceURL.setValue("");
-		useWebSiteRelatedResource.setValue(false);
-		webSiteURL.setValue("");
+		resource.setValue("");
+		resourceFilter.setValue("");
+		siteFilter.setValue(false);
+		webSite.setValue("");
 	}
 
 	public LiferayConnectionProperties connection;
@@ -324,12 +328,13 @@ public class LiferayResourceProperties
 
 	};
 
-	public StringProperty resourceURL = PropertyFactory.newString(
-		"resourceURL");
+	public StringProperty resource = PropertyFactory.newString("resource");
+	public Property<String> resourceFilter = PropertyFactory.newString(
+		"resourceFilter");
 	public ISchemaListener schemaListener;
-	public Property<Boolean> useWebSiteRelatedResource =
-		PropertyFactory.newBoolean("useWebSiteRelatedResource");
-	public StringProperty webSiteURL = PropertyFactory.newString("webSiteURL");
+	public Property<Boolean> siteFilter = PropertyFactory.newBoolean(
+		"siteFilter");
+	public StringProperty webSite = PropertyFactory.newString("webSite");
 
 	protected static final I18nMessages i18nMessages =
 		GlobalI18N.getI18nMessageProvider().getI18nMessages(

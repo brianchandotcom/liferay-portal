@@ -87,7 +87,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_TEXT_LINK_URL</td>
-	<td>//div[@class='journal-content-article']//a[contains(.,'${key_contentText}')]</td>
+	<td>//div[contains(@class,'journal-content-article')]//a[contains(.,'${key_contentText}')]</td>
 	<td></td>
 </tr>
 <tr>

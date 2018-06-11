@@ -1671,8 +1671,10 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<execute macro="AlloyEditor#addSourceContent">
-			<var name="content"><![CDATA[<p><span><a href="http://localhost:8080/web/guest/home/-/testportlet">text</a></span></p>]]></var>
+			<var name="content"><![CDATA[<p><span><a href="${portalURL}/web/guest/home/-/testportlet">text</a></span></p>]]></var>
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

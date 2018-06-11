@@ -26,7 +26,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -578,44 +577,6 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the layout page template collection local service.
-	 *
-	 * @return the layout page template collection local service
-	 */
-	public com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService getLayoutPageTemplateCollectionLocalService() {
-		return layoutPageTemplateCollectionLocalService;
-	}
-
-	/**
-	 * Sets the layout page template collection local service.
-	 *
-	 * @param layoutPageTemplateCollectionLocalService the layout page template collection local service
-	 */
-	public void setLayoutPageTemplateCollectionLocalService(
-		com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService layoutPageTemplateCollectionLocalService) {
-		this.layoutPageTemplateCollectionLocalService = layoutPageTemplateCollectionLocalService;
-	}
-
-	/**
-	 * Returns the layout page template collection persistence.
-	 *
-	 * @return the layout page template collection persistence
-	 */
-	public LayoutPageTemplateCollectionPersistence getLayoutPageTemplateCollectionPersistence() {
-		return layoutPageTemplateCollectionPersistence;
-	}
-
-	/**
-	 * Sets the layout page template collection persistence.
-	 *
-	 * @param layoutPageTemplateCollectionPersistence the layout page template collection persistence
-	 */
-	public void setLayoutPageTemplateCollectionPersistence(
-		LayoutPageTemplateCollectionPersistence layoutPageTemplateCollectionPersistence) {
-		this.layoutPageTemplateCollectionPersistence = layoutPageTemplateCollectionPersistence;
-	}
-
-	/**
 	 * Returns the class name local service.
 	 *
 	 * @return the class name local service
@@ -767,10 +728,6 @@ public abstract class LayoutPageTemplateEntryLocalServiceBaseImpl
 	protected LayoutPageTemplateEntryPersistence layoutPageTemplateEntryPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService.class)
-	protected com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService layoutPageTemplateCollectionLocalService;
-	@BeanReference(type = LayoutPageTemplateCollectionPersistence.class)
-	protected LayoutPageTemplateCollectionPersistence layoutPageTemplateCollectionPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)

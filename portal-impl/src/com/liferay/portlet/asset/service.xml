@@ -101,7 +101,6 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetVocabulary" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity deprecated="true" local-service="true" name="AssetCategoryProperty" remote-service="true">
@@ -146,10 +145,6 @@
 			<finder-column name="categoryId" />
 			<finder-column name="key" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="AssetEntry" remote-service="true">
 
@@ -240,14 +235,11 @@
 		<!-- References -->
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
-		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
 		<reference entity="SocialActivityCounter" package-path="com.liferay.portlet.social" />
 	</entity>
 	<entity local-service="true" name="AssetLink" remote-service="false">
@@ -401,10 +393,6 @@
 			<finder-column name="tagId" />
 			<finder-column name="classNameId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity external-reference-code="true" local-service="true" name="AssetVocabulary" remote-service="true" uuid="true">
 
@@ -457,7 +445,6 @@
 
 		<!-- References -->
 
-		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />

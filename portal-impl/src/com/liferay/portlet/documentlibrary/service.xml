@@ -8,9 +8,7 @@
 		<!-- References -->
 
 		<reference entity="Repository" package-path="com.liferay.portal" />
-		<reference entity="RepositoryEntry" package-path="com.liferay.portal" />
 		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileEntryMetadata" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
@@ -19,7 +17,6 @@
 		<!-- References -->
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
@@ -27,7 +24,6 @@
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileEntryType" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileShortcut" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
@@ -563,7 +559,6 @@
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 	</entity>
 	<entity local-service="true" name="DLTrash" remote-service="true">
-		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<exceptions>
 		<exception>DirectoryName</exception>

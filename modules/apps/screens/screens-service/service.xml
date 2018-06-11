@@ -5,9 +5,6 @@
 	<author>José Manuel Navarro</author>
 	<namespace>Screens</namespace>
 	<entity local-service="false" name="ScreensAssetEntry" remote-service="true">
-		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />
-		<reference entity="DDLRecordSet" package-path="com.liferay.dynamic.data.lists" />
-		<reference entity="DDMStructure" package-path="com.liferay.dynamic.data.mapping" />
 		<reference entity="JournalArticle" package-path="com.liferay.journal" />
 		<reference entity="JournalArticleResource" package-path="com.liferay.journal" />
 		<reference entity="Layout" package-path="com.liferay.portal" />
@@ -15,7 +12,6 @@
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<entity local-service="false" name="ScreensComment" remote-service="true">
 		<reference entity="Group" package-path="com.liferay.portal" />

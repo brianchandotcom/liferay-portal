@@ -41,11 +41,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="banUserId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity human-name="message boards category" local-service="true" name="MBCategory" remote-service="true" trash-enabled="true" uuid="true">
 
@@ -133,12 +128,8 @@
 
 		<reference entity="MBMessage" package-path="com.liferay.message.boards" />
 		<reference entity="MBThread" package-path="com.liferay.message.boards" />
-		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
@@ -184,8 +175,6 @@
 
 		<!-- References -->
 
-		<reference entity="MBMessage" package-path="com.liferay.message.boards" />
-		<reference entity="MBThread" package-path="com.liferay.message.boards" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
@@ -237,10 +226,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity human-name="message-boards message" local-service="true" name="MBMessage" remote-service="true" trash-enabled="true" uuid="true">
 
@@ -404,19 +389,16 @@
 
 		<!-- References -->
 
-		<reference entity="Mail" package-path="com.liferay.mail" />
 		<reference entity="MBCategory" package-path="com.liferay.message.boards" />
 		<reference entity="MBThread" package-path="com.liferay.message.boards" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 	</entity>
@@ -616,10 +598,6 @@
 			<finder-column name="userId" />
 			<finder-column name="threadId" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>BannedUser</exception>

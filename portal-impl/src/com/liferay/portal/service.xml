@@ -191,14 +191,11 @@
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Image" package-path="com.liferay.portal" />
 		<reference entity="LayoutPrototype" package-path="com.liferay.portal" />
-		<reference entity="LayoutSet" package-path="com.liferay.portal" />
 		<reference entity="LayoutSetPrototype" package-path="com.liferay.portal" />
 		<reference entity="Organization" package-path="com.liferay.portal" />
 		<reference entity="PasswordPolicy" package-path="com.liferay.portal" />
 		<reference entity="PortalPreferences" package-path="com.liferay.portal" />
 		<reference entity="Portlet" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="UserGroup" package-path="com.liferay.portal" />
@@ -266,7 +263,6 @@
 
 		<reference entity="Address" package-path="com.liferay.portal" />
 		<reference entity="EmailAddress" package-path="com.liferay.portal" />
-		<reference entity="Organization" package-path="com.liferay.portal" />
 		<reference entity="Phone" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="Website" package-path="com.liferay.portal" />
@@ -505,10 +501,8 @@
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Layout" package-path="com.liferay.portal" />
-		<reference entity="LayoutPrototype" package-path="com.liferay.portal" />
 		<reference entity="LayoutSet" package-path="com.liferay.portal" />
 		<reference entity="LayoutSetBranch" package-path="com.liferay.portal" />
-		<reference entity="LayoutSetPrototype" package-path="com.liferay.portal" />
 		<reference entity="MembershipRequest" package-path="com.liferay.portal" />
 		<reference entity="Organization" package-path="com.liferay.portal" />
 		<reference entity="Portlet" package-path="com.liferay.portal" />
@@ -536,7 +530,6 @@
 		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
 		<reference entity="SocialActivitySetting" package-path="com.liferay.portlet.social" />
 		<reference entity="SocialRequest" package-path="com.liferay.portlet.social" />
-		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity local-service="true" name="Image" remote-service="true">
 
@@ -567,10 +560,6 @@
 		<finder name="LtSize" return-type="Collection">
 			<finder-column comparator="&lt;" name="size" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
 	<entity local-service="true" name="Layout" remote-service="true" uad-application-name="Layout" uad-dir-path="../modules/apps/layout/layout-uad/src/main/java" uad-package-path="com.liferay.layout" uuid="true">
 
@@ -701,9 +690,7 @@
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="UserGroup" package-path="com.liferay.portal" />
-		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="ExportImportConfiguration" package-path="com.liferay.portlet.exportimport" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
@@ -856,7 +843,6 @@
 
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Layout" package-path="com.liferay.portal" />
-		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
@@ -970,14 +956,10 @@
 
 		<!-- References -->
 
-		<reference entity="Image" package-path="com.liferay.portal" />
 		<reference entity="Layout" package-path="com.liferay.portal" />
-		<reference entity="LayoutBranch" package-path="com.liferay.portal" />
-		<reference entity="LayoutSet" package-path="com.liferay.portal" />
 		<reference entity="LayoutSetBranch" package-path="com.liferay.portal" />
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="RecentLayoutRevision" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 	</entity>
@@ -1230,13 +1212,11 @@
 
 		<!-- References -->
 
-		<reference entity="Mail" package-path="com.liferay.mail" />
 		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="UserGroup" package-path="com.liferay.portal" />
 		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
 	</entity>
 	<entity external-reference-code="true" local-service="true" name="Organization" remote-service="true" uuid="true">
@@ -1311,7 +1291,6 @@
 		<reference entity="EmailAddress" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="ListType" package-path="com.liferay.portal" />
-		<reference entity="PasswordPolicy" package-path="com.liferay.portal" />
 		<reference entity="PasswordPolicyRel" package-path="com.liferay.portal" />
 		<reference entity="Phone" package-path="com.liferay.portal" />
 		<reference entity="Region" package-path="com.liferay.portal" />
@@ -1528,7 +1507,6 @@
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 		<reference entity="Team" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="Phone" remote-service="true" uuid="true">
 
@@ -1679,7 +1657,6 @@
 
 		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="ResourceAction" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
@@ -2033,17 +2010,10 @@
 		<!-- References -->
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="RepositoryEntry" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="DLAppHelper" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileEntryType" package-path="com.liferay.portlet.documentlibrary" />
-		<reference entity="DLFileShortcut" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFileVersion" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="DLFolder" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="ExpandoValue" package-path="com.liferay.portlet.expando" />
@@ -2092,7 +2062,6 @@
 		<!-- References -->
 
 		<reference entity="ResourceAction" package-path="com.liferay.portal" />
-		<reference entity="ResourceBlock" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
@@ -2480,12 +2449,6 @@
 			<finder-column name="classNameId" />
 			<finder-column arrayable-operator="OR" name="classPK" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<entity local-service="true" name="SystemEvent" remote-service="false" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal">
 
@@ -2777,7 +2740,6 @@
 
 		<!-- References -->
 
-		<reference entity="Mail" package-path="com.liferay.mail" />
 		<reference entity="BrowserTracker" package-path="com.liferay.portal" />
 		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Contact" package-path="com.liferay.portal" />
@@ -2802,7 +2764,6 @@
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AnnouncementsDelivery" package-path="com.liferay.portlet.announcements" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
@@ -2859,7 +2820,6 @@
 		<!-- References -->
 
 		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Layout" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="Team" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />

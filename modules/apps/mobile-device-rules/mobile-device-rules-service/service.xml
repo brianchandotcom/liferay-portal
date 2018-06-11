@@ -42,7 +42,6 @@
 		<!-- References -->
 
 		<reference entity="MDRRuleGroupInstance" package-path="com.liferay.mobile.device.rules" />
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="MDRRule" remote-service="true" uuid="true">
@@ -87,7 +86,6 @@
 		<!-- References -->
 
 		<reference entity="MDRRuleGroup" package-path="com.liferay.mobile.device.rules" />
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="MDRRuleGroup" remote-service="true" uuid="true">
@@ -132,7 +130,6 @@
 		<reference entity="MDRRuleGroupInstance" package-path="com.liferay.mobile.device.rules" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="MDRRuleGroupInstance" remote-service="true" uuid="true">
@@ -192,7 +189,6 @@
 		<reference entity="Layout" package-path="com.liferay.portal" />
 		<reference entity="LayoutSet" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>

@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.AddressPersistence;
 import com.liferay.portal.kernel.service.persistence.ContactPersistence;
 import com.liferay.portal.kernel.service.persistence.EmailAddressPersistence;
-import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
-import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.PhonePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
@@ -445,62 +443,6 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the organization local service.
-	 *
-	 * @return the organization local service
-	 */
-	public com.liferay.portal.kernel.service.OrganizationLocalService getOrganizationLocalService() {
-		return organizationLocalService;
-	}
-
-	/**
-	 * Sets the organization local service.
-	 *
-	 * @param organizationLocalService the organization local service
-	 */
-	public void setOrganizationLocalService(
-		com.liferay.portal.kernel.service.OrganizationLocalService organizationLocalService) {
-		this.organizationLocalService = organizationLocalService;
-	}
-
-	/**
-	 * Returns the organization persistence.
-	 *
-	 * @return the organization persistence
-	 */
-	public OrganizationPersistence getOrganizationPersistence() {
-		return organizationPersistence;
-	}
-
-	/**
-	 * Sets the organization persistence.
-	 *
-	 * @param organizationPersistence the organization persistence
-	 */
-	public void setOrganizationPersistence(
-		OrganizationPersistence organizationPersistence) {
-		this.organizationPersistence = organizationPersistence;
-	}
-
-	/**
-	 * Returns the organization finder.
-	 *
-	 * @return the organization finder
-	 */
-	public OrganizationFinder getOrganizationFinder() {
-		return organizationFinder;
-	}
-
-	/**
-	 * Sets the organization finder.
-	 *
-	 * @param organizationFinder the organization finder
-	 */
-	public void setOrganizationFinder(OrganizationFinder organizationFinder) {
-		this.organizationFinder = organizationFinder;
-	}
-
-	/**
 	 * Returns the phone local service.
 	 *
 	 * @return the phone local service
@@ -695,12 +637,6 @@ public abstract class ContactLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.kernel.service.EmailAddressLocalService emailAddressLocalService;
 	@BeanReference(type = EmailAddressPersistence.class)
 	protected EmailAddressPersistence emailAddressPersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.OrganizationLocalService.class)
-	protected com.liferay.portal.kernel.service.OrganizationLocalService organizationLocalService;
-	@BeanReference(type = OrganizationPersistence.class)
-	protected OrganizationPersistence organizationPersistence;
-	@BeanReference(type = OrganizationFinder.class)
-	protected OrganizationFinder organizationFinder;
 	@BeanReference(type = com.liferay.portal.kernel.service.PhoneLocalService.class)
 	protected com.liferay.portal.kernel.service.PhoneLocalService phoneLocalService;
 	@BeanReference(type = PhonePersistence.class)

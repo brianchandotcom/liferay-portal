@@ -194,7 +194,6 @@
 
 		<!-- References -->
 
-		<reference entity="LayoutPageTemplateCollection" package-path="com.liferay.layout.page.template" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />

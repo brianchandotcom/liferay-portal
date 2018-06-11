@@ -405,11 +405,8 @@ public class LiferayPortlet extends GenericPortlet {
 
 		queue.add(path);
 
-		while (!queue.isEmpty()) {
-			String currentPath = queue.remove();
-
-			Set<String> childPaths = portletContext.getResourcePaths(
-				currentPath);
+		while ((path = queue.poll()) != null) {
+			Set<String> childPaths = portletContext.getResourcePaths(path);
 
 			if (childPaths != null) {
 				for (String childPath : childPaths) {

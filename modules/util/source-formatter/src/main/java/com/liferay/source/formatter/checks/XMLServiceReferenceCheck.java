@@ -25,6 +25,7 @@ import com.liferay.source.formatter.util.FileUtil;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,11 +66,18 @@ public class XMLServiceReferenceCheck extends BaseFileCheck {
 			boolean remoteService = GetterUtil.getBoolean(
 				entityElement.attributeValue("remote-service"));
 
+			List<String> requiredEntityNames = _getRequiredEntityNames(
+				entityElement);
+
 			for (Element referenceElement :
 					(List<Element>)entityElement.elements("reference")) {
 
 				String referenceEntityName = referenceElement.attributeValue(
 					"entity");
+
+				if (requiredEntityNames.contains(referenceEntityName)) {
+					continue;
+				}
 
 				if (!_isRequiredReference(
 						entityName, referenceEntityName, localService,
@@ -123,6 +131,22 @@ public class XMLServiceReferenceCheck extends BaseFileCheck {
 		}
 
 		return null;
+	}
+
+	private List<String> _getRequiredEntityNames(Element entityElement) {
+		List<String> requiredEntityNames = new ArrayList<>();
+
+		for (Element columnElement :
+				(List<Element>)entityElement.elements("column")) {
+
+			String entityName = columnElement.attributeValue("entity");
+
+			if (entityName != null) {
+				requiredEntityNames.add(entityName);
+			}
+		}
+
+		return requiredEntityNames;
 	}
 
 	private boolean _isRequiredReference(

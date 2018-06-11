@@ -148,7 +148,7 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 	};
 
 	Liferay.componentReady('teamsManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on(
 				'actionItemClicked',
 				function(event) {

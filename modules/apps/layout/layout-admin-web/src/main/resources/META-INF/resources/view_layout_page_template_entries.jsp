@@ -199,7 +199,7 @@ request.setAttribute(LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_DISPLAY_CONTEXT, la
 	};
 
 	Liferay.componentReady('layoutPageTemplateEntriesManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on(
 				['actionItemClicked', 'creationMenuItemClicked', 'filterItemClicked'],
 				function(event) {

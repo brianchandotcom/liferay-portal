@@ -168,7 +168,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	}
 
 	Liferay.componentReady('editRoleAssignmentsManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on('creationButtonClicked', addAssignees);
 		}
 	);

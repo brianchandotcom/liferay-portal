@@ -175,7 +175,7 @@ PortletURL portletURL = editPasswordPolicyAssignmentsManagementToolbarDisplayCon
 	}
 
 	Liferay.componentReady('editPasswordPolicyAssignmentsManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on('creationButtonClicked', addAssignees);
 		}
 	);

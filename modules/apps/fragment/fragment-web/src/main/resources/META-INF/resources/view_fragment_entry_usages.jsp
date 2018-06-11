@@ -184,7 +184,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "usages-and-propagation-x",
 	};
 
 	Liferay.componentReady('fragmentEntryLinksManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on(
 				'actionItemClicked',
 				function(event) {

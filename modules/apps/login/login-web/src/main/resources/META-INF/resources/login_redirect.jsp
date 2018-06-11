@@ -94,15 +94,15 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 						method: 'POST'
 					}
 				).then(
-					response => {
+					function(response) {
 						return response.ok ? response.json() : Promise.reject();
 					}
 				).then(
-					data => {
+					function(data) {
 						return !data.exception ? data.userStatus : Promise.reject();
 					}
 				).then(
-					userStatus => {
+					function(userStatus) {
 						var message = '';
 
 						if (userStatus == 'user_added') {

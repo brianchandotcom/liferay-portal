@@ -230,7 +230,7 @@ Role role = usersDisplayContext.getRole();
 	};
 
 	Liferay.componentReady('usersManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on('creationButtonClicked', handleAddClick);
 
 			managementToolbar.on(

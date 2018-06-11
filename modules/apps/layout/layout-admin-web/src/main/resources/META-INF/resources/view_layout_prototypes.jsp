@@ -121,7 +121,7 @@
 	};
 
 	Liferay.componentReady('layoutPrototypeManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on(
 				['actionItemClicked', 'filterItemClicked'],
 				function(event) {

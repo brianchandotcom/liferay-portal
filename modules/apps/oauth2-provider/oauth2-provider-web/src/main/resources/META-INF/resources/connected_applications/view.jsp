@@ -52,7 +52,6 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 
 			<liferay-ui:search-container-row
 				className="com.liferay.oauth2.provider.model.OAuth2Authorization"
-				cssClass="autofit-row-center"
 				escapedModel="<%= true %>"
 				keyProperty="OAuth2AuthorizationId"
 				modelVar="oAuth2Authorization"
@@ -76,10 +75,16 @@ int userOAuth2AuthorizationsCount = OAuth2AuthorizationServiceUtil.getUserOAuth2
 
 				<liferay-ui:search-container-column-text
 					colspan="<%= 2 %>"
-					href="<%= viewURL.toString() %>"
-					name="application-name"
-					value="<%= HtmlUtil.escape(oAuth2Application.getName()) %>"
-				/>
+				>
+					<h4>
+						<aui:a href="<%= viewURL.toString() %>"><%= HtmlUtil.escape(oAuth2Application.getName()) %></aui:a>
+					</h4>
+
+					<h5 class="text-default">
+						<span><liferay-ui:message key="authorization" /></span>:
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</h5>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
 					align="right"

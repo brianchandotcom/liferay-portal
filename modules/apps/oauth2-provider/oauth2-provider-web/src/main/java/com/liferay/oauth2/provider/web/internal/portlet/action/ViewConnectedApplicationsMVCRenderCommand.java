@@ -21,21 +21,23 @@ import com.liferay.oauth2.provider.scope.liferay.ScopeDescriptorLocator;
 import com.liferay.oauth2.provider.scope.liferay.ScopeLocator;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
 import com.liferay.oauth2.provider.web.internal.AssignableScopes;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderPortletKeys;
 import com.liferay.oauth2.provider.web.internal.constants.OAuth2ProviderWebKeys;
 import com.liferay.oauth2.provider.web.internal.display.context.OAuth2ConnectedApplicationsPortletDisplayContext;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -64,9 +66,16 @@ public class ViewConnectedApplicationsMVCRenderCommand
 			WebKeys.THEME_DISPLAY);
 
 		List<OAuth2Authorization> userOAuth2Authorizations =
-			_oAuth2AuthorizationLocalService.getUserOAuth2Authorizations(
-				themeDisplay.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
+			Collections.emptyList();
+
+		try {
+			userOAuth2Authorizations =
+				_oAuth2AuthorizationService.getUserOAuth2Authorizations(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		}
+		catch (PortalException pe) {
+			_log.error("Unable to load user OAuth2 authorizations", pe);
+		}
 
 		long oAuth2AuthorizationId = ParamUtil.getLong(
 			renderRequest, "oAuth2AuthorizationId");
@@ -90,38 +99,47 @@ public class ViewConnectedApplicationsMVCRenderCommand
 			return "/connected_applications/view.jsp";
 		}
 
-		long oAuth2ApplicationId = ParamUtil.getLong(
-			renderRequest, "oAuth2ApplicationId");
+		OAuth2Authorization oAuth2Authorization = null;
 
-		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliaseses =
-			_oAuth2ApplicationScopeAliasesLocalService.
-				getOAuth2ApplicationScopeAliaseses(
-					oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null);
+		for (OAuth2Authorization userOAuth2Authorization :
+				userOAuth2Authorizations) {
 
-		Set<String> scopeAliases = new HashSet<>();
+			if (userOAuth2Authorization.getOAuth2AuthorizationId() ==
+					oAuth2AuthorizationId) {
 
-		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
-				oAuth2ApplicationScopeAliaseses) {
+				oAuth2Authorization = userOAuth2Authorization;
 
-			scopeAliases.addAll(
-				oAuth2ApplicationScopeAliases.getScopeAliasesList());
+				break;
+			}
 		}
 
 		AssignableScopes assignableScopes = new AssignableScopes(
 			_applicationDescriptorLocator, themeDisplay.getLocale(),
 			_scopeDescriptorLocator);
 
-		for (String scopeAlias : scopeAliases) {
-			assignableScopes.addLiferayOAuth2Scopes(
-				_scopeLocator.getLiferayOAuth2Scopes(
-					themeDisplay.getCompanyId(), scopeAlias));
+		long oAuth2ApplicationScopeAliasesId =
+			oAuth2Authorization.getOAuth2ApplicationScopeAliasesId();
+
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
+			_oAuth2ApplicationScopeAliasesLocalService.
+				fetchOAuth2ApplicationScopeAliases(
+					oAuth2ApplicationScopeAliasesId);
+
+		if (oAuth2ApplicationScopeAliases != null) {
+			for (String scopeAlias :
+					oAuth2ApplicationScopeAliases.getScopeAliasesList()) {
+
+				assignableScopes.addLiferayOAuth2Scopes(
+					_scopeLocator.getLiferayOAuth2Scopes(
+						themeDisplay.getCompanyId(), scopeAlias));
+			}
 		}
 
 		OAuth2ConnectedApplicationsPortletDisplayContext
 			oAuth2ConnectedApplicationsPortletDisplayContext =
 				new OAuth2ConnectedApplicationsPortletDisplayContext(
-					assignableScopes, renderRequest, _oAuth2ApplicationService);
+					assignableScopes, renderRequest, _oAuth2ApplicationService,
+					oAuth2Authorization);
 
 		renderRequest.setAttribute(
 			OAuth2ProviderWebKeys.
@@ -130,6 +148,9 @@ public class ViewConnectedApplicationsMVCRenderCommand
 
 		return "/connected_applications/view_application.jsp";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewConnectedApplicationsMVCRenderCommand.class);
 
 	@Reference
 	private ApplicationDescriptorLocator _applicationDescriptorLocator;
@@ -142,7 +163,7 @@ public class ViewConnectedApplicationsMVCRenderCommand
 	private OAuth2ApplicationService _oAuth2ApplicationService;
 
 	@Reference
-	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
+	private OAuth2AuthorizationService _oAuth2AuthorizationService;
 
 	@Reference
 	private ScopeDescriptorLocator _scopeDescriptorLocator;

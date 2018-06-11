@@ -27,6 +27,8 @@ OAuth2Application oAuth2Application = oAuth2ConnectedApplicationsPortletDisplayC
 renderResponse.setTitle(oAuth2Application.getName());
 
 AssignableScopes assignableScopes = oAuth2ConnectedApplicationsPortletDisplayContext.getAssignableScopes();
+
+OAuth2Authorization oAuth2Authorization = oAuth2ConnectedApplicationsPortletDisplayContext.getOAuth2Authorization();
 %>
 
 <div class="container-fluid-1280 view-application">
@@ -71,7 +73,7 @@ AssignableScopes assignableScopes = oAuth2ConnectedApplicationsPortletDisplayCon
 				</c:if>
 
 				<h4 class="permissions">
-					<liferay-ui:message key="permissions" />:
+					<liferay-ui:message key="permissions" />
 				</h4>
 
 				<ul class="list-group">
@@ -106,10 +108,17 @@ AssignableScopes assignableScopes = oAuth2ConnectedApplicationsPortletDisplayCon
 
 				<p class="last-access text-truncate">
 					<span><liferay-ui:message key="last-access" /></span>:
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getAccessTokenCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 				</p>
 
 				<p class="authorization text-truncate">
 					<span><liferay-ui:message key="authorization" /></span>:
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - oAuth2Authorization.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+				</p>
+
+				<p class="authorization text-truncate">
+					<span><liferay-ui:message key="remoteIPInfo" /></span>:
+					<%= HtmlUtil.escape(oAuth2Authorization.getRemoteIPInfo()) %>
 				</p>
 
 				<p class="buttons">

@@ -14,6 +14,7 @@
 
 package com.liferay.oauth2.provider.web.internal.display.context;
 
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationService;
 import com.liferay.oauth2.provider.web.internal.AssignableScopes;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -29,13 +30,16 @@ public class OAuth2ConnectedApplicationsPortletDisplayContext
 
 	public OAuth2ConnectedApplicationsPortletDisplayContext(
 		AssignableScopes assignableScopes, PortletRequest portletRequest,
-		OAuth2ApplicationService oAuth2ApplicationService) {
+		OAuth2ApplicationService oAuth2ApplicationService,
+		OAuth2Authorization oAuth2Authorization) {
 
 		this(portletRequest);
 
 		_assignableScopes = assignableScopes;
 
 		super.oAuth2ApplicationService = oAuth2ApplicationService;
+
+		_oAuth2Authorization = oAuth2Authorization;
 	}
 
 	public OAuth2ConnectedApplicationsPortletDisplayContext(
@@ -51,6 +55,11 @@ public class OAuth2ConnectedApplicationsPortletDisplayContext
 		return _assignableScopes;
 	}
 
+	public OAuth2Authorization getOAuth2Authorization() {
+		return _oAuth2Authorization;
+	}
+
 	private AssignableScopes _assignableScopes;
+	private OAuth2Authorization _oAuth2Authorization;
 
 }

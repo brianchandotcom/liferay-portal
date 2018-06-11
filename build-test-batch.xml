@@ -2362,22 +2362,71 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-jboss-mysql57-jdk8">
+		<run-functional-test
+			app.server.type="jboss"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-marketplaceapp-smoke-jboss-mysql56-jdk8">
 		<antcall target="functional-bundle-jboss-mysql56-jdk8" />
+	</target>
+
+	<target name="functional-bundle-marketplaceapp-smoke-jboss-mysql57-jdk8">
+		<antcall target="functional-bundle-jboss-mysql57-jdk8" />
 	</target>
 
 	<target name="functional-bundle-marketplaceapp-smoke-tomcat-mysql56-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
 
+	<target name="functional-bundle-marketplaceapp-smoke-tomcat-mysql57-jdk8">
+		<antcall target="functional-bundle-tomcat-mysql57-jdk8" />
+	</target>
+
 	<target name="functional-bundle-marketplaceapp-smoke-wildfly-mysql56-jdk8">
 		<antcall target="functional-bundle-wildfly-mysql56-jdk8" />
+	</target>
+
+	<target name="functional-bundle-marketplaceapp-smoke-wildfly-mysql57-jdk8">
+		<antcall target="functional-bundle-wildfly-mysql57-jdk8" />
 	</target>
 
 	<target name="functional-bundle-tcserver-mysql56-jdk8">
 		<run-functional-test
 			app.server.type="tcserver"
 			database.type="mysql"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-bundle-tcserver-mysql57-jdk8">
+		<run-functional-test
+			app.server.type="tcserver"
+			database.type="mysql"
+			database.version="5.7"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
@@ -2580,6 +2629,24 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-weblogic-mysql57-jdk8">
+		<run-functional-test
+			app.server.type="weblogic"
+			database.type="mysql"
+			database.version="5.7"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-weblogic-oracle121-jdk8">
 		<run-functional-test
 			app.server.type="weblogic"
@@ -2616,6 +2683,22 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test
 			app.server.type="wildfly"
 			database.type="mysql"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-bundle-wildfly-mysql57-jdk8">
+		<run-functional-test
+			app.server.type="wildfly"
+			database.type="mysql"
+			database.version="5.7"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"

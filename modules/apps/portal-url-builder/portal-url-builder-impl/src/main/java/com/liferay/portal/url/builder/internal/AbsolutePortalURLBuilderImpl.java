@@ -94,9 +94,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 				boolean ignoreCDNHost = _ignoreCDNHost;
 				boolean ignorePathProxy = _ignorePathProxy;
 
-				if (PortletDependency.Type.CSS.equals(
-						portletDependency.getType())) {
-
+				if (PortletDependency.Type.CSS == portletDependency.getType()) {
 					String resourcePath = cssURN;
 
 					if (Validator.isNull(resourcePath)) {
@@ -110,8 +108,8 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 					sb.append(resourcePath);
 				}
-				else if (PortletDependency.Type.JAVASCRIPT.equals(
-							portletDependency.getType())) {
+				else if (PortletDependency.Type.JAVASCRIPT ==
+							portletDependency.getType()) {
 
 					String resourcePath = javaScriptURN;
 

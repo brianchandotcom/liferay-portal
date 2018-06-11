@@ -17,7 +17,10 @@ package com.liferay.commerce.user.service.impl;
 import com.liferay.commerce.user.service.base.CommerceUserServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -34,6 +37,8 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 	public User updateActive(long userId, boolean active)
 		throws PortalException {
 
+		_checkUser(userId);
+
 		return commerceUserLocalService.updateActive(userId, active);
 	}
 
@@ -43,6 +48,8 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 			boolean passwordReset)
 		throws PortalException {
 
+		_checkUser(userId);
+
 		return commerceUserLocalService.updatePassword(
 			userId, password1, password2, passwordReset);
 	}
@@ -51,6 +58,8 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 	public User updatePasswordReset(long userId, boolean passwordReset)
 		throws PortalException {
 
+		_checkUser(userId);
+
 		return commerceUserLocalService.updatePasswordReset(
 			userId, passwordReset);
 	}
@@ -58,6 +67,8 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 	@Override
 	public User updateReminderQuery(long userId, String question, String answer)
 		throws PortalException {
+
+		_checkUser(userId);
 
 		return commerceUserLocalService.updateReminderQuery(
 			userId, question, answer);
@@ -72,6 +83,8 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 			int birthdayYear, String jobTitle, ServiceContext serviceContext)
 		throws PortalException {
 
+		_checkUser(userId);
+
 		return commerceUserLocalService.updateUser(
 			userId, screenName, emailAddress, portrait, portraitBytes,
 			languageId, firstName, middleName, lastName, prefixId, suffixId,
@@ -83,7 +96,24 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 	public void updateUserRoles(long userId, long groupId, long[] roleIds)
 		throws PortalException {
 
+		_checkUser(userId);
+
 		commerceUserLocalService.updateUserRoles(userId, groupId, roleIds);
+	}
+
+	private void _checkUser(long userId) throws PortalException {
+		User user = userLocalService.getUser(userId);
+
+		for (long organizationId : user.getOrganizationIds()) {
+			if (OrganizationPermissionUtil.contains(
+					getPermissionChecker(), organizationId,
+					ActionKeys.MANAGE_USERS)) {
+
+				return;
+			}
+		}
+
+		throw new PrincipalException();
 	}
 
 }

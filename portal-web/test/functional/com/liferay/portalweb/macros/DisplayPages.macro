@@ -6,7 +6,7 @@
 			<var name="name" value="${displayPageName}" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="assertAssetTypeUnselectable">

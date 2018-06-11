@@ -116,6 +116,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 		jobProperties = portalTestClassJob.getJobProperties();
 
+		_setTestReleaseBundle();
 		_setTestRelevantChanges();
 	}
 
@@ -285,8 +286,21 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	protected final List<PathMatcher> includesPathMatchers = new ArrayList<>();
 	protected final Properties jobProperties;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
+	protected boolean testReleaseBundle;
 	protected boolean testRelevantChanges;
 	protected final String testSuiteName;
+
+	private void _setTestReleaseBundle() {
+		String propertyValue = getFirstPropertyValue("test.release.bundle");
+
+		if (propertyValue != null) {
+			testReleaseBundle = Boolean.parseBoolean(propertyValue);
+
+			return;
+		}
+
+		testReleaseBundle = _DEFAULT_TEST_RELEASE_BUNDLE;
+	}
 
 	private void _setTestRelevantChanges() {
 		String propertyValue = getFirstPropertyValue("test.relevant.changes");
@@ -301,6 +315,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	private static final int _DEFAULT_AXIS_MAX_SIZE = 5000;
+
+	private static final boolean _DEFAULT_TEST_RELEASE_BUNDLE = false;
 
 	private static final boolean _DEFAULT_TEST_RELEVANT_CHANGES = false;
 

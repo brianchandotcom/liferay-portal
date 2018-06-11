@@ -26,10 +26,6 @@ import com.liferay.portal.util.PropsValues;
  */
 public class PortletDependencyImpl implements PortletDependency {
 
-	public PortletDependencyImpl(String name, String scope, String version) {
-		this(name, scope, version, null, null);
-	}
-
 	public PortletDependencyImpl(
 		String name, String scope, String version, String markup,
 		AbsolutePortalURLBuilder absolutePortalURLBuilder) {

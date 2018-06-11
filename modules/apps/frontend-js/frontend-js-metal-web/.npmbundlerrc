@@ -10,5 +10,13 @@
 				"senna": "^2.0.0"
 			}
 		}
+	},
+	"exclude": {
+		"bootstrap": [
+			"Gruntfile.js", "grunt/**/*"
+		],
+		"querystring": [
+			"test/**/*"
+		]
 	}
 }

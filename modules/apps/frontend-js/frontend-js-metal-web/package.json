@@ -34,8 +34,8 @@
 		"metal-web-component": "^2.16.5"
 	},
 	"devDependencies": {
-		"liferay-npm-bridge-generator": "2.0.0-rc.3",
-		"liferay-npm-bundler": "2.0.0-rc.3"
+		"liferay-npm-bridge-generator": "^2.0.0",
+		"liferay-npm-bundler": "^2.0.0"
 	},
 	"name": "frontend-js-metal-web",
 	"scripts": {

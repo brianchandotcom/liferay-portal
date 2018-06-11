@@ -1,8 +1,8 @@
 {
 	"config": {
 		"imports": {
-			"": {
-				"map-common": "^3.0.0"
+			"map-common": {
+				"/": "^3.0.0"
 			},
 			"frontend-js-metal-web": {
 				"metal": "^2.0.0",

@@ -352,6 +352,20 @@ public class CommerceOrganizationLocalServiceImpl
 			logoBytes, false, serviceContext);
 	}
 
+	@Override
+	public Organization updateOrganization(long organizationId, long parentOrganizationId,
+			String name, String type, long regionId, long countryId,
+			long statusId, String comments, ServiceContext serviceContext)
+			throws PortalException {
+
+		Organization organization = organizationLocalService.getOrganization(
+				organizationId);
+
+		return organizationLocalService.updateOrganization(organization.getCompanyId(), organizationId, parentOrganizationId,
+				name, type, regionId, countryId, statusId, comments, false, null, false,
+				serviceContext);
+	}
+
 	protected SearchContext buildSearchContext(
 			User user, Organization parentOrganization, String type,
 			String keywords, int start, int end, Sort[] sorts)

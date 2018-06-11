@@ -73,3 +73,7 @@ page import="java.util.StringJoiner" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+String languageId = LanguageUtil.getLanguageId(locale);
+%>

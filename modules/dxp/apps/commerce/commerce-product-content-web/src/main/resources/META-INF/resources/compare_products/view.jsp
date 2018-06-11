@@ -19,8 +19,6 @@
 <%
 CPCompareContentDisplayContext cpCompareContentDisplayContext = (CPCompareContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-String languageId = LocaleUtil.toLanguageId(locale);
-
 Map<String, Object> contextObjects = new HashMap<>();
 
 contextObjects.put("cpCompareContentDisplayContext", cpCompareContentDisplayContext);

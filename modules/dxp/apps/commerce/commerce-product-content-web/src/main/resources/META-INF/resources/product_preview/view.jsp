@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String languageId = LocaleUtil.toLanguageId(locale);
-
 CPPreviewContentDisplayContext cpPreviewContentDisplayContext = (CPPreviewContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpPreviewContentDisplayContext.getCPDefinition();

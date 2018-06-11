@@ -8,7 +8,7 @@
 			<var name="key_menuItem" value="${itemsPerPage}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="${itemsPerPage} Entries" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="${itemsPerPage} Entries" />
 	</command>
 
 	<command name="viewResults">

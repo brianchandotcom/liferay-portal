@@ -1861,7 +1861,7 @@
 	</command>
 
 	<command name="viewPaginateRelatedAssets">
-		<execute function="AssertTextEquals" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="${itemsPerPage}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Pagination#ITEMS_PER_PAGE_SELECT" value1="${itemsPerPage}" />
 		<execute function="AssertTextEquals" locator1="Pagination#CURRENT_PAGE_SELECT" value1="${numberOfPages}" />
 	</command>
 

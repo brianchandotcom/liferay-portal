@@ -13,7 +13,9 @@
 		<field name="clientId" type="String" />
 		<field name="clientProfile" type="int" />
 		<field name="clientSecret" type="String" />
-		<field name="description" type="String" />
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="features" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>

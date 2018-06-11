@@ -85,7 +85,7 @@ class MBPortlet extends PortletBase {
 		let inputNode = this.one('#body');
 		inputNode.value = window[this.ns('replyMessageBody' + this.replyToMessageId)].getHTML();
 
-		let form = this.one(`[name="${this.ns('advancedReplyFm' + this.replyToMessageId)}"]`)
+		let form = this.one(`[name="${this.ns('advancedReplyFm' + this.replyToMessageId)}"]`);
 
 		let advancedReplyInputNode = form.querySelector(`[name="${this.ns('body')}"]`);
 

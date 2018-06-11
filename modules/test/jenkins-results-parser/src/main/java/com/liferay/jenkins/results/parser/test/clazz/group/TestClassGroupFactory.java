@@ -52,6 +52,11 @@ public class TestClassGroupFactory {
 					batchName, portalTestClassJob);
 			}
 
+			if (batchName.startsWith("modules-semantic-versioning-")) {
+				return new SemVerBaselineBatchTestClassGroup(
+					batchName, portalTestClassJob);
+			}
+
 			if (batchName.startsWith("plugins-compile-")) {
 				return new PluginsBatchTestClassGroup(
 					batchName, portalTestClassJob);
@@ -59,11 +64,6 @@ public class TestClassGroupFactory {
 
 			if (batchName.startsWith("portal-frontend-js-")) {
 				return new NPMTestBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-
-			if (batchName.startsWith("semantic-versioning-")) {
-				return new SemVerBaselineBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 

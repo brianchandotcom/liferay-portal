@@ -28,6 +28,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -67,6 +69,36 @@ import org.osgi.service.component.annotations.Reference;
 public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String SCHEMA_VERSION = "1.0.0";
+
+	@Override
+	public String exportData(
+			PortletDataContext portletDataContext, String portletId,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		String[] stagedModelTypesStrings = parameterMap.get("stagedModelTypes");
+
+		if (ArrayUtil.isEmpty(stagedModelTypesStrings)) {
+			return super.exportData(
+				portletDataContext, portletId, portletPreferences);
+		}
+
+		StagedModelType[] stagedModelTypes =
+			new StagedModelType[stagedModelTypesStrings.length];
+
+		for (int i = 0; i < stagedModelTypesStrings.length; i++) {
+			stagedModelTypes[i] = StagedModelType.parse(
+				stagedModelTypesStrings[i]);
+		}
+
+		setDeletionSystemEventStagedModelTypes(stagedModelTypes);
+
+		return super.exportData(
+			portletDataContext, portletId, portletPreferences);
+	}
 
 	@Override
 	public String getSchemaVersion() {

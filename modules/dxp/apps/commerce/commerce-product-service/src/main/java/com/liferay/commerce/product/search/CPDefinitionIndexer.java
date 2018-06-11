@@ -27,11 +27,13 @@ import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -74,6 +76,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	public static final String FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID =
 		"defaultImageFileEntryId";
 
+	public static final String FIELD_DEFAULT_IMAGE_FILE_URL =
+		"defaultImageFileUrl";
+
 	public static final String FIELD_DISPLAY_DATE = "displayDate";
 
 	public static final String FIELD_EXTERNAL_REFERENCE_CODE =
@@ -87,6 +92,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	public static final String FIELD_OPTION_NAMES = "optionsNames";
 
 	public static final String FIELD_PRODUCT_TYPE_NAME = "productTypeName";
+
+	public static final String FIELD_SHORT_DESCRIPTION = "shortDescription";
 
 	public static final String FIELD_SKUS = "skus";
 
@@ -167,6 +174,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.DESCRIPTION, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, FIELD_SHORT_DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchTerm(searchQuery, searchContext, Field.NAME, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
@@ -222,11 +231,14 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			String description = cpDefinition.getDescription(languageId);
 			String name = cpDefinition.getName(languageId);
 			String urlTitle = languageIdToUrlTitleMap.get(languageId);
+			String shortDescription = cpDefinition.getShortDescription(
+				languageId);
 
 			if (languageId.equals(cpDefinitionDefaultLanguageId)) {
 				document.addText(Field.DESCRIPTION, description);
 				document.addText(Field.NAME, name);
 				document.addText(Field.URL, urlTitle);
+				document.addText(FIELD_SHORT_DESCRIPTION, shortDescription);
 				document.addText("defaultLanguageId", languageId);
 			}
 
@@ -240,11 +252,25 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.URL, languageId),
 				urlTitle);
+			document.addText(
+				LocalizationUtil.getLocalizedName(
+					FIELD_SHORT_DESCRIPTION, languageId),
+				shortDescription);
 
 			document.addText(Field.CONTENT, description);
 		}
 
-		document.addText(Field.NAME, cpDefinition.getName());
+		document.addText(
+			Field.NAME, cpDefinition.getName(cpDefinitionDefaultLanguageId));
+		document.addText(
+			Field.DESCRIPTION,
+			cpDefinition.getDescription(cpDefinitionDefaultLanguageId));
+		document.addText(
+			Field.URL,
+			languageIdToUrlTitleMap.get(cpDefinitionDefaultLanguageId));
+		document.addText(
+			FIELD_SHORT_DESCRIPTION,
+			cpDefinition.getShortDescription(cpDefinitionDefaultLanguageId));
 
 		List<String> optionNames = new ArrayList<>();
 		List<Long> optionIds = new ArrayList<>();
@@ -398,6 +424,13 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addNumber(
 				FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID,
 				cpAttachmentFileEntry.getFileEntryId());
+
+			FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+			document.addKeyword(
+				FIELD_DEFAULT_IMAGE_FILE_URL,
+				DLUtil.getDownloadURL(
+					fileEntry, fileEntry.getFileVersion(), null, null));
 		}
 
 		if (_log.isDebugEnabled()) {

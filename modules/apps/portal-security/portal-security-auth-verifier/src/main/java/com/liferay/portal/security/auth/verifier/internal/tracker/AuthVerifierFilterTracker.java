@@ -131,7 +131,8 @@ public class AuthVerifierFilterTracker {
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
 				AuthVerifierFilter.class.getName());
 			properties.put(
-				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN, "/*");
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET,
+				"cxf-servlet");
 
 			return properties;
 		}

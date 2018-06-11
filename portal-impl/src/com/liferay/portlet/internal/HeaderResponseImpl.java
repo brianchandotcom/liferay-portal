@@ -42,7 +42,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -83,18 +82,13 @@ public class HeaderResponseImpl
 			return;
 		}
 
-		List<ParsedElement> parsedElements;
+		if (xml != null) {
+			List<ParsedElement> parsedElements = _parseElements(xml);
 
-		if (xml == null) {
-			parsedElements = Collections.emptyList();
-		}
-		else {
-			parsedElements = _parseElements(xml);
-		}
-
-		if (parsedElements.size() > 1) {
-			throw new IllegalArgumentException(
-				"More than one element in markup: " + xml);
+			if (parsedElements.size() > 1) {
+				throw new IllegalArgumentException(
+					"More than one element in markup: " + xml);
+			}
 		}
 
 		PortletDependency portletDependency =

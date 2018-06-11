@@ -91,7 +91,9 @@ public class CommerceCartContentDisplayContext {
 			return _commerceOrder;
 		}
 
-		return commerceContext.getCommerceOrder();
+		_commerceOrder = commerceContext.getCommerceOrder();
+
+		return _commerceOrder;
 	}
 
 	public long getCommerceOrderId() throws PortalException {
@@ -161,7 +163,7 @@ public class CommerceCartContentDisplayContext {
 		throws PortalException {
 
 		return _commerceOrderValidatorRegistry.getCommerceOrderValidatorResults(
-			_commerceOrder);
+			getCommerceOrder());
 	}
 
 	public String getCPDefinitionURL(
@@ -296,18 +298,20 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public boolean isValidCommerceOrder() throws PortalException {
-		if (_commerceOrder == null) {
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		if (commerceOrder == null) {
 			return false;
 		}
 
 		List<CommerceOrderItem> commerceOrderItems =
-			_commerceOrder.getCommerceOrderItems();
+			commerceOrder.getCommerceOrderItems();
 
 		if (commerceOrderItems.isEmpty()) {
 			return false;
 		}
 
-		return _commerceOrderValidatorRegistry.isValid(_commerceOrder);
+		return _commerceOrderValidatorRegistry.isValid(commerceOrder);
 	}
 
 	public List<CommerceOrderValidatorResult> validateCommerceOrderItem(

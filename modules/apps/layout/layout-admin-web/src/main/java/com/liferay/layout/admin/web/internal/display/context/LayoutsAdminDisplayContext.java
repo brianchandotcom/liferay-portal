@@ -987,7 +987,9 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
 		}
 
-		jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
+		if (showConfigureAction(layout)) {
+			jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
+		}
 
 		if (showOrphanPortletsAction(layout)) {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));

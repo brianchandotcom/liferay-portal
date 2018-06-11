@@ -16,7 +16,7 @@ package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
-import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebUtil;
+import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
@@ -50,10 +50,10 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 	public CPPublisherDisplayContext(
 		CPDataSourceRegistry cpDataSourceRegistry,
 		CPDefinitionHelper cpDefinitionHelper,
-		CPPublisherWebUtil cpPublisherWebUtil,
+		CPPublisherWebHelper cpPublisherWebHelper,
 		HttpServletRequest httpServletRequest) {
 
-		super(cpPublisherWebUtil, httpServletRequest);
+		super(cpPublisherWebHelper, httpServletRequest);
 
 		_cpDataSourceRegistry = cpDataSourceRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
@@ -164,11 +164,11 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 		CPQuery cpQuery = new CPQuery();
 
-		cpPublisherWebUtil.setCategoriesAndTags(
+		cpPublisherWebHelper.setCategoriesAndTags(
 			cpContentRequestHelper.getScopeGroupId(), cpQuery,
 			cpContentRequestHelper.getPortletPreferences());
 
-		cpPublisherWebUtil.setOrdering(
+		cpPublisherWebHelper.setOrdering(
 			cpQuery, cpContentRequestHelper.getPortletPreferences());
 
 		CPDataSourceResult cpDataSourceResult = _cpDefinitionHelper.search(

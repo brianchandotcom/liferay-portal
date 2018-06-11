@@ -21,7 +21,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.internal.display.context.CPPublisherConfigurationDisplayContext;
-import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebUtil;
+import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.content.web.internal.util.CPQueryRule;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -130,7 +130,7 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 				cpPublisherConfigurationDisplayContext =
 					new CPPublisherConfigurationDisplayContext(
 						_assetCategoryLocalService, _assetTagLocalService,
-						_cpDataSourceRegistry, _cpPublisherWebUtil,
+						_cpDataSourceRegistry, _cpPublisherWebHelper,
 						_cpTypeServicesTracker, httpServletRequest,
 						_itemSelector);
 
@@ -483,7 +483,7 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private CPPublisherWebUtil _cpPublisherWebUtil;
+	private CPPublisherWebHelper _cpPublisherWebHelper;
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;

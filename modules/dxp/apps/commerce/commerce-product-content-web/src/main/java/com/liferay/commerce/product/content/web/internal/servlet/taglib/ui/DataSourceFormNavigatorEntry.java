@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.content.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants;
-import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebUtil;
+import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -98,10 +98,10 @@ public class DataSourceFormNavigatorEntry extends BaseJSPFormNavigatorEntry {
 			themeDisplay.getStrictLayoutPortletSetup(
 				themeDisplay.getLayout(), portletDisplay.getPortletResource());
 
-		return _cpPublisherWebUtil.isDataSourceSelection(portletPreferences);
+		return _cpPublisherWebHelper.isDataSourceSelection(portletPreferences);
 	}
 
 	@Reference
-	private CPPublisherWebUtil _cpPublisherWebUtil;
+	private CPPublisherWebHelper _cpPublisherWebHelper;
 
 }

@@ -47,8 +47,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  */
-@Component(service = CPPublisherWebUtil.class)
-public class CPPublisherWebUtil {
+@Component(service = CPPublisherWebHelper.class)
+public class CPPublisherWebHelper {
 
 	public List<CPCatalogEntry> getCPCatalogEntries(
 			PortletPreferences portletPreferences, ThemeDisplay themeDisplay)

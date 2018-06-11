@@ -16,7 +16,7 @@ package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.web.internal.display.context.util.CPContentRequestHelper;
-import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebUtil;
+import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -33,16 +33,16 @@ import javax.servlet.http.HttpServletRequest;
 public class BaseCPPublisherDisplayContext {
 
 	public BaseCPPublisherDisplayContext(
-		CPPublisherWebUtil cpPublisherWebUtil,
+		CPPublisherWebHelper cpPublisherWebHelper,
 		HttpServletRequest httpServletRequest) {
 
-		this.cpPublisherWebUtil = cpPublisherWebUtil;
+		this.cpPublisherWebHelper = cpPublisherWebHelper;
 
 		cpContentRequestHelper = new CPContentRequestHelper(httpServletRequest);
 	}
 
 	public List<CPCatalogEntry> getCPCatalogEntries() throws Exception {
-		return cpPublisherWebUtil.getCPCatalogEntries(
+		return cpPublisherWebHelper.getCPCatalogEntries(
 			cpContentRequestHelper.getPortletPreferences(),
 			cpContentRequestHelper.getThemeDisplay());
 	}
@@ -76,7 +76,7 @@ public class BaseCPPublisherDisplayContext {
 	}
 
 	public String getSku(CPDefinition cpDefinition, Locale locale) {
-		return cpPublisherWebUtil.getSku(cpDefinition, locale);
+		return cpPublisherWebHelper.getSku(cpDefinition, locale);
 	}
 
 	public boolean isSelectionStyleDataSource() {
@@ -98,7 +98,7 @@ public class BaseCPPublisherDisplayContext {
 	}
 
 	protected final CPContentRequestHelper cpContentRequestHelper;
-	protected final CPPublisherWebUtil cpPublisherWebUtil;
+	protected final CPPublisherWebHelper cpPublisherWebHelper;
 	protected String dataSource;
 	protected String selectionStyle;
 

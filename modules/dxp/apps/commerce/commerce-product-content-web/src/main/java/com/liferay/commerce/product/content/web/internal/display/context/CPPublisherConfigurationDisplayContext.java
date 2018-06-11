@@ -20,7 +20,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebUtil;
+import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
@@ -67,11 +67,11 @@ public class CPPublisherConfigurationDisplayContext
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetTagLocalService assetTagLocalService,
 		CPDataSourceRegistry cpDataSourceRegistry,
-		CPPublisherWebUtil cpPublisherWebUtil,
+		CPPublisherWebHelper cpPublisherWebHelper,
 		CPTypeServicesTracker cpTypeServicesTracker,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
-		super(cpPublisherWebUtil, httpServletRequest);
+		super(cpPublisherWebHelper, httpServletRequest);
 
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetTagLocalService = assetTagLocalService;

@@ -16,7 +16,9 @@ package com.liferay.exportimport.internal.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -29,6 +31,8 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
@@ -145,7 +149,9 @@ public class DeletionSystemEventExporter {
 
 		dynamicQuery.add(typeProperty.eq(SystemEventConstants.TYPE_DELETE));
 
-		addCreateDateProperty(portletDataContext, dynamicQuery);
+		if (ExportImportDateUtil.isRangeDateRange(portletDataContext)) {
+			addCreateDateProperty(portletDataContext, dynamicQuery);
+		}
 	}
 
 	protected void doExportDeletionSystemEvents(
@@ -214,10 +220,28 @@ public class DeletionSystemEventExporter {
 			new StagedModelType(
 				systemEvent.getClassNameId(),
 				systemEvent.getReferrerClassNameId()));
+
+		if (ExportImportThreadLocal.isStagingInProcess()) {
+			try {
+				SystemEventLocalServiceUtil.deleteSystemEvent(
+					systemEvent.getSystemEventId());
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to delete system event. The events are being " +
+							"cleaned up reagularly by a scheduled process.",
+						pe);
+				}
+			}
+		}
 	}
 
 	private DeletionSystemEventExporter() {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeletionSystemEventExporter.class);
 
 	private static final DeletionSystemEventExporter _instance =
 		new DeletionSystemEventExporter();

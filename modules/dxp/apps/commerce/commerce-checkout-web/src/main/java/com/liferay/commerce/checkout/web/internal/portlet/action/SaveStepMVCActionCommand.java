@@ -17,6 +17,7 @@ package com.liferay.commerce.checkout.web.internal.portlet.action;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracker;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,6 +43,38 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 
+	public String getRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String checkoutStepName)
+		throws Exception {
+
+		CommerceCheckoutStep commerceCheckoutStep =
+			_commerceCheckoutStepServicesTracker.getNextCommerceCheckoutStep(
+				checkoutStepName, _portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse));
+
+		if (commerceCheckoutStep == null) {
+			return ParamUtil.getString(actionRequest, "redirect");
+		}
+		else {
+			LiferayPortletResponse liferayPortletResponse =
+				_portal.getLiferayPortletResponse(actionResponse);
+
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+			long commerceOrderId = ParamUtil.getLong(
+				actionRequest, "commerceOrderId");
+
+			portletURL.setParameter(
+				"commerceOrderId", String.valueOf(commerceOrderId));
+
+			portletURL.setParameter(
+				"checkoutStepName", commerceCheckoutStep.getName());
+
+			return portletURL.toString();
+		}
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -56,6 +90,11 @@ public class SaveStepMVCActionCommand extends BaseMVCActionCommand {
 		commerceCheckoutStep.processAction(actionRequest, actionResponse);
 
 		hideDefaultSuccessMessage(actionRequest);
+
+		String redirect = getRedirect(
+			actionRequest, actionResponse, checkoutStepName);
+
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	@Reference

@@ -21,13 +21,10 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
-
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -105,30 +102,6 @@ public class CheckoutDisplayContext {
 		}
 
 		return commerceCheckoutStep.getName();
-	}
-
-	public String getRedirect() throws Exception {
-		PortletURL portletURL = null;
-
-		CommerceCheckoutStep commerceCheckoutStep =
-			_commerceCheckoutStepServicesTracker.getNextCommerceCheckoutStep(
-				_commerceCheckoutStep.getName(), _httpServletRequest,
-				_httpServletResponse);
-
-		if (commerceCheckoutStep == null) {
-			portletURL = PortletURLUtil.getCurrent(
-				_liferayPortletRequest, _liferayPortletResponse);
-		}
-		else {
-			portletURL = _liferayPortletResponse.createRenderURL();
-
-			portletURL.setParameter(
-				"commerceOrderId", String.valueOf(getCommerceOrderId()));
-			portletURL.setParameter(
-				"checkoutStepName", commerceCheckoutStep.getName());
-		}
-
-		return portletURL.toString();
 	}
 
 	public boolean isEmptyCommerceOrder() {

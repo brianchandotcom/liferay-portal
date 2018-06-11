@@ -29,8 +29,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -39,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
@@ -66,13 +70,30 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceCheckoutPortlet extends MVCPortlet {
 
 	@Override
+	public void processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException, PortletException {
+
+		try {
+			CommerceOrder commerceOrder = getCommerceOrder(actionRequest);
+
+			actionRequest.setAttribute(
+				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
+		super.processAction(actionRequest, actionResponse);
+	}
+
+	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
 		try {
-			CommerceOrder commerceOrder = getCommerceOrder(
-				renderRequest, renderResponse);
+			CommerceOrder commerceOrder = getCommerceOrder(renderRequest);
 
 			renderRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
@@ -93,19 +114,18 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 		}
 	}
 
-	protected CommerceOrder getCommerceOrder(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+	protected CommerceOrder getCommerceOrder(PortletRequest portletRequest)
 		throws PortalException {
 
 		long commerceOrderId = ParamUtil.getLong(
-			renderRequest, "commerceOrderId");
+			portletRequest, "commerceOrderId");
 
 		if (commerceOrderId > 0) {
 			return _commerceOrderService.getCommerceOrder(commerceOrderId);
 		}
 
 		return _commerceOrderHttpHelper.getCurrentCommerceOrder(
-			_portal.getHttpServletRequest(renderRequest));
+			_portal.getHttpServletRequest(portletRequest));
 	}
 
 	@Reference

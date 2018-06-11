@@ -84,7 +84,7 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 				<aui:form action="<%= saveStepURL %>" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
 					<aui:input name="checkoutStepName" type="hidden" value="<%= currentCheckoutStepName %>" />
 					<aui:input name="commerceOrderId" type="hidden" value="<%= checkoutDisplayContext.getCommerceOrderId() %>" />
-					<aui:input name="redirect" type="hidden" value="<%= checkoutDisplayContext.getRedirect() %>" />
+					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 					<%
 					checkoutDisplayContext.renderCurrentCheckoutStep();

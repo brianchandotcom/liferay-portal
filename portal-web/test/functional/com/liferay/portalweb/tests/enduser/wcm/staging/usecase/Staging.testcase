@@ -748,8 +748,6 @@
 
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute macro="Alert#viewSuccessMessage" />
-
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />

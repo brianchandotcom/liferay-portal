@@ -127,6 +127,50 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
+	<command name="CannotImportInvalidZip" priority="5">
+		<description message="This is a test case for LPS-80625." />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Fragment#importCollectionFromDependenciesFolder">
+			<var name="collectionZipFile" value="fragment-invalid-zip.zip" />
+		</execute>
+
+		<execute macro="Button#click">
+			<var name="button" value="Import" />
+		</execute>
+
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="The selected file is not a valid zip file." />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
+	<command name="CannotImportNonZip" priority="5">
+		<description message="This is a test case for LPS-80625." />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Fragment#importCollectionFromDependenciesFolder">
+			<var name="collectionZipFile" value="Document_1.doc" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_VALIDATION" value1="Please enter a file with a valid extension (zip)." />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
 	<command name="DeleteFragment" priority="5">
 		<property name="portal.acceptance" value="true" />
 

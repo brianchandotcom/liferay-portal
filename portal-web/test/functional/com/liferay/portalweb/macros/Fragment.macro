@@ -76,6 +76,12 @@
 		</execute>
 	</command>
 
+	<command name="importCollectionFromDependenciesFolder">
+		<execute macro="Fragment#_gotoImportCollection" />
+
+		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${collectionZipFile}" />
+	</command>
+
 	<command name="importCollectionFromTempFolder">
 		<execute macro="Fragment#_gotoImportCollection" />
 

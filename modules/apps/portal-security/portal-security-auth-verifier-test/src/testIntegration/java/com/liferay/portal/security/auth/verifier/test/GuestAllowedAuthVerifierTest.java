@@ -64,7 +64,13 @@ public class GuestAllowedAuthVerifierTest {
 			_url, "/o/auth-verifier-guest-allowed-default-test/guestAllowed");
 
 		try (InputStream inputStream = url.openStream()) {
-			Assert.assertEquals("guest-allowed", StringUtil.read(inputStream));
+			Assert.fail();
+		}
+		catch (IOException ioe) {
+			String message = ioe.getMessage();
+
+			Assert.assertTrue(
+				message.startsWith("Server returned HTTP response code: 403"));
 		}
 	}
 

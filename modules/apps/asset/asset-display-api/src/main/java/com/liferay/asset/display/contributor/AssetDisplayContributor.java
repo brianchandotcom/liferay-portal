@@ -49,6 +49,10 @@ public interface AssetDisplayContributor {
 			long classTypeId, Locale locale)
 		throws PortalException {
 
+		if (classTypeId == 0) {
+			return Collections.emptyList();
+		}
+
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				getClassName());

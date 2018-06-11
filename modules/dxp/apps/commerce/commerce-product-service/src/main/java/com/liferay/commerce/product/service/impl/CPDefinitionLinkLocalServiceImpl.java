@@ -63,6 +63,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
 		reindexCPDefinition(cpDefinitionId1);
+		reindexCPDefinition(cpDefinitionId2);
 
 		return cpDefinitionLink;
 	}
@@ -120,6 +121,7 @@ public class CPDefinitionLinkLocalServiceImpl
 		cpDefinitionLinkPersistence.update(cpDefinitionLink);
 
 		reindexCPDefinition(cpDefinitionLink.getCPDefinitionId1());
+		reindexCPDefinition(cpDefinitionLink.getCPDefinitionId2());
 
 		return cpDefinitionLink;
 	}
@@ -158,7 +160,11 @@ public class CPDefinitionLinkLocalServiceImpl
 						serviceContext);
 				}
 			}
+
+			reindexCPDefinition(cpDefinitionId2);
 		}
+
+		reindexCPDefinition(cpDefinitionId1);
 	}
 
 	protected void reindexCPDefinition(long cpDefinitionId)

@@ -24,22 +24,28 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.AccountIdentifier;
-import com.liferay.commerce.data.integration.apio.identifiers.CommerceOrganizationIdentifier;
-import com.liferay.commerce.data.integration.apio.identifiers.UserIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.AccountForm;
 import com.liferay.commerce.data.integration.apio.internal.security.permission.AccountPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.AccountHelper;
+import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.OrganizationService;
-
-import java.util.List;
-
+import com.liferay.portal.kernel.service.UserService;
+import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -47,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class AccountCollectionResource
 	implements NestedCollectionResource<Organization, Long,
-		AccountIdentifier, Long, CommerceOrganizationIdentifier> {
+		AccountIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<Organization, Long, Long> collectionRoutes(
@@ -71,9 +77,9 @@ public class AccountCollectionResource
 		ItemRoutes.Builder<Organization, Long> builder) {
 
 		return builder.addGetter(
-			_organizationService::getOrganization
+			_commerceOrganizationService::getOrganization
 		).addRemover(
-			idempotent(_organizationService::deleteOrganization),
+			idempotent(_commerceOrganizationService::deleteOrganization),
 			_accountPermissionChecker.forDeleting()::apply
 		).addUpdater(
 			this::_updateAccount, Company.class,
@@ -91,39 +97,51 @@ public class AccountCollectionResource
 		).identifier(
 			Organization::getOrganizationId
 		).addBidirectionalModel(
-			"organization", "accounts", CommerceOrganizationIdentifier.class,
-			Organization::getParentOrganizationId
-		).addRelatedCollection(
-			"members", UserIdentifier.class
+			"website", "accounts", WebSiteIdentifier.class,
+			this::_getSiteId
+		).addLinkedModel(
+			"website", WebSiteIdentifier.class, this::_getSiteId
+		).addNumberList(
+			"members", this::getUserIds
 		).addString(
 			"name", Organization::getName
 		).build();
 	}
 
+	private List<Number> getUserIds(Organization organization) {
+		List<Number> userIds = new ArrayList<>();
+		try {
+			long[] ids = _userService.getOrganizationUserIds(organization.getOrganizationId());
+			for (long id : ids) {
+                userIds.add(id);
+			}
+		} catch (PortalException e) {
+            _log.error("Error to retrieve users", e);
+		}
+		return userIds;
+	}
+
 	private Organization _addAccount(
-			Long organizationId, AccountForm accountCreateForm)
+			Long webSiteId, AccountForm accountCreateForm)
 		throws Exception {
 
-		Organization organization = _accountHelper.createAccount(
-			accountCreateForm.getName(), organizationId);
+        Group group = _groupLocalService.getGroup(webSiteId);
+        Long parentOrganizationId = group.getClassPK();
 
-		_accountHelper.addMembers(accountCreateForm.getUserIds(), organization);
-
-		return organization;
+		return _accountHelper.createAccount(
+			accountCreateForm.getName(), parentOrganizationId, accountCreateForm.getUserIds());
 	}
 
 	private PageItems<Organization> _getPageItems(
-		Pagination pagination, Long organizationId, Company company) {
+		Pagination pagination, Long webSiteId, Company company) throws PortalException {
 
-		List<Organization> organizations =
-			_organizationService.getOrganizations(
-				company.getCompanyId(), organizationId,
-				pagination.getStartPosition(), pagination.getEndPosition());
+		long userId = PrincipalThreadLocal.getUserId();
 
-		int count = _organizationService.getOrganizationsCount(
-			company.getCompanyId(), organizationId);
+		BaseModelSearchResult<Organization> result = _commerceOrganizationService.searchOrganizationsByGroup(webSiteId,
+				userId, CommerceOrganizationConstants.TYPE_ACCOUNT, StringPool.BLANK,
+				pagination.getStartPosition(), pagination.getEndPosition(), null);
 
-		return new PageItems<>(organizations, count);
+		return new PageItems<>(result.getBaseModels(), result.getLength());
 	}
 
 	private Long _getSiteId(Organization organization) {
@@ -131,8 +149,6 @@ public class AccountCollectionResource
 			organization.getGroupId()
 		).map(
 			_groupLocalService::getGroup
-		).filter(
-			Group::isSite
 		).map(
 			Group::getGroupId
 		).orElse(
@@ -144,13 +160,11 @@ public class AccountCollectionResource
 			Long accountId, AccountForm accountCreateForm, Company company)
 		throws PortalException {
 
-		Organization organization = _accountHelper.updateAccount(
-			accountId, accountCreateForm.getName());
-
-		_accountHelper.addMembers(accountCreateForm.getUserIds(), organization);
-
-		return organization;
+		return _accountHelper.updateAccount(
+			accountId, accountCreateForm.getName(), accountCreateForm.getUserIds());
 	}
+
+    private static final Log _log = LogFactoryUtil.getLog(AccountCollectionResource.class);
 
 	@Reference
 	private AccountHelper _accountHelper;
@@ -162,6 +176,9 @@ public class AccountCollectionResource
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private OrganizationService _organizationService;
+	private CommerceOrganizationService _commerceOrganizationService;
+
+	@Reference
+	private UserService _userService;
 
 }

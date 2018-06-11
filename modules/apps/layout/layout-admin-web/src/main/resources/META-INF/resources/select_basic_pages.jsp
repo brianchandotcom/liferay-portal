@@ -122,7 +122,6 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 
 <portlet:actionURL name="/layout/add_simple_layout" var="addLayoutURL">
 	<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
-	<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
 	<portlet:param name="portletResource" value="<%= layoutsAdminDisplayContext.getPortletResource() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />

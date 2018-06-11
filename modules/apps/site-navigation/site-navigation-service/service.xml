@@ -100,7 +100,6 @@
 
 		<!-- References -->
 
-		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="SiteNavigationMenu" package-path="com.liferay.site.navigation" />
 	</entity>

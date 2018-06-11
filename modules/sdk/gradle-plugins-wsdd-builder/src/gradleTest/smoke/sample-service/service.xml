@@ -40,10 +40,5 @@
 		<finder name="Field2" return-type="Collection">
 			<finder-column name="field2" />
 		</finder>
-
-		<!-- References -->
-
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 	</entity>
 </service-builder>

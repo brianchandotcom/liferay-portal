@@ -96,6 +96,19 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		return modifiedModuleDirsList;
 	}
 
+	public List<File> getModuleAppDirs() throws IOException {
+		List<File> moduleAppDirs = new ArrayList<>();
+
+		List<File> moduleAppBndFiles = JenkinsResultsParserUtil.findFiles(
+			new File(getWorkingDirectory(), "modules"), "app\\.bnd");
+
+		for (File moduleAppBndFile : moduleAppBndFiles) {
+			moduleAppDirs.add(moduleAppBndFile.getParentFile());
+		}
+
+		return moduleAppDirs;
+	}
+
 	public List<File> getModuleDirsList() throws IOException {
 		return getModuleDirsList(null, null);
 	}

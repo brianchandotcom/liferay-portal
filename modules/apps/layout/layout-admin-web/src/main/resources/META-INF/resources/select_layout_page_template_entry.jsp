@@ -174,7 +174,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 
 						<portlet:actionURL name="/layout/add_content_layout" var="addLayoutURL">
 							<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
-							<portlet:param name="redirect" value="<%= layoutsAdminDisplayContext.getRedirect() %>" />
 							<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
 							<portlet:param name="portletResource" value="<%= layoutsAdminDisplayContext.getPortletResource() %>" />
 							<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getParentLayoutId()) %>" />

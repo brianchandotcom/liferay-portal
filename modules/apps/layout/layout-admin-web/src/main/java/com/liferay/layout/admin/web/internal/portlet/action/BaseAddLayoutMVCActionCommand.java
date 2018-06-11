@@ -14,13 +14,11 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
 
@@ -31,22 +29,31 @@ public abstract class BaseAddLayoutMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	protected String getRedirectURL(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(redirect)) {
-			return redirect;
-		}
+		ActionResponse actionResponse, Layout layout) {
 
 		LiferayPortletResponse liferayPortletResponse =
 			PortalUtil.getLiferayPortletResponse(actionResponse);
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		PortletURL configureLayoutURL =
+			liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcRenderCommandName", "/layout/view");
+		configureLayoutURL.setParameter(
+			"mvcRenderCommandName", "/layout/edit_layout");
 
-		return portletURL.toString();
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+		redirectURL.setParameter("mvcRenderCommandName", "/layout/view");
+
+		configureLayoutURL.setParameter("redirect", redirectURL.toString());
+
+		configureLayoutURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		configureLayoutURL.setParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+		configureLayoutURL.setParameter(
+			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+		return configureLayoutURL.toString();
 	}
 
 }

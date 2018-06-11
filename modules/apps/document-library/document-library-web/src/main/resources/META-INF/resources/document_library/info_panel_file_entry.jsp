@@ -337,6 +337,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 								<liferay-ui:panel
 									collapsible="<%= true %>"
 									cssClass="metadata"
+									defaultState="closed"
 									extended="<%= true %>"
 									id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>'
 									markupView="lexicon"
@@ -372,6 +373,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 					<liferay-ui:panel
 						collapsible="<%= true %>"
 						cssClass="lfr-custom-fields"
+						defaultState="closed"
 						id="documentLibraryCustomFieldsPanel"
 						markupView="lexicon"
 						persistState="<%= true %>"
@@ -408,6 +410,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 							<liferay-ui:panel
 								collapsible="<%= true %>"
 								cssClass="lfr-asset-metadata"
+								defaultState="closed"
 								id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>'
 								markupView="lexicon"
 								persistState="<%= true %>"

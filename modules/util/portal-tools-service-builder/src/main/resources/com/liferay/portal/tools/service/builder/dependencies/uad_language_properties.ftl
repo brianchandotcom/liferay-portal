@@ -1,1 +1,0 @@
-application.name.${uadPackagePath}.uad=${uadApplicationName}

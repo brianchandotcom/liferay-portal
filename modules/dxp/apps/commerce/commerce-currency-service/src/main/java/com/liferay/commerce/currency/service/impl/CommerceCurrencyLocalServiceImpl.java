@@ -16,7 +16,6 @@ package com.liferay.commerce.currency.service.impl;
 
 import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
 import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
-import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.constants.RoundingTypeConstants;
 import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;

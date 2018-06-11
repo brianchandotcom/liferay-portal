@@ -15,11 +15,29 @@
 package com.liferay.fragment.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -46,4 +64,67 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class FragmentPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			_verifyRenderLayouts(renderRequest);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	private Layout _createAssetDisplayLayout(Group group)
+		throws PortalException {
+
+		long defaultUserId = _userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+
+		return _layoutLocalService.addLayout(
+			defaultUserId, group.getGroupId(), false, 0, "Asset Display Page",
+			null, null, "asset_display", true, null, serviceContext);
+	}
+
+	private void _verifyRenderLayouts(RenderRequest renderRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = _groupLocalService.fetchGroup(
+			themeDisplay.getScopeGroupId());
+
+		if ((group.getPublicLayoutsPageCount() == 0) &&
+			(group.getPrivateLayoutsPageCount() == 0)) {
+
+			_createAssetDisplayLayout(group);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentPortlet.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 }

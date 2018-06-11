@@ -33,6 +33,10 @@ public class LiferayPortletUtil {
 	public static LiferayPortletRequest getLiferayPortletRequest(
 		PortletRequest portletRequest) {
 
+		if (portletRequest == null) {
+			return null;
+		}
+
 		while (!(portletRequest instanceof PortletRequestImpl)) {
 			if (portletRequest instanceof DoPrivilegedBean) {
 				DoPrivilegedBean doPrivilegedBean =
@@ -59,6 +63,10 @@ public class LiferayPortletUtil {
 
 	public static LiferayPortletResponse getLiferayPortletResponse(
 		PortletResponse portletResponse) {
+
+		if (portletResponse == null) {
+			return null;
+		}
 
 		while (!(portletResponse instanceof PortletResponseImpl)) {
 			if (portletResponse instanceof PortletResponseWrapper) {

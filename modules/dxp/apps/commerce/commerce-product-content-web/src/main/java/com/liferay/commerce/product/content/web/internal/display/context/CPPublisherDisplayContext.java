@@ -21,6 +21,7 @@ import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -147,7 +148,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		params.put("keywords", "*");
+		params.put("keywords", StringPool.STAR);
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
@@ -160,7 +161,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		searchContext.setCompanyId(cpContentRequestHelper.getCompanyId());
 		searchContext.setGroupIds(new long[] {groupId});
 
-		searchContext.setKeywords("*");
+		searchContext.setKeywords(StringPool.STAR);
 
 		CPQuery cpQuery = new CPQuery();
 

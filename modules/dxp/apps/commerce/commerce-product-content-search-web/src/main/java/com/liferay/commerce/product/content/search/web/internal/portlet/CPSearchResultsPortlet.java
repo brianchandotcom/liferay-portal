@@ -23,6 +23,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -113,7 +114,7 @@ public class CPSearchResultsPortlet
 			portletSharedSearchSettings.getParameter("q");
 
 		portletSharedSearchSettings.setKeywords(
-			parameterValueOptional.orElse("*"));
+			parameterValueOptional.orElse(StringPool.STAR));
 
 		portletSharedSearchSettings.addCondition(
 			new BooleanClauseImpl<Query>(

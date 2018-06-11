@@ -21,6 +21,7 @@ import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -85,7 +86,7 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		params.put("keywords", "*");
+		params.put("keywords", StringPool.STAR);
 
 		Map<String, Serializable> attributes = new HashMap<>();
 
@@ -101,7 +102,7 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 		searchContext.setCompanyId(_portal.getCompanyId(httpServletRequest));
 		searchContext.setGroupIds(new long[] {groupId});
 
-		searchContext.setKeywords("*");
+		searchContext.setKeywords(StringPool.STAR);
 
 		CPQuery cpQuery = new CPQuery();
 

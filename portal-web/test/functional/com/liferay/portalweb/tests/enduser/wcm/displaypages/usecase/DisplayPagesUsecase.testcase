@@ -351,6 +351,16 @@
 			<var name="templateScript" value="${htmlSnippet}" />
 		</execute>
 
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="cssSnippet" />
+			<var name="fileName" value="fragment_title.css" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="css" />
+			<var name="templateScript" value="${cssSnippet}" />
+		</execute>
+
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="ProductMenu#gotoPortlet">

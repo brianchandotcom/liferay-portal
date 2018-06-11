@@ -103,12 +103,12 @@ public class HeaderResponseImpl
 
 		Portlet portlet = getPortlet();
 
-		if ((PortletDependency.Type.CSS.equals(portletDependency.getType()) &&
+		if (((PortletDependency.Type.CSS == portletDependency.getType()) &&
 			 portlet.isPortletDependencyCssEnabled()) ||
-			(PortletDependency.Type.JAVASCRIPT.equals(
+			((PortletDependency.Type.JAVASCRIPT ==
 				portletDependency.getType()) &&
 			 portlet.isPortletDependencyJavaScriptEnabled()) ||
-			PortletDependency.Type.OTHER.equals(portletDependency.getType())) {
+			(PortletDependency.Type.OTHER == portletDependency.getType())) {
 
 			_addDependencyToHead(name, scope, version, null, portletDependency);
 		}

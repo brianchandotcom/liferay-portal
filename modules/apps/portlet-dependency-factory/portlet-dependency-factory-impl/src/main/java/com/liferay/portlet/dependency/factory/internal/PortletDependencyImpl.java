@@ -86,13 +86,13 @@ public class PortletDependencyImpl implements PortletDependency {
 		if (Validator.isNull(_markup)) {
 			sb = new StringBundler(8);
 
-			if (_type.equals(Type.CSS)) {
+			if (_type == Type.CSS) {
 				sb.append("<link ");
 				sb.append("href=\"");
 				sb.append(_getURL());
 				sb.append("\" type=\"text/css\"></link>");
 			}
-			else if (_type.equals(Type.JAVASCRIPT)) {
+			else if (_type == Type.JAVASCRIPT) {
 				sb.append("<script ");
 				sb.append("src=\"");
 				sb.append(_getURL());

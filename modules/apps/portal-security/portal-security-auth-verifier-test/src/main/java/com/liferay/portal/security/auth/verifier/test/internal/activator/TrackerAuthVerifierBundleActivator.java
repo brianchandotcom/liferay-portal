@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 
 /**
  * @author Marta Medio
@@ -39,14 +40,13 @@ public class TrackerAuthVerifierBundleActivator
 	public void doStart(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("com.liferay.auth.verifier.filter.enabled", true);
+		properties.put("auth.verifier.guest.allowed", true);
+		properties.put(JaxrsWhiteboardConstants.JAX_RS_NAME, "filter-enabled");
 
 		registerServletContextHelper(
 			"auth-verifier-filter-tracker-enabled-test", properties);
 
 		properties = new HashMapDictionary<>();
-
-		properties.put("com.liferay.auth.verifier.filter.enabled", false);
 
 		registerServletContextHelper(
 			"auth-verifier-filter-tracker-disabled-test", properties);
@@ -58,6 +58,9 @@ public class TrackerAuthVerifierBundleActivator
 
 		properties = new HashMapDictionary<>();
 
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+			"cxf-servlet");
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 			"/remoteUser");

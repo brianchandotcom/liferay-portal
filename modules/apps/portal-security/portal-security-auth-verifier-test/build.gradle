@@ -8,6 +8,7 @@ dependencies {
 	compileOnly group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
 	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.jaxrs", version: "1.0.0"
 	compileOnly project(":apps:static:osgi:osgi-util")
 
 	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay", version: "1.0.7"

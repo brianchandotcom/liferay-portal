@@ -14,9 +14,6 @@
 
 package com.liferay.layout.page.template.util;
 
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -28,16 +25,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = LayoutPrototypeHelper.class)
-public class LayoutPrototypeHelper {
+public class LayoutPrototypeHelperUtil {
 
-	public Layout addLayoutPrototype(
+	public static Layout addLayoutPrototype(
+			LayoutPrototypeLocalService layoutPrototypeLocalService,
 			long companyId, long defaultUserId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String layoutTemplateId,
 			List<LayoutPrototype> layoutPrototypes)
@@ -54,7 +48,7 @@ public class LayoutPrototypeHelper {
 		}
 
 		LayoutPrototype layoutPrototype =
-			_layoutPrototypeLocalService.addLayoutPrototype(
+			layoutPrototypeLocalService.addLayoutPrototype(
 				defaultUserId, companyId, nameMap, descriptionMap, true,
 				new ServiceContext());
 
@@ -67,15 +61,5 @@ public class LayoutPrototypeHelper {
 
 		return layout;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPrototypeHelper.class);
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }

@@ -19,6 +19,7 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +80,30 @@ public class BNDSourceUtil {
 		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
 
 		return absolutePath.substring(y + 1, x);
+	}
+
+	public static String updateInstruction(
+		String content, String header, String value) {
+
+		String instruction = header + StringPool.COLON;
+
+		if (Validator.isNotNull(value)) {
+			instruction = instruction + StringPool.SPACE + value;
+		}
+
+		if (!content.contains(header)) {
+			return content + StringPool.NEW_LINE + instruction;
+		}
+
+		String[] lines = StringUtil.splitLines(content);
+
+		for (String line : lines) {
+			if (line.contains(header)) {
+				content = StringUtil.replaceFirst(content, line, instruction);
+			}
+		}
+
+		return content;
 	}
 
 	private static Map<String, String> _populateDefinitionKeysMap(

@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.internal.PortletSessionImpl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

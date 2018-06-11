@@ -319,9 +319,9 @@ public class TLiferayOutputProperties
 	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");
 
 	/**
-	 * Have to use an explicit class to get the override of afterResource(),
-	 * an anonymous class cannot be public and thus cannot be called via
-	 * Talend's reflection mechanism.
+	 * Have to use an explicit class to get the override of afterResource(), an
+	 * anonymous class cannot be public and thus cannot be called via Talend's
+	 * reflection mechanism.
 	 */
 	public class ResourcePropertiesHelper extends LiferayResourceProperties {
 

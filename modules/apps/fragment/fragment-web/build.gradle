@@ -1,5 +1,32 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
+task buildHtml2Canvas(type: Copy)
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
+
+File jsDestinationDir = file("classes/META-INF/resources/js")
+
+buildHtml2Canvas {
+	File html2CanvasDestinationDir = new File(jsDestinationDir, "html2canvas")
+
+	dependsOn npmInstall
+
+	doFirst {
+		delete html2CanvasDestinationDir
+	}
+
+	eachFile new StripPathSegmentsAction(2)
+	from npmInstall.nodeModulesDir
+	include "html2canvas/dist/html2canvas.min.js"
+	includeEmptyDirs = false
+	into html2CanvasDestinationDir
+}
+
+classes {
+	dependsOn buildHtml2Canvas
+}
 
 dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

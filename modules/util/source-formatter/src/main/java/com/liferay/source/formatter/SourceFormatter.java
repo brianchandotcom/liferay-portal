@@ -43,6 +43,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -396,6 +397,49 @@ public class SourceFormatter {
 		return _sourceMismatchExceptions;
 	}
 
+	private void _addDependentFileNames() {
+		List<String> recentChangesFileNames =
+			_sourceFormatterArgs.getRecentChangesFileNames();
+
+		if (recentChangesFileNames == null) {
+			return;
+		}
+
+		Set<String> dependentFileNames = new HashSet<>();
+
+		for (String recentChangesFileName : recentChangesFileNames) {
+			if (!recentChangesFileName.endsWith("ServiceImpl.java")) {
+				continue;
+			}
+
+			String dirName = recentChangesFileName.substring(
+				0, recentChangesFileName.lastIndexOf(CharPool.SLASH));
+
+			while (true) {
+				String serviceFileName = dirName + "/service.xml";
+
+				File file = new File(
+					_sourceFormatterArgs.getBaseDirName() + serviceFileName);
+
+				if (file.exists()) {
+					dependentFileNames.add(serviceFileName);
+
+					break;
+				}
+
+				int pos = dirName.lastIndexOf(CharPool.SLASH);
+
+				if (pos == -1) {
+					break;
+				}
+
+				dirName = dirName.substring(0, pos);
+			}
+		}
+
+		_sourceFormatterArgs.addRecentChangesFileNames(dependentFileNames);
+	}
+
 	private List<String> _getCheckNames() {
 		List<String> checkNames = new ArrayList<>();
 
@@ -546,6 +590,8 @@ public class SourceFormatter {
 		for (String modulePropertiesFileName : modulePropertiesFileNames) {
 			_readProperties(new File(modulePropertiesFileName));
 		}
+
+		_addDependentFileNames();
 
 		_pluginsInsideModulesDirectoryNames =
 			_getPluginsInsideModulesDirectoryNames();

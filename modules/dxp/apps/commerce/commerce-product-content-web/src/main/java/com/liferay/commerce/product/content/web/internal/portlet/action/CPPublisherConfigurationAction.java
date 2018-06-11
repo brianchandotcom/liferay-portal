@@ -76,53 +76,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 
-	public void addSelection(
-			PortletPreferences portletPreferences, long cpDefinitionId,
-			int productEntryOrder)
-		throws Exception {
-
-		CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
-			cpDefinitionId);
-
-		String[] catalogEntryXmls = portletPreferences.getValues(
-			"catalogEntryXml", new String[0]);
-
-		String assetEntryXml = _getAssetEntryXml(
-			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
-
-		if (!ArrayUtil.contains(catalogEntryXmls, assetEntryXml)) {
-			if (productEntryOrder > -1) {
-				catalogEntryXmls[productEntryOrder] = assetEntryXml;
-			}
-			else {
-				catalogEntryXmls = ArrayUtil.append(
-					catalogEntryXmls, assetEntryXml);
-			}
-
-			portletPreferences.setValues("catalogEntryXml", catalogEntryXmls);
-		}
-
-		try {
-			portletPreferences.store();
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	public void addSelection(
-			PortletRequest portletRequest,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		long[] cpDefinitionIds = ParamUtil.getLongValues(
-			portletRequest, "cpDefinitionIds");
-
-		for (long cpDefinitionId : cpDefinitionIds) {
-			addSelection(portletPreferences, cpDefinitionId, -1);
-		}
-	}
-
 	@Override
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		try {
@@ -184,12 +137,6 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 				}
 			}
 		}
-		else if (cmd.equals("select-data-source")) {
-			setDataSource(actionRequest, preferences);
-		}
-		else if (cmd.equals("selection-style")) {
-			setSelectionStyle(actionRequest, preferences);
-		}
 		else if (cmd.equals("add-selection")) {
 			addSelection(actionRequest, preferences);
 		}
@@ -201,6 +148,12 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 		}
 		else if (cmd.equals("remove-selection")) {
 			removeSelection(actionRequest, preferences);
+		}
+		else if (cmd.equals("select-data-source")) {
+			setDataSource(actionRequest, preferences);
+		}
+		else if (cmd.equals("selection-style")) {
+			setSelectionStyle(actionRequest, preferences);
 		}
 
 		if (SessionErrors.isEmpty(actionRequest)) {
@@ -233,6 +186,53 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	protected void addSelection(
+			PortletPreferences portletPreferences, long cpDefinitionId,
+			int productEntryOrder)
+		throws Exception {
+
+		CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
+			cpDefinitionId);
+
+		String[] catalogEntryXmls = portletPreferences.getValues(
+			"catalogEntryXml", new String[0]);
+
+		String assetEntryXml = _getAssetEntryXml(
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+
+		if (!ArrayUtil.contains(catalogEntryXmls, assetEntryXml)) {
+			if (productEntryOrder > -1) {
+				catalogEntryXmls[productEntryOrder] = assetEntryXml;
+			}
+			else {
+				catalogEntryXmls = ArrayUtil.append(
+					catalogEntryXmls, assetEntryXml);
+			}
+
+			portletPreferences.setValues("catalogEntryXml", catalogEntryXmls);
+		}
+
+		try {
+			portletPreferences.store();
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+	}
+
+	protected void addSelection(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		long[] cpDefinitionIds = ParamUtil.getLongValues(
+			portletRequest, "cpDefinitionIds");
+
+		for (long cpDefinitionId : cpDefinitionIds) {
+			addSelection(portletPreferences, cpDefinitionId, -1);
+		}
 	}
 
 	protected CPQueryRule getQueryRule(ActionRequest actionRequest, int index) {

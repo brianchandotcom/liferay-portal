@@ -40,7 +40,7 @@ List<CPCatalogEntry> results = searchContainer.getResults();
 			<a class="aspect-ratio" href="<%= cpPublisherDisplayContext.getProductFriendlyURL(cpCatalogEntry) %>">
 
 				<%
-					String img = cpCatalogEntry.getDefaultImageFileUrl();
+				String img = cpCatalogEntry.getDefaultImageFileUrl();
 				%>
 
 				<c:if test="<%= Validator.isNotNull(img) %>">

@@ -43,7 +43,7 @@ if (Validator.isNotNull(allowedOrderQuantity)) {
 
 <div class="commerce-quantity-container">
 	<c:choose>
-		<c:when test="<%= !useSelect %>">
+		<c:when test="<%= (allowedOrderQuantities == null) && !useSelect %>">
 			<aui:input ignoreRequestValue="<%= true %>" label="quantity" name="<%= name %>" type="number" value="<%= value %>">
 				<aui:validator name="number" />
 				<aui:validator name="min"><%= minOrderQuantity %></aui:validator>

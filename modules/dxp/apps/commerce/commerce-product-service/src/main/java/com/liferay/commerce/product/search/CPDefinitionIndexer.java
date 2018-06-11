@@ -139,6 +139,22 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 				Field.STATUS, String.valueOf(WorkflowConstants.STATUS_IN_TRASH),
 				BooleanClauseOccur.MUST_NOT);
 		}
+
+		String definitionLinkType = GetterUtil.getString(
+			searchContext.getAttribute("definitionLinkType"), null);
+
+		long definitionLinkCPDefinitionId = GetterUtil.getLong(
+			searchContext.getAttribute("definitionLinkCPDefinitionId"), -1);
+
+		if (Validator.isNotNull(definitionLinkType) &&
+			(definitionLinkCPDefinitionId > 0)) {
+
+			TermsFilter linkFilter = new TermsFilter(definitionLinkType);
+
+			linkFilter.addValue(String.valueOf(definitionLinkCPDefinitionId));
+
+			contextBooleanFilter.add(linkFilter, BooleanClauseOccur.MUST);
+		}
 	}
 
 	@Override

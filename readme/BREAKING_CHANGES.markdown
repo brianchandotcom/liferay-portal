@@ -803,3 +803,46 @@ This change provides the latest features offered by the Portlet 3.0
 Specification, which was released in early 2017.
 
 ---------------------------------------
+
+### Changed the Dependency for the liferay-util:html-top JSP tag When Implementing Portlet 3.0
+- **Date:** 2018-Jun-07
+- **JIRA Ticket:** LPS-81983
+
+#### What changed?
+
+When implementing Portlet 3.0, the usage of `portal-kernel`'s `StringBundler`
+has been deprecated in favor of Petra's `StringBundler`.
+
+#### Who is affected?
+
+This affects anyone implementing Portlet 3.0 that uses the
+`<liferay-util:html-top>` JSP tag.
+
+#### How should I update my code?
+
+You must add the following dependency in your build file for your JSPs to
+compile successfully:
+
+**build.gradle**:
+
+    dependencies {
+        ...
+        compileOnly project(":core:petra:petra-string")
+        ...
+    }
+
+**pom.xml**:
+
+    <dependency>
+        <groupId>com.liferay</groupId>
+        <artifactId>com.liferay.petra.string</artifactId>
+        <version>1.2.0</version>
+        <scope>provided</scope>
+    </dependency>
+
+#### Why was this change made?
+
+This change provides the latest features offered by the Portlet 3.0
+Specification.
+
+---------------------------------------

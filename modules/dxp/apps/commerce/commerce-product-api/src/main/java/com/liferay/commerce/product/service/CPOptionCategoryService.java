@@ -62,9 +62,6 @@ public interface CPOptionCategoryService extends BaseService {
 		Map<Locale, String> descriptionMap, double priority, String key,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPOptionCategory deleteCPOptionCategory(
-		CPOptionCategory cpOptionCategory) throws PortalException;
-
 	public CPOptionCategory deleteCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException;
 

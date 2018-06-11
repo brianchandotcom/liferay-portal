@@ -280,6 +280,14 @@ public class CPSpecificationOptionLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPSpecificationOption> getCPSpecificationOptions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPSpecificationOption> orderByComparator) {
+		return _cpSpecificationOptionLocalService.getCPSpecificationOptions(groupId,
+			start, end, orderByComparator);
+	}
+
 	/**
 	* Returns all the cp specification options matching the UUID and company.
 	*
@@ -320,6 +328,11 @@ public class CPSpecificationOptionLocalServiceWrapper
 	@Override
 	public int getCPSpecificationOptionsCount() {
 		return _cpSpecificationOptionLocalService.getCPSpecificationOptionsCount();
+	}
+
+	@Override
+	public int getCPSpecificationOptionsCount(long groupId) {
+		return _cpSpecificationOptionLocalService.getCPSpecificationOptionsCount(groupId);
 	}
 
 	@Override

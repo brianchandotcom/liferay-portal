@@ -46,13 +46,6 @@ public class CPOptionCategoryServiceWrapper implements CPOptionCategoryService,
 
 	@Override
 	public com.liferay.commerce.product.model.CPOptionCategory deleteCPOptionCategory(
-		com.liferay.commerce.product.model.CPOptionCategory cpOptionCategory)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionCategoryService.deleteCPOptionCategory(cpOptionCategory);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOptionCategory deleteCPOptionCategory(
 		long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionCategoryService.deleteCPOptionCategory(cpOptionCategoryId);

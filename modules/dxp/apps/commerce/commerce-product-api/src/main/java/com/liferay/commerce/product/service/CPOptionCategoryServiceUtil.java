@@ -54,12 +54,6 @@ public class CPOptionCategoryServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionCategory deleteCPOptionCategory(
-		com.liferay.commerce.product.model.CPOptionCategory cpOptionCategory)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPOptionCategory(cpOptionCategory);
-	}
-
-	public static com.liferay.commerce.product.model.CPOptionCategory deleteCPOptionCategory(
 		long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCPOptionCategory(cpOptionCategoryId);

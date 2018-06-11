@@ -251,6 +251,11 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	public List<CPSpecificationOption> getCPSpecificationOptions(int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPSpecificationOption> getCPSpecificationOptions(long groupId,
+		int start, int end,
+		OrderByComparator<CPSpecificationOption> orderByComparator);
+
 	/**
 	* Returns all the cp specification options matching the UUID and company.
 	*
@@ -284,6 +289,9 @@ public interface CPSpecificationOptionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPSpecificationOptionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPSpecificationOptionsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

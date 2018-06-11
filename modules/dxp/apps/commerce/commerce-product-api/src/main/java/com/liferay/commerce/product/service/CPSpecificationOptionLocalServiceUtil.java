@@ -266,6 +266,14 @@ public class CPSpecificationOptionLocalServiceUtil {
 		return getService().getCPSpecificationOptions(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPSpecificationOption> getCPSpecificationOptions(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPSpecificationOption> orderByComparator) {
+		return getService()
+				   .getCPSpecificationOptions(groupId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns all the cp specification options matching the UUID and company.
 	*
@@ -304,6 +312,10 @@ public class CPSpecificationOptionLocalServiceUtil {
 	*/
 	public static int getCPSpecificationOptionsCount() {
 		return getService().getCPSpecificationOptionsCount();
+	}
+
+	public static int getCPSpecificationOptionsCount(long groupId) {
+		return getService().getCPSpecificationOptionsCount(groupId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(

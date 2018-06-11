@@ -370,12 +370,6 @@ public class CPDefinitionPersistenceTest {
 			getOrderByComparator());
 	}
 
-	@Test
-	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, getOrderByComparator());
-	}
-
 	protected OrderByComparator<CPDefinition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CPDefinition", "uuid",
 			true, "defaultLanguageId", true, "CPDefinitionId", true, "groupId",

@@ -49,7 +49,7 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-trash:emp
 			'click',
 			function(event) {
 				if (confirm('<%= UnicodeLanguageUtil.get(request, confirmMessage) %>')) {
-					var form = document.getElementById('<portlet:namespace />fm');
+					var form = document.getElementById('<portlet:namespace />emptyForm');
 
 					if (form) {
 						submitForm(form);

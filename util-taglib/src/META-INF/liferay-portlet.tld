@@ -49,8 +49,8 @@
 	</tag>
 	<tag>
 		<name>defineObjects</name>
-		<tag-class>com.liferay.taglib.portlet.DefineObjectsTag</tag-class>
-		<tei-class>com.liferay.taglib.portlet.DefineObjectsTei</tei-class>
+		<tag-class>com.liferay.taglib.portlet.DefineObjectsTag3</tag-class>
+		<tei-class>com.liferay.taglib.portlet.DefineObjectsTei3</tei-class>
 		<body-content>empty</body-content>
 	</tag>
 	<tag>

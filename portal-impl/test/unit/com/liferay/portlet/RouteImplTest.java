@@ -17,6 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.util.HttpImpl;
+import com.liferay.portlet.internal.RouteImpl;
 
 import java.util.HashMap;
 import java.util.Map;

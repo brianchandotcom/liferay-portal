@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.petra.string.CharPool;
@@ -98,7 +96,6 @@ import javax.servlet.http.HttpSession;
  * @author Connor McKay
  * @author Neil Griffin
  */
-@ProviderType
 public class PortletURLImpl
 	implements LiferayPortletURL, PortletURL, ResourceURL, Serializable {
 

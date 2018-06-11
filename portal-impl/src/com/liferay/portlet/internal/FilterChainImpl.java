@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portlet.internal;
 
 import java.io.IOException;
 
@@ -49,7 +47,6 @@ import javax.portlet.filter.ResourceFilter;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public class FilterChainImpl implements FilterChain, HeaderFilterChain {
 
 	public FilterChainImpl(

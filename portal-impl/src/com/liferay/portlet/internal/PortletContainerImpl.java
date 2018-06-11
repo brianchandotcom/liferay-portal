@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portlet.internal;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -67,7 +65,21 @@ import com.liferay.portal.kernel.util.comparator.PortletConfigurationIconCompara
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.theme.PortletDisplayFactory;
-import com.liferay.portlet.internal.PortletAppUtil;
+import com.liferay.portlet.ActionRequestFactory;
+import com.liferay.portlet.ActionRequestImpl;
+import com.liferay.portlet.ActionResponseFactory;
+import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.portlet.EventRequestFactory;
+import com.liferay.portlet.EventRequestImpl;
+import com.liferay.portlet.EventResponseFactory;
+import com.liferay.portlet.EventResponseImpl;
+import com.liferay.portlet.InvokerPortletImpl;
+import com.liferay.portlet.PublicRenderParametersPool;
+import com.liferay.portlet.RenderParametersPool;
+import com.liferay.portlet.ResourceRequestFactory;
+import com.liferay.portlet.ResourceRequestImpl;
+import com.liferay.portlet.ResourceResponseFactory;
+import com.liferay.portlet.ResourceResponseImpl;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
@@ -101,7 +113,6 @@ import javax.servlet.http.HttpSession;
  * @author Raymond Augé
  * @author Neil Griffin
  */
-@ProviderType
 public class PortletContainerImpl implements PortletContainer {
 
 	@Override

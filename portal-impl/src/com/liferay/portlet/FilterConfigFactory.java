@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletFilter;
+import com.liferay.portlet.internal.FilterConfigImpl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

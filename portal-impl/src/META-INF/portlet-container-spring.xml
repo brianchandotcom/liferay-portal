@@ -9,16 +9,16 @@
 	<bean class="com.liferay.portlet.InvokerPortletFactoryImpl" id="com.liferay.portal.kernel.portlet.InvokerPortletFactory" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil">
 		<property name="portletConfigFactory">
-			<bean class="com.liferay.portlet.PortletConfigFactoryImpl">
+			<bean class="com.liferay.portlet.internal.PortletConfigFactoryImpl">
 				<property name="portletContextFactory" ref="com.liferay.portal.kernel.portlet.PortletContextFactory" />
 			</bean>
 		</property>
 	</bean>
-	<bean class="com.liferay.portlet.PortletContextFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletContextFactory" />
+	<bean class="com.liferay.portlet.internal.PortletContextFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletContextFactory" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil">
 		<property name="portletContextFactory" ref="com.liferay.portal.kernel.portlet.PortletContextFactory" />
 	</bean>
-	<bean class="com.liferay.portlet.PortletInstanceFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletInstanceFactory">
+	<bean class="com.liferay.portlet.internal.PortletInstanceFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletInstanceFactory">
 		<property name="defaultInvokerPortletFactory" ref="com.liferay.portal.kernel.portlet.InvokerPortletFactory" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil">
@@ -30,7 +30,7 @@
 	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletQNameUtil" id="com.liferay.portal.kernel.portlet.PortletQNameUtil">
 		<property name="portletQName">
-			<bean class="com.liferay.portlet.PortletQNameImpl" />
+			<bean class="com.liferay.portlet.internal.PortletQNameImpl" />
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil">

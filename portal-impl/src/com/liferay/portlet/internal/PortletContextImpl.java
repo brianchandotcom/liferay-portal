@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portlet.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -47,7 +45,6 @@ import javax.servlet.ServletContext;
  * @author Brett Randall
  * @author Neil Griffin
  */
-@ProviderType
 public class PortletContextImpl implements LiferayPortletContext {
 
 	public PortletContextImpl(Portlet portlet, ServletContext servletContext) {

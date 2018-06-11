@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfigWrapper;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -61,7 +63,6 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import com.liferay.portlet.configuration.web.internal.constants.PortletConfigurationPortletKeys;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
@@ -364,11 +365,11 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 	@Override
 	public void init(PortletConfig portletConfig) throws PortletException {
-		if (portletConfig instanceof PortletConfigImpl) {
+		if (portletConfig instanceof LiferayPortletConfig) {
 			PortletConfigurationPortletPortletConfig
 				portletConfigurationPortletPortletConfig =
 					new PortletConfigurationPortletPortletConfig(
-						(PortletConfigImpl)portletConfig);
+						(LiferayPortletConfig)portletConfig);
 
 			super.init(portletConfigurationPortletPortletConfig);
 		}
@@ -1063,7 +1064,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	private ResourcePermissionService _resourcePermissionService;
 
 	private class PortletConfigurationPortletPortletConfig
-		extends PortletConfigImpl {
+		extends LiferayPortletConfigWrapper {
 
 		@Override
 		public ResourceBundle getResourceBundle(Locale locale) {
@@ -1097,11 +1098,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		private PortletConfigurationPortletPortletConfig(
-			PortletConfigImpl portletConfigImpl) {
+			LiferayPortletConfig liferayPortletConfig) {
 
-			super(
-				portletConfigImpl.getPortlet(),
-				portletConfigImpl.getPortletContext());
+			super(liferayPortletConfig);
 		}
 
 	}

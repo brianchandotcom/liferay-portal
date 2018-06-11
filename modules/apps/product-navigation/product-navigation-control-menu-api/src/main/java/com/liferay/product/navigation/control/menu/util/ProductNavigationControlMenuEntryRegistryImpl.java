@@ -41,8 +41,10 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(
 	immediate = true, service = ProductNavigationControlMenuEntryRegistry.class
 )
-public class ProductNavigationControlMenuEntryRegistryImpl {
+public class ProductNavigationControlMenuEntryRegistryImpl
+	implements ProductNavigationControlMenuEntryRegistry {
 
+	@Override
 	public List<ProductNavigationControlMenuEntry>
 		getProductNavigationControlMenuEntries(
 			ProductNavigationControlMenuCategory
@@ -59,6 +61,7 @@ public class ProductNavigationControlMenuEntryRegistryImpl {
 		return productNavigationControlMenuEntries;
 	}
 
+	@Override
 	public List<ProductNavigationControlMenuEntry>
 		getProductNavigationControlMenuEntries(
 			ProductNavigationControlMenuCategory

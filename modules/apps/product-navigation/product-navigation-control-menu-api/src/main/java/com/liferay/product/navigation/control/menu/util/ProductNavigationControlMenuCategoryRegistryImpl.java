@@ -44,8 +44,10 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	service = ProductNavigationControlMenuCategoryRegistry.class
 )
-public class ProductNavigationControlMenuCategoryRegistryImpl {
+public class ProductNavigationControlMenuCategoryRegistryImpl
+	implements ProductNavigationControlMenuCategoryRegistry {
 
+	@Override
 	public List<ProductNavigationControlMenuCategory>
 		getProductNavigationControlMenuCategories(
 			String productNavigationControlMenuCategoryKey) {
@@ -62,6 +64,7 @@ public class ProductNavigationControlMenuCategoryRegistryImpl {
 		return new ArrayList<>(productNavigationControlMenuCategories);
 	}
 
+	@Override
 	public List<ProductNavigationControlMenuCategory>
 		getProductNavigationControlMenuCategories(
 			String productNavigationControlMenuCategoryKey,

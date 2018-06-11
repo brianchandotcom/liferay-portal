@@ -4,16 +4,5 @@
 <service-builder auto-namespace-tables="true" package-path="com.liferay.flags">
 	<namespace>Flags</namespace>
 	<entity local-service="false" name="FlagsEntry" remote-service="true">
-
-		<!-- References -->
-
-		<reference entity="Mail" package-path="com.liferay.mail" />
-		<reference entity="Company" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Layout" package-path="com.liferay.portal" />
-		<reference entity="Role" package-path="com.liferay.portal" />
-		<reference entity="UserGroup" package-path="com.liferay.portal" />
-		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 	</entity>
 </service-builder>

@@ -156,7 +156,6 @@
 
 		<!-- References -->
 
-		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="SocialActivityCounter" package-path="com.liferay.portlet.social" />
 	</entity>
@@ -281,7 +280,6 @@
 
 		<!-- References -->
 
-		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="SocialActivitySet" remote-service="false">
@@ -456,7 +454,6 @@
 
 		<!-- References -->
 
-		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="SocialRequest" remote-service="true" uuid="true">

@@ -345,6 +345,22 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	public void setLayoutPrototypeId(long layoutPrototypeId);
 
 	/**
+	 * Returns the last publish date of this layout page template entry.
+	 *
+	 * @return the last publish date of this layout page template entry
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this layout page template entry.
+	 *
+	 * @param lastPublishDate the last publish date of this layout page template entry
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this layout page template entry.
 	 *
 	 * @return the status of this layout page template entry
@@ -424,22 +440,6 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
-
-	/**
-	 * Returns the last publish date of this layout page template entry.
-	 *
-	 * @return the last publish date of this layout page template entry
-	 */
-	@Override
-	public Date getLastPublishDate();
-
-	/**
-	 * Sets the last publish date of this layout page template entry.
-	 *
-	 * @param lastPublishDate the last publish date of this layout page template entry
-	 */
-	@Override
-	public void setLastPublishDate(Date lastPublishDate);
 
 	/**
 	 * Returns <code>true</code> if this layout page template entry is approved.

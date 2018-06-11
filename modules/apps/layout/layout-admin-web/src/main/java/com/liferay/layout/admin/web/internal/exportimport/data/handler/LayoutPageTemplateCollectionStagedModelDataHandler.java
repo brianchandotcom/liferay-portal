@@ -110,7 +110,7 @@ public class LayoutPageTemplateCollectionStagedModelDataHandler
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.fragment.model.LayoutPageTemplateCollection)",
+		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateCollection)",
 		unbind = "-"
 	)
 	private StagedModelRepository<LayoutPageTemplateCollection>

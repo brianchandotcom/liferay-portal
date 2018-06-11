@@ -53,18 +53,6 @@ public class CPOptionCategoryServiceImpl
 	}
 
 	@Override
-	public CPOptionCategory deleteCPOptionCategory(
-			CPOptionCategory cpOptionCategory)
-		throws PortalException {
-
-		_cpOptionCategoryModelResourcePermission.check(
-			getPermissionChecker(), cpOptionCategory, ActionKeys.DELETE);
-
-		return cpOptionCategoryLocalService.deleteCPOptionCategory(
-			cpOptionCategory);
-	}
-
-	@Override
 	public CPOptionCategory deleteCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException {
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -74,6 +76,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html, String mode)
 		throws PortalException {
+
+		validateFragmentEntryHTML(html);
 
 		Document document = _getDocument(html);
 
@@ -122,7 +126,19 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					defaultPreferences);
 			}
 
+			if (Validator.isNull(portletPreferences)) {
+				Portlet portlet = _portletLocalService.getPortletById(
+					portletName);
+
+				portletPreferences = portlet.getDefaultPreferences();
+			}
+
+			Document preferencesDocument = Jsoup.parse(portletPreferences);
+
+			portletPreferences = preferencesDocument.html();
+
 			runtimeTagElement.attr("defaultPreferences", portletPreferences);
+
 			runtimeTagElement.attr("instanceId", instanceId);
 			runtimeTagElement.attr("persistSettings=false", true);
 			runtimeTagElement.attr("portletName", portletName);
@@ -178,6 +194,16 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					LanguageUtil.format(
 						_resourceBundle,
 						"there-is-no-widget-available-for-alias-x", alias));
+			}
+
+			if (Validator.isNotNull(element.id()) &&
+				!Validator.isAlphanumericName(element.id())) {
+
+				throw new FragmentEntryContentException(
+					LanguageUtil.format(
+						_resourceBundle,
+						"widget-id-must-contain-only-alphanumeric-characters",
+						alias));
 			}
 		}
 	}
@@ -239,7 +265,11 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private String _getInstanceId(String namespace, String id) {
-		return namespace + StringPool.UNDERLINE + id;
+		if (Validator.isNull(namespace)) {
+			namespace = StringUtil.randomId();
+		}
+
+		return namespace + id;
 	}
 
 	private Element _getPortletMenuElement(
@@ -344,6 +374,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private PortletRegistry _portletRegistry;

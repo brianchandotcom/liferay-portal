@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.web.internal.layout.prototype;
 
-import com.liferay.layout.page.template.util.LayoutPrototypeHelper;
+import com.liferay.layout.page.template.util.LayoutPrototypeHelperUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -143,9 +143,9 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 			layoutPrototypeLocalService.search(
 				companyId, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Layout layout = _layoutPrototypeHelper.addLayoutPrototype(
-			companyId, defaultUserId, nameMap, descriptionMap, layoutTemplateId,
-			layoutPrototypes);
+		Layout layout = LayoutPrototypeHelperUtil.addLayoutPrototype(
+			layoutPrototypeLocalService, companyId, defaultUserId, nameMap,
+			descriptionMap, layoutTemplateId, layoutPrototypes);
 
 		if (layout == null) {
 			return;
@@ -280,8 +280,5 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 	private final SearchLayoutPrototypeCustomizer
 		_defaultSearchLayoutPrototypeCustomizer =
 			new DefaultSearchLayoutPrototypeCustomizer();
-
-	@Reference
-	private LayoutPrototypeHelper _layoutPrototypeHelper;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.wiki.layout.prototype.internal.instance.lifecycle;
 
 import com.liferay.asset.categories.navigation.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;
-import com.liferay.layout.page.template.util.LayoutPrototypeHelper;
+import com.liferay.layout.page.template.util.LayoutPrototypeHelperUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -82,9 +82,9 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 			ResourceBundleUtil.getLocalizationMap(
 				resourceBundleLoader, "layout-prototype-wiki-description");
 
-		Layout layout = _layoutPrototypeHelper.addLayoutPrototype(
-			companyId, defaultUserId, nameMap, descriptionMap, "2_columns_iii",
-			layoutPrototypes);
+		Layout layout = LayoutPrototypeHelperUtil.addLayoutPrototype(
+			_layoutPrototypeLocalService, companyId, defaultUserId, nameMap,
+			descriptionMap, "2_columns_iii", layoutPrototypes);
 
 		if (layout == null) {
 			return;
@@ -150,9 +150,6 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 	)
 	protected void setWikiPortlet(Portlet portlet) {
 	}
-
-	@Reference
-	private LayoutPrototypeHelper _layoutPrototypeHelper;
 
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 

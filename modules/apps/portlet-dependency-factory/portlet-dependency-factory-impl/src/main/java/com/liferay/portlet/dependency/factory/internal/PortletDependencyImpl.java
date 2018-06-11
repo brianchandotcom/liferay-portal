@@ -36,7 +36,10 @@ public class PortletDependencyImpl implements PortletDependency {
 		_markup = markup;
 		_absolutePortalURLBuilder = absolutePortalURLBuilder;
 
-		if (_name != null) {
+		if (_name == null) {
+			_type = Type.OTHER;
+		}
+		else {
 			if (_name.endsWith(".css")) {
 				_type = Type.CSS;
 			}
@@ -46,9 +49,6 @@ public class PortletDependencyImpl implements PortletDependency {
 			else {
 				_type = Type.OTHER;
 			}
-		}
-		else {
-			_type = Type.OTHER;
 		}
 	}
 
@@ -81,10 +81,8 @@ public class PortletDependencyImpl implements PortletDependency {
 
 	@Override
 	public StringBundler toStringBundler() {
-		StringBundler sb;
-
 		if (Validator.isNull(_markup)) {
-			sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(8);
 
 			if (_type == Type.CSS) {
 				sb.append("<link ");
@@ -108,12 +106,11 @@ public class PortletDependencyImpl implements PortletDependency {
 				sb.append(_version);
 				sb.append("\" -->");
 			}
-		}
-		else {
-			sb = new StringBundler(_markup);
+
+			return sb;
 		}
 
-		return sb;
+		return new StringBundler(_markup);
 	}
 
 	private String _getURL() {

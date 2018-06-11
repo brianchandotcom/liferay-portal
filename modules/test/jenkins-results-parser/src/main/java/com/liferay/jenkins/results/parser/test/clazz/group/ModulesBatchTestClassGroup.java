@@ -14,10 +14,13 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.util.List;
 
 /**
  * @author Leslie Wong
@@ -26,16 +29,22 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 	public static class ModulesBatchTestClass extends BaseTestClass {
 
-		protected static ModulesBatchTestClass getInstance(
-			String batchName, File moduleBaseDir) {
-
-			return new ModulesBatchTestClass(batchName, moduleBaseDir);
+		protected ModulesBatchTestClass(File moduleBaseDir) {
+			super(moduleBaseDir);
 		}
 
-		protected ModulesBatchTestClass(String batchName, File moduleBaseDir) {
-			super(moduleBaseDir);
+		protected void initTestMethods(
+			List<File> modulesProjectDirs, File modulesDir, String taskName) {
 
-			addTestMethod(batchName);
+			for (File modulesProjectDir : modulesProjectDirs) {
+				String path = JenkinsResultsParserUtil.getPathRelativeTo(
+					modulesProjectDir, modulesDir);
+
+				String moduleTaskCall = JenkinsResultsParserUtil.combine(
+					":", path.replaceAll("/", ":"), ":", taskName);
+
+				addTestMethod(moduleTaskCall);
+			}
 		}
 
 	}

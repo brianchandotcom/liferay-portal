@@ -21,6 +21,12 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +35,102 @@ import java.util.List;
  */
 public class ModulesCompileBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
+
+	public static class ModulesCompileBatchTestClass
+		extends ModulesBatchTestClass {
+
+		protected static ModulesCompileBatchTestClass getInstance(
+			File moduleBaseDir, File modulesDir) {
+
+			return new ModulesCompileBatchTestClass(moduleBaseDir, modulesDir);
+		}
+
+		protected ModulesCompileBatchTestClass(
+			File moduleBaseDir, File modulesDir) {
+
+			super(moduleBaseDir);
+
+			final File baseDir = modulesDir;
+			final List<File> modulesProjectDirs = new ArrayList<>();
+			final Path moduleBaseDirPath = moduleBaseDir.toPath();
+
+			try {
+				Files.walkFileTree(
+					moduleBaseDirPath,
+					new SimpleFileVisitor<Path>() {
+
+						@Override
+						public FileVisitResult preVisitDirectory(
+							Path filePath, BasicFileAttributes attrs) {
+
+							if (filePath.equals(baseDir.toPath())) {
+								return FileVisitResult.CONTINUE;
+							}
+
+							File currentDirectory = filePath.toFile();
+
+							File bndBndFile = new File(
+								currentDirectory, "bnd.bnd");
+
+							File buildFile = new File(
+								currentDirectory, "build.gradle");
+
+							String directoryName = currentDirectory.getName();
+
+							if (buildFile.exists() && bndBndFile.exists()) {
+								modulesProjectDirs.add(currentDirectory);
+
+								return FileVisitResult.SKIP_SUBTREE;
+							}
+
+							if (directoryName.startsWith("frontend-theme")) {
+								File gulpFile = new File(
+									currentDirectory, "gulpfile.js");
+
+								if (buildFile.exists() && gulpFile.exists()) {
+									modulesProjectDirs.add(currentDirectory);
+
+									return FileVisitResult.SKIP_SUBTREE;
+								}
+							}
+
+							buildFile = new File(currentDirectory, "build.xml");
+
+							if (directoryName.endsWith("-hook")) {
+								if (buildFile.exists()) {
+									modulesProjectDirs.add(currentDirectory);
+
+									return FileVisitResult.SKIP_SUBTREE;
+								}
+							}
+
+							if (directoryName.endsWith("-portlet")) {
+								File ivyFile = new File(
+									currentDirectory, "ivy.xml");
+
+								if (buildFile.exists() && ivyFile.exists()) {
+									modulesProjectDirs.add(currentDirectory);
+
+									return FileVisitResult.SKIP_SUBTREE;
+								}
+							}
+
+							return FileVisitResult.CONTINUE;
+						}
+
+					});
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to get module marker files from " +
+						moduleBaseDir.getPath(),
+					ioe);
+			}
+
+			initTestMethods(modulesProjectDirs, modulesDir, "assemble");
+		}
+
+	}
 
 	protected ModulesCompileBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
@@ -62,9 +164,13 @@ public class ModulesCompileBatchTestClassGroup
 			}
 		}
 
+		File portalModulesBaseDir = new File(
+			portalGitWorkingDirectory.getWorkingDirectory(), "modules");
+
 		for (File moduleDir : moduleDirsList) {
 			testClasses.add(
-				ModulesBatchTestClass.getInstance(batchName, moduleDir));
+				ModulesCompileBatchTestClass.getInstance(
+					moduleDir, portalModulesBaseDir));
 		}
 	}
 

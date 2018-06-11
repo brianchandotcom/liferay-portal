@@ -25,6 +25,7 @@
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_OPTION_CATEGORIES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>VIEW_COMMERCE_PRODUCT_RULES</action-key>
@@ -42,6 +43,7 @@
 				<action-key>MANAGE_COMMERCE_PRODUCT_ATTACHMENTS</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_IMAGES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS</action-key>
+				<action-key>MANAGE_COMMERCE_PRODUCT_OPTION_CATEGORIES</action-key>
 				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</guest-unsupported>

@@ -173,7 +173,8 @@ public class CPPublisherWebHelper {
 
 			Element rootElement = document.getRootElement();
 
-			String cpDefinitionId = rootElement.elementText("product-id");
+			long cpDefinitionId = GetterUtil.getLong(
+				rootElement.elementText("product-id"));
 
 			if (cpDefinitionIds.contains(cpDefinitionId)) {
 				itr.remove();

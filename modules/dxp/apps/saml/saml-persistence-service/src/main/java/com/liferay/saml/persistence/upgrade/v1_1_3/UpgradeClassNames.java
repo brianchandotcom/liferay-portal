@@ -64,11 +64,11 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 						ResultSet rs2 = ps2.executeQuery()) {
 
 						if (rs2.next()) {
-							long maxCurrentId = rs2.getLong(1);
+							long currentId = rs2.getLong(1);
 
 							CounterLocalServiceUtil.reset(
 								"com.liferay.saml.model." + modelName,
-								maxCurrentId);
+								currentId);
 
 							CounterLocalServiceUtil.reset(
 								"com.liferay.saml.persistence.model." +

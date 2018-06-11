@@ -144,6 +144,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>APPLY</td>
+	<td>//button[contains(.,'Apply')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPLY_EFFECTS</td>
 	<td>//div[contains(@class,'controls-container') and contains(@class,'open')]//button[contains(@class,'btn') and contains(.,'Apply')]</td>
 	<td></td>

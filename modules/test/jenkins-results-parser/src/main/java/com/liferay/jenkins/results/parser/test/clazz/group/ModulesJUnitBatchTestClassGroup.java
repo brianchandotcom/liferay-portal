@@ -242,10 +242,18 @@ public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
 				String appSuiteTitle = _getAppSuiteTitle(appBndFile);
 
 				for (String bundledAppName : bundledAppNames) {
-					if (bundledAppName.contains(appSuiteTitle) &&
-						bundledAppName.contains(appTitle)) {
+					if (bundledAppName.contains(appSuiteTitle + " -") &&
+						bundledAppName.contains(appTitle + " -")) {
 
 						releaseModuleAppDirs.add(moduleAppDir);
+
+						continue;
+					}
+
+					if (bundledAppName.contains(appTitle + ".lpkg")) {
+						releaseModuleAppDirs.add(moduleAppDir);
+
+						continue;
 					}
 				}
 			}

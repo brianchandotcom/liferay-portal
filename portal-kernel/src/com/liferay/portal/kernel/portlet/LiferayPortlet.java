@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -41,9 +42,11 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Queue;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -398,18 +401,24 @@ public class LiferayPortlet extends GenericPortlet {
 
 		PortletContext portletContext = getPortletContext();
 
-		Set<String> childPaths = portletContext.getResourcePaths(path);
+		Queue<String> queue = new ArrayDeque<>();
 
-		if (childPaths == null) {
-			return paths;
-		}
+		queue.add(path);
 
-		for (String childPath : childPaths) {
-			if (childPath.endsWith(StringPool.SLASH)) {
-				paths.addAll(getPaths(childPath, extension));
-			}
-			else if (childPath.endsWith(extension)) {
-				paths.add(childPath);
+		while ((path = queue.poll()) != null) {
+			Set<String> childPaths = portletContext.getResourcePaths(path);
+
+			if (childPaths != null) {
+				for (String childPath : childPaths) {
+					if (childPath.charAt(childPath.length() - 1) ==
+							CharPool.SLASH) {
+
+						queue.add(childPath);
+					}
+					else if (childPath.endsWith(extension)) {
+						paths.add(childPath);
+					}
+				}
 			}
 		}
 

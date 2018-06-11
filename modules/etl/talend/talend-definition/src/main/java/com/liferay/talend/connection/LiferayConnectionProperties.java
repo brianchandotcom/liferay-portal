@@ -155,6 +155,13 @@ public class LiferayConnectionProperties
 
 		Form wizardForm = Form.create(this, FORM_WIZARD);
 
+		Widget loginWidgetWizard = Widget.widget(loginType);
+
+		loginWidgetWizard.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
+		loginWidgetWizard.setDeemphasize(true);
+
+		wizardForm.addRow(loginWidgetWizard);
+
 		wizardForm.addRow(name);
 
 		wizardForm.addRow(endpoint);
@@ -175,6 +182,12 @@ public class LiferayConnectionProperties
 		// Main form
 
 		Form mainForm = Form.create(this, Form.MAIN);
+
+		Widget loginWidgetMain = Widget.widget(loginType);
+
+		loginWidgetMain.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
+
+		mainForm.addRow(loginWidgetMain);
 
 		mainForm.addRow(endpoint);
 
@@ -222,6 +235,7 @@ public class LiferayConnectionProperties
 		endpoint.setValue(_HOST);
 		followRedirects.setValue(true);
 		forceHttps.setValue(false);
+		loginType.setValue(LoginType.Basic);
 		password.setValue("");
 		userId.setValue("");
 	}
@@ -266,6 +280,8 @@ public class LiferayConnectionProperties
 		"forceHttps");
 	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
 		"itemsPerPage", _ITEMS_PER_PAGE);
+	public Property<LoginType> loginType = PropertyFactory.newEnum(
+		"loginType", LoginType.class).setRequired();
 	public Property<String> name = PropertyFactory.newString(
 		"name").setRequired();
 	public Property<String> password =
@@ -280,6 +296,22 @@ public class LiferayConnectionProperties
 	public PresentationItem testConnection = new PresentationItem(
 		"testConnection", "Test Connection");
 	public Property<String> userId = PropertyFactory.newString("userId");
+
+	public enum LoginType {
+
+		Basic("Basic authentication");
+
+		public String getDescription() {
+			return _description;
+		}
+
+		private LoginType(String description) {
+			_description = description;
+		}
+
+		private final String _description;
+
+	}
 
 	protected SandboxedInstance getRuntimeSandboxedInstance() {
 		return LiferayBaseComponentDefinition.getSandboxedInstance(

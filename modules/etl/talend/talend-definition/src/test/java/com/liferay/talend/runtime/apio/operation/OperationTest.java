@@ -74,9 +74,9 @@ public class OperationTest {
 	@Test
 	public void testOperation2() {
 		expectedException.expect(UnsupportedOperationException.class);
-		expectedException.expectMessage("Unsupported operation: UPDATE");
+		expectedException.expectMessage("Unsupported operation: Update");
 
-		new Operation("UPDATE", _DEFAULT_ID, "http://example.com", true);
+		new Operation("Update", _DEFAULT_ID, "http://example.com", true);
 	}
 
 	@Test

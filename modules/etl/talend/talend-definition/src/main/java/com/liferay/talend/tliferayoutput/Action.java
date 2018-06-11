@@ -19,7 +19,7 @@ package com.liferay.talend.tliferayoutput;
  */
 public enum Action {
 
-	DELETE("DELETE"), INSERT("POST"), UPDATE("PUT");
+	Delete("DELETE"), Update("PUT"), Upsert("POST");
 
 	public String getMethodName() {
 		return _method;

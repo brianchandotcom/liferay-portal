@@ -214,7 +214,7 @@ public class TLiferayOutputProperties
 		super.setupProperties();
 
 		dieOnError.setValue(true);
-		operations.setValue(Action.INSERT);
+		operations.setValue(Action.Upsert);
 
 		resource = new ResourcePropertiesHelper("resource");
 

@@ -16,7 +16,6 @@ package com.liferay.bookmarks.service.base;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetLinkPersistence;
-import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryService;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
-import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -353,63 +351,6 @@ public abstract class BookmarksEntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the portlet preferences local service.
-	 *
-	 * @return the portlet preferences local service
-	 */
-	public com.liferay.portal.kernel.service.PortletPreferencesLocalService getPortletPreferencesLocalService() {
-		return portletPreferencesLocalService;
-	}
-
-	/**
-	 * Sets the portlet preferences local service.
-	 *
-	 * @param portletPreferencesLocalService the portlet preferences local service
-	 */
-	public void setPortletPreferencesLocalService(
-		com.liferay.portal.kernel.service.PortletPreferencesLocalService portletPreferencesLocalService) {
-		this.portletPreferencesLocalService = portletPreferencesLocalService;
-	}
-
-	/**
-	 * Returns the portlet preferences remote service.
-	 *
-	 * @return the portlet preferences remote service
-	 */
-	public com.liferay.portal.kernel.service.PortletPreferencesService getPortletPreferencesService() {
-		return portletPreferencesService;
-	}
-
-	/**
-	 * Sets the portlet preferences remote service.
-	 *
-	 * @param portletPreferencesService the portlet preferences remote service
-	 */
-	public void setPortletPreferencesService(
-		com.liferay.portal.kernel.service.PortletPreferencesService portletPreferencesService) {
-		this.portletPreferencesService = portletPreferencesService;
-	}
-
-	/**
-	 * Returns the portlet preferences persistence.
-	 *
-	 * @return the portlet preferences persistence
-	 */
-	public PortletPreferencesPersistence getPortletPreferencesPersistence() {
-		return portletPreferencesPersistence;
-	}
-
-	/**
-	 * Sets the portlet preferences persistence.
-	 *
-	 * @param portletPreferencesPersistence the portlet preferences persistence
-	 */
-	public void setPortletPreferencesPersistence(
-		PortletPreferencesPersistence portletPreferencesPersistence) {
-		this.portletPreferencesPersistence = portletPreferencesPersistence;
-	}
-
-	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -577,62 +518,6 @@ public abstract class BookmarksEntryServiceBaseImpl extends BaseServiceImpl
 	public void setAssetLinkPersistence(
 		AssetLinkPersistence assetLinkPersistence) {
 		this.assetLinkPersistence = assetLinkPersistence;
-	}
-
-	/**
-	 * Returns the asset tag local service.
-	 *
-	 * @return the asset tag local service
-	 */
-	public com.liferay.asset.kernel.service.AssetTagLocalService getAssetTagLocalService() {
-		return assetTagLocalService;
-	}
-
-	/**
-	 * Sets the asset tag local service.
-	 *
-	 * @param assetTagLocalService the asset tag local service
-	 */
-	public void setAssetTagLocalService(
-		com.liferay.asset.kernel.service.AssetTagLocalService assetTagLocalService) {
-		this.assetTagLocalService = assetTagLocalService;
-	}
-
-	/**
-	 * Returns the asset tag remote service.
-	 *
-	 * @return the asset tag remote service
-	 */
-	public com.liferay.asset.kernel.service.AssetTagService getAssetTagService() {
-		return assetTagService;
-	}
-
-	/**
-	 * Sets the asset tag remote service.
-	 *
-	 * @param assetTagService the asset tag remote service
-	 */
-	public void setAssetTagService(
-		com.liferay.asset.kernel.service.AssetTagService assetTagService) {
-		this.assetTagService = assetTagService;
-	}
-
-	/**
-	 * Returns the asset tag persistence.
-	 *
-	 * @return the asset tag persistence
-	 */
-	public AssetTagPersistence getAssetTagPersistence() {
-		return assetTagPersistence;
-	}
-
-	/**
-	 * Sets the asset tag persistence.
-	 *
-	 * @param assetTagPersistence the asset tag persistence
-	 */
-	public void setAssetTagPersistence(AssetTagPersistence assetTagPersistence) {
-		this.assetTagPersistence = assetTagPersistence;
 	}
 
 	/**
@@ -846,12 +731,6 @@ public abstract class BookmarksEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.GroupService groupService;
 	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@ServiceReference(type = com.liferay.portal.kernel.service.PortletPreferencesLocalService.class)
-	protected com.liferay.portal.kernel.service.PortletPreferencesLocalService portletPreferencesLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.PortletPreferencesService.class)
-	protected com.liferay.portal.kernel.service.PortletPreferencesService portletPreferencesService;
-	@ServiceReference(type = PortletPreferencesPersistence.class)
-	protected PortletPreferencesPersistence portletPreferencesPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
@@ -870,12 +749,6 @@ public abstract class BookmarksEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.asset.kernel.service.AssetLinkLocalService assetLinkLocalService;
 	@ServiceReference(type = AssetLinkPersistence.class)
 	protected AssetLinkPersistence assetLinkPersistence;
-	@ServiceReference(type = com.liferay.asset.kernel.service.AssetTagLocalService.class)
-	protected com.liferay.asset.kernel.service.AssetTagLocalService assetTagLocalService;
-	@ServiceReference(type = com.liferay.asset.kernel.service.AssetTagService.class)
-	protected com.liferay.asset.kernel.service.AssetTagService assetTagService;
-	@ServiceReference(type = AssetTagPersistence.class)
-	protected AssetTagPersistence assetTagPersistence;
 	@ServiceReference(type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class)
 	protected com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService;
 	@ServiceReference(type = ExpandoRowPersistence.class)

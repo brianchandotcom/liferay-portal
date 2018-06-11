@@ -17,8 +17,6 @@ package com.liferay.portlet.documentlibrary.service.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder;
-import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFolderFinder;
 import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
 
@@ -30,7 +28,6 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.persistence.RepositoryEntryPersistence;
 import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -136,44 +133,6 @@ public abstract class DLAppLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the repository entry local service.
-	 *
-	 * @return the repository entry local service
-	 */
-	public com.liferay.portal.kernel.service.RepositoryEntryLocalService getRepositoryEntryLocalService() {
-		return repositoryEntryLocalService;
-	}
-
-	/**
-	 * Sets the repository entry local service.
-	 *
-	 * @param repositoryEntryLocalService the repository entry local service
-	 */
-	public void setRepositoryEntryLocalService(
-		com.liferay.portal.kernel.service.RepositoryEntryLocalService repositoryEntryLocalService) {
-		this.repositoryEntryLocalService = repositoryEntryLocalService;
-	}
-
-	/**
-	 * Returns the repository entry persistence.
-	 *
-	 * @return the repository entry persistence
-	 */
-	public RepositoryEntryPersistence getRepositoryEntryPersistence() {
-		return repositoryEntryPersistence;
-	}
-
-	/**
-	 * Sets the repository entry persistence.
-	 *
-	 * @param repositoryEntryPersistence the repository entry persistence
-	 */
-	public void setRepositoryEntryPersistence(
-		RepositoryEntryPersistence repositoryEntryPersistence) {
-		this.repositoryEntryPersistence = repositoryEntryPersistence;
-	}
-
-	/**
 	 * Returns the trash entry local service.
 	 *
 	 * @return the trash entry local service
@@ -230,63 +189,6 @@ public abstract class DLAppLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setDLAppHelperLocalService(
 		com.liferay.document.library.kernel.service.DLAppHelperLocalService dlAppHelperLocalService) {
 		this.dlAppHelperLocalService = dlAppHelperLocalService;
-	}
-
-	/**
-	 * Returns the document library file entry metadata local service.
-	 *
-	 * @return the document library file entry metadata local service
-	 */
-	public com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService getDLFileEntryMetadataLocalService() {
-		return dlFileEntryMetadataLocalService;
-	}
-
-	/**
-	 * Sets the document library file entry metadata local service.
-	 *
-	 * @param dlFileEntryMetadataLocalService the document library file entry metadata local service
-	 */
-	public void setDLFileEntryMetadataLocalService(
-		com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService) {
-		this.dlFileEntryMetadataLocalService = dlFileEntryMetadataLocalService;
-	}
-
-	/**
-	 * Returns the document library file entry metadata persistence.
-	 *
-	 * @return the document library file entry metadata persistence
-	 */
-	public DLFileEntryMetadataPersistence getDLFileEntryMetadataPersistence() {
-		return dlFileEntryMetadataPersistence;
-	}
-
-	/**
-	 * Sets the document library file entry metadata persistence.
-	 *
-	 * @param dlFileEntryMetadataPersistence the document library file entry metadata persistence
-	 */
-	public void setDLFileEntryMetadataPersistence(
-		DLFileEntryMetadataPersistence dlFileEntryMetadataPersistence) {
-		this.dlFileEntryMetadataPersistence = dlFileEntryMetadataPersistence;
-	}
-
-	/**
-	 * Returns the document library file entry metadata finder.
-	 *
-	 * @return the document library file entry metadata finder
-	 */
-	public DLFileEntryMetadataFinder getDLFileEntryMetadataFinder() {
-		return dlFileEntryMetadataFinder;
-	}
-
-	/**
-	 * Sets the document library file entry metadata finder.
-	 *
-	 * @param dlFileEntryMetadataFinder the document library file entry metadata finder
-	 */
-	public void setDLFileEntryMetadataFinder(
-		DLFileEntryMetadataFinder dlFileEntryMetadataFinder) {
-		this.dlFileEntryMetadataFinder = dlFileEntryMetadataFinder;
 	}
 
 	/**
@@ -392,10 +294,6 @@ public abstract class DLAppLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.kernel.service.RepositoryLocalService repositoryLocalService;
 	@BeanReference(type = RepositoryPersistence.class)
 	protected RepositoryPersistence repositoryPersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.RepositoryEntryLocalService.class)
-	protected com.liferay.portal.kernel.service.RepositoryEntryLocalService repositoryEntryLocalService;
-	@BeanReference(type = RepositoryEntryPersistence.class)
-	protected RepositoryEntryPersistence repositoryEntryPersistence;
 	@BeanReference(type = com.liferay.trash.kernel.service.TrashEntryLocalService.class)
 	@SuppressWarnings("deprecation")
 	protected com.liferay.trash.kernel.service.TrashEntryLocalService trashEntryLocalService;
@@ -403,12 +301,6 @@ public abstract class DLAppLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected TrashEntryPersistence trashEntryPersistence;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLAppHelperLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLAppHelperLocalService dlAppHelperLocalService;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService.class)
-	protected com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
-	@BeanReference(type = DLFileEntryMetadataPersistence.class)
-	protected DLFileEntryMetadataPersistence dlFileEntryMetadataPersistence;
-	@BeanReference(type = DLFileEntryMetadataFinder.class)
-	protected DLFileEntryMetadataFinder dlFileEntryMetadataFinder;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLFolderLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLFolderLocalService dlFolderLocalService;
 	@BeanReference(type = DLFolderPersistence.class)

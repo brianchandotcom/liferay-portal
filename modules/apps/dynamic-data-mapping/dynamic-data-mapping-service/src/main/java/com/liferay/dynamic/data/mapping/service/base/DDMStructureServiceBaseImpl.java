@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.GroupPersistence;
-import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -330,62 +328,6 @@ public abstract class DDMStructureServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the group local service.
-	 *
-	 * @return the group local service
-	 */
-	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
-		return groupLocalService;
-	}
-
-	/**
-	 * Sets the group local service.
-	 *
-	 * @param groupLocalService the group local service
-	 */
-	public void setGroupLocalService(
-		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
-
-	/**
-	 * Returns the group remote service.
-	 *
-	 * @return the group remote service
-	 */
-	public com.liferay.portal.kernel.service.GroupService getGroupService() {
-		return groupService;
-	}
-
-	/**
-	 * Sets the group remote service.
-	 *
-	 * @param groupService the group remote service
-	 */
-	public void setGroupService(
-		com.liferay.portal.kernel.service.GroupService groupService) {
-		this.groupService = groupService;
-	}
-
-	/**
-	 * Returns the group persistence.
-	 *
-	 * @return the group persistence
-	 */
-	public GroupPersistence getGroupPersistence() {
-		return groupPersistence;
-	}
-
-	/**
-	 * Sets the group persistence.
-	 *
-	 * @param groupPersistence the group persistence
-	 */
-	public void setGroupPersistence(GroupPersistence groupPersistence) {
-		this.groupPersistence = groupPersistence;
-	}
-
-	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -402,44 +344,6 @@ public abstract class DDMStructureServiceBaseImpl extends BaseServiceImpl
 	public void setResourceLocalService(
 		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
 		this.resourceLocalService = resourceLocalService;
-	}
-
-	/**
-	 * Returns the system event local service.
-	 *
-	 * @return the system event local service
-	 */
-	public com.liferay.portal.kernel.service.SystemEventLocalService getSystemEventLocalService() {
-		return systemEventLocalService;
-	}
-
-	/**
-	 * Sets the system event local service.
-	 *
-	 * @param systemEventLocalService the system event local service
-	 */
-	public void setSystemEventLocalService(
-		com.liferay.portal.kernel.service.SystemEventLocalService systemEventLocalService) {
-		this.systemEventLocalService = systemEventLocalService;
-	}
-
-	/**
-	 * Returns the system event persistence.
-	 *
-	 * @return the system event persistence
-	 */
-	public SystemEventPersistence getSystemEventPersistence() {
-		return systemEventPersistence;
-	}
-
-	/**
-	 * Sets the system event persistence.
-	 *
-	 * @param systemEventPersistence the system event persistence
-	 */
-	public void setSystemEventPersistence(
-		SystemEventPersistence systemEventPersistence) {
-		this.systemEventPersistence = systemEventPersistence;
 	}
 
 	/**
@@ -801,18 +705,8 @@ public abstract class DDMStructureServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
-	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.GroupService.class)
-	protected com.liferay.portal.kernel.service.GroupService groupService;
-	@ServiceReference(type = GroupPersistence.class)
-	protected GroupPersistence groupPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.SystemEventLocalService.class)
-	protected com.liferay.portal.kernel.service.SystemEventLocalService systemEventLocalService;
-	@ServiceReference(type = SystemEventPersistence.class)
-	protected SystemEventPersistence systemEventPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)

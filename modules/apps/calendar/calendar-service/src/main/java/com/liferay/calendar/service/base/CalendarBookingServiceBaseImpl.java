@@ -373,25 +373,6 @@ public abstract class CalendarBookingServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the mail remote service.
-	 *
-	 * @return the mail remote service
-	 */
-	public com.liferay.mail.kernel.service.MailService getMailService() {
-		return mailService;
-	}
-
-	/**
-	 * Sets the mail remote service.
-	 *
-	 * @param mailService the mail remote service
-	 */
-	public void setMailService(
-		com.liferay.mail.kernel.service.MailService mailService) {
-		this.mailService = mailService;
-	}
-
-	/**
 	 * Returns the class name local service.
 	 *
 	 * @return the class name local service
@@ -981,8 +962,6 @@ public abstract class CalendarBookingServiceBaseImpl extends BaseServiceImpl
 	protected CalendarResourceFinder calendarResourceFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@ServiceReference(type = com.liferay.mail.kernel.service.MailService.class)
-	protected com.liferay.mail.kernel.service.MailService mailService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.oauth2.provider.model.OAuth2ScopeGrant;
 import com.liferay.oauth2.provider.service.OAuth2ScopeGrantLocalService;
-import com.liferay.oauth2.provider.service.persistence.OAuth2ApplicationScopeAliasesPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantFinder;
 import com.liferay.oauth2.provider.service.persistence.OAuth2ScopeGrantPersistence;
@@ -549,44 +548,6 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the o auth2 application scope aliases local service.
-	 *
-	 * @return the o auth2 application scope aliases local service
-	 */
-	public com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService getOAuth2ApplicationScopeAliasesLocalService() {
-		return oAuth2ApplicationScopeAliasesLocalService;
-	}
-
-	/**
-	 * Sets the o auth2 application scope aliases local service.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesLocalService the o auth2 application scope aliases local service
-	 */
-	public void setOAuth2ApplicationScopeAliasesLocalService(
-		com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService oAuth2ApplicationScopeAliasesLocalService) {
-		this.oAuth2ApplicationScopeAliasesLocalService = oAuth2ApplicationScopeAliasesLocalService;
-	}
-
-	/**
-	 * Returns the o auth2 application scope aliases persistence.
-	 *
-	 * @return the o auth2 application scope aliases persistence
-	 */
-	public OAuth2ApplicationScopeAliasesPersistence getOAuth2ApplicationScopeAliasesPersistence() {
-		return oAuth2ApplicationScopeAliasesPersistence;
-	}
-
-	/**
-	 * Sets the o auth2 application scope aliases persistence.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesPersistence the o auth2 application scope aliases persistence
-	 */
-	public void setOAuth2ApplicationScopeAliasesPersistence(
-		OAuth2ApplicationScopeAliasesPersistence oAuth2ApplicationScopeAliasesPersistence) {
-		this.oAuth2ApplicationScopeAliasesPersistence = oAuth2ApplicationScopeAliasesPersistence;
-	}
-
-	/**
 	 * Returns the o auth2 authorization local service.
 	 *
 	 * @return the o auth2 authorization local service
@@ -684,10 +645,6 @@ public abstract class OAuth2ScopeGrantLocalServiceBaseImpl
 	protected OAuth2ScopeGrantFinder oAuth2ScopeGrantFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService.class)
-	protected com.liferay.oauth2.provider.service.OAuth2ApplicationScopeAliasesLocalService oAuth2ApplicationScopeAliasesLocalService;
-	@BeanReference(type = OAuth2ApplicationScopeAliasesPersistence.class)
-	protected OAuth2ApplicationScopeAliasesPersistence oAuth2ApplicationScopeAliasesPersistence;
 	@BeanReference(type = com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService.class)
 	protected com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService;
 	@BeanReference(type = OAuth2AuthorizationPersistence.class)

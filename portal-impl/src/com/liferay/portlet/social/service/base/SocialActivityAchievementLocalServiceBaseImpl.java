@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.kernel.service.persistence.GroupFinder;
-import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -385,61 +383,6 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the group local service.
-	 *
-	 * @return the group local service
-	 */
-	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
-		return groupLocalService;
-	}
-
-	/**
-	 * Sets the group local service.
-	 *
-	 * @param groupLocalService the group local service
-	 */
-	public void setGroupLocalService(
-		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
-
-	/**
-	 * Returns the group persistence.
-	 *
-	 * @return the group persistence
-	 */
-	public GroupPersistence getGroupPersistence() {
-		return groupPersistence;
-	}
-
-	/**
-	 * Sets the group persistence.
-	 *
-	 * @param groupPersistence the group persistence
-	 */
-	public void setGroupPersistence(GroupPersistence groupPersistence) {
-		this.groupPersistence = groupPersistence;
-	}
-
-	/**
-	 * Returns the group finder.
-	 *
-	 * @return the group finder
-	 */
-	public GroupFinder getGroupFinder() {
-		return groupFinder;
-	}
-
-	/**
-	 * Sets the group finder.
-	 *
-	 * @param groupFinder the group finder
-	 */
-	public void setGroupFinder(GroupFinder groupFinder) {
-		this.groupFinder = groupFinder;
-	}
-
-	/**
 	 * Returns the user local service.
 	 *
 	 * @return the user local service
@@ -609,12 +552,6 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	protected SocialActivityAchievementPersistence socialActivityAchievementPersistence;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
-	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
-	@BeanReference(type = GroupPersistence.class)
-	protected GroupPersistence groupPersistence;
-	@BeanReference(type = GroupFinder.class)
-	protected GroupFinder groupFinder;
 	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@BeanReference(type = UserPersistence.class)

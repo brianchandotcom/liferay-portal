@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
-import com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -384,63 +383,6 @@ public abstract class BlogsEntryServiceBaseImpl extends BaseServiceImpl
 	public void setOrganizationPersistence(
 		OrganizationPersistence organizationPersistence) {
 		this.organizationPersistence = organizationPersistence;
-	}
-
-	/**
-	 * Returns the portlet preferences local service.
-	 *
-	 * @return the portlet preferences local service
-	 */
-	public com.liferay.portal.kernel.service.PortletPreferencesLocalService getPortletPreferencesLocalService() {
-		return portletPreferencesLocalService;
-	}
-
-	/**
-	 * Sets the portlet preferences local service.
-	 *
-	 * @param portletPreferencesLocalService the portlet preferences local service
-	 */
-	public void setPortletPreferencesLocalService(
-		com.liferay.portal.kernel.service.PortletPreferencesLocalService portletPreferencesLocalService) {
-		this.portletPreferencesLocalService = portletPreferencesLocalService;
-	}
-
-	/**
-	 * Returns the portlet preferences remote service.
-	 *
-	 * @return the portlet preferences remote service
-	 */
-	public com.liferay.portal.kernel.service.PortletPreferencesService getPortletPreferencesService() {
-		return portletPreferencesService;
-	}
-
-	/**
-	 * Sets the portlet preferences remote service.
-	 *
-	 * @param portletPreferencesService the portlet preferences remote service
-	 */
-	public void setPortletPreferencesService(
-		com.liferay.portal.kernel.service.PortletPreferencesService portletPreferencesService) {
-		this.portletPreferencesService = portletPreferencesService;
-	}
-
-	/**
-	 * Returns the portlet preferences persistence.
-	 *
-	 * @return the portlet preferences persistence
-	 */
-	public PortletPreferencesPersistence getPortletPreferencesPersistence() {
-		return portletPreferencesPersistence;
-	}
-
-	/**
-	 * Sets the portlet preferences persistence.
-	 *
-	 * @param portletPreferencesPersistence the portlet preferences persistence
-	 */
-	public void setPortletPreferencesPersistence(
-		PortletPreferencesPersistence portletPreferencesPersistence) {
-		this.portletPreferencesPersistence = portletPreferencesPersistence;
 	}
 
 	/**
@@ -866,12 +808,6 @@ public abstract class BlogsEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.OrganizationService organizationService;
 	@ServiceReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	@ServiceReference(type = com.liferay.portal.kernel.service.PortletPreferencesLocalService.class)
-	protected com.liferay.portal.kernel.service.PortletPreferencesLocalService portletPreferencesLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.PortletPreferencesService.class)
-	protected com.liferay.portal.kernel.service.PortletPreferencesService portletPreferencesService;
-	@ServiceReference(type = PortletPreferencesPersistence.class)
-	protected PortletPreferencesPersistence portletPreferencesPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)

@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.service.persistence.MembershipRequestPersistenc
 import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserFinder;
-import com.liferay.portal.kernel.service.persistence.UserGroupFinder;
-import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupRoleFinder;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
@@ -134,25 +132,6 @@ public abstract class MembershipRequestServiceBaseImpl extends BaseServiceImpl
 	public void setCounterLocalService(
 		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the mail remote service.
-	 *
-	 * @return the mail remote service
-	 */
-	public com.liferay.mail.kernel.service.MailService getMailService() {
-		return mailService;
-	}
-
-	/**
-	 * Sets the mail remote service.
-	 *
-	 * @param mailService the mail remote service
-	 */
-	public void setMailService(
-		com.liferay.mail.kernel.service.MailService mailService) {
-		this.mailService = mailService;
 	}
 
 	/**
@@ -453,81 +432,6 @@ public abstract class MembershipRequestServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the user group local service.
-	 *
-	 * @return the user group local service
-	 */
-	public com.liferay.portal.kernel.service.UserGroupLocalService getUserGroupLocalService() {
-		return userGroupLocalService;
-	}
-
-	/**
-	 * Sets the user group local service.
-	 *
-	 * @param userGroupLocalService the user group local service
-	 */
-	public void setUserGroupLocalService(
-		com.liferay.portal.kernel.service.UserGroupLocalService userGroupLocalService) {
-		this.userGroupLocalService = userGroupLocalService;
-	}
-
-	/**
-	 * Returns the user group remote service.
-	 *
-	 * @return the user group remote service
-	 */
-	public com.liferay.portal.kernel.service.UserGroupService getUserGroupService() {
-		return userGroupService;
-	}
-
-	/**
-	 * Sets the user group remote service.
-	 *
-	 * @param userGroupService the user group remote service
-	 */
-	public void setUserGroupService(
-		com.liferay.portal.kernel.service.UserGroupService userGroupService) {
-		this.userGroupService = userGroupService;
-	}
-
-	/**
-	 * Returns the user group persistence.
-	 *
-	 * @return the user group persistence
-	 */
-	public UserGroupPersistence getUserGroupPersistence() {
-		return userGroupPersistence;
-	}
-
-	/**
-	 * Sets the user group persistence.
-	 *
-	 * @param userGroupPersistence the user group persistence
-	 */
-	public void setUserGroupPersistence(
-		UserGroupPersistence userGroupPersistence) {
-		this.userGroupPersistence = userGroupPersistence;
-	}
-
-	/**
-	 * Returns the user group finder.
-	 *
-	 * @return the user group finder
-	 */
-	public UserGroupFinder getUserGroupFinder() {
-		return userGroupFinder;
-	}
-
-	/**
-	 * Sets the user group finder.
-	 *
-	 * @param userGroupFinder the user group finder
-	 */
-	public void setUserGroupFinder(UserGroupFinder userGroupFinder) {
-		this.userGroupFinder = userGroupFinder;
-	}
-
-	/**
 	 * Returns the user group role local service.
 	 *
 	 * @return the user group role local service
@@ -658,8 +562,6 @@ public abstract class MembershipRequestServiceBaseImpl extends BaseServiceImpl
 	protected MembershipRequestPersistence membershipRequestPersistence;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.mail.kernel.service.MailService.class)
-	protected com.liferay.mail.kernel.service.MailService mailService;
 	@BeanReference(type = com.liferay.portal.kernel.service.CompanyLocalService.class)
 	protected com.liferay.portal.kernel.service.CompanyLocalService companyLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.CompanyService.class)
@@ -692,14 +594,6 @@ public abstract class MembershipRequestServiceBaseImpl extends BaseServiceImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupLocalService.class)
-	protected com.liferay.portal.kernel.service.UserGroupLocalService userGroupLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupService.class)
-	protected com.liferay.portal.kernel.service.UserGroupService userGroupService;
-	@BeanReference(type = UserGroupPersistence.class)
-	protected UserGroupPersistence userGroupPersistence;
-	@BeanReference(type = UserGroupFinder.class)
-	protected UserGroupFinder userGroupFinder;
 	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupRoleLocalService.class)
 	protected com.liferay.portal.kernel.service.UserGroupRoleLocalService userGroupRoleLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupRoleService.class)

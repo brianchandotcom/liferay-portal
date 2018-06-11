@@ -79,10 +79,6 @@
 	<command name="importCollection">
 		<execute macro="Fragment#_gotoImportCollection" />
 
-		<execute macro="Button#click">
-			<var name="button" value="Select Files" />
-		</execute>
-
 		<var method="TestPropsUtil#get('output.dir.name')" name="tempDir" />
 
 		<var method="StringUtil#split('**/collections-*.zip')" name="pattern" />
@@ -102,7 +98,7 @@
 			<return name="shortFileName" />
 		</execute>
 
-		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${shortFileName}" />
+		<execute function="UploadTempFile" locator1="TextInput#FILE" value1="${shortFileName}" />
 
 		<execute macro="Button#click">
 			<var name="button" value="Import" />

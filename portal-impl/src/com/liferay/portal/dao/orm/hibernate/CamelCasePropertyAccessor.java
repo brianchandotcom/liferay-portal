@@ -15,7 +15,6 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import org.hibernate.PropertyNotFoundException;
-import org.hibernate.property.BasicPropertyAccessor;
 import org.hibernate.property.Getter;
 import org.hibernate.property.Setter;
 
@@ -23,7 +22,7 @@ import org.hibernate.property.Setter;
  * @author Brian Wing Shun Chan
  */
 @SuppressWarnings("rawtypes")
-public class CamelCasePropertyAccessor extends BasicPropertyAccessor {
+public class CamelCasePropertyAccessor extends LiferayPropertyAccessor {
 
 	@Override
 	public Getter getGetter(Class clazz, String propertyName)

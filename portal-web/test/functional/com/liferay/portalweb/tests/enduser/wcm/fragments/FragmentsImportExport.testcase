@@ -164,8 +164,6 @@
 
 		<execute function="Confirm" value1="Form submitted" />
 
-		<execute macro="IFrame#selectTopFrame">
-			<var name="" value="" />
-		</execute>
+		<execute macro="IFrame#selectTopFrame" />
 	</command>
 </definition>

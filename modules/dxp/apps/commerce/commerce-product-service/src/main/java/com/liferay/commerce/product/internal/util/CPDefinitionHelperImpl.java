@@ -14,10 +14,15 @@
 
 package com.liferay.commerce.product.internal.util;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
+import com.liferay.commerce.product.search.CPDefinitionIndexer;
+import com.liferay.commerce.product.search.CPDefinitionSearcher;
 import com.liferay.commerce.product.search.FacetImpl;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
@@ -37,6 +42,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -56,6 +62,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -229,6 +236,48 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		return _layoutLocalService.getLayout(plid);
 	}
 
+	public boolean isVisible(long cpDefinitionId) throws PortalException {
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
+
+		if (!cpDefinition.isPublished()) {
+			return false;
+		}
+
+		if (!cpDefinition.isApproved()) {
+			return false;
+		}
+
+		//TODO Permission checking
+
+		return true;
+	}
+
+	@Override
+	public CPDataSourceResult search(
+			long groupId, SearchContext searchContext, CPQuery cpQuery,
+			int start, int end)
+		throws Exception {
+
+		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
+
+		CPDefinitionSearcher cpDefinitionSearcher = _getCPDefinitionSearcher(
+			groupId, searchContext, cpQuery, start, end);
+
+		cpDefinitionSearcher.setCPQuery(cpQuery);
+
+		Hits hits = cpDefinitionSearcher.search(searchContext);
+
+		Document[] documents = hits.getDocs();
+
+		for (Document document : documents) {
+			cpCatalogEntries.add(
+				_getCPCatalogEntry(document, searchContext.getLocale()));
+		}
+
+		return new CPDataSourceResult(cpCatalogEntries, hits.getLength());
+	}
+
 	protected SearchContext buildSearchContext(
 		long companyId, long groupId, String keywords, int start, int end,
 		Sort sort) {
@@ -274,8 +323,97 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		return searchContext;
 	}
 
+	private CPCatalogEntry _getCPCatalogEntry(
+		Document document, Locale locale) {
+
+		CPCatalogEntry cpCatalogEntry = new CPCatalogEntry();
+
+		cpCatalogEntry.setCPDefinitionId(
+			GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+		cpCatalogEntry.setDefaultImageFileUrl(
+			document.get(CPDefinitionIndexer.FIELD_DEFAULT_IMAGE_FILE_URL));
+		cpCatalogEntry.setDescription(document.get(locale, Field.DESCRIPTION));
+		cpCatalogEntry.setName(document.get(locale, Field.NAME));
+		cpCatalogEntry.setShortDescription(
+			document.get(locale, CPDefinitionIndexer.FIELD_SHORT_DESCRIPTION));
+		cpCatalogEntry.setUrl(document.get(locale, Field.URL));
+
+		return cpCatalogEntry;
+	}
+
+	private CPDefinitionSearcher _getCPDefinitionSearcher(
+			long groupId, SearchContext searchContext, CPQuery cpQuery,
+			int start, int end)
+		throws Exception {
+
+		Indexer<?> searcher = CPDefinitionSearcher.getInstance();
+
+		CPDefinitionSearcher cpDefinitionSearcher =
+			(CPDefinitionSearcher)searcher;
+
+		cpDefinitionSearcher.setCPQuery(cpQuery);
+
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {groupId});
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setSorts(_getSorts(cpQuery, searchContext.getLocale()));
+		searchContext.setStart(start);
+
+		return cpDefinitionSearcher;
+	}
+
 	private String _getIndexFieldName(String optionKey) {
 		return "ATTRIBUTE_" + optionKey + "_VALUES_NAMES";
+	}
+
+	private String _getOrderByCol(String sortField, Locale locale) {
+		if (sortField.equals("modifiedDate")) {
+			sortField = Field.MODIFIED_DATE;
+		}
+		else if (sortField.equals("name")) {
+			sortField = Field.getSortableFieldName(
+				"localized_name_".concat(LocaleUtil.toLanguageId(locale)));
+		}
+
+		return sortField;
+	}
+
+	private Sort _getSort(String orderByType, String sortField, Locale locale) {
+		int sortType = _getSortType(sortField);
+
+		return SortFactoryUtil.getSort(
+			CPDefinition.class, sortType, _getOrderByCol(sortField, locale),
+			orderByType);
+	}
+
+	private Sort[] _getSorts(CPQuery cpQuery, Locale locale) {
+		Sort sort1 = _getSort(
+			cpQuery.getOrderByType1(), cpQuery.getOrderByCol1(), locale);
+		Sort sort2 = _getSort(
+			cpQuery.getOrderByType2(), cpQuery.getOrderByCol2(), locale);
+
+		return new Sort[] {sort1, sort2};
+	}
+
+	private int _getSortType(String fieldType) {
+		int sortType = Sort.STRING_TYPE;
+
+		if (fieldType.equals(Field.CREATE_DATE) ||
+			fieldType.equals(Field.EXPIRATION_DATE) ||
+			fieldType.equals(Field.PUBLISH_DATE) ||
+			fieldType.equals("modifiedDate")) {
+
+			sortType = Sort.LONG_TYPE;
+		}
+		else if (fieldType.equals(Field.PRIORITY)) {
+			sortType = Sort.DOUBLE_TYPE;
+		}
+
+		return sortType;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

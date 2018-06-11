@@ -16,6 +16,8 @@ package com.liferay.commerce.product.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.catalog.CPQuery;
+import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -47,5 +49,12 @@ public interface CPDefinitionHelper {
 	public Layout getProductLayout(
 			long groupId, boolean privateLayout, long cpDefinitionId)
 		throws PortalException;
+
+	public boolean isVisible(long cpDefinitionId) throws PortalException;
+
+	public CPDataSourceResult search(
+			long groupId, SearchContext searchContext, CPQuery cpQuery,
+			int start, int end)
+		throws Exception;
 
 }

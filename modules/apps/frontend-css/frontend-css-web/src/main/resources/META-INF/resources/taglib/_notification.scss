@@ -1,3 +1,13 @@
+.alert-notifications.alert-notifications-fixed {
+	@include respond-to(phone) {
+		top: inherit;
+
+		.alert {
+			max-width: none;
+		}
+	}
+}
+
 .lfr-notification-container {
 	bottom: 1.25rem;
 	left: 1.25rem;

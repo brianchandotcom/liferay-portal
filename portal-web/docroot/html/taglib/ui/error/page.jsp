@@ -58,6 +58,13 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 				{
 					autoClose: true,
 					destroyOnHide: true,
+					events: {
+						'disposed': function(event) {
+							if (!alertContainer.hasChildNodes()) {
+								dom.exitDocument(alertContainer);
+							}
+						}
+					},
 					message: '<%= HtmlUtil.escapeJS(alertMessage) %>',
 					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg',
 					style: '<%= alertStyle %>',

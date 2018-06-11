@@ -2,9 +2,11 @@ Bundle-Name: Liferay Commerce Product API
 Bundle-SymbolicName: com.liferay.commerce.product.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.commerce.product.catalog,\
 	com.liferay.commerce.product.catalog.rule,\
 	com.liferay.commerce.product.configuration,\
 	com.liferay.commerce.product.constants,\
+	com.liferay.commerce.product.data.source,\
 	com.liferay.commerce.product.exception,\
 	com.liferay.commerce.product.importer,\
 	com.liferay.commerce.product.links,\

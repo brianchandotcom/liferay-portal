@@ -17,19 +17,28 @@ package com.liferay.portal.search.test.util.facet;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.internal.facet.modified.ModifiedFacetFactoryImpl;
+import com.liferay.portal.search.internal.filter.FilterBuildersImpl;
+import com.liferay.portal.search.test.util.FacetsAssert;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.QueryContributors;
+import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -85,6 +94,18 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 				return facet;
 			},
 			expectedRanges);
+	}
+
+	@Test
+	public void testSearchEngineDateMath() throws Exception {
+		addDocument("17760704000000");
+		addDocument("27760704000000");
+
+		String dateMathExpressionWithAlphabeticalOrderSwitched =
+			"[now-500y TO now]";
+
+		doTestSearchEngineDateMath(
+			dateMathExpressionWithAlphabeticalOrderSwitched, 1);
 	}
 
 	protected static JSONArray createRangeArray(String... ranges) {
@@ -162,7 +183,12 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 
 	protected Facet createFacet(SearchContext searchContext) {
 		ModifiedFacetFactory modifiedFacetFactory =
-			new ModifiedFacetFactoryImpl();
+			new ModifiedFacetFactoryImpl() {
+				{
+					dateFormatFactory = new DateFormatFactoryImpl();
+					filterBuilders = new FilterBuildersImpl();
+				}
+			};
 
 		Facet facet = modifiedFacetFactory.newInstance(searchContext);
 
@@ -223,6 +249,42 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 		);
 
 		return jsonObject;
+	}
+
+	protected void doTestSearchEngineDateMath(String range, int frequency)
+		throws Exception {
+
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS,
+			() -> {
+				SearchContext searchContext = createSearchContext();
+
+				Facet facet = createFacet(searchContext);
+
+				setConfigurationRanges(facet, new String[] {range});
+
+				facet.select(range);
+
+				searchContext.addFacet(facet);
+
+				Hits hits = search(
+					searchContext,
+					query -> {
+						BooleanClause<Filter> booleanClause =
+							facet.getFacetFilterBooleanClause();
+
+						query.setPostFilter(booleanClause.getClause());
+					});
+
+				Assert.assertEquals(
+					hits.toString(), frequency, hits.getLength());
+
+				FacetsAssert.assertFrequencies(
+					facet.getFieldName(), searchContext,
+					Arrays.asList(range + "=" + frequency));
+
+				return null;
+			});
 	}
 
 	@Override

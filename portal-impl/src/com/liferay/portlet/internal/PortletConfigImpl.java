@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -56,7 +54,6 @@ import javax.xml.namespace.QName;
  * @author Shuyang Zhou
  * @author Neil Griffin
  */
-@ProviderType
 public class PortletConfigImpl implements LiferayPortletConfig {
 
 	public PortletConfigImpl(Portlet portlet, PortletContext portletContext) {

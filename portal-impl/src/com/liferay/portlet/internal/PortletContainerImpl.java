@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -115,7 +113,6 @@ import javax.servlet.http.HttpSession;
  * @author Raymond Augé
  * @author Neil Griffin
  */
-@ProviderType
 public class PortletContainerImpl implements PortletContainer {
 
 	@Override

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -59,7 +57,6 @@ import javax.portlet.filter.ResourceFilter;
  * @author Raymond Augé
  * @author Neil Griffin
  */
-@ProviderType
 public class InvokerFilterContainerImpl
 	implements Closeable, InvokerFilterContainer {
 

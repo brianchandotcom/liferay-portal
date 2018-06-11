@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -414,24 +415,24 @@ public class FragmentsEditorDisplayContext {
 	private List<SoyContext> _getSoyContextFragmentCollections() {
 		List<SoyContext> soyContexts = new ArrayList<>();
 
-		long scopeGroupId = _themeDisplay.getScopeGroupId();
+		long groupId = _getGroupId();
 
-		Group group = _themeDisplay.getScopeGroup();
+		Group group = GroupLocalServiceUtil.fetchGroup(_getGroupId());
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
 		if (stagingGroupHelper.isLocalStagingGroup(group)) {
-			scopeGroupId = group.getLiveGroupId();
+			groupId = group.getLiveGroupId();
 		}
 
 		List<FragmentCollection> fragmentCollections =
-			FragmentCollectionServiceUtil.getFragmentCollections(scopeGroupId);
+			FragmentCollectionServiceUtil.getFragmentCollections(groupId);
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =
 				FragmentEntryServiceUtil.getFragmentEntries(
-					scopeGroupId, fragmentCollection.getFragmentCollectionId(),
+					groupId, fragmentCollection.getFragmentCollectionId(),
 					WorkflowConstants.STATUS_APPROVED);
 
 			if (ListUtil.isEmpty(fragmentEntries)) {

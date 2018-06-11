@@ -53,6 +53,8 @@ public class LPKGDeployerRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) throws Exception {
+		bundleContext.addBundleListener(_bundleListener);
+
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
 			_lpkgDeployer.getDeployedLPKGBundles();
 
@@ -61,8 +63,6 @@ public class LPKGDeployerRegistrar {
 
 			_register(entry.getKey(), entry.getValue());
 		}
-
-		bundleContext.addBundleListener(_bundleListener);
 	}
 
 	@Deactivate

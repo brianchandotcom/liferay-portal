@@ -28,7 +28,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 	<aui:input helpMessage="home-page-url-help" name="homePageURL" />
 
 	<c:if test="<%= oAuth2Application != null %>">
-		<aui:input helpMessage="application-description-help" label="application-description" name="description" type="textarea" />
+		<aui:input helpMessage="application-description-help" label="application-description" name="description" />
 	</c:if>
 
 	<aui:input helpMessage="redirect-uris-help" label="redirect-uris" name="redirectURIs" />

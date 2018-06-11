@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -97,6 +98,11 @@ public class CommerceOrganizationServiceImpl
 		_checkOrganization(organizationId);
 
 		return organizationLocalService.getOrganization(organizationId);
+	}
+
+	@Override
+	public void deleteOrganization(long organizationId) throws PortalException {
+		organizationLocalService.deleteOrganization(organizationId);
 	}
 
 	@Override

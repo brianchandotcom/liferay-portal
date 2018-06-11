@@ -208,6 +208,12 @@ public class BlogsStatsUserLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.blogs.model.BlogsStatsUser fetchStatsUser(long groupId,
+		long userId) {
+		return _blogsStatsUserLocalService.fetchStatsUser(groupId, userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _blogsStatsUserLocalService.getActionableDynamicQuery();
 	}

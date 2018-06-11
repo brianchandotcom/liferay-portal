@@ -178,6 +178,9 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	public BlogsStatsUser fetchBlogsStatsUser(long statsUserId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsStatsUser fetchStatsUser(long groupId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

@@ -42,6 +42,51 @@ public class RatingsEntryModelListener extends BaseModelListener<RatingsEntry> {
 	}
 
 	@Override
+	public void onBeforeRemove(RatingsEntry ratingsEntry)
+		throws ModelListenerException {
+
+		String className = ratingsEntry.getClassName();
+
+		if (!className.equals(BlogsEntry.class.getName())) {
+			return;
+		}
+
+		try {
+			BlogsEntry blogsEntry = _blogsEntryLocalService.getEntry(
+				ratingsEntry.getClassPK());
+
+			BlogsStatsUser blogsStatsUser =
+				_blogsStatsUserLocalService.fetchStatsUser(
+					blogsEntry.getGroupId(), blogsEntry.getUserId());
+
+			if (blogsStatsUser != null) {
+				double ratingsAverageScore = 0;
+				double ratingsTotalScore = 0;
+
+				int ratingsTotalEntries =
+					blogsStatsUser.getRatingsTotalEntries() - 1;
+
+				if (ratingsTotalEntries > 0) {
+					ratingsTotalScore =
+						blogsStatsUser.getRatingsTotalScore() -
+							ratingsEntry.getScore();
+
+					ratingsAverageScore =
+						ratingsTotalScore / ratingsTotalEntries;
+				}
+
+				_blogsStatsUserLocalService.updateStatsUser(
+					blogsEntry.getGroupId(), blogsEntry.getUserId(),
+					ratingsTotalEntries, ratingsTotalScore,
+					ratingsAverageScore);
+			}
+		}
+		catch (PortalException pe) {
+			throw new ModelListenerException(pe);
+		}
+	}
+
+	@Override
 	public void onBeforeUpdate(RatingsEntry ratingsEntry)
 		throws ModelListenerException {
 

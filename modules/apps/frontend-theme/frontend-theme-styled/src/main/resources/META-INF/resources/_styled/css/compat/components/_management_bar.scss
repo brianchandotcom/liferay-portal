@@ -127,6 +127,14 @@
 		}
 	}
 
+	.management-bar-nav .basic-search-slider {
+		left: inherit;
+
+		.basic-search-close {
+			display: none;
+		}
+	}
+
 	.management-bar-header {
 		@include clearfix;
 

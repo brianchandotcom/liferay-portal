@@ -37,9 +37,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -101,34 +99,6 @@ public class ViewConnectedApplicationsMVCRenderCommand
 			return "/connected_applications/view.jsp";
 		}
 
-		long oAuth2ApplicationId = ParamUtil.getLong(
-			renderRequest, "oAuth2ApplicationId");
-
-		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliaseses =
-			_oAuth2ApplicationScopeAliasesLocalService.
-				getOAuth2ApplicationScopeAliaseses(
-					oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null);
-
-		Set<String> scopeAliases = new HashSet<>();
-
-		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
-				oAuth2ApplicationScopeAliaseses) {
-
-			scopeAliases.addAll(
-				oAuth2ApplicationScopeAliases.getScopeAliasesList());
-		}
-
-		AssignableScopes assignableScopes = new AssignableScopes(
-			_applicationDescriptorLocator, themeDisplay.getLocale(),
-			_scopeDescriptorLocator);
-
-		for (String scopeAlias : scopeAliases) {
-			assignableScopes.addLiferayOAuth2Scopes(
-				_scopeLocator.getLiferayOAuth2Scopes(
-					themeDisplay.getCompanyId(), scopeAlias));
-		}
-
 		OAuth2Authorization oAuth2Authorization = null;
 
 		for (OAuth2Authorization userOAuth2Authorization :
@@ -140,6 +110,28 @@ public class ViewConnectedApplicationsMVCRenderCommand
 				oAuth2Authorization = userOAuth2Authorization;
 
 				break;
+			}
+		}
+
+		AssignableScopes assignableScopes = new AssignableScopes(
+			_applicationDescriptorLocator, themeDisplay.getLocale(),
+			_scopeDescriptorLocator);
+
+		long oAuth2ApplicationScopeAliasesId =
+			oAuth2Authorization.getOAuth2ApplicationScopeAliasesId();
+
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
+			_oAuth2ApplicationScopeAliasesLocalService.
+				fetchOAuth2ApplicationScopeAliases(
+					oAuth2ApplicationScopeAliasesId);
+
+		if (oAuth2ApplicationScopeAliases != null) {
+			for (String scopeAlias :
+					oAuth2ApplicationScopeAliases.getScopeAliasesList()) {
+
+				assignableScopes.addLiferayOAuth2Scopes(
+					_scopeLocator.getLiferayOAuth2Scopes(
+						themeDisplay.getCompanyId(), scopeAlias));
 			}
 		}
 

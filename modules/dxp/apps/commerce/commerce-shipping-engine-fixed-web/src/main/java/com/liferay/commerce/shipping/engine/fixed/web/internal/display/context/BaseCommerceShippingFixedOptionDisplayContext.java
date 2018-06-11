@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceShippingMethod;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,10 +46,12 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 	public BaseCommerceShippingFixedOptionDisplayContext(
 		CommerceCurrencyService commerceCurrencyService,
 		CommerceShippingMethodService commerceShippingMethodService,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		this.commerceCurrencyService = commerceCurrencyService;
 		this.commerceShippingMethodService = commerceShippingMethodService;
+		this.portletResourcePermission = portletResourcePermission;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
 
@@ -162,6 +166,15 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 	public abstract SearchContainer<T> getSearchContainer()
 		throws PortalException;
 
+	public boolean hasManageCommerceShipmentsPermission() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+	}
+
 	public BigDecimal round(BigDecimal value) {
 		CommerceCurrency commerceCurrency = getCommerceCurrency();
 
@@ -196,6 +209,7 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 
 	protected final CommerceCurrencyService commerceCurrencyService;
 	protected final CommerceShippingMethodService commerceShippingMethodService;
+	protected final PortletResourcePermission portletResourcePermission;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
 	protected SearchContainer<T> searchContainer;

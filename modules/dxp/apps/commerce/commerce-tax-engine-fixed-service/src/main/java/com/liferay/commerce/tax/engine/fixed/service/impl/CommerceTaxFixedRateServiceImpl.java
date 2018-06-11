@@ -15,10 +15,12 @@
 package com.liferay.commerce.tax.engine.fixed.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.service.permission.CommercePermission;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRate;
 import com.liferay.commerce.tax.engine.fixed.service.base.CommerceTaxFixedRateServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -37,7 +39,7 @@ public class CommerceTaxFixedRateServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
@@ -53,7 +55,7 @@ public class CommerceTaxFixedRateServiceImpl
 			commerceTaxFixedRateLocalService.getCommerceTaxFixedRate(
 				commerceTaxFixedRateId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceTaxFixedRate.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
@@ -71,7 +73,7 @@ public class CommerceTaxFixedRateServiceImpl
 				commerceTaxFixedRateId);
 
 		if (commerceTaxFixedRate != null) {
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), commerceTaxFixedRate.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 		}
@@ -89,7 +91,7 @@ public class CommerceTaxFixedRateServiceImpl
 				cpTaxCategoryId, commerceTaxMethodId);
 
 		if (commerceTaxFixedRate != null) {
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), commerceTaxFixedRate.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 		}
@@ -103,7 +105,7 @@ public class CommerceTaxFixedRateServiceImpl
 			OrderByComparator<CommerceTaxFixedRate> orderByComparator)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
@@ -116,7 +118,7 @@ public class CommerceTaxFixedRateServiceImpl
 			long groupId, long commerceTaxMethodId)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
@@ -133,12 +135,18 @@ public class CommerceTaxFixedRateServiceImpl
 			commerceTaxFixedRateLocalService.getCommerceTaxFixedRate(
 				commerceTaxFixedRateId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceTaxFixedRate.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
 		return commerceTaxFixedRateLocalService.updateCommerceTaxFixedRate(
 			commerceTaxFixedRateId, rate);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceTaxFixedRateServiceImpl.class,
+				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -24,6 +25,7 @@ import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.C
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -68,7 +70,8 @@ public class EditCommerceShippingFixedOptionMVCRenderCommand
 					new CommerceShippingFixedOptionsDisplayContext(
 						_commerceCurrencyService, _commercePriceFormatter,
 						_commerceShippingMethodService,
-						_commerceShippingFixedOptionService, renderRequest,
+						_commerceShippingFixedOptionService,
+						_portletResourcePermission, renderRequest,
 						renderResponse);
 
 			renderRequest.setAttribute(
@@ -114,6 +117,11 @@ public class EditCommerceShippingFixedOptionMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.engine.fixed.web)"

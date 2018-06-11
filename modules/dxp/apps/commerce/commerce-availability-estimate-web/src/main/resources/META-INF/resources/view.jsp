@@ -21,7 +21,7 @@ CommerceAvailabilityEstimateDisplayContext commerceAvailabilityEstimateDisplayCo
 
 SearchContainer<CommerceAvailabilityEstimate> commerceAvailabilityEstimateSearchContainer = commerceAvailabilityEstimateDisplayContext.getSearchContainer();
 
-boolean hasManageCommerceAvailabilityEstimatesPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
+boolean hasManageCommerceAvailabilityEstimatesPermission = commerceAvailabilityEstimateDisplayContext.hasManageCommerceAvailabilityEstimatesPermission();
 %>
 
 <liferay-frontend:management-bar

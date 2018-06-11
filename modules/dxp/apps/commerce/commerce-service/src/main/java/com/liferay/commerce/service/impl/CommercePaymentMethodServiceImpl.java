@@ -15,10 +15,12 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.service.base.CommercePaymentMethodServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.File;
@@ -42,7 +44,7 @@ public class CommercePaymentMethodServiceImpl
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
 
@@ -61,7 +63,7 @@ public class CommercePaymentMethodServiceImpl
 				commercePaymentMethodId);
 
 		if (commercePaymentMethod != null) {
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), commercePaymentMethod.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
 		}
@@ -78,7 +80,7 @@ public class CommercePaymentMethodServiceImpl
 			commercePaymentMethodLocalService.getCommercePaymentMethod(
 				commercePaymentMethodId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commercePaymentMethod.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
 
@@ -133,7 +135,7 @@ public class CommercePaymentMethodServiceImpl
 				commercePaymentMethodId);
 
 		if (commercePaymentMethod != null) {
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), commercePaymentMethod.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
 		}
@@ -154,7 +156,7 @@ public class CommercePaymentMethodServiceImpl
 			commercePaymentMethodLocalService.getCommercePaymentMethod(
 				commercePaymentMethodId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commercePaymentMethod.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
 
@@ -163,5 +165,11 @@ public class CommercePaymentMethodServiceImpl
 			descriptionMap, imageFile, engineParameterMap, priority, active,
 			serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommercePaymentMethodServiceImpl.class,
+				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
 
 }

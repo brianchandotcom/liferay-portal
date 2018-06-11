@@ -17,8 +17,9 @@ package com.liferay.commerce.product.service.impl;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.base.CPMeasurementUnitServiceBaseImpl;
-import com.liferay.commerce.product.service.permission.CPMeasurementUnitPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -40,7 +41,7 @@ public class CPMeasurementUnitServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPMeasurementUnitPermission.check(
+		_cpMeasurementUnitModelResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
@@ -55,7 +56,7 @@ public class CPMeasurementUnitServiceImpl
 		CPMeasurementUnit cpMeasurementUnit =
 			cpMeasurementUnitPersistence.findByPrimaryKey(cpMeasurementUnitId);
 
-		CPMeasurementUnitPermission.check(
+		_cpMeasurementUnitModelResourcePermission.check(
 			getPermissionChecker(), cpMeasurementUnit.getGroupId(),
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
@@ -102,7 +103,7 @@ public class CPMeasurementUnitServiceImpl
 		CPMeasurementUnit cpMeasurementUnit =
 			cpMeasurementUnitPersistence.findByPrimaryKey(cpMeasurementUnitId);
 
-		CPMeasurementUnitPermission.check(
+		_cpMeasurementUnitModelResourcePermission.check(
 			getPermissionChecker(), cpMeasurementUnit.getGroupId(),
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
@@ -120,7 +121,7 @@ public class CPMeasurementUnitServiceImpl
 		CPMeasurementUnit cpMeasurementUnit =
 			cpMeasurementUnitPersistence.findByPrimaryKey(cpMeasurementUnitId);
 
-		CPMeasurementUnitPermission.check(
+		_cpMeasurementUnitModelResourcePermission.check(
 			getPermissionChecker(), cpMeasurementUnit.getGroupId(),
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 
@@ -128,5 +129,12 @@ public class CPMeasurementUnitServiceImpl
 			cpMeasurementUnitId, nameMap, key, rate, primary, priority, type,
 			serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<CPMeasurementUnit>
+		_cpMeasurementUnitModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPMeasurementUnitServiceImpl.class,
+				"_cpMeasurementUnitModelResourcePermission",
+				CPMeasurementUnit.class);
 
 }

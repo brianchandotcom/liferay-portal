@@ -15,10 +15,12 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceTaxMethod;
 import com.liferay.commerce.service.base.CommerceTaxMethodServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -38,7 +40,7 @@ public class CommerceTaxMethodServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
@@ -61,7 +63,7 @@ public class CommerceTaxMethodServiceImpl
 			commerceTaxMethodLocalService.getCommerceTaxMethod(
 				commerceTaxMethodId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceTaxMethod.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
@@ -89,7 +91,7 @@ public class CommerceTaxMethodServiceImpl
 	public List<CommerceTaxMethod> getCommerceTaxMethods(long groupId)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
@@ -119,7 +121,7 @@ public class CommerceTaxMethodServiceImpl
 				commerceTaxMethodId);
 
 		if (commerceTaxMethod != null) {
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), commerceTaxMethod.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 		}
@@ -139,7 +141,7 @@ public class CommerceTaxMethodServiceImpl
 			commerceTaxMethodLocalService.getCommerceTaxMethod(
 				commerceTaxMethodId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceTaxMethod.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
 
@@ -147,5 +149,11 @@ public class CommerceTaxMethodServiceImpl
 			commerceTaxMethod.getCommerceTaxMethodId(), nameMap, descriptionMap,
 			percentage, active);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceTaxMethodServiceImpl.class,
+				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
 
 }

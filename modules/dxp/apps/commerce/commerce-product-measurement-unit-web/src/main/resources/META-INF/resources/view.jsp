@@ -23,7 +23,7 @@ SearchContainer<CPMeasurementUnit> cpMeasurementUnitSearchContainer = cpMeasurem
 
 int type = cpMeasurementUnitsDisplayContext.getType();
 
-boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
+boolean hasManageCPMeasurementUnitsPermission = cpMeasurementUnitsDisplayContext.hasManageCPMeasurementUnitsPermission();
 %>
 
 <clay:navigation-bar

@@ -15,6 +15,7 @@
 package com.liferay.commerce.payment.method.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
 import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodsDisplayContext;
 import com.liferay.commerce.service.CommercePaymentMethodService;
@@ -22,6 +23,7 @@ import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -64,7 +66,8 @@ public class EditCommercePaymentMethodMVCRenderCommand
 				commercePaymentMethodsDisplayContext =
 					new CommercePaymentMethodsDisplayContext(
 						_commercePaymentEngineRegistry,
-						_commercePaymentMethodService, renderRequest,
+						_commercePaymentMethodService,
+						_portletResourcePermission, renderRequest,
 						renderResponse);
 
 			renderRequest.setAttribute(
@@ -103,6 +106,11 @@ public class EditCommercePaymentMethodMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.method.web)"

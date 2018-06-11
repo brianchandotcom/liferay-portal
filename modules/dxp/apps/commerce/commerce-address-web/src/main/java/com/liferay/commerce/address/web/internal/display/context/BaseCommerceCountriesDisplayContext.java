@@ -22,8 +22,11 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -35,10 +38,12 @@ import javax.portlet.RenderResponse;
 public abstract class BaseCommerceCountriesDisplayContext<T> {
 
 	public BaseCommerceCountriesDisplayContext(
-		ActionHelper actionHelper, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		ActionHelper actionHelper,
+		PortletResourcePermission portletResourcePermission,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		this.actionHelper = actionHelper;
+		this.portletResourcePermission = portletResourcePermission;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
 
@@ -122,6 +127,15 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 			getScreenNavigationCategoryKey());
 	}
 
+	public boolean hasPermission(String actionId) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			actionId);
+	}
+
 	public void setDefaultOrderByCol(String defaultOrderByCol) {
 		_defaultOrderByCol = defaultOrderByCol;
 	}
@@ -135,6 +149,7 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 	}
 
 	protected final ActionHelper actionHelper;
+	protected final PortletResourcePermission portletResourcePermission;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;
 	protected SearchContainer<T> searchContainer;

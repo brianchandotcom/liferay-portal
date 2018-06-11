@@ -16,9 +16,11 @@ package com.liferay.commerce.currency.service.impl;
 
 import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.service.base.CommerceCurrencyServiceBaseImpl;
-import com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -43,7 +45,7 @@ public class CommerceCurrencyServiceImpl
 			double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceCurrencyPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
@@ -60,7 +62,7 @@ public class CommerceCurrencyServiceImpl
 		CommerceCurrency commerceCurrency =
 			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
 
-		CommerceCurrencyPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceCurrency.getGroupId(),
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
@@ -124,7 +126,7 @@ public class CommerceCurrencyServiceImpl
 		CommerceCurrency commerceCurrency =
 			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
 
-		CommerceCurrencyPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceCurrency.getGroupId(),
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
@@ -139,7 +141,7 @@ public class CommerceCurrencyServiceImpl
 		CommerceCurrency commerceCurrency =
 			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
 
-		CommerceCurrencyPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceCurrency.getGroupId(),
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
@@ -159,7 +161,7 @@ public class CommerceCurrencyServiceImpl
 		CommerceCurrency commerceCurrency =
 			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
 
-		CommerceCurrencyPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceCurrency.getGroupId(),
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
@@ -177,7 +179,7 @@ public class CommerceCurrencyServiceImpl
 		CommerceCurrency commerceCurrency =
 			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
 
-		CommerceCurrencyPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceCurrency.getGroupId(),
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
@@ -189,11 +191,17 @@ public class CommerceCurrencyServiceImpl
 	public void updateExchangeRates(ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceCurrencyPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
 		commerceCurrencyLocalService.updateExchangeRates();
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceCurrencyServiceImpl.class, "_portletResourcePermission",
+				CommerceCurrencyConstants.RESOURCE_NAME);
 
 }

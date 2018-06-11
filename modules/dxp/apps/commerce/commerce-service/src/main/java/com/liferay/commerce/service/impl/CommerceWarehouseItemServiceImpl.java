@@ -15,12 +15,15 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
-import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.commerce.service.base.CommerceWarehouseItemServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -40,8 +43,11 @@ public class CommerceWarehouseItemServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId, ActionKeys.UPDATE);
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
+			ActionKeys.UPDATE);
 
 		return commerceWarehouseItemLocalService.addCommerceWarehouseItem(
 			commerceWarehouseId, cpInstanceId, quantity, serviceContext);
@@ -55,8 +61,11 @@ public class CommerceWarehouseItemServiceImpl
 			commerceWarehouseItemLocalService.getCommerceWarehouseItem(
 				commerceWarehouseItemId);
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), commerceWarehouseItem.getCPInstanceId(),
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(
+			commerceWarehouseItem.getCPInstanceId());
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			ActionKeys.UPDATE);
 
 		commerceWarehouseItemLocalService.deleteCommerceWarehouseItem(
@@ -68,8 +77,11 @@ public class CommerceWarehouseItemServiceImpl
 			long commerceWarehouseId, long cpInstanceId)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId, ActionKeys.UPDATE);
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
+			ActionKeys.UPDATE);
 
 		return commerceWarehouseItemLocalService.fetchCommerceWarehouseItem(
 			commerceWarehouseId, cpInstanceId);
@@ -84,8 +96,11 @@ public class CommerceWarehouseItemServiceImpl
 			commerceWarehouseItemLocalService.getCommerceWarehouseItem(
 				commerceWarehouseItemId);
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), commerceWarehouseItem.getCPInstanceId(),
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(
+			commerceWarehouseItem.getCPInstanceId());
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			ActionKeys.UPDATE);
 
 		return commerceWarehouseItem;
@@ -96,8 +111,11 @@ public class CommerceWarehouseItemServiceImpl
 			long cpInstanceId)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId, ActionKeys.VIEW);
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
+			ActionKeys.VIEW);
 
 		return commerceWarehouseItemLocalService.getCommerceWarehouseItems(
 			cpInstanceId);
@@ -109,8 +127,11 @@ public class CommerceWarehouseItemServiceImpl
 			OrderByComparator<CommerceWarehouseItem> orderByComparator)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId, ActionKeys.VIEW);
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
+			ActionKeys.VIEW);
 
 		return commerceWarehouseItemLocalService.getCommerceWarehouseItems(
 			cpInstanceId, start, end, orderByComparator);
@@ -120,8 +141,11 @@ public class CommerceWarehouseItemServiceImpl
 	public int getCommerceWarehouseItemsCount(long cpInstanceId)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId, ActionKeys.VIEW);
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
+			ActionKeys.VIEW);
 
 		return commerceWarehouseItemLocalService.getCommerceWarehouseItemsCount(
 			cpInstanceId);
@@ -129,8 +153,11 @@ public class CommerceWarehouseItemServiceImpl
 
 	@Override
 	public int getCPInstanceQuantity(long cpInstanceId) throws PortalException {
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId, ActionKeys.VIEW);
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
+			ActionKeys.VIEW);
 
 		return commerceWarehouseItemLocalService.getCPInstanceQuantity(
 			cpInstanceId);
@@ -146,13 +173,22 @@ public class CommerceWarehouseItemServiceImpl
 			commerceWarehouseItemLocalService.getCommerceWarehouseItem(
 				commerceWarehouseItemId);
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), commerceWarehouseItem.getCPInstanceId(),
+		CPInstance cpInstance = _cpInstanceService.getCPInstance(
+			commerceWarehouseItem.getCPInstanceId());
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			ActionKeys.UPDATE);
 
 		return commerceWarehouseItemLocalService.updateCommerceWarehouseItem(
 			commerceWarehouseItemId, quantity, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CommerceWarehouseItemServiceImpl.class,
+				"_cpDefinitionModelResourcePermission", CPDefinition.class);
 
 	@ServiceReference(type = CPDefinitionService.class)
 	private CPDefinitionService _cpDefinitionService;

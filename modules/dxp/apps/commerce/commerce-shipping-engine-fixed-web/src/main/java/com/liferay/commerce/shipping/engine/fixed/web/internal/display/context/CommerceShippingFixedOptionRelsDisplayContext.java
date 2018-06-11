@@ -36,6 +36,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -63,11 +64,12 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		CommerceShippingFixedOptionRelService
 			commerceShippingFixedOptionRelService,
 		CPMeasurementUnitService cpMeasurementUnitService,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(
 			commerceCurrencyService, commerceShippingMethodService,
-			renderRequest, renderResponse);
+			portletResourcePermission, renderRequest, renderResponse);
 
 		_commerceCountryService = commerceCountryService;
 		_commerceRegionService = commerceRegionService;

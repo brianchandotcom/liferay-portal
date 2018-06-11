@@ -20,7 +20,6 @@ import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceWarehouseService;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.commerce.warehouse.web.internal.admin.WarehousesCommerceAdminModule;
 import com.liferay.frontend.taglib.servlet.taglib.ManagementBarFilterItem;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,10 +49,12 @@ public class CommerceWarehousesDisplayContext {
 	public CommerceWarehousesDisplayContext(
 		CommerceCountryService commerceCountryService,
 		CommerceWarehouseService commerceWarehouseService,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		PortletResourcePermission portletResourcePermission) {
 
 		_commerceCountryService = commerceCountryService;
 		_commerceWarehouseService = commerceWarehouseService;
+		_portletResourcePermission = portletResourcePermission;
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
@@ -235,11 +237,15 @@ public class CommerceWarehousesDisplayContext {
 		return _searchContainer;
 	}
 
-	public boolean isShowAddButton() {
-		return CommercePermission.contains(
+	public boolean hasManageCommerceWarehousePermission() {
+		return _portletResourcePermission.contains(
 			_cpRequestHelper.getPermissionChecker(),
 			_cpRequestHelper.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES);
+	}
+
+	public boolean isShowAddButton() {
+		return hasManageCommerceWarehousePermission();
 	}
 
 	protected String getKeywords() {
@@ -292,6 +298,7 @@ public class CommerceWarehousesDisplayContext {
 	private final CommerceWarehouseService _commerceWarehouseService;
 	private final CPRequestHelper _cpRequestHelper;
 	private String _keywords;
+	private final PortletResourcePermission _portletResourcePermission;
 	private SearchContainer<CommerceWarehouse> _searchContainer;
 
 }

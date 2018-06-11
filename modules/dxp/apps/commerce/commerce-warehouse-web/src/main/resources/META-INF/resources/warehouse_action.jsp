@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceWarehousesDisplayContext commerceWarehousesDisplayContext = (CommerceWarehousesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceWarehouse commerceWarehouse = (CommerceWarehouse)row.getObject();
@@ -29,7 +31,7 @@ CommerceWarehouse commerceWarehouse = (CommerceWarehouse)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES) %>">
+	<c:if test="<%= commerceWarehousesDisplayContext.hasManageCommerceWarehousePermission() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCommerceWarehouse" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

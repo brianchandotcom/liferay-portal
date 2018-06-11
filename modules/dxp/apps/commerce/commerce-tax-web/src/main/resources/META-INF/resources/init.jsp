@@ -25,12 +25,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
-page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceConstants" %><%@
 page import="com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.exception.CommerceTaxMethodNameException" %><%@
 page import="com.liferay.commerce.model.CommerceTaxMethod" %><%@
-page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.commerce.tax.web.internal.display.context.CommerceTaxMethodsDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

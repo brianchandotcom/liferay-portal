@@ -26,7 +26,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
 page import="com.liferay.commerce.configuration.CommerceShippingGroupServiceConfiguration" %><%@
-page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceShippingMethodNameException" %><%@
 page import="com.liferay.commerce.exception.CommerceWarehouseActiveException" %><%@
 page import="com.liferay.commerce.exception.CommerceWarehouseNameException" %><%@
@@ -34,7 +33,6 @@ page import="com.liferay.commerce.model.CommerceAddressRestriction" %><%@
 page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceShippingMethod" %><%@
 page import="com.liferay.commerce.model.CommerceShippingOriginLocator" %><%@
-page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.commerce.shipping.web.admin.ShippingMethodsCommerceAdminModule" %><%@
 page import="com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodRestrictionsDisplayContext" %><%@
 page import="com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext" %><%@

@@ -23,8 +23,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
-page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
+<%@ page import="com.liferay.commerce.constants.CommercePortletKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceShipmentItemQuantityException" %><%@
 page import="com.liferay.commerce.exception.NoSuchShipmentException" %><%@
 page import="com.liferay.commerce.exception.NoSuchShipmentItemException" %><%@
@@ -36,7 +35,6 @@ page import="com.liferay.commerce.model.CommerceShippingMethod" %><%@
 page import="com.liferay.commerce.model.CommerceWarehouse" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
-page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.commerce.shipment.web.internal.display.context.CommerceShipmentDisplayContext" %><%@
 page import="com.liferay.commerce.shipment.web.internal.display.context.CommerceShipmentItemDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -68,6 +66,4 @@ PortletURL shipmentsURLObj = PortalUtil.getControlPanelPortletURL(request, Comme
 String shipmentsURL = shipmentsURLObj.toString();
 
 String languageId = LanguageUtil.getLanguageId(locale);
-
-boolean hasManageCommerceShipmentsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 %>

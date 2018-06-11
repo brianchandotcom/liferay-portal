@@ -26,11 +26,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.admin.constants.CommerceAdminWebKeys" %><%@
 page import="com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration" %><%@
-page import="com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys" %><%@
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyCodeException" %><%@
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyNameException" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
-page import="com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission" %><%@
 page import="com.liferay.commerce.currency.web.internal.admin.CurrenciesCommerceAdminModule" %><%@
 page import="com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext" %><%@
 page import="com.liferay.commerce.currency.web.internal.servlet.taglib.ui.CommerceCurrencyScreenNavigationConstants" %><%@

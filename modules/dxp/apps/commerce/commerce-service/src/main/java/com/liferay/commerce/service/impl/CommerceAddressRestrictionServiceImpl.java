@@ -15,12 +15,14 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.base.CommerceAddressRestrictionServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -124,7 +126,7 @@ public class CommerceAddressRestrictionServiceImpl
 				commercePaymentMethodLocalService.getCommercePaymentMethod(
 					classPK);
 
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), commercePaymentMethod.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 		}
@@ -133,10 +135,16 @@ public class CommerceAddressRestrictionServiceImpl
 				commerceShippingMethodLocalService.getCommerceShippingMethod(
 					classPK);
 
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), commerceShippingMethod.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
 		}
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceAddressRestrictionServiceImpl.class,
+				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
 
 }

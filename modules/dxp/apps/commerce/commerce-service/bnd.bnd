@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.commerce.configuration,\
 	com.liferay.commerce.configuration.definition,\
-	com.liferay.commerce.model.impl,\
-	com.liferay.commerce.service.permission
+	com.liferay.commerce.model.impl
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

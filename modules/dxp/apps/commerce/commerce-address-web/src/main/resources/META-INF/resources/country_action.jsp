@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCountriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
@@ -29,7 +31,7 @@ CommerceCountry commerceCountry = (CommerceCountry)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommercePermission.contains(permissionChecker, commerceCountry.getGroupId(), CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES) %>">
+	<c:if test="<%= commerceCountriesDisplayContext.hasPermission(CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCommerceCountry" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

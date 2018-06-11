@@ -31,7 +31,7 @@ CommerceShippingFixedOption commerceShippingFixedOption = (CommerceShippingFixed
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommercePermission.contains(permissionChecker, commerceShippingFixedOption.getGroupId(), CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS) %>">
+	<c:if test="<%= commerceShippingFixedOptionsDisplayContext.hasManageCommerceShipmentsPermission() %>">
 		<liferay-portlet:renderURL var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="editCommerceShippingFixedOption" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

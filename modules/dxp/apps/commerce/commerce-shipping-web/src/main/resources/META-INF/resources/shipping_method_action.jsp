@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceShippingMethodsDisplayContext commerceShippingMethodsDisplayContext = (CommerceShippingMethodsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceShippingMethod commerceShippingMethod = (CommerceShippingMethod)row.getObject();
@@ -29,7 +31,7 @@ CommerceShippingMethod commerceShippingMethod = (CommerceShippingMethod)row.getO
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS) %>">
+	<c:if test="<%= commerceShippingMethodsDisplayContext.hasManageCommerceShipmentsPermission() %>">
 		<portlet:actionURL name="editCommerceShippingMethod" var="editURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

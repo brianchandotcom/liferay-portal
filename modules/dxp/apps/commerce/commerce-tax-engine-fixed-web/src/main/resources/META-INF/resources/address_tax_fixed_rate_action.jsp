@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDisplayContext = (CommerceTaxFixedRateAddressRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel = (CommerceTaxFixedRateAddressRel)row.getObject();
@@ -29,7 +31,7 @@ CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel = (CommerceTaxFixe
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommercePermission.contains(permissionChecker, commerceTaxFixedRateAddressRel.getGroupId(), CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS) %>">
+	<c:if test="<%= commerceTaxFixedRateAddressRelsDisplayContext.hasManageCommerceTaxMethodsPermission() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCommerceTaxFixedRateAddressRel" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

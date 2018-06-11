@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.payment.method.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodsDisplayContext;
 import com.liferay.commerce.service.CommercePaymentMethodService;
@@ -24,6 +25,7 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -99,7 +101,8 @@ public class CommercePaymentMethodDetailsScreenNavigationEntry
 				commercePaymentMethodsDisplayContext =
 					new CommercePaymentMethodsDisplayContext(
 						_commercePaymentEngineRegistry,
-						_commercePaymentMethodService, renderRequest,
+						_commercePaymentMethodService,
+						_portletResourcePermission, renderRequest,
 						renderResponse);
 
 			httpServletRequest.setAttribute(
@@ -126,6 +129,11 @@ public class CommercePaymentMethodDetailsScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.payment.method.web)"

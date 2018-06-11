@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.measurement.unit.web.internal.display.context;
 
+import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.measurement.unit.web.internal.admin.MeasurementUnitsCommerceAdminModule;
 import com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasurementUnitUtil;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -45,9 +47,13 @@ public class CPMeasurementUnitsDisplayContext {
 
 	public CPMeasurementUnitsDisplayContext(
 		CPMeasurementUnitService cpMeasurementUnitService,
+		ModelResourcePermission<CPMeasurementUnit>
+			cpMeasurementUnitModelResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_cpMeasurementUnitService = cpMeasurementUnitService;
+		_cpMeasurementUnitModelResourcePermission =
+			cpMeasurementUnitModelResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -194,6 +200,17 @@ public class CPMeasurementUnitsDisplayContext {
 			_renderRequest, "type", CPMeasurementUnitConstants.TYPE_DIMENSION);
 	}
 
+	public boolean hasManageCPMeasurementUnitsPermission()
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _cpMeasurementUnitModelResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
+	}
+
 	protected NavigationItem getNavigationItem(
 		boolean active, String href, String label) {
 
@@ -227,6 +244,8 @@ public class CPMeasurementUnitsDisplayContext {
 	}
 
 	private CPMeasurementUnit _cpMeasurementUnit;
+	private final ModelResourcePermission<CPMeasurementUnit>
+		_cpMeasurementUnitModelResourcePermission;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 	private CPMeasurementUnit _primaryCPMeasurementUnit;
 	private final RenderRequest _renderRequest;

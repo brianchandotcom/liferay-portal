@@ -15,16 +15,19 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPDefinitionServiceBaseImpl;
-import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
-import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -62,7 +65,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 
@@ -95,7 +98,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 
@@ -114,7 +117,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, long categoryId)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		cpDefinitionLocalService.deleteAssetCategoryCPDefinition(
@@ -125,7 +128,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition deleteCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.DELETE);
 
 		return cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId);
@@ -139,7 +142,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			cpDefinitionId);
 
 		if (cpDefinition != null) {
-			CPDefinitionPermission.check(
+			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(), cpDefinition, ActionKeys.VIEW);
 		}
 
@@ -150,7 +153,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition getCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
@@ -207,7 +210,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getDefaultImage(cpDefinitionId);
@@ -215,7 +218,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 
 	@Override
 	public String getLayoutUuid(long cpDefinitionId) throws PortalException {
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getLayoutUuid(cpDefinitionId);
@@ -225,7 +228,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public String getUrlTitleMapAsXML(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionLocalService.getUrlTitleMapAsXML(cpDefinitionId);
@@ -235,7 +238,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public CPDefinition moveCPDefinitionToTrash(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.DELETE);
 
 		return cpDefinitionLocalService.moveCPDefinitionToTrash(
@@ -246,7 +249,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	public void restoreCPDefinitionFromTrash(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.DELETE);
 
 		cpDefinitionLocalService.restoreCPDefinitionFromTrash(
@@ -283,7 +286,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinition(
@@ -314,7 +317,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinition(
@@ -332,7 +335,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinitionCategorization(
@@ -345,7 +348,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateCPDefinitionIgnoreSKUCombinations(
@@ -358,7 +361,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		cpDisplayLayoutLocalService.addCPDisplayLayout(
@@ -373,7 +376,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateShippingInfo(
@@ -388,7 +391,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateStatus(
@@ -401,11 +404,22 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean telcoOrElectronics)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionLocalService.updateTaxCategoryInfo(
 			cpDefinitionId, cpTaxCategoryId, taxExempt, telcoOrElectronics);
 	}
+
+	private static volatile ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPDefinitionServiceImpl.class,
+				"_cpDefinitionModelResourcePermission", CPDefinition.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CPDefinitionServiceImpl.class, "_portletResourcePermission",
+				CPConstants.RESOURCE_NAME);
 
 }

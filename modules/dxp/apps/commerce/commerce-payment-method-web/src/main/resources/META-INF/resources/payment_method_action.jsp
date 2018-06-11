@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommercePaymentMethodsDisplayContext commercePaymentMethodsDisplayContext = (CommercePaymentMethodsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommercePaymentMethod commercePaymentMethod = (CommercePaymentMethod)row.getObject();
@@ -31,7 +33,7 @@ long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId(
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS) %>">
+	<c:if test="<%= commercePaymentMethodsDisplayContext.hasManageCommercePaymentMethodPermission() %>">
 		<portlet:actionURL name="editCommercePaymentMethod" var="editURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

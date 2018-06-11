@@ -15,11 +15,13 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.base.CommerceRegionServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -40,7 +42,7 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 		CommerceCountry commerceCountry =
 			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceCountry.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
@@ -56,7 +58,7 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 		CommerceRegion commerceRegion =
 			commerceRegionPersistence.findByPrimaryKey(commerceRegionId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceRegion.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
@@ -115,7 +117,7 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 		CommerceRegion commerceRegion =
 			commerceRegionPersistence.findByPrimaryKey(commerceRegionId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceRegion.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
@@ -131,7 +133,7 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 		CommerceRegion commerceRegion =
 			commerceRegionPersistence.findByPrimaryKey(commerceRegionId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceRegion.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
@@ -139,5 +141,11 @@ public class CommerceRegionServiceImpl extends CommerceRegionServiceBaseImpl {
 			commerceRegion.getCommerceRegionId(), name, code, priority, active,
 			serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceRegionServiceImpl.class, "_portletResourcePermission",
+				CommerceConstants.RESOURCE_NAME);
 
 }

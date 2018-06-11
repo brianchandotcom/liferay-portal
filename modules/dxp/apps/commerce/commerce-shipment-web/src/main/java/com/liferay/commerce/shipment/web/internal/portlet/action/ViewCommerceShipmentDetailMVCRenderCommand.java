@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipment.web.internal.portlet.action;
 
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
@@ -22,6 +23,7 @@ import com.liferay.commerce.shipment.web.internal.display.context.CommerceShipme
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -63,7 +65,8 @@ public class ViewCommerceShipmentDetailMVCRenderCommand
 					new CommerceShipmentItemDisplayContext(
 						_actionHelper, _commerceShippingMethodLocalService,
 						httpServletRequest, _commerceShipmentItemService,
-						_commerceWarehouseService, _itemSelector);
+						_commerceWarehouseService, _itemSelector,
+						_portletResourcePermission);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -94,5 +97,10 @@ public class ViewCommerceShipmentDetailMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

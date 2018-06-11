@@ -21,7 +21,7 @@ CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDis
 
 SearchContainer<CommerceTaxFixedRateAddressRel> commerceTaxFixedRateAddressRelSearchContainer = commerceTaxFixedRateAddressRelsDisplayContext.getSearchContainer();
 
-boolean hasManageCommerceTaxMethodsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+boolean hasManageCommerceTaxMethodsPermission = commerceTaxFixedRateAddressRelsDisplayContext.hasManageCommerceTaxMethodsPermission();
 %>
 
 <liferay-frontend:management-bar

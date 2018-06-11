@@ -22,7 +22,7 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 CommerceCountry commerceCountry = commerceRegionsDisplayContext.getCommerceCountry();
 SearchContainer<CommerceRegion> commerceRegionSearchContainer = commerceRegionsDisplayContext.getSearchContainer();
 
-boolean hasManageCommerceCountriesPermission = CommercePermission.contains(permissionChecker, commerceCountry.getGroupId(), CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
+boolean hasManageCommerceCountriesPermission = commerceRegionsDisplayContext.hasPermission(CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 %>
 
 <liferay-frontend:management-bar

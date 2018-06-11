@@ -21,7 +21,7 @@ CommerceShippingMethodRestrictionsDisplayContext commerceShippingMethodRestricti
 
 SearchContainer<CommerceAddressRestriction> commerceAddressRestrictionSearchContainer = commerceShippingMethodRestrictionsDisplayContext.getSearchContainer();
 
-boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+boolean hasManageCommerceShippingMethodsPermission = commerceShippingMethodRestrictionsDisplayContext.hasManageCommerceShipmentsPermission();
 %>
 
 <liferay-frontend:management-bar

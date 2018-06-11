@@ -16,6 +16,7 @@ package com.liferay.commerce.address.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext;
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
@@ -23,6 +24,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -106,8 +108,8 @@ public class CommerceCountryRegionsScreenNavigationEntry
 
 		CommerceRegionsDisplayContext commerceRegionsDisplayContext =
 			new CommerceRegionsDisplayContext(
-				_actionHelper, _commerceRegionService, renderRequest,
-				renderResponse);
+				_actionHelper, _commerceRegionService,
+				_portletResourcePermission, renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceRegionsDisplayContext);
@@ -125,6 +127,11 @@ public class CommerceCountryRegionsScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.address.web)"

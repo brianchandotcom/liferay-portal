@@ -15,16 +15,19 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.base.CPAttachmentFileEntryServiceBaseImpl;
-import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
-import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -102,7 +105,7 @@ public class CPAttachmentFileEntryServiceImpl
 			if (cpDefinitionClassNameId ==
 					cpAttachmentFileEntry.getClassNameId()) {
 
-				CPDefinitionPermission.check(
+				_cpDefinitionModelResourcePermission.check(
 					getPermissionChecker(), cpAttachmentFileEntry.getClassPK(),
 					ActionKeys.VIEW);
 			}
@@ -159,7 +162,7 @@ public class CPAttachmentFileEntryServiceImpl
 			if (cpDefinitionClassNameId ==
 					cpAttachmentFileEntry.getClassNameId()) {
 
-				CPDefinitionPermission.check(
+				_cpDefinitionModelResourcePermission.check(
 					getPermissionChecker(), cpAttachmentFileEntry.getClassPK(),
 					ActionKeys.VIEW);
 			}
@@ -235,13 +238,14 @@ public class CPAttachmentFileEntryServiceImpl
 
 		String actionKey = getActionKeyByCPAttachmentFileEntryType(type);
 
-		CPPermission.check(getPermissionChecker(), scopeGroupId, actionKey);
+		_portletResourcePermission.check(
+			getPermissionChecker(), scopeGroupId, actionKey);
 
 		long cpDefinitionClassNameId = _portal.getClassNameId(
 			CPDefinition.class);
 
 		if (classNameId == cpDefinitionClassNameId) {
-			CPDefinitionPermission.check(
+			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(), classPK, ActionKeys.UPDATE);
 		}
 	}
@@ -253,6 +257,17 @@ public class CPAttachmentFileEntryServiceImpl
 
 		return CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES;
 	}
+
+	private static volatile ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPAttachmentFileEntryServiceImpl.class,
+				"_cpDefinitionModelResourcePermission", CPDefinition.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CPAttachmentFileEntryServiceImpl.class,
+				"_portletResourcePermission", CPConstants.RESOURCE_NAME);
 
 	@ServiceReference(type = Portal.class)
 	private Portal _portal;

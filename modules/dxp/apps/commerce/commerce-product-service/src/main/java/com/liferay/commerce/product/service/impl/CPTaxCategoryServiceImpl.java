@@ -15,10 +15,12 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPTaxCategory;
 import com.liferay.commerce.product.service.base.CPTaxCategoryServiceBaseImpl;
-import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -37,7 +39,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
@@ -52,7 +54,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 		CPTaxCategory cpTaxCategory =
 			cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), cpTaxCategory.getGroupId(),
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
@@ -63,7 +65,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 	public List<CPTaxCategory> getCPTaxCategories(long groupId)
 		throws PortalException {
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
@@ -76,7 +78,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 			OrderByComparator<CPTaxCategory> orderByComparator)
 		throws PortalException {
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
@@ -86,7 +88,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 
 	@Override
 	public int getCPTaxCategoriesCount(long groupId) throws PortalException {
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
@@ -100,7 +102,7 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 		CPTaxCategory cpTaxCategory =
 			cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), cpTaxCategory.getGroupId(),
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
@@ -116,12 +118,18 @@ public class CPTaxCategoryServiceImpl extends CPTaxCategoryServiceBaseImpl {
 		CPTaxCategory cpTaxCategory =
 			cpTaxCategoryLocalService.getCPTaxCategory(cpTaxCategoryId);
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), cpTaxCategory.getGroupId(),
 			CPActionKeys.MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES);
 
 		return cpTaxCategoryLocalService.updateCPTaxCategory(
 			cpTaxCategoryId, nameMap, descriptionMap);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CPTaxCategoryServiceImpl.class, "_portletResourcePermission",
+				CPConstants.RESOURCE_NAME);
 
 }

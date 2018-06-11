@@ -15,6 +15,7 @@
 package com.liferay.commerce.tax.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.service.CommerceCountryService;
@@ -26,6 +27,7 @@ import com.liferay.commerce.tax.engine.fixed.web.internal.display.context.Commer
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -72,7 +74,8 @@ public class EditCommerceTaxFixedRateAddressRelMVCRenderCommand
 						_commerceCountryService, _commerceCurrencyService,
 						_commerceRegionService, _commerceTaxMethodService,
 						_commerceTaxFixedRateAddressRelService,
-						_cpTaxCategoryService, renderRequest, renderResponse);
+						_cpTaxCategoryService, _portletResourcePermission,
+						renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -123,6 +126,11 @@ public class EditCommerceTaxFixedRateAddressRelMVCRenderCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.tax.engine.fixed.web)"

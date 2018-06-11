@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.tax.engine.fixed.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
@@ -30,6 +31,7 @@ import com.liferay.commerce.tax.engine.fixed.web.internal.servlet.taglib.ui.Comm
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -53,8 +55,9 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		CommerceTaxMethodService commerceTaxMethodService,
 		CommerceTaxFixedRateAddressRelService
 			commerceTaxFixedRateAddressRelService,
-		CPTaxCategoryService cpTaxCategoryService, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		CPTaxCategoryService cpTaxCategoryService,
+		PortletResourcePermission portletResourcePermission,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(
 			commerceCurrencyService, commerceTaxMethodService, renderRequest,
@@ -65,6 +68,7 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		_commerceTaxFixedRateAddressRelService =
 			commerceTaxFixedRateAddressRelService;
 		_cpTaxCategoryService = cpTaxCategoryService;
+		_portletResourcePermission = portletResourcePermission;
 	}
 
 	public List<CPTaxCategory> getAvailableCPTaxCategories()
@@ -177,10 +181,18 @@ public class CommerceTaxFixedRateAddressRelsDisplayContext
 		return searchContainer;
 	}
 
+	public boolean hasManageCommerceTaxMethodsPermission() {
+		return _portletResourcePermission.contains(
+			commerceTaxFixedRateRequestHelper.getPermissionChecker(),
+			commerceTaxFixedRateRequestHelper.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+	}
+
 	private final CommerceCountryService _commerceCountryService;
 	private final CommerceRegionService _commerceRegionService;
 	private final CommerceTaxFixedRateAddressRelService
 		_commerceTaxFixedRateAddressRelService;
 	private final CPTaxCategoryService _cpTaxCategoryService;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

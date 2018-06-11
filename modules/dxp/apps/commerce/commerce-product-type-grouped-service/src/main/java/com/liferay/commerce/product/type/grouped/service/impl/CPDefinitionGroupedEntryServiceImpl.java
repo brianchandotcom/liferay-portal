@@ -14,11 +14,13 @@
 
 package com.liferay.commerce.product.type.grouped.service.impl;
 
-import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.base.CPDefinitionGroupedEntryServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -36,11 +38,11 @@ public class CPDefinitionGroupedEntryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		for (long entryCPDefinitionId : entryCPDefinitionIds) {
-			CPDefinitionPermission.check(
+			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(), entryCPDefinitionId, ActionKeys.VIEW);
 		}
 
@@ -57,7 +59,7 @@ public class CPDefinitionGroupedEntryServiceImpl
 			cpDefinitionGroupedEntryPersistence.findByPrimaryKey(
 				cpDefinitionGroupedEntryId);
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(),
 			cpDefinitionGroupedEntry.getCPDefinitionId(), ActionKeys.UPDATE);
 
@@ -72,7 +74,7 @@ public class CPDefinitionGroupedEntryServiceImpl
 			OrderByComparator<CPDefinitionGroupedEntry> orderByComparator)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return
@@ -84,7 +86,7 @@ public class CPDefinitionGroupedEntryServiceImpl
 	public int getCPDefinitionGroupedEntriesCount(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionGroupedEntryLocalService.
@@ -101,10 +103,10 @@ public class CPDefinitionGroupedEntryServiceImpl
 				cpDefinitionGroupedEntryId);
 
 		if (cpDefinitionGroupedEntry != null) {
-			CPDefinitionPermission.check(
+			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(),
 				cpDefinitionGroupedEntry.getCPDefinitionId(), ActionKeys.VIEW);
-			CPDefinitionPermission.check(
+			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(),
 				cpDefinitionGroupedEntry.getEntryCPDefinitionId(),
 				ActionKeys.VIEW);
@@ -122,10 +124,10 @@ public class CPDefinitionGroupedEntryServiceImpl
 			cpDefinitionGroupedEntryPersistence.findByPrimaryKey(
 				cpDefinitionGroupedEntryId);
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(),
 			cpDefinitionGroupedEntry.getCPDefinitionId(), ActionKeys.UPDATE);
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(),
 			cpDefinitionGroupedEntry.getEntryCPDefinitionId(), ActionKeys.VIEW);
 
@@ -133,5 +135,11 @@ public class CPDefinitionGroupedEntryServiceImpl
 			cpDefinitionGroupedEntryLocalService.updateCPDefinitionGroupedEntry(
 				cpDefinitionGroupedEntryId, priority, quantity);
 	}
+
+	private static volatile ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPDefinitionGroupedEntryServiceImpl.class,
+				"_cpDefinitionModelResourcePermission", CPDefinition.class);
 
 }

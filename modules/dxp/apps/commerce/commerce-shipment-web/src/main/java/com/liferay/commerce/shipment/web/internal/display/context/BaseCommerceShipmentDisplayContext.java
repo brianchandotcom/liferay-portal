@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipment.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,13 +48,14 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 	public BaseCommerceShipmentDisplayContext(
 		ActionHelper actionHelper,
 		CommerceShippingMethodLocalService commerceShippingMethodLocalService,
-		HttpServletRequest httpServletRequest,
-		String portalPreferenceNamespace) {
+		HttpServletRequest httpServletRequest, String portalPreferenceNamespace,
+		PortletResourcePermission portletResourcePermission) {
 
 		this.actionHelper = actionHelper;
 		this.commerceShippingMethodLocalService =
 			commerceShippingMethodLocalService;
 		this.httpServletRequest = httpServletRequest;
+		this.portletResourcePermission = portletResourcePermission;
 
 		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			this.httpServletRequest);
@@ -224,6 +227,13 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 	public abstract SearchContainer<T> getSearchContainer()
 		throws PortalException;
 
+	public boolean hasManageCommerceShipmentsPermission() {
+		return portletResourcePermission.contains(
+			cpRequestHelper.getPermissionChecker(),
+			cpRequestHelper.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+	}
+
 	public boolean isSearch() {
 		return false;
 	}
@@ -274,6 +284,7 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 	protected final LiferayPortletRequest liferayPortletRequest;
 	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final PortalPreferences portalPreferences;
+	protected final PortletResourcePermission portletResourcePermission;
 	protected SearchContainer<T> searchContainer;
 
 	private CommerceShipment _commerceShipment;

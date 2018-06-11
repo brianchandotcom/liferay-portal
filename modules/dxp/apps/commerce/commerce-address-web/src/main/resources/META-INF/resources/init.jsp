@@ -37,7 +37,6 @@ page import="com.liferay.commerce.exception.CommerceCountryTwoLettersISOCodeExce
 page import="com.liferay.commerce.exception.CommerceRegionNameException" %><%@
 page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceRegion" %><%@
-page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

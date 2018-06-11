@@ -27,6 +27,7 @@ import com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.ui
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -53,11 +54,12 @@ public class CommerceShippingFixedOptionsDisplayContext
 		CommercePriceFormatter commercePriceFormatter,
 		CommerceShippingMethodService commerceShippingMethodService,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(
 			commerceCurrencyService, commerceShippingMethodService,
-			renderRequest, renderResponse);
+			portletResourcePermission, renderRequest, renderResponse);
 
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingFixedOptionService =

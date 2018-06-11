@@ -15,10 +15,12 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.service.base.CommerceAvailabilityEstimateServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -38,7 +40,7 @@ public class CommerceAvailabilityEstimateServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
 
@@ -55,7 +57,7 @@ public class CommerceAvailabilityEstimateServiceImpl
 			commerceAvailabilityEstimatePersistence.findByPrimaryKey(
 				commerceAvailabilityEstimateId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceAvailabilityEstimate.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
 
@@ -98,7 +100,7 @@ public class CommerceAvailabilityEstimateServiceImpl
 			commerceAvailabilityEstimatePersistence.findByPrimaryKey(
 				commerceAvailabilityEstimateId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceAvailabilityEstimate.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_AVAILABILITY_ESTIMATES);
 
@@ -107,5 +109,11 @@ public class CommerceAvailabilityEstimateServiceImpl
 				commerceAvailabilityEstimateId, titleMap, priority,
 				serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceAvailabilityEstimateServiceImpl.class,
+				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
 
 }

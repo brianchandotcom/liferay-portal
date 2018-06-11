@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDisplayContext = (CommerceShippingFixedOptionRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceShippingFixedOptionRel commerceShippingFixedOptionRel = (CommerceShippingFixedOptionRel)row.getObject();
@@ -29,7 +31,7 @@ CommerceShippingFixedOptionRel commerceShippingFixedOptionRel = (CommerceShippin
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommercePermission.contains(permissionChecker, commerceShippingFixedOptionRel.getGroupId(), CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS) %>">
+	<c:if test="<%= commerceShippingFixedOptionRelsDisplayContext.hasManageCommerceShipmentsPermission() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCommerceShippingFixedOptionRel" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

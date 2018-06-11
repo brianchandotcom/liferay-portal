@@ -21,7 +21,7 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 
 SearchContainer<CommerceCurrency> commerceCurrencySearchContainer = commerceCurrenciesDisplayContext.getSearchContainer();
 
-boolean hasManageCommerceCurrenciesPermission = CommerceCurrencyPermission.contains(permissionChecker, scopeGroupId, CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
+boolean hasManageCommerceCurrenciesPermission = commerceCurrenciesDisplayContext.hasManageCommerceCurrencyPermission();
 %>
 
 <liferay-frontend:management-bar

@@ -18,17 +18,18 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
-import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletRequest;
@@ -72,7 +73,8 @@ public class CPDefinitionAssetRendererFactory
 			classPK);
 
 		CPDefinitionAssetRenderer cpDefinitionAssetRenderer =
-			new CPDefinitionAssetRenderer(cpDefinition);
+			new CPDefinitionAssetRenderer(
+				cpDefinition, _cpDefinitionModelResourcePermission);
 
 		cpDefinitionAssetRenderer.setAssetRendererType(type);
 		cpDefinitionAssetRenderer.setServletContext(_servletContext);
@@ -133,7 +135,7 @@ public class CPDefinitionAssetRendererFactory
 			PermissionChecker permissionChecker, long groupId, long classTypeId)
 		throws Exception {
 
-		return CPPermission.contains(
+		return _portletResourcePermission.contains(
 			permissionChecker, groupId,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 	}
@@ -143,7 +145,7 @@ public class CPDefinitionAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return CPDefinitionPermission.contains(
+		return _cpDefinitionModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -156,8 +158,17 @@ public class CPDefinitionAssetRendererFactory
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"
+	)
+	private ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.definitions.web)"

@@ -15,10 +15,12 @@
 package com.liferay.commerce.shipping.engine.fixed.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
-import com.liferay.commerce.service.permission.CommercePermission;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.service.base.CommerceShippingFixedOptionRelServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -42,7 +44,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
@@ -64,7 +66,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 				getCommerceShippingFixedOptionRel(
 					commerceShippingFixedOptionRelId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceShippingFixedOptionRel.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
@@ -168,7 +170,7 @@ public class CommerceShippingFixedOptionRelServiceImpl
 				getCommerceShippingFixedOptionRel(
 					commerceShippingFixedOptionRelId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceShippingFixedOptionRel.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
@@ -178,5 +180,11 @@ public class CommerceShippingFixedOptionRelServiceImpl
 				commerceCountryId, commerceRegionId, zip, weightFrom, weightTo,
 				fixedPrice, rateUnitWeightPrice, ratePercentage);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceShippingFixedOptionRelServiceImpl.class,
+				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
 
 }

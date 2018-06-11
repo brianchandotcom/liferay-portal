@@ -15,16 +15,19 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.base.CPSpecificationOptionServiceBaseImpl;
-import com.liferay.commerce.product.service.permission.CPOptionCategoryPermission;
-import com.liferay.commerce.product.service.permission.CPPermission;
-import com.liferay.commerce.product.service.permission.CPSpecificationOptionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -45,14 +48,14 @@ public class CPSpecificationOptionServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CPActionKeys.ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION);
 
 		if (cpOptionCategoryId !=
 				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID) {
 
-			CPOptionCategoryPermission.check(
+			_cpOptionCategoryModelResourcePermission.check(
 				getPermissionChecker(), cpOptionCategoryId, ActionKeys.VIEW);
 		}
 
@@ -65,7 +68,7 @@ public class CPSpecificationOptionServiceImpl
 	public void deleteCPSpecificationOption(long cpSpecificationOptionId)
 		throws PortalException {
 
-		CPSpecificationOptionPermission.check(
+		_cpSpecificationOptionModelResourcePermission.check(
 			getPermissionChecker(), cpSpecificationOptionId, ActionKeys.DELETE);
 
 		cpSpecificationOptionLocalService.deleteCPSpecificationOption(
@@ -77,7 +80,7 @@ public class CPSpecificationOptionServiceImpl
 			long cpSpecificationOptionId)
 		throws PortalException {
 
-		CPSpecificationOptionPermission.check(
+		_cpSpecificationOptionModelResourcePermission.check(
 			getPermissionChecker(), cpSpecificationOptionId, ActionKeys.VIEW);
 
 		return cpSpecificationOptionLocalService.fetchCPSpecificationOption(
@@ -94,7 +97,7 @@ public class CPSpecificationOptionServiceImpl
 				groupId, key);
 
 		if (cpSpecificationOption != null) {
-			CPSpecificationOptionPermission.check(
+			_cpSpecificationOptionModelResourcePermission.check(
 				getPermissionChecker(), cpSpecificationOption, ActionKeys.VIEW);
 		}
 
@@ -106,7 +109,7 @@ public class CPSpecificationOptionServiceImpl
 			long cpSpecificationOptionId)
 		throws PortalException {
 
-		CPSpecificationOptionPermission.check(
+		_cpSpecificationOptionModelResourcePermission.check(
 			getPermissionChecker(), cpSpecificationOptionId, ActionKeys.VIEW);
 
 		return cpSpecificationOptionLocalService.getCPSpecificationOption(
@@ -146,13 +149,13 @@ public class CPSpecificationOptionServiceImpl
 			boolean facetable, String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPSpecificationOptionPermission.check(
+		_cpSpecificationOptionModelResourcePermission.check(
 			getPermissionChecker(), cpSpecificationOptionId, ActionKeys.UPDATE);
 
 		if (cpOptionCategoryId !=
 				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID) {
 
-			CPOptionCategoryPermission.check(
+			_cpOptionCategoryModelResourcePermission.check(
 				getPermissionChecker(), cpOptionCategoryId, ActionKeys.VIEW);
 		}
 
@@ -160,5 +163,23 @@ public class CPSpecificationOptionServiceImpl
 			cpSpecificationOptionId, cpOptionCategoryId, titleMap,
 			descriptionMap, facetable, key, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<CPOptionCategory>
+		_cpOptionCategoryModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPSpecificationOptionServiceImpl.class,
+				"_cpOptionCategoryModelResourcePermission",
+				CPOptionCategory.class);
+	private static volatile ModelResourcePermission<CPSpecificationOption>
+		_cpSpecificationOptionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPSpecificationOptionServiceImpl.class,
+				"_cpSpecificationOptionModelResourcePermission",
+				CPSpecificationOption.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CPSpecificationOptionServiceImpl.class,
+				"_portletResourcePermission", CPConstants.RESOURCE_NAME);
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.warehouse.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -28,6 +29,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -53,18 +55,20 @@ public class CommerceWarehouseItemsDisplayContext {
 		CommerceWarehouseItemService commerceWarehouseItemService,
 		CommerceWarehouseService commerceWarehouseService,
 		CPInstanceService cpInstanceService,
-		HttpServletRequest httpServletRequest, Portal portal) {
+		HttpServletRequest httpServletRequest, Portal portal,
+		PortletResourcePermission portletResourcePermission) {
 
 		_commerceWarehouseItemService = commerceWarehouseItemService;
 		_commerceWarehouseService = commerceWarehouseService;
 		_cpInstanceService = cpInstanceService;
 		_portal = portal;
+		_portletResourcePermission = portletResourcePermission;
 
-		cpRequestHelper = new CPRequestHelper(httpServletRequest);
+		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
 
 	public String getBackURL() throws PortalException {
-		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
+		RenderRequest renderRequest = _cpRequestHelper.getRenderRequest();
 
 		String lifecycle = (String)renderRequest.getAttribute(
 			LiferayPortletRequest.LIFECYCLE_PHASE);
@@ -105,7 +109,7 @@ public class CommerceWarehouseItemsDisplayContext {
 	public CPInstance getCPInstance() throws PortalException {
 		if (_cpInstance == null) {
 			long cpInstanceId = ParamUtil.getLong(
-				cpRequestHelper.getRenderRequest(), "cpInstanceId");
+				_cpRequestHelper.getRenderRequest(), "cpInstanceId");
 
 			_cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
 		}
@@ -116,7 +120,7 @@ public class CommerceWarehouseItemsDisplayContext {
 	public String getUpdateCommerceWarehouseItemTaglibOnClick(
 		long commerceWarehouseId, long commerceWarehouseItemId, int index) {
 
-		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
+		RenderResponse renderResponse = _cpRequestHelper.getRenderResponse();
 
 		StringBundler sb = new StringBundler(10);
 
@@ -134,10 +138,15 @@ public class CommerceWarehouseItemsDisplayContext {
 		return sb.toString();
 	}
 
-	protected final CPRequestHelper cpRequestHelper;
+	public boolean hasManageCommerceWarehousePermission() {
+		return _portletResourcePermission.contains(
+			_cpRequestHelper.getPermissionChecker(),
+			_cpRequestHelper.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES);
+	}
 
 	private List<CommerceWarehouse> _getCommerceWarehouses() {
-		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
+		RenderRequest renderRequest = _cpRequestHelper.getRenderRequest();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -151,6 +160,8 @@ public class CommerceWarehouseItemsDisplayContext {
 	private final CommerceWarehouseService _commerceWarehouseService;
 	private CPInstance _cpInstance;
 	private final CPInstanceService _cpInstanceService;
+	private final CPRequestHelper _cpRequestHelper;
 	private final Portal _portal;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

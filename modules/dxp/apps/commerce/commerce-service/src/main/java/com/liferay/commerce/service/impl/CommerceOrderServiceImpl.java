@@ -14,18 +14,20 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.internal.security.permission.CommerceOrderWorkflowPermissionChecker;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.base.CommerceOrderServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -250,7 +252,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if ((orderUserId != permissionChecker.getUserId()) &&
-			!CommercePermission.contains(
+			!_portletResourcePermission.contains(
 				permissionChecker, groupId,
 				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS)) {
 
@@ -268,7 +270,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if ((orderUserId != permissionChecker.getUserId()) &&
-			!CommercePermission.contains(
+			!_portletResourcePermission.contains(
 				permissionChecker, groupId,
 				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS)) {
 
@@ -436,6 +438,11 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			ModelResourcePermissionFactory.getInstance(
 				CommerceOrderServiceImpl.class,
 				"_commerceOrderModelResourcePermission", CommerceOrder.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceOrderServiceImpl.class, "_portletResourcePermission",
+				CommerceConstants.RESOURCE_NAME);
 
 	@ServiceReference(type = CommerceOrderWorkflowPermissionChecker.class)
 	private CommerceOrderWorkflowPermissionChecker

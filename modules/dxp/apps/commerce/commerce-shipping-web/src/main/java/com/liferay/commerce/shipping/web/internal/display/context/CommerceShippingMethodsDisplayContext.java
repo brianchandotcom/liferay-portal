@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipping.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -23,6 +24,7 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.comparator.CommerceShippingMethodNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -49,10 +51,12 @@ public class CommerceShippingMethodsDisplayContext {
 	public CommerceShippingMethodsDisplayContext(
 		CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 		CommerceShippingMethodService commerceShippingMethodService,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_commerceShippingMethodService = commerceShippingMethodService;
+		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -162,6 +166,15 @@ public class CommerceShippingMethodsDisplayContext {
 			getScreenNavigationCategoryKey());
 	}
 
+	public boolean hasManageCommerceShipmentsPermission() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+	}
+
 	protected List<CommerceShippingMethod> addDefaultCommerceShippingMethods(
 			List<CommerceShippingMethod> commerceShippingMethods)
 		throws PortalException {
@@ -221,6 +234,7 @@ public class CommerceShippingMethodsDisplayContext {
 		_commerceShippingEngineRegistry;
 	private CommerceShippingMethod _commerceShippingMethod;
 	private final CommerceShippingMethodService _commerceShippingMethodService;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CommerceShippingMethod> _searchContainer;

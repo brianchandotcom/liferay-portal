@@ -15,12 +15,14 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.base.CommerceCountryServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -43,7 +45,7 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
@@ -60,7 +62,7 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 		CommerceCountry commerceCountry =
 			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceCountry.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
@@ -133,7 +135,7 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			long groupId, boolean all)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES);
 
@@ -157,7 +159,7 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 		CommerceCountry commerceCountry =
 			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceCountry.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
@@ -176,7 +178,7 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 		CommerceCountry commerceCountry =
 			commerceCountryPersistence.findByPrimaryKey(commerceCountryId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceCountry.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_COUNTRIES);
 
@@ -185,5 +187,11 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			shippingAllowed, twoLettersISOCode, threeLettersISOCode,
 			numericISOCode, subjectToVAT, priority, active, serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceCountryServiceImpl.class, "_portletResourcePermission",
+				CommerceConstants.RESOURCE_NAME);
 
 }

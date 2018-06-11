@@ -15,10 +15,12 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.base.CommerceShippingMethodServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.File;
@@ -41,7 +43,7 @@ public class CommerceShippingMethodServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
@@ -60,7 +62,7 @@ public class CommerceShippingMethodServiceImpl
 				commerceShippingMethodId);
 
 		if (commerceShippingMethod != null) {
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), commerceShippingMethod.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 		}
@@ -77,7 +79,7 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceShippingMethod.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
@@ -106,7 +108,7 @@ public class CommerceShippingMethodServiceImpl
 	public List<CommerceShippingMethod> getCommerceShippingMethods(long groupId)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
@@ -139,7 +141,7 @@ public class CommerceShippingMethodServiceImpl
 				commerceShippingMethodId);
 
 		if (commerceShippingMethod != null) {
-			CommercePermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), commerceShippingMethod.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 		}
@@ -159,7 +161,7 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceShippingMethodId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceShippingMethod.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
@@ -167,5 +169,11 @@ public class CommerceShippingMethodServiceImpl
 			commerceShippingMethod.getCommerceShippingMethodId(), nameMap,
 			descriptionMap, imageFile, priority, active);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceShippingMethodServiceImpl.class,
+				"_portletResourcePermission", CommerceConstants.RESOURCE_NAME);
 
 }

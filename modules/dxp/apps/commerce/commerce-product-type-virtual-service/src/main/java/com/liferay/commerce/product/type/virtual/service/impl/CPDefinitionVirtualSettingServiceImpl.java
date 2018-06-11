@@ -14,11 +14,13 @@
 
 package com.liferay.commerce.product.type.virtual.service.impl;
 
-import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.base.CPDefinitionVirtualSettingServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Locale;
@@ -43,7 +45,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionVirtualSettingLocalService.
@@ -64,7 +66,7 @@ public class CPDefinitionVirtualSettingServiceImpl
 				fetchCPDefinitionVirtualSettingByCPDefinitionId(cpDefinitionId);
 
 		if (cpDefinitionVirtualSetting != null) {
-			CPDefinitionPermission.check(
+			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(),
 				cpDefinitionVirtualSetting.getCPDefinitionId(),
 				ActionKeys.VIEW);
@@ -95,5 +97,11 @@ public class CPDefinitionVirtualSettingServiceImpl
 				termsOfUseContentMap, termsOfUseJournalArticleResourcePrimKey,
 				serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPDefinitionVirtualSettingServiceImpl.class,
+				"_cpDefinitionModelResourcePermission", CPDefinition.class);
 
 }

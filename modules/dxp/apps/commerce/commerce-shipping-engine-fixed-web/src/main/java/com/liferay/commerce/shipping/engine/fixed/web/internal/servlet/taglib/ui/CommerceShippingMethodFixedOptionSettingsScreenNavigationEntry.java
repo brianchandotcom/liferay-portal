@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
@@ -31,6 +32,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -126,7 +128,8 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 					_commerceShippingFixedOptionService,
 					_commerceWarehouseService,
 					_commerceShippingFixedOptionRelService,
-					_cpMeasurementUnitService, renderRequest, renderResponse);
+					_cpMeasurementUnitService, _portletResourcePermission,
+					renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -165,6 +168,11 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.engine.fixed.web)"

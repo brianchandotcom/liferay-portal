@@ -25,13 +25,14 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceServiceUtil;
-import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;
 import com.liferay.commerce.taglib.servlet.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -50,20 +51,33 @@ public class PriceTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!CPPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), CPActionKeys.VIEW_PRICE)) {
-
-			return super.doStartTag();
-		}
-
 		try {
 			CommerceContext commerceContext =
 				(CommerceContext)request.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			Organization organization = commerceContext.getOrganization();
+
+			long groupId;
+
+			if (organization == null) {
+				groupId = themeDisplay.getScopeGroupId();
+			}
+			else {
+				groupId = organization.getGroupId();
+			}
+
+			PortletResourcePermission cpPortletResourcePermission =
+				ServletContextUtil.getCPPortletResourcePermission();
+
+			if (!cpPortletResourcePermission.contains(
+					themeDisplay.getPermissionChecker(), groupId,
+					CPActionKeys.VIEW_PRICE)) {
+
+				return super.doStartTag();
+			}
 
 			CPDefinition cpDefinition = CPDefinitionServiceUtil.getCPDefinition(
 				_cpDefinitionId);

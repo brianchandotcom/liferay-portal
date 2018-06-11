@@ -15,6 +15,7 @@
 package com.liferay.commerce.tax.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.exception.NoSuchTaxMethodException;
 import com.liferay.commerce.service.CommerceTaxMethodService;
 import com.liferay.commerce.tax.web.internal.display.context.CommerceTaxMethodsDisplayContext;
@@ -22,6 +23,7 @@ import com.liferay.commerce.util.CommerceTaxEngineRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -62,7 +64,7 @@ public class EditCommerceTaxMethodMVCRenderCommand implements MVCRenderCommand {
 			CommerceTaxMethodsDisplayContext commerceTaxMethodsDisplayContext =
 				new CommerceTaxMethodsDisplayContext(
 					_commerceTaxEngineRegistry, _commerceTaxMethodService,
-					renderRequest, renderResponse);
+					_portletResourcePermission, renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -100,6 +102,11 @@ public class EditCommerceTaxMethodMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.tax.web)")
 	private ServletContext _servletContext;

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Collections;
@@ -56,12 +57,14 @@ public class CommerceShipmentItemDisplayContext
 			HttpServletRequest httpServletRequest,
 			CommerceShipmentItemService commerceShipmentItemService,
 			CommerceWarehouseService commerceWarehouseService,
-			ItemSelector itemSelector)
+			ItemSelector itemSelector,
+			PortletResourcePermission portletResourcePermission)
 		throws PortalException {
 
 		super(
 			actionHelper, commerceShippingMethodLocalService,
-			httpServletRequest, CommerceShipmentItem.class.getSimpleName());
+			httpServletRequest, CommerceShipmentItem.class.getSimpleName(),
+			portletResourcePermission);
 
 		_commerceShipmentItemService = commerceShipmentItemService;
 		_commerceWarehouseService = commerceWarehouseService;

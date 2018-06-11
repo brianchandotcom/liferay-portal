@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CPTaxCategory cpTaxCategory = (CPTaxCategory)row.getObject();
@@ -29,7 +31,7 @@ CPTaxCategory cpTaxCategory = (CPTaxCategory)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= hasManageCPTaxCategoriesPermission %>">
+	<c:if test="<%= cpTaxCategoryDisplayContext.hasManageCPTaxCategoriesPermission() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCPTaxCategory" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

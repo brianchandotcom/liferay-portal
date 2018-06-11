@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.payment.method.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommercePaymentEngine;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.web.internal.admin.PaymentMethodsCommerceAdminModule;
@@ -23,6 +24,7 @@ import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.commerce.util.comparator.CommercePaymentMethodNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -48,10 +50,12 @@ public class CommercePaymentMethodsDisplayContext {
 	public CommercePaymentMethodsDisplayContext(
 		CommercePaymentEngineRegistry commercePaymentEngineRegistry,
 		CommercePaymentMethodService commercePaymentMethodService,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commercePaymentEngineRegistry = commercePaymentEngineRegistry;
 		_commercePaymentMethodService = commercePaymentMethodService;
+		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -176,6 +180,15 @@ public class CommercePaymentMethodsDisplayContext {
 				CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS);
 	}
 
+	public boolean hasManageCommercePaymentMethodPermission() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
+	}
+
 	protected List<CommercePaymentMethod> addDefaultCommercePaymentMethods(
 			List<CommercePaymentMethod> commercePaymentMethods)
 		throws PortalException {
@@ -233,6 +246,7 @@ public class CommercePaymentMethodsDisplayContext {
 	private final CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
 	private CommercePaymentMethod _commercePaymentMethod;
 	private final CommercePaymentMethodService _commercePaymentMethodService;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CommercePaymentMethod> _searchContainer;

@@ -20,13 +20,14 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -53,8 +54,12 @@ import javax.servlet.http.HttpServletResponse;
 public class CPDefinitionAssetRenderer
 	extends BaseJSPAssetRenderer<CPDefinition> implements TrashRenderer {
 
-	public CPDefinitionAssetRenderer(CPDefinition cpDefinition) {
+	public CPDefinitionAssetRenderer(
+		CPDefinition cpDefinition,
+		ModelResourcePermission<CPDefinition> modelResourcePermission) {
+
 		_cpDefinition = cpDefinition;
+		_modelResourcePermission = modelResourcePermission;
 	}
 
 	@Override
@@ -204,14 +209,18 @@ public class CPDefinitionAssetRenderer
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker) {
-		return CPDefinitionPermission.contains(
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
+		return _modelResourcePermission.contains(
 			permissionChecker, _cpDefinition, ActionKeys.UPDATE);
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker) {
-		return CPDefinitionPermission.contains(
+	public boolean hasViewPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
+		return _modelResourcePermission.contains(
 			permissionChecker, _cpDefinition, ActionKeys.VIEW);
 	}
 
@@ -232,5 +241,7 @@ public class CPDefinitionAssetRenderer
 	}
 
 	private final CPDefinition _cpDefinition;
+	private final ModelResourcePermission<CPDefinition>
+		_modelResourcePermission;
 
 }

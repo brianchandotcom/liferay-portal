@@ -22,6 +22,7 @@ import com.liferay.commerce.util.CommerceTaxEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -85,7 +86,7 @@ public class TaxesCommerceAdminModule implements CommerceAdminModule {
 		CommerceTaxMethodsDisplayContext commerceTaxMethodsDisplayContext =
 			new CommerceTaxMethodsDisplayContext(
 				_commerceTaxEngineRegistry, _commerceTaxMethodService,
-				renderRequest, renderResponse);
+				_portletResourcePermission, renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceTaxMethodsDisplayContext);
@@ -106,6 +107,11 @@ public class TaxesCommerceAdminModule implements CommerceAdminModule {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.commerce.tax.web)")
 	private ServletContext _servletContext;

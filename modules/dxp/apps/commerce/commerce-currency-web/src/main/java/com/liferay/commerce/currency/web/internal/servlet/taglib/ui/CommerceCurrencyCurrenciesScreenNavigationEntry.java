@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.currency.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.currency.model.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
@@ -23,6 +24,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -101,7 +103,7 @@ public class CommerceCurrencyCurrenciesScreenNavigationEntry
 			new CommerceCurrenciesDisplayContext(
 				_commerceCurrencyService, _commercePriceFormatter,
 				_configurationProvider, _exchangeRateProviderRegistry,
-				renderRequest, renderResponse);
+				_portletResourcePermission, renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCurrenciesDisplayContext);
@@ -125,6 +127,11 @@ public class CommerceCurrencyCurrenciesScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(resource.name=" + CommerceCurrencyConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.currency.web)"

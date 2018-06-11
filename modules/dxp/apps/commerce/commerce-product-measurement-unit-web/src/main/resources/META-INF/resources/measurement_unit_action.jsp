@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasurementUnitsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)row.getObject();
@@ -29,7 +31,7 @@ CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CPMeasurementUnitPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS) %>">
+	<c:if test="<%= cpMeasurementUnitsDisplayContext.hasManageCPMeasurementUnitsPermission() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="editCPMeasurementUnit" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

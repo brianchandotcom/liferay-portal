@@ -14,15 +14,17 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionRelServiceBaseImpl;
-import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -42,7 +44,7 @@ public class CPDefinitionOptionRelServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
@@ -58,7 +60,7 @@ public class CPDefinitionOptionRelServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
@@ -72,7 +74,7 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionId, long cpOptionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.addCPDefinitionOptionRel(
@@ -84,8 +86,9 @@ public class CPDefinitionOptionRelServiceImpl
 			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPDefinitionOptionRel(
-			getPermissionChecker(), cpDefinitionOptionRel, ActionKeys.UPDATE);
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionOptionRel.getCPDefinitionId(),
+			ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
 			cpDefinitionOptionRel);
@@ -96,11 +99,16 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionOptionRelId)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPDefinitionOptionRel(
-			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionOptionRel.getCPDefinitionId(),
+			ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
-			cpDefinitionOptionRelId);
+			cpDefinitionOptionRel);
 	}
 
 	@Override
@@ -113,8 +121,9 @@ public class CPDefinitionOptionRelServiceImpl
 				cpDefinitionOptionRelId);
 
 		if (cpDefinitionOptionRel != null) {
-			CPDefinitionPermission.checkCPDefinitionOptionRel(
-				getPermissionChecker(), cpDefinitionOptionRel, ActionKeys.VIEW);
+			_cpDefinitionModelResourcePermission.check(
+				getPermissionChecker(),
+				cpDefinitionOptionRel.getCPDefinitionId(), ActionKeys.VIEW);
 		}
 
 		return cpDefinitionOptionRel;
@@ -125,11 +134,15 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionOptionRelId)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPDefinitionOptionRel(
-			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.VIEW);
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
 
-		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
-			cpDefinitionOptionRelId);
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionOptionRel.getCPDefinitionId(),
+			ActionKeys.VIEW);
+
+		return cpDefinitionOptionRel;
 	}
 
 	@Override
@@ -137,7 +150,7 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionId, boolean skuContributor)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
@@ -149,7 +162,7 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionId, int start, int end)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
@@ -162,7 +175,7 @@ public class CPDefinitionOptionRelServiceImpl
 			OrderByComparator<CPDefinitionOptionRel> orderByComparator)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
@@ -173,7 +186,7 @@ public class CPDefinitionOptionRelServiceImpl
 	public int getCPDefinitionOptionRelsCount(long cpDefinitionId)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
@@ -185,7 +198,7 @@ public class CPDefinitionOptionRelServiceImpl
 			long cpDefinitionId, boolean skuContributor)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionOptionRelLocalService.getCPDefinitionOptionRelsCount(
@@ -217,13 +230,24 @@ public class CPDefinitionOptionRelServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPDefinitionOptionRel(
-			getPermissionChecker(), cpDefinitionOptionRelId, ActionKeys.UPDATE);
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionOptionRel.getCPDefinitionId(),
+			ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
 			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
 			serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPDefinitionOptionRelServiceImpl.class,
+				"_cpDefinitionModelResourcePermission", CPDefinition.class);
 
 }

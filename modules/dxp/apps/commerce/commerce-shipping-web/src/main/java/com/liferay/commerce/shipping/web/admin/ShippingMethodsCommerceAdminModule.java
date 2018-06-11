@@ -15,6 +15,7 @@
 package com.liferay.commerce.shipping.web.admin;
 
 import com.liferay.commerce.admin.CommerceAdminModule;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext;
@@ -22,6 +23,7 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -82,8 +84,8 @@ public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
 			commerceShippingMethodsDisplayContext =
 				new CommerceShippingMethodsDisplayContext(
 					_commerceShippingEngineRegistry,
-					_commerceShippingMethodService, renderRequest,
-					renderResponse);
+					_commerceShippingMethodService, _portletResourcePermission,
+					renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -114,6 +116,11 @@ public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.web)"

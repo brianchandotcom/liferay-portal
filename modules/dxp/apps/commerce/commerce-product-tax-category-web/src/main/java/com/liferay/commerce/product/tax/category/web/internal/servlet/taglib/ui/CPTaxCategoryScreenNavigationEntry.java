@@ -16,6 +16,7 @@ package com.liferay.commerce.product.tax.category.web.internal.servlet.taglib.ui
 
 import com.liferay.commerce.admin.CommerceAdminModule;
 import com.liferay.commerce.constants.CommerceTaxScreenNavigationConstants;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.service.CPTaxCategoryService;
 import com.liferay.commerce.product.tax.category.web.internal.display.context.CPTaxCategoryDisplayContext;
 import com.liferay.commerce.service.CommerceTaxMethodService;
@@ -23,6 +24,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -97,8 +99,8 @@ public class CPTaxCategoryScreenNavigationEntry
 
 		CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext =
 			new CPTaxCategoryDisplayContext(
-				_commerceTaxMethodService, _cpTaxCategoryService, renderRequest,
-				renderResponse);
+				_commerceTaxMethodService, _cpTaxCategoryService,
+				_portletResourcePermission, renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpTaxCategoryDisplayContext);
@@ -116,6 +118,9 @@ public class CPTaxCategoryScreenNavigationEntry
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.tax.category.web)"

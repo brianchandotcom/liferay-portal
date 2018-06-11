@@ -15,16 +15,19 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.base.CPOptionServiceBaseImpl;
-import com.liferay.commerce.product.service.permission.CPOptionPermission;
-import com.liferay.commerce.product.service.permission.CPPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -44,7 +47,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION);
 
@@ -55,7 +58,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public void deleteCPOption(long cpOptionId) throws PortalException {
-		CPOptionPermission.check(
+		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.DELETE);
 
 		cpOptionLocalService.deleteCPOption(cpOptionId);
@@ -66,7 +69,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 		CPOption cpOption = cpOptionLocalService.fetchCPOption(cpOptionId);
 
 		if (cpOption != null) {
-			CPOptionPermission.check(
+			_cpOptionModelResourcePermission.check(
 				getPermissionChecker(), cpOption, ActionKeys.VIEW);
 		}
 
@@ -80,7 +83,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 		CPOption cpOption = cpOptionLocalService.fetchCPOption(groupId, key);
 
 		if (cpOption != null) {
-			CPOptionPermission.check(
+			_cpOptionModelResourcePermission.check(
 				getPermissionChecker(), cpOption, ActionKeys.VIEW);
 		}
 
@@ -89,7 +92,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 	@Override
 	public CPOption getCPOption(long cpOptionId) throws PortalException {
-		CPOptionPermission.check(
+		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
 
 		return cpOptionLocalService.getCPOption(cpOptionId);
@@ -133,7 +136,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	public CPOption setFacetable(long cpOptionId, boolean facetable)
 		throws PortalException {
 
-		CPOptionPermission.check(
+		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
 
 		return cpOptionLocalService.setFacetable(cpOptionId, facetable);
@@ -143,7 +146,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	public CPOption setRequired(long cpOptionId, boolean required)
 		throws PortalException {
 
-		CPOptionPermission.check(
+		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
 
 		return cpOptionLocalService.setRequired(cpOptionId, required);
@@ -153,7 +156,7 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	public CPOption setSkuContributor(long cpOptionId, boolean skuContributor)
 		throws PortalException {
 
-		CPOptionPermission.check(
+		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
 
 		return cpOptionLocalService.setSkuContributor(
@@ -168,12 +171,23 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 			String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPOptionPermission.check(
+		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionId, ActionKeys.UPDATE);
 
 		return cpOptionLocalService.updateCPOption(
 			cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
 			facetable, required, skuContributor, key, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<CPOption>
+		_cpOptionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPOptionServiceImpl.class, "_cpOptionModelResourcePermission",
+				CPOption.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CPOptionServiceImpl.class, "_portletResourcePermission",
+				CPConstants.RESOURCE_NAME);
 
 }

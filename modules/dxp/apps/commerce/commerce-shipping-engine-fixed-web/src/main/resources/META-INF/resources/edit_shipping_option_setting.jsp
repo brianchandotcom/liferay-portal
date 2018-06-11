@@ -47,10 +47,10 @@ Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", StringPool.TRUE);
 
-String screenNavigationEntryKey = commerceShippingFixedOptionRelsDisplayContext.getScreenNavigationEntryKey();
+String screenNavigationCategoryKey = commerceShippingFixedOptionRelsDisplayContext.getScreenNavigationCategoryKey();
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), shippingMethodsURL.toString(), data);
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationEntryKey), redirect, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationCategoryKey), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 

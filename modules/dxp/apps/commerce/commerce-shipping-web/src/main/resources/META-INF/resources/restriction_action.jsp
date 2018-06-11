@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceShippingMethodRestrictionsDisplayContext commerceShippingMethodRestrictionsDisplayContext = (CommerceShippingMethodRestrictionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceAddressRestriction commerceAddressRestriction = (CommerceAddressRestriction)row.getObject();
@@ -29,7 +31,7 @@ CommerceAddressRestriction commerceAddressRestriction = (CommerceAddressRestrict
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= CommercePermission.contains(permissionChecker, commerceAddressRestriction.getGroupId(), CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS) %>">
+	<c:if test="<%= commerceShippingMethodRestrictionsDisplayContext.hasManageCommerceShipmentsPermission() %>">
 		<portlet:actionURL name="editCommerceShippingMethodAddressRestriction" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

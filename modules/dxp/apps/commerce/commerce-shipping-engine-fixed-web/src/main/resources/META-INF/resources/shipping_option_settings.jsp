@@ -21,7 +21,7 @@ CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDis
 
 SearchContainer<CommerceShippingFixedOptionRel> commerceShippingFixedOptionRelSearchContainer = commerceShippingFixedOptionRelsDisplayContext.getSearchContainer();
 
-boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+boolean hasManageCommerceShippingMethodsPermission = commerceShippingFixedOptionRelsDisplayContext.hasManageCommerceShipmentsPermission();
 %>
 
 <c:choose>

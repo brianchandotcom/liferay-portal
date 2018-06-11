@@ -15,10 +15,12 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.base.CommerceShipmentServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -42,7 +44,7 @@ public class CommerceShipmentServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
@@ -62,7 +64,7 @@ public class CommerceShipmentServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceShipment.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
@@ -76,7 +78,7 @@ public class CommerceShipmentServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceShipment.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
@@ -112,7 +114,7 @@ public class CommerceShipmentServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		CommercePermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), commerceShipment.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
@@ -124,5 +126,11 @@ public class CommerceShipmentServiceImpl
 			expectedDateDay, expectedDateYear, expectedDateHour,
 			expectedDateMinute);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceShipmentServiceImpl.class, "_portletResourcePermission",
+				CommerceConstants.RESOURCE_NAME);
 
 }

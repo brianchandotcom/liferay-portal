@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.tax.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceTaxEngine;
 import com.liferay.commerce.model.CommerceTaxMethod;
@@ -22,6 +23,7 @@ import com.liferay.commerce.util.CommerceTaxEngineRegistry;
 import com.liferay.commerce.util.comparator.CommerceTaxMethodNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -47,10 +49,12 @@ public class CommerceTaxMethodsDisplayContext {
 	public CommerceTaxMethodsDisplayContext(
 		CommerceTaxEngineRegistry commerceTaxEngineRegistry,
 		CommerceTaxMethodService commerceTaxMethodService,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commerceTaxEngineRegistry = commerceTaxEngineRegistry;
 		_commerceTaxMethodService = commerceTaxMethodService;
+		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -155,6 +159,15 @@ public class CommerceTaxMethodsDisplayContext {
 		return _searchContainer;
 	}
 
+	public boolean hasManageCommerceTaxMethodPermission() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_TAX_METHODS);
+	}
+
 	protected List<CommerceTaxMethod> addDefaultCommerceTaxMethods(
 			List<CommerceTaxMethod> commerceTaxMethods)
 		throws PortalException {
@@ -208,6 +221,7 @@ public class CommerceTaxMethodsDisplayContext {
 	private final CommerceTaxEngineRegistry _commerceTaxEngineRegistry;
 	private CommerceTaxMethod _commerceTaxMethod;
 	private final CommerceTaxMethodService _commerceTaxMethodService;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CommerceTaxMethod> _searchContainer;

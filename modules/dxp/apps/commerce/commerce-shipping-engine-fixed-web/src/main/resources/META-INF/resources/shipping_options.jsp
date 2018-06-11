@@ -22,7 +22,7 @@ CommerceShippingFixedOptionsDisplayContext commerceShippingFixedOptionsDisplayCo
 CommerceShippingMethod commerceShippingMethod = commerceShippingFixedOptionsDisplayContext.getCommerceShippingMethod();
 SearchContainer<CommerceShippingFixedOption> commerceShippingFixedOptionSearchContainer = commerceShippingFixedOptionsDisplayContext.getSearchContainer();
 
-boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+boolean hasManageCommerceShippingMethodsPermission = commerceShippingFixedOptionsDisplayContext.hasManageCommerceShipmentsPermission();
 %>
 
 <liferay-frontend:management-bar

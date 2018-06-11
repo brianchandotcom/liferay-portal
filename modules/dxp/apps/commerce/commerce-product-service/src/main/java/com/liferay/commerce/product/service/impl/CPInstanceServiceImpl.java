@@ -15,15 +15,17 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.base.CPInstanceServiceBaseImpl;
-import com.liferay.commerce.product.service.permission.CPDefinitionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -52,7 +54,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
 
@@ -79,7 +81,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
 
@@ -98,7 +100,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
 
@@ -109,8 +111,8 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public CPInstance deleteCPInstance(CPInstance cpInstance)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstance,
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.deleteCPInstance(cpInstance);
@@ -120,11 +122,14 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public CPInstance deleteCPInstance(long cpInstanceId)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId,
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
 
-		return cpInstanceLocalService.deleteCPInstance(cpInstanceId);
+		return cpInstanceLocalService.deleteCPInstance(cpInstance);
 	}
 
 	@Override
@@ -135,8 +140,9 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			cpInstanceId);
 
 		if (cpInstance != null) {
-			CPDefinitionPermission.checkCPInstance(
-				getPermissionChecker(), cpInstance, ActionKeys.VIEW);
+			_cpDefinitionModelResourcePermission.check(
+				getPermissionChecker(), cpInstance.getCPDefinitionId(),
+				ActionKeys.VIEW);
 		}
 
 		return cpInstance;
@@ -147,7 +153,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			long cpDefinitionId, int start, int end)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPDefinitionInstances(
@@ -160,7 +166,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPDefinitionInstances(
@@ -171,7 +177,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public int getCPDefinitionInstancesCount(long cpDefinitionId, int status)
 		throws PortalException {
 
-		CPDefinitionPermission.check(
+		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.getCPDefinitionInstancesCount(
@@ -180,10 +186,14 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 	@Override
 	public CPInstance getCPInstance(long cpInstanceId) throws PortalException {
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId, ActionKeys.VIEW);
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
 
-		return cpInstanceLocalService.getCPInstance(cpInstanceId);
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
+			ActionKeys.VIEW);
+
+		return cpInstance;
 	}
 
 	@Override
@@ -197,10 +207,14 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	public CPInstance getCPInstance(String externalReferenceCode)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), externalReferenceCode, ActionKeys.VIEW);
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			externalReferenceCode);
 
-		return cpInstanceLocalService.getCPInstance(externalReferenceCode);
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
+			ActionKeys.VIEW);
+
+		return cpInstance;
 	}
 
 	@Override
@@ -266,8 +280,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId,
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updateCPInstance(
@@ -291,8 +308,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId,
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updateCPInstance(
@@ -310,8 +330,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			BigDecimal cost, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId,
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updatePricingInfo(
@@ -324,8 +347,11 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			double weight, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId,
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updateShippingInfo(
@@ -339,12 +365,21 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		CPDefinitionPermission.checkCPInstance(
-			getPermissionChecker(), cpInstanceId,
+		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
+			cpInstanceId);
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 
 		return cpInstanceLocalService.updateStatus(
 			userId, cpInstanceId, status, serviceContext, workflowContext);
 	}
+
+	private static volatile ModelResourcePermission<CPDefinition>
+		_cpDefinitionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPInstanceServiceImpl.class,
+				"_cpDefinitionModelResourcePermission", CPDefinition.class);
 
 }

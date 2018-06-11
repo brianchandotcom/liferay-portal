@@ -15,15 +15,17 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.base.CommerceAddressServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -170,7 +172,7 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 		}
 		else if (className.equals(User.class.getName())) {
 			if ((classPK != getUserId()) &&
-				!CommercePermission.contains(
+				!_portletResourcePermission.contains(
 					getPermissionChecker(), groupId,
 					CommerceActionKeys.MANAGE_COMMERCE_ADDRESSES)) {
 
@@ -178,5 +180,11 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 			}
 		}
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceAddressServiceImpl.class, "_portletResourcePermission",
+				CommerceConstants.RESOURCE_NAME);
 
 }

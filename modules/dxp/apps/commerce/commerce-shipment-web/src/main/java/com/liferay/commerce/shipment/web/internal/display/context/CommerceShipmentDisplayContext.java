@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -51,12 +52,14 @@ public class CommerceShipmentDisplayContext
 			CommerceAddressService commerceAddressService,
 			CommerceShipmentService commerceShipmentService,
 			CommerceWarehouseService commerceWarehouseService,
+			PortletResourcePermission portletResourcePermission,
 			UserLocalService userLocalService)
 		throws PortalException {
 
 		super(
 			actionHelper, commerceShippingMethodLocalService,
-			httpServletRequest, CommerceShipment.class.getSimpleName());
+			httpServletRequest, CommerceShipment.class.getSimpleName(),
+			portletResourcePermission);
 
 		_commerceAddressService = commerceAddressService;
 		_commerceShipmentService = commerceShipmentService;

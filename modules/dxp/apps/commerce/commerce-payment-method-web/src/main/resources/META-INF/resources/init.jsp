@@ -35,7 +35,6 @@ page import="com.liferay.commerce.payment.method.web.internal.admin.PaymentMetho
 page import="com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodRestrictionsDisplayContext" %><%@
 page import="com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodsDisplayContext" %><%@
 page import="com.liferay.commerce.payment.method.web.internal.servlet.taglib.ui.CommercePaymentScreenNavigationConstants" %><%@
-page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

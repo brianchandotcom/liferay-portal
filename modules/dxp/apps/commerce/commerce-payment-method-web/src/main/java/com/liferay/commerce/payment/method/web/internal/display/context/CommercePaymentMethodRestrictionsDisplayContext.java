@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.payment.method.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.item.selector.criterion.CommerceCountryItemSelectorCriterion;
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.model.CommercePaymentMethod;
@@ -32,11 +33,14 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,12 +58,14 @@ public class CommercePaymentMethodRestrictionsDisplayContext {
 	public CommercePaymentMethodRestrictionsDisplayContext(
 		CommerceAddressRestrictionService commerceAddressRestrictionService,
 		CommercePaymentMethodService commercePaymentMethodService,
-		ItemSelector itemSelector, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		ItemSelector itemSelector,
+		PortletResourcePermission portletResourcePermission,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commerceAddressRestrictionService = commerceAddressRestrictionService;
 		_commercePaymentMethodService = commercePaymentMethodService;
 		_itemSelector = itemSelector;
+		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -193,6 +199,15 @@ public class CommercePaymentMethodRestrictionsDisplayContext {
 		return _searchContainer;
 	}
 
+	public boolean hasManageCommercePaymentMethodPermission() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
+	}
+
 	protected long[] getCheckedCommerceCountryIds() throws PortalException {
 		List<Long> commerceCountryIdsList = new ArrayList<>();
 
@@ -236,6 +251,7 @@ public class CommercePaymentMethodRestrictionsDisplayContext {
 	private CommercePaymentMethod _commercePaymentMethod;
 	private final CommercePaymentMethodService _commercePaymentMethodService;
 	private final ItemSelector _itemSelector;
+	private final PortletResourcePermission _portletResourcePermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private RowChecker _rowChecker;

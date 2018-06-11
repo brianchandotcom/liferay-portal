@@ -103,7 +103,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<div class="col-md-2">
 				<c:choose>
-					<c:when test="<%= hasManageCommerceShipmentsPermission %>">
+					<c:when test="<%= commerceShipmentItemDisplayContext.hasManageCommerceShipmentsPermission() %>">
 						<aui:input name="shippingDate" />
 					</c:when>
 					<c:otherwise>
@@ -116,7 +116,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<div class="col-md-3">
 				<c:choose>
-					<c:when test="<%= hasManageCommerceShipmentsPermission %>">
+					<c:when test="<%= commerceShipmentItemDisplayContext.hasManageCommerceShipmentsPermission() %>">
 						<aui:input name="trackingNumber" />
 					</c:when>
 					<c:otherwise>
@@ -155,7 +155,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<div class="col-md-2">
 				<c:choose>
-					<c:when test="<%= hasManageCommerceShipmentsPermission %>">
+					<c:when test="<%= commerceShipmentItemDisplayContext.hasManageCommerceShipmentsPermission() %>">
 						<aui:input name="expectedDate" />
 					</c:when>
 					<c:otherwise>
@@ -174,7 +174,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<div class="row">
 			<div class="col-md-4">
 				<c:choose>
-					<c:when test="<%= hasManageCommerceShipmentsPermission %>">
+					<c:when test="<%= commerceShipmentItemDisplayContext.hasManageCommerceShipmentsPermission() %>">
 						<aui:input name="carrier" />
 					</c:when>
 					<c:otherwise>
@@ -185,7 +185,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<div class="col-md-4">
 				<c:choose>
-					<c:when test="<%= hasManageCommerceShipmentsPermission %>">
+					<c:when test="<%= commerceShipmentItemDisplayContext.hasManageCommerceShipmentsPermission() %>">
 						<aui:select label="method" name="commerceShippingMethodId" showEmptyOption="<%= true %>">
 
 							<%
@@ -221,7 +221,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			<div class="col-md-4">
 				<c:choose>
-					<c:when test="<%= hasManageCommerceShipmentsPermission %>">
+					<c:when test="<%= commerceShipmentItemDisplayContext.hasManageCommerceShipmentsPermission() %>">
 						<aui:input name="expectedDuration" />
 					</c:when>
 					<c:otherwise>

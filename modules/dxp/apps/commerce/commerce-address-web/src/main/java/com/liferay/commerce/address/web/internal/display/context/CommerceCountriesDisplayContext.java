@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -49,9 +50,12 @@ public class CommerceCountriesDisplayContext
 	public CommerceCountriesDisplayContext(
 		ActionHelper actionHelper,
 		CommerceCountryService commerceCountryService,
+		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(actionHelper, renderRequest, renderResponse);
+		super(
+			actionHelper, portletResourcePermission, renderRequest,
+			renderResponse);
 
 		_commerceCountryService = commerceCountryService;
 	}

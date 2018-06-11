@@ -2680,7 +2680,8 @@ public class ProjectTemplatesTest {
 
 		Element idElement = document.createElement("id");
 
-		idElement.appendChild(document.createTextNode("nexus"));
+		idElement.appendChild(
+			document.createTextNode(System.currentTimeMillis() + ""));
 
 		Element urlElement = document.createElement("url");
 

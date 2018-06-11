@@ -131,6 +131,18 @@ public class CommerceOrganizationLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Organization updateOrganization(
+		long organizationId, long parentOrganizationId, String name,
+		String type, long regionId, long countryId, long statusId,
+		String comments,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrganizationLocalService.updateOrganization(organizationId,
+			parentOrganizationId, name, type, regionId, countryId, statusId,
+			comments, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Organization updateOrganization(
 		long organizationId, String name, long emailAddressId, String address,
 		long addressId, String street1, String street2, String street3,
 		String city, String zip, long regionId, long countryId, boolean logo,

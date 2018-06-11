@@ -65,6 +65,11 @@ public class CommerceOrganizationServiceUtil {
 		return getService().fetchOrganization(organizationId);
 	}
 
+	public static void deleteOrganization(long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteOrganization(organizationId);
+	}
+
 	public static com.liferay.portal.kernel.model.Organization getOrganization(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {

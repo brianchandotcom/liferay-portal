@@ -63,6 +63,9 @@ public interface CommerceOrganizationService extends BaseService {
 		String[] emailAddresses, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void deleteOrganization(long organizationId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Organization fetchOrganization(long organizationId)
 		throws PortalException;

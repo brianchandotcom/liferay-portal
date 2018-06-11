@@ -114,6 +114,18 @@ public class CommerceOrganizationServiceSoap {
 		}
 	}
 
+	public static void deleteOrganization(long organizationId)
+		throws RemoteException {
+		try {
+			CommerceOrganizationServiceUtil.deleteOrganization(organizationId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
 		long organizationId) throws RemoteException {
 		try {

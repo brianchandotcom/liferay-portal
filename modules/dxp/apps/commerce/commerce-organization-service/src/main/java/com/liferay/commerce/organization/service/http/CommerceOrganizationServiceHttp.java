@@ -182,6 +182,34 @@ public class CommerceOrganizationServiceHttp {
 		}
 	}
 
+	public static void deleteOrganization(HttpPrincipal httpPrincipal,
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceOrganizationServiceUtil.class,
+					"deleteOrganization", _deleteOrganizationParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					organizationId);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
 		HttpPrincipal httpPrincipal, long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -399,6 +427,11 @@ public class CommerceOrganizationServiceHttp {
 	private static final Class<?>[] _getOrganizationParameterTypes3 = new Class[] {
 			long.class
 		};
+
+	private static final Class<?>[] _deleteOrganizationParameterTypes3 = new Class[] {
+			long.class
+		};
+
 	private static final Class<?>[] _getOrganizationPrimaryAddressParameterTypes4 =
 		new Class[] { long.class };
 	private static final Class<?>[] _getOrganizationPrimaryEmailAddressParameterTypes5 =

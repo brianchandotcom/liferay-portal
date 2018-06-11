@@ -91,6 +91,9 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 			public String build() {
 				StringBundler sb = new StringBundler(7);
 
+				boolean ignoreCDNHost = _ignoreCDNHost;
+				boolean ignorePathProxy = _ignorePathProxy;
+
 				if (PortletDependency.Type.CSS.equals(
 						portletDependency.getType())) {
 
@@ -101,8 +104,8 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 							PortalWebResourceConstants.RESOURCE_TYPE_CSS;
 					}
 					else {
-						_ignoreCDNHost = true;
-						_ignorePathProxy = true;
+						ignoreCDNHost = true;
+						ignorePathProxy = true;
 					}
 
 					sb.append(resourcePath);
@@ -117,8 +120,8 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 							PortalWebResourceConstants.RESOURCE_TYPE_JS;
 					}
 					else {
-						_ignoreCDNHost = true;
-						_ignorePathProxy = true;
+						ignoreCDNHost = true;
+						ignorePathProxy = true;
 					}
 
 					sb.append(resourcePath);
@@ -137,7 +140,9 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 				sb.append(StringPool.FORWARD_SLASH);
 				sb.append(portletDependency.getName());
 
-				return _build(StringPool.BLANK, sb.toString());
+				return _build(
+					ignoreCDNHost, ignorePathProxy, StringPool.BLANK,
+					sb.toString());
 			}
 
 		};
@@ -169,14 +174,17 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		return this;
 	}
 
-	private String _build(String pathPrefix, String relativeURL) {
+	private String _build(
+		boolean ignoreCDNHost, boolean ignorePathProxy, String pathPrefix,
+		String relativeURL) {
+
 		StringBundler sb = new StringBundler(6);
 
-		if (!_ignoreCDNHost) {
+		if (!ignoreCDNHost) {
 			sb.append(_getCDNHost(_request));
 		}
 
-		if (!_ignorePathProxy) {
+		if (!ignorePathProxy) {
 			sb.append(_getPathProxy());
 		}
 
@@ -200,6 +208,11 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		sb.append(relativeURL);
 
 		return sb.toString();
+	}
+
+	private String _build(String pathPrefix, String relativeURL) {
+		return _build(
+			_ignoreCDNHost, _ignorePathProxy, pathPrefix, relativeURL);
 	}
 
 	private String _getCDNHost(HttpServletRequest request) {

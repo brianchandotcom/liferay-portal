@@ -29,9 +29,9 @@ create table LayoutPageTemplateEntry (
 	previewFileEntryId LONG,
 	defaultTemplate BOOLEAN,
 	layoutPrototypeId LONG,
+	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	lastPublishDate DATE null
+	statusDate DATE null
 );

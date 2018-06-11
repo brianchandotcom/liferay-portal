@@ -166,6 +166,9 @@ public class CommerceOrganizationServiceImpl
 
 		_checkOrganization(organizationId);
 
+		OrganizationPermissionUtil.check(
+			getPermissionChecker(), organizationId, ActionKeys.UPDATE);
+
 		return commerceOrganizationLocalService.updateOrganization(
 			organizationId, name, emailAddressId, address, addressId, street1,
 			street2, street3, city, zip, regionId, countryId, logo, logoBytes,

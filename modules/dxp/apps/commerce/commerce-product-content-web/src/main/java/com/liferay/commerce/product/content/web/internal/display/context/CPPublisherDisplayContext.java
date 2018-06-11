@@ -134,7 +134,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		}
 
 		_searchContainer.setTotal(cpDataSourceResult.getLength());
-		_searchContainer.setResults(cpDataSourceResult.getResult());
+		_searchContainer.setResults(cpDataSourceResult.getCPCatalogEntries());
 
 		return _searchContainer;
 	}

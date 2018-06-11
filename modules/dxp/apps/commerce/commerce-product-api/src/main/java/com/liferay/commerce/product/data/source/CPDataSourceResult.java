@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.data.source;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -28,51 +29,55 @@ import java.util.List;
  */
 public class CPDataSourceResult implements Serializable {
 
-	public CPDataSourceResult(List<CPCatalogEntry> results, int length) {
-		if (results == null) {
-			_results = Collections.emptyList();
+	public CPDataSourceResult(
+		List<CPCatalogEntry> cpCatalogEntries, int length) {
+
+		if (cpCatalogEntries == null) {
+			_cpCatalogEntries = Collections.emptyList();
 		}
 		else {
-			_results = results;
+			_cpCatalogEntries = cpCatalogEntries;
 		}
 
 		_length = length;
+	}
+
+	public List<CPCatalogEntry> getCPCatalogEntries() {
+		return _cpCatalogEntries;
 	}
 
 	public int getLength() {
 		return _length;
 	}
 
-	public List<CPCatalogEntry> getResult() {
-		return _results;
-	}
-
 	@Override
 	public String toString() {
-		if (_results.isEmpty()) {
-			return "{data={}, length=".concat(
-				String.valueOf(_length)).concat(StringPool.CLOSE_BRACKET);
-		}
-
-		StringBundler sb = new StringBundler(2 * _results.size() + 3);
+		StringBundler sb = new StringBundler(2 * _cpCatalogEntries.size() + 4);
 
 		sb.append("{data={");
 
-		for (CPCatalogEntry entry : _results) {
-			sb.append(entry);
-			sb.append(StringPool.COMMA_AND_SPACE);
+		boolean first = true;
+
+		for (CPCatalogEntry cpCatalogEntry : _cpCatalogEntries) {
+			if (!first) {
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+
+			first = false;
+
+			sb.append(cpCatalogEntry);
 		}
 
-		sb.setStringAt(StringPool.CLOSE_BRACKET, sb.index() - 1);
+		sb.append(CharPool.CLOSE_BRACKET);
 
 		sb.append(", length=");
 		sb.append(_length);
-		sb.append(StringPool.CLOSE_BRACKET);
+		sb.append(CharPool.CLOSE_BRACKET);
 
 		return sb.toString();
 	}
 
+	private final List<CPCatalogEntry> _cpCatalogEntries;
 	private final int _length;
-	private final List<CPCatalogEntry> _results;
 
 }

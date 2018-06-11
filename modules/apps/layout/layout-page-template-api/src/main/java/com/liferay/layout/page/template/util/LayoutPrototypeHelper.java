@@ -14,9 +14,6 @@
 
 package com.liferay.layout.page.template.util;
 
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -67,13 +64,6 @@ public class LayoutPrototypeHelper {
 
 		return layout;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPrototypeHelper.class);
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

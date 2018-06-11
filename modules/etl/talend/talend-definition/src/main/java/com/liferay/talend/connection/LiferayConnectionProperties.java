@@ -130,6 +130,7 @@ public class LiferayConnectionProperties
 
 		if (formName.equals(Form.MAIN) || formName.equals(FORM_WIZARD)) {
 			PropertiesUtils.setHidden(form, endpoint, useOtherConnection);
+			PropertiesUtils.setHidden(form, loginType, useOtherConnection);
 			PropertiesUtils.setHidden(form, userId, useOtherConnection);
 			PropertiesUtils.setHidden(form, password, useOtherConnection);
 			PropertiesUtils.setHidden(form, anonymousLogin, useOtherConnection);

@@ -69,8 +69,8 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 			{
 				Map<String, String> orderColumnsMap = new HashMap<>();
 
-				orderColumnsMap.put("createDate", "createDate");
-				orderColumnsMap.put("oAuth2ApplicationId", "application-name");
+				orderColumnsMap.put("createDate", "authorization");
+				orderColumnsMap.put("oAuth2ApplicationId", "application-id");
 
 				addGroup(
 					dropdownGroupItem -> {

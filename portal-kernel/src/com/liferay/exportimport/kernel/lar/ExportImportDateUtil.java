@@ -544,6 +544,12 @@ public class ExportImportDateUtil {
 		}
 		else if (exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE) {
+
+			return RANGE_FROM_LAST_PUBLISH_DATE;
+		}
+		else if (exportImportConfiguration.getType() ==
+					ExportImportConfigurationConstants.
 						TYPE_SCHEDULED_PUBLISH_LAYOUT_LOCAL) {
 
 			return RANGE_FROM_LAST_PUBLISH_DATE;

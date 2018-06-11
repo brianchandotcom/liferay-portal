@@ -323,6 +323,29 @@ public class LayoutServiceSoap {
 	}
 
 	/**
+	* Returns primary key of the matching default layout for the group
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @return the primary key of the default layout for the group; {@link
+	LayoutConstants#DEFAULT_PLID}) otherwise
+	*/
+	public static long getDefaultPlid(long groupId, boolean privateLayout)
+		throws RemoteException {
+		try {
+			long returnValue = LayoutServiceUtil.getDefaultPlid(groupId,
+					privateLayout);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the primary key of the default layout for the group.
 	*
 	* @param groupId the primary key of the group

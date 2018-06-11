@@ -1160,10 +1160,13 @@ public class StagingImpl implements Staging {
 						TYPE_PUBLISH_LAYOUT_LOCAL) ||
 				(exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
-					TYPE_PUBLISH_LAYOUT_REMOTE) ||
+						TYPE_PUBLISH_LAYOUT_REMOTE) ||
 				(exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
-					TYPE_PUBLISH_PORTLET_LOCAL))) {
+						TYPE_PUBLISH_PORTLET_LOCAL) ||
+				(exportImportConfiguration.getType() !=
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,
@@ -1362,10 +1365,13 @@ public class StagingImpl implements Staging {
 						TYPE_PUBLISH_LAYOUT_LOCAL) ||
 				(exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
-					TYPE_PUBLISH_LAYOUT_REMOTE) ||
+						TYPE_PUBLISH_LAYOUT_REMOTE) ||
 				(exportImportConfiguration.getType() ==
 					ExportImportConfigurationConstants.
-					TYPE_PUBLISH_PORTLET_LOCAL))) {
+						TYPE_PUBLISH_PORTLET_LOCAL) ||
+				(exportImportConfiguration.getType() !=
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_REMOTE))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,

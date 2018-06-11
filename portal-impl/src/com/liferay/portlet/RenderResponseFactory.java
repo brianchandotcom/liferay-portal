@@ -32,6 +32,10 @@ import javax.servlet.http.HttpServletResponse;
 @ProviderType
 public class RenderResponseFactory {
 
+	public static LiferayRenderResponse create() {
+		return new RenderResponseImpl();
+	}
+
 	public static LiferayRenderResponse create(
 		RenderRequest renderRequest, HttpServletResponse response) {
 

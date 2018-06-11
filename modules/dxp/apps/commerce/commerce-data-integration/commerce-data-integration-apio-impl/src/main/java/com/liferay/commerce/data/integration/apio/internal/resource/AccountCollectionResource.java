@@ -41,11 +41,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -97,49 +98,40 @@ public class AccountCollectionResource
 		).identifier(
 			Organization::getOrganizationId
 		).addBidirectionalModel(
-			"website", "accounts", WebSiteIdentifier.class,
-			this::_getSiteId
+			"website", "accounts", WebSiteIdentifier.class, this::_getSiteId
 		).addLinkedModel(
 			"website", WebSiteIdentifier.class, this::_getSiteId
 		).addNumberList(
-			"members", this::getUserIds
+			"members", this::_getUserIds
 		).addString(
 			"name", Organization::getName
 		).build();
-	}
-
-	private List<Number> getUserIds(Organization organization) {
-		List<Number> userIds = new ArrayList<>();
-		try {
-			long[] ids = _userService.getOrganizationUserIds(organization.getOrganizationId());
-			for (long id : ids) {
-                userIds.add(id);
-			}
-		} catch (PortalException e) {
-            _log.error("Error to retrieve users", e);
-		}
-		return userIds;
 	}
 
 	private Organization _addAccount(
 			Long webSiteId, AccountForm accountCreateForm)
 		throws Exception {
 
-        Group group = _groupLocalService.getGroup(webSiteId);
-        Long parentOrganizationId = group.getClassPK();
+		Group group = _groupLocalService.getGroup(webSiteId);
+
+		Long parentOrganizationId = group.getClassPK();
 
 		return _accountHelper.createAccount(
-			accountCreateForm.getName(), parentOrganizationId, accountCreateForm.getUserIds());
+			accountCreateForm.getName(), parentOrganizationId,
+			accountCreateForm.getUserIds());
 	}
 
 	private PageItems<Organization> _getPageItems(
-		Pagination pagination, Long webSiteId, Company company) throws PortalException {
+			Pagination pagination, Long webSiteId, Company company)
+		throws PortalException {
 
 		long userId = PrincipalThreadLocal.getUserId();
 
-		BaseModelSearchResult<Organization> result = _commerceOrganizationService.searchOrganizationsByGroup(webSiteId,
-				userId, CommerceOrganizationConstants.TYPE_ACCOUNT, StringPool.BLANK,
-				pagination.getStartPosition(), pagination.getEndPosition(), null);
+		BaseModelSearchResult<Organization> result =
+			_commerceOrganizationService.searchOrganizationsByGroup(
+				webSiteId, userId, CommerceOrganizationConstants.TYPE_ACCOUNT,
+				StringPool.BLANK, pagination.getStartPosition(),
+				pagination.getEndPosition(), null);
 
 		return new PageItems<>(result.getBaseModels(), result.getLength());
 	}
@@ -156,15 +148,35 @@ public class AccountCollectionResource
 		);
 	}
 
+	private List<Number> _getUserIds(Organization organization) {
+		List<Number> userIds = new ArrayList<>();
+
+		try {
+			long[] ids = _userService.getOrganizationUserIds(
+				organization.getOrganizationId());
+
+			for (long id : ids) {
+				userIds.add(id);
+			}
+		}
+		catch (PortalException pe) {
+			_log.error("Error to retrieve users", pe);
+		}
+
+		return userIds;
+	}
+
 	private Organization _updateAccount(
 			Long accountId, AccountForm accountCreateForm, Company company)
 		throws PortalException {
 
 		return _accountHelper.updateAccount(
-			accountId, accountCreateForm.getName(), accountCreateForm.getUserIds());
+			accountId, accountCreateForm.getName(),
+			accountCreateForm.getUserIds());
 	}
 
-    private static final Log _log = LogFactoryUtil.getLog(AccountCollectionResource.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountCollectionResource.class);
 
 	@Reference
 	private AccountHelper _accountHelper;
@@ -173,10 +185,10 @@ public class AccountCollectionResource
 	private AccountPermissionChecker _accountPermissionChecker;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
-	private CommerceOrganizationService _commerceOrganizationService;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private UserService _userService;

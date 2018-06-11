@@ -14,25 +14,19 @@
 
 package com.liferay.commerce.data.integration.apio.internal.util;
 
-import aQute.bnd.osgi.resource.FilterParser;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.List;
-import java.util.stream.LongStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,6 +36,43 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = AccountHelper.class)
 public class AccountHelper {
+
+	public Organization createAccount(
+			String name, Long parentOrganizationId, List<Long> userIds)
+		throws PortalException {
+
+		ServiceContext serviceContext = _getServiceContext();
+
+		Organization organization =
+			_commerceOrganizationLocalService.addOrganization(
+				parentOrganizationId, name,
+				CommerceOrganizationConstants.TYPE_ACCOUNT, serviceContext);
+
+		_addMembers(userIds, organization);
+
+		return organization;
+	}
+
+	public Organization updateAccount(
+			Long organizationId, String name, List<Long> userIds)
+		throws PortalException {
+
+		ServiceContext serviceContext = _getServiceContext();
+
+		Organization organization = _organizationLocalService.getOrganization(
+			organizationId);
+
+		organization = _commerceOrganizationLocalService.updateOrganization(
+			organization.getOrganizationId(),
+			organization.getParentOrganizationId(), name,
+			organization.getType(), organization.getRegionId(),
+			organization.getCountryId(), organization.getStatusId(),
+			organization.getComments(), serviceContext);
+
+		_addMembers(userIds, organization);
+
+		return organization;
+	}
 
 	private void _addMembers(List<Long> userIds, Organization organization) {
 		if (userIds != null) {
@@ -61,36 +92,6 @@ public class AccountHelper {
 				}
 			}
 		}
-	}
-
-	public Organization createAccount(String name, Long parentOrganizationId, List<Long> userIds)
-		throws PortalException {
-
-		ServiceContext serviceContext = _getServiceContext();
-
-		Organization organization = _commerceOrganizationLocalService.addOrganization(parentOrganizationId, name, CommerceOrganizationConstants.TYPE_ACCOUNT,
-                serviceContext);
-
-		_addMembers(userIds, organization);
-
-		return organization;
-	}
-
-	public Organization updateAccount(Long organizationId, String name, List<Long> userIds)
-		throws PortalException {
-
-		ServiceContext serviceContext = _getServiceContext();
-
-		Organization organization = _organizationLocalService.getOrganization(organizationId);
-		organization.setName(name);
-
-		organization = _commerceOrganizationLocalService.updateOrganization(organization.getOrganizationId(), organization.getParentOrganizationId(),
-			organization.getName(), organization.getType(), organization.getRegionId(), organization.getCountryId(),
-			organization.getStatusId(), organization.getComments(), serviceContext);
-
-		_addMembers(userIds, organization);
-
-		return organization;
 	}
 
 	private ServiceContext _getServiceContext() throws PortalException {
@@ -116,12 +117,12 @@ public class AccountHelper {
 	private static final Log _log = LogFactoryUtil.getLog(AccountHelper.class);
 
 	@Reference
+	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
+
+	@Reference
 	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private CommerceOrganizationLocalService _commerceOrganizationLocalService;
 
 }

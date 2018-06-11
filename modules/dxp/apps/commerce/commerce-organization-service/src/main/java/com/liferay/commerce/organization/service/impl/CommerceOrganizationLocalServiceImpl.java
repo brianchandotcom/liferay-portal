@@ -325,6 +325,22 @@ public class CommerceOrganizationLocalServiceImpl
 
 	@Override
 	public Organization updateOrganization(
+			long organizationId, long parentOrganizationId, String name,
+			String type, long regionId, long countryId, long statusId,
+			String comments, ServiceContext serviceContext)
+		throws PortalException {
+
+		Organization organization = organizationLocalService.getOrganization(
+			organizationId);
+
+		return organizationLocalService.updateOrganization(
+			organization.getCompanyId(), organizationId, parentOrganizationId,
+			name, type, regionId, countryId, statusId, comments, false, null,
+			false, serviceContext);
+	}
+
+	@Override
+	public Organization updateOrganization(
 			long organizationId, String name, long emailAddressId,
 			String address, long addressId, String street1, String street2,
 			String street3, String city, String zip, long regionId,
@@ -350,20 +366,6 @@ public class CommerceOrganizationLocalServiceImpl
 			organization.getType(), regionId, countryId,
 			organization.getStatusId(), organization.getComments(), logo,
 			logoBytes, false, serviceContext);
-	}
-
-	@Override
-	public Organization updateOrganization(long organizationId, long parentOrganizationId,
-			String name, String type, long regionId, long countryId,
-			long statusId, String comments, ServiceContext serviceContext)
-			throws PortalException {
-
-		Organization organization = organizationLocalService.getOrganization(
-				organizationId);
-
-		return organizationLocalService.updateOrganization(organization.getCompanyId(), organizationId, parentOrganizationId,
-				name, type, regionId, countryId, statusId, comments, false, null, false,
-				serviceContext);
 	}
 
 	protected SearchContext buildSearchContext(

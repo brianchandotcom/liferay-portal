@@ -77,6 +77,11 @@ public class CommerceOrganizationServiceImpl
 			organizationId, emailAddresses, serviceContext);
 	}
 
+	public void deleteOrganization(long organizationId) throws PortalException {
+		organizationLocalService.deleteOrganization(organizationId);
+
+	}
+
 	@Override
 	public Organization fetchOrganization(long organizationId)
 		throws PortalException {
@@ -98,11 +103,6 @@ public class CommerceOrganizationServiceImpl
 		_checkOrganization(organizationId);
 
 		return organizationLocalService.getOrganization(organizationId);
-	}
-
-	@Override
-	public void deleteOrganization(long organizationId) throws PortalException {
-		organizationLocalService.deleteOrganization(organizationId);
 	}
 
 	@Override

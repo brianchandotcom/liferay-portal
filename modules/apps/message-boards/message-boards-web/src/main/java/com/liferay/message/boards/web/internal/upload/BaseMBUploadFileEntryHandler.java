@@ -28,6 +28,8 @@ import com.liferay.upload.UploadFileEntryHandler;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
@@ -47,8 +49,6 @@ public abstract class BaseMBUploadFileEntryHandler
 		try (InputStream inputStream = getFileAsStream(uploadPortletRequest)) {
 			String tempFileName = TempFileEntryUtil.getTempFileName(
 				getFileName(uploadPortletRequest));
-
-			MBMessageService mbMessageService = getMBMessageService();
 
 			return mbMessageService.addTempAttachment(
 				themeDisplay.getScopeGroupId(), categoryId,
@@ -72,8 +72,9 @@ public abstract class BaseMBUploadFileEntryHandler
 		return uploadPortletRequest.getFileName(getParameterName());
 	}
 
-	protected abstract MBMessageService getMBMessageService();
-
 	protected abstract String getParameterName();
+
+	@Reference
+	protected MBMessageService mbMessageService;
 
 }

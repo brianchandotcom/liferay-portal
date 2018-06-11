@@ -92,6 +92,14 @@ public class BNDBundleCheck extends BaseFileCheck {
 			String value = StringUtil.toLowerCase(s.trim());
 
 			if (Validator.isNull(value)) {
+				content = _updateInstruction(
+					content, "Liferay-Releng-Bundle", "false");
+				content = _updateInstruction(
+					content, "Liferay-Releng-Fix-Delivery-Method",
+					StringPool.BLANK);
+				content = _updateInstruction(
+					content, "Liferay-Releng-Portal-Required", "false");
+
 				continue;
 			}
 

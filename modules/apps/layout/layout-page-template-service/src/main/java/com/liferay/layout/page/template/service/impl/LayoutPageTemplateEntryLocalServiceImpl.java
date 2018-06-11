@@ -15,6 +15,8 @@
 package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
@@ -23,6 +25,8 @@ import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntr
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -200,6 +204,23 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				classNameLocalService.getClassNameId(
 					LayoutPageTemplateEntry.class.getName()),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+		// Dynamic data mapping structure link
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
+			Validator.isNotNull(layoutPageTemplateEntry.getClassTypeId())) {
+
+			DDMStructureLink ddmStructureLink =
+				_ddmStructureLinkLocalService.getUniqueStructureLink(
+					classNameLocalService.getClassNameId(
+						LayoutPageTemplateEntry.class),
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+			_ddmStructureLinkLocalService.deleteDDMStructureLink(
+				ddmStructureLink);
+		}
 
 		// Resources
 
@@ -418,8 +439,15 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setClassNameId(classNameId);
 		layoutPageTemplateEntry.setClassTypeId(classTypeId);
 
-		return layoutPageTemplateEntryLocalService.
-			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
+
+		// Dynamic data mapping structure link
+
+		_ddmStructureLinkLocalService.addStructureLink(
+			classNameLocalService.getClassNameId(LayoutPageTemplateEntry.class),
+			layoutPageTemplateEntryId, classTypeId);
+
+		return layoutPageTemplateEntry;
 	}
 
 	@Override
@@ -499,12 +527,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplateEntryLocalServiceImpl.class);
+
 	@ServiceReference(type = AssetDisplayPageEntryLocalService.class)
 	private AssetDisplayPageEntryLocalService
 		_assetDisplayPageEntryLocalService;
 
 	@ServiceReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;
+
+	@ServiceReference(type = DDMStructureLinkLocalService.class)
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@ServiceReference(type = FragmentEntryLinkLocalService.class)
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

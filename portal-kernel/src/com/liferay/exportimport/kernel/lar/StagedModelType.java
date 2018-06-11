@@ -16,6 +16,7 @@ package com.liferay.exportimport.kernel.lar;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -36,6 +37,33 @@ public class StagedModelType {
 	public static final int REFERRER_CLASS_NAME_ID_ALL = -1;
 
 	public static final int REFERRER_CLASS_NAME_ID_ANY = -2;
+
+	public static StagedModelType parse(String stagedModelTypeString) {
+		if (Validator.isNull(stagedModelTypeString)) {
+			return null;
+		}
+
+		try {
+			int pos = stagedModelTypeString.indexOf(CharPool.POUND);
+
+			if (pos == -1) {
+				return new StagedModelType(stagedModelTypeString);
+			}
+
+			String className = stagedModelTypeString.substring(0, pos);
+
+			if (Validator.isNull(className)) {
+				return null;
+			}
+
+			String referrerClassName = stagedModelTypeString.substring(pos + 1);
+
+			return new StagedModelType(className, referrerClassName);
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
 
 	public StagedModelType(Class<?> clazz) {
 		setClassName(clazz.getName());

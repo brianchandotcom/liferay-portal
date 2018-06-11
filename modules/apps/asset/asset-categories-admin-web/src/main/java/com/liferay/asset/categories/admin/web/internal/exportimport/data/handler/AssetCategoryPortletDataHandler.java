@@ -20,11 +20,13 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
@@ -162,6 +164,19 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new String[] {
+					AssetCategory.class.getName(),
+					AssetVocabulary.class.getName()
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery categoryActionableDynamicQuery =
 			_assetCategoryLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
@@ -232,5 +247,8 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 
 	private AssetCategoryLocalService _assetCategoryLocalService;
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

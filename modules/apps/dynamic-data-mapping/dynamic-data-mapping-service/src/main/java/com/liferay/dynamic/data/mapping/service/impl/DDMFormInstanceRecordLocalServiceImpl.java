@@ -185,15 +185,18 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return ddmFormInstanceRecord;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public void deleteFormInstanceRecord(long ddmFormInstanceRecordId)
+	public DDMFormInstanceRecord deleteFormInstanceRecord(
+			long ddmFormInstanceRecordId)
 		throws PortalException {
 
 		DDMFormInstanceRecord ddmFormInstanceRecord =
 			ddmFormInstanceRecordPersistence.findByPrimaryKey(
 				ddmFormInstanceRecordId);
 
-		deleteFormInstanceRecord(ddmFormInstanceRecord);
+		return ddmFormInstanceRecordLocalService.deleteFormInstanceRecord(
+			ddmFormInstanceRecord);
 	}
 
 	@Override

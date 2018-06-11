@@ -32,20 +32,30 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.service.http.GroupServiceHttp;
+import com.liferay.portal.service.http.LayoutServiceHttp;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -235,21 +245,63 @@ public class ExportImportChangesetMVCActionCommandImpl
 			}
 
 			long liveGroupId = 0;
+			long targetPlid = themeDisplay.getPlid();
 
 			if (scopeGroup.isStagingGroup()) {
 				liveGroupId = scopeGroup.getLiveGroupId();
 			}
 			else if (scopeGroup.isStagedRemotely()) {
 				liveGroupId = scopeGroup.getRemoteLiveGroupId();
+
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				User user = permissionChecker.getUser();
+
+				Group stagingGroup = scopeGroup;
+
+				if (scopeGroup.isLayout()) {
+					stagingGroup = scopeGroup.getParentGroup();
+				}
+
+				UnicodeProperties typeSettingsProperties =
+					stagingGroup.getTypeSettingsProperties();
+
+				HttpPrincipal httpPrincipal = new HttpPrincipal(
+					_staging.buildRemoteURL(typeSettingsProperties),
+					user.getLogin(), user.getPassword(),
+					user.isPasswordEncrypted());
+
+				Thread currentThread = Thread.currentThread();
+
+				ClassLoader contextClassLoader =
+					currentThread.getContextClassLoader();
+
+				try {
+					currentThread.setContextClassLoader(
+						ClassLoaderUtil.getPortalClassLoader());
+
+					Group liveGroup = GroupServiceHttp.getGroup(
+						httpPrincipal, liveGroupId);
+
+					Group controlPanelGroup = GroupServiceHttp.getGroup(
+						httpPrincipal, liveGroup.getCompanyId(),
+						GroupConstants.CONTROL_PANEL);
+
+					targetPlid = LayoutServiceHttp.getDefaultPlid(
+						httpPrincipal, controlPanelGroup.getGroupId(), true);
+				}
+				finally {
+					currentThread.setContextClassLoader(contextClassLoader);
+				}
 			}
 
 			Map<String, Serializable> settingsMap =
 				_exportImportConfigurationSettingsMapFactory.
 					buildPublishPortletSettingsMap(
 						themeDisplay.getUser(), themeDisplay.getScopeGroupId(),
-						themeDisplay.getPlid(), liveGroupId,
-						themeDisplay.getPlid(), ChangesetPortletKeys.CHANGESET,
-						parameterMap);
+						themeDisplay.getPlid(), liveGroupId, targetPlid,
+						ChangesetPortletKeys.CHANGESET, parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
 				_exportImportConfigurationLocalService.
@@ -286,6 +338,9 @@ public class ExportImportChangesetMVCActionCommandImpl
 
 	@Reference
 	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

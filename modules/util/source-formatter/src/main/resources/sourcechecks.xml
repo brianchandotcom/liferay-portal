@@ -369,6 +369,9 @@
 		<check name="XMLResourceActionsFileCheck" />
 		<check name="XMLServiceEntityNameCheck" />
 		<check name="XMLServiceFileCheck" />
+		<check name="XMLServiceReferenceCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="XMLSolrSchemaFileCheck" />
 		<check name="XMLSuppressionsFileCheck" />
 		<check name="XMLTagAttributesCheck" />

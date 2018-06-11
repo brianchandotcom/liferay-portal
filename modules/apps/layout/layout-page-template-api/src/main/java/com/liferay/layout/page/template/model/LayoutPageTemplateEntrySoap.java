@@ -51,11 +51,11 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		soapModel.setPreviewFileEntryId(model.getPreviewFileEntryId());
 		soapModel.setDefaultTemplate(model.isDefaultTemplate());
 		soapModel.setLayoutPrototypeId(model.getLayoutPrototypeId());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
 		soapModel.setStatusByUserName(model.getStatusByUserName());
 		soapModel.setStatusDate(model.getStatusDate());
-		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -244,6 +244,14 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		_layoutPrototypeId = layoutPrototypeId;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	public int getStatus() {
 		return _status;
 	}
@@ -276,14 +284,6 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	private String _uuid;
 	private long _layoutPageTemplateEntryId;
 	private long _groupId;
@@ -300,9 +300,9 @@ public class LayoutPageTemplateEntrySoap implements Serializable {
 	private long _previewFileEntryId;
 	private boolean _defaultTemplate;
 	private long _layoutPrototypeId;
+	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private Date _lastPublishDate;
 }

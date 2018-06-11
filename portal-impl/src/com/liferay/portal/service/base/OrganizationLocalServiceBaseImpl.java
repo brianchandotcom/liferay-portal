@@ -62,8 +62,6 @@ import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationFinder;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
-import com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder;
-import com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyRelPersistence;
 import com.liferay.portal.kernel.service.persistence.PhonePersistence;
 import com.liferay.portal.kernel.service.persistence.RegionPersistence;
@@ -1200,63 +1198,6 @@ public abstract class OrganizationLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the password policy local service.
-	 *
-	 * @return the password policy local service
-	 */
-	public com.liferay.portal.kernel.service.PasswordPolicyLocalService getPasswordPolicyLocalService() {
-		return passwordPolicyLocalService;
-	}
-
-	/**
-	 * Sets the password policy local service.
-	 *
-	 * @param passwordPolicyLocalService the password policy local service
-	 */
-	public void setPasswordPolicyLocalService(
-		com.liferay.portal.kernel.service.PasswordPolicyLocalService passwordPolicyLocalService) {
-		this.passwordPolicyLocalService = passwordPolicyLocalService;
-	}
-
-	/**
-	 * Returns the password policy persistence.
-	 *
-	 * @return the password policy persistence
-	 */
-	public PasswordPolicyPersistence getPasswordPolicyPersistence() {
-		return passwordPolicyPersistence;
-	}
-
-	/**
-	 * Sets the password policy persistence.
-	 *
-	 * @param passwordPolicyPersistence the password policy persistence
-	 */
-	public void setPasswordPolicyPersistence(
-		PasswordPolicyPersistence passwordPolicyPersistence) {
-		this.passwordPolicyPersistence = passwordPolicyPersistence;
-	}
-
-	/**
-	 * Returns the password policy finder.
-	 *
-	 * @return the password policy finder
-	 */
-	public PasswordPolicyFinder getPasswordPolicyFinder() {
-		return passwordPolicyFinder;
-	}
-
-	/**
-	 * Sets the password policy finder.
-	 *
-	 * @param passwordPolicyFinder the password policy finder
-	 */
-	public void setPasswordPolicyFinder(
-		PasswordPolicyFinder passwordPolicyFinder) {
-		this.passwordPolicyFinder = passwordPolicyFinder;
-	}
-
-	/**
 	 * Returns the password policy rel local service.
 	 *
 	 * @return the password policy rel local service
@@ -1677,12 +1618,6 @@ public abstract class OrganizationLocalServiceBaseImpl
 	protected com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService;
 	@BeanReference(type = ExpandoRowPersistence.class)
 	protected ExpandoRowPersistence expandoRowPersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.PasswordPolicyLocalService.class)
-	protected com.liferay.portal.kernel.service.PasswordPolicyLocalService passwordPolicyLocalService;
-	@BeanReference(type = PasswordPolicyPersistence.class)
-	protected PasswordPolicyPersistence passwordPolicyPersistence;
-	@BeanReference(type = PasswordPolicyFinder.class)
-	protected PasswordPolicyFinder passwordPolicyFinder;
 	@BeanReference(type = com.liferay.portal.kernel.service.PasswordPolicyRelLocalService.class)
 	protected com.liferay.portal.kernel.service.PasswordPolicyRelLocalService passwordPolicyRelLocalService;
 	@BeanReference(type = PasswordPolicyRelPersistence.class)

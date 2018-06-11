@@ -123,5 +123,6 @@
 		<suppress checks="JavaAPISignatureCheck" files="modules/private/apps/commerce/.*" />
 		<suppress checks="JavaConfigurationCategoryCheck" files="modules/private/.*" />
 		<suppress checks="JavaDeprecatedKernelClassesCheck" files="modules/private/.*" />
+		<suppress checks="XMLServiceReferenceCheck" files="modules/private/.*" />
 	</source-check>
 </suppressions>

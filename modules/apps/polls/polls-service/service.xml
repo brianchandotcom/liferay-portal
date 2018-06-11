@@ -93,7 +93,6 @@
 		<reference entity="PollsChoice" package-path="com.liferay.polls" />
 		<reference entity="PollsVote" package-path="com.liferay.polls" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="PollsVote" remote-service="true" uuid="true">

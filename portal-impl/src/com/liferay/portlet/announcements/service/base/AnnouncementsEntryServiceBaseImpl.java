@@ -162,25 +162,6 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the mail remote service.
-	 *
-	 * @return the mail remote service
-	 */
-	public com.liferay.mail.kernel.service.MailService getMailService() {
-		return mailService;
-	}
-
-	/**
-	 * Sets the mail remote service.
-	 *
-	 * @param mailService the mail remote service
-	 */
-	public void setMailService(
-		com.liferay.mail.kernel.service.MailService mailService) {
-		this.mailService = mailService;
-	}
-
-	/**
 	 * Returns the company local service.
 	 *
 	 * @return the company local service
@@ -873,8 +854,6 @@ public abstract class AnnouncementsEntryServiceBaseImpl extends BaseServiceImpl
 	protected AnnouncementsEntryFinder announcementsEntryFinder;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.mail.kernel.service.MailService.class)
-	protected com.liferay.mail.kernel.service.MailService mailService;
 	@BeanReference(type = com.liferay.portal.kernel.service.CompanyLocalService.class)
 	protected com.liferay.portal.kernel.service.CompanyLocalService companyLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.CompanyService.class)

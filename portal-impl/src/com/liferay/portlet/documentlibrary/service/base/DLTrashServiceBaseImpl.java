@@ -105,25 +105,6 @@ public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
 		this.counterLocalService = counterLocalService;
 	}
 
-	/**
-	 * Returns the dl app helper local service.
-	 *
-	 * @return the dl app helper local service
-	 */
-	public com.liferay.document.library.kernel.service.DLAppHelperLocalService getDLAppHelperLocalService() {
-		return dlAppHelperLocalService;
-	}
-
-	/**
-	 * Sets the dl app helper local service.
-	 *
-	 * @param dlAppHelperLocalService the dl app helper local service
-	 */
-	public void setDLAppHelperLocalService(
-		com.liferay.document.library.kernel.service.DLAppHelperLocalService dlAppHelperLocalService) {
-		this.dlAppHelperLocalService = dlAppHelperLocalService;
-	}
-
 	public void afterPropertiesSet() {
 	}
 
@@ -170,6 +151,4 @@ public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
 	protected DLTrashService dlTrashService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLAppHelperLocalService.class)
-	protected com.liferay.document.library.kernel.service.DLAppHelperLocalService dlAppHelperLocalService;
 }

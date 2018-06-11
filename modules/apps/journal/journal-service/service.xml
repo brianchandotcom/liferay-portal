@@ -215,16 +215,13 @@
 		<reference entity="JournalArticleResource" package-path="com.liferay.journal" />
 		<reference entity="JournalContentSearch" package-path="com.liferay.journal" />
 		<reference entity="JournalFolder" package-path="com.liferay.journal" />
-		<reference entity="Mail" package-path="com.liferay.mail" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Image" package-path="com.liferay.portal" />
-		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
-		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetCategory" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
@@ -414,7 +411,6 @@
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="ExpandoValue" package-path="com.liferay.portlet.expando" />
 	</entity>
@@ -502,7 +498,6 @@
 
 		<reference entity="JournalArticle" package-path="com.liferay.journal" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
-		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />

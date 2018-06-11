@@ -85,9 +85,6 @@
 		<!-- References -->
 
 		<reference entity="OAuth2ScopeGrant" package-path="com.liferay.oauth2.provider" />
-		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<entity json-enabled="false" local-service="true" name="OAuth2Authorization" remote-service="true">
 
@@ -137,7 +134,6 @@
 
 		<!-- References -->
 
-		<reference entity="OAuth2Application" package-path="com.liferay.oauth2.provider" />
 		<reference entity="OAuth2ScopeGrant" package-path="com.liferay.oauth2.provider" />
 	</entity>
 	<entity json-enabled="false" local-service="true" name="OAuth2ScopeGrant" remote-service="false">
@@ -176,7 +172,6 @@
 
 		<!-- References -->
 
-		<reference entity="OAuth2ApplicationScopeAliases" package-path="com.liferay.oauth2.provider" />
 		<reference entity="OAuth2Authorization" package-path="com.liferay.oauth2.provider" />
 	</entity>
 	<exceptions>

@@ -65,6 +65,22 @@ public class CommercePriceFormatterTest {
 	}
 
 	@Test
+	public void testFormatCurrencyBigDecimalDefaultFormatter()
+		throws Exception {
+
+		String regex = "^[" + _SYMBOLS + "]\\d{1,3}(\\,\\d{3})*\\.\\d\\d$";
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+				_group.getGroupId());
+
+		String formattedPrice = _commercePriceFormatter.format(
+			commerceCurrency, _price, Locale.US);
+
+		Assert.assertTrue(formattedPrice.matches(regex));
+	}
+
+	@Test
 	public void testFormatCurrencyBigDecimalLocaleFR() throws Exception {
 		String regexFR = "^\\d{1,3}(.\\d{3})*,\\d\\d\\s[" + _SYMBOLS + "]$";
 
@@ -73,8 +89,6 @@ public class CommercePriceFormatterTest {
 				_group.getGroupId());
 
 		commerceCurrency.setFormatPattern("###,##0.00 $", Locale.FRANCE);
-
-		_commerceCurrencyLocalService.updateCommerceCurrency(commerceCurrency);
 
 		Locale.setDefault(Locale.FRANCE);
 
@@ -94,8 +108,6 @@ public class CommercePriceFormatterTest {
 
 		commerceCurrency.setFormatPattern("$ ###,##0.00", Locale.ITALY);
 
-		_commerceCurrencyLocalService.updateCommerceCurrency(commerceCurrency);
-
 		Locale.setDefault(Locale.ITALY);
 
 		String formattedPrice = _commercePriceFormatter.format(
@@ -113,8 +125,6 @@ public class CommercePriceFormatterTest {
 				_group.getGroupId());
 
 		commerceCurrency.setFormatPattern("$###,##0.00", Locale.US);
-
-		_commerceCurrencyLocalService.updateCommerceCurrency(commerceCurrency);
 
 		Locale.setDefault(Locale.US);
 

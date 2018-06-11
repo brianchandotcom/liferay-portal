@@ -46,7 +46,3 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:registry-api")
 }
-
-replaceSoyTranslation {
-	dependsOn transpileJS
-}

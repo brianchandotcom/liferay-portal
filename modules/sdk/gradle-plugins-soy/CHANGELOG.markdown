@@ -71,6 +71,12 @@ version 3.0.3.
 - [LPS-81900]: Update the [Liferay Portal Tools Soy Builder] dependency to
 version 3.0.4.
 
+## 3.1.6 - 2018-06-11
+
+### Added
+- [LPS-81638]: Automatically run the `replaceSoyTranslation` task after both
+`configJSModules` and `transpileJS`, if present.
+
 [Command Line Tools for Metal.js]: https://github.com/metal/metal-cli
 [Liferay Portal Tools Soy Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-soy-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -80,4 +86,5 @@ version 3.0.4.
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092
 [LPS-72750]: https://issues.liferay.com/browse/LPS-72750
 [LPS-75554]: https://issues.liferay.com/browse/LPS-75554
+[LPS-81638]: https://issues.liferay.com/browse/LPS-81638
 [LPS-81900]: https://issues.liferay.com/browse/LPS-81900

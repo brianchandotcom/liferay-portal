@@ -32,6 +32,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -55,6 +56,9 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 				project, REPLACE_SOY_TRANSLATION_TASK_NAME,
 				ReplaceSoyTranslationTask.class);
 
+		replaceSoyTranslationTask.mustRunAfter(
+			new OptionalTaskCallable(project, _CONFIG_JS_MODULES_TASK_NAME),
+			new OptionalTaskCallable(project, _TRANSPILE_JS_TASK_NAME));
 		replaceSoyTranslationTask.setDescription(
 			"Replaces 'goog.getMsg' definitions.");
 		replaceSoyTranslationTask.setGroup(BasePlugin.BUILD_GROUP);
@@ -129,6 +133,30 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			JavaPlugin.CLASSES_TASK_NAME);
 
 		classesTask.dependsOn(replaceSoyTranslationTask);
+	}
+
+	private static final String _CONFIG_JS_MODULES_TASK_NAME =
+		"configJSModules";
+
+	private static final String _TRANSPILE_JS_TASK_NAME = "transpileJS";
+
+	private static class OptionalTaskCallable implements Callable<Task> {
+
+		public OptionalTaskCallable(Project project, String name) {
+			_project = project;
+			_name = name;
+		}
+
+		@Override
+		public Task call() throws Exception {
+			TaskContainer taskContainer = _project.getTasks();
+
+			return taskContainer.findByName(_name);
+		}
+
+		private final String _name;
+		private final Project _project;
+
 	}
 
 }

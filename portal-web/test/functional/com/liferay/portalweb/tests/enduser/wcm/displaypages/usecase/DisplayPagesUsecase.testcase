@@ -401,12 +401,10 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addArticleCP">
-			<var name="webContentContent" value="Webcontent Content" />
-			<var name="webContentTitle" value="Webcontent Title" />
-		</execute>
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContentNavigator#gotoEditCP">
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Webcontent Content" />
 			<var name="webContentTitle" value="Webcontent Title" />
 		</execute>
 

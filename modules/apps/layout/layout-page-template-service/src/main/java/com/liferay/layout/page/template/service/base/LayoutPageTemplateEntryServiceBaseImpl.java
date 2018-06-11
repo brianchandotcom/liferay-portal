@@ -16,7 +16,6 @@ package com.liferay.layout.page.template.service.base;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
-import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -129,63 +128,6 @@ public abstract class LayoutPageTemplateEntryServiceBaseImpl
 	public void setCounterLocalService(
 		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the layout page template collection local service.
-	 *
-	 * @return the layout page template collection local service
-	 */
-	public com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService getLayoutPageTemplateCollectionLocalService() {
-		return layoutPageTemplateCollectionLocalService;
-	}
-
-	/**
-	 * Sets the layout page template collection local service.
-	 *
-	 * @param layoutPageTemplateCollectionLocalService the layout page template collection local service
-	 */
-	public void setLayoutPageTemplateCollectionLocalService(
-		com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService layoutPageTemplateCollectionLocalService) {
-		this.layoutPageTemplateCollectionLocalService = layoutPageTemplateCollectionLocalService;
-	}
-
-	/**
-	 * Returns the layout page template collection remote service.
-	 *
-	 * @return the layout page template collection remote service
-	 */
-	public com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService getLayoutPageTemplateCollectionService() {
-		return layoutPageTemplateCollectionService;
-	}
-
-	/**
-	 * Sets the layout page template collection remote service.
-	 *
-	 * @param layoutPageTemplateCollectionService the layout page template collection remote service
-	 */
-	public void setLayoutPageTemplateCollectionService(
-		com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService layoutPageTemplateCollectionService) {
-		this.layoutPageTemplateCollectionService = layoutPageTemplateCollectionService;
-	}
-
-	/**
-	 * Returns the layout page template collection persistence.
-	 *
-	 * @return the layout page template collection persistence
-	 */
-	public LayoutPageTemplateCollectionPersistence getLayoutPageTemplateCollectionPersistence() {
-		return layoutPageTemplateCollectionPersistence;
-	}
-
-	/**
-	 * Sets the layout page template collection persistence.
-	 *
-	 * @param layoutPageTemplateCollectionPersistence the layout page template collection persistence
-	 */
-	public void setLayoutPageTemplateCollectionPersistence(
-		LayoutPageTemplateCollectionPersistence layoutPageTemplateCollectionPersistence) {
-		this.layoutPageTemplateCollectionPersistence = layoutPageTemplateCollectionPersistence;
 	}
 
 	/**
@@ -376,12 +318,6 @@ public abstract class LayoutPageTemplateEntryServiceBaseImpl
 	protected LayoutPageTemplateEntryPersistence layoutPageTemplateEntryPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService.class)
-	protected com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService layoutPageTemplateCollectionLocalService;
-	@BeanReference(type = com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService.class)
-	protected com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService layoutPageTemplateCollectionService;
-	@BeanReference(type = LayoutPageTemplateCollectionPersistence.class)
-	protected LayoutPageTemplateCollectionPersistence layoutPageTemplateCollectionPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)

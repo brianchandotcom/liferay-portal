@@ -166,9 +166,18 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 
 						<%
 						boolean isLatestVersion = fileVersion.equals(fileEntry.getLatestFileVersion());
+
+						String urlLabel = null;
+
+						if (isLatestVersion) {
+							urlLabel = LanguageUtil.get(resourceBundle, "latest-version-url");
+						}
+						else {
+							urlLabel = LanguageUtil.format(request, "version-x-url", fileVersion.getVersion());
+						}
 						%>
 
-						<aui:input name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
+						<aui:input label="<%= urlLabel %>" name="url" type="resource" value="<%= DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, !isLatestVersion, true) %>" />
 
 						<c:if test="<%= portletDisplay.isWebDAVEnabled() && fileEntry.isSupportsSocial() && isLatestVersion %>">
 
@@ -328,6 +337,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 								<liferay-ui:panel
 									collapsible="<%= true %>"
 									cssClass="metadata"
+									defaultState="closed"
 									extended="<%= true %>"
 									id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>'
 									markupView="lexicon"
@@ -363,6 +373,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 					<liferay-ui:panel
 						collapsible="<%= true %>"
 						cssClass="lfr-custom-fields"
+						defaultState="closed"
 						id="documentLibraryCustomFieldsPanel"
 						markupView="lexicon"
 						persistState="<%= true %>"
@@ -399,6 +410,7 @@ if (dlViewFileVersionDisplayContext.isVersionInfoVisible()) {
 							<liferay-ui:panel
 								collapsible="<%= true %>"
 								cssClass="lfr-asset-metadata"
+								defaultState="closed"
 								id='<%= "documentLibraryMetadataPanel" + StringPool.UNDERLINE + ddmStructure.getStructureId() %>'
 								markupView="lexicon"
 								persistState="<%= true %>"

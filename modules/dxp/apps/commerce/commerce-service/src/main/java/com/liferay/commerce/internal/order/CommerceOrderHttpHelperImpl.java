@@ -106,25 +106,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 		long plid = _portal.getPlidFromPortletId(
-			groupId, CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
-
-		if (plid > 0) {
-			PortletURL portletURL = _getPortletURL(
-				httpServletRequest,
-				CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
-
-			if (commerceOrder != null) {
-				portletURL.setParameter(
-					"mvcRenderCommandName", "editCommerceOrder");
-				portletURL.setParameter(
-					"commerceOrderId",
-					String.valueOf(commerceOrder.getCommerceOrderId()));
-			}
-
-			return portletURL;
-		}
-
-		plid = _portal.getPlidFromPortletId(
 			groupId, CommercePortletKeys.COMMERCE_CART_CONTENT);
 
 		if (plid > 0) {
@@ -142,6 +123,25 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			if (commerceOrder != null) {
 				portletURL.setParameter(
 					"mvcRenderCommandName", "viewCommerceOrderItems");
+				portletURL.setParameter(
+					"commerceOrderId",
+					String.valueOf(commerceOrder.getCommerceOrderId()));
+			}
+
+			return portletURL;
+		}
+
+		plid = _portal.getPlidFromPortletId(
+			groupId, CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
+
+		if (plid > 0) {
+			PortletURL portletURL = _getPortletURL(
+				httpServletRequest,
+				CommercePortletKeys.COMMERCE_ORGANIZATION_ORDER);
+
+			if (commerceOrder != null) {
+				portletURL.setParameter(
+					"mvcRenderCommandName", "editCommerceOrder");
 				portletURL.setParameter(
 					"commerceOrderId",
 					String.valueOf(commerceOrder.getCommerceOrderId()));

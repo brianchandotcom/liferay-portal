@@ -12,23 +12,14 @@
  * details.
  */
 
-package com.liferay.layout.internal.xstream.configurator;
+package com.liferay.layout.page.template.internal.xstream.configurator;
 
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
-import com.liferay.layout.internal.model.adapter.StagedLayoutSetImpl;
-import com.liferay.layout.set.model.adapter.StagedLayoutSet;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
-import com.liferay.portal.kernel.model.LayoutStagingHandler;
-import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.layout.page.template.model.impl.LayoutPageTemplateCollectionImpl;
+import com.liferay.layout.page.template.model.impl.LayoutPageTemplateEntryImpl;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.model.impl.LayoutBranchImpl;
-import com.liferay.portal.model.impl.LayoutImpl;
-import com.liferay.portal.model.impl.LayoutRevisionImpl;
-import com.liferay.portal.model.impl.LayoutSetBranchImpl;
-import com.liferay.portal.model.impl.LayoutSetImpl;
 import com.liferay.xstream.configurator.XStreamConfigurator;
 
 import java.util.List;
@@ -37,14 +28,15 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Pavel Savinov
  */
 @Component(immediate = true, service = XStreamConfigurator.class)
-public class LayoutXStreamConfigurator implements XStreamConfigurator {
+public class LayoutPageTemplateXStreamConfigurator
+	implements XStreamConfigurator {
 
 	@Override
 	public List<XStreamType> getAllowedXStreamTypes() {
-		return ListUtil.toList(_xStreamTypes);
+		return null;
 	}
 
 	@Override
@@ -60,25 +52,14 @@ public class LayoutXStreamConfigurator implements XStreamConfigurator {
 	@Activate
 	protected void activate() {
 		_xStreamAliases = new XStreamAlias[] {
-			new XStreamAlias(LayoutImpl.class, "Layout"),
-			new XStreamAlias(StagedLayoutSetImpl.class, "StagedLayoutSet")
-		};
-
-		_xStreamTypes = new XStreamType[] {
-			new XStreamType(LayoutBranchImpl.class),
-			new XStreamType(LayoutRevisionImpl.class),
-			new XStreamType(LayoutSet.class),
-			new XStreamType(LayoutSetBranchImpl.class),
-			new XStreamType(LayoutSetImpl.class),
-			new XStreamType(LayoutSetStagingHandler.class),
-			new XStreamType(LayoutStagingHandler.class),
-			new XStreamType(ModelWrapper.class),
-			new XStreamType(StagedLayoutSet.class),
-			new XStreamType(StagedLayoutSetImpl.class)
+			new XStreamAlias(
+				LayoutPageTemplateCollectionImpl.class,
+				"LayoutPageTemplateCollection"),
+			new XStreamAlias(
+				LayoutPageTemplateEntryImpl.class, "LayoutPageTemplateEntry")
 		};
 	}
 
 	private XStreamAlias[] _xStreamAliases;
-	private XStreamType[] _xStreamTypes;
 
 }

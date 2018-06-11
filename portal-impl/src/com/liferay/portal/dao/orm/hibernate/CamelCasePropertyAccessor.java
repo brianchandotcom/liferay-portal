@@ -47,11 +47,9 @@ public class CamelCasePropertyAccessor extends LiferayPropertyAccessor {
 			return propertyName;
 		}
 
-		char[] chars = propertyName.toCharArray();
-
-		char c0 = chars[0];
-		char c1 = chars[1];
-		char c2 = chars[2];
+		char c0 = propertyName.charAt(0);
+		char c1 = propertyName.charAt(1);
+		char c2 = propertyName.charAt(2);
 
 		if (Character.isLowerCase(c0) && Character.isUpperCase(c1) &&
 			Character.isLowerCase(c2)) {

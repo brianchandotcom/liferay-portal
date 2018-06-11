@@ -325,8 +325,6 @@
 	</command>
 
 	<command name="ViewDisplayPageViaFriendlyURL" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />

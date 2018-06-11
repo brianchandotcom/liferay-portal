@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.web.internal.upload;
 
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -39,6 +40,10 @@ public abstract class BaseMBUploadFileEntryHandler
 	@Override
 	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
 		throws IOException, PortalException {
+
+		dlValidator.validateFileSize(
+			uploadPortletRequest.getFileName(getParameterName()),
+			uploadPortletRequest.getSize(getParameterName()));
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
@@ -73,6 +78,9 @@ public abstract class BaseMBUploadFileEntryHandler
 	}
 
 	protected abstract String getParameterName();
+
+	@Reference
+	protected DLValidator dlValidator;
 
 	@Reference
 	protected MBMessageService mbMessageService;

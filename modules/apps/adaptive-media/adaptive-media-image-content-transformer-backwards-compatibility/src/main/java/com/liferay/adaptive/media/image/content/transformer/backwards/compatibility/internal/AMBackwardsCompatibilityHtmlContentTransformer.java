@@ -49,6 +49,19 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 	}
 
 	@Override
+	public String transform(String html) throws PortalException {
+		if (html == null) {
+			return null;
+		}
+
+		if (!html.contains("<img")) {
+			return html;
+		}
+
+		return super.transform(html);
+	}
+
+	@Override
 	protected FileEntry getFileEntry(Matcher matcher) throws PortalException {
 		if (StringUtil.containsIgnoreCase(
 				matcher.group(0),

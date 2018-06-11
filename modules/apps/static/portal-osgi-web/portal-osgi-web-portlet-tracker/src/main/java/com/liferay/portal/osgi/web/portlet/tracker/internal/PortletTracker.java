@@ -327,15 +327,14 @@ public class PortletTracker
 			PortletContextBagPool.put(
 				bundlePortletApp.getServletContextName(), portletContextBag);
 
-			PortletBagFactory portletBagFactory = new BundlePortletBagFactory(
-				portlet);
+			PortletBagFactory portletBagFactory = new PortletBagFactory();
 
 			portletBagFactory.setClassLoader(bundleClassLoader);
 			portletBagFactory.setServletContext(
 				bundlePortletApp.getServletContext());
 			portletBagFactory.setWARFile(true);
 
-			portletBagFactory.create(portletModel, true);
+			portletBagFactory.create(portletModel, portlet, true);
 
 			List<Company> companies = _companyLocalService.getCompanies();
 

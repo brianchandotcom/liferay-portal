@@ -23,11 +23,6 @@
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Page Fragments" />
 		</execute>
-
-		<execute macro="Fragment#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
-		</execute>
 	</set-up>
 
 	<tear-down>
@@ -48,12 +43,6 @@
 		<description message="This is a test case for LPS-80625." />
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Page Fragments" />
-		</execute>
-
 		<execute macro="Fragment#importCollectionFromDependenciesFolder">
 			<var name="collectionZipFile" value="fragment-invalid-zip.zip" />
 		</execute>
@@ -73,12 +62,6 @@
 		<description message="This is a test case for LPS-80625." />
 		<property name="portal.acceptance" value="true" />
 
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Page Fragments" />
-		</execute>
-
 		<execute macro="Fragment#importCollectionFromDependenciesFolder">
 			<var name="collectionZipFile" value="Document_1.doc" />
 		</execute>
@@ -90,6 +73,11 @@
 
 	<command name="ExportImportCollectionViewFragment" priority="5">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Fragment#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />

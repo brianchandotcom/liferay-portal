@@ -2662,6 +2662,47 @@ public class ProjectTemplatesTest {
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
+	private static void _addNexusRepositoriesElement(
+		Document document, String parentElementName, String elementName) {
+
+		Element projectElement = document.getDocumentElement();
+
+		Element repositoriesElement = XMLTestUtil.getChildElement(
+			projectElement, parentElementName);
+
+		if (repositoriesElement == null) {
+			repositoriesElement = document.createElement(parentElementName);
+
+			projectElement.appendChild(repositoriesElement);
+		}
+
+		Element repositoryElement = document.createElement(elementName);
+
+		Element idElement = document.createElement("id");
+
+		idElement.appendChild(document.createTextNode("nexus"));
+
+		Element urlElement = document.createElement("url");
+
+		Text urlText = null;
+
+		String repositoryUrl = mavenExecutor.getRepositoryUrl();
+
+		if (Validator.isNotNull(repositoryUrl)) {
+			urlText = document.createTextNode(repositoryUrl);
+		}
+		else {
+			urlText = document.createTextNode(_REPOSITORY_CDN_URL);
+		}
+
+		urlElement.appendChild(urlText);
+
+		repositoryElement.appendChild(idElement);
+		repositoryElement.appendChild(urlElement);
+
+		repositoriesElement.appendChild(repositoryElement);
+	}
+
 	private static void _addNpmrc(File projectDir) throws IOException {
 		File npmrcFile = new File(projectDir, ".npmrc");
 
@@ -3007,40 +3048,39 @@ public class ProjectTemplatesTest {
 
 		final String repositoryUrl = mavenExecutor.getRepositoryUrl();
 
-		if (Validator.isNotNull(repositoryUrl)) {
-			Files.walkFileTree(
-				projectDir.toPath(),
-				new SimpleFileVisitor<Path>() {
+		Files.walkFileTree(
+			projectDir.toPath(),
+			new SimpleFileVisitor<Path>() {
 
-					@Override
-					public FileVisitResult visitFile(
-							Path path, BasicFileAttributes basicFileAttributes)
-						throws IOException {
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-						String fileName = String.valueOf(path.getFileName());
+					String fileName = String.valueOf(path.getFileName());
 
-						if (fileName.equals("build.gradle") ||
-							fileName.equals("settings.gradle")) {
+					if (fileName.equals("build.gradle") ||
+						fileName.equals("settings.gradle")) {
 
-							String content = FileUtil.read(path);
+						String content = FileUtil.read(path);
 
+						if (Validator.isNotNull(repositoryUrl)) {
 							content = content.replace(
 								"\"" + _REPOSITORY_CDN_URL + "\"",
 								"\"" + repositoryUrl + "\"");
-
-							content = content.replace(
-								"repositories {",
-								"repositories {\tmavenLocal()\n");
-
-							Files.write(
-								path, content.getBytes(StandardCharsets.UTF_8));
 						}
 
-						return FileVisitResult.CONTINUE;
+						content = content.replace(
+							"repositories {", "repositories {\tmavenLocal()\n");
+
+						Files.write(
+							path, content.getBytes(StandardCharsets.UTF_8));
 					}
 
-				});
-		}
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 
 		GradleRunner gradleRunner = GradleRunner.create();
 
@@ -3106,6 +3146,34 @@ public class ProjectTemplatesTest {
 
 	private static String _executeMaven(File projectDir, String... args)
 		throws Exception {
+
+		File pomXmlFile = new File(projectDir, "pom.xml");
+
+		if (pomXmlFile.exists()) {
+			DocumentBuilderFactory documentBuilderFactory =
+				DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
+
+			Document document = documentBuilder.parse(pomXmlFile);
+
+			_addNexusRepositoriesElement(
+				document, "repositories", "repository");
+			_addNexusRepositoriesElement(
+				document, "pluginRepositories", "pluginRepository");
+
+			TransformerFactory transformerFactory =
+				TransformerFactory.newInstance();
+
+			Transformer transformer = transformerFactory.newTransformer();
+
+			DOMSource domSource = new DOMSource(document);
+
+			StreamResult streamResult = new StreamResult(pomXmlFile);
+
+			transformer.transform(domSource, streamResult);
+		}
 
 		String[] completeArgs = new String[args.length + 1];
 

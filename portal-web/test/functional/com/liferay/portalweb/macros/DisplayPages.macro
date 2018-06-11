@@ -95,7 +95,7 @@
 		<var method="StringUtil#replace('${siteNameURL}', ' ', '-')" name="siteNameURL" />
 
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="${portalURL}/${siteNameURL}/-/${friendlyURL}" />
+			<var name="url" value="${portalURL}/web/${siteNameURL}/-/${friendlyURL}" />
 		</execute>
 
 		<for list="${contentList}" param="content">

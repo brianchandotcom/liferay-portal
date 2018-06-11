@@ -16,6 +16,7 @@ package com.liferay.source.formatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Raymond Augé
@@ -52,6 +53,12 @@ public class SourceFormatterArgs {
 	public static final boolean SHOW_STATUS_UPDATES = false;
 
 	public static final boolean THROW_EXCEPTION = false;
+
+	public void addRecentChangesFileNames(Set<String> fileNames) {
+		if (_recentChangesFileNames != null) {
+			_recentChangesFileNames.addAll(fileNames);
+		}
+	}
 
 	public String getBaseDirName() {
 		return _baseDirName;

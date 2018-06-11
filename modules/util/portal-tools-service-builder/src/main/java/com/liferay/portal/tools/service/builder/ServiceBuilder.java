@@ -3431,9 +3431,19 @@ public class ServiceBuilder {
 		int x = oldContent.indexOf("<beans");
 		int y = oldContent.lastIndexOf("</beans>");
 
-		int firstSession = newContent.indexOf("<bean ", x);
+		int firstSession = newContent.indexOf(
+			"<bean class=\"" + _packagePath + ".service.", x);
 
-		int lastSession = newContent.lastIndexOf("<bean ", y);
+		int lastSession = newContent.lastIndexOf(
+			"<bean class=\"" + _packagePath + ".service.", y);
+
+		if (firstSession == -1) {
+			firstSession = newContent.indexOf(
+				"<bean class=\"" + _apiPackagePath + ".service.", x);
+
+			lastSession = newContent.lastIndexOf(
+				"<bean class=\"" + _apiPackagePath + ".service.", y);
+		}
 
 		if ((firstSession == -1) || (firstSession > y)) {
 			x = newContent.indexOf("</beans>");

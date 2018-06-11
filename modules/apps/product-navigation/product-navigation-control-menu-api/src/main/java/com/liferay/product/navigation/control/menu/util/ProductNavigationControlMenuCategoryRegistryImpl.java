@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	service = ProductNavigationControlMenuCategoryRegistry.class
 )
-public class ProductNavigationControlMenuCategoryRegistry {
+public class ProductNavigationControlMenuCategoryRegistryImpl {
 
 	public List<ProductNavigationControlMenuCategory>
 		getProductNavigationControlMenuCategories(
@@ -142,7 +142,7 @@ public class ProductNavigationControlMenuCategoryRegistry {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ProductNavigationControlMenuCategoryRegistry.class);
+		ProductNavigationControlMenuCategoryRegistryImpl.class);
 
 	private ServiceTrackerMap
 		<String, List<ProductNavigationControlMenuCategory>>

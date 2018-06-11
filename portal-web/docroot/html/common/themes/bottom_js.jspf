@@ -67,9 +67,14 @@
 
 <aui:script require="clay-tooltip/src/ClayTooltip as ClayTooltip">
 	if (!Liferay.Data.LFR_PORTAL_CLAY_TOOLTIP) {
-		Liferay.Data.LFR_PORTAL_CLAY_TOOLTIP = ClayTooltip.default.init({
-			selectors: ['.management-bar [data-title]:not(.lfr-portal-tooltip)', '.management-bar [title]:not(.lfr-portal-tooltip)', ]
-		});
+		Liferay.Data.LFR_PORTAL_CLAY_TOOLTIP = ClayTooltip.default.init(
+			{
+				selectors: [
+					'.management-bar [data-title]:not(.lfr-portal-tooltip)',
+					'.management-bar [title]:not(.lfr-portal-tooltip)'
+				]
+			}
+		);
 	}
 </aui:script>
 

@@ -64,6 +64,10 @@ public class CPPortletKeys {
 		"com_liferay_commerce_product_content_web_internal_portlet_" +
 			"CPPreviewContentPortlet";
 
+	public static final String CP_PUBLISHER_WEB =
+		"com_liferay_commerce_product_content_web_internal_portlet_" +
+			"CPPublisherPortlet";
+
 	public static final String CP_SEARCH_RESULTS =
 		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
 			"CPSearchResultsPortlet";

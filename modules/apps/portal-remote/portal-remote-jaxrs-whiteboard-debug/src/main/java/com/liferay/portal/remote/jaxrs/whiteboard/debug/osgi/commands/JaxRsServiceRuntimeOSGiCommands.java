@@ -14,11 +14,16 @@
 
 package com.liferay.portal.remote.jaxrs.whiteboard.debug.osgi.commands;
 
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Arrays;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.jaxrs.runtime.JaxrsServiceRuntime;
@@ -88,6 +93,31 @@ public class JaxRsServiceRuntimeOSGiCommands {
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
+	protected ServiceReference<?> getServiceReference(long serviceId) {
+		try {
+			ServiceReference<?>[] serviceReferences =
+				_bundleContext.getServiceReferences(
+					(String)null, "(service.id=" + serviceId + ")");
+
+			if ((serviceReferences == null) ||
+				(serviceReferences.length == 0)) {
+
+				return null;
+			}
+			else {
+				return serviceReferences[0];
+			}
+		}
+		catch (InvalidSyntaxException ise) {
+			throw new IllegalArgumentException(ise);
+		}
+	}
+
 	protected void printApplicationDTO(ApplicationDTO applicationDTO) {
 		System.out.println(
 			StringBundler.concat(
@@ -149,7 +179,7 @@ public class JaxRsServiceRuntimeOSGiCommands {
 				DTOConstants.FAILURE_REASON_DUPLICATE_NAME) {
 
 			sb.append(" is clashing with another service (");
-			sb.append(failedApplicationDTO.name);
+			sb.append(failedApplicationDTO.serviceId);
 			sb.append(")");
 		}
 		else if (failedApplicationDTO.failureReason ==
@@ -194,7 +224,7 @@ public class JaxRsServiceRuntimeOSGiCommands {
 				DTOConstants.FAILURE_REASON_DUPLICATE_NAME) {
 
 			sb.append(" is clashing with another service (");
-			sb.append(failedExtensionDTO.name);
+			sb.append(failedExtensionDTO.serviceId);
 			sb.append(")");
 		}
 		else if (failedExtensionDTO.failureReason ==
@@ -206,13 +236,32 @@ public class JaxRsServiceRuntimeOSGiCommands {
 					DTOConstants.
 						FAILURE_REASON_REQUIRED_APPLICATION_UNAVAILABLE) {
 
-			sb.append(" is waiting for an application");
+			sb.append(" is waiting for an application: ");
+
+			ServiceReference<?> serviceReference = getServiceReference(
+				failedExtensionDTO.serviceId);
+
+			if (serviceReference != null) {
+				sb.append(
+					serviceReference.getProperty(
+						"osgi.jaxrs.application.select"));
+			}
 		}
 		else if (failedExtensionDTO.failureReason ==
 					DTOConstants.
 						FAILURE_REASON_REQUIRED_EXTENSIONS_UNAVAILABLE) {
 
-			sb.append(" has unresolved dependencies on extensions");
+			sb.append(" has unresolved dependencies on extensions: ");
+
+			ServiceReference<?> serviceReference = getServiceReference(
+				failedExtensionDTO.serviceId);
+
+			if (serviceReference != null) {
+				sb.append(
+					StringPlus.asList(
+						serviceReference.getProperty(
+							"osgi.jaxrs.extension.select")));
+			}
 		}
 		else if (failedExtensionDTO.failureReason ==
 					DTOConstants.FAILURE_REASON_SERVICE_NOT_GETTABLE) {
@@ -246,20 +295,39 @@ public class JaxRsServiceRuntimeOSGiCommands {
 				DTOConstants.FAILURE_REASON_DUPLICATE_NAME) {
 
 			sb.append(" is clashing with another service (");
-			sb.append(failedResourceDTO.name);
+			sb.append(failedResourceDTO.serviceId);
 			sb.append(")");
 		}
 		else if (failedResourceDTO.failureReason ==
 					DTOConstants.
 						FAILURE_REASON_REQUIRED_APPLICATION_UNAVAILABLE) {
 
-			sb.append(" is waiting for an application");
+			sb.append(" is waiting for an application: ");
+
+			ServiceReference<?> serviceReference = getServiceReference(
+				failedResourceDTO.serviceId);
+
+			if (serviceReference != null) {
+				sb.append(
+					serviceReference.getProperty(
+						"osgi.jaxrs.application.select"));
+			}
 		}
 		else if (failedResourceDTO.failureReason ==
 					DTOConstants.
 						FAILURE_REASON_REQUIRED_EXTENSIONS_UNAVAILABLE) {
 
-			sb.append(" has unresolved dependencies on extensions");
+			sb.append(" has unresolved dependencies on extensions: ");
+
+			ServiceReference<?> serviceReference = getServiceReference(
+				failedResourceDTO.serviceId);
+
+			if (serviceReference != null) {
+				sb.append(
+					StringPlus.asList(
+						serviceReference.getProperty(
+							"osgi.jaxrs.extension.select")));
+			}
 		}
 		else if (failedResourceDTO.failureReason ==
 					DTOConstants.FAILURE_REASON_SERVICE_NOT_GETTABLE) {
@@ -291,6 +359,8 @@ public class JaxRsServiceRuntimeOSGiCommands {
 				" Produces: ",
 				Arrays.toString(resourceMethodInfoDTO.producingMimeType)));
 	}
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private JaxrsServiceRuntime _jaxrsServiceRuntime;

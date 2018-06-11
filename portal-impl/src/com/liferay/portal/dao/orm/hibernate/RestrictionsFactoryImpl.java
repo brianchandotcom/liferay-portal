@@ -26,13 +26,13 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.hibernate.criterion.Restrictions;
 
@@ -119,7 +119,8 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 		int databaseInMaxParameters = GetterUtil.getInteger(
 			PropsUtil.get(
 				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
-				new Filter(dbType.getName())), Integer.MAX_VALUE);
+				new Filter(dbType.getName())),
+			Integer.MAX_VALUE);
 
 		int size = values.size();
 
@@ -129,12 +130,13 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 			int start = 0;
 			int end = databaseInMaxParameters;
 
-			while (start < size) {
-				List<?> list = values.stream().skip(start).limit(end).collect(
-					Collectors.toList());
+			List<?> list = ListUtil.fromCollection(values);
 
+			while (start < size) {
 				disjunction.add(
-					new CriterionImpl(Restrictions.in(propertyName, list)));
+					new CriterionImpl(
+						Restrictions.in(
+							propertyName, ListUtil.subList(list, start, end))));
 
 				start += databaseInMaxParameters;
 				end += databaseInMaxParameters;
@@ -156,7 +158,8 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 		int databaseInMaxParameters = GetterUtil.getInteger(
 			PropsUtil.get(
 				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
-				new Filter(dbType.getName())), Integer.MAX_VALUE);
+				new Filter(dbType.getName())),
+			Integer.MAX_VALUE);
 
 		int length = values.length;
 

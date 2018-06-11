@@ -35,7 +35,7 @@ public class DateRangeFactory {
 	}
 
 	public String getRangeString(String label, Calendar calendar) {
-		return _normalizeDates(_rangeMap.get(label), calendar);
+		return replaceAliases(_rangeMap.get(label), calendar);
 	}
 
 	public String getRangeString(String from, String to) {
@@ -60,7 +60,7 @@ public class DateRangeFactory {
 		return map;
 	}
 
-	private String _normalizeDates(String rangeString, Calendar calendar) {
+	public String replaceAliases(String rangeString, Calendar calendar) {
 		Calendar now = (Calendar)calendar.clone();
 
 		Calendar pastHour = (Calendar)now.clone();

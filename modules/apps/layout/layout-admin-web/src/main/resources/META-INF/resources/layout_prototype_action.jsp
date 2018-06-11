@@ -28,14 +28,24 @@ LayoutPrototype layoutPrototype = (LayoutPrototype)request.getAttribute(LayoutAd
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= LayoutPrototypePermissionUtil.contains(permissionChecker, layoutPrototype.getLayoutPrototypeId(), ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL">
+
+		<%
+		Group layoutPrototypeGroup = layoutPrototype.getGroup();
+		%>
+
+		<liferay-ui:icon
+			message="edit"
+			url="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>"
+		/>
+
+		<portlet:renderURL var="configureURL">
 			<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
 			<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			message="edit"
-			url="<%= editURL %>"
+			message="configure"
+			url="<%= configureURL %>"
 		/>
 	</c:if>
 

@@ -42,7 +42,7 @@ public class DefaultPortletDependencyFactory
 	public PortletDependency createPortletDependency(
 		String name, String scope, String version) {
 
-		return new PortletDependencyImpl(name, scope, version);
+		return new PortletDependencyImpl(name, scope, version, null, null);
 	}
 
 	@Override

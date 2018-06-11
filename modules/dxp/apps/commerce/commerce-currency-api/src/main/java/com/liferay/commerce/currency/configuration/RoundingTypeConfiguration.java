@@ -32,9 +32,6 @@ import java.math.RoundingMode;
 )
 public interface RoundingTypeConfiguration {
 
-	@Meta.AD(deflt = "###\\,##0.00", name = "format-pattern", required = false)
-	public String formatPattern();
-
 	@Meta.AD(deflt = "2", name = "maximum-fraction-digits", required = false)
 	public int maximumFractionDigits();
 

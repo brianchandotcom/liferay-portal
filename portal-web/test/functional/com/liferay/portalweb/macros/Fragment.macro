@@ -76,7 +76,7 @@
 		</execute>
 	</command>
 
-	<command name="importCollection">
+	<command name="importCollectionFromTempFolder">
 		<execute macro="Fragment#_gotoImportCollection" />
 
 		<var method="TestPropsUtil#get('output.dir.name')" name="tempDir" />

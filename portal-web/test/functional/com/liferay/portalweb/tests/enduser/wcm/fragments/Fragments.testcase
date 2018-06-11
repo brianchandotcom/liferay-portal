@@ -248,7 +248,7 @@
 			<var name="portlet" value="Page Fragments" />
 		</execute>
 
-		<execute macro="Fragment#importCollection" />
+		<execute macro="Fragment#importCollectionFromTempFolder" />
 
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />

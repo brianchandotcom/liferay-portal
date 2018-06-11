@@ -53,7 +53,7 @@ public class TestClassGroupFactory {
 			}
 
 			if (batchName.startsWith("modules-semantic-versioning-")) {
-				return new SemVerBaselineBatchTestClassGroup(
+				return new ModulesSemVerBatchTestClassGroup(
 					batchName, portalTestClassJob);
 			}
 

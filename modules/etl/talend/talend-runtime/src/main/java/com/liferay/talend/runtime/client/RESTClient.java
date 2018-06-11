@@ -23,6 +23,7 @@ import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
+import com.liferay.talend.utils.UriUtils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,7 +42,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.StatusType;
-import javax.ws.rs.core.UriBuilder;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -97,7 +97,7 @@ public class RESTClient {
 	}
 
 	public ApioResult executeGetRequest() throws ApioException {
-		URI decoratedURI = _updateWithQueryParameters(
+		URI decoratedURI = UriUtils.updateWithQueryParameters(
 			getEndpointURI(), _getQueryParametersMap());
 
 		WebTarget webTarget = _client.target(decoratedURI);
@@ -355,19 +355,6 @@ public class RESTClient {
 		clientConfig.register(httpAuthenticationFeature);
 
 		return clientConfig;
-	}
-
-	private URI _updateWithQueryParameters(
-		URI uri, Map<String, String> queryParameters) {
-
-		for (Map.Entry<String, String> parameter : queryParameters.entrySet()) {
-			UriBuilder uriBuilder = UriBuilder.fromUri(uri);
-
-			uri = uriBuilder.replaceQueryParam(
-				parameter.getKey(), parameter.getValue()).build();
-		}
-
-		return uri;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

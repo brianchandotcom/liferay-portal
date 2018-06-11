@@ -20,7 +20,6 @@ import com.liferay.commerce.product.search.CPOptionIndexer;
 import com.liferay.commerce.product.service.base.CPOptionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -63,8 +61,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 			String ddmFormFieldTypeName, boolean facetable, boolean required,
 			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException {
-
-		// Commerce product option
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
@@ -93,10 +89,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		cpOptionPersistence.update(cpOption);
 
-		// Resources
-
-		resourceLocalService.addModelResources(cpOption, serviceContext);
-
 		return cpOption;
 	}
 
@@ -113,12 +105,6 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 		cpOptionValueLocalService.deleteCPOptionValues(
 			cpOption.getCPOptionId());
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			cpOption.getCompanyId(), CPOption.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, cpOption.getCPOptionId());
 
 		// Expando
 

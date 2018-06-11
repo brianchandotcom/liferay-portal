@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -284,10 +283,6 @@ public class CPDefinitionLocalServiceImpl
 			groupId, serviceContext.getCompanyId(), CPDefinition.class,
 			cpDefinitionId, urlTitleMap);
 
-		// Resources
-
-		resourceLocalService.addModelResources(cpDefinition, serviceContext);
-
 		// Asset
 
 		updateAsset(
@@ -409,13 +404,6 @@ public class CPDefinitionLocalServiceImpl
 		// Commerce product definition
 
 		cpDefinitionPersistence.remove(cpDefinition);
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			cpDefinition.getCompanyId(), CPDefinition.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			cpDefinition.getCPDefinitionId());
 
 		// Asset
 

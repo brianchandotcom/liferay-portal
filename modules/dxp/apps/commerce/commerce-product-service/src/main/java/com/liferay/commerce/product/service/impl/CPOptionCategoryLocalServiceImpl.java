@@ -21,7 +21,6 @@ import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.base.CPOptionCategoryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,8 +45,6 @@ public class CPOptionCategoryLocalServiceImpl
 			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		// Commerce product option category
-
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -71,11 +68,6 @@ public class CPOptionCategoryLocalServiceImpl
 		cpOptionCategory.setKey(key);
 
 		cpOptionCategoryPersistence.update(cpOptionCategory);
-
-		// Resources
-
-		resourceLocalService.addModelResources(
-			cpOptionCategory, serviceContext);
 
 		return cpOptionCategory;
 	}
@@ -133,13 +125,6 @@ public class CPOptionCategoryLocalServiceImpl
 						getCPDefinitionSpecificationOptionValueId(),
 					CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID);
 		}
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			cpOptionCategory.getCompanyId(), CPOptionCategory.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			cpOptionCategory.getCPOptionCategoryId());
 
 		return cpOptionCategory;
 	}

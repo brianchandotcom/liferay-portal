@@ -21,7 +21,6 @@ import com.liferay.commerce.product.search.CPSpecificationOptionIndexer;
 import com.liferay.commerce.product.service.base.CPSpecificationOptionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -66,8 +64,6 @@ public class CPSpecificationOptionLocalServiceImpl
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		// Commerce product specification option
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
@@ -95,11 +91,6 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		cpSpecificationOptionPersistence.update(cpSpecificationOption);
 
-		// Resources
-
-		resourceLocalService.addModelResources(
-			cpSpecificationOption, serviceContext);
-
 		return cpSpecificationOption;
 	}
 
@@ -119,14 +110,6 @@ public class CPSpecificationOptionLocalServiceImpl
 		cpDefinitionSpecificationOptionValueLocalService.
 			deleteCPSpecificationOptionDefinitionValues(
 				cpSpecificationOption.getCPSpecificationOptionId());
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			cpSpecificationOption.getCompanyId(),
-			CPSpecificationOption.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			cpSpecificationOption.getCPSpecificationOptionId());
 
 		// Expando
 

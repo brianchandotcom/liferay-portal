@@ -913,6 +913,8 @@
 			<var name="panel" value="Display Page" />
 		</execute>
 
+		<execute function="Click" locator1="WCSelectDisplayPage#USE_SPECIFIC_DISPLAY_PAGE" />
+
 		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
 
 		<execute function="Pause" locator1="5000" />

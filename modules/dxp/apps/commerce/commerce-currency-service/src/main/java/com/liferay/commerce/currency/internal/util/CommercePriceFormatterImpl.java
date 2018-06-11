@@ -15,6 +15,7 @@
 package com.liferay.commerce.currency.internal.util;
 
 import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
+import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
@@ -100,7 +101,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			CommerceCurrency commerceCurrency, Locale locale)
 		throws PortalException {
 
-		String formatPattern = _roundingTypeConfiguration.formatPattern();
+		String formatPattern = CommerceCurrencyConstants.DEFAULT_FORMAT_PATTERN;
 		int maxFractionDigits =
 			_roundingTypeConfiguration.maximumFractionDigits();
 		int minFractionDigits =

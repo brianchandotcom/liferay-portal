@@ -16,6 +16,7 @@ package com.liferay.commerce.currency.web.internal.display.context;
 
 import com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration;
 import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
+import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.constants.RoundingTypeConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -93,10 +94,7 @@ public class CommerceCurrenciesDisplayContext {
 	}
 
 	public String getDefaultFormatPattern() throws ConfigurationException {
-		RoundingTypeConfiguration roundingTypeConfiguration =
-			getRoundingTypeConfiguration();
-
-		return roundingTypeConfiguration.formatPattern();
+		return CommerceCurrencyConstants.DEFAULT_FORMAT_PATTERN;
 	}
 
 	public int getDefaultMaxFractionDigits() throws ConfigurationException {

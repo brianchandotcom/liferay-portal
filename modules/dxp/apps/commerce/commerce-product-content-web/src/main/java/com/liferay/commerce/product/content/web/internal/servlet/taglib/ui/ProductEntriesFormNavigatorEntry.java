@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = FormNavigatorEntry.class
 )
 public class ProductEntriesFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry {
+	extends BaseJSPFormNavigatorEntry<Void> {
 
 	@Override
 	public String getCategoryKey() {
@@ -65,7 +65,7 @@ public class ProductEntriesFormNavigatorEntry
 	}
 
 	@Override
-	public boolean isVisible(User user, Object object) {
+	public boolean isVisible(User user, Void object) {
 		return _isManualSelection();
 	}
 

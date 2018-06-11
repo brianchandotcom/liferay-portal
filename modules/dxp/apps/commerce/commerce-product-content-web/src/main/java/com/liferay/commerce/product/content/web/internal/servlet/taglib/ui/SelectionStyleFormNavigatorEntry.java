@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = FormNavigatorEntry.class
 )
 public class SelectionStyleFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry {
+	extends BaseJSPFormNavigatorEntry<Void> {
 
 	@Override
 	public String getCategoryKey() {

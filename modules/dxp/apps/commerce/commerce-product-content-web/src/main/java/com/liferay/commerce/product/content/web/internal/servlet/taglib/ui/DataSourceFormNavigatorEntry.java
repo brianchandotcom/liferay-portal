@@ -41,7 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "form.navigator.entry.order:Integer=400",
 	service = FormNavigatorEntry.class
 )
-public class DataSourceFormNavigatorEntry extends BaseJSPFormNavigatorEntry {
+public class DataSourceFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<Void> {
 
 	@Override
 	public String getCategoryKey() {
@@ -64,7 +65,7 @@ public class DataSourceFormNavigatorEntry extends BaseJSPFormNavigatorEntry {
 	}
 
 	@Override
-	public boolean isVisible(User user, Object object) {
+	public boolean isVisible(User user, Void object) {
 		if (_isDataSourceSelection()) {
 			return true;
 		}

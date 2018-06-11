@@ -41,7 +41,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "form.navigator.entry.order:Integer=200",
 	service = FormNavigatorEntry.class
 )
-public class OrderingFormNavigatorEntry extends BaseJSPFormNavigatorEntry {
+public class OrderingFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<Void> {
 
 	@Override
 	public String getCategoryKey() {
@@ -64,7 +65,7 @@ public class OrderingFormNavigatorEntry extends BaseJSPFormNavigatorEntry {
 	}
 
 	@Override
-	public boolean isVisible(User user, Object object) {
+	public boolean isVisible(User user, Void object) {
 		if (_isDynamicSelection()) {
 			return true;
 		}

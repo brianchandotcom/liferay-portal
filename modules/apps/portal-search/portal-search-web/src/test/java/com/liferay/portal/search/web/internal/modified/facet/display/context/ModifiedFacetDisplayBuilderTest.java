@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
@@ -241,6 +242,44 @@ public class ModifiedFacetDisplayBuilderTest {
 			modifiedFacetDisplayContext.getModifiedFacetTermDisplayContexts());
 	}
 
+	@Test
+	public void testModifiedFacetTermDisplayContexts() {
+		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
+			createDisplayBuilder();
+
+		mockFacetConfiguration(
+			"past-hour=[20180515225959 TO 20180515235959]",
+			"some-time-ago=[20180508235959 TO 20180514235959]");
+
+		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
+			modifiedFacetDisplayBuilder.build();
+
+		List<ModifiedFacetTermDisplayContext> modifiedFacetTermDisplayContexts =
+			modifiedFacetDisplayContext.getModifiedFacetTermDisplayContexts();
+
+		Assert.assertEquals(
+			modifiedFacetTermDisplayContexts.toString(), 2,
+			modifiedFacetTermDisplayContexts.size());
+
+		ModifiedFacetTermDisplayContext modifiedFacetTermDisplayContext =
+			modifiedFacetTermDisplayContexts.get(0);
+
+		Assert.assertEquals(
+			"past-hour", modifiedFacetTermDisplayContext.getLabel());
+		Assert.assertEquals(
+			"[20180515225959 TO 20180515235959]",
+			modifiedFacetTermDisplayContext.getRange());
+
+		modifiedFacetTermDisplayContext = modifiedFacetTermDisplayContexts.get(
+			1);
+
+		Assert.assertEquals(
+			"some-time-ago", modifiedFacetTermDisplayContext.getLabel());
+		Assert.assertEquals(
+			"[20180508235959 TO 20180514235959]",
+			modifiedFacetTermDisplayContext.getRange());
+	}
+
 	protected void addRangeJSONObject(
 		JSONArray jsonArray, String label, String range) {
 
@@ -282,44 +321,63 @@ public class ModifiedFacetDisplayBuilderTest {
 		}
 	}
 
+	protected JSONObject createDataJSONObject(String... labelsAndRanges) {
+		JSONObject dataJSONObject = _jsonFactory.createJSONObject();
+
+		dataJSONObject.put("ranges", createRangesJSONArray(labelsAndRanges));
+
+		return dataJSONObject;
+	}
+
 	protected ModifiedFacetDisplayBuilder createDisplayBuilder() {
 		ModifiedFacetDisplayBuilder modifiedFacetDisplayBuilder =
 			new ModifiedFacetDisplayBuilder(
 				_calendarFactory, _dateFormatFactory, _http);
 
+		mockFacetConfiguration();
+
 		modifiedFacetDisplayBuilder.setFacet(_facet);
-		modifiedFacetDisplayBuilder.setRangesJSONArray(createRangesJSONArray());
 		modifiedFacetDisplayBuilder.setLocale(LocaleUtil.getDefault());
 		modifiedFacetDisplayBuilder.setTimeZone(TimeZoneUtil.getDefault());
 
 		return modifiedFacetDisplayBuilder;
 	}
 
-	protected JSONArray createRangesJSONArray() {
+	protected JSONArray createRangesJSONArray(String... labelsAndRanges) {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		addRangeJSONObject(
-			jsonArray, "past-hour", "[20180215120000 TO 20180215140000]");
-		addRangeJSONObject(
-			jsonArray, "past-24-hours", "[20180214130000 TO 20180215140000]");
-		addRangeJSONObject(
-			jsonArray, "past-week", "[20180208130000 TO 20180215140000]");
-		addRangeJSONObject(
-			jsonArray, "past-month", "[20180115130000 TO 20180215140000]");
-		addRangeJSONObject(
-			jsonArray, "past-year", "[20170215130000 TO 20180215140000]");
+		for (String labelAndRange : labelsAndRanges) {
+			String[] labelAndRangeArray = StringUtil.split(labelAndRange, '=');
+
+			addRangeJSONObject(
+				jsonArray, labelAndRangeArray[0], labelAndRangeArray[1]);
+		}
 
 		return jsonArray;
 	}
 
 	protected FacetConfiguration getFacetConfiguration() {
-		FacetConfiguration facetConfiguration = new FacetConfiguration();
-
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		facetConfiguration.setDataJSONObject(jsonObject);
+		return getFacetConfiguration(jsonObject);
+	}
+
+	protected FacetConfiguration getFacetConfiguration(
+		JSONObject dataJSONObject) {
+
+		FacetConfiguration facetConfiguration = new FacetConfiguration();
+
+		facetConfiguration.setDataJSONObject(dataJSONObject);
 
 		return facetConfiguration;
+	}
+
+	protected void mockFacetConfiguration(String... labelsAndRanges) {
+		Mockito.doReturn(
+			getFacetConfiguration(createDataJSONObject(labelsAndRanges))
+		).when(
+			_facet
+		).getFacetConfiguration();
 	}
 
 	protected TermCollector mockTermCollector() {

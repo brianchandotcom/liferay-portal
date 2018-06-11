@@ -25,6 +25,7 @@ page import="com.liferay.portal.search.web.internal.util.PortletPreferencesJspUt
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
 <portlet:defineObjects />
@@ -60,9 +61,11 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 					JSONObject jsonObject = rangesJSONArray.getJSONObject(i);
 				%>
 
-					<div class="lfr-form-row lfr-form-row-inline">
+					<div class="lfr-form-row lfr-form-row-inline range-form-row">
 						<div class="row-fields">
-							<aui:input label="label" name='<%= "label_" + i %>' value='<%= jsonObject.getString("label") %>' />
+							<aui:input cssClass="label-input" label="label" name='<%= "label_" + i %>' value='<%= jsonObject.getString("label") %>' />
+
+							<aui:input cssClass="range-input" label="range" name='<%= "range_" + i %>' value='<%= jsonObject.getString("range") %>' />
 						</div>
 					</div>
 
@@ -70,7 +73,7 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 				}
 				%>
 
-				<aui:input name="<%= PortletPreferencesJspUtil.getInputName(ModifiedFacetPortletPreferences.PREFERENCE_KEY_RANGES) %>" type="hidden" value="<%= modifiedFacetPortletPreferences.getRangesString() %>" />
+				<aui:input cssClass="ranges-input" name="<%= PortletPreferencesJspUtil.getInputName(ModifiedFacetPortletPreferences.PREFERENCE_KEY_RANGES) %>" type="hidden" value="<%= modifiedFacetPortletPreferences.getRangesString() %>" />
 
 				<aui:input name='<%= "rangesIndexes" %>' type="hidden" value="<%= StringUtil.merge(rangesIndexes) %>" />
 			</aui:fieldset>
@@ -94,26 +97,6 @@ JSONArray rangesJSONArray = modifiedFacetPortletPreferences.getRangesJSONArray()
 	).render();
 </aui:script>
 
-<aui:script>
-	var form = AUI.$(document.<portlet:namespace />fm);
-
-	$('#<portlet:namespace />fm').on(
-		'submit',
-		function(event) {
-			event.preventDefault();
-
-			var ranges = [];
-
-			for (var i = 0 ; i < <%= rangesJSONArray.length() %> ; i ++) {
-				var label = $('[name="<portlet:namespace />label_' + i +'"]').val();
-
-				ranges.push({
-					label : label
-				});
-			}
-			form.fm('<%= PortletPreferencesJspUtil.getInputName(ModifiedFacetPortletPreferences.PREFERENCE_KEY_RANGES) %>').val(JSON.stringify(ranges));
-
-			submitForm(form);
-		}
-	);
+<aui:script use="liferay-search-modified-facet-configuration">
+	new Liferay.Search.ModifiedFacetConfiguration(A.one(document.<portlet:namespace />fm));
 </aui:script>

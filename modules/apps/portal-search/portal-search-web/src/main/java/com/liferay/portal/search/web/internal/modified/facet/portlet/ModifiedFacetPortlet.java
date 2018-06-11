@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.portlet;
 
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -29,8 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
 import com.liferay.portal.search.web.internal.display.context.ThemeDisplaySupplier;
-import com.liferay.portal.search.web.internal.modified.facet.builder.ModifiedFacetConfiguration;
-import com.liferay.portal.search.web.internal.modified.facet.builder.ModifiedFacetConfigurationImpl;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.ModifiedFacetDisplayContext;
@@ -119,13 +115,6 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 
 		modifiedFacetDisplayBuilder.setFacet(facet);
 
-		ModifiedFacetConfigurationImpl modifiedFacetConfiguration =
-			new ModifiedFacetConfigurationImpl(facet.getFacetConfiguration());
-
-		modifiedFacetDisplayBuilder.setRangesJSONArray(
-			getRangesJSONArray(
-				modifiedFacetConfiguration, modifiedFacetPortletPreferences));
-
 		ThemeDisplay themeDisplay = getThemeDisplay(renderRequest);
 
 		modifiedFacetDisplayBuilder.setLocale(themeDisplay.getLocale());
@@ -190,29 +179,6 @@ public class ModifiedFacetPortlet extends MVCPortlet {
 
 		return new ModifiedFacetPortletPreferencesImpl(
 			Optional.ofNullable(renderRequest.getPreferences()));
-	}
-
-	protected JSONArray getRangesJSONArray(
-		ModifiedFacetConfiguration modifiedFacetConfiguration,
-		ModifiedFacetPortletPreferences modifiedFacetPortletPreferences) {
-
-		JSONArray rangesJSONArray =
-			modifiedFacetConfiguration.getRangesJSONArray();
-
-		JSONArray rangesFromPreferencesJSONArray =
-			modifiedFacetPortletPreferences.getRangesJSONArray();
-
-		for (int i = 0; i < rangesJSONArray.length(); i++) {
-			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
-			JSONObject rangeFromPreferenceJSONObject =
-				rangesFromPreferencesJSONArray.getJSONObject(i);
-
-			rangeJSONObject.remove("label");
-			rangeJSONObject.put(
-				"label", rangeFromPreferenceJSONObject.get("label"));
-		}
-
-		return rangesJSONArray;
 	}
 
 	protected ThemeDisplay getThemeDisplay(RenderRequest renderRequest) {

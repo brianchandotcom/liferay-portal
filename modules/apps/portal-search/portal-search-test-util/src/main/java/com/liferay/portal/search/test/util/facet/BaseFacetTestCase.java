@@ -47,7 +47,7 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 	}
 
 	protected void assertFacet(
-			Function<SearchContext, Facet> function,
+			Function<SearchContext, ? extends Facet> function,
 			QueryContributor queryContributor, List<String> expectedTerms)
 		throws Exception {
 
@@ -71,7 +71,7 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 	}
 
 	protected Void doAssertFacet(
-			Function<SearchContext, Facet> function,
+			Function<SearchContext, ? extends Facet> function,
 			QueryContributor queryContributor, List<String> expectedFrequencies)
 		throws Exception {
 

@@ -3761,9 +3761,16 @@ of a module includes transitive dependencies.
 - [LPS-82178]: Update the [Liferay Gradle Plugins Patcher] dependency to version
 1.0.13.
 
+## 5.4.33 - *(Unreleased)*
+
+### Changed
+- [LPS-77875]: Update the constant `DEFAULT_REPOSITORY_URL` in the
+`GradlePluginsDefaultsUtil` class to
+`https://repository-cdn.liferay.com/nexus/content/groups/public`.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
-[Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
+[Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Baseline]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-baseline
@@ -4095,6 +4102,7 @@ of a module includes transitive dependencies.
 [LPS-77797]: https://issues.liferay.com/browse/LPS-77797
 [LPS-77836]: https://issues.liferay.com/browse/LPS-77836
 [LPS-77840]: https://issues.liferay.com/browse/LPS-77840
+[LPS-77875]: https://issues.liferay.com/browse/LPS-77875
 [LPS-77886]: https://issues.liferay.com/browse/LPS-77886
 [LPS-77916]: https://issues.liferay.com/browse/LPS-77916
 [LPS-77968]: https://issues.liferay.com/browse/LPS-77968

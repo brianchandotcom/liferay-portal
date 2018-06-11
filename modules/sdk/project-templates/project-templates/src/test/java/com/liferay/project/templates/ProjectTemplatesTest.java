@@ -3552,8 +3552,7 @@ public class ProjectTemplatesTest {
 	private static final String _OUTPUT_FILENAME_GLOB_REGEX = "*.{jar,war}";
 
 	private static final String _REPOSITORY_CDN_URL =
-		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
-			"/public";
+		"https://repository-cdn.liferay.com/nexus/content/groups/public";
 
 	private static final String[] _SPRING_MVC_PORTLET_JAR_NAMES = {
 		"aop", "beans", "context", "core", "expression", "web", "webmvc",

@@ -2,6 +2,7 @@
 
 <source-formatter>
 	<source-processor name="all">
+		<check name="CDNCheck" />
 		<check name="IncorrectFileLocationCheck" />
 		<check name="ReturnCharacterCheck" />
 	</source-processor>

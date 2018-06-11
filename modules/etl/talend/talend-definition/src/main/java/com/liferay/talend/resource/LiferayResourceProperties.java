@@ -270,7 +270,7 @@ public class LiferayResourceProperties
 
 		resourceSelectionForm.addRow(resourcesWidget);
 
-		resourceSelectionForm.addRow(resourceFilter);
+		resourceSelectionForm.addRow(condition);
 
 		refreshLayout(resourceSelectionForm);
 
@@ -298,7 +298,7 @@ public class LiferayResourceProperties
 
 		referenceForm.addRow(resourcesReferenceWidget);
 
-		referenceForm.addRow(resourceFilter);
+		referenceForm.addRow(condition);
 
 		referenceForm.addRow(main.getForm(Form.REFERENCE));
 
@@ -309,12 +309,13 @@ public class LiferayResourceProperties
 	public void setupProperties() {
 		super.setupProperties();
 
+		condition.setValue("");
 		resource.setValue("");
-		resourceFilter.setValue("");
 		siteFilter.setValue(false);
 		webSite.setValue("");
 	}
 
+	public Property<String> condition = PropertyFactory.newString("condition");
 	public LiferayConnectionProperties connection;
 
 	public SchemaProperties main = new SchemaProperties("main") {
@@ -329,8 +330,6 @@ public class LiferayResourceProperties
 	};
 
 	public StringProperty resource = PropertyFactory.newString("resource");
-	public Property<String> resourceFilter = PropertyFactory.newString(
-		"resourceFilter");
 	public ISchemaListener schemaListener;
 	public Property<Boolean> siteFilter = PropertyFactory.newBoolean(
 		"siteFilter");

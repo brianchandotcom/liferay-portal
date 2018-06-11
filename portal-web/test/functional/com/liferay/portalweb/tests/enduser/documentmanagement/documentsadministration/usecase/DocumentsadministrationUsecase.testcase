@@ -702,6 +702,8 @@
 
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
+		<execute function="Refresh" />
+
 		<execute macro="DMDocument#checkoutPG">
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
@@ -710,7 +712,7 @@
 			<var name="dmDocumentVersionNumber" value="PWC" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Draft" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="DRAFT" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -775,7 +777,7 @@
 
 		<execute macro="DMDocument#saveAndCheckinEditedDocumentPG">
 			<var name="dmDocumentTitle" value="Document1" />
-			<var name="revision" value="Minor" />
+			<var name="revision" value="Minor Version" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentPG">
@@ -786,7 +788,7 @@
 			<var name="dmDocumentVersionNumber" value="1.1" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="APPROVED" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
@@ -832,7 +834,7 @@
 			<var name="dmDocumentVersionNumber" value="1.1" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="APPROVED" />
 	</command>
 
 	<command name="Comments" priority="4">

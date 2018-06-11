@@ -274,7 +274,7 @@ DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayCont
 	};
 
 	Liferay.componentReady('displayPagesManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on('creationButtonClicked', handleAddDisplayPageMenuItemClick);
 
 			managementToolbar.on(

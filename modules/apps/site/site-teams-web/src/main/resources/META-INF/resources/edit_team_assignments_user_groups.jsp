@@ -202,7 +202,7 @@ EditSiteTeamAssignmentsUserGroupsDisplayContext editSiteTeamAssignmentsUserGroup
 	};
 
 	Liferay.componentReady('editTeamAssignemntsUserGroupsWebManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on('creationButtonClicked', handleAddClick);
 
 			managementToolbar.on(

@@ -209,7 +209,7 @@ Role role = userGroupsDisplayContext.getRole();
 	};
 
 	Liferay.componentReady('userGroupsManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on('creationButtonClicked', handleAddClick);
 
 			managementToolbar.on(

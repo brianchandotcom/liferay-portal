@@ -173,7 +173,7 @@
 		}
 
 		Liferay.componentReady('fragmentEntriesManagementToolbar').then(
-			(managementToolbar) => {
+			function(managementToolbar) {
 				managementToolbar.on('creationButtonClicked', handleAddFragmentEntryMenuItemClick);
 			}
 		);
@@ -199,7 +199,7 @@
 	};
 
 	Liferay.componentReady('fragmentEntriesManagementToolbar').then(
-		(managementToolbar) => {
+		function(managementToolbar) {
 			managementToolbar.on(
 				'actionItemClicked',
 					function(event) {

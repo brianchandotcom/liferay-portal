@@ -272,6 +272,10 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutRevision> getLayoutRevisions(long layoutSetBranchId,
+		boolean head, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutRevision> getLayoutRevisions(long layoutSetBranchId,
 		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

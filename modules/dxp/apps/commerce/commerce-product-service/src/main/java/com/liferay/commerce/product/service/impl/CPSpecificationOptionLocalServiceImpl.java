@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -153,6 +154,20 @@ public class CPSpecificationOptionLocalServiceImpl
 		long groupId, String key) {
 
 		return cpSpecificationOptionPersistence.fetchByG_K(groupId, key);
+	}
+
+	@Override
+	public List<CPSpecificationOption> getCPSpecificationOptions(
+		long groupId, int start, int end,
+		OrderByComparator<CPSpecificationOption> orderByComparator) {
+
+		return cpSpecificationOptionPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCPSpecificationOptionsCount(long groupId) {
+		return cpSpecificationOptionPersistence.countByGroupId(groupId);
 	}
 
 	@Override

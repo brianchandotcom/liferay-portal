@@ -92,46 +92,106 @@
 	</div>
 
 	<div class="product-detail-body">
-		<div class="product-detail-image-widget">
-			<div class="product-detail-thumbnail-column">
-				<div class="product-detail-thumbnail-container" id="<@portlet.namespace />thumbs-container">
+		<div class="product-detail-image-widget-column">
+			<div class="product-detail-image-widget">
+				<div class="product-detail-thumbnail-column">
 					<#if entries?has_content>
+						<#assign
+							imagesIndex=1
+							imageOverflowUrls = []
+						/>
+
 						<#list images as curImage>
-							<div class="thumb">
-								<img class="img-fluid" src="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}">
-							</div>
+							<#assign
+								imageOverflowUrls = imageOverflowUrls + [" ${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)} "]
+							/>
+
+							<#if imagesIndex gt 3>
+								<#if imagesIndex == 4>
+									<div class="product-detail-thumbnail-container product-detail-thumbnail-text-container" id="<@portlet.namespace />thumbs-container">
+										<a class="thumb thumb-text" data-toggle="modal" href="#<@portlet.namespace />ImageWidgetModal">
+											+ ${images?size - 3}
+										</a>
+									</div>
+								</#if>
+							<#else>
+								<div class="product-detail-thumbnail-container" id="<@portlet.namespace />thumbs-container">
+
+									<#--
+										`data-standard` value should be same as img value
+										`href` value should be the large version used for zoom
+									-->
+
+									<a class="thumb thumb-image" data-standard="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}" href="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}">
+										<img class="img-fluid" src="${simpleCPTypeDisplayContext.getImageURL(curImage.getFileEntry(), themeDisplay)}">
+									</a>
+								</div>
+							</#if>
+
+							<#assign
+								imagesIndex=imagesIndex + 1
+							/>
 						</#list>
 					</#if>
 				</div>
 
-				<div class="product-detail-thumbnail-container">
-					<a class="thumb" href="#placeholder">
-						<span class="rounded-circle sticker sticker-primary sticker-sm sticker-top-left">
-							<@liferay_aui.icon
-								image="play"
-								markupView="lexicon"
-							/>
-						</span>
-					</a>
-				</div>
+				<#if validator.isNotNull(defaultImage)>
+					<#assign
+						easyzoomCssClass = " easyzoom easyzoom--adjacent"
+					/>
 
-				<div class="product-detail-thumbnail-container">
-					<a class="thumb" href="#placeholder">7 +</a>
-				</div>
+					<div class="product-detail-image-column">
+						<div class="full-image product-detail-image-container">
+							<div class="product-detail-image${easyzoomCssClass}">
+								<a href="${simpleCPTypeDisplayContext.getImageURL(defaultImage.getFileEntry(), themeDisplay)}" tabindex="-1">
+									<img class="img-fluid" id="<@portlet.namespace />full-image" src="${simpleCPTypeDisplayContext.getImageURL(defaultImage.getFileEntry(), themeDisplay)}">
+								</a>
+							</div>
+						</div>
+					</div>
+				</#if>
 			</div>
-			<#if validator.isNotNull(defaultImage)>
-				<div class="product-detail-image-column">
-					<div class="full-image product-detail-image-container">
-						<img class="img-fluid" id="<@portlet.namespace />full-image" src="${simpleCPTypeDisplayContext.getImageURL(defaultImage.getFileEntry(), themeDisplay)}">
-						<a class="sticker sticker-bottom-right" href="#placeholder">
+
+			<div class="product-detail-social-navigation">
+				<#-- Use @liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences("portletSetupPortletDecoratorId", "barebone") and set it up. The nav below is just a placeholder. -->
+
+				<ul class="nav">
+					<li class="nav-item">
+						<a href="#1">
 							<@liferay_aui.icon
-								image="search"
+								image="social-facebook"
 								markupView="lexicon"
 							/>
 						</a>
-					</div>
-				</div>
-			</#if>
+					</li>
+					<li class="nav-item">
+						<a href="#1">
+							<@liferay_aui.icon
+								image="twitter"
+								markupView="lexicon"
+							/>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="#1">
+							<@liferay_aui.icon
+								image="social-linkedin"
+								markupView="lexicon"
+							/>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="#1">
+							<span class="icon-instagram"></span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="#1">
+							<span class="icon-youtube-play"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
 		</div>
 
 		<div class="product-detail-info">
@@ -217,6 +277,76 @@
 				<@liferay_commerce["compare-product"] CPDefinitionId=cpDefinitionId />
 			</div>
 		</div>
+
+		<#if imageOverflowUrls?has_content>
+			<div aria-hidden="true" aria-labelledby="" class="fade modal modal-hidden product-detail-image-widget-modal" id="<@portlet.namespace />ImageWidgetModal" role="dialog" tabindex="-1">
+				<div class="modal-dialog modal-full-screen" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<div class="modal-title">${cpDefinition.getName()}</div>
+							<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+								<@liferay_aui.icon
+									image="times"
+									markupView="lexicon"
+								/>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<div class="carousel" data-interval="false" data-ride="carousel" id="carouselExampleFade">
+								<div class="carousel-inner">
+									<#assign
+										imageOverflowUrlsIndex = 1
+									/>
+
+									<#list imageOverflowUrls as url>
+										<#assign
+											activeClass=""
+										/>
+
+										<#if imageOverflowUrls[3]?? && imageOverflowUrls[3] == url>
+											<#assign
+												activeClass="active "
+											/>
+										</#if>
+
+										<div class="${activeClass}carousel-item">
+											<div class="carousel-item-image">
+												<img alt="Product Image" class="img-fluid" src="${url}">
+											</div>
+
+											<div class="carousel-index">${imageOverflowUrlsIndex}/${imageOverflowUrls?size}</div>
+										</div>
+
+										<#assign
+											imageOverflowUrlsIndex = imageOverflowUrlsIndex + 1
+										/>
+									</#list>
+
+									<a class="carousel-control-prev" data-slide="prev" href="#carouselExampleFade" role="button">
+										<@liferay_aui.icon
+											image="angle-left"
+											markupView="lexicon"
+										/>
+
+										<span class="sr-only">Previous</span>
+									</a>
+
+									<a class="carousel-control-next" data-slide="next" href="#carouselExampleFade" role="button">
+										<@liferay_aui.icon
+											image="angle-right"
+											markupView="lexicon"
+										/>
+
+										<span class="sr-only">Next</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</#if>
 	</div>
 
 	<#assign
@@ -345,6 +475,22 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	var easyzoom = $('.easyzoom').easyZoom();
+	var easyzoomApi = easyzoom.filter('.easyzoom').data('easyZoom');
+
+	$('.product-detail-image-widget .thumb-image').on(
+		'click',
+		function(event) {
+			var $this = $(this);
+
+			event.preventDefault();
+
+			easyzoomApi.swap($this.data('standard'), $this.attr('href'));
+		}
+	);
+</script>
 
 <@liferay_aui.script use="liferay-commerce-product-content">
 	var productContent = new Liferay.Portlet.ProductContent(

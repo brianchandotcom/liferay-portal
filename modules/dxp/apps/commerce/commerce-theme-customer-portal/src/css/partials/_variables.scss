@@ -82,19 +82,29 @@ $footer-secondary-link: (
 	hover-color: #2F313E
 ) !default;
 
-// Orders
+// Product Detail
 
-$product-detail-image-widget-width: 250px !default;
+$product-detail-image-widget-width: 100% !default;
 
-$product-detail-image-widget-height: calc(#{$product-detail-image-widget-width} * 0.84) !default;
+$product-detail-image-widget-height: calc(#{$product-detail-image-widget-width} * 0.9) !default;
 
-$product-detail-image-widget-width-lg: 300px !default;
+$product-detail-image-widget-width-sm: null !default;
+
+$product-detail-image-widget-height-sm: null !default;
+
+$product-detail-image-widget-width-md: 300px !default;
+
+$product-detail-image-widget-height-md: calc(#{$product-detail-image-widget-width-md} * 0.84) !default;
+
+$product-detail-image-widget-width-lg: 350px !default;
 
 $product-detail-image-widget-height-lg: calc(#{$product-detail-image-widget-width-lg} * 0.84) !default;
 
-$product-detail-image-widget-width-xl: 450px !default;
+$product-detail-image-widget-width-xl: 500px !default;
 
 $product-detail-image-widget-height-xl: calc(#{$product-detail-image-widget-width-xl} * 0.84) !default;
+
+// Orders
 
 $order-details-title: () !default;
 $order-details-title: map-merge((

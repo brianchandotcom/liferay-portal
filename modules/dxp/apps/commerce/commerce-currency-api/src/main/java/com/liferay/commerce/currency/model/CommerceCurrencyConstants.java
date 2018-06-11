@@ -19,6 +19,8 @@ package com.liferay.commerce.currency.model;
  */
 public class CommerceCurrencyConstants {
 
+	public static final String DEFAULT_FORMAT_PATTERN = "###,##0.00";
+
 	public static final String RESOURCE_NAME = "com.liferay.commerce.currency";
 
 }

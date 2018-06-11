@@ -17,6 +17,7 @@ package com.liferay.commerce.currency.internal.util;
 import com.liferay.commerce.currency.configuration.RoundingTypeConfiguration;
 import com.liferay.commerce.currency.constants.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.model.CommerceCurrencyConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

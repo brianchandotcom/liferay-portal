@@ -6,28 +6,29 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
+	<description>Provides the Liferay Dynamic Section component tags. These tags mark customizable sections of jsps. By default, these sections render as written, but they can be customized with extensions.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-dynamic-section</short-name>
 	<uri>http://liferay.com/tld/dynamic-section</uri>
 	<tag>
-		<description></description>
+		<description>Marks a dynamic section.</description>
 		<name>dynamic-section</name>
 		<tag-class>com.liferay.frontend.taglib.dynamic.section.servlet.taglib.DynamicSectionTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Name for Dynamic Section</description>
+			<description>A name for the dynamic section.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
-		<description></description>
+		<description>Marks a dynamic section's original body.</description>
 		<name>dynamic-section-original-body</name>
 		<tag-class>com.liferay.frontend.taglib.dynamic.section.servlet.taglib.DynamicSectionOriginalBodyTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Name for Dynamic Section Original Body</description>
+			<description>A name for the dynamic section's original body.</description>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

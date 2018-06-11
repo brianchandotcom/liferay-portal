@@ -99,6 +99,10 @@ public abstract class BasePanelApp implements PanelApp {
 
 		Group group = groupProvider.getGroup(request);
 
+		if (group == null) {
+			return portletURL;
+		}
+
 		portletURL.setParameter(
 			"p_v_l_s_g_id", String.valueOf(group.getGroupId()));
 

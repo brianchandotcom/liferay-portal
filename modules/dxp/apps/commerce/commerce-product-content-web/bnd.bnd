@@ -5,4 +5,7 @@ Export-Package:\
 	com.liferay.commerce.product.content.web.configuration,\
 	com.liferay.commerce.product.content.web.display.context
 Liferay-JS-Config: /META-INF/resources/js/config.js
+Require-Capability:\
+	soy;\
+		filter:="(type=asset-publisher-web)"
 Web-ContextPath: /commerce-product-content-web

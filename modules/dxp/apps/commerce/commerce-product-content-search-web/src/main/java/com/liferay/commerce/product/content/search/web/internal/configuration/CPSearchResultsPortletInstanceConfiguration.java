@@ -33,12 +33,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CPSearchResultsPortletInstanceConfiguration {
 
-	@Meta.AD(name = "asset-category-ids", required = false)
-	public String[] assetCategoryIds();
-
-	@Meta.AD(deflt = "", name = "configuration-method", required = false)
-	public String configurationMethod();
-
 	@Meta.AD(deflt = "", name = "display-style", required = false)
 	public String displayStyle();
 

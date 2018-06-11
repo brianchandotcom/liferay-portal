@@ -16,9 +16,7 @@ package com.liferay.commerce.product.content.search.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
-import com.liferay.commerce.product.content.search.web.internal.constants.CPSearchResultsConfigurationConstants;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -40,8 +38,6 @@ import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -125,50 +121,16 @@ public class CPSearchResultsPortlet
 					Field.ENTRY_CLASS_NAME, CPDefinition.class.getName()),
 				BooleanClauseOccur.MUST));
 
-		String configurationMethod =
-			_cpSearchResultsPortletInstanceConfiguration.configurationMethod();
+		AssetCategory assetCategory = (AssetCategory)renderRequest.getAttribute(
+			WebKeys.ASSET_CATEGORY);
 
-		if (configurationMethod.equals(
-				CPSearchResultsConfigurationConstants.SELECT_CATEGORIES)) {
-
-			String[] assetCategoryIds =
-				_cpSearchResultsPortletInstanceConfiguration.assetCategoryIds();
-
+		if (assetCategory != null) {
 			portletSharedSearchSettings.addCondition(
 				new BooleanClauseImpl<Query>(
 					new TermQueryImpl(
 						Field.ASSET_CATEGORY_IDS,
-						StringUtil.merge(assetCategoryIds)),
+						String.valueOf(assetCategory.getCategoryId())),
 					BooleanClauseOccur.MUST));
-		}
-		else {
-			AssetCategory assetCategory =
-				(AssetCategory)renderRequest.getAttribute(
-					WebKeys.ASSET_CATEGORY);
-
-			if (assetCategory != null) {
-				portletSharedSearchSettings.addCondition(
-					new BooleanClauseImpl<Query>(
-						new TermQueryImpl(
-							Field.ASSET_CATEGORY_IDS,
-							String.valueOf(assetCategory.getCategoryId())),
-						BooleanClauseOccur.MUST));
-			}
-
-			CPDefinition cpDefinition =
-				(CPDefinition)renderRequest.getAttribute(
-					CPWebKeys.CP_DEFINITION);
-
-			if ((cpDefinition != null) &&
-				Validator.isNotNull(configurationMethod)) {
-
-				portletSharedSearchSettings.addCondition(
-					new BooleanClauseImpl<Query>(
-						new TermQueryImpl(
-							configurationMethod,
-							String.valueOf(cpDefinition.getCPDefinitionId())),
-						BooleanClauseOccur.MUST));
-			}
 		}
 
 		SearchContext searchContext =

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
@@ -87,16 +86,6 @@ public class CPSearchResultsDisplayContext {
 		_cpSearchResultsPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CPSearchResultsPortletInstanceConfiguration.class);
-	}
-
-	public String getCategoryIds() {
-		return StringUtil.merge(
-			_cpSearchResultsPortletInstanceConfiguration.assetCategoryIds());
-	}
-
-	public String getConfigurationMethod() {
-		return _cpSearchResultsPortletInstanceConfiguration.
-			configurationMethod();
 	}
 
 	public long getCPDefinitionId(Document document) {
@@ -167,7 +156,8 @@ public class CPSearchResultsDisplayContext {
 		}
 
 		if (fileEntry != null) {
-			return DLUtil.getThumbnailSrc(fileEntry, themeDisplay);
+			return DLUtil.getDownloadURL(
+				fileEntry, fileEntry.getFileVersion(), themeDisplay, null);
 		}
 
 		return StringPool.BLANK;

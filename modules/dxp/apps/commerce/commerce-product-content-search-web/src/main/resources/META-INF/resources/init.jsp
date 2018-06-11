@@ -25,12 +25,10 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.product.content.search.web.internal.constants.CPSearchResultsConfigurationConstants" %><%@
-page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionFacetsDisplayContext" %><%@
+<%@ page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionFacetsDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionFacetsDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.search.web.internal.portlet.CPSearchResultsPortlet" %><%@
-page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.search.Document" %><%@
 page import="com.liferay.portal.kernel.search.facet.Facet" %><%@

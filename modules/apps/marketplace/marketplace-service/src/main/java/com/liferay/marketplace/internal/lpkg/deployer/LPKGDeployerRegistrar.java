@@ -39,7 +39,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
-import org.osgi.framework.SynchronousBundleListener;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -161,17 +160,16 @@ public class LPKGDeployerRegistrar {
 	@Reference
 	private AppLocalService _appLocalService;
 
-	private final BundleListener _bundleListener =
-		new SynchronousBundleListener() {
+	private final BundleListener _bundleListener = new BundleListener() {
 
-			@Override
-			public void bundleChanged(BundleEvent bundleEvent) {
-				if (bundleEvent.getType() == BundleEvent.STARTED) {
-					_register(bundleEvent.getBundle(), null);
-				}
+		@Override
+		public void bundleChanged(BundleEvent bundleEvent) {
+			if (bundleEvent.getType() == BundleEvent.STARTED) {
+				_register(bundleEvent.getBundle(), null);
 			}
+		}
 
-		};
+	};
 
 	@Reference
 	private LPKGDeployer _lpkgDeployer;

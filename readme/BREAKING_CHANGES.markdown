@@ -842,7 +842,54 @@ compile successfully:
 
 #### Why was this change made?
 
-This change provides the latest features offered by the Portlet 3.0
+This change helps provide the latest features offered by the Portlet 3.0
+Specification.
+
+---------------------------------------
+
+### Decoupled Several Classes from PortletURLImpl When Implementing Portlet 3.0
+- **Date:** 2018-Jun-08
+- **JIRA Ticket:** LPS-82119
+
+#### What changed?
+
+All classes implementing `javax.portlet.BaseURL` have been moved to the
+`com.liferay.portlet.internal` sub package. These classes include
+
+- `PortletURLImplWrapper`
+- `LiferayStrutsPortletURLImpl`
+- `StrutsActionPortletURL`
+
+#### Who is affected?
+
+This affects anyone implementing Portlet 3.0 that uses `PortletURLImpl`.
+
+#### How should I update my code?
+
+You must refactor the constructors of your affected classes to receive
+`com.liferay.portal.kernel.portlet.LiferayPortletResponse` instead of
+`com.liferay.portlet.PortletResponseImpl`.
+
+In addition, their class hierarchies must be changed. For example, the
+`com.liferay.portal.struts.StrutsActionPortletURL` class hierarchy was changed
+from
+
+- `com.liferay.portlet.PortletURLImpl`
+    - `com.liferay.portlet.PortletURLImplWrapper`
+        - `com.liferay.portal.struts.StrutsActionPortletURL`
+
+to
+
+- `javax.portlet.filter.RenderStateWrapper`
+    - `javax.portlet.filter.BaseURLWrapper`
+        - `javax.portlet.filter.PortletURLWrapper`
+            - `com.liferay.portal.kernel.portlet.LiferayPortletURLWrapper`
+                - `com.liferay.portlet.PortletURLImplWrapper`
+                    - `com.liferay.portal.struts.StrutsActionPortletURL`
+
+#### Why was this change made?
+
+This change helps provide the latest features offered by the Portlet 3.0
 Specification.
 
 ---------------------------------------

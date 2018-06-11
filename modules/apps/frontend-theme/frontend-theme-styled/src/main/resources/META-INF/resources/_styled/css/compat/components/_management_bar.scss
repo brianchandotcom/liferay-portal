@@ -115,9 +115,23 @@
 			padding-left: 20px;
 			padding-top: 12px;
 
+			.input-group-btn .btn-default {
+				background-color: #F1F2F5;
+				border-color: #E7E7ED;
+			}
+
 			.form-control {
+				border-right-color: transparent;
 				width: 100%;
 			}
+		}
+	}
+
+	.management-bar-nav .basic-search-slider {
+		left: inherit;
+
+		.basic-search-close {
+			display: none;
 		}
 	}
 
@@ -143,6 +157,10 @@
 					padding-top: $management-bar-desktop-padding-vertical;
 				}
 			}
+		}
+
+		.btn-default:not([disabled]):not(.disabled).active {
+			border-color: transparent;
 		}
 	}
 
@@ -520,5 +538,10 @@
 				padding-top: $management-bar-desktop-padding-vertical;
 			}
 		}
+	}
+
+	.management-bar-secondary-bar {
+		background-color: #F0F5FF;
+		border-bottom: 1px solid $primary;
 	}
 }

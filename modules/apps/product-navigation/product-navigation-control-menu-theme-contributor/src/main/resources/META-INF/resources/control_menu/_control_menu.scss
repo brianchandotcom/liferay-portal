@@ -65,7 +65,7 @@
 		padding: 6px 1rem 7px 1rem;
 
 		@include sm() {
-			padding: 15px 1.25rem 14px 1.25rem;
+			padding: 10px 1.25rem;
 		}
 	}
 
@@ -81,7 +81,7 @@
 
 .control-menu-level-1-heading {
 	color: #FFF;
-	font-size: 19px;
+	font-size: 1rem;
 	font-weight: bold;
 }
 
@@ -231,6 +231,10 @@
 		@include transform(translateY(-50%));
 
 		white-space: nowrap;
+	}
+
+	span.text-muted {
+		font-size: 0.875rem;
 	}
 }
 

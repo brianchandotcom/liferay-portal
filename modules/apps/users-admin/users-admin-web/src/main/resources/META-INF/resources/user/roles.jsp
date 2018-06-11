@@ -427,7 +427,29 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 </div>
 
 <div class="sheet-section">
-	<h3 class="sheet-subtitle"><liferay-ui:message key="site-roles" /></h3>
+	<h3 class="sheet-subtitle">
+		<span class="autofit-padded-no-gutters autofit-row">
+			<span class="autofit-col autofit-col-expand">
+				<span class="heading-text">
+					<liferay-ui:message key="site-roles" />
+				</span>
+			</span>
+
+			<c:if test="<%= !groups.isEmpty() && !portletName.equals(myAccountPortletId) %>">
+				<span class="autofit-col">
+					<liferay-ui:icon
+						cssClass="modify-link"
+						id="selectSiteRoleLink"
+						label="<%= true %>"
+						linkCssClass="btn btn-secondary btn-sm"
+						message="select"
+						method="get"
+						url="javascript:;"
+					/>
+				</span>
+			</c:if>
+		</span>
+	</h3>
 
 	<c:choose>
 		<c:when test="<%= groups.isEmpty() %>">
@@ -499,16 +521,6 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			</liferay-ui:search-container>
 
 			<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
-				<liferay-ui:icon
-					cssClass="modify-link"
-					id="selectSiteRoleLink"
-					label="<%= true %>"
-					linkCssClass="btn btn-secondary btn-sm"
-					message="select"
-					method="get"
-					url="javascript:;"
-				/>
-
 				<aui:script use="liferay-search-container">
 					var Util = Liferay.Util;
 

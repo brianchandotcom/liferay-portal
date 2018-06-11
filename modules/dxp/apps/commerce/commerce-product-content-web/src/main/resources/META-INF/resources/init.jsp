@@ -24,15 +24,23 @@ taglib uri="http://liferay.com/tld/commerce-cart" prefix="liferay-commerce-cart"
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext" %><%@
+<%@ page import="com.liferay.asset.kernel.exception.DuplicateQueryRuleException" %><%@
+page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
+page import="com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants" %><%@
+page import="com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentMiniDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPContentConfigurationDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPPreviewContentDisplayContext" %><%@
+page import="com.liferay.commerce.product.content.web.internal.display.context.CPPublisherConfigurationDisplayContext" %><%@
+page import="com.liferay.commerce.product.content.web.internal.display.context.CPPublisherDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentMiniPortlet" %><%@
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentPortlet" %><%@
+page import="com.liferay.commerce.product.data.source.CPDataSource" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionValueRel" %><%@
@@ -41,12 +49,14 @@ page import="com.liferay.commerce.product.model.CPOptionCategory" %><%@
 page import="com.liferay.commerce.product.model.CPSpecificationOption" %><%@
 page import="com.liferay.commerce.product.type.CPType" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 

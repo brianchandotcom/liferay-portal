@@ -62,8 +62,8 @@ class Utils {
 
 		Liferay.Portlet.readyCounter = 0;
 
-		Liferay.destroyAllComponents(
-			function(destroyConfig) {
+		Liferay.destroyComponents(
+			function(component, destroyConfig) {
 				return destroyConfig.destroyOnNavigate;
 			}
 		);

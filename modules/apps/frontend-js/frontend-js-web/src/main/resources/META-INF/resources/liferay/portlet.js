@@ -645,6 +645,12 @@
 
 					portlet.remove(true);
 
+					Liferay.destroyComponents(
+						function(component, destroyConfig) {
+							return portlet.portletId === destroyConfig.portletId;
+						}
+					);
+
 					var params = {};
 
 					var urlPieces = url.split('?');

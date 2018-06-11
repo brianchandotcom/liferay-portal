@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -71,7 +69,7 @@ public class FragmentPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			_verifyRenderLayouts(renderRequest);
+			_createAssetDisplayLayout(renderRequest);
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -82,8 +80,17 @@ public class FragmentPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	private Layout _createAssetDisplayLayout(Group group)
+	private void _createAssetDisplayLayout(RenderRequest renderRequest)
 		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (_layoutLocalService.hasLayouts(group)) {
+			return;
+		}
 
 		long defaultUserId = _userLocalService.getDefaultUserId(
 			group.getCompanyId());
@@ -94,32 +101,13 @@ public class FragmentPortlet extends MVCPortlet {
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
-		return _layoutLocalService.addLayout(
+		_layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), false, 0, "Asset Display Page",
 			null, null, "asset_display", true, null, serviceContext);
 	}
 
-	private void _verifyRenderLayouts(RenderRequest renderRequest)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = _groupLocalService.fetchGroup(
-			themeDisplay.getScopeGroupId());
-
-		if ((group.getPublicLayoutsPageCount() == 0) &&
-			(group.getPrivateLayoutsPageCount() == 0)) {
-
-			_createAssetDisplayLayout(group);
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentPortlet.class);
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

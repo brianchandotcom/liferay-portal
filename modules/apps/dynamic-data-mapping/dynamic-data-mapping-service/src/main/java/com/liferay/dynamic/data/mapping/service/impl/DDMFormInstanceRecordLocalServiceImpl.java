@@ -178,6 +178,10 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				ddmFormInstanceRecordVersion.getPrimaryKey());
 		}
 
+		assetEntryLocalService.deleteEntry(
+			DDMFormInstanceRecord.class.getName(),
+			ddmFormInstanceRecord.getFormInstanceRecordId());
+
 		return ddmFormInstanceRecord;
 	}
 

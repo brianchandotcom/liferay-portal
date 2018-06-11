@@ -37,6 +37,13 @@ function openToast(
 		{
 			autoClose: true,
 			destroyOnHide: true,
+			events: {
+				'disposed': function(event) {
+					if (!alertContainer.hasChildNodes()) {
+						dom.exitDocument(alertContainer);
+					}
+				}
+			},
 			message: message,
 			spritemap: themeDisplay.getPathThemeImages() + '/lexicon/icons.svg',
 			style: type,

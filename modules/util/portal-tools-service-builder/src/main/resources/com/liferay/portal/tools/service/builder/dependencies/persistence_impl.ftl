@@ -95,9 +95,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-<#list referenceEntities as referenceEntity>
-	<#if referenceEntity.hasEntityColumns() && (stringUtil.equals(entity.name, "Counter") || !stringUtil.equals(referenceEntity.name, "Counter"))>
-		import ${referenceEntity.apiPackagePath}.service.persistence.${referenceEntity.name}Persistence;
+<#list entity.entityColumns as entityColumn>
+	<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
+		<#assign referenceEntity = serviceBuilder.getEntity(entityColumn.entityName) />
+
+		<#if stringUtil.equals(entity.name, "Counter") || !stringUtil.equals(referenceEntity.name, "Counter")>
+			import ${referenceEntity.apiPackagePath}.service.persistence.${referenceEntity.name}Persistence;
+		</#if>
 	</#if>
 </#list>
 

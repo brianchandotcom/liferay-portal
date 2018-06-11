@@ -129,10 +129,25 @@ public class ViewConnectedApplicationsMVCRenderCommand
 					themeDisplay.getCompanyId(), scopeAlias));
 		}
 
+		OAuth2Authorization oAuth2Authorization = null;
+
+		for (OAuth2Authorization userOAuth2Authorization :
+				userOAuth2Authorizations) {
+
+			if (userOAuth2Authorization.getOAuth2AuthorizationId() ==
+					oAuth2AuthorizationId) {
+
+				oAuth2Authorization = userOAuth2Authorization;
+
+				break;
+			}
+		}
+
 		OAuth2ConnectedApplicationsPortletDisplayContext
 			oAuth2ConnectedApplicationsPortletDisplayContext =
 				new OAuth2ConnectedApplicationsPortletDisplayContext(
-					assignableScopes, renderRequest, _oAuth2ApplicationService);
+					assignableScopes, renderRequest, _oAuth2ApplicationService,
+					oAuth2Authorization);
 
 		renderRequest.setAttribute(
 			OAuth2ProviderWebKeys.

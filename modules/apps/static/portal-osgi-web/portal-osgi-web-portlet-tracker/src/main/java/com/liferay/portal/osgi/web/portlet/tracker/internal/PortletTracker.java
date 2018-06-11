@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
-import com.liferay.portal.kernel.model.portlet.PortletDependencyFactoryUtil;
+import com.liferay.portal.kernel.model.portlet.PortletDependencyFactory;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -750,7 +750,7 @@ public class PortletTracker
 			String[] parts = StringUtil.split(dependency, CharPool.SEMICOLON);
 
 			portletModel.addPortletDependency(
-				PortletDependencyFactoryUtil.createPortletDependency(
+				_portletDependencyFactory.createPortletDependency(
 					parts[0], parts[1], parts[2]));
 		}
 	}
@@ -1262,6 +1262,9 @@ public class PortletTracker
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletDependencyFactory _portletDependencyFactory;
 
 	@Reference
 	private PortletInstanceFactory _portletInstanceFactory;

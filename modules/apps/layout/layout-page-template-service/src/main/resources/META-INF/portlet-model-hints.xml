@@ -35,10 +35,10 @@
 		<field name="previewFileEntryId" type="long" />
 		<field name="defaultTemplate" type="boolean" />
 		<field name="layoutPrototypeId" type="long" />
+		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
-		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

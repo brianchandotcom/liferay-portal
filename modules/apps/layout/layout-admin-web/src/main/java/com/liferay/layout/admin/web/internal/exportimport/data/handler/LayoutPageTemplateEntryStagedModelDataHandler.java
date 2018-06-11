@@ -161,7 +161,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		_layoutPageTemplateCollectionLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.fragment.model.LayoutPageTemplateEntry)",
+		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)",
 		unbind = "-"
 	)
 	private StagedModelRepository<LayoutPageTemplateEntry>

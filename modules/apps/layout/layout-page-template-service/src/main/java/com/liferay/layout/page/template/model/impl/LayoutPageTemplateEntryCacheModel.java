@@ -99,6 +99,8 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		sb.append(defaultTemplate);
 		sb.append(", layoutPrototypeId=");
 		sb.append(layoutPrototypeId);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -107,8 +109,6 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -166,6 +166,15 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		layoutPageTemplateEntryImpl.setPreviewFileEntryId(previewFileEntryId);
 		layoutPageTemplateEntryImpl.setDefaultTemplate(defaultTemplate);
 		layoutPageTemplateEntryImpl.setLayoutPrototypeId(layoutPrototypeId);
+
+		if (lastPublishDate == Long.MIN_VALUE) {
+			layoutPageTemplateEntryImpl.setLastPublishDate(null);
+		}
+		else {
+			layoutPageTemplateEntryImpl.setLastPublishDate(new Date(
+					lastPublishDate));
+		}
+
 		layoutPageTemplateEntryImpl.setStatus(status);
 		layoutPageTemplateEntryImpl.setStatusByUserId(statusByUserId);
 
@@ -181,14 +190,6 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		}
 		else {
 			layoutPageTemplateEntryImpl.setStatusDate(new Date(statusDate));
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			layoutPageTemplateEntryImpl.setLastPublishDate(null);
-		}
-		else {
-			layoutPageTemplateEntryImpl.setLastPublishDate(new Date(
-					lastPublishDate));
 		}
 
 		layoutPageTemplateEntryImpl.resetOriginalValues();
@@ -225,13 +226,13 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		defaultTemplate = objectInput.readBoolean();
 
 		layoutPrototypeId = objectInput.readLong();
+		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
 
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
-		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -282,6 +283,7 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		objectOutput.writeBoolean(defaultTemplate);
 
 		objectOutput.writeLong(layoutPrototypeId);
+		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
 
@@ -295,7 +297,6 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 		}
 
 		objectOutput.writeLong(statusDate);
-		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -314,9 +315,9 @@ public class LayoutPageTemplateEntryCacheModel implements CacheModel<LayoutPageT
 	public long previewFileEntryId;
 	public boolean defaultTemplate;
 	public long layoutPrototypeId;
+	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-	public long lastPublishDate;
 }

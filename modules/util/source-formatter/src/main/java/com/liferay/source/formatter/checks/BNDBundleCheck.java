@@ -15,11 +15,9 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 
 import java.util.ArrayList;
@@ -67,8 +65,6 @@ public class BNDBundleCheck extends BaseFileCheck {
 		if (content.matches("(?s).*Liferay-Releng-Deprecated:\\s*true.*")) {
 			content = BNDSourceUtil.updateInstruction(
 				content, "Liferay-Releng-Bundle", "false");
-			content = BNDSourceUtil.updateInstruction(
-				content, "Liferay-Releng-Suite", StringPool.BLANK);
 		}
 
 		content = BNDSourceUtil.updateInstruction(
@@ -79,52 +75,6 @@ public class BNDBundleCheck extends BaseFileCheck {
 			content, "Liferay-Releng-Support-Url", "http://www.liferay.com");
 		content = BNDSourceUtil.updateInstruction(
 			content, "Liferay-Releng-Supported", "${liferay.releng.supported}");
-
-		String[] lines = StringUtil.splitLines(content);
-
-		for (String line : lines) {
-			if (!line.contains("Liferay-Releng-Suite")) {
-				continue;
-			}
-
-			String s = StringUtil.replace(
-				line, "Liferay-Releng-Suite:", StringPool.BLANK);
-
-			String value = StringUtil.toLowerCase(s.trim());
-
-			if (Validator.isNull(value)) {
-				content = BNDSourceUtil.updateInstruction(
-					content, "Liferay-Releng-Bundle", "false");
-				content = BNDSourceUtil.updateInstruction(
-					content, "Liferay-Releng-Fix-Delivery-Method",
-					StringPool.BLANK);
-				content = BNDSourceUtil.updateInstruction(
-					content, "Liferay-Releng-Portal-Required", "false");
-
-				continue;
-			}
-
-			if (!ArrayUtil.contains(_SUITES, value)) {
-				String message = StringBundler.concat(
-					"The 'Liferay-Releng-Suite' can be blank or one of the ",
-					"following values ", StringUtil.merge(_SUITES, ", "));
-
-				addMessage(fileName, message);
-
-				continue;
-			}
-
-			content = BNDSourceUtil.updateInstruction(
-				content, "Liferay-Releng-Bundle", "true");
-			content = BNDSourceUtil.updateInstruction(
-				content, "Liferay-Releng-Fix-Delivery-Method", "core");
-			content = BNDSourceUtil.updateInstruction(
-				content, "Liferay-Releng-Marketplace", "true");
-			content = BNDSourceUtil.updateInstruction(
-				content, "Liferay-Releng-Portal-Required", "true");
-			content = BNDSourceUtil.updateInstruction(
-				content, "Liferay-Releng-Suite", value);
-		}
 
 		for (String instruction : _REQUIRED_INSTRUCTIONS) {
 			if (!content.contains(instruction + ":")) {
@@ -167,13 +117,7 @@ public class BNDBundleCheck extends BaseFileCheck {
 		"Liferay-Releng-Fix-Delivery-Method", "Liferay-Releng-Labs",
 		"Liferay-Releng-Marketplace", "Liferay-Releng-Portal-Required",
 		"Liferay-Releng-Public", "Liferay-Releng-Restart-Required",
-		"Liferay-Releng-Suite", "Liferay-Releng-Support-Url",
-		"Liferay-Releng-Supported"
-	};
-
-	private static final String[] _SUITES = {
-		"collaboration", "forms-and-workflow", "foundation", "static",
-		"web-experience"
+		"Liferay-Releng-Support-Url", "Liferay-Releng-Supported"
 	};
 
 	private final List<String> _allowedFileNames = new ArrayList<>();

@@ -1108,7 +1108,7 @@ AUI.add(
 
 						var field = event.currentTarget.ancestor('.' + CSS_FIELD).getData('field-instance');
 
-						if (!instance.isEditMode()) {
+						if (instance.isEditMode()) {
 							return;
 						}
 

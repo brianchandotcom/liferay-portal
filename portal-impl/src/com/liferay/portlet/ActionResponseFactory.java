@@ -40,14 +40,8 @@ public class ActionResponseFactory {
 			User user, Layout layout)
 		throws PortletException {
 
-		while (true) {
-			if (actionRequest instanceof ActionRequestWrapper) {
-				actionRequest =
-					((ActionRequestWrapper)actionRequest).getRequest();
-			}
-			else {
-				break;
-			}
+		while (actionRequest instanceof ActionRequestWrapper) {
+			actionRequest = ((ActionRequestWrapper)actionRequest).getRequest();
 		}
 
 		ActionResponseImpl actionResponseImpl = new ActionResponseImpl();

@@ -35,14 +35,9 @@ public class ResourceResponseFactory {
 	public static LiferayResourceResponse create(
 		ResourceRequest resourceRequest, HttpServletResponse response) {
 
-		while (true) {
-			if (resourceRequest instanceof ResourceRequestWrapper) {
-				resourceRequest =
-					((ResourceRequestWrapper)resourceRequest).getRequest();
-			}
-			else {
-				break;
-			}
+		while (resourceRequest instanceof ResourceRequestWrapper) {
+			resourceRequest =
+				((ResourceRequestWrapper)resourceRequest).getRequest();
 		}
 
 		ResourceResponseImpl resourceResponseImpl = new ResourceResponseImpl();

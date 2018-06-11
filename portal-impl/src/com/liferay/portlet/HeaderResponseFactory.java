@@ -34,14 +34,8 @@ public class HeaderResponseFactory {
 	public static LiferayHeaderResponse create(
 		HeaderRequest headerRequest, HttpServletResponse response) {
 
-		while (true) {
-			if (headerRequest instanceof HeaderRequestWrapper) {
-				headerRequest =
-					((HeaderRequestWrapper)headerRequest).getRequest();
-			}
-			else {
-				break;
-			}
+		while (headerRequest instanceof HeaderRequestWrapper) {
+			headerRequest = ((HeaderRequestWrapper)headerRequest).getRequest();
 		}
 
 		HeaderResponseImpl headerResponseImpl = new HeaderResponseImpl();

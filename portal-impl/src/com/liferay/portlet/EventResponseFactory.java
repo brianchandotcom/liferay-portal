@@ -41,13 +41,8 @@ public class EventResponseFactory {
 			Layout layout)
 		throws PortletModeException, WindowStateException {
 
-		while (true) {
-			if (eventRequest instanceof EventRequestWrapper) {
-				eventRequest = ((EventRequestWrapper)eventRequest).getRequest();
-			}
-			else {
-				break;
-			}
+		while (eventRequest instanceof EventRequestWrapper) {
+			eventRequest = ((EventRequestWrapper)eventRequest).getRequest();
 		}
 
 		EventResponseImpl eventResponseImpl = new EventResponseImpl();

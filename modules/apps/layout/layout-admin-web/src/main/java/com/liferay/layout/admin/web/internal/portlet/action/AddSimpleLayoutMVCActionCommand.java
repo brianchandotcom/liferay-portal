@@ -123,7 +123,7 @@ public class AddSimpleLayoutMVCActionCommand
 				actionRequest, portletResource + "layoutAdded", layout);
 
 			jsonObject.put(
-				"redirectURL", getRedirectURL(actionRequest, actionResponse));
+				"redirectURL", getRedirectURL(actionResponse, layout));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

@@ -14,12 +14,17 @@
 
 package com.liferay.talend.utils;
 
+import com.liferay.talend.runtime.apio.constants.ApioConstants;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.Collections;
 import java.util.Map;
 
 import javax.ws.rs.core.UriBuilder;
+
+import org.apache.commons.lang3.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,18 +34,44 @@ import org.slf4j.LoggerFactory;
  */
 public class UriUtils {
 
+	public static URI addQueryConditionToURL(
+		String resourceURL, String queryCondition) {
+
+		if (StringUtils.isEmpty(queryCondition)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Query condition was empty!");
+			}
+
+			return getUri(resourceURL);
+		}
+
+		Collections.singletonMap(
+			ApioConstants.FILTER_QUERY_PARAM, queryCondition);
+
+		URI decoratedUri = updateWithQueryParameters(
+			resourceURL,
+			Collections.singletonMap(
+				ApioConstants.FILTER_QUERY_PARAM, queryCondition));
+
+		return decoratedUri;
+	}
+
+	public static URI getUri(String url) {
+		try {
+			return new URI(url);
+		}
+		catch (URISyntaxException urise) {
+			_log.error("Unable to convert URL to URI: " + url);
+
+			throw new RuntimeException(urise);
+		}
+	}
+
 	public static URI updateWithQueryParameters(
 		String url, Map<String, String> queryParameters) {
 
 		if ((queryParameters == null) || queryParameters.isEmpty()) {
-			try {
-				return new URI(url);
-			}
-			catch (URISyntaxException urise) {
-				_log.error("Unable to convert URL to URI: " + url);
-
-				throw new RuntimeException(urise);
-			}
+			return getUri(url);
 		}
 
 		URI uri = null;

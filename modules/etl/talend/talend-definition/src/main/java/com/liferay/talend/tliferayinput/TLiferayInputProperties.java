@@ -124,7 +124,7 @@ public class TLiferayInputProperties
 					resource.main.schema.setValue(runtimeSchema);
 				}
 				catch (IOException ioe) {
-					ExceptionUtils.exceptionToValidationResult(ioe);
+					return ExceptionUtils.exceptionToValidationResult(ioe);
 				}
 			}
 

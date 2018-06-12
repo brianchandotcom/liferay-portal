@@ -17,7 +17,7 @@ package com.liferay.talend.runtime.apio.constants;
 /**
  * @author Zoltán Takács
  */
-public class ApioConstants {
+public interface ApioConstants {
 
 	public static final String FILTER_QUERY_PARAM = "filter";
 

@@ -115,6 +115,10 @@ public class TeamLocalServiceUtil {
 		getService().clearUserTeams(userId);
 	}
 
+	public static int countByGroupId(long groupId) {
+		return getService().countByGroupId(groupId);
+	}
+
 	/**
 	* Creates a new team with the primary key. Does not add the team to the database.
 	*

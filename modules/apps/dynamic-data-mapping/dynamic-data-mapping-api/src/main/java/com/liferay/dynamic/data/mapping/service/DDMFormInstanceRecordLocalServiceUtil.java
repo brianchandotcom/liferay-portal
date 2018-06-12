@@ -105,9 +105,10 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 		return getService().deleteFormInstanceRecord(ddmFormInstanceRecord);
 	}
 
-	public static void deleteFormInstanceRecord(long ddmFormInstanceRecordId)
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord deleteFormInstanceRecord(
+		long ddmFormInstanceRecordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFormInstanceRecord(ddmFormInstanceRecordId);
+		return getService().deleteFormInstanceRecord(ddmFormInstanceRecordId);
 	}
 
 	public static void deleteFormInstanceRecords(long ddmFormInstanceId)

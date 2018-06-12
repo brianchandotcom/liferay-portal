@@ -122,8 +122,9 @@ public interface DDMFormInstanceRecordLocalService extends BaseLocalService,
 	public DDMFormInstanceRecord deleteFormInstanceRecord(
 		DDMFormInstanceRecord ddmFormInstanceRecord) throws PortalException;
 
-	public void deleteFormInstanceRecord(long ddmFormInstanceRecordId)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public DDMFormInstanceRecord deleteFormInstanceRecord(
+		long ddmFormInstanceRecordId) throws PortalException;
 
 	public void deleteFormInstanceRecords(long ddmFormInstanceId)
 		throws PortalException;

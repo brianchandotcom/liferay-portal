@@ -30,12 +30,14 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = MapProviderTracker.class)
-public class MapProviderTrackerImpl {
+public class MapProviderTrackerImpl implements MapProviderTracker {
 
+	@Override
 	public MapProvider getMapProvider(String mapProviderKey) {
 		return _mapProviders.get(mapProviderKey);
 	}
 
+	@Override
 	public Collection<MapProvider> getMapProviders() {
 		return _mapProviders.values();
 	}

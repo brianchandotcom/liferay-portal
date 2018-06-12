@@ -29,8 +29,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = MapProviderHelper.class)
-public class MapProviderHelperImpl {
+public class MapProviderHelperImpl implements MapProviderHelper {
 
+	@Override
 	public String getMapProviderKey(long companyId) {
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(companyId);
@@ -39,6 +40,7 @@ public class MapProviderHelperImpl {
 			MapProviderWebKeys.MAP_PROVIDER_KEY, null);
 	}
 
+	@Override
 	public String getMapProviderKey(long companyId, long groupId) {
 		String companyMapProviderKey = getMapProviderKey(companyId);
 

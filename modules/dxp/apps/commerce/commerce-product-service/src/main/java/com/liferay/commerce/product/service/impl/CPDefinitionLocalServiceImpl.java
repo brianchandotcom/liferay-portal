@@ -583,7 +583,7 @@ public class CPDefinitionLocalServiceImpl
 	public List<CPDefinition> getCPDefinitions(
 		long groupId, int status, int start, int end) {
 
-		return cpDefinitionPersistence.filterFindByG_NotS(
+		return cpDefinitionPersistence.findByG_NotS(
 			groupId, status, start, end);
 	}
 

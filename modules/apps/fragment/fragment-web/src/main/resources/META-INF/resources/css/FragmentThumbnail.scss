@@ -1,0 +1,17 @@
+@import "mixins";
+
+.portlet-fragment-web {
+	.fragment-thumbnail {
+		.button-row {
+			background-color: #FFF;
+			border-top: 1px solid #DEE2E6 !important;
+			bottom: 0;
+			padding: 0.5rem;
+			position: absolute;
+
+			.autofit-col-end {
+				display: inline;
+			}
+		}
+	}
+}

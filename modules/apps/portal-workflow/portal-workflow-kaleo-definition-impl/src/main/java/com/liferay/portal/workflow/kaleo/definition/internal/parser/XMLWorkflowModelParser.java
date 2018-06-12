@@ -843,7 +843,7 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 			sourceNode.addOutgoingTransition(transition);
 
-			if (targetNode != null) {
+			if (Validator.isNotNull(targetNode)) {
 				targetNode.addIncomingTransition(transition);
 			}
 		}

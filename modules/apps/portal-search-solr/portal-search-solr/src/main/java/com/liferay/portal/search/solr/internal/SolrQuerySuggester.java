@@ -199,7 +199,7 @@ public class SolrQuerySuggester implements QuerySuggester {
 
 		long[] groupIds = getGroupIdsForSuggestions(searchContext);
 
-		if (groupIds != null) {
+		if (Validator.isNotNull(groupIds)) {
 			String groupIdFilterQuery = getFilterQuery(
 				Field.GROUP_ID, groupIds);
 

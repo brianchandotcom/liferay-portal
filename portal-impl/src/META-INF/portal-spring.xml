@@ -271,35 +271,4 @@
 	<bean class="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl" id="com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryLocalService" />
-	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryService" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryFinderImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsEntryFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsStatsLocalService" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsFinderImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityLocalService" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialActivityServiceImpl" id="com.liferay.social.kernel.service.SocialActivityService" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityFinderImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialActivityAchievementLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityAchievementLocalService" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityAchievementPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityAchievementPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialActivityCounterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityCounterLocalService" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityCounterPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityCounterPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityCounterFinderImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialActivityInterpreterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityInterpreterLocalService" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialActivityLimitLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityLimitLocalService" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityLimitPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityLimitPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialActivitySetLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivitySetLocalService" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySetPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivitySetPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySetFinderImpl" id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivitySettingLocalService" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialActivitySettingServiceImpl" id="com.liferay.social.kernel.service.SocialActivitySettingService" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySettingPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivitySettingPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl" id="com.liferay.social.kernel.service.SocialRelationLocalService" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRelationPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialRelationPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialRequestLocalServiceImpl" id="com.liferay.social.kernel.service.SocialRequestLocalService" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialRequestServiceImpl" id="com.liferay.social.kernel.service.SocialRequestService" />
-	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRequestPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialRequestPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialRequestInterpreterLocalService" />
 </beans>

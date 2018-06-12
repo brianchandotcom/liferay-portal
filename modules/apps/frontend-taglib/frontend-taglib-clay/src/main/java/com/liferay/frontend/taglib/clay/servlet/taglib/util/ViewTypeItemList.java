@@ -54,7 +54,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 			viewTypeItem.setActive(Objects.equals(_selectedType, "icon"));
 		}
 
-		if (_portletURL != null) {
+		if (Validator.isNotNull(_portletURL)) {
 			viewTypeItem.setHref(_portletURL, "displayStyle", "icon");
 		}
 
@@ -79,7 +79,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 				Objects.equals(_selectedType, "descriptive"));
 		}
 
-		if (_portletURL != null) {
+		if (Validator.isNotNull(_portletURL)) {
 			viewTypeItem.setHref(_portletURL, "displayStyle", "descriptive");
 		}
 
@@ -103,7 +103,7 @@ public class ViewTypeItemList extends ArrayList<ViewTypeItem> {
 			viewTypeItem.setActive(Objects.equals(_selectedType, "list"));
 		}
 
-		if (_portletURL != null) {
+		if (Validator.isNotNull(_portletURL)) {
 			viewTypeItem.setHref(_portletURL, "displayStyle", "list");
 		}
 

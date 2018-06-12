@@ -96,7 +96,7 @@ public abstract class BaseUpgradeClassNames extends UpgradeProcess {
 				Map<String, Serializable> workflowContext =
 					updateWorkflowContext(workflowContextJSON);
 
-				if (workflowContext != null) {
+				if (Validator.isNotNull(workflowContext)) {
 					updateWorkflowContext(
 						tableName, primaryKeyName, primaryKeyValue,
 						WorkflowContextUtil.convert(workflowContext));

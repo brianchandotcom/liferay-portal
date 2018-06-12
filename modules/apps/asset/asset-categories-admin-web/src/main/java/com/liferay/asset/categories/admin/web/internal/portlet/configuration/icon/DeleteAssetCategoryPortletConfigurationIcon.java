@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
@@ -94,7 +95,7 @@ public class DeleteAssetCategoryPortletConfigurationIcon
 
 		AssetCategory category = assetCategoriesDisplayContext.getCategory();
 
-		if (category == null) {
+		if (Validator.isNull(category)) {
 			return false;
 		}
 

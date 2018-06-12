@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -64,7 +65,7 @@ public class SelectDDMFormFieldValueAccessor
 
 	@Override
 	public Object map(Object value) {
-		if (value == null) {
+		if (Validator.isNull(value)) {
 			return value;
 		}
 

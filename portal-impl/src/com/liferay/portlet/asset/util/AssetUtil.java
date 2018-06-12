@@ -897,7 +897,7 @@ public class AssetUtil {
 			"ddmStructureFieldValue");
 
 		if (Validator.isNotNull(ddmStructureFieldName) &&
-			(ddmStructureFieldValue != null)) {
+			Validator.isNotNull(ddmStructureFieldValue)) {
 
 			searchContext.setAttribute(
 				"ddmStructureFieldName", ddmStructureFieldName);

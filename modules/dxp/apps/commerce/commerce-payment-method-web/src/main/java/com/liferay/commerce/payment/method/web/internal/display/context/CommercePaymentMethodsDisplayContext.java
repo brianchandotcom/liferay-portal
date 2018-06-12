@@ -180,7 +180,7 @@ public class CommercePaymentMethodsDisplayContext {
 				CATEGORY_KEY_COMMERCE_PAYMENT_METHOD_DETAILS);
 	}
 
-	public boolean hasManageCommercePaymentMethodPermission() {
+	public boolean hasManageCommercePaymentMethodsPermission() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

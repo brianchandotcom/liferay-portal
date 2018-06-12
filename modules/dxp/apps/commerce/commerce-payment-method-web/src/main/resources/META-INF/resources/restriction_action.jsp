@@ -31,7 +31,7 @@ CommerceAddressRestriction commerceAddressRestriction = (CommerceAddressRestrict
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= commercePaymentMethodRestrictionsDisplayContext.hasManageCommercePaymentMethodPermission() %>">
+	<c:if test="<%= commercePaymentMethodRestrictionsDisplayContext.hasManageCommercePaymentMethodsPermission() %>">
 		<portlet:actionURL name="editCommercePaymentMethodAddressRestriction" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

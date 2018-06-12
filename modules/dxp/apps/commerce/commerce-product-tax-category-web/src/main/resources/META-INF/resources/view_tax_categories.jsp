@@ -18,6 +18,8 @@
 
 <%
 CPTaxCategoryDisplayContext cpTaxCategoryDisplayContext = (CPTaxCategoryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+boolean hasManageCPTaxCategoriesPermission = cpTaxCategoryDisplayContext.hasManageCPTaxCategoriesPermission();
 %>
 
 <liferay-frontend:management-bar

@@ -199,7 +199,7 @@ public class CommercePaymentMethodRestrictionsDisplayContext {
 		return _searchContainer;
 	}
 
-	public boolean hasManageCommercePaymentMethodPermission() {
+	public boolean hasManageCommercePaymentMethodsPermission() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

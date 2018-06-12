@@ -21,7 +21,7 @@ CommercePaymentMethodRestrictionsDisplayContext commercePaymentMethodRestriction
 
 SearchContainer<CommerceAddressRestriction> commerceAddressRestrictionSearchContainer = commercePaymentMethodRestrictionsDisplayContext.getSearchContainer();
 
-boolean hasManageCommercePaymentMethodsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
+boolean hasManageCommercePaymentMethodsPermission = commercePaymentMethodRestrictionsDisplayContext.hasManageCommercePaymentMethodsPermission();
 %>
 
 <div class="container-fluid-1280">

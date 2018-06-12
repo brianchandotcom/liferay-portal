@@ -33,7 +33,7 @@ long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId(
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= commercePaymentMethodsDisplayContext.hasManageCommercePaymentMethodPermission() %>">
+	<c:if test="<%= commercePaymentMethodsDisplayContext.hasManageCommercePaymentMethodsPermission() %>">
 		<portlet:actionURL name="editCommercePaymentMethod" var="editURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

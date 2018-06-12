@@ -17,16 +17,9 @@ package com.liferay.commerce.product.internal.security.permission.resource;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
-
-import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -53,7 +46,8 @@ public class CPDefinitionModelResourcePermissionLogic
 		}
 
 		return _hasPermission(
-			permissionChecker, cpDefinition.getGroupId(), CPActionKeys.MANAGE_CATALOG);
+			permissionChecker, cpDefinition.getGroupId(),
+			CPActionKeys.MANAGE_CATALOG);
 	}
 
 	private boolean _hasPermission(

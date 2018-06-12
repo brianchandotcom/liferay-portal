@@ -15,20 +15,14 @@
 package com.liferay.commerce.product.internal.security.permission.resource.definition;
 
 import com.liferay.commerce.product.constants.CPConstants;
-import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.internal.security.permission.resource.CPDefinitionModelResourcePermissionLogic;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
-import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.definition.ModelResourcePermissionDefinition;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 
 import java.util.function.Consumer;
 

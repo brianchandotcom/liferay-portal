@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Document Library Compat Test
+Bundle-SymbolicName: com.liferay.portal.document.library.compat.test
+Bundle-Version: 1.0.0
+-includeresource: test-classes/integration

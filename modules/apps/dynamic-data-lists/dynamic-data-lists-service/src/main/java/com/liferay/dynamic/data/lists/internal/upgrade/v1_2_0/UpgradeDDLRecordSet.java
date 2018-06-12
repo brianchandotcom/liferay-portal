@@ -116,15 +116,17 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 					updateDDMStructureLink(ddmStructureId);
 
 					upgradeResourcePermission(
-						recordSetId, ddmFormInstance.getFormInstanceId(),
+						recordSetId,
 						"com.liferay.dynamic.data.mapping.model." +
-							"DDMFormInstance");
+							"DDMFormInstance",
+						true);
 
 					upgradeResourcePermission(
-						ddmStructureId, ddmStructureId,
+						ddmStructureId,
 						"com.liferay.dynamic.data.mapping.model." +
 							"DDMFormInstance-com.liferay.dynamic.data." +
-								"mapping.model.DDMStructure");
+								"mapping.model.DDMStructure",
+						false);
 
 					updateInstanceablePortletPreferences(
 						ddmFormInstance.getFormInstanceId(), recordSetId,
@@ -140,6 +142,19 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 				}
 			}
 		}
+	}
+
+	protected long getNewActionIds(long oldActionIds) {
+		long bit4 = (oldActionIds >> 3) & 1;
+		long bit5 = (oldActionIds >> 4) & 1;
+
+		if (bit4 == bit5) {
+			return oldActionIds;
+		}
+
+		int mask = (1 << 3) | (1 << 4);
+
+		return oldActionIds ^ mask;
 	}
 
 	protected void updateDDMStructure(long ddmStructureId) throws Exception {
@@ -233,7 +248,7 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 	}
 
 	protected void upgradeResourcePermission(
-			long oldPrimKeyId, long newPrimKeyId, String name)
+			long primKeyId, String name, boolean updateActionIds)
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
@@ -243,14 +258,25 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 			dynamicQuery -> {
 				Property nameProperty = PropertyFactoryUtil.forName("primKey");
 
-				dynamicQuery.add(nameProperty.eq(String.valueOf(oldPrimKeyId)));
+				dynamicQuery.add(nameProperty.eq(String.valueOf(primKeyId)));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod<ResourcePermission>)
 				resourcePermission -> {
 					resourcePermission.setName(name);
-					resourcePermission.setPrimKey(String.valueOf(newPrimKeyId));
-					resourcePermission.setPrimKeyId(newPrimKeyId);
+
+					if (updateActionIds) {
+						resourcePermission.setActionIds(
+							getNewActionIds(resourcePermission.getActionIds()));
+					}
+
+					_resourcePermissionLocalService.updateResourcePermission(
+						resourcePermission);
+				});
+
+		actionableDynamicQuery.performActions();
+	}
+
 
 					_resourcePermissionLocalService.updateResourcePermission(
 						resourcePermission);

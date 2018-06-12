@@ -85,8 +85,9 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(LayoutPageTemplateEntry.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "entries", true, false, null,
-				LayoutPageTemplateEntry.class.getName()));
+				NAMESPACE, "page-templates", true, false, null,
+				LayoutPageTemplateEntry.class.getName(),
+				StagedModelType.REFERRER_CLASS_NAME_ALL));
 		setImportControls(getExportControls());
 	}
 
@@ -113,7 +114,9 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		if (!portletDataContext.getBooleanParameter(NAMESPACE, "entries")) {
+		if (!portletDataContext.getBooleanParameter(
+				NAMESPACE, "page-templates")) {
+
 			return getExportDataRootElementString(rootElement);
 		}
 

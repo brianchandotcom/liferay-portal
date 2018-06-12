@@ -20,9 +20,9 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -59,9 +59,11 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
-		FragmentCollection layoutPageTemplateCollection =
-			_layoutPageTemplateCollectionLocalService.fetchFragmentCollection(
-				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollection(
+					layoutPageTemplateEntry.
+						getLayoutPageTemplateCollectionId());
 
 		if (layoutPageTemplateCollection != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -109,7 +111,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 
 		Map<Long, Long> layoutPageTemplateCollectionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				FragmentCollection.class);
+				LayoutPageTemplateCollection.class);
 
 		long layoutPageTemplateCollectionId = MapUtil.getLong(
 			layoutPageTemplateCollectionIds,
@@ -157,7 +159,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 	}
 
 	@Reference
-	private FragmentCollectionLocalService
+	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
 
 	@Reference(

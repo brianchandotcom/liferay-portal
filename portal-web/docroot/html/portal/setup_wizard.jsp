@@ -16,37 +16,31 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<style>
-	<%@ include file="/html/portal/setup_wizard_css.jspf" %>
-</style>
-
-<div id="wrapper">
-	<header id="banner" role="banner">
-		<div id="heading">
-			<h1 class="site-title">
-				<span class="logo" title="<liferay-ui:message key="welcome-to-liferay" />">
+<div class="pt-0" id="wrapper">
+	<header class="mb-4" id="banner">
+		<div class="mb-4 navbar navbar-classic navbar-top py-3">
+			<div class="container">
+				<div class="align-items-center d-inline-flex logo">
 
 					<%
 					Group group = layout.getGroup();
 					%>
 
-					<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName(locale)) %>" height="<%= themeDisplay.getCompanyLogoHeight() %>" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" width="<%= themeDisplay.getCompanyLogoWidth() %>" />
+					<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName(locale)) %>" height="56" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" />
 
-					<span class="site-name">
+					<h1 class="font-weight-bold h2 mb-0 text-dark">
 						<%= PropsValues.COMPANY_DEFAULT_NAME %>
-					</span>
-				</span>
-				<span class="configuration-title" title="<liferay-ui:message key="basic-configuration" />">
-					<i class="icon-cog"></i>
-
-					<liferay-ui:message key="basic-configuration" />
-				</span>
-			</h1>
+					</h1>
+				</div>
+			</div>
 		</div>
 	</header>
 
-	<div id="content">
-		<div class="sheet" id="main-content">
+	<div class="container" id="content">
+		<div class="sheet sheet-lg" id="main-content">
+			<h2 class="sheet-title" title="<liferay-ui:message key="basic-configuration" />">
+				<liferay-ui:message key="basic-configuration" />
+			</h2>
 
 			<%
 			UnicodeProperties unicodeProperties = (UnicodeProperties)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES);
@@ -63,33 +57,45 @@
 						<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
 						<div class="row">
-							<aui:fieldset cssClass="col-md-6" label="portal">
-								<aui:input helpTextCssClass="help-inline" label="portal-name" name="companyName" suffix='<%= LanguageUtil.format(request, "for-example-x", "Liferay", false) %>' value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
+							<aui:fieldset cssClass="col-md-6">
+								<h3 class="sheet-subtitle">
+									<liferay-ui:message key="portal" />
+								</h3>
 
-								<aui:field-wrapper inlineLabel="default-language" label="default-language" name="companyLocale">
-									<aui:select label="" name="companyLocale">
+								<aui:input label="portal-name" name="companyName" value="<%= PropsValues.COMPANY_DEFAULT_NAME %>" />
 
-										<%
-										String languageId = GetterUtil.getString((String)session.getAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE), SetupWizardUtil.getDefaultLanguageId());
+								<aui:field-wrapper label="default-language" name="companyLocale">
+									<div class="form-group-autofit">
+										<div class="form-group-item">
+											<aui:select label="" name="companyLocale">
 
-										for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
-										%>
+												<%
+												String languageId = GetterUtil.getString((String)session.getAttribute(WebKeys.SETUP_WIZARD_DEFAULT_LOCALE), SetupWizardUtil.getDefaultLanguageId());
 
-											<aui:option label="<%= curLocale.getDisplayName(curLocale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
+												for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
+												%>
 
-										<%
-										}
-										%>
+													<aui:option label="<%= curLocale.getDisplayName(curLocale) %>" selected="<%= languageId.equals(LocaleUtil.toLanguageId(curLocale)) %>" value="<%= LocaleUtil.toLanguageId(curLocale) %>" />
 
-									</aui:select>
+												<%
+												}
+												%>
 
-									<aui:button cssClass="change-language" name="changeLanguageButton" value="change" />
+											</aui:select>
+										</div>
+
+										<aui:button name="changeLanguageButton" value="change" />
+									</div>
 								</aui:field-wrapper>
 
 								<aui:input label="add-sample-data" name='<%= "properties--" + PropsKeys.SETUP_WIZARD_ADD_SAMPLE_DATA + "--" %>' type="checkbox" value="<%= true %>" />
 							</aui:fieldset>
 
-							<aui:fieldset cssClass="col-md-6 column-last" label="administrator-user">
+							<aui:fieldset cssClass="col-md-6">
+								<h3 class="sheet-subtitle">
+									<liferay-ui:message key="administrator-user" />
+								</h3>
+
 								<%@ include file="/html/portal/setup_wizard_user_name.jspf" %>
 
 								<aui:input label="email" name="adminEmailAddress" value="<%= PropsValues.ADMIN_EMAIL_FROM_ADDRESS %>">
@@ -100,7 +106,11 @@
 						</div>
 
 						<div class="row">
-							<aui:fieldset cssClass="col-md-12" label="database">
+							<aui:fieldset cssClass="col-md-12">
+								<h3 class="sheet-subtitle">
+									<liferay-ui:message key="database" />
+								</h3>
+
 								<aui:input name="defaultDatabase" type="hidden" value="<%= defaultDatabase %>" />
 
 								<div id="defaultDatabaseOptions">
@@ -113,9 +123,9 @@
 											<liferay-ui:message key="this-database-is-useful-for-development-and-demo'ing-purposes" />
 										</c:when>
 										<c:otherwise>
-											<p>
-												<strong><liferay-ui:message key="configured-database" /></strong>
-											</p>
+											<h4>
+												<liferay-ui:message key="configured-database" />
+											</h4>
 
 											<dl class="database-values dl-horizontal">
 												<c:choose>
@@ -168,7 +178,7 @@
 								<div class="hide" id="customDatabaseOptions">
 									<div class="connection-messages" id="connectionMessages"></div>
 
-									<a class="database-options" href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>" id="defaultDatabaseOptionsLink">
+									<a class="d-inline-block database-options mb-3" href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>" id="defaultDatabaseOptionsLink">
 										&laquo; <liferay-ui:message key='<%= defaultDatabase ? "use-default-database" : "use-configured-database" %>' />
 									</a>
 
@@ -400,8 +410,12 @@
 	</div>
 
 	<footer id="footer" role="contentinfo">
-		<p class="powered-by">
-			<liferay-ui:message key="powered-by" /> <a href="http://www.liferay.com" rel="external">Liferay</a>
-		</p>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center text-md-left">
+					<liferay-ui:message key="powered-by" /> <a class="text-white" href="http://www.liferay.com" rel="external">Liferay</a>
+				</div>
+			</div>
+		</div>
 	</footer>
 </div>

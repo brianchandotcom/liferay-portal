@@ -31,24 +31,29 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Pavel Savinov
  */
 @Component(immediate = true, service = SiteNavigationMenuItemTypeRegistry.class)
-public class SiteNavigationMenuItemTypeRegistryImpl {
+public class SiteNavigationMenuItemTypeRegistryImpl
+	implements SiteNavigationMenuItemTypeRegistry {
 
+	@Override
 	public SiteNavigationMenuItemType getSiteNavigationMenuItemType(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
 		return getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
 	}
 
+	@Override
 	public SiteNavigationMenuItemType getSiteNavigationMenuItemType(
 		String type) {
 
 		return _siteNavigationMenuItemTypes.get(type);
 	}
 
+	@Override
 	public List<SiteNavigationMenuItemType> getSiteNavigationMenuItemTypes() {
 		return ListUtil.fromMapValues(_siteNavigationMenuItemTypes);
 	}
 
+	@Override
 	public String[] getTypes() {
 		Set<String> types = _siteNavigationMenuItemTypes.keySet();
 

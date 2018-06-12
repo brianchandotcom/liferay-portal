@@ -28,7 +28,7 @@ public class CentralMergePullRequestJob
 	implements SubrepositoryDependentJob {
 
 	public CentralMergePullRequestJob(String url) {
-		super(url, "central-merge");
+		super(url, "relevant");
 
 		_subrepositoryName = _getSubrepositoryName(gitWorkingDirectory);
 

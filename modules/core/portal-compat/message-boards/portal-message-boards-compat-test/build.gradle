@@ -1,0 +1,11 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+	testIntegrationCompile project(":apps:message-boards:message-boards-api")
+	testIntegrationCompile project(":apps:portal-search:portal-search-test-util")
+	testIntegrationCompile project(":apps:social:social-activity-test-util")
+	testIntegrationCompile project(":apps:trash:trash-api")
+	testIntegrationCompile project(":apps:trash:trash-test-util")
+	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
+}

@@ -177,7 +177,7 @@ public class CommerceCartContentDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			commerceCartContentRequestHelper.getLiferayPortletResponse();
 
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "editCommerceOrderItem");

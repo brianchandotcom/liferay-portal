@@ -29,18 +29,15 @@ if (Validator.isNull(redirect)) {
 
 PortalUtil.addPortletBreadcrumbEntry(request, portletDisplay.getPortletDisplayName(), String.valueOf(renderResponse.createRenderURL()));
 
-PortletURL viewCategoryURL = renderResponse.createRenderURL();
-
-viewCategoryURL.setParameter("mvcRenderCommandName", "/view_category");
-viewCategoryURL.setParameter("configurationCategory", configurationScreen.getCategoryKey());
-
 ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = (ConfigurationCategoryMenuDisplay)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORY_MENU_DISPLAY);
 
 ConfigurationCategoryDisplay configurationCategoryDisplay = configurationCategoryMenuDisplay.getConfigurationCategoryDisplay();
 
 String categoryDisplayName = HtmlUtil.escape(configurationCategoryDisplay.getCategoryLabel(locale));
 
-PortalUtil.addPortletBreadcrumbEntry(request, categoryDisplayName, viewCategoryURL.toString());
+String viewCategoryHref = ConfigurationCategoryUtil.getHref(configurationCategoryMenuDisplay, liferayPortletResponse, renderRequest, renderResponse);
+
+PortalUtil.addPortletBreadcrumbEntry(request, categoryDisplayName, viewCategoryHref);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(portletURL.toString());

@@ -47,12 +47,9 @@ ConfigurationCategoryDisplay configurationCategoryDisplay = configurationCategor
 
 String categoryDisplayName = HtmlUtil.escape(configurationCategoryDisplay.getCategoryLabel(locale));
 
-PortletURL viewCategoryURL = renderResponse.createRenderURL();
+String viewCategoryHref = ConfigurationCategoryUtil.getHref(configurationCategoryMenuDisplay, liferayPortletResponse, renderRequest, renderResponse);
 
-viewCategoryURL.setParameter("mvcRenderCommandName", "/view_category");
-viewCategoryURL.setParameter("configurationCategory", configurationModel.getCategory());
-
-PortalUtil.addPortletBreadcrumbEntry(request, categoryDisplayName, viewCategoryURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, categoryDisplayName, viewCategoryHref);
 
 ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(ConfigurationAdminWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 

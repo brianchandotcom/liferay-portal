@@ -53,22 +53,11 @@ ConfigurationEntryRetriever configurationEntryRetriever = (ConfigurationEntryRet
 					for (ConfigurationCategoryDisplay configurationCategoryDisplay : configurationCategorySectionDisplay.getConfigurationCategoryDisplays()) {
 						ConfigurationCategoryMenuDisplay configurationCategoryMenuDisplay = configurationEntryRetriever.getConfigurationCategoryMenuDisplay(configurationCategoryDisplay.getCategoryKey(), themeDisplay.getLanguageId());
 
-						String viewCategoryURL = null;
-
-						if (!configurationCategoryMenuDisplay.isEmpty()) {
-							ConfigurationEntry configurationEntry = configurationCategoryMenuDisplay.getFirstConfigurationEntry();
-
-							viewCategoryURL = configurationEntry.getEditURL(renderRequest, renderResponse);
-						}
-						else {
-							PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-							viewCategoryURL = portletURL.toString();
-						}
+						String viewCategoryHref = ConfigurationCategoryUtil.getHref(configurationCategoryMenuDisplay, liferayPortletResponse, renderRequest, renderResponse);
 					%>
 
 						<li class="list-group-card-item">
-							<a href="<%= viewCategoryURL.toString() %>">
+							<a href="<%= viewCategoryHref %>">
 								<clay:icon
 									elementClasses="user-icon-sm"
 									symbol="<%= configurationCategoryDisplay.getCategoryIcon() %>"

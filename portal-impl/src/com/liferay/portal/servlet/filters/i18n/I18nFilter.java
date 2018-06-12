@@ -103,7 +103,9 @@ public class I18nFilter extends BasePortalFilter {
 		if (Validator.isNotNull(pathInfo)) {
 			String[] pathInfoElements = pathInfo.split("/");
 
-			if ((pathInfoElements != null) && (pathInfoElements.length > 1)) {
+			if (Validator.isNotNull(pathInfoElements) &&
+				(pathInfoElements.length > 1)) {
+
 				friendlyURL = StringPool.SLASH + pathInfoElements[1];
 			}
 		}
@@ -226,7 +228,7 @@ public class I18nFilter extends BasePortalFilter {
 
 		String requestedLanguageId = null;
 
-		if (locale != null) {
+		if (Validator.isNotNull(locale)) {
 			requestedLanguageId = LocaleUtil.toLanguageId(locale);
 		}
 

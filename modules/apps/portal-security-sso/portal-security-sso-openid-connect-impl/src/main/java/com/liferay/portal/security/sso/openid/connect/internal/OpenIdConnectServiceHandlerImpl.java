@@ -310,7 +310,7 @@ public class OpenIdConnectServiceHandlerImpl
 			(OpenIdConnectSession)httpSession.getAttribute(
 				OpenIdConnectWebKeys.OPEN_ID_CONNECT_SESSION);
 
-		if (openIdConnectSession == null) {
+		if (Validator.isNull(openIdConnectSession)) {
 			throw new OpenIdConnectServiceException.
 				NoOpenIdConnectSessionException(
 					"HTTP session does contain an OpenId Connect session");
@@ -324,7 +324,7 @@ public class OpenIdConnectServiceHandlerImpl
 
 		AccessToken accessToken = openIdConnectSession.getAccessToken();
 
-		if (accessToken == null) {
+		if (Validator.isNull(accessToken)) {
 			return false;
 		}
 

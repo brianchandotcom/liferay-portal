@@ -205,7 +205,7 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 
 		Object value = ddmFormFieldEvaluationResult.getProperty("value");
 
-		if (value == null) {
+		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
 

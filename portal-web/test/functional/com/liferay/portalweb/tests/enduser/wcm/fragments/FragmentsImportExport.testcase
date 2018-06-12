@@ -1,0 +1,169 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Fragments" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="CannotImportInvalidZip" priority="5">
+		<description message="This is a test case for LPS-80625." />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Fragment#importCollectionFromDependenciesFolder">
+			<var name="collectionZipFile" value="fragment-invalid-zip.zip" />
+		</execute>
+
+		<execute macro="Button#click">
+			<var name="button" value="Import" />
+		</execute>
+
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="The selected file is not a valid zip file." />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
+	<command name="CannotImportNonZip" priority="5">
+		<description message="This is a test case for LPS-80625." />
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Fragment#importCollectionFromDependenciesFolder">
+			<var name="collectionZipFile" value="Document_1.doc" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_VALIDATION" value1="Please enter a file with a valid extension (zip)." />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
+	<command name="ExportImportCollectionViewFragment" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Fragment#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="htmlSnippet" />
+			<var name="fileName" value="fragment_button.html" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="cssSnippet" />
+			<var name="fileName" value="fragment_button.css" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="css" />
+			<var name="templateScript" value="${cssSnippet}" />
+		</execute>
+
+		<execute macro="TestCase#getFileContent">
+			<return from="fileContent" name="javascriptSnippet" />
+			<var name="fileName" value="fragment_button.js" />
+		</execute>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="javascript" />
+			<var name="templateScript" value="${javascriptSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Fragment#exportCollection">
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="New Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Fragment#importCollectionFromTempFolder" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Collection Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Fragment Name" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="Fragment#PREVIEW_IFRAME" />
+
+		<for list="Submit,Cancel" param="button">
+			<execute macro="Button#viewPresent">
+				<var name="button" value="${button}" />
+			</execute>
+		</for>
+
+		<execute macro="Button#clickNoError">
+			<var name="button" value="Submit" />
+		</execute>
+
+		<execute function="Confirm" value1="Form submitted" />
+
+		<execute macro="IFrame#selectTopFrame" />
+	</command>
+</definition>

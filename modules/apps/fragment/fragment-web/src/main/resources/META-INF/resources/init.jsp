@@ -26,16 +26,14 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
-page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
+<%@ page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
 page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionException" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentEntryKeyException" %><%@
 page import="com.liferay.fragment.exception.FragmentCollectionNameException" %><%@
 page import="com.liferay.fragment.exception.FragmentEntryContentException" %><%@
-page import="com.liferay.fragment.exception.InvalidFragmentCollectionFileException" %><%@
-page import="com.liferay.fragment.exception.InvalidFragmentEntryFileException" %><%@
+page import="com.liferay.fragment.exception.InvalidFileException" %><%@
 page import="com.liferay.fragment.exception.RequiredFragmentEntryException" %><%@
 page import="com.liferay.fragment.model.FragmentCollection" %><%@
 page import="com.liferay.fragment.model.FragmentEntry" %><%@
@@ -45,7 +43,6 @@ page import="com.liferay.fragment.service.FragmentCollectionServiceUtil" %><%@
 page import="com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil" %><%@
 page import="com.liferay.fragment.service.FragmentEntryLocalServiceUtil" %><%@
 page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
-page import="com.liferay.fragment.web.internal.constants.ExportImportConstants" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentCollectionsDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayContext" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentEntryLinkDisplayContext" %><%@
@@ -54,20 +51,14 @@ page import="com.liferay.frontend.taglib.servlet.taglib.util.EmptyResultMessageK
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil" %><%@
-page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
-
-<%@ page import="java.text.DecimalFormatSymbols" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@

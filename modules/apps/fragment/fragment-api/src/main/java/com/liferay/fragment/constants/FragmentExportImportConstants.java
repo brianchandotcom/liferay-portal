@@ -12,31 +12,15 @@
  * details.
  */
 
-package com.liferay.fragment.exception;
-
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.fragment.constants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  */
-@ProviderType
-public class InvalidFragmentCollectionFileException extends PortalException {
+public class FragmentExportImportConstants {
 
-	public InvalidFragmentCollectionFileException() {
-	}
+	public static final String COLLECTION_CONFIG_FILE_NAME = "collection.json";
 
-	public InvalidFragmentCollectionFileException(String msg) {
-		super(msg);
-	}
-
-	public InvalidFragmentCollectionFileException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public InvalidFragmentCollectionFileException(Throwable cause) {
-		super(cause);
-	}
+	public static final String FRAGMENT_CONFIG_FILE_NAME = "fragment.json";
 
 }

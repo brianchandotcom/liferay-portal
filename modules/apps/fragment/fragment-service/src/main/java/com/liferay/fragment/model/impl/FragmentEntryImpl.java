@@ -16,6 +16,7 @@ package com.liferay.fragment.model.impl;
 
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.petra.string.StringPool;
@@ -79,7 +80,10 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		jsonObject.put("jsPath", path + "/src/index.js");
 		jsonObject.put("name", getName());
 
-		zipWriter.addEntry(path + "/fragment.json", jsonObject.toString());
+		zipWriter.addEntry(
+			path + StringPool.SLASH +
+				FragmentExportImportConstants.FRAGMENT_CONFIG_FILE_NAME,
+			jsonObject.toString());
 
 		zipWriter.addEntry(path + "/src/index.css", getCss());
 		zipWriter.addEntry(path + "/src/index.js", getJs());

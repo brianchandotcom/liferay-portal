@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.util;
+package com.liferay.dynamic.data.mapping.internal.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.mapping.util.DDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -34,7 +36,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(immediate = true, service = DDMDisplayRegistry.class)
 @ProviderType
-public class DDMDisplayRegistryImpl implements DDMDisplayRegistry{
+public class DDMDisplayRegistryImpl implements DDMDisplayRegistry {
 
 	@Override
 	public DDMDisplay getDDMDisplay(String portletId) {

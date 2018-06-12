@@ -1548,6 +1548,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<ant dir="modules" inheritAll="false" target="build-app-lpkg-release" />
 
+							<delete dir="${liferay.home}/osgi/deploy" />
 							<delete dir="${liferay.home}/osgi/modules" />
 							<delete dir="${liferay.home}/osgi/portal" />
 							<delete dir="${liferay.home}/osgi/static" />

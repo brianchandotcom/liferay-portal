@@ -89,7 +89,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		boolean count, VerifiableResourcedModel verifiableResourcedModel,
 		Role role) {
 
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("select ");
 

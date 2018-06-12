@@ -6,7 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
-	<description>Provides the Liferay Dynamic Section component tags. These tags mark customizable sections of jsps. By default, these sections render as written, but they can be customized with extensions.</description>
+	<description>Provides the Liferay Dynamic Section component tags. These tags mark customizable sections of JSPs. By default, these sections render as written, but they can be customized with extensions.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-dynamic-section</short-name>
 	<uri>http://liferay.com/tld/dynamic-section</uri>

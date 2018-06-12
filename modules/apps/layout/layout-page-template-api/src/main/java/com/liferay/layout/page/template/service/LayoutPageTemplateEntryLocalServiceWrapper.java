@@ -458,6 +458,12 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 		return _layoutPageTemplateEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void updateLayoutPageTemplateEntriesRelations()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntriesRelations();
+	}
+
 	/**
 	* Updates the layout page template entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

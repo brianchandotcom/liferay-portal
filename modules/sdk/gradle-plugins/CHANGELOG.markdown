@@ -4780,6 +4780,10 @@ to version 2.3.182.
 ## 3.12.33 - 2018-06-08
 
 ### Changed
+- [LPS-72445]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.42.
+- [LPS-72445]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.225.
 - [LPS-82130]: Update the [Liferay Gradle Plugins Gulp] dependency to version
 2.0.31.
 - [LPS-82130]: Update the [Liferay Gradle Plugins JS Module Config Generator]
@@ -4952,6 +4956,7 @@ version 2.4.11.
 [LPS-72340]: https://issues.liferay.com/browse/LPS-72340
 [LPS-72347]: https://issues.liferay.com/browse/LPS-72347
 [LPS-72365]: https://issues.liferay.com/browse/LPS-72365
+[LPS-72445]: https://issues.liferay.com/browse/LPS-72445
 [LPS-72514]: https://issues.liferay.com/browse/LPS-72514
 [LPS-72572]: https://issues.liferay.com/browse/LPS-72572
 [LPS-72606]: https://issues.liferay.com/browse/LPS-72606

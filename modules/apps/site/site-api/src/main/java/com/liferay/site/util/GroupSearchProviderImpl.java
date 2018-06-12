@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(immediate = true, service = GroupSearchProvider.class)
-public class GroupSearchProvider {
+public class GroupSearchProviderImpl {
 
 	public GroupSearch getGroupSearch(
 			PortletRequest portletRequest, PortletURL portletURL)

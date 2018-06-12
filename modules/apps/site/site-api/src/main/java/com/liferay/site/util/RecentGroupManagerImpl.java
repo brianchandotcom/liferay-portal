@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(immediate = true, service = RecentGroupManager.class)
-public class RecentGroupManager {
+public class RecentGroupManagerImpl {
 
 	public void addRecentGroup(HttpServletRequest request, Group group) {
 		addRecentGroup(request, group.getGroupId());

@@ -875,7 +875,7 @@ public class WorkflowTaskDisplayContext {
 		ResultRow resultRow = (ResultRow)_liferayPortletRequest.getAttribute(
 			WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-		if (Validator.isNotNull(resultRow)) {
+		if (resultRow != null) {
 			return (WorkflowTask)resultRow.getParameter("workflowTask");
 		}
 		else {

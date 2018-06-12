@@ -34,7 +34,7 @@ public class BaseClayCardTag extends BaseClayTag {
 
 		Map<String, Object> context = getContext();
 
-		if (Validator.isNotNull(_rowChecker)) {
+		if (_rowChecker != null) {
 			if (Validator.isNull(context.get("inputName"))) {
 				setInputName(_rowChecker.getRowIds());
 			}
@@ -47,7 +47,7 @@ public class BaseClayCardTag extends BaseClayTag {
 				setSelectable(true);
 			}
 
-			if (Validator.isNotNull(_resultRow)) {
+			if (_resultRow != null) {
 				if (Validator.isNull(context.get("disabled"))) {
 					setDisabled(_rowChecker.isDisabled(_resultRow.getObject()));
 				}

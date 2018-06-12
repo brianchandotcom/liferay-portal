@@ -66,7 +66,7 @@ public class ScreenNavigationTag extends IncludeTag {
 	}
 
 	public Object getModelContext() {
-		if (Validator.isNotNull(_modelBean)) {
+		if (_modelBean != null) {
 			return _modelBean;
 		}
 

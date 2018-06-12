@@ -264,7 +264,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(
 				ddmFormFieldValue.getName());
 
-			if (Validator.isNotNull(ddmFormField)) {
+			if (ddmFormField != null) {
 				validateDDMFormFieldValue(
 					ddmFormFieldsMap.get(ddmFormFieldValue.getName()),
 					ddmFormFieldValue);

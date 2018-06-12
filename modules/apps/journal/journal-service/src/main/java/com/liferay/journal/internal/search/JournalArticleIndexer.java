@@ -179,7 +179,7 @@ public class JournalArticleIndexer
 			"ddmStructureFieldValue");
 
 		if (Validator.isNotNull(ddmStructureFieldName) &&
-			Validator.isNotNull(ddmStructureFieldValue)) {
+			(ddmStructureFieldValue != null)) {
 
 			QueryFilter queryFilter = _ddmIndexer.createFieldValueQueryFilter(
 				ddmStructureFieldName, ddmStructureFieldValue,

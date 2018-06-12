@@ -4,11 +4,11 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.asset.display.page.model.AssetDisplayPageEntry" />
 	<class name="com.liferay.asset.display.page.model.impl.AssetDisplayPageEntryImpl" table="AssetDisplayPageEntry">
-		<id name="assetDisplayPageEntryId" type="long">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="assetDisplayPageEntryId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="assetEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="layoutPageTemplateEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="assetEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="layoutPageTemplateEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

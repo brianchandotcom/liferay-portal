@@ -97,12 +97,12 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 		protected void prepareTest() throws Exception {
 			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 
-			User user = UserTestUtil.getAdminUser(defaultCompanyId);
+			String previewURL = null;
 
 			ServiceReference<DLAppLocalService> serviceReference =
 				bundleContext.getServiceReference(DLAppLocalService.class);
 
-			String previewURL = null;
+			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
 			try {
 				DLAppLocalService dlAppLocalService = bundleContext.getService(
@@ -113,10 +113,6 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 					"text/plain", _TEST_FILE_CONTENT.getBytes(),
 					new ServiceContext());
 
-				previewURL = DLUtil.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null, "", false,
-					false);
-
 				autoCloseables.add(
 					() -> {
 						dlAppLocalService.deleteFileEntry(
@@ -124,6 +120,10 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 
 						bundleContext.ungetService(serviceReference);
 					});
+
+				previewURL = DLUtil.getPreviewURL(
+					fileEntry, fileEntry.getFileVersion(), null, "", false,
+					false);
 			}
 			catch (Exception e) {
 				bundleContext.ungetService(serviceReference);

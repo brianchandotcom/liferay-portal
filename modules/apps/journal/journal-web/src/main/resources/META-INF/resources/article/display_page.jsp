@@ -49,7 +49,7 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 		>
 
 			<%
-			String defaultAssetDisplayPageName = editArticleDisplayPageDisplayContext.getDefaultAssetDisplayPageName();
+			String defaultAssetDisplayPageName = editArticleDisplayPageDisplayContext.getDefaultAssetDisplayPageName(journalDisplayContext.getDDMStructureKey());
 
 			String taglibLabelTypeDefault = LanguageUtil.format(request, "use-default-display-page-for-x-x", new Object[] {journalDisplayContext.getDDMStructureName(), Validator.isNotNull(defaultAssetDisplayPageName) ? defaultAssetDisplayPageName : LanguageUtil.get(request, "none")}, false);
 

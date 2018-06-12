@@ -491,7 +491,7 @@
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="pageName" value="Private Blogs Page" />
-			<var name="privacy" value="Private" />
+			<var name="privacy" value="Private Pages" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME">

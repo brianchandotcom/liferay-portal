@@ -90,7 +90,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page Edit" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -154,7 +154,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page Edit" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 </definition>

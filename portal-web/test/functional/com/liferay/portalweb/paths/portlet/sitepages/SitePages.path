@@ -35,6 +35,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM_ANGLE_ICON_SPECIFIC</td>
+	<td>//li[contains(@class,'list-group-item')][div/h4[normalize-space()='${key_pageName}']]//*[*[name()='svg'][contains(@class,'icon-angle-right')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_GROUP_ITEM_CHECKBOX</td>
 	<td>//li[contains(@class,'list-group-item')][div/h4[normalize-space()='${key_pageName}']]//input[@type='checkbox']</td>
 	<td></td>

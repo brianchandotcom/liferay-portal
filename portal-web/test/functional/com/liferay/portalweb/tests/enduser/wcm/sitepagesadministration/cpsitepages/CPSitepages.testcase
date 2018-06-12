@@ -75,7 +75,7 @@
 			<execute macro="SitePages#configurePage">
 				<var name="pageName" value="${portlet} Full Page Application" />
 				<var name="portlet" value="${portlet}" />
-				<var name="privacy" value="Public" />
+				<var name="privacy" value="Public Pages" />
 				<var name="sitePageType" value="Full Page Application" />
 			</execute>
 
@@ -157,7 +157,7 @@
 			<execute macro="Page#view">
 				<var name="depth" value="1" />
 				<var name="pageName" value="${childPageName}" />
-				<var name="privacy" value="Public" />
+				<var name="privacy" value="Public Pages" />
 			</execute>
 		</for>
 	</command>
@@ -200,7 +200,7 @@
 		<execute macro="Page#view">
 			<var name="depth" value="1" />
 			<var name="pageName" value="Site Child Page" />
-			<var name="privacy" value="Private" />
+			<var name="privacy" value="Private Pages" />
 		</execute>
 	</command>
 
@@ -236,7 +236,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page" />
-			<var name="privacy" value="Private" />
+			<var name="privacy" value="Private Pages" />
 		</execute>
 	</command>
 
@@ -317,7 +317,7 @@
 		<execute macro="Page#view">
 			<var name="depth" value="1" />
 			<var name="pageName" value="Site Child Page" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 
@@ -353,7 +353,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 
@@ -424,7 +424,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -445,7 +445,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-2-1 Columns" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -470,7 +470,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="Freeform" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -491,7 +491,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="2 Columns (50/50)" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -512,7 +512,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="2 Columns (70/30)" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -533,7 +533,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="3 Columns" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -554,7 +554,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-2 Columns (30/70)" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -579,7 +579,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-2 Columns (70/30)" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -600,7 +600,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="2-2 Columns" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -621,7 +621,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-3-1 Columns" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -642,7 +642,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1-3-2 Columns" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -663,7 +663,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="2-1-2 Columns" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -684,7 +684,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="3-2-3 Columns" />
 			<var name="pageName" value="Site Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -759,7 +759,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Site Page Edit" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -787,7 +787,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 
@@ -831,7 +831,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="pageName" value="Site Page" />
 			<var name="pageTypeURL" value="https://www.liferay.com" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Embedded" />
 		</execute>
 

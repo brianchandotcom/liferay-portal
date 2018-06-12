@@ -122,7 +122,7 @@
 
 	<command name="addPrivateChildPage">
 		<execute macro="SitePages#togglePrivacy">
-			<var name="privacy" value="Private" />
+			<var name="privacy" value="Private Pages" />
 		</execute>
 
 		<execute macro="SitePages#addChildPage">
@@ -134,11 +134,9 @@
 	</command>
 
 	<command name="addPrivatePage">
-		<execute macro="SitePages#togglePrivacy">
-			<var name="privacy" value="Private" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Private Page" />
 		</execute>
-
-		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="SitePages#_addPage">
 			<var name="hideFromNavMenu" value="${hideFromNavMenu}" />
@@ -150,7 +148,7 @@
 
 	<command name="addPublicChildPage">
 		<execute macro="SitePages#togglePrivacy">
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="SitePages#addChildPage">
@@ -162,11 +160,9 @@
 	</command>
 
 	<command name="addPublicPage">
-		<execute macro="SitePages#togglePrivacy">
-			<var name="privacy" value="Public" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Public Page" />
 		</execute>
-
-		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="SitePages#_addPage">
 			<var name="hideFromNavMenu" value="${hideFromNavMenu}" />
@@ -270,10 +266,8 @@
 	</command>
 
 	<command name="togglePrivacy">
-		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${privacy} Pages">
-			<var name="key_menuItem" value="${privacy} Pages" />
+		<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_ANGLE_ICON_SPECIFIC">
+			<var name="key_pageName" value="${privacy}" />
 		</execute>
 	</command>
 </definition>

@@ -143,7 +143,7 @@
 
 		<execute macro="Staging#enablePageInSitePagesVariation">
 			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePagesVariationName" value="Main Variation" />
 		</execute>
 
@@ -201,7 +201,7 @@
 
 		<execute macro="Page#viewNoPage">
 			<var name="pageName" value="Staging Test Page 2" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 
@@ -691,7 +691,7 @@
 
 		<execute macro="Staging#enablePageInSitePagesVariation">
 			<var name="pageName" value="Page 2" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePagesVariationName" value="Summer" />
 		</execute>
 

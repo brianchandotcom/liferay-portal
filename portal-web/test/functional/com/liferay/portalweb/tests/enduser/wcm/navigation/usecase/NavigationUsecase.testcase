@@ -115,7 +115,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Navigation Test Page2 Edit" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

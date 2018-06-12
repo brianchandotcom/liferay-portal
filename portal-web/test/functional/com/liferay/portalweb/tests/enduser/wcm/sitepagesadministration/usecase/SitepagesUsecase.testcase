@@ -150,7 +150,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="pageLinkName" value="Site Page1 Name" />
 			<var name="pageName" value="Site Page2 Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Link to a Page of This Site" />
 		</execute>
 
@@ -162,7 +162,7 @@
 		<execute macro="Page#view">
 			<var name="depth" value="1" />
 			<var name="pageName" value="Child Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 
@@ -378,7 +378,7 @@
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="pageName" value="Site Page" />
-			<var name="privacy" value="Private" />
+			<var name="privacy" value="Private Pages" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -428,7 +428,7 @@
 
 		<execute macro="PermissionsInline#gotoSitepageCP">
 			<var name="pageName" value="Site Page" />
-			<var name="privacy" value="Private" />
+			<var name="privacy" value="Private Pages" />
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
@@ -1242,7 +1242,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="componentName" value="Collaboration" />
 			<var name="pageName" value="Panel Test Page" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Panel" />
 		</execute>
 
@@ -1354,7 +1354,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="pageName" value="Embedded Page" />
 			<var name="pageTypeURL" value="http://iscaliforniaonfire.com/" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Embedded" />
 		</execute>
 
@@ -1366,7 +1366,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="componentName" value="Community" />
 			<var name="pageName" value="Panel Page" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Panel" />
 		</execute>
 

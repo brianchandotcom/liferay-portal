@@ -78,15 +78,17 @@
 	{/let}
 
 	<li class="{$listGroupItemClasses}">
-		<div class="autofit-col flex-col">
-			<div class="custom-checkbox custom-control">
-				<label>
-					<input class="custom-control-input" name="{$portletNamespace}rowIds" type="checkbox" value="{$layoutColumnItem.plid}"/>
+		{if $layoutColumnItem.plid != '0'}
+			<div class="autofit-col flex-col">
+				<div class="custom-checkbox custom-control">
+					<label>
+						<input class="custom-control-input" name="{$portletNamespace}rowIds" type="checkbox" value="{$layoutColumnItem.plid}"/>
 
-					<span class="custom-control-indicator custom-control-label"></span>
-				</label>
+						<span class="custom-control-indicator custom-control-label"></span>
+					</label>
+				</div>
 			</div>
-		</div>
+		{/if}
 
 		<div class="autofit-col flex-col flex-col-expand">
 			<h4 class="list-group-title">
@@ -95,87 +97,122 @@
 				</span>
 			</h4>
 
-			<h6 class="list-group-subtitle text-truncate">
-				{$layoutColumnItem.description}
-			</h6>
+			{if $layoutColumnItem.description}
+				<h6 class="list-group-subtitle text-truncate">
+					{$layoutColumnItem.description}
+				</h6>
+			{/if}
 		</div>
 
-		{if $layoutColumnItem.actionURLs['addURL']}
+		{if $layoutColumnItem.plid == '0'}
+			{if $layoutColumnItem.actionURLs['configureURL']}
+				<div class="flex-col">
+					<div class="quick-action-menu">
+						<a class="btn btn-link p-1" href="{$layoutColumnItem.actionURLs['configureURL']}">
+							{call .lexiconIcon}
+								{param name: 'cog' /}
+								{param pathThemeImages: $pathThemeImages /}
+							{/call}
+						</a>
+					</div>
+				</div>
+			{/if}
+		{else}
+			{if $layoutColumnItem.actionURLs['addURL']}
+				<div class="flex-col">
+					<div class="quick-action-menu">
+						<a class="btn btn-link p-1" href="{$layoutColumnItem.actionURLs['addURL']}">
+							{call .lexiconIcon}
+								{param name: 'plus' /}
+								{param pathThemeImages: $pathThemeImages /}
+							{/call}
+						</a>
+					</div>
+				</div>
+			{/if}
+
 			<div class="flex-col">
-				<div class="quick-action-menu">
-					<a class="btn btn-link p-1" href="{$layoutColumnItem.actionURLs['addURL']}">
+				<div aria-expanded="false" aria-haspopup="true" class="dropdown dropdown-action mt-0">
+					<button class="btn btn-link p-1" data-toggle="dropdown" type="button">
 						{call .lexiconIcon}
-							{param name: 'plus' /}
+							{param name: 'ellipsis-v' /}
 							{param pathThemeImages: $pathThemeImages /}
 						{/call}
-					</a>
+					</button>
+
+					<div class="dropdown-menu">
+						{if $layoutColumnItem.actionURLs['viewLayoutURL']}
+							<a
+								class="dropdown-item"
+								href="{$layoutColumnItem.actionURLs['viewLayoutURL']}"
+							>
+								{msg desc=""}view{/msg}
+							</a>
+						{/if}
+
+						{if $layoutColumnItem.actionURLs['editLayoutURL']}
+							<a
+								class="dropdown-item"
+								href="{$layoutColumnItem.actionURLs['editLayoutURL']}"
+							>
+								{msg desc=""}edit{/msg}
+							</a>
+						{/if}
+
+						{if $layoutColumnItem.actionURLs['configureURL']}
+							<a
+								class="dropdown-item"
+								href="{$layoutColumnItem.actionURLs['configureURL']}"
+							>
+								{msg desc=""}configure{/msg}
+							</a>
+						{/if}
+
+						{if $layoutColumnItem.actionURLs['copyLayoutURL']}
+							<a
+								class="dropdown-item"
+								data-onclick="_handleCopyLayoutClick"
+								href="{$layoutColumnItem.actionURLs['copyLayoutURL']}"
+							>
+								{msg desc=""}copy-page{/msg}
+							</a>
+						{/if}
+
+						{let $permissionLinkAttributes kind="attributes"}
+							class="dropdown-item layout-permissions-link lfr-icon-item"
+							data-onclick="_handlePermissionLinkClick"
+							href="{$layoutColumnItem.actionURLs['permissionsURL']}"
+							id="{$portletNamespace}{$layoutColumnItem.plid}_permissions"
+						{/let}
+
+						{if $layoutColumnItem.actionURLs['permissionsURL']}
+							<a {$permissionLinkAttributes}>
+								{msg desc=""}permissions{/msg}
+							</a>
+						{/if}
+
+						{if $layoutColumnItem.actionURLs['orphanPortletsURL']}
+							<a
+								class="dropdown-item"
+								href="{$layoutColumnItem.actionURLs['orphanPortletsURL']}"
+							>
+								{msg desc=""}orphan-widgets{/msg}
+							</a>
+						{/if}
+
+						{if $layoutColumnItem.actionURLs['deleteURL']}
+							<a
+								class="dropdown-item"
+								data-onclick="_handleDeleteItemClick"
+								href="{$layoutColumnItem.actionURLs['deleteURL']}"
+							>
+								{msg desc=""}delete{/msg}
+							</a>
+						{/if}
+						</div>
 				</div>
 			</div>
 		{/if}
-
-		<div class="flex-col">
-			<div aria-expanded="false" aria-haspopup="true" class="dropdown dropdown-action mt-0">
-				<button class="btn btn-link p-1" data-toggle="dropdown" type="button">
-					{call .lexiconIcon}
-						{param name: 'ellipsis-v' /}
-						{param pathThemeImages: $pathThemeImages /}
-					{/call}
-				</button>
-
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['viewLayoutURL']}">
-						{msg desc=""}view{/msg}
-					</a>
-
-					{if $layoutColumnItem.actionURLs['editLayoutURL']}
-						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['editLayoutURL']}">
-							{msg desc=""}edit{/msg}
-						</a>
-					{/if}
-
-					{if $layoutColumnItem.actionURLs['configureURL']}
-						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['configureURL']}">
-							{msg desc=""}configure{/msg}
-						</a>
-					{/if}
-
-					{if $layoutColumnItem.actionURLs['copyLayoutURL']}
-						<a class="dropdown-item" data-onclick="_handleCopyLayoutClick" href="{$layoutColumnItem.actionURLs['copyLayoutURL']}">
-							{msg desc=""}copy-page{/msg}
-						</a>
-					{/if}
-
-					{let $permissionLinkAttributes kind="attributes"}
-						class="dropdown-item layout-permissions-link lfr-icon-item"
-						data-onclick="_handlePermissionLinkClick"
-						href="{$layoutColumnItem.actionURLs['permissionsURL']}"
-						id="{$portletNamespace}{$layoutColumnItem.plid}_permissions"
-					{/let}
-
-					{if $layoutColumnItem.actionURLs['permissionsURL']}
-						<a {$permissionLinkAttributes}>
-							{msg desc=""}permissions{/msg}
-						</a>
-					{/if}
-
-					{if $layoutColumnItem.actionURLs['orphanPortletsURL']}
-						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['orphanPortletsURL']}">
-							{msg desc=""}orphan-widgets{/msg}
-						</a>
-					{/if}
-
-					{if $layoutColumnItem.actionURLs['deleteURL']}
-						<a
-							class="dropdown-item"
-							data-onclick="_handleDeleteItemClick"
-							href="{$layoutColumnItem.actionURLs['deleteURL']}"
-						>
-							{msg desc=""}delete{/msg}
-						</a>
-					{/if}
-				</div>
-			</div>
-		</div>
 
 		{if $layoutColumnItem.hasChild}
 			<div class="flex-col">

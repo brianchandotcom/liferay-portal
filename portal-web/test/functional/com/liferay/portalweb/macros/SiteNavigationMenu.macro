@@ -9,7 +9,7 @@
 		<if>
 			<contains string="${privacy}" substring="{privacy}" />
 			<then>
-				<var name="privacy" value="Public" />
+				<var name="privacy" value="Public Pages" />
 			</then>
 		</if>
 

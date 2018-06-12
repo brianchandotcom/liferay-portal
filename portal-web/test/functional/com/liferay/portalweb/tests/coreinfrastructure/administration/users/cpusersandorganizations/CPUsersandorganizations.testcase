@@ -361,7 +361,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Private Page" />
-			<var name="privacy" value="Private" />
+			<var name="privacy" value="Private Pages" />
 		</execute>
 	</command>
 
@@ -412,7 +412,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Public Page" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 

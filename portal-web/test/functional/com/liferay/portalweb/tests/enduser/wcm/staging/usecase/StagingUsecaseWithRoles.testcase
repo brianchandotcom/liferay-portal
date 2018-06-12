@@ -369,7 +369,7 @@
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
 			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePageType" value="Widget Page" />
 		</execute>
 
@@ -612,7 +612,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -622,7 +622,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Wiki" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -647,7 +647,7 @@
 
 		<execute macro="Staging#enablePageInSitePagesVariation">
 			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 			<var name="sitePagesVariationName" value="Main Variation Edit" />
 		</execute>
 
@@ -667,7 +667,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -701,7 +701,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -792,7 +792,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Home" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -806,7 +806,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Wiki" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -820,7 +820,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Test Page Name" />
-			<var name="privacy" value="Public" />
+			<var name="privacy" value="Public Pages" />
 		</execute>
 	</command>
 

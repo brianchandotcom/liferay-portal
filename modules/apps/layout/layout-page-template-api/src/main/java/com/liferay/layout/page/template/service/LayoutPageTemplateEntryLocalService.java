@@ -354,6 +354,9 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public void updateLayoutPageTemplateEntriesRelations()
+		throws PortalException;
+
 	/**
 	* Updates the layout page template entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

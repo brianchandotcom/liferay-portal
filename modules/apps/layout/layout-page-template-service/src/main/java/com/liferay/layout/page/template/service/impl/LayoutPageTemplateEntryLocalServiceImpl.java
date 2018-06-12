@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameExc
 import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -373,6 +375,25 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public void updateLayoutPageTemplateEntriesRelations()
+		throws PortalException {
+
+		List<LayoutPrototype> layoutPrototypes =
+			_layoutPrototypeLocalService.getLayoutPrototypes(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				fetchFirstLayoutPageTemplateEntry(
+					layoutPrototype.getLayoutPrototypeId());
+
+			if (layoutPageTemplateEntry == null) {
+				addLayoutPageTemplateEntry(layoutPrototype);
+			}
+		}
+	}
+
+	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, boolean defaultTemplate) {
 
@@ -544,5 +565,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@ServiceReference(type = FragmentEntryLinkLocalService.class)
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@ServiceReference(type = LayoutPrototypeLocalService.class)
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 }

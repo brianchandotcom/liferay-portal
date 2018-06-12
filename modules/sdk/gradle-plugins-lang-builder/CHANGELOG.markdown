@@ -74,6 +74,11 @@ http://titlecapitalization.com.
 ### Changed
 - [LPS-78845]: Update the [Liferay Lang Builder] dependency to version 1.0.24.
 
+## 2.2.2 - 2018-06-11
+
+### Changed
+- [LPS-82209]: Update the [Liferay Lang Builder] dependency to version 1.0.25.
+
 [Liferay Lang Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/lang-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-71375]: https://issues.liferay.com/browse/LPS-71375
@@ -82,3 +87,4 @@ http://titlecapitalization.com.
 [LPS-76221]: https://issues.liferay.com/browse/LPS-76221
 [LPS-78493]: https://issues.liferay.com/browse/LPS-78493
 [LPS-78845]: https://issues.liferay.com/browse/LPS-78845
+[LPS-82209]: https://issues.liferay.com/browse/LPS-82209

@@ -2,3 +2,8 @@ Bundle-Name: Liferay Commerce Order Web
 Bundle-SymbolicName: com.liferay.commerce.order.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.commerce.order.web.security.permission.resource
+Import-Package:\
+	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\
+	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\
+	\
+	*

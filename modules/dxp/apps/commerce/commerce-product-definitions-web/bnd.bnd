@@ -6,6 +6,11 @@ Export-Package:\
 	com.liferay.commerce.product.definitions.web.display.context,\
 	com.liferay.commerce.product.definitions.web.portlet.action,\
 	com.liferay.commerce.product.definitions.web.servlet.taglib.ui
+Import-Package:\
+	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\
+	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\
+	\
+	*
 Provide-Capability:\
 	soy;\
 		type="commerce-product-definitions-web";\

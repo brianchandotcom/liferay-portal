@@ -2,6 +2,11 @@ Bundle-Name: Liferay Commerce Wish List Taglib
 Bundle-SymbolicName: com.liferay.commerce.wish.list.taglib
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.commerce.wish.list.taglib.servlet.taglib
+Import-Package:\
+	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\
+	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\
+	\
+	*
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

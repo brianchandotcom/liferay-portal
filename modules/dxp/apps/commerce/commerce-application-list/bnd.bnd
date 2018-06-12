@@ -2,3 +2,8 @@ Bundle-Name: Liferay Commerce Application List
 Bundle-SymbolicName: com.liferay.commerce.application.list
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.commerce.application.list.constants
+Import-Package:\
+	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\
+	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\
+	\
+	*

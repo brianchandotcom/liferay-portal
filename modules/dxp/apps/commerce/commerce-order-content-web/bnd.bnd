@@ -1,4 +1,9 @@
 Bundle-Name: Liferay Commerce Order Content Web
 Bundle-SymbolicName: com.liferay.commerce.order.content.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\
+	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\
+	\
+	*
 Web-ContextPath: /commerce-order-content-web

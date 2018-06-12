@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.document.library.kernel.exception.InvalidFileVersionException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
@@ -268,6 +269,28 @@ public class DLFileEntryLocalServiceTest {
 			_group.getGroupId(), folder.getFolderId());
 
 		Assert.assertEquals(20, fileEntriesCount);
+	}
+
+	@Test(expected = InvalidFileVersionException.class)
+	public void testDoesNotDeleteUnapprovedVersion() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			serviceContext);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
+
+		DLFileEntryLocalServiceUtil.deleteFileVersion(
+			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
+			dlFileVersion.getVersion());
 	}
 
 	@Test

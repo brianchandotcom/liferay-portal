@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -55,49 +54,6 @@ public class CPDefinitionFinderImpl
 		long groupId, String productTypeName, String languageId,
 		QueryDefinition<CPDefinition> queryDefinition) {
 
-		return doCountByG_P_S(
-			groupId, productTypeName, languageId, queryDefinition, false);
-	}
-
-	@Override
-	public int filterCountByG_P_S(
-		long groupId, String productTypeName, String languageId,
-		QueryDefinition<CPDefinition> queryDefinition) {
-
-		return doCountByG_P_S(
-			groupId, productTypeName, languageId, queryDefinition, true);
-	}
-
-	@Override
-	public List<CPDefinition> filterFindByG_P_S(
-		long groupId, String productTypeName, String languageId,
-		QueryDefinition<CPDefinition> queryDefinition) {
-
-		return doFindByG_P_S(
-			groupId, productTypeName, languageId, queryDefinition, true);
-	}
-
-	@Override
-	public List<CPDefinition> findByExpirationDate(
-		Date expirationDate, QueryDefinition<CPDefinition> queryDefinition) {
-
-		return doFindByExpirationDate(expirationDate, queryDefinition, false);
-	}
-
-	@Override
-	public List<CPDefinition> findByG_P_S(
-		long groupId, String productTypeName, String languageId,
-		QueryDefinition<CPDefinition> queryDefinition) {
-
-		return doFindByG_P_S(
-			groupId, productTypeName, languageId, queryDefinition, false);
-	}
-
-	protected int doCountByG_P_S(
-		long groupId, String productTypeName, String languageId,
-		QueryDefinition<CPDefinition> queryDefinition,
-		boolean inlineSQLHelper) {
-
 		Session session = null;
 
 		try {
@@ -116,12 +72,6 @@ public class CPDefinitionFinderImpl
 				sql = StringUtil.replace(
 					sql, "(CPDefinition.productTypeName = ?) AND",
 					StringPool.BLANK);
-			}
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, CPDefinition.class.getName(),
-					"CPDefinition.CPDefinitionId", groupId);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -162,9 +112,9 @@ public class CPDefinitionFinderImpl
 		}
 	}
 
-	protected List<CPDefinition> doFindByExpirationDate(
-		Date expirationDate, QueryDefinition<CPDefinition> queryDefinition,
-		boolean inlineSQLHelper) {
+	@Override
+	public List<CPDefinition> findByExpirationDate(
+		Date expirationDate, QueryDefinition<CPDefinition> queryDefinition) {
 
 		Session session = null;
 
@@ -199,10 +149,10 @@ public class CPDefinitionFinderImpl
 		}
 	}
 
-	protected List<CPDefinition> doFindByG_P_S(
+	@Override
+	public List<CPDefinition> findByG_P_S(
 		long groupId, String productTypeName, String languageId,
-		QueryDefinition<CPDefinition> queryDefinition,
-		boolean inlineSQLHelper) {
+		QueryDefinition<CPDefinition> queryDefinition) {
 
 		Session session = null;
 
@@ -225,12 +175,6 @@ public class CPDefinitionFinderImpl
 				sql = StringUtil.replace(
 					sql, "(CPDefinition.productTypeName = ?) AND",
 					StringPool.BLANK);
-			}
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, CPDefinition.class.getName(),
-					"CPDefinition.CPDefinitionId", groupId);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);

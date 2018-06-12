@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -588,6 +589,22 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinition> getCPDefinitions(
+		long groupId, String productTypeName, String languageId, int status,
+		int start, int end, OrderByComparator<CPDefinition> orderByComparator) {
+
+		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
+			status, start, end, orderByComparator);
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+		}
+
+		return cpDefinitionFinder.findByG_P_S(
+			groupId, productTypeName, languageId, queryDefinition);
+	}
+
+	@Override
 	public List<CPDefinition> getCPDefinitionsByCategoryId(
 		long categoryId, int start, int end) {
 
@@ -616,6 +633,21 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpDefinitions;
+	}
+
+	@Override
+	public int getCPDefinitionsCount(
+		long groupId, String productTypeName, String languageId, int status) {
+
+		QueryDefinition<CPDefinition> queryDefinition = new QueryDefinition<>(
+			status);
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
+		}
+
+		return cpDefinitionFinder.countByG_P_S(
+			groupId, productTypeName, languageId, queryDefinition);
 	}
 
 	@Override

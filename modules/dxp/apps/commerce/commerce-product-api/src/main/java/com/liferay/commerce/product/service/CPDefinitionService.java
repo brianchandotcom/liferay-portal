@@ -109,8 +109,7 @@ public interface CPDefinitionService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinition> getCPDefinitions(long groupId,
 		String productTypeName, String languageId, int status, int start,
-		int end, OrderByComparator<CPDefinition> orderByComparator)
-		throws PortalException;
+		int end, OrderByComparator<CPDefinition> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinition> getCPDefinitionsByCategoryId(long categoryId,
@@ -151,6 +150,12 @@ public interface CPDefinitionService extends BaseService {
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
 		long companyId, long groupId, String keywords, int status, int start,
 		int end, Sort sort) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
+		long companyId, long groupId, String keywords, String filterFields,
+		String filterValues, int start, int end, Sort sort)
+		throws PortalException;
 
 	public CPDefinition updateCPDefinition(long cpDefinitionId,
 		Map<Locale, String> nameMap, Map<Locale, String> shortDescriptionMap,

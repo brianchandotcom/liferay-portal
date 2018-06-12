@@ -124,8 +124,7 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
 		long groupId, String productTypeName, String languageId, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator) {
 		return _cpDefinitionService.getCPDefinitions(groupId, productTypeName,
 			languageId, status, start, end, orderByComparator);
 	}
@@ -198,6 +197,16 @@ public class CPDefinitionServiceWrapper implements CPDefinitionService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpDefinitionService.searchCPDefinitions(companyId, groupId,
 			keywords, status, start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
+		long companyId, long groupId, String keywords, String filterFields,
+		String filterValues, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionService.searchCPDefinitions(companyId, groupId,
+			keywords, filterFields, filterValues, start, end, sort);
 	}
 
 	@Override

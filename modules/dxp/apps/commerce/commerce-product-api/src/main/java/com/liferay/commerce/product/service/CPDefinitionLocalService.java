@@ -34,7 +34,9 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -345,6 +347,11 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinition> getCPDefinitions(long groupId,
+		String productTypeName, String languageId, int status, int start,
+		int end, OrderByComparator<CPDefinition> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinition> getCPDefinitionsByCategoryId(long categoryId,
 		int start, int end);
 
@@ -383,6 +390,10 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public int getCPDefinitionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPDefinitionsCount(long groupId, String productTypeName,
+		String languageId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionsCountByCategoryId(long categoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -396,6 +407,10 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Facet> getFacets(String filterFields, String filterValues,
+		SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -467,6 +482,12 @@ public interface CPDefinitionLocalService extends BaseLocalService,
 	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
 		long companyId, long groupId, String keywords, int status, int start,
 		int end, Sort sort) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
+		long companyId, long groupId, String keywords, String filterFields,
+		String filterValues, int start, int end, Sort sort)
+		throws PortalException;
 
 	public void updateAsset(long userId, CPDefinition cpDefinition,
 		long[] assetCategoryIds, String[] assetTagNames,

@@ -128,8 +128,7 @@ public class CPDefinitionServiceUtil {
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
 		long groupId, String productTypeName, String languageId, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator) {
 		return getService()
 				   .getCPDefinitions(groupId, productTypeName, languageId,
 			status, start, end, orderByComparator);
@@ -194,6 +193,16 @@ public class CPDefinitionServiceUtil {
 		return getService()
 				   .searchCPDefinitions(companyId, groupId, keywords, status,
 			start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
+		long companyId, long groupId, String keywords, String filterFields,
+		String filterValues, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPDefinitions(companyId, groupId, keywords,
+			filterFields, filterValues, start, end, sort);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(

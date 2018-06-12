@@ -26,14 +26,6 @@ public interface CPDefinitionFinder {
 		String languageId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
 
-	public int filterCountByG_P_S(long groupId, String productTypeName,
-		String languageId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
-
-	public java.util.List<com.liferay.commerce.product.model.CPDefinition> filterFindByG_P_S(
-		long groupId, String productTypeName, String languageId,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);
-
 	public java.util.List<com.liferay.commerce.product.model.CPDefinition> findByExpirationDate(
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.commerce.product.model.CPDefinition> queryDefinition);

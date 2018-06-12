@@ -437,6 +437,15 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getCPDefinitions(groupId, status, start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitions(
+		long groupId, String productTypeName, String languageId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPDefinition> orderByComparator) {
+		return getService()
+				   .getCPDefinitions(groupId, productTypeName, languageId,
+			status, start, end, orderByComparator);
+	}
+
 	public static java.util.List<com.liferay.commerce.product.model.CPDefinition> getCPDefinitionsByCategoryId(
 		long categoryId, int start, int end) {
 		return getService().getCPDefinitionsByCategoryId(categoryId, start, end);
@@ -481,6 +490,13 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().getCPDefinitionsCount();
 	}
 
+	public static int getCPDefinitionsCount(long groupId,
+		String productTypeName, String languageId, int status) {
+		return getService()
+				   .getCPDefinitionsCount(groupId, productTypeName, languageId,
+			status);
+	}
+
 	public static int getCPDefinitionsCountByCategoryId(long categoryId) {
 		return getService().getCPDefinitionsCountByCategoryId(categoryId);
 	}
@@ -499,6 +515,12 @@ public class CPDefinitionLocalServiceUtil {
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.search.facet.Facet> getFacets(
+		String filterFields, String filterValues,
+		com.liferay.portal.kernel.search.SearchContext searchContext) {
+		return getService().getFacets(filterFields, filterValues, searchContext);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -592,6 +614,16 @@ public class CPDefinitionLocalServiceUtil {
 		return getService()
 				   .searchCPDefinitions(companyId, groupId, keywords, status,
 			start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinition> searchCPDefinitions(
+		long companyId, long groupId, String keywords, String filterFields,
+		String filterValues, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCPDefinitions(companyId, groupId, keywords,
+			filterFields, filterValues, start, end, sort);
 	}
 
 	public static void updateAsset(long userId,

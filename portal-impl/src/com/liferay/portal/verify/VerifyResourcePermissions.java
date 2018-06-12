@@ -89,7 +89,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		boolean count, VerifiableResourcedModel verifiableResourcedModel,
 		Role role) {
 
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("select ");
 
@@ -104,7 +104,6 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			sb.append(verifiableResourcedModel.getTableName());
 			sb.append(".");
 			sb.append(verifiableResourcedModel.getUserIdColumnName());
-			sb.append(", ResourcePermission.resourcePermissionId");
 		}
 
 		sb.append(" from ");
@@ -116,17 +115,17 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		sb.append(verifiableResourcedModel.getModelName());
 		sb.append("' and ResourcePermission.scope = ");
 		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
-		sb.append(" and ResourcePermission.primKey = CAST_TEXT(");
+		sb.append(" and ResourcePermission.primKeyId = ");
 		sb.append(verifiableResourcedModel.getTableName());
 		sb.append(".");
 		sb.append(verifiableResourcedModel.getPrimaryKeyColumnName());
-		sb.append(") and ResourcePermission.roleId = ");
+		sb.append(" and ResourcePermission.roleId = ");
 		sb.append(role.getRoleId());
 		sb.append(") where ");
 		sb.append(verifiableResourcedModel.getTableName());
 		sb.append(".companyId = ");
 		sb.append(role.getCompanyId());
-		sb.append(" and ResourcePermission.resourcePermissionId is NULL");
+		sb.append(" and ResourcePermission.primKeyId is NULL");
 
 		return SQLTransformer.transform(sb.toString());
 	}

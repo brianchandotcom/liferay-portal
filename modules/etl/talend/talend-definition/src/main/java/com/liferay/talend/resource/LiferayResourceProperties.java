@@ -20,6 +20,7 @@ import com.liferay.talend.connection.LiferayConnectionPropertiesProvider;
 import com.liferay.talend.exception.ExceptionUtils;
 import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 import com.liferay.talend.utils.PropertiesUtils;
+import com.liferay.talend.utils.UriUtils;
 
 import java.io.IOException;
 
@@ -35,6 +36,7 @@ import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessages;
+import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.PropertiesImpl;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
@@ -272,6 +274,13 @@ public class LiferayResourceProperties
 
 		resourceSelectionForm.addRow(condition);
 
+		Widget validateConditionWidget = Widget.widget(validateCondition);
+
+		validateConditionWidget.setLongRunning(true);
+		validateConditionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
+
+		resourceSelectionForm.addColumn(validateConditionWidget);
+
 		refreshLayout(resourceSelectionForm);
 
 		// Reference form
@@ -300,6 +309,15 @@ public class LiferayResourceProperties
 
 		referenceForm.addRow(condition);
 
+		Widget validateConditionReferenceWidget = Widget.widget(
+			validateCondition);
+
+		validateConditionReferenceWidget.setLongRunning(true);
+		validateConditionReferenceWidget.setWidgetType(
+			Widget.BUTTON_WIDGET_TYPE);
+
+		referenceForm.addColumn(validateConditionReferenceWidget);
+
 		referenceForm.addRow(main.getForm(Form.REFERENCE));
 
 		refreshLayout(referenceForm);
@@ -313,6 +331,24 @@ public class LiferayResourceProperties
 		resource.setValue("");
 		siteFilter.setValue(false);
 		webSite.setValue("");
+	}
+
+	public ValidationResult validateValidateCondition() {
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
+
+		validationResultMutable.setStatus(Result.OK);
+
+		String endpointUrl = connection.endpoint.getValue();
+
+		try {
+			UriUtils.addQueryConditionToURL(endpointUrl, condition.getValue());
+		}
+		catch (Exception exception) {
+			return ExceptionUtils.exceptionToValidationResult(exception);
+		}
+
+		return validationResultMutable;
 	}
 
 	public Property<String> condition = PropertyFactory.newString("condition");
@@ -333,6 +369,8 @@ public class LiferayResourceProperties
 	public ISchemaListener schemaListener;
 	public Property<Boolean> siteFilter = PropertyFactory.newBoolean(
 		"siteFilter");
+	public transient PresentationItem validateCondition = new PresentationItem(
+		"validateCondition", "Validate Condition");
 	public StringProperty webSite = PropertyFactory.newString("webSite");
 
 	protected static final I18nMessages i18nMessages =

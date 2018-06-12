@@ -18,7 +18,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import com.liferay.talend.avro.ResourceEntityConverter;
 import com.liferay.talend.runtime.LiferaySource;
-import com.liferay.talend.runtime.apio.constants.ApioConstants;
 import com.liferay.talend.runtime.apio.jsonld.ApioResourceCollection;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
 import com.liferay.talend.utils.UriUtils;
@@ -28,13 +27,11 @@ import java.io.IOException;
 import java.net.URI;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.avro.generic.IndexedRecord;
-import org.apache.commons.lang3.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +51,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		super(runtimeContainer, liferaySource);
 
 		liferayConnectionResourceBaseProperties = tLiferayInputProperties;
+		_queryCondition = tLiferayInputProperties.resource.condition.getValue();
 	}
 
 	@Override
@@ -90,12 +88,13 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		String nextResourceCollectionSegmentUrl =
 			_apioResourceCollection.getResourceNextPage();
 
-		String decoratedNextResourceCollectionSegmentUrl =
-			_addQueryConditionToURL(nextResourceCollectionSegmentUrl);
+		URI decoratedNextResourceCollectionSegmentUri =
+			UriUtils.addQueryConditionToURL(
+				nextResourceCollectionSegmentUrl, _queryCondition);
 
 		_apioResourceCollection = new ApioResourceCollection(
 			liferaySource.doApioGetRequest(
-				decoratedNextResourceCollectionSegmentUrl));
+				decoratedNextResourceCollectionSegmentUri.toString()));
 
 		_inputRecordsJsonNode = _apioResourceCollection.getMemberJsonNode();
 
@@ -176,16 +175,17 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			liferayConnectionResourceBaseProperties.resource.resource.
 				getValue();
 
-		String decoratedResourceURL = _addQueryConditionToURL(resourceURL);
+		URI decoratedResourceUri = UriUtils.addQueryConditionToURL(
+			resourceURL, _queryCondition);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				"Started to process resources. Entry point is: " +
-					decoratedResourceURL);
+					decoratedResourceUri.toString());
 		}
 
 		_apioResourceCollection = new ApioResourceCollection(
-			liferaySource.doApioGetRequest(decoratedResourceURL));
+			liferaySource.doApioGetRequest(decoratedResourceUri.toString()));
 
 		_inputRecordsJsonNode = _apioResourceCollection.getMemberJsonNode();
 
@@ -221,30 +221,6 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		return _resourceEntityConverter;
 	}
 
-	private String _addQueryConditionToURL(String resourceURL) {
-		String queryCondition =
-			liferayConnectionResourceBaseProperties.resource.condition.
-				getValue();
-
-		if (StringUtils.isEmpty(queryCondition)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Query condition was empty!");
-			}
-
-			return resourceURL;
-		}
-
-		Collections.singletonMap(
-			ApioConstants.FILTER_QUERY_PARAM, queryCondition);
-
-		URI decoratedUri = UriUtils.updateWithQueryParameters(
-			resourceURL,
-			Collections.singletonMap(
-				ApioConstants.FILTER_QUERY_PARAM, queryCondition));
-
-		return decoratedUri.toString();
-	}
-
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayInputReader.class);
 
@@ -261,6 +237,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	 * Resource collection members field
 	 */
 	private transient JsonNode _inputRecordsJsonNode;
+
+	private final String _queryCondition;
 
 	/**
 	 * Converts row retrieved from data source to Avro format {@link

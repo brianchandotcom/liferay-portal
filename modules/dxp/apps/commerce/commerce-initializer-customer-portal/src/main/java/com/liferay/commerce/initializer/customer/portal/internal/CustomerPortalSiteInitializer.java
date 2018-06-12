@@ -86,7 +86,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.exception.InitializationException;
-import com.liferay.site.initializer.GroupInitializer;
+import com.liferay.site.initializer.SiteInitializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -121,10 +121,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "group.initializer.key=" + CustomerPortalGroupInitializer.KEY,
-	service = GroupInitializer.class
+	property = "site.initializer.key=" + CustomerPortalSiteInitializer.KEY,
+	service = SiteInitializer.class
 )
-public class CustomerPortalGroupInitializer implements GroupInitializer {
+public class CustomerPortalSiteInitializer implements SiteInitializer {
 
 	public static final int ACCOUNT_ORGANIZATIONS_COUNT = 3;
 
@@ -989,7 +989,7 @@ public class CustomerPortalGroupInitializer implements GroupInitializer {
 		"com.liferay.commerce.product.type.simple.internal.SimpleCPType";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomerPortalGroupInitializer.class);
+		CustomerPortalSiteInitializer.class);
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;

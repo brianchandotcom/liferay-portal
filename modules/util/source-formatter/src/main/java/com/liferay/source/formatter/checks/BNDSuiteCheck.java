@@ -69,8 +69,6 @@ public class BNDSuiteCheck extends BaseFileCheck {
 
 			if (Validator.isNull(value)) {
 				content = BNDSourceUtil.updateInstruction(
-					content, "Liferay-Releng-Bundle", "false");
-				content = BNDSourceUtil.updateInstruction(
 					content, "Liferay-Releng-Fix-Delivery-Method",
 					StringPool.BLANK);
 				content = BNDSourceUtil.updateInstruction(

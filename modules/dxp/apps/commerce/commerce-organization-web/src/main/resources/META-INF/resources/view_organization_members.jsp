@@ -108,6 +108,7 @@ Organization organization = commerceOrganizationMembersDisplayContext.getCurrent
 
 				<liferay-ui:search-container-column-text
 					cssClass="important table-cell-content"
+					href="<%= commerceOrganizationMembersDisplayContext.getEditURL(curUser) %>"
 					name="name"
 					orderable="<%= true %>"
 					value="<%= curUser.getFullName() %>"

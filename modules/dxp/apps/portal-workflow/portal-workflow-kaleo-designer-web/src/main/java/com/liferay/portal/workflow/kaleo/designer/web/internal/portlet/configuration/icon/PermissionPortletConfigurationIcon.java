@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
@@ -97,7 +96,7 @@ public class PermissionPortletConfigurationIcon
 			(KaleoDefinitionVersion)portletRequest.getAttribute(
 				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
-		if (Validator.isNotNull(kaleoDefinitionVersion)) {
+		if (kaleoDefinitionVersion != null) {
 			return KaleoDefinitionVersionPermission.contains(
 				permissionChecker, kaleoDefinitionVersion,
 				ActionKeys.PERMISSIONS);

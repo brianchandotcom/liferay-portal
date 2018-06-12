@@ -501,7 +501,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 			HttpSession session = request.getSession(false);
 
-			if (Validator.isNotNull(session)) {
+			if (session != null) {
 				session.removeAttribute(SamlWebKeys.FORCE_REAUTHENTICATION);
 			}
 		}

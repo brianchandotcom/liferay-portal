@@ -17,7 +17,6 @@ package com.liferay.portal.reports.engine.jasper.internal.exporter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.ReportFormat;
 import com.liferay.portal.reports.engine.ReportFormatExporter;
 import com.liferay.portal.reports.engine.ReportFormatExporterRegistry;
@@ -80,7 +79,7 @@ public class JasperReportFormatExporterRegistry
 
 		ReportFormat reportFormat = ReportFormat.parse(reportFormatString);
 
-		if (Validator.isNull(reportFormat)) {
+		if (reportFormat == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"No report format specified for " + reportFormatExporter);

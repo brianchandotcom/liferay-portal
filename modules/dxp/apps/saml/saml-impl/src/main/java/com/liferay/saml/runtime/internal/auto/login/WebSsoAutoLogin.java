@@ -63,7 +63,7 @@ public class WebSsoAutoLogin extends BaseAutoLogin {
 
 			HttpSession session = request.getSession(false);
 
-			if (Validator.isNotNull(session)) {
+			if (session != null) {
 				boolean forceReauthentication = GetterUtil.getBoolean(
 					session.getAttribute(SamlWebKeys.FORCE_REAUTHENTICATION));
 

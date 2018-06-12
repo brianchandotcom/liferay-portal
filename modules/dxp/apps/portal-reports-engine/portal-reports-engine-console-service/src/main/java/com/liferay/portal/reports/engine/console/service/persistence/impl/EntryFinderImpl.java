@@ -118,13 +118,13 @@ public class EntryFinderImpl
 					sql, "(Reports_Entry.groupId = ?) AND", StringPool.BLANK);
 			}
 
-			if (Validator.isNull(createDateGT)) {
+			if (createDateGT == null) {
 				sql = StringUtil.replace(
 					sql, "(Reports_Entry.createDate > ?) AND",
 					StringPool.BLANK);
 			}
 
-			if (Validator.isNull(createDateLT)) {
+			if (createDateLT == null) {
 				sql = StringUtil.replace(
 					sql, "(Reports_Entry.createDate < ?) AND",
 					StringPool.BLANK);
@@ -149,11 +149,11 @@ public class EntryFinderImpl
 				qPos.add(groupId);
 			}
 
-			if (Validator.isNotNull(createDateGT)) {
+			if (createDateGT != null) {
 				qPos.add(createDateGT);
 			}
 
-			if (Validator.isNotNull(createDateLT)) {
+			if (createDateLT != null) {
 				qPos.add(createDateLT);
 			}
 
@@ -210,13 +210,13 @@ public class EntryFinderImpl
 					sql, "(Reports_Entry.groupId = ?) AND", StringPool.BLANK);
 			}
 
-			if (Validator.isNull(createDateGT)) {
+			if (createDateGT == null) {
 				sql = StringUtil.replace(
 					sql, "(Reports_Entry.createDate > ?) AND ",
 					StringPool.BLANK);
 			}
 
-			if (Validator.isNull(createDateLT)) {
+			if (createDateLT == null) {
 				sql = StringUtil.replace(
 					sql, "(Reports_Entry.createDate < ?) AND ",
 					StringPool.BLANK);
@@ -244,11 +244,11 @@ public class EntryFinderImpl
 				qPos.add(groupId);
 			}
 
-			if (Validator.isNotNull(createDateGT)) {
+			if (createDateGT != null) {
 				qPos.add(createDateGT);
 			}
 
-			if (Validator.isNotNull(createDateLT)) {
+			if (createDateLT != null) {
 				qPos.add(createDateLT);
 			}
 

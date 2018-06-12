@@ -125,7 +125,7 @@ public class SamlUtil {
 			for (XMLObject xmlObject : xmlValues) {
 				Serializable value = getXMLObjectValue(xmlObject);
 
-				if (Validator.isNotNull(value)) {
+				if (value != null) {
 					values.add(value);
 				}
 			}

@@ -81,7 +81,7 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		WorkflowDefinition latestWorkflowDefinition =
 			getLatestWorkflowDefinition(themeDisplay.getCompanyId(), name);
 
-		if (Validator.isNull(latestWorkflowDefinition) ||
+		if ((latestWorkflowDefinition == null) ||
 			!latestWorkflowDefinition.isActive()) {
 
 			actionRequest.setAttribute(

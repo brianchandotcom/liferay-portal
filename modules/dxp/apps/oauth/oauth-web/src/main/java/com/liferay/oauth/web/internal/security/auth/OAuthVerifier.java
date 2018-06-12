@@ -156,7 +156,7 @@ public class OAuthVerifier implements AuthVerifier {
 	protected OAuthUser getOAuthUser(OAuthMessage oAuthMessage)
 		throws IOException, OAuthException {
 
-		if (Validator.isNull(oAuthMessage) ||
+		if ((oAuthMessage == null) ||
 			Validator.isNull(oAuthMessage.getToken())) {
 
 			net.oauth.OAuthException oAuthException = new OAuthProblemException(

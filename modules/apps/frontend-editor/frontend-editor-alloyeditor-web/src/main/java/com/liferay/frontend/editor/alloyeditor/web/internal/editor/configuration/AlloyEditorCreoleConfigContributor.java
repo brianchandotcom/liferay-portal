@@ -102,10 +102,10 @@ public class AlloyEditorCreoleConfigContributor
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append("ae_dragresize,ae_tableresize,bidi,colorbutton,colordialog,");
-		sb.append("div,flash,font,forms,indentblock,justify,keystrokes,");
-		sb.append("maximize,newpage,pagebreak,preview,print,save,showblocks,");
-		sb.append("smiley,stylescombo,templates,video");
+		sb.append("ae_dragresize,ae_tableresize,bidi,div,flash,font,forms,");
+		sb.append("indentblock,justify,keystrokes,maximize,newpage,pagebreak,");
+		sb.append("preview,print,save,showblocks,smiley,stylescombo,");
+		sb.append("templates,video");
 
 		jsonObject.put(
 			"removePlugins", removePlugins.concat(",").concat(sb.toString()));

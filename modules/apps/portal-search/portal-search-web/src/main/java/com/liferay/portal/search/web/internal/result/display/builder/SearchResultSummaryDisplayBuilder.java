@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,6 +57,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -606,30 +606,15 @@ public class SearchResultSummaryDisplayBuilder {
 	protected String getValuesToString(Field field) {
 		String[] values = field.getValues();
 
-		StringBundler sb = new StringBundler(4 * values.length);
-
-		for (String value : values) {
-			if (field.isNumeric()) {
-				sb.append(HtmlUtil.escape(value));
-			}
-			else {
-				sb.append(StringPool.QUOTE);
-				sb.append(HtmlUtil.escape(value));
-				sb.append(StringPool.QUOTE);
-			}
-
-			sb.append(StringPool.COMMA_AND_SPACE);
+		if (ArrayUtil.isEmpty(values)) {
+			return StringPool.BLANK;
 		}
 
-		sb.setIndex(sb.index() - 1);
-
-		if (values.length > 1) {
-			sb.setStringAt(StringPool.OPEN_BRACKET, 0);
-
-			sb.append(StringPool.CLOSE_BRACKET);
+		if (values.length == 1) {
+			return values[0];
 		}
 
-		return sb.toString();
+		return String.valueOf(Arrays.asList(values));
 	}
 
 	protected boolean hasAssetCategoriesOrTags(AssetEntry assetEntry) {

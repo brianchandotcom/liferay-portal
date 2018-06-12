@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -86,19 +87,17 @@ public class EditArticleDisplayPageDisplayContext {
 		return _article;
 	}
 
-	public long getAssetDisplayPageId() throws PortalException {
-		if (_assetDisplayPageId > 0) {
-			return _assetDisplayPageId;
-		}
+	public AssetDisplayPageEntry getAssetDisplayPageEntry()
+		throws PortalException {
 
-		long assetDisplayPageId = 0;
+		if (_assetDisplayPageEntry != null) {
+			return _assetDisplayPageEntry;
+		}
 
 		JournalArticle journalArticle = getArticle();
 
 		if (journalArticle == null) {
-			_assetDisplayPageId = assetDisplayPageId;
-
-			return _assetDisplayPageId;
+			return _assetDisplayPageEntry;
 		}
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
@@ -106,9 +105,7 @@ public class EditArticleDisplayPageDisplayContext {
 			journalArticle.getArticleResourceUuid());
 
 		if (assetEntry == null) {
-			_assetDisplayPageId = assetDisplayPageId;
-
-			return _assetDisplayPageId;
+			return _assetDisplayPageEntry;
 		}
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
@@ -117,9 +114,28 @@ public class EditArticleDisplayPageDisplayContext {
 					assetEntry.getEntryId());
 
 		if (assetDisplayPageEntry != null) {
-			_assetDisplayPageId =
+			_assetDisplayPageEntry = assetDisplayPageEntry;
+		}
+
+		return _assetDisplayPageEntry;
+	}
+
+	public long getAssetDisplayPageId() throws PortalException {
+		if (_assetDisplayPageId != null) {
+			return _assetDisplayPageId;
+		}
+
+		long assetDisplayPageId = 0;
+
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			getAssetDisplayPageEntry();
+
+		if (assetDisplayPageEntry != null) {
+			assetDisplayPageId =
 				assetDisplayPageEntry.getLayoutPageTemplateEntryId();
 		}
+
+		_assetDisplayPageId = assetDisplayPageId;
 
 		return _assetDisplayPageId;
 	}
@@ -137,15 +153,21 @@ public class EditArticleDisplayPageDisplayContext {
 			return _displayPageType;
 		}
 
-		long assetDisplayPageId = getAssetDisplayPageId();
+		AssetDisplayPageEntry assetDisplayPageEntry =
+			getAssetDisplayPageEntry();
 
 		int displayPageType = AssetDisplayPageConstants.TYPE_NONE;
 
-		if ((assetDisplayPageId > 0) || Validator.isNotNull(getLayoutUuid())) {
+		if (Objects.equals(
+				assetDisplayPageEntry.getType(),
+				AssetDisplayPageConstants.TYPE_SPECIFIC)) {
+
 			displayPageType = AssetDisplayPageConstants.TYPE_SPECIFIC;
 		}
+		else if (Objects.equals(
+					assetDisplayPageEntry.getType(),
+					AssetDisplayPageConstants.TYPE_DEFAULT)) {
 
-		if (assetDisplayPageId < 0) {
 			displayPageType = AssetDisplayPageConstants.TYPE_DEFAULT;
 		}
 
@@ -426,7 +448,8 @@ public class EditArticleDisplayPageDisplayContext {
 	}
 
 	private JournalArticle _article;
-	private long _assetDisplayPageId;
+	private AssetDisplayPageEntry _assetDisplayPageEntry;
+	private Long _assetDisplayPageId;
 	private AssetEntry _assetEntry;
 	private String _defaultAssetDisplayPageName;
 	private Integer _displayPageType;

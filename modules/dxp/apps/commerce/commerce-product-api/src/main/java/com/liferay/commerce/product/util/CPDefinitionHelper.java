@@ -36,6 +36,6 @@ public interface CPDefinitionHelper {
 	public CPDataSourceResult search(
 			long groupId, SearchContext searchContext, CPQuery cpQuery,
 			int start, int end)
-		throws Exception;
+		throws PortalException;
 
 }

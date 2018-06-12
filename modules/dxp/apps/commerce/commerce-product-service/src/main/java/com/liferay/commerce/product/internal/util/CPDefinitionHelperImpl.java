@@ -116,7 +116,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 	public CPDataSourceResult search(
 			long groupId, SearchContext searchContext, CPQuery cpQuery,
 			int start, int end)
-		throws Exception {
+		throws PortalException {
 
 		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
 
@@ -156,9 +156,8 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 	}
 
 	private CPDefinitionSearcher _getCPDefinitionSearcher(
-			long groupId, SearchContext searchContext, CPQuery cpQuery,
-			int start, int end)
-		throws Exception {
+		long groupId, SearchContext searchContext, CPQuery cpQuery, int start,
+		int end) {
 
 		Indexer<?> searcher = CPDefinitionSearcher.getInstance();
 

@@ -26,15 +26,10 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public interface CommerceProductPriceCalculation {
+public interface CommerceProductPriceHelper {
 
-	public CommerceMoney getFinalPrice(
-			long cpInstanceId, int quantity, boolean includeDiscounts,
-			boolean includeTaxes, CommerceContext commerceContext)
-		throws PortalException;
-
-	public CommerceMoney getOrderSubtotal(
-			CommerceOrder commerceOrder, CommerceContext commerceContext)
+	public CommerceProductPrice getCommerceProductPrice(
+			long cpInstanceId, int quantity, CommerceContext commerceContext)
 		throws PortalException;
 
 	public CommerceMoney getUnitMaxPrice(

@@ -19,9 +19,7 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.price.CommerceProductPriceHelper;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -45,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component
-public class CommerceProductPriceCalculationImpl implements CommerceProductPriceCalculation {
+public class CommerceProductPriceHelperImpl implements CommerceProductPriceHelper {
 
 	@Override
 	public CommerceMoney getFinalPrice(
@@ -61,33 +59,6 @@ public class CommerceProductPriceCalculationImpl implements CommerceProductPrice
 		return _commerceMoneyFactory.create(
 			commerceMoney.getCommerceCurrency(),
 			price.multiply(BigDecimal.valueOf(quantity)));
-	}
-
-	@Override
-	public CommerceMoney getOrderSubtotal(
-			CommerceOrder commerceOrder, CommerceContext commerceContext)
-		throws PortalException {
-
-		if (commerceOrder == null) {
-			return _commerceMoneyFactory.create(
-				commerceContext.getCommerceCurrency(), BigDecimal.ZERO);
-		}
-
-		BigDecimal orderSubtotal = BigDecimal.ZERO;
-
-		List<CommerceOrderItem> commerceOrderItems =
-			commerceOrder.getCommerceOrderItems();
-
-		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			CommerceMoney commerceMoney = getFinalPrice(
-				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity(), false, false, commerceContext);
-
-			orderSubtotal = orderSubtotal.add(commerceMoney.getPrice());
-		}
-
-		return _commerceMoneyFactory.create(
-			commerceContext.getCommerceCurrency(), orderSubtotal);
 	}
 
 	@Override

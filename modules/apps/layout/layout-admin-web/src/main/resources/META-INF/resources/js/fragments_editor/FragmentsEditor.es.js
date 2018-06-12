@@ -748,7 +748,7 @@ FragmentsEditor.STATE = {
 	classPK: Config.string().required(),
 
 	/**
-	 * Default configuration for AlloyEditor instances.
+	 * Default configurations for AlloyEditor instances.
 	 * @default {}
 	 * @instance
 	 * @memberOf FragmentsEditor
@@ -756,7 +756,7 @@ FragmentsEditor.STATE = {
 	 * @type {object}
 	 */
 
-	defaultEditorConfiguration: Config.object().value({}),
+	defaultEditorConfigurations: Config.object().value({}),
 
 	/**
 	 * Default language id.

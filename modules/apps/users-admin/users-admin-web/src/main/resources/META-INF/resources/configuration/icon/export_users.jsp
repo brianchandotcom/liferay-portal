@@ -24,8 +24,17 @@ int status = GetterUtil.getInteger(request.getAttribute(UsersAdminWebKeys.STATUS
 	<liferay-portlet:param name="status" value="<%= String.valueOf(status) %>" />
 </liferay-portlet:resourceURL>
 
+<liferay-util:buffer
+	var="onClickFn"
+>
+	if (confirm('<liferay-ui:message key="warning-this-csv-file-contains-user-supplied-inputs" />')) {
+		submitForm(document.hrefFm, '<%= exportURL + "&compress=0&etag=0&strip=0" %>');
+	}
+</liferay-util:buffer>
+
 <liferay-ui:icon
 	message="export-users"
 	method="get"
-	url='<%= exportURL + "&compress=0&etag=0&strip=0" %>'
+	onClick="<%= onClickFn %>"
+	url="javascript:;"
 />

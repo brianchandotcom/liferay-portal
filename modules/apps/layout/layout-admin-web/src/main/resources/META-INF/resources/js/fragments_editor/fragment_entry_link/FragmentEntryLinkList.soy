@@ -4,7 +4,7 @@
  * FragmentEntryLinkList
  */
 {template .render}
-	{@param defaultEditorConfiguration: ?}
+	{@param defaultEditorConfigurations: ?}
 	{@param defaultLanguageId: string}
 	{@param imageSelectorURL: string}
 	{@param languageId: string}
@@ -52,7 +52,7 @@
 				<div data-position="{index($fragmentEntryLink)}" key="{$fragmentEntryLink.fragmentEntryLinkId}">
 					{call com.liferay.layout.admin.web.FragmentEntryLink.render}
 						{param content: $fragmentEntryLink.content /}
-						{param defaultEditorConfiguration: $defaultEditorConfiguration /}
+						{param defaultEditorConfigurations: $defaultEditorConfigurations /}
 						{param defaultLanguageId: $defaultLanguageId /}
 						{param editableValues: $fragmentEntryLink.editableValues /}
 						{param events: [

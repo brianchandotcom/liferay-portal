@@ -162,6 +162,12 @@ class FragmentEntryLink extends Component {
 				) ? this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.id] :
 					{defaultValue: editable.innerHTML};
 
+				let defaultEditorConfiguration = this.defaultEditorConfigurations.text;
+
+				if (this.defaultEditorConfigurations[editable.getAttribute('type')]) {
+					defaultEditorConfiguration = this.defaultEditorConfigurations[editable.getAttribute('type')];
+				}
+
 				return new FragmentEditableField(
 					{
 						content: editable.innerHTML,
@@ -180,7 +186,7 @@ class FragmentEntryLink extends Component {
 						portletNamespace: this.portletNamespace,
 
 						processorsOptions: {
-							defaultEditorConfiguration: this.defaultEditorConfiguration,
+							defaultEditorConfiguration: defaultEditorConfiguration,
 							imageSelectorURL: this.imageSelectorURL
 						},
 
@@ -448,7 +454,7 @@ FragmentEntryLink.STATE = {
 		.value(''),
 
 	/**
-	 * Default configuration for AlloyEditor instances.
+	 * Default configurations for AlloyEditor instances.
 	 * @default {}
 	 * @instance
 	 * @memberOf FragmentEntryLink
@@ -456,7 +462,7 @@ FragmentEntryLink.STATE = {
 	 * @type {object}
 	 */
 
-	defaultEditorConfiguration: Config.object().value({}),
+	defaultEditorConfigurations: Config.object().value({}),
 
 	/**
 	 * Default language id.

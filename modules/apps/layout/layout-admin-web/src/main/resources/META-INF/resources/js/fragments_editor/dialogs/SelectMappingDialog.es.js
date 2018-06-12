@@ -27,6 +27,15 @@ const COMPATIBLE_TYPES = {
 		'image'
 	],
 
+	'rich-text': [
+		'ddm-date',
+		'ddm-decimal',
+		'ddm-integer',
+		'ddm-number',
+		'ddm-text-html',
+		'text'
+	],
+
 	text: [
 		'ddm-date',
 		'ddm-decimal',

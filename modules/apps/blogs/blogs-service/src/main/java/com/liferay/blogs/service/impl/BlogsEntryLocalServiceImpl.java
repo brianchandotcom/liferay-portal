@@ -234,7 +234,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
-		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
 
 		if (smallImage) {
@@ -261,8 +260,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			StringPool.BLANK, coverImageImageSelector, smallImageImageSelector,
-			serviceContext);
+			StringPool.BLANK, null, smallImageImageSelector, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1180,7 +1178,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ImageSelector coverImageImageSelector = null;
 		ImageSelector smallImageImageSelector = null;
 
 		if (smallImage) {
@@ -1210,8 +1207,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, entryId, title, StringPool.BLANK, description, content,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-			StringPool.BLANK, coverImageImageSelector, smallImageImageSelector,
-			serviceContext);
+			StringPool.BLANK, null, smallImageImageSelector, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

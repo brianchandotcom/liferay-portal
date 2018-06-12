@@ -589,8 +589,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		updateSB.append(ownerRoleId);
 		updateSB.append(",");
 		updateSB.append(siteMemberRoleId);
-		updateSB.append(") and ownerId = 0 and actionIds % 2 = 0 and scope = ");
-		updateSB.append("4");
+		updateSB.append(") and ownerId = 0 and MOD(actionIds, 2) = 0 and ");
+		updateSB.append("scope = 4");
 
 		runSQL(updateSB.toString());
 

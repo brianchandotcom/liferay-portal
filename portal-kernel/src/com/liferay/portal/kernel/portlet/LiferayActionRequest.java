@@ -17,11 +17,12 @@ package com.liferay.portal.kernel.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ClientDataRequest;
 
 /**
  * @author Neil Griffin
  */
 @ProviderType
 public interface LiferayActionRequest
-	extends LiferayClientDataRequest, ActionRequest {
+	extends LiferayPortletRequest, ClientDataRequest, ActionRequest {
 }

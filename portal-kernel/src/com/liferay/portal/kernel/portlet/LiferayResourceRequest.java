@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import javax.portlet.ClientDataRequest;
 import javax.portlet.ResourceRequest;
 
 /**
@@ -23,5 +24,5 @@ import javax.portlet.ResourceRequest;
  */
 @ProviderType
 public interface LiferayResourceRequest
-	extends LiferayClientDataRequest, ResourceRequest {
+	extends LiferayPortletRequest, ClientDataRequest, ResourceRequest {
 }

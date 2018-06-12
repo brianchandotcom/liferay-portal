@@ -42,21 +42,18 @@ public class UriUtils {
 				_log.debug("Query condition was empty!");
 			}
 
-			return getUri(resourceURL);
+			return getURI(resourceURL);
 		}
 
-		Collections.singletonMap(
-			ApioConstants.FILTER_QUERY_PARAM, queryCondition);
-
-		URI decoratedUri = updateWithQueryParameters(
+		URI decoratedURI = updateWithQueryParameters(
 			resourceURL,
 			Collections.singletonMap(
 				ApioConstants.FILTER_QUERY_PARAM, queryCondition));
 
-		return decoratedUri;
+		return decoratedURI;
 	}
 
-	public static URI getUri(String url) {
+	public static URI getURI(String url) {
 		try {
 			return new URI(url);
 		}
@@ -71,7 +68,7 @@ public class UriUtils {
 		String url, Map<String, String> queryParameters) {
 
 		if ((queryParameters == null) || queryParameters.isEmpty()) {
-			return getUri(url);
+			return getURI(url);
 		}
 
 		URI uri = null;

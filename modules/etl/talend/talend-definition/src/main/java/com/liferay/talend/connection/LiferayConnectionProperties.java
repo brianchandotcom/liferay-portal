@@ -156,12 +156,12 @@ public class LiferayConnectionProperties
 
 		Form wizardForm = Form.create(this, FORM_WIZARD);
 
-		Widget loginWidgetWizard = Widget.widget(loginType);
+		Widget loginWizardWidget = Widget.widget(loginType);
 
-		loginWidgetWizard.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
-		loginWidgetWizard.setDeemphasize(true);
+		loginWizardWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
+		loginWizardWidget.setDeemphasize(true);
 
-		wizardForm.addRow(loginWidgetWizard);
+		wizardForm.addRow(loginWizardWidget);
 
 		wizardForm.addRow(name);
 
@@ -184,11 +184,11 @@ public class LiferayConnectionProperties
 
 		Form mainForm = Form.create(this, Form.MAIN);
 
-		Widget loginWidgetMain = Widget.widget(loginType);
+		Widget loginMainWidget = Widget.widget(loginType);
 
-		loginWidgetMain.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
+		loginMainWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
 
-		mainForm.addRow(loginWidgetMain);
+		mainForm.addRow(loginMainWidget);
 
 		mainForm.addRow(endpoint);
 
@@ -300,7 +300,7 @@ public class LiferayConnectionProperties
 
 	public enum LoginType {
 
-		Basic("Basic authentication");
+		Basic("Basic Authentication");
 
 		public String getDescription() {
 			return _description;

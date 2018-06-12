@@ -219,7 +219,7 @@
 						<configuration>
 							<instructions>
 								<Bundle-SymbolicName>com.liferay.talend</Bundle-SymbolicName>
-								<Import-Package>!sun.misc.*, !com.sun.jdi.*, !jersey.repackaged.com.google.common.*, *</Import-Package>
+								<Import-Package>!com.sun.jdi.*, !jersey.repackaged.com.google.common.*, !sun.misc.*, *</Import-Package>
 								<Service-Component>*</Service-Component>
 								<Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!components*|auto-service|pax-url-aether</Embed-Dependency>
 								<Include-Resource>{maven-resources},META-INF/services/=target/classes/META-INF/services/,META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt=target/classes/META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt</Include-Resource>

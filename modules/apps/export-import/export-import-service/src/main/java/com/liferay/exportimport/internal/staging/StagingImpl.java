@@ -198,6 +198,14 @@ public class StagingImpl implements Staging {
 
 		StagedGroupedModel stagedGroupedModel = (StagedGroupedModel)model;
 
+		if (_stagedModelRepositoryHelper.isStagedModelInTrash(
+				stagedGroupedModel)) {
+
+			removeModelFromChangesetCollection(model);
+
+			return;
+		}
+
 		if (stagedGroupedModel instanceof WorkflowedModel) {
 			WorkflowedModel workflowedModel =
 				(WorkflowedModel)stagedGroupedModel;
@@ -215,14 +223,6 @@ public class StagingImpl implements Staging {
 
 				return;
 			}
-		}
-
-		if (_stagedModelRepositoryHelper.isStagedModelInTrash(
-				stagedGroupedModel)) {
-
-			removeModelFromChangesetCollection(model);
-
-			return;
 		}
 
 		long classNameId = _classNameLocalService.getClassNameId(

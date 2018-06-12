@@ -104,21 +104,26 @@ function init(
 	wrapper.dataset.lfrEditableId = editableElement.id;
 	wrapper.innerHTML = editableContent;
 
+	const editorName = portletNamespace + 'FragmentEntryLinkEditable_' + editableElement.id;
+
+	wrapper.setAttribute('id', editorName);
+	wrapper.setAttribute('name', editorName);
+
 	editableElement.innerHTML = '';
 	editableElement.appendChild(wrapper);
 
 	_editableElement = editableElement;
 	_editorEventHandler = new EventHandler();
 
-	_editor = AlloyEditor.editable(
-		wrapper,
-		_getEditorConfiguration(
-			editableElement,
-			portletNamespace,
-			fragmentEntryLinkId,
-			defaultEditorConfiguration
-		)
+	let editorConfiguration = _getEditorConfiguration(
+		editableElement,
+		portletNamespace,
+		fragmentEntryLinkId,
+		defaultEditorConfiguration,
+		editorName
 	);
+
+	_editor = AlloyEditor.editable(wrapper, editorConfiguration);
 
 	const nativeEditor = _editor.get('nativeEditor');
 
@@ -163,7 +168,8 @@ function _getEditorConfiguration(
 	editableElement,
 	portletNamespace,
 	fragmentEntryLinkId,
-	defaultEditorConfiguration
+	defaultEditorConfiguration,
+	editorName
 ) {
 	const configuration = {};
 
@@ -178,6 +184,10 @@ function _getEditorConfiguration(
 		configuration.disallowedContent = 'br';
 		configuration.toolbars = {};
 	}
+
+	configuration.filebrowserImageBrowseLinkUrl = defaultEditorConfiguration.editorConfig.filebrowserImageBrowseLinkUrl.replace('_EDITOR_NAME_', editorName);
+
+	configuration.filebrowserImageBrowseUrl = defaultEditorConfiguration.editorConfig.filebrowserImageBrowseUrl.replace('_EDITOR_NAME_', editorName);
 
 	return object.mixin(
 		{},

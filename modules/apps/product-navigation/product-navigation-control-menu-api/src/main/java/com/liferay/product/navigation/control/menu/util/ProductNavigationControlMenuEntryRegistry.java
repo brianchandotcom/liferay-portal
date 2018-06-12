@@ -35,6 +35,6 @@ public interface ProductNavigationControlMenuEntryRegistry {
 		getProductNavigationControlMenuEntries(
 			ProductNavigationControlMenuCategory
 				productNavigationControlMenuCategory,
-			final HttpServletRequest request);
+			HttpServletRequest request);
 
 }

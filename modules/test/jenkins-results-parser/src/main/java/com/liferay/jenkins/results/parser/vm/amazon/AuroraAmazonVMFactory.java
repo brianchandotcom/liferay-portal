@@ -28,19 +28,19 @@ public class AuroraAmazonVMFactory {
 
 	public static AuroraAmazonVM newAuroraAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
-		String dbInstanceClass, String dbInstanceId,
+		String dbEngineVersion, String dbInstanceClass, String dbInstanceId,
 		InstanceType instanceType) {
 
 		if (instanceType == InstanceType.MYSQL) {
 			return new MySQLAuroraAmazonVM(
 				awsAccessKeyId, awsSecretAccessKey, dbClusterId,
-				dbInstanceClass, dbInstanceId);
+				dbEngineVersion, dbInstanceClass, dbInstanceId);
 		}
 
 		if (instanceType == InstanceType.POSTGRESQL) {
 			return new PostgreSQLAuroraAmazonVM(
 				awsAccessKeyId, awsSecretAccessKey, dbClusterId,
-				dbInstanceClass, dbInstanceId);
+				dbEngineVersion, dbInstanceClass, dbInstanceId);
 		}
 
 		throw new IllegalArgumentException("Invalid instance type");

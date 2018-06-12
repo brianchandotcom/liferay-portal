@@ -43,12 +43,6 @@
 			</label>
 		{/if}
 
-		{if $showLabel}
-			{if $tip}
-				<span class="form-text">{$tip}</span>
-			{/if}
-		{/if}
-
 		{if $tooltip}
 			<button
 				class="btn btn-monospaced btn-unstyled trigger-tooltip"
@@ -86,5 +80,11 @@
 				</div>
 			{/if}
 		</div>
+		
+		{if $showLabel}
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
+		{/if}
 	</div>
 {/template}

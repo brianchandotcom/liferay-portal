@@ -41,12 +41,6 @@
 			</label>
 		{/if}
 
-		{if $showLabel}
-			{if $tip}
-				<span class="form-text">{$tip}</span>
-			{/if}
-		{/if}
-
 		{if $tooltip}
 			<button class="btn btn-monospaced btn-unstyled trigger-tooltip"
 					data-original-title="{$tooltip}"
@@ -69,5 +63,11 @@
 				value="{$displayValue}">
 			</div>
 		</div>
+		
+		{if $showLabel}
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
+		{/if}
 	</div>
 {/template}

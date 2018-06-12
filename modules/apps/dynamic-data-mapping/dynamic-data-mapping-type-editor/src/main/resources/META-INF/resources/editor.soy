@@ -37,10 +37,6 @@
 			</label>
 		{/if}
 
-		{if $showLabel}
-			<p class="liferay-ddm-form-field-tip">{$tip ? $tip: ''}</p>
-		{/if}
-
 		<div class="field-type-editor form-control input-group-container">
 			<div class="alloy-editor-container input-group" id="{$name}Container">
 				<div class="alloy-editor alloy-editor-placeholder" contenteditable="false" data-placeholder="{$placeholder}" id="{$name}Editor" name="{$name}Editor">
@@ -55,5 +51,11 @@
 				value="{$value}"
 			/>
 		</div>
+		
+		{if $showLabel}
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
+		{/if}
 	</div>
 {/template}

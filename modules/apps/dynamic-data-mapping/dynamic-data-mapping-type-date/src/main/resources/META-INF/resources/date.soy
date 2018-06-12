@@ -52,12 +52,6 @@
 			</label>
 		{/if}
 
-		{if $showLabel}
-			{if $tip}
-				<span class="form-text">{$tip}</span>
-			{/if}
-		{/if}
-
 		{let $displayValue: $formattedValue ? $formattedValue : $predefinedValue /}
 
 		<div class="input-group input-group-container">
@@ -89,5 +83,11 @@
 
 			<span class="input-group-addon"><span class="icon-calendar"></span></span>
 		</div>
+		
+		{if $showLabel}
+			{if $tip}
+				<span class="form-text">{$tip}</span>
+			{/if}
+		{/if}
 	</div>
 {/template}

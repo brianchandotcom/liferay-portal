@@ -16,23 +16,13 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
-import javax.portlet.MimeResponse;
-import javax.portlet.RenderResponse;
+import javax.portlet.ClientDataRequest;
+import javax.portlet.ResourceRequest;
 
 /**
- * @author Raymond Augé
  * @author Neil Griffin
  */
 @ProviderType
-public interface LiferayRenderResponse
-	extends LiferayPortletResponse, MimeResponse, RenderResponse {
-
-	public String getTitle();
-
-	public boolean getUseDefaultTemplate();
-
-	public void setResourceName(String resourceName);
-
-	public void setUseDefaultTemplate(Boolean useDefaultTemplate);
-
+public interface LiferayResourceRequest
+	extends LiferayPortletRequest, ClientDataRequest, ResourceRequest {
 }

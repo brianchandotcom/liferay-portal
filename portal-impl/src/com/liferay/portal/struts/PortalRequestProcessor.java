@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.model.UserTrackerPath;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -63,10 +65,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.RenderRequestFactory;
-import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.RenderResponseFactory;
-import com.liferay.portlet.RenderResponseImpl;
 
 import java.io.IOException;
 
@@ -106,6 +107,7 @@ import org.apache.struts.util.MessageResources;
  * @author Jorge Ferrer
  * @author Wesley Gong
  * @author Mika Koivisto
+ * @author Neil Griffin
  */
 public class PortalRequestProcessor extends TilesRequestProcessor {
 
@@ -221,12 +223,13 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		// Clean up portlet objects that may have been created by defineObjects
 		// for portlets that are called directly from a Struts path
 
-		RenderRequestImpl renderRequestImpl =
-			(RenderRequestImpl)request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
+		LiferayRenderRequest liferayRenderRequest =
+			(LiferayRenderRequest)LiferayPortletUtil.getLiferayPortletRequest(
+				(PortletRequest)request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST));
 
-		if (renderRequestImpl != null) {
-			renderRequestImpl.cleanUp();
+		if (liferayRenderRequest != null) {
+			liferayRenderRequest.cleanUp();
 		}
 	}
 
@@ -256,14 +259,15 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 
-		RenderRequestImpl renderRequestImpl = RenderRequestFactory.create(
+		LiferayRenderRequest liferayRenderRequest = RenderRequestFactory.create(
 			request, portlet, invokerPortlet, portletContext,
 			WindowState.MAXIMIZED, PortletMode.VIEW, portletPreferences);
 
-		RenderResponseImpl renderResponseImpl = RenderResponseFactory.create(
-			renderRequestImpl, response);
+		LiferayRenderResponse liferayRenderResponse =
+			RenderResponseFactory.create(liferayRenderRequest, response);
 
-		renderRequestImpl.defineObjects(portletConfig, renderResponseImpl);
+		liferayRenderRequest.defineObjects(
+			portletConfig, liferayRenderResponse);
 
 		request.setAttribute(WebKeys.PORTLET_STRUTS_EXECUTE, Boolean.TRUE);
 	}

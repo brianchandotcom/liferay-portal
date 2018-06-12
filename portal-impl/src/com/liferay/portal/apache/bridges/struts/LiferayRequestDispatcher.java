@@ -18,10 +18,11 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portlet.PortletRequestImpl;
-import com.liferay.portlet.PortletResponseImpl;
+import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.PortletServletRequest;
 import com.liferay.portlet.PortletServletResponse;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -173,11 +174,11 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 		HttpServletRequest request = (HttpServletRequest)servletRequest;
 		boolean named = false;
 
-		PortletRequestImpl portletRequestImpl =
-			PortletRequestImpl.getPortletRequestImpl(portletRequest);
+		LiferayPortletRequest liferayPortletRequest =
+			LiferayPortletUtil.getLiferayPortletRequest(portletRequest);
 
 		return new PortletServletRequest(
-			request, portletRequestImpl, pathInfo, queryString, requestURI,
+			request, liferayPortletRequest, pathInfo, queryString, requestURI,
 			servletPath, named, include);
 	}
 
@@ -188,11 +189,11 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		PortletResponseImpl portletResponseImpl =
-			(PortletResponseImpl)portletResponse;
+		LiferayPortletResponse liferayPortletResponse =
+			LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
 
 		HttpServletResponse httpServletResponse = new PortletServletResponse(
-			response, portletResponseImpl, include);
+			response, liferayPortletResponse, include);
 
 		PrintWriter printWriter = servletResponse.getWriter();
 
@@ -208,10 +209,10 @@ public class LiferayRequestDispatcher implements RequestDispatcher {
 		ServletRequest servletRequest, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
 
-		PortletRequestImpl portletRequestImpl =
-			PortletRequestImpl.getPortletRequestImpl(portletRequest);
+		LiferayPortletRequest liferayPortletRequest =
+			LiferayPortletUtil.getLiferayPortletRequest(portletRequest);
 
-		Portlet portlet = portletRequestImpl.getPortlet();
+		Portlet portlet = liferayPortletRequest.getPortlet();
 
 		PortletApp portletApp = portlet.getPortletApp();
 

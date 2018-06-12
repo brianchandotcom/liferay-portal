@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayStateAwareResponse;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portlet.internal.EventImpl;
+import com.liferay.portlet.PublicRenderParametersPool;
 
 import java.io.Serializable;
 
@@ -37,7 +38,6 @@ import javax.portlet.Event;
 import javax.portlet.MutableRenderParameters;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
-import javax.portlet.StateAwareResponse;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
@@ -50,7 +50,7 @@ import javax.xml.namespace.QName;
  * @author Brian Wing Shun Chan
  */
 public abstract class StateAwareResponseImpl
-	extends PortletResponseImpl implements StateAwareResponse {
+	extends PortletResponseImpl implements LiferayStateAwareResponse {
 
 	public String getDefaultNamespace() {
 		Portlet portlet = getPortlet();
@@ -65,6 +65,7 @@ public abstract class StateAwareResponseImpl
 		}
 	}
 
+	@Override
 	public List<Event> getEvents() {
 		return _events;
 	}
@@ -78,6 +79,7 @@ public abstract class StateAwareResponseImpl
 		return _portletMode;
 	}
 
+	@Override
 	public String getRedirectLocation() {
 		return _redirectLocation;
 	}
@@ -101,6 +103,31 @@ public abstract class StateAwareResponseImpl
 		return _windowState;
 	}
 
+	public void init(
+			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
+			User user, Layout layout, boolean setWindowStateAndPortletMode)
+		throws PortletModeException, WindowStateException {
+
+		super.init(portletRequestImpl, response);
+
+		_user = user;
+		_layout = layout;
+
+		_publicRenderParameters = PublicRenderParametersPool.get(
+			getHttpServletRequest(), layout.getPlid());
+
+		if (setWindowStateAndPortletMode) {
+			setWindowState(portletRequestImpl.getWindowState());
+			setPortletMode(portletRequestImpl.getPortletMode());
+		}
+
+		// Set _calledSetRenderParameter to false because setWindowState and
+		// setPortletMode sets it to true
+
+		_calledSetRenderParameter = false;
+	}
+
+	@Override
 	public boolean isCalledSetRenderParameter() {
 		return _calledSetRenderParameter;
 	}
@@ -284,30 +311,6 @@ public abstract class StateAwareResponseImpl
 		}
 
 		_calledSetRenderParameter = true;
-	}
-
-	protected void init(
-			PortletRequestImpl portletRequestImpl, HttpServletResponse response,
-			User user, Layout layout, boolean setWindowStateAndPortletMode)
-		throws PortletModeException, WindowStateException {
-
-		super.init(portletRequestImpl, response);
-
-		_user = user;
-		_layout = layout;
-
-		_publicRenderParameters = PublicRenderParametersPool.get(
-			getHttpServletRequest(), layout.getPlid());
-
-		if (setWindowStateAndPortletMode) {
-			setWindowState(portletRequestImpl.getWindowState());
-			setPortletMode(portletRequestImpl.getPortletMode());
-		}
-
-		// Set _calledSetRenderParameter to false because setWindowState and
-		// setPortletMode sets it to true
-
-		_calledSetRenderParameter = false;
 	}
 
 	protected void reset() {

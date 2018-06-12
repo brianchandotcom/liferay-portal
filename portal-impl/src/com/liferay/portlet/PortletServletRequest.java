@@ -16,6 +16,7 @@ package com.liferay.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
@@ -67,7 +68,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 		_portletRequest = portletRequest;
 
-		_portletRequestImpl = PortletRequestImpl.getPortletRequestImpl(
+		_liferayPortletRequest = LiferayPortletUtil.getLiferayPortletRequest(
 			_portletRequest);
 
 		_pathInfo = pathInfo;
@@ -77,10 +78,10 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		_named = named;
 		_include = include;
 
-		_lifecycle = _portletRequestImpl.getLifecycle();
+		_lifecycle = _liferayPortletRequest.getLifecycle();
 
 		if (Validator.isNotNull(_queryString)) {
-			_portletRequestImpl.setPortletRequestDispatcherRequest(request);
+			_liferayPortletRequest.setPortletRequestDispatcherRequest(request);
 		}
 	}
 
@@ -447,7 +448,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 			return null;
 		}
 
-		session = new PortletServletSession(session, _portletRequestImpl);
+		session = new PortletServletSession(session, _liferayPortletRequest);
 
 		if (ServerDetector.isJetty()) {
 			try {
@@ -545,10 +546,10 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	private final boolean _include;
 	private final String _lifecycle;
+	private final LiferayPortletRequest _liferayPortletRequest;
 	private final boolean _named;
 	private final String _pathInfo;
 	private final PortletRequest _portletRequest;
-	private final PortletRequestImpl _portletRequestImpl;
 	private final String _queryString;
 	private final HttpServletRequest _request;
 	private final String _requestURI;

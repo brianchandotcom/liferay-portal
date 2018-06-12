@@ -17,6 +17,7 @@ package com.liferay.alloy.mvc.internal.json.web.service;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.servlet.URLEncoder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -1439,6 +1440,11 @@ public class AlloyMockUtil {
 		}
 
 		@Override
+		public String getLifecycle() {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public String getNamespace() {
 			throw new UnsupportedOperationException();
 		}
@@ -1485,6 +1491,16 @@ public class AlloyMockUtil {
 
 		@Override
 		public void setProperty(String key, String value) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void setURLEncoder(URLEncoder urlEncoder) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void transferHeaders(HttpServletResponse response) {
 			throw new UnsupportedOperationException();
 		}
 

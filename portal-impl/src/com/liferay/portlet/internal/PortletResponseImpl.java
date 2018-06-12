@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portlet.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -24,6 +22,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.servlet.URLEncoder;
@@ -34,9 +33,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
-import com.liferay.portlet.internal.LiferayPortletResponseUtil;
-import com.liferay.portlet.internal.LiferayPortletURLPrivilegedAction;
-import com.liferay.portlet.internal.PortletURLImpl;
 
 import java.io.Writer;
 
@@ -53,11 +49,9 @@ import javax.portlet.ActionURL;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderURL;
 import javax.portlet.ResourceURL;
-import javax.portlet.filter.PortletResponseWrapper;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -80,28 +74,7 @@ import org.w3c.dom.Element;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public abstract class PortletResponseImpl implements LiferayPortletResponse {
-
-	public static PortletResponseImpl getPortletResponseImpl(
-		PortletResponse portletResponse) {
-
-		while (!(portletResponse instanceof PortletResponseImpl)) {
-			if (portletResponse instanceof PortletResponseWrapper) {
-				PortletResponseWrapper portletResponseWrapper =
-					(PortletResponseWrapper)portletResponse;
-
-				portletResponse = portletResponseWrapper.getResponse();
-			}
-			else {
-				throw new RuntimeException(
-					"Unable to unwrap the portlet response from " +
-						portletResponse.getClass());
-			}
-		}
-
-		return (PortletResponseImpl)portletResponse;
-	}
 
 	@Override
 	public void addDateHeader(String name, long date) {
@@ -304,12 +277,10 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			(ThemeDisplay)portletRequestImpl.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Layout layout = LiferayPortletResponseUtil.getLayout(
-			portletRequestImpl, themeDisplay);
+		Layout layout = getLayout(portletRequestImpl, themeDisplay);
 
 		if (_portletSetup == null) {
-			_portletSetup = LiferayPortletResponseUtil.getPortletSetup(
-				themeDisplay, layout, portletName);
+			_portletSetup = getPortletSetup(themeDisplay, layout, portletName);
 		}
 
 		return DoPrivilegedUtil.wrap(
@@ -407,6 +378,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		return response;
 	}
 
+	@Override
 	public abstract String getLifecycle();
 
 	@Override
@@ -474,6 +446,21 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		return _urlEncoder;
 	}
 
+	public void init(
+		PortletRequestImpl portletRequestImpl, HttpServletResponse response) {
+
+		this.portletRequestImpl = portletRequestImpl;
+		this.response = response;
+
+		_portlet = portletRequestImpl.getPortlet();
+
+		portletName = _portlet.getPortletId();
+
+		_companyId = _portlet.getCompanyId();
+
+		setPlid(portletRequestImpl.getPlid());
+	}
+
 	@Override
 	public void setDateHeader(String name, long date) {
 		if (Validator.isNull(name)) {
@@ -538,10 +525,12 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		setHeader(key, value);
 	}
 
+	@Override
 	public void setURLEncoder(URLEncoder urlEncoder) {
 		_urlEncoder = urlEncoder;
 	}
 
+	@Override
 	public void transferHeaders(HttpServletResponse response) {
 		TransferHeadersHelperUtil.transferHeaders(_headers, response);
 	}
@@ -592,19 +581,29 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		}
 	}
 
-	protected void init(
-		PortletRequestImpl portletRequestImpl, HttpServletResponse response) {
+	protected Layout getLayout(
+		PortletRequest portletRequest, ThemeDisplay themeDisplay) {
 
-		this.portletRequestImpl = portletRequestImpl;
-		this.response = response;
+		Layout layout = (Layout)portletRequest.getAttribute(WebKeys.LAYOUT);
 
-		_portlet = portletRequestImpl.getPortlet();
+		if ((layout == null) && (themeDisplay != null)) {
+			layout = themeDisplay.getLayout();
+		}
 
-		portletName = _portlet.getPortletId();
+		return layout;
+	}
 
-		_companyId = _portlet.getCompanyId();
+	protected PortletPreferences getPortletSetup(
+		ThemeDisplay themeDisplay, Layout layout, String portletName) {
 
-		setPlid(portletRequestImpl.getPlid());
+		if (themeDisplay == null) {
+			return PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+				layout, portletName);
+		}
+		else {
+			return themeDisplay.getStrictLayoutPortletSetup(
+				layout, portletName);
+		}
 	}
 
 	protected String portletName;

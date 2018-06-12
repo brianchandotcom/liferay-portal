@@ -204,6 +204,10 @@ public class MVCActionCommandTest {
 		}
 
 		@Override
+		public void cleanUp() {
+		}
+
+		@Override
 		public Map<String, String[]> clearRenderParameters() {
 			return null;
 		}
@@ -235,6 +239,11 @@ public class MVCActionCommandTest {
 		@Override
 		public HttpServletRequest getHttpServletRequest() {
 			return _mockHttpServletRequest;
+		}
+
+		@Override
+		public String getLifecycle() {
+			return null;
 		}
 
 		@Override
@@ -275,6 +284,11 @@ public class MVCActionCommandTest {
 		}
 
 		@Override
+		public HttpServletRequest getPortletRequestDispatcherRequest() {
+			return null;
+		}
+
+		@Override
 		public RenderParameters getRenderParameters() {
 			return null;
 		}
@@ -282,6 +296,15 @@ public class MVCActionCommandTest {
 		@Override
 		public String getUserAgent() {
 			return null;
+		}
+
+		@Override
+		public void invalidateSession() {
+		}
+
+		@Override
+		public void setPortletRequestDispatcherRequest(
+			HttpServletRequest request) {
 		}
 
 		private final MockHttpServletRequest _mockHttpServletRequest =

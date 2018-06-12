@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LiferayActionRequest;
+import com.liferay.portal.kernel.portlet.LiferayActionResponse;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -26,18 +30,16 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.ActionRequestFactory;
-import com.liferay.portlet.ActionRequestImpl;
 import com.liferay.portlet.ActionResponseFactory;
-import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.RenderRequestFactory;
-import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.RenderResponseFactory;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletResponse;
-import javax.portlet.RenderResponse;
+import javax.portlet.RenderRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -47,6 +49,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Bruno Basto
+ * @author Neil Griffin
  */
 public class SoyPortletRequestFactory {
 
@@ -54,7 +57,7 @@ public class SoyPortletRequestFactory {
 		_portlet = portlet;
 	}
 
-	public ActionRequestImpl createActionRequest(
+	public LiferayActionRequest createActionRequest(
 			ResourceRequest resourceRequest)
 		throws Exception {
 
@@ -83,35 +86,33 @@ public class SoyPortletRequestFactory {
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 
-		ActionRequestImpl actionRequestImpl = ActionRequestFactory.create(
+		LiferayActionRequest liferayActionRequest = ActionRequestFactory.create(
 			request, _portlet, invokerPortlet, portletContext,
 			resourceRequest.getWindowState(), resourceRequest.getPortletMode(),
 			portletPreferences, themeDisplay.getPlid());
 
-		actionRequestImpl.setPortletRequestDispatcherRequest(request);
+		liferayActionRequest.setPortletRequestDispatcherRequest(request);
 
-		return actionRequestImpl;
+		return liferayActionRequest;
 	}
 
-	public ActionResponseImpl createActionResponse(
-			ActionRequestImpl actionRequestImpl,
-			ResourceResponse resourceResponse)
+	public LiferayActionResponse createActionResponse(
+			ActionRequest actionRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)actionRequestImpl.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		HttpServletResponse httpServletResponse =
 			PortalUtil.getHttpServletResponse(resourceResponse);
 
-		User user = PortalUtil.getUser(actionRequestImpl);
+		User user = PortalUtil.getUser(actionRequest);
 
 		return ActionResponseFactory.create(
-			actionRequestImpl, httpServletResponse, user,
-			themeDisplay.getLayout());
+			actionRequest, httpServletResponse, user, themeDisplay.getLayout());
 	}
 
-	public RenderRequestImpl createRenderRequest(
+	public LiferayRenderRequest createRenderRequest(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
@@ -140,32 +141,30 @@ public class SoyPortletRequestFactory {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		RenderRequestImpl renderRequestImpl = RenderRequestFactory.create(
+		LiferayRenderRequest liferayRenderRequest = RenderRequestFactory.create(
 			httpServletRequest, _portlet, invokerPortlet, portletContext,
 			resourceRequest.getWindowState(), resourceRequest.getPortletMode(),
 			portletPreferences, themeDisplay.getPlid());
 
-		renderRequestImpl.setPortletRequestDispatcherRequest(
+		liferayRenderRequest.setPortletRequestDispatcherRequest(
 			httpServletRequest);
 
 		PortletResponse portletResponse = createRenderResponse(
-			renderRequestImpl, resourceResponse);
+			liferayRenderRequest, resourceResponse);
 
-		renderRequestImpl.defineObjects(portletConfig, portletResponse);
+		liferayRenderRequest.defineObjects(portletConfig, portletResponse);
 
-		return renderRequestImpl;
+		return liferayRenderRequest;
 	}
 
-	public RenderResponse createRenderResponse(
-			RenderRequestImpl renderRequestImpl,
-			ResourceResponse resourceResponse)
+	public LiferayRenderResponse createRenderResponse(
+			RenderRequest renderRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		HttpServletResponse httpServletResponse =
 			PortalUtil.getHttpServletResponse(resourceResponse);
 
-		return RenderResponseFactory.create(
-			renderRequestImpl, httpServletResponse);
+		return RenderResponseFactory.create(renderRequest, httpServletResponse);
 	}
 
 	private final Portlet _portlet;

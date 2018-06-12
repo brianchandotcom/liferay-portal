@@ -95,6 +95,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletMode;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
+import com.liferay.portal.kernel.portlet.LiferayStateAwareResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
@@ -209,13 +212,9 @@ import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.webserver.WebServerServlet;
+import com.liferay.portlet.LiferayPortletUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.PortletPreferencesWrapper;
-import com.liferay.portlet.PortletRequestImpl;
-import com.liferay.portlet.PortletResponseImpl;
-import com.liferay.portlet.RenderRequestImpl;
-import com.liferay.portlet.RenderResponseImpl;
-import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.admin.util.OmniadminUtil;
 import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.registry.Registry;
@@ -863,10 +862,11 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public void clearRequestParameters(RenderRequest renderRequest) {
-		RenderRequestImpl renderRequestImpl = (RenderRequestImpl)renderRequest;
+		LiferayRenderRequest liferayRenderRequest =
+			(LiferayRenderRequest)renderRequest;
 
-		if (renderRequestImpl.isTriggeredByActionURL()) {
-			renderRequestImpl.clearRenderParameters();
+		if (liferayRenderRequest.isTriggeredByActionURL()) {
+			liferayRenderRequest.clearRenderParameters();
 		}
 	}
 
@@ -874,15 +874,15 @@ public class PortalImpl implements Portal {
 	public void copyRequestParameters(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		if (actionResponse instanceof StateAwareResponseImpl) {
-			StateAwareResponseImpl stateAwareResponseImpl =
-				(StateAwareResponseImpl)actionResponse;
+		if (actionResponse instanceof LiferayStateAwareResponse) {
+			LiferayStateAwareResponse liferayStateAwareResponse =
+				(LiferayStateAwareResponse)actionResponse;
 
-			if (stateAwareResponseImpl.getRedirectLocation() != null) {
+			if (liferayStateAwareResponse.getRedirectLocation() != null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Cannot copy parameters on a redirected " +
-							"StateAwareResponseImpl");
+							"LiferayStateAwareResponse");
 				}
 
 				return;
@@ -2635,10 +2635,10 @@ public class PortalImpl implements Portal {
 			return liferayPortletRequest.getHttpServletRequest();
 		}
 
-		PortletRequestImpl portletRequestImpl =
-			PortletRequestImpl.getPortletRequestImpl(portletRequest);
+		LiferayPortletRequest liferayPortletRequest =
+			LiferayPortletUtil.getLiferayPortletRequest(portletRequest);
 
-		return portletRequestImpl.getHttpServletRequest();
+		return liferayPortletRequest.getHttpServletRequest();
 	}
 
 	@Override
@@ -2652,10 +2652,10 @@ public class PortalImpl implements Portal {
 			return liferayPortletResponse.getHttpServletResponse();
 		}
 
-		PortletResponseImpl portletResponseImpl =
-			PortletResponseImpl.getPortletResponseImpl(portletResponse);
+		LiferayPortletResponse liferayPortletResponse =
+			LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
 
-		return portletResponseImpl.getHttpServletResponse();
+		return liferayPortletResponse.getHttpServletResponse();
 	}
 
 	@Override
@@ -3307,10 +3307,10 @@ public class PortalImpl implements Portal {
 			return (LiferayPortletRequest)portletRequest;
 		}
 
-		PortletRequestImpl portletRequestImpl =
-			PortletRequestImpl.getPortletRequestImpl(portletRequest);
+		LiferayPortletRequest liferayPortletRequest =
+			LiferayPortletUtil.getLiferayPortletRequest(portletRequest);
 
-		return DoPrivilegedUtil.wrapWhenActive(portletRequestImpl);
+		return DoPrivilegedUtil.wrapWhenActive(liferayPortletRequest);
 	}
 
 	@Override
@@ -3321,10 +3321,10 @@ public class PortalImpl implements Portal {
 			return (LiferayPortletResponse)portletResponse;
 		}
 
-		PortletResponseImpl portletResponseImpl =
-			PortletResponseImpl.getPortletResponseImpl(portletResponse);
+		LiferayPortletResponse liferayPortletResponse =
+			LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
 
-		return DoPrivilegedUtil.wrapWhenActive(portletResponseImpl);
+		return DoPrivilegedUtil.wrapWhenActive(liferayPortletResponse);
 	}
 
 	@Override
@@ -4610,11 +4610,11 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortletTitle(PortletResponse portletResponse) {
-		PortletResponseImpl portletResponseImpl =
-			PortletResponseImpl.getPortletResponseImpl(portletResponse);
+		LiferayPortletResponse liferayPortletResponse =
+			LiferayPortletUtil.getLiferayPortletResponse(portletResponse);
 
-		if (portletResponseImpl instanceof RenderResponseImpl) {
-			return ((RenderResponseImpl)portletResponseImpl).getTitle();
+		if (liferayPortletResponse instanceof LiferayRenderResponse) {
+			return ((LiferayRenderResponse)liferayPortletResponse).getTitle();
 		}
 
 		return null;
@@ -5521,11 +5521,12 @@ public class PortalImpl implements Portal {
 	public UploadPortletRequest getUploadPortletRequest(
 		PortletRequest portletRequest) {
 
-		PortletRequestImpl portletRequestImpl =
-			PortletRequestImpl.getPortletRequestImpl(portletRequest);
+		LiferayPortletRequest liferayPortletRequest =
+			LiferayPortletUtil.getLiferayPortletRequest(portletRequest);
 
 		DynamicServletRequest dynamicRequest =
-			(DynamicServletRequest)portletRequestImpl.getHttpServletRequest();
+			(DynamicServletRequest)
+				liferayPortletRequest.getHttpServletRequest();
 
 		HttpServletRequestWrapper requestWrapper =
 			(HttpServletRequestWrapper)dynamicRequest.getRequest();
@@ -5534,8 +5535,8 @@ public class PortalImpl implements Portal {
 			requestWrapper);
 
 		return new UploadPortletRequestImpl(
-			uploadServletRequest, portletRequestImpl,
-			getPortletNamespace(portletRequestImpl.getPortletName()));
+			uploadServletRequest, liferayPortletRequest,
+			getPortletNamespace(liferayPortletRequest.getPortletName()));
 	}
 
 	@Override

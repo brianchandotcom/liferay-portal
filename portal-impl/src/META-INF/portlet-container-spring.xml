@@ -6,7 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.portlet.InvokerPortletFactoryImpl" id="com.liferay.portal.kernel.portlet.InvokerPortletFactory" />
+	<bean class="com.liferay.portlet.internal.InvokerPortletFactoryImpl" id="com.liferay.portal.kernel.portlet.InvokerPortletFactory" />
 	<bean class="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil">
 		<property name="portletConfigFactory">
 			<bean class="com.liferay.portlet.internal.PortletConfigFactoryImpl">

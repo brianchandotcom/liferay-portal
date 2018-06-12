@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.JSONAction;
-import com.liferay.portlet.InvokerPortletImpl;
+import com.liferay.portlet.InvokerPortletUtil;
 
 import javax.portlet.PortletPreferences;
 
@@ -77,7 +77,7 @@ public class UpdatePortletTitleAction extends JSONAction {
 
 		portletSetup.store();
 
-		InvokerPortletImpl.clearResponse(
+		InvokerPortletUtil.clearResponse(
 			session, layout.getPrimaryKey(), portletId,
 			LanguageUtil.getLanguageId(request));
 

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.servlet.HttpMethods;
@@ -46,7 +44,6 @@ import javax.servlet.http.Part;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public abstract class ClientDataRequestImpl
 	extends PortletRequestImpl implements ClientDataRequest {
 

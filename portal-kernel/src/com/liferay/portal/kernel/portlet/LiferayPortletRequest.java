@@ -32,12 +32,16 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface LiferayPortletRequest extends PortletRequest {
 
+	public void cleanUp();
+
 	public Map<String, String[]> clearRenderParameters();
 
 	public void defineObjects(
 		PortletConfig portletConfig, PortletResponse portletResponse);
 
 	public HttpServletRequest getHttpServletRequest();
+
+	public String getLifecycle();
 
 	public HttpServletRequest getOriginalHttpServletRequest();
 
@@ -46,5 +50,11 @@ public interface LiferayPortletRequest extends PortletRequest {
 	public Portlet getPortlet();
 
 	public String getPortletName();
+
+	public HttpServletRequest getPortletRequestDispatcherRequest();
+
+	public void invalidateSession();
+
+	public void setPortletRequestDispatcherRequest(HttpServletRequest request);
 
 }

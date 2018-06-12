@@ -12,23 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
-import javax.portlet.HeaderRequest;
-import javax.portlet.PortletRequest;
+import javax.portlet.MimeResponse;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Neil Griffin
  */
 @ProviderType
-public class HeaderRequestImpl
-	extends RenderRequestImpl implements HeaderRequest {
-
-	@Override
-	public String getLifecycle() {
-		return PortletRequest.HEADER_PHASE;
-	}
-
+public interface LiferayResourceResponse
+	extends LiferayPortletResponse, MimeResponse, ResourceResponse {
 }

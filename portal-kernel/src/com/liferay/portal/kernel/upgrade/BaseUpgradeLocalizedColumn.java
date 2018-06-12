@@ -157,11 +157,12 @@ public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 
 		String sql = StringBundler.concat(
 			"update ", tableName, " set ", columnName, " = ? where ",
-			columnName, " like ? and companyId = ", String.valueOf(companyId));
+			columnName, " like ? and companyId = ?");
 
 		try (PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setString(1, localizationXML);
 			ps.setString(2, originalContent);
+			ps.setLong(3, companyId);
 
 			ps.executeUpdate();
 		}

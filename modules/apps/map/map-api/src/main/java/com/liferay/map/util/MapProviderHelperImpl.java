@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = MapProviderHelper.class)
-public class MapProviderHelper {
+public class MapProviderHelperImpl {
 
 	public String getMapProviderKey(long companyId) {
 		PortletPreferences companyPortletPreferences =

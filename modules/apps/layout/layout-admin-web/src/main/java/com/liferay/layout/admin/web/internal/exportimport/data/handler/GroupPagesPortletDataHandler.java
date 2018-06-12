@@ -69,7 +69,7 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public boolean isStaged() {
-		return false;
+		return true;
 	}
 
 	@Override

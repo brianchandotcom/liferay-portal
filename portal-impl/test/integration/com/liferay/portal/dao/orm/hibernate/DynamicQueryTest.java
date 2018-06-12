@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,6 +69,27 @@ public class DynamicQueryTest {
 
 		Assert.assertEquals(classNames.toString(), 1, classNames.size());
 		Assert.assertEquals(className, classNames.get(0));
+	}
+
+	@Test
+	public void testInRestrictionCriterion() {
+		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+
+		int listSize = PropsValues.DATABASE_IN_MAX_PARAMETERS + 1;
+
+		List<Long> parameterList = new ArrayList<>(listSize);
+
+		for (long i = 0; i < listSize; i++) {
+			parameterList.add(i);
+		}
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in("classNameId", parameterList));
+
+		List<ClassName> dynamicQueryClassNames =
+			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
+
+		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
 	}
 
 	@Test

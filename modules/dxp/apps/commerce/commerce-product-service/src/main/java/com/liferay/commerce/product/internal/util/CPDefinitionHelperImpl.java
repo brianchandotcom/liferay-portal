@@ -17,7 +17,6 @@ package com.liferay.commerce.product.internal.util;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CPConstants;
-import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -40,13 +38,10 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.search.facet.util.FacetFactory;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,24 +93,6 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		return currentSiteURL + CPConstants.SEPARATOR_PRODUCT_URL +
 			cpFriendlyURLEntry.getUrlTitle();
-	}
-
-	@Override
-	public Layout getProductLayout(
-			long groupId, boolean privateLayout, long cpDefinitionId)
-		throws PortalException {
-
-		String layoutUuid = _cpDefinitionService.getLayoutUuid(cpDefinitionId);
-
-		if (Validator.isNotNull(layoutUuid)) {
-			return _layoutLocalService.getLayoutByUuidAndGroupId(
-				layoutUuid, groupId, privateLayout);
-		}
-
-		long plid = _portal.getPlidFromPortletId(
-			groupId, CPPortletKeys.CP_CONTENT_WEB);
-
-		return _layoutLocalService.getLayout(plid);
 	}
 
 	public boolean isVisible(long cpDefinitionId) throws PortalException {
@@ -257,12 +234,6 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
-
-	@Reference
-	private FacetFactory _facetFactory;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

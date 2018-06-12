@@ -23,7 +23,10 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
@@ -41,8 +44,10 @@ import com.liferay.portal.kernel.exception.SitemapPagePriorityException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -54,6 +59,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -120,6 +127,22 @@ public class GroupPagesPortlet extends MVCPortlet {
 		}
 		else {
 			try {
+				List<LayoutPrototype> layoutPrototypes =
+					_layoutPrototypeLocalService.getLayoutPrototypes(
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+					LayoutPageTemplateEntry layoutPageTemplateEntry =
+						_layoutPageTemplateEntryLocalService.
+							fetchFirstLayoutPageTemplateEntry(
+								layoutPrototype.getLayoutPrototypeId());
+
+					if (layoutPageTemplateEntry == null) {
+						_layoutPageTemplateEntryLocalService.
+							addLayoutPageTemplateEntry(layoutPrototype);
+					}
+				}
+
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(renderRequest);
 
@@ -218,6 +241,13 @@ public class GroupPagesPortlet extends MVCPortlet {
 	@Reference
 	private LayoutPageTemplateCollectionService
 		_layoutPageTemplateCollectionService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@Reference
 	private Portal _portal;

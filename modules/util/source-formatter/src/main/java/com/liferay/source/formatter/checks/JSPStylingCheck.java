@@ -57,7 +57,8 @@ public class JSPStylingCheck extends StylingCheck {
 			});
 
 		_checkIllegalSyntax(
-			fileName, content, "=>", "Do not use arrow function");
+			fileName, content, "=>", "Do not use arrow function",
+			"arrow_functions.markdown");
 		_checkIllegalSyntax(
 			fileName, content, "console.log(", "Do not use console.log");
 		_checkIllegalSyntax(
@@ -90,6 +91,13 @@ public class JSPStylingCheck extends StylingCheck {
 	private void _checkIllegalSyntax(
 		String fileName, String content, String syntax, String message) {
 
+		_checkIllegalSyntax(fileName, content, syntax, message, null);
+	}
+
+	private void _checkIllegalSyntax(
+		String fileName, String content, String syntax, String message,
+		String markdownFileName) {
+
 		int pos = -1;
 
 		while (true) {
@@ -100,7 +108,9 @@ public class JSPStylingCheck extends StylingCheck {
 			}
 
 			if (!ToolsUtil.isInsideQuotes(content, pos)) {
-				addMessage(fileName, message, getLineNumber(content, pos));
+				addMessage(
+					fileName, message, markdownFileName,
+					getLineNumber(content, pos));
 			}
 		}
 	}

@@ -1237,7 +1237,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			sb.append("<taglib-uri>http://java.sun.com/portlet_2_0");
 			sb.append("</taglib-uri>");
 			sb.append("<taglib-location>");
-			sb.append("/WEB-INF/tld/liferay-portlet.tld");
+			sb.append("/WEB-INF/tld/liferay-portlet_2_0.tld");
 			sb.append("</taglib-location>");
 			sb.append("</taglib>");
 		}

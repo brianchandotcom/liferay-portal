@@ -40,8 +40,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(immediate = true, service = GroupURLProvider.class)
-public class GroupURLProviderImpl {
+public class GroupURLProviderImpl implements GroupURLProvider {
 
+	@Override
 	public String getGroupAdministrationURL(
 		Group group, PortletRequest portletRequest) {
 
@@ -69,6 +70,7 @@ public class GroupURLProviderImpl {
 		return null;
 	}
 
+	@Override
 	public String getGroupLayoutsURL(
 		Group group, boolean privateLayout, PortletRequest portletRequest) {
 
@@ -85,10 +87,12 @@ public class GroupURLProviderImpl {
 		return null;
 	}
 
+	@Override
 	public String getGroupURL(Group group, PortletRequest portletRequest) {
 		return getGroupURL(group, portletRequest, true);
 	}
 
+	@Override
 	public String getLiveGroupURL(Group group, PortletRequest portletRequest) {
 		return getGroupURL(group, portletRequest, false);
 	}
@@ -145,7 +149,7 @@ public class GroupURLProviderImpl {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GroupURLProvider.class);
+		GroupURLProviderImpl.class);
 
 	@Reference
 	private Http _http;

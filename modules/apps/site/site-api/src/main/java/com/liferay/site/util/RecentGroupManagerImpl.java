@@ -49,12 +49,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(immediate = true, service = RecentGroupManager.class)
-public class RecentGroupManagerImpl {
+public class RecentGroupManagerImpl implements RecentGroupManager {
 
+	@Override
 	public void addRecentGroup(HttpServletRequest request, Group group) {
 		addRecentGroup(request, group.getGroupId());
 	}
 
+	@Override
 	public void addRecentGroup(HttpServletRequest request, long groupId) {
 		long liveGroupId = _getLiveGroupId(groupId);
 
@@ -80,6 +82,7 @@ public class RecentGroupManagerImpl {
 		_setRecentGroupsValue(request, StringUtil.merge(groupIds));
 	}
 
+	@Override
 	public List<Group> getRecentGroups(HttpServletRequest request) {
 		String value = _getRecentGroupsValue(request);
 
@@ -205,7 +208,7 @@ public class RecentGroupManagerImpl {
 		"com.liferay.site.util_recentGroups";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		RecentGroupManager.class);
+		RecentGroupManagerImpl.class);
 
 	private GroupLocalService _groupLocalService;
 

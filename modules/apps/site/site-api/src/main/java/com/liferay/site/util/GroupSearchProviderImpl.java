@@ -49,8 +49,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Julio Camarero
  */
 @Component(immediate = true, service = GroupSearchProvider.class)
-public class GroupSearchProviderImpl {
+public class GroupSearchProviderImpl implements GroupSearchProvider {
 
+	@Override
 	public GroupSearch getGroupSearch(
 			PortletRequest portletRequest, PortletURL portletURL)
 		throws PortalException {

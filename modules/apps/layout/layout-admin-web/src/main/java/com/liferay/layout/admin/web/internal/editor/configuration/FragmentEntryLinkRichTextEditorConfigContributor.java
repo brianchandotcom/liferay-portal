@@ -25,17 +25,20 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.util.StringBundler;
 
-import javax.portlet.PortletURL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -57,19 +60,38 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		String namespace = GetterUtil.getString(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:namespace"));
-		String name = GetterUtil.getString(
-			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(getAllowedContentText());
+		sb.append(" div[*](*); img[*](*){*}; ");
+		sb.append(getAllowedContentLists());
+		sb.append(" p {text-align}; ");
+		sb.append(getAllowedContentTable());
+
+		jsonObject.put("allowedContent", sb.toString());
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, namespace + name + "selectItem",
+			requestBackedPortletURLFactory, "_EDITOR_NAME_selectItem",
 			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+
+		jsonObject.put("toolbars", getToolbarsJSONObject());
+	}
+
+	protected String getAllowedContentLists() {
+		return "li ol ul;";
+	}
+
+	protected String getAllowedContentTable() {
+		return "table[border, cellpadding, cellspacing] {width}; tbody td " +
+			"th[scope]; thead tr[scope];";
+	}
+
+	protected String getAllowedContentText() {
+		return "b code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
 	}
 
 	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
@@ -86,6 +108,20 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 			desiredItemSelectorReturnTypes);
 
 		return imageItemSelectorCriterion;
+	}
+
+	protected JSONObject getToolbarsJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject toolbarJSONObject = JSONFactoryUtil.createJSONObject();
+
+		toolbarJSONObject.put(
+			"buttons", toJSONArray("['image', 'table', 'hline']"));
+		toolbarJSONObject.put("tabIndex", 1);
+
+		jsonObject.put("add", toolbarJSONObject);
+
+		return jsonObject;
 	}
 
 	protected ItemSelectorCriterion getURLItemSelectorCriterion() {

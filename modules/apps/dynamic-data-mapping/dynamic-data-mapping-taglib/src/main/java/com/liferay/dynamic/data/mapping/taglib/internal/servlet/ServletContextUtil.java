@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.taglib.internal.servlet;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
@@ -28,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ServletContextUtil {
 
 	public static final ServletContext getServletContext() {
-		if (_instance != null) {
+		if (Validator.isNotNull(_instance)) {
 			return _instance._getServletContext();
 		}
 

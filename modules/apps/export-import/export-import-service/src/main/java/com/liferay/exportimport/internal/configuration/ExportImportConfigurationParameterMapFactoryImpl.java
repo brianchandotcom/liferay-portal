@@ -26,12 +26,14 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -498,6 +500,44 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 		}
 	}
 
+	private void _populateStagedModelTypes(
+		Map<String, String[]> parameterMap, Portlet dataSiteLevelPortlet) {
+
+		if (!parameterMap.containsKey("stagedModelTypes")) {
+			parameterMap.put("stagedModelTypes", new String[0]);
+		}
+
+		PortletDataHandler portletDataHandler =
+			dataSiteLevelPortlet.getPortletDataHandlerInstance();
+
+		List<StagedModelType> stagedModelTypes = ListUtil.toList(
+			portletDataHandler.getDeletionSystemEventStagedModelTypes());
+
+		if (ListUtil.isEmpty(stagedModelTypes)) {
+			return;
+		}
+
+		String[] parameterStagedModelTypes = parameterMap.get(
+			"stagedModelTypes");
+
+		List<String> parameterStagedModelTypesList = ListUtil.toList(
+			parameterStagedModelTypes);
+
+		for (StagedModelType stagedModelType : stagedModelTypes) {
+			String stagedModelTypeString = stagedModelType.toString();
+
+			if (!parameterStagedModelTypesList.contains(
+					stagedModelTypeString)) {
+
+				parameterStagedModelTypesList.add(stagedModelTypeString);
+			}
+		}
+
+		parameterMap.put(
+			"stagedModelTypes",
+			parameterStagedModelTypesList.toArray(new String[0]));
+	}
+
 	/**
 	 * 1. Removes PORTLET_DATA_portletId and PORTLET_DATA_ALL parameters in parameterMap and replaces them with PORTLET_DATA_changesetPortletId.
 	 * 2. It also adds model specific parameters to be able to decide in changeset portlet data handler whether a model needs to be exported or not.
@@ -522,6 +562,9 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 				if (portletDataAll ||
 					((portletDataValues != null) &&
 					 GetterUtil.getBoolean(portletDataValues[0]))) {
+
+					_populateStagedModelTypes(
+						parameterMap, dataSiteLevelPortlet);
 
 					_addModelParameter(
 						parameterMap, dataSiteLevelPortlet, portletDataAll);

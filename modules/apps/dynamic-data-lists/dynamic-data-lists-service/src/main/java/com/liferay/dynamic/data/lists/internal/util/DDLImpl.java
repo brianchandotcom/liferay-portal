@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -389,7 +390,7 @@ public class DDLImpl implements DDL {
 	protected Object[] getFieldValues(Field field, Locale locale) {
 		Object fieldValue = field.getValue(locale);
 
-		if (fieldValue == null) {
+		if (Validator.isNull(fieldValue)) {
 			return new Object[0];
 		}
 

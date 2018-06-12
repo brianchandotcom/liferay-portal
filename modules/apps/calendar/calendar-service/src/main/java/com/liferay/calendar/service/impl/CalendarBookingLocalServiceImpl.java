@@ -2236,7 +2236,7 @@ public class CalendarBookingLocalServiceImpl
 				Recurrence recurrenceObj =
 					recurringCalendarBooking.getRecurrenceObj();
 
-				if (recurrenceObj != null) {
+				if (Validator.isNotNull(recurrenceObj)) {
 					java.util.Calendar startTimeJCalendar =
 						JCalendarUtil.getJCalendar(
 							recurringCalendarBooking.getStartTime(),

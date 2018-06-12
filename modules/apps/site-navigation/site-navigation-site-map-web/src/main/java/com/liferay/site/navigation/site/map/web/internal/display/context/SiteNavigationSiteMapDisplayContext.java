@@ -134,7 +134,7 @@ public class SiteNavigationSiteMapDisplayContext {
 		if (Validator.isNotNull(
 				_siteNavigationSiteMapPortletInstanceConfiguration.
 					rootLayoutUuid()) &&
-			(rootLayout != null)) {
+			Validator.isNotNull(rootLayout)) {
 
 			_rootLayoutId = rootLayout.getLayoutId();
 		}

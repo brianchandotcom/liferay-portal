@@ -435,7 +435,7 @@ public class AssetCategoriesDisplayContext {
 		else if (isFlattenedNavigationAllowed()) {
 			AssetCategory category = getCategory();
 
-			if (category == null) {
+			if (Validator.isNull(category)) {
 				categoriesCount =
 					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
 						themeDisplay.getScopeGroupId(), getVocabularyId());

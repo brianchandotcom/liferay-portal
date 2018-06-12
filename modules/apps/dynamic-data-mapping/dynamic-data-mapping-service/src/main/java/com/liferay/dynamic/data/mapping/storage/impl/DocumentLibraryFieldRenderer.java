@@ -62,7 +62,7 @@ public class DocumentLibraryFieldRenderer extends BaseFieldRenderer {
 	protected String doRender(Field field, Locale locale, int valueIndex) {
 		Serializable value = field.getValue(locale, valueIndex);
 
-		if (value == null) {
+		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
 

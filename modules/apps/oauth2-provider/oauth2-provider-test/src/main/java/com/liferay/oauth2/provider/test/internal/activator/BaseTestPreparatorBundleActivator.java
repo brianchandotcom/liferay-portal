@@ -153,7 +153,7 @@ public abstract class BaseTestPreparatorBundleActivator
 					public void updated(
 						String pid, Dictionary<String, ?> updatedProperties) {
 
-						if (updatedProperties == null) {
+						if (Validator.isNull(updatedProperties)) {
 							return;
 						}
 
@@ -498,7 +498,7 @@ public abstract class BaseTestPreparatorBundleActivator
 			bundleContext.registerService(
 				ManagedService.class,
 				updatedProperties -> {
-					if (updatedProperties == null) {
+					if (Validator.isNull(updatedProperties)) {
 						return;
 					}
 

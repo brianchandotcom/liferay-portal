@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletPreferences;
 
@@ -34,7 +35,7 @@ public class UserGroupsAdminExportImportPortletPreferencesProcessorUtil {
 				TemplateHandlerRegistryUtil.getTemplateHandler(
 					UserGroup.class.getName());
 
-			if (templateHandler != null) {
+			if (Validator.isNotNull(templateHandler)) {
 				return portletPreferences.getValue("displayStyle", null);
 			}
 		}
@@ -52,7 +53,7 @@ public class UserGroupsAdminExportImportPortletPreferencesProcessorUtil {
 				TemplateHandlerRegistryUtil.getTemplateHandler(
 					UserGroup.class.getName());
 
-			if (templateHandler != null) {
+			if (Validator.isNotNull(templateHandler)) {
 				return GetterUtil.getLong(
 					portletPreferences.getValue("displayStyleGroupId", null));
 			}

@@ -871,7 +871,7 @@ public class DDMDisplayContext {
 
 		boolean showAncestorScopes = showAncestorScopes();
 
-		if (showAncestorScopes != null) {
+		if (Validator.isNotNull(showAncestorScopes)) {
 			portletURL.setParameter(
 				"showAncestorScopes", String.valueOf(showAncestorScopes));
 		}

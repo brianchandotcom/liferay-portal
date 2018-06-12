@@ -139,11 +139,11 @@ else {
 
 BufferCacheServletResponse bufferCacheServletResponse = new BufferCacheServletResponse(response);
 
-HeaderRequestImpl headerRequestImpl = HeaderRequestFactory.create(request, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);
-PortletRequest portletRequest = headerRequestImpl;
-HeaderResponseImpl headerResponseImpl = HeaderResponseFactory.create(headerRequestImpl, bufferCacheServletResponse);
-headerRequestImpl.defineObjects(portletConfig, headerResponseImpl);
-String responseContentType = headerRequestImpl.getResponseContentType();
+LiferayHeaderRequest liferayHeaderRequest = HeaderRequestFactory.create(request, portlet, invokerPortlet, portletCtx, windowState, portletMode, portletPreferences, plid);
+PortletRequest portletRequest = liferayHeaderRequest;
+LiferayHeaderResponse liferayHeaderResponse = HeaderResponseFactory.create(liferayHeaderRequest, bufferCacheServletResponse);
+liferayHeaderRequest.defineObjects(portletConfig, liferayHeaderResponse);
+String responseContentType = liferayHeaderRequest.getResponseContentType();
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
@@ -224,12 +224,12 @@ if (portlet.isActive() && portlet.isReady() && supportsMimeType && (invokerPortl
 	try {
 		if (!PortalUtil.isSkipPortletContentProcesssing(group, request, layoutTypePortlet, portletDisplay, portletDisplay.getPortletName())) {
 			if (invokerPortlet.isHeaderPortlet()) {
-				invokerPortlet.renderHeaders(headerRequestImpl, headerResponseImpl);
-				headerResponseImpl.writeToHead();
+				invokerPortlet.renderHeaders(liferayHeaderRequest, liferayHeaderResponse);
+				liferayHeaderResponse.writeToHead();
 			}
 		}
 
-		headerResponseImpl.transferHeaders(bufferCacheServletResponse);
+		liferayHeaderResponse.transferHeaders(bufferCacheServletResponse);
 	}
 	catch (UnavailableException ue) {
 		if (ue.isPermanent()) {
@@ -241,7 +241,7 @@ if (portlet.isActive() && portlet.isReady() && supportsMimeType && (invokerPortl
 	}
 }
 
-headerRequestImpl.cleanUp();
+liferayHeaderRequest.cleanUp();
 %>
 
 <%!

@@ -27,12 +27,13 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.membership.policy.site.BaseSiteMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.portlet.RenderResponseImpl;
+import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.portlet.sites.search.UserGroupRoleRoleChecker;
 import com.liferay.portlet.sites.search.UserGroupRoleUserChecker;
 import com.liferay.portlet.sitesadmin.search.SiteMembershipChecker;
 
 import javax.portlet.RenderResponse;
+import javax.portlet.filter.RenderResponseWrapper;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -255,7 +256,7 @@ public class SiteMembershipPolicyRowCheckerTest
 	}
 
 	private static final RenderResponse _renderResponse =
-		new RenderResponseImpl() {
+		new RenderResponseWrapper(RenderResponseFactory.create()) {
 
 			@Override
 			public String getNamespace() {

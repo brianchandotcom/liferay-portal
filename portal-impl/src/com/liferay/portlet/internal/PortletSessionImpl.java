@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.Deserializer;
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.servlet.HttpSessionWrapper;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.PortletSessionAttributeMap;
 
 import java.io.Externalizable;
 import java.io.IOException;

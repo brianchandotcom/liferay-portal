@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
@@ -34,7 +32,6 @@ import javax.portlet.PortletRequest;
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  */
-@ProviderType
 public class RenderResponseImpl
 	extends MimeResponseImpl implements LiferayRenderResponse {
 
@@ -47,10 +44,12 @@ public class RenderResponseImpl
 		return _resourceName;
 	}
 
+	@Override
 	public String getTitle() {
 		return _title;
 	}
 
+	@Override
 	public boolean getUseDefaultTemplate() {
 		if (_useDefaultTemplate == null) {
 			Portlet portlet = getPortlet();
@@ -99,6 +98,7 @@ public class RenderResponseImpl
 		portletDisplay.setTitle(_title);
 	}
 
+	@Override
 	public void setUseDefaultTemplate(Boolean useDefaultTemplate) {
 		_useDefaultTemplate = useDefaultTemplate;
 	}

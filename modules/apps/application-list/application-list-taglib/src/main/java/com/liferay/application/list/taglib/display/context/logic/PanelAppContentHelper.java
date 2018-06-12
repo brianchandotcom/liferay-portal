@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -28,9 +29,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.DynamicServletRequestUtil;
-import com.liferay.portlet.PortletRequestImpl;
+import com.liferay.portlet.LiferayPortletUtil;
 
 import java.io.Writer;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -102,12 +105,13 @@ public class PanelAppContentHelper {
 	protected HttpServletRequest getOriginalHttpServletRequest(
 		HttpServletRequest request) {
 
-		PortletRequestImpl portletRequestImpl =
-			(PortletRequestImpl)_request.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
+		LiferayPortletRequest liferayPortletRequest =
+			LiferayPortletUtil.getLiferayPortletRequest(
+				(PortletRequest)_request.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST));
 
-		if (portletRequestImpl != null) {
-			return portletRequestImpl.getOriginalHttpServletRequest();
+		if (liferayPortletRequest != null) {
+			return liferayPortletRequest.getOriginalHttpServletRequest();
 		}
 
 		HttpServletRequest originalServletRequest =

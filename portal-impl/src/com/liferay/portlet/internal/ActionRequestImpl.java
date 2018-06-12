@@ -12,27 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet;
+package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.portlet.LiferayActionRequest;
 
-import javax.portlet.MimeResponse;
-import javax.portlet.RenderResponse;
+import javax.portlet.ActionParameters;
+import javax.portlet.PortletRequest;
 
 /**
- * @author Raymond Augé
+ * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
-public interface LiferayRenderResponse
-	extends LiferayPortletResponse, MimeResponse, RenderResponse {
+public class ActionRequestImpl
+	extends ClientDataRequestImpl implements LiferayActionRequest {
 
-	public String getTitle();
+	@Override
+	public ActionParameters getActionParameters() {
+		throw new UnsupportedOperationException();
+	}
 
-	public boolean getUseDefaultTemplate();
-
-	public void setResourceName(String resourceName);
-
-	public void setUseDefaultTemplate(Boolean useDefaultTemplate);
+	@Override
+	public String getLifecycle() {
+		return PortletRequest.ACTION_PHASE;
+	}
 
 }

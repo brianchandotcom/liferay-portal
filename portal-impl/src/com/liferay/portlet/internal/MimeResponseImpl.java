@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portlet.internal;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.internal.CacheControlImpl;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -36,7 +33,6 @@ import javax.portlet.WindowState;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@ProviderType
 public abstract class MimeResponseImpl
 	extends PortletResponseImpl implements MimeResponse {
 

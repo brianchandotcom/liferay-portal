@@ -12,26 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portal.kernel.portlet;
 
-import javax.portlet.ActionParameters;
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
+import aQute.bnd.annotation.ProviderType;
+
+import javax.portlet.HeaderResponse;
+import javax.portlet.MimeResponse;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
-public class ActionRequestImpl
-	extends ClientDataRequestImpl implements ActionRequest {
+@ProviderType
+public interface LiferayHeaderResponse
+	extends LiferayPortletResponse, MimeResponse, HeaderResponse {
 
-	@Override
-	public ActionParameters getActionParameters() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getLifecycle() {
-		return PortletRequest.ACTION_PHASE;
-	}
+	public void writeToHead();
 
 }

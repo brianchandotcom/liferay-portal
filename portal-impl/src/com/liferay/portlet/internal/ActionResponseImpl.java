@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.portlet.LiferayActionResponse;
 
 import java.io.IOException;
 
-import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderURL;
@@ -27,9 +26,8 @@ import javax.portlet.RenderURL;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public class ActionResponseImpl
-	extends StateAwareResponseImpl implements ActionResponse {
+	extends StateAwareResponseImpl implements LiferayActionResponse {
 
 	@Override
 	public RenderURL createRedirectURL(MimeResponse.Copy copy) {

@@ -23,11 +23,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.membership.policy.usergroup.BaseUserGroupMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.RenderResponseImpl;
+import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.portlet.usergroupsadmin.search.SetUserUserGroupChecker;
 import com.liferay.portlet.usergroupsadmin.search.UnsetUserUserGroupChecker;
 
 import javax.portlet.RenderResponse;
+import javax.portlet.filter.RenderResponseWrapper;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -122,7 +123,7 @@ public class UserGroupMembershipPolicyRowCheckerTest
 	}
 
 	private static final RenderResponse _renderResponse =
-		new RenderResponseImpl() {
+		new RenderResponseWrapper(RenderResponseFactory.create()) {
 
 			@Override
 			public String getNamespace() {

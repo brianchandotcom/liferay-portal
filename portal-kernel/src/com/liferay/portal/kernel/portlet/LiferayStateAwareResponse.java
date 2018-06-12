@@ -16,23 +16,22 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
-import javax.portlet.MimeResponse;
-import javax.portlet.RenderResponse;
+import java.util.List;
+
+import javax.portlet.Event;
+import javax.portlet.StateAwareResponse;
 
 /**
- * @author Raymond Augé
  * @author Neil Griffin
  */
 @ProviderType
-public interface LiferayRenderResponse
-	extends LiferayPortletResponse, MimeResponse, RenderResponse {
+public interface LiferayStateAwareResponse
+	extends LiferayPortletResponse, StateAwareResponse {
 
-	public String getTitle();
+	public List<Event> getEvents();
 
-	public boolean getUseDefaultTemplate();
+	public String getRedirectLocation();
 
-	public void setResourceName(String resourceName);
-
-	public void setUseDefaultTemplate(Boolean useDefaultTemplate);
+	public boolean isCalledSetRenderParameter();
 
 }

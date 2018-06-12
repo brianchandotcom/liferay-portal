@@ -72,7 +72,7 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portlet.InvokerPortletImpl;
+import com.liferay.portlet.InvokerPortletUtil;
 import com.liferay.portlet.admin.util.AdminUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
@@ -534,7 +534,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			PortletSession portletSession = actionRequest.getPortletSession();
 
-			InvokerPortletImpl.clearResponses(portletSession);
+			InvokerPortletUtil.clearResponses(portletSession);
 
 			updateLanguageId = true;
 		}

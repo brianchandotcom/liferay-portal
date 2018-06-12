@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portlet.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LiferayResourceRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.internal.PortletAsyncContextImpl;
+import com.liferay.portlet.RenderParametersPool;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,9 +47,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
 public class ResourceRequestImpl
-	extends ClientDataRequestImpl implements ResourceRequest {
+	extends ClientDataRequestImpl implements LiferayResourceRequest {
 
 	@Override
 	public String getCacheability() {
@@ -123,6 +121,35 @@ public class ResourceRequestImpl
 	}
 
 	@Override
+	public void init(
+		HttpServletRequest request, Portlet portlet,
+		InvokerPortlet invokerPortlet, PortletContext portletContext,
+		WindowState windowState, PortletMode portletMode,
+		PortletPreferences preferences, long plid) {
+
+		if (Validator.isNull(windowState.toString())) {
+			windowState = WindowState.NORMAL;
+		}
+
+		if (Validator.isNull(portletMode.toString())) {
+			portletMode = PortletMode.VIEW;
+		}
+
+		super.init(
+			request, portlet, invokerPortlet, portletContext, windowState,
+			portletMode, preferences, plid);
+
+		_cacheablity = ParamUtil.getString(
+			request, "p_p_cacheability", ResourceURL.PAGE);
+
+		_resourceID = request.getParameter("p_p_resource_id");
+
+		if (!PortalUtil.isValidResourceId(_resourceID)) {
+			_resourceID = StringPool.BLANK;
+		}
+	}
+
+	@Override
 	public boolean isAsyncStarted() {
 		throw new UnsupportedOperationException();
 	}
@@ -163,35 +190,6 @@ public class ResourceRequestImpl
 		_portletAsyncContext = new PortletAsyncContextImpl();
 
 		return _portletAsyncContext;
-	}
-
-	@Override
-	protected void init(
-		HttpServletRequest request, Portlet portlet,
-		InvokerPortlet invokerPortlet, PortletContext portletContext,
-		WindowState windowState, PortletMode portletMode,
-		PortletPreferences preferences, long plid) {
-
-		if (Validator.isNull(windowState.toString())) {
-			windowState = WindowState.NORMAL;
-		}
-
-		if (Validator.isNull(portletMode.toString())) {
-			portletMode = PortletMode.VIEW;
-		}
-
-		super.init(
-			request, portlet, invokerPortlet, portletContext, windowState,
-			portletMode, preferences, plid);
-
-		_cacheablity = ParamUtil.getString(
-			request, "p_p_cacheability", ResourceURL.PAGE);
-
-		_resourceID = request.getParameter("p_p_resource_id");
-
-		if (!PortalUtil.isValidResourceId(_resourceID)) {
-			_resourceID = StringPool.BLANK;
-		}
 	}
 
 	private String _cacheablity;

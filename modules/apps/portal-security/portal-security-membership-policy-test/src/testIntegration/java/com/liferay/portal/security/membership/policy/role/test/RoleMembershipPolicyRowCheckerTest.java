@@ -24,11 +24,12 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.security.membership.policy.role.BaseRoleMembershipPolicyTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.portlet.RenderResponseImpl;
+import com.liferay.portlet.RenderResponseFactory;
 import com.liferay.portlet.rolesadmin.search.SetUserRoleChecker;
 import com.liferay.portlet.rolesadmin.search.UnsetUserRoleChecker;
 
 import javax.portlet.RenderResponse;
+import javax.portlet.filter.RenderResponseWrapper;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -119,7 +120,7 @@ public class RoleMembershipPolicyRowCheckerTest
 	}
 
 	private static final RenderResponse _renderResponse =
-		new RenderResponseImpl() {
+		new RenderResponseWrapper(RenderResponseFactory.create()) {
 
 			@Override
 			public String getNamespace() {

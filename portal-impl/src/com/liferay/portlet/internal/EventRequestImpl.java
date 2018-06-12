@@ -12,27 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet;
+package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.portlet.LiferayEventRequest;
 
-import javax.portlet.MimeResponse;
-import javax.portlet.RenderResponse;
+import javax.portlet.Event;
+import javax.portlet.PortletRequest;
 
 /**
- * @author Raymond Augé
+ * @author Brian Wing Shun Chan
  * @author Neil Griffin
  */
-@ProviderType
-public interface LiferayRenderResponse
-	extends LiferayPortletResponse, MimeResponse, RenderResponse {
+public class EventRequestImpl
+	extends PortletRequestImpl implements LiferayEventRequest {
 
-	public String getTitle();
+	@Override
+	public Event getEvent() {
+		return _event;
+	}
 
-	public boolean getUseDefaultTemplate();
+	@Override
+	public String getLifecycle() {
+		return PortletRequest.EVENT_PHASE;
+	}
 
-	public void setResourceName(String resourceName);
+	@Override
+	public void setEvent(Event event) {
+		_event = event;
+	}
 
-	public void setUseDefaultTemplate(Boolean useDefaultTemplate);
+	private Event _event;
 
 }

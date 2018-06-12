@@ -12,35 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
-import javax.portlet.Event;
-import javax.portlet.EventRequest;
-import javax.portlet.PortletRequest;
+import javax.portlet.ActionRequest;
+import javax.portlet.ClientDataRequest;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Neil Griffin
  */
 @ProviderType
-public class EventRequestImpl
-	extends PortletRequestImpl implements EventRequest {
-
-	@Override
-	public Event getEvent() {
-		return _event;
-	}
-
-	@Override
-	public String getLifecycle() {
-		return PortletRequest.EVENT_PHASE;
-	}
-
-	public void setEvent(Event event) {
-		_event = event;
-	}
-
-	private Event _event;
-
+public interface LiferayActionRequest
+	extends LiferayPortletRequest, ClientDataRequest, ActionRequest {
 }

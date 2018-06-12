@@ -12,27 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet;
+package com.liferay.portlet.internal;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.portlet.LiferayHeaderRequest;
 
-import javax.portlet.MimeResponse;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletRequest;
 
 /**
- * @author Raymond Augé
  * @author Neil Griffin
  */
-@ProviderType
-public interface LiferayRenderResponse
-	extends LiferayPortletResponse, MimeResponse, RenderResponse {
+public class HeaderRequestImpl
+	extends RenderRequestImpl implements LiferayHeaderRequest {
 
-	public String getTitle();
-
-	public boolean getUseDefaultTemplate();
-
-	public void setResourceName(String resourceName);
-
-	public void setUseDefaultTemplate(Boolean useDefaultTemplate);
+	@Override
+	public String getLifecycle() {
+		return PortletRequest.HEADER_PHASE;
+	}
 
 }

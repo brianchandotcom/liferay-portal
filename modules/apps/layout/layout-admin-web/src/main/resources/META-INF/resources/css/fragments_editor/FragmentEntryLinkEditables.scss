@@ -5,7 +5,7 @@ lfr-editable {
 	box-shadow: 0 0 0 1px transparent;
 	cursor: pointer;
 	display: inline-block;
-	position: relative;
+	position: static;
 	transition: box-shadow ease 0.2s;
 
 	& > div[data-lfr-editable-id] {
@@ -15,14 +15,8 @@ lfr-editable {
 		outline: none;
 	}
 
-	&[type="image"]:after {
-		background-size: $fragmentEditableFieldGridSize $fragmentEditableFieldGridSize;
-		content: '';
-		height: 100%;
-		left: 0;
-		position: absolute;
-		top: 0;
-		width: 100%;
+	&[type="image"] > img {
+		max-width: 100%;
 	}
 
 	&:hover {
@@ -39,8 +33,7 @@ lfr-editable {
 		background-color: fade_out($fragmentEditableFieldGridDefaultColor, 0.9);
 		box-shadow: 0 0 0 1px $fragmentEditableFieldGridDefaultColor;
 
-		&.translated,
-		&.translated[type="image"]:after {
+		&.translated {
 			background-color: fade_out($fragmentEditableFieldGridTranslatedColor, 0.9);
 			box-shadow: 0 0 0 1px $fragmentEditableFieldGridTranslatedColor;
 		}
@@ -57,31 +50,22 @@ lfr-editable {
 	}
 
 	.fragment-entry-link-list.mapping & {
+		background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($fragmentEditableFieldGridDefaultColor, 0.7) 50%, transparent calc(50% + 1px), transparent 100%);
 		box-shadow: 0 0 0 1px $fragmentEditableFieldGridDefaultColor;
 
-		&,
-		&[type="image"]:after {
-			background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($fragmentEditableFieldGridDefaultColor, 0.7) 50%, transparent calc(50% + 1px), transparent 100%);
-		}
-
-		&:hover,
-		&[type="image"]:hover:after {
+		&:hover {
 			box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
 		}
 	}
 
 	&.mapped,
-	&.mapped[type="image"]:after,
-	.fragment-entry-link-list.mapping &.mapped,
-	.fragment-entry-link-list.mapping &.mapped[type="image"]:after {
+	.fragment-entry-link-list.mapping &.mapped {
 		background-image: linear-gradient(45deg, transparent 0%, transparent calc(50% - 1px), fade_out($fragmentEditableFieldGridAccentColor, 0.7) 50%, transparent calc(50% + 1px), transparent 100%);
 		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.7);
 	}
 
 	&.mapped:hover,
-	&.mapped[type="image"]:hover:after,
-	.fragment-entry-link-list.mapping &.mapped:hover,
-	.fragment-entry-link-list.mapping &.mapped[type="image"]:hover:after {
+	.fragment-entry-link-list.mapping &.mapped:hover {
 		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.4);
 	}
 }

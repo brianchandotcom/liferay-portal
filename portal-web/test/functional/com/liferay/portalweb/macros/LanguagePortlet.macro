@@ -80,7 +80,7 @@
 					<var name="key_portletName" value="${portletName}" />
 				</execute>
 
-				<execute function="AssertClick" locator1="Language#LANGUAGE" value1="${locale}">
+				<execute function="AssertClick" locator1="Language#LANGUAGE" value1="${textIcon}">
 					<var name="key_locale" value="${locale}" />
 					<var name="key_portletName" value="${portletName}" />
 				</execute>
@@ -90,7 +90,8 @@
 
 	<command name="tearDownLanguagePG">
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 	</command>
 

@@ -84,7 +84,8 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="es-es" />
+			<var name="locale" value="es_ES" />
+			<var name="textIcon" value="español-España" />
 		</execute>
 
 		<execute macro="CalendarScheduler#addLocalizedEvent">
@@ -99,7 +100,8 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute macro="CalendarScheduler#viewDay">

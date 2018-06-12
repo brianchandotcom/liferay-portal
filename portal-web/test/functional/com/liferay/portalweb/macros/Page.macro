@@ -1044,6 +1044,7 @@
 	<command name="viewSiteNameTranslationsPG">
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="locale" value="${locale}" />
+			<var name="textIcon" value="${textIcon}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${siteName}" />

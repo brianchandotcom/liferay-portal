@@ -132,25 +132,29 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="es-es" />
+			<var name="locale" value="es_ES" />
+			<var name="textIcon" value="español-España" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="ja-jp" />
+			<var name="locale" value="ja_JP" />
+			<var name="textIcon" value="日本語-日本" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -188,25 +192,29 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="es-es" />
+			<var name="locale" value="es_ES" />
+			<var name="textIcon" value="español-España" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/es/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="ja-jp" />
+			<var name="locale" value="ja_JP" />
+			<var name="textIcon" value="日本語-日本" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/ja/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -244,25 +252,29 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/en/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="es-es" />
+			<var name="locale" value="es_ES" />
+			<var name="textIcon" value="español-España" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/es/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="ja-jp" />
+			<var name="locale" value="ja_JP" />
+			<var name="textIcon" value="日本語-日本" />
 		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/ja/web/guest/language-test-page" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

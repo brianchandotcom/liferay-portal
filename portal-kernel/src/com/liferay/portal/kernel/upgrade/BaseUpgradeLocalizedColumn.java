@@ -102,11 +102,6 @@ public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 		}
 	}
 
-	private String _escape(String string) {
-		return string.replace(
-			StringPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
-	}
-
 	private String _getLocalizationXML(
 			String localizationMapKey, String localizationXMLKey,
 			long companyId, ResourceBundleLoader resourceBundleLoader)

@@ -85,7 +85,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 				AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
 				%>
 
-				<%= assetRenderer.getSummary(renderRequest, renderResponse) %>
+				<%= HtmlUtil.escape(assetRenderer.getSummary(renderRequest, renderResponse)) %>
 			</p>
 		</div>
 	</div>

@@ -1564,7 +1564,7 @@ public class JournalArticleFinderImpl
 		}
 
 		for (Object obj : array) {
-			if (Validator.isNotNull(obj)) {
+			if (obj != null) {
 				return false;
 			}
 		}

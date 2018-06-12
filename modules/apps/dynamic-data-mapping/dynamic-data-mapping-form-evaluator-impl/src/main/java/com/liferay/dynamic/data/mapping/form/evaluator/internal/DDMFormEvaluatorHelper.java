@@ -492,13 +492,13 @@ public class DDMFormEvaluatorHelper {
 			String dataType = ddmFormField.getDataType();
 
 			if (FieldConstants.isNumericType(ddmFormField.getDataType())) {
-				if (Validator.isNotNull(value)) {
+				if (value != null) {
 					ddmExpression.setDoubleVariableValue(
 						ddmFormFieldName, GetterUtil.getDouble(value));
 				}
 			}
 			else if (dataType.equals(FieldConstants.BOOLEAN)) {
-				if (Validator.isNotNull(value)) {
+				if (value != null) {
 					ddmExpression.setBooleanVariableValue(
 						ddmFormFieldName, GetterUtil.getBoolean(value));
 				}

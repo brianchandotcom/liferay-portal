@@ -602,7 +602,7 @@ public class WorkflowDefinitionDisplayContext {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		if (Validator.isNull(request)) {
+		if (request == null) {
 			return portletURL;
 		}
 

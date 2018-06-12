@@ -156,7 +156,7 @@ public class NotificationTemplateContextFactory {
 		NotificationTemplateContext notificationTemplateContext = getInstance(
 			notificationType, notificationTemplateType, calendarBooking, user);
 
-		if (Validator.isNotNull(serviceContext)) {
+		if (serviceContext != null) {
 			if (Validator.isNotNull(
 					serviceContext.getAttribute("instanceStartTime"))) {
 

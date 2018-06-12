@@ -140,7 +140,7 @@ public class DDMFormInstanceRecordIndexer
 			"ddmStructureFieldValue");
 
 		if (Validator.isNotNull(ddmStructureFieldName) &&
-			Validator.isNotNull(ddmStructureFieldValue)) {
+			(ddmStructureFieldValue != null)) {
 
 			QueryFilter queryFilter = ddmIndexer.createFieldValueQueryFilter(
 				ddmStructureFieldName, ddmStructureFieldValue,

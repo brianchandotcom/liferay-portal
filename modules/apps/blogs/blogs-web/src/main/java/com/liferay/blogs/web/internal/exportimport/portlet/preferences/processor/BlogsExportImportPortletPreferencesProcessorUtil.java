@@ -18,7 +18,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletPreferences;
 
@@ -35,7 +34,7 @@ public class BlogsExportImportPortletPreferencesProcessorUtil {
 				TemplateHandlerRegistryUtil.getTemplateHandler(
 					BlogsEntry.class.getName());
 
-			if (Validator.isNotNull(templateHandler)) {
+			if (templateHandler != null) {
 				return portletPreferences.getValue("displayStyle", null);
 			}
 		}
@@ -53,7 +52,7 @@ public class BlogsExportImportPortletPreferencesProcessorUtil {
 				TemplateHandlerRegistryUtil.getTemplateHandler(
 					BlogsEntry.class.getName());
 
-			if (Validator.isNotNull(templateHandler)) {
+			if (templateHandler != null) {
 				return GetterUtil.getLong(
 					portletPreferences.getValue("displayStyleGroupId", null));
 			}

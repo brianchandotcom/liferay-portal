@@ -335,6 +335,11 @@ public class LayoutRevisionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutRevision> getLayoutRevisions(
+		long layoutSetBranchId, boolean head, int status) {
+		return getService().getLayoutRevisions(layoutSetBranchId, head, status);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutRevision> getLayoutRevisions(
 		long layoutSetBranchId, int status) {
 		return getService().getLayoutRevisions(layoutSetBranchId, status);
 	}

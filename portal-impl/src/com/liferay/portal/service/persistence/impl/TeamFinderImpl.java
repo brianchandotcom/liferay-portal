@@ -248,7 +248,7 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 			String key = entry.getKey();
 			Object value = entry.getValue();
 
-			if (value != null) {
+			if (Validator.isNotNull(value)) {
 				sb.append(getJoin(key));
 			}
 		}
@@ -288,7 +288,7 @@ public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 			String key = entry.getKey();
 			Object value = entry.getValue();
 
-			if (value != null) {
+			if (Validator.isNotNull(value)) {
 				sb.append(getWhere(key));
 			}
 		}

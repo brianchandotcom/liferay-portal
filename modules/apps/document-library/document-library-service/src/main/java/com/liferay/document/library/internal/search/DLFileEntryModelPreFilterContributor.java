@@ -115,7 +115,7 @@ public class DLFileEntryModelPreFilterContributor
 				"ddmStructureFieldValue");
 
 			if (Validator.isNotNull(ddmStructureFieldName) &&
-				(ddmStructureFieldValue != null)) {
+				Validator.isNotNull(ddmStructureFieldValue)) {
 
 				String[] ddmStructureFieldNameParts = StringUtil.split(
 					ddmStructureFieldName,

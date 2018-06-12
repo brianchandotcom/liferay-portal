@@ -63,7 +63,9 @@ import com.liferay.staging.StagingGroupHelperUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
@@ -96,8 +98,6 @@ public class FragmentsEditorDisplayContext {
 	}
 
 	public SoyContext getEditorContext() throws PortalException {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
 		soyContext.put(
@@ -132,15 +132,8 @@ public class FragmentsEditorDisplayContext {
 		soyContext.put("classNameId", _classNameId);
 		soyContext.put("classPK", _classPK);
 
-		EditorConfiguration editorConfiguration =
-			EditorConfigurationFactoryUtil.getEditorConfiguration(
-				PortletIdCodec.decodePortletName(portletDisplay.getId()),
-				"fragmenEntryLinkEditor", StringPool.BLANK,
-				Collections.emptyMap(), _themeDisplay,
-				RequestBackedPortletURLFactoryUtil.create(_request));
-
 		soyContext.put(
-			"defaultEditorConfiguration", editorConfiguration.getData());
+			"defaultEditorConfigurations", _getDefaultConfigurations());
 
 		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
 		soyContext.put(
@@ -227,6 +220,32 @@ public class FragmentsEditorDisplayContext {
 				"/layout/update_layout_page_template_entry_asset_type"));
 
 		return soyContext;
+	}
+
+	private Map<String, Object> _getDefaultConfigurations() {
+		Map<String, Object> configurations = new HashMap<>();
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				PortletIdCodec.decodePortletName(portletDisplay.getId()),
+				"fragmenEntryLinkEditor", StringPool.BLANK,
+				Collections.emptyMap(), _themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(_request));
+
+		EditorConfiguration richTextEditorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				PortletIdCodec.decodePortletName(portletDisplay.getId()),
+				"fragmenEntryLinkRichTextEditor", StringPool.BLANK,
+				Collections.emptyMap(), _themeDisplay,
+				RequestBackedPortletURLFactoryUtil.create(_request));
+
+		configurations.put("rich-text", richTextEditorConfiguration.getData());
+
+		configurations.put("text", editorConfiguration.getData());
+
+		return configurations;
 	}
 
 	private List<SoyContext> _getFragmentEntriesSoyContext(

@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.site.navigation.type;
+package com.liferay.site.navigation.type.impl;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
 import java.util.Map;

@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Eudaldo Alonso
@@ -100,25 +99,25 @@ public class AssetEntryQueryTestUtil {
 
 		// Class type IDs
 
-		if (Validator.isNotNull(classTypeIds)) {
+		if (classTypeIds != null) {
 			assetEntryQuery.setClassTypeIds(classTypeIds);
 		}
 
 		// Categories
 
-		if (Validator.isNotNull(notAllCategoryIds)) {
+		if (notAllCategoryIds != null) {
 			assetEntryQuery.setNotAllCategoryIds(notAllCategoryIds);
 		}
 
-		if (Validator.isNotNull(notAnyCategoryIds)) {
+		if (notAnyCategoryIds != null) {
 			assetEntryQuery.setNotAnyCategoryIds(notAnyCategoryIds);
 		}
 
-		if (Validator.isNotNull(anyCategoryIds)) {
+		if (anyCategoryIds != null) {
 			assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
 		}
 
-		if (Validator.isNotNull(allCategoryIds)) {
+		if (allCategoryIds != null) {
 			assetEntryQuery.setAllCategoryIds(allCategoryIds);
 		}
 

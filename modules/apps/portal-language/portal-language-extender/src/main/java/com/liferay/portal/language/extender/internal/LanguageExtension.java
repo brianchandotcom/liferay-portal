@@ -90,7 +90,7 @@ public class LanguageExtension implements Extension {
 			Object bundleSymbolicNameObject = attributes.get(
 				"bundle.symbolic.name");
 
-			if (Validator.isNull(bundleSymbolicNameObject)) {
+			if (bundleSymbolicNameObject == null) {
 				bundleSymbolicName = _bundle.getSymbolicName();
 			}
 			else {

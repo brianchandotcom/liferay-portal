@@ -83,7 +83,7 @@ public class PrefixHandlerFactoryImpl implements PrefixHandlerFactory {
 		for (String serviceProperty : _serviceProperties) {
 			Object value = propertyAccessorFunction.apply(serviceProperty);
 
-			if (Validator.isNotNull(value)) {
+			if (value != null) {
 				strings.add(value.toString());
 			}
 			else {

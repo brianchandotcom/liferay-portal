@@ -119,7 +119,7 @@ public class FragmentEntryLinkDisplayContext {
 	}
 
 	public FragmentEntry getFragmentEntry() throws PortalException {
-		if (Validator.isNotNull(_fragmentEntry)) {
+		if (_fragmentEntry != null) {
 			return _fragmentEntry;
 		}
 

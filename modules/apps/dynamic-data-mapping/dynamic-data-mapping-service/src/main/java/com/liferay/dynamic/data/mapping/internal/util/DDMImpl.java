@@ -289,7 +289,7 @@ public class DDMImpl implements DDM {
 			}
 		}
 		else if (type.equals(DDMImpl.TYPE_DDM_DOCUMENTLIBRARY)) {
-			if (Validator.isNull(fieldValue)) {
+			if (fieldValue == null) {
 				return StringPool.BLANK;
 			}
 
@@ -309,7 +309,7 @@ public class DDMImpl implements DDM {
 				false, true);
 		}
 		else if (type.equals(DDMImpl.TYPE_DDM_LINK_TO_PAGE)) {
-			if (Validator.isNull(fieldValue)) {
+			if (fieldValue == null) {
 				return StringPool.BLANK;
 			}
 
@@ -981,20 +981,20 @@ public class DDMImpl implements DDM {
 			Serializable fieldValue = serviceContext.getAttribute(
 				fieldNameValue);
 
-			if (Validator.isNull(fieldValue)) {
+			if (fieldValue == null) {
 				fieldValue = predefinedValue.getString(
 					serviceContext.getLocale());
 			}
 
 			if (fieldType.equals(DDMImpl.TYPE_CHECKBOX) &&
-				Validator.isNull(fieldValue)) {
+				(fieldValue == null)) {
 
 				fieldValue = "false";
 			}
 			else if (fieldDataType.equals(FieldConstants.DATE)) {
 				Date fieldValueDate = null;
 
-				if (Validator.isNull(fieldValue)) {
+				if (fieldValue == null) {
 					int fieldValueMonth = GetterUtil.getInteger(
 						serviceContext.getAttribute(fieldNameValue + "Month"));
 					int fieldValueDay = GetterUtil.getInteger(
@@ -1022,7 +1022,7 @@ public class DDMImpl implements DDM {
 				}
 			}
 			else if (fieldDataType.equals(FieldConstants.IMAGE) &&
-					 Validator.isNull(fieldValue)) {
+					 (fieldValue == null)) {
 
 				HttpServletRequest request = serviceContext.getRequest();
 
@@ -1036,7 +1036,7 @@ public class DDMImpl implements DDM {
 				}
 			}
 
-			if (Validator.isNull(fieldValue)) {
+			if (fieldValue == null) {
 				return null;
 			}
 

@@ -109,7 +109,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 
 		Group sourceGroup = _groupLocalService.fetchGroup(sourceGroupId);
 
-		if (Validator.isNull(sourceGroup) || !sourceGroup.isStagedRemotely()) {
+		if ((sourceGroup == null) || !sourceGroup.isStagedRemotely()) {
 			return false;
 		}
 
@@ -132,8 +132,7 @@ public class EventRemotePropagatorExportImportLifecycleListener
 		// must not propagate the event because it means remote staging is
 		// configured between two sites on the same portal instance
 
-		if (Validator.isNotNull(remoteGroupUUID) &&
-			Validator.isNotNull(targetGroup) &&
+		if (Validator.isNotNull(remoteGroupUUID) && (targetGroup != null) &&
 			StringUtil.equals(remoteGroupUUID, targetGroup.getUuid())) {
 
 			return false;

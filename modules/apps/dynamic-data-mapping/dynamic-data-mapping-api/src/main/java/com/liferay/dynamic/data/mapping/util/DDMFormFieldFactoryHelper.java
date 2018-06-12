@@ -336,7 +336,7 @@ public class DDMFormFieldFactoryHelper {
 	protected LocalizedValue getPropertyValue(Object value) {
 		LocalizedValue localizedValue = new LocalizedValue(_defaultLocale);
 
-		if (Validator.isNull(value)) {
+		if (value == null) {
 			return localizedValue;
 		}
 

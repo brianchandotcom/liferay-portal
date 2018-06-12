@@ -219,7 +219,7 @@ public class TrashContainerModelDisplayContext {
 	public Object[] getMissingContainerMessageArguments()
 		throws PortalException {
 
-		if (Validator.isNotNull(_missingContainerMessageArguments)) {
+		if (_missingContainerMessageArguments != null) {
 			return _missingContainerMessageArguments;
 		}
 

@@ -153,7 +153,7 @@ public class RSSFeedEntry {
 	protected List<SyndContent> getSyndContents() {
 		SyndContent syndContent = _syndEntry.getDescription();
 
-		if (Validator.isNull(syndContent)) {
+		if (syndContent == null) {
 			return _syndEntry.getContents();
 		}
 

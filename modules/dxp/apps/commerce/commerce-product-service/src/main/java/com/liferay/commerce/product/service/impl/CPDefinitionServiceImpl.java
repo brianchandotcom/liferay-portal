@@ -355,12 +355,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 				externalReferenceCode);
 
 		if (cpDefinition == null) {
-			CPPermission.check(
+			_portletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				CPActionKeys.ADD_COMMERCE_PRODUCT_DEFINITION);
 		}
 		else {
-			CPDefinitionPermission.check(
+			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(), cpDefinition.getCPDefinitionId(),
 				ActionKeys.UPDATE);
 		}

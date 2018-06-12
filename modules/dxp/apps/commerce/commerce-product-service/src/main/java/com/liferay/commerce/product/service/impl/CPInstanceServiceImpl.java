@@ -277,13 +277,13 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 				externalReferenceCode);
 
 		if (cpInstance == null) {
-			CPDefinitionPermission.check(
+			_cpDefinitionModelResourcePermission.check(
 				getPermissionChecker(), cpDefinitionId,
 				CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
 		}
 		else {
-			CPDefinitionPermission.checkCPInstance(
-				getPermissionChecker(), cpInstance.getCPInstanceId(),
+			_cpDefinitionModelResourcePermission.check(
+				getPermissionChecker(), cpInstance.getCPDefinitionId(),
 				CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 		}
 

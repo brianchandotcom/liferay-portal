@@ -804,19 +804,18 @@ Specification, which was released in early 2017.
 
 ---------------------------------------
 
-### Changed the Dependency for the liferay-util:html-top JSP tag When Implementing Portlet 3.0
+### Changed the Dependency for the liferay-util:html-top JSP tag
 - **Date:** 2018-Jun-07
 - **JIRA Ticket:** LPS-81983
 
 #### What changed?
 
-When implementing Portlet 3.0, the usage of `portal-kernel`'s `StringBundler`
-has been deprecated in favor of Petra's `StringBundler`.
+The usage of `portal-kernel`'s `StringBundler` has been deprecated in favor of
+Liferay's Petra `StringBundler`.
 
 #### Who is affected?
 
-This affects anyone implementing Portlet 3.0 that uses the
-`<liferay-util:html-top>` JSP tag.
+This affects anyone using the `<liferay-util:html-top>` JSP tag.
 
 #### How should I update my code?
 
@@ -827,7 +826,7 @@ compile successfully:
 
     dependencies {
         ...
-        compileOnly project(":core:petra:petra-string")
+        compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "1.2.0"
         ...
     }
 
@@ -842,19 +841,18 @@ compile successfully:
 
 #### Why was this change made?
 
-This change helps provide the latest features offered by the Portlet 3.0
-Specification.
+This change helps stabilize the foundation of Liferay Portal's utilities.
 
 ---------------------------------------
 
-### Decoupled Several Classes from PortletURLImpl When Implementing Portlet 3.0
+### Decoupled Several Classes from PortletURLImpl
 - **Date:** 2018-Jun-08
 - **JIRA Ticket:** LPS-82119
 
 #### What changed?
 
-All classes implementing `javax.portlet.BaseURL` have been moved to the
-`com.liferay.portlet.internal` sub package. These classes include
+All classes implementing `javax.portlet.BaseURL` have had their inheritance
+hierarchy change. These classes include
 
 - `PortletURLImplWrapper`
 - `LiferayStrutsPortletURLImpl`
@@ -862,7 +860,8 @@ All classes implementing `javax.portlet.BaseURL` have been moved to the
 
 #### Who is affected?
 
-This affects anyone implementing Portlet 3.0 that uses `PortletURLImpl`.
+This affects code that attempts to subclass or create a new instance of the
+classes listed previously.
 
 #### How should I update my code?
 
@@ -889,7 +888,7 @@ to
 
 #### Why was this change made?
 
-This change helps provide the latest features offered by the Portlet 3.0
-Specification.
+This change corrects a best practice violation regarding
+implementation-specific details being included within an API.
 
 ---------------------------------------

@@ -165,6 +165,10 @@
 			<var name="key_threadSubject" value="${threadSubject}" />
 		</execute>
 
+		<execute function="AssertElementPresent" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
+			<var name="key_threadReplyBody" value="${threadReplyBody}" />
+		</execute>
+
 		<execute function="Click" locator1="MessageBoards#THREAD_REPLY_ACTIONS">
 			<var name="key_threadReplyBody" value="${threadReplyBody}" />
 		</execute>

@@ -47,11 +47,11 @@
 
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Blog Images" />
 
-		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${imageFileName}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${imageFileName}" />
 
-		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
+		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 
-		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="1 results for ${imageFileName}" />
+		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="1 Results for ${imageFileName}" />
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 
@@ -74,11 +74,11 @@
 
 		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_SPECIFIC_TAB" value1="Documents and Media" />
 
-		<execute function="Type" locator1="Search#TEMPLATE_SEARCH_BAR" value1="${imageFileName}" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${imageFileName}" />
 
-		<execute function="KeyPress" locator1="Search#TEMPLATE_SEARCH_BAR" value1="\RETURN" />
+		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 
-		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="1 results for ${imageFileName}" />
+		<execute function="AssertTextEquals" locator1="Search#SEARCH_INFO" value1="1 Results for ${imageFileName}" />
 
 		<execute function="AssertElementPresent" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
 

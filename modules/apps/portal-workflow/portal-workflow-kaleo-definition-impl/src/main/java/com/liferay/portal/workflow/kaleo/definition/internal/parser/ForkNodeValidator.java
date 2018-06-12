@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Fork;
 import com.liferay.portal.workflow.kaleo.definition.Join;
@@ -158,7 +157,7 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 			else if (nodeType.equals(NodeType.JOIN) ||
 					 nodeType.equals(NodeType.JOIN_XOR)) {
 
-				if (Validator.isNull(join)) {
+				if (join == null) {
 					join = (Join)targetNode;
 				}
 				else if (!Objects.equals(join, targetNode)) {

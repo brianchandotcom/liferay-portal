@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -67,7 +66,7 @@ public class CheckboxMultipleDDMFormFieldValueAccessor
 
 	@Override
 	public Object map(Object value) {
-		if (Validator.isNull(value)) {
+		if (value == null) {
 			return value;
 		}
 

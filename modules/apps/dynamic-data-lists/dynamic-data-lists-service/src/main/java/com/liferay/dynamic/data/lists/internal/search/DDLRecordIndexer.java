@@ -142,7 +142,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			"ddmStructureFieldValue");
 
 		if (Validator.isNotNull(ddmStructureFieldName) &&
-			Validator.isNotNull(ddmStructureFieldValue)) {
+			(ddmStructureFieldValue != null)) {
 
 			QueryFilter queryFilter = ddmIndexer.createFieldValueQueryFilter(
 				ddmStructureFieldName, ddmStructureFieldValue,

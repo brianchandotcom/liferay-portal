@@ -1058,7 +1058,7 @@ public class GroupFinderImpl
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			Object value = entry.getValue();
 
-			if (Validator.isNull(value)) {
+			if (value == null) {
 				continue;
 			}
 
@@ -1292,7 +1292,7 @@ public class GroupFinderImpl
 				if (value instanceof Integer) {
 					Integer valueInteger = (Integer)value;
 
-					if (Validator.isNotNull(valueInteger)) {
+					if (valueInteger != null) {
 						qPos.add(valueInteger);
 					}
 				}

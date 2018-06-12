@@ -313,7 +313,7 @@ public class SearchContainerRowTag<R>
 			Object rowIdObj = BeanPropertiesUtil.getObjectSilent(
 				model, _rowIdProperty);
 
-			if (Validator.isNull(rowIdObj)) {
+			if (rowIdObj == null) {
 				rowId = String.valueOf(_rowIndex + 1);
 			}
 			else {

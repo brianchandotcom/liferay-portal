@@ -494,7 +494,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 		Object instance = _instances.get(className);
 
-		if (Validator.isNotNull(instance)) {
+		if (instance != null) {
 			return instance;
 		}
 

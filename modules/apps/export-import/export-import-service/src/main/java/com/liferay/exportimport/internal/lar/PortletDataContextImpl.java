@@ -2660,7 +2660,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			sb.append(HtmlUtil.escapeXPathAttribute(uuid));
 		}
 
-		if (Validator.isNotNull(classPK)) {
+		if (classPK != null) {
 			sb.append(" and @class-pk='");
 			sb.append(classPK);
 			sb.append(StringPool.APOSTROPHE);

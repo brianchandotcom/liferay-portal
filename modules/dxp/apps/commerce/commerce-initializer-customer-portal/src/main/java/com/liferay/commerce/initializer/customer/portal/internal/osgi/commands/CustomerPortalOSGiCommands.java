@@ -17,6 +17,7 @@ package com.liferay.commerce.initializer.customer.portal.internal.osgi.commands;
 import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalLayoutsInitializer;
 import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalSampleForecastsInitializer;
 import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalSampleOrdersInitializer;
+import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalThemePortletSettingsInitializer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -44,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=initCustomerPortalLayouts",
 		"osgi.command.function=initCustomerPortalSampleForecasts",
 		"osgi.command.function=initCustomerPortalSampleOrders",
+		"osgi.command.function=initCustomerPortalThemePortletSettings",
 		"osgi.command.scope=commerce"
 	},
 	service = CustomerPortalOSGiCommands.class
@@ -103,6 +105,26 @@ public class CustomerPortalOSGiCommands {
 			});
 	}
 
+	public void initCustomerPortalThemePortletSettings(final long groupId)
+		throws Throwable {
+
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					ServiceContext serviceContext = _getServiceContext(groupId);
+
+					_customerPortalThemePortletSettingsInitializer.initialize(
+						serviceContext);
+
+					return null;
+				}
+
+			});
+	}
+
 	private ServiceContext _getServiceContext(long groupId)
 		throws PortalException {
 
@@ -146,6 +168,10 @@ public class CustomerPortalOSGiCommands {
 	@Reference
 	private CustomerPortalSampleOrdersInitializer
 		_customerPortalSampleOrdersInitializer;
+
+	@Reference
+	private CustomerPortalThemePortletSettingsInitializer
+		_customerPortalThemePortletSettingsInitializer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

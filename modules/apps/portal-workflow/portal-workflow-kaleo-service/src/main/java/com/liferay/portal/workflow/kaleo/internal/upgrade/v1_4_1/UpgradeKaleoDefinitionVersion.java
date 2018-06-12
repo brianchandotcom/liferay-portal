@@ -75,6 +75,7 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 
 			if (hasColumn("KaleoInstance", "kaleoDefinitionId")) {
 				runSQL("drop index IX_ACF16238 on KaleoInstance");
+				runSQL("drop index IX_4DA4D123 on KaleoInstance");
 
 				runSQL(
 					"alter table KaleoInstance drop column kaleoDefinitionId");

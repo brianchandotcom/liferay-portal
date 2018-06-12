@@ -1,0 +1,107 @@
+<definition>
+	<command name="add">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${displayPageName}" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+	</command>
+
+	<command name="assertAssetTypeUnselectable">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Mapping" />
+		</execute>
+
+		<execute macro="Button#viewNotPresent">
+			<var name="button" value="Select" />
+		</execute>
+	</command>
+
+	<command name="mapEditableTextToAsset">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Mapping" />
+		</execute>
+
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT">
+			<var name="key_fragmentName" value="${fragmentName}" />
+			<var name="key_id" value="${id}" />
+		</execute>
+
+		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT">
+			<var name="key_fragmentName" value="${fragmentName}" />
+			<var name="key_id" value="${id}" />
+		</execute>
+
+		<execute macro="Button#clickMap" />
+
+		<execute function="AssertClick" locator1="Fragment#LIST_GROUP_ITEM" value1="${itemName}">
+			<var name="key_itemName" value="${itemName}" />
+		</execute>
+	</command>
+
+	<command name="selectAssetType">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Mapping" />
+		</execute>
+
+		<execute macro="Button#clickSelect" />
+
+		<if>
+			<contains string="${assetType}" substring="{assetType}" />
+			<then>
+				<var name="${assetType}" value="Web Content Article" />
+				<if>
+					<contains string="${subType}" substring="{subType}" />
+					<then>
+						<var name="${subType}" value="Basic Web Content" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${assetType}">
+			<var name="key_fieldLabel" value="Asset Type" />
+		</execute>
+
+		<execute function="Select" locator1="Select#GENERIC_SELECT_FIELD" value1="${subType}">
+			<var name="key_fieldLabel" value="Subtype" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+	</command>
+
+	<command name="viewPGViaAP">
+		<var name="key_assetContent" value="${webContentContent}" />
+		<var name="key_assetTitle" value="${webContentTitle}" />
+
+		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
+
+		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${webContentTitle}" />
+
+		<for list="${contentList}" param="content">
+			<execute function="AssertElementPresent" locator1="Fragment#EDITABLE_FIELD_CONTENT">
+				<var name="key_text" value="${content}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="viewPGViaFriendlyURL">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+		<var method="StringUtil#toLowerCase('${siteName}')" name="siteNameURL" />
+
+		<var method="StringUtil#replace('${siteNameURL}', ' ', '-')" name="siteNameURL" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="${portalURL}/web/${siteNameURL}/-/${friendlyURL}" />
+		</execute>
+
+		<for list="${contentList}" param="content">
+			<execute function="AssertElementPresent" locator1="Fragment#EDITABLE_FIELD_CONTENT">
+				<var name="key_text" value="${content}" />
+			</execute>
+		</for>
+	</command>
+</definition>

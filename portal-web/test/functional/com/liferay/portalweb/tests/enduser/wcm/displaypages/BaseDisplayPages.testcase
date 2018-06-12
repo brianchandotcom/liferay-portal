@@ -1,0 +1,205 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Display Pages" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AddBlankDisplayPage" priority="3">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+	</command>
+
+	<command name="AssertAssetTypeOnlySelectableOnce" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="DisplayPages#selectAssetType">
+			<var name="assetType" value="Web Content Article" />
+			<var name="subType" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="DisplayPages#assertAssetTypeUnselectable" />
+	</command>
+
+	<command name="DeleteDisplayPage" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#delete">
+			<var name="rowEntry" value="Display Page Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewNoEntry">
+			<var name="rowEntry" value="Display Page Name" />
+		</execute>
+	</command>
+
+	<command name="RenameDisplayPage" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LayoutPageTemplates#rename">
+			<var name="pageTemplateName" value="Display Page Name New" />
+			<var name="rowEntry" value="Display Page Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#viewEntryName">
+			<var name="rowEntry" value="Display Page Name New" />
+		</execute>
+	</command>
+
+	<command name="ViewCannotDeleteActiveDisplayPage" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="DisplayPages#add">
+			<var name="displayPageName" value="Display Page Name" />
+		</execute>
+
+		<execute macro="DisplayPages#selectAssetType">
+			<var name="assetType" value="Web Content Article" />
+			<var name="subType" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addArticleCP">
+			<var name="webContentContent" value="Webcontent Content" />
+			<var name="webContentTitle" value="Webcontent Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Webcontent Title" />
+		</execute>
+
+		<execute macro="WebContent#editDisplayPage">
+			<var name="pageName" value="Display Page Name" />
+			<var name="pageType" value="Display Pages" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Display Pages" />
+		</execute>
+
+		<execute macro="LexiconEntry#delete">
+			<var name="failure" value="You cannot delete asset display pages that are used by one or more assets." />
+			<var name="rowEntry" value="Display Page Name" />
+		</execute>
+	</command>
+</definition>

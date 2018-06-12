@@ -168,6 +168,8 @@
 		<execute function="Select" locator1="APConfigurationDisplaysettings#ASSET_LINK_BEHAVIOR_SELECT" value1="${assetLinkBehavior}" />
 
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
 	</command>
 
 	<command name="configureAssetTypePG">

@@ -1,4 +1,8 @@
-.fragment-header .title {
+.fragment-header > .spacer {
+	padding: 10em;
+}
+
+.fragment-header > .title {
 	border-bottom: solid thin black;
 	border-top: solid thin black;
 	font-family: inherit;

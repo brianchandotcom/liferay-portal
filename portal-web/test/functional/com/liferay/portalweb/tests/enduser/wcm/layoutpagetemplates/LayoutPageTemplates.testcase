@@ -17,17 +17,6 @@
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="Test Site Name" />
 		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Build" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Page Fragments" />
-		</execute>
-
-		<execute macro="Fragment#addCollection">
-			<var name="collectionDescription" value="Collection Description" />
-			<var name="collectionName" value="Collection Name" />
-		</execute>
 	</set-up>
 
 	<tear-down>
@@ -46,6 +35,17 @@
 
 	<command name="AddLayoutPageTemplateRemoveFragment" priority="5">
 		<property name="portal.acceptance" value="true" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Fragment#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
 
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
@@ -105,79 +105,18 @@
 		<execute macro="LayoutPageTemplates#viewEditorEmpty" />
 	</command>
 
-	<command name="AddPageTemplateWithWidgetInFragment" priority="4">
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Collection Name" />
-		</execute>
-
-		<execute macro="Fragment#addFragment">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-
-		<execute macro="TestCase#getFileContent">
-			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="Navigation_Menu_Portlet.html" />
-		</execute>
-
-		<execute macro="Fragment#typeFragmentEditor">
-			<var name="editor" value="html" />
-			<var name="templateScript" value="${htmlSnippet}" />
-		</execute>
-
-		<execute macro="PortletEntry#publish" />
-
+	<command ignore="true" name="ChangeEditableImage" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Pages" />
+			<var name="portlet" value="Page Fragments" />
 		</execute>
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Test Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Page Templates" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#addCollection">
-			<var name="collectionName" value="Page Template Collection" />
-		</execute>
-
-		<execute macro="Navigator#gotoNavNested">
-			<var name="navNested" value="Page Template Collection" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#add">
-			<var name="pageTemplateName" value="Page Template Name" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#selectFragment">
+		<execute macro="Fragment#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
 			<var name="collectionName" value="Collection Name" />
-			<var name="fragmentName" value="Fragment Name" />
 		</execute>
 
-		<execute macro="LayoutPageTemplates#viewNavigationPortlet">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-
-		<execute macro="LayoutPageTemplates#gotoPortletConfiguration">
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-
-		<execute macro="NavigationMenu#selectAndSaveConfiguration">
-			<var name="displayTemplate" value="Tabs" />
-		</execute>
-
-		<execute function="Refresh" />
-
-		<execute macro="LayoutPageTemplates#viewNavigationPortlet">
-			<var name="displayTemplateClass" value="nav-tabs" />
-			<var name="fragmentName" value="Fragment Name" />
-		</execute>
-	</command>
-
-	<command ignore="true" name="ChangeEditableImage" priority="5">
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
 		</execute>
@@ -242,6 +181,17 @@
 	</command>
 
 	<command name="ChangeEditableText" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Fragment#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
 		</execute>
@@ -291,7 +241,7 @@
 
 		<execute macro="LayoutPageTemplates#editFragmentText">
 			<var name="fragmentName" value="Fragment Name" />
-			<var name="id" value="test" />
+			<var name="id" value="title" />
 			<var name="text" value="Editing Finished" />
 		</execute>
 
@@ -300,7 +250,9 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCollection" priority="4">
+	<command name="DeleteCollection" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Build" />
 			<var name="panel" value="Site Administration" />
@@ -449,6 +401,17 @@
 	<command name="ReorderFragments" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Fragment#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
 		</execute>
@@ -485,7 +448,7 @@
 
 		<execute macro="TestCase#getFileContent">
 			<return from="fileContent" name="htmlSnippet" />
-			<var name="fileName" value="fragment_content.html" />
+			<var name="fileName" value="fragment_title.html" />
 		</execute>
 
 		<execute macro="Fragment#typeFragmentEditor">
@@ -579,6 +542,17 @@
 	</command>
 
 	<command name="ViewDraftFragmentDoesNotDisplayInSidebar" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Page Fragments" />
+		</execute>
+
+		<execute macro="Fragment#addCollection">
+			<var name="collectionDescription" value="Collection Description" />
+			<var name="collectionName" value="Collection Name" />
+		</execute>
+
 		<execute macro="Navigator#gotoNavNested">
 			<var name="navNested" value="Collection Name" />
 		</execute>

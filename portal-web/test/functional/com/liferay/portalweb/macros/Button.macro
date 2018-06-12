@@ -6,7 +6,9 @@
 	</command>
 
 	<command name="clickAdd">
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute macro="Button#click">
+			<var name="button" value="Add" />
+		</execute>
 	</command>
 
 	<command name="clickAddRow">
@@ -18,27 +20,51 @@
 	</command>
 
 	<command name="clickCancel">
-		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
+		<execute macro="Button#click">
+			<var name="button" value="Cancel" />
+		</execute>
 	</command>
 
 	<command name="clickConfirm">
-		<execute function="AssertClick" locator1="Button#CONFIRM" value1="Confirm" />
+		<execute macro="Button#click">
+			<var name="button" value="Confirm" />
+		</execute>
 	</command>
 
 	<command name="clickDelete">
-		<execute function="AssertClick" locator1="Button#DELETE" value1="Delete" />
+		<execute macro="Button#click">
+			<var name="button" value="Delete" />
+		</execute>
 	</command>
 
 	<command name="clickDone">
-		<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
+		<execute macro="Button#click">
+			<var name="button" value="Done" />
+		</execute>
+	</command>
+
+	<command name="clickEdit">
+		<execute macro="Button#click">
+			<var name="button" value="Edit" />
+		</execute>
 	</command>
 
 	<command name="clickInstall">
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Install" />
+		<execute macro="Button#click">
+			<var name="button" value="Install" />
+		</execute>
+	</command>
+
+	<command name="clickMap">
+		<execute macro="Button#click">
+			<var name="button" value="Map" />
+		</execute>
 	</command>
 
 	<command name="clickNext">
-		<execute function="AssertClick" locator1="Button#NEXT" value1="Next" />
+		<execute macro="Button#click">
+			<var name="button" value="Next" />
+		</execute>
 	</command>
 
 	<command name="clickNoError">
@@ -58,27 +84,45 @@
 	</command>
 
 	<command name="clickRemove">
-		<execute function="AssertClick" locator1="Button#REMOVE" value1="Remove" />
+		<execute macro="Button#click">
+			<var name="button" value="Remove" />
+		</execute>
 	</command>
 
 	<command name="clickSave">
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute macro="Button#click">
+			<var name="button" value="Save" />
+		</execute>
 	</command>
 
 	<command name="clickSaveAsDraft">
-		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
+		<execute macro="Button#click">
+			<var name="button" value="Save as Draft" />
+		</execute>
+	</command>
+
+	<command name="clickSelect">
+		<execute macro="Button#click">
+			<var name="button" value="Select" />
+		</execute>
 	</command>
 
 	<command name="clickSubmitForPublication">
-		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
+		<execute macro="Button#click">
+			<var name="button" value="Submit for Publication" />
+		</execute>
 	</command>
 
 	<command name="clickSubmitLocalized">
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="${buttonName}" />
+		<execute macro="Button#click">
+			<var name="button" value="${buttonName}" />
+		</execute>
 	</command>
 
 	<command name="clickUpdate">
-		<execute function="AssertClick" locator1="Button#UPDATE" value1="Update" />
+		<execute macro="Button#click">
+			<var name="button" value="Update" />
+		</execute>
 	</command>
 
 	<command name="viewNotPresent">

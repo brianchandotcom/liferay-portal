@@ -913,23 +913,37 @@
 			<var name="panel" value="Display Page" />
 		</execute>
 
+		<execute function="Click" locator1="WCSelectDisplayPage#USE_SPECIFIC_DISPLAY_PAGE" />
+
 		<execute function="AssertClick" locator1="Button#CHOOSE" value1="Choose" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="SelectFrameTop" />
-
 		<execute function="SelectFrame" locator1="WCSelectDisplayPage#DISPLAY_PAGE_CONFIGURATION_IFRAME" />
 
-		<execute macro="Portlet#expandTree" />
+		<if>
+			<contains string="${pageType}" substring="{pageType}" />
+			<then>
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Public Pages" />
+				</execute>
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Public Pages" />
-		</execute>
+				<execute macro="Portlet#expandTree" />
 
-		<execute macro="Portlet#selectTreeNode">
-			<var name="nodeName" value="${pageName}" />
-		</execute>
+				<execute macro="Portlet#selectTreeNode">
+					<var name="nodeName" value="${pageName}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="${pageType}" />
+				</execute>
+
+				<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${pageName}">
+					<var name="key_cardText" value="${pageName}" />
+				</execute>
+			</else>
+		</if>
 
 		<execute function="SelectFrameTop" />
 
@@ -944,7 +958,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="WCEditWebContent#DISPLAY_PAGE_SELECTION" value1="Public Pages > ${pageName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WCEditWebContent#DISPLAY_PAGE_SELECTION" value1="${pageName}" />
 
 		<execute macro="Button#clickPublish" />
 	</command>

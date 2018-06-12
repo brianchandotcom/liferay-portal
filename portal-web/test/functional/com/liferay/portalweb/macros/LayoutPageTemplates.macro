@@ -13,6 +13,12 @@
 		</if>
 	</command>
 
+	<command name="_gotoTab">
+		<execute function="AssertClick" locator1="Fragment#FRAGMENT_SIDEBAR_TAB" value1="${tabName}">
+			<var name="key_tabName" value="${tabName}" />
+		</execute>
+	</command>
+
 	<command name="add">
 		<execute macro="LexiconEntry#gotoAddMenuItem">
 			<var name="menuItem" value="Content Page Template" />
@@ -59,12 +65,21 @@
 	</command>
 
 	<command name="editFragmentText">
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT">
 			<var name="key_fragmentName" value="${fragmentName}" />
+			<var name="key_id" value="${id}" />
 		</execute>
 
-		<execute function="Type#typeEditor" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT" value1="${text}">
+		<if>
+			<condition function="IsElementPresent" locator1="Button#EDIT" />
+			<then>
+				<execute macro="Button#clickEdit" />
+			</then>
+		</if>
+
+		<execute function="Type#typeEditor" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT_CK_EDITOR" value1="${text}">
 			<var name="key_fragmentName" value="${fragmentName}" />
+			<var name="key_id" value="${id}" />
 		</execute>
 	</command>
 
@@ -139,6 +154,10 @@
 	</command>
 
 	<command name="selectFragment">
+		<execute macro="LayoutPageTemplates#_gotoTab">
+			<var name="tabName" value="Available" />
+		</execute>
+
 		<execute macro="LayoutPageTemplates#expandFragmentCollection">
 			<var name="collectionName" value="${collectionName}" />
 		</execute>

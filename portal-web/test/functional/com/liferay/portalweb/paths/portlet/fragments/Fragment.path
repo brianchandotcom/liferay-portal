@@ -49,6 +49,16 @@
 	<td>//ul[contains(@class,'nav')]//div[contains(@id,'fragment-collection')]//button[@data-fragment-entry-name='${key_fragmentName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_TAB</td>
+	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_TAB_ACTIVE</td>
+	<td>//ul[contains(@class,'nav')]//li[contains(@class,'nav-item')]//a[contains(.,'${key_tabName}')][contains(@class,'active')]</td>
+	<td></td>
+</tr>
 <!--PAGE_TEMPLATE-->
 <tr>
 	<td>PAGE_TEMPLATE_AUTOSAVE_MESSAGE</td>
@@ -62,7 +72,12 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT</td>
-	<td>//div[contains(@class,'fragment-entry-links')]/div[contains(.,'${key_fragmentName}')]//div[contains(@class,'cke_editable_inline')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_FRAGMENT_EDITABLE_TEXT_CK_EDITOR</td>
+	<td>//div[contains(@class,'fragment-entry-link')]/div[contains(.,'${key_fragmentName}')]//lfr-editable[contains(@id,'${key_id}')]//div[contains(@class,'cke_editable_inline')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,22 +107,33 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_NAVIGATION_PORTLET</td>
-	<td>//div[contains(@class,'fragment-entry-links')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_NAVIGATION_PORTLET_DISPLAY_CLASS</td>
-	<td>//div[contains(@class,'fragment-entry-links')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]//ul[contains(@class,'${key_displayTemplateClass}')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')][contains(.,'Navigation Menu')]//ul[contains(@class,'${key_displayTemplateClass}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_PORTLET_CONFIGURE</td>
-	<td>//div[contains(@class,'fragment-entry-links')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')]//button[contains(.,'Configure')]</td>
+	<td>//div[contains(@class,'fragment-entry-link')][contains(.,'${key_fragmentName}')]//div[contains(@class,'portlet')]//button[contains(.,'Configure')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_GROUP_ITEM</td>
+	<td>//div[contains(@class,'list-group')]//a[contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<!--CONTENT PAGES-->
+<tr>
 	<td>CONTENT_PAGE_FRAGMENT</td>
 	<td>//div[contains(@id,'fragment') and contains(.,'${key_content}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDITABLE_FIELD_CONTENT</td>
+	<td>//lfr-editable[contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 </tbody>

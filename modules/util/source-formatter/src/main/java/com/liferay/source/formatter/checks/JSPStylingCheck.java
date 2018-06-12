@@ -55,29 +55,15 @@ public class JSPStylingCheck extends StylingCheck {
 				"confirm(\"<%= UnicodeLanguageUtil.", ";\n"
 			});
 
-		int pos = content.indexOf("debugger.");
-
-		if (pos != -1) {
-			addMessage(
-				fileName, "Do not use debugger", getLineNumber(content, pos));
-		}
-
-		pos = content.indexOf("console.log(");
-
-		if (pos != -1) {
-			addMessage(
-				fileName, "Do not use console.log",
-				getLineNumber(content, pos));
-		}
+		_checkIllegalSyntax(
+			fileName, content, "console.log(", "Do not use console.log");
+		_checkIllegalSyntax(
+			fileName, content, "debugger.", "Do not use debugger");
 
 		if (!fileName.endsWith("test.jsp")) {
-			pos = content.indexOf("System.out.print");
-
-			if (pos != -1) {
-				addMessage(
-					fileName, "Do not call 'System.out.print'",
-					getLineNumber(content, pos));
-			}
+			_checkIllegalSyntax(
+				fileName, content, "System.out.print",
+				"Do not call 'System.out.print'");
 		}
 
 		return formatStyling(content);
@@ -95,6 +81,22 @@ public class JSPStylingCheck extends StylingCheck {
 			addMessage(
 				fileName, "Avoid chaining on 'getClass'", "chaining.markdown",
 				getLineNumber(content, matcher.start()));
+		}
+	}
+
+	private void _checkIllegalSyntax(
+		String fileName, String content, String syntax, String message) {
+
+		int pos = -1;
+
+		while (true) {
+			pos = content.indexOf(syntax, pos + 1);
+
+			if (pos == -1) {
+				return;
+			}
+
+			addMessage(fileName, message, getLineNumber(content, pos));
 		}
 	}
 

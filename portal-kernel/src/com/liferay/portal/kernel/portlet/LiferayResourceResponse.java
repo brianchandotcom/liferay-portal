@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import javax.portlet.MimeResponse;
 import javax.portlet.ResourceResponse;
 
 /**
@@ -23,5 +24,5 @@ import javax.portlet.ResourceResponse;
  */
 @ProviderType
 public interface LiferayResourceResponse
-	extends LiferayMimeResponse, ResourceResponse {
+	extends LiferayPortletResponse, MimeResponse, ResourceResponse {
 }

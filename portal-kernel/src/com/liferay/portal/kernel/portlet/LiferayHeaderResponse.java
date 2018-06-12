@@ -17,13 +17,14 @@ package com.liferay.portal.kernel.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import javax.portlet.HeaderResponse;
+import javax.portlet.MimeResponse;
 
 /**
  * @author Neil Griffin
  */
 @ProviderType
 public interface LiferayHeaderResponse
-	extends LiferayMimeResponse, HeaderResponse {
+	extends LiferayPortletResponse, MimeResponse, HeaderResponse {
 
 	public void writeToHead();
 

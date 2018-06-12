@@ -610,7 +610,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			blogsEntryLocalService.updateStatus(
 				entry.getStatusByUserId(), entry.getEntryId(),
 				WorkflowConstants.STATUS_APPROVED, serviceContext,
-				new HashMap<String, Serializable>());
+				new HashMap<>());
 		}
 	}
 
@@ -1480,8 +1480,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		return updateStatus(
-			userId, entryId, status, serviceContext,
-			new HashMap<String, Serializable>());
+			userId, entryId, status, serviceContext, new HashMap<>());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

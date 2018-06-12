@@ -15,14 +15,14 @@
 package com.liferay.commerce.product.measurement.unit.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException;
 import com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext;
-import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -62,9 +62,8 @@ public class EditCPMeasurementUnitMVCRenderCommand implements MVCRenderCommand {
 		try {
 			CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext =
 				new CPMeasurementUnitsDisplayContext(
-					_cpMeasurementUnitService,
-					_cpMeasurementUnitModelResourcePermission, renderRequest,
-					renderResponse);
+					_cpMeasurementUnitService, _portletResourcePermission,
+					renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -94,17 +93,14 @@ public class EditCPMeasurementUnitMVCRenderCommand implements MVCRenderCommand {
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
 
-	@Reference(
-		target = "(model.class.name=com.liferay.commerce.product.model.CPMeasurementUnit)"
-	)
-	private ModelResourcePermission<CPMeasurementUnit>
-		_cpMeasurementUnitModelResourcePermission;
-
 	@Reference
 	private CPMeasurementUnitService _cpMeasurementUnitService;
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.product.measurement.unit.web)"

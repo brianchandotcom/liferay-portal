@@ -32,6 +32,7 @@ import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceConstants;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
+import com.liferay.commerce.product.search.FacetImpl;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -59,14 +60,17 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -78,6 +82,7 @@ import com.liferay.trash.kernel.model.TrashEntry;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -87,6 +92,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * @author Marco Leo
@@ -706,6 +712,77 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<Facet> getFacets(
+		String filterFields, String filterValues, SearchContext searchContext) {
+
+		List<Facet> facets = new ArrayList<>();
+
+		if (Validator.isNotNull(filterFields) &&
+			Validator.isNotNull(filterValues)) {
+
+			Map<String, List<String>> facetMap = new HashMap<>();
+
+			String[] filterFieldsArray = StringUtil.split(filterFields);
+			String[] filterValuesArray = StringUtil.split(filterValues);
+
+			List<String> options = new ArrayList<>();
+
+			for (int i = 0; i < filterFieldsArray.length; i++) {
+				String key = filterFieldsArray[i];
+				String value = filterValuesArray[i];
+
+				if (key.startsWith("OPTION_")) {
+					key = key.replace("OPTION_", StringPool.BLANK);
+
+					key = _getIndexFieldName(key);
+
+					options.add(key);
+				}
+
+				List<String> facetValues = null;
+
+				if (facetMap.containsKey(key)) {
+					facetValues = facetMap.get(key);
+				}
+
+				if (facetValues == null) {
+					facetValues = new ArrayList<>();
+				}
+
+				facetValues.add(value);
+
+				facetMap.put(key, facetValues);
+			}
+
+			for (Map.Entry<String, List<String>> entry : facetMap.entrySet()) {
+				String fieldName = entry.getKey();
+
+				FacetImpl facet = new FacetImpl(fieldName, searchContext);
+
+				List<String> facetValues = entry.getValue();
+
+				String[] facetValuesArray = ArrayUtil.toStringArray(
+					facetValues);
+
+				facet.select(facetValuesArray);
+
+				if (fieldName.equals("assetCategoryIds")) {
+					Stream<String> stream = Arrays.stream(facetValuesArray);
+
+					long[] assetCategoryIds = stream.mapToLong(
+						GetterUtil::getLong).toArray();
+
+					searchContext.setAssetCategoryIds(assetCategoryIds);
+				}
+
+				facets.add(facet);
+			}
+		}
+
+		return facets;
+	}
+
+	@Override
 	public String getLayoutUuid(long cpDefinitionId) {
 		CPDisplayLayout cpDisplayLayout =
 			cpDisplayLayoutLocalService.fetchCPDisplayLayout(
@@ -874,6 +951,24 @@ public class CPDefinitionLocalServiceImpl
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, groupId, keywords, status, start, end, sort);
+
+		return searchCPDefinitions(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CPDefinition> searchCPDefinitions(
+			long companyId, long groupId, String keywords, String filterFields,
+			String filterValues, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupId, keywords, WorkflowConstants.STATUS_ANY, start,
+			end, sort);
+
+		List<Facet> facets = getFacets(
+			filterFields, filterValues, searchContext);
+
+		searchContext.setFacets(facets);
 
 		return searchCPDefinitions(searchContext);
 	}
@@ -1633,6 +1728,10 @@ public class CPDefinitionLocalServiceImpl
 
 		return cpDefinitionLocalizationPersistence.update(
 			cpDefinitionLocalization);
+	}
+
+	private String _getIndexFieldName(String optionKey) {
+		return "ATTRIBUTE_" + optionKey + "_VALUES_NAMES";
 	}
 
 	private Map<Locale, String> _getUniqueUrlTitles(

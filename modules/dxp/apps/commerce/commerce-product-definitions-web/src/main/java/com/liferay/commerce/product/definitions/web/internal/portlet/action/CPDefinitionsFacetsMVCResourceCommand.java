@@ -20,11 +20,11 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.search.FacetImpl;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -125,7 +125,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 
 		SearchContext searchContext = buildSearchContext(resourceRequest);
 
-		List<Facet> facets = _cpDefinitionHelper.getFacets(
+		List<Facet> facets = _cpDefinitionLocalService.getFacets(
 			filterFields, filtersValues, searchContext);
 
 		searchContext.setFacets(facets);
@@ -237,7 +237,7 @@ public class CPDefinitionsFacetsMVCResourceCommand
 	}
 
 	@Reference
-	private CPDefinitionHelper _cpDefinitionHelper;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionOptionValueRelService

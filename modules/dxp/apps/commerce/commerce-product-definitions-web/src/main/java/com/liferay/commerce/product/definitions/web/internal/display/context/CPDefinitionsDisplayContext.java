@@ -284,7 +284,7 @@ public class CPDefinitionsDisplayContext
 
 			BaseModelSearchResult<CPDefinition>
 				cpDefinitionBaseModelSearchResult =
-					_cpDefinitionHelper.getCPDefinitions(
+					_cpDefinitionService.searchCPDefinitions(
 						themeDisplay.getCompanyId(),
 						themeDisplay.getScopeGroupId(), getKeywords(),
 						filterFields, filtersValues, searchContainer.getStart(),

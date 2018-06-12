@@ -1831,6 +1831,17 @@ app.server.type=@{app.server.type}]]></echo>
 							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
+
+							<for list="${test.batch.deploy.additional.modules}" param="test.batch.deploy.additional.module">
+								<sequential>
+									<if>
+										<available file="modules/@{test.batch.deploy.additional.module}" />
+										<then>
+											<gradle-execute dir="modules/@{test.batch.deploy.additional.module}" forcedcacheenabled="false" task="deploy" />
+										</then>
+									</if>
+								</sequential>
+							</for>
 						</then>
 						<elseif>
 							<isset property="env.DIST_PATH" />

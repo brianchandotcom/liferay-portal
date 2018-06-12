@@ -192,8 +192,8 @@ public abstract class BaseCustomerPortalSampleInitializer {
 		Bundle bundle = _bundleContext.getBundle();
 
 		Enumeration<URL> enumeration = bundle.findEntries(
-			CustomerPortalSiteInitializer.DEPENDENCY_PATH + getName(),
-			"*.json", false);
+			CustomerPortalSiteInitializer.DEPENDENCY_PATH + getName(), "*.json",
+			false);
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();

@@ -76,7 +76,6 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
 
-import com.liferay.site.initializer.SiteInitializer;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 

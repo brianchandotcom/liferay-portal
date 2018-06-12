@@ -1,3 +1,8 @@
+Import-Package:\
+	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\
+	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\
+	\
+	*
 Liferay-Releng-App-Description:
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Commerce Private
 Liferay-Releng-Bundle: true
@@ -13,8 +18,3 @@ Liferay-Releng-Restart-Required: true
 Liferay-Releng-Suite:
 Liferay-Releng-Support-Url: http://www.liferay.com
 Liferay-Releng-Supported: ${liferay.releng.supported}
-Import-Package:\
-	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\
-	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\
-	\
-	*

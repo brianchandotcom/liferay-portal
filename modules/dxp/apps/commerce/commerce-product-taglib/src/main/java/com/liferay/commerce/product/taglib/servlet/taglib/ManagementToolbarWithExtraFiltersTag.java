@@ -22,7 +22,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.ManagementToolbarTag;
 public class ManagementToolbarWithExtraFiltersTag extends ManagementToolbarTag {
 
 	public ManagementToolbarWithExtraFiltersTag() {
-
 		setComponentBaseName(
 			"com.liferay.commerce.product.taglib." +
 				"ManagementToolbarWithExtraFilters");

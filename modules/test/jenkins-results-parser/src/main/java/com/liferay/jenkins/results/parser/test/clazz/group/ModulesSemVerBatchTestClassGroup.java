@@ -33,19 +33,19 @@ import java.util.List;
 /**
  * @author Leslie Wong
  */
-public class SemVerBaselineBatchTestClassGroup
+public class ModulesSemVerBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
-	public static class SemVerBaselineBatchTestClass
+	public static class ModulesSemVerBatchTestClass
 		extends ModulesBatchTestClass {
 
-		protected static SemVerBaselineBatchTestClass getInstance(
+		protected static ModulesSemVerBatchTestClass getInstance(
 			File moduleBaseDir, File modulesDir) {
 
-			return new SemVerBaselineBatchTestClass(moduleBaseDir, modulesDir);
+			return new ModulesSemVerBatchTestClass(moduleBaseDir, modulesDir);
 		}
 
-		protected SemVerBaselineBatchTestClass(
+		protected ModulesSemVerBatchTestClass(
 			File moduleBaseDir, File modulesDir) {
 
 			super(moduleBaseDir);
@@ -98,7 +98,7 @@ public class SemVerBaselineBatchTestClassGroup
 
 	}
 
-	protected SemVerBaselineBatchTestClassGroup(
+	protected ModulesSemVerBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
@@ -130,7 +130,7 @@ public class SemVerBaselineBatchTestClassGroup
 
 		for (File moduleDir : moduleDirsList) {
 			testClasses.add(
-				SemVerBaselineBatchTestClass.getInstance(
+				ModulesSemVerBatchTestClass.getInstance(
 					moduleDir, portalModulesBaseDir));
 		}
 	}

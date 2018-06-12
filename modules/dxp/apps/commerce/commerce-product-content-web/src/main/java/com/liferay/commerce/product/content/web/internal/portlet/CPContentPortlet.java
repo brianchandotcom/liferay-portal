@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.log.Log;
@@ -70,25 +70,26 @@ public class CPContentPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		CPDefinition cpDefinition = (CPDefinition)renderRequest.getAttribute(
-			CPWebKeys.CP_DEFINITION);
+		CPCatalogEntry cpCatalogEntry =
+			(CPCatalogEntry)renderRequest.getAttribute(
+				CPWebKeys.CP_CATALOG_ENTRY);
 
-		renderCPDefinition(cpDefinition, renderRequest, renderResponse);
+		renderCPCatalogEntry(cpCatalogEntry, renderRequest, renderResponse);
 
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected void renderCPDefinition(
-		CPDefinition cpDefinition, RenderRequest renderRequest,
+	protected void renderCPCatalogEntry(
+		CPCatalogEntry cpCatalogEntry, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
-		if (cpDefinition == null) {
+		if (cpCatalogEntry == null) {
 			return;
 		}
 
 		CPTypeRenderer cpTypeRenderer =
 			_cpTypeServicesTracker.getCPTypeRenderer(
-				cpDefinition.getProductTypeName());
+				cpCatalogEntry.getProductTypeName());
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -97,7 +98,7 @@ public class CPContentPortlet extends MVCPortlet {
 
 		try {
 			cpTypeRenderer.render(
-				cpDefinition, httpServletRequest, httpServletResponse);
+				cpCatalogEntry, httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

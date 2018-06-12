@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.type;
 
-import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 public interface CPTypeRenderer {
 
 	public void render(
-			CPDefinition cpDefinition, HttpServletRequest httpServletRequest,
+			CPCatalogEntry cpCatalogEntry,
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 

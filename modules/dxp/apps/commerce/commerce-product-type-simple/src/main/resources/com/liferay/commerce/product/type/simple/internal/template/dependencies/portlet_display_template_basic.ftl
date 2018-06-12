@@ -1,10 +1,10 @@
 <#assign
-	cpDefinition = simpleCPTypeDisplayContext.getCPDefinition()
+	cpCatalogEntry = simpleCPTypeDisplayContext.getCPCatalogEntry()
 
 	cpInstance = simpleCPTypeDisplayContext.getDefaultCPInstance()
 />
 
-<div class="container-fluid product-detail" id="<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent">
+<div class="container-fluid product-detail" id="<@portlet.namespace />${cpCatalogEntry.getCPDefinitionId()}ProductContent">
 	<div class="row">
 		<div class="product-detail-header">
 			<div class="col-lg-6 col-md-7">
@@ -36,14 +36,14 @@
 			</div>
 
 			<div class="col-lg-6 col-md-5">
-				<h1>${cpDefinition.getName()}</h1>
+				<h1>${cpCatalogEntry.getName()}</h1>
 
 				<#if cpInstance??>
 					<h4 class="sku">${cpInstance.getSku()}</h4>
 
 					<div class="price">
 						<@liferay_commerce["price"]
-							CPDefinitionId=cpDefinition.getCPDefinitionId()
+							CPDefinitionId=cpCatalogEntry.getCPDefinitionId()
 							CPInstanceId=cpInstance.getCPInstanceId()
 						/>
 					</div>
@@ -121,7 +121,7 @@
 
 				<div class="tab-content">
 					<div class="active tab-pane" id="<@portlet.namespace />description">
-						<p>${cpDefinition.getDescription(themeDisplay.getLanguageId())}</p>
+						<p>${cpCatalogEntry.getDescription()}</p>
 					</div>
 
 					<#if simpleCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues()>
@@ -226,11 +226,11 @@
 			cpDefinitionId: ${simpleCPTypeDisplayContext.getCPDefinitionId()},
 			fullImageSelector : '#<@portlet.namespace />full-image',
 			namespace: '<@portlet.namespace />',
-			productContentSelector: '#<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent',
+			productContentSelector: '#<@portlet.namespace />${cpCatalogEntry.getCPDefinitionId()}ProductContent',
 			thumbsContainerSelector : '#<@portlet.namespace />thumbs-container',
 			viewAttachmentURL: '${simpleCPTypeDisplayContext.getViewAttachmentURL().toString()}'
 		}
 	);
 
-	Liferay.component('<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent', productContent);
+	Liferay.component('<@portlet.namespace />${cpCatalogEntry.getCPDefinitionId()}ProductContent', productContent);
 </@>

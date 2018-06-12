@@ -15,9 +15,9 @@
 package com.liferay.commerce.product.type.virtual.web.internal.display.context;
 
 import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayContext;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
@@ -43,9 +43,9 @@ public class VirtualCPTypeDisplayContext extends CPTypeDisplayContext {
 	public VirtualCPTypeDisplayContext(
 			AssetCategoryService assetCategoryService,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
+			CPCatalogEntry cpCatalogEntry,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
 			CPContentContributorRegistry cpContentContributorRegistry,
-			CPDefinition cpDefinition,
 			CPDefinitionVirtualSettingLocalService
 				cpDefinitionVirtualSettingLocalService,
 			DLAppService dlAppService, CPInstanceHelper cpInstanceHelper,
@@ -56,10 +56,9 @@ public class VirtualCPTypeDisplayContext extends CPTypeDisplayContext {
 		throws Exception {
 
 		super(
-			assetCategoryService, cpAttachmentFileEntryService,
+			assetCategoryService, cpAttachmentFileEntryService, cpCatalogEntry,
 			cpContentConfigurationHelper, cpContentContributorRegistry,
-			cpDefinition, cpInstanceHelper,
-			cpDefinitionSpecificationOptionValueService,
+			cpInstanceHelper, cpDefinitionSpecificationOptionValueService,
 			cpOptionCategoryService, httpServletRequest, portal);
 
 		_dlAppService = dlAppService;
@@ -67,7 +66,7 @@ public class VirtualCPTypeDisplayContext extends CPTypeDisplayContext {
 		_cpDefinitionVirtualSetting =
 			cpDefinitionVirtualSettingLocalService.
 				fetchCPDefinitionVirtualSettingByCPDefinitionId(
-					cpDefinition.getCPDefinitionId());
+					cpCatalogEntry.getCPDefinitionId());
 	}
 
 	public CPDefinitionVirtualSetting getCPDefinitionVirtualSetting() {

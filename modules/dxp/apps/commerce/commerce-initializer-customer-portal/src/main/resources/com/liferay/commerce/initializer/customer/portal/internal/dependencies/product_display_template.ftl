@@ -1,11 +1,11 @@
 <#assign
-	cpDefinition = simpleCPTypeDisplayContext.getCPDefinition()
+	cpCatalogEntry = simpleCPTypeDisplayContext.getCPCatalogEntry()
 
 	cpDefinitionId = simpleCPTypeDisplayContext.getCPDefinitionId()
 
 	cpInstanceId = 0
 
-	isIgnoreSKUCombinations = cpDefinition.isIgnoreSKUCombinations()
+	isIgnoreSKUCombinations = cpCatalogEntry.isIgnoreSKUCombinations()
 
 	images = simpleCPTypeDisplayContext.getImages()
 
@@ -60,9 +60,9 @@
 	</#if>
 </#if>
 
-<div class="product-detail" id="<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent">
+<div class="product-detail" id="<@portlet.namespace />${cpCatalogEntry.getCPDefinitionId()}ProductContent">
 	<div class="product-detail-header">
-		<h2 class="commerce-title">${cpDefinition.getName(locale)}</h2>
+		<h2 class="commerce-title">${cpCatalogEntry.getName()}</h2>
 
 		<div class="autofit-float autofit-row product-detail-secondary-info">
 			<div class="autofit-col">
@@ -240,7 +240,7 @@
 			<#if cpInstance??>
 				<@liferay_commerce["tier-price"]
 					CPInstanceId=cpInstanceId
-					taglibQuantityInputId=renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'Quantity'
+					taglibQuantityInputId=renderResponse.getNamespace() +  cpCatalogEntry.getCPDefinitionId() + 'Quantity'
 				/>
 			</#if>
 
@@ -263,8 +263,8 @@
 						CPDefinitionId=cpDefinitionId
 						CPInstanceId=cpInstanceId
 						elementClasses="btn-primary text-truncate"
-						productContentId=renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'ProductContent'
-						taglibQuantityInputId=renderResponse.getNamespace() +  cpDefinition.getCPDefinitionId() + 'Quantity'
+						productContentId=renderResponse.getNamespace() + cpCatalogEntry.getCPDefinitionId() + 'ProductContent'
+						taglibQuantityInputId=renderResponse.getNamespace() +  cpCatalogEntry.getCPDefinitionId() + 'Quantity'
 					/>
 				</div>
 
@@ -283,7 +283,7 @@
 				<div class="modal-dialog modal-full-screen" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<div class="modal-title">${cpDefinition.getName()}</div>
+							<div class="modal-title">${cpCatalogEntry.getName()}</div>
 							<button aria-label="Close" class="close" data-dismiss="modal" type="button">
 								<@liferay_aui.icon
 									image="times"
@@ -384,7 +384,7 @@
 
 		<div class="tab-content">
 			<div class="active fade show tab-pane" id="<@portlet.namespace />description">
-				<p>${cpDefinition.getDescription(themeDisplay.getLanguageId())}</p>
+				<p>${cpCatalogEntry.getDescription()}</p>
 			</div>
 
 			<#if simpleCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues()>
@@ -498,11 +498,11 @@
 			cpDefinitionId: ${cpDefinitionId},
 			fullImageSelector : '#<@portlet.namespace />full-image',
 			namespace: '<@portlet.namespace />',
-			productContentSelector: '#<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent',
+			productContentSelector: '#<@portlet.namespace />${cpCatalogEntry.getCPDefinitionId()}ProductContent',
 			thumbsContainerSelector : '#<@portlet.namespace />thumbs-container',
 			viewAttachmentURL: '${simpleCPTypeDisplayContext.getViewAttachmentURL().toString()}'
 		}
 	);
 
-	Liferay.component('<@portlet.namespace />${cpDefinition.getCPDefinitionId()}ProductContent', productContent);
+	Liferay.component('<@portlet.namespace />${cpCatalogEntry.getCPDefinitionId()}ProductContent', productContent);
 </@>

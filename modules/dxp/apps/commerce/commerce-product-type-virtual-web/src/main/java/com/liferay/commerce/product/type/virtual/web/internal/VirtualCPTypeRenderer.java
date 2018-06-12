@@ -15,8 +15,8 @@
 package com.liferay.commerce.product.type.virtual.web.internal;
 
 import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
@@ -51,17 +51,18 @@ public class VirtualCPTypeRenderer implements CPTypeRenderer {
 
 	@Override
 	public void render(
-			CPDefinition cpDefinition, HttpServletRequest httpServletRequest,
+			CPCatalogEntry cpCatalogEntry,
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
 		VirtualCPTypeDisplayContext virtualCPTypeDisplayContext =
 			new VirtualCPTypeDisplayContext(
 				_assetCategoryService, _cpAttachmentFileEntryService,
-				_cpContentConfigurationHelper, _cpContentContributorRegistry,
-				cpDefinition, _cpDefinitionVirtualSettingLocalService,
-				_dlAppService, _cpInstanceHelper,
-				_cpDefinitionSpecificationOptionValueService,
+				cpCatalogEntry, _cpContentConfigurationHelper,
+				_cpContentContributorRegistry,
+				_cpDefinitionVirtualSettingLocalService, _dlAppService,
+				_cpInstanceHelper, _cpDefinitionSpecificationOptionValueService,
 				_cpOptionCategoryService, httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(

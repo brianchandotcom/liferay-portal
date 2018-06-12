@@ -15,8 +15,8 @@
 package com.liferay.commerce.product.type.grouped.web.internal;
 
 import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
@@ -50,7 +50,8 @@ public class GroupedCPTypeRenderer implements CPTypeRenderer {
 
 	@Override
 	public void render(
-			CPDefinition cpDefinition, HttpServletRequest httpServletRequest,
+			CPCatalogEntry cpCatalogEntry,
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
@@ -58,7 +59,7 @@ public class GroupedCPTypeRenderer implements CPTypeRenderer {
 			new GroupedCPTypeDisplayContext(
 				_assetCategoryService, _cpAttachmentFileEntryService,
 				_cpContentConfigurationHelper, _cpContentContributorRegistry,
-				cpDefinition, _cpDefinitionGroupedEntryService,
+				cpCatalogEntry, _cpDefinitionGroupedEntryService,
 				_cpInstanceHelper, _cpDefinitionSpecificationOptionValueService,
 				_cpOptionCategoryService, httpServletRequest, _portal);
 

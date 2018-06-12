@@ -23,11 +23,11 @@ Map<String, Object> contextObjects = new HashMap<>();
 
 contextObjects.put("simpleCPTypeDisplayContext", cpTypeDisplayContext);
 
-CPDefinition cpDefinition = cpTypeDisplayContext.getCPDefinition();
+CPCatalogEntry cpCatalogEntry = cpTypeDisplayContext.getCPCatalogEntry();
 
 CPInstance cpInstance = cpTypeDisplayContext.getDefaultCPInstance();
 
-request.setAttribute("cpDefinition", cpDefinition);
+request.setAttribute("cpCatalogEntry", cpCatalogEntry);
 request.setAttribute("cpInstance", cpInstance);
 %>
 
@@ -36,9 +36,9 @@ request.setAttribute("cpInstance", cpInstance);
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= cpTypeDisplayContext.getDisplayStyle() %>"
 	displayStyleGroupId="<%= cpTypeDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= Collections.singletonList(cpDefinition) %>"
+	entries="<%= Collections.singletonList(cpCatalogEntry) %>"
 >
-	<div class="container-fluid product-detail" id="<portlet:namespace /><%= cpDefinition.getCPDefinitionId() %>ProductContent">
+	<div class="container-fluid product-detail" id="<portlet:namespace /><%= cpCatalogEntry.getCPDefinitionId() %>ProductContent">
 		<div class="product-detail-header">
 			<div class="row">
 				<div class="col-lg-6 col-md-7">
@@ -76,7 +76,7 @@ request.setAttribute("cpInstance", cpInstance);
 				</div>
 
 				<div class="col-lg-6 col-md-5">
-					<h1><%= cpDefinition.getName(languageId) %></h1>
+					<h1><%= cpCatalogEntry.getName() %></h1>
 
 					<c:choose>
 						<c:when test="<%= cpInstance != null %>">
@@ -113,7 +113,7 @@ request.setAttribute("cpInstance", cpInstance);
 
 					<div class="row">
 						<div class="col-md-12">
-							<liferay-commerce:compare-product CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" />
+							<liferay-commerce:compare-product CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>" />
 						</div>
 					</div>
 
@@ -163,7 +163,7 @@ request.setAttribute("cpInstance", cpInstance);
 
 					<div class="tab-content">
 						<div class="active tab-pane" id="<portlet:namespace />description">
-							<p><%= cpDefinition.getDescription(languageId) %></p>
+							<p><%= cpCatalogEntry.getDescription() %></p>
 						</div>
 
 						<c:if test="<%= cpTypeDisplayContext.hasCPDefinitionSpecificationOptionValues() %>">
@@ -276,12 +276,12 @@ request.setAttribute("cpInstance", cpInstance);
 				cpDefinitionId: <%= cpTypeDisplayContext.getCPDefinitionId() %>,
 				fullImageSelector : '#<portlet:namespace />full-image',
 				namespace: '<portlet:namespace />',
-				productContentSelector: '#<portlet:namespace /><%= cpDefinition.getCPDefinitionId() %>ProductContent',
+				productContentSelector: '#<portlet:namespace /><%= cpCatalogEntry.getCPDefinitionId() %>ProductContent',
 				thumbsContainerSelector : '#<portlet:namespace />thumbs-container',
 				viewAttachmentURL: '<%= cpTypeDisplayContext.getViewAttachmentURL().toString() %>'
 			}
 		);
 
-		Liferay.component('<portlet:namespace /><%= cpDefinition.getCPDefinitionId() %>ProductContent', productContent);
+		Liferay.component('<portlet:namespace /><%= cpCatalogEntry.getCPDefinitionId() %>ProductContent', productContent);
 	</aui:script>
 </liferay-ddm:template-renderer>

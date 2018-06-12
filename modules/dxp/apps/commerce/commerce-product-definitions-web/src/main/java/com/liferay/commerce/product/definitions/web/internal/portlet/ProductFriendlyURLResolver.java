@@ -16,14 +16,15 @@ package com.liferay.commerce.product.definitions.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -97,16 +98,11 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 					languageId, true);
 		}
 
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			cpFriendlyURLEntry.getClassPK());
-
-		if (!cpDefinition.isApproved()) {
-			throw new NoSuchCPDefinitionException(
-				"{cpDefinitionId=" + cpFriendlyURLEntry.getClassPK() + "}");
-		}
+		CPCatalogEntry cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
+			groupId, cpFriendlyURLEntry.getClassPK(), locale);
 
 		Layout layout = getProductLayout(
-			groupId, privateLayout, cpDefinition.getCPDefinitionId());
+			groupId, privateLayout, cpCatalogEntry.getCPDefinitionId());
 
 		String layoutActualURL = _portal.getLayoutActualURL(layout, mainPath);
 
@@ -119,7 +115,8 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		actualParams.put("p_p_lifecycle", new String[] {"0"});
 		actualParams.put("p_p_mode", new String[] {"view"});
 
-		httpServletRequest.setAttribute(CPWebKeys.CP_DEFINITION, cpDefinition);
+		httpServletRequest.setAttribute(
+			CPWebKeys.CP_CATALOG_ENTRY, cpCatalogEntry);
 
 		String queryString = _http.parameterMapToString(actualParams, false);
 
@@ -132,13 +129,12 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 				layoutActualURL + StringPool.QUESTION + queryString;
 		}
 
-		_portal.addPageSubtitle(
-			cpDefinition.getName(languageId), httpServletRequest);
+		_portal.addPageSubtitle(cpCatalogEntry.getName(), httpServletRequest);
 		_portal.addPageDescription(
-			cpDefinition.getShortDescription(languageId), httpServletRequest);
+			cpCatalogEntry.getShortDescription(), httpServletRequest);
 
 		List<AssetTag> assetTags = _assetTagLocalService.getTags(
-			CPDefinition.class.getName(), cpDefinition.getPrimaryKey());
+			CPDefinition.class.getName(), cpCatalogEntry.getCPDefinitionId());
 
 		if (!assetTags.isEmpty()) {
 			_portal.addPageKeywords(
@@ -227,6 +223,9 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

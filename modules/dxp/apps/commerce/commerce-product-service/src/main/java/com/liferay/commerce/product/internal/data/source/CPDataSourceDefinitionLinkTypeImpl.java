@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.product.internal.data.source;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -73,11 +73,11 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
-		CPDefinition cpDefinition =
-			(CPDefinition)httpServletRequest.getAttribute(
-				CPWebKeys.CP_DEFINITION);
+		CPCatalogEntry cpCatalogEntry =
+			(CPCatalogEntry)httpServletRequest.getAttribute(
+				CPWebKeys.CP_CATALOG_ENTRY);
 
-		if (cpDefinition == null) {
+		if (cpCatalogEntry == null) {
 			return new CPDataSourceResult(new ArrayList<>(), 0);
 		}
 
@@ -91,7 +91,7 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 
 		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 		attributes.put(
-			"definitionLinkCPDefinitionId", cpDefinition.getCPDefinitionId());
+			"definitionLinkCPDefinitionId", cpCatalogEntry.getCPDefinitionId());
 		attributes.put(
 			"definitionLinkType", _cpDefinitionLinkTypeConfiguration.type());
 		attributes.put("params", params);

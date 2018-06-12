@@ -15,9 +15,9 @@
 package com.liferay.commerce.product.type.grouped.web.internal.display.context;
 
 import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayContext;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
@@ -48,7 +48,7 @@ public class GroupedCPTypeDisplayContext extends CPTypeDisplayContext {
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
 			CPContentContributorRegistry cpContentContributorRegistry,
-			CPDefinition cpDefinition,
+			CPCatalogEntry cpCatalogEntry,
 			CPDefinitionGroupedEntryService cpDefinitionGroupedEntryService,
 			CPInstanceHelper cpInstanceHelper,
 			CPDefinitionSpecificationOptionValueService
@@ -58,10 +58,9 @@ public class GroupedCPTypeDisplayContext extends CPTypeDisplayContext {
 		throws Exception {
 
 		super(
-			assetCategoryService, cpAttachmentFileEntryService,
+			assetCategoryService, cpAttachmentFileEntryService, cpCatalogEntry,
 			cpContentConfigurationHelper, cpContentContributorRegistry,
-			cpDefinition, cpInstanceHelper,
-			cpDefinitionSpecificationOptionValueService,
+			cpInstanceHelper, cpDefinitionSpecificationOptionValueService,
 			cpOptionCategoryService, httpServletRequest, portal);
 
 		_cpDefinitionGroupedEntryService = cpDefinitionGroupedEntryService;
@@ -71,7 +70,7 @@ public class GroupedCPTypeDisplayContext extends CPTypeDisplayContext {
 		throws PortalException {
 
 		return _cpDefinitionGroupedEntryService.getCPDefinitionGroupedEntries(
-			cpDefinition.getCPDefinitionId(), QueryUtil.ALL_POS,
+			cpCatalogEntry.getCPDefinitionId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
 			new CPDefinitionGroupedEntryPriorityComparator());
 	}

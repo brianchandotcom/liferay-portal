@@ -16,6 +16,7 @@ package com.liferay.commerce.product.content.web.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
@@ -65,9 +66,10 @@ public class CPTypeDisplayContext {
 	public CPTypeDisplayContext(
 			AssetCategoryService assetCategoryService,
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
+			CPCatalogEntry cpCatalogEntry,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
 			CPContentContributorRegistry cpContentContributorRegistry,
-			CPDefinition cpDefinition, CPInstanceHelper cpInstanceHelper,
+			CPInstanceHelper cpInstanceHelper,
 			CPDefinitionSpecificationOptionValueService
 				cpDefinitionSpecificationOptionValueService,
 			CPOptionCategoryService cpOptionCategoryService,
@@ -76,9 +78,9 @@ public class CPTypeDisplayContext {
 
 		this.assetCategoryService = assetCategoryService;
 		this.cpAttachmentFileEntryService = cpAttachmentFileEntryService;
+		this.cpCatalogEntry = cpCatalogEntry;
 		this.cpContentConfigurationHelper = cpContentConfigurationHelper;
 		this.cpContentContributorRegistry = cpContentContributorRegistry;
-		this.cpDefinition = cpDefinition;
 		this.cpInstanceHelper = cpInstanceHelper;
 		this.cpDefinitionSpecificationOptionValueService =
 			cpDefinitionSpecificationOptionValueService;
@@ -104,7 +106,7 @@ public class CPTypeDisplayContext {
 
 	public List<AssetCategory> getAssetCategories() throws PortalException {
 		return assetCategoryService.getCategories(
-			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
+			CPDefinition.class.getName(), cpCatalogEntry.getCPDefinitionId());
 	}
 
 	public String getAvailabilityEstimateLabel() throws Exception {
@@ -139,7 +141,7 @@ public class CPTypeDisplayContext {
 
 		return cpDefinitionSpecificationOptionValueService.
 			getCPDefinitionSpecificationOptionValues(
-				cpDefinition.getCPDefinitionId(), cpOptionCategoryId);
+				cpCatalogEntry.getCPDefinitionId(), cpOptionCategoryId);
 	}
 
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries()
@@ -149,14 +151,18 @@ public class CPTypeDisplayContext {
 
 		int total =
 			cpAttachmentFileEntryService.getCPAttachmentFileEntriesCount(
-				classNameId, cpDefinition.getCPDefinitionId(),
+				classNameId, cpCatalogEntry.getCPDefinitionId(),
 				CPAttachmentFileEntryConstants.TYPE_OTHER,
 				WorkflowConstants.STATUS_APPROVED);
 
 		return cpAttachmentFileEntryService.getCPAttachmentFileEntries(
-			classNameId, cpDefinition.getCPDefinitionId(),
+			classNameId, cpCatalogEntry.getCPDefinitionId(),
 			CPAttachmentFileEntryConstants.TYPE_OTHER,
 			WorkflowConstants.STATUS_APPROVED, 0, total);
+	}
+
+	public CPCatalogEntry getCPCatalogEntry() {
+		return cpCatalogEntry;
 	}
 
 	public Object getCPContentContributorValue(String contributorKey)
@@ -174,12 +180,8 @@ public class CPTypeDisplayContext {
 			getDefaultCPInstance(), httpServletRequest);
 	}
 
-	public CPDefinition getCPDefinition() {
-		return cpDefinition;
-	}
-
 	public long getCPDefinitionId() {
-		return cpDefinition.getCPDefinitionId();
+		return cpCatalogEntry.getCPDefinitionId();
 	}
 
 	public List<CPDefinitionSpecificationOptionValue>
@@ -188,7 +190,7 @@ public class CPTypeDisplayContext {
 
 		return cpDefinitionSpecificationOptionValueService.
 			getCPDefinitionSpecificationOptionValues(
-				cpDefinition.getCPDefinitionId(),
+				cpCatalogEntry.getCPDefinitionId(),
 				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID);
 	}
 
@@ -203,18 +205,18 @@ public class CPTypeDisplayContext {
 	}
 
 	public CPInstance getDefaultCPInstance() throws Exception {
-		CPDefinition cpDefinition = getCPDefinition();
+		CPCatalogEntry cpCatalogEntry = getCPCatalogEntry();
 
-		if (cpDefinition == null) {
+		if (cpCatalogEntry == null) {
 			return null;
 		}
 
-		if (!cpDefinition.isIgnoreSKUCombinations()) {
+		if (!cpCatalogEntry.isIgnoreSKUCombinations()) {
 			return null;
 		}
 
 		return cpInstanceHelper.getCPInstance(
-			cpDefinition.getCPDefinitionId(), null);
+			cpCatalogEntry.getCPDefinitionId(), null);
 	}
 
 	public CPAttachmentFileEntry getDefaultImage() throws PortalException {
@@ -222,7 +224,7 @@ public class CPTypeDisplayContext {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryService.getCPAttachmentFileEntries(
-				classNameId, cpDefinition.getCPDefinitionId(),
+				classNameId, cpCatalogEntry.getCPDefinitionId(),
 				CPAttachmentFileEntryConstants.TYPE_IMAGE,
 				WorkflowConstants.STATUS_APPROVED, 0, 1);
 
@@ -236,13 +238,13 @@ public class CPTypeDisplayContext {
 	public String getDisplayStyle() {
 		return cpContentConfigurationHelper.getCPTypeDisplayStyle(
 			cpContentPortletInstanceConfiguration,
-			cpDefinition.getProductTypeName());
+			cpCatalogEntry.getProductTypeName());
 	}
 
 	public long getDisplayStyleGroupId() {
 		return cpContentConfigurationHelper.getCPTypeDisplayStyleGroupId(
 			cpContentPortletInstanceConfiguration,
-			cpDefinition.getProductTypeName());
+			cpCatalogEntry.getProductTypeName());
 	}
 
 	public String getDownloadFileEntryURL(FileEntry fileEntry)
@@ -263,7 +265,7 @@ public class CPTypeDisplayContext {
 		long classNameId = portal.getClassNameId(CPDefinition.class);
 
 		return cpAttachmentFileEntryService.getCPAttachmentFileEntries(
-			classNameId, cpDefinition.getCPDefinitionId(),
+			classNameId, cpCatalogEntry.getCPDefinitionId(),
 			CPAttachmentFileEntryConstants.TYPE_IMAGE,
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
@@ -307,9 +309,9 @@ public class CPTypeDisplayContext {
 	public ResourceURL getViewAttachmentURL() {
 		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
 
-		CPDefinition cpDefinition = getCPDefinition();
+		CPCatalogEntry cpCatalogEntry = getCPCatalogEntry();
 
-		if (cpDefinition != null) {
+		if (cpCatalogEntry != null) {
 			resourceURL.setParameter(
 				"cpDefinitionId", String.valueOf(getCPDefinitionId()));
 		}
@@ -326,7 +328,7 @@ public class CPTypeDisplayContext {
 			cpDefinitionSpecificationOptionValues =
 				cpDefinitionSpecificationOptionValueService.
 					getCPDefinitionSpecificationOptionValues(
-						cpDefinition.getCPDefinitionId());
+						cpCatalogEntry.getCPDefinitionId());
 
 		return !cpDefinitionSpecificationOptionValues.isEmpty();
 	}
@@ -335,25 +337,25 @@ public class CPTypeDisplayContext {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
-		CPDefinition cpDefinition = getCPDefinition();
+		CPCatalogEntry cpCatalogEntry = getCPCatalogEntry();
 
-		if (cpDefinition == null) {
+		if (cpCatalogEntry == null) {
 			return StringPool.BLANK;
 		}
 
 		return cpInstanceHelper.renderPublicStoreOptions(
-			cpDefinition.getCPDefinitionId(), null,
-			cpDefinition.getIgnoreSKUCombinations(), false, renderRequest,
+			cpCatalogEntry.getCPDefinitionId(), null,
+			cpCatalogEntry.isIgnoreSKUCombinations(), false, renderRequest,
 			renderResponse);
 	}
 
 	protected final AssetCategoryService assetCategoryService;
 	protected final CPAttachmentFileEntryService cpAttachmentFileEntryService;
+	protected final CPCatalogEntry cpCatalogEntry;
 	protected final CPContentConfigurationHelper cpContentConfigurationHelper;
 	protected final CPContentContributorRegistry cpContentContributorRegistry;
 	protected final CPContentPortletInstanceConfiguration
 		cpContentPortletInstanceConfiguration;
-	protected final CPDefinition cpDefinition;
 	protected final CPDefinitionSpecificationOptionValueService
 		cpDefinitionSpecificationOptionValueService;
 	protected final CPInstanceHelper cpInstanceHelper;

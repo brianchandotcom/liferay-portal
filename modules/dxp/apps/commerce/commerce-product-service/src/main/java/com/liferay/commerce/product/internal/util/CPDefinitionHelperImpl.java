@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -52,9 +53,33 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @Component(immediate = true)
 public class CPDefinitionHelperImpl implements CPDefinitionHelper {
+
+	@Override
+	public CPCatalogEntry getCPCatalogEntry(
+			long groupId, long cpDefinitionId, Locale locale)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute(
+			Field.ENTRY_CLASS_PK, String.valueOf(cpDefinitionId));
+		searchContext.setCompanyId(group.getCompanyId());
+		searchContext.setGroupIds(new long[] {groupId});
+
+		CPDataSourceResult cpDataSourceResult = search(
+			groupId, searchContext, new CPQuery(), 0, 1);
+
+		List<CPCatalogEntry> cpCatalogEntries =
+			cpDataSourceResult.getCPCatalogEntries();
+
+		return cpCatalogEntries.get(0);
+	}
 
 	@Override
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)
@@ -147,7 +172,13 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		cpCatalogEntry.setDefaultImageFileUrl(
 			document.get(CPDefinitionIndexer.FIELD_DEFAULT_IMAGE_FILE_URL));
 		cpCatalogEntry.setDescription(document.get(locale, Field.DESCRIPTION));
+		cpCatalogEntry.setIgnoreSKUCombinations(
+			GetterUtil.getBoolean(
+				document.get(
+					CPDefinitionIndexer.FIELD_IS_IGNORE_SKU_COMBINATIONS)));
 		cpCatalogEntry.setName(document.get(locale, Field.NAME));
+		cpCatalogEntry.setProductTypeName(
+			document.get(CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME));
 		cpCatalogEntry.setShortDescription(
 			document.get(locale, CPDefinitionIndexer.FIELD_SHORT_DESCRIPTION));
 		cpCatalogEntry.setUrl(document.get(locale, Field.URL));
@@ -233,6 +264,9 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

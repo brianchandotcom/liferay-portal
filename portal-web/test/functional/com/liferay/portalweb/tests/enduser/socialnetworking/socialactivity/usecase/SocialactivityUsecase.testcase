@@ -330,7 +330,8 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="fr-fr" />
+			<var name="locale" value="fr_FR" />
+			<var name="textIcon" value="français-France" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -350,7 +351,8 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="ja-jp" />
+			<var name="locale" value="ja_JP" />
+			<var name="textIcon" value="日本語-日本" />
 		</execute>
 
 		<execute macro="Page#gotoSALocalizedCP">
@@ -366,7 +368,8 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="pt-br" />
+			<var name="locale" value="pt-BR" />
+			<var name="textIcon" value="português-Brasil" />
 		</execute>
 
 		<execute macro="Page#gotoSALocalizedCP">
@@ -382,7 +385,8 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

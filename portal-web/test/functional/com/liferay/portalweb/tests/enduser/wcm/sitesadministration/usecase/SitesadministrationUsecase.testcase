@@ -316,18 +316,21 @@
 		</execute>
 
 		<execute macro="Page#viewSiteNameTranslationsPG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en-US" />
 			<var name="siteName" value="Site Name" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute macro="Page#viewSiteNameTranslationsPG">
-			<var name="locale" value="es-es" />
+			<var name="locale" value="es-ES" />
 			<var name="siteName" value="Nombre del Sitio" />
+			<var name="textIcon" value="español-España" />
 		</execute>
 
 		<execute macro="Page#viewSiteNameTranslationsPG">
-			<var name="locale" value="zh-cn" />
+			<var name="locale" value="zh-CN" />
 			<var name="siteName" value="站点名称" />
+			<var name="textIcon" value="中文-中国" />
 		</execute>
 
 		<execute macro="LanguagePortlet#tearDownLanguagePG" />

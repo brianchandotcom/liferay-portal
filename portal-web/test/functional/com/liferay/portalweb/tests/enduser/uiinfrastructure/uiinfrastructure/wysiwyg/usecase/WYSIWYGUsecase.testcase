@@ -229,7 +229,8 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="iw-il" />
+			<var name="locale" value="iw_IL" />
+			<var name="textIcon" value="עברית-ישראל" />
 		</execute>
 
 		<execute macro="WikiPage#addLocalizedFrontPagePG">
@@ -249,7 +250,8 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 	</command>
 </definition>

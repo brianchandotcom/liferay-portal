@@ -551,7 +551,8 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="zh-cn" />
+			<var name="locale" value="zh-CN" />
+			<var name="textIcon" value="中文-中国" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
@@ -1089,8 +1090,9 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
 			<var name="portletName" value="JournalContentPortlet" />
+			<var name="textIcon" value="English-United States" />
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">

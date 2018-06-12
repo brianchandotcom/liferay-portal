@@ -18,9 +18,9 @@
 
 <div class="pt-0" id="wrapper">
 	<header class="mb-4" id="banner">
-		<div class="navbar navbar-classic navbar-top py-3 mb-4">
+		<div class="mb-4 navbar navbar-classic navbar-top py-3">
 			<div class="container">
-				<div class="logo align-items-center d-inline-flex">
+				<div class="align-items-center d-inline-flex logo">
 
 					<%
 					Group group = layout.getGroup();
@@ -178,7 +178,7 @@
 								<div class="hide" id="customDatabaseOptions">
 									<div class="connection-messages" id="connectionMessages"></div>
 
-									<a class="database-options d-inline-block mb-3" href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>" id="defaultDatabaseOptionsLink">
+									<a class="d-inline-block database-options mb-3" href="<%= HttpUtil.addParameter(themeDisplay.getPathMain() + "/portal/setup_wizard", "defaultDatabase", true) %>" id="defaultDatabaseOptionsLink">
 										&laquo; <liferay-ui:message key='<%= defaultDatabase ? "use-default-database" : "use-configured-database" %>' />
 									</a>
 

@@ -834,9 +834,11 @@ public class UIItemsBuilder {
 				String.valueOf(_fileShortcut.getFileShortcutId()));
 		}
 
+		portletURL.setParameter("backURL", _getCurrentURL());
+
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.PUBLISH, "publish",
-			portletURL.toString());
+			new URLMenuItem(), menuItems, DLUIItemKeys.PUBLISH,
+			"publish-to-live", portletURL.toString());
 	}
 
 	public void addRevertToVersionMenuItem(List<MenuItem> menuItems)

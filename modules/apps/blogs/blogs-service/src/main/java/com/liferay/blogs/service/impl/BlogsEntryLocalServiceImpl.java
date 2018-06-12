@@ -733,14 +733,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				groupId, BlogsConstants.SERVICE_NAME);
 
 		try {
-			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+			return PortletFileRepositoryUtil.getPortletFolder(
 				repository.getRepositoryId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				BlogsConstants.SERVICE_NAME);
-
-			return folder;
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return null;
@@ -1783,12 +1784,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			groupId, BlogsConstants.SERVICE_NAME, serviceContext);
 
-		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+		return PortletFileRepositoryUtil.addPortletFolder(
 			userId, repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, folderName,
 			serviceContext);
-
-		return folder;
 	}
 
 	protected String getEntryURL(
@@ -1844,17 +1843,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ThemeDisplay themeDisplay, ServiceContext serviceContext)
 		throws PortalException {
 
-		String layoutFullURL = null;
-
 		if (themeDisplay != null) {
-			layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
+			return PortalUtil.getLayoutFullURL(themeDisplay);
 		}
 
-		if (Validator.isNull(layoutFullURL)) {
-			layoutFullURL = serviceContext.getLayoutFullURL();
-		}
-
-		return layoutFullURL;
+		return serviceContext.getLayoutFullURL();
 	}
 
 	/**

@@ -24,6 +24,7 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -176,30 +177,52 @@ public class EditArticleDisplayPageDisplayContext {
 		return _displayPageType;
 	}
 
-	public String getDefaultAssetDisplayPageName() throws PortalException {
+	public String getDefaultAssetDisplayPageName(String ddmStructureKey)
+		throws PortalException {
+
 		if (_defaultAssetDisplayPageName != null) {
 			return _defaultAssetDisplayPageName;
 		}
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry = null;
+
 		AssetEntry assetEntry = _getAssetEntry();
 
-		if (assetEntry == null) {
-			return null;
+		if (assetEntry != null) {
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryServiceUtil.
+					fetchDefaultLayoutPageTemplateEntry(
+						assetEntry.getGroupId(), assetEntry.getClassNameId(),
+						assetEntry.getClassTypeId());
 		}
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryServiceUtil.
-				fetchDefaultLayoutPageTemplateEntry(
-					assetEntry.getGroupId(), assetEntry.getClassNameId(),
-					assetEntry.getClassTypeId());
+		if (layoutPageTemplateEntry != null) {
+			_defaultAssetDisplayPageName = layoutPageTemplateEntry.getName();
 
-		if (layoutPageTemplateEntry == null) {
-			return null;
+			return _defaultAssetDisplayPageName;
 		}
 
-		_defaultAssetDisplayPageName = layoutPageTemplateEntry.getName();
+		DDMStructure ddmStructure = _getDDMStructure(ddmStructureKey);
 
-		return _defaultAssetDisplayPageName;
+		if (ddmStructure != null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			layoutPageTemplateEntry =
+				LayoutPageTemplateEntryServiceUtil.
+					fetchDefaultLayoutPageTemplateEntry(
+						themeDisplay.getScopeGroupId(),
+						PortalUtil.getClassNameId(JournalArticle.class),
+						ddmStructure.getStructureId());
+		}
+
+		if (layoutPageTemplateEntry != null) {
+			_defaultAssetDisplayPageName = layoutPageTemplateEntry.getName();
+
+			return _defaultAssetDisplayPageName;
+		}
+
+		return null;
 	}
 
 	public String getDisplayPageItemSelectorURL() throws PortalException {
@@ -410,6 +433,16 @@ public class EditArticleDisplayPageDisplayContext {
 			journalArticle.getArticleResourceUuid());
 
 		return _assetEntry;
+	}
+
+	private DDMStructure _getDDMStructure(String ddmStructureKey) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return DDMStructureLocalServiceUtil.fetchStructure(
+			themeDisplay.getSiteGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class), ddmStructureKey,
+			true);
 	}
 
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {

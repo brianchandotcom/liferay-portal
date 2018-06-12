@@ -6663,7 +6663,7 @@ public class JournalArticleLocalServiceImpl
 		Date modifiedDate = serviceContext.getModifiedDate(now);
 
 		article.setModifiedDate(modifiedDate);
-		
+
 		article.setUrlTitle(urlTitle);
 
 		journalArticlePersistence.update(article);

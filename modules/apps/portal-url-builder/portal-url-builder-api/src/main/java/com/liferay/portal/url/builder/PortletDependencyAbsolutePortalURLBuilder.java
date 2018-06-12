@@ -12,32 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet;
-
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.model.portlet.PortletDependency;
-
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
+package com.liferay.portal.url.builder;
 
 /**
  * @author Neil Griffin
  */
-@ProviderType
-public class HeaderResponseFactory {
-
-	public static HeaderResponseImpl create(
-		RenderRequestImpl renderRequestImpl, HttpServletResponse response,
-		List<PortletDependency> portletDependencies) {
-
-		HeaderResponseImpl headerResponseImpl = new HeaderResponseImpl();
-
-		headerResponseImpl.init(
-			renderRequestImpl, response, portletDependencies);
-
-		return headerResponseImpl;
-	}
-
+public interface PortletDependencyAbsolutePortalURLBuilder
+	extends BuildableAbsolutePortalURLBuilder {
 }

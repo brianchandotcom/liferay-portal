@@ -39,7 +39,8 @@ header-portlet-css*, header-portal-javascript*, header-portlet-javascript*,
 header-request-attribute-prefix*, header-timeout?, footer-portal-css*,
 footer-portlet-css*, footer-portal-javascript*, footer-portlet-javascript*,
 css-class-wrapper?, facebook-integration?,
-add-default-resource?, system?, active?, include?)>
+add-default-resource?, system?, active?, include?,
+portlet-dependency-css-enabled?, portlet-dependency-javascript-enabled?)>
 
 <!--
 The portlet-name element contains the unique name of the portlet. This name must
@@ -827,6 +828,21 @@ and memory usage is a cheap price to pay in order to provide an easy
 installation and upgrade path.
 -->
 <!ELEMENT include (#PCDATA)>
+
+<!--
+The default value of portlet-dependency-css-enabled is true. If set to false,
+then CSS resource dependencies added via portlet.xml, @Dependency, or
+HeaderResponse.addDependency will not be added to the head of the portal page.
+-->
+<!ELEMENT portlet-dependency-css-enabled (#PCDATA)>
+
+<!--
+The default value of portlet-dependency-javascript-enabled is true. If set to
+false, then JavaScript resource dependencies added via portlet.xml,
+@Dependency, or HeaderResponse.addDependency will not be added to the head of
+the portal page.
+-->
+<!ELEMENT portlet-dependency-javascript-enabled (#PCDATA)>
 
 <!--
 The role-mapper contains two names specified by role-name and role-link. The

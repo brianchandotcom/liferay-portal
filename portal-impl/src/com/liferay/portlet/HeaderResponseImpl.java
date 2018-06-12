@@ -25,6 +25,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.portlet.PortletDependency;
+import com.liferay.portal.kernel.model.portlet.PortletDependencyFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -51,6 +54,7 @@ import javax.portlet.HeaderResponse;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -73,9 +77,38 @@ public class HeaderResponseImpl
 	public void addDependency(
 		String name, String scope, String version, String xml) {
 
-		// TODO
+		if (Validator.isNull(name)) {
+			throw new IllegalArgumentException();
+		}
 
-		throw new UnsupportedOperationException();
+		if ("PortletHub".equals(name) && "javax.portlet".equals(scope)) {
+			return;
+		}
+
+		if (xml != null) {
+			List<ParsedElement> parsedElements = _parseElements(xml);
+
+			if (parsedElements.size() > 1) {
+				throw new IllegalArgumentException(
+					"More than one element in markup: " + xml);
+			}
+		}
+
+		PortletDependency portletDependency =
+			PortletDependencyFactoryUtil.createPortletDependency(
+				name, scope, version, xml, portletRequestImpl);
+
+		Portlet portlet = getPortlet();
+
+		if (((PortletDependency.Type.CSS == portletDependency.getType()) &&
+			 portlet.isPortletDependencyCssEnabled()) ||
+			((PortletDependency.Type.JAVASCRIPT ==
+				portletDependency.getType()) &&
+			 portlet.isPortletDependencyJavaScriptEnabled()) ||
+			(PortletDependency.Type.OTHER == portletDependency.getType())) {
+
+			_addDependencyToHead(name, scope, version, null, portletDependency);
+		}
 	}
 
 	@Override
@@ -129,6 +162,21 @@ public class HeaderResponseImpl
 		_calledGetWriter = true;
 
 		return _printWriter;
+	}
+
+	public void init(
+		PortletRequestImpl portletRequestImpl, HttpServletResponse response,
+		List<PortletDependency> portletDependencies) {
+
+		super.init(portletRequestImpl, response);
+
+		if (portletDependencies != null) {
+			for (PortletDependency portletDependency : portletDependencies) {
+				addDependency(
+					portletDependency.getName(), portletDependency.getScope(),
+					portletDependency.getVersion());
+			}
+		}
 	}
 
 	@Override
@@ -214,8 +262,8 @@ public class HeaderResponseImpl
 	}
 
 	private void _addDependencyToHead(
-		String name, String scope, String version,
-		ParsedElement parsedElement) {
+		String name, String scope, String version, ParsedElement parsedElement,
+		PortletDependency portletDependency) {
 
 		if (Validator.isNull(scope)) {
 			scope = StringPool.BLANK;
@@ -281,8 +329,16 @@ public class HeaderResponseImpl
 		String outputKey = sb.toString();
 
 		if (outputData.addOutputKey(outputKey)) {
-			outputData.addDataSB(
-				outputKey, WebKeys.PAGE_TOP, parsedElement.toStringBundler());
+			if (parsedElement != null) {
+				outputData.addDataSB(
+					outputKey, WebKeys.PAGE_TOP,
+					parsedElement.toStringBundler());
+			}
+			else if (portletDependency != null) {
+				outputData.addDataSB(
+					outputKey, WebKeys.PAGE_TOP,
+					portletDependency.toStringBundler());
+			}
 		}
 	}
 
@@ -294,7 +350,7 @@ public class HeaderResponseImpl
 		}
 
 		for (ParsedElement parsedElement : _parseElements(xml)) {
-			_addDependencyToHead(name, scope, null, parsedElement);
+			_addDependencyToHead(name, scope, null, parsedElement, null);
 		}
 	}
 

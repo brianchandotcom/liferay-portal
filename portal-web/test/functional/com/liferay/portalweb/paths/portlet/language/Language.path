@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>LANGUAGE</td>
-	<td>//div[ul[contains(@aria-labelledby,'${key_portletName}')]][contains(@class,'open')]//a[span[normalize-space(text())='${key_locale}']]</td>
+	<td>//div[ul[contains(@aria-labelledby,'${key_portletName}')]][contains(@class,'open')]//a[contains(@href, '${key_locale}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.util;
+package com.liferay.site.internal.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
+import com.liferay.site.util.GroupSearchProvider;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -236,7 +237,7 @@ public class GroupSearchProviderImpl implements GroupSearchProvider {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
+	 * @deprecated As of 1.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Reference(unbind = "-")

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.util;
+package com.liferay.site.internal.util;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.util.GroupURLProvider;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;

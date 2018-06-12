@@ -30,16 +30,19 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Marcellus Tavares
  */
 @Component(immediate = true, service = DDMDataProviderTracker.class)
-public class DDMDataProviderTrackerImpl {
+public class DDMDataProviderTrackerImpl implements DDMDataProviderTracker{
 
+	@Override
 	public DDMDataProvider getDDMDataProvider(String type) {
 		return _ddmDataProviderTypeTrackerMap.getService(type);
 	}
 
+	@Override
 	public DDMDataProvider getDDMDataProviderByInstanceId(String instanceId) {
 		return _ddmDataProviderInstanceIdTrackerMap.getService(instanceId);
 	}
 
+	@Override
 	public List<DDMDataProviderContextContributor>
 		getDDMDataProviderContextContributors(String type) {
 
@@ -54,6 +57,7 @@ public class DDMDataProviderTrackerImpl {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public Set<String> getDDMDataProviderTypes() {
 		return _ddmDataProviderTypeTrackerMap.keySet();
 	}

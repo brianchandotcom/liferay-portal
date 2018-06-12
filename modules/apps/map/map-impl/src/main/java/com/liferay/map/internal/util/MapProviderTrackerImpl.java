@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.map.util;
+package com.liferay.map.internal.util;
 
 import com.liferay.map.MapProvider;
+import com.liferay.map.util.MapProviderTracker;
 
 import java.util.Collection;
 import java.util.Map;

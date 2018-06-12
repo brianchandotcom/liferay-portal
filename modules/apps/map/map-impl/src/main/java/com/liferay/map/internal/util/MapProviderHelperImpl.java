@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.map.util;
+package com.liferay.map.internal.util;
 
 import com.liferay.map.constants.MapProviderWebKeys;
+import com.liferay.map.util.MapProviderHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;

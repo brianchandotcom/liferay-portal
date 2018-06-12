@@ -42,6 +42,7 @@
 	{@param? _highlightMapping: bool}
 	{@param? _lastSaveDate: string}
 	{@param? _selectMappingDialogEditableId: string}
+	{@param? _selectMappingDialogEditableType: string}
 	{@param? _selectMappingDialogFragmentEntryLinkId: string}
 	{@param? _selectMappingDialogVisible: bool}
 	{@param? _selectMappingTypeDialogVisible: bool}
@@ -137,6 +138,7 @@
 		{if $mappingFieldsURL}
 			{call com.liferay.layout.admin.web.SelectMappingDialog.render}
 				{param editableId: $_selectMappingDialogEditableId /}
+				{param editableType: $_selectMappingDialogEditableType /}
 				{param events: [
 					'mappeableFieldSelected': $_handleMappeableFieldSelected,
 					'visibleChanged': $_handleSelectMappingDialogVisibleChanged

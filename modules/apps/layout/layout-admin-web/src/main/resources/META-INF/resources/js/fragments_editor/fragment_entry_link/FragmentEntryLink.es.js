@@ -310,6 +310,7 @@ class FragmentEntryLink extends Component {
 			'mappeableFieldClicked',
 			{
 				editableId: event.editableId,
+				editableType: event.editableType,
 				fragmentEntryLinkId: this.fragmentEntryLinkId
 			}
 		);

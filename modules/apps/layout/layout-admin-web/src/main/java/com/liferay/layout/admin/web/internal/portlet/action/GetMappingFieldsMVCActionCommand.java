@@ -77,6 +77,7 @@ public class GetMappingFieldsMVCActionCommand extends BaseMVCActionCommand {
 
 				jsonObject.put("key", assetEntryField.getKey());
 				jsonObject.put("label", assetEntryField.getLabel());
+				jsonObject.put("type", assetEntryField.getType());
 
 				jsonArray.put(jsonObject);
 			}

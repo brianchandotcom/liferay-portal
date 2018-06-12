@@ -296,7 +296,10 @@ class FragmentEditableField extends Component {
 		else if (buttonId === TOOLTIP_BUTTONS.map.id) {
 			this.emit(
 				'mapButtonClicked',
-				{editableId: this.editableId}
+				{
+					editableId: this.editableId,
+					editableType: this.type
+				}
 			);
 		}
 

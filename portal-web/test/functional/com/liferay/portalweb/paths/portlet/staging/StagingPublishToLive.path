@@ -41,7 +41,7 @@
 <!--DATE-->
 <tr>
 	<td>DATE_NOW_RADIO</td>
-	<td>//input[contains(@id,'publishingEventNow')]</td>
+	<td>//input[contains(@id,'publishingEventNow')]//following-sibling::span</td>
 	<td></td>
 </tr>
 <tr>

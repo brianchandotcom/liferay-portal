@@ -19,6 +19,7 @@ import com.liferay.blogs.attachments.test.BlogsEntryAttachmentFileEntryHelperTes
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.blogs.exception.EntryTitleException;
+import com.liferay.blogs.exception.EntryUrlTitleException;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
@@ -29,6 +30,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -48,9 +50,11 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -123,6 +127,22 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddCoverImageWithURL() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		String imageURL = StringUtil.randomString();
+
+		BlogsEntryLocalServiceUtil.addCoverImage(
+			entry.getEntryId(), new ImageSelector(imageURL));
+
+		BlogsEntry updatedEntry = BlogsEntryLocalServiceUtil.getEntry(
+			entry.getEntryId());
+
+		Assert.assertEquals(0, updatedEntry.getCoverImageFileEntryId());
+		Assert.assertEquals(imageURL, updatedEntry.getCoverImageURL());
+	}
+
+	@Test
 	public void testAddDraftEntryWithBlankTitle() throws Exception {
 		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			_group.getGroupId(), _statusAnyQueryDefinition);
@@ -163,6 +183,73 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddDuplicateAttachmentFileEntry() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		String fileName = StringUtil.randomString();
+
+		FileEntry fileEntry1 =
+			BlogsEntryLocalServiceUtil.addAttachmentFileEntry(
+				entry, entry.getUserId(), fileName,
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				new UnsyncByteArrayInputStream(new byte[0]));
+
+		FileEntry fileEntry2 =
+			BlogsEntryLocalServiceUtil.addAttachmentFileEntry(
+				entry, entry.getUserId(), fileName,
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				new UnsyncByteArrayInputStream(new byte[0]));
+
+		Assert.assertNotEquals(
+			fileEntry1.getFileName(), fileEntry2.getFileName());
+
+		Assert.assertEquals(
+			2,
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				fileEntry2.getGroupId(), fileEntry2.getFolderId()));
+	}
+
+	@Test
+	public void testAddEmptyCoverImage() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		BlogsEntryLocalServiceUtil.addCoverImage(
+			entry.getEntryId(), new ImageSelector());
+
+		BlogsEntry updatedEntry = BlogsEntryLocalServiceUtil.getEntry(
+			entry.getEntryId());
+
+		Assert.assertEquals(0, updatedEntry.getCoverImageFileEntryId());
+		Assert.assertEquals(StringPool.BLANK, updatedEntry.getCoverImageURL());
+	}
+
+	@Test
+	public void testAddEmptyOriginalImageFileEntry() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		Assert.assertEquals(
+			0,
+			BlogsEntryLocalServiceUtil.addOriginalImageFileEntry(
+				entry.getUserId(), entry.getGroupId(), entry.getEntryId(),
+				new ImageSelector()));
+	}
+
+	@Test
+	public void testAddEmptySmallImage() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		BlogsEntryLocalServiceUtil.addSmallImage(
+			entry.getEntryId(), new ImageSelector());
+
+		BlogsEntry updatedEntry = BlogsEntryLocalServiceUtil.getEntry(
+			entry.getEntryId());
+
+		Assert.assertEquals(0, updatedEntry.getSmallImageFileEntryId());
+		Assert.assertEquals(StringPool.BLANK, updatedEntry.getCoverImageURL());
+		Assert.assertFalse(updatedEntry.isSmallImage());
+	}
+
+	@Test
 	public void testAddEntry() throws Exception {
 		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			_group.getGroupId(), _statusApprovedQueryDefinition);
@@ -173,6 +260,44 @@ public class BlogsEntryLocalServiceTest {
 			_group.getGroupId(), _statusApprovedQueryDefinition);
 
 		Assert.assertEquals(initialCount + 1, actualCount);
+	}
+
+	@Test(expected = EntryUrlTitleException.class)
+	public void testAddEntryWithInvalidURLTitle() throws Exception {
+		BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(256),
+			StringUtil.randomString(), StringUtil.randomString(), new Date(),
+			true, true, new String[0], null, null, null, new ServiceContext());
+	}
+
+	@Test
+	public void testAddEntryWithNoImages() throws Exception {
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), new Date(),
+			true, true, new String[0], null, new ImageSelector(),
+			new ImageSelector(), ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(0, entry.getCoverImageFileEntryId());
+		Assert.assertEquals(StringPool.BLANK, entry.getCoverImageURL());
+		Assert.assertEquals(0, entry.getSmallImageFileEntryId());
+		Assert.assertEquals(StringPool.BLANK, entry.getSmallImageURL());
+		Assert.assertFalse(entry.isSmallImage());
+	}
+
+	@Test
+	public void testAddEntryWithURLTitle() throws Exception {
+		String urlTitle = StringUtil.toLowerCase(StringUtil.randomString());
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringUtil.randomString(), urlTitle, StringUtil.randomString(),
+			StringUtil.randomString(), new Date(), true, true, new String[0],
+			null, null, null, ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(urlTitle, entry.getUrlTitle());
 	}
 
 	@Test(expected = EntryContentException.class)
@@ -203,6 +328,33 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), title, RandomTestUtil.randomString(),
 			serviceContext);
+	}
+
+	@Test
+	public void testAddNullCoverImage() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		BlogsEntryLocalServiceUtil.addCoverImage(entry.getEntryId(), null);
+
+		BlogsEntry updatedEntry = BlogsEntryLocalServiceUtil.getEntry(
+			entry.getEntryId());
+
+		Assert.assertEquals(0, updatedEntry.getCoverImageFileEntryId());
+		Assert.assertEquals(StringPool.BLANK, updatedEntry.getCoverImageURL());
+	}
+
+	@Test
+	public void testAddNullSmallImage() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		BlogsEntryLocalServiceUtil.addSmallImage(entry.getEntryId(), null);
+
+		BlogsEntry updatedEntry = BlogsEntryLocalServiceUtil.getEntry(
+			entry.getEntryId());
+
+		Assert.assertEquals(0, updatedEntry.getSmallImageFileEntryId());
+		Assert.assertEquals(StringPool.BLANK, updatedEntry.getCoverImageURL());
+		Assert.assertFalse(updatedEntry.isSmallImage());
 	}
 
 	@Test
@@ -249,6 +401,31 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntryLocalServiceUtil.deleteEntry(entry);
 
 		BlogsEntryLocalServiceUtil.getEntry(entry.getEntryId());
+	}
+
+	@Test
+	public void testFetchNotNullAttachmentsFolder() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		byte[] bytes = FileUtil.getBytes(
+			RandomTestUtil.randomInputStream(randomValue -> true));
+
+		BlogsEntryLocalServiceUtil.addOriginalImageFileEntry(
+			entry.getUserId(), entry.getGroupId(), entry.getEntryId(),
+			new ImageSelector(
+				bytes, StringUtil.randomString() + ".bin",
+				ContentTypes.APPLICATION_OCTET_STREAM, StringPool.BLANK));
+
+		Assert.assertNotNull(
+			BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
+				entry.getUserId(), entry.getGroupId()));
+	}
+
+	@Test
+	public void testFetchNullAttachmentsFolder() throws Exception {
+		Assert.assertNull(
+			BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
+				TestPropsValues.getUserId(), TestPropsValues.getGroupId()));
 	}
 
 	@Test

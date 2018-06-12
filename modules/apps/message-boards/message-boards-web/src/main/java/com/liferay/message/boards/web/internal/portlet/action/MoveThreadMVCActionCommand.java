@@ -27,7 +27,7 @@ import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
-import com.liferay.portal.kernel.portlet.LiferayActionResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -123,7 +123,7 @@ public class MoveThreadMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		PortletURL portletURL =
-			((LiferayActionResponse)actionResponse).createRenderURL();
+			((LiferayPortletResponse)actionResponse).createRenderURL();
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/view_message");

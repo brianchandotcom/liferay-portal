@@ -15,7 +15,7 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -51,12 +51,12 @@ public class EditUserMyAccountMVCRenderCommand implements MVCRenderCommand {
 		try {
 			User user = _portal.getUser(renderRequest);
 
-			LiferayRenderRequest liferayRenderRequest =
-				(LiferayRenderRequest)renderRequest;
+			LiferayPortletRequest liferayPortletRequest =
+				(LiferayPortletRequest)renderRequest;
 
 			DynamicServletRequest dynamicRequest =
 				(DynamicServletRequest)
-					liferayRenderRequest.getHttpServletRequest();
+					liferayPortletRequest.getHttpServletRequest();
 
 			dynamicRequest.setParameter(
 				"p_u_i_d", String.valueOf(user.getUserId()));

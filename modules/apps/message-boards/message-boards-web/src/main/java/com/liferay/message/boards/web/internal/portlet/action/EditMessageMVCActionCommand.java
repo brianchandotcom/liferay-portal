@@ -50,7 +50,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.portlet.LiferayActionResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -286,10 +286,10 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			return ParamUtil.getString(actionRequest, "redirect");
 		}
 
-		LiferayActionResponse liferayActionResponse =
-			(LiferayActionResponse)actionResponse;
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)actionResponse;
 
-		PortletURL portletURL = liferayActionResponse.createRenderURL();
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/view_message");
@@ -308,7 +308,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		boolean preview = ParamUtil.getBoolean(actionRequest, "preview");
 
 		PortletURL portletURL =
-			((LiferayActionResponse)actionResponse).createRenderURL();
+			((LiferayPortletResponse)actionResponse).createRenderURL();
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/message_boards/edit_message");

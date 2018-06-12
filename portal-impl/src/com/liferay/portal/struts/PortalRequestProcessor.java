@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.model.UserTrackerPath;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
 import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
@@ -223,13 +224,13 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		// Clean up portlet objects that may have been created by defineObjects
 		// for portlets that are called directly from a Struts path
 
-		LiferayRenderRequest liferayRenderRequest =
-			(LiferayRenderRequest)LiferayPortletUtil.getLiferayPortletRequest(
+		LiferayPortletRequest liferayPortletRequest =
+			(LiferayPortletRequest)LiferayPortletUtil.getLiferayPortletRequest(
 				(PortletRequest)request.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST));
 
-		if (liferayRenderRequest != null) {
-			liferayRenderRequest.cleanUp();
+		if (liferayPortletRequest != null) {
+			liferayPortletRequest.cleanUp();
 		}
 	}
 

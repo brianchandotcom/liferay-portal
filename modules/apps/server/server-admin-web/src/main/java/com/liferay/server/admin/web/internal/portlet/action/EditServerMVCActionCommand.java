@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.portlet.LiferayActionResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.scripting.Scripting;
@@ -229,8 +229,8 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			String cmd)
 		throws Exception {
 
-		LiferayActionResponse liferayActionResponse =
-			(LiferayActionResponse)actionResponse;
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)actionResponse;
 
 		PortletSession portletSession = actionRequest.getPortletSession();
 
@@ -275,7 +275,7 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String path = convertProcess.getPath();
 
 		if (path != null) {
-			PortletURL portletURL = liferayActionResponse.createRenderURL();
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 			portletURL.setParameter("mvcRenderCommandName", path);
 			portletURL.setWindowState(WindowState.MAXIMIZED);

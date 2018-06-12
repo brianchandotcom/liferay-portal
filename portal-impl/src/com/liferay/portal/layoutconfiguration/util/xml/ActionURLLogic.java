@@ -15,8 +15,8 @@
 package com.liferay.portal.layoutconfiguration.util.xml;
 
 import com.liferay.portal.kernel.layoutconfiguration.util.xml.RuntimeLogic;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.LiferayRenderResponse;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -37,7 +37,7 @@ public class ActionURLLogic extends RuntimeLogic {
 	public static final String OPEN_TAG = "<runtime-action-url";
 
 	public ActionURLLogic(RenderResponse renderResponse) {
-		_liferayRenderResponse = (LiferayRenderResponse)renderResponse;
+		_liferayPortletResponse = (LiferayPortletResponse)renderResponse;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class ActionURLLogic extends RuntimeLogic {
 		Element root = doc.getRootElement();
 
 		LiferayPortletURL liferayPortletURL =
-			_liferayRenderResponse.createLiferayPortletURL(getLifecycle());
+			_liferayPortletResponse.createLiferayPortletURL(getLifecycle());
 
 		String portletId = root.attributeValue("portlet-name");
 
@@ -87,6 +87,6 @@ public class ActionURLLogic extends RuntimeLogic {
 
 	private static final String _LIFECYCLE = PortletRequest.ACTION_PHASE;
 
-	private final LiferayRenderResponse _liferayRenderResponse;
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

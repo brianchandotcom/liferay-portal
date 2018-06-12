@@ -37,6 +37,16 @@ public class PostgreSQLAuroraAmazonVM extends AuroraAmazonVM {
 
 	protected PostgreSQLAuroraAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
+		String dbEngineVersion, String dbInstanceClass, String dbInstanceId) {
+
+		super(
+			awsAccessKeyId, awsSecretAccessKey, dbClusterId,
+			"aurora-postgresql", dbEngineVersion, dbInstanceClass, dbInstanceId,
+			"password", "root");
+	}
+
+	protected PostgreSQLAuroraAmazonVM(
+		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbEngineVersion, String dbInstanceClass, String dbInstanceId,
 		String dbPassword, String dbUsername) {
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.search.web.internal.search.results.constants.SearchResultsPortletKeys;
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferences;
 import com.liferay.portal.search.web.internal.search.results.portlet.SearchResultsPortletPreferencesImpl;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
@@ -74,10 +75,8 @@ public class SearchResultsPortletSharedSearchContributor
 			portletSharedSearchSettings.getParameter(
 				paginationStartParameterName);
 
-		Optional<Integer> paginationStartOptional =
-			paginationStartParameterValueOptional.map(Integer::valueOf);
-
-		paginationStartOptional.ifPresent(
+		SearchOptionalUtil.copy(
+			() -> paginationStartParameterValueOptional.map(Integer::valueOf),
 			portletSharedSearchSettings::setPaginationStart);
 
 		String paginationDeltaParameterName =

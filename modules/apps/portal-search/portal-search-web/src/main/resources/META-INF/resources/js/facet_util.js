@@ -3,8 +3,8 @@ AUI.add(
 	function(A) {
 		var FacetUtil = {
 			addURLParameter: function(key, value, parameterArray) {
-				key = encodeURI(key);
-				value = encodeURI(value);
+				key = encodeURIComponent(key);
+				value = encodeURIComponent(value);
 
 				parameterArray[parameterArray.length] = [key, value].join('=');
 
@@ -46,7 +46,7 @@ AUI.add(
 			},
 
 			removeURLParameters: function(key, parameterArray) {
-				key = encodeURI(key);
+				key = encodeURIComponent(key);
 
 				var newParameters = parameterArray.filter(
 					function(item) {

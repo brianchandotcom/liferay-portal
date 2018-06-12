@@ -25,7 +25,8 @@ page import="com.liferay.portal.search.web.internal.search.results.portlet.Searc
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+<%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
+taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <portlet:defineObjects />
@@ -68,7 +69,7 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 </style>
 
 <p class="search-total-label text-default">
-	<%= searchContainer1.getTotal() %> results for <strong><%= searchResultsPortletDisplayContext.getKeywords() %></strong>
+	<%= searchContainer1.getTotal() %> results for <strong><%= HtmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()) %></strong>
 </p>
 
 <liferay-ui:search-container
@@ -187,17 +188,12 @@ com.liferay.portal.kernel.dao.search.SearchContainer<com.liferay.portal.kernel.s
 									%>
 
 										<tr>
-											<td>
+											<td style="word-break:break-all;" width="25%">
 												<strong><%= HtmlUtil.escape(searchResultFieldDisplayContext.getName()) %></strong>
-												<br />
-
-												<em>
-													<liferay-ui:message key="array" /> = <%= searchResultFieldDisplayContext.isArray() %>, <liferay-ui:message key="numeric" /> = <%= searchResultFieldDisplayContext.isNumeric() %>, <liferay-ui:message key="tokenized" /> = <%= searchResultFieldDisplayContext.isTokenized() %>
-												</em>
 											</td>
 											<td>
 												<code>
-													<%= searchResultFieldDisplayContext.getValuesToString() %>
+													<%= HtmlUtil.escape(searchResultFieldDisplayContext.getValuesToString()) %>
 												</code>
 											</td>
 										</tr>

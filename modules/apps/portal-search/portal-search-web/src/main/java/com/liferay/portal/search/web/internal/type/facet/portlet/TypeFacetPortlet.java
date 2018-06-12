@@ -22,6 +22,7 @@ import com.liferay.portal.search.facet.type.AssetEntriesFacetFactory;
 import com.liferay.portal.search.web.internal.facet.display.builder.AssetEntriesSearchFacetDisplayBuilder;
 import com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext;
 import com.liferay.portal.search.web.internal.type.facet.constants.TypeFacetPortletKeys;
+import com.liferay.portal.search.web.internal.util.SearchOptionalUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
@@ -129,10 +130,9 @@ public class TypeFacetPortlet extends MVCPortlet {
 
 		assetEntriesSearchFacetDisplayBuilder.setParameterName(parameterName);
 
-		Optional<List<String>> typesOptional = getParameterValues(
-			parameterName, portletSharedSearchResponse, renderRequest);
-
-		typesOptional.ifPresent(
+		SearchOptionalUtil.copy(
+			() -> getParameterValuesOptional(
+				parameterName, portletSharedSearchResponse, renderRequest),
 			assetEntriesSearchFacetDisplayBuilder::setParameterValues);
 
 		return assetEntriesSearchFacetDisplayBuilder.build();
@@ -152,16 +152,16 @@ public class TypeFacetPortlet extends MVCPortlet {
 		return facet.getFieldName();
 	}
 
-	protected Optional<List<String>> getParameterValues(
+	protected Optional<List<String>> getParameterValuesOptional(
 		String parameterName,
 		PortletSharedSearchResponse portletSharedSearchResponse,
 		RenderRequest renderRequest) {
 
-		Optional<String[]> parameterValuesOptional =
+		Optional<String[]> optional =
 			portletSharedSearchResponse.getParameterValues(
 				parameterName, renderRequest);
 
-		return parameterValuesOptional.map(Arrays::asList);
+		return optional.map(Arrays::asList);
 	}
 
 	@Reference

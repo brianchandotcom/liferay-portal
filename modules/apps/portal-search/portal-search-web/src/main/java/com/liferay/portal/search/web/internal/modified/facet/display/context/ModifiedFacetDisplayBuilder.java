@@ -69,11 +69,11 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 				buildCustomRangeModifiedTermDisplayContext());
 		modifiedFacetDisplayContext.setDefaultModifiedFacetTermDisplayContext(
 			buildDefaultModifiedFacetTermDisplayContext());
-		modifiedFacetDisplayContext.setRenderNothing(isRenderNothing());
-		modifiedFacetDisplayContext.setNothingSelected(isNothingSelected());
-		modifiedFacetDisplayContext.setParameterName(_parameterName);
 		modifiedFacetDisplayContext.setModifiedFacetTermDisplayContexts(
 			buildTermDisplayContexts());
+		modifiedFacetDisplayContext.setNothingSelected(isNothingSelected());
+		modifiedFacetDisplayContext.setParameterName(_parameterName);
+		modifiedFacetDisplayContext.setRenderNothing(isRenderNothing());
 
 		return modifiedFacetDisplayContext;
 	}
@@ -94,8 +94,8 @@ public class ModifiedFacetDisplayBuilder implements Serializable {
 		_locale = locale;
 	}
 
-	public void setParameterName(String paramName) {
-		_parameterName = paramName;
+	public void setParameterName(String parameterName) {
+		_parameterName = parameterName;
 	}
 
 	public void setParameterValues(String... parameterValues) {

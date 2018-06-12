@@ -24,7 +24,6 @@ import com.liferay.blogs.exception.EntrySmallImageNameException;
 import com.liferay.blogs.exception.EntrySmallImageScaleException;
 import com.liferay.blogs.exception.EntryTitleException;
 import com.liferay.blogs.exception.EntryUrlTitleException;
-import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
@@ -40,7 +39,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -981,7 +979,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public String getUniqueUrlTitle(BlogsEntry entry) throws PortalException {
+	public String getUniqueUrlTitle(BlogsEntry entry) {
 		return _getUniqueUrlTitle(entry);
 	}
 
@@ -1865,14 +1863,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	protected String getUniqueUrlTitle(
 		long entryId, long groupId, String title) {
 
-		try {
-			BlogsEntry entry = blogsEntryPersistence.fetchByPrimaryKey(entryId);
-
-			return _getUniqueUrlTitle(entry);
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
-		}
+		return _getUniqueUrlTitle(
+			blogsEntryPersistence.fetchByPrimaryKey(entryId));
 	}
 
 	protected void notifySubscribers(
@@ -2454,13 +2446,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				" in folder ", String.valueOf(folderId)));
 	}
 
-	private String _getUniqueUrlTitle(BlogsEntry entry) throws PortalException {
+	private String _getUniqueUrlTitle(BlogsEntry entry) {
 		return _getUniqueUrlTitle(entry, entry.getTitle());
 	}
 
-	private String _getUniqueUrlTitle(BlogsEntry entry, String newTitle)
-		throws PortalException {
-
+	private String _getUniqueUrlTitle(BlogsEntry entry, String newTitle) {
 		long entryId = entry.getEntryId();
 
 		String urlTitle = null;
@@ -2493,7 +2483,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			entry.getGroupId(), classNameId, entry.getEntryId(), urlTitle);
 	}
 
-	private String _getURLTitle(long entryId) throws NoSuchEntryException {
+	private String _getURLTitle(long entryId) {
 		BlogsEntry entry = blogsEntryPersistence.fetchByPrimaryKey(entryId);
 
 		if (entry != null) {

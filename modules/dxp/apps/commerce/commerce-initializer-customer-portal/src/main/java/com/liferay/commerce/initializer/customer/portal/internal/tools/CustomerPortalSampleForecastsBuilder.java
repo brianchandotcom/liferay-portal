@@ -15,7 +15,7 @@
 package com.liferay.commerce.initializer.customer.portal.internal.tools;
 
 import com.liferay.commerce.forecast.model.CommerceForecastEntryConstants;
-import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalGroupInitializer;
+import com.liferay.commerce.initializer.customer.portal.internal.CustomerPortalSiteInitializer;
 import com.liferay.commerce.initializer.customer.portal.internal.tools.util.CustomerPortalToolsUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.Time;
@@ -53,13 +53,13 @@ public class CustomerPortalSampleForecastsBuilder {
 		Path outputDirPath = Paths.get(outputDirName);
 
 		String productsJSON = CustomerPortalToolsUtil.read(
-			CustomerPortalGroupInitializer.DEPENDENCY_PATH + "products.json");
+			CustomerPortalSiteInitializer.DEPENDENCY_PATH + "products.json");
 
 		JSONArray productsJSONArray = new JSONArray(productsJSON);
 
 		for (int customerId = 0;
 			customerId <=
-				CustomerPortalGroupInitializer.ACCOUNT_ORGANIZATIONS_COUNT;
+				CustomerPortalSiteInitializer.ACCOUNT_ORGANIZATIONS_COUNT;
 			customerId++) {
 
 			_writeForecasts(

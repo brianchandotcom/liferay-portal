@@ -43,14 +43,14 @@ public class CustomerPortalLayoutsInitializer {
 
 		String json = StringUtil.read(
 			classLoader,
-			CustomerPortalGroupInitializer.DEPENDENCY_PATH + "layouts.json",
+			CustomerPortalSiteInitializer.DEPENDENCY_PATH + "layouts.json",
 			false);
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		_cpFileImporter.createLayouts(
 			jsonArray, false, classLoader,
-			CustomerPortalGroupInitializer.DEPENDENCY_PATH, serviceContext);
+			CustomerPortalSiteInitializer.DEPENDENCY_PATH, serviceContext);
 	}
 
 	@Reference

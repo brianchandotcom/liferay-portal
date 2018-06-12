@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.exception.InitializationException;
-import com.liferay.site.initializer.GroupInitializer;
+import com.liferay.site.initializer.SiteInitializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,6 +76,7 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.ServletContext;
 
+import com.liferay.site.initializer.SiteInitializer;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -84,10 +85,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "group.initializer.key=" + LotusGroupInitializer.KEY,
-	service = GroupInitializer.class
+	property = "site.initializer.key=" + LotusGroupInitializer.KEY,
+	service = SiteInitializer.class
 )
-public class LotusGroupInitializer implements GroupInitializer {
+public class LotusGroupInitializer implements SiteInitializer {
 
 	public static final String KEY = "lotus";
 

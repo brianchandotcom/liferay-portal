@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.site.initializer.GroupInitializer;
+import com.liferay.site.initializer.SiteInitializer;
 
 import java.util.List;
 
@@ -162,9 +162,9 @@ public class CustomerPortalCompanySiteInitializer
 		CustomerPortalCompanySiteInitializer.class);
 
 	@Reference(
-		target = "(group.initializer.key=" + CustomerPortalGroupInitializer.KEY + ")"
+		target = "(site.initializer.key=" + CustomerPortalSiteInitializer.KEY + ")"
 	)
-	private GroupInitializer _groupInitializer;
+	private SiteInitializer _groupInitializer;
 
 	private GroupLocalService _groupLocalService;
 	private RoleLocalService _roleLocalService;

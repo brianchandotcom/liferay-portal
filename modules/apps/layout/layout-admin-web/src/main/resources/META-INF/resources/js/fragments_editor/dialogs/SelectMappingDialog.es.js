@@ -13,9 +13,27 @@ import templates from './SelectMappingDialog.soy';
  */
 
 const COMPATIBLE_TYPES = {
-	html: ['ddm-text-html', 'text'],
-	image: ['ddm-image', 'image'],
-	text: ['text']
+	html: [
+		'ddm-date',
+		'ddm-decimal',
+		'ddm-integer',
+		'ddm-number',
+		'ddm-text-html',
+		'text'
+	],
+
+	image: [
+		'ddm-image',
+		'image'
+	],
+
+	text: [
+		'ddm-date',
+		'ddm-decimal',
+		'ddm-integer',
+		'ddm-number',
+		'text'
+	]
 };
 
 /**

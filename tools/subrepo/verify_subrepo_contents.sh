@@ -110,6 +110,7 @@ fi
 SUBREPO_SEARCH_PARAMETERS=(
 	"7.0.x:../..:modules"
 	"7.0.x-private:../../../liferay-portal-ee:modules/private"
+	"7.1.x:../..:modules"
 	"master-private:../../../liferay-portal-ee:modules/private"
 	"master:../..:modules"
 )

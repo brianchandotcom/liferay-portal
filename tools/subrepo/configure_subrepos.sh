@@ -117,6 +117,7 @@ fi
 SUBREPO_SEARCH_PARAMETERS=(
 	"7.0.x:../..:modules"
 	"7.0.x-private:../../../liferay-portal-ee:modules/private"
+	"7.1.x:../..:modules"
 	"master-private:../../../liferay-portal-ee:modules/private"
 	"master:../..:modules"
 )
@@ -187,6 +188,9 @@ do
 	elif [[ "$(printf '%s\n' "${ALL_GITREPOS[@]}" | grep "^7.0.x-private:[^:]*:${GITREPO}\$")" ]]
 	then
 		GITREPOS=("${GITREPOS[@]}" "$(printf '%s\n' "${ALL_GITREPOS[@]}" | grep "^7.0.x-private:[^:]*:${GITREPO}\$" | head -n 1)")
+	elif [[ "$(printf '%s\n' "${ALL_GITREPOS[@]}" | grep "^7.1.x-private:[^:]*:${GITREPO}\$")" ]]
+	then
+		GITREPOS=("${GITREPOS[@]}" "$(printf '%s\n' "${ALL_GITREPOS[@]}" | grep "^7.1.x-private:[^:]*:${GITREPO}\$" | head -n 1)")
 	else
 		GITREPOS=("${GITREPOS[@]}" "$(printf '%s\n' "${ALL_GITREPOS[@]}" | grep ":${GITREPO}\$" | head -n 1)")
 	fi
@@ -298,6 +302,8 @@ do
 			PROTECTED_BRANCHES="
 7.0.x
 7.0.x-private
+7.1.x
+7.1.x-private
 master
 master-private
 "
@@ -353,6 +359,9 @@ master-private
 			elif [[ "$(printf '%s\n' "${BRANCHES[@]}" | grep '^7.0.x-private$')" ]]
 			then
 				CORRECT_DEFAULT_BRANCH=7.0.x-private
+			elif [[ "$(printf '%s\n' "${BRANCHES[@]}" | grep '^7.1.x-private$')" ]]
+			then
+				CORRECT_DEFAULT_BRANCH=7.1.x-private
 			elif [[ "$(printf '%s\n' "${BRANCHES[@]}" | grep '^master$')" ]]
 			then
 				CORRECT_DEFAULT_BRANCH=master

@@ -27,7 +27,7 @@ public interface SchemaOrgConstants {
 
 	public interface Vocabulary {
 
-		public static final String WEB_SITES = "web-sites";
+		public static final String WEB_SITE = "web-site";
 
 	}
 

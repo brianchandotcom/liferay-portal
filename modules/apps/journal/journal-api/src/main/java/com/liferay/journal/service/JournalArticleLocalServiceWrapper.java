@@ -4255,6 +4255,27 @@ public class JournalArticleLocalServiceWrapper
 			oldDDMTemplateKey, newDDMTemplateKey);
 	}
 
+	/**
+	* Updates the URL title of the web content article.
+	*
+	* @param article the web content article
+	* @param urlTitle the web content article's URL title
+	* @param serviceContext the service context to be applied. Can set the
+	modification date, status date, and portlet preferences. With
+	respect to social activities, by setting the service context's
+	command to {@link Constants#UPDATE}, the invocation is considered
+	a web content update activity; otherwise it is considered a web
+	content add activity.
+	* @return the updated web content article
+	*/
+	@Override
+	public com.liferay.journal.model.JournalArticle updateUrlTitle(
+		com.liferay.journal.model.JournalArticle article, String urlTitle,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _journalArticleLocalService.updateUrlTitle(article, urlTitle,
+			serviceContext);
+	}
+
 	@Override
 	public JournalArticleLocalService getWrappedService() {
 		return _journalArticleLocalService;

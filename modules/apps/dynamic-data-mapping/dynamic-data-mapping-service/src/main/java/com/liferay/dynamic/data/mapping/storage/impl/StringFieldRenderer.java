@@ -74,7 +74,7 @@ public class StringFieldRenderer extends BaseFieldRenderer {
 
 		Serializable value = field.getValue(locale, valueIndex);
 
-		if (value == null) {
+		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
 

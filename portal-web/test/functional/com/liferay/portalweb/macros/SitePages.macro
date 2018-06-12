@@ -16,7 +16,11 @@
 			</then>
 		</if>
 
-		<execute macro="Modal#save" />
+		<for list="1,2" param="iteration">
+			<execute macro="Button#click">
+				<var name="button" value="Save" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="_clickAddPage">

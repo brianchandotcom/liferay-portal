@@ -892,3 +892,33 @@ This change corrects a best practice violation regarding
 implementation-specific details being included within an API.
 
 ---------------------------------------
+
+### Request as a map is accessible from requestMap
+- **Date:** 2018-Jun-12
+- **JIRA Ticket:** LPS-77766
+
+#### What changed?
+
+The request object is no longer accessible as a map but as an object of type
+javax.servlet.http.HttpServletRequest.
+
+#### Who is affected?
+
+This affects users with Web Content Templates that accesss request parameters
+as a map like this:
+
+    <#assign containerId = request["theme-display"]["portlet-display"]["instance-id"] >
+
+#### How should I update my code?
+
+In order to keep retrieving the request parameter values as a map, `requestMap`
+must be used instead:
+
+    <#assign containerId = requestMap["theme-display"]["portlet-display"]["instance-id"] >
+
+#### Why was this change made?
+
+This was done in order to allow Template Context contributors to work in Web
+Content templates.
+
+---------------------------------------

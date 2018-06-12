@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Objects;
+
 /**
  * @author Leonardo Barros
  */
@@ -127,6 +129,12 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 							"DDMFormInstance-com.liferay.dynamic.data." +
 								"mapping.model.DDMStructure",
 						false);
+
+					upgradeResourcePermission(
+						"com_liferay_dynamic_data_lists_form_web_portlet_" +
+							"DDLFormAdminPortlet",
+						"com_liferay_dynamic_data_mapping_form_web_portlet_" +
+							"DDMFormAdminPortlet");
 
 					updateInstanceablePortletPreferences(
 						ddmFormInstance.getFormInstanceId(), recordSetId,
@@ -277,6 +285,28 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 		actionableDynamicQuery.performActions();
 	}
 
+	protected void upgradeResourcePermission(String oldName, String newName)
+		throws Exception {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_resourcePermissionLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property nameProperty = PropertyFactoryUtil.forName("name");
+
+				dynamicQuery.add(nameProperty.eq(oldName));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod<ResourcePermission>)
+				resourcePermission -> {
+					resourcePermission.setName(newName);
+
+					if (Objects.equals(
+							resourcePermission.getPrimKey(), oldName)) {
+
+						resourcePermission.setPrimKey(newName);
+					}
 
 					_resourcePermissionLocalService.updateResourcePermission(
 						resourcePermission);

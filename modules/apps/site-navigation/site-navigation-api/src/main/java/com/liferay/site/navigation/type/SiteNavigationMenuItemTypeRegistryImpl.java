@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Pavel Savinov
  */
 @Component(immediate = true, service = SiteNavigationMenuItemTypeRegistry.class)
-public class SiteNavigationMenuItemTypeRegistry {
+public class SiteNavigationMenuItemTypeRegistryImpl {
 
 	public SiteNavigationMenuItemType getSiteNavigationMenuItemType(
 		SiteNavigationMenuItem siteNavigationMenuItem) {

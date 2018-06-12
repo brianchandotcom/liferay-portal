@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(immediate = true, service = DDMDisplayRegistry.class)
 @ProviderType
-public class DDMDisplayRegistry {
+public class DDMDisplayRegistryImpl {
 
 	public DDMDisplay getDDMDisplay(String portletId) {
 		return _getDDMDisplay(portletId);

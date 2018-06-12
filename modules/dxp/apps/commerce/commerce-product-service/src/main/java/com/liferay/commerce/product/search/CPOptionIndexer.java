@@ -63,8 +63,6 @@ public class CPOptionIndexer extends BaseIndexer<CPOption> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
 			Field.SCOPE_GROUP_ID, Field.UID, FIELD_KEY);
-		setFilterSearch(true);
-		setPermissionAware(true);
 	}
 
 	@Override

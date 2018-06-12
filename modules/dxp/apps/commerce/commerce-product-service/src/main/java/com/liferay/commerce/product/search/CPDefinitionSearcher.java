@@ -53,8 +53,6 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID, Field.NAME,
 			Field.DESCRIPTION, Field.URL,
 			CPDefinitionIndexer.FIELD_DEFAULT_IMAGE_FILE_URL);
-		setFilterSearch(false);
-		setPermissionAware(false);
 	}
 
 	@Override

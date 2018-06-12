@@ -48,7 +48,6 @@ public class CPSearcher extends BaseSearcher {
 		setDefaultSelectedFieldNames(
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID);
 		setFilterSearch(true);
-		setPermissionAware(true);
 	}
 
 	@Override

@@ -109,7 +109,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
 			Field.SCOPE_GROUP_ID, Field.UID);
 		setFilterSearch(true);
-		setPermissionAware(true);
 	}
 
 	@Override

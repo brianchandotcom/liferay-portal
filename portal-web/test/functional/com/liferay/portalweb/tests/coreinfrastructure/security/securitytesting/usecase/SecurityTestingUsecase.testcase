@@ -133,18 +133,13 @@
 
 		<execute macro="UserBar#gotoProfile" />
 
-		<execute macro="JSONUser#getUserIdByEmailAddress">
- 			<var name="userEmailAddress" value="userea@liferay.com" />
- 			<return from="userId" name="userId" />
- 		</execute>
-
 		<execute function="AssertElementNotPresent" locator1="Home#APP_MANAGER_PRTLET_CONTENT">
 			<var name="key_contentName" value="Liferay Marketplace" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Home#APP_MANAGER_PORTLET_BODY" value1="Portlet is temporarily unavailable." />
 
-		<execute function="AssertConsoleTextPresent" value1="User ${userId} must be the company administrator to perform the action" />
+		<execute function="AssertConsoleTextPresent" value1="must be the company administrator to perform the action" />
 	</command>
 
 	<command name="ValidateBeanIdentifierUserPermissions" priority="5">

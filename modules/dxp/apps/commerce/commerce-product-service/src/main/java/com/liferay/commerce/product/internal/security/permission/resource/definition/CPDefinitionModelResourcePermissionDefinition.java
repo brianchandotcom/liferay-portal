@@ -16,6 +16,7 @@ package com.liferay.commerce.product.internal.security.permission.resource.defin
 
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.internal.security.permission.resource.CPDefinitionModelResourcePermissionLogic;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
@@ -68,28 +69,14 @@ public class CPDefinitionModelResourcePermissionDefinition
 			modelResourcePermissionLogicConsumer) {
 
 		modelResourcePermissionLogicConsumer.accept(
-			new StagedModelPermissionLogic<>(
-				_stagingPermission, CPPortletKeys.CP_DEFINITIONS,
-				CPDefinition::getCPDefinitionId));
-		modelResourcePermissionLogicConsumer.accept(
-			new WorkflowedModelPermissionLogic<>(
-				_workflowPermission, modelResourcePermission,
-				_groupLocalService, CPDefinition::getCPDefinitionId));
+			new CPDefinitionModelResourcePermissionLogic(
+				_portletResourcePermission));
 	}
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
-	@Reference
-	private GroupLocalService _groupLocalService;
-
 	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private StagingPermission _stagingPermission;
-
-	@Reference
-	private WorkflowPermission _workflowPermission;
 
 }

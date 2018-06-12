@@ -6654,9 +6654,8 @@ public class JournalArticleLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateUrlTitle(
-			JournalArticle article, String urlTitle,
-			ServiceContext serviceContext)
-		throws PortalException {
+		JournalArticle article, String urlTitle,
+		ServiceContext serviceContext) {
 
 		Date now = new Date();
 

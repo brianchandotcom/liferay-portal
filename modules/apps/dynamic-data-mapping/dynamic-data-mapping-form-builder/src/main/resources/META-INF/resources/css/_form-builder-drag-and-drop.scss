@@ -36,19 +36,56 @@
 
 	.form-builder-layout .layout-row-container-row .layout-row {
 		.col.col-empty.col-empty-over, .col.lfr-initial-col {
-			background-color: $light-100;
-			border: 2px dashed $light-blue-200;
+			background-color: #F7F8F9;
+			border: 2px dashed #A7A9BC;
 			border-radius: 4px;
+			color: #A7A9BC;
+
+			&.yui3-dd-drop-over {
+				background-color: $light-100;
+				border: 2px dashed $light-blue-200;
+				color: $medium-blue;
+			}
 		}
 
-		.col.lfr-initial-col {
+		.col.col-empty.col-empty-over {
+			&.last-col {
+				margin: 0 -24px;
+			}
+
+			&.col-md-12.lfr-initial-col {
+				margin: 44px 24px !important;
+			}
+
+			&.col-md-12 {
+				margin: 0 24px;
+			}
+
+			@for $i from 1 through 11 {
+				&.col-md-#{$i}:first-child {
+					$w: $i * (100% / 12);
+					margin: 0 0 0 24px;
+					max-width: calc(#{$w} - 24px);
+				}
+			}
+		}
+
+		.col.col-empty {
 			align-items: center;
-			color: $medium-blue;
 			display: flex;
+			flex: 100%;
 			justify-content: center;
-			margin: 44px auto;
-			max-width: 1185px;
-			min-height: 56px;
+
+			&.lfr-initial-col {
+				margin: 44px 24px;
+				min-height: 56px;
+			}
+		}
+	}
+
+	.form-builder-layout .layout-row-container-row:last-child {
+		.col-empty-over {
+			margin-bottom: 20px !important;
 		}
 	}
 

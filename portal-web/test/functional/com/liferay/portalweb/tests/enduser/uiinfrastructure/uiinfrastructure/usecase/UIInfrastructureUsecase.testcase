@@ -43,7 +43,7 @@
 		</execute>
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="iw-il" />
+			<var name="locale" value="iw_IL" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
@@ -51,7 +51,7 @@
 		<execute macro="Page#viewRTLLayout" />
 
 		<execute macro="LanguagePortlet#selectLanguagePG">
-			<var name="locale" value="en-us" />
+			<var name="locale" value="en_US" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -68,7 +68,7 @@
 
 		<execute macro="PortletEntry#changeLocale">
 			<var name="fieldName" value="כותרת" />
-			<var name="locale" value="iw-IL" />
+			<var name="locale" value="iw_IL" />
 		</execute>
 
 		<execute macro="WebContent#addCP">

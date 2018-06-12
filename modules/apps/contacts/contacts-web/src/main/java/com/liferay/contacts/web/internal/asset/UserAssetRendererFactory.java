@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.directory.web.internal.asset;
+package com.liferay.contacts.web.internal.asset;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
-import com.liferay.directory.web.internal.constants.DirectoryPortletKeys;
+import com.liferay.contacts.constants.ContactsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
-import com.liferay.portal.kernel.util.PortletKeys;
 
 import javax.servlet.ServletContext;
 
@@ -37,12 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortletKeys.DIRECTORY,
-		"javax.portlet.name=" + PortletKeys.FRIENDS_DIRECTORY,
-		"javax.portlet.name=" + PortletKeys.MY_SITES_DIRECTORY,
-		"javax.portlet.name=" + PortletKeys.SITE_MEMBERS_DIRECTORY
-	},
+	property = "javax.portlet.name=" + ContactsPortletKeys.CONCTACTS_CENTER,
 	service = AssetRendererFactory.class
 )
 public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
@@ -92,7 +86,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 
 	@Override
 	public String getPortletId() {
-		return DirectoryPortletKeys.SITE_MEMBERS_DIRECTORY;
+		return ContactsPortletKeys.CONCTACTS_CENTER;
 	}
 
 	@Override
@@ -110,7 +104,7 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.directory.web)",
+		target = "(osgi.web.symbolicname=com.liferay.contacts.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

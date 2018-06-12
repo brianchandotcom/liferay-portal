@@ -97,7 +97,7 @@ public class ScopeLocatorImpl implements ScopeLocator {
 
 		Bundle bundle = getBundle(serviceReference);
 
-		Collection<LiferayOAuth2Scope> locatedScopes = new ArrayList<>(
+		Collection<LiferayOAuth2Scope> locatedScopes = new HashSet<>(
 			scopes.size());
 		Map<String, Boolean> matchCache = new HashMap<>();
 		PrefixHandler prefixHandler = prefixHandlerFactory.create(

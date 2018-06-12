@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -530,11 +531,11 @@ public class ReleaseManagerOSGiCommands {
 			int buildNumber = 0;
 			int state = ReleaseConstants.STATE_GOOD;
 
-			for (UpgradeInfo upgradeInfo : _upgradeInfos) {
-				UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
+			try {
+				_updateReleaseState(_STATE_IN_PROGRESS);
 
-				try {
-					_updateReleaseState(_STATE_IN_PROGRESS);
+				for (UpgradeInfo upgradeInfo : _upgradeInfos) {
+					UpgradeStep upgradeStep = upgradeInfo.getUpgradeStep();
 
 					upgradeStep.upgrade(
 						new DBProcessContext() {
@@ -558,28 +559,26 @@ public class ReleaseManagerOSGiCommands {
 
 					buildNumber = upgradeInfo.getBuildNumber();
 				}
-				catch (Exception e) {
-					state = ReleaseConstants.STATE_UPGRADE_FAILURE;
+			}
+			catch (Exception e) {
+				state = ReleaseConstants.STATE_UPGRADE_FAILURE;
 
-					throw new RuntimeException(e);
-				}
-				finally {
-					Release release = _releaseLocalService.fetchRelease(
-						_bundleSymbolicName);
+				ReflectionUtil.throwException(e);
+			}
+			finally {
+				Release release = _releaseLocalService.fetchRelease(
+					_bundleSymbolicName);
 
-					if ((release != null) &&
-						((buildNumber > 0) ||
-						 (state == ReleaseConstants.STATE_UPGRADE_FAILURE))) {
-
+				if (release != null) {
+					if (buildNumber > 0) {
 						release.setBuildNumber(buildNumber);
-						release.setState(state);
-
-						_releaseLocalService.updateRelease(release);
 					}
+
+					release.setState(state);
+
+					_releaseLocalService.updateRelease(release);
 				}
 			}
-
-			_updateReleaseState(ReleaseConstants.STATE_GOOD);
 
 			CacheRegistryUtil.clear();
 		}

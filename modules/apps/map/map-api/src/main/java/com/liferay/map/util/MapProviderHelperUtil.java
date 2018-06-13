@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.map.internal.util;
+package com.liferay.map.util;
 
 import com.liferay.map.constants.MapProviderWebKeys;
-import com.liferay.map.util.MapProviderHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -23,26 +22,14 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 
 import javax.portlet.PortletPreferences;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Jürgen Kappler
  */
-@Component(immediate = true, service = MapProviderHelper.class)
-public class MapProviderHelperImpl implements MapProviderHelper {
+public class MapProviderHelperUtil {
 
-	@Override
-	public String getMapProviderKey(long companyId) {
-		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(companyId);
+	public static String getMapProviderKey(
+		GroupLocalService groupLocalService, long companyId, long groupId) {
 
-		return companyPortletPreferences.getValue(
-			MapProviderWebKeys.MAP_PROVIDER_KEY, null);
-	}
-
-	@Override
-	public String getMapProviderKey(long companyId, long groupId) {
 		String companyMapProviderKey = getMapProviderKey(companyId);
 
 		Group group = groupLocalService.fetchGroup(groupId);
@@ -62,11 +49,12 @@ public class MapProviderHelperImpl implements MapProviderHelper {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
+	public static String getMapProviderKey(long companyId) {
+		PortletPreferences companyPortletPreferences =
+			PrefsPropsUtil.getPreferences(companyId);
 
-	protected GroupLocalService groupLocalService;
+		return companyPortletPreferences.getValue(
+			MapProviderWebKeys.MAP_PROVIDER_KEY, null);
+	}
 
 }

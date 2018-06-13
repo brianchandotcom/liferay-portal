@@ -15,7 +15,7 @@
 package com.liferay.portal.settings.web.internal.servlet.taglib.ui;
 
 import com.liferay.map.constants.MapProviderWebKeys;
-import com.liferay.map.util.MapProviderHelper;
+import com.liferay.map.util.MapProviderHelperUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -62,7 +62,8 @@ public class CompanySettingsMapsFormNavigatorEntry
 
 		request.setAttribute(
 			MapProviderWebKeys.MAP_PROVIDER_KEY,
-			_mapProviderHelper.getMapProviderKey(themeDisplay.getCompanyId()));
+			MapProviderHelperUtil.getMapProviderKey(
+				themeDisplay.getCompanyId()));
 
 		super.include(request, response);
 	}
@@ -80,12 +81,5 @@ public class CompanySettingsMapsFormNavigatorEntry
 	protected String getJspPath() {
 		return "/maps.jsp";
 	}
-
-	@Reference(unbind = "-")
-	protected void setMapProviderHelper(MapProviderHelper mapProviderHelper) {
-		_mapProviderHelper = mapProviderHelper;
-	}
-
-	private MapProviderHelper _mapProviderHelper;
 
 }

@@ -15,10 +15,10 @@
 package com.liferay.map.taglib.internal.servlet;
 
 import com.liferay.map.MapProvider;
-import com.liferay.map.util.MapProviderHelper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.util.Collection;
 
@@ -37,12 +37,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class ServletContextUtil {
 
-	public static MapProvider getMapProvider(String mapProviderKey) {
-		return _instance._mapProviders.getService(mapProviderKey);
+	public static GroupLocalService getGroupLocalService() {
+		return _instance._groupLocalService;
 	}
 
-	public static final MapProviderHelper getMapProviderHelper() {
-		return _instance._getMapProviderHelper();
+	public static MapProvider getMapProvider(String mapProviderKey) {
+		return _instance._mapProviders.getService(mapProviderKey);
 	}
 
 	public static Collection<MapProvider> getMapProviders() {
@@ -84,20 +84,11 @@ public class ServletContextUtil {
 		_mapProviders.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setMapProviderHelper(MapProviderHelper mapProviderHelper) {
-		_mapProviderHelper = mapProviderHelper;
-	}
-
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.map.taglib)", unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
-	}
-
-	private MapProviderHelper _getMapProviderHelper() {
-		return _mapProviderHelper;
 	}
 
 	private ServletContext _getServletContext() {
@@ -106,7 +97,9 @@ public class ServletContextUtil {
 
 	private static ServletContextUtil _instance;
 
-	private MapProviderHelper _mapProviderHelper;
+	@Reference
+	private GroupLocalService _groupLocalService;
+
 	private ServiceTrackerMap<String, MapProvider> _mapProviders;
 	private ServletContext _servletContext;
 

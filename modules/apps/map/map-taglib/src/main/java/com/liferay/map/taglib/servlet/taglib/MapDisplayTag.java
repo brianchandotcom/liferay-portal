@@ -16,7 +16,7 @@ package com.liferay.map.taglib.servlet.taglib;
 
 import com.liferay.map.MapProvider;
 import com.liferay.map.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.map.util.MapProviderHelper;
+import com.liferay.map.util.MapProviderHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -121,10 +121,8 @@ public class MapDisplayTag extends IncludeTag {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			MapProviderHelper mapProviderHelper =
-				ServletContextUtil.getMapProviderHelper();
-
-			mapProdiverKey = mapProviderHelper.getMapProviderKey(
+			mapProdiverKey = MapProviderHelperUtil.getMapProviderKey(
+				ServletContextUtil.getGroupLocalService(),
 				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId());
 		}
 

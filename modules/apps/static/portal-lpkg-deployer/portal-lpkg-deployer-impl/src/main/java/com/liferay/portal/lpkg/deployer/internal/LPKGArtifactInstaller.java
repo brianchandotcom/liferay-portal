@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.deployer.internal;
+package com.liferay.portal.lpkg.deployer.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;

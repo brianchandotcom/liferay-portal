@@ -8,8 +8,13 @@
 		}
 	}
 
-	.dropdown svg {
-		font-size: 1rem;
+	.dropdown {
+		button:not(:hover):not(:active):not(:focus) {
+			background: none;
+		}
+		svg {
+			font-size: 1rem;
+		}
 	}
 
 	.lfr-icon-item {

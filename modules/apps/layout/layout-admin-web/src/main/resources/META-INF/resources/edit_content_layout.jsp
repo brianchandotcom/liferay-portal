@@ -35,6 +35,8 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(selLayout.getName(locale));
 %>
 
+<liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-created-succesfully") %>' />
+
 <liferay-editor:resources
 	editorName="alloyeditor"
 />

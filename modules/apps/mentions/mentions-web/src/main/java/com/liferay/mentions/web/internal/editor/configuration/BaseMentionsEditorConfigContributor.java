@@ -61,15 +61,14 @@ public class BaseMentionsEditorConfigContributor
 		triggerJSONObject.put("term", "@");
 		triggerJSONObject.put("tplReplace", "{mention}");
 
-		StringBundler sb = new StringBundler(5);
+		String tpl = StringBundler.concat(
+			"<div class=\"autofit-row\">",
+			"<div class=\"autofit-col inline-item-before\">{portraitHTML}",
+			"</div><div class=\"autofit-col autofit-col-expand\" ",
+			"style=\"margin-top: .35rem;\">",
+			"<h4>{fullName} <small>@{screenName}</small></h4></div></div>");
 
-		sb.append("<div class=\"nameplate\"><div class=\"nameplate-field\">");
-		sb.append("<div class=\"user-icon\"><img class=\"img-circle\" ");
-		sb.append("src=\"{portraitURL}\" height=\"32px\" width=\"32px\">");
-		sb.append("</img></div></div><div class=\"nameplate-content\"><h4>");
-		sb.append("{fullName} <small>@{screenName}</small></h4></div></div>");
-
-		triggerJSONObject.put("tplResults", sb.toString());
+		triggerJSONObject.put("tplResults", tpl);
 
 		PortletURL autoCompleteUserURL =
 			requestBackedPortletURLFactory.createResourceURL(

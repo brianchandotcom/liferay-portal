@@ -37,8 +37,46 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 
+	created() {
+		const addedTab = this.sidebarTabs.find(tab => tab.id === ADDED_TAB_ID);
+
+		if (addedTab) {
+			this._addedTabEnabled = addedTab.enabled;
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
 	dispose() {
 		this._disposeTabEventProxy();
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	prepareStateForRender(state) {
+		return Object.assign(
+			{},
+			state,
+			{
+				sidebarTabs: state.sidebarTabs.map(
+					sidebarTab => {
+						return sidebarTab.id !== ADDED_TAB_ID ?
+							sidebarTab :
+							Object.assign(
+								{},
+								sidebarTab,
+								{enabled: state._addedTabEnabled}
+							);
+					}
+				)
+			}
+		);
 	}
 
 	/**
@@ -72,17 +110,7 @@ class FragmentsEditorSidebar extends Component {
 	 */
 
 	toggleAddedTab(enabled) {
-		this.sidebarTabs = this.sidebarTabs.map(
-			sidebarTab => {
-				return sidebarTab.id !== ADDED_TAB_ID ?
-					sidebarTab :
-					Object.assign(
-						{},
-						sidebarTab,
-						{enabled}
-					);
-			}
-		);
+		this._addedTabEnabled = !!enabled;
 
 		if (!enabled) {
 			this._selectedTab = DEFAULT_TAB_ID;
@@ -183,6 +211,21 @@ FragmentsEditorSidebar.STATE = {
 			}
 		)
 	).required(),
+
+	/**
+	 * Whether to show added tab or not
+	 * @default null
+	 * @instance
+	 * @memberOf FragmentsEditorSidebar
+	 * @private
+	 * @review
+	 * @type {bool}
+	 */
+
+	_addedTabEnabled: Config
+		.bool()
+		.internal()
+		.value(null),
 
 	/**
 	 * Tab selected inside sidebar

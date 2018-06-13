@@ -1,6 +1,0 @@
-mergeLang {
-	sourceDirs = [
-		"../../dynamic-data-mapping/dynamic-data-mapping-lang/src/main/resources/content",
-		"src/main/resources/content"
-	]
-}

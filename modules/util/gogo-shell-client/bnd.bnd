@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Gogo Shell Client
-Bundle-SymbolicName: com.liferay.gogo.shell.client
-Bundle-Version: 1.0.1
-Export-Package: com.liferay.gogo.shell.client

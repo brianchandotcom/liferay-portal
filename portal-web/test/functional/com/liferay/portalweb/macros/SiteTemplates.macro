@@ -66,9 +66,55 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<if>
+			<contains string="${sitePageType}" substring="{sitePageType}" />
+			<then>
+				<var name="sitePageType" value="Widget Page" />
+			</then>
+		</if>
+
+		<var name="rowEntry" value="${sitePageType}" />
+
+		<if>
+			<not>
+				<contains string="${pageTemplateName}" substring="{pageTemplateName}" />
+			</not>
+			<then>
+				<execute macro="Navigator#gotoNavItem">
+					<var name="navItem" value="Global Templates" />
+				</execute>
+
+				<var name="rowEntry" value="${pageTemplateName}" />
+
+				<execute macro="LexiconEntry#gotoEntry">
+					<var name="rowEntry" value="${rowEntry}" />
+				</execute>
+			</then>
+			<else>
+				<execute macro="Card#clickSitePagesCardLink">
+					<var name="cardName" value="${rowEntry}" />
+				</execute>
+			</else>
+		</if>
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageName}" />
 		</execute>
+
+		<if>
+			<equals arg1="${hideFromNavMenu}" arg2="true" />
+			<then>
+				<execute function="Uncheck" locator1="Checkbox#ADD_TO_NAVIGATION_MENU" />
+			</then>
+		</if>
+
+		<for list="1,2" param="iteration">
+			<execute macro="Button#click">
+				<var name="button" value="Save" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="allowChangesToPageTemplateCP">

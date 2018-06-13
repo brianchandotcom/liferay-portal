@@ -21,12 +21,14 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -200,6 +202,19 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new String[] {
+					DDMFormInstance.class.getName(),
+					DDMFormInstanceRecord.class.getName()
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery formInstanceActionableDynamicQuery =
 			_formInstanceStagedModelRepository.getExportActionableDynamicQuery(
 				portletDataContext);
@@ -245,5 +260,8 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 		_formInstanceRecordStagedModelRepository;
 	private StagedModelRepository<DDMFormInstance>
 		_formInstanceStagedModelRepository;
+
+	@Reference
+	private Staging _staging;
 
 }

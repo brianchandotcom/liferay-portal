@@ -15,11 +15,13 @@
 package com.liferay.mobile.device.rules.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.mobile.device.rules.constants.MDRConstants;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRAction;
@@ -178,6 +180,20 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new String[] {
+					MDRAction.class.getName(), MDRRule.class.getName(),
+					MDRRuleGroup.class.getName(),
+					MDRRuleGroupInstance.class.getName()
+				});
+
+			return;
+		}
+
 		ExportActionableDynamicQuery actionsExportActionableDynamicQuery =
 			_mdrActionLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
@@ -252,5 +268,8 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.message.boards.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
@@ -22,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBPortletKeys;
@@ -256,6 +258,20 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new String[] {
+					MBBan.class.getName(), MBCategory.class.getName(),
+					MBMessage.class.getName(), MBThread.class.getName(),
+					MBThreadFlag.class.getName()
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery banActionableDynamicQuery =
 			_mbBanLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
@@ -392,5 +408,8 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 	private MBStatsUserLocalService _mbStatsUserLocalService;
 	private MBThreadFlagLocalService _mbThreadFlagLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

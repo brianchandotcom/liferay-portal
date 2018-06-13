@@ -15,12 +15,14 @@
 package com.liferay.polls.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.polls.constants.PollsConstants;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.model.PollsChoice;
@@ -192,6 +194,19 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new String[] {
+					PollsChoice.class.getName(), PollsQuestion.class.getName(),
+					PollsVote.class.getName()
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery choiceActionableDynamicQuery =
 			_pollsChoiceLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
@@ -240,5 +255,8 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 	private PollsChoiceLocalService _pollsChoiceLocalService;
 	private PollsQuestionLocalService _pollsQuestionLocalService;
 	private PollsVoteLocalService _pollsVoteLocalService;
+
+	@Reference
+	private Staging _staging;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.wiki.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -22,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -211,6 +213,18 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new String[] {
+					WikiNode.class.getName(), WikiPage.class.getName()
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery nodeActionableDynamicQuery =
 			_wikiNodeLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
@@ -247,6 +261,10 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 	private MultiVMPool _multiVMPool;
 
 	private PortalCache<?, ?> _portalCache;
+
+	@Reference
+	private Staging _staging;
+
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiPageLocalService _wikiPageLocalService;
 

@@ -16,12 +16,14 @@ package com.liferay.knowledge.base.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -205,6 +207,19 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new String[] {
+					KBArticle.class.getName(), KBComment.class.getName(),
+					KBTemplate.class.getName()
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery kbArticleActionableDynamicQuery =
 			_kbArticleLocalService.getExportActionableDynamicQuery(
 				portletDataContext);
@@ -307,5 +322,8 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 	private KBFolderLocalService _kbFolderLocalService;
 	private KBTemplateLocalService _kbTemplateLocalService;
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 }

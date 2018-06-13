@@ -16,9 +16,11 @@ package com.liferay.dynamic.data.mapping.data.provider.web.internal.exportimport
 
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -122,6 +124,16 @@ public class DDMDataProviderPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new String[] {DDMDataProviderInstance.class.getName()});
+
+			return;
+		}
+
 		ActionableDynamicQuery entryExportActionableDynamicQuery =
 			_ddmDataProviderInstanceStagedModelRepository.
 				getExportActionableDynamicQuery(portletDataContext);
@@ -134,5 +146,8 @@ public class DDMDataProviderPortletDataHandler extends BasePortletDataHandler {
 	)
 	private StagedModelRepository<DDMDataProviderInstance>
 		_ddmDataProviderInstanceStagedModelRepository;
+
+	@Reference
+	private Staging _staging;
 
 }

@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.portlet.PortletDependencyFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
@@ -2043,6 +2044,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			GetterUtil.getBoolean(
 				portletElement.elementText("include"),
 				portletModel.isInclude()));
+		portletModel.setPortletDependencyCssEnabled(
+			GetterUtil.getBoolean(
+				portletElement.elementText("portlet-dependency-css-enabled"),
+				portletModel.isPortletDependencyCssEnabled()));
+		portletModel.setPortletDependencyJavaScriptEnabled(
+			GetterUtil.getBoolean(
+				portletElement.elementText(
+					"portlet-dependency-javascript-enabled"),
+				portletModel.isPortletDependencyJavaScriptEnabled()));
 
 		if (Validator.isNull(servletContextName)) {
 			portletModel.setReady(true);
@@ -2455,6 +2465,23 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				GetterUtil.getLong(
 					multipartConfigElement.elementText("max-request-size"),
 					-1L));
+		}
+
+		for (Element dependencyElement :
+				portletElement.elements("dependency")) {
+
+			String name = GetterUtil.getString(
+				dependencyElement.elementText("name"));
+
+			String scope = GetterUtil.getString(
+				dependencyElement.elementText("scope"));
+
+			String version = GetterUtil.getString(
+				dependencyElement.elementText("version"));
+
+			portletModel.addPortletDependency(
+				PortletDependencyFactoryUtil.createPortletDependency(
+					name, scope, version));
 		}
 
 		portletsMap.put(portletId, portletModel);

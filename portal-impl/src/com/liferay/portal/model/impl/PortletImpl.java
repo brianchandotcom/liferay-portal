@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.portlet.PortletDependency;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.poller.PollerProcessor;
@@ -135,6 +136,9 @@ public class PortletImpl extends PortletBaseImpl {
 		_initParams = new HashMap<>();
 		_portletFilters = new LinkedHashMap<>();
 		_portletModes = new HashMap<>();
+		_portletDependencies = new ArrayList<>();
+		_portletDependencyCssEnabled = true;
+		_portletDependencyJavaScriptEnabled = true;
 		_roleMappers = new LinkedHashMap<>();
 		_rootPortlet = this;
 		_schedulerEntries = new ArrayList<>();
@@ -195,7 +199,10 @@ public class PortletImpl extends PortletBaseImpl {
 		List<String> footerPortletJavaScript, String cssClassWrapper,
 		boolean addDefaultResource, String roles, Set<String> unlinkedRoles,
 		Map<String, String> roleMappers, boolean system, boolean active,
-		boolean include, Map<String, String> initParams, Integer expCache,
+		boolean include, boolean portletDependencyCssEnabled,
+		boolean portletDependencyJavaScriptEnabled,
+		List<PortletDependency> portletDependencies,
+		Map<String, String> initParams, Integer expCache,
 		boolean asyncSupported, int multipartFileSizeThreshold,
 		String multipartLocation, long multipartMaxFileSize,
 		long multipartMaxRequestSize, Map<String, Set<String>> portletModes,
@@ -297,6 +304,10 @@ public class PortletImpl extends PortletBaseImpl {
 		_roleMappers = roleMappers;
 		_system = system;
 		_include = include;
+		_portletDependencyCssEnabled = portletDependencyCssEnabled;
+		_portletDependencyJavaScriptEnabled =
+			portletDependencyJavaScriptEnabled;
+		_portletDependencies = portletDependencies;
 		_initParams = initParams;
 		_expCache = expCache;
 		_asyncSupported = asyncSupported;
@@ -321,6 +332,16 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public void addApplicationType(ApplicationType applicationType) {
 		_applicationTypes.add(applicationType);
+	}
+
+	/**
+	 * Adds a portlet JS/CSS resource dependency.
+	 *
+	 * @param portletDependency a portlet JS/CSS resource dependency
+	 */
+	@Override
+	public void addPortletDependency(PortletDependency portletDependency) {
+		_portletDependencies.add(portletDependency);
 	}
 
 	/**
@@ -424,7 +445,9 @@ public class PortletImpl extends PortletBaseImpl {
 			getFooterPortalJavaScript(), getFooterPortletJavaScript(),
 			getCssClassWrapper(), isAddDefaultResource(), getRoles(),
 			getUnlinkedRoles(), getRoleMappers(), isSystem(), isActive(),
-			isInclude(), getInitParams(), getExpCache(), isAsyncSupported(),
+			isInclude(), isPortletDependencyCssEnabled(),
+			isPortletDependencyJavaScriptEnabled(), getPortletDependencies(),
+			getInitParams(), getExpCache(), isAsyncSupported(),
 			getMultipartFileSizeThreshold(), getMultipartLocation(),
 			getMultipartMaxFileSize(), getMultipartMaxRequestSize(),
 			getPortletModes(), getWindowStates(), getSupportedLocales(),
@@ -1415,6 +1438,16 @@ public class PortletImpl extends PortletBaseImpl {
 		}
 
 		return portletDataHandlerInstances.get(0);
+	}
+
+	/**
+	 * Returns the list of portlet JS/CSS resource dependencies.
+	 *
+	 * @return the list of portlet JS/CSS resource dependencies.
+	 */
+	@Override
+	public List<PortletDependency> getPortletDependencies() {
+		return _portletDependencies;
 	}
 
 	/**
@@ -2608,6 +2641,32 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Returns <code>true</code> if CSS resource dependencies added via
+	 * portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	 * to the head of the portal page.
+	 *
+	 * @return <code>true</code> if CSS resource dependencies added via
+	 * portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	 * to the head of the portal page
+	 */
+	public boolean isPortletDependencyCssEnabled() {
+		return _portletDependencyCssEnabled;
+	}
+
+	/**
+	 * Returns <code>true</code> if JavaScript resource dependencies added via
+	 * portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	 * to the head of the portal page.
+	 *
+	 * @return <code>true</code> if JavaScript resource dependencies added via
+	 * portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	 * to the head of the portal page
+	 */
+	public boolean isPortletDependencyJavaScriptEnabled() {
+		return _portletDependencyJavaScriptEnabled;
+	}
+
+	/**
 	 * Returns <code>true</code> if preferences are shared across the entire
 	 * company.
 	 *
@@ -3497,6 +3556,39 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public void setPortletDataHandlerClass(String portletDataHandlerClass) {
 		_portletDataHandlerClass = portletDataHandlerClass;
+	}
+
+	/**
+	 * Set to <code>true</code> if the CSS resource dependencies added via
+	 * portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	 * to the head of the portal page.
+	 *
+	 * @param portletDependencyCssEnabled boolean value for whether the
+	 *        CSS resource dependencies added via portlet.xml, @Dependency, or
+	 *        HeaderResponse.addDependency are to be added to the head of the
+	 *        portal page
+	 */
+	public void setPortletDependencyCssEnabled(
+		boolean portletDependencyCssEnabled) {
+
+		_portletDependencyCssEnabled = portletDependencyCssEnabled;
+	}
+
+	/**
+	 * Set to <code>true</code> if the JavaScript resource dependencies added
+	 * via portlet.xml, @Dependency, or HeaderResponse.addDependency are to be
+	 * added to the head of the portal page.
+	 *
+	 * @param portletDependencyJavaScriptEnabled boolean value for whether
+	 *        the JavaScript resource dependencies added via portlet.xml,
+	 *        @Dependency, or HeaderResponse.addDependency are to be added to
+	 *        the head of the portal page
+	 */
+	public void setPortletDependencyJavaScriptEnabled(
+		boolean portletDependencyJavaScriptEnabled) {
+
+		_portletDependencyJavaScriptEnabled =
+			portletDependencyJavaScriptEnabled;
 	}
 
 	/**
@@ -4500,6 +4592,25 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The name of the portlet data handler class of the portlet.
 	 */
 	private String _portletDataHandlerClass;
+
+	/**
+	 * The client-side dependencies associated with the portlet.
+	 */
+	private List<PortletDependency> _portletDependencies;
+
+	/**
+	 * <code>True</code> if CSS resource dependencies added via portlet.xml,
+	 * @Dependency, or HeaderResponse.addDependency are to be added to the head
+	 * of the portal page.
+	 */
+	private boolean _portletDependencyCssEnabled;
+
+	/**
+	 * <code>True</code> if JavaScript resource dependencies added via
+	 * portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	 * to the head of the portal page.
+	 */
+	private boolean _portletDependencyJavaScriptEnabled;
 
 	/**
 	 * The filters of the portlet.

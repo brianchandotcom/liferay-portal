@@ -131,7 +131,7 @@ public class AddContentLayoutMVCActionCommand
 			}
 
 			jsonObject.put(
-				"redirectURL", getRedirectURL(actionResponse, layout));
+				"redirectURL", getContentRedirectURL(actionResponse, layout));
 
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");

@@ -40,6 +40,7 @@ import com.liferay.portal.util.PropsValues;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -122,8 +123,13 @@ public class AddSimpleLayoutMVCActionCommand
 			MultiSessionMessages.add(
 				actionRequest, portletResource + "layoutAdded", layout);
 
-			jsonObject.put(
-				"redirectURL", getRedirectURL(actionResponse, layout));
+			String redirectURL = getRedirectURL(actionResponse, layout);
+
+			if (Objects.equals(type, "content")) {
+				redirectURL = getContentRedirectURL(actionResponse, layout);
+			}
+
+			jsonObject.put("redirectURL", redirectURL);
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

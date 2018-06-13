@@ -402,6 +402,7 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 		"http://repository-cdn.liferay.com/nexus/content/groups/public/",
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public/",
+		"https://repository.liferay.com/nexus/content/groups/public/",
 		"https://repository-cdn.liferay.com/nexus/content/groups/public/"
 	};
 

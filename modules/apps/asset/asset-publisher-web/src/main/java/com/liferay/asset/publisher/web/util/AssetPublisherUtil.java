@@ -694,6 +694,8 @@ public class AssetPublisherUtil {
 		Map<String, Serializable> attributes =
 			assetPublisherDisplayContext.getAttributes();
 
+		attributes.put("filterExpired", true);
+
 		return getAssetEntryResults(
 			searchContainer, assetEntryQuery, layout, portletPreferences,
 			portletName, locale, timeZone, companyId, scopeGroupId, userId,

@@ -94,6 +94,8 @@ public class SearchRequestImpl implements SearchRequest {
 
 		searchContext.setAttribute("paginationType", "more");
 
+		searchContext.setAttribute("filterExpired", true);
+
 		return searchContext;
 	}
 

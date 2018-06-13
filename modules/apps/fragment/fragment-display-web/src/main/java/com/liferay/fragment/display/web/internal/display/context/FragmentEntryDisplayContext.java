@@ -157,6 +157,9 @@ public class FragmentEntryDisplayContext {
 
 		SoyContext soyContext = SoyContextFactoryUtil.createSoyContext();
 
+		soyContext.put(
+			"defaultEditorConfigurations", _getDefaultConfigurations());
+
 		PortletURL editFragmentEntryLinkURL = _renderResponse.createActionURL();
 
 		editFragmentEntryLinkURL.setParameter(
@@ -164,10 +167,8 @@ public class FragmentEntryDisplayContext {
 			"/fragment_display/edit_fragment_entry_link");
 
 		soyContext.put(
-			"defaultEditorConfigurations", _getDefaultConfigurations());
-
-		soyContext.put(
 			"editFragmentEntryLinkURL", editFragmentEntryLinkURL.toString());
+
 		soyContext.put("fragmentEntryLink", _getSoyContextFragmentEntryLink());
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
@@ -234,6 +235,8 @@ public class FragmentEntryDisplayContext {
 				Collections.emptyMap(), themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_renderRequest));
 
+		configurations.put("text", editorConfiguration.getData());
+
 		EditorConfiguration richTextEditorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				PortletIdCodec.decodePortletName(portletDisplay.getId()),
@@ -242,8 +245,6 @@ public class FragmentEntryDisplayContext {
 				RequestBackedPortletURLFactoryUtil.create(_renderRequest));
 
 		configurations.put("rich-text", richTextEditorConfiguration.getData());
-
-		configurations.put("text", editorConfiguration.getData());
 
 		return configurations;
 	}

@@ -116,10 +116,8 @@ public class FragmentsEditorDisplayContext {
 		soyContext.put(
 			"classNameId", PortalUtil.getClassNameId(Layout.class.getName()));
 		soyContext.put("classPK", _themeDisplay.getPlid());
-
 		soyContext.put(
 			"defaultEditorConfigurations", _getDefaultConfigurations());
-
 		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
 		soyContext.put(
 			"deleteFragmentEntryLinkURL",
@@ -176,6 +174,8 @@ public class FragmentsEditorDisplayContext {
 				Collections.emptyMap(), _themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_request));
 
+		configurations.put("text", editorConfiguration.getData());
+
 		EditorConfiguration richTextEditorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				PortletIdCodec.decodePortletName(portletDisplay.getId()),
@@ -184,8 +184,6 @@ public class FragmentsEditorDisplayContext {
 				RequestBackedPortletURLFactoryUtil.create(_request));
 
 		configurations.put("rich-text", richTextEditorConfiguration.getData());
-
-		configurations.put("text", editorConfiguration.getData());
 
 		return configurations;
 	}

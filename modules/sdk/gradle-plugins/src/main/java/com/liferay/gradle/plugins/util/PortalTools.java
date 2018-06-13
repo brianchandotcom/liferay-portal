@@ -153,10 +153,7 @@ public class PortalTools {
 		ClassLoader classLoader = PortalTools.class.getClassLoader();
 
 		try {
-			Properties properties = _populateVersionsMap(
-				classLoader, null, null);
-
-			_populateVersionsMap(classLoader, PORTAL_VERSION_7_0_X, properties);
+			_populateVersionsMap(classLoader, null, null);
 		}
 		catch (IOException ioe) {
 			throw new ExceptionInInitializerError(ioe);

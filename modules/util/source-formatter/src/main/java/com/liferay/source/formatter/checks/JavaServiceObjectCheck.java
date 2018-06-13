@@ -23,7 +23,6 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.FileUtil;
-import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import java.io.File;
 
@@ -313,8 +312,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	private void _populateServiceXMLElements(String dirName, int maxDepth)
 		throws Exception {
 
-		File directory = SourceFormatterUtil.getFile(
-			getBaseDirName(), dirName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+		File directory = getFile(dirName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
 		if (directory == null) {
 			return;

@@ -117,8 +117,9 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 			}
 
 			for (Organization organization : organizationsTree) {
-				String treePath = StringUtil.quote(
-					organization.buildTreePath(), StringPool.STAR);
+				String treePath = organization.buildTreePath();
+
+				treePath = StringUtil.quote(treePath, StringPool.STAR);
 
 				WildcardQuery wildcardQuery = new WildcardQueryImpl(
 					Field.TREE_PATH, treePath);

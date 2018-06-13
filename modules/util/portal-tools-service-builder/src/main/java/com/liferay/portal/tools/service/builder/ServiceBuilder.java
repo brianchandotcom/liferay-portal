@@ -612,6 +612,8 @@ public class ServiceBuilder {
 					"Unable to parse DTD version for " + inputFileName);
 			}
 
+			_compatProperties = _getCompatProperties(matcher.group(1));
+
 			Element rootElement = document.getRootElement();
 
 			String packagePath = rootElement.attributeValue("package-path");
@@ -983,6 +985,10 @@ public class ServiceBuilder {
 		}
 
 		return sb.toString();
+	}
+
+	public String getCompatProperty(String key) {
+		return _compatProperties.getProperty(key);
 	}
 
 	public String getCreateMappingTableSQL(EntityMapping entityMapping)
@@ -4428,6 +4434,21 @@ public class ServiceBuilder {
 			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
+	private Properties _getCompatProperties(String version) {
+		Properties properties = new Properties();
+
+		try (InputStream is = ServiceBuilder.class.getResourceAsStream(
+				"dependencies/" + version + "/compatibility.properties")) {
+
+			properties.load(is);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		return properties;
+	}
+
 	private Map<String, Object> _getContext() throws TemplateModelException {
 		BeansWrapper beansWrapper = BeansWrapper.getDefaultInstance();
 
@@ -7103,6 +7124,7 @@ public class ServiceBuilder {
 	private long _buildNumber;
 	private boolean _buildNumberIncrement;
 	private boolean _commercialPlugin;
+	private Properties _compatProperties;
 	private String _currentTplName;
 	private int _databaseNameMaxLength = 30;
 	private Version _dtdVersion;
@@ -7119,6 +7141,7 @@ public class ServiceBuilder {
 	private boolean _osgiModule;
 	private String _outputPath;
 	private String _packagePath;
+	private Pattern _pattern;
 	private String _pluginName;
 	private String _portletShortName = StringPool.BLANK;
 	private String _propsUtil;

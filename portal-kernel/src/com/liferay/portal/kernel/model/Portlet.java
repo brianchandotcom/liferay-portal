@@ -1418,24 +1418,34 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public boolean isPopUpPrint();
 
 	/**
-	* Returns <code>true</code> if CSS resource dependencies added via
-	* portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
-	* to the head of the portal page.
+	* Returns <code>true</code> if the CSS resource dependencies that are
+	* specified in portlet.xml, @{@link javax.portlet.annotations.Dependency},
+	* {@link javax.portlet.HeaderResponse#addDependency(String, String,
+	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
+	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @return <code>true</code> if CSS resource dependencies added via
-	portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
-	to the head of the portal page
+	* @return <code>true</code> if the CSS resource dependencies that are
+	specified in portlet.xml, @{@link javax.portlet.annotations.Dependency},
+	{@link javax.portlet.HeaderResponse#addDependency(String, String,
+	String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
+	String, String, String)} are to be referenced in the page's header
 	*/
 	public boolean isPortletDependencyCssEnabled();
 
 	/**
-	* Returns <code>true</code> if JavaScript resource dependencies added via
-	* portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
-	* to the head of the portal page.
+	* Returns <code>true</code> if the JavaScript resource dependencies that
+	* are specified in portlet.xml,
 	*
-	* @return <code>true</code> if JavaScript resource dependencies added via
-	portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
-	to the head of the portal page
+	* @{@link javax.portlet.annotations.Dependency},
+	{@link javax.portlet.HeaderResponse#addDependency(String, String,
+	String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
+	String, String, String)} are to be referenced in the page's header.
+	* @return <code>true</code> if the JavaScript resource dependencies that
+	are specified in portlet.xml,
+	* @{@link javax.portlet.annotations.Dependency},
+	{@link javax.portlet.HeaderResponse#addDependency(String, String,
+	String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
+	String, String, String)} are to be referenced in the page's header
 	*/
 	public boolean isPortletDependencyJavaScriptEnabled();
 
@@ -2085,27 +2095,37 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public void setPortletDataHandlerClass(String portletDataHandlerClass);
 
 	/**
-	* Set to <code>true</code> if the CSS resource dependencies added via
-	* portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
-	* to the head of the portal page.
+	* Set to <code>true</code> if the CSS resource dependencies that are
+	* specified in portlet.xml, @{@link javax.portlet.annotations.Dependency},
+	* {@link javax.portlet.HeaderResponse#addDependency(String, String,
+	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
+	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @param portletDependencyCssEnabled boolean value for whether the
-	CSS resource dependencies added via portlet.xml, @Dependency, or
-	HeaderResponse.addDependency are to be added to the head of the
-	portal page
+	* @param portletDependencyCssEnabled boolean value for whether the CSS
+	resource dependencies that are specified in portlet.xml,
+	* @{@link javax.portlet.annotations.Dependency},
+	{@link javax.portlet.HeaderResponse#addDependency(String, String,
+	String)}, or {@link javax.portlet.HeaderResponse#addDependency(
+	String, String, String, String)} are to be referenced in the
+	page's header
 	*/
 	public void setPortletDependencyCssEnabled(
 		boolean portletDependencyCssEnabled);
 
 	/**
-	* Set to <code>true</code> if the JavaScript resource dependencies added
-	* via portlet.xml, @Dependency, or HeaderResponse.addDependency are to be
-	* added to the head of the portal page.
+	* Set to <code>true</code> if the JavaScript resource dependencies that are
+	* specified in portlet.xml, @{@link javax.portlet.annotations.Dependency},
+	* {@link javax.portlet.HeaderResponse#addDependency(String, String,
+	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
+	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @param portletDependencyJavaScriptEnabled boolean value for whether
-	the JavaScript resource dependencies added via portlet.xml,
-	* @Dependency, or HeaderResponse.addDependency are to be added to
-	the head of the portal page
+	* @param portletDependencyJavaScriptEnabled boolean value for whether the
+	JavaScript resource dependencies that are specified in
+	portlet.xml, @{@link javax.portlet.annotations.Dependency},
+	{@link javax.portlet.HeaderResponse#addDependency(String, String,
+	String)}, or {@link javax.portlet.HeaderResponse#addDependency(
+	String, String, String, String)} are to be referenced in the
+	page's header
 	*/
 	public void setPortletDependencyJavaScriptEnabled(
 		boolean portletDependencyJavaScriptEnabled);

@@ -12,74 +12,68 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.internal.upgrade.v1_0_2;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3;
 
-import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 /**
- * @author Adam Brandizzi
+ * @author Pedro Queiroz
  */
-public class UpgradeDDLRecordSetSettings extends UpgradeProcess {
+public class UpgradeDDMFormInstanceSettings extends UpgradeProcess {
 
-	public UpgradeDDLRecordSetSettings(JSONFactory jsonFactory) {
+	public UpgradeDDMFormInstanceSettings(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
 
-	protected String addRequireAuthenticationSetting(
-		JSONObject settingsJSONObject) {
-
+	protected String addAutosaveEnabledSetting(JSONObject settingsJSONObject) {
 		JSONArray fieldValuesJSONArray = settingsJSONObject.getJSONArray(
 			"fieldValues");
 
-		JSONObject requireAuthenticationSettingJSONObject =
-			createRequireAuthenticationSetting();
+		JSONObject autosaveEnabledSettingJSONObject =
+			createAutosaveEnabledSetting();
 
-		fieldValuesJSONArray.put(requireAuthenticationSettingJSONObject);
+		fieldValuesJSONArray.put(autosaveEnabledSettingJSONObject);
 
 		settingsJSONObject.put("fieldValues", fieldValuesJSONArray);
 
 		return settingsJSONObject.toJSONString();
 	}
 
-	protected JSONObject createRequireAuthenticationSetting() {
-		JSONObject requireAuthenticationSettingJSONObject =
+	protected JSONObject createAutosaveEnabledSetting() {
+		JSONObject autosaveEnabledSettingJSONObject =
 			_jsonFactory.createJSONObject();
 
-		requireAuthenticationSettingJSONObject.put(
+		autosaveEnabledSettingJSONObject.put(
 			"instanceId", StringUtil.randomString());
-		requireAuthenticationSettingJSONObject.put(
-			"name", "requireAuthentication");
-		requireAuthenticationSettingJSONObject.put("value", "false");
+		autosaveEnabledSettingJSONObject.put("name", "autosaveEnabled");
+		autosaveEnabledSettingJSONObject.put("value", "true");
 
-		return requireAuthenticationSettingJSONObject;
+		return autosaveEnabledSettingJSONObject;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		String sql = "select recordSetId, scope, settings_ from DDLRecordSet";
+		String sql = "select formInstanceId, settings_ from DDMFormInstance";
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sql);
 			ResultSet rs = ps1.executeQuery();
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDLRecordSet set settings_ = ? where recordSetId " +
-						"= ?")) {
+					"update DDMFormInstance set settings_ = ? where " +
+						"formInstanceId = ?")) {
 
 			while (rs.next()) {
-				long recordSetId = rs.getLong("recordSetId");
-
-				int scope = rs.getInt("scope");
+				long formInstanceId = rs.getLong("formInstanceId");
 
 				String settings = rs.getString("settings_");
 
@@ -87,16 +81,13 @@ public class UpgradeDDLRecordSetSettings extends UpgradeProcess {
 					JSONObject settingsJSONObject =
 						_jsonFactory.createJSONObject(settings);
 
-					if (scope == DDLRecordSetConstants.SCOPE_FORMS) {
-						settings = addRequireAuthenticationSetting(
-							settingsJSONObject);
+					settings = addAutosaveEnabledSetting(settingsJSONObject);
 
-						ps2.setString(1, settings);
+					ps2.setString(1, settings);
 
-						ps2.setLong(2, recordSetId);
+					ps2.setLong(2, formInstanceId);
 
-						ps2.addBatch();
-					}
+					ps2.addBatch();
 				}
 			}
 

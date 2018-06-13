@@ -22,7 +22,7 @@ import org.junit.Test;
 /**
  * @author Marcellus Tavares
  */
-public class ExpressionVisitorTest {
+public class ExpressionTest {
 
 	@Test
 	public void testAndExpresion() {

@@ -34,12 +34,12 @@ import org.junit.Test;
 /**
  * @author Leonardo Barros
  */
-public class ExpressionModelTest {
+public class DDMExpressionModelTest {
 
 	@Test
 	public void testAndExpression() throws Exception {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
-			"true && (2 != 3)", Boolean.class);
+			"true && (2 != 3)");
 
 		Expression expressionModel = expression.getModel();
 
@@ -87,7 +87,7 @@ public class ExpressionModelTest {
 	@Test
 	public void testArithmeticExpression() throws Exception {
 		DDMExpressionImpl<Double> expression = new DDMExpressionImpl<>(
-			"a + b * c - d", Double.class);
+			"a + b * c - d");
 
 		Expression expressionModel = expression.getModel();
 
@@ -152,7 +152,7 @@ public class ExpressionModelTest {
 	@Test
 	public void testFunctionCallExpression() throws Exception {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
-			"date()", Boolean.class);
+			"date()");
 
 		Expression expressionModel = expression.getModel();
 
@@ -169,7 +169,7 @@ public class ExpressionModelTest {
 	@Test
 	public void testGreaterThanExpression() throws Exception {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
-			"(2 * 5) > 3", Boolean.class);
+			"(2 * 5) > 3");
 
 		Expression expressionModel = expression.getModel();
 
@@ -226,7 +226,7 @@ public class ExpressionModelTest {
 	@Test
 	public void testLessThanEqualExpression() throws Exception {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
-			"((1 + 4) / (5 - 2)) <= sum(Var1,Var2)", Boolean.class);
+			"((1 + 4) / (5 - 2)) <= sum(Var1,Var2)");
 
 		Expression expressionModel = expression.getModel();
 
@@ -354,7 +354,7 @@ public class ExpressionModelTest {
 	@Test
 	public void testNotExpression() throws Exception {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
-			"not false", Boolean.class);
+			"not false");
 
 		Expression expressionModel = expression.getModel();
 
@@ -374,7 +374,7 @@ public class ExpressionModelTest {
 	@Test
 	public void testOrExpression() throws Exception {
 		DDMExpressionImpl<Boolean> expression = new DDMExpressionImpl<>(
-			"(-3 < Var1) || (not equals(Var2,sum(Var3,Var4)))", Boolean.class);
+			"(-3 < Var1) || (not equals(Var2,sum(Var3,Var4)))");
 
 		Expression expressionModel = expression.getModel();
 

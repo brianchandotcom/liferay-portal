@@ -36,18 +36,24 @@ public class ServiceRegistrationBundleActivator implements BundleActivator {
 	public void start(BundleContext context) throws Exception {
 		Hashtable<String, Object> properties = new Hashtable<>();
 
+		properties.put("liferay.auth.verifier", false);
+		properties.put("liferay.oauth2", false);
 		properties.put("osgi.jaxrs.application.base", "/test-rest/greeter1");
 
 		_serviceRegistrations.add(
 			context.registerService(
 				Application.class, new Greeter(), properties));
 
+		properties.put("liferay.auth.verifier", false);
+		properties.put("liferay.oauth2", false);
 		properties.put("osgi.jaxrs.application.base", "/test-rest/greeter2");
 
 		_serviceRegistrations.add(
 			context.registerService(
 				Application.class, new Greeter(), properties));
 
+		properties.put("liferay.auth.verifier", false);
+		properties.put("liferay.oauth2", false);
 		properties.put("addonable", Boolean.TRUE);
 		properties.put("osgi.jaxrs.application.base", "/test-rest/greeter3");
 

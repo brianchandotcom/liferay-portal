@@ -17,7 +17,7 @@
 
 					<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
 						access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-					<#else>
+					<#elseif stringUtil.equals(dtdVersionString, "7_1_0")>
 						access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
 					</#if>
 
@@ -44,7 +44,7 @@
 			<id
 				<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
 					access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-				<#else>
+				<#elseif stringUtil.equals(dtdVersionString, "7_1_0")>
 					access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
 				</#if>
 
@@ -89,7 +89,7 @@
 
 				<#if serviceBuilder.isHBMCamelCasePropertyAccessor(entityColumn.name)>
 					access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor"
-				<#else>
+				<#elseif stringUtil.equals(dtdVersionString, "7_1_0")>
 					access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor"
 				</#if>
 

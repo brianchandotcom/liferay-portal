@@ -3448,26 +3448,38 @@ app.server.type=@{app.server.type}]]></echo>
 	<target name="modules-compile-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules" outputproperty="modules.compile.project.paths" task="printProjectPath">
-					<arg value="--quiet" />
-					<arg value="-Dbuild.exclude.dirs=private/apps/osb-lcs,private/apps/saml,third-party" />
-				</gradle-execute>
+				<if>
+					<not>
+						<isset property="modules.test.class.group" />
+					</not>
+					<then>
+						<gradle-execute dir="modules" outputproperty="modules.project.paths" task="printProjectPath">
+							<arg value="--quiet" />
+							<arg value="-Dbuild.exclude.dirs=private/apps/osb-lcs,private/apps/saml,third-party" />
+						</gradle-execute>
+
+						<loadresource property="modules.test.class.group">
+							<filterchain>
+								<linecontainsregexp>
+									<regexp pattern="^:" />
+								</linecontainsregexp>
+
+								<suffixlines suffix=":assemble " />
+
+								<striplinebreaks />
+							</filterchain>
+							<propertyresource name="modules.project.paths" />
+						</loadresource>
+					</then>
+				</if>
 
 				<loadresource property="modules.compile.task.groups">
 					<filterchain>
-						<linecontainsregexp>
-							<regexp pattern="^:" />
-						</linecontainsregexp>
-
-						<suffixlines suffix=":assemble " />
-
-						<striplinebreaks />
-
 						<tokenfilter>
 							<replaceregex flags="g" pattern="(\S+ ){${test.module.groups.size}}" replace="\0," />
 						</tokenfilter>
 					</filterchain>
-					<propertyresource name="modules.compile.project.paths" />
+					<propertyresource name="modules.test.class.group" />
 				</loadresource>
 
 				<for list="${modules.compile.task.groups}" param="modules.compile.task.group" trim="true">
@@ -3672,39 +3684,23 @@ app.server.type=@{app.server.type}]]></echo>
 	<target name="modules-semantic-versioning-jdk8">
 		<run-batch-test>
 			<test-action>
-				<for keepgoing="true" list="${modules.base.dir.names}" param="module.base.dir.name">
+				<loadresource property="modules.baseline.task.groups">
+					<filterchain>
+						<tokenfilter>
+							<replaceregex flags="g" pattern="(\S+ ){${test.module.groups.size}}" replace="\0," />
+						</tokenfilter>
+					</filterchain>
+					<propertyresource name="modules.test.class.group" />
+				</loadresource>
+
+				<for list="${modules.baseline.task.groups}" param="modules.baseline.task.group" trim="true">
 					<sequential>
-						<var name="module.baseline.task.name" unset="true" />
-						<var name="modules.base.dir.name" unset="true" />
+						<echo>Executing Gradle tasks: @{modules.baseline.task.group}.</echo>
 
-						<propertyregex
-							input="@{module.base.dir.name}"
-							override="true"
-							property="modules.base.dir.name"
-							regexp="(.*/modules)(/.*)"
-							replace="\1"
-						/>
-
-						<propertyregex
-							input="@{module.base.dir.name}"
-							override="true"
-							property="module.baseline.task.name"
-							regexp="(.*/modules)(/.*)"
-							replace="\2"
-						/>
-
-						<antelope:stringutil property="module.baseline.task.name" string="${module.baseline.task.name}">
-							<antelope:replace regex="/" replacement=":" />
-						</antelope:stringutil>
-
-						<var name="module.baseline.task.name" value="${module.baseline.task.name}:baseline" />
-
-						<echo>Executing ${module.baseline.task.name} on ${modules.base.dir.name}.</echo>
-
-						<gradle-execute dir="${modules.base.dir.name}" forcedcacheenabled="false" task="${module.baseline.task.name}" />
-
-						<var name="module.baseline.task.name" unset="true" />
-						<var name="modules.base.dir.name" unset="true" />
+						<gradle-execute dir="modules" task="@{modules.baseline.task.group}">
+							<arg value="--continue" />
+							<arg value="--parallel" />
+						</gradle-execute>
 					</sequential>
 				</for>
 
@@ -3740,7 +3736,7 @@ app.server.type=@{app.server.type}]]></echo>
 			</test-action>
 
 			<test-set-up>
-				<fail message="Please set the property ${modules.base.dir.names}" unless="modules.base.dir.names" />
+				<fail message="Please set the property ${modules.test.class.group}" unless="modules.test.class.group" />
 
 				<echo>unzip -p liferay-portal-source.zip modules/core/portal-bootstrap/build/system.packages.extra.mf > modules/core/portal-bootstrap/system.packages.extra.mf</echo>
 

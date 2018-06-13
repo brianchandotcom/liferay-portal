@@ -220,7 +220,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 										FileEntry fileEntry = curCPAttachmentFileEntry.getFileEntry();
 									%>
 
-									<tr>
+										<tr>
 											<td>
 												<span><%= curCPAttachmentFileEntry.getTitle(languageId) %></span>
 

@@ -8,5 +8,8 @@ Import-Package:\
 	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\
 	\
 	*
+Require-Capability:\
+	soy;\
+		filter:="(type=commerce-cart-taglib)"
 Web-ContextPath: /commerce-initializer-customer-portal
 -dsannotations-options: inherit

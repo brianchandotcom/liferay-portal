@@ -138,17 +138,6 @@ public class CustomerPortalThemePortletSettingsInitializer {
 				portletSetup.setValue(key, value);
 			}
 
-			DDMTemplate ddmTemplate = _getDDMTemplate(
-				_SIMPLE_CP_TYPE_CLASS_NAME,
-				CustomerPortalSiteInitializer.DEPENDENCY_PATH +
-					"product_display_template.ftl",
-				"Commerce Product Customer Portal", serviceContext);
-
-			String ddmTemplateKey =
-				"ddmTemplate_" + ddmTemplate.getTemplateKey();
-
-			portletSetup.setValue("displayStyle", ddmTemplateKey);
-
 			portletSetup.store();
 
 			long plid = LayoutConstants.DEFAULT_PLID;
@@ -259,9 +248,6 @@ public class CustomerPortalThemePortletSettingsInitializer {
 	private static final String _CP_SEARCH_RESULT_PORTLET_NAME =
 		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
 			"CPSearchResultsPortlet";
-
-	private static final String _SIMPLE_CP_TYPE_CLASS_NAME =
-		"com.liferay.commerce.product.type.simple.internal.SimpleCPType";
 
 	@Reference
 	private CPFileImporter _cpFileImporter;

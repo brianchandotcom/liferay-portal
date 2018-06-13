@@ -4,9 +4,11 @@
 		"layoutFriendlyURL": "/product-detail",
 		"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet",
 		"portletPreferences": {
-			"cpType": "simple",
 			"displayStyle": "",
-			"displayStyleGroupId": ""
+			"displayStyleGroupId": "",
+			"grouped--cpTypeRendererKey": "grouped",
+			"simple--cpTypeRendererKey": "beryl",
+			"virtual--cpTypeRendererKey": "virtual"
 		}
 	},
 	{

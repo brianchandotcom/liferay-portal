@@ -39,7 +39,7 @@ public class UpgradeDDLRecordVersion extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"delete from DDLRecordVersion where recordVersionId ?")) {
+				"delete from DDLRecordVersion where recordVersionId = ?")) {
 
 			ps.setLong(1, recordVersionId);
 

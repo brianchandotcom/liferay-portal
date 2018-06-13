@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -233,12 +234,14 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				"update PortletPreferences set portletId = '", newRootPortletId,
 				"' where portletId = '", oldRootPortletId, "'"));
 
-		runSQL(
-			StringBundler.concat(
-				"update PortletPreferences set portletId = replace(portletId, ",
-				"'", oldRootPortletId, "_INSTANCE_', '", newRootPortletId,
-				"_INSTANCE_') where portletId like '", oldRootPortletId,
-				"_INSTANCE_%'"));
+		if (!newRootPortletId.contains("_INSTANCE_")) {
+			runSQL(
+				StringBundler.concat(
+					"update PortletPreferences set portletId = replace(",
+					"portletId, '", oldRootPortletId, "_INSTANCE_', '",
+					newRootPortletId, "_INSTANCE_') where portletId like '",
+					oldRootPortletId, "_INSTANCE_%'"));
+		}
 
 		runSQL(
 			StringBundler.concat(
@@ -372,7 +375,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					typeSettings, oldRootPortletId, newRootPortletId,
 					exactMatch);
 
-				ps2.setString(1, newTypeSettings);
+				ps2.setClob(1, new UnsyncStringReader(newTypeSettings));
 
 				ps2.setLong(2, plid);
 
@@ -471,19 +474,43 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			boolean updateName)
 		throws Exception {
 
-		runSQL(
-			StringBundler.concat(
-				"update ResourcePermission set primKey = replace(primKey, ",
-				"'_LAYOUT_", oldRootPortletId, "', '_LAYOUT_", newRootPortletId,
-				"') where name = '", oldRootPortletId,
-				"' and primKey like '%_LAYOUT_", oldRootPortletId, "'"));
+		if (updateName) {
+			runSQL(
+				StringBundler.concat(
+					"update ResourcePermission set name = '", newRootPortletId,
+					"', primKey = replace(primKey, '_LAYOUT_", oldRootPortletId,
+					"', '_LAYOUT_", newRootPortletId, "') where name = '",
+					oldRootPortletId, "' and primKey like '%_LAYOUT_",
+					oldRootPortletId, "'"));
 
-		runSQL(
-			StringBundler.concat(
-				"update ResourcePermission set primKey = replace(primKey, ",
-				"'_LAYOUT_", oldRootPortletId, "_', '_LAYOUT_",
-				newRootPortletId, "') where name = '", oldRootPortletId,
-				"' and primKey like '%_LAYOUT_", oldRootPortletId, "_%'"));
+			runSQL(
+				StringBundler.concat(
+					"update ResourcePermission set name = '", newRootPortletId,
+					"', primKey = replace(primKey, '_LAYOUT_", oldRootPortletId,
+					"_INSTANCE_', '_LAYOUT_", newRootPortletId, "_INSTANCE_') ",
+					"where name = '", oldRootPortletId,
+					"' and primKey like '%_LAYOUT_", oldRootPortletId,
+					"_INSTANCE_%'"));
+		}
+		else {
+			runSQL(
+				StringBundler.concat(
+					"update ResourcePermission set primKey = replace(primKey, ",
+					"'_LAYOUT_", oldRootPortletId, "', '_LAYOUT_",
+					newRootPortletId, "') where name = '", oldRootPortletId,
+					"' and primKey like '%_LAYOUT_", oldRootPortletId, "'"));
+
+			if (!newRootPortletId.contains("_INSTANCE_")) {
+				runSQL(
+					StringBundler.concat(
+						"update ResourcePermission set primKey = replace(",
+						"primKey, '_LAYOUT_", oldRootPortletId, "_INSTANCE_', ",
+						"'_LAYOUT_", newRootPortletId, "_INSTANCE_') where ",
+						"name = '", oldRootPortletId,
+						"' and primKey like '%_LAYOUT_", oldRootPortletId,
+						"_INSTANCE_%'"));
+			}
+		}
 
 		if (updateName) {
 			runSQL(

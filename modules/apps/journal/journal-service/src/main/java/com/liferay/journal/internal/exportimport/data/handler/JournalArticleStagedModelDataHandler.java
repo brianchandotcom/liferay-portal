@@ -883,7 +883,7 @@ public class JournalArticleStagedModelDataHandler
 				article.getPrimaryKey(), importedArticle.getPrimaryKey());
 
 			_importFriendlyURLEntries(
-			    portletDataContext, article, importedArticle);
+				portletDataContext, article, importedArticle);
 		}
 		finally {
 			if (smallFile != null) {
@@ -1164,8 +1164,8 @@ public class JournalArticleStagedModelDataHandler
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
 				JournalArticle.class, importedArticle.getResourcePrimKey());
 
-		_journalArticleLocalService.updateUrlTitle(
-			importedArticle, mainFriendlyURLEntry.getUrlTitle());
+		_journalArticleLocalService.updateArticle(
+			importedArticle.getId(), mainFriendlyURLEntry.getUrlTitle());
 	}
 
 	/**

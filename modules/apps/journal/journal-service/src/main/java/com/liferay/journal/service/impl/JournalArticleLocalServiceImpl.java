@@ -6007,6 +6007,27 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Updates the URL title of the web content article.
+	 *
+	 * @param  id the primary key of the web content article
+	 * @param  urlTitle the web content article's URL title
+	 * @return the updated web content article
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public JournalArticle updateArticle(long id, String urlTitle)
+		throws PortalException {
+
+		JournalArticle article = journalArticlePersistence.findByPrimaryKey(id);
+
+		article.setUrlTitle(urlTitle);
+
+		journalArticlePersistence.update(article);
+
+		return article;
+	}
+
+	/**
 	 * Updates the translation of the web content article.
 	 *
 	 * @param  groupId the primary key of the web content article's group
@@ -6636,25 +6657,6 @@ public class JournalArticleLocalServiceImpl
 
 		updateDDMTemplateKey(
 			groupId, classNameId, oldDDMTemplateKey, newDDMTemplateKey);
-	}
-
-	/**
-	 * Updates the URL title of the web content article.
-	 *
-	 * @param  article the web content article
-	 * @param  urlTitle the web content article's URL title
-	 * @return the updated web content article
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public JournalArticle updateUrlTitle(
-		JournalArticle article, String urlTitle) {
-
-		article.setUrlTitle(urlTitle);
-
-		journalArticlePersistence.update(article);
-
-		return article;
 	}
 
 	protected void addDocumentLibraryFileEntries(Element dynamicElementElement)

@@ -153,7 +153,9 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		tabItems.add(_getStructuresTabItem());
 		tabItems.add(getTemplatesTabItem());
 
-		if (portal.isRSSFeedsEnabled()) {
+		if (_journalWebConfiguration.showFeeds() &&
+			portal.isRSSFeedsEnabled()) {
+
 			tabItems.add(_getFeedsTabItem());
 		}
 

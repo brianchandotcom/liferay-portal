@@ -147,6 +147,48 @@
 		<antcall target="index-modules-and-app-lpkgs" />
 	</target>
 
+	<target name="build-app-lpkg-base">
+		<for param="app.dir">
+			<path>
+				<dirset
+					dir="${modules.dir}"
+				>
+					<include name="apps/*" />
+					<include name="private/apps/*" />
+					<exclude name="${build.exclude.dirs}" />
+					<exclude name="apps/static/*" />
+				</dirset>
+			</path>
+
+			<sequential>
+				<local name="app.name" />
+				<local name="Liferay-Releng-Suite" />
+
+				<basename file="@{app.dir}" property="app.name" />
+
+				<property file="@{app.dir}/app.bnd" />
+
+				<if>
+					<or>
+						<equals arg1="${Liferay-Releng-Suite}" arg2="collaboration" />
+						<equals arg1="${Liferay-Releng-Suite}" arg2="forms-and-workflow" />
+						<equals arg1="${Liferay-Releng-Suite}" arg2="foundation" />
+						<equals arg1="${Liferay-Releng-Suite}" arg2="web-experience" />
+					</or>
+					<then>
+						<ant inheritAll="false" target="build-app-lpkg">
+							<property name="app.name" value="${app.name}" />
+						</ant>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
+		<ant inheritAll="false" target="build-app-lpkg">
+			<property name="app.name" value="static" />
+		</ant>
+	</target>
+
 	<target name="build-app-lpkg-release">
 		<for param="app.dir">
 			<path>

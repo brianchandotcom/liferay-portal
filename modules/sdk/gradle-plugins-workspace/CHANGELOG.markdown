@@ -205,7 +205,7 @@ Gradle plugin to the root project if the `target.platform.version` property in
 
 ### Changed
 - [LPS-77875]: Update the [Liferay Portal Tools Bundle Support] dependency to
-version 3.2.4.
+version 3.2.5.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

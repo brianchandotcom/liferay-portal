@@ -103,17 +103,30 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		return outputData;
 	}
 
+	private boolean _isInline() {
+		ServletRequest servletRequest = getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean xPjax = GetterUtil.getBoolean(request.getHeader("X-PJAX"));
+
+		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive() || xPjax) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private void _outputStylesheetLink() {
 		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
 
 		if (npmResolver == null) {
 			return;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)getRequest().getAttribute(WebKeys.THEME_DISPLAY);
-
-		boolean xPjax = GetterUtil.getBoolean(request.getHeader("X-PJAX"));
 
 		String cssPath = npmResolver.resolveModuleName(
 			"clay-charts/lib/css/main.css");
@@ -126,9 +139,7 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		sb.append(cssPath);
 		sb.append("\" rel=\"stylesheet\">");
 
-		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
-			themeDisplay.isStateExclusive() || xPjax) {
-
+		if (_isInline()) {
 			try {
 				JspWriter jspWriter = pageContext.getOut();
 
@@ -164,9 +175,22 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		try {
 			String svg = StringUtil.read(url.openStream());
 
-			outputData.setDataSB(
-				_OUTPUT_SVG_KEY, WebKeys.PAGE_BODY_BOTTOM,
-				new StringBundler(svg));
+			StringBundler sb = new StringBundler(svg);
+
+			if (_isInline()) {
+				try {
+					JspWriter jspWriter = pageContext.getOut();
+
+					jspWriter.write(sb.toString());
+				}
+				catch (IOException ioe) {
+					_log.error("Unable to output svg", ioe);
+				}
+			}
+			else {
+				outputData.setDataSB(
+					_OUTPUT_SVG_KEY, WebKeys.PAGE_BODY_BOTTOM, sb);
+			}
 		}
 		catch (IOException ioe) {
 		}

@@ -59,12 +59,25 @@ public abstract class BaseCssTag extends IncludeTag {
 		return outputData;
 	}
 
-	private void _outputStylesheetLink() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)getRequest().getAttribute(WebKeys.THEME_DISPLAY);
+	private boolean _isInline() {
+		ServletRequest servletRequest = getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		boolean xPjax = GetterUtil.getBoolean(request.getHeader("X-PJAX"));
 
+		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive() || xPjax) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private void _outputStylesheetLink() {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("<link data-senna-track=\"temporary\" href=\"");
@@ -74,9 +87,7 @@ public abstract class BaseCssTag extends IncludeTag {
 		sb.append("/css/main.css");
 		sb.append("\" rel=\"stylesheet\">");
 
-		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
-			themeDisplay.isStateExclusive() || xPjax) {
-
+		if (_isInline()) {
 			try {
 				JspWriter jspWriter = pageContext.getOut();
 

@@ -282,12 +282,25 @@ public class SelectLayoutTag extends ComponentRendererTag {
 		return GetterUtil.getBoolean(context.get("enableCurrentPage"));
 	}
 
-	private void _outputStylesheetLink() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)getRequest().getAttribute(WebKeys.THEME_DISPLAY);
+	private boolean _isInline() {
+		ServletRequest servletRequest = getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		boolean xPjax = GetterUtil.getBoolean(request.getHeader("X-PJAX"));
 
+		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive() || xPjax) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private void _outputStylesheetLink() {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("<link data-senna-track=\"temporary\" href=\"");
@@ -295,9 +308,7 @@ public class SelectLayoutTag extends ComponentRendererTag {
 		sb.append("/layout-taglib/select_layout/css/main.css");
 		sb.append("\" rel=\"stylesheet\">");
 
-		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
-			themeDisplay.isStateExclusive() || xPjax) {
-
+		if (_isInline()) {
 			try {
 				JspWriter jspWriter = pageContext.getOut();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.navigation.type.impl;
+package com.liferay.site.navigation.internal.type;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;

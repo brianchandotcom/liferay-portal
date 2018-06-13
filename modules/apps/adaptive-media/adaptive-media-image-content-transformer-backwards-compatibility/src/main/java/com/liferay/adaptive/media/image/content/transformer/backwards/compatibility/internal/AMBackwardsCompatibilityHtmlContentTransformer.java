@@ -54,7 +54,7 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			return null;
 		}
 
-		if (!html.contains("<img")) {
+		if (!html.contains("<img") || !html.contains("/documents/")) {
 			return html;
 		}
 

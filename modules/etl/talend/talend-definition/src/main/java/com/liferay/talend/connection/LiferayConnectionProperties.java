@@ -50,7 +50,7 @@ public class LiferayConnectionProperties
 		super(name);
 	}
 
-	public void afterAnonymousLogin() {
+	public void afterAnonymousLoginProperty() {
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(FORM_WIZARD));
 	}
@@ -72,7 +72,8 @@ public class LiferayConnectionProperties
 			}
 
 			repo.storeProperties(
-				this, this.name.getValue(), _repositoryLocation, null);
+				this, this.repositoryNameProperty.getValue(),
+				_repositoryLocation, null);
 
 			return ValidationResult.OK;
 		}
@@ -129,15 +130,19 @@ public class LiferayConnectionProperties
 		String formName = form.getName();
 
 		if (formName.equals(Form.MAIN) || formName.equals(FORM_WIZARD)) {
-			PropertiesUtils.setHidden(form, endpoint, useOtherConnection);
-			PropertiesUtils.setHidden(form, loginType, useOtherConnection);
-			PropertiesUtils.setHidden(form, userId, useOtherConnection);
-			PropertiesUtils.setHidden(form, password, useOtherConnection);
-			PropertiesUtils.setHidden(form, anonymousLogin, useOtherConnection);
+			PropertiesUtils.setHidden(
+				form, endpointProperty, useOtherConnection);
+			PropertiesUtils.setHidden(
+				form, loginTypeProperty, useOtherConnection);
+			PropertiesUtils.setHidden(form, userIdProperty, useOtherConnection);
+			PropertiesUtils.setHidden(
+				form, passwordProperty, useOtherConnection);
+			PropertiesUtils.setHidden(
+				form, anonymousLoginProperty, useOtherConnection);
 
-			if (!useOtherConnection && anonymousLogin.getValue()) {
-				PropertiesUtils.setHidden(form, userId, true);
-				PropertiesUtils.setHidden(form, password, true);
+			if (!useOtherConnection && anonymousLoginProperty.getValue()) {
+				PropertiesUtils.setHidden(form, userIdProperty, true);
+				PropertiesUtils.setHidden(form, passwordProperty, true);
 			}
 		}
 	}
@@ -156,24 +161,25 @@ public class LiferayConnectionProperties
 
 		Form wizardForm = Form.create(this, FORM_WIZARD);
 
-		Widget loginWizardWidget = Widget.widget(loginType);
+		Widget loginWizardWidget = Widget.widget(loginTypeProperty);
 
 		loginWizardWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
 		loginWizardWidget.setDeemphasize(true);
 
 		wizardForm.addRow(loginWizardWidget);
 
-		wizardForm.addRow(name);
+		wizardForm.addRow(repositoryNameProperty);
 
-		wizardForm.addRow(endpoint);
+		wizardForm.addRow(endpointProperty);
 
-		wizardForm.addRow(userId);
+		wizardForm.addRow(userIdProperty);
 
-		wizardForm.addRow(password);
+		wizardForm.addRow(passwordProperty);
 
-		wizardForm.addRow(anonymousLogin);
+		wizardForm.addRow(anonymousLoginProperty);
 
-		Widget testConnectionWidget = Widget.widget(testConnection);
+		Widget testConnectionWidget = Widget.widget(
+			testConnectionPresentationItem);
 
 		testConnectionWidget.setLongRunning(true);
 		testConnectionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
@@ -184,19 +190,19 @@ public class LiferayConnectionProperties
 
 		Form mainForm = Form.create(this, Form.MAIN);
 
-		Widget loginMainWidget = Widget.widget(loginType);
+		Widget loginMainWidget = Widget.widget(loginTypeProperty);
 
 		loginMainWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
 
 		mainForm.addRow(loginMainWidget);
 
-		mainForm.addRow(endpoint);
+		mainForm.addRow(endpointProperty);
 
-		mainForm.addRow(userId);
+		mainForm.addRow(userIdProperty);
 
-		mainForm.addRow(password);
+		mainForm.addRow(passwordProperty);
 
-		mainForm.addRow(anonymousLogin);
+		mainForm.addRow(anonymousLoginProperty);
 
 		// A form for a reference to a connection, used in a tLiferayInput
 		// for example
@@ -218,30 +224,30 @@ public class LiferayConnectionProperties
 
 		Form advancedForm = new Form(this, Form.ADVANCED);
 
-		advancedForm.addRow(connectTimeout);
+		advancedForm.addRow(connectTimeoutProperty);
 
-		advancedForm.addRow(readTimeout);
+		advancedForm.addRow(readTimeoutProperty);
 
-		advancedForm.addRow(itemsPerPage);
+		advancedForm.addRow(itemsPerPageProperty);
 
-		advancedForm.addRow(followRedirects);
+		advancedForm.addRow(followRedirectsProperty);
 
-		advancedForm.addRow(forceHttps);
+		advancedForm.addRow(forceHttpsProperty);
 	}
 
 	@Override
 	public void setupProperties() {
 		super.setupProperties();
 
-		endpoint.setValue(_HOST);
-		followRedirects.setValue(true);
-		forceHttps.setValue(false);
-		loginType.setValue(LoginType.Basic);
-		password.setValue("");
-		userId.setValue("");
+		endpointProperty.setValue(_HOST);
+		followRedirectsProperty.setValue(true);
+		forceHttpsProperty.setValue(false);
+		loginTypeProperty.setValue(LoginType.Basic);
+		passwordProperty.setValue(_PASSWORD);
+		userIdProperty.setValue(_USER_ID);
 	}
 
-	public ValidationResult validateTestConnection() {
+	public ValidationResult validateTestConnectionPresentationItem() {
 		try {
 			SandboxedInstance sandboxedInstance = getRuntimeSandboxedInstance();
 
@@ -270,33 +276,36 @@ public class LiferayConnectionProperties
 		}
 	}
 
-	public Property<Boolean> anonymousLogin = PropertyFactory.newBoolean(
-		"anonymousLogin");
-	public Property<Integer> connectTimeout = PropertyFactory.newInteger(
-		"connectTimeout", _CONNECT_TIMEOUT);
-	public Property<String> endpoint = PropertyFactory.newString("endpoint");
-	public Property<Boolean> followRedirects = PropertyFactory.newBoolean(
-		"followRedirects");
-	public Property<Boolean> forceHttps = PropertyFactory.newBoolean(
-		"forceHttps");
-	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
-		"itemsPerPage", _ITEMS_PER_PAGE);
-	public Property<LoginType> loginType = PropertyFactory.newEnum(
-		"loginType", LoginType.class).setRequired();
-	public Property<String> name = PropertyFactory.newString(
-		"name").setRequired();
-	public Property<String> password =
-		PropertyFactory.newString("password").setFlags(
+	public Property<Boolean> anonymousLoginProperty =
+		PropertyFactory.newBoolean("anonymousLoginProperty");
+	public Property<Integer> connectTimeoutProperty =
+		PropertyFactory.newInteger("connectTimeoutProperty", _CONNECT_TIMEOUT);
+	public Property<String> endpointProperty = PropertyFactory.newString(
+		"endpointProperty");
+	public Property<Boolean> followRedirectsProperty =
+		PropertyFactory.newBoolean("followRedirectsProperty");
+	public Property<Boolean> forceHttpsProperty = PropertyFactory.newBoolean(
+		"forceHttpsProperty");
+	public Property<Integer> itemsPerPageProperty = PropertyFactory.newInteger(
+		"itemsPerPageProperty", _ITEMS_PER_PAGE);
+	public Property<LoginType> loginTypeProperty = PropertyFactory.newEnum(
+		"loginTypeProperty", LoginType.class).setRequired();
+	public Property<String> passwordProperty =
+		PropertyFactory.newString("passwordProperty").setFlags(
 			EnumSet.of(
 				Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING));
-	public Property<Integer> readTimeout = PropertyFactory.newInteger(
-		"readTimeout", _READ_TIMEOUT);
+	public Property<Integer> readTimeoutProperty = PropertyFactory.newInteger(
+		"readTimeoutProperty", _READ_TIMEOUT);
 	public ComponentReferenceProperties<LiferayConnectionProperties>
 		referencedComponent = new ComponentReferenceProperties<>(
 			"referencedComponent", TLiferayConnectionDefinition.COMPONENT_NAME);
-	public PresentationItem testConnection = new PresentationItem(
-		"testConnection", "Test Connection");
-	public Property<String> userId = PropertyFactory.newString("userId");
+	public Property<String> repositoryNameProperty = PropertyFactory.newString(
+		"repositoryNameProperty").setRequired();
+	public PresentationItem testConnectionPresentationItem =
+		new PresentationItem(
+			"testConnectionPresentationItem", "Test Connection");
+	public Property<String> userIdProperty = PropertyFactory.newString(
+		"userIdProperty");
 
 	public enum LoginType {
 
@@ -321,11 +330,15 @@ public class LiferayConnectionProperties
 
 	private static final int _CONNECT_TIMEOUT = 30;
 
-	private static final String _HOST = "\"https://apiosample.wedeploy.io\"";
+	private static final String _HOST = "\"http://localhost:8080/o/api\"";
 
 	private static final int _ITEMS_PER_PAGE = 100;
 
+	private static final String _PASSWORD = "test";
+
 	private static final int _READ_TIMEOUT = 60;
+
+	private static final String _USER_ID = "test@liferay.com";
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayConnectionProperties.class);

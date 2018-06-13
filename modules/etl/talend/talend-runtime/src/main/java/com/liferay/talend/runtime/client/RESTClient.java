@@ -70,7 +70,7 @@ public class RESTClient {
 
 	public RESTClient(LiferayConnectionProperties liferayConnectionProperties) {
 		this(
-			liferayConnectionProperties.endpoint.getValue(),
+			liferayConnectionProperties.endpointProperty.getValue(),
 			liferayConnectionProperties);
 	}
 
@@ -79,8 +79,8 @@ public class RESTClient {
 		LiferayConnectionProperties liferayConnectionProperties) {
 
 		this(
-			endpoint, liferayConnectionProperties.password.getValue(),
-			liferayConnectionProperties.userId.getValue(),
+			endpoint, liferayConnectionProperties.passwordProperty.getValue(),
+			liferayConnectionProperties.userIdProperty.getValue(),
 			liferayConnectionProperties);
 	}
 
@@ -144,7 +144,8 @@ public class RESTClient {
 	}
 
 	public String getEndpoint() {
-		boolean forceHttps = _liferayConnectionProperties.forceHttps.getValue();
+		boolean forceHttps =
+			_liferayConnectionProperties.forceHttpsProperty.getValue();
 
 		if (forceHttps) {
 			return _replaceHttpSchemeWithHttps(_endpoint);
@@ -233,11 +234,12 @@ public class RESTClient {
 
 		clientConfig = clientConfig.property(
 			ClientProperties.CONNECT_TIMEOUT,
-			_liferayConnectionProperties.connectTimeout.getValue() * 1000);
-
+			_liferayConnectionProperties.connectTimeoutProperty.getValue() *
+				_SEC_TO_MS_UNIT);
 		clientConfig = clientConfig.property(
 			ClientProperties.READ_TIMEOUT,
-			_liferayConnectionProperties.readTimeout.getValue() * 1000);
+			_liferayConnectionProperties.readTimeoutProperty.getValue() *
+				_SEC_TO_MS_UNIT);
 
 		return clientConfig;
 	}
@@ -247,7 +249,7 @@ public class RESTClient {
 
 		parameters.put(
 			JSONLDConstants.PER_PAGE,
-			_liferayConnectionProperties.itemsPerPage.getStringValue());
+			_liferayConnectionProperties.itemsPerPageProperty.getStringValue());
 
 		return parameters;
 	}
@@ -256,7 +258,7 @@ public class RESTClient {
 		String httpMethod, Invocation.Builder builder, Entity<String> entity) {
 
 		boolean followRedirects =
-			_liferayConnectionProperties.followRedirects.getValue();
+			_liferayConnectionProperties.followRedirectsProperty.getValue();
 		Response response;
 
 		if (entity == null) {
@@ -356,6 +358,8 @@ public class RESTClient {
 
 		return clientConfig;
 	}
+
+	private static final int _SEC_TO_MS_UNIT = 1_000;
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		RESTClient.class);

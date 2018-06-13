@@ -10,6 +10,14 @@ import './SidebarMapping.es';
 import templates from './FragmentsEditorSidebar.soy';
 
 /**
+ * Added tab ID
+ * @review
+ * @type {!string}
+ */
+
+const ADDED_TAB_ID = 'added';
+
+/**
  * Default selected tab
  * @review
  * @type {!string}
@@ -29,8 +37,46 @@ class FragmentsEditorSidebar extends Component {
 	 * @review
 	 */
 
+	created() {
+		const addedTab = this.sidebarTabs.find(tab => tab.id === ADDED_TAB_ID);
+
+		if (addedTab) {
+			this._addedTabEnabled = addedTab.enabled;
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
 	dispose() {
 		this._disposeTabEventProxy();
+	}
+
+	/**
+	 * @inheritDoc
+	 * @review
+	 */
+
+	prepareStateForRender(state) {
+		return Object.assign(
+			{},
+			state,
+			{
+				sidebarTabs: state.sidebarTabs.map(
+					sidebarTab => {
+						return sidebarTab.id !== ADDED_TAB_ID ?
+							sidebarTab :
+							Object.assign(
+								{},
+								sidebarTab,
+								{enabled: state._addedTabEnabled}
+							);
+					}
+				)
+			}
+		);
 	}
 
 	/**
@@ -64,21 +110,7 @@ class FragmentsEditorSidebar extends Component {
 	 */
 
 	toggleAddedTab(enabled) {
-		const addedTabIndex = this.sidebarTabs.findIndex(tab => tab.id === 'added');
-
-		if (addedTabIndex !== -1) {
-			const newAddedTab = Object.assign(
-				{},
-				this.sidebarTabs[addedTabIndex],
-				{enabled: enabled}
-			);
-
-			const newSidebarTabs = [...this.sidebarTabs];
-
-			newSidebarTabs[addedTabIndex] = newAddedTab;
-
-			this.sidebarTabs = newSidebarTabs;
-		}
+		this._addedTabEnabled = !!enabled;
 
 		if (!enabled) {
 			this._selectedTab = DEFAULT_TAB_ID;
@@ -164,6 +196,7 @@ FragmentsEditorSidebar.STATE = {
 	 * @memberOf FragmentsEditorSidebar
 	 * @review
 	 * @type {!Array<{
+	 *   enabled: bool,
 	 * 	 id: string,
 	 * 	 label: string
 	 * }>}
@@ -178,6 +211,21 @@ FragmentsEditorSidebar.STATE = {
 			}
 		)
 	).required(),
+
+	/**
+	 * Whether to show added tab or not
+	 * @default null
+	 * @instance
+	 * @memberOf FragmentsEditorSidebar
+	 * @private
+	 * @review
+	 * @type {bool}
+	 */
+
+	_addedTabEnabled: Config
+		.bool()
+		.internal()
+		.value(null),
 
 	/**
 	 * Tab selected inside sidebar

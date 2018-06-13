@@ -66,11 +66,12 @@ public class LiferayWriter
 		_runtimeContainer = runtimeContainer;
 		_tLiferayOutputProperties = tLiferayOutputProperties;
 
-		_dieOnError = tLiferayOutputProperties.dieOnError.getValue();
+		_dieOnError = tLiferayOutputProperties.dieOnErrorProperty.getValue();
 		_liferaySink = writeOperation.getSink();
 		_rejectWrites = new ArrayList<>();
 		_rejectSchema = TLiferayOutputProperties.createRejectSchema(
-			tLiferayOutputProperties.resource.main.schema.getValue());
+			tLiferayOutputProperties.liferayResourceProperties.
+				mainSchemaProperties.schema.getValue());
 		_successWrites = new ArrayList<>();
 	}
 
@@ -93,7 +94,8 @@ public class LiferayWriter
 		String resourceId = getIndexedRecordId(indexedRecord);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.resource.getValue();
+			_tLiferayOutputProperties.liferayResourceProperties.
+				resourceStringProperty.getValue();
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
 
@@ -120,7 +122,8 @@ public class LiferayWriter
 		ObjectNode apioForm = _createApioExpectedForm(indexedRecord, true);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.resource.getValue();
+			_tLiferayOutputProperties.liferayResourceProperties.
+				resourceStringProperty.getValue();
 
 		try {
 			_liferaySink.doApioPostRequest(
@@ -140,7 +143,8 @@ public class LiferayWriter
 		String resourceId = getIndexedRecordId(indexedRecord);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.resource.getValue();
+			_tLiferayOutputProperties.liferayResourceProperties.
+				resourceStringProperty.getValue();
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
 
@@ -205,7 +209,7 @@ public class LiferayWriter
 		IndexedRecord indexedRecord = (IndexedRecord)indexedRecordDatum;
 		cleanWrites();
 
-		Action action = _tLiferayOutputProperties.operations.getValue();
+		Action action = _tLiferayOutputProperties.operationsProperty.getValue();
 
 		try {
 			if (Action.Delete == action) {

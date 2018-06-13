@@ -16,36 +16,22 @@
 
 <%@ include file="/init.jsp" %>
 
-<script>
-	var NAMESPACE = 'LFR_FRAGMENT_RENDER';
+<aui:script require="metal-dom/src/all/dom as dom">
+    function handleIframeMessage(event) {
+        if (event.data) {
+            var virtualDocument = document.createElement('html');
 
-	function handleIframeMessage(event) {
-		var data = event.data;
-		var prevData = localStorage.getItem(NAMESPACE) || '';
+            virtualDocument.innerHTML = JSON.parse(event.data).data;
 
-		if (data === '') {
-			localStorage.removeItem(NAMESPACE);
-		}
-		else if (data && (data !== prevData)) {
-			localStorage.setItem(NAMESPACE, data);
-			location.reload();
-		}
-	}
+            var virtualBody = virtualDocument.querySelector('.portlet-body');
 
-	function updatePreview() {
-		window.addEventListener('message', handleIframeMessage);
-		window[NAMESPACE] = true;
+            if (virtualBody) {
+                document.querySelector('.portlet-body').innerHTML = virtualBody.innerHTML;
+            }
 
-		var content = JSON.parse(
-			localStorage.getItem(NAMESPACE) || '{}'
-		).data || '';
+            dom.globalEval.runScriptsInElement(virtualBody);
+        }
+    }
 
-		document.open();
-
-		document.write(content);
-	}
-
-	if (!window[NAMESPACE]) {
-		updatePreview();
-	}
-</script>
+    window.addEventListener('message', handleIframeMessage);
+</aui:script>

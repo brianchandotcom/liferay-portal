@@ -51,7 +51,9 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		super(runtimeContainer, liferaySource);
 
 		liferayConnectionResourceBaseProperties = tLiferayInputProperties;
-		_queryCondition = tLiferayInputProperties.resource.condition.getValue();
+		_queryCondition =
+			tLiferayInputProperties.liferayResourceProperties.conditionProperty.
+				getValue();
 	}
 
 	@Override
@@ -172,8 +174,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
 		String resourceURL =
-			liferayConnectionResourceBaseProperties.resource.resource.
-				getValue();
+			liferayConnectionResourceBaseProperties.liferayResourceProperties.
+				resourceStringProperty.getValue();
 
 		URI decoratedResourceURI = URIUtils.addQueryConditionToURL(
 			resourceURL, _queryCondition);

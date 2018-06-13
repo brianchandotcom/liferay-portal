@@ -192,6 +192,13 @@ public class FragmentEntryServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
+		long fragmentEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFragmentEntry(fragmentEntryId, previewFileEntryId);
+	}
+
+	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		long fragmentEntryId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateFragmentEntry(fragmentEntryId, name);

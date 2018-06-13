@@ -15,6 +15,8 @@
 package com.liferay.fragment.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -78,6 +80,9 @@ public class FragmentPortlet extends MVCPortlet {
 			}
 		}
 
+		renderRequest.setAttribute(
+			FragmentWebKeys.ITEM_SELECTOR, _itemSelector);
+
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
@@ -109,6 +114,9 @@ public class FragmentPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentPortlet.class);
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -63,6 +63,22 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
+
+		<%
+		Map<String, Object> data = new HashMap<>();
+
+		data.put("fragment-entry-id", fragmentEntry.getFragmentEntryId());
+		%>
+
+		<liferay-ui:icon
+			cssClass="update-fragment-preview"
+			data="<%= data %>"
+			message="change-thumbnail"
+			url="javascript:;"
+		/>
+	</c:if>
+
 	<portlet:resourceURL id="/fragment/export_fragment_entries" var="exportFragmentEntriesURL">
 		<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
 	</portlet:resourceURL>

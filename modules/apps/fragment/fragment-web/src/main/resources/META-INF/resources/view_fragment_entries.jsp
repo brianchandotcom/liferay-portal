@@ -124,6 +124,15 @@
 	</liferay-ui:search-container>
 </aui:form>
 
+<portlet:actionURL name="/fragment/update_fragment_entry_preview" var="updateFragmentEntryPreviewURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= updateFragmentEntryPreviewURL %>" name="fragmentEntryPreviewFm">
+	<aui:input name="fragmentEntryId" type="hidden" />
+	<aui:input name="fileEntryId" type="hidden" />
+</aui:form>
+
 <c:if test="<%= FragmentPermission.contains(permissionChecker, scopeGroupId, FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES) %>">
 	<aui:script require="metal-dom/src/all/dom as dom,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as modalCommands">
 		function handleAddFragmentEntryMenuItemClick(event) {
@@ -166,8 +175,72 @@
 			}
 		);
 
+		<%
+		PortletURL uploadURL = renderResponse.createActionURL();
+
+		uploadURL.setParameter(ActionRequest.ACTION_NAME, "/fragment/upload_fragment_entry_preview");
+
+		String[] extensions = null;
+
+		ItemSelectorCriterion uploadItemSelectorCriterion = new UploadItemSelectorCriterion(FragmentPortletKeys.FRAGMENT, uploadURL.toString(), LanguageUtil.get(themeDisplay.getLocale(), "fragments"), UploadServletRequestConfigurationHelperUtil.getMaxSize(), extensions);
+
+		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes = new ArrayList<>();
+
+		uploadDesiredItemSelectorReturnTypes.add(new FileEntryItemSelectorReturnType());
+
+		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(uploadDesiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), renderResponse.getNamespace() + "changePreview", uploadItemSelectorCriterion);
+		%>
+
+		var updateFragmentEntryPreviewMenuItemClickHandler = dom.delegate(
+			document.body,
+			'click',
+			'.update-fragment-preview > a',
+			function(event) {
+				var data = event.delegateTarget.dataset;
+
+				event.preventDefault();
+
+				var uri = '<%= itemSelectorURL %>';
+
+				uri = Liferay.Util.addParams('<portlet:namespace />fragmentEntryId=' + data.fragmentEntryId, uri);
+
+				AUI().use(
+					'liferay-item-selector-dialog',
+					function(A) {
+						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+							{
+								eventName: '<portlet:namespace />changePreview',
+								on: {
+									selectedItemChange: function(event) {
+										var selectedItem = event.newVal;
+
+										if (selectedItem) {
+											var itemValue = JSON.parse(selectedItem.value);
+
+											document.<portlet:namespace />fragmentEntryPreviewFm.<portlet:namespace />fragmentEntryId.value = data.fragmentEntryId;
+											document.<portlet:namespace />fragmentEntryPreviewFm.<portlet:namespace />fileEntryId.value = itemValue.fileEntryId;
+
+											submitForm(document.<portlet:namespace />fragmentEntryPreviewFm);
+										}
+									}
+								},
+								'strings.add': '<liferay-ui:message key="ok" />',
+								title: '<liferay-ui:message key="fragment-thumbnail" />',
+								url: uri
+							}
+						);
+
+						itemSelectorDialog.open();
+					}
+				);
+			}
+		);
+
 		function handleDestroyPortlet () {
 			updateFragmentEntryMenuItemClickHandler.removeListener();
+			updateFragmentEntryPreviewMenuItemClickHandler.removeListener();
 
 			Liferay.detach('destroyPortlet', handleDestroyPortlet);
 		}

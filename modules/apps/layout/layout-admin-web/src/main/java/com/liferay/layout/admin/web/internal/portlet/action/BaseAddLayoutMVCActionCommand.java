@@ -28,6 +28,29 @@ import javax.portlet.PortletURL;
 public abstract class BaseAddLayoutMVCActionCommand
 	extends BaseMVCActionCommand {
 
+	protected String getContentRedirectURL(
+		ActionResponse actionResponse, Layout layout) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(actionResponse);
+
+		PortletURL editLayoutURL = liferayPortletResponse.createRenderURL();
+
+		editLayoutURL.setParameter("mvcPath", "/edit_content_layout.jsp");
+
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+		redirectURL.setParameter("mvcRenderCommandName", "/layout/view");
+
+		editLayoutURL.setParameter("redirect", redirectURL.toString());
+
+		editLayoutURL.setParameter(
+			"groupId", String.valueOf(layout.getGroupId()));
+		editLayoutURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+
+		return editLayoutURL.toString();
+	}
+
 	protected String getRedirectURL(
 		ActionResponse actionResponse, Layout layout) {
 

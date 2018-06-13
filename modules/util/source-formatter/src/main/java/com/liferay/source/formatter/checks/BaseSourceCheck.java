@@ -34,6 +34,8 @@ import com.liferay.source.formatter.util.SourceFormatterUtil;
 import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import java.net.URL;
 
@@ -517,6 +519,35 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		}
 
 		return portalImplDir.getParentFile();
+	}
+
+	protected InputStream getPortalInputStream(String fileName)
+		throws Exception {
+
+		File file = getFile(fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (file != null) {
+			return new FileInputStream(file);
+		}
+
+		String portalBranchName = SourceFormatterUtil.getPropertyValue(
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
+
+		if (Validator.isNull(portalBranchName)) {
+			return null;
+		}
+
+		try {
+			URL url = new URL(
+				StringBundler.concat(
+					_GIT_LIFERAY_PORTAL_URL, portalBranchName, StringPool.SLASH,
+					fileName));
+
+			return url.openStream();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	protected String getProjectName() {

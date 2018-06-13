@@ -443,24 +443,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			return content;
 		}
 
-		String portalBranchName = SourceFormatterUtil.getPropertyValue(
-			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
+		URL url = _getPortalGitURL(fileName);
 
-		if (Validator.isNull(portalBranchName)) {
-			return null;
-		}
-
-		try {
-			URL url = new URL(
-				StringBundler.concat(
-					_GIT_LIFERAY_PORTAL_URL, portalBranchName, StringPool.SLASH,
-					fileName));
-
+		if (url != null) {
 			return StringUtil.read(url.openStream());
 		}
-		catch (Exception e) {
-			return null;
-		}
+
+		return null;
 	}
 
 	protected Document getPortalCustomSQLDocument() throws Exception {
@@ -530,24 +519,13 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			return new FileInputStream(file);
 		}
 
-		String portalBranchName = SourceFormatterUtil.getPropertyValue(
-			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
+		URL url = _getPortalGitURL(fileName);
 
-		if (Validator.isNull(portalBranchName)) {
-			return null;
-		}
-
-		try {
-			URL url = new URL(
-				StringBundler.concat(
-					_GIT_LIFERAY_PORTAL_URL, portalBranchName, StringPool.SLASH,
-					fileName));
-
+		if (url != null) {
 			return url.openStream();
 		}
-		catch (Exception e) {
-			return null;
-		}
+
+		return null;
 	}
 
 	protected String getProjectName() {
@@ -778,6 +756,25 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private URL _getPortalGitURL(String fileName) {
+		String portalBranchName = SourceFormatterUtil.getPropertyValue(
+			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
+
+		if (Validator.isNull(portalBranchName)) {
+			return null;
+		}
+
+		try {
+			return new URL(
+				StringBundler.concat(
+					_GIT_LIFERAY_PORTAL_URL, portalBranchName, StringPool.SLASH,
+					fileName));
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
 
 	private static final String _GIT_LIFERAY_PORTAL_URL =
 		"https://raw.githubusercontent.com/liferay/liferay-portal/";

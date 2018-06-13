@@ -382,6 +382,116 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="deploy-release-dependency-modules">
+		<sequential>
+			<beanshell>
+				<![CDATA[
+					import org.apache.commons.lang.StringUtils;
+
+					String projectDir = project.getProperty("project.dir");
+
+					public List findFiles(File baseDir, String regex) {
+						List files = new ArrayList();
+
+						for (File file : baseDir.listFiles()) {
+							String filePath = file.toString();
+
+							if (file.isDirectory()) {
+								files.addAll(findFiles(file, regex));
+							}
+							else if (filePath.matches(regex)) {
+								files.add(file);
+							}
+						}
+
+						return files;
+					}
+
+					public List getModulesFromModuleGroups(String[] moduleGroups) {
+						List modules = new ArrayList();
+
+						for (String moduleGroup : moduleGroups) {
+							String moduleGroupPath = projectDir + "/" + moduleGroup;
+
+							File appBndFile = new File(moduleGroupPath, "app.bnd");
+
+							if (!appBndFile.exists()) {
+								modules.add(moduleGroup);
+
+								continue;
+							}
+
+							List moduleBuildGradleFiles = findFiles(new File(moduleGroupPath), moduleGroupPath + "/.+/build.gradle");
+
+							for (File moduleBuildGradleFile : moduleBuildGradleFiles) {
+								String module = moduleBuildGradleFile.getParent();
+
+								module = module.replace(projectDir + "/", "");
+
+								if (module.endsWith("-test")) {
+									System.out.println("Ignoring " + module);
+
+									continue;
+								}
+
+								modules.add(module);
+							}
+						}
+
+						return modules;
+					}
+
+					public List getTestUtilModules() {
+						List testUtilModuleBuildGradleFiles = findFiles(new File(projectDir, "modules/apps"), ".+test-util/build.gradle");
+
+						File privateAppsDirectory = new File(projectDir, "modules/private/apps");
+
+						if (privateAppsDirectory.exists()) {
+							testUtilModuleBuildGradleFiles.addAll(findFiles(privateAppsDirectory, ".+test-util/build.gradle"));
+						}
+
+						List testUtilModules = new ArrayList();
+
+						for (File testUtilModuleBuildGradleFile : testUtilModuleBuildGradleFiles) {
+							String testUtilModule = testUtilModuleBuildGradleFile.getParent();
+
+							testUtilModule = testUtilModule.replace(projectDir + "/", "");
+
+							testUtilModules.add(testUtilModule);
+						}
+
+						return testUtilModules;
+					}
+
+					Set releaseDependentModules = new TreeSet();
+
+					releaseDependentModules.addAll(getTestUtilModules());
+
+					String deprecatedModuleGroups = project.getProperty("test.batch.deprecated.module.groups");
+
+					if (deprecatedModuleGroups != null) {
+						releaseDependentModules.addAll(getModulesFromModuleGroups(deprecatedModuleGroups.split(",")));
+					}
+
+					project.setProperty("release.dependency.modules", StringUtils.join(releaseDependentModules, ','));
+				]]>
+			</beanshell>
+
+			<for list="${release.dependency.modules}" param="release.dependency.module">
+				<sequential>
+					<if>
+						<available file="@{release.dependency.module}" />
+						<then>
+							<echo>Deploying @{release.dependency.module}</echo>
+
+							<gradle-execute dir="@{release.dependency.module}" forcedcacheenabled="false" task="deploy" />
+						</then>
+					</if>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="diagnose-database-start">
 		<attribute name="database.type" />
 		<attribute name="exec.result" />
@@ -1906,7 +2016,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<local name="artifact.version" />
 
-							<property name="artifact.version" value="TEST_ARTIFACT" />
+							<property name="artifact.version" value="1.0.0-TEST_ARTIFACT" />
 
 							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/portal-impl.jar" artifact.name="com.liferay.portal.impl" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${app.server.lib.global.dir}/portal-kernel.jar" artifact.name="com.liferay.portal.kernel" artifact.version="${artifact.version}" />
@@ -1915,6 +2025,8 @@ app.server.type=@{app.server.type}]]></echo>
 							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/util-bridges.jar" artifact.name="com.liferay.util.bridges" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/util-java.jar" artifact.name="com.liferay.util.java" artifact.version="${artifact.version}" />
 							<copy-artifact-to-local-cache artifact.file="${app.server.lib.portal.dir}/util-taglib.jar" artifact.name="com.liferay.util.taglib" artifact.version="${artifact.version}" />
+
+							<deploy-release-dependency-modules />
 						</then>
 						<elseif>
 							<isset property="env.DIST_PATH" />

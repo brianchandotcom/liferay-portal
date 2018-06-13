@@ -17,21 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-    function handleIframeMessage(event) {
-        if (event.data) {
-            var virtualDocument = document.createElement('html');
+	function handleIframeMessage(event) {
+		if (event.data) {
+			var virtualDocument = document.createElement('html');
 
-            virtualDocument.innerHTML = JSON.parse(event.data).data;
+			virtualDocument.innerHTML = JSON.parse(event.data).data;
 
-            var virtualBody = virtualDocument.querySelector('.portlet-body');
+			var virtualBody = virtualDocument.querySelector('.portlet-body');
 
-            if (virtualBody) {
-                document.querySelector('.portlet-body').innerHTML = virtualBody.innerHTML;
-            }
+			if (virtualBody) {
+				document.querySelector('.portlet-body').innerHTML = virtualBody.innerHTML;
+			}
 
-            dom.globalEval.runScriptsInElement(virtualBody);
-        }
-    }
+			dom.globalEval.runScriptsInElement(virtualBody);
+		}
+	}
 
-    window.addEventListener('message', handleIframeMessage);
+	window.addEventListener('message', handleIframeMessage);
 </aui:script>

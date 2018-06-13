@@ -24,6 +24,7 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -61,7 +62,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(getAllowedContentText());
-		sb.append(" div[*](*); img[*](*){*}; ");
+		sb.append(" a[*](*); div[*](*); img[*](*){*}; ");
 		sb.append(getAllowedContentLists());
 		sb.append(" p {text-align}; ");
 		sb.append(getAllowedContentTable());
@@ -117,6 +118,56 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		toolbarJSONObject.put("tabIndex", 1);
 
 		jsonObject.put("add", toolbarJSONObject);
+
+		jsonObject.put("styles", getToolbarsStylesJSONObject());
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarsStylesJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("selections", getToolbarsStylesSelectionsJSONArray());
+		jsonObject.put("tabIndex", 1);
+
+		return jsonObject;
+	}
+
+	protected JSONArray getToolbarsStylesSelectionsJSONArray() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put(getToolbarsStylesSelectionsLinkJSONObject());
+		jsonArray.put(getToolbarsStylesSelectionsTextJSONObject());
+
+		return jsonArray;
+	}
+
+	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("buttons", toJSONArray("[‘linkEditBrowse’]"));
+		jsonObject.put("name", "link");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
+
+		return jsonObject;
+	}
+
+	protected JSONObject getToolbarsStylesSelectionsTextJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put("bold");
+		jsonArray.put("italic");
+		jsonArray.put("underline");
+		jsonArray.put("ol");
+		jsonArray.put("ul");
+		jsonArray.put("linkBrowse");
+
+		jsonObject.put("buttons", jsonArray);
+
+		jsonObject.put("name", "text");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 
 		return jsonObject;
 	}

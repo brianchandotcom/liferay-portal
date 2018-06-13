@@ -89,6 +89,16 @@ class FragmentPreview extends Component {
 	}
 
 	/**
+	 * Event sent when the preview frame content has been loaded
+	 * @private
+	 * @review
+	 */
+
+	_handlePreviewLoaded() {
+		this._updatePreview();
+	}
+
+	/**
 	 * Changes the preview size
 	 * @param {Event} event
 	 * @protected

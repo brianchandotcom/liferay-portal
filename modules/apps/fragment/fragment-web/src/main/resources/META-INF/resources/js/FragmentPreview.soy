@@ -7,6 +7,7 @@
 	{@param previewFragmentEntryURL: string}
 	{@param spritemap: string}
 	{@param? _currentPreviewSize: string}
+	{@param? _handlePreviewLoaded: any}
 	{@param? _handlePreviewSizeButtonClick: any}
 	{@param? _loading: bool}
 	{@param? _previewSizes: list<string>}
@@ -78,6 +79,7 @@
 
 			<iframe
 				class="fragment-preview__content"
+				data-onload="{$_handlePreviewLoaded}"
 				ref="previewFrame"
 				src="{$previewFragmentEntryURL}"
 			></iframe>

@@ -243,8 +243,8 @@ public class LiferayConnectionProperties
 		followRedirectsProperty.setValue(true);
 		forceHttpsProperty.setValue(false);
 		loginTypeProperty.setValue(LoginType.Basic);
-		passwordProperty.setValue("");
-		userIdProperty.setValue("");
+		passwordProperty.setValue(_PASSWORD);
+		userIdProperty.setValue(_USER_ID);
 	}
 
 	public ValidationResult validateTestConnectionPresentationItem() {
@@ -330,11 +330,15 @@ public class LiferayConnectionProperties
 
 	private static final int _CONNECT_TIMEOUT = 30;
 
-	private static final String _HOST = "\"https://apiosample.wedeploy.io\"";
+	private static final String _HOST = "\"http://localhost:8080/o/api\"";
 
 	private static final int _ITEMS_PER_PAGE = 100;
 
+	private static final String _PASSWORD = "test";
+
 	private static final int _READ_TIMEOUT = 60;
+
+	private static final String _USER_ID = "test@liferay.com";
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayConnectionProperties.class);

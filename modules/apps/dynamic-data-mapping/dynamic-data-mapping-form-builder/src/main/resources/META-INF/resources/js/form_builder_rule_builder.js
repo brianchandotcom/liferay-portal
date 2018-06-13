@@ -169,6 +169,7 @@ AUI.add(
 										label: field.get('label') || field.get('fieldName'),
 										options: field.get('options'),
 										pageIndex: instance.getPageIndex(field),
+										repeatable: field.get('repeatable'),
 										type: field.get('type'),
 										value: field.get('fieldName')
 									}

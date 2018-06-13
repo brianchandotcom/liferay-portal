@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.internal.security.permission.resource;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
-import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPOption;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 /**
  * @author Alessio Antonio Rendina
  */
-public class CPDefinitionModelResourcePermissionLogic
-	implements ModelResourcePermissionLogic<CPDefinition> {
+public class CPOptionModelResourcePermissionLogic
+	implements ModelResourcePermissionLogic<CPOption> {
 
-	public CPDefinitionModelResourcePermissionLogic(
+	public CPOptionModelResourcePermissionLogic(
 		PortletResourcePermission portletResourcePermission) {
 
 		_portletResourcePermission = portletResourcePermission;
@@ -36,12 +36,12 @@ public class CPDefinitionModelResourcePermissionLogic
 
 	@Override
 	public Boolean contains(
-			PermissionChecker permissionChecker, String name,
-			CPDefinition cpDefinition, String actionId)
+			PermissionChecker permissionChecker, String name, CPOption cpOption,
+			String actionId)
 		throws PortalException {
 
-		if (permissionChecker.isCompanyAdmin(cpDefinition.getCompanyId()) ||
-			permissionChecker.isGroupAdmin(cpDefinition.getGroupId())) {
+		if (permissionChecker.isCompanyAdmin(cpOption.getCompanyId()) ||
+			permissionChecker.isGroupAdmin(cpOption.getGroupId())) {
 
 			return true;
 		}
@@ -51,12 +51,12 @@ public class CPDefinitionModelResourcePermissionLogic
 			actionId.equals(ActionKeys.VIEW)) {
 
 			return _hasPermission(
-				permissionChecker, cpDefinition.getGroupId(),
+				permissionChecker, cpOption.getGroupId(),
 				CPActionKeys.MANAGE_CATALOG);
 		}
 
 		return _hasPermission(
-			permissionChecker, cpDefinition.getGroupId(), actionId);
+			permissionChecker, cpOption.getGroupId(), actionId);
 	}
 
 	private boolean _hasPermission(

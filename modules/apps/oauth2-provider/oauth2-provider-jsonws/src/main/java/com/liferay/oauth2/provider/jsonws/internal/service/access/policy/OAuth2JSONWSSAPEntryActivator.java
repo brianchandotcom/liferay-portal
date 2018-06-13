@@ -80,20 +80,18 @@ public class OAuth2JSONWSSAPEntryActivator {
 	}
 
 	private static final String[][] _SAP_ENTRY_OBJECT_ARRAYS = {
+		{"OAUTH2_everything", "*"},
+		{"OAUTH2_everything.read", "#fetch*\n#get*\n#has*\n#is*\n#search*"},
 		{
-			"OAUTH2_documents_download",
+			"OAUTH2_everything.read.documents.download",
 			"com.liferay.document.library.kernel.service.DLAppService#get*\n" +
 				"com.liferay.portal.kernel.service.ImageService#get*"
 		},
 		{
-			"OAUTH2_everything.readonly",
-			"#fetch*\n#get*\n#has*\n#is*\n#search*"
-		},
-		{"OAUTH2_everything", "*"},
-		{
-			"OAUTH2_userprofile",
+			"OAUTH2_everything.read.userprofile",
 			"com.liferay.portal.kernel.service.UserService#getCurrentUser"
-		}
+		},
+		{"OAUTH2_everything.write", "#add*\n#create*\n#update*\\n#delete*"}
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -18,6 +18,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.portlet.PortletDependency;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,6 +27,7 @@ import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ImageAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.MainAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ModuleAbsolutePortalURLBuilder;
+import com.liferay.portal.url.builder.PortletDependencyAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ResourceAbsolutePortalURLBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,6 +81,72 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 	}
 
 	@Override
+	public PortletDependencyAbsolutePortalURLBuilder forPortletDependency(
+		PortletDependency portletDependency, String cssURN,
+		String javaScriptURN) {
+
+		return new PortletDependencyAbsolutePortalURLBuilder() {
+
+			@Override
+			public String build() {
+				StringBundler sb = new StringBundler(7);
+
+				boolean ignoreCDNHost = _ignoreCDNHost;
+				boolean ignorePathProxy = _ignorePathProxy;
+
+				if (PortletDependency.Type.CSS == portletDependency.getType()) {
+					String resourcePath = cssURN;
+
+					if (Validator.isNull(resourcePath)) {
+						resourcePath =
+							PortalWebResourceConstants.RESOURCE_TYPE_CSS;
+					}
+					else {
+						ignoreCDNHost = true;
+						ignorePathProxy = true;
+					}
+
+					sb.append(resourcePath);
+				}
+				else if (PortletDependency.Type.JAVASCRIPT ==
+							portletDependency.getType()) {
+
+					String resourcePath = javaScriptURN;
+
+					if (Validator.isNull(resourcePath)) {
+						resourcePath =
+							PortalWebResourceConstants.RESOURCE_TYPE_JS;
+					}
+					else {
+						ignoreCDNHost = true;
+						ignorePathProxy = true;
+					}
+
+					sb.append(resourcePath);
+				}
+
+				if (Validator.isNotNull(portletDependency.getScope())) {
+					sb.append(StringPool.FORWARD_SLASH);
+					sb.append(portletDependency.getScope());
+				}
+
+				if (Validator.isNotNull(portletDependency.getVersion())) {
+					sb.append(StringPool.FORWARD_SLASH);
+					sb.append(portletDependency.getVersion());
+				}
+
+				sb.append(StringPool.FORWARD_SLASH);
+				sb.append(portletDependency.getName());
+
+				return _build(
+					ignoreCDNHost, ignorePathProxy, StringPool.BLANK,
+					sb.toString());
+			}
+
+		};
+	}
+
+	@Override
 	public ResourceAbsolutePortalURLBuilder forResource(String relativeURL) {
 		return new ResourceAbsolutePortalURLBuilder() {
 
@@ -103,14 +172,17 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		return this;
 	}
 
-	private String _build(String pathPrefix, String relativeURL) {
+	private String _build(
+		boolean ignoreCDNHost, boolean ignorePathProxy, String pathPrefix,
+		String relativeURL) {
+
 		StringBundler sb = new StringBundler(6);
 
-		if (!_ignoreCDNHost) {
+		if (!ignoreCDNHost) {
 			sb.append(_getCDNHost(_request));
 		}
 
-		if (!_ignorePathProxy) {
+		if (!ignorePathProxy) {
 			sb.append(_getPathProxy());
 		}
 
@@ -134,6 +206,11 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		sb.append(relativeURL);
 
 		return sb.toString();
+	}
+
+	private String _build(String pathPrefix, String relativeURL) {
+		return _build(
+			_ignoreCDNHost, _ignorePathProxy, pathPrefix, relativeURL);
 	}
 
 	private String _getCDNHost(HttpServletRequest request) {

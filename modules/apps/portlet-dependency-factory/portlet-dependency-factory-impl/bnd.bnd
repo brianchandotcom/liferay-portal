@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portlet Dependency Factory Implementation
+Bundle-SymbolicName: com.liferay.portlet.dependency.factory.impl
+Bundle-Version: 1.0.0

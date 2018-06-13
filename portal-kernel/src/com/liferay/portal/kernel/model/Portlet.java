@@ -79,6 +79,14 @@ public interface Portlet extends PortletModel, PersistedModel {
 		com.liferay.portal.kernel.application.type.ApplicationType applicationType);
 
 	/**
+	* Adds a portlet JS/CSS resource dependency.
+	*
+	* @param portletDependency a portlet JS/CSS resource dependency
+	*/
+	public void addPortletDependency(
+		com.liferay.portal.kernel.model.portlet.PortletDependency portletDependency);
+
+	/**
 	* Adds a processing event.
 	*/
 	public void addProcessingEvent(
@@ -693,6 +701,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @return the portlet data handler instance of the portlet
 	*/
 	public com.liferay.exportimport.kernel.lar.PortletDataHandler getPortletDataHandlerInstance();
+
+	/**
+	* Returns the list of portlet JS/CSS resource dependencies.
+	*
+	* @return the list of portlet JS/CSS resource dependencies.
+	*/
+	public java.util.List<com.liferay.portal.kernel.model.portlet.PortletDependency> getPortletDependencies();
 
 	/**
 	* Returns the filters of the portlet.
@@ -1381,6 +1396,19 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public boolean isMaximizeHelp();
 
 	/**
+	* Returns <code>true</code> if the portlet's
+	* serveResource(ResourceRequest,ResourceResponse) method should be invoked
+	* during a partial action triggered by a different portlet on the same
+	* portal page.
+	*
+	* @return <code>true</code> if the portlet's
+	serveResource(ResourceRequest,ResourceResponse) method should be
+	invoked during a partial action triggered by a different portlet
+	on the same portal page
+	*/
+	public boolean isPartialActionServeResource();
+
+	/**
 	* Returns <code>true</code> if the portlet goes into the pop up state when
 	* the user goes into the print mode.
 	*
@@ -1388,6 +1416,28 @@ public interface Portlet extends PortletModel, PersistedModel {
 	the user goes into the print mode
 	*/
 	public boolean isPopUpPrint();
+
+	/**
+	* Returns <code>true</code> if CSS resource dependencies added via
+	* portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	* to the head of the portal page.
+	*
+	* @return <code>true</code> if CSS resource dependencies added via
+	portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	to the head of the portal page
+	*/
+	public boolean isPortletDependencyCssEnabled();
+
+	/**
+	* Returns <code>true</code> if JavaScript resource dependencies added via
+	* portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	* to the head of the portal page.
+	*
+	* @return <code>true</code> if JavaScript resource dependencies added via
+	portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	to the head of the portal page
+	*/
+	public boolean isPortletDependencyJavaScriptEnabled();
 
 	/**
 	* Returns <code>true</code> if preferences are shared across the entire
@@ -1961,6 +2011,20 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public void setParentStrutsPath(String parentStrutsPath);
 
 	/**
+	* Set to <code>true</code> if the portlet's
+	* serveResource(ResourceRequest,ResourceResponse) method should be invoked
+	* during a partial action triggered by a different portlet on the same
+	* portal page.
+	*
+	* @param partialActionServeResource boolean value for whether the portlet's
+	serveResource(ResourceRequest,ResourceResponse) method should be
+	invoked during a partial action triggered by a different portlet
+	on the same portal page
+	*/
+	public void setPartialActionServeResource(
+		boolean partialActionServeResource);
+
+	/**
 	* Sets the name of the permission propagator class of the portlet.
 	*/
 	public void setPermissionPropagatorClass(String permissionPropagatorClass);
@@ -2019,6 +2083,32 @@ public interface Portlet extends PortletModel, PersistedModel {
 	the portlet
 	*/
 	public void setPortletDataHandlerClass(String portletDataHandlerClass);
+
+	/**
+	* Set to <code>true</code> if the CSS resource dependencies added via
+	* portlet.xml, @Dependency, or HeaderResponse.addDependency are to be added
+	* to the head of the portal page.
+	*
+	* @param portletDependencyCssEnabled boolean value for whether the
+	CSS resource dependencies added via portlet.xml, @Dependency, or
+	HeaderResponse.addDependency are to be added to the head of the
+	portal page
+	*/
+	public void setPortletDependencyCssEnabled(
+		boolean portletDependencyCssEnabled);
+
+	/**
+	* Set to <code>true</code> if the JavaScript resource dependencies added
+	* via portlet.xml, @Dependency, or HeaderResponse.addDependency are to be
+	* added to the head of the portal page.
+	*
+	* @param portletDependencyJavaScriptEnabled boolean value for whether
+	the JavaScript resource dependencies added via portlet.xml,
+	* @Dependency, or HeaderResponse.addDependency are to be added to
+	the head of the portal page
+	*/
+	public void setPortletDependencyJavaScriptEnabled(
+		boolean portletDependencyJavaScriptEnabled);
 
 	/**
 	* Sets the filters of the portlet.

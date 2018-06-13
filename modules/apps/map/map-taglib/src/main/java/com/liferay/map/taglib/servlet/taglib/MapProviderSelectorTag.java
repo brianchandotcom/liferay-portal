@@ -14,13 +14,10 @@
 
 package com.liferay.map.taglib.servlet.taglib;
 
-import com.liferay.map.MapProvider;
 import com.liferay.map.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.map.util.MapProviderTracker;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -73,15 +70,8 @@ public class MapProviderSelectorTag extends IncludeTag {
 			_mapProviderKey);
 		request.setAttribute(
 			"liferay-map:map-provider-selector:mapProviders",
-			_getMapProviders());
+			new ArrayList<>(ServletContextUtil.getMapProviders()));
 		request.setAttribute("liferay-map:map-provider-selector:name", _name);
-	}
-
-	private List<MapProvider> _getMapProviders() {
-		MapProviderTracker mapProviderTracker =
-			ServletContextUtil.getMapProviderTracker();
-
-		return new ArrayList<>(mapProviderTracker.getMapProviders());
 	}
 
 	private static final String _PAGE = "/map_provider_selector/page.jsp";

@@ -17,14 +17,13 @@ package com.liferay.map.taglib.servlet.taglib;
 import com.liferay.map.MapProvider;
 import com.liferay.map.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.map.util.MapProviderHelper;
-import com.liferay.map.util.MapProviderTracker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -93,23 +92,22 @@ public class MapDisplayTag extends IncludeTag {
 	}
 
 	private MapProvider _getMapProvider() {
-		MapProviderTracker mapProviderTracker =
-			ServletContextUtil.getMapProviderTracker();
-
 		String mapProviderKey = _getMapProviderKey();
 
 		MapProvider mapProvider = null;
 
 		if (Validator.isNotNull(mapProviderKey)) {
-			mapProvider = mapProviderTracker.getMapProvider(mapProviderKey);
+			mapProvider = ServletContextUtil.getMapProvider(mapProviderKey);
 		}
 
 		if (mapProvider == null) {
-			List<MapProvider> mapProviders = new ArrayList(
-				mapProviderTracker.getMapProviders());
+			Collection<MapProvider> mapProviders =
+				ServletContextUtil.getMapProviders();
 
-			if (!mapProviders.isEmpty()) {
-				mapProvider = mapProviders.get(0);
+			Iterator<MapProvider> iterator = mapProviders.iterator();
+
+			if (iterator.hasNext()) {
+				mapProvider = iterator.next();
 			}
 		}
 

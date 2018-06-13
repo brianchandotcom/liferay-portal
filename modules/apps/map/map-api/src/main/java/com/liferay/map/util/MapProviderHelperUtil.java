@@ -37,16 +37,14 @@ public class MapProviderHelperUtil {
 		if (group == null) {
 			return companyMapProviderKey;
 		}
-		else {
-			if (group.isStagingGroup()) {
-				group = group.getLiveGroup();
-			}
 
-			return GetterUtil.getString(
-				group.getTypeSettingsProperty(
-					MapProviderWebKeys.MAP_PROVIDER_KEY),
-				companyMapProviderKey);
+		if (group.isStagingGroup()) {
+			group = group.getLiveGroup();
 		}
+
+		return GetterUtil.getString(
+			group.getTypeSettingsProperty(MapProviderWebKeys.MAP_PROVIDER_KEY),
+			companyMapProviderKey);
 	}
 
 	public static String getMapProviderKey(long companyId) {

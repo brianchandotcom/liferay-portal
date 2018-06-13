@@ -263,7 +263,7 @@ public class LayoutsAdminDisplayContext {
 		};
 	}
 
-	public String getDeleteLayoutURL(Layout layout) {
+	public String getDeleteLayoutURL(Layout layout) throws PortalException {
 		PortletURL deleteLayoutURL = _liferayPortletResponse.createActionURL();
 
 		deleteLayoutURL.setParameter(
@@ -271,6 +271,8 @@ public class LayoutsAdminDisplayContext {
 		deleteLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
 		deleteLayoutURL.setParameter(
 			"selPlid", String.valueOf(layout.getPlid()));
+		deleteLayoutURL.setParameter(
+			"layoutSetBranchId", String.valueOf(_getActiveLayoutSetBranchId()));
 
 		return deleteLayoutURL.toString();
 	}

@@ -124,6 +124,10 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		serviceContext.setAttribute(
+			"layoutSetBranchId",
+			ParamUtil.getLong(actionRequest, "layoutSetBranchId"));
+
 		_layoutService.deleteLayout(selPlid, serviceContext);
 	}
 

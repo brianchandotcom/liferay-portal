@@ -43,6 +43,13 @@
 		<execute macro="Upgrade#viewCalendar" />
 	</command>
 
+	<command name="ViewCalendarArchive621021" priority="5">
+		<property name="data.archive.type" value="data-archive-calendar" />
+		<property name="portal.version" value="6.2.10.21" />
+
+		<execute macro="Upgrade#viewCalendar" />
+	</command>
+
 	<command name="ViewCalendarArchive625" priority="5">
 		<property name="data.archive.type" value="data-archive-calendar" />
 		<property name="portal.version" value="6.2.5" />

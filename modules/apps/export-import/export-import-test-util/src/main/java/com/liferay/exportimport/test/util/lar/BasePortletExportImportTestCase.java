@@ -134,14 +134,6 @@ public abstract class BasePortletExportImportTestCase
 			PortletDataHandlerKeys.DELETIONS,
 			new String[] {Boolean.TRUE.toString()});
 
-		exportImportPortlet(
-			getPortletId(), exportParameterMap, getImportParameterMap());
-
-		importedStagedModel = getStagedModel(
-			stagedModelUuid, importedGroup.getGroupId());
-
-		Assert.assertNotNull(importedStagedModel);
-
 		Map<String, String[]> importParameterMap = new LinkedHashMap<>();
 
 		importParameterMap.put(

@@ -1,5 +1,5 @@
 <definition>
-	<command name="_closeMessage">
+	<command name="closeMessage">
 		<if>
 			<and>
 				<condition function="IsElementPresent" locator1="Message#${messageType}" />
@@ -19,7 +19,7 @@
 	</command>
 
 	<command name="closePortalLocalizationWarning">
-		<execute macro="Alert#_closeMessage">
+		<execute macro="Alert#closeMessage">
 			<var name="messageType" value="PORTAL_LOCALIZATION" />
 		</execute>
 

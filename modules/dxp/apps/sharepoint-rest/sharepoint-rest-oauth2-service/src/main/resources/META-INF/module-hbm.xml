@@ -4,15 +4,15 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry" />
 	<class name="com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl" table="SharepointOAuth2TokenEntry">
-		<id name="sharepointOAuth2TokenEntryId" type="long">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="sharepointOAuth2TokenEntryId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="accessToken" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="configurationPid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
-		<property name="refreshToken" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="accessToken" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="configurationPid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="refreshToken" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 </hibernate-mapping>

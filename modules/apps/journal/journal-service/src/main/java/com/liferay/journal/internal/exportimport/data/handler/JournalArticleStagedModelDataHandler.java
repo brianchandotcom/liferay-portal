@@ -484,7 +484,7 @@ public class JournalArticleStagedModelDataHandler
 		List<JournalArticle> articles = _journalArticleLocalService.getArticles(
 			portletDataContext.getScopeGroupId(), articleId);
 
-		if (Validator.isNumber(articleId) || !articles.isEmpty()) {
+		if (!articles.isEmpty()) {
 			autoArticleId = true;
 		}
 

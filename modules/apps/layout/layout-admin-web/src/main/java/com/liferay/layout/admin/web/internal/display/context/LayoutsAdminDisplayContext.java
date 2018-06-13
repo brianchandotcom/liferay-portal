@@ -837,23 +837,7 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
-	public boolean isShowAddRootLayoutButton() throws PortalException {
-		return GroupPermissionUtil.contains(
-			_themeDisplay.getPermissionChecker(), getSelGroup(),
-			ActionKeys.ADD_LAYOUT);
-	}
-
-	public boolean isShowPublicPages() {
-		Group selGroup = getSelGroup();
-
-		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean showAddChildPageAction(Layout layout)
+	public boolean isShowAddChildPageAction(Layout layout)
 		throws PortalException {
 
 		return LayoutPermissionUtil.contains(
@@ -861,12 +845,20 @@ public class LayoutsAdminDisplayContext {
 			ActionKeys.ADD_LAYOUT);
 	}
 
-	public boolean showConfigureAction(Layout layout) throws PortalException {
+	public boolean isShowAddRootLayoutButton() throws PortalException {
+		return GroupPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), getSelGroup(),
+			ActionKeys.ADD_LAYOUT);
+	}
+
+	public boolean isShowConfigureAction(Layout layout) throws PortalException {
 		return LayoutPermissionUtil.contains(
 			_themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 	}
 
-	public boolean showCopyLayoutAction(Layout layout) throws PortalException {
+	public boolean isShowCopyLayoutAction(Layout layout)
+		throws PortalException {
+
 		if (!isShowAddRootLayoutButton()) {
 			return false;
 		}
@@ -878,7 +870,7 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public boolean showDeleteAction(Layout layout) throws PortalException {
+	public boolean isShowDeleteAction(Layout layout) throws PortalException {
 		if (StagingUtil.isIncomplete(layout)) {
 			return false;
 		}
@@ -904,7 +896,7 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public boolean showOrphanPortletsAction(Layout layout) {
+	public boolean isShowOrphanPortletsAction(Layout layout) {
 		if (StagingUtil.isIncomplete(layout)) {
 			return false;
 		}
@@ -926,7 +918,9 @@ public class LayoutsAdminDisplayContext {
 		return true;
 	}
 
-	public boolean showPermissionsAction(Layout layout) throws PortalException {
+	public boolean isShowPermissionsAction(Layout layout)
+		throws PortalException {
+
 		if (StagingUtil.isIncomplete(layout)) {
 			return false;
 		}
@@ -942,12 +936,22 @@ public class LayoutsAdminDisplayContext {
 			ActionKeys.PERMISSIONS);
 	}
 
+	public boolean isShowPublicPages() {
+		Group selGroup = getSelGroup();
+
+		if (selGroup.isLayoutSetPrototype() || selGroup.isLayoutPrototype()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private JSONObject _getActionURLsJSONObject(Layout layout)
 		throws Exception {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (showAddChildPageAction(layout)) {
+		if (isShowAddChildPageAction(layout)) {
 			jsonObject.put(
 				"addURL",
 				getSelectLayoutPageTemplateEntryURL(
@@ -955,27 +959,27 @@ public class LayoutsAdminDisplayContext {
 					layout.isPrivateLayout()));
 		}
 
-		if (showConfigureAction(layout)) {
+		if (isShowConfigureAction(layout)) {
 			jsonObject.put("configureURL", getConfigureLayoutURL(layout));
 		}
 
-		if (showCopyLayoutAction(layout)) {
+		if (isShowCopyLayoutAction(layout)) {
 			jsonObject.put("copyLayoutURL", getCopyLayoutURL(layout));
 		}
 
-		if (showDeleteAction(layout)) {
+		if (isShowDeleteAction(layout)) {
 			jsonObject.put("deleteURL", getDeleteLayoutURL(layout));
 		}
 
-		if (showConfigureAction(layout)) {
+		if (isShowConfigureAction(layout)) {
 			jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
 		}
 
-		if (showOrphanPortletsAction(layout)) {
+		if (isShowOrphanPortletsAction(layout)) {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));
 		}
 
-		if (showPermissionsAction(layout)) {
+		if (isShowPermissionsAction(layout)) {
 			jsonObject.put("permissionsURL", getPermissionsURL(layout));
 		}
 

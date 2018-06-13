@@ -767,16 +767,17 @@ portal page.
 
 <!--
 The default value of portlet-dependency-css-enabled is true. If set to false,
-then CSS resource dependencies added via portlet.xml, @Dependency, or
-HeaderResponse#addDependency will not be added to the head of the portal page.
+then the CSS resource dependencies that are specified in portlet.xml,
+@Dependency, or HeaderResponse#addDependency will not be referenced in the
+page's header.
 -->
 <!ELEMENT portlet-dependency-css-enabled (#PCDATA)>
 
 <!--
 The default value of portlet-dependency-javascript-enabled is true. If set to
-false, then JavaScript resource dependencies added via portlet.xml,
-@Dependency, or HeaderResponse#addDependency will not be added to the head of
-the portal page.
+false, then the JavaScript resource dependencies that are specified in
+portlet.xml, @Dependency, or HeaderResponse#addDependency will not be referenced
+in the page's header.
 -->
 <!ELEMENT portlet-dependency-javascript-enabled (#PCDATA)>
 

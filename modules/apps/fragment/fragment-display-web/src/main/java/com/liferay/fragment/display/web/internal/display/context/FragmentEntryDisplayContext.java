@@ -232,7 +232,7 @@ public class FragmentEntryDisplayContext {
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				PortletIdCodec.decodePortletName(portletDisplay.getId()),
 				"fragmenEntryLinkEditor", StringPool.BLANK,
-				Collections.emptyMap(), themeDisplay,
+				new HashMap<String, Object>(), themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_renderRequest));
 
 		configurations.put("text", editorConfiguration.getData());
@@ -241,7 +241,7 @@ public class FragmentEntryDisplayContext {
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				PortletIdCodec.decodePortletName(portletDisplay.getId()),
 				"fragmenEntryLinkRichTextEditor", StringPool.BLANK,
-				Collections.emptyMap(), themeDisplay,
+				new HashMap<String, Object>(), themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_renderRequest));
 
 		configurations.put("rich-text", richTextEditorConfiguration.getData());

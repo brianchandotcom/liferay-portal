@@ -14,8 +14,10 @@
 
 package com.liferay.oauth2.provider.client.test;
 
+import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
+import com.liferay.oauth2.provider.test.internal.TestApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
@@ -25,6 +27,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.net.URISyntaxException;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Dictionary;
 
 import javax.ws.rs.client.Invocation;
@@ -70,6 +74,12 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 			"/annotated-guest-default/", "everything.readonly", 403);
 
 		testApplication("/annotated-guest-default/no-scope", "no-scope", 403);
+
+		testApplication("/methods-guest-not-allowed/", "get", 403);
+
+		testApplication("/methods-guest-allowed/", "get", 403);
+
+		testApplication("/methods-guest-default/", "get", 403);
 	}
 
 	public static class AnnotatedApplicationTestPreparatorBundleActivator
@@ -103,12 +113,37 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 				new TestAnnotatedApplication(), "annotated-guest-default",
 				properties);
 
+			properties = new HashMapDictionary<>();
+
+			properties.put("auth.verifier.guest.allowed", false);
+			properties.put("oauth2.scopechecker.type", "http.method");
+
+			registerJaxRsApplication(
+				new TestApplication(), "methods-guest-not-allowed", properties);
+
+			properties = new HashMapDictionary<>();
+
+			properties.put("auth.verifier.guest.allowed", true);
+			properties.put("oauth2.scopechecker.type", "http.method");
+
+			registerJaxRsApplication(
+				new TestApplication(), "methods-guest-allowed", properties);
+
+			properties = new HashMapDictionary<>();
+
+			properties.put("oauth2.scopechecker.type", "http.method");
+
+			registerJaxRsApplication(
+				new TestApplication(), "methods-guest-default", properties);
+
 			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
 			createOAuth2Application(
-				defaultCompanyId, user, "oauthTestApplication");
+				defaultCompanyId, user, "oauthTestApplication",
+				Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
+				Arrays.asList(new String[] {"GET", "everything.readonly"}));
 		}
 
 	}

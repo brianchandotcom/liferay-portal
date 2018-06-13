@@ -2698,6 +2698,8 @@ public class StagingImpl implements Staging {
 					publishLayoutRemoteSettingsMap, "secureConnection");
 				remotePrivateLayout = MapUtil.getBoolean(
 					publishLayoutRemoteSettingsMap, "remotePrivateLayout");
+				remoteGroupId = MapUtil.getLong(
+					publishLayoutRemoteSettingsMap, "targetGroupId");
 
 				if (!Validator.isBlank(name)) {
 					Map<String, String[]> parameterMap =
@@ -2919,6 +2921,11 @@ public class StagingImpl implements Staging {
 		boolean secureConnection = false;
 		boolean remotePrivateLayout = false;
 
+		long remoteGroupId = ParamUtil.getLong(
+			portletRequest, "remoteGroupId",
+			GetterUtil.getLong(
+				groupTypeSettingsProperties.getProperty("remoteGroupId")));
+
 		long exportImportConfigurationId = ParamUtil.getLong(
 			portletRequest, "exportImportConfigurationId");
 
@@ -2941,6 +2948,7 @@ public class StagingImpl implements Staging {
 				remotePort = MapUtil.getInteger(settingsMap, "remotePort");
 				remotePathContext = MapUtil.getString(
 					settingsMap, "remotePathContext");
+				remoteGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 				secureConnection = MapUtil.getBoolean(
 					settingsMap, "secureConnection");
 				remotePrivateLayout = MapUtil.getBoolean(
@@ -2974,10 +2982,6 @@ public class StagingImpl implements Staging {
 		}
 
 		remoteAddress = stripProtocolFromRemoteAddress(remoteAddress);
-		long remoteGroupId = ParamUtil.getLong(
-			portletRequest, "remoteGroupId",
-			GetterUtil.getLong(
-				groupTypeSettingsProperties.getProperty("remoteGroupId")));
 
 		_groupLocalService.validateRemote(
 			groupId, remoteAddress, remotePort, remotePathContext,

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -37,13 +38,16 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -991,6 +995,36 @@ public class LayoutsAdminDisplayContext {
 		return jsonObject;
 	}
 
+	private long _getActiveLayoutSetBranchId() throws PortalException {
+		long activeLayoutSetBranchId = ParamUtil.getLong(
+			_request, "layoutSetBranchId");
+
+		Layout layout = getSelLayout();
+
+		if (layout != null) {
+			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
+				layout);
+
+			if (layoutRevision != null) {
+				activeLayoutSetBranchId = layoutRevision.getLayoutSetBranchId();
+			}
+		}
+
+		List<LayoutSetBranch> layoutSetBranches =
+			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(
+				_themeDisplay.getScopeGroupId(), isPrivatePages());
+
+		if ((activeLayoutSetBranchId == 0) && !layoutSetBranches.isEmpty()) {
+			LayoutSetBranch layoutSetBranch =
+				LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
+					_themeDisplay.getScopeGroupId(), isPrivateLayout());
+
+			activeLayoutSetBranchId = layoutSetBranch.getLayoutSetBranchId();
+		}
+
+		return activeLayoutSetBranchId;
+	}
+
 	private JSONObject _getBreadcrumbEntryJSONObject(long plid, String title) {
 		JSONObject breadcrumbEntryJSONObject =
 			JSONFactoryUtil.createJSONObject();
@@ -1076,6 +1110,12 @@ public class LayoutsAdminDisplayContext {
 
 		layoutColumnsJSONArray.put(firstColumnJSONArray);
 
+		JSONArray layoutSetBranchesJSONArray = _getLayoutSetBranchesJSONArray();
+
+		if (layoutSetBranchesJSONArray.length() > 0) {
+			layoutColumnsJSONArray.put(layoutSetBranchesJSONArray);
+		}
+
 		layoutColumnsJSONArray.put(_getLayoutsJSONArray(0, isPrivatePages()));
 
 		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
@@ -1105,14 +1145,52 @@ public class LayoutsAdminDisplayContext {
 		return layoutColumnsJSONArray;
 	}
 
+	private JSONArray _getLayoutSetBranchesJSONArray() throws PortalException {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<LayoutSetBranch> layoutSetBranches =
+			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(
+				_themeDisplay.getScopeGroupId(), isPrivatePages());
+
+		long activeLayoutSetBranchId = _getActiveLayoutSetBranchId();
+
+		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			PortletURL portletURL = getPortletURL();
+
+			portletURL.setParameter(
+				"layoutSetBranchId",
+				String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
+
+			jsonObject.put(
+				"active",
+				layoutSetBranch.getLayoutSetBranchId() ==
+					activeLayoutSetBranchId);
+
+			jsonObject.put("hasChild", true);
+			jsonObject.put("plid", LayoutConstants.DEFAULT_PLID);
+			jsonObject.put(
+				"title", LanguageUtil.get(_request, layoutSetBranch.getName()));
+			jsonObject.put("url", portletURL.toString());
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
+	}
+
 	private JSONArray _getLayoutsJSONArray(
 			long parentLayoutId, boolean privateLayout)
 		throws Exception {
 
+		long layoutSetBranchId = ParamUtil.getLong(
+			_request, "layoutSetBranchId", _getActiveLayoutSetBranchId());
+
 		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			getSelGroupId(), privateLayout, parentLayoutId, false,
+			getSelGroupId(), privateLayout, parentLayoutId, true,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, _getOrderByComparator());
 
 		for (Layout layout : layouts) {
@@ -1127,6 +1205,15 @@ public class LayoutsAdminDisplayContext {
 			}
 
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
+
+			if (layoutSetBranchId > 0) {
+				LayoutRevision layoutRevision =
+					LayoutStagingUtil.getLayoutRevision(layout);
+
+				if (layoutRevision.isIncomplete()) {
+					continue;
+				}
+			}
 
 			layoutJSONObject.put(
 				"actionURLs", _getActionURLsJSONObject(layout));
@@ -1159,6 +1246,8 @@ public class LayoutsAdminDisplayContext {
 
 				portletURL.setParameter(
 					"selPlid", String.valueOf(layout.getPlid()));
+				portletURL.setParameter(
+					"layoutSetBranchId", String.valueOf(layoutSetBranchId));
 
 				layoutJSONObject.put("url", portletURL.toString());
 			}

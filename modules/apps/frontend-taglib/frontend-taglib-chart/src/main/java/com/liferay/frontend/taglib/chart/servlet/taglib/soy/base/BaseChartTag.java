@@ -20,7 +20,11 @@ import com.liferay.frontend.taglib.chart.model.ChartConfig;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -32,6 +36,7 @@ import java.net.URL;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.jsp.JspWriter;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -99,13 +104,16 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 	}
 
 	private void _outputStylesheetLink() {
-		OutputData outputData = _getOutputData();
-
 		NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
 
 		if (npmResolver == null) {
 			return;
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)getRequest().getAttribute(WebKeys.THEME_DISPLAY);
+
+		boolean xPjax = GetterUtil.getBoolean(request.getHeader("X-PJAX"));
 
 		String cssPath = npmResolver.resolveModuleName(
 			"clay-charts/lib/css/main.css");
@@ -118,7 +126,23 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		sb.append(cssPath);
 		sb.append("\" rel=\"stylesheet\">");
 
-		outputData.setDataSB(_OUTPUT_CSS_KEY, WebKeys.PAGE_TOP, sb);
+		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive() || xPjax) {
+
+			try {
+				JspWriter jspWriter = pageContext.getOut();
+
+				jspWriter.write(sb.toString());
+			}
+			catch (IOException ioe) {
+				_log.error("Unable to output style sheet link", ioe);
+			}
+		}
+		else {
+			OutputData outputData = _getOutputData();
+
+			outputData.setDataSB(_OUTPUT_CSS_KEY, WebKeys.PAGE_TOP, sb);
+		}
 	}
 
 	private void _outputTilesSVG() {
@@ -153,6 +177,8 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 
 	private static final String _OUTPUT_SVG_KEY =
 		BaseChartTag.class.getName() + "_SVG";
+
+	private static final Log _log = LogFactoryUtil.getLog(BaseChartTag.class);
 
 	private final String _moduleBaseName;
 	private final String _templateNamespace;

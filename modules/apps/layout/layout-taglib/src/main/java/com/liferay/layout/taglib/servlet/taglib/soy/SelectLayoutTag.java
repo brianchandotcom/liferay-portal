@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -33,6 +35,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.IOException;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +44,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Eudaldo Alonso
@@ -278,7 +283,10 @@ public class SelectLayoutTag extends ComponentRendererTag {
 	}
 
 	private void _outputStylesheetLink() {
-		OutputData outputData = _getOutputData();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)getRequest().getAttribute(WebKeys.THEME_DISPLAY);
+
+		boolean xPjax = GetterUtil.getBoolean(request.getHeader("X-PJAX"));
 
 		StringBundler sb = new StringBundler(4);
 
@@ -287,8 +295,27 @@ public class SelectLayoutTag extends ComponentRendererTag {
 		sb.append("/layout-taglib/select_layout/css/main.css");
 		sb.append("\" rel=\"stylesheet\">");
 
-		outputData.setDataSB(
-			SelectLayoutTag.class.getName() + "_CSS", WebKeys.PAGE_TOP, sb);
+		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive() || xPjax) {
+
+			try {
+				JspWriter jspWriter = pageContext.getOut();
+
+				jspWriter.write(sb.toString());
+			}
+			catch (IOException ioe) {
+				_log.error("Unable to output style sheet link", ioe);
+			}
+		}
+		else {
+			OutputData outputData = _getOutputData();
+
+			outputData.setDataSB(
+				SelectLayoutTag.class.getName() + "_CSS", WebKeys.PAGE_TOP, sb);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SelectLayoutTag.class);
 
 }

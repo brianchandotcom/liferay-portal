@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	property = {
-		"osgi.jaxrs.application.select=(&(osgi.jaxrs.extension.select=\\(liferay.extension\\=OAuth2\\))(|(!(oauth2.scopechecker.type=*))(oauth2.scopechecker.type=http.method)))",
+		"osgi.jaxrs.application.select=(|(!(oauth2.scopechecker.type=*))(oauth2.scopechecker.type=http.method))",
 		"osgi.jaxrs.extension=true",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.OAuth2)",
 		"osgi.jaxrs.name=Liferay.OAuth2.HTTP.method.request.checker"

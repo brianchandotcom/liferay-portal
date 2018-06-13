@@ -209,7 +209,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) &&
-			Validator.isNotNull(layoutPageTemplateEntry.getClassTypeId())) {
+			(layoutPageTemplateEntry.getClassTypeId() > 0)) {
 
 			DDMStructureLink ddmStructureLink =
 				_ddmStructureLinkLocalService.getUniqueStructureLink(

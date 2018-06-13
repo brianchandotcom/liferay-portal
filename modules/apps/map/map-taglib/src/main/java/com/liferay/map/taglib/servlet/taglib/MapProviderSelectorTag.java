@@ -17,8 +17,6 @@ package com.liferay.map.taglib.servlet.taglib;
 import com.liferay.map.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -70,7 +68,7 @@ public class MapProviderSelectorTag extends IncludeTag {
 			_mapProviderKey);
 		request.setAttribute(
 			"liferay-map:map-provider-selector:mapProviders",
-			new ArrayList<>(ServletContextUtil.getMapProviders()));
+			ServletContextUtil.getMapProviders());
 		request.setAttribute("liferay-map:map-provider-selector:name", _name);
 	}
 

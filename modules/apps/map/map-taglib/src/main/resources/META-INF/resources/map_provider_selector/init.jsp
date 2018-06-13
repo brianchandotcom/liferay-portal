@@ -22,5 +22,5 @@ String namespace = AUIUtil.getNamespace(liferayPortletRequest, liferayPortletRes
 String configurationPrefix = GetterUtil.getString(request.getAttribute("liferay-map:map-provider-selector:configurationPrefix"), "TypeSettingsProperties");
 String name = GetterUtil.getString(request.getAttribute("liferay-map:map-provider-selector:name"));
 String mapProviderKey = GetterUtil.getString(request.getAttribute("liferay-map:map-provider-selector:mapProviderKey"));
-List<MapProvider> mapProviders = (List<MapProvider>)request.getAttribute("liferay-map:map-provider-selector:mapProviders");
+Collection<MapProvider> mapProviders = (Collection<MapProvider>)request.getAttribute("liferay-map:map-provider-selector:mapProviders");
 %>

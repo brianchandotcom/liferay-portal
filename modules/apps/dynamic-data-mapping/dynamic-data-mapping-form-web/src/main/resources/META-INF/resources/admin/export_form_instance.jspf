@@ -26,7 +26,13 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 %>
 
 <div class="hide" id="<portlet:namespace />exportFormInstance">
-	<div id="<portlet:namespace />csvWarning"></div>
+	<div class="hide" id="<portlet:namespace />csvWarning">
+		<clay:alert
+			message='<%= LanguageUtil.get(resourceBundle, "csv-warning-message") %>'
+			style="warning"
+			title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+		/>
+	</div>
 
 	<aui:select label="file-extension" name="fileExtension">
 
@@ -68,17 +74,6 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 
 				if ((fileExtensionSelect.val() === 'csv') && <%= showCSVWarning %>) {
 					csvWarning.show();
-
-					new A.Alert(
-						{
-							bodyContent: '<liferay-ui:message key="csv-warning-message" />',
-							boundingBox: '#<portlet:namespace />csvWarning',
-							closeable: false,
-							cssClass: 'alert-warning',
-							destroyOnHide: false,
-							render: true
-						}
-					);
 				}
 				else {
 					csvWarning.hide();
@@ -121,6 +116,18 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 										click: function() {
 											submitForm(form, url, false);
 
+											dialog.hide();
+										}
+									}
+								}
+							],
+							header: [
+								{
+									cssClass: 'close',
+									discardDefaultButtonCssClasses: true,
+									labelHTML: Liferay.Util.getLexiconIconTpl('times'),
+									on: {
+										click: function() {
 											dialog.hide();
 										}
 									}

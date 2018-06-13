@@ -10,6 +10,14 @@ import './SidebarMapping.es';
 import templates from './FragmentsEditorSidebar.soy';
 
 /**
+ * Added tab ID
+ * @review
+ * @type {!string}
+ */
+
+const ADDED_TAB_ID = 'added';
+
+/**
  * Default selected tab
  * @review
  * @type {!string}
@@ -64,21 +72,17 @@ class FragmentsEditorSidebar extends Component {
 	 */
 
 	toggleAddedTab(enabled) {
-		const addedTabIndex = this.sidebarTabs.findIndex(tab => tab.id === 'added');
-
-		if (addedTabIndex !== -1) {
-			const newAddedTab = Object.assign(
-				{},
-				this.sidebarTabs[addedTabIndex],
-				{enabled: enabled}
-			);
-
-			const newSidebarTabs = [...this.sidebarTabs];
-
-			newSidebarTabs[addedTabIndex] = newAddedTab;
-
-			this.sidebarTabs = newSidebarTabs;
-		}
+		this.sidebarTabs = this.sidebarTabs.map(
+			sidebarTab => {
+				return sidebarTab.id !== ADDED_TAB_ID ?
+					sidebarTab :
+					Object.assign(
+						{},
+						sidebarTab,
+						{enabled}
+					);
+			}
+		);
 
 		if (!enabled) {
 			this._selectedTab = DEFAULT_TAB_ID;
@@ -164,6 +168,7 @@ FragmentsEditorSidebar.STATE = {
 	 * @memberOf FragmentsEditorSidebar
 	 * @review
 	 * @type {!Array<{
+	 *   enabled: bool,
 	 * 	 id: string,
 	 * 	 label: string
 	 * }>}

@@ -14,31 +14,22 @@
 
 package com.liferay.commerce.product.content.web.internal.display.context;
 
-import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
-import com.liferay.commerce.product.content.web.configuration.CPContentPortletInstanceConfiguration;
-import com.liferay.commerce.product.type.CPType;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.content.web.internal.configuration.CPContentPortletInstanceConfiguration;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPContentConfigurationDisplayContext {
 
 	public CPContentConfigurationDisplayContext(
-			CPContentConfigurationHelper cpContentConfigurationHelper,
-			CPTypeServicesTracker cpTypeServicesTracker,
 			HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		_cpContentConfigurationHelper = cpContentConfigurationHelper;
-		_cpTypeServicesTracker = cpTypeServicesTracker;
+		throws PortalException {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -51,23 +42,43 @@ public class CPContentConfigurationDisplayContext {
 				CPContentPortletInstanceConfiguration.class);
 	}
 
-	public List<CPType> getCPTypes() {
-		return _cpTypeServicesTracker.getCPTypes();
+	public String getCPTypeRendererKey() {
+		return _cpContentPortletInstanceConfiguration.cpTypeRendererKey();
 	}
 
-	public String getDisplayStyle(String cpTypeName) {
-		return _cpContentConfigurationHelper.getCPTypeDisplayStyle(
-			_cpContentPortletInstanceConfiguration, cpTypeName);
+	public String getDisplayStyle() {
+		return _cpContentPortletInstanceConfiguration.displayStyle();
 	}
 
-	public long getDisplayStyleGroupId(String cpTypeName) {
-		return _cpContentConfigurationHelper.getCPTypeDisplayStyleGroupId(
-			_cpContentPortletInstanceConfiguration, cpTypeName);
+	public long getDisplayStyleGroupId() {
+		return _cpContentPortletInstanceConfiguration.displayStyleGroupId();
 	}
 
-	private final CPContentConfigurationHelper _cpContentConfigurationHelper;
+	public String getSelectionStyle() {
+		return _cpContentPortletInstanceConfiguration.selectionStyle();
+	}
+
+	public boolean isSelectionStyleADT() {
+		String selectionStyle = getSelectionStyle();
+
+		if (selectionStyle.equals("adt")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSelectionStyleCustomRenderer() {
+		String selectionStyle = getSelectionStyle();
+
+		if (selectionStyle.equals("custom")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private final CPContentPortletInstanceConfiguration
 		_cpContentPortletInstanceConfiguration;
-	private final CPTypeServicesTracker _cpTypeServicesTracker;
 
 }

@@ -17,218 +17,202 @@
 <%@ include file="/init.jsp" %>
 
 <%
-GroupedCPTypeDisplayContext groupedCPTypeDisplayContext = (GroupedCPTypeDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+GroupedCPTypeHelper groupedCPTypeHelper = (GroupedCPTypeHelper)request.getAttribute("groupedCPTypeHelper");
 
-Map<String, Object> contextObjects = new HashMap<>();
+CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 
-contextObjects.put("groupedCPTypeDisplayContext", groupedCPTypeDisplayContext);
+CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
+CPInstance cpInstance = cpContentHelper.getDefaultCPInstance(request);
 
-CPDefinition cpDefinition = groupedCPTypeDisplayContext.getCPDefinition();
-
-CPInstance cpInstance = groupedCPTypeDisplayContext.getDefaultCPInstance();
-
-request.setAttribute("cpDefinition", cpDefinition);
-request.setAttribute("cpInstance", cpInstance);
+long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 %>
 
-<liferay-ddm:template-renderer
-	className="<%= GroupedCPType.class.getName() %>"
-	contextObjects="<%= contextObjects %>"
-	displayStyle="<%= groupedCPTypeDisplayContext.getDisplayStyle() %>"
-	displayStyleGroupId="<%= groupedCPTypeDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= Collections.singletonList(cpDefinition) %>"
->
-	<div class="container-fluid product-detail" id="<portlet:namespace /><%= cpDefinition.getCPDefinitionId() %>ProductContent">
-		<div class="row">
-			<div class="product-detail-header">
-				<div class="col-lg-6 col-md-7">
-					<div class="row">
-						<div class="col-lg-2 col-md-3 col-xs-2">
-							<div id="<portlet:namespace />thumbs-container">
-
-								<%
-								for (CPAttachmentFileEntry cpAttachmentFileEntry : groupedCPTypeDisplayContext.getImages()) {
-									String url = groupedCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
-								%>
-
-									<div class="card thumb" data-url="<%= url %>">
-										<img class="center-block img-responsive" src="<%= url %>">
-									</div>
-
-								<%
-								}
-								%>
-
-							</div>
-						</div>
-
-						<div class="col-lg-10 col-md-9 col-xs-10 full-image">
+<div class="container-fluid product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
+	<div class="row">
+		<div class="product-detail-header">
+			<div class="col-lg-6 col-md-7">
+				<div class="row">
+					<div class="col-lg-2 col-md-3 col-xs-2">
+						<div id="<portlet:namespace />thumbs-container">
 
 							<%
-							CPAttachmentFileEntry cpAttachmentFileEntry = groupedCPTypeDisplayContext.getDefaultImage();
+							for (CPAttachmentFileEntry cpAttachmentFileEntry : cpContentHelper.getImages(cpDefinitionId)) {
+								String url = cpContentHelper.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay);
 							%>
 
-							<c:if test="<%= cpAttachmentFileEntry != null %>">
-								<img class="center-block img-responsive" id="<portlet:namespace />full-image" src="<%= groupedCPTypeDisplayContext.getImageURL(cpAttachmentFileEntry.getFileEntry(), themeDisplay) %>">
-							</c:if>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-6 col-md-5">
-					<h1><%= cpDefinition.getName(languageId) %></h1>
-
-					<c:choose>
-						<c:when test="<%= cpInstance != null %>">
-							<h4 class="sku"><%= cpInstance.getSku() %></h4>
-
-							<div class="price"><%= cpInstance.getPrice() %></div>
-
-							<div class="availability"><%= groupedCPTypeDisplayContext.getAvailabilityLabel() %></div>
-
-							<div class="availabilityEstimate"><%= groupedCPTypeDisplayContext.getAvailabilityEstimateLabel() %></div>
-
-							<div class="stockQuantity"><%= groupedCPTypeDisplayContext.getStockQuantityLabel() %></div>
-						</c:when>
-						<c:otherwise>
-							<h4 class="sku" data-text-cp-instance-sku=""></h4>
-
-							<div class="price" data-text-cp-instance-price=""></div>
-
-							<div class="availability" data-text-cp-instance-availability=""></div>
-
-							<div class="availabilityEstimate" data-text-cp-instance-availability-estimate=""></div>
-
-							<div class="stockQuantity" data-text-cp-instance-stock-quantity=""></div>
-						</c:otherwise>
-					</c:choose>
-
-					<div class="row">
-						<div class="col-md-12">
-							<div class="options">
-								<%= groupedCPTypeDisplayContext.renderOptions(renderRequest, renderResponse) %>
-							</div>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-12">
-							<liferay-commerce:compare-product CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" />
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-12">
-							<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
-
-							<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_wish_list#" />
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-lg-12">
-
-				<%
-				for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : groupedCPTypeDisplayContext.getCPDefinitionGroupedEntry()) {
-					CPDefinition curCPDefinition = cpDefinitionGroupedEntry.getEntryCPDefinition();
-				%>
-
-					<div class="row">
-						<div class="col-md-4">
-							<img class="img-responsive" src="<%= curCPDefinition.getDefaultImageThumbnailSrc(themeDisplay) %>">
-						</div>
-
-						<div class="col-md-8">
-							<h5>
-								<%= curCPDefinition.getName(languageId) %>
-							</h5>
-
-							<h6>
-								<liferay-ui:message arguments="<%= cpDefinitionGroupedEntry.getQuantity() %>" key="quantity-x" />
-							</h6>
-						</div>
-					</div>
-
-				<%
-				}
-				%>
-
-			</div>
-		</div>
-
-		<%
-		List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = groupedCPTypeDisplayContext.getCPDefinitionSpecificationOptionValues();
-		List<CPOptionCategory> cpOptionCategories = groupedCPTypeDisplayContext.getCPOptionCategories();
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries = groupedCPTypeDisplayContext.getCPAttachmentFileEntries();
-		%>
-
-		<div class="row">
-			<div class="product-detail-body">
-				<div class="nav-tabs-centered">
-					<ul class="nav nav-tabs" role="tablist">
-						<li class="active" role="presentation">
-							<a aria-controls="<portlet:namespace />description" aria-expanded="true" data-toggle="tab" href="#<portlet:namespace />description" role="tab">
-								<%= LanguageUtil.get(resourceBundle, "description") %>
-							</a>
-						</li>
-
-						<c:if test="<%= groupedCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues() %>">
-							<li role="presentation">
-								<a aria-controls="<portlet:namespace />specification" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />specification" role="tab">
-									<%= LanguageUtil.get(resourceBundle, "specifications") %>
-								</a>
-							</li>
-						</c:if>
-
-						<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
-							<li role="presentation">
-								<a aria-controls="<portlet:namespace />attachments" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />attachments" role="tab">
-									<%= LanguageUtil.get(resourceBundle, "attachments") %>
-								</a>
-							</li>
-						</c:if>
-					</ul>
-
-					<div class="tab-content">
-						<div class="active tab-pane" id="<portlet:namespace />description">
-							<p><%= cpDefinition.getDescription(languageId) %></p>
-						</div>
-
-						<c:if test="<%= groupedCPTypeDisplayContext.hasCPDefinitionSpecificationOptionValues() %>">
-							<div class="tab-pane" id="<portlet:namespace />specification">
-								<div class="table-responsive">
-									<table class="table table-bordered table-striped">
-
-										<%
-										for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : cpDefinitionSpecificationOptionValues) {
-											CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
-										%>
-
-											<tr>
-												<td><%= cpSpecificationOption.getTitle(languageId) %></td>
-												<td><%= cpDefinitionSpecificationOptionValue.getValue(languageId) %></td>
-											</tr>
-
-										<%
-										}
-										%>
-
-									</table>
+								<div class="card thumb" data-url="<%= url %>">
+									<img class="center-block img-responsive" src="<%= url %>">
 								</div>
 
-								<%
-								for (CPOptionCategory cpOptionCategory : cpOptionCategories) {
-									List<CPDefinitionSpecificationOptionValue> categorizedCPDefinitionSpecificationOptionValues = groupedCPTypeDisplayContext.getCategorizedCPDefinitionSpecificationOptionValues(cpOptionCategory.getCPOptionCategoryId());
-								%>
+							<%
+							}
+							%>
+
+						</div>
+					</div>
+
+					<div class="col-lg-10 col-md-9 col-xs-10 full-image">
+						<c:if test="<%= Validator.isNotNull(cpCatalogEntry.getDefaultImageFileUrl()) %>">
+							<img class="center-block img-responsive" id="<portlet:namespace />full-image" src="<%= cpCatalogEntry.getDefaultImageFileUrl() %>">
+						</c:if>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-6 col-md-5">
+				<h1><%= cpCatalogEntry.getName() %></h1>
+
+				<c:choose>
+					<c:when test="<%= cpInstance != null %>">
+						<h4 class="sku"><%= cpInstance.getSku() %></h4>
+
+						<div class="price"><%= cpInstance.getPrice() %></div>
+
+						<div class="availability"><%= cpContentHelper.getAvailabilityLabel(request) %></div>
+
+						<div class="availabilityEstimate"><%= cpContentHelper.getAvailabilityEstimateLabel(request) %></div>
+
+						<div class="stockQuantity"><%= cpContentHelper.getStockQuantityLabel(request) %></div>
+					</c:when>
+					<c:otherwise>
+						<h4 class="sku" data-text-cp-instance-sku=""></h4>
+
+						<div class="price" data-text-cp-instance-price=""></div>
+
+						<div class="availability" data-text-cp-instance-availability=""></div>
+
+						<div class="availabilityEstimate" data-text-cp-instance-availability-estimate=""></div>
+
+						<div class="stockQuantity" data-text-cp-instance-stock-quantity=""></div>
+					</c:otherwise>
+				</c:choose>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="options">
+							<%= cpContentHelper.renderOptions(renderRequest, renderResponse) %>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<liferay-commerce:compare-product CPDefinitionId="<%= cpDefinitionId %>" />
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_cart#" />
+
+						<liferay-util:dynamic-include key="com.liferay.commerce.product.content.web#/add_to_wish_list#" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+
+			<%
+			for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : groupedCPTypeHelper.getCPDefinitionGroupedEntry(cpDefinitionId)) {
+				CPDefinition curCPDefinition = cpDefinitionGroupedEntry.getEntryCPDefinition();
+			%>
+
+				<div class="row">
+					<div class="col-md-4">
+						<img class="img-responsive" src="<%= curCPDefinition.getDefaultImageThumbnailSrc(themeDisplay) %>">
+					</div>
+
+					<div class="col-md-8">
+						<h5>
+							<%= curCPDefinition.getName(LocaleUtil.toLanguageId(locale)) %>
+						</h5>
+
+						<h6>
+							<liferay-ui:message arguments="<%= cpDefinitionGroupedEntry.getQuantity() %>" key="quantity-x" />
+						</h6>
+					</div>
+				</div>
+
+			<%
+			}
+			%>
+
+		</div>
+	</div>
+
+	<%
+	List<CPDefinitionSpecificationOptionValue> cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpDefinitionId);
+	List<CPOptionCategory> cpOptionCategories = cpContentHelper.getCPOptionCategories(scopeGroupId);
+	List<CPAttachmentFileEntry> cpAttachmentFileEntries = cpContentHelper.getCPAttachmentFileEntries(cpDefinitionId);
+	%>
+
+	<div class="row">
+		<div class="product-detail-body">
+			<div class="nav-tabs-centered">
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="active" role="presentation">
+						<a aria-controls="<portlet:namespace />description" aria-expanded="true" data-toggle="tab" href="#<portlet:namespace />description" role="tab">
+							<%= LanguageUtil.get(resourceBundle, "description") %>
+						</a>
+					</li>
+
+					<c:if test="<%= cpContentHelper.hasCPDefinitionSpecificationOptionValues(cpDefinitionId) %>">
+						<li role="presentation">
+							<a aria-controls="<portlet:namespace />specification" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />specification" role="tab">
+								<%= LanguageUtil.get(resourceBundle, "specifications") %>
+							</a>
+						</li>
+					</c:if>
+
+					<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
+						<li role="presentation">
+							<a aria-controls="<portlet:namespace />attachments" aria-expanded="false" data-toggle="tab" href="#<portlet:namespace />attachments" role="tab">
+								<%= LanguageUtil.get(resourceBundle, "attachments") %>
+							</a>
+						</li>
+					</c:if>
+				</ul>
+
+				<div class="tab-content">
+					<div class="active tab-pane" id="<portlet:namespace />description">
+						<p><%= cpCatalogEntry.getDescription() %></p>
+					</div>
+
+					<c:if test="<%= cpContentHelper.hasCPDefinitionSpecificationOptionValues(cpDefinitionId) %>">
+						<div class="tab-pane" id="<portlet:namespace />specification">
+							<div class="table-responsive">
+								<table class="table table-bordered table-striped">
+
+									<%
+									for (CPDefinitionSpecificationOptionValue cpDefinitionSpecificationOptionValue : cpDefinitionSpecificationOptionValues) {
+										CPSpecificationOption cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption();
+									%>
+
+										<tr>
+											<td><%= cpSpecificationOption.getTitle(locale) %></td>
+											<td><%= cpDefinitionSpecificationOptionValue.getValue(locale) %></td>
+										</tr>
+
+									<%
+									}
+									%>
+
+								</table>
+							</div>
+
+							<%
+							for (CPOptionCategory cpOptionCategory : cpOptionCategories) {
+								List<CPDefinitionSpecificationOptionValue> categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId, cpOptionCategory.getCPOptionCategoryId());
+							%>
 
 								<c:if test="<%= !categorizedCPDefinitionSpecificationOptionValues.isEmpty() %>">
 									<div class="table-responsive">
 										<table class="table table-bordered table-striped">
 											<tr>
-												<th><%= cpOptionCategory.getTitle(languageId) %></th>
+												<th><%= cpOptionCategory.getTitle(locale) %></th>
 												<th></th>
 											</tr>
 
@@ -238,8 +222,8 @@ request.setAttribute("cpInstance", cpInstance);
 											%>
 
 												<tr>
-													<td><%= cpSpecificationOption.getTitle(languageId) %></td>
-													<td><%= cpDefinitionSpecificationOptionValue.getValue(languageId) %></td>
+													<td><%= cpSpecificationOption.getTitle(locale) %></td>
+													<td><%= cpDefinitionSpecificationOptionValue.getValue(locale) %></td>
 												</tr>
 
 											<%
@@ -250,69 +234,70 @@ request.setAttribute("cpInstance", cpInstance);
 									</div>
 								</c:if>
 
-								<%
-								}
-								%>
+							<%
+							}
+							%>
 
+						</div>
+					</c:if>
+
+					<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
+						<div class="tab-pane" id="<portlet:namespace />attachments">
+							<div class="table-responsive">
+								<table class="table table-bordered table-striped">
+
+									<%
+									for (CPAttachmentFileEntry curCPAttachmentFileEntry : cpAttachmentFileEntries) {
+										FileEntry fileEntry = curCPAttachmentFileEntry.getFileEntry();
+									%>
+
+										<tr>
+											<td>
+												<span><%= curCPAttachmentFileEntry.getTitle(locale) %></span>
+
+												<span>
+													<aui:icon cssClass="icon-monospaced" image="download" markupView="lexicon" url="<%= cpContentHelper.getDownloadFileEntryURL(fileEntry, themeDisplay) %>" />
+												</span>
+											</td>
+										</tr>
+
+									<%
+									}
+									%>
+
+								</table>
 							</div>
-						</c:if>
-
-						<c:if test="<%= !cpAttachmentFileEntries.isEmpty() %>">
-							<div class="tab-pane" id="<portlet:namespace />attachments">
-								<div class="table-responsive">
-									<table class="table table-bordered table-striped">
-
-										<%
-										for (CPAttachmentFileEntry curCPAttachmentFileEntry : cpAttachmentFileEntries) {
-											FileEntry fileEntry = curCPAttachmentFileEntry.getFileEntry();
-										%>
-
-											<tr>
-												<td>
-													<span><%= curCPAttachmentFileEntry.getTitle(languageId) %></span>
-
-													<span>
-														<aui:icon cssClass="icon-monospaced" image="download" markupView="lexicon" url="<%= groupedCPTypeDisplayContext.getDownloadFileEntryURL(fileEntry) %>" />
-													</span>
-												</td>
-											</tr>
-
-										<%
-										}
-										%>
-
-									</table>
-								</div>
-							</div>
-						</c:if>
-					</div>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<aui:script>
-		$(document).ready(
-			function() {
-				$(".thumb").click(
-					function() {
-						$("#<portlet:namespace />full-image").attr("src", $(this).attr("data-url"));
-					});
-			});
-	</aui:script>
+<aui:script>
+	$(document).ready(
+		function() {
+			$(".thumb").click(
+				function() {
+					$("#<portlet:namespace />full-image").attr("src", $(this).attr("data-url"));
+				}
+			);
+		}
+	);
+</aui:script>
 
-	<aui:script use="liferay-commerce-product-content">
-		var productContent = new Liferay.Portlet.ProductContent(
-			{
-				cpDefinitionId: <%= groupedCPTypeDisplayContext.getCPDefinitionId() %>,
-				fullImageSelector : '#<portlet:namespace />full-image',
-				namespace: '<portlet:namespace />',
-				productContentSelector: '#<portlet:namespace /><%= cpDefinition.getCPDefinitionId() %>ProductContent',
-				thumbsContainerSelector : '#<portlet:namespace />thumbs-container',
-				viewAttachmentURL: '<%= groupedCPTypeDisplayContext.getViewAttachmentURL().toString() %>'
-			}
-		);
+<aui:script use="liferay-commerce-product-content">
+	var productContent = new Liferay.Portlet.ProductContent(
+		{
+			cpDefinitionId: <%= cpDefinitionId %>,
+			fullImageSelector : '#<portlet:namespace />full-image',
+			namespace: '<portlet:namespace />',
+			productContentSelector: '#<portlet:namespace /><%= cpDefinitionId %>ProductContent',
+			thumbsContainerSelector : '#<portlet:namespace />thumbs-container',
+			viewAttachmentURL: '<%= String.valueOf(cpContentHelper.getViewAttachmentURL(liferayPortletRequest, liferayPortletResponse)) %>'
+		}
+	);
 
-		Liferay.component('<portlet:namespace /><%= cpDefinition.getCPDefinitionId() %>ProductContent', productContent);
-	</aui:script>
-</liferay-ddm:template-renderer>
+	Liferay.component('<portlet:namespace /><%= cpDefinitionId %>ProductContent', productContent);
+</aui:script>

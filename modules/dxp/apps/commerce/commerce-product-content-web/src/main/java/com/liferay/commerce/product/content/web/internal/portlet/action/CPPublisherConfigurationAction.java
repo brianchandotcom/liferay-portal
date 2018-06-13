@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.internal.display.context.CPPublisherConfigurationDisplayContext;
 import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.content.web.internal.util.CPQueryRule;
@@ -469,9 +468,6 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private CPContentConfigurationHelper _cpContentConfigurationHelper;
 
 	@Reference
 	private CPDataSourceRegistry _cpDataSourceRegistry;

@@ -15,7 +15,7 @@
 package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.web.configuration.CPCompareContentMiniPortletInstanceConfiguration;
+import com.liferay.commerce.product.content.web.internal.configuration.CPCompareContentMiniPortletInstanceConfiguration;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.util.CPCompareUtil;

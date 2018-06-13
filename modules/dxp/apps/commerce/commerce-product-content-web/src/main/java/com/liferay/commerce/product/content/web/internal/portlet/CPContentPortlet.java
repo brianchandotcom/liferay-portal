@@ -14,15 +14,16 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet;
 
-import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.constants.CPWebKeys;
-import com.liferay.commerce.product.type.CPTypeRenderer;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.content.constants.CPContentWebKeys;
+import com.liferay.commerce.product.content.util.CPContentHelper;
+import com.liferay.commerce.product.content.web.internal.display.context.CPContentConfigurationDisplayContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -30,9 +31,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,46 +68,31 @@ public class CPContentPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		CPCatalogEntry cpCatalogEntry =
-			(CPCatalogEntry)renderRequest.getAttribute(
-				CPWebKeys.CP_CATALOG_ENTRY);
+		try {
+			CPContentConfigurationDisplayContext
+				cpContentConfigurationDisplayContext =
+					new CPContentConfigurationDisplayContext(
+						_portal.getHttpServletRequest(renderRequest));
 
-		renderCPCatalogEntry(cpCatalogEntry, renderRequest, renderResponse);
+			renderRequest.setAttribute(
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				cpContentConfigurationDisplayContext);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		renderRequest.setAttribute(
+			CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
 
 		super.render(renderRequest, renderResponse);
-	}
-
-	protected void renderCPCatalogEntry(
-		CPCatalogEntry cpCatalogEntry, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
-
-		if (cpCatalogEntry == null) {
-			return;
-		}
-
-		CPTypeRenderer cpTypeRenderer =
-			_cpTypeServicesTracker.getCPTypeRenderer(
-				cpCatalogEntry.getProductTypeName());
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(renderResponse);
-
-		try {
-			cpTypeRenderer.render(
-				cpCatalogEntry, httpServletRequest, httpServletResponse);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPContentPortlet.class);
 
 	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPContentHelper _cpContentHelper;
 
 	@Reference
 	private Portal _portal;

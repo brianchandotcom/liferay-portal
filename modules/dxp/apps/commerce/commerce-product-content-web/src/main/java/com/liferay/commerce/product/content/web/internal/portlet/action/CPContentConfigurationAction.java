@@ -15,9 +15,10 @@
 package com.liferay.commerce.product.content.web.internal.portlet.action;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
+import com.liferay.commerce.product.content.constants.CPContentWebKeys;
+import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.content.web.internal.display.context.CPContentConfigurationDisplayContext;
-import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -32,6 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	immediate = true,
@@ -46,16 +48,18 @@ public class CPContentConfigurationAction extends DefaultConfigurationAction {
 			CPContentConfigurationDisplayContext
 				cpContentConfigurationDisplayContext =
 					new CPContentConfigurationDisplayContext(
-						_cpContentConfigurationHelper, _cpTypeServicesTracker,
 						httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cpContentConfigurationDisplayContext);
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
+
+		httpServletRequest.setAttribute(
+			CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
 
 		return "/product_detail/configuration.jsp";
 	}
@@ -73,9 +77,6 @@ public class CPContentConfigurationAction extends DefaultConfigurationAction {
 		CPContentConfigurationAction.class);
 
 	@Reference
-	private CPContentConfigurationHelper _cpContentConfigurationHelper;
-
-	@Reference
-	private CPTypeServicesTracker _cpTypeServicesTracker;
+	private CPContentHelper _cpContentHelper;
 
 }

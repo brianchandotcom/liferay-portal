@@ -31,6 +31,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.asset.kernel.exception.DuplicateQueryRuleException" %><%@
 page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
+page import="com.liferay.commerce.product.content.constants.CPContentWebKeys" %><%@
+page import="com.liferay.commerce.product.content.render.CPContentRenderer" %><%@
+page import="com.liferay.commerce.product.content.util.CPContentHelper" %><%@
+page import="com.liferay.commerce.product.content.web.internal.constants.CPContentConstants" %><%@
 page import="com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants" %><%@
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentMiniDisplayContext" %><%@
@@ -40,6 +44,7 @@ page import="com.liferay.commerce.product.content.web.internal.display.context.C
 page import="com.liferay.commerce.product.content.web.internal.display.context.CPPublisherDisplayContext" %><%@
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentMiniPortlet" %><%@
 page import="com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentPortlet" %><%@
+page import="com.liferay.commerce.product.content.web.internal.portlet.CPContentPortlet" %><%@
 page import="com.liferay.commerce.product.data.source.CPDataSource" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionOptionRel" %><%@
@@ -60,7 +65,8 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.HashMap" %><%@
+<%@ page import="java.util.Collections" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Set" %><%@

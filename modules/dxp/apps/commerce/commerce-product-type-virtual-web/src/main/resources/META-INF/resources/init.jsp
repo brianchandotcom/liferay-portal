@@ -19,15 +19,15 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/commerce" prefix="liferay-commerce" %><%@
-taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
-taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.model.CommerceOrder" %><%@
+page import="com.liferay.commerce.product.catalog.CPCatalogEntry" %><%@
 page import="com.liferay.commerce.product.constants.CPPortletKeys" %><%@
+page import="com.liferay.commerce.product.content.constants.CPContentWebKeys" %><%@
+page import="com.liferay.commerce.product.content.util.CPContentHelper" %><%@
 page import="com.liferay.commerce.product.model.CPAttachmentFileEntry" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue" %><%@
@@ -49,10 +49,9 @@ page import="com.liferay.commerce.product.type.virtual.order.exception.CommerceV
 page import="com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemFileEntryIdException" %><%@
 page import="com.liferay.commerce.product.type.virtual.order.exception.CommerceVirtualOrderItemUrlException" %><%@
 page import="com.liferay.commerce.product.type.virtual.order.model.CommerceVirtualOrderItem" %><%@
-page import="com.liferay.commerce.product.type.virtual.web.internal.VirtualCPType" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.CPDefinitionVirtualSettingDisplayContext" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.CommerceVirtualOrderItemEditDisplayContext" %><%@
-page import="com.liferay.commerce.product.type.virtual.web.internal.display.context.VirtualCPTypeDisplayContext" %><%@
+page import="com.liferay.commerce.product.type.virtual.web.internal.portlet.template.contributor.VirtualCPTypeHelper" %><%@
 page import="com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib.ui.CPDefinitionVirtualSettingFormNavigatorConstants" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -64,12 +63,10 @@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.Time" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
-<%@ page import="java.util.Collections" %><%@
-page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

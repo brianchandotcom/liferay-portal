@@ -15,3 +15,38 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+CPContentConfigurationDisplayContext cpContentConfigurationDisplayContext = (CPContentConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
+
+Map<String, Object> contextObjects = new HashMap<>();
+
+contextObjects.put("cpContentHelper", cpContentHelper);
+
+CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
+
+CPInstance cpInstance = cpContentHelper.getDefaultCPInstance(request);
+
+request.setAttribute("cpCatalogEntry", cpCatalogEntry);
+request.setAttribute("cpInstance", cpInstance);
+%>
+
+<c:choose>
+	<c:when test="<%= cpContentConfigurationDisplayContext.isSelectionStyleADT() %>">
+		<liferay-ddm:template-renderer
+			className="<%= CPContentPortlet.class.getName() %>"
+			contextObjects="<%= contextObjects %>"
+			displayStyle="<%= cpContentConfigurationDisplayContext.getDisplayStyle() %>"
+			displayStyleGroupId="<%= cpContentConfigurationDisplayContext.getDisplayStyleGroupId() %>"
+			entries="<%= Collections.singletonList(cpCatalogEntry) %>"
+		/>
+	</c:when>
+	<c:otherwise>
+
+		<%
+		cpContentHelper.renderCPType(request, response);
+		%>
+
+	</c:otherwise>
+</c:choose>

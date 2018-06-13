@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Commerce Product Content Web
 Bundle-SymbolicName: com.liferay.commerce.product.content.web
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.commerce.product.content.web.configuration,\
-	com.liferay.commerce.product.content.web.display.context
 Import-Package:\
 	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\
 	com.liferay.portal.kernel.search;version="[7.5.0,8.0.0)",\

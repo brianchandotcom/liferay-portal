@@ -17,79 +17,36 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPContentConfigurationDisplayContext cpContentConfigurationDisplayContext = (CPContentConfigurationDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<div id="<portlet:namespace/>configuration-tabs">
-				<ul class="nav nav-tabs">
+	<%
+	request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
+	request.setAttribute("configuration.jsp-redirect", redirect);
+	%>
 
-					<%
-					for (CPType cpType : cpContentConfigurationDisplayContext.getCPTypes()) {
-					%>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:form-navigator
+			id="<%= CPContentConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
+			showButtons="<%= false %>"
+		/>
+	</liferay-frontend:edit-form-body>
 
-						<li>
-							<a href="#<%= cpType.getName() %>"><%= cpType.getLabel(locale) %></a>
-						</li>
+	<liferay-frontend:edit-form-footer>
+		<aui:button type="submit" />
 
-					<%
-					}
-					%>
-
-				</ul>
-
-				<div class="tab-content">
-
-					<%
-					for (CPType cpType : cpContentConfigurationDisplayContext.getCPTypes()) {
-						Class<?> cpTypeClass = cpType.getClass();
-					%>
-
-						<div id="<%= cpType.getName() %>">
-							<aui:fieldset-group markupView="lexicon">
-								<aui:fieldset>
-									<aui:input name="preferences--cpType--" type="hidden" value="<%= cpType.getName() %>" />
-
-									<div class="display-template">
-										<liferay-ddm:template-selector
-											className="<%= cpTypeClass.getName() %>"
-											displayStyle="<%= cpContentConfigurationDisplayContext.getDisplayStyle(cpType.getName()) %>"
-											displayStyleGroupId="<%= cpContentConfigurationDisplayContext.getDisplayStyleGroupId(cpType.getName()) %>"
-											refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
-											showEmptyOption="<%= true %>"
-										/>
-									</div>
-								</aui:fieldset>
-							</aui:fieldset-group>
-						</div>
-
-					<%
-					}
-					%>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="submitButton" type="submit" value="save" />
-	</aui:button-row>
-</aui:form>
-
-<aui:script use="aui-tabview">
-	new A.TabView(
-		{
-			srcNode: '#<portlet:namespace/>configuration-tabs'
-		}
-	).render();
-</aui:script>
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

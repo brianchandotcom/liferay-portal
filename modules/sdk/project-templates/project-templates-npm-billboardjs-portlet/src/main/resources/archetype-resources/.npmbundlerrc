@@ -1,5 +1,0 @@
-{
-#if (${buildType} != "gradle")
-    "output": "target/classes/META-INF/resources",
-#end    "preset": "liferay-npm-bundler-preset-standard"
-}

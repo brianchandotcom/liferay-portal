@@ -1,9 +1,0 @@
-Bundle-Description: Creates a Liferay module project that packages UI resources (e.g., CSS and JS) independent of a theme to include on a Liferay Portal page.
-Bundle-Name: Liferay Project Templates Theme Contributor
-Bundle-SymbolicName: com.liferay.project.templates.theme.contributor
-Bundle-Version: 1.0.8
-Liferay-Versions: [7,8)
--removeheaders:\
-	Import-Package,\
-	Private-Package,\
-	Require-Capability

@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Headless Apio
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Hypermedia REST APIs
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:

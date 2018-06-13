@@ -14,140 +14,24 @@
 
 package com.liferay.product.navigation.control.menu.util;
 
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
-import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
 /**
- * @author Julio Camarero
+ * @author Lance Ji
  */
-@Component(
-	immediate = true,
-	service = ProductNavigationControlMenuCategoryRegistry.class
-)
-public class ProductNavigationControlMenuCategoryRegistry {
+public interface ProductNavigationControlMenuCategoryRegistry {
 
 	public List<ProductNavigationControlMenuCategory>
 		getProductNavigationControlMenuCategories(
-			String productNavigationControlMenuCategoryKey) {
-
-		List<ProductNavigationControlMenuCategory>
-			productNavigationControlMenuCategories =
-				_productNavigationControlMenuCategoryServiceTrackerMap.
-					getService(productNavigationControlMenuCategoryKey);
-
-		if (productNavigationControlMenuCategories == null) {
-			return Collections.emptyList();
-		}
-
-		return new ArrayList<>(productNavigationControlMenuCategories);
-	}
+			String productNavigationControlMenuCategoryKey);
 
 	public List<ProductNavigationControlMenuCategory>
 		getProductNavigationControlMenuCategories(
 			String productNavigationControlMenuCategoryKey,
-			final HttpServletRequest request) {
-
-		List<ProductNavigationControlMenuCategory>
-			productNavigationControlMenuCategories =
-				getProductNavigationControlMenuCategories(
-					productNavigationControlMenuCategoryKey);
-
-		if (productNavigationControlMenuCategories.isEmpty()) {
-			return productNavigationControlMenuCategories;
-		}
-
-		return ListUtil.filter(
-			productNavigationControlMenuCategories,
-			new PredicateFilter<ProductNavigationControlMenuCategory>() {
-
-				@Override
-				public boolean filter(
-					ProductNavigationControlMenuCategory
-						productNavigationControlMenuCategory) {
-
-					try {
-						if (!productNavigationControlMenuCategory.
-								hasAccessPermission(request)) {
-
-							return false;
-						}
-
-						List<ProductNavigationControlMenuEntry>
-							productNavigationControlMenuEntries =
-								_productNavigationControlMenuEntryRegistry.
-									getProductNavigationControlMenuEntries(
-										productNavigationControlMenuCategory,
-										request);
-
-						if (productNavigationControlMenuEntries.isEmpty()) {
-							return false;
-						}
-
-						return true;
-					}
-					catch (PortalException pe) {
-						_log.error(pe, pe);
-					}
-
-					return false;
-				}
-
-			});
-	}
-
-	@Activate
-	protected void activate(final BundleContext bundleContext) {
-		_productNavigationControlMenuCategoryServiceTrackerMap =
-			ServiceTrackerMapFactory.openMultiValueMap(
-				bundleContext, ProductNavigationControlMenuCategory.class,
-				"(product.navigation.control.menu.category.key=*)",
-				new ProductNavigationControlMenuCategoryServiceReferenceMapper(),
-				Collections.reverseOrder(
-					new PropertyServiceReferenceComparator(
-						"product.navigation.control.menu.category.order")));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_productNavigationControlMenuCategoryServiceTrackerMap.close();
-	}
-
-	@Reference(unbind = "-")
-	protected void setProductNavigationControlMenuEntryRegistry(
-		ProductNavigationControlMenuEntryRegistry
-			productNavigationControlMenuEntryRegistry) {
-
-		_productNavigationControlMenuEntryRegistry =
-			productNavigationControlMenuEntryRegistry;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductNavigationControlMenuCategoryRegistry.class);
-
-	private ServiceTrackerMap
-		<String, List<ProductNavigationControlMenuCategory>>
-			_productNavigationControlMenuCategoryServiceTrackerMap;
-	private ProductNavigationControlMenuEntryRegistry
-		_productNavigationControlMenuEntryRegistry;
+			HttpServletRequest request);
 
 }

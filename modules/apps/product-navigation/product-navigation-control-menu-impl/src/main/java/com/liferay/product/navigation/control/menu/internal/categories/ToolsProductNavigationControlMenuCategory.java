@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.categories;
+package com.liferay.product.navigation.control.menu.internal.categories;
 
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;

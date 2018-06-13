@@ -14,66 +14,23 @@
 
 package com.liferay.site.navigation.type;
 
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
- * @author Pavel Savinov
+ * @author Lance Ji
  */
-@Component(immediate = true, service = SiteNavigationMenuItemTypeRegistry.class)
-public class SiteNavigationMenuItemTypeRegistry {
+public interface SiteNavigationMenuItemTypeRegistry {
 
 	public SiteNavigationMenuItemType getSiteNavigationMenuItemType(
-		SiteNavigationMenuItem siteNavigationMenuItem) {
-
-		return getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
-	}
+		SiteNavigationMenuItem siteNavigationMenuItem);
 
 	public SiteNavigationMenuItemType getSiteNavigationMenuItemType(
-		String type) {
+		String type);
 
-		return _siteNavigationMenuItemTypes.get(type);
-	}
+	public List<SiteNavigationMenuItemType> getSiteNavigationMenuItemTypes();
 
-	public List<SiteNavigationMenuItemType> getSiteNavigationMenuItemTypes() {
-		return ListUtil.fromMapValues(_siteNavigationMenuItemTypes);
-	}
-
-	public String[] getTypes() {
-		Set<String> types = _siteNavigationMenuItemTypes.keySet();
-
-		return types.toArray(new String[types.size()]);
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
-	)
-	public void registerSiteNavigationMenuItemType(
-		SiteNavigationMenuItemType siteNavigationMenuItemType) {
-
-		_siteNavigationMenuItemTypes.put(
-			siteNavigationMenuItemType.getType(), siteNavigationMenuItemType);
-	}
-
-	public void unregisterSiteNavigationMenuItemType(
-		SiteNavigationMenuItemType siteNavigationMenuItemType) {
-
-		_siteNavigationMenuItemTypes.remove(
-			siteNavigationMenuItemType.getType());
-	}
-
-	private final Map<String, SiteNavigationMenuItemType>
-		_siteNavigationMenuItemTypes = new ConcurrentHashMap<>();
+	public String[] getTypes();
 
 }

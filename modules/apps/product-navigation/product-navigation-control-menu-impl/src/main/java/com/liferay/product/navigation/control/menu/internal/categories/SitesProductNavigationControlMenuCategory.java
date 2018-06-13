@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.categories;
+package com.liferay.product.navigation.control.menu.internal.categories;
 
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
@@ -28,16 +28,16 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.ROOT,
-		"product.navigation.control.menu.category.order:Integer=300"
+		"product.navigation.control.menu.category.order:Integer=100"
 	},
 	service = ProductNavigationControlMenuCategory.class
 )
-public class UserProductNavigationControlMenuCategory
+public class SitesProductNavigationControlMenuCategory
 	implements ProductNavigationControlMenuCategory {
 
 	@Override
 	public String getKey() {
-		return ProductNavigationControlMenuCategoryKeys.USER;
+		return ProductNavigationControlMenuCategoryKeys.SITES;
 	}
 
 	@Override

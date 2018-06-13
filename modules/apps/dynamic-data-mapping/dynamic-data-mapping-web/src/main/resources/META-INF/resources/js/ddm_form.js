@@ -1436,7 +1436,7 @@ AUI.add(
 						url.setParameter('eventName', 'selectContent');
 						url.setParameter('groupId', themeDisplay.getScopeGroupId());
 						url.setParameter('p_p_auth', container.getData('assetBrowserAuthToken'));
-						url.setParameter('selectedGroupIds', themeDisplay.getScopeGroupId());
+						url.setParameter('selectedGroupId', themeDisplay.getScopeGroupId());
 						url.setParameter('showNonindexable', true);
 						url.setParameter('showScheduled', true);
 						url.setParameter('typeSelection', 'com.liferay.journal.model.JournalArticle');

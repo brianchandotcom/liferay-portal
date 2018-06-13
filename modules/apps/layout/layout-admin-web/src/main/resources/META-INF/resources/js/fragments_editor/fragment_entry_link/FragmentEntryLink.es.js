@@ -162,11 +162,9 @@ class FragmentEntryLink extends Component {
 				) ? this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][editable.id] :
 					{defaultValue: editable.innerHTML};
 
-				let defaultEditorConfiguration = this.defaultEditorConfigurations.text;
-
-				if (this.defaultEditorConfigurations[editable.getAttribute('type')]) {
-					defaultEditorConfiguration = this.defaultEditorConfigurations[editable.getAttribute('type')];
-				}
+				const defaultEditorConfiguration = this
+					.defaultEditorConfigurations[editable.getAttribute('type')] ||
+					this.defaultEditorConfigurations.text;
 
 				return new FragmentEditableField(
 					{
@@ -186,7 +184,7 @@ class FragmentEntryLink extends Component {
 						portletNamespace: this.portletNamespace,
 
 						processorsOptions: {
-							defaultEditorConfiguration: defaultEditorConfiguration,
+							defaultEditorConfiguration,
 							imageSelectorURL: this.imageSelectorURL
 						},
 

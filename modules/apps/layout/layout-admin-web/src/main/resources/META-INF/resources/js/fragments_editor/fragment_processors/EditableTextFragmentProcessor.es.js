@@ -104,7 +104,7 @@ function init(
 	wrapper.dataset.lfrEditableId = editableElement.id;
 	wrapper.innerHTML = editableContent;
 
-	const editorName = portletNamespace + 'FragmentEntryLinkEditable_' + editableElement.id;
+	const editorName = `${portletNamespace}FragmentEntryLinkEditable_${editableElement.id}`;
 
 	wrapper.setAttribute('id', editorName);
 	wrapper.setAttribute('name', editorName);
@@ -115,15 +115,16 @@ function init(
 	_editableElement = editableElement;
 	_editorEventHandler = new EventHandler();
 
-	let editorConfiguration = _getEditorConfiguration(
-		editableElement,
-		portletNamespace,
-		fragmentEntryLinkId,
-		defaultEditorConfiguration,
-		editorName
+	_editor = AlloyEditor.editable(
+		wrapper,
+		_getEditorConfiguration(
+			editableElement,
+			portletNamespace,
+			fragmentEntryLinkId,
+			defaultEditorConfiguration,
+			editorName
+		)
 	);
-
-	_editor = AlloyEditor.editable(wrapper, editorConfiguration);
 
 	const nativeEditor = _editor.get('nativeEditor');
 
@@ -185,9 +186,15 @@ function _getEditorConfiguration(
 		configuration.toolbars = {};
 	}
 
-	configuration.filebrowserImageBrowseLinkUrl = defaultEditorConfiguration.editorConfig.filebrowserImageBrowseLinkUrl.replace('_EDITOR_NAME_', editorName);
+	configuration.filebrowserImageBrowseLinkUrl = defaultEditorConfiguration
+		.editorConfig
+		.filebrowserImageBrowseLinkUrl
+		.replace('_EDITOR_NAME_', editorName);
 
-	configuration.filebrowserImageBrowseUrl = defaultEditorConfiguration.editorConfig.filebrowserImageBrowseUrl.replace('_EDITOR_NAME_', editorName);
+	configuration.filebrowserImageBrowseUrl = defaultEditorConfiguration
+		.editorConfig
+		.filebrowserImageBrowseUrl
+		.replace('_EDITOR_NAME_', editorName);
 
 	return object.mixin(
 		{},

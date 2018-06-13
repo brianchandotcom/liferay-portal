@@ -113,6 +113,10 @@ public class PortalTools {
 
 		Properties properties = _versionsMap.get(portalVersion);
 
+		if (properties == null) {
+			properties = _versionsMap.get(null);
+		}
+
 		return properties.getProperty(name);
 	}
 

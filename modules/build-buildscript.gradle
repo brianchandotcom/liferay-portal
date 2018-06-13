@@ -27,6 +27,6 @@ repositories {
 	}
 
 	maven {
-		url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		url System.properties["repository.url"] ?: "https://repository.liferay.com/nexus/content/groups/public"
 	}
 }

@@ -19,7 +19,7 @@ buildscript {
 
 	repositories {
 		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			url "https://repository.liferay.com/nexus/content/groups/public"
 		}
 	}
 }

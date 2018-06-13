@@ -86,6 +86,7 @@ public class ValidatorIsNullCheck extends BaseCheck {
 			String typeName = DetailASTUtil.getTypeName(typeAST, true);
 
 			if (Validator.isNotNull(typeName) && !typeName.equals("Long") &&
+				!typeName.equals("Object") &&
 				!typeName.equals("Serializable") &&
 				!typeName.equals("String")) {
 

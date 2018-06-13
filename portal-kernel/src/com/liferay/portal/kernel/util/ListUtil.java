@@ -255,7 +255,7 @@ public class ListUtil {
 		}
 
 		for (Object bean : list) {
-			if (bean != null) {
+			if (Validator.isNotNull(bean)) {
 				return false;
 			}
 		}

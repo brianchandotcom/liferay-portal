@@ -340,7 +340,7 @@ public class LiferayResourceProperties
 
 		validationResultMutable.setStatus(Result.OK);
 
-		String endpointUrl = connection.endpoint.getValue();
+		String endpointUrl = connection.endpointProperty.getValue();
 
 		try {
 			URIUtils.addQueryConditionToURL(endpointUrl, condition.getValue());
@@ -394,11 +394,11 @@ public class LiferayResourceProperties
 				_log.debug("Using a reference connection properties");
 				_log.debug(
 					"User ID: " +
-						referencedLiferayConnectionProperties.userId.
+						referencedLiferayConnectionProperties.userIdProperty.
 							getValue());
 				_log.debug(
 					"Endpoint: " +
-						referencedLiferayConnectionProperties.endpoint.
+						referencedLiferayConnectionProperties.endpointProperty.
 							getValue());
 			}
 
@@ -407,9 +407,11 @@ public class LiferayResourceProperties
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"User ID: " + liferayConnectionProperties.userId.getValue());
+				"User ID: " +
+					liferayConnectionProperties.userIdProperty.getValue());
 			_log.debug(
-				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
+				"Endpoint: " +
+					liferayConnectionProperties.endpointProperty.getValue());
 		}
 
 		return liferayConnectionProperties;

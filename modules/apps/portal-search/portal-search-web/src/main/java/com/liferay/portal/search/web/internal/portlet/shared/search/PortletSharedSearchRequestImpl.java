@@ -175,8 +175,7 @@ public class PortletSharedSearchRequestImpl
 			searchContextBuilder, searchContainerBuilder,
 			facetedSearcherManager);
 
-		Stream<Portlet> portletsStream = getExplicitlyAddedPortlets(
-			themeDisplay);
+		Stream<Portlet> portletsStream = getPortlets(themeDisplay);
 
 		contributeSearchSettings(
 			searchRequest, portletsStream, themeDisplay, renderRequest);
@@ -187,29 +186,32 @@ public class PortletSharedSearchRequestImpl
 			searchResponse, portletSharedRequestHelper);
 	}
 
-	protected Stream<Portlet> getExplicitlyAddedPortlets(
-		ThemeDisplay themeDisplay) {
+	protected PortletPreferences fetchPreferences(
+		Portlet portlet, ThemeDisplay themeDisplay) {
 
+		if (portlet.isStatic()) {
+			return portletPreferencesLocalService.fetchPreferences(
+				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				PortletKeys.PREFS_PLID_SHARED, portlet.getPortletId());
+		}
+		else {
+			return portletPreferencesLocalService.fetchPreferences(
+				themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
+				portlet.getPortletId());
+		}
+	}
+
+	protected Stream<Portlet> getPortlets(ThemeDisplay themeDisplay) {
 		Layout layout = themeDisplay.getLayout();
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		List<Portlet> portlets = layoutTypePortlet.getExplicitlyAddedPortlets();
+		List<Portlet> portlets = layoutTypePortlet.getAllPortlets(false);
 
 		return portlets.stream();
-	}
-
-	protected Optional<PortletPreferences> getPortletPreferences(
-		ThemeDisplay themeDisplay, String portletId) {
-
-		PortletPreferences portletPreferences =
-			portletPreferencesLocalService.fetchPreferences(
-				themeDisplay.getCompanyId(), PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-				portletId);
-
-		return Optional.ofNullable(portletPreferences);
 	}
 
 	protected Optional<PortletSharedSearchContributor>
@@ -230,24 +232,25 @@ public class PortletSharedSearchRequestImpl
 		Optional<SearchSettingsContributor> searchSettingsContributorOptional =
 			portletSharedSearchContributorOptional.map(
 				portletSharedSearchContributor -> getSearchSettingsContributor(
-					portletSharedSearchContributor, portlet.getPortletId(),
-					themeDisplay, renderRequest));
+					portletSharedSearchContributor, portlet, themeDisplay,
+					renderRequest));
 
 		return searchSettingsContributorOptional;
 	}
 
 	protected SearchSettingsContributor getSearchSettingsContributor(
 		PortletSharedSearchContributor portletSharedSearchContributor,
-		String portletId, ThemeDisplay themeDisplay,
+		Portlet portlet, ThemeDisplay themeDisplay,
 		RenderRequest renderRequest) {
 
 		Optional<PortletPreferences> portletPreferencesOptional =
-			getPortletPreferences(themeDisplay, portletId);
+			Optional.ofNullable(fetchPreferences(portlet, themeDisplay));
 
 		return searchSettings -> portletSharedSearchContributor.contribute(
 			new PortletSharedSearchSettingsImpl(
-				searchSettings, portletId, portletPreferencesOptional,
-				portletSharedRequestHelper, renderRequest));
+				searchSettings, portlet.getPortletId(),
+				portletPreferencesOptional, portletSharedRequestHelper,
+				renderRequest));
 	}
 
 	protected ThemeDisplay getThemeDisplay(RenderRequest renderRequest) {

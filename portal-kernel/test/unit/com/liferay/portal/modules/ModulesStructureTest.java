@@ -1361,7 +1361,7 @@ public class ModulesStructureTest {
 		"systemProp.repository.private.username";
 
 	private static final String _REPOSITORY_URL =
-		"https://repository-cdn.liferay.com/nexus/content/groups/public";
+		"https://repository.liferay.com/nexus/content/groups/public";
 
 	private static final String _SOURCE_FORMATTER_IGNORE_FILE_NAME =
 		"source_formatter.ignore";

@@ -21,7 +21,7 @@ buildscript {
 
 	repositories {
 		maven {
-			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+			url "https://repository.liferay.com/nexus/content/groups/public"
 		}
 	}
 }
@@ -36,7 +36,7 @@ transitive dependencies. The Liferay CDN repository hosts them all:
 ```gradle
 repositories {
 	maven {
-		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		url "https://repository.liferay.com/nexus/content/groups/public"
 	}
 }
 ```

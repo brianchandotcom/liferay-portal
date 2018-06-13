@@ -3784,7 +3784,7 @@ of a module includes transitive dependencies.
 ### Changed
 - [LPS-77875]: Update the constant `DEFAULT_REPOSITORY_URL` in the
 `GradlePluginsDefaultsUtil` class to
-`https://repository-cdn.liferay.com/nexus/content/groups/public`.
+`https://repository.liferay.com/nexus/content/groups/public`.
 - [LPS-77875]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.37.
 
@@ -3802,7 +3802,7 @@ of a module includes transitive dependencies.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
-[Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public
+[Liferay CDN]: https://repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Baseline]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-baseline

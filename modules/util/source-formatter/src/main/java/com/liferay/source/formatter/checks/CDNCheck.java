@@ -40,7 +40,9 @@ public class CDNCheck extends BaseFileCheck {
 
 			String s = matcher.group(2);
 
-			if (!_isCDNSubdomainName(s)) {
+			if (!StringUtil.equalsIgnoreCase(s, "releases") &&
+				!StringUtil.equalsIgnoreCase(s, "repository")) {
+
 				continue;
 			}
 
@@ -51,26 +53,8 @@ public class CDNCheck extends BaseFileCheck {
 			content = StringUtil.replaceFirst(content, match, newSub);
 		}
 
-		for (String subdomainName : _SUBDOMAIN_NAMES) {
-			content = StringUtil.replace(
-				content, subdomainName + "-cdn.liferay.com",
-				subdomainName + ".liferay.com");
-		}
-
 		return content;
 	}
-
-	private boolean _isCDNSubdomainName(String subdomainName) {
-		for (String cdnSubdomainName : _SUBDOMAIN_NAMES) {
-			if (StringUtil.equalsIgnoreCase(cdnSubdomainName, subdomainName)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private static final String[] _SUBDOMAIN_NAMES = {"releases", "repository"};
 
 	private final Pattern _cdnPattern = Pattern.compile(
 		"\\S*(cdn\\.lfrs\\.sl\\/(\\w+)\\.liferay\\.com)\\S*");

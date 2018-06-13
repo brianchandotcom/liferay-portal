@@ -12,23 +12,13 @@
  * details.
  */
 
-package com.liferay.talend.tliferayoutput;
+package com.liferay.talend.runtime.apio.constants;
 
 /**
  * @author Zoltán Takács
  */
-public enum Action {
+public interface ApioConstants {
 
-	Delete("DELETE"), Update("PUT"), Upsert("POST");
-
-	public String getMethodName() {
-		return _method;
-	}
-
-	private Action(String method) {
-		_method = method;
-	}
-
-	private final String _method;
+	public static final String FILTER_QUERY_PARAM = "filter";
 
 }

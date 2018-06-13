@@ -46,7 +46,7 @@ public class ExpectedFormSchemaInferrer {
 		String methodName = operation.getMethod();
 		Schema schema = SchemaProperties.EMPTY_SCHEMA;
 
-		if (methodName.equals(Action.DELETE.getMethodName())) {
+		if (methodName.equals(Action.Delete.getMethodName())) {
 			schema = _getDeleteSchema();
 		}
 		else {

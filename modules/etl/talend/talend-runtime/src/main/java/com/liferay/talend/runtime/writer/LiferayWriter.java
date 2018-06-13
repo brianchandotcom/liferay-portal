@@ -93,7 +93,7 @@ public class LiferayWriter
 		String resourceId = getIndexedRecordId(indexedRecord);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.resourceURL.getValue();
+			_tLiferayOutputProperties.resource.resource.getValue();
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
 
@@ -120,7 +120,7 @@ public class LiferayWriter
 		ObjectNode apioForm = _createApioExpectedForm(indexedRecord, true);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.resourceURL.getValue();
+			_tLiferayOutputProperties.resource.resource.getValue();
 
 		try {
 			_liferaySink.doApioPostRequest(
@@ -140,7 +140,7 @@ public class LiferayWriter
 		String resourceId = getIndexedRecordId(indexedRecord);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.resourceURL.getValue();
+			_tLiferayOutputProperties.resource.resource.getValue();
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
 
@@ -208,13 +208,13 @@ public class LiferayWriter
 		Action action = _tLiferayOutputProperties.operations.getValue();
 
 		try {
-			if (Action.INSERT == action) {
+			if (Action.Upsert == action) {
 				doInsert(indexedRecord);
 			}
-			else if (Action.DELETE == action) {
+			else if (Action.Delete == action) {
 				doDelete(indexedRecord);
 			}
-			else if (Action.UPDATE == action) {
+			else if (Action.Update == action) {
 				doUpdate(indexedRecord);
 			}
 

@@ -548,7 +548,7 @@ public class LiferaySourceOrSink
 			resourceCollectionEntrySet.stream();
 
 		return stream.anyMatch(
-			entry -> Vocabulary.WEB_SITES.equals(entry.getValue()));
+			entry -> Vocabulary.WEB_SITE.equals(entry.getValue()));
 	}
 
 	@Override
@@ -783,7 +783,7 @@ public class LiferaySourceOrSink
 			resourceCollectionEntrySet.stream();
 
 		Optional<String> webSiteHrefOptional = stream.filter(
-			entry -> Vocabulary.WEB_SITES.equals(entry.getValue())
+			entry -> Vocabulary.WEB_SITE.equals(entry.getValue())
 		).map(
 			Map.Entry::getKey
 		).findFirst();

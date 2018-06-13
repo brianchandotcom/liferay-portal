@@ -43,11 +43,11 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderR
 		</div>
 	</div>
 
-	<div class="sheet-text">
-		<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_terms_of_use" %>' name="fm">
-			<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
-			<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
+	<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_terms_of_use" %>' name="fm">
+		<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
+		<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
 
+		<div class="sheet-text">
 			<c:choose>
 				<c:when test="<%= termsOfUseContentProvider != null %>">
 
@@ -60,7 +60,9 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderR
 					<liferay-util:include page="/html/portal/terms_of_use_default.jsp" />
 				</c:otherwise>
 			</c:choose>
+		</div>
 
+		<div class="sheet-footer">
 			<c:if test="<%= !user.isAgreedToTermsOfUse() %>">
 				<aui:button-row>
 					<aui:button type="submit" value="i-agree" />
@@ -72,6 +74,6 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderR
 					<aui:button onClick="<%= taglibOnClick %>" type="cancel" value="i-disagree" />
 				</aui:button-row>
 			</c:if>
-		</aui:form>
-	</div>
+		</div>
+	</aui:form>
 </div>

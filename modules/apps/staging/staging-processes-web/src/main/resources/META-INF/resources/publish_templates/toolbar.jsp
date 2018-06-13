@@ -18,7 +18,6 @@
 
 <clay:management-toolbar
 	creationMenu="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext.getCreationMenu() %>"
-	id="<portlet:namespace/>stagingProcessesWebPublishTemplatesToolbar"
 	searchActionURL="<%= stagingProcessesWebPublishTemplatesToolbarDisplayContext.getSearchActionURL() %>"
 	searchFormName="searchFm"
 	selectable="<%= false %>"

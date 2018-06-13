@@ -42,7 +42,6 @@ portletURL.setParameter("searchContainerId", String.valueOf(searchContainerId));
 	actionDropdownItems="<%= stagingProcessesWebToolbarDisplayContext.getActionDropdownItems() %>"
 	creationMenu="<%= stagingProcessesWebToolbarDisplayContext.getCreationMenu(GroupPermissionUtil.contains(permissionChecker, stagingGroupId, ActionKeys.PUBLISH_STAGING)) %>"
 	filterDropdownItems="<%= stagingProcessesWebToolbarDisplayContext.getFilterDropdownItems() %>"
-	id="<portlet:namespace/>stagingProcessesWebToolbar"
 	searchContainerId="<%= searchContainerId %>"
 	showCreationMenu='<%= tabs1.equals("processes") %>'
 	showSearch="<%= false %>"

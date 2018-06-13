@@ -51,7 +51,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 	<div class="export-dialog-tree">
 		<div class="container-fluid-1280">
-			<aui:fieldset-group id="<portlet:namespace />importConfiguration" markupView="lexicon">
+			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset cssClass="options-group" label="file">
 					<dl class="import-file-details options">
 						<dt>

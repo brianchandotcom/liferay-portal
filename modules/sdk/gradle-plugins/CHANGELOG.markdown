@@ -4840,6 +4840,12 @@ version 2.1.44.
 - [LPS-82261]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.227.
 
+## 3.12.41 - 2018-06-13
+
+### Removed
+- [LPS-77425]: Remove version difference for
+[Liferay Portal Tools Service Builder] based on the portal version.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

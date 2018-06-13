@@ -3794,6 +3794,12 @@ of a module includes transitive dependencies.
 - [LPS-82261]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.38.
 
+## 5.4.40 - 2018-06-13
+
+### Changed
+- [LPS-77425]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.41.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public

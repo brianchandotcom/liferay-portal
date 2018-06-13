@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -395,14 +394,14 @@ public class PortletContainerImpl implements PortletContainer {
 		}
 		finally {
 			if (themeDisplay != null) {
-				if (GroupLocalServiceUtil.fetchGroup(previousScopeGroupId)
-						!= null) {
+				if (GroupLocalServiceUtil.fetchGroup(previousScopeGroupId) !=
+						null) {
 
 					themeDisplay.setScopeGroupId(previousScopeGroupId);
 				}
 
-				if (GroupLocalServiceUtil.fetchGroup(previousSiteGroupId)
-						!= null) {
+				if (GroupLocalServiceUtil.fetchGroup(previousSiteGroupId) !=
+						null) {
 
 					themeDisplay.setSiteGroupId(previousSiteGroupId);
 				}

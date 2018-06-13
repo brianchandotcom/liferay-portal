@@ -80,6 +80,12 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 		testApplication("/methods-guest-allowed/", "get", 403);
 
 		testApplication("/methods-guest-default/", "get", 403);
+
+		testApplication("/default-jaxrs-app-guest-not-allowed/", "get", 403);
+
+		testApplication("/default-jaxrs-app-guest-allowed/", "get", 403);
+
+		testApplication("/default-jaxrs-app-guest-default/", "get", 403);
 	}
 
 	public static class AnnotatedApplicationTestPreparatorBundleActivator
@@ -135,6 +141,26 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 			registerJaxRsApplication(
 				new TestApplication(), "methods-guest-default", properties);
+
+			properties = new HashMapDictionary<>();
+
+			properties.put("auth.verifier.guest.allowed", true);
+
+			registerJaxRsApplication(
+				new TestApplication(), "default-jaxrs-app-guest-allowed",
+				properties);
+
+			properties = new HashMapDictionary<>();
+
+			properties.put("auth.verifier.guest.allowed", false);
+
+			registerJaxRsApplication(
+				new TestApplication(), "default-jaxrs-app-guest-not-allowed",
+				properties);
+
+			registerJaxRsApplication(
+				new TestApplication(), "default-jaxrs-app-guest-default",
+				new HashMapDictionary<>());
 
 			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 

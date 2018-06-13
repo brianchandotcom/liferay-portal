@@ -25,6 +25,8 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.net.URL;
+
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -140,20 +142,18 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		LiferayExtension liferayExtension = GradleUtil.addExtension(
 			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
 
-		StringBuilder sb = new StringBuilder();
+		String name = _getConfigLiferayScriptName(
+			PortalTools.getPortalVersion(project));
 
-		sb.append("com/liferay/gradle/plugins/dependencies/config-liferay");
+		ClassLoader classLoader = LiferayBasePlugin.class.getClassLoader();
 
-		String portalVersion = PortalTools.getPortalVersion(project);
+		URL url = classLoader.getResource(name);
 
-		if (Validator.isNotNull(portalVersion)) {
-			sb.append('-');
-			sb.append(portalVersion);
+		if (url == null) {
+			name = _getConfigLiferayScriptName(null);
 		}
 
-		sb.append(".gradle");
-
-		GradleUtil.applyScript(project, sb.toString(), project);
+		GradleUtil.applyScript(project, name, project);
 
 		return liferayExtension;
 	}
@@ -301,6 +301,21 @@ public class LiferayBasePlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private String _getConfigLiferayScriptName(String portalVersion) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("com/liferay/gradle/plugins/dependencies/config-liferay");
+
+		if (Validator.isNotNull(portalVersion)) {
+			sb.append('-');
+			sb.append(portalVersion);
+		}
+
+		sb.append(".gradle");
+
+		return sb.toString();
 	}
 
 }

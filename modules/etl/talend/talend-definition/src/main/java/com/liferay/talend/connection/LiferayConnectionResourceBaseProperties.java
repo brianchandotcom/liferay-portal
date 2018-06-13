@@ -61,11 +61,11 @@ public abstract class LiferayConnectionResourceBaseProperties
 				_log.debug("Using a reference connection properties");
 				_log.debug(
 					"User ID: " +
-						referencedLiferayConnectionProperties.userId.
+						referencedLiferayConnectionProperties.userIdProperty.
 							getValue());
 				_log.debug(
 					"Endpoint: " +
-						referencedLiferayConnectionProperties.endpoint.
+						referencedLiferayConnectionProperties.endpointProperty.
 							getValue());
 			}
 
@@ -74,9 +74,11 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"User ID: " + liferayConnectionProperties.userId.getValue());
+				"User ID: " +
+					liferayConnectionProperties.userIdProperty.getValue());
 			_log.debug(
-				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
+				"Endpoint: " +
+					liferayConnectionProperties.endpointProperty.getValue());
 		}
 
 		return liferayConnectionProperties;

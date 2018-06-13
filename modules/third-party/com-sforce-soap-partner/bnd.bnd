@@ -1,4 +1,0 @@
-Bundle-SymbolicName: com.sforce.soap.partner
-Bundle-Version: 1.0.2
-Export-Package: com.sforce.soap.partner.*
--includeresource: @lib/com-sforce-soap-partner-ws.jar

@@ -1,3 +1,0 @@
-dependencies {
-	compileOnly group: "de.l3s.boilerpipe", name: "boilerpipe", transitive: false, version: "1.1.0"
-}

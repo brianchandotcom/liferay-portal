@@ -1,3 +1,0 @@
-Bundle-SymbolicName: org.elasticsearch
-Bundle-Version: 2.4.0.LIFERAY-PATCHED-1
-Export-Package: org.elasticsearch.*

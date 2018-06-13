@@ -1,1 +1,0 @@
-com.liferay.portal.tools.db.support.commands.CleanServiceBuilderCommand

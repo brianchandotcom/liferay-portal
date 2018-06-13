@@ -1,9 +1,0 @@
-Bundle-Description: Creates a Liferay API module project with an empty public interface.
-Bundle-Name: Liferay Project Templates API
-Bundle-SymbolicName: com.liferay.project.templates.api
-Bundle-Version: 1.0.10
-Liferay-Versions: [7,8)
--removeheaders:\
-	Import-Package,\
-	Private-Package,\
-	Require-Capability

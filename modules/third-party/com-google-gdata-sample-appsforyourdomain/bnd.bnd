@@ -1,3 +1,0 @@
-Bundle-SymbolicName: com.google.gdata.sample.appsforyourdomain
-Bundle-Version: 1.47.1
-Export-Package: com.google.gdata.sample.appsforyourdomain.*

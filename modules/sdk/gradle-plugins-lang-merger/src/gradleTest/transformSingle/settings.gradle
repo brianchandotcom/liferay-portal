@@ -1,4 +1,0 @@
-include "sample-lang"
-include "sample-web"
-
-rootProject.name = "sample"

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Gradle Plugins Patcher
-Bundle-SymbolicName: com.liferay.gradle.plugins.patcher
-Bundle-Version: 1.0.14
-Export-Package: com.liferay.gradle.plugins.patcher

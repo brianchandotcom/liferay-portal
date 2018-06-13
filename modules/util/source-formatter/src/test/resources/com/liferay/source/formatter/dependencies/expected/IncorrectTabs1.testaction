@@ -1,7 +1,0 @@
-<definition>
-	<element name="test">
-		<attribute name="hello world" />
-	</element>
-
-	<attribute name="hello world" />
-</definition>

@@ -1,7 +1,0 @@
-dependencies {
-	compileInclude group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
-}
-
-liferayOSGi {
-	expandCompileInclude = true
-}

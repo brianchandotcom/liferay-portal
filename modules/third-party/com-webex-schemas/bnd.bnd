@@ -1,4 +1,0 @@
-Bundle-SymbolicName: com.webex.schemas
-Bundle-Version: 6.0.0
-Export-Package: com.webex.schemas.*
--includeresource: @lib/com.webex.schemas-xbean.jar

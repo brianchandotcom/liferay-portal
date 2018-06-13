@@ -1,6 +1,0 @@
-include "sample-api"
-include "sample-service"
-include "sample-test"
-include "sample-war"
-
-rootProject.name = "sample"

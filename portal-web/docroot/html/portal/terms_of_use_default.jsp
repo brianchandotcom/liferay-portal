@@ -16,7 +16,12 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
-<p class="lead">Placeholder for Terms of Use</p>
+<p>
+	<span>
+		Placeholder for Terms of Use
+	</span>
+</p>
+
 <p>
 	<span>
 		Terms of use are shown to each user on first login. An administrative user must configure the Terms of Use at <em>Control Panel</em> &gt; <em>Configuration</em> &gt; <em>Instance Settings.</em>

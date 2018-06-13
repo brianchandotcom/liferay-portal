@@ -15,13 +15,20 @@
 package com.liferay.staging.taglib.servlet.taglib.base;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.io.IOException;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Peter Borkuti
@@ -52,9 +59,25 @@ public abstract class BaseCssTag extends IncludeTag {
 		return outputData;
 	}
 
-	private void _outputStylesheetLink() {
-		OutputData outputData = _getOutputData();
+	private boolean _isInline() {
+		ServletRequest servletRequest = getRequest();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)servletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		boolean xPjax = GetterUtil.getBoolean(request.getHeader("X-PJAX"));
+
+		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
+			themeDisplay.isStateExclusive() || xPjax) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private void _outputStylesheetLink() {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("<link data-senna-track=\"temporary\" href=\"");
@@ -64,11 +87,27 @@ public abstract class BaseCssTag extends IncludeTag {
 		sb.append("/css/main.css");
 		sb.append("\" rel=\"stylesheet\">");
 
-		outputData.setDataSB(
-			_OUTPUT_CSS_KEY + getTagNameForCssPath(), WebKeys.PAGE_TOP, sb);
+		if (_isInline()) {
+			try {
+				JspWriter jspWriter = pageContext.getOut();
+
+				jspWriter.write(sb.toString());
+			}
+			catch (IOException ioe) {
+				_log.error("Unable to output style sheet link", ioe);
+			}
+		}
+		else {
+			OutputData outputData = _getOutputData();
+
+			outputData.setDataSB(
+				_OUTPUT_CSS_KEY + getTagNameForCssPath(), WebKeys.PAGE_TOP, sb);
+		}
 	}
 
 	private static final String _OUTPUT_CSS_KEY =
 		BaseCssTag.class.getName() + "_CSS_";
+
+	private static final Log _log = LogFactoryUtil.getLog(BaseCssTag.class);
 
 }

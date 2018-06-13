@@ -40,7 +40,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -80,10 +79,6 @@ public class LangBuilder {
 			LangBuilderArgs.LANG_DIR_NAME);
 		String langFileName = GetterUtil.getString(
 			arguments.get("lang.file"), LangBuilderArgs.LANG_FILE_NAME);
-		boolean plugin = GetterUtil.getBoolean(
-			arguments.get("lang.plugin"), LangBuilderArgs.PLUGIN);
-		String portalLanguagePropertiesFileName = arguments.get(
-			"lang.portal.language.properties.file");
 		boolean titleCapitalization = GetterUtil.getBoolean(
 			arguments.get("lang.title.capitalization"),
 			LangBuilderArgs.TITLE_CAPITALIZATION);
@@ -103,8 +98,7 @@ public class LangBuilder {
 				arguments, "git.working.branch.name", "master");
 
 			_processCurrentBranch(
-				excludedLanguageIds, langFileName, plugin,
-				portalLanguagePropertiesFileName, titleCapitalization,
+				excludedLanguageIds, langFileName, titleCapitalization,
 				translate, translateSubscriptionKey, gitWorkingBranchName);
 
 			return;
@@ -112,9 +106,8 @@ public class LangBuilder {
 
 		try {
 			new LangBuilder(
-				excludedLanguageIds, langDirName, langFileName, plugin,
-				portalLanguagePropertiesFileName, titleCapitalization,
-				translate, translateSubscriptionKey);
+				excludedLanguageIds, langDirName, langFileName,
+				titleCapitalization, translate, translateSubscriptionKey);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -123,9 +116,7 @@ public class LangBuilder {
 
 	public LangBuilder(
 			String[] excludedLanguageIds, String langDirName,
-			String langFileName, boolean plugin,
-			String portalLanguagePropertiesFileName,
-			boolean titleCapitalization, boolean translate,
+			String langFileName, boolean titleCapitalization, boolean translate,
 			String translateSubscriptionKey)
 		throws Exception {
 
@@ -138,38 +129,6 @@ public class LangBuilder {
 		Translate.setSubscriptionKey(translateSubscriptionKey);
 
 		_initKeysWithUpdatedValues();
-
-		if (plugin) {
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			InputStream inputStream = classLoader.getResourceAsStream(
-				"content/Language.properties");
-
-			if ((inputStream == null) &&
-				Validator.isNotNull(portalLanguagePropertiesFileName)) {
-
-				inputStream = new FileInputStream(
-					portalLanguagePropertiesFileName);
-			}
-
-			if (inputStream != null) {
-				try {
-					_portalLanguageProperties = PropertiesUtil.load(
-						inputStream, StringPool.UTF8);
-				}
-				finally {
-					inputStream.close();
-				}
-			}
-			else {
-				_portalLanguageProperties = null;
-			}
-		}
-		else {
-			_portalLanguageProperties = null;
-		}
 
 		File renameKeysFile = new File(_langDirName + "/rename.properties");
 
@@ -268,8 +227,7 @@ public class LangBuilder {
 	}
 
 	private static void _processCurrentBranch(
-			String[] excludedLanguageIds, String langFileName, boolean plugin,
-			String portalLanguagePropertiesFileName,
+			String[] excludedLanguageIds, String langFileName,
 			boolean titleCapitalization, boolean translate,
 			String translateSubscriptionKey, String gitWorkingBranchName)
 		throws Exception {
@@ -291,9 +249,8 @@ public class LangBuilder {
 				String langDirName = basedir + fileName.substring(0, pos + 7);
 
 				new LangBuilder(
-					excludedLanguageIds, langDirName, langFileName, plugin,
-					portalLanguagePropertiesFileName, titleCapitalization,
-					translate, translateSubscriptionKey);
+					excludedLanguageIds, langDirName, langFileName,
+					titleCapitalization, translate, translateSubscriptionKey);
 			}
 		}
 		catch (GitException ge) {
@@ -717,15 +674,6 @@ public class LangBuilder {
 							value = _fixEnglishTranslation(key, value);
 						}
 
-						if (_portalLanguageProperties != null) {
-							String portalValue = String.valueOf(
-								_portalLanguageProperties.get(key));
-
-							if (value.equals(portalValue)) {
-								System.out.println("Duplicate key " + key);
-							}
-						}
-
 						messages.put(key, value);
 					}
 				}
@@ -863,7 +811,6 @@ public class LangBuilder {
 	private final Set<String> _keysWithUpdatedValues = new HashSet<>();
 	private final String _langDirName;
 	private final String _langFileName;
-	private final Properties _portalLanguageProperties;
 	private final Properties _renameKeys;
 	private final boolean _titleCapitalization;
 	private final boolean _translate;

@@ -4846,6 +4846,12 @@ version 1.0.227.
 - [LPS-77425]: Remove version difference for
 [Liferay Portal Tools Service Builder] based on the portal version.
 
+## 3.12.43 - 2018-06-13
+
+### Fixed
+- [LPS-77425]: Fix error when getting a tool version for an unknown portal
+version.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

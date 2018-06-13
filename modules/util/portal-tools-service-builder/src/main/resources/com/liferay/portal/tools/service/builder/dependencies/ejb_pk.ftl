@@ -1,10 +1,9 @@
 package ${apiPackagePath}.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
-
+import ${serviceBuilder.getCompatProperty("StringBundler")};
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 

@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.soy.utils.SoyContext;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -232,7 +231,7 @@ public class FragmentEntryDisplayContext {
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				PortletIdCodec.decodePortletName(portletDisplay.getId()),
 				"fragmenEntryLinkEditor", StringPool.BLANK,
-				Collections.emptyMap(), themeDisplay,
+				new HashMap<String, Object>(), themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_renderRequest));
 
 		configurations.put("text", editorConfiguration.getData());
@@ -241,7 +240,7 @@ public class FragmentEntryDisplayContext {
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				PortletIdCodec.decodePortletName(portletDisplay.getId()),
 				"fragmenEntryLinkRichTextEditor", StringPool.BLANK,
-				Collections.emptyMap(), themeDisplay,
+				new HashMap<String, Object>(), themeDisplay,
 				RequestBackedPortletURLFactoryUtil.create(_renderRequest));
 
 		configurations.put("rich-text", richTextEditorConfiguration.getData());

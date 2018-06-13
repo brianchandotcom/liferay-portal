@@ -223,7 +223,8 @@ public class TLiferayOutputProperties
 		dieOnErrorProperty.setValue(true);
 		operationsProperty.setValue(Action.Upsert);
 
-		liferayResourceProperties = new ResourcePropertiesHelper("resource");
+		liferayResourceProperties = new LiferayResourcePropertiesHelper(
+			"liferayResourceProperties");
 
 		liferayResourceProperties.liferayConnectionProperties =
 			liferayConnectionProperties;
@@ -340,9 +341,10 @@ public class TLiferayOutputProperties
 	 * afterResourceStringProperty(), an anonymous class cannot be public and
 	 * thus cannot be called via Talend's reflection mechanism.
 	 */
-	public class ResourcePropertiesHelper extends LiferayResourceProperties {
+	public class LiferayResourcePropertiesHelper
+		extends LiferayResourceProperties {
 
-		public ResourcePropertiesHelper(String name) {
+		public LiferayResourcePropertiesHelper(String name) {
 			super(name);
 		}
 

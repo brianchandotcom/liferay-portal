@@ -35,6 +35,8 @@ import com.puppycrawl.tools.checkstyle.api.Configuration;
 
 import java.io.File;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -289,7 +291,17 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected String getContent(String fileName, int level) throws Exception {
-		return SourceFormatterUtil.getContent(_baseDirName, fileName, level);
+		File file = getFile(fileName, level);
+
+		if (file != null) {
+			String content = FileUtil.read(file);
+
+			if (Validator.isNotNull(content)) {
+				return content;
+			}
+		}
+
+		return StringPool.BLANK;
 	}
 
 	protected Document getCustomSQLDocument(
@@ -423,11 +435,30 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	protected String getPortalContent(String fileName) throws Exception {
+		String content = getContent(fileName, ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (Validator.isNotNull(content)) {
+			return content;
+		}
+
 		String portalBranchName = SourceFormatterUtil.getPropertyValue(
 			SourceFormatterUtil.GIT_LIFERAY_PORTAL_BRANCH, _propertiesMap);
 
-		return SourceFormatterUtil.getPortalContent(
-			_baseDirName, portalBranchName, fileName);
+		if (Validator.isNull(portalBranchName)) {
+			return null;
+		}
+
+		try {
+			URL url = new URL(
+				StringBundler.concat(
+					_GIT_LIFERAY_PORTAL_URL, portalBranchName, StringPool.SLASH,
+					fileName));
+
+			return StringUtil.read(url.openStream());
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	protected Document getPortalCustomSQLDocument() throws Exception {
@@ -716,6 +747,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";
+
+	private static final String _GIT_LIFERAY_PORTAL_URL =
+		"https://raw.githubusercontent.com/liferay/liferay-portal/";
 
 	private String _baseDirName;
 	private final Map<String, BNDSettings> _bndSettingsMap =

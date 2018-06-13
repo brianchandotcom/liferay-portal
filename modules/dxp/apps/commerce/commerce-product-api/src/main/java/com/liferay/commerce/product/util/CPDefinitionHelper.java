@@ -32,14 +32,11 @@ import java.util.Locale;
 @ProviderType
 public interface CPDefinitionHelper {
 
-	public CPCatalogEntry getCPCatalogEntry(
-			long groupId, long cpDefinitionId, Locale locale)
+	public CPCatalogEntry getCPCatalogEntry(long cpDefinitionId, Locale locale)
 		throws PortalException;
 
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException;
-
-	public boolean isVisible(long cpDefinitionId) throws PortalException;
 
 	public CPDataSourceResult search(
 			long groupId, SearchContext searchContext, CPQuery cpQuery,

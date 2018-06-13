@@ -17,88 +17,24 @@ package com.liferay.commerce.product.catalog;
 /**
  * @author Marco Leo
  */
-public class CPCatalogEntry {
+public interface CPCatalogEntry {
 
-	public long getCPDefinitionId() {
-		return _cpDefinitionId;
-	}
+	public long getCPDefinitionId();
 
-	public String getDefaultImageFileUrl() {
-		return _defaultImageFileUrl;
-	}
+	public String getDefaultImageFileUrl();
 
-	public String getDescription() {
-		return _description;
-	}
+	public String getDescription();
 
-	public String getName() {
-		return _name;
-	}
+	public String getName();
 
-	public String getProductTypeName() {
-		return _productTypeName;
-	}
+	public String getProductTypeName();
 
-	public String getShortDescription() {
-		return _shortDescription;
-	}
+	public String getShortDescription();
 
-	public String getSku() {
-		return _sku;
-	}
+	public String getSku();
 
-	public String getUrl() {
-		return _url;
-	}
+	public String getUrl();
 
-	public boolean isIgnoreSKUCombinations() {
-		return _ignoreSKUCombinations;
-	}
-
-	public void setCPDefinitionId(long cpDefinitionId) {
-		_cpDefinitionId = cpDefinitionId;
-	}
-
-	public void setDefaultImageFileUrl(String defaultImageFileUrl) {
-		_defaultImageFileUrl = defaultImageFileUrl;
-	}
-
-	public void setDescription(String description) {
-		_description = description;
-	}
-
-	public void setIgnoreSKUCombinations(boolean ignoreSKUCombinations) {
-		_ignoreSKUCombinations = ignoreSKUCombinations;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public void setProductTypeName(String productTypeName) {
-		_productTypeName = productTypeName;
-	}
-
-	public void setShortDescription(String shortDescription) {
-		_shortDescription = shortDescription;
-	}
-
-	public void setSku(String sku) {
-		_sku = sku;
-	}
-
-	public void setUrl(String url) {
-		_url = url;
-	}
-
-	private long _cpDefinitionId;
-	private String _defaultImageFileUrl;
-	private String _description;
-	private boolean _ignoreSKUCombinations;
-	private String _name;
-	private String _productTypeName;
-	private String _shortDescription;
-	private String _sku;
-	private String _url;
+	public boolean isIgnoreSKUCombinations();
 
 }

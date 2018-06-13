@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
+import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -57,7 +58,7 @@ public class CPPublisherWebHelper {
 		String[] catalogEntryXmls = portletPreferences.getValues(
 			"catalogEntryXml", new String[0]);
 
-		List<CPCatalogEntry> catalogEntries = new ArrayList<>();
+		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
 
 		List<Long> missingAssetCPDefinitionIds = new ArrayList<>();
 
@@ -69,38 +70,24 @@ public class CPPublisherWebHelper {
 			long cpDefinitionId = GetterUtil.getLong(
 				rootElement.elementText("product-id"));
 
-			CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
-				cpDefinitionId);
+			try {
+				CPCatalogEntry cpCatalogEntry =
+					_cpDefinitionHelper.getCPCatalogEntry(
+						cpDefinitionId, themeDisplay.getLocale());
 
-			if (cpDefinition == null) {
+				if (cpCatalogEntry != null) {
+					cpCatalogEntries.add(cpCatalogEntry);
+				}
+			}
+			catch (NoSuchCPDefinitionException nscpde) {
 				missingAssetCPDefinitionIds.add(cpDefinitionId);
 			}
-
-			if (!_cpDefinitionHelper.isVisible(cpDefinitionId)) {
-				continue;
-			}
-
-			CPCatalogEntry cpCatalogEntry = new CPCatalogEntry();
-
-			cpCatalogEntry.setCPDefinitionId(cpDefinitionId);
-			cpCatalogEntry.setName(
-				cpDefinition.getName(themeDisplay.getLanguageId()));
-			cpCatalogEntry.setShortDescription(
-				cpDefinition.getShortDescription(themeDisplay.getLanguageId()));
-			cpCatalogEntry.setDescription(
-				cpDefinition.getDescription(themeDisplay.getLanguageId()));
-			cpCatalogEntry.setSku(
-				getSku(cpDefinition, themeDisplay.getLocale()));
-			cpCatalogEntry.setDefaultImageFileUrl(
-				cpDefinition.getDefaultImageThumbnailSrc(themeDisplay));
-
-			catalogEntries.add(cpCatalogEntry);
 		}
 
 		removeAndStoreSelection(
 			missingAssetCPDefinitionIds, portletPreferences);
 
-		return catalogEntries;
+		return cpCatalogEntries;
 	}
 
 	public String getSku(CPDefinition cpDefinition, Locale locale) {

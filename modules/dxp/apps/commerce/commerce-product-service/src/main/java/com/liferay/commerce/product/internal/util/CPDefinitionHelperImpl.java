@@ -18,11 +18,12 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
+import com.liferay.commerce.product.internal.catalog.DatabaseCPCatalogEntryImpl;
+import com.liferay.commerce.product.internal.catalog.IndexCPCatalogEntryImpl;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
-import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.search.CPDefinitionSearcher;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
@@ -38,9 +39,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -59,26 +58,19 @@ import org.osgi.service.component.annotations.Reference;
 public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Override
-	public CPCatalogEntry getCPCatalogEntry(
-			long groupId, long cpDefinitionId, Locale locale)
+	public CPCatalogEntry getCPCatalogEntry(long cpDefinitionId, Locale locale)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(groupId);
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
 
-		SearchContext searchContext = new SearchContext();
+		if (!_isVisible(cpDefinition)) {
+			return null;
+		}
 
-		searchContext.setAttribute(
-			Field.ENTRY_CLASS_PK, String.valueOf(cpDefinitionId));
-		searchContext.setCompanyId(group.getCompanyId());
-		searchContext.setGroupIds(new long[] {groupId});
-
-		CPDataSourceResult cpDataSourceResult = search(
-			groupId, searchContext, new CPQuery(), 0, 1);
-
-		List<CPCatalogEntry> cpCatalogEntries =
-			cpDataSourceResult.getCPCatalogEntries();
-
-		return cpCatalogEntries.get(0);
+		return new DatabaseCPCatalogEntryImpl(
+			cpDefinition, _cpDefinitionLocalService,
+			_cpFriendlyURLEntryLocalService, locale, _portal);
 	}
 
 	@Override
@@ -120,23 +112,6 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			cpFriendlyURLEntry.getUrlTitle();
 	}
 
-	public boolean isVisible(long cpDefinitionId) throws PortalException {
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			cpDefinitionId);
-
-		if (!cpDefinition.isPublished()) {
-			return false;
-		}
-
-		if (!cpDefinition.isApproved()) {
-			return false;
-		}
-
-		//TODO Permission checking
-
-		return true;
-	}
-
 	@Override
 	public CPDataSourceResult search(
 			long groupId, SearchContext searchContext, CPQuery cpQuery,
@@ -156,34 +131,11 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		for (Document document : documents) {
 			cpCatalogEntries.add(
-				_getCPCatalogEntry(document, searchContext.getLocale()));
+				new IndexCPCatalogEntryImpl(
+					document, searchContext.getLocale()));
 		}
 
 		return new CPDataSourceResult(cpCatalogEntries, hits.getLength());
-	}
-
-	private CPCatalogEntry _getCPCatalogEntry(
-		Document document, Locale locale) {
-
-		CPCatalogEntry cpCatalogEntry = new CPCatalogEntry();
-
-		cpCatalogEntry.setCPDefinitionId(
-			GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
-		cpCatalogEntry.setDefaultImageFileUrl(
-			document.get(CPDefinitionIndexer.FIELD_DEFAULT_IMAGE_FILE_URL));
-		cpCatalogEntry.setDescription(document.get(locale, Field.DESCRIPTION));
-		cpCatalogEntry.setIgnoreSKUCombinations(
-			GetterUtil.getBoolean(
-				document.get(
-					CPDefinitionIndexer.FIELD_IS_IGNORE_SKU_COMBINATIONS)));
-		cpCatalogEntry.setName(document.get(locale, Field.NAME));
-		cpCatalogEntry.setProductTypeName(
-			document.get(CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME));
-		cpCatalogEntry.setShortDescription(
-			document.get(locale, CPDefinitionIndexer.FIELD_SHORT_DESCRIPTION));
-		cpCatalogEntry.setUrl(document.get(locale, Field.URL));
-
-		return cpCatalogEntry;
 	}
 
 	private CPDefinitionSearcher _getCPDefinitionSearcher(
@@ -256,17 +208,28 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		return sortType;
 	}
 
+	private boolean _isVisible(CPDefinition cpDefinition) {
+		if (!cpDefinition.isPublished()) {
+			return false;
+		}
+
+		if (!cpDefinition.isApproved()) {
+			return false;
+		}
+
+		//TODO Permission checking
+
+		return true;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionHelperImpl.class);
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

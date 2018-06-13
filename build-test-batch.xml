@@ -4019,9 +4019,14 @@ ${output.content}</echo>
 	<target name="service-builder-jdk8">
 		<run-batch-test>
 			<test-action>
-				<gradle-execute dir="modules/util/portal-tools-service-builder" task="deploy">
-					<arg value="clean" />
-				</gradle-execute>
+				<if>
+					<available file="modules/util/portal-tools-service-builder" />
+					<then>
+						<gradle-execute dir="modules/util/portal-tools-service-builder" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
+					</then>
+				</if>
 
 				<record action="start" name="${project.dir}/build.services.output.txt" />
 

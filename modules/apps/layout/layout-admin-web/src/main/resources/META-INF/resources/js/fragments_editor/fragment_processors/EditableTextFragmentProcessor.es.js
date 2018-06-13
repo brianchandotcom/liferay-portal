@@ -104,6 +104,11 @@ function init(
 	wrapper.dataset.lfrEditableId = editableElement.id;
 	wrapper.innerHTML = editableContent;
 
+	const editorName = `${portletNamespace}FragmentEntryLinkEditable_${editableElement.id}`;
+
+	wrapper.setAttribute('id', editorName);
+	wrapper.setAttribute('name', editorName);
+
 	editableElement.innerHTML = '';
 	editableElement.appendChild(wrapper);
 
@@ -116,7 +121,8 @@ function init(
 			editableElement,
 			portletNamespace,
 			fragmentEntryLinkId,
-			defaultEditorConfiguration
+			defaultEditorConfiguration,
+			editorName
 		)
 	);
 
@@ -163,7 +169,8 @@ function _getEditorConfiguration(
 	editableElement,
 	portletNamespace,
 	fragmentEntryLinkId,
-	defaultEditorConfiguration
+	defaultEditorConfiguration,
+	editorName
 ) {
 	const configuration = {};
 
@@ -178,6 +185,16 @@ function _getEditorConfiguration(
 		configuration.disallowedContent = 'br';
 		configuration.toolbars = {};
 	}
+
+	configuration.filebrowserImageBrowseLinkUrl = defaultEditorConfiguration
+		.editorConfig
+		.filebrowserImageBrowseLinkUrl
+		.replace('_EDITOR_NAME_', editorName);
+
+	configuration.filebrowserImageBrowseUrl = defaultEditorConfiguration
+		.editorConfig
+		.filebrowserImageBrowseUrl
+		.replace('_EDITOR_NAME_', editorName);
 
 	return object.mixin(
 		{},

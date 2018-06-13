@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true, property = "type=html",
+	immediate = true, property = "type=rich-text",
 	service = EditableElementParser.class
 )
-public class HtmlEditableElementParser implements EditableElementParser {
+public class RichTextEditableElementParser implements EditableElementParser {
 
 	@Override
 	public String getFieldTemplate() {

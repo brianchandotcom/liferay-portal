@@ -385,9 +385,11 @@ public class TLiferayOutputProperties
 			TLiferayOutputProperties.class);
 
 	protected transient PropertyPathConnector flowConnector =
-		new PropertyPathConnector(Connector.MAIN_NAME, "schemaFlow");
+		new PropertyPathConnector(
+			Connector.MAIN_NAME, "schemaFlowSchemaProperties");
 	protected transient PropertyPathConnector rejectConnector =
-		new PropertyPathConnector(Connector.REJECT_NAME, "schemaReject");
+		new PropertyPathConnector(
+			Connector.REJECT_NAME, "schemaRejectSchemaProperties");
 
 	private String _getAvailableOperations(Stream<Operation> operationStream) {
 		String availableOperations = operationStream.map(

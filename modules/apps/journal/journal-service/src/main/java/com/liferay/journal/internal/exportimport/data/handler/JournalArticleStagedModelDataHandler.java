@@ -883,7 +883,7 @@ public class JournalArticleStagedModelDataHandler
 				article.getPrimaryKey(), importedArticle.getPrimaryKey());
 
 			_importFriendlyURLEntries(
-				portletDataContext, article, importedArticle, serviceContext);
+			    portletDataContext, article, importedArticle);
 		}
 		finally {
 			if (smallFile != null) {
@@ -1139,7 +1139,7 @@ public class JournalArticleStagedModelDataHandler
 
 	private void _importFriendlyURLEntries(
 			PortletDataContext portletDataContext, JournalArticle article,
-			JournalArticle importedArticle, ServiceContext serviceContext)
+			JournalArticle importedArticle)
 		throws PortalException {
 
 		List<Element> friendlyURLEntryElements =
@@ -1165,8 +1165,7 @@ public class JournalArticleStagedModelDataHandler
 				JournalArticle.class, importedArticle.getResourcePrimKey());
 
 		_journalArticleLocalService.updateUrlTitle(
-			importedArticle, mainFriendlyURLEntry.getUrlTitle(),
-			serviceContext);
+			importedArticle, mainFriendlyURLEntry.getUrlTitle());
 	}
 
 	/**

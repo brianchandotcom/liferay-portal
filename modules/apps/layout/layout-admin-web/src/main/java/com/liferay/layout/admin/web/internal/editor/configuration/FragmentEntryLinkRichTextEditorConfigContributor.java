@@ -115,8 +115,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 		JSONObject toolbarJSONObject = JSONFactoryUtil.createJSONObject();
 
-		toolbarJSONObject.put(
-			"buttons", toJSONArray("['image', 'table', 'hline']"));
+		toolbarJSONObject.put("buttons", toJSONArray("['image']"));
 		toolbarJSONObject.put("tabIndex", 1);
 
 		jsonObject.put("add", toolbarJSONObject);

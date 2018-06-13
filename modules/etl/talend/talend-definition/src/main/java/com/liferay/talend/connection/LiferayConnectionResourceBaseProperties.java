@@ -137,7 +137,9 @@ public abstract class LiferayConnectionResourceBaseProperties
 	public LiferayResourceProperties liferayResourceProperties;
 
 	protected transient PropertyPathConnector mainConnector =
-		new PropertyPathConnector(Connector.MAIN_NAME, "baseMain");
+		new PropertyPathConnector(
+			Connector.MAIN_NAME,
+			"liferayResourceProperties.mainSchemaProperties");
 	protected transient Schema temporaryMainSchema =
 		SchemaProperties.EMPTY_SCHEMA;
 

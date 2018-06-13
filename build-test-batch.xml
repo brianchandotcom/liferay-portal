@@ -3399,6 +3399,10 @@ app.server.type=@{app.server.type}]]></echo>
 						</antcall>
 
 						<antcall inheritAll="false" target="setup-sdk" />
+
+						<setup-testable-tomcat />
+
+						<setup-test-batch-testable-tomcat />
 					</else>
 				</if>
 			</test-set-up>

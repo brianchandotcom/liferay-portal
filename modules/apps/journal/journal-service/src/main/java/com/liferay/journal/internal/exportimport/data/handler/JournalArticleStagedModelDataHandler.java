@@ -1164,9 +1164,8 @@ public class JournalArticleStagedModelDataHandler
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
 				JournalArticle.class, importedArticle.getResourcePrimKey());
 
-		importedArticle.setUrlTitle(mainFriendlyURLEntry.getUrlTitle());
-
-		_journalArticleLocalService.updateJournalArticle(importedArticle);
+		_journalArticleLocalService.updateArticle(
+			importedArticle.getId(), mainFriendlyURLEntry.getUrlTitle());
 	}
 
 	/**

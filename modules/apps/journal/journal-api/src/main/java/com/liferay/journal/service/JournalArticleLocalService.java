@@ -3358,6 +3358,17 @@ public interface JournalArticleLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
+	* Updates the URL title of the web content article.
+	*
+	* @param id the primary key of the web content article
+	* @param urlTitle the web content article's URL title
+	* @return the updated web content article
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticle updateArticle(long id, String urlTitle)
+		throws PortalException;
+
+	/**
 	* Updates the translation of the web content article.
 	*
 	* @param groupId the primary key of the web content article's group

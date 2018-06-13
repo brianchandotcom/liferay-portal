@@ -4006,6 +4006,20 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	/**
+	* Updates the URL title of the web content article.
+	*
+	* @param id the primary key of the web content article
+	* @param urlTitle the web content article's URL title
+	* @return the updated web content article
+	*/
+	@Override
+	public com.liferay.journal.model.JournalArticle updateArticle(long id,
+		String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalArticleLocalService.updateArticle(id, urlTitle);
+	}
+
+	/**
 	* Updates the translation of the web content article.
 	*
 	* @param groupId the primary key of the web content article's group

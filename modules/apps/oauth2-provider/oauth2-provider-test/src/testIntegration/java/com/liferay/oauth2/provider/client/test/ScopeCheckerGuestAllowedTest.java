@@ -14,12 +14,16 @@
 
 package com.liferay.oauth2.provider.client.test;
 
+import com.liferay.oauth2.provider.constants.OAuth2ProviderConstants;
 import com.liferay.oauth2.provider.test.internal.TestAnnotatedApplication;
 import com.liferay.oauth2.provider.test.internal.activator.BaseTestPreparatorBundleActivator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.net.URISyntaxException;
 
 import java.util.Dictionary;
 
@@ -37,12 +41,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Marta Medio
+ * @author Tomas Polesovsky
  */
 @RunAsClient
 @RunWith(Arquillian.class)
-public class AnnotatedApplicationClientGuestAllowedTest
-	extends BaseClientTestCase {
+public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
@@ -52,31 +55,21 @@ public class AnnotatedApplicationClientGuestAllowedTest
 
 	@Test
 	public void test() throws Exception {
-		String invalidToken = "Invalid Token";
+		testApplication(
+			"/annotated-guest-not-allowed/", "everything.readonly", 403);
 
-		WebTarget webTarget = getWebTarget("/annotated-guest-not-allowed");
+		testApplication(
+			"/annotated-guest-not-allowed/no-scope", "no-scope", 403);
 
-		webTarget = webTarget.path("/no-scope");
+		testApplication(
+			"/annotated-guest-allowed/", "everything.readonly", 403);
 
-		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(), invalidToken);
+		testApplication("/annotated-guest-allowed/no-scope", "no-scope", 200);
 
-		Response response = invocationBuilder.get();
+		testApplication(
+			"/annotated-guest-default/", "everything.readonly", 403);
 
-		Assert.assertEquals(403, response.getStatus());
-
-		invocationBuilder = authorize(
-			webTarget.request(), getToken("oauthTestApplication"));
-
-		Assert.assertEquals("no-scope", invocationBuilder.get(String.class));
-
-		webTarget = getWebTarget("/annotated-guest-allowed");
-
-		webTarget = webTarget.path("/no-scope");
-
-		invocationBuilder = authorize(webTarget.request(), invalidToken);
-
-		Assert.assertEquals("no-scope", invocationBuilder.get(String.class));
+		testApplication("/annotated-guest-default/no-scope", "no-scope", 403);
 	}
 
 	public static class AnnotatedApplicationTestPreparatorBundleActivator
@@ -102,6 +95,14 @@ public class AnnotatedApplicationClientGuestAllowedTest
 				new TestAnnotatedApplication(), "annotated-guest-allowed",
 				properties);
 
+			properties = new HashMapDictionary<>();
+
+			properties.put("oauth2.scopechecker.type", "annotations");
+
+			registerJaxRsApplication(
+				new TestAnnotatedApplication(), "annotated-guest-default",
+				properties);
+
 			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
@@ -111,5 +112,43 @@ public class AnnotatedApplicationClientGuestAllowedTest
 		}
 
 	}
+
+	protected void testApplication(
+			String path, String expectedValidTokenResponse,
+			int expectedInvalidTokenStatus)
+		throws URISyntaxException {
+
+		WebTarget webTarget = getWebTarget(path);
+
+		for (String invalidToken : _INVALID_TOKENS) {
+			Invocation.Builder invocationBuilder = webTarget.request();
+
+			if (invalidToken != null) {
+				invocationBuilder = authorize(invocationBuilder, invalidToken);
+			}
+
+			Response response = invocationBuilder.get();
+
+			int status = response.getStatus();
+
+			Assert.assertEquals(
+				"Token: " + invalidToken, expectedInvalidTokenStatus, status);
+		}
+
+		Invocation.Builder invocationBuilder = webTarget.request();
+
+		String validToken = getToken("oauthTestApplication");
+
+		invocationBuilder = authorize(invocationBuilder, validToken);
+
+		String response = invocationBuilder.get(String.class);
+
+		Assert.assertEquals(expectedValidTokenResponse, response);
+	}
+
+	private static final String[] _INVALID_TOKENS = {
+		null, StringPool.BLANK, StringPool.NULL,
+		OAuth2ProviderConstants.EXPIRED_TOKEN, "Invalid Token"
+	};
 
 }

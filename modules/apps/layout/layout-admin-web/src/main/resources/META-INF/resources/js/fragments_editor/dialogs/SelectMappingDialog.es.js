@@ -97,6 +97,26 @@ class SelectMappingDialog extends PortletBase {
 	}
 
 	/**
+	 * Emit a mappeableFieldSelected event
+	 * @param {string} [key='']
+	 * @private
+	 * @review
+	 */
+
+	_emitMappeableFieldSelected(key = '') {
+		this.emit(
+			'mappeableFieldSelected',
+			{
+				editableId: this.editableId,
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				key
+			}
+		);
+
+		this.visible = false;
+	}
+
+	/**
 	 * Changes visible property to false
 	 * @private
 	 * @review
@@ -123,18 +143,9 @@ class SelectMappingDialog extends PortletBase {
 	 */
 
 	_handleMappeableFieldLinkClick(event) {
-		const key = event.delegateTarget.dataset.key;
-
-		this.emit(
-			'mappeableFieldSelected',
-			{
-				editableId: this.editableId,
-				fragmentEntryLinkId: this.fragmentEntryLinkId,
-				key
-			}
+		this._emitMappeableFieldSelected(
+			event.delegateTarget.dataset.key
 		);
-
-		this.visible = false;
 	}
 
 	/**

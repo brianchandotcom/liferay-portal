@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import com.liferay.tag.apio.architect.identifier.TagIdentifier;
 
 import java.util.List;
 

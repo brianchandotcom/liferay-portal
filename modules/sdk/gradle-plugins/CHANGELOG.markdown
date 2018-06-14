@@ -4840,11 +4840,31 @@ version 2.1.44.
 - [LPS-82261]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.227.
 
+## 3.12.39 - 2018-06-12
+
+### Changed
+- [LPS-82261]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.45.
+- [LPS-82261]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.228.
+
+## 3.12.40 - 2018-06-13
+
+### Changed
+- [LPS-82343]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.187.
+- [LPS-82343]: Update the [Liferay Source Formatter] dependency to version
+1.0.660.
+
 ## 3.12.41 - 2018-06-13
 
 ### Removed
 - [LPS-77425]: Remove version difference for
 [Liferay Portal Tools Service Builder] based on the portal version.
+
+## 3.12.42 - 2018-06-13
+
+*No changes.*
 
 ## 3.12.43 - 2018-06-13
 
@@ -5265,4 +5285,5 @@ unknown portal version.
 [LPS-82130]: https://issues.liferay.com/browse/LPS-82130
 [LPS-82209]: https://issues.liferay.com/browse/LPS-82209
 [LPS-82261]: https://issues.liferay.com/browse/LPS-82261
+[LPS-82343]: https://issues.liferay.com/browse/LPS-82343
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

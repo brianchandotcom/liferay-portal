@@ -131,6 +131,19 @@ public class MBDiscussionPermissionImplTest {
 				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
 	}
 
+	@Test
+	public void testUserCannotUpdateHisComment() throws Exception {
+		long commentId = _addComment(_siteUser);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_siteUser);
+
+		DiscussionPermission discussionPermission =
+			_commentManager.getDiscussionPermission(permissionChecker);
+
+		Assert.assertFalse(discussionPermission.hasUpdatePermission(commentId));
+	}
+
 	private long _addComment(User user) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, user.getUserId());

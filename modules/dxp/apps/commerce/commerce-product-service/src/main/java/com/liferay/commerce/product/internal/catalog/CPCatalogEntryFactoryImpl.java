@@ -43,12 +43,12 @@ public class CPCatalogEntryFactoryImpl implements CPCatalogEntryFactory {
 	public CPCatalogEntry create(long cpDefinitionId, Locale locale)
 		throws PortalException {
 
-		CPDefinition cpDefinition = null;
-
-		if (cpDefinitionId > 0) {
-			cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-				cpDefinitionId);
+		if (cpDefinitionId <= 0) {
+			return null;
 		}
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpDefinitionId);
 
 		return new DatabaseCPCatalogEntryImpl(
 			cpDefinition, _cpDefinitionLocalService,

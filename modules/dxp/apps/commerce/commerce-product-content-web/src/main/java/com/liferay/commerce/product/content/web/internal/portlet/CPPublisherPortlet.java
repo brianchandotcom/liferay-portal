@@ -15,6 +15,8 @@
 package com.liferay.commerce.product.content.web.internal.portlet;
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPPublisherDisplayContext;
 import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
@@ -74,14 +76,22 @@ public class CPPublisherPortlet extends MVCPortlet {
 
 		CPPublisherDisplayContext cpPublisherDisplayContext =
 			new CPPublisherDisplayContext(
-				_cpDataSourceRegistry, _cpDefinitionHelper,
-				_cpPublisherWebHelper, httpServletRequest);
+				_cpContentListEntryRendererRegistry,
+				_cpContentListRendererRegistry, _cpDataSourceRegistry,
+				_cpDefinitionHelper, _cpPublisherWebHelper, httpServletRequest);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, cpPublisherDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}
+
+	@Reference
+	private CPContentListEntryRendererRegistry
+		_cpContentListEntryRendererRegistry;
+
+	@Reference
+	private CPContentListRendererRegistry _cpContentListRendererRegistry;
 
 	@Reference
 	private CPDataSourceRegistry _cpDataSourceRegistry;

@@ -14,20 +14,22 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet.action;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.ServletContext;
@@ -52,11 +54,12 @@ public class CPCompareContentConfigurationAction
 		try {
 			CPCompareContentDisplayContext cpCompareContentDisplayContext =
 				new CPCompareContentDisplayContext(
-					_cpDefinitionHelper, _cpDefinitionService,
+					_cpCatalogEntryFactory, _cpContentListEntryRendererRegistry,
+					_cpContentListRendererRegistry, _cpDefinitionService,
 					_cpDefinitionSpecificationOptionValueService,
 					_cpInstanceHelper, _cpMeasurementUnitService,
-					_cpOptionCategoryService, _ddmFormFieldTypeServicesTracker,
-					httpServletRequest);
+					_cpOptionCategoryService, _cpTypeServicesTracker,
+					_ddmFormFieldTypeServicesTracker, httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -82,7 +85,14 @@ public class CPCompareContentConfigurationAction
 		CPCompareContentConfigurationAction.class);
 
 	@Reference
-	private CPDefinitionHelper _cpDefinitionHelper;
+	private CPCatalogEntryFactory _cpCatalogEntryFactory;
+
+	@Reference
+	private CPContentListEntryRendererRegistry
+		_cpContentListEntryRendererRegistry;
+
+	@Reference
+	private CPContentListRendererRegistry _cpContentListRendererRegistry;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
@@ -101,9 +111,9 @@ public class CPCompareContentConfigurationAction
 	private CPOptionCategoryService _cpOptionCategoryService;
 
 	@Reference
-	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
-	private Portal _portal;
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 }

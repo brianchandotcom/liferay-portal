@@ -25,66 +25,26 @@ contextObjects.put("cpSearchResultsDisplayContext", cpSearchResultsDisplayContex
 
 SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContainer();
 
-List<Document> results = searchContainer.getResults();
+List<CPCatalogEntry> results = searchContainer.getResults();
 %>
 
-<liferay-ddm:template-renderer
-	className="<%= CPSearchResultsPortlet.class.getName() %>"
-	contextObjects="<%= contextObjects %>"
-	displayStyle="<%= cpSearchResultsDisplayContext.getDisplayStyle() %>"
-	displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= results %>"
->
-	<c:choose>
-		<c:when test="<%= results.size() > 0 %>">
-			<div class="row">
+<c:choose>
+	<c:when test="<%= cpSearchResultsDisplayContext.isSelectionStyleADT() %>">
+		<liferay-ddm:template-renderer
+			className="<%= CPSearchResultsPortlet.class.getName() %>"
+			contextObjects="<%= contextObjects %>"
+			displayStyle="<%= cpSearchResultsDisplayContext.getDisplayStyle() %>"
+			displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"
+			entries="<%= results %>"
+		/>
+	</c:when>
+	<c:when test="<%= cpSearchResultsDisplayContext.isSelectionStyleCustomRenderer() %>">
 
-				<%
-				for (Object object : results) {
-					Document document = (Document)object;
-				%>
+		<%
+		cpSearchResultsDisplayContext.renderCPContentList();
+		%>
 
-				<div class="col-md-4">
-					<div class="card">
-						<a class="aspect-ratio" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(document) %>">
-
-							<%
-							String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
-							%>
-
-							<c:if test="<%= Validator.isNotNull(img) %>">
-								<img class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= img %>">
-							</c:if>
-						</a>
-
-						<div class="card-row card-row-padded card-row-valign-top">
-							<div class="card-col-content">
-								<a class="truncate-text" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(document) %>">
-									<%= cpSearchResultsDisplayContext.getName(document) %>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<%
-				}
-				%>
-
-			</div>
-		</c:when>
-		<c:otherwise>
-			<div class="alert alert-info">
-				<liferay-ui:message key="no-products-were-found" />
-			</div>
-		</c:otherwise>
-	</c:choose>
-</liferay-ddm:template-renderer>
-
-<aui:form useNamespace="<%= false %>">
-	<liferay-ui:search-paginator
-		markupView="lexicon"
-		searchContainer="<%= searchContainer %>"
-		type="more"
-	/>
-</aui:form>
+	</c:when>
+	<c:otherwise>
+	</c:otherwise>
+</c:choose>

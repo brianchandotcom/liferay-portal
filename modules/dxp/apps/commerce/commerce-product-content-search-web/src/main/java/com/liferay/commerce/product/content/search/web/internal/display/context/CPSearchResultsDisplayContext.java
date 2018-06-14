@@ -14,68 +14,73 @@
 
 package com.liferay.commerce.product.content.search.web.internal.display.context;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
+import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.search.CPDefinitionIndexer;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
-import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPSearchResultsDisplayContext {
 
 	public CPSearchResultsDisplayContext(
-			CPDefinitionHelper cpDefinitionHelper,
+			CPCatalogEntryFactory cpCatalogEntryFactory,
+			CPContentListEntryRendererRegistry
+				cpContentListEntryRendererRegistry,
+			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDefinitionLinkTypeRegistry cpDefinitionLinkTypeRegistry,
-			CPInstanceHelper cpInstanceHelper, DLAppService dlAppService,
+			CPInstanceHelper cpInstanceHelper,
+			CPTypeServicesTracker cpTypeServicesTracker,
 			HttpServletRequest httpServletRequest,
 			PortletSharedSearchResponse portletSharedSearchResponse)
 		throws ConfigurationException {
 
-		_cpDefinitionHelper = cpDefinitionHelper;
+		_cpCatalogEntryFactory = cpCatalogEntryFactory;
+		_cpContentListEntryRendererRegistry =
+			cpContentListEntryRendererRegistry;
+		_cpContentListRendererRegistry = cpContentListRendererRegistry;
 		_cpDefinitionLinkTypeRegistry = cpDefinitionLinkTypeRegistry;
 		_cpInstanceHelper = cpInstanceHelper;
-		_dlAppService = dlAppService;
+		_cpTypeServicesTracker = cpTypeServicesTracker;
 		_httpServletRequest = httpServletRequest;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
 
-		CPRequestHelper cpRequestHelper = new CPRequestHelper(
-			httpServletRequest);
-
-		_liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
-
-		_locale = httpServletRequest.getLocale();
+		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -88,20 +93,90 @@ public class CPSearchResultsDisplayContext {
 				CPSearchResultsPortletInstanceConfiguration.class);
 	}
 
-	public long getCPDefinitionId(Document document) {
-		String entryClassPK = document.get(_locale, Field.ENTRY_CLASS_PK);
+	public List<CPContentListEntryRenderer> getCPContentListEntryRenderers(
+		String cpType) {
 
-		return GetterUtil.getLong(entryClassPK);
+		return
+			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderers(
+				getCPContentListRendererKey(), cpType);
+	}
+
+	public String getCPContentListRendererKey() {
+		RenderRequest renderRequest = _cpRequestHelper.getRenderRequest();
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String value = portletPreferences.getValue(
+			"cpContentListRendererKey", null);
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		List<CPContentListRenderer> cpContentListRenderers =
+			getCPContentListRenderers();
+
+		if (cpContentListRenderers.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		CPContentListRenderer cpContentListRenderer =
+			cpContentListRenderers.get(0);
+
+		if (cpContentListRenderer == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpContentListRenderer.getKey();
+	}
+
+	public List<CPContentListRenderer> getCPContentListRenderers() {
+		return _cpContentListRendererRegistry.getCPContentListRenderers(
+			CPPortletKeys.CP_SEARCH_RESULTS);
 	}
 
 	public List<String> getCPDefinitionLinkTypes() {
 		return _cpDefinitionLinkTypeRegistry.getTypes();
 	}
 
-	public CPInstance getDefaultCPInstance(Document document) throws Exception {
-		long cpDefinitionId = getCPDefinitionId(document);
+	public String getCPTypeListEntryRendererKey(String cpType) {
+		RenderRequest renderRequest = _cpRequestHelper.getRenderRequest();
 
-		return _cpInstanceHelper.getCPInstance(cpDefinitionId, null);
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String value = portletPreferences.getValue(
+			cpType + "--cpTypeListEntryRendererKey", null);
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		List<CPContentListEntryRenderer> cpContentListEntryRenderers =
+			getCPContentListEntryRenderers(cpType);
+
+		if (cpContentListEntryRenderers.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		CPContentListEntryRenderer cpContentListEntryRenderer =
+			cpContentListEntryRenderers.get(0);
+
+		if (cpContentListEntryRenderer == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpContentListEntryRenderer.getKey();
+	}
+
+	public List<CPType> getCPTypes() {
+		return _cpTypeServicesTracker.getCPTypes();
+	}
+
+	public CPInstance getDefaultCPInstance(CPCatalogEntry cpCatalogEntry)
+		throws Exception {
+
+		return _cpInstanceHelper.getCPInstance(
+			cpCatalogEntry.getCPDefinitionId(), null);
 	}
 
 	public String getDisplayStyle() {
@@ -127,55 +202,7 @@ public class CPSearchResultsDisplayContext {
 		return _displayStyleGroupId;
 	}
 
-	public String getName(Document document) {
-		String name = document.get(_locale, Field.NAME);
-
-		if (Validator.isNull(name)) {
-			name = document.get(Field.NAME);
-		}
-
-		return name;
-	}
-
-	public String getProductDefaultImage(
-			Document document, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		long fileEntryId = GetterUtil.getLong(
-			document.get(
-				CPDefinitionIndexer.FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID));
-
-		FileEntry fileEntry = null;
-
-		if (fileEntryId > 0) {
-			try {
-				fileEntry = _dlAppService.getFileEntry(fileEntryId);
-			}
-			catch (NoSuchFileEntryException nsfee) {
-			}
-		}
-
-		if (fileEntry != null) {
-			return DLUtil.getDownloadURL(
-				fileEntry, fileEntry.getFileVersion(), themeDisplay, null);
-		}
-
-		return StringPool.BLANK;
-	}
-
-	public String getProductFriendlyURL(Document document)
-		throws PortalException {
-
-		long cpDefinitionId = getCPDefinitionId(document);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return _cpDefinitionHelper.getFriendlyURL(cpDefinitionId, themeDisplay);
-	}
-
-	public SearchContainer<Document> getSearchContainer()
+	public SearchContainer<CPCatalogEntry> getSearchContainer()
 		throws PortalException {
 
 		if (_searchContainer != null) {
@@ -191,22 +218,73 @@ public class CPSearchResultsDisplayContext {
 		return _searchContainer;
 	}
 
-	public String[] getSkus(Document document) throws Exception {
-		return document.getValues(CPDefinitionIndexer.FIELD_SKUS);
+	public String getSelectionStyle() {
+		return _cpSearchResultsPortletInstanceConfiguration.selectionStyle();
 	}
 
-	public boolean isIgnoreSkuCombinations(Document document) {
-		return GetterUtil.getBoolean(
-			document.get(CPDefinitionIndexer.FIELD_IS_IGNORE_SKU_COMBINATIONS));
+	public boolean isSelectionStyleADT() {
+		String selectionStyle = getSelectionStyle();
+
+		if (selectionStyle.equals("adt")) {
+			return true;
+		}
+
+		return false;
 	}
 
-	protected SearchContainer<Document> buildSearchContainer(
+	public boolean isSelectionStyleCustomRenderer() {
+		String selectionStyle = getSelectionStyle();
+
+		if (selectionStyle.equals("custom")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public void renderCPContentList() throws Exception {
+		CPContentListRenderer cpContentListRenderer =
+			_cpContentListRendererRegistry.getCPContentListRenderer(
+				getCPContentListRendererKey());
+
+		if (cpContentListRenderer != null) {
+			SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer =
+				getSearchContainer();
+
+			cpContentListRenderer.render(
+				cpCatalogEntrySearchContainer.getResults(),
+				_cpRequestHelper.getRequest(),
+				PortalUtil.getHttpServletResponse(
+					_cpRequestHelper.getLiferayPortletResponse()));
+		}
+	}
+
+	public void renderCPContentListEntry(CPCatalogEntry cpCatalogEntry)
+		throws Exception {
+
+		String cpType = cpCatalogEntry.getProductTypeName();
+
+		CPContentListEntryRenderer cpContentListEntryRenderer =
+			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderer(
+				getCPTypeListEntryRendererKey(cpType),
+				getCPContentListRendererKey(), cpType);
+
+		if (cpContentListEntryRenderer != null) {
+			cpContentListEntryRenderer.render(
+				cpCatalogEntry, _cpRequestHelper.getRequest(),
+				PortalUtil.getHttpServletResponse(
+					_cpRequestHelper.getLiferayPortletResponse()));
+		}
+	}
+
+	protected SearchContainer<CPCatalogEntry> buildSearchContainer(
 			List<Document> documents, int totalHits, int paginationStart,
 			String paginationStartParameterName, int paginationDelta,
 			String paginationDeltaParameterName)
 		throws PortalException {
 
-		PortletRequest portletRequest = _liferayPortletRequest;
+		PortletRequest portletRequest =
+			_cpRequestHelper.getLiferayPortletRequest();
 		DisplayTerms displayTerms = null;
 		DisplayTerms searchTerms = null;
 		String curParam = paginationStartParameterName;
@@ -218,12 +296,12 @@ public class CPSearchResultsDisplayContext {
 		String emptyResultsMessage = null;
 		String cssClass = null;
 
-		SearchContainer<Document> searchContainer = new SearchContainer<>(
+		SearchContainer<CPCatalogEntry> searchContainer = new SearchContainer<>(
 			portletRequest, displayTerms, searchTerms, curParam, cur, delta,
 			portletURL, headerNames, emptyResultsMessage, cssClass);
 
 		searchContainer.setDeltaParam(paginationDeltaParameterName);
-		searchContainer.setResults(documents);
+		searchContainer.setResults(getSearchContainerResults(documents));
 		searchContainer.setTotal(totalHits);
 
 		return searchContainer;
@@ -246,9 +324,22 @@ public class CPSearchResultsDisplayContext {
 		};
 	}
 
+	protected List<CPCatalogEntry> getSearchContainerResults(
+		List<Document> documents) {
+
+		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
+
+		for (Document document : documents) {
+			cpCatalogEntries.add(
+				_cpCatalogEntryFactory.create(
+					document, _cpRequestHelper.getLocale()));
+		}
+
+		return cpCatalogEntries;
+	}
+
 	protected HttpServletRequest getSharedRequest() {
-		return PortalUtil.getOriginalServletRequest(
-			PortalUtil.getHttpServletRequest(_liferayPortletRequest));
+		return PortalUtil.getOriginalServletRequest(_httpServletRequest);
 	}
 
 	protected String getURLString(
@@ -260,17 +351,19 @@ public class CPSearchResultsDisplayContext {
 		return urlString;
 	}
 
-	private final CPDefinitionHelper _cpDefinitionHelper;
+	private final CPCatalogEntryFactory _cpCatalogEntryFactory;
+	private final CPContentListEntryRendererRegistry
+		_cpContentListEntryRendererRegistry;
+	private final CPContentListRendererRegistry _cpContentListRendererRegistry;
 	private final CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;
 	private final CPInstanceHelper _cpInstanceHelper;
+	private final CPRequestHelper _cpRequestHelper;
 	private final CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;
+	private final CPTypeServicesTracker _cpTypeServicesTracker;
 	private long _displayStyleGroupId;
-	private final DLAppService _dlAppService;
 	private final HttpServletRequest _httpServletRequest;
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final Locale _locale;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;
-	private SearchContainer<Document> _searchContainer;
+	private SearchContainer<CPCatalogEntry> _searchContainer;
 
 }

@@ -42,11 +42,13 @@ request.setAttribute("cpInstance", cpInstance);
 			entries="<%= Collections.singletonList(cpCatalogEntry) %>"
 		/>
 	</c:when>
-	<c:otherwise>
+	<c:when test="<%= cpContentConfigurationDisplayContext.isSelectionStyleCustomRenderer() %>">
 
 		<%
 		cpContentHelper.renderCPType(request, response);
 		%>
 
+	</c:when>
+	<c:otherwise>
 	</c:otherwise>
 </c:choose>

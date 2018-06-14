@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.content.search.web.internal.portlet.template;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.portlet.CPSearchResultsPortlet;
@@ -22,7 +23,6 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
@@ -88,8 +88,9 @@ public class CPSearchResultsPortletDisplayTemplateHandler
 			CPSearchResultsDisplayContext.class,
 			"cpSearchResultsDisplayContext");
 		templateVariableGroup.addCollectionVariable(
-			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"document", Document.class, "curDocument", "title");
+			"cp-catalog-entries", List.class,
+			PortletDisplayTemplateConstants.ENTRIES, "cp-catalog-entry",
+			CPCatalogEntry.class, "curCPCatalogEntry", "CPDefinitionId");
 
 		String[] restrictedVariables = getRestrictedVariables(language);
 

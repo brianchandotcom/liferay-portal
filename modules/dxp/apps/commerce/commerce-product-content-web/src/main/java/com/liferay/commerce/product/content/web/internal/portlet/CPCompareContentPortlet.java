@@ -14,13 +14,16 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -81,11 +84,12 @@ public class CPCompareContentPortlet extends MVCPortlet {
 
 			CPCompareContentDisplayContext cpCompareContentDisplayContext =
 				new CPCompareContentDisplayContext(
-					_cpDefinitionHelper, _cpDefinitionService,
+					_cpCatalogEntryFactory, _cpContentListEntryRendererRegistry,
+					_cpContentListRendererRegistry, _cpDefinitionService,
 					_cpDefinitionSpecificationOptionValueService,
 					_cpInstanceHelper, _cpMeasurementUnitService,
-					_cpOptionCategoryService, _ddmFormFieldTypeServicesTracker,
-					httpServletRequest);
+					_cpOptionCategoryService, _cpTypeServicesTracker,
+					_ddmFormFieldTypeServicesTracker, httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -102,7 +106,14 @@ public class CPCompareContentPortlet extends MVCPortlet {
 		CPCompareContentPortlet.class);
 
 	@Reference
-	private CPDefinitionHelper _cpDefinitionHelper;
+	private CPCatalogEntryFactory _cpCatalogEntryFactory;
+
+	@Reference
+	private CPContentListEntryRendererRegistry
+		_cpContentListEntryRendererRegistry;
+
+	@Reference
+	private CPContentListRendererRegistry _cpContentListRendererRegistry;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
@@ -119,6 +130,9 @@ public class CPCompareContentPortlet extends MVCPortlet {
 
 	@Reference
 	private CPOptionCategoryService _cpOptionCategoryService;
+
+	@Reference
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

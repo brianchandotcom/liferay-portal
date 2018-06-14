@@ -16,6 +16,7 @@ package com.liferay.commerce.product.content.search.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -33,6 +34,17 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CPSearchResultsPortletInstanceConfiguration {
 
+	@Meta.AD(
+		deflt = CPPortletKeys.CP_SEARCH_RESULTS,
+		name = "cp-content-list-renderer-key", required = false
+	)
+	public String cpContentListRendererKey();
+
+	@Meta.AD(
+		deflt = "", name = "cp-type-list-entry-renderer-key", required = false
+	)
+	public String cpTypeListEntryRendererKey();
+
 	@Meta.AD(deflt = "", name = "display-style", required = false)
 	public String displayStyle();
 
@@ -41,5 +53,8 @@ public interface CPSearchResultsPortletInstanceConfiguration {
 
 	@Meta.AD(deflt = "15", name = "pagination-delta", required = false)
 	public int paginationDelta();
+
+	@Meta.AD(deflt = "custom", name = "selection-style", required = false)
+	public String selectionStyle();
 
 }

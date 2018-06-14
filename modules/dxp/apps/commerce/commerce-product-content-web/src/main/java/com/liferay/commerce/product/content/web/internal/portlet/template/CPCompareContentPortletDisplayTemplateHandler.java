@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet.template;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext;
 import com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentPortlet;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -82,14 +82,14 @@ public class CPCompareContentPortletDisplayTemplateHandler
 
 		templateVariableGroup.empty();
 
+		templateVariableGroup.addCollectionVariable(
+			"cp-catalog-entries", List.class,
+			PortletDisplayTemplateConstants.ENTRIES, "cp-catalog-entry",
+			CPCatalogEntry.class, "curCPCatalogEntry", "CPDefinitionId");
 		templateVariableGroup.addVariable(
 			"cp-compare-content-display-context",
 			CPCompareContentDisplayContext.class,
 			"cpCompareContentDisplayContext");
-		templateVariableGroup.addCollectionVariable(
-			"cp-definitions", List.class,
-			PortletDisplayTemplateConstants.ENTRIES, "cp-definition",
-			CPDefinition.class, "curCPDefinition", "CPDefinitionId");
 
 		String[] restrictedVariables = getRestrictedVariables(language);
 

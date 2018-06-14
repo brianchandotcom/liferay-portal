@@ -17,36 +17,36 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+String redirect = ParamUtil.getString(request, "redirect");
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
+<liferay-frontend:edit-form
+	action="<%= configurationActionURL %>"
+	method="post"
+	name="fm"
+>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<div class="portlet-configuration-body-content">
-		<div class="container-fluid-1280">
-			<aui:fieldset-group markupView="lexicon">
-				<aui:fieldset>
-					<div class="display-template">
-						<liferay-ddm:template-selector
-							className="<%= CPSearchResultsPortlet.class.getName() %>"
-							displayStyle="<%= cpSearchResultsDisplayContext.getDisplayStyle() %>"
-							displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"
-							refreshURL="<%= PortalUtil.getCurrentURL(request) %>"
-							showEmptyOption="<%= true %>"
-						/>
-					</div>
-				</aui:fieldset>
-			</aui:fieldset-group>
-		</div>
-	</div>
+	<%
+	request.setAttribute("configuration.jsp-configurationRenderURL", configurationRenderURL);
+	request.setAttribute("configuration.jsp-redirect", redirect);
+	%>
 
-	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="submitButton" type="submit" value="save" />
-	</aui:button-row>
-</aui:form>
+	<liferay-frontend:edit-form-body>
+		<liferay-frontend:form-navigator
+			id="<%= CPSearchResultsConstants.FORM_NAVIGATOR_ID_CONFIGURATION %>"
+			showButtons="<%= false %>"
+		/>
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<aui:button type="submit" />
+
+		<aui:button type="cancel" />
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>

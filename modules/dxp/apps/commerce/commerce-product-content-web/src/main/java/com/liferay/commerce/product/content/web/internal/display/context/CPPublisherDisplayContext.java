@@ -16,6 +16,10 @@ package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
+import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
+import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
@@ -23,11 +27,11 @@ import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -45,16 +49,21 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 	public CPPublisherDisplayContext(
+		CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
+		CPContentListRendererRegistry cpContentListRendererRegistry,
 		CPDataSourceRegistry cpDataSourceRegistry,
 		CPDefinitionHelper cpDefinitionHelper,
 		CPPublisherWebHelper cpPublisherWebHelper,
 		HttpServletRequest httpServletRequest) {
 
-		super(cpPublisherWebHelper, httpServletRequest);
+		super(
+			contentListEntryRendererRegistry, cpContentListRendererRegistry,
+			cpPublisherWebHelper, httpServletRequest);
 
 		_cpDataSourceRegistry = cpDataSourceRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
@@ -74,14 +83,6 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		}
 
 		return portletURL;
-	}
-
-	public String getProductFriendlyURL(CPCatalogEntry cpCatalogEntry)
-		throws PortalException {
-
-		return _cpDefinitionHelper.getFriendlyURL(
-			cpCatalogEntry.getCPDefinitionId(),
-			cpContentRequestHelper.getThemeDisplay());
 	}
 
 	public SearchContainer<CPCatalogEntry> getSearchContainer()
@@ -138,6 +139,41 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		_searchContainer.setResults(cpDataSourceResult.getCPCatalogEntries());
 
 		return _searchContainer;
+	}
+
+	public void renderCPContentList() throws Exception {
+		CPContentListRenderer cpContentListRenderer =
+			cpContentListRendererRegistry.getCPContentListRenderer(
+				getCPContentListRendererKey());
+
+		if (cpContentListRenderer != null) {
+			SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer =
+				getSearchContainer();
+
+			cpContentListRenderer.render(
+				cpCatalogEntrySearchContainer.getResults(),
+				cpContentRequestHelper.getRequest(),
+				PortalUtil.getHttpServletResponse(
+					cpContentRequestHelper.getLiferayPortletResponse()));
+		}
+	}
+
+	public void renderCPContentListEntry(CPCatalogEntry cpCatalogEntry)
+		throws Exception {
+
+		String cpType = cpCatalogEntry.getProductTypeName();
+
+		CPContentListEntryRenderer cpContentListEntryRenderer =
+			contentListEntryRendererRegistry.getCPContentListEntryRenderer(
+				getCPTypeListEntryRendererKey(cpType),
+				getCPContentListRendererKey(), cpType);
+
+		if (cpContentListEntryRenderer != null) {
+			cpContentListEntryRenderer.render(
+				cpCatalogEntry, cpContentRequestHelper.getRequest(),
+				PortalUtil.getHttpServletResponse(
+					cpContentRequestHelper.getLiferayPortletResponse()));
+		}
 	}
 
 	private CPDataSourceResult _getDynamicCPDataSourceResult(

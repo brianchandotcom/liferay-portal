@@ -16,14 +16,11 @@ package com.liferay.commerce.product.util;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-
-import java.util.Locale;
 
 /**
  * @author Marco Leo
@@ -31,9 +28,6 @@ import java.util.Locale;
  */
 @ProviderType
 public interface CPDefinitionHelper {
-
-	public CPCatalogEntry getCPCatalogEntry(long cpDefinitionId, Locale locale)
-		throws PortalException;
 
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException;

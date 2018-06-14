@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPPublisherConfigurationDisplayContext;
 import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.content.web.internal.util.CPQueryRule;
@@ -82,9 +84,10 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 				cpPublisherConfigurationDisplayContext =
 					new CPPublisherConfigurationDisplayContext(
 						_assetCategoryLocalService, _assetTagLocalService,
-						_cpDataSourceRegistry, _cpPublisherWebHelper,
-						_cpTypeServicesTracker, httpServletRequest,
-						_itemSelector);
+						_cpContentListEntryRendererRegistry,
+						_cpContentListRendererRegistry, _cpDataSourceRegistry,
+						_cpPublisherWebHelper, _cpTypeServicesTracker,
+						httpServletRequest, _itemSelector);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -139,6 +142,9 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 		else if (cmd.equals("add-selection")) {
 			addSelection(actionRequest, preferences);
 		}
+		else if (cmd.equals("list-renderer-selection")) {
+			setCPContentListRendererKey(actionRequest, preferences);
+		}
 		else if (cmd.equals("move-selection-down")) {
 			moveSelectionDown(actionRequest, preferences);
 		}
@@ -147,6 +153,12 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 		}
 		else if (cmd.equals("remove-selection")) {
 			removeSelection(actionRequest, preferences);
+		}
+		else if (cmd.equals("render-selection")) {
+			String renderSelection = getParameter(
+				actionRequest, "renderSelection");
+
+			preferences.setValue("renderSelection", renderSelection);
 		}
 		else if (cmd.equals("select-data-source")) {
 			setDataSource(actionRequest, preferences);
@@ -332,6 +344,17 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 		preferences.setValues("catalogEntryXml", newEntries);
 	}
 
+	protected void setCPContentListRendererKey(
+			ActionRequest actionRequest, PortletPreferences preferences)
+		throws Exception {
+
+		String cpContentListRendererKey = getParameter(
+			actionRequest, "cpContentListRendererKey");
+
+		preferences.setValue(
+			"cpContentListRendererKey", cpContentListRendererKey);
+	}
+
 	protected void setDataSource(
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
@@ -468,6 +491,13 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CPContentListEntryRendererRegistry
+		_cpContentListEntryRendererRegistry;
+
+	@Reference
+	private CPContentListRendererRegistry _cpContentListRendererRegistry;
 
 	@Reference
 	private CPDataSourceRegistry _cpDataSourceRegistry;

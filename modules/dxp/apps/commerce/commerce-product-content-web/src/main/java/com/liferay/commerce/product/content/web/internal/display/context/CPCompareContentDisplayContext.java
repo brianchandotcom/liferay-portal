@@ -14,6 +14,13 @@
 
 package com.liferay.commerce.product.content.web.internal.display.context;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
+import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
+import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.configuration.CPCompareContentPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -29,8 +36,9 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CPOptionCategoryService;
+import com.liferay.commerce.product.type.CPType;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPCompareUtil;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.petra.string.StringPool;
@@ -42,16 +50,18 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,30 +72,37 @@ import javax.servlet.http.HttpServletRequest;
 public class CPCompareContentDisplayContext {
 
 	public CPCompareContentDisplayContext(
-			CPDefinitionHelper cpDefinitionHelper,
+			CPCatalogEntryFactory cpCatalogEntryFactory,
+			CPContentListEntryRendererRegistry
+				cpContentListEntryRendererRegistry,
+			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDefinitionService cpDefinitionService,
 			CPDefinitionSpecificationOptionValueService
 				cpDefinitionSpecificationOptionValueService,
 			CPInstanceHelper cpInstanceHelper,
 			CPMeasurementUnitService cpMeasurementUnitService,
 			CPOptionCategoryService cpOptionCategoryService,
+			CPTypeServicesTracker cpTypeServicesTracker,
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		_cpDefinitionHelper = cpDefinitionHelper;
+		_cpCatalogEntryFactory = cpCatalogEntryFactory;
+		_cpContentListEntryRendererRegistry =
+			cpContentListEntryRendererRegistry;
+		_cpContentListRendererRegistry = cpContentListRendererRegistry;
 		_cpDefinitionService = cpDefinitionService;
 		_cpDefinitionSpecificationOptionValueService =
 			cpDefinitionSpecificationOptionValueService;
 		_cpInstanceHelper = cpInstanceHelper;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
 		_cpOptionCategoryService = cpOptionCategoryService;
+		_cpTypeServicesTracker = cpTypeServicesTracker;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-		_httpServletRequest = httpServletRequest;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
+
+		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -97,37 +114,92 @@ public class CPCompareContentDisplayContext {
 	}
 
 	public Set<CPSpecificationOption> getCategorizedCPSpecificationOptions(
-			List<CPDefinition> cpDefinitions)
+			List<CPCatalogEntry> cpCatalogEntries)
 		throws PortalException {
 
 		Set<CPSpecificationOption> cpSpecificationOptions = new HashSet<>();
 
-		for (CPDefinition cpDefinition : cpDefinitions) {
+		for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
 			cpSpecificationOptions.addAll(
-				getCPSpecificationOptions(cpDefinition, true));
+				getCPSpecificationOptions(cpCatalogEntry, true));
 		}
 
 		return cpSpecificationOptions;
 	}
 
-	public Set<String> getCPDefinitionOptionRelNames(
-		List<CPDefinition> cpDefinitions) {
+	public List<CPCatalogEntry> getCPCatalogEntries() throws PortalException {
+		List<CPCatalogEntry> cpCatalogEntries = new ArrayList<>();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		for (Long cpDefinitionId : _cpDefinitionIds) {
+			cpCatalogEntries.add(
+				_cpCatalogEntryFactory.create(
+					cpDefinitionId, _cpRequestHelper.getLocale()));
+		}
+
+		if (cpCatalogEntries.size() > getProductsLimit()) {
+			return cpCatalogEntries.subList(0, getProductsLimit());
+		}
+
+		return cpCatalogEntries;
+	}
+
+	public List<CPContentListEntryRenderer> getCPContentListEntryRenderers(
+		String cpType) {
+
+		return
+			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderers(
+				getCPContentListRendererKey(), cpType);
+	}
+
+	public String getCPContentListRendererKey() {
+		RenderRequest renderRequest = _cpRequestHelper.getRenderRequest();
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String value = portletPreferences.getValue(
+			"cpContentListRendererKey", null);
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		List<CPContentListRenderer> cpContentListRenderers =
+			getCPContentListRenderers();
+
+		if (cpContentListRenderers.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		CPContentListRenderer cpContentListRenderer =
+			cpContentListRenderers.get(0);
+
+		if (cpContentListRenderer == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpContentListRenderer.getKey();
+	}
+
+	public List<CPContentListRenderer> getCPContentListRenderers() {
+		return _cpContentListRendererRegistry.getCPContentListRenderers(
+			CPPortletKeys.CP_COMPARE_CONTENT_WEB);
+	}
+
+	public Set<String> getCPDefinitionOptionRelNames(
+			List<CPCatalogEntry> cpCatalogEntries)
+		throws PortalException {
 
 		Set<String> cpDefinitionOptionRelNames = new HashSet<>();
 
-		for (CPDefinition cpDefinition : cpDefinitions) {
+		for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
 			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
-				getMultiValueCPDefinitionOptionRels(cpDefinition);
+				getMultiValueCPDefinitionOptionRels(cpCatalogEntry);
 
 			for (CPDefinitionOptionRel cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {
 
 				String cpDefinitionOptionRelName =
-					cpDefinitionOptionRel.getName(themeDisplay.getLanguageId());
+					cpDefinitionOptionRel.getName(_cpRequestHelper.getLocale());
 
 				cpDefinitionOptionRelNames.add(cpDefinitionOptionRelName);
 			}
@@ -137,55 +209,30 @@ public class CPCompareContentDisplayContext {
 	}
 
 	public String getCPDefinitionOptionValueRels(
-		CPDefinition cpDefinition, String cpDefinitionOptionRelName) {
+			CPCatalogEntry cpCatalogEntry, String cpDefinitionOptionRelName)
+		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String languageId = themeDisplay.getLanguageId();
+		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
 
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
 				cpDefinition.getCPDefinitionOptionRels()) {
 
 			if (cpDefinitionOptionRelName.equals(
-					cpDefinitionOptionRel.getName(languageId))) {
+					cpDefinitionOptionRel.getName(
+						_cpRequestHelper.getLocale()))) {
 
 				return StringUtil.merge(
 					getCPDefinitionOptionValueRels(
 						cpDefinitionOptionRel.getCPDefinitionOptionValueRels(),
-						languageId));
+						_cpRequestHelper.getLocale()));
 			}
 		}
 
 		return StringPool.BLANK;
 	}
 
-	public List<CPDefinition> getCPDefinitions() throws PortalException {
-		List<CPDefinition> cpDefinitions = new ArrayList<>();
-
-		for (Long cpDefinitionId : _cpDefinitionIds) {
-			CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
-				cpDefinitionId);
-
-			if (cpDefinition != null) {
-				cpDefinitions.add(cpDefinition);
-			}
-		}
-
-		if (cpDefinitions.size() > getProductsLimit()) {
-			return cpDefinitions.subList(0, getProductsLimit());
-		}
-
-		return cpDefinitions;
-	}
-
 	public String getCPDefinitionSpecificationOptionValue(
 		long cpDefinitionId, long cpSpecificationOptionId) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
@@ -198,52 +245,78 @@ public class CPCompareContentDisplayContext {
 		}
 
 		return cpDefinitionSpecificationOptionValue.getValue(
-			themeDisplay.getLanguageId());
+			_cpRequestHelper.getLocale());
 	}
 
 	public List<CPOptionCategory> getCPOptionCategories() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		return _cpOptionCategoryService.getCPOptionCategories(
-			themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+			_cpRequestHelper.getScopeGroupId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 	}
 
 	public Set<CPSpecificationOption> getCPSpecificationOptions(
-			List<CPDefinition> cpDefinitions)
+			List<CPCatalogEntry> cpCatalogEntries)
 		throws PortalException {
 
 		Set<CPSpecificationOption> cpSpecificationOptions = new HashSet<>();
 
-		for (CPDefinition cpDefinition : cpDefinitions) {
+		for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
 			cpSpecificationOptions.addAll(
-				getCPSpecificationOptions(cpDefinition, false));
+				getCPSpecificationOptions(cpCatalogEntry, false));
 		}
 
 		return cpSpecificationOptions;
 	}
 
-	public CPInstance getDefaultCPInstance(CPDefinition cpDefinition)
+	public String getCPTypeListEntryRendererKey(String cpType) {
+		RenderRequest renderRequest = _cpRequestHelper.getRenderRequest();
+
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
+
+		String value = portletPreferences.getValue(
+			cpType + "--cpTypeListEntryRendererKey", null);
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		List<CPContentListEntryRenderer> cpContentListEntryRenderers =
+			getCPContentListEntryRenderers(cpType);
+
+		if (cpContentListEntryRenderers.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		CPContentListEntryRenderer cpContentListEntryRenderer =
+			cpContentListEntryRenderers.get(0);
+
+		if (cpContentListEntryRenderer == null) {
+			return StringPool.BLANK;
+		}
+
+		return cpContentListEntryRenderer.getKey();
+	}
+
+	public List<CPType> getCPTypes() {
+		return _cpTypeServicesTracker.getCPTypes();
+	}
+
+	public CPInstance getDefaultCPInstance(CPCatalogEntry cpCatalogEntry)
 		throws Exception {
 
 		return _cpInstanceHelper.getCPInstance(
-			cpDefinition.getCPDefinitionId(), null);
+			cpCatalogEntry.getCPDefinitionId(), null);
 	}
 
 	public String getDeleteCompareProductURL(long cpDefinitionId) {
-		CPRequestHelper cpRequestHelper = new CPRequestHelper(
-			_httpServletRequest);
-
-		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
+		RenderResponse renderResponse = _cpRequestHelper.getRenderResponse();
 
 		PortletURL portletURL = renderResponse.createActionURL();
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "deleteCompareProduct");
 
-		String redirect = PortalUtil.getCurrentURL(_httpServletRequest);
+		String redirect = _cpRequestHelper.getCurrentURL();
 
 		portletURL.setParameter("redirect", redirect);
 
@@ -253,21 +326,25 @@ public class CPCompareContentDisplayContext {
 		return portletURL.toString();
 	}
 
-	public String getDimensionCPMeasurementUnitName() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+	public double getDepth(CPCatalogEntry cpCatalogEntry)
+		throws PortalException {
 
+		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
+
+		return cpDefinition.getDepth();
+	}
+
+	public String getDimensionCPMeasurementUnitName() {
 		CPMeasurementUnit cpMeasurementUnit =
 			_cpMeasurementUnitService.fetchPrimaryCPMeasurementUnit(
-				themeDisplay.getScopeGroupId(),
+				_cpRequestHelper.getScopeGroupId(),
 				CPMeasurementUnitConstants.TYPE_DIMENSION);
 
 		if (cpMeasurementUnit == null) {
 			return StringPool.BLANK;
 		}
 
-		return cpMeasurementUnit.getName(themeDisplay.getLanguageId());
+		return cpMeasurementUnit.getName(_cpRequestHelper.getLocale());
 	}
 
 	public String getDisplayStyle() {
@@ -279,18 +356,20 @@ public class CPCompareContentDisplayContext {
 			_cpCompareContentPortletInstanceConfiguration.displayStyleGroupId();
 	}
 
-	public String getProductFriendlyURL(long cpDefinitionId)
+	public double getHeight(CPCatalogEntry cpCatalogEntry)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
 
-		return _cpDefinitionHelper.getFriendlyURL(cpDefinitionId, themeDisplay);
+		return cpDefinition.getHeight();
 	}
 
 	public int getProductsLimit() {
 		return _cpCompareContentPortletInstanceConfiguration.productsLimit();
+	}
+
+	public String getSelectionStyle() {
+		return _cpCompareContentPortletInstanceConfiguration.selectionStyle();
 	}
 
 	public boolean hasCategorizedCPDefinitionSpecificationOptionValues(
@@ -298,7 +377,7 @@ public class CPCompareContentDisplayContext {
 		throws PortalException {
 
 		Set<CPSpecificationOption> cpSpecificationOptions =
-			getCategorizedCPSpecificationOptions(getCPDefinitions());
+			getCategorizedCPSpecificationOptions(getCPCatalogEntries());
 
 		for (CPSpecificationOption cpSpecificationOption :
 				cpSpecificationOptions) {
@@ -313,9 +392,67 @@ public class CPCompareContentDisplayContext {
 		return false;
 	}
 
+	public boolean isSelectionStyleADT() {
+		String selectionStyle = getSelectionStyle();
+
+		if (selectionStyle.equals("adt")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isSelectionStyleCustomRenderer() {
+		String selectionStyle = getSelectionStyle();
+
+		if (selectionStyle.equals("custom")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public void renderCPContentList() throws Exception {
+		CPContentListRenderer cpContentListRenderer =
+			_cpContentListRendererRegistry.getCPContentListRenderer(
+				getCPContentListRendererKey());
+
+		if (cpContentListRenderer != null) {
+			cpContentListRenderer.render(
+				getCPCatalogEntries(), _cpRequestHelper.getRequest(),
+				PortalUtil.getHttpServletResponse(
+					_cpRequestHelper.getLiferayPortletResponse()));
+		}
+	}
+
+	public void renderCPContentListEntry(CPCatalogEntry cpCatalogEntry)
+		throws Exception {
+
+		String cpType = cpCatalogEntry.getProductTypeName();
+
+		CPContentListEntryRenderer cpContentListEntryRenderer =
+			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderer(
+				getCPTypeListEntryRendererKey(cpType),
+				getCPContentListRendererKey(), cpType);
+
+		if (cpContentListEntryRenderer != null) {
+			cpContentListEntryRenderer.render(
+				cpCatalogEntry, _cpRequestHelper.getRequest(),
+				PortalUtil.getHttpServletResponse(
+					_cpRequestHelper.getLiferayPortletResponse()));
+		}
+	}
+
+	protected CPDefinition getCPDefinition(CPCatalogEntry cpCatalogEntry)
+		throws PortalException {
+
+		return _cpDefinitionService.getCPDefinition(
+			cpCatalogEntry.getCPDefinitionId());
+	}
+
 	protected List<String> getCPDefinitionOptionValueRels(
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels,
-		String languageId) {
+		Locale locale) {
 
 		List<String> cpDefinitionOptionValueRelValues = new ArrayList<>();
 
@@ -323,17 +460,19 @@ public class CPCompareContentDisplayContext {
 				cpDefinitionOptionValueRels) {
 
 			cpDefinitionOptionValueRelValues.add(
-				cpDefinitionOptionValueRel.getName(languageId));
+				cpDefinitionOptionValueRel.getName(locale));
 		}
 
 		return cpDefinitionOptionValueRelValues;
 	}
 
 	protected List<CPSpecificationOption> getCPSpecificationOptions(
-			CPDefinition cpDefinition, boolean categorized)
+			CPCatalogEntry cpCatalogEntry, boolean categorized)
 		throws PortalException {
 
 		List<CPSpecificationOption> cpSpecificationOptions = new ArrayList<>();
+
+		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
 
 		for (CPDefinitionSpecificationOptionValue
 				cpDefinitionSpecificationOptionValue :
@@ -359,10 +498,13 @@ public class CPCompareContentDisplayContext {
 	}
 
 	protected List<CPDefinitionOptionRel> getMultiValueCPDefinitionOptionRels(
-		CPDefinition cpDefinition) {
+			CPCatalogEntry cpCatalogEntry)
+		throws PortalException {
 
 		List<CPDefinitionOptionRel> multiValueCPDefinitionOptionRels =
 			new ArrayList<>();
+
+		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
 
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
 				cpDefinition.getCPDefinitionOptionRels()) {
@@ -384,9 +526,12 @@ public class CPCompareContentDisplayContext {
 		return multiValueCPDefinitionOptionRels;
 	}
 
+	private final CPCatalogEntryFactory _cpCatalogEntryFactory;
 	private final CPCompareContentPortletInstanceConfiguration
 		_cpCompareContentPortletInstanceConfiguration;
-	private final CPDefinitionHelper _cpDefinitionHelper;
+	private final CPContentListEntryRendererRegistry
+		_cpContentListEntryRendererRegistry;
+	private final CPContentListRendererRegistry _cpContentListRendererRegistry;
 	private final List<Long> _cpDefinitionIds;
 	private final CPDefinitionService _cpDefinitionService;
 	private final CPDefinitionSpecificationOptionValueService
@@ -394,8 +539,9 @@ public class CPCompareContentDisplayContext {
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 	private final CPOptionCategoryService _cpOptionCategoryService;
+	private final CPRequestHelper _cpRequestHelper;
+	private final CPTypeServicesTracker _cpTypeServicesTracker;
 	private final DDMFormFieldTypeServicesTracker
 		_ddmFormFieldTypeServicesTracker;
-	private final HttpServletRequest _httpServletRequest;
 
 }

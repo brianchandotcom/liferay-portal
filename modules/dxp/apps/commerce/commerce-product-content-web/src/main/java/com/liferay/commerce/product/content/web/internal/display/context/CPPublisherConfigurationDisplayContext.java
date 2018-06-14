@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
@@ -66,12 +68,16 @@ public class CPPublisherConfigurationDisplayContext
 	public CPPublisherConfigurationDisplayContext(
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetTagLocalService assetTagLocalService,
+		CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
+		CPContentListRendererRegistry cpContentListRendererRegistry,
 		CPDataSourceRegistry cpDataSourceRegistry,
 		CPPublisherWebHelper cpPublisherWebHelper,
 		CPTypeServicesTracker cpTypeServicesTracker,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
-		super(cpPublisherWebHelper, httpServletRequest);
+		super(
+			contentListEntryRendererRegistry, cpContentListRendererRegistry,
+			cpPublisherWebHelper, httpServletRequest);
 
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetTagLocalService = assetTagLocalService;
@@ -233,8 +239,8 @@ public class CPPublisherConfigurationDisplayContext
 		return _cpDataSourceRegistry.getCPDataSources();
 	}
 
-	public CPType getCPType(String name) {
-		return _cpTypeServicesTracker.getCPType(name);
+	public List<CPType> getCPTypes() {
+		return _cpTypeServicesTracker.getCPTypes();
 	}
 
 	public String getItemSelectorUrl() throws Exception {

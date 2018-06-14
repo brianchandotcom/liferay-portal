@@ -42,10 +42,6 @@ public class CPContentConfigurationDisplayContext {
 				CPContentPortletInstanceConfiguration.class);
 	}
 
-	public String getCPTypeRendererKey() {
-		return _cpContentPortletInstanceConfiguration.cpTypeRendererKey();
-	}
-
 	public String getDisplayStyle() {
 		return _cpContentPortletInstanceConfiguration.displayStyle();
 	}

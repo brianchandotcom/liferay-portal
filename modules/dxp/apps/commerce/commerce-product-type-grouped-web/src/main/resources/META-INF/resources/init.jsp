@@ -19,6 +19,8 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/commerce" prefix="liferay-commerce" %><%@
+taglib uri="http://liferay.com/tld/commerce-cart" prefix="liferay-commerce-cart" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -41,6 +43,7 @@ page import="com.liferay.commerce.product.type.grouped.model.CPDefinitionGrouped
 page import="com.liferay.commerce.product.type.grouped.web.internal.constants.GroupedCPTypeWebKeys" %><%@
 page import="com.liferay.commerce.product.type.grouped.web.internal.display.context.CPDefinitionGroupedEntriesDisplayContext" %><%@
 page import="com.liferay.commerce.product.type.grouped.web.internal.portlet.template.contributor.GroupedCPTypeHelper" %><%@
+page import="com.liferay.commerce.product.util.CPDefinitionFriendlyURLUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

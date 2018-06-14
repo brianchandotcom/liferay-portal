@@ -14,13 +14,15 @@
 
 package com.liferay.commerce.product.content.search.web.internal.portlet.action;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
+import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPInstanceHelper;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -61,8 +63,10 @@ public class CPSearchResultsConfigurationAction
 		try {
 			CPSearchResultsDisplayContext cpSearchResultsDisplayContext =
 				new CPSearchResultsDisplayContext(
-					_cpDefinitionHelper, _cpDefinitionLinkTypeRegistry,
-					_cpInstanceHelper, _dlAppService, httpServletRequest,
+					_cpCatalogEntryFactory, _cpContentListEntryRendererRegistry,
+					_cpContentListRendererRegistry,
+					_cpDefinitionLinkTypeRegistry, _cpInstanceHelper,
+					_cpTypeServicesTracker, httpServletRequest,
 					portletSharedSearchResponse);
 
 			httpServletRequest.setAttribute(
@@ -88,7 +92,14 @@ public class CPSearchResultsConfigurationAction
 		CPSearchResultsConfigurationAction.class);
 
 	@Reference
-	private CPDefinitionHelper _cpDefinitionHelper;
+	private CPCatalogEntryFactory _cpCatalogEntryFactory;
+
+	@Reference
+	private CPContentListEntryRendererRegistry
+		_cpContentListEntryRendererRegistry;
+
+	@Reference
+	private CPContentListRendererRegistry _cpContentListRendererRegistry;
 
 	@Reference
 	private CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;
@@ -97,7 +108,7 @@ public class CPSearchResultsConfigurationAction
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private DLAppService _dlAppService;
+	private CPTypeServicesTracker _cpTypeServicesTracker;
 
 	@Reference
 	private PortletSharedSearchRequest _portletSharedSearchRequest;

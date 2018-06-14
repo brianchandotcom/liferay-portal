@@ -18,12 +18,10 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
-import com.liferay.commerce.product.internal.catalog.DatabaseCPCatalogEntryImpl;
 import com.liferay.commerce.product.internal.catalog.IndexCPCatalogEntryImpl;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.search.CPDefinitionSearcher;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
@@ -56,22 +54,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class CPDefinitionHelperImpl implements CPDefinitionHelper {
-
-	@Override
-	public CPCatalogEntry getCPCatalogEntry(long cpDefinitionId, Locale locale)
-		throws PortalException {
-
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			cpDefinitionId);
-
-		if (!_isVisible(cpDefinition)) {
-			return null;
-		}
-
-		return new DatabaseCPCatalogEntryImpl(
-			cpDefinition, _cpDefinitionLocalService,
-			_cpFriendlyURLEntryLocalService, locale, _portal);
-	}
 
 	@Override
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)
@@ -224,9 +206,6 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionHelperImpl.class);
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;

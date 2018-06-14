@@ -28,44 +28,23 @@ SearchContainer searchContainer = cpPublisherDisplayContext.getSearchContainer()
 List<CPCatalogEntry> results = searchContainer.getResults();
 %>
 
-<div class="row">
+<c:choose>
+	<c:when test="<%= cpPublisherDisplayContext.isRenderSelectionADT() %>">
+		<liferay-ddm:template-renderer
+			className="<%= CPPublisherPortlet.class.getName() %>"
+			contextObjects="<%= contextObjects %>"
+			displayStyle="<%= cpPublisherDisplayContext.getDisplayStyle() %>"
+			displayStyleGroupId="<%= cpPublisherDisplayContext.getDisplayStyleGroupId() %>"
+			entries="<%= results %>"
+		/>
+	</c:when>
+	<c:when test="<%= cpPublisherDisplayContext.isRenderSelectionCustomRenderer() %>">
 
-	<%
-	for (Object object : results) {
-		CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)object;
-	%>
+		<%
+		cpPublisherDisplayContext.renderCPContentList();
+		%>
 
-	<div class="col-md-4">
-		<div class="card">
-			<a class="aspect-ratio" href="<%= cpPublisherDisplayContext.getProductFriendlyURL(cpCatalogEntry) %>">
-
-				<%
-				String img = cpCatalogEntry.getDefaultImageFileUrl();
-				%>
-
-				<c:if test="<%= Validator.isNotNull(img) %>">
-					<img class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= img %>">
-				</c:if>
-			</a>
-
-			<div class="card-row card-row-padded card-row-valign-top">
-				<div class="card-col-content">
-					<a class="truncate-text" href="<%= cpPublisherDisplayContext.getProductFriendlyURL(cpCatalogEntry) %>">
-						<%= cpCatalogEntry.getName() %>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<%
-	}
-	%>
-
-<aui:form useNamespace="<%= false %>">
-	<liferay-ui:search-paginator
-		markupView="lexicon"
-		searchContainer="<%= searchContainer %>"
-		type="more"
-	/>
-</aui:form>
+	</c:when>
+	<c:otherwise>
+	</c:otherwise>
+</c:choose>

@@ -1,6 +1,8 @@
 <#assign
 	facebook_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("facebook-icon"))
 	facebook_icon_link_url = themeDisplay.getThemeSetting("facebook-icon-link-url")
+	show_footer = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-footer"))
+	show_header = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-header"))
 	show_main_navigation_in_full_screen = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-main-navigation-in-full-screen"))
 	twitter_icon = getterUtil.getBoolean(themeDisplay.getThemeSetting("twitter-icon"))
 	twitter_icon_link_url = themeDisplay.getThemeSetting("twitter-icon-link-url")

@@ -15,12 +15,14 @@
 package com.liferay.site.navigation.menu.item.layout.internal.type;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutWebKeys;
@@ -71,16 +74,31 @@ public class LayoutSiteNavigationMenuItemType
 	implements SiteNavigationMenuItemType {
 
 	@Override
-	public void exportData(
+	public boolean exportData(
 		PortletDataContext portletDataContext,
 		Element siteNavigationMenuItemElement,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
 		Layout layout = _getLayout(siteNavigationMenuItem);
 
+		if (layout == null) {
+			return false;
+		}
+
+		LayoutRevision layoutRevision = _layoutStaging.getLayoutRevision(
+			layout);
+
+		if ((layoutRevision != null) &&
+			(layoutRevision.getStatus() == WorkflowConstants.STATUS_DRAFT)) {
+
+			return false;
+		}
+
 		portletDataContext.addReferenceElement(
 			siteNavigationMenuItem, siteNavigationMenuItemElement, layout,
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+
+		return true;
 	}
 
 	@Override
@@ -238,7 +256,7 @@ public class LayoutSiteNavigationMenuItemType
 	}
 
 	@Override
-	public void importData(
+	public boolean importData(
 		PortletDataContext portletDataContext,
 		SiteNavigationMenuItem siteNavigationMenuItem,
 		SiteNavigationMenuItem importedSiteNavigationMenuItem) {
@@ -248,6 +266,19 @@ public class LayoutSiteNavigationMenuItemType
 				Layout.class);
 
 		Layout layout = _getLayout(importedSiteNavigationMenuItem);
+
+		if (layout == null) {
+			return false;
+		}
+
+		LayoutRevision layoutRevision = _layoutStaging.getLayoutRevision(
+			layout);
+
+		if ((layoutRevision != null) &&
+			(layoutRevision.getStatus() == WorkflowConstants.STATUS_DRAFT)) {
+
+			return false;
+		}
 
 		long plid = MapUtil.getLong(
 			layoutPlids, layout.getPlid(), layout.getPlid());
@@ -270,6 +301,8 @@ public class LayoutSiteNavigationMenuItemType
 			importedSiteNavigationMenuItem.setTypeSettings(
 				typeSettingsProperties.toString());
 		}
+
+		return true;
 	}
 
 	@Override
@@ -363,6 +396,9 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutStaging _layoutStaging;
 
 	@Reference
 	private Portal _portal;

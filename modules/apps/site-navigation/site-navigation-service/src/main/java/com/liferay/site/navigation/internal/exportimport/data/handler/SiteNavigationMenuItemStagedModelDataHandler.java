@@ -62,12 +62,12 @@ public class SiteNavigationMenuItemStagedModelDataHandler
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception {
 
+		Element siteNavigationMenuItemElement =
+			portletDataContext.getExportDataElement(siteNavigationMenuItem);
+
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				siteNavigationMenuItem.getType());
-
-		Element siteNavigationMenuItemElement =
-			portletDataContext.getExportDataElement(siteNavigationMenuItem);
 
 		if (!siteNavigationMenuItemType.exportData(
 				portletDataContext, siteNavigationMenuItemElement,

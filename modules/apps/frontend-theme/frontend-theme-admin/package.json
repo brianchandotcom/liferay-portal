@@ -21,5 +21,5 @@
 	"main": "package.json",
 	"name": "liferay-admin-theme",
 	"repository": "liferay/liferay-portal",
-	"version": "1.0.40"
+	"version": "2.0.0"
 }

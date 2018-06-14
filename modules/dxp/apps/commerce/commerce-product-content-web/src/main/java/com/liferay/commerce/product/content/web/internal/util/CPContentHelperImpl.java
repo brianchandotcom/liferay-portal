@@ -276,6 +276,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 			StringPool.BLANK);
 	}
 
+	@Override
 	public String getLabel(Locale locale, String key) {
 		return LanguageUtil.get(locale, key);
 	}

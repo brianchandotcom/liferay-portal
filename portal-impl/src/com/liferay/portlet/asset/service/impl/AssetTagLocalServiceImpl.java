@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetTagLocalServiceBaseImpl;
@@ -386,6 +387,39 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the number of tags associated to the asset from the given
+	 * classNameId-classPK pair value.
+	 * @param classNameId the classNameId.
+	 * @param classPK the primary key.
+	 * @return the number of tags.
+	 */
+	@Override
+	public int getTagCount(long classNameId, long classPK) {
+		AssetEntry entry = assetEntryPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		if (entry == null) {
+			return 0;
+		}
+
+		return assetEntryPersistence.getAssetTagsSize(entry.getEntryId());
+	}
+
+	/**
+	 ** Returns the number of tags associated to the asset from the given
+	 * className-classPK pair value.
+	 * @param className the name of the class.
+	 * @param classPK the primary key.
+	 * @return the number of tags.
+	 */
+	@Override
+	public int getTagCount(String className, long classPK) {
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return getTagCount(classNameId, classPK);
+	}
+
+	/**
 	 * Returns the primary keys of the asset tags with the names in the group.
 	 *
 	 * @param  groupId the primary key of the group
@@ -533,6 +567,31 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		return assetEntryPersistence.getAssetTags(entry.getEntryId());
 	}
 
+	/**
+	 * Returns a range of asset tags of the entity.
+	 *
+	 * @param  classNameId the class name ID of the entity
+	 * @param  classPK the primary key of the entity
+	 * @param  start the lower bound of the range of asset tags
+	 * @param  end the upper bound of the range of asset tags (not inclusive)
+	 * @return the asset tags of the entity
+	 */
+	@Override
+	public List<AssetTag> getTags(
+		long classNameId,  long classPK, int start, int end,
+		OrderByComparator<AssetTag> obc) {
+
+		AssetEntry entry = assetEntryPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		if (entry == null) {
+			return Collections.emptyList();
+		}
+
+		return assetEntryPersistence.getAssetTags(
+			entry.getEntryId(), start, end, obc);
+	}
+
 	@Override
 	public List<AssetTag> getTags(long groupId, long classNameId, String name) {
 		return assetTagFinder.findByG_C_N(
@@ -561,6 +620,26 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return getTags(classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of asset tags of the entity.
+	 *
+	 * @param  className the class name of the entity
+	 * @param  classPK the primary key of the entity
+	 * @param  start the lower bound of the range of asset tags
+	 * @param  end the upper bound of the range of asset tags (not inclusive)
+	 * @return the asset tags of the entity
+	 */
+	@Override
+	@ThreadLocalCachable
+	public List<AssetTag> getTags(
+		String className, long classPK, int start, int end,
+		OrderByComparator<AssetTag> obc) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return getTags(classNameId, classPK, start, end, obc);
 	}
 
 	@Override

@@ -2,42 +2,6 @@ import {EventHandler} from 'metal-events';
 import {object} from 'metal';
 
 /**
- * Default configuration used for creating AlloyEditor instances.
- */
-
-const EDITOR_CONFIGURATION = {
-	enterMode: CKEDITOR.ENTER_BR,
-
-	extraPlugins: [
-		'ae_autolink',
-		'ae_dragresize',
-		'ae_addimages',
-		'ae_imagealignment',
-		'ae_placeholder',
-		'ae_selectionregion',
-		'ae_tableresize',
-		'ae_tabletools',
-		'ae_uicore',
-		'itemselector',
-		'media',
-		'adaptivemedia'
-	].join(','),
-
-	removePlugins: [
-		'contextmenu',
-		'elementspath',
-		'image',
-		'link',
-		'liststyle',
-		'magicline',
-		'resize',
-		'tabletools',
-		'toolbar',
-		'ae_embed'
-	].join(',')
-};
-
-/**
  * Enter key keycode
  * @review
  * @type {number}
@@ -172,35 +136,22 @@ function _getEditorConfiguration(
 	defaultEditorConfiguration,
 	editorName
 ) {
-	const configuration = {};
-
-	configuration.title = [
-		portletNamespace,
-		'_FragmentEntryLinkEditable_',
-		fragmentEntryLinkId
-	].join('');
-
-	if (editableElement.getAttribute('type') === 'text') {
-		configuration.allowedContent = '';
-		configuration.disallowedContent = 'br';
-		configuration.toolbars = {};
-	}
-
-	configuration.filebrowserImageBrowseLinkUrl = defaultEditorConfiguration
-		.editorConfig
-		.filebrowserImageBrowseLinkUrl
-		.replace('_EDITOR_NAME_', editorName);
-
-	configuration.filebrowserImageBrowseUrl = defaultEditorConfiguration
-		.editorConfig
-		.filebrowserImageBrowseUrl
-		.replace('_EDITOR_NAME_', editorName);
-
 	return object.mixin(
 		{},
 		defaultEditorConfiguration.editorConfig || {},
-		EDITOR_CONFIGURATION,
-		configuration
+		{
+			filebrowserImageBrowseLinkUrl: defaultEditorConfiguration
+				.editorConfig
+				.filebrowserImageBrowseLinkUrl
+				.replace('_EDITOR_NAME_', editorName),
+
+			filebrowserImageBrowseUrl: defaultEditorConfiguration
+				.editorConfig
+				.filebrowserImageBrowseUrl
+				.replace('_EDITOR_NAME_', editorName),
+
+			title: editorName
+		}
 	);
 }
 

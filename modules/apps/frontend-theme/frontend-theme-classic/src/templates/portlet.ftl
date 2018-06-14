@@ -78,12 +78,10 @@
 					<div class="autofit-col autofit-col-expand">
 						<h2 class="portlet-title-text">${portlet_title}</h2>
 					</div>
+				</#if>
 
+				<#if portlet_header_wrapper?has_content>
 					${portlet_header_wrapper}
-				<#else>
-					<#if portlet_header_wrapper?has_content>
-						${portlet_header_wrapper}
-					</#if>
 				</#if>
 			</div>
 		</#if>

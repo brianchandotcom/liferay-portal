@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1113,6 +1114,16 @@ public class LayoutsAdminDisplayContext {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, _getOrderByComparator());
 
 		for (Layout layout : layouts) {
+			UnicodeProperties typeSettingsProperties =
+				layout.getTypeSettingsProperties();
+
+			boolean visible = GetterUtil.getBoolean(
+				typeSettingsProperties.getProperty("visible"), true);
+
+			if (!visible) {
+				continue;
+			}
+
 			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
 
 			layoutJSONObject.put(

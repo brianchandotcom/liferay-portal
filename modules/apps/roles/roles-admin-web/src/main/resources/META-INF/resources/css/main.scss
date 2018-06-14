@@ -137,7 +137,9 @@
 	}
 
 	.permission-group {
-		margin: 10px 0 0 10px;
+		.lfr-search-container {
+			margin-bottom: 1.5rem;
+		}
 	}
 
 	.organization-icon, .plugin-thumbnail, .site-icon {

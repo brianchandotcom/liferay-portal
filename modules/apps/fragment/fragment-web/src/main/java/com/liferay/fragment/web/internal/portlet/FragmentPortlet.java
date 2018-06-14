@@ -29,10 +29,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.Portlet;
@@ -124,9 +128,20 @@ public class FragmentPortlet extends MVCPortlet {
 		serviceContext.setAttribute(
 			"layout.instanceable.allowed", Boolean.TRUE);
 
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(locale, "Asset Display Page");
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("visible", Boolean.FALSE.toString());
+
 		_layoutLocalService.addLayout(
-			defaultUserId, group.getGroupId(), false, 0, "Asset Display Page",
-			null, null, "asset_display", true, null, serviceContext);
+			defaultUserId, group.getGroupId(), false, 0, nameMap, null, null,
+			null, null, "asset_display", typeSettingsProperties.toString(),
+			true, new HashMap<>(), serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

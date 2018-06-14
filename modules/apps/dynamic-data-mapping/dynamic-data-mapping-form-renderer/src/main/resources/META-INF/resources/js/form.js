@@ -161,6 +161,13 @@ AUI.add(
 
 									instance.showLoadingFeedback();
 
+									Liferay.fire(
+										'ddmFormSubmit',
+										{
+											formId: instance.getFormId()
+										}
+									);
+
 									Liferay.Util.submitForm(formNode);
 								}
 							}

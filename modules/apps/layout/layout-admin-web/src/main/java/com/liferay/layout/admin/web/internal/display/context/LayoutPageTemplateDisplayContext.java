@@ -77,11 +77,9 @@ public class LayoutPageTemplateDisplayContext {
 
 		_itemSelector = (ItemSelector)request.getAttribute(
 			LayoutAdminWebKeys.ITEM_SELECTOR);
-
 		_layoutAdminWebConfiguration =
 			(LayoutAdminWebConfiguration)_renderRequest.getAttribute(
 				LayoutAdminWebConfiguration.class.getName());
-
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

@@ -15,6 +15,7 @@
 		label: string,
 		key: string
 	]>}
+	{@param? mappedFieldId: string}
 
 	{call liferay.frontend.Modal.render}
 		{param body kind="html"}
@@ -22,6 +23,7 @@
 				{if $_mappeableFields and not $_loadingMappeableFields}
 					{foreach $mappeableField in $_mappeableFields}
 						{call .mappeableField}
+							{param active: $mappeableField.key == $mappedFieldId /}
 							{param enabled: $mappeableField.enabled /}
 							{param handleLinkClick: $_handleMappeableFieldLinkClick /}
 							{param label: $mappeableField.label /}
@@ -36,6 +38,7 @@
 		{/param}
 
 		{param footer kind="html"}
+
 			<div class="btn-group">
 				<div class="btn-group-item">
 					<button
@@ -68,15 +71,26 @@
 {/template}
 
 {template .mappeableField}
+	{@param active: bool}
 	{@param enabled: bool}
-	{@param label: string}
 	{@param key: string}
+	{@param label: string}
 	{@param spritemap: string}
 	{@param? handleLinkClick: any}
 
 	{if $enabled}
+		{let $mappeableFieldClasses kind="text"}
+			list-group-item
+			{sp}list-group-item-action
+			{sp}list-group-item-flex
+
+			{if $active}
+				{sp}active
+			{/if}
+		{/let}
+
 		<a
-			class="list-group-item list-group-item-action list-group-item-flex"
+			class="{$mappeableFieldClasses}"
 			data-key="{$key}"
 			data-onclick="{$handleLinkClick}"
 			href="javascript:;"

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -69,7 +70,7 @@ public class PrefsPropsToConfigurationUpgradeImpl
 				Object value = PrefsPropsUtil.getString(
 					portletPreferences, prefsPropsName);
 
-				if (value == null) {
+				if (Validator.isNull(value)) {
 					continue;
 				}
 

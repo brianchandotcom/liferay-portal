@@ -3794,6 +3794,12 @@ of a module includes transitive dependencies.
 - [LPS-82261]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.38.
 
+## 5.4.38 - 2018-06-12
+
+### Changed
+- [LPS-82261]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.39.
+
 ## 5.4.40 - 2018-06-13
 
 ### Changed

@@ -657,9 +657,9 @@ process namespaced parameters. The default value is true.
 The default value of action-timeout is 0. If set to a value greater than 0,
 and monitoring-spring.xml is enabled via the property "spring.configs" in
 portal.properties, and the property "monitoring.portlet.action.request" in
-portal.properties is set to true, then the portlet's action phase processing
-will be timed. If the execution time is longer than action-timeout, it will be
-recorded as a timeout request processing. The time unit is millisecond.
+portal.properties is set to true, the portlet's action phase processing will be
+timed. If the execution time is longer than action-timeout, it will be recorded
+as a timeout request processing. The time unit is millisecond.
 -->
 <!ELEMENT action-timeout (#PCDATA)>
 
@@ -667,27 +667,27 @@ recorded as a timeout request processing. The time unit is millisecond.
 The default value of render-timeout is 0. If set to a value greater than 0,
 and monitoring-spring.xml is enabled via the property "spring.configs" in
 portal.properties, and the property "monitoring.portlet.render.request" in
-portal.properties is set to true, then the portlet's render phase processing
-will be timed. If the execution time is longer than render-timeout, it will be
-recorded as a timeout request processing. The time unit is millisecond.
+portal.properties is set to true, the portlet's render phase processing will be
+timed. If the execution time is longer than render-timeout, it will be recorded
+as a timeout request processing. The time unit is millisecond.
 -->
 <!ELEMENT render-timeout (#PCDATA)>
 
 <!--
 The default value of render-weight is 1. If set to a value less than 1, the
-portlet is rendered in parallel. If set to a value of 1 or greater, then the
-portlet is rendered serially. Portlets with a greater render weight have greater
+portlet is rendered in parallel. If set to a value of 1 or greater, the portlet
+is rendered serially. Portlets with a greater render weight have greater
 priority and will be rendered before portlets with a lower render weight.
 
-If the ajaxable value is set to false, then render-weight is always set to 1
-if it is set to a value less than 1. This means ajaxable can override
-render-weight if ajaxable is set to false.
+If the ajaxable value is set to false, the render-weight is always set to 1 if
+it is set to a value less than 1. This means ajaxable can override render-weight
+if ajaxable is set to false.
 -->
 <!ELEMENT render-weight (#PCDATA)>
 
 <!--
-The default value of ajaxable is true. If set to false, then this portlet can
-never be displayed via Ajax.
+The default value of ajaxable is true. If set to false, this portlet can never
+be displayed via Ajax.
 -->
 <!ELEMENT ajaxable (#PCDATA)>
 
@@ -727,9 +727,9 @@ subsequent render request.
 The default value of header-timeout is 0. If set to a value greater than 0,
 and monitoring-spring.xml is enabled via the property "spring.configs" in
 portal.properties, and the property "monitoring.portlet.header.request" in
-portal.properties is set to true, then the portlet's header phase processing
-will be timed. If the execution time is longer than header-timeout, it will be
-recorded as a timeout request processing. The time unit is millisecond.
+portal.properties is set to true, the portlet's header phase processing will be
+timed. If the execution time is longer than header-timeout, it will be recorded
+as a timeout request processing. The time unit is millisecond.
 -->
 <!ELEMENT header-timeout (#PCDATA)>
 
@@ -759,7 +759,7 @@ to the portlet's context path.
 
 <!--
 The default value of partial-action-serve-resource is false. If set to true,
-then the portlet's serveResource(ResourceRequest, ResourceResponse) method will
+the portlet's serveResource(ResourceRequest, ResourceResponse) method will
 be invoked during a partial action triggered by a different portlet on the same
 portal page.
 -->
@@ -800,7 +800,7 @@ This element is deprecated as of 7.1.0, with no direct replacement.
 
 <!--
 If the add-default-resource value is set to false and the portlet does not
-belong to the page but has been dynamically added, then the user will not have
+belong to the page but has been dynamically added, the user will not have
 permissions to view the portlet. If the add-default-resource value is set to
 true, the default portlet resources and permissions are added to the page, and
 the user can then view the portlet. This is useful (and necessary) for portlets

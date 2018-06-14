@@ -410,7 +410,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		int count = 0;
 
 		for (int i = content.indexOf(expected); i != -1;
-				i = content.indexOf(expected, i + 1)) {
+			i = content.indexOf(expected, i + 1)) {
 
 			count++;
 		}
@@ -503,7 +503,9 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 			new Hashtable<String, String>()
 		).when(
 			bundle
-		).getHeaders();
+		).getHeaders(
+			StringPool.BLANK
+		);
 
 		doReturn(
 			bsn

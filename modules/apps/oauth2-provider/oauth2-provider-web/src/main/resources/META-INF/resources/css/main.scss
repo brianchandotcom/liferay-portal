@@ -25,6 +25,15 @@ $grayTextColor: #6B6C7E;
 	.inline {
 		display: inline-block;
 	}
+	.list-group .list-group-title {
+		font-weight: normal;
+	}
+	.panel-header .form-group {
+		margin-bottom: 0;
+	}
+	.sheet .panel-group .panel-body {
+		margin-bottom: 0;
+	}
 }
 
 .portlet-oauth2-provider-authorize {

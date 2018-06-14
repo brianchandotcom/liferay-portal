@@ -15,6 +15,7 @@
 package com.liferay.frontend.js.bundle.config.extender.internal;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringPool;
 
 import java.net.URL;
 
@@ -68,7 +69,8 @@ public class JSBundleConfigTracker
 
 		Bundle bundle = serviceReference.getBundle();
 
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String jsConfig = headers.get("Liferay-JS-Config");
 

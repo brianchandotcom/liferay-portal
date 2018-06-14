@@ -67,11 +67,7 @@ public class ADTFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 
 	@Override
 	public boolean isVisible(User user, Void object) {
-		if (_isSelectionStyleADT()) {
-			return true;
-		}
-
-		return false;
+		return _isSelectionStyleADT();
 	}
 
 	@Override

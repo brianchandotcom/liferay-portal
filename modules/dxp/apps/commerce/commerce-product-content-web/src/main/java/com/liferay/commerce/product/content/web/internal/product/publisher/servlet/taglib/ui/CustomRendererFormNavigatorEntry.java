@@ -71,11 +71,7 @@ public class CustomRendererFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Void object) {
-		if (_isSelectionStyleCustomRenderer()) {
-			return true;
-		}
-
-		return false;
+		return _isSelectionStyleCustomRenderer();
 	}
 
 	@Override

@@ -71,7 +71,7 @@ public class UpdateExchangeRateMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (!_commerceCurrencyConfiguration.autoUpdate()) {
+		if (!_commerceCurrencyConfiguration.enableAutoUpdate()) {
 			return;
 		}
 

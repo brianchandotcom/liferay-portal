@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CommerceCurrencyConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
-	public boolean autoUpdate();
+	public boolean enableAutoUpdate();
 
 	@Meta.AD(deflt = "60", required = false)
 	public int updateInterval();

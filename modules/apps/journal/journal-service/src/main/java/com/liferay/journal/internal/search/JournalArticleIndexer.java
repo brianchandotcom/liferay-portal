@@ -238,24 +238,26 @@ public class JournalArticleIndexer
 		boolean filterExpired = GetterUtil.getBoolean(
 			searchContext.getAttribute("filterExpired"));
 
-		if (filterExpired) {
-			String formatPattern = PropsUtil.get(
-				PropsKeys.INDEX_DATE_FORMAT_PATTERN);
-
-			Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-				formatPattern);
-
-			DateRangeFilterBuilder dateRangeFilterBuilder =
-				_filterBuilders.dateRangeFilterBuilder();
-
-			dateRangeFilterBuilder.setFieldName(Field.EXPIRATION_DATE);
-			dateRangeFilterBuilder.setFormat(formatPattern);
-			dateRangeFilterBuilder.setFrom(dateFormat.format(new Date()));
-			dateRangeFilterBuilder.setIncludeLower(false);
-			dateRangeFilterBuilder.setIncludeUpper(false);
-
-			contextBooleanFilter.add(dateRangeFilterBuilder.build());
+		if (!filterExpired) {
+			return;
 		}
+
+		String formatPattern = PropsUtil.get(
+			PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+
+		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			formatPattern);
+
+		DateRangeFilterBuilder dateRangeFilterBuilder =
+			_filterBuilders.dateRangeFilterBuilder();
+
+		dateRangeFilterBuilder.setFieldName(Field.EXPIRATION_DATE);
+		dateRangeFilterBuilder.setFormat(formatPattern);
+		dateRangeFilterBuilder.setFrom(dateFormat.format(new Date()));
+		dateRangeFilterBuilder.setIncludeLower(false);
+		dateRangeFilterBuilder.setIncludeUpper(false);
+
+		contextBooleanFilter.add(dateRangeFilterBuilder.build());
 	}
 
 	@Override

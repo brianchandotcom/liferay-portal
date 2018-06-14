@@ -169,6 +169,8 @@
 	</command>
 
 	<command name="PortletPreferencesPersistWithSiteTemplateWhenSamePortletAddedOnSecondPage" priority="4">
+		<description message="This is a use case for LPS-81629" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

@@ -79,7 +79,7 @@ public class DynamicQueryTest {
 			PropsValues.DATABASE_IN_MAX_PARAMETERS + 1);
 
 		for (long i = 0; i < values.size(); i++) {
-			values.add(i);
+			values.add(-i);
 		}
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId", values));

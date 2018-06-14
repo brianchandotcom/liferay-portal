@@ -45,6 +45,8 @@ describe('Analytics Client', () => {
 
 	beforeEach(
 		() => {
+			fetchMock.mock(/asahlfr/ig, () => Promise.resolve(200));
+
 			Analytics = AnalyticsClient.create();
 
 			localStorage.removeItem(STORAGE_KEY_EVENTS);
@@ -123,6 +125,8 @@ describe('Analytics Client', () => {
 		});
 
 		it('should regenerate the stored identity if the identity changed' , () => {
+			fetchMock.mock(/identity/ig, () => Promise.resolve(200));
+
 			Analytics.reset();
 			Analytics.dispose();
 
@@ -147,6 +151,8 @@ describe('Analytics Client', () => {
 		});
 
 		it('should report identity changes to the Identity Service', () => {
+			fetchMock.mock(/identity/ig, () => Promise.resolve(200));
+
 			Analytics.reset();
 			Analytics.dispose();
 
@@ -158,8 +164,10 @@ describe('Analytics Client', () => {
 
 			let identityCalled = 0;
 
-			Analytics.setIdentity(ANALYTICS_IDENTITY)
+			return Analytics.setIdentity(ANALYTICS_IDENTITY)
 			.then(() => {
+				fetchMock.restore();
+				fetchMock.mock(/asahlfr/ig, () => Promise.resolve(200));
 				fetchMock.mock(
 					/send-identity-context/,
 					function(url) {
@@ -169,10 +177,12 @@ describe('Analytics Client', () => {
 				)
 			})
 			.then(() => Analytics.setIdentity({email: 'john@liferay.com'}))
-			.then(() => expect(identityCalled).to.equal(1))
+			.then(() => expect(identityCalled).to.equal(1));
 		});
 
 		it('should not request the Identity Service when identity hasn\'t changed', () => {
+			fetchMock.mock(/identity/ig, () => Promise.resolve(200));
+
 			Analytics.reset();
 			Analytics.dispose();
 
@@ -184,8 +194,10 @@ describe('Analytics Client', () => {
 
 			let identityCalled = 0;
 
-			Analytics.setIdentity(ANALYTICS_IDENTITY)
+			return Analytics.setIdentity(ANALYTICS_IDENTITY)
 			.then(() => {
+				fetchMock.restore();
+				fetchMock.mock(/asahlfr/ig, () => Promise.resolve(200));
 				fetchMock.mock(
 					/send-identity-context/,
 					function(url) {
@@ -195,7 +207,7 @@ describe('Analytics Client', () => {
 				)
 			})
 			.then(() => Analytics.setIdentity(ANALYTICS_IDENTITY))
-			.then(() => expect(identityCalled).to.equal(1))
+			.then(() => expect(identityCalled).to.equal(0));
 		});
 
 		it('should only clear the persisted events when done', () => {
@@ -229,7 +241,7 @@ describe('Analytics Client', () => {
 			return Analytics.flush().then(() => {
 				const events = Analytics.events;
 
-				events.should.have.lengthOf(5); // 7 for each gateway
+				events.should.have.lengthOf(7);
 			});
 		});
 	});

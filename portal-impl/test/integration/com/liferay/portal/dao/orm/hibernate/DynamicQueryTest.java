@@ -75,21 +75,19 @@ public class DynamicQueryTest {
 	public void testInRestrictionCriterion() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
-		int listSize = PropsValues.DATABASE_IN_MAX_PARAMETERS + 1;
+		List<Long> values = new ArrayList<>(
+			PropsValues.DATABASE_IN_MAX_PARAMETERS + 1);
 
-		List<Long> parameterList = new ArrayList<>(listSize);
-
-		for (long i = 0; i < listSize; i++) {
-			parameterList.add(i);
+		for (long i = 0; i < values.size(); i++) {
+			values.add(i);
 		}
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.in("classNameId", parameterList));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId", values));
 
-		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
+		List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
+			dynamicQuery);
 
-		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
+		Assert.assertTrue(classNames.isEmpty());
 	}
 
 	@Test

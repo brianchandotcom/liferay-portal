@@ -143,9 +143,8 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 			return disjunction;
 		}
-		else {
-			return new CriterionImpl(Restrictions.in(propertyName, values));
-		}
+
+		return new CriterionImpl(Restrictions.in(propertyName, values));
 	}
 
 	@Override

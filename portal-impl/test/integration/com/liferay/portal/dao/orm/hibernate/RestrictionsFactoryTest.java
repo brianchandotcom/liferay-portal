@@ -41,58 +41,32 @@ public class RestrictionsFactoryTest {
 
 	@Test
 	public void testInWithDatabaseInMaxParametersValue() {
-		List<Integer> parameterList =
-			new ArrayList<>(PropsValues.DATABASE_IN_MAX_PARAMETERS);
-
-		for (int i = 0; i < PropsValues.DATABASE_IN_MAX_PARAMETERS; i++) {
-			parameterList.add(i);
-		}
-
-		Criterion inCriterion = RestrictionsFactoryUtil.in(
-			"property", parameterList);
-
-		Assert.assertFalse(
-			inCriterion.getClass().getName() + " should not be a " +
-			Disjunction.class.getName(),
-			inCriterion instanceof Disjunction);
-	}
-
-	@Test
-	public void testInWithLessThanDatabaseInMaxParametersValue() {
-		int listSize = PropsValues.DATABASE_IN_MAX_PARAMETERS - 1;
-
-		List<Integer> parameterList = new ArrayList<>(listSize);
-
-		for (int i = 0; i < listSize; i++) {
-			parameterList.add(i);
-		}
-
-		Criterion inCriterion = RestrictionsFactoryUtil.in(
-			"property", parameterList);
-
-		Assert.assertFalse(
-			inCriterion.getClass().getName() + " should not be a " +
-				Disjunction.class.getName(),
-			inCriterion instanceof Disjunction);
+		_testInMaxParametersValue(
+			PropsValues.DATABASE_IN_MAX_PARAMETERS, false);
 	}
 
 	@Test
 	public void testInWithMoreThanDatabaseInMaxParametersValue() {
-		int listSize = PropsValues.DATABASE_IN_MAX_PARAMETERS + 1;
+		_testInMaxParametersValue(
+			PropsValues.DATABASE_IN_MAX_PARAMETERS + 1, true);
+	}
 
-		List<Integer> parameterList = new ArrayList<>(listSize);
+	private void _testInMaxParametersValue(
+		int length, boolean expectedDisjunction) {
 
-		for (int i = 0; i < listSize; i++) {
-			parameterList.add(i);
+		List<Integer> values = new ArrayList<>(length);
+
+		for (int i = 0; i < length; i++) {
+			values.add(i);
 		}
 
-		Criterion inCriterion = RestrictionsFactoryUtil.in(
-			"property", parameterList);
+		Criterion criterion = RestrictionsFactoryUtil.in("property", values);
 
-		Assert.assertTrue(
-			inCriterion.getClass().getName() + " should be a " +
-				Disjunction.class.getName(),
-			inCriterion instanceof Disjunction);
+		Class<?> clazz = criterion.getClass();
+
+		Assert.assertEquals(
+			clazz.getName(), expectedDisjunction,
+			criterion instanceof Disjunction);
 	}
 
 }

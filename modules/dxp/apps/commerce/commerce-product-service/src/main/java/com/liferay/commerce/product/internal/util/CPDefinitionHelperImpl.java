@@ -15,10 +15,10 @@
 package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
-import com.liferay.commerce.product.internal.catalog.IndexCPCatalogEntryImpl;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.search.CPDefinitionSearcher;
@@ -113,7 +113,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		for (Document document : documents) {
 			cpCatalogEntries.add(
-				new IndexCPCatalogEntryImpl(
+				_cpCatalogEntryFactory.create(
 					document, searchContext.getLocale()));
 		}
 
@@ -206,6 +206,9 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionHelperImpl.class);
+
+	@Reference
+	private CPCatalogEntryFactory _cpCatalogEntryFactory;
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;

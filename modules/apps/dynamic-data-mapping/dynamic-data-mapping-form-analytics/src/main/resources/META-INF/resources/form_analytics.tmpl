@@ -3,7 +3,7 @@ Liferay.on(
 		if (window.Analytics) {
 			Analytics.send(
 				'fieldBlurred',
-				'Forms',
+				'Form',
 				{
 					fieldName: event.fieldName,
 					focusDuration: event.focusDuration,
@@ -20,42 +20,11 @@ Liferay.on(
 		if (window.Analytics) {
 			Analytics.send(
 				'fieldFocused',
-				'Forms',
+				'Form',
 				{
 					fieldName: event.fieldName,
 					formId: event.formId,
 					page: event.page
-				}
-			);
-		}
-	}
-);
-
-Liferay.on(
-	'ddmFieldStartedFilling', function(event) {
-		if (window.Analytics) {
-			Analytics.send(
-				'fieldStarted',
-				'Forms',
-				{
-					fieldName: event.fieldName,
-					formId: event.formId,
-					page: event.page
-				}
-			);
-		}
-	}
-);
-
-Liferay.on(
-	'ddmFieldValidationError', function(event) {
-		if (window.Analytics) {
-			Analytics.send(
-				'fieldInvalid',
-				'Forms',
-				{
-					fieldName: event.fieldName,
-					formId: event.formId
 				}
 			);
 		}
@@ -67,7 +36,7 @@ Liferay.on(
 		if (window.Analytics) {
 			Analytics.send(
 				'pageViewed',
-				'Forms',
+				'Form',
 				{
 					formId: event.formId,
 					page: event.page
@@ -78,26 +47,11 @@ Liferay.on(
 );
 
 Liferay.on(
-	'ddmFormPageHide', function(event) {
+	'ddmFormSubmit', function(event) {
 		if (window.Analytics) {
 			Analytics.send(
-				'pageHidden',
-				'Forms',
-				{
-					formId: event.formId,
-					page: event.page
-				}
-			);
-		}
-	}
-);
-
-Liferay.on(
-	'ddmFormValidationError', function(event) {
-		if (window.Analytics) {
-			Analytics.send(
-				'formInvalid',
-				'Forms',
+				'formSubmitted',
+				'Form',
 				{
 					formId: event.formId
 				}
@@ -111,7 +65,7 @@ Liferay.on(
 		if (window.Analytics) {
 			Analytics.send(
 				'formViewed',
-				'Forms',
+				'Form',
 				{
 					formId: event.formId,
 					title: event.title

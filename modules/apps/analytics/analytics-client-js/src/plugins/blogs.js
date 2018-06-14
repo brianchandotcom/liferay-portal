@@ -3,7 +3,7 @@ import {getClosestAssetElement} from '../utils/assets';
 import {onReady} from '../utils/events.js';
 import {ScrollTracker} from '../utils/scroll';
 
-const applicationId = 'Blogs';
+const applicationId = 'Blog';
 
 /**
  * Returns analytics payload with Blog information.

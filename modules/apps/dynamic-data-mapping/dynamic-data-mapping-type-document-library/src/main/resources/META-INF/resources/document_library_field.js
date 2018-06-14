@@ -206,6 +206,14 @@ AUI.add(
 										}
 
 										instance._fireStartedFillingEvent();
+									},
+									visibleChange: function(event) {
+										if (event.newVal) {
+											instance._fireFocusEvent();
+										}
+										else {
+											instance._fireBlurEvent();
+										}
 									}
 								},
 								url: instance.getDocumentLibrarySelectorURL()

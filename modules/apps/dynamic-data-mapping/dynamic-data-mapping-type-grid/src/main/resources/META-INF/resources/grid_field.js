@@ -36,7 +36,9 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandlers.push(
-							instance.bindContainerEvent('change', instance._onCheckItem, '.form-builder-grid-field')
+							instance.bindContainerEvent('blur', instance._onBlurItem, '.form-builder-grid-field'),
+							instance.bindContainerEvent('change', instance._onCheckItem, '.form-builder-grid-field'),
+							instance.bindContainerEvent('focus', instance._onFocusItem, '.form-builder-grid-field')
 						);
 					},
 
@@ -125,6 +127,12 @@ AUI.add(
 						);
 					},
 
+					_onBlurItem: function() {
+						var instance = this;
+
+						instance._fireBlurEvent();
+					},
+
 					_onCheckItem: function(event) {
 						var instance = this;
 
@@ -139,6 +147,12 @@ AUI.add(
 						instance.setValue(value);
 
 						instance._fireStartedFillingEvent();
+					},
+
+					_onFocusItem: function() {
+						var instance = this;
+
+						instance._fireFocusEvent();
 					},
 
 					_setColumns: function(columns) {

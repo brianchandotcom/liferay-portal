@@ -1,7 +1,7 @@
 import {onReady} from '../utils/events.js';
 import {getClosestAssetElement} from '../utils/assets';
 
-const applicationId = 'WebContents';
+const applicationId = 'WebContent';
 
 /**
  * Returns analytics payload with WebContent information.

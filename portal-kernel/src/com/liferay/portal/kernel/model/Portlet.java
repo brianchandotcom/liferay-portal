@@ -79,9 +79,9 @@ public interface Portlet extends PortletModel, PersistedModel {
 		com.liferay.portal.kernel.application.type.ApplicationType applicationType);
 
 	/**
-	* Adds a portlet CSS/JS resource dependency.
+	* Adds a portlet CSS/JavaScript resource dependency.
 	*
-	* @param portletDependency a portlet CSS/JS resource dependency
+	* @param portletDependency the portlet CSS/JavaScript resource dependency
 	*/
 	public void addPortletDependency(
 		com.liferay.portal.kernel.model.portlet.PortletDependency portletDependency);
@@ -703,9 +703,9 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public com.liferay.exportimport.kernel.lar.PortletDataHandler getPortletDataHandlerInstance();
 
 	/**
-	* Returns the list of portlet CSS/JS resource dependencies.
+	* Returns the portlet's CSS/JavaScript resource dependencies.
 	*
-	* @return the list of portlet CSS/JS resource dependencies
+	* @return the portlet's CSS/JavaScript resource dependencies
 	*/
 	public java.util.List<com.liferay.portal.kernel.model.portlet.PortletDependency> getPortletDependencies();
 
@@ -1397,14 +1397,14 @@ public interface Portlet extends PortletModel, PersistedModel {
 
 	/**
 	* Returns <code>true</code> if the portlet's
-	* serveResource(ResourceRequest,ResourceResponse) method should be invoked
-	* during a partial action triggered by a different portlet on the same
-	* portal page.
+	* <code>serveResource(ResourceRequest,ResourceResponse)</code> method
+	* should be invoked during a partial action triggered by a different
+	* portlet on the same portal page.
 	*
 	* @return <code>true</code> if the portlet's
-	serveResource(ResourceRequest,ResourceResponse) method should be
-	invoked during a partial action triggered by a different portlet
-	on the same portal page
+	<code>serveResource(ResourceRequest,ResourceResponse)</code>
+	method should be invoked during a partial action triggered by a
+	different portlet on the same portal page
 	*/
 	public boolean isPartialActionServeResource();
 
@@ -1418,34 +1418,27 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public boolean isPopUpPrint();
 
 	/**
-	* Returns <code>true</code> if the CSS resource dependencies that are
-	* specified in portlet.xml, @{@link javax.portlet.annotations.Dependency},
+	* Returns <code>true</code> if the CSS resource dependencies specified in
+	* <code>portlet.xml</code>, @{@link javax.portlet.annotations.Dependency},
 	* {@link javax.portlet.HeaderResponse#addDependency(String, String,
 	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @return <code>true</code> if the CSS resource dependencies that are
-	specified in portlet.xml, @{@link javax.portlet.annotations.Dependency},
-	{@link javax.portlet.HeaderResponse#addDependency(String, String,
-	String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
-	String, String, String)} are to be referenced in the page's header
+	* @return <code>true</code> if the specified CSS resource dependencies are
+	to be referenced in the page's header
 	*/
 	public boolean isPortletDependencyCssEnabled();
 
 	/**
-	* Returns <code>true</code> if the JavaScript resource dependencies that
-	* are specified in portlet.xml,
+	* Returns <code>true</code> if the JavaScript resource dependencies
+	* specified in <code>portlet.xml</code>, @{@link
+	* javax.portlet.annotations.Dependency}, {@link
+	* javax.portlet.HeaderResponse#addDependency(String, String, String)}, or
+	* {@link javax.portlet.HeaderResponse#addDependency(String, String, String,
+	* String)} are to be referenced in the page's header.
 	*
-	* @{@link javax.portlet.annotations.Dependency},
-	{@link javax.portlet.HeaderResponse#addDependency(String, String,
-	String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
-	String, String, String)} are to be referenced in the page's header.
-	* @return <code>true</code> if the JavaScript resource dependencies that
-	are specified in portlet.xml,
-	* @{@link javax.portlet.annotations.Dependency},
-	{@link javax.portlet.HeaderResponse#addDependency(String, String,
-	String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
-	String, String, String)} are to be referenced in the page's header
+	* @return <code>true</code> if the specified JavaScript resource
+	dependencies are to be referenced in the page's header
 	*/
 	public boolean isPortletDependencyJavaScriptEnabled();
 
@@ -2021,15 +2014,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public void setParentStrutsPath(String parentStrutsPath);
 
 	/**
-	* Set to <code>true</code> if the portlet's
-	* serveResource(ResourceRequest,ResourceResponse) method should be invoked
-	* during a partial action triggered by a different portlet on the same
-	* portal page.
+	* Sets whether the portlet's serve resource should be invoked during a
+	* partial action triggered by a different portlet on the same portal page.
 	*
-	* @param partialActionServeResource boolean value for whether the portlet's
-	serveResource(ResourceRequest,ResourceResponse) method should be
-	invoked during a partial action triggered by a different portlet
-	on the same portal page
+	* @param partialActionServeResource whether the portlet's
+	<code>serveResource(ResourceRequest,ResourceResponse)</code>
+	method should be invoked during a partial action triggered by a
+	different portlet on the same portal page
 	*/
 	public void setPartialActionServeResource(
 		boolean partialActionServeResource);
@@ -2064,11 +2055,11 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public void setPopMessageListenerClass(String popMessageListenerClass);
 
 	/**
-	* Set to <code>true</code> if the portlet goes into the pop up state when
-	* the user goes into the print mode.
+	* Sets whether the portlet goes into the pop up state when the user goes
+	* into the print mode.
 	*
-	* @param popUpPrint boolean value for whether the portlet goes into the pop
-	up state when the user goes into the print mode
+	* @param popUpPrint whether the portlet goes into the pop up state when the
+	user goes into the print mode
 	*/
 	public void setPopUpPrint(boolean popUpPrint);
 
@@ -2095,14 +2086,14 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public void setPortletDataHandlerClass(String portletDataHandlerClass);
 
 	/**
-	* Set to <code>true</code> if the CSS resource dependencies that are
-	* specified in portlet.xml, @{@link javax.portlet.annotations.Dependency},
+	* Sets whether the CSS resource dependencies specified in
+	* <code>portlet.xml</code>, @{@link javax.portlet.annotations.Dependency},
 	* {@link javax.portlet.HeaderResponse#addDependency(String, String,
 	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @param portletDependencyCssEnabled boolean value for whether the CSS
-	resource dependencies that are specified in portlet.xml,
+	* @param portletDependencyCssEnabled whether the CSS
+	resource dependencies that are specified in <code>portlet.xml</code>,
 	* @{@link javax.portlet.annotations.Dependency},
 	{@link javax.portlet.HeaderResponse#addDependency(String, String,
 	String)}, or {@link javax.portlet.HeaderResponse#addDependency(
@@ -2113,15 +2104,15 @@ public interface Portlet extends PortletModel, PersistedModel {
 		boolean portletDependencyCssEnabled);
 
 	/**
-	* Set to <code>true</code> if the JavaScript resource dependencies that are
-	* specified in portlet.xml, @{@link javax.portlet.annotations.Dependency},
+	* Sets whether the JavaScript resource dependencies specified in
+	* <code>portlet.xml</code>, @{@link javax.portlet.annotations.Dependency},
 	* {@link javax.portlet.HeaderResponse#addDependency(String, String,
 	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @param portletDependencyJavaScriptEnabled boolean value for whether the
-	JavaScript resource dependencies that are specified in
-	portlet.xml, @{@link javax.portlet.annotations.Dependency},
+	* @param portletDependencyJavaScriptEnabled whether the
+	JavaScript resource dependencies specified in
+	<code>portlet.xml</code>, @{@link javax.portlet.annotations.Dependency},
 	{@link javax.portlet.HeaderResponse#addDependency(String, String,
 	String)}, or {@link javax.portlet.HeaderResponse#addDependency(
 	String, String, String, String)} are to be referenced in the

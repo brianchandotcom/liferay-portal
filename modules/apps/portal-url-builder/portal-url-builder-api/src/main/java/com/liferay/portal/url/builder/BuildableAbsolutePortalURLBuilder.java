@@ -15,15 +15,16 @@
 package com.liferay.portal.url.builder;
 
 /**
- * A builder that can return a URL.
+ * Provides a builder that returns a URL.
+ *
  * @author Iván Zaera Avellón
- * @review
  */
 public interface BuildableAbsolutePortalURLBuilder {
 
 	/**
-	 * Return the URL according to the builder configuration.
-	 * @return a URL
+	 * Returns the URL according to the builder configuration.
+	 *
+	 * @return the URL
 	 */
 	public String build();
 

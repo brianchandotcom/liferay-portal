@@ -17,79 +17,76 @@ package com.liferay.portal.url.builder;
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
 
 /**
- * A builder for constructing absolute URLs pointing to portal resources.
+ * Provides a builder for constructing absolute URLs pointing to portal
+ * resources.
+ *
  * @author Iván Zaera Avellón
- * @review
+ * @see    BuildableAbsolutePortalURLBuilder
  */
 public interface AbsolutePortalURLBuilder {
 
 	/**
-	 * Configure this builder to return URLs for portal images. Image resources
-	 * live in {@link com.liferay.portal.kernel.util.Portal#getPathImage()}.
-	 * @param relativeURL the relative URL of the image
+	 * Returns URLs for portal images. Image resources live in {@link
+	 * com.liferay.portal.kernel.util.Portal#getPathImage()}.
+	 *
+	 * @param  relativeURL the image's relative URL
 	 * @return a builder that returns image URLs
-	 * @see BuildableAbsolutePortalURLBuilder
-	 * @review
 	 */
 	public ImageAbsolutePortalURLBuilder forImage(String relativeURL);
 
 	/**
-	 * Configure this builder to return URLs for portal main resources. Main
-	 * resources live in {@link com.liferay.portal.kernel.util.Portal#getPathMain()}.
-	 * @param relativeURL the relative URL of the resource
+	 * Returns URLs for portal's main resources. Main resources live in {@link
+	 * com.liferay.portal.kernel.util.Portal#getPathMain()}.
+	 *
+	 * @param  relativeURL the resource's relative URL
 	 * @return a builder that returns main resource URLs
-	 * @see BuildableAbsolutePortalURLBuilder
-	 * @review
 	 */
 	public MainAbsolutePortalURLBuilder forMain(String relativeURL);
 
 	/**
-	 * Configure this builder to return URLs for module resources. Module
-	 * resources live in {@link com.liferay.portal.kernel.util.Portal#getPathModule()}.
-	 * @param relativeURL the relative URL of the resource
+	 * Returns URLs for module resources. Module resources live in {@link
+	 * com.liferay.portal.kernel.util.Portal#getPathModule()}.
+	 *
+	 * @param  relativeURL the resource's relative URL
 	 * @return a builder that returns module resource URLs
-	 * @see BuildableAbsolutePortalURLBuilder
-	 * @review
 	 */
 	public ModuleAbsolutePortalURLBuilder forModule(String relativeURL);
 
 	/**
-	 * Configure this builder to return URLs for portlet dependency resources.
-	 * Portlet dependency resources live in the root path of the portal.
-	 * @param portletDependency the portlet dependency resource
-	 * @param cssURN the URN for CSS portlet dependency resources.
-	 * @param javaScriptURN the URN for JavaScript portlet dependency resources.
-	 * @return a builder that returns arbitrary resource URLs
-	 * @see BuildableAbsolutePortalURLBuilder
-	 * @review
+	 * Returns URLs for portlet dependency resources. Portlet dependency
+	 * resources live in the portal's root path.
+	 *
+	 * @param  portletDependency the portlet dependency resource
+	 * @param  cssURN the URN for CSS portlet dependency resources
+	 * @param  javaScriptURN the URN for JavaScript portlet dependency resources
+	 * @return a builder that returns portlet dependency resource URLs
 	 */
 	public PortletDependencyAbsolutePortalURLBuilder forPortletDependency(
 		PortletDependency portletDependency, String cssURN,
 		String javaScriptURN);
 
 	/**
-	 * Configure this builder to return URLs for arbitrary resources. Arbitrary
-	 * resources live in the root path of the portal.
-	 * @param relativeURL the relative URL of the resource
+	 * Returns URLs for arbitrary resources. Arbitrary resources live in the
+	 * portal's root path.
+	 *
+	 * @param  relativeURL the resource's relative URL
 	 * @return a builder that returns arbitrary resource URLs
-	 * @see BuildableAbsolutePortalURLBuilder
-	 * @review
 	 */
 	public ResourceAbsolutePortalURLBuilder forResource(String relativeURL);
 
 	/**
-	 * Configure this builder to return absolute URLs without the CDN part.
+	 * Returns absolute URLs without the CDN part.
+	 *
 	 * @return the same builder
-	 * @see com.liferay.portal.kernel.util.Portal#getCDNHost(javax.servlet.http.HttpServletRequest)
-	 * @review
+	 * @see    com.liferay.portal.kernel.util.Portal#getCDNHost(javax.servlet.http.HttpServletRequest)
 	 */
 	public AbsolutePortalURLBuilder ignoreCDNHost();
 
 	/**
-	 * Configure this builder to return absolute URLs without the proxy part.
+	 * Returns absolute URLs without the proxy part.
+	 *
 	 * @return the same builder
-	 * @see com.liferay.portal.kernel.util.Portal#getPathProxy()
-	 * @review
+	 * @see    com.liferay.portal.kernel.util.Portal#getPathProxy()
 	 */
 	public AbsolutePortalURLBuilder ignorePathProxy();
 

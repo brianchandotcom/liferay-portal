@@ -1356,6 +1356,10 @@
 			</execute>
 		</for>
 
+		<execute macro="SearchPortlet#configureScope">
+			<var name="searchScope" value="Everything" />
+		</execute>
+
 		<execute macro="SearchBarPortlet#configureScope">
 			<var name="searchScope" value="Everything" />
 		</execute>

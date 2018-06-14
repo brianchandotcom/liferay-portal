@@ -29,8 +29,7 @@ BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguratio
 
 		<div class="btn-group-item">
 			<clay:link
-				buttonStyle="secondary"
-				elementClasses="btn-outline-borderless btn-outline-secondary btn-sm"
+				elementClasses="btn btn-outline-borderless btn-outline-secondary btn-sm"
 				href="<%= rssURL %>"
 				icon="rss-full"
 				label='<%= LanguageUtil.get(request, "rss") %>'

@@ -62,6 +62,20 @@ public class SiteNavigationMenuItemStagedModelDataHandler
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception {
 
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				siteNavigationMenuItem.getType());
+
+		Element siteNavigationMenuItemElement =
+			portletDataContext.getExportDataElement(siteNavigationMenuItem);
+
+		if (!siteNavigationMenuItemType.exportData(
+				portletDataContext, siteNavigationMenuItemElement,
+				siteNavigationMenuItem)) {
+
+			return;
+		}
+
 		if (siteNavigationMenuItem.getSiteNavigationMenuId() > 0) {
 			SiteNavigationMenu siteNavigationMenu =
 				_siteNavigationMenuLocalService.getSiteNavigationMenu(
@@ -82,17 +96,6 @@ public class SiteNavigationMenuItemStagedModelDataHandler
 				parentSiteNavigationMenuItem,
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
-
-		Element siteNavigationMenuItemElement =
-			portletDataContext.getExportDataElement(siteNavigationMenuItem);
-
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				siteNavigationMenuItem.getType());
-
-		siteNavigationMenuItemType.exportData(
-			portletDataContext, siteNavigationMenuItemElement,
-			siteNavigationMenuItem);
 
 		portletDataContext.addClassedModel(
 			siteNavigationMenuItemElement,
@@ -181,9 +184,12 @@ public class SiteNavigationMenuItemStagedModelDataHandler
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
 				siteNavigationMenuItem.getType());
 
-		siteNavigationMenuItemType.importData(
-			portletDataContext, siteNavigationMenuItem,
-			importedSiteNavigationMenuItem);
+		if (!siteNavigationMenuItemType.importData(
+				portletDataContext, siteNavigationMenuItem,
+				importedSiteNavigationMenuItem)) {
+
+			return;
+		}
 
 		portletDataContext.importClassedModel(
 			siteNavigationMenuItem, importedSiteNavigationMenuItem);

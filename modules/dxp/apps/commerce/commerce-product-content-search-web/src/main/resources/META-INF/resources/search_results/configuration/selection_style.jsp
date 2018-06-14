@@ -28,8 +28,6 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 
 <aui:script>
 	function <portlet:namespace />chooseSelectionStyle() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		submitForm(form);
+		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

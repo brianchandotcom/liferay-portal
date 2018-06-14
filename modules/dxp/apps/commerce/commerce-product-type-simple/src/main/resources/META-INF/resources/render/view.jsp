@@ -247,9 +247,9 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 <aui:script>
 	$(document).ready(
 		function() {
-			$(".thumb").click(
+			$('.thumb').click(
 				function() {
-					$("#<portlet:namespace />full-image").attr("src",$(this).attr("data-url"));
+					$('#<portlet:namespace />full-image').attr('src', $(this).attr('data-url'));
 				}
 			);
 		}

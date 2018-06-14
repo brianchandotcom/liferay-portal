@@ -150,13 +150,16 @@ public class AssetEntriesSearchFacetDisplayBuilder implements Serializable {
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(assetType);
 
-			boolean selected = _parameterValues.contains(
-				termCollector.getTerm());
+			boolean selected = false;
+
+			if (termCollector != null) {
+				selected = _parameterValues.contains(termCollector.getTerm());
+			}
 
 			AssetEntriesSearchFacetTermDisplayContext
 				assetEntriesSearchFacetFieldDisplayContext = buildTermDisplay(
 					assetRendererFactory.getTypeName(_locale), selected,
-					assetType, termCollector.getFrequency());
+					assetType, frequency);
 
 			assetEntriesSearchFacetFieldDisplayContexts.add(
 				assetEntriesSearchFacetFieldDisplayContext);

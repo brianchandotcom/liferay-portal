@@ -225,6 +225,20 @@ SelectMappingDialog.STATE = {
 		.value(''),
 
 	/**
+	 * Mapped field ID of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf SelectMappingDialog
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	mappedFieldId: Config
+		.string()
+		.value(''),
+
+	/**
 	 * URL for getting the list of mapping fields
 	 * @default undefined
 	 * @instance

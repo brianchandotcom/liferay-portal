@@ -1,6 +1,4 @@
 <definition>
-	<var name="validationErrorMessage" value="This field is required." />
-
 	<command name="changeLocale">
 		<execute function="Click" locator1="FormPortlet#LOCALIZATION_BUTTON" />
 
@@ -77,7 +75,7 @@
 	<command name="submitWithValidationError">
 		<execute macro="FormPortlet#submit" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="${validationErrorMessage}" />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
 	<command name="viewSuccessPage">

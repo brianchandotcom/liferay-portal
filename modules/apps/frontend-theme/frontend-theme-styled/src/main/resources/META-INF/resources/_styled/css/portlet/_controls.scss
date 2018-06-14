@@ -78,9 +78,9 @@ body.portlet {
 		}
 	}
 
-	&:active, &:hover, &:focus, &.active {
+	&:hover, &.open {
 		.visible-interaction {
-			display: inherit;
+			display: block;
 		}
 	}
 }

@@ -1,5 +1,7 @@
 <#assign
+	show_footer = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-footer"))
 	show_global_menu_on = themeDisplay.getThemeSetting("show-global-menu-on")
+	show_header = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-header"))
 	show_main_search_on = themeDisplay.getThemeSetting("show-main-search-on")
 	show_recursive_menu_on = themeDisplay.getThemeSetting("show-recursive-menu-on")
 />

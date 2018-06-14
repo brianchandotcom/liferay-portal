@@ -108,6 +108,7 @@ public class FjordSiteInitializer implements SiteInitializer {
 		try {
 			ServiceContext serviceContext = _createServiceContext(groupId);
 
+			_updateLogo(serviceContext);
 			_updateLookAndFeel(serviceContext);
 
 			Folder folder = _dlAppLocalService.addFolder(
@@ -385,6 +386,19 @@ public class FjordSiteInitializer implements SiteInitializer {
 			StringPool.BLANK, bytes, serviceContext);
 
 		return fileEntry.getFileEntryId();
+	}
+
+	private void _updateLogo(ServiceContext serviceContext) throws Exception {
+		URL url = _bundle.getEntry(_PATH + "/images/logo.png");
+
+		byte[] bytes = null;
+
+		try (InputStream is = url.openStream()) {
+			bytes = FileUtil.getBytes(is);
+		}
+
+		_layoutSetLocalService.updateLogo(
+			serviceContext.getScopeGroupId(), false, true, bytes);
 	}
 
 	private void _updateLookAndFeel(ServiceContext serviceContext)

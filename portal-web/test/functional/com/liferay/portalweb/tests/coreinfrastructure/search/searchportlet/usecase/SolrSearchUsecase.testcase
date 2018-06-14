@@ -1569,22 +1569,6 @@
 			<var name="noResultsList" value="apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks" />
 		</execute>
 
-		<execute macro="SearchFacetPortlet#checkFacetAndViewURL">
-			<return from="updatedSearchURL" name="testSearchURL" />
-			<var name="facetClass" value="tag" />
-			<var name="facetValueName" value="ripe" />
-			<var name="searchURL" value="${testSearchURL}" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewMultipleSearchResults">
-			<var name="resultsList" value="orange/Web Content Article" />
-			<var name="searchTerm" value="test" />
-		</execute>
-
-		<execute macro="SearchResultPortlet#viewMultipleSearchResultsNotPresent">
-			<var name="noResultsList" value="apple/Blogs Entry,apple/Web Content Article,banana/Bookmarks" />
-		</execute>
-
 		<execute macro="SearchFacetPortlet#uncheckFacetAndViewURL">
 			<return from="updatedSearchURL" name="testSearchURL" />
 			<var name="facetClass" value="folder" />

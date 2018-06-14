@@ -47,6 +47,23 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 		/>
 	</c:if>
 
+	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.UPDATE) %>">
+
+		<%
+		Map<String, Object> data = new HashMap<>();
+
+		data.put("item-selector-url", layoutPageTemplateDisplayContext.getItemSelectorURL(layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		data.put("layout-page-template-entry-id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		%>
+
+		<liferay-ui:icon
+			cssClass="update-layout-page-template-entry-preview"
+			data="<%= data %>"
+			message="change-thumbnail"
+			url="javascript:;"
+		/>
+	</c:if>
+
 	<c:if test="<%= LayoutPageTemplateEntryPermission.contains(permissionChecker, layoutPageTemplateEntry, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= LayoutPageTemplateEntry.class.getName() %>"

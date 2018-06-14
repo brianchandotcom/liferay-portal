@@ -35,12 +35,6 @@ import java.util.regex.Pattern;
 public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 	@Override
-	public void init() {
-		_annotationsExclusions = _getAnnotationsExclusions();
-		_defaultPrimitiveValues = _getDefaultPrimitiveValues();
-	}
-
-	@Override
 	public boolean isPortalCheck() {
 		return true;
 	}
@@ -143,7 +137,10 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		String defaultValue = null;
 
 		if (StringUtil.isLowerCase(fieldType)) {
-			defaultValue = _defaultPrimitiveValues.get(fieldType);
+			Map<String, String> defaultPrimitiveValues =
+				_getDefaultPrimitiveValues();
+
+			defaultValue = defaultPrimitiveValues.get(fieldType);
 		}
 		else {
 			defaultValue = StringPool.NULL;
@@ -168,7 +165,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		String classContent, JavaClass javaClass, JavaVariable javaVariable,
 		String fieldType) {
 
-		for (String annotation : _annotationsExclusions) {
+		for (String annotation : _getAnnotationsExclusions()) {
 			if (javaVariable.hasAnnotation(annotation)) {
 				return classContent;
 			}
@@ -245,21 +242,30 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		return childJavaTerms;
 	}
 
-	private List<String> _getAnnotationsExclusions() {
-		return ListUtil.fromArray(
-			new String[] {
-				"ArquillianResource", "Autowired", "BeanReference", "Captor",
-				"Context", "Inject", "Mock", "Parameter", "Reference",
-				"ServiceReference", "SuppressWarnings", "Value"
-			});
+	private synchronized List<String> _getAnnotationsExclusions() {
+		if (_annotationsExclusions == null) {
+			_annotationsExclusions = ListUtil.fromArray(
+				new String[] {
+					"ArquillianResource", "Autowired", "BeanReference",
+					"Captor", "Context", "Inject", "Mock", "Parameter",
+					"Reference", "ServiceReference", "SuppressWarnings", "Value"
+				});
+		}
+
+		return _annotationsExclusions;
 	}
 
-	private Map<String, String> _getDefaultPrimitiveValues() {
-		return MapUtil.fromArray(
-			new String[] {
-				"boolean", "false", "char", "'\\\\0'", "byte", "0", "double",
-				"0\\.0", "float", "0\\.0", "int", "0", "long", "0", "short", "0"
-			});
+	private synchronized Map<String, String> _getDefaultPrimitiveValues() {
+		if (_defaultPrimitiveValues == null) {
+			_defaultPrimitiveValues = MapUtil.fromArray(
+				new String[] {
+					"boolean", "false", "char", "'\\\\0'", "byte", "0",
+					"double", "0\\.0", "float", "0\\.0", "int", "0", "long",
+					"0", "short", "0"
+				});
+		}
+
+		return _defaultPrimitiveValues;
 	}
 
 	private String _getFieldType(JavaVariable javaVariable) {

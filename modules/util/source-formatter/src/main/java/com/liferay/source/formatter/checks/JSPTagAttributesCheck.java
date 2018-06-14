@@ -54,11 +54,6 @@ import org.dom4j.Element;
 public class JSPTagAttributesCheck extends TagAttributesCheck {
 
 	@Override
-	public void init() throws Exception {
-		_primitiveTagAttributeDataTypes = _getPrimitiveTagAttributeDataTypes();
-	}
-
-	@Override
 	public void setAllFileNames(List<String> allFileNames) {
 		_allFileNames = allFileNames;
 	}
@@ -133,7 +128,10 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 				continue;
 			}
 
-			if (_primitiveTagAttributeDataTypes.contains(dataType)) {
+			Set<String> primitiveTagAttributeDataType =
+				_getPrimitiveTagAttributeDataTypes();
+
+			if (primitiveTagAttributeDataType.contains(dataType)) {
 				if (!_isValidTagAttributeValue(attributeValue, dataType)) {
 					continue;
 				}
@@ -277,13 +275,17 @@ public class JSPTagAttributesCheck extends TagAttributesCheck {
 		return jspTags;
 	}
 
-	private Set<String> _getPrimitiveTagAttributeDataTypes() {
-		return SetUtil.fromArray(
-			new String[] {
-				"java.lang.Boolean", "Boolean", "boolean", "java.lang.Double",
-				"Double", "double", "java.lang.Integer", "Integer", "int",
-				"java.lang.Long", "Long", "long"
-			});
+	private synchronized Set<String> _getPrimitiveTagAttributeDataTypes() {
+		if (_primitiveTagAttributeDataTypes == null) {
+			_primitiveTagAttributeDataTypes = SetUtil.fromArray(
+				new String[] {
+					"java.lang.Boolean", "Boolean", "boolean",
+					"java.lang.Double", "Double", "double", "java.lang.Integer",
+					"Integer", "int", "java.lang.Long", "Long", "long"
+				});
+		}
+
+		return _primitiveTagAttributeDataTypes;
 	}
 
 	private synchronized Map<String, String> _getSetMethodsMap(String tagName)

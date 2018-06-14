@@ -46,19 +46,14 @@ import java.util.regex.Pattern;
 public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_emptyExportPackageBundleSymbolicNames.addAll(
-			_getEmptyExportPackageBundleSymbolicNames());
-	}
-
-	@Override
 	public boolean isPortalCheck() {
 		return true;
 	}
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
 		if (!absolutePath.contains("/modules/apps/")) {
 			return content;
@@ -79,7 +74,9 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private String _formatDependencies(String content, String dependencies) {
+	private String _formatDependencies(String content, String dependencies)
+		throws Exception {
+
 		int x = dependencies.indexOf("\n");
 		int y = dependencies.lastIndexOf("\n");
 
@@ -154,13 +151,19 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		return matcher.group(1);
 	}
 
-	private Set<String> _getEmptyExportPackageBundleSymbolicNames()
+	private synchronized Set<String> _getEmptyExportPackageBundleSymbolicNames()
 		throws Exception {
+
+		if (_emptyExportPackageBundleSymbolicNames != null) {
+			return _emptyExportPackageBundleSymbolicNames;
+		}
 
 		File portalDir = getPortalDir();
 
 		if (portalDir == null) {
-			return Collections.emptySet();
+			_emptyExportPackageBundleSymbolicNames = Collections.emptySet();
+
+			return _emptyExportPackageBundleSymbolicNames;
 		}
 
 		final List<File> files = new ArrayList<>();
@@ -192,7 +195,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 
 			});
 
-		Set<String> bundleSymbolicNames = new HashSet<>();
+		_emptyExportPackageBundleSymbolicNames = new HashSet<>();
 
 		for (File file : files) {
 			String content = FileUtil.read(file);
@@ -207,16 +210,21 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 			if ((bundleSymbolicName != null) &&
 				bundleSymbolicName.startsWith("com.liferay.")) {
 
-				bundleSymbolicNames.add(bundleSymbolicName);
+				_emptyExportPackageBundleSymbolicNames.add(bundleSymbolicName);
 			}
 		}
 
-		return bundleSymbolicNames;
+		return _emptyExportPackageBundleSymbolicNames;
 	}
 
-	private boolean _isValidBundleSymbolicName(String dependencyName) {
+	private boolean _isValidBundleSymbolicName(String dependencyName)
+		throws Exception {
+
+		Set<String> emptyExportPackageBundleSymbolicNames =
+			_getEmptyExportPackageBundleSymbolicNames();
+
 		if (!dependencyName.startsWith("com.liferay.") ||
-			!_emptyExportPackageBundleSymbolicNames.contains(dependencyName)) {
+			!emptyExportPackageBundleSymbolicNames.contains(dependencyName)) {
 
 			return true;
 		}
@@ -234,7 +242,6 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		"(\n|\\A)(\t*)dependencies \\{\n");
 	private final Pattern _dependencyNamePattern = Pattern.compile(
 		".*, name: \"([^\"]*)\".*");
-	private final List<String> _emptyExportPackageBundleSymbolicNames =
-		new ArrayList<>();
+	private Set<String> _emptyExportPackageBundleSymbolicNames;
 
 }

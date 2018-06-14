@@ -35,13 +35,9 @@ import java.util.regex.Pattern;
 public class CompatClassImportsCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_compatClassNamesMap = _getCompatClassNamesMap();
-	}
-
-	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
 		if (isPortalSource() || isSubrepository() ||
 			absolutePath.contains("/ext-") ||
@@ -53,10 +49,10 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 		return _fixCompatClassImports(content);
 	}
 
-	private String _fixCompatClassImports(String content) {
-		for (Map.Entry<String, String> entry :
-				_compatClassNamesMap.entrySet()) {
+	private String _fixCompatClassImports(String content) throws Exception {
+		Map<String, String> compatClassNamesMap = _getCompatClassNamesMap();
 
+		for (Map.Entry<String, String> entry : compatClassNamesMap.entrySet()) {
 			String compatClassName = entry.getKey();
 			String extendedClassName = entry.getValue();
 
@@ -78,8 +74,14 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private Map<String, String> _getCompatClassNamesMap() throws Exception {
-		Map<String, String> compatClassNamesMap = new HashMap<>();
+	private synchronized Map<String, String> _getCompatClassNamesMap()
+		throws Exception {
+
+		if (_compatClassNamesMap != null) {
+			return _compatClassNamesMap;
+		}
+
+		_compatClassNamesMap = new HashMap<>();
 
 		String[] includes =
 			{"**/portal-compat-shared/src/com/liferay/compat/**/*.java"};
@@ -122,11 +124,11 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 				compatClassName, "compat.", StringPool.BLANK);
 
 			if (content.contains("extends " + extendedClassName)) {
-				compatClassNamesMap.put(compatClassName, extendedClassName);
+				_compatClassNamesMap.put(compatClassName, extendedClassName);
 			}
 		}
 
-		return compatClassNamesMap;
+		return _compatClassNamesMap;
 	}
 
 	private Map<String, String> _compatClassNamesMap;

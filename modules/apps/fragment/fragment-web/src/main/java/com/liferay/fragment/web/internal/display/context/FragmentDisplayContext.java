@@ -21,6 +21,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.util.FragmentPortletUtil;
@@ -71,6 +72,10 @@ public class FragmentDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
+
+		_fragmentPortletConfiguration =
+			(FragmentPortletConfiguration)_request.getAttribute(
+				FragmentPortletConfiguration.class.getName());
 
 		_itemSelector = (ItemSelector)request.getAttribute(
 			FragmentWebKeys.ITEM_SELECTOR);
@@ -422,14 +427,12 @@ public class FragmentDisplayContext {
 			ActionRequest.ACTION_NAME,
 			"/fragment/upload_fragment_entry_preview");
 
-		String[] extensions = null;
-
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				FragmentPortletKeys.FRAGMENT, uploadURL.toString(),
 				LanguageUtil.get(themeDisplay.getLocale(), "fragments"),
 				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
-				extensions);
+				_fragmentPortletConfiguration.thumbnailExtensions());
 
 		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -642,6 +645,7 @@ public class FragmentDisplayContext {
 	private SearchContainer _fragmentEntriesSearchContainer;
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
+	private final FragmentPortletConfiguration _fragmentPortletConfiguration;
 	private String _htmlContent;
 	private final ItemSelector _itemSelector;
 	private String _jsContent;

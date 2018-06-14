@@ -15,8 +15,10 @@
 package com.liferay.fragment.web.internal.portlet;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,18 +33,23 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
  */
 @Component(
+	configurationPid = "com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration",
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-fragment-web",
@@ -66,6 +73,13 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FragmentPortlet extends MVCPortlet {
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_fragmentPortletConfiguration = ConfigurableUtil.createConfigurable(
+			FragmentPortletConfiguration.class, properties);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -79,6 +93,10 @@ public class FragmentPortlet extends MVCPortlet {
 				_log.debug(pe, pe);
 			}
 		}
+
+		renderRequest.setAttribute(
+			FragmentPortletConfiguration.class.getName(),
+			_fragmentPortletConfiguration);
 
 		renderRequest.setAttribute(
 			FragmentWebKeys.ITEM_SELECTOR, _itemSelector);
@@ -114,6 +132,8 @@ public class FragmentPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentPortlet.class);
+
+	private volatile FragmentPortletConfiguration _fragmentPortletConfiguration;
 
 	@Reference
 	private ItemSelector _itemSelector;

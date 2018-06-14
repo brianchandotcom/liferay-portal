@@ -9,3 +9,23 @@ Import-Package:\
 	!org.skyscreamer.jsonassert.*,\
 	\
 	*
+-conditionalpackage:\
+	com.liferay.apio.architect.impl.internal.alias,\
+	com.liferay.apio.architect.impl.internal.alias.form,\
+	com.liferay.apio.architect.impl.internal.date,\
+	com.liferay.apio.architect.impl.internal.documentation,\
+	com.liferay.apio.architect.impl.internal.form,\
+	com.liferay.apio.architect.impl.internal.list,\
+	com.liferay.apio.architect.impl.internal.message.json,\
+	com.liferay.apio.architect.impl.internal.operation,\
+	com.liferay.apio.architect.impl.internal.pagination,\
+	com.liferay.apio.architect.impl.internal.related,\
+	com.liferay.apio.architect.impl.internal.representor,\
+	com.liferay.apio.architect.impl.internal.request,\
+	com.liferay.apio.architect.impl.internal.response.control,\
+	com.liferay.apio.architect.impl.internal.routes,\
+	com.liferay.apio.architect.impl.internal.single.model,\
+	com.liferay.apio.architect.impl.internal.unsafe,\
+	com.liferay.apio.architect.impl.internal.url,\
+	com.liferay.apio.architect.impl.internal.writer,\
+	com.liferay.apio.architect.impl.internal.writer.util

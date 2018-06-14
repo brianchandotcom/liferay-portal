@@ -14,6 +14,9 @@
 
 package com.liferay.oauth2.provider.jsonws.internal.service.access.policy;
 
+import com.liferay.oauth2.provider.jsonws.internal.configuration.OAuth2JSONWSConfiguration;
+import com.liferay.oauth2.provider.jsonws.internal.service.access.policy.scope.SAPEntryScopeDescriptorFinderRegistrator;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,7 +43,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Tomas Polesovsky
  */
-@Component(immediate = true)
+@Component(
+	configurationPid = "com.liferay.oauth2.provider.jsonws.internal.configuration.OAuth2JSONWSConfiguration",
+	immediate = true
+)
 public class OAuth2JSONWSSAPEntryActivator {
 
 	public void addSAPEntries(long companyId) throws PortalException {
@@ -66,7 +72,17 @@ public class OAuth2JSONWSSAPEntryActivator {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		OAuth2JSONWSConfiguration oAuth2JSONWSConfiguration =
+			ConfigurableUtil.createConfigurable(
+				OAuth2JSONWSConfiguration.class, properties);
+
+		if (!oAuth2JSONWSConfiguration.createOAuth2SAPEntriesOnStartup()) {
+			return;
+		}
+
 		_serviceRegistration = bundleContext.registerService(
 			PortalInstanceLifecycleListener.class,
 			new PolicyPortalInstanceLifecycleListener(), null);

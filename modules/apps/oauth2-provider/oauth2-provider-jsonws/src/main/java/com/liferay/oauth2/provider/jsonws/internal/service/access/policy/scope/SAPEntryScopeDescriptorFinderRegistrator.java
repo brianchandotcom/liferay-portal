@@ -137,6 +137,8 @@ public class SAPEntryScopeDescriptorFinderRegistrator {
 
 		return stream.filter(
 			this::isOAuth2ExportedSAPEntry
+		).filter(
+			SAPEntry::isEnabled
 		).map(
 			sapEntry -> new SAPEntryScope(sapEntry, _parseScope(sapEntry))
 		).collect(

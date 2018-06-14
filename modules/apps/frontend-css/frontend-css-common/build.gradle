@@ -52,5 +52,9 @@ publishNodeModule {
 }
 
 updateFileVersions {
-	match(/com\.liferay\.frontend\.css\.common=(\d.+)/, "../../../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+	File gradlePluginsDir = new File("../../../../sdk/gradle-plugins")
+
+	if (gradlePluginsDir.exists()) {
+		match(/com\.liferay\.frontend\.css\.common=(\d.+)/, new File(gradlePluginsDir, "src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties"))
+	}
 }

@@ -54,17 +54,11 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 	@Deployment
 	public static Archive<?> getDeployment() throws Exception {
 		return BaseClientTestCase.getDeployment(
-			AnnotatedApplicationTestPreparatorBundleActivator.class);
+			ScopeCheckerGuestAllowedTestPreparatorBundleActivator.class);
 	}
 
 	@Test
 	public void test() throws Exception {
-		testApplication(
-			"/annotated-guest-not-allowed/", "everything.readonly", 403);
-
-		testApplication(
-			"/annotated-guest-not-allowed/no-scope", "no-scope", 403);
-
 		testApplication(
 			"/annotated-guest-allowed/", "everything.readonly", 403);
 
@@ -75,34 +69,31 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 		testApplication("/annotated-guest-default/no-scope", "no-scope", 403);
 
-		testApplication("/methods-guest-not-allowed/", "get", 403);
+		testApplication(
+			"/annotated-guest-not-allowed/", "everything.readonly", 403);
+
+		testApplication(
+			"/annotated-guest-not-allowed/no-scope", "no-scope", 403);
+
+		testApplication("/default-jaxrs-app-guest-allowed/", "get", 403);
+
+		testApplication("/default-jaxrs-app-guest-default/", "get", 403);
+
+		testApplication("/default-jaxrs-app-guest-not-allowed/", "get", 403);
 
 		testApplication("/methods-guest-allowed/", "get", 403);
 
 		testApplication("/methods-guest-default/", "get", 403);
 
-		testApplication("/default-jaxrs-app-guest-not-allowed/", "get", 403);
-
-		testApplication("/default-jaxrs-app-guest-allowed/", "get", 403);
-
-		testApplication("/default-jaxrs-app-guest-default/", "get", 403);
+		testApplication("/methods-guest-not-allowed/", "get", 403);
 	}
 
-	public static class AnnotatedApplicationTestPreparatorBundleActivator
+	public static class ScopeCheckerGuestAllowedTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {
 
 		@Override
 		protected void prepareTest() throws Exception {
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put("auth.verifier.guest.allowed", false);
-			properties.put("oauth2.scopechecker.type", "annotations");
-
-			registerJaxRsApplication(
-				new TestAnnotatedApplication(), "annotated-guest-not-allowed",
-				properties);
-
-			properties = new HashMapDictionary<>();
 
 			properties.put("auth.verifier.guest.allowed", true);
 			properties.put("oauth2.scopechecker.type", "annotations");
@@ -122,10 +113,31 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 			properties = new HashMapDictionary<>();
 
 			properties.put("auth.verifier.guest.allowed", false);
-			properties.put("oauth2.scopechecker.type", "http.method");
+			properties.put("oauth2.scopechecker.type", "annotations");
 
 			registerJaxRsApplication(
-				new TestApplication(), "methods-guest-not-allowed", properties);
+				new TestAnnotatedApplication(), "annotated-guest-not-allowed",
+				properties);
+
+			properties = new HashMapDictionary<>();
+
+			properties.put("auth.verifier.guest.allowed", true);
+
+			registerJaxRsApplication(
+				new TestApplication(), "default-jaxrs-app-guest-allowed",
+				properties);
+
+			registerJaxRsApplication(
+				new TestApplication(), "default-jaxrs-app-guest-default",
+				new HashMapDictionary<>());
+
+			properties = new HashMapDictionary<>();
+
+			properties.put("auth.verifier.guest.allowed", false);
+
+			registerJaxRsApplication(
+				new TestApplication(), "default-jaxrs-app-guest-not-allowed",
+				properties);
 
 			properties = new HashMapDictionary<>();
 
@@ -144,23 +156,11 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 
 			properties = new HashMapDictionary<>();
 
-			properties.put("auth.verifier.guest.allowed", true);
-
-			registerJaxRsApplication(
-				new TestApplication(), "default-jaxrs-app-guest-allowed",
-				properties);
-
-			properties = new HashMapDictionary<>();
-
 			properties.put("auth.verifier.guest.allowed", false);
+			properties.put("oauth2.scopechecker.type", "http.method");
 
 			registerJaxRsApplication(
-				new TestApplication(), "default-jaxrs-app-guest-not-allowed",
-				properties);
-
-			registerJaxRsApplication(
-				new TestApplication(), "default-jaxrs-app-guest-default",
-				new HashMapDictionary<>());
+				new TestApplication(), "methods-guest-not-allowed", properties);
 
 			long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 
@@ -169,7 +169,7 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplication",
 				Collections.singletonList(GrantType.CLIENT_CREDENTIALS),
-				Arrays.asList(new String[] {"GET", "everything.readonly"}));
+				Arrays.asList(new String[] {"everything.readonly", "GET"}));
 		}
 
 	}
@@ -196,20 +196,16 @@ public class ScopeCheckerGuestAllowedTest extends BaseClientTestCase {
 				"Token: " + invalidToken, expectedInvalidTokenStatus, status);
 		}
 
-		Invocation.Builder invocationBuilder = webTarget.request();
+		Invocation.Builder invocationBuilder = authorize(
+			webTarget.request(), getToken("oauthTestApplication"));
 
-		String validToken = getToken("oauthTestApplication");
-
-		invocationBuilder = authorize(invocationBuilder, validToken);
-
-		String response = invocationBuilder.get(String.class);
-
-		Assert.assertEquals(expectedValidTokenResponse, response);
+		Assert.assertEquals(
+			expectedValidTokenResponse, invocationBuilder.get(String.class));
 	}
 
 	private static final String[] _INVALID_TOKENS = {
-		null, StringPool.BLANK, StringPool.NULL,
-		OAuth2ProviderConstants.EXPIRED_TOKEN, "Invalid Token"
+		OAuth2ProviderConstants.EXPIRED_TOKEN, StringPool.BLANK,
+		StringPool.NULL, "Invalid Token", null
 	};
 
 }

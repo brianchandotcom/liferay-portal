@@ -106,7 +106,8 @@ public class ThemeContributorExtender extends AbstractExtender {
 	private String _getProperty(
 		Bundle bundle, String headerName, String jsonName) {
 
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String type = headers.get(headerName);
 

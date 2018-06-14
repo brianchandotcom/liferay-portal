@@ -15,23 +15,32 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
+import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.util.FragmentPortletUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,9 +48,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -60,6 +71,9 @@ public class FragmentDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_request = request;
+
+		_itemSelector = (ItemSelector)request.getAttribute(
+			FragmentWebKeys.ITEM_SELECTOR);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
@@ -398,6 +412,40 @@ public class FragmentDisplayContext {
 		return _htmlContent;
 	}
 
+	public PortletURL getItemSelectorURL() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletURL uploadURL = _renderResponse.createActionURL();
+
+		uploadURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/fragment/upload_fragment_entry_preview");
+
+		String[] extensions = null;
+
+		ItemSelectorCriterion uploadItemSelectorCriterion =
+			new UploadItemSelectorCriterion(
+				FragmentPortletKeys.FRAGMENT, uploadURL.toString(),
+				LanguageUtil.get(themeDisplay.getLocale(), "fragments"),
+				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
+				extensions);
+
+		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		uploadDesiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
+
+		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			uploadDesiredItemSelectorReturnTypes);
+
+		return _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_request),
+			_renderResponse.getNamespace() + "changePreview",
+			uploadItemSelectorCriterion);
+	}
+
 	public String getJsContent() {
 		if (Validator.isNotNull(_jsContent)) {
 			return _jsContent;
@@ -595,6 +643,7 @@ public class FragmentDisplayContext {
 	private FragmentEntry _fragmentEntry;
 	private Long _fragmentEntryId;
 	private String _htmlContent;
+	private final ItemSelector _itemSelector;
 	private String _jsContent;
 	private String _keywords;
 	private String _orderByCol;

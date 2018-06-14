@@ -175,24 +175,6 @@
 			}
 		);
 
-		<%
-		PortletURL uploadURL = renderResponse.createActionURL();
-
-		uploadURL.setParameter(ActionRequest.ACTION_NAME, "/fragment/upload_fragment_entry_preview");
-
-		String[] extensions = null;
-
-		ItemSelectorCriterion uploadItemSelectorCriterion = new UploadItemSelectorCriterion(FragmentPortletKeys.FRAGMENT, uploadURL.toString(), LanguageUtil.get(themeDisplay.getLocale(), "fragments"), UploadServletRequestConfigurationHelperUtil.getMaxSize(), extensions);
-
-		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes = new ArrayList<>();
-
-		uploadDesiredItemSelectorReturnTypes.add(new FileEntryItemSelectorReturnType());
-
-		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(uploadDesiredItemSelectorReturnTypes);
-
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(request), renderResponse.getNamespace() + "changePreview", uploadItemSelectorCriterion);
-		%>
-
 		var updateFragmentEntryPreviewMenuItemClickHandler = dom.delegate(
 			document.body,
 			'click',
@@ -202,7 +184,7 @@
 
 				event.preventDefault();
 
-				var uri = '<%= itemSelectorURL %>';
+				var uri = '<%= fragmentDisplayContext.getItemSelectorURL() %>';
 
 				uri = Liferay.Util.addParams('<portlet:namespace />fragmentEntryId=' + data.fragmentEntryId, uri);
 

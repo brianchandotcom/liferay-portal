@@ -3800,6 +3800,12 @@ of a module includes transitive dependencies.
 - [LPS-82261]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.39.
 
+## 5.4.39 - 2018-06-13
+
+### Changed
+- [LPS-82343]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.40.
+
 ## 5.4.40 - 2018-06-13
 
 ### Changed
@@ -4242,6 +4248,7 @@ of a module includes transitive dependencies.
 [LPS-82178]: https://issues.liferay.com/browse/LPS-82178
 [LPS-82209]: https://issues.liferay.com/browse/LPS-82209
 [LPS-82261]: https://issues.liferay.com/browse/LPS-82261
+[LPS-82343]: https://issues.liferay.com/browse/LPS-82343
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

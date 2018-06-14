@@ -298,7 +298,8 @@ class FragmentEditableField extends Component {
 				'mapButtonClicked',
 				{
 					editableId: this.editableId,
-					editableType: this.type
+					editableType: this.type,
+					mappedFieldId: this.editableValues.mappedField || ''
 				}
 			);
 		}

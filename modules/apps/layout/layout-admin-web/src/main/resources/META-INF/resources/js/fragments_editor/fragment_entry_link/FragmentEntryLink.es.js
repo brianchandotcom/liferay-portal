@@ -315,7 +315,8 @@ class FragmentEntryLink extends Component {
 			{
 				editableId: event.editableId,
 				editableType: event.editableType,
-				fragmentEntryLinkId: this.fragmentEntryLinkId
+				fragmentEntryLinkId: this.fragmentEntryLinkId,
+				mappedFieldId: event.mappedFieldId
 			}
 		);
 	}

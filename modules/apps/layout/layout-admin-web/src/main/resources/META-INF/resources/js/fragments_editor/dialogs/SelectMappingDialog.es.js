@@ -97,25 +97,13 @@ class SelectMappingDialog extends PortletBase {
 	}
 
 	/**
-	 * Changes visible property to false
+	 * Emit a mappeableFieldSelected event
+	 * @param {string} [key='']
 	 * @private
 	 * @review
 	 */
 
-	_handleCancelButtonClick() {
-		this.visible = false;
-	}
-
-	/**
-	 * Handle a mappeable field click and propagate it's selection
-	 * @param {Event} event
-	 * @private
-	 * @review
-	 */
-
-	_handleMappeableFieldLinkClick(event) {
-		const key = event.delegateTarget.dataset.key;
-
+	_emitMappeableFieldSelected(key = '') {
 		this.emit(
 			'mappeableFieldSelected',
 			{
@@ -126,6 +114,39 @@ class SelectMappingDialog extends PortletBase {
 		);
 
 		this.visible = false;
+	}
+
+	/**
+	 * Changes visible property to false
+	 * @private
+	 * @review
+	 */
+
+	_handleCancelButtonClick() {
+		this.visible = false;
+	}
+
+	/**
+	 * Unmaps the existing editable field
+	 * @private
+	 * @review
+	 */
+
+	_handleUnmapButtonClick() {
+		this._emitMappeableFieldSelected('');
+	}
+
+	/**
+	 * Handle a mappeable field click and propagate it's selection
+	 * @param {Event} event
+	 * @private
+	 * @review
+	 */
+
+	_handleMappeableFieldLinkClick(event) {
+		this._emitMappeableFieldSelected(
+			event.delegateTarget.dataset.key
+		);
 	}
 
 	/**
@@ -221,6 +242,20 @@ SelectMappingDialog.STATE = {
 	 */
 
 	fragmentEntryLinkId: Config
+		.string()
+		.value(''),
+
+	/**
+	 * Mapped field ID of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf SelectMappingDialog
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	mappedFieldId: Config
 		.string()
 		.value(''),
 

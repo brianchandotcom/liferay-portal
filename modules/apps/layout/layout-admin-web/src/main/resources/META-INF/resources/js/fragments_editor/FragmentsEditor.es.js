@@ -468,6 +468,7 @@ class FragmentsEditor extends Component {
 		this._selectMappingDialogEditableId = event.editableId;
 		this._selectMappingDialogEditableType = event.editableType;
 		this._selectMappingDialogFragmentEntryLinkId = event.fragmentEntryLinkId;
+		this._selectMappingDialogMappedFieldId = event.mappedFieldId;
 
 		if (this.selectedMappingTypes && this.selectedMappingTypes.type) {
 			this._selectMappingDialogVisible = true;
@@ -1127,6 +1128,21 @@ FragmentsEditor.STATE = {
 	 */
 
 	_selectMappingDialogFragmentEntryLinkId: Config
+		.string()
+		.internal()
+		.value(''),
+
+	/**
+	 * Mapped field ID of the field that is being mapped
+	 * @default ''
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @private
+	 * @review
+	 * @type {string}
+	 */
+
+	_selectMappingDialogMappedFieldId: Config
 		.string()
 		.internal()
 		.value(''),

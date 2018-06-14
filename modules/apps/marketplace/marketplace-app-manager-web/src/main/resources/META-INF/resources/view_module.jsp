@@ -42,7 +42,7 @@ SearchContainer searchContainer = viewModuleManagementToolbarDisplayContext.getS
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
-Dictionary<String, String> headers = bundle.getHeaders();
+Dictionary<String, String> headers = bundle.getHeaders(StringPool.BLANK);
 
 String bundleName = GetterUtil.getString(headers.get(BundleConstants.BUNDLE_NAME));
 

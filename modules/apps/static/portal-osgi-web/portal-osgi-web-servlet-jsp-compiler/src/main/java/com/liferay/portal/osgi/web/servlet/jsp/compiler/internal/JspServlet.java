@@ -544,7 +544,8 @@ public class JspServlet extends HttpServlet {
 		public List<Path> addingBundle(Bundle bundle, BundleEvent bundleEvent) {
 			List<Path> paths = new ArrayList<>();
 
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			String fragmentHost = headers.get("Fragment-Host");
 

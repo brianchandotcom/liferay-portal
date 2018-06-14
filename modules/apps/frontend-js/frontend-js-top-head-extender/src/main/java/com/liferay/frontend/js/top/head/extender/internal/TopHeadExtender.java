@@ -59,7 +59,8 @@ public class TopHeadExtender extends AbstractExtender {
 
 	@Override
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String liferayJsResourcesTopHead = headers.get(
 			"Liferay-JS-Resources-Top-Head");

@@ -284,7 +284,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	private void _processLegacyBridges(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String jsSubmodulesBridge = GetterUtil.getString(
 			headers.get("Liferay-JS-Submodules-Bridge"));

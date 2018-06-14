@@ -293,7 +293,8 @@ public class JSLoaderModule {
 			_versionedConfiguration = normalize(
 				generateConfiguration(jsonObject, bundleWiring, true));
 
-			Dictionary<String, String> headers = _bundle.getHeaders();
+			Dictionary<String, String> headers = _bundle.getHeaders(
+				StringPool.BLANK);
 
 			String jsSubmodulesExport = GetterUtil.getString(
 				headers.get("Liferay-JS-Submodules-Export"));

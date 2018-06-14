@@ -81,7 +81,8 @@ public class MarketplaceAppManagerUtil {
 				moduleGroupDisplay.getDisplayURL(renderResponse));
 		}
 
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String bundleName = GetterUtil.getString(
 			headers.get(BundleConstants.BUNDLE_NAME));
@@ -159,7 +160,8 @@ public class MarketplaceAppManagerUtil {
 		List<String> categories = new ArrayList<>();
 
 		for (Bundle bundle : bundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			String[] categoriesArray = StringUtil.split(
 				headers.get(BundleConstants.LIFERAY_RELENG_CATEGORY));

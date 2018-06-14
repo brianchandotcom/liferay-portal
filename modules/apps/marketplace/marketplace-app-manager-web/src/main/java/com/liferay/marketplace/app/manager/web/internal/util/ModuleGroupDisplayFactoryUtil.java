@@ -47,7 +47,8 @@ public class ModuleGroupDisplayFactoryUtil {
 		List<Bundle> bundles = appDisplay.getBundles();
 
 		for (Bundle bundle : bundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			String curModuleGroupTitle = GetterUtil.getString(
 				headers.get(BundleConstants.LIFERAY_RELENG_MODULE_GROUP_TITLE));
@@ -83,7 +84,8 @@ public class ModuleGroupDisplayFactoryUtil {
 			new HashMap<>();
 
 		for (Bundle bundle : bundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			String moduleGroupTitle = headers.get(
 				BundleConstants.LIFERAY_RELENG_MODULE_GROUP_TITLE);

@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -85,7 +86,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Override
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		if (headers.get("Liferay-Spring-Context") == null) {
 			return null;
@@ -216,7 +218,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				_component.add(serviceDependency);
 			}
 
-			Dictionary<String, String> headers = _bundle.getHeaders();
+			Dictionary<String, String> headers = _bundle.getHeaders(
+				StringPool.BLANK);
 
 			String requireSchemaVersion = headers.get(
 				"Liferay-Require-SchemaVersion");
@@ -250,7 +253,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		private ServiceRegistration<UpgradeStep> _processInitialUpgrade(
 			ClassLoader classLoader) {
 
-			Dictionary<String, String> headers = _bundle.getHeaders();
+			Dictionary<String, String> headers = _bundle.getHeaders(
+				StringPool.BLANK);
 
 			String upgradeToSchemaVersion = GetterUtil.getString(
 				headers.get("Liferay-Require-SchemaVersion"),

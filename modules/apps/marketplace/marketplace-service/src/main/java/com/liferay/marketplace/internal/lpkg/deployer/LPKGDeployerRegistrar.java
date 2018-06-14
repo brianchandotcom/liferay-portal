@@ -105,7 +105,8 @@ public class LPKGDeployerRegistrar {
 
 		if ((bundles != null) && !bundles.isEmpty()) {
 			for (Bundle bundle : bundles) {
-				Dictionary<String, String> headers = bundle.getHeaders();
+				Dictionary<String, String> headers = bundle.getHeaders(
+					StringPool.BLANK);
 
 				String contextName = ContextUtil.getContextName(
 					GetterUtil.getString(headers.get("Web-ContextPath")));

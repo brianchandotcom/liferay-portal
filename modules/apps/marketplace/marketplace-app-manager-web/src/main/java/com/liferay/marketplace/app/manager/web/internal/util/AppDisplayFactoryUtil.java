@@ -83,7 +83,8 @@ public class AppDisplayFactoryUtil {
 		}
 
 		for (Bundle bundle : bundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			String curAppTitle = GetterUtil.getString(
 				headers.get(BundleConstants.LIFERAY_RELENG_APP_TITLE));
@@ -190,7 +191,8 @@ public class AppDisplayFactoryUtil {
 		Collection<Bundle> bundles = bundlesMap.values();
 
 		for (Bundle bundle : bundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			if (Validator.isNotNull(category)) {
 				String[] categories = StringUtil.split(

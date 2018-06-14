@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.internal.wrapper.bundle;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -37,7 +38,8 @@ public class WARBundleWrapperBundleActivator implements BundleActivator {
 	public void start(final BundleContext bundleContext) throws Exception {
 		Bundle bundle = bundleContext.getBundle();
 
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String contextName = headers.get("Liferay-WAB-Context-Name");
 

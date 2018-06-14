@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.petra.string.StringPool;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
@@ -33,7 +35,8 @@ public class SpringContextHeaderParser {
 	public String[] getBeanDefinitionFileNames() {
 		List<String> beanDefinitionFileNames = new ArrayList<>();
 
-		Dictionary<String, String> headers = _bundle.getHeaders();
+		Dictionary<String, String> headers = _bundle.getHeaders(
+			StringPool.BLANK);
 
 		String liferayService = headers.get("Liferay-Service");
 

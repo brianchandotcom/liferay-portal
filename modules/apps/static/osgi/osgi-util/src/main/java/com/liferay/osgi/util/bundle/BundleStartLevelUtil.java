@@ -15,6 +15,7 @@
 package com.liferay.osgi.util.bundle;
 
 import com.liferay.petra.concurrent.DefaultNoticeableFuture;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -60,7 +61,8 @@ public class BundleStartLevelUtil {
 	private static void _startBundle(Bundle bundle, BundleContext bundleContext)
 		throws Exception {
 
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
 

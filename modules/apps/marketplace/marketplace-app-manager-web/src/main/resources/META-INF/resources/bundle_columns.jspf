@@ -25,7 +25,7 @@
 >
 
 	<%
-	Dictionary<String, String> headers = bundle.getHeaders();
+	Dictionary<String, String> headers = bundle.getHeaders(StringPool.BLANK);
 	%>
 
 	<h5 class="text-default">

@@ -221,7 +221,8 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		List<Bundle> bundles = BundleManagerUtil.getInstalledBundles();
 
 		for (Bundle bundle : bundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			boolean liferayRelengBundle = GetterUtil.getBoolean(
 				headers.get("Liferay-Releng-Bundle"));

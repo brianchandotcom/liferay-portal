@@ -133,6 +133,7 @@ class SelectMappingDialog extends PortletBase {
 	 */
 
 	_handleUnmapButtonClick() {
+		this._emitMappeableFieldSelected('');
 	}
 
 	/**

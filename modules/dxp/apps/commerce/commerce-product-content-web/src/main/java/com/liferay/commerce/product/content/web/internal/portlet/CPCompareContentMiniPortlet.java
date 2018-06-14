@@ -19,7 +19,6 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentMiniDisplayContext;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -78,8 +77,8 @@ public class CPCompareContentMiniPortlet extends MVCPortlet {
 					new CPCompareContentMiniDisplayContext(
 						_cpCatalogEntryFactory,
 						_cpContentListEntryRendererRegistry,
-						_cpContentListRendererRegistry, _cpDefinitionService,
-						_cpTypeServicesTracker, _layoutLocalService,
+						_cpContentListRendererRegistry, _cpTypeServicesTracker,
+						_layoutLocalService,
 						_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -105,9 +104,6 @@ public class CPCompareContentMiniPortlet extends MVCPortlet {
 
 	@Reference
 	private CPContentListRendererRegistry _cpContentListRendererRegistry;
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;

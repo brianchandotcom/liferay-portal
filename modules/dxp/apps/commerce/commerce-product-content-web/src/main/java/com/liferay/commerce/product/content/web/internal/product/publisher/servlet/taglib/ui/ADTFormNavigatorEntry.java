@@ -16,8 +16,6 @@ package com.liferay.commerce.product.content.web.internal.product.publisher.serv
 
 import com.liferay.commerce.product.content.web.internal.constants.CPPublisherConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -104,8 +102,5 @@ public class ADTFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ADTFormNavigatorEntry.class);
 
 }

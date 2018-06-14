@@ -23,7 +23,6 @@ import com.liferay.commerce.product.content.render.list.entry.CPContentListEntry
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.configuration.CPCompareContentMiniPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPCompareUtil;
@@ -57,7 +56,6 @@ public class CPCompareContentMiniDisplayContext {
 			CPContentListEntryRendererRegistry
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
-			CPDefinitionService cpDefinitionService,
 			CPTypeServicesTracker cpTypeServicesTracker,
 			LayoutLocalService layoutLocalService,
 			HttpServletRequest httpServletRequest)
@@ -67,7 +65,6 @@ public class CPCompareContentMiniDisplayContext {
 		_cpContentListEntryRendererRegistry =
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
-		_cpDefinitionService = cpDefinitionService;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
 		_layoutLocalService = layoutLocalService;
 
@@ -302,7 +299,6 @@ public class CPCompareContentMiniDisplayContext {
 		_cpContentListEntryRendererRegistry;
 	private final CPContentListRendererRegistry _cpContentListRendererRegistry;
 	private final List<Long> _cpDefinitionIds;
-	private final CPDefinitionService _cpDefinitionService;
 	private final CPRequestHelper _cpRequestHelper;
 	private final CPTypeServicesTracker _cpTypeServicesTracker;
 	private final LayoutLocalService _layoutLocalService;

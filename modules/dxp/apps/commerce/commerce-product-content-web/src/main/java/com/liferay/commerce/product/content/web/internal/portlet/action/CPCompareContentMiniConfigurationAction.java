@@ -19,7 +19,6 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentMiniDisplayContext;
-import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -53,9 +52,8 @@ public class CPCompareContentMiniConfigurationAction
 					new CPCompareContentMiniDisplayContext(
 						_cpCatalogEntryFactory,
 						_cpContentListEntryRendererRegistry,
-						_cpContentListRendererRegistry, _cpDefinitionService,
-						_cpTypeServicesTracker, _layoutLocalService,
-						httpServletRequest);
+						_cpContentListRendererRegistry, _cpTypeServicesTracker,
+						_layoutLocalService, httpServletRequest);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -89,9 +87,6 @@ public class CPCompareContentMiniConfigurationAction
 
 	@Reference
 	private CPContentListRendererRegistry _cpContentListRendererRegistry;
-
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;

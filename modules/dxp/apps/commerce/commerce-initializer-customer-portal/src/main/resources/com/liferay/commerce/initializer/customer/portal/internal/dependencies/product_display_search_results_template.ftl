@@ -26,12 +26,12 @@
 			<#if isIgnoreSKUCombinations>
 				<#if cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)??>
 					<#assign
-					cpInstance =  cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)
+					cpInstance = cpSearchResultsDisplayContext.getDefaultCPInstance(curDocument)
 					/>
 
 					<#if cpInstance??>
 						<#assign
-						cpInstanceId =  cpInstance.getCPInstanceId()
+						cpInstanceId = cpInstance.getCPInstanceId()
 
 						gtin = cpInstance.getGtin()
 						modelNumber = cpInstance.getManufacturerPartNumber()

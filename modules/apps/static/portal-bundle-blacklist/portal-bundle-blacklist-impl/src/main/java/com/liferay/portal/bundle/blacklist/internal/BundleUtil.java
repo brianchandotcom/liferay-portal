@@ -16,6 +16,7 @@ package com.liferay.portal.bundle.blacklist.internal;
 
 import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
@@ -101,8 +102,8 @@ public class BundleUtil {
 			String contextName = webContextPath[0].substring(1);
 
 			for (Bundle installedBundle : bundleContext.getBundles()) {
-				Dictionary<String, String> headers =
-					installedBundle.getHeaders();
+				Dictionary<String, String> headers = installedBundle.getHeaders(
+					StringPool.BLANK);
 
 				if (contextName.equals(
 						headers.get("Liferay-WAB-Context-Name"))) {

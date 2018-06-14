@@ -47,19 +47,9 @@
 			<@liferay_util["dynamic-include"] key="portlet_header_${portlet_display_root_portlet_id}" />
 		</@>
 
-		<@liferay_util["buffer"] var="portlet_header_wrapper">
-			<#if portlet_header?has_content>
-				<div class="autofit-col autofit-col-end">
-					<div class="autofit-section">
-						${portlet_header}
-					</div>
-				</div>
-			</#if>
-		</@>
-
 		<#assign show_portlet_decorator = validator.isNotNull(portlet_display.getPortletDecoratorId()) && !stringUtil.equals(portlet_display.getPortletDecoratorId(), "barebone") />
 
-		<#if portlet_display.isShowBackIcon() || show_portlet_decorator || portlet_header_wrapper?has_content>
+		<#if portlet_display.isShowBackIcon() || show_portlet_decorator || portlet_header?has_content>
 			<div class="autofit-float autofit-row portlet-header">
 				<#if portlet_display.isShowBackIcon()>
 					<div class="autofit-col">
@@ -80,8 +70,12 @@
 					</div>
 				</#if>
 
-				<#if portlet_header_wrapper?has_content>
-					${portlet_header_wrapper}
+				<#if portlet_header?has_content>
+					<div class="autofit-col autofit-col-end">
+						<div class="autofit-section">
+							${portlet_header}
+						</div>
+					</div>
 				</#if>
 			</div>
 		</#if>

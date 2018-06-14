@@ -36,20 +36,21 @@ public class MySQLAuroraAmazonVM extends AuroraAmazonVM {
 
 	protected MySQLAuroraAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
-		String dbEngineVersion, String dbInstanceClass, String dbInstanceId) {
+		String dbEngine, String dbEngineVersion, String dbInstanceClass,
+		String dbInstanceId) {
 
 		super(
-			awsAccessKeyId, awsSecretAccessKey, dbClusterId, "aurora",
+			awsAccessKeyId, awsSecretAccessKey, dbClusterId, dbEngine,
 			dbEngineVersion, dbInstanceClass, dbInstanceId, "password", "root");
 	}
 
 	protected MySQLAuroraAmazonVM(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
-		String dbEngineVersion, String dbInstanceClass, String dbInstanceId,
-		String dbPassword, String dbUsername) {
+		String dbEngine, String dbEngineVersion, String dbInstanceClass,
+		String dbInstanceId, String dbPassword, String dbUsername) {
 
 		super(
-			awsAccessKeyId, awsSecretAccessKey, dbClusterId, "aurora",
+			awsAccessKeyId, awsSecretAccessKey, dbClusterId, dbEngine,
 			dbEngineVersion, dbInstanceClass, dbInstanceId, dbPassword,
 			dbUsername);
 	}

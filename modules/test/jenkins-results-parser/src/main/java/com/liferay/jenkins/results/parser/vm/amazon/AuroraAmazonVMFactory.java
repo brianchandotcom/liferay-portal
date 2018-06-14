@@ -32,8 +32,14 @@ public class AuroraAmazonVMFactory {
 		InstanceType instanceType) {
 
 		if (instanceType == InstanceType.MYSQL) {
+			String dbEngine = "aurora-mysql";
+
+			if (dbEngineVersion.equals("5.6.10a")) {
+				dbEngine = "aurora";
+			}
+
 			return new MySQLAuroraAmazonVM(
-				awsAccessKeyId, awsSecretAccessKey, dbClusterId,
+				awsAccessKeyId, awsSecretAccessKey, dbClusterId, dbEngine,
 				dbEngineVersion, dbInstanceClass, dbInstanceId);
 		}
 

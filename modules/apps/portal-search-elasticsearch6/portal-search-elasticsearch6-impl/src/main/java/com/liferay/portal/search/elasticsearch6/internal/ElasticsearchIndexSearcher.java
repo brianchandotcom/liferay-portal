@@ -179,12 +179,15 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return hits;
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-
-			if (!_logExceptionsOnly) {
-				throw new SearchException(e.getMessage(), e);
+			if (!handle(e)) {
+				if (_logExceptionsOnly) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(e, e);
+					}
+				}
+				else {
+					throw new SearchException(e.getMessage(), e);
+				}
 			}
 
 			return new HitsImpl();
@@ -213,12 +216,15 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			return doSearchCount(searchContext, query);
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-
-			if (!_logExceptionsOnly) {
-				throw new SearchException(e.getMessage(), e);
+			if (!handle(e)) {
+				if (_logExceptionsOnly) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(e, e);
+					}
+				}
+				else {
+					throw new SearchException(e.getMessage(), e);
+				}
 			}
 
 			return 0;
@@ -696,6 +702,30 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 
 		return Field.getSortFieldName(sort, scoreFieldName);
+	}
+
+	protected boolean handle(Exception e) {
+		Throwable throwable = e.getCause();
+
+		if (throwable == null) {
+			return false;
+		}
+
+		String message = throwable.getMessage();
+
+		if (message == null) {
+			return false;
+		}
+
+		if (message.contains(
+				"Fielddata is disabled on text fields by default.")) {
+
+			_log.error("Unable to aggregate facet on a non-keyword field", e);
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected AggregationBuilder postProcessAggregationBuilder(

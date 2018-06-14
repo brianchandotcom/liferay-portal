@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.tag.apio.internal.form;
+package com.liferay.tag.apio.internal.architect.form;
 
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
 
 /**
+ * Instances of this class represent the values extracted from a tag form.
+ *
  * @author Alejandro Hernández
  */
 public class TagForm {

@@ -97,8 +97,7 @@ public class MBDiscussionPermissionImplTest {
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(permissionChecker);
 
-		Assert.assertEquals(
-			true,
+		Assert.assertTrue(
 			discussionPermission.hasAddPermission(
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
 				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
@@ -126,8 +125,7 @@ public class MBDiscussionPermissionImplTest {
 		discussionPermission = _commentManager.getDiscussionPermission(
 			permissionChecker);
 
-		Assert.assertEquals(
-			false,
+		Assert.assertFalse(
 			discussionPermission.hasAddPermission(
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
 				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));

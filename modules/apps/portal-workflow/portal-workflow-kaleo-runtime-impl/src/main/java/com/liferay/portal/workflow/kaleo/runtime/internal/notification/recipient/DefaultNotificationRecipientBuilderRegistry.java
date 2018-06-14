@@ -18,6 +18,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper.Emitter;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.RecipientType;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilder;
 import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilderRegistry;
@@ -69,7 +70,7 @@ public class DefaultNotificationRecipientBuilderRegistry
 						Object value = serviceReference.getProperty(
 							"recipient.type");
 
-						if (value == null) {
+						if (Validator.isNull(value)) {
 							throw new IllegalArgumentException(
 								"The property \"recipient.type\" is invalid " +
 									"for " + serviceReference);

@@ -1058,7 +1058,7 @@ public class GroupFinderImpl
 		for (Map.Entry<String, Object> entry : params.entrySet()) {
 			Object value = entry.getValue();
 
-			if (value == null) {
+			if (Validator.isNull(value)) {
 				continue;
 			}
 

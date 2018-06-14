@@ -14,11 +14,11 @@
 	{@param inline: bool}
 	{@param label: string}
 	{@param name: string}
-	{@param options: list<[label: string, value: string]>}
+	{@param options: list<[label: string, value: ?]>}
 	{@param pathThemeImages: string}
 	{@param readOnly: bool}
 	{@param showLabel: bool}
-	{@param value: string}
+	{@param value: ?}
 	{@param visible: bool}
 	{@param? dir: string}
 	{@param? predefinedValue: string}
@@ -38,7 +38,7 @@
 
 					{if $required}
 						<svg aria-hidden="true"
-							 class="lexicon-icon lexicon-icon-asterisk reference-mark">
+							class="lexicon-icon lexicon-icon-asterisk reference-mark">
 							<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#asterisk"/>
 						</svg>
 					{/if}

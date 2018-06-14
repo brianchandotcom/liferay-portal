@@ -259,6 +259,7 @@ public class SourceFormatter {
 		_sourceProcessors.add(new CodeownersSourceProcessor());
 		_sourceProcessors.add(new CQLSourceProcessor());
 		_sourceProcessors.add(new CSSSourceProcessor());
+		_sourceProcessors.add(new ConfigSourceProcessor());
 		_sourceProcessors.add(new DockerfileSourceProcessor());
 		_sourceProcessors.add(new FTLSourceProcessor());
 		_sourceProcessors.add(new GradleSourceProcessor());

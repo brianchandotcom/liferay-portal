@@ -48,6 +48,9 @@
 		<check name="CSSPropertiesOrderCheck" />
 		<check name="CSSWhitespaceCheck" />
 	</source-processor>
+	<source-processor name="ConfigSourceProcessor">
+		<check name="ConfigDefinitionKeysCheck" />
+	</source-processor>
 	<source-processor name="DockerfileSourceProcessor">
 		<check name="DockerfileEmptyLinesCheck" />
 		<check name="DockerfileInstructionCheck" />

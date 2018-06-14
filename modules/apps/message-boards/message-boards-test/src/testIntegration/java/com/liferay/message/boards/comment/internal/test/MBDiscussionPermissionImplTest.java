@@ -98,13 +98,13 @@ public class MBDiscussionPermissionImplTest {
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(permissionChecker);
 
-		_addComment(user);
-
 		Assert.assertEquals(
 			true,
 			discussionPermission.hasAddPermission(
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
 				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
+
+		_addComment(user);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
 			TestPropsValues.getCompanyId());

@@ -1498,6 +1498,40 @@ public class LayoutPageTemplateEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId,
+		long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(LayoutPageTemplateEntryServiceUtil.class,
+					"updateLayoutPageTemplateEntry",
+					_updateLayoutPageTemplateEntryParameterTypes47);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					layoutPageTemplateEntryId, previewFileEntryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.layout.page.template.model.LayoutPageTemplateEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(LayoutPageTemplateEntryServiceHttp.class);
 	private static final Class<?>[] _addLayoutPageTemplateEntryParameterTypes0 = new Class[] {
 			long.class, long.class, String.class, int.class, int.class,
@@ -1649,4 +1683,6 @@ public class LayoutPageTemplateEntryServiceHttp {
 			long.class, String.class, long[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
+	private static final Class<?>[] _updateLayoutPageTemplateEntryParameterTypes47 =
+		new Class[] { long.class, long.class };
 }

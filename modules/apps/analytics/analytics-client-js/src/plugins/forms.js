@@ -1,6 +1,6 @@
 import {onReady} from '../utils/events.js';
 
-const applicationId = 'Forms';
+const applicationId = 'Form';
 
 /**
  * Returns an identifier for a form element.

@@ -149,7 +149,7 @@ public class IndentationCheck extends BaseCheck {
 	private int _addExtraTabForForStatement(
 		int expectedTabCount, DetailAST detailAST) {
 
-		if (_findParent(detailAST, TokenTypes.FOR_EACH_CLAUSE) != null) {
+		if (_findParent(detailAST, TokenTypes.LITERAL_FOR) != null) {
 			return expectedTabCount + 1;
 		}
 

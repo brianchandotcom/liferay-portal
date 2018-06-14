@@ -238,9 +238,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="This field is required." />
-
-		<execute macro="Alert#viewRequestFailedToComplete" />
+		<execute macro="Alert#viewRequiredField" />
 
 		<if>
 			<isset var="webContentContent" />
@@ -1017,7 +1015,7 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
+		<execute macro="Alert#viewRequiredField" />
 	</command>
 
 	<command name="editPGViaWCD">

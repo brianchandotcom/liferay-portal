@@ -40,7 +40,7 @@
 			<elseif>
 				<equals arg1="${userGroupNameVariation}" arg2="Null" />
 				<then>
-					<execute function="AssertTextEquals" locator1="UserGroupsEditUserGroup#NAME_FIELD_ALERT" value1="This field is required." />
+					<execute macro="Alert#viewRequiredField" />
 				</then>
 			</elseif>
 			<else>

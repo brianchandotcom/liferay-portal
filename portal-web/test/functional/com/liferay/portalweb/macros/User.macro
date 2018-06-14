@@ -153,7 +153,7 @@
 			<elseif>
 				<equals arg1="${userEmailAddressVariation}" arg2="Null" />
 				<then>
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#EMAIL_ADDRESS_FIELD_ALERT" value1="This field is required." />
+					<execute macro="Alert#viewRequiredField" />
 				</then>
 			</elseif>
 			<elseif>

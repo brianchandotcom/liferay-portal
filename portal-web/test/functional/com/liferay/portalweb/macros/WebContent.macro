@@ -150,7 +150,7 @@
 			<var name="panel" value="Metadata" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please select at least one category for ${vocabularyName}." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please select at least one category for ${vocabularyName}." />
 	</command>
 
 	<command name="addFeed">

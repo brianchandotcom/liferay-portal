@@ -170,7 +170,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid title." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please enter a valid title." />
 	</command>
 
 	<command name="addFrontPageChildPageInvalidTitleViaWD">
@@ -187,7 +187,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid title." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Please enter a valid title." />
 	</command>
 
 	<command name="addFrontPageCP">

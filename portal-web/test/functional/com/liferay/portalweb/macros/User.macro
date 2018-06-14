@@ -148,7 +148,7 @@
 		<if>
 			<equals arg1="${userEmailAddressVariation}" arg2="Invalid" />
 			<then>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#EMAIL_ADDRESS_FIELD_ALERT" value1="Please enter a valid email address." />
+				<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="Please enter a valid email address." />
 			</then>
 			<elseif>
 				<equals arg1="${userEmailAddressVariation}" arg2="Null" />
@@ -161,13 +161,13 @@
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid email address." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please enter a valid email address." />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${userScreenNameVariation}" arg2="Invalid" />
 				<then>
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#SCREEN_NAME_FIELD_ALERT" value1="The screen name cannot be an email address or a reserved word, such as postfix. It must contain only alphanumeric or the following special characters: -._." />
+					<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="The screen name cannot be an email address or a reserved word, such as postfix. It must contain only alphanumeric or the following special characters: -._." />
 				</then>
 			</elseif>
 			<else>
@@ -1164,14 +1164,14 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Passwords may not be changed under the current password policy." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Passwords may not be changed under the current password policy." />
 			</then>
 			<elseif>
 				<equals arg1="${passwordTooShort}" arg2="true" />
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password is too short. Please make sure your password is at least 6 characters long." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password is too short. Please make sure your password is at least 6 characters long." />
 				</then>
 			</elseif>
 			<elseif>
@@ -1179,7 +1179,7 @@
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password uses common words. Please enter a password that is harder to guess (i.e. contains a mix of numbers and letters)." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password uses common words. Please enter a password that is harder to guess (i.e. contains a mix of numbers and letters)." />
 				</then>
 			</elseif>
 			<elseif>
@@ -1187,13 +1187,13 @@
 				<then>
 					<execute macro="Alert#viewRequestFailedToComplete" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password does not comply with the regular expression ${regex}. Please enter a different password." />
+					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password does not comply with the regular expression ${regex}. Please enter a different password." />
 				</then>
 			</elseif>
 			<else>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password is invalid. Please enter in a different password." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password is invalid. Please enter in a different password." />
 			</else>
 		</if>
 	</command>

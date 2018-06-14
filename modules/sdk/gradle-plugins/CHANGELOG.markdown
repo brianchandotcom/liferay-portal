@@ -4862,6 +4862,10 @@ to version 2.3.187.
 - [LPS-77425]: Remove version difference for
 [Liferay Portal Tools Service Builder] based on the portal version.
 
+## 3.12.42 - 2018-06-13
+
+*No changes.*
+
 ## 3.12.43 - 2018-06-13
 
 ### Fixed

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.tag.apio.identifier;
+package com.liferay.tag.apio.architect.identifier;
 
 import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Holds information about an {@code AssetTag} identifier. It's
- * identified by a {@code long} instance.
+ * Holds information about a {@code Tag} identifier. It's identified by the
+ * internal {@code AssetTag#getTagId()}.
  *
  * @author Javier Gamarra
  * @review

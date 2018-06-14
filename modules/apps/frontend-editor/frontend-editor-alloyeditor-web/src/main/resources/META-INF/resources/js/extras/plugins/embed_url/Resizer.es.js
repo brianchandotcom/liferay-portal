@@ -100,13 +100,15 @@ class Resizer {
 	}
 
 	show(el) {
+		const uiNode = this.editor.config.uiNode || document.body;
+
 		this.el = el;
 
 		this.box = getBoundingBox(this.window, this.el);
 
-		positionElement(this.container, this.box.left, this.box.top);
+		positionElement(this.container, this.box.left, this.box.top + uiNode.scrollTop);
 
-		this.document.body.appendChild(this.container);
+		uiNode.appendChild(this.container);
 
 		this.el.classList.add('ckimgrsz');
 

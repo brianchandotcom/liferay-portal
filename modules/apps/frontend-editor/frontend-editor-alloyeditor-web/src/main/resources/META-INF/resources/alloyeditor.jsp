@@ -175,9 +175,14 @@ name = HtmlUtil.escapeJS(name);
 
 		editorConfig.removePlugins = editorConfig.removePlugins ? editorConfig.removePlugins + ',ae_embed' : 'ae_embed';
 
+		var uiNode = Liferay.Util.getOpener() !== window.self ?
+			document.querySelector('#main-content') :
+			null;
+
 		editorConfig = A.merge(
 			{
-				title: false
+				title: false,
+				uiNode: uiNode
 			},
 			editorConfig
 		);

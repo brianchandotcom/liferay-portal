@@ -43,6 +43,7 @@ import com.liferay.sites.kernel.util.SitesUtil;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -130,8 +131,13 @@ public class AddContentLayoutMVCActionCommand
 					serviceContext);
 			}
 
-			jsonObject.put(
-				"redirectURL", getContentRedirectURL(actionResponse, layout));
+			String redirectURL = getRedirectURL(actionResponse, layout);
+
+			if (Objects.equals(layout.getType(), "content")) {
+				redirectURL = getContentRedirectURL(actionResponse, layout);
+			}
+
+			jsonObject.put("redirectURL", redirectURL);
 
 			String portletResource = ParamUtil.getString(
 				actionRequest, "portletResource");

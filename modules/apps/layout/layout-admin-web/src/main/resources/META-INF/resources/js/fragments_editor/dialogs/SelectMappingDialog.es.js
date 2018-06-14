@@ -107,6 +107,15 @@ class SelectMappingDialog extends PortletBase {
 	}
 
 	/**
+	 * Unmaps the existing editable field
+	 * @private
+	 * @review
+	 */
+
+	_handleUnmapButtonClick() {
+	}
+
+	/**
 	 * Handle a mappeable field click and propagate it's selection
 	 * @param {Event} event
 	 * @private

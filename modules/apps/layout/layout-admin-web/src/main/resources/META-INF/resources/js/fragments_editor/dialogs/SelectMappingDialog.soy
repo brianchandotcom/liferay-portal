@@ -7,6 +7,7 @@
 	{@param spritemap: string}
 	{@param visible: bool}
 	{@param? _handleCancelButtonClick: any}
+	{@param? _handleUnmapButtonClick: any}
 	{@param? _handleMappeableFieldLinkClick: any}
 	{@param? _handleVisibleChanged: any}
 	{@param? _loadingMappeableFields: bool}
@@ -38,6 +39,20 @@
 		{/param}
 
 		{param footer kind="html"}
+			<div class="btn-group">
+				{if $mappedFieldId and $mappedFieldId != ''}
+					<div class="btn-group-item">
+						<button
+							class="btn btn-secondary"
+							data-dismiss="modal"
+							data-onclick="{$_handleUnmapButtonClick}"
+							type="button"
+						>
+							{msg desc=""}unmap-area{/msg}
+						</button>
+					</div>
+				{/if}
+			</div>
 
 			<div class="btn-group">
 				<div class="btn-group-item">

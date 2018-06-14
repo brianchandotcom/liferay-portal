@@ -110,7 +110,7 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 					<aui:validator name="min">1</aui:validator>
 				</aui:input>
 
-				<aui:input name="allowedOrderQuantities" />
+				<aui:input helpMessage="separate-values-with-a-comma-period-or-space" name="allowedOrderQuantities" />
 
 				<aui:input name="multipleOrderQuantity">
 					<aui:validator name="digits" />

@@ -1,4 +1,5 @@
-#if (${projectType} != "workspace")buildscript {
+#if (${projectType} != "workspace")
+buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "@com.liferay.gradle.plugins.version@"
 	}
@@ -11,26 +12,33 @@
 }
 
 apply plugin: "com.liferay.plugin"
-
 #end
+
 dependencies {
 #if (${dependencyManagementEnabled} == "true")
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api"
-	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+#if (${liferayVersion.startsWith("7.0")})
+	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type"
 	compileOnly group: "org.osgi", name: "osgi.cmpn"
+#elseif (${liferayVersion.startsWith("7.1")})
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
+#end
 #else
+#if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.2.0"
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type", version: "2.0.0"
-#if (${liferayVersion.startsWith("7.0")})
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	compileOnly group: "org.osgi", name: "osgi.cmpn", version: "6.0.0"
 #elseif (${liferayVersion.startsWith("7.1")})
+	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "4.0.1"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
 #end
-	compileOnly group: "org.osgi", name: "osgi.cmpn", version: "6.0.0"
 #end
 }
 
+#if (${liferayVersion.startsWith("7.0")})
 classes {
 	dependsOn buildSoy
 }
@@ -45,10 +53,12 @@ wrapSoyAlloyTemplate {
 	moduleName = "${artifactId}-form-field-template"
 	namespace = "ddm"
 }
-#if (${projectType} != "workspace")
+#end
 
+#if (${projectType} != "workspace")
 repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
-}#end
+}
+#end

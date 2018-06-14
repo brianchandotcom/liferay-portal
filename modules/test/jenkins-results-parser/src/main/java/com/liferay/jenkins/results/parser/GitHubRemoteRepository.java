@@ -14,7 +14,10 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
+
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,20 +26,45 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
-
 /**
  * @author Peter Yoo
  */
 public class GitHubRemoteRepository extends RemoteRepository {
 
-	public List<Label> getLabels() {
-		String labelsRequestURL = JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", getUsername(), "/", getName(),
-			"/labels");
+	public void addLabel(String color, String description, String name) {
+		JSONObject jsonObject = new JSONObject();
 
-		if (_repositoryLabels.containsKey(labelsRequestURL)) {
-			return _repositoryLabels.get(labelsRequestURL);
+		jsonObject.put("color", color);
+		jsonObject.put("name", name);
+
+		if ((description != null) && !description.isEmpty()) {
+			jsonObject.put("description", description);
+		}
+
+		String labelRequestURL = _getLabelRequestURL();
+
+		try {
+			JenkinsResultsParserUtil.toString(
+				labelRequestURL, jsonObject.toString());
+
+			_repositoryLabels.remove(labelRequestURL);
+		}
+		catch (IOException ioe) {
+			System.out.println("Unable to add label " + name);
+
+			ioe.printStackTrace();
+		}
+	}
+
+	public void deleteLabel(Label oldLabel) {
+		updateLabel(null, null, null, oldLabel);
+	}
+
+	public List<Label> getLabels() {
+		String labelRequestURL = _getLabelRequestURL();
+
+		if (_repositoryLabels.containsKey(labelRequestURL)) {
+			return _repositoryLabels.get(labelRequestURL);
 		}
 
 		JSONArray labelsJSONArray;
@@ -49,7 +77,7 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			try {
 				labelsJSONArray = JenkinsResultsParserUtil.toJSONArray(
 					JenkinsResultsParserUtil.combine(
-						labelsRequestURL, "?page=", String.valueOf(page)));
+						labelRequestURL, "?page=", String.valueOf(page)));
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(
@@ -69,9 +97,53 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			page++;
 		}
 
-		_repositoryLabels.put(labelsRequestURL, labels);
+		_repositoryLabels.put(labelRequestURL, labels);
 
 		return labels;
+	}
+
+	public void updateLabel(
+		String color, String description, String name, Label oldLabel) {
+
+		JSONObject jsonObject = null;
+
+		if (name != null) {
+			jsonObject = new JSONObject();
+
+			jsonObject.put("color", color);
+			jsonObject.put("name", name);
+
+			if ((description != null) && !description.isEmpty()) {
+				jsonObject.put("description", description);
+			}
+		}
+
+		String labelRequestURL = JenkinsResultsParserUtil.combine(
+			_getLabelRequestURL(), "/", oldLabel.getName());
+
+		try {
+			if (jsonObject == null) {
+				JenkinsResultsParserUtil.toString(labelRequestURL);
+			}
+			else {
+				JenkinsResultsParserUtil.toString(
+					labelRequestURL, jsonObject.toString());
+			}
+
+			_repositoryLabels.remove(_getLabelRequestURL());
+		}
+		catch (IOException ioe) {
+			if (jsonObject == null) {
+				System.out.println(
+					"Unable to delete label " + oldLabel.getName());
+			}
+			else {
+				System.out.println(
+					"Unable to update label " + oldLabel.getName());
+			}
+
+			ioe.printStackTrace();
+		}
 	}
 
 	protected GitHubRemoteRepository(Remote remote) {
@@ -85,6 +157,12 @@ public class GitHubRemoteRepository extends RemoteRepository {
 
 	protected GitHubRemoteRepository(String repositoryName, String username) {
 		super("github.com", repositoryName, username);
+	}
+
+	private String _getLabelRequestURL() {
+		return JenkinsResultsParserUtil.combine(
+			"https://api.github.com/repos/", getUsername(), "/", getName(),
+			"/labels");
 	}
 
 	private static final Map<String, List<Label>> _repositoryLabels =

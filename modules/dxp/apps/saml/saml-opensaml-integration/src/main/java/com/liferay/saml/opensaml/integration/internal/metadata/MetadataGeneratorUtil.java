@@ -85,7 +85,6 @@ public class MetadataGeneratorUtil {
 			OpenSamlUtil.buildIdpSsoDescriptor();
 
 		idpSSODescriptor.addSupportedProtocol(SAMLConstants.SAML20P_NS);
-
 		idpSSODescriptor.setWantAuthnRequestsSigned(wantAuthnRequestSigned);
 
 		List<KeyDescriptor> keyDescriptors =

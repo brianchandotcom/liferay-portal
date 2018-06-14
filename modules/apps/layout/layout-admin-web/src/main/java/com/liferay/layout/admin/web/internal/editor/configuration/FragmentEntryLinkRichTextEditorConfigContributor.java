@@ -145,7 +145,7 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("buttons", toJSONArray("[‘linkEditBrowse’]"));
+		jsonObject.put("buttons", toJSONArray("['linkEditBrowse']"));
 		jsonObject.put("name", "link");
 		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
 

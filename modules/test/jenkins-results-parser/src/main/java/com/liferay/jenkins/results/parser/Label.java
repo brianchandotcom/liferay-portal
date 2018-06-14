@@ -89,6 +89,11 @@ public class Label {
 		_updateGithub();
 	}
 
+	@Override
+	public String toString() {
+		return _jsonObject.toString(4);
+	}
+
 	protected Label(JSONObject jsonObject) {
 		_jsonObject = jsonObject;
 	}

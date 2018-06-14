@@ -20,12 +20,14 @@ import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.GroupInheritContentException;
 import com.liferay.portal.kernel.exception.ImageTypeException;
@@ -61,6 +63,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -69,7 +72,9 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -103,6 +108,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class GroupPagesPortlet extends MVCPortlet {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_layoutAdminWebConfiguration = ConfigurableUtil.createConfigurable(
+			LayoutAdminWebConfiguration.class, properties);
+	}
 
 	@Override
 	protected void doDispatch(
@@ -161,6 +173,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 				ApplicationListWebKeys.GROUP_PROVIDER, _groupProvider);
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.ITEM_SELECTOR, _itemSelector);
+			renderRequest.setAttribute(
+				LayoutAdminWebConfiguration.class.getName(),
+				_layoutAdminWebConfiguration);
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_TEMPLATE_COLLECTION_SERVICE,
 				_layoutPageTemplateCollectionService);
@@ -237,6 +252,8 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	private volatile LayoutAdminWebConfiguration _layoutAdminWebConfiguration;
 
 	@Reference
 	private LayoutPageTemplateCollectionService

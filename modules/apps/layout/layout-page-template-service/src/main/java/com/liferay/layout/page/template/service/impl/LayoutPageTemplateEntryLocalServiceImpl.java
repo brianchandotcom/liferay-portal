@@ -409,6 +409,21 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId, long previewFileEntryId)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.findByPrimaryKey(
+				layoutPageTemplateEntryId);
+
+		layoutPageTemplateEntry.setPreviewFileEntryId(previewFileEntryId);
+
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long userId, long layoutPageTemplateEntryId, int status)
 		throws PortalException {
 

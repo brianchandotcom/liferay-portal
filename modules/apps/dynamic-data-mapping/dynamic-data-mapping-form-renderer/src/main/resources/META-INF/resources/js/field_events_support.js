@@ -77,8 +77,47 @@ AUI.add(
 				var instance = this;
 
 				instance.bindInputEvent('blur', instance._onInputBlur, true);
-				instance.bindInputEvent('focus', instance._onInputFocus);
+				instance.bindInputEvent('focus', instance._onInputFocus, true);
 				instance.bindInputEvent(instance.getChangeEventName(), instance._onValueChange, true);
+			},
+
+			_fireBlurEvent: function() {
+				var instance = this;
+
+				var root = instance.getRoot();
+
+				if (root) {
+					var now = new Date();
+
+					Liferay.fire(
+						'ddmFieldBlur',
+						{
+							fieldName: instance.get('fieldName'),
+							focusDuration: (now - (instance.get('fieldFocusDate') || now)),
+							formId: root.getFormId(),
+							page: root.getCurrentPage() || 1
+						}
+					);
+				}
+			},
+
+			_fireFocusEvent: function() {
+				var instance = this;
+
+				var root = instance.getRoot();
+
+				if (root) {
+					instance.set('fieldFocusDate', new Date());
+
+					Liferay.fire(
+						'ddmFieldFocus',
+						{
+							fieldName: instance.get('fieldName'),
+							formId: root.getFormId(),
+							page: root.getCurrentPage() || 1
+						}
+					);
+				}
 			},
 
 			_fireStartedFillingEvent: function() {
@@ -90,11 +129,14 @@ AUI.add(
 					var root = instance.getRoot();
 
 					if (root) {
-						Liferay.fire("ddmFieldStartedFilling", {
-							fieldName: instance.get("fieldName"),
-							formId: root.getFormId(),
-							page: root.getCurrentPage() || 1
-						});
+						Liferay.fire(
+							'ddmFieldStartedFilling',
+							{
+								fieldName: instance.get('fieldName'),
+								formId: root.getFormId(),
+								page: root.getCurrentPage() || 1
+							}
+						);
 					}
 				}
 			},
@@ -113,18 +155,7 @@ AUI.add(
 
 				instance.fire('blur', instance._getEventPayload(event));
 
-				var root = instance.getRoot();
-
-				if (root) {
-					var now = new Date();
-
-					Liferay.fire("ddmFieldBlur", {
-						fieldName: instance.get("fieldName"),
-						focusDuration: (now - (instance.get('fieldFocusDate') || now)),
-						formId: root.getFormId(),
-						page: root.getCurrentPage() || 1
-					});
-				}
+				instance._fireBlurEvent();
 			},
 
 			_onInputFocus: function(event) {
@@ -132,17 +163,7 @@ AUI.add(
 
 				instance.fire('focus', instance._getEventPayload(event));
 
-				var root = instance.getRoot();
-
-				if (root) {
-					instance.set('fieldFocusDate', new Date());
-
-					Liferay.fire("ddmFieldFocus", {
-						fieldName: instance.get("fieldName"),
-						formId: root.getFormId(),
-						page: root.getCurrentPage() || 1
-					});
-				}
+				instance._fireFocusEvent();
 			},
 
 			_onValueChange: function(event) {

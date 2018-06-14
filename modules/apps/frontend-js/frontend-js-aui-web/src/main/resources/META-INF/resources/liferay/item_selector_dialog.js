@@ -9,6 +9,8 @@ AUI.add(
 
 		var STR_SELECTED_ITEM = 'selectedItem';
 
+		var STR_VISIBLE = 'visible';
+
 		var LiferayItemSelectorDialog = A.Component.create(
 			{
 				ATTRS: {
@@ -37,6 +39,11 @@ AUI.add(
 
 					zIndex: {
 						validator: Lang.isNumber
+					},
+
+					visible: {
+						validator: Lang.isBoolean,
+						value: false
 					}
 				},
 
@@ -63,6 +70,8 @@ AUI.add(
 						instance._currentItem = null;
 						instance._selectedItem = null;
 
+						instance.set(STR_VISIBLE, true);
+
 						Util.selectEntity(
 							{
 								dialog: {
@@ -74,6 +83,8 @@ AUI.add(
 											if (!event.newVal) {
 												instance.set(STR_SELECTED_ITEM, instance._selectedItem);
 											}
+
+											instance.set(STR_VISIBLE, event.newVal);
 										}
 									},
 									'toolbars.footer': [

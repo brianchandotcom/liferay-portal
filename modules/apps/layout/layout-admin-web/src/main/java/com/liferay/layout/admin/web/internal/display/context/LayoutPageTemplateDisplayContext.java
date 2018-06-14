@@ -17,6 +17,14 @@ package com.liferay.layout.admin.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.configuration.LayoutAdminWebConfiguration;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -31,14 +39,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +75,11 @@ public class LayoutPageTemplateDisplayContext {
 		_renderResponse = renderResponse;
 		_request = request;
 
+		_itemSelector = (ItemSelector)request.getAttribute(
+			LayoutAdminWebKeys.ITEM_SELECTOR);
+		_layoutAdminWebConfiguration =
+			(LayoutAdminWebConfiguration)_renderRequest.getAttribute(
+				LayoutAdminWebConfiguration.class.getName());
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -201,6 +217,38 @@ public class LayoutPageTemplateDisplayContext {
 					});
 			}
 		};
+	}
+
+	public PortletURL getItemSelectorURL(long layoutPageTemplateEntryId) {
+		PortletURL uploadURL = _renderResponse.createActionURL();
+
+		uploadURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/layout/upload_layout_page_template_entry_preview");
+		uploadURL.setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(layoutPageTemplateEntryId));
+
+		ItemSelectorCriterion uploadItemSelectorCriterion =
+			new UploadItemSelectorCriterion(
+				LayoutAdminPortletKeys.GROUP_PAGES, uploadURL.toString(),
+				LanguageUtil.get(_themeDisplay.getLocale(), "page-template"),
+				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
+				_layoutAdminWebConfiguration.thumbnailExtensions());
+
+		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
+			new ArrayList<>();
+
+		uploadDesiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
+
+		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			uploadDesiredItemSelectorReturnTypes);
+
+		return _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_request),
+			_renderResponse.getNamespace() + "changePreview",
+			uploadItemSelectorCriterion);
 	}
 
 	public String getKeywords() {
@@ -675,7 +723,9 @@ public class LayoutPageTemplateDisplayContext {
 		return false;
 	}
 
+	private final ItemSelector _itemSelector;
 	private String _keywords;
+	private final LayoutAdminWebConfiguration _layoutAdminWebConfiguration;
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 	private Long _layoutPageTemplateCollectionId;
 	private List<LayoutPageTemplateCollection> _layoutPageTemplateCollections;

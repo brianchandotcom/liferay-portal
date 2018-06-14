@@ -252,6 +252,10 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 		long layoutPageTemplateEntryId, int status) throws PortalException;
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, long previewFileEntryId)
+		throws PortalException;
+
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException;
 

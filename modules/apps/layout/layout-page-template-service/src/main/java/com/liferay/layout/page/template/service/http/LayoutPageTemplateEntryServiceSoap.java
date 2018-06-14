@@ -797,6 +797,23 @@ public class LayoutPageTemplateEntryServiceSoap {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, long previewFileEntryId)
+		throws RemoteException {
+		try {
+			com.liferay.layout.page.template.model.LayoutPageTemplateEntry returnValue =
+				LayoutPageTemplateEntryServiceUtil.updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
+					previewFileEntryId);
+
+			return com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntrySoap updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws RemoteException {
 		try {

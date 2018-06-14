@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -67,6 +69,15 @@ public class UpdateFragmentEntryPreviewMVCActionCommand
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
 				themeDisplay.getScopeGroupId(), FragmentPortletKeys.FRAGMENT);
+
+		if (repository == null) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
+			repository = PortletFileRepositoryUtil.addPortletRepository(
+				themeDisplay.getScopeGroupId(), FragmentPortletKeys.FRAGMENT,
+				serviceContext);
+		}
 
 		String fileName =
 			fragmentEntryId + "_preview." + fileEntry.getExtension();

@@ -69,6 +69,10 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 
 		jsonObject.put("allowedContent", sb.toString());
 
+		jsonObject.put("enterMode", 2);
+
+		jsonObject.put("extraPlugins", getExtraPluginsLists());
+
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, "_EDITOR_NAME_selectItem",
 			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
@@ -76,6 +80,8 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+
+		jsonObject.put("removePlugins", getRemovePluginsLists());
 
 		jsonObject.put("toolbars", getToolbarsJSONObject());
 	}
@@ -93,6 +99,12 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 		return "b code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
 	}
 
+	protected String getExtraPluginsLists() {
+		return "ae_autolink,ae_dragresize,ae_addimages,ae_imagealignment," +
+			"ae_placeholder,ae_selectionregion,ae_tableresize," +
+				"ae_tabletools,ae_uicore,itemselector,media,adaptivemedia";
+	}
+
 	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -107,6 +119,11 @@ public class FragmentEntryLinkRichTextEditorConfigContributor
 			desiredItemSelectorReturnTypes);
 
 		return imageItemSelectorCriterion;
+	}
+
+	protected String getRemovePluginsLists() {
+		return "contextmenu,elementspath,image,link,liststyle,magicline," +
+			"resize,tabletools,toolbar,ae_embed";
 	}
 
 	protected JSONObject getToolbarsJSONObject() {

@@ -25,6 +25,7 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -69,9 +70,27 @@ public class FragmentEntryLinkEditorConfigContributor
 			requestBackedPortletURLFactory, namespace + name + "selectItem",
 			getImageItemSelectorCriterion(), getURLItemSelectorCriterion());
 
+		jsonObject.put("allowedContent", "");
+
+		jsonObject.put("disallowedContent", "br");
+
+		jsonObject.put("enterMode", 2);
+
+		jsonObject.put("extraPlugins", getExtraPluginsLists());
+
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+
+		jsonObject.put("removePlugins", getRemovePluginsLists());
+
+		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
+	}
+
+	protected String getExtraPluginsLists() {
+		return "ae_autolink,ae_dragresize,ae_addimages,ae_imagealignment," +
+			"ae_placeholder,ae_selectionregion,ae_tableresize," +
+				"ae_tabletools,ae_uicore,itemselector,media,adaptivemedia";
 	}
 
 	protected ItemSelectorCriterion getImageItemSelectorCriterion() {
@@ -88,6 +107,11 @@ public class FragmentEntryLinkEditorConfigContributor
 			desiredItemSelectorReturnTypes);
 
 		return imageItemSelectorCriterion;
+	}
+
+	protected String getRemovePluginsLists() {
+		return "contextmenu,elementspath,image,link,liststyle,magicline," +
+			"resize,tabletools,toolbar,ae_embed";
 	}
 
 	protected ItemSelectorCriterion getURLItemSelectorCriterion() {

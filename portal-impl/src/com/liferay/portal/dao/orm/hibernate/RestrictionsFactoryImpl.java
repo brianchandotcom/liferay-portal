@@ -41,6 +41,18 @@ import org.hibernate.criterion.Restrictions;
 @DoPrivileged
 public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
+	public void afterPropertiesSet() {
+		DB db = DBManagerUtil.getDB();
+
+		DBType dbType = db.getDBType();
+
+		_databaseInMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
+				new Filter(dbType.getName())),
+			Integer.MAX_VALUE);
+	}
+
 	@Override
 	public Criterion allEq(Map<String, Criterion> propertyNameValues) {
 		return new CriterionImpl(Restrictions.allEq(propertyNameValues));
@@ -111,23 +123,13 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	@Override
 	public Criterion in(String propertyName, Collection<?> values) {
-		DB db = DBManagerUtil.getDB();
-
-		DBType dbType = db.getDBType();
-
-		int databaseInMaxParameters = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
-				new Filter(dbType.getName())),
-			Integer.MAX_VALUE);
-
 		int size = values.size();
 
-		if (size > databaseInMaxParameters) {
+		if (size > _databaseInMaxParameters) {
 			Disjunction disjunction = disjunction();
 
 			int start = 0;
-			int end = databaseInMaxParameters;
+			int end = _databaseInMaxParameters;
 
 			List<?> list = ListUtil.fromCollection(values);
 
@@ -137,8 +139,8 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 						Restrictions.in(
 							propertyName, ListUtil.subList(list, start, end))));
 
-				start += databaseInMaxParameters;
-				end += databaseInMaxParameters;
+				start += _databaseInMaxParameters;
+				end += _databaseInMaxParameters;
 			}
 
 			return disjunction;
@@ -282,5 +284,7 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 		return new CriterionImpl(
 			Restrictions.sqlRestriction(sql, values, hibernateTypes));
 	}
+
+	private int _databaseInMaxParameters;
 
 }

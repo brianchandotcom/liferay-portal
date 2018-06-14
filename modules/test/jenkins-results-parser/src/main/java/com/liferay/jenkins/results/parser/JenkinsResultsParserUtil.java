@@ -748,9 +748,9 @@ public class JenkinsResultsParserUtil {
 		List<JenkinsMaster> jenkinsMasters = new ArrayList<>();
 
 		for (int i = 1;
-			buildProperties.containsKey(
-				"master.slaves(" + prefix + "-" + i + ")");
-			i++) {
+				buildProperties.containsKey(
+					"master.slaves(" + prefix + "-" + i + ")");
+				i++) {
 
 			jenkinsMasters.add(new JenkinsMaster(prefix + "-" + i));
 		}
@@ -1191,8 +1191,8 @@ public class JenkinsResultsParserUtil {
 					"Unable to get build properties", ioe);
 			}
 
-			for (int i =
-				1; properties.containsKey(_getRedactTokenKey(i)); i++) {
+			for (int i = 1; properties.containsKey(_getRedactTokenKey(i));
+					i++) {
 
 				String key = properties.getProperty(_getRedactTokenKey(i));
 

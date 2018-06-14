@@ -46,11 +46,13 @@ public class CopyrightCheck extends BaseFileCheck {
 		if (isModulesApp(absolutePath, true)) {
 			String commercialCopyright = _getCommercialCopyright();
 
-			if (Validator.isNotNull(commercialCopyright) &&
-				content.contains(copyright)) {
+			if (Validator.isNotNull(commercialCopyright)) {
+				if (content.contains(copyright)) {
+					content = StringUtil.replace(
+						content, copyright, commercialCopyright);
+				}
 
-				content = StringUtil.replace(
-					content, copyright, commercialCopyright);
+				copyright = commercialCopyright;
 			}
 		}
 

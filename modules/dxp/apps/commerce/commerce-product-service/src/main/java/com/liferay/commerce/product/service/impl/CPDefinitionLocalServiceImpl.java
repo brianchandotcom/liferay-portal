@@ -282,7 +282,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product friendly URL
 
-		if (Validator.isNull(urlTitleMap)) {
+		if (urlTitleMap == null) {
 			urlTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
 		}
 
@@ -1072,7 +1072,7 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinitionPersistence.update(cpDefinition);
 
-		if (Validator.isNull(urlTitleMap)) {
+		if (urlTitleMap == null) {
 			urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
 		}
 

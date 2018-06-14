@@ -374,7 +374,7 @@ public class CommercePriceEntryLocalServiceImpl
 				commercePriceEntryPersistence.fetchByExternalReferenceCode(
 					externalReferenceCode);
 
-			if (Validator.isNotNull(commercePriceEntry)) {
+			if (commercePriceEntry != null) {
 				return updateCommercePriceEntry(
 					commercePriceEntry.getCommercePriceEntryId(), price,
 					promoPrice, serviceContext);

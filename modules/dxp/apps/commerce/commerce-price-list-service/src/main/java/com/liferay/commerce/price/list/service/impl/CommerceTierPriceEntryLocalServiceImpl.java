@@ -363,7 +363,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				commerceTierPriceEntryPersistence.fetchByExternalReferenceCode(
 					externalReferenceCode);
 
-			if (Validator.isNotNull(commerceTierPriceEntry)) {
+			if (commerceTierPriceEntry != null) {
 				return updateCommerceTierPriceEntry(
 					commerceTierPriceEntry.getCommerceTierPriceEntryId(), price,
 					promoPrice, minQuantity, serviceContext);

@@ -566,7 +566,7 @@ public class CommercePriceListLocalServiceImpl
 				commercePriceListPersistence.fetchByExternalReferenceCode(
 					externalReferenceCode);
 
-			if (Validator.isNotNull(commercePriceList)) {
+			if (commercePriceList != null) {
 				return updateCommercePriceList(
 					commercePriceList.getCommercePriceListId(),
 					commerceCurrencyId, name, priority, displayDateMonth,

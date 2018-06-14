@@ -185,15 +185,19 @@ prepareMajorIncrement {
 					return FileVisitResult.SKIP_SUBTREE
 				}
 
+				String bundleSymbolicName = null
+
 				File bndBndFile = new File(it, "bnd.bnd")
+				File gulpfileJsFile = new File(it, "gulpfile.js")
 
-				if (!bndBndFile.exists()) {
-					return FileVisitResult.CONTINUE
+				if (bndBndFile.exists()) {
+					Properties bndProperties = GUtil.loadProperties(bndBndFile)
+
+					bundleSymbolicName = bndProperties.getProperty("Bundle-SymbolicName")
 				}
-
-				Properties bndProperties = GUtil.loadProperties(bndBndFile)
-
-				String bundleSymbolicName = bndProperties.getProperty("Bundle-SymbolicName")
+				else if (gulpfileJsFile.exists() && gulpfileJsFile.text.contains("liferay-theme-tasks")) {
+					bundleSymbolicName = it.name
+				}
 
 				if (!bundleSymbolicName) {
 					return FileVisitResult.CONTINUE
@@ -268,6 +272,7 @@ prepareMajorIncrement {
 
 			File bndBndFile = new File(dir, "bnd.bnd")
 			File buildXmlFile = new File(dir, "build.xml")
+			File packageJsonFile = new File(dir, "package.json")
 
 			if (bndBndFile.exists()) {
 				versionFile = bndBndFile
@@ -276,6 +281,10 @@ prepareMajorIncrement {
 			else if (buildXmlFile.exists()) {
 				versionFile = buildXmlFile
 				versionPattern = ~/<property name="artifact\.version" value="(\w+\.\w+\.\w+)" \/>/
+			}
+			else if (packageJsonFile.exists()) {
+				versionFile = packageJsonFile
+				versionPattern = ~/"version": "(\w+\.\w+\.\w+)"/
 			}
 			else {
 				throw new GradleException("Unable to increment major version of ${dir}")

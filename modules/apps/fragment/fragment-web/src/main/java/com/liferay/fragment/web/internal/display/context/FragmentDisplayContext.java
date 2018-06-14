@@ -589,7 +589,6 @@ public class FragmentDisplayContext {
 	}
 
 	private String _cssContent;
-	private String _displayStyle;
 	private FragmentCollection _fragmentCollection;
 	private Long _fragmentCollectionId;
 	private SearchContainer _fragmentEntriesSearchContainer;

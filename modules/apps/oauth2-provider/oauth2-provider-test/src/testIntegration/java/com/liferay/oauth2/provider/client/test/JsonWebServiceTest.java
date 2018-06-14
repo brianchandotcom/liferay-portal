@@ -122,7 +122,7 @@ public class JsonWebServiceTest extends BaseClientTestCase {
 
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationRO",
-				Collections.singletonList("everything.readonly"));
+				Collections.singletonList("everything.read"));
 
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplicationRW",

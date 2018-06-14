@@ -44,25 +44,36 @@
 			</div>
 
 			<div aria-labelledby="<portlet:namespace />globalAccordionHeading<%= scopeAlias %>" class="collapse panel-collapse" id="<portlet:namespace />globalAccordion<%= scopeAlias %>" role="tabpanel">
+				<div class="panel-body">
 
-				<%
-				AssignableScopes assignableScopes = scopeAliasAssignableScopesEntry.getKey();
+					<%
+					AssignableScopes assignableScopes = scopeAliasAssignableScopesEntry.getKey();
 
-				for (String applicationName : assignableScopes.getApplicationNames()) {
-				%>
+					for (String applicationName : assignableScopes.getApplicationNames()) {
+					%>
 
-					<ul>
-						<li>
-							<%= HtmlUtil.escape(assignScopesDisplayContext.getApplicationDescription(applicationName)) %><br />
+						<ul class="list-group">
+							<li class="list-group-item list-group-item-flex">
+								<div class="autofit-col">
+									<clay:icon
+										symbol="search"
+									/>
+								</div>
 
-							<font size="1">( <%= HtmlUtil.escape(StringUtil.merge(assignableScopes.getApplicationScopeDescription(applicationName))) %>)</font>
-						</li>
-					</ul>
+								<div class="autofit-col autofit-col-expand">
+									<h4 class="list-group-title text-truncate"><%= HtmlUtil.escape(assignScopesDisplayContext.getApplicationDescription(applicationName)) %></h4>
+									<p class="list-group-subtitle text-truncate">
+										<%= assignScopesDisplayContext.getApplicationScopeDescription(applicationName, assignableScopes, "<br />+ ") %>
+									</p>
+								</div>
+							</li>
+						</ul>
 
-				<%
-				}
-				%>
+					<%
+					}
+					%>
 
+				</div>
 			</div>
 		</div>
 

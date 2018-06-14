@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.commerce.currency.configuration.ExchangeRateProviderGroupServiceConfiguration",
 	localization = "content/Language",
-	name = "exchange-rate-group-service-configuration-name"
+	name = "exchange-rate-provider-group-service-configuration-name"
 )
 public interface ExchangeRateProviderGroupServiceConfiguration {
 

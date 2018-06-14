@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -167,7 +168,7 @@ public class DDMTemplateStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		DDMTemplate existingTemplate = fetchExistingTemplate(
+		DDMTemplate existingTemplate = fetchExistingTemplateWithParentGroups(
 			uuid, groupId, classNameId, templateKey, preloaded);
 
 		if (existingTemplate == null) {
@@ -293,9 +294,7 @@ public class DDMTemplateStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		DDMTemplate existingTemplate = null;
-
-		existingTemplate = fetchExistingTemplate(
+		DDMTemplate existingTemplate = fetchExistingTemplateWithParentGroups(
 			uuid, groupId, classNameId, templateKey, preloaded);
 
 		Map<Long, Long> templateIds =
@@ -473,6 +472,26 @@ public class DDMTemplateStagedModelDataHandler
 		return existingTemplate;
 	}
 
+	protected DDMTemplate fetchExistingTemplateWithParentGroups(
+		String uuid, long groupId, long classNameId, String templateKey,
+		boolean preloaded) {
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		while (group != null) {
+			DDMTemplate existingTemplate = fetchExistingTemplate(
+				uuid, group.getGroupId(), classNameId, templateKey, preloaded);
+
+			if (existingTemplate != null) {
+				return existingTemplate;
+			}
+
+			group = group.getParentGroup();
+		}
+
+		return null;
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
@@ -513,6 +532,10 @@ public class DDMTemplateStagedModelDataHandler
 	private DDMTemplateExportImportContentProcessor
 		_ddmTemplateExportImportContentProcessor;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
 	private ImageLocalService _imageLocalService;
 
 	@Reference

@@ -30,12 +30,14 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -48,11 +50,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -74,6 +78,54 @@ public class DDMStructureStagedModelDataHandlerTest
 
 		setUpDDMDataProvider();
 		setUpDDMFormValuesJSONDeserializer();
+	}
+
+	@Test
+	public void testPublishStructureWithParentGroups() throws Exception {
+		Group parentGroup = GroupTestUtil.addGroup();
+
+		Group childGroup = GroupTestUtil.addGroup(parentGroup.getGroupId());
+
+		DDMStructure parentStructure = DDMStructureTestUtil.addStructure(
+			parentGroup.getGroupId(), _CLASS_NAME);
+
+		DDMStructure childStructure = DDMStructureTestUtil.addStructure(
+			childGroup.getGroupId(), _CLASS_NAME,
+			parentStructure.getStructureId(),
+			DDMStructureTestUtil.getSampleDDMForm("childname"),
+			LocaleUtil.getSiteDefault(),
+			ServiceContextTestUtil.getServiceContext());
+
+		exportStructure(parentGroup, parentStructure);
+
+		Group newParentGroup = GroupTestUtil.addGroup();
+
+		importStructure(parentGroup, newParentGroup, parentStructure);
+
+		exportStructure(childGroup, childStructure);
+
+		childGroup = GroupTestUtil.deleteGroup(childGroup);
+
+		parentGroup = GroupTestUtil.deleteGroup(parentGroup);
+
+		Group newChildGroup = GroupTestUtil.addGroup(
+			newParentGroup.getGroupId());
+
+		importStructure(childGroup, newChildGroup, childStructure);
+
+		DDMStructure importedParentStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+				parentStructure.getUuid(), newParentGroup.getGroupId());
+
+		DDMStructure importedChildStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+				childStructure.getUuid(), newChildGroup.getGroupId());
+
+		Assert.assertNotNull(importedParentStructure);
+		Assert.assertNotNull(importedChildStructure);
+		Assert.assertEquals(
+			importedParentStructure.getStructureId(),
+			importedChildStructure.getParentStructureId());
 	}
 
 	@Override
@@ -162,6 +214,15 @@ public class DDMStructureStagedModelDataHandlerTest
 			ddmForm, LocaleUtil.getSiteDefault(), serviceContext);
 	}
 
+	protected void exportStructure(Group exportGroup, DDMStructure structure)
+		throws Exception {
+
+		initExport(exportGroup);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, structure);
+	}
+
 	protected DDMFormValues getDDMDataProviderInstanceFormValues() {
 		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
 
@@ -219,6 +280,21 @@ public class DDMStructureStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return DDMStructure.class;
+	}
+
+	protected void importStructure(
+			Group exportGroup, Group importGroup, DDMStructure structure)
+		throws Exception {
+
+		initImport(exportGroup, importGroup);
+
+		if (Objects.nonNull(structure)) {
+			DDMStructure exportedStructure =
+				(DDMStructure)readExportedStagedModel(structure);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStructure);
+		}
 	}
 
 	protected void setUpDDMDataProvider() throws Exception {

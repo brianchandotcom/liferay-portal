@@ -162,6 +162,10 @@ public class GroupTestUtil {
 			friendlyURL, site, active, serviceContext);
 	}
 
+	public static Group deleteGroup(Group group) throws Exception {
+		return GroupLocalServiceUtil.deleteGroup(group);
+	}
+
 	public static void enableLocalStaging(Group group) throws Exception {
 		enableLocalStaging(group, TestPropsValues.getUserId());
 	}

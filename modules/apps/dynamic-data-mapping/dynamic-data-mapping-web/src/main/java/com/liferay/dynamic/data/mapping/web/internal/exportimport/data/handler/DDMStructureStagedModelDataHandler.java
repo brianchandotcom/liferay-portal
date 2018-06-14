@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -181,7 +182,7 @@ public class DDMStructureStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		DDMStructure existingStructure = fetchExistingStructure(
+		DDMStructure existingStructure = fetchExistingStructureWithParentGroups(
 			uuid, groupId, classNameId, structureKey, preloaded);
 
 		if (existingStructure == null) {
@@ -254,9 +255,7 @@ public class DDMStructureStagedModelDataHandler
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
-		DDMStructure existingStructure = null;
-
-		existingStructure = fetchExistingStructure(
+		DDMStructure existingStructure = fetchExistingStructureWithParentGroups(
 			uuid, groupId, classNameId, structureKey, preloaded);
 
 		Map<Long, Long> structureIds =
@@ -480,6 +479,26 @@ public class DDMStructureStagedModelDataHandler
 		return existingStructure;
 	}
 
+	protected DDMStructure fetchExistingStructureWithParentGroups(
+		String uuid, long groupId, long classNameId, String structureKey,
+		boolean preloaded) {
+
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		while (group != null) {
+			DDMStructure existingStructure = fetchExistingStructure(
+				uuid, group.getGroupId(), classNameId, structureKey, preloaded);
+
+			if (existingStructure != null) {
+				return existingStructure;
+			}
+
+			group = group.getParentGroup();
+		}
+
+		return null;
+	}
+
 	protected DDMForm getImportDDMForm(
 			PortletDataContext portletDataContext, Element structureElement)
 		throws PortalException {
@@ -667,6 +686,9 @@ public class DDMStructureStagedModelDataHandler
 	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

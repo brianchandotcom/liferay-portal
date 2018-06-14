@@ -23,6 +23,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
@@ -76,6 +77,10 @@ public class LayoutPageTemplateDisplayContext {
 
 		_itemSelector = (ItemSelector)request.getAttribute(
 			LayoutAdminWebKeys.ITEM_SELECTOR);
+
+		_layoutAdminWebConfiguration =
+			(LayoutAdminWebConfiguration)_renderRequest.getAttribute(
+				LayoutAdminWebConfiguration.class.getName());
 
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -226,14 +231,12 @@ public class LayoutPageTemplateDisplayContext {
 			"layoutPageTemplateEntryId",
 			String.valueOf(layoutPageTemplateEntryId));
 
-		String[] extensions = null;
-
 		ItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				LayoutAdminPortletKeys.GROUP_PAGES, uploadURL.toString(),
 				LanguageUtil.get(_themeDisplay.getLocale(), "page-template"),
 				UploadServletRequestConfigurationHelperUtil.getMaxSize(),
-				extensions);
+				_layoutAdminWebConfiguration.thumbnailExtensions());
 
 		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -724,6 +727,7 @@ public class LayoutPageTemplateDisplayContext {
 
 	private final ItemSelector _itemSelector;
 	private String _keywords;
+	private final LayoutAdminWebConfiguration _layoutAdminWebConfiguration;
 	private LayoutPageTemplateCollection _layoutPageTemplateCollection;
 	private Long _layoutPageTemplateCollectionId;
 	private List<LayoutPageTemplateCollection> _layoutPageTemplateCollections;

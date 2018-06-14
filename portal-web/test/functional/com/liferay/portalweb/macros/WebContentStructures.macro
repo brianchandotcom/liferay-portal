@@ -68,7 +68,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
+		<execute macro="Alert#viewRequiredField" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -109,7 +109,7 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The structure cannot be deleted because it is required by one or more templates." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="The structure cannot be deleted because it is required by one or more templates." />
 			</then>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />

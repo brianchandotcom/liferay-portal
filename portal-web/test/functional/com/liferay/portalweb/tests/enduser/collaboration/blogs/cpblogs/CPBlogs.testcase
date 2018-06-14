@@ -1015,6 +1015,6 @@
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE_FIELD_HELPER" value1="This field is required to publish the entry." />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_FIELD_HELPER" value1="This field is required." />
+		<execute macro="Alert#viewRequiredField" />
 	</command>
 </definition>

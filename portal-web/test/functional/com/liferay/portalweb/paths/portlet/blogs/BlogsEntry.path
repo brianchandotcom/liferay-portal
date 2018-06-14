@@ -89,11 +89,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTENT_FIELD_HELPER</td>
-	<td>//div[contains(@class,'required') and contains(.,'This field is required.')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_GENERIC</td>
 	<td>//div[contains(@class,'content')]//p</td>
 	<td></td>

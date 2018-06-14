@@ -800,7 +800,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Definition imported successfully." />
 
-		<execute macro="Alert#_closeMessage">
+		<execute macro="Alert#closeMessage">
 			<var name="messageType" value="SUCCESS" />
 		</execute>
 

@@ -49,7 +49,7 @@
 			<var name="url" value="${url1}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_1" value1="You do not have the required permissions." />
 
 		<!-- Ignore following step until LPS-73530 is fixed -->
 

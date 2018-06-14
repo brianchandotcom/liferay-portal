@@ -182,7 +182,7 @@
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="${errorMessage}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="${errorMessage}" />
 	</command>
 
 	<command name="waitForRSSLoad">

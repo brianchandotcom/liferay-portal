@@ -42,6 +42,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -57,6 +58,8 @@ public class ReleaseVersionsTest {
 
 	@Test
 	public void testReleaseVersions() throws IOException {
+		Assume.assumeTrue(Validator.isNull(System.getenv("JENKINS_HOME")));
+
 		String otherDirName = System.getProperty(
 			"release.versions.test.other.dir");
 

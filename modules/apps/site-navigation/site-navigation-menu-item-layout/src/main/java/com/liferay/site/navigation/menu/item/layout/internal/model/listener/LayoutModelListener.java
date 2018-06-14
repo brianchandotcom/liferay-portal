@@ -54,10 +54,16 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return;
 		}
 
-		boolean addToAutoMenus = GetterUtil.getBoolean(
-			layout.getTypeSettingsProperty("addToAutoMenus"));
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
 
-		if (layout.isHidden() || !addToAutoMenus) {
+		boolean addToAutoMenus = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("addToAutoMenus"));
+
+		boolean visible = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("visible"), true);
+
+		if (layout.isHidden() || !addToAutoMenus || !visible) {
 			return;
 		}
 

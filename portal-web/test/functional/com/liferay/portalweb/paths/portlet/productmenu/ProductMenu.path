@@ -60,12 +60,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_OPENED</td>
-	<td>//div[contains(@id,'sidenavSliderId') and not(contains(@class,'closed'))]</td>
+	<td>//div[contains(@id,'sidenavSliderId') and contains(@class,'open') and not(contains(@class,'sidenav-transition')) and not(contains(@class,'closed'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_MENU_CLOSED</td>
-	<td>//div[contains(@id,'sidenavSliderId') and (contains(@class,'closed'))]</td>
+	<td>//div[contains(@id,'sidenavSliderId') and contains(@class,'closed') and not(contains(@class,'sidenav-transition')) and not(contains(@class,'open'))]</td>
 	<td></td>
 </tr>
 <tr>

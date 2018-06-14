@@ -1,7 +1,7 @@
 import debounce from 'metal-debounce';
 import {ScrollTracker} from '../utils/scroll';
 
-const applicationId = 'Scrolling';
+const applicationId = 'Page';
 
 /**
  * Plugin function that registers listener against scroll event
@@ -12,7 +12,7 @@ function scrolling(analytics) {
 
 	const onScroll = debounce(() => {
 		scrollTracker.onDepthReached(depth => {
-			analytics.send('depthReached', applicationId, {depth});
+			analytics.send('pageDepthReached', applicationId, {depth});
 		});
 	}, 1500);
 

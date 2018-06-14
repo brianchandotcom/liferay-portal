@@ -24,7 +24,11 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetTagModel;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.category.apio.architect.identifier.CategoryIdentifier;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.folder.apio.architect.identifier.FolderIdentifier;
 import com.liferay.folder.apio.architect.identifier.RootFolderIdentifier;
@@ -35,6 +39,8 @@ import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.tag.apio.architect.identifier.TagIdentifier;
 
 import java.util.List;
 
@@ -116,6 +122,8 @@ public class MediaObjectNestedCollectionResource
 			"name", FileEntry::getFileName
 		).addString(
 			"text", FileEntry::getDescription
+		).addStringList(
+			"keywords", this::_getMediaObjectTags
 		).build();
 	}
 
@@ -137,6 +145,13 @@ public class MediaObjectNestedCollectionResource
 			groupId, 0L, mediaObjectCreatorForm);
 	}
 
+	private List<String> _getMediaObjectTags(FileEntry fileEntry) {
+		List<AssetTag> tags = _assetTagLocalService.getTags(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		return ListUtil.toList(tags, AssetTagModel::getName);
+	}
+
 	private PageItems<FileEntry> _getPageItems(
 			Pagination pagination, long groupId)
 		throws PortalException {
@@ -148,6 +163,9 @@ public class MediaObjectNestedCollectionResource
 
 		return new PageItems<>(fileEntries, count);
 	}
+
+	@Reference
+	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

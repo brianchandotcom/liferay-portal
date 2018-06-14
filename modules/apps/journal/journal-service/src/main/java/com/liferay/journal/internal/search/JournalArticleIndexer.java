@@ -221,9 +221,6 @@ public class JournalArticleIndexer
 		boolean showNonindexable = GetterUtil.getBoolean(
 			searchContext.getAttribute("showNonindexable"));
 
-		boolean filterExpired = GetterUtil.getBoolean(
-			searchContext.getAttribute("filterExpired"));
-
 		if (latest && !relatedClassName && !showNonindexable) {
 			contextBooleanFilter.addRequiredTerm("latest", Boolean.TRUE);
 		}
@@ -237,6 +234,9 @@ public class JournalArticleIndexer
 		else if (!relatedClassName && showNonindexable) {
 			contextBooleanFilter.addRequiredTerm("headListable", Boolean.TRUE);
 		}
+
+		boolean filterExpired = GetterUtil.getBoolean(
+			searchContext.getAttribute("filterExpired"));
 
 		if (filterExpired) {
 			String formatPattern = PropsUtil.get(

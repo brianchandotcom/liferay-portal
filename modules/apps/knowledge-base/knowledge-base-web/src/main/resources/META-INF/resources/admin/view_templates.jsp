@@ -27,6 +27,7 @@ KBTemplatesManagementToolbarDisplayContext kbTemplatesManagementToolbarDisplayCo
 	clearResultsURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"
 	componentId="kbTemplatesManagementToolbar"
 	creationMenu="<%= kbTemplatesManagementToolbarDisplayContext.getCreationMenu() %>"
+	disabled="<%= kbTemplatesManagementToolbarDisplayContext.isDisabled() %>"
 	filterDropdownItems="<%= kbTemplatesManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= kbTemplatesManagementToolbarDisplayContext.getTotal() %>"
 	searchActionURL="<%= String.valueOf(kbTemplatesManagementToolbarDisplayContext.getSearchURL()) %>"

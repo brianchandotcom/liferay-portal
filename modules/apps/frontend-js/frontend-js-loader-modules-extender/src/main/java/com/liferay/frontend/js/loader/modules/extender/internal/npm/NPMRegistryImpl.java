@@ -27,6 +27,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -43,6 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.osgi.framework.Bundle;
@@ -150,22 +152,44 @@ public class NPMRegistryImpl implements NPMRegistry {
 		JSPackageDependency jsPackageDependency) {
 
 		String packageName = jsPackageDependency.getPackageName();
+		String versionConstraints = jsPackageDependency.getVersionConstraints();
 
-		Range range = Range.from(
-			jsPackageDependency.getVersionConstraints(), true);
+		String cacheKey = StringBundler.concat(
+			packageName, StringPool.UNDERLINE, versionConstraints);
+
+		JSPackage jsPackage = _jsPackageDependencyCache.get(cacheKey);
+
+		if (jsPackage != null) {
+			if (jsPackage == _NULL_JS_PACKAGE) {
+				return null;
+			}
+
+			return jsPackage;
+		}
+
+		Range range = Range.from(versionConstraints, true);
 
 		for (JSPackageVersion jsPackageVersion : _jsPackageVersions) {
-			JSPackage jsPackage = jsPackageVersion._jsPackage;
+			JSPackage innerJSPackage = jsPackageVersion._jsPackage;
 			Version version = jsPackageVersion._version;
 
-			if (packageName.equals(jsPackage.getName()) &&
+			if (packageName.equals(innerJSPackage.getName()) &&
 				range.test(version)) {
 
-				return jsPackage;
+				jsPackage = innerJSPackage;
+
+				break;
 			}
 		}
 
-		return null;
+		if (jsPackage == null) {
+			_jsPackageDependencyCache.put(cacheKey, _NULL_JS_PACKAGE);
+		}
+		else {
+			_jsPackageDependencyCache.put(cacheKey, jsPackage);
+		}
+
+		return jsPackage;
 	}
 
 	@Activate
@@ -287,6 +311,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 	}
 
 	private synchronized void _refreshJSModuleCaches() {
+		_jsPackageDependencyCache.clear();
+
 		Map<String, JSModule> jsModules = new HashMap<>();
 		Map<String, JSPackage> jsPackages = new HashMap<>();
 		List<JSPackageVersion> jsPackageVersions = new ArrayList<>();
@@ -335,6 +361,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 		}
 	}
 
+	private static final JSPackage _NULL_JS_PACKAGE =
+		ProxyFactory.newDummyInstance(JSPackage.class);
+
 	private BundleContext _bundleContext;
 	private BundleTracker<JSBundle> _bundleTracker;
 	private final Map<String, String> _globalAliases = new HashMap<>();
@@ -359,6 +388,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 	@Reference
 	private JSONFactory _jsonFactory;
 
+	private final Map<String, JSPackage> _jsPackageDependencyCache =
+		new ConcurrentHashMap<>();
 	private Map<String, JSPackage> _jsPackages = new HashMap<>();
 	private List<JSPackageVersion> _jsPackageVersions = new ArrayList<>();
 	private Map<String, JSModule> _resolvedJSModules = new HashMap<>();

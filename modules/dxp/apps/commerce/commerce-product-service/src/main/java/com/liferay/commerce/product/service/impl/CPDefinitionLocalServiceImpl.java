@@ -282,8 +282,11 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product friendly URL
 
-		if (urlTitleMap == null) {
+		if (Validator.isNull(urlTitleMap)) {
 			urlTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
+		}
+		else {
+			urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
 		}
 
 		cpFriendlyURLEntryLocalService.addCPFriendlyURLEntries(
@@ -1072,7 +1075,10 @@ public class CPDefinitionLocalServiceImpl
 
 		cpDefinitionPersistence.update(cpDefinition);
 
-		if (urlTitleMap == null) {
+		if (Validator.isNull(urlTitleMap)) {
+			urlTitleMap = _getUniqueUrlTitles(cpDefinition, nameMap);
+		}
+		else {
 			urlTitleMap = _getUniqueUrlTitles(cpDefinition, urlTitleMap);
 		}
 

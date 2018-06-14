@@ -15,10 +15,11 @@
 package com.liferay.site.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.map.constants.MapProviderWebKeys;
-import com.liferay.map.util.MapProviderHelper;
+import com.liferay.map.util.MapProviderHelperUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -71,8 +72,9 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 
 		request.setAttribute(
 			MapProviderWebKeys.MAP_PROVIDER_KEY,
-			_mapProviderHelper.getMapProviderKey(
-				themeDisplay.getCompanyId(), liveGroup.getGroupId()));
+			MapProviderHelperUtil.getMapProviderKey(
+				_groupLocalService, themeDisplay.getCompanyId(),
+				liveGroup.getGroupId()));
 
 		super.include(request, response);
 	}
@@ -100,11 +102,7 @@ public class SiteMapsFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 		return "/site/maps.jsp";
 	}
 
-	@Reference(unbind = "-")
-	protected void setMapProviderHelper(MapProviderHelper mapProviderHelper) {
-		_mapProviderHelper = mapProviderHelper;
-	}
-
-	private MapProviderHelper _mapProviderHelper;
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

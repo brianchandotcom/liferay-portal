@@ -14,11 +14,18 @@
 
 package com.liferay.map.taglib.internal.servlet;
 
-import com.liferay.map.util.MapProviderHelper;
-import com.liferay.map.util.MapProviderTracker;
+import com.liferay.map.MapProvider;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.service.GroupLocalService;
+
+import java.util.Collection;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -30,12 +37,16 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class ServletContextUtil {
 
-	public static final MapProviderHelper getMapProviderHelper() {
-		return _instance._getMapProviderHelper();
+	public static GroupLocalService getGroupLocalService() {
+		return _instance._groupLocalService;
 	}
 
-	public static final MapProviderTracker getMapProviderTracker() {
-		return _instance._getMapProviderTracker();
+	public static MapProvider getMapProvider(String mapProviderKey) {
+		return _instance._mapProviders.getService(mapProviderKey);
+	}
+
+	public static Collection<MapProvider> getMapProviders() {
+		return _instance._mapProviders.values();
 	}
 
 	public static final ServletContext getServletContext() {
@@ -43,25 +54,34 @@ public class ServletContextUtil {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(final BundleContext bundleContext) {
+		_mapProviders = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, MapProvider.class, null,
+			new ServiceReferenceMapper<String, MapProvider>() {
+
+				@Override
+				public void map(
+					ServiceReference<MapProvider> serviceReference,
+					ServiceReferenceMapper.Emitter<String> emitter) {
+
+					MapProvider mapProvider = bundleContext.getService(
+						serviceReference);
+
+					emitter.emit(mapProvider.getKey());
+
+					bundleContext.ungetService(serviceReference);
+				}
+
+			});
+
 		_instance = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_instance = null;
-	}
 
-	@Reference(unbind = "-")
-	protected void setMapProviderHelper(MapProviderHelper mapProviderHelper) {
-		_mapProviderHelper = mapProviderHelper;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMapProviderTracker(
-		MapProviderTracker mapProviderTracker) {
-
-		_mapProviderTracker = mapProviderTracker;
+		_mapProviders.close();
 	}
 
 	@Reference(
@@ -71,22 +91,16 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
-	private MapProviderHelper _getMapProviderHelper() {
-		return _mapProviderHelper;
-	}
-
-	private MapProviderTracker _getMapProviderTracker() {
-		return _mapProviderTracker;
-	}
-
 	private ServletContext _getServletContext() {
 		return _servletContext;
 	}
 
 	private static ServletContextUtil _instance;
 
-	private MapProviderHelper _mapProviderHelper;
-	private MapProviderTracker _mapProviderTracker;
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	private ServiceTrackerMap<String, MapProvider> _mapProviders;
 	private ServletContext _servletContext;
 
 }

@@ -17,7 +17,7 @@
 <%@ include file="/map_provider_selector/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= ListUtil.isEmpty(mapProviders) %>">
+	<c:when test="<%= mapProviders.isEmpty() %>">
 		<div class="alert alert-danger">
 			<%= LanguageUtil.get(resourceBundle, "a-list-of-map-providers-should-be-shown-here") %>
 		</div>

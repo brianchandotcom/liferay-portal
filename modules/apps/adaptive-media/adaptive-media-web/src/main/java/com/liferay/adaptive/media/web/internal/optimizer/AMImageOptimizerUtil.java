@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.adaptive.media.image.optimizer;
+package com.liferay.adaptive.media.web.internal.optimizer;
 
+import com.liferay.adaptive.media.image.optimizer.AMImageOptimizer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;

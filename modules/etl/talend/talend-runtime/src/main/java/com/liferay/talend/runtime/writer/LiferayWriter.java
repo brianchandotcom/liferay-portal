@@ -116,25 +116,6 @@ public class LiferayWriter
 		}
 	}
 
-	public void doInsert(IndexedRecord indexedRecord) throws IOException {
-		ObjectNode apioForm = _createApioExpectedForm(indexedRecord, true);
-
-		String resourceURL =
-			_tLiferayOutputProperties.resource.resource.getValue();
-
-		try {
-			_liferaySink.doApioPostRequest(
-				_runtimeContainer, resourceURL, apioForm);
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to insert the resource: ", ioe);
-			}
-
-			throw ioe;
-		}
-	}
-
 	public void doUpdate(IndexedRecord indexedRecord) throws IOException {
 		ObjectNode apioForm = _createApioExpectedForm(indexedRecord, true);
 		String resourceId = getIndexedRecordId(indexedRecord);
@@ -157,6 +138,25 @@ public class LiferayWriter
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to update the resource: ", ioe);
+			}
+
+			throw ioe;
+		}
+	}
+
+	public void doUpsert(IndexedRecord indexedRecord) throws IOException {
+		ObjectNode apioForm = _createApioExpectedForm(indexedRecord, true);
+
+		String resourceURL =
+			_tLiferayOutputProperties.resource.resource.getValue();
+
+		try {
+			_liferaySink.doApioPostRequest(
+				_runtimeContainer, resourceURL, apioForm);
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to insert the resource: ", ioe);
 			}
 
 			throw ioe;
@@ -215,7 +215,7 @@ public class LiferayWriter
 				doUpdate(indexedRecord);
 			}
 			else if (Action.Upsert == action) {
-				doInsert(indexedRecord);
+				doUpsert(indexedRecord);
 			}
 
 			_handleSuccessRecord(indexedRecord);

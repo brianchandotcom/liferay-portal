@@ -463,6 +463,15 @@ if (Validator.isNull(liferayAnalyticsKey)) {
 				}
 			);
 
+			if (themeDisplay.isSignedIn()) {
+				Analytics.setIdentity(
+					{
+						email: '<%= HtmlUtil.escapeJS(user.getEmailAddress()) %>',
+						name: '<%= HtmlUtil.escapeJS(user.getFullName()) %>'
+					}
+				);
+			}
+
 			Analytics.send('pageViewed', 'Page');
 
 			<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
@@ -472,6 +481,15 @@ if (Validator.isNull(liferayAnalyticsKey)) {
 						Analytics.dispose();
 
 						Analytics.create(config);
+
+						if (themeDisplay.isSignedIn()) {
+							Analytics.setIdentity(
+								{
+									email: '<%= HtmlUtil.escapeJS(user.getEmailAddress()) %>',
+									name: '<%= HtmlUtil.escapeJS(user.getFullName()) %>'
+								}
+							);
+						}
 
 						Analytics.send('pageViewed', 'Page', {'page': event.path});
 					}

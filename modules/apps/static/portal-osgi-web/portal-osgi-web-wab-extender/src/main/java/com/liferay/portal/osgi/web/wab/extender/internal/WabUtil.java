@@ -14,6 +14,8 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
+import com.liferay.petra.string.StringPool;
+
 import java.util.Dictionary;
 
 import org.osgi.framework.Bundle;
@@ -24,7 +26,8 @@ import org.osgi.framework.Bundle;
 public class WabUtil {
 
 	public static String getWebContextPath(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		return headers.get("Web-ContextPath");
 	}

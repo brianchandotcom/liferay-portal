@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.portlet.tracker.internal;
 
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.plugin.License;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -39,7 +40,7 @@ public class BundlePluginPackage implements PluginPackage {
 		_bundle = bundle;
 		_portletApp = portletApp;
 
-		_headers = _bundle.getHeaders();
+		_headers = _bundle.getHeaders(StringPool.BLANK);
 		_version = Version.getInstance(getVersion());
 	}
 

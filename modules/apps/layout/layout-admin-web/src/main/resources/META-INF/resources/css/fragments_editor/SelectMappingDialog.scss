@@ -1,4 +1,4 @@
-.select-mapping-dialog {
+.modal-dialog.select-mapping-dialog {
 	.modal-header {
 		border-color: transparent;
 	}
@@ -10,6 +10,7 @@
 
 	.modal-footer {
 		border-color: transparent;
+		justify-content: space-between;
 	}
 
 	.list-group-item {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.tag.apio.internal.resource;
+package com.liferay.tag.apio.internal.architect.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
@@ -23,13 +23,15 @@ import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
+import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import com.liferay.tag.apio.identifier.TagIdentifier;
-import com.liferay.tag.apio.internal.form.TagForm;
+import com.liferay.tag.apio.architect.identifier.TagIdentifier;
+import com.liferay.tag.apio.internal.architect.form.TagForm;
 
 import java.util.List;
 
@@ -37,10 +39,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides the information necessary to expose {@link AssetTag}
- * resources through a web API.
+ * Provides the information necessary to expose {@code Tag} resources
+ * through a web API. The resources are mapped from the internal model {@code
+ * AssetTag}.
  *
  * @author Alejandro Hernández
+ * @author Ibai Ruiz
+ * @author Eduardo Perez
  */
 @Component(immediate = true)
 public class TagNestedCollectionResource
@@ -52,12 +57,7 @@ public class TagNestedCollectionResource
 		NestedCollectionRoutes.Builder<AssetTag, Long, Long> builder) {
 
 		return builder.addCreator(
-			this::_addTag,
-			(credentials, groupId) -> {
-				//TODO Permission for creating tags
-
-				return true;
-			},
+			this::_addTag, _hasPermission.forAddingIn(WebSiteIdentifier.class),
 			TagForm::buildForm
 		).addGetter(
 			this::_getPageItems
@@ -76,20 +76,9 @@ public class TagNestedCollectionResource
 		return builder.addGetter(
 			_assetTagService::getTag
 		).addRemover(
-			idempotent(_assetTagService::deleteTag),
-			(credentials, assetTagId) -> {
-				//TODO Permissions for removing tags
-
-				return true;
-			}
+			idempotent(_assetTagService::deleteTag), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateTag,
-			(credentials, assetTagId) -> {
-				//TODO Permissions for updating tags
-
-				return true;
-			},
-			TagForm::buildForm
+			this::_updateTag, _hasPermission::forUpdating, TagForm::buildForm
 		).build();
 	}
 
@@ -104,18 +93,24 @@ public class TagNestedCollectionResource
 		).addBidirectionalModel(
 			"interactionService", "tag", WebSiteIdentifier.class,
 			AssetTag::getGroupId
+		).addDate(
+			"dateCreated", AssetTag::getCreateDate
+		).addDate(
+			"dateModified", AssetTag::getModifiedDate
+		).addDate(
+			"datePublished", AssetTag::getLastPublishDate
+		).addLinkedModel(
+			"author", PersonIdentifier.class, AssetTag::getUserId
+		).addLinkedModel(
+			"creator", PersonIdentifier.class, AssetTag::getUserId
+		).addNumber(
+			"usages", AssetTag::getAssetCount
 		).addString(
 			"name", AssetTag::getName
-		).addNumber(
-			"usages",
-			assetTag -> {
-				return _assetEntryLocalService.getAssetTagAssetEntriesCount(
-					assetTag.getTagId());
-			}
 		).build();
 	}
 
-	private AssetTag _addTag(Long groupId, TagForm tagForm)
+	private AssetTag _addTag(long groupId, TagForm tagForm)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -133,11 +128,10 @@ public class TagNestedCollectionResource
 
 		List<AssetTag> tags = _assetTagService.getGroupTags(
 			groupId, pagination.getStartPosition(), pagination.getEndPosition(),
-			null);
+			new AssetTagNameComparator());
+		int count = _assetTagService.getGroupTagsCount(groupId);
 
-		int totalCount = _assetTagService.getGroupTagsCount(groupId);
-
-		return new PageItems<>(tags, totalCount);
+		return new PageItems<>(tags, count);
 	}
 
 	private AssetTag _updateTag(Long assetTagId, TagForm tagForm)
@@ -147,9 +141,11 @@ public class TagNestedCollectionResource
 	}
 
 	@Reference
-	private AssetEntryLocalService _assetEntryLocalService;
-
-	@Reference
 	private AssetTagService _assetTagService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.asset.kernel.model.AssetTag)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

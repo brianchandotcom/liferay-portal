@@ -82,13 +82,6 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 			return false;
 		}
 
-		MBDiscussion mbDiscussion = _mbDiscussionLocalService.fetchDiscussion(
-			className, classPK);
-
-		if (mbDiscussion == null) {
-			return false;
-		}
-
 		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
 			className);
 

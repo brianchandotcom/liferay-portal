@@ -1025,7 +1025,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private boolean _hasLazyActivationPolicy(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
 
@@ -1462,7 +1463,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		List<String> hostBundleSymbolicNames = new ArrayList<>();
 
 		for (Bundle bundle : installedBundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
 

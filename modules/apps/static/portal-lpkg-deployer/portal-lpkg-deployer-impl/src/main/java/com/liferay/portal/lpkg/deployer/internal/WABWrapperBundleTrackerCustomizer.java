@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -39,7 +40,8 @@ public class WABWrapperBundleTrackerCustomizer
 
 	@Override
 	public Bundle addingBundle(Bundle bundle, BundleEvent event) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		if (Boolean.valueOf(headers.get("Wrapper-Bundle"))) {
 			return bundle;
@@ -84,7 +86,8 @@ public class WABWrapperBundleTrackerCustomizer
 	}
 
 	private Bundle _getWABBundle(Bundle bundle) throws MalformedURLException {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		URL lpkgURL = new URL(headers.get("Liferay-WAB-LPKG-URL"));
 

@@ -15,6 +15,7 @@
 package com.liferay.portal.scripting.executor.internal.extender;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -142,7 +143,8 @@ public class ScriptingExecutorExtender {
 
 			Bundle bundle = scriptBundleProvider.getBundle();
 
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			if (GetterUtil.getBoolean(
 					headers.get(

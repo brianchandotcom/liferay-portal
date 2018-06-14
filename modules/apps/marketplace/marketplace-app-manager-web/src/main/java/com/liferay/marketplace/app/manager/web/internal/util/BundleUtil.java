@@ -15,6 +15,7 @@
 package com.liferay.marketplace.app.manager.web.internal.util;
 
 import com.liferay.marketplace.app.manager.web.internal.constants.BundleConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -41,7 +42,8 @@ public class BundleUtil {
 				continue;
 			}
 
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			String bundleType = GetterUtil.getString(
 				headers.get("Liferay-Releng-Bundle-Type"));
@@ -53,7 +55,8 @@ public class BundleUtil {
 	}
 
 	public static boolean isFragment(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String fragmentHost = headers.get(BundleConstants.FRAGMENT_HOST);
 

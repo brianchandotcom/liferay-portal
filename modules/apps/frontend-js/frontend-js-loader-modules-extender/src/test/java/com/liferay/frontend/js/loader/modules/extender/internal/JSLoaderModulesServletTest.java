@@ -503,7 +503,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 			new Hashtable<String, String>()
 		).when(
 			bundle
-		).getHeaders();
+		).getHeaders(StringPool.BLANK);
 
 		doReturn(
 			bsn

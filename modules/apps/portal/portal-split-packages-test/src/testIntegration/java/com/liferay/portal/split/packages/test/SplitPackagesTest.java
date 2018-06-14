@@ -107,7 +107,8 @@ public class SplitPackagesTest {
 	}
 
 	private Set<ExportPackage> _getExportPackages(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String exportPackageName = headers.get(Constants.EXPORT_PACKAGE);
 

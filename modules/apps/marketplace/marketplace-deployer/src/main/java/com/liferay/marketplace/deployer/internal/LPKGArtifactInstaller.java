@@ -14,6 +14,7 @@
 
 package com.liferay.marketplace.deployer.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -122,7 +123,8 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 		}
 
 		for (Bundle bundle : _lpkgDeployer.deploy(_bundleContext, file)) {
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
 
@@ -181,7 +183,8 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 				Set<Bundle> wrapperBundles = new HashSet<>();
 
 				for (Bundle installedBundle : installedBundles) {
-					Dictionary<String, String> headers = bundle.getHeaders();
+					Dictionary<String, String> headers = bundle.getHeaders(
+						StringPool.BLANK);
 
 					if (Boolean.getBoolean(headers.get("Wrapper-Bundle"))) {
 						wrapperBundles.add(installedBundle);

@@ -617,7 +617,8 @@ public class LPKGBundleTrackerCustomizer
 
 		Set<Bundle> uninstalledBundles = new HashSet<>();
 
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		if (symbolicName.startsWith(prefix) &&
 			Boolean.valueOf(headers.get("Wrapper-Bundle"))) {

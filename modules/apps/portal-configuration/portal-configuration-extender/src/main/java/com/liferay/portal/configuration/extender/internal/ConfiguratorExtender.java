@@ -15,6 +15,7 @@
 package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
@@ -193,7 +194,7 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 		@Override
 		public Dictionary<String, String> getHeaders() {
-			return _bundle.getHeaders();
+			return _bundle.getHeaders(StringPool.BLANK);
 		}
 
 		@Override

@@ -15,6 +15,7 @@
 package com.liferay.portal.remote.http.tunnel.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -80,7 +81,8 @@ public class HttpTunnelExtender extends AbstractExtender {
 
 	@Override
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		if (headers.get("Http-Tunnel") == null) {
 			return null;

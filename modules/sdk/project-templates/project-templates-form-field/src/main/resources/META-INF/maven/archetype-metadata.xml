@@ -17,9 +17,11 @@
 		<fileSet filtered="true">
 			<directory></directory>
 			<includes>
+				<include>.babelrc</include>
 				<include>.gitignore</include>
 				<include>bnd.bnd</include>
 				<include>build.gradle</include>
+				<include>package.json</include>
 			</includes>
 		</fileSet>
 	</fileSets>

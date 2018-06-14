@@ -110,7 +110,8 @@ public class MarketplaceAppManagerComparator implements Comparator {
 		else if (object instanceof Bundle) {
 			Bundle bundle = (Bundle)object;
 
-			Dictionary<String, String> headers = bundle.getHeaders();
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
 
 			return GetterUtil.getString(
 				headers.get(BundleConstants.BUNDLE_NAME));

@@ -124,7 +124,8 @@ public class MarketplaceAppManagerSearchUtil {
 			return true;
 		}
 
-		Dictionary<String, String> headers = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
 
 		String bundleDescription = headers.get(
 			BundleConstants.BUNDLE_DESCRIPTION);

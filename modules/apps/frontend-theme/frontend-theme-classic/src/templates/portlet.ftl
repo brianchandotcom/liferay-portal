@@ -66,7 +66,9 @@
 			</#if>
 		</@>
 
-		<#if validator.isNotNull(portlet_display.getPortletDecoratorId()) && !stringUtil.equals(portlet_display.getPortletDecoratorId(), "barebone")>
+		<#assign show_portlet_decorator = validator.isNotNull(portlet_display.getPortletDecoratorId()) && !stringUtil.equals(portlet_display.getPortletDecoratorId(), "barebone") />
+
+		<#if show_portlet_decorator>
 			<div class="autofit-float autofit-row portlet-header">
 				<div class="autofit-col autofit-col-expand">
 					<h2 class="portlet-title-text">${portlet_title}</h2>

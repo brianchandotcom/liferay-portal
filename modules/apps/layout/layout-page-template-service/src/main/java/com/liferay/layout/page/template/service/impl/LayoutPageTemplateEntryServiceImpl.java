@@ -582,6 +582,20 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId, long previewFileEntryId)
+		throws PortalException {
+
+		_layoutPageTemplateEntryModelResourcePermission.check(
+			getPermissionChecker(), layoutPageTemplateEntryId,
+			ActionKeys.UPDATE);
+
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId, previewFileEntryId);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
 		throws PortalException {
 

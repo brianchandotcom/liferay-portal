@@ -73,6 +73,7 @@ public class MBDiscussionPermissionImplTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_user = TestPropsValues.getUser();
+		_siteUser = UserTestUtil.addUser(_group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
@@ -90,10 +91,8 @@ public class MBDiscussionPermissionImplTest {
 	public void testAddDiscussionPermissionWhenUserIsDiscussionOwnerButDoesNotHaveNotFileEntryAddDiscussionPermission()
 		throws Exception {
 
-		User user = UserTestUtil.addUser(_group.getGroupId());
-
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
+			PermissionCheckerFactoryUtil.create(_siteUser);
 
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(permissionChecker);
@@ -104,7 +103,7 @@ public class MBDiscussionPermissionImplTest {
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
 				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
 
-		_addComment(user);
+		_addComment(_siteUser);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
 			TestPropsValues.getCompanyId());
@@ -122,7 +121,7 @@ public class MBDiscussionPermissionImplTest {
 				ActionKeys.ADD_DISCUSSION);
 		}
 
-		permissionChecker = PermissionCheckerFactoryUtil.create(user);
+		permissionChecker = PermissionCheckerFactoryUtil.create(_siteUser);
 
 		discussionPermission = _commentManager.getDiscussionPermission(
 			permissionChecker);
@@ -173,6 +172,9 @@ public class MBDiscussionPermissionImplTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@DeleteAfterTestRun
+	private User _siteUser;
 
 	private User _user;
 

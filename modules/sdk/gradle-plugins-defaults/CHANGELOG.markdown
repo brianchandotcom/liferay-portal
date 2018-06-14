@@ -3761,7 +3761,7 @@ of a module includes transitive dependencies.
 - [LPS-82178]: Update the [Liferay Gradle Plugins Patcher] dependency to version
 1.0.13.
 
-## 5.4.33 - 2018-06-08
+## 5.4.33 - 2018-06-11
 
 ### Changed
 - [LPS-82209]: Update the [Liferay Gradle Plugins] dependency to version

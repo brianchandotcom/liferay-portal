@@ -68,21 +68,20 @@
 
 		<#assign show_portlet_decorator = validator.isNotNull(portlet_display.getPortletDecoratorId()) && !stringUtil.equals(portlet_display.getPortletDecoratorId(), "barebone") />
 
-		<#if show_portlet_decorator>
+		<#if show_portlet_decorator || portlet_header_wrapper?has_content>
 			<div class="autofit-float autofit-row portlet-header">
-				<div class="autofit-col autofit-col-expand">
-					<h2 class="portlet-title-text">${portlet_title}</h2>
-				</div>
+				<#if show_portlet_decorator>
+					<div class="autofit-col autofit-col-expand">
+						<h2 class="portlet-title-text">${portlet_title}</h2>
+					</div>
 
-				${portlet_header_wrapper}
-
-			</div>
-		<#else>
-			<#if portlet_header_wrapper?has_content>
-				<div class="autofit-float autofit-row portlet-header">
 					${portlet_header_wrapper}
-				</div>
-			</#if>
+				<#else>
+					<#if portlet_header_wrapper?has_content>
+						${portlet_header_wrapper}
+					</#if>
+				</#if>
+			</div>
 		</#if>
 
 		${portlet_display.writeContent(writer)}

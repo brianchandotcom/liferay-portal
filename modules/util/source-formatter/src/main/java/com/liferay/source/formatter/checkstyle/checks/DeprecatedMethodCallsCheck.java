@@ -579,7 +579,9 @@ public class DeprecatedMethodCallsCheck extends BaseCheck {
 			int x = absolutePath.lastIndexOf("/");
 
 			if (x == -1) {
-				return null;
+				_rootDirName = StringPool.BLANK;
+
+				return _rootDirName;
 			}
 
 			absolutePath = absolutePath.substring(0, x);
@@ -587,7 +589,9 @@ public class DeprecatedMethodCallsCheck extends BaseCheck {
 			File file = new File(absolutePath + "/portal-impl");
 
 			if (file.exists()) {
-				return absolutePath;
+				_rootDirName = absolutePath;
+
+				return _rootDirName;
 			}
 		}
 	}

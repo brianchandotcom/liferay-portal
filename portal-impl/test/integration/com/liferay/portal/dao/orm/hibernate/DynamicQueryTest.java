@@ -78,16 +78,27 @@ public class DynamicQueryTest {
 		List<Long> values = new ArrayList<>(
 			PropsValues.DATABASE_IN_MAX_PARAMETERS + 1);
 
-		for (long i = 0; i < values.size(); i++) {
+		ClassName className1 = _allClassNames.get(1);
+		ClassName className2 = _allClassNames.get(2);
+
+		values.add(className1.getClassNameId());
+
+		for (long i = 0; i < values.size() - 1; i++) {
 			values.add(-i);
 		}
+
+		values.add(className2.getClassNameId());
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in("classNameId", values));
 
 		List<ClassName> classNames = ClassNameLocalServiceUtil.dynamicQuery(
 			dynamicQuery);
 
-		Assert.assertTrue(classNames.isEmpty());
+		Assert.assertEquals(classNames.toString(), 2, classNames.size());
+		Assert.assertTrue(
+			classNames.toString(), classNames.contains(className1));
+		Assert.assertTrue(
+			classNames.toString(), classNames.contains(className2));
 	}
 
 	@Test

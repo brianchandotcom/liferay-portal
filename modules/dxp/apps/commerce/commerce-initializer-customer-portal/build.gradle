@@ -70,6 +70,7 @@ dependencies {
 	compileOnly project(":private:apps:commerce:commerce-currency-api")
 	compileOnly project(":private:apps:commerce:commerce-forecast-api")
 	compileOnly project(":private:apps:commerce:commerce-organization-api")
+	compileOnly project(":private:apps:commerce:commerce-price-list-api")
 	compileOnly project(":private:apps:commerce:commerce-product-api")
 	compileOnly project(":private:apps:commerce:commerce-product-content-api")
 	compileOnly project(":private:apps:commerce:commerce-taglib")

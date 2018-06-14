@@ -8,22 +8,6 @@
 <tr><td rowspan="1" colspan="3">UsersAndOrganizationsEditUser</td></tr>
 </thead>
 <tbody>
-<!--ALERTS-->
-<tr>
-	<td>EMAIL_ADDRESS_FIELD_ALERT</td>
-	<td>//div[@role='alert']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCREEN_NAME_FIELD_ALERT</td>
-	<td>//div[@role='alert']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_BIRTHDAY_FIELD</td>

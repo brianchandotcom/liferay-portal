@@ -159,14 +159,6 @@
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Please enter a unique folder name." />
 			</then>
-			<elseif>
-				<equals arg1="${dmSubFolder}" arg2="Invalid" />
-				<then>
-					<execute macro="Alert#viewRequestFailedToComplete" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid name." />
-				</then>
-			</elseif>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />
 			</else>
@@ -206,14 +198,6 @@
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a unique folder name." />
 			</then>
-			<elseif>
-				<equals arg1="${dmSubFolder}" arg2="Invalid" />
-				<then>
-					<execute macro="Alert#viewRequestFailedToComplete" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Please enter a valid name." />
-				</then>
-			</elseif>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />
 			</else>

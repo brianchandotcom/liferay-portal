@@ -25,6 +25,7 @@ import com.liferay.commerce.product.type.virtual.order.service.base.CommerceVirt
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -149,10 +150,9 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 				commerceVirtualOrderItemId);
 
 		InputStream contentStream;
+		FileEntry fileEntry = commerceVirtualOrderItem.getFileEntry();
 
 		if (commerceVirtualOrderItem.getFileEntryId() > 0) {
-			FileEntry fileEntry = commerceVirtualOrderItem.getFileEntry();
-
 			contentStream = fileEntry.getContentStream();
 		}
 		else {
@@ -161,7 +161,25 @@ public class CommerceVirtualOrderItemLocalServiceImpl
 			contentStream = url.openStream();
 		}
 
-		return FileUtil.createTempFile(contentStream);
+		CommerceOrderItem commerceOrderItem =
+			commerceVirtualOrderItem.getCommerceOrderItem();
+
+		File tempFile = FileUtil.createTempFile(contentStream);
+
+		File file = new File(
+			tempFile.getParent(),
+			commerceOrderItem.getNameCurrentValue() + StringPool.PERIOD +
+				fileEntry.getExtension());
+
+		if (file.exists()) {
+			file.delete();
+		}
+
+		if (!tempFile.renameTo(file)) {
+			file = tempFile;
+		}
+
+		return file;
 	}
 
 	@Override

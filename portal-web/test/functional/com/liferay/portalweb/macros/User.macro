@@ -1325,7 +1325,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_SELECT_LINK" value1="SELECT" />
+		<execute function="AssertClick#assertTextClickCaseInsensitive" locator1="UsersAndOrganizationsEditUser#SITES_SELECT_LINK" value1="SELECT" />
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_USER_SITES" />
 

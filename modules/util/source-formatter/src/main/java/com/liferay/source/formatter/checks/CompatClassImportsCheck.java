@@ -14,6 +14,17 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,13 +35,9 @@ import java.util.regex.Pattern;
 public class CompatClassImportsCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_compatClassNamesMap = getCompatClassNamesMap();
-	}
-
-	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
 		if (isPortalSource() || isSubrepository() ||
 			absolutePath.contains("/ext-") ||
@@ -42,10 +49,10 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 		return _fixCompatClassImports(content);
 	}
 
-	private String _fixCompatClassImports(String content) {
-		for (Map.Entry<String, String> entry :
-				_compatClassNamesMap.entrySet()) {
+	private String _fixCompatClassImports(String content) throws Exception {
+		Map<String, String> compatClassNamesMap = _getCompatClassNamesMap();
 
+		for (Map.Entry<String, String> entry : compatClassNamesMap.entrySet()) {
 			String compatClassName = entry.getKey();
 			String extendedClassName = entry.getValue();
 
@@ -65,6 +72,63 @@ public class CompatClassImportsCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private synchronized Map<String, String> _getCompatClassNamesMap()
+		throws Exception {
+
+		if (_compatClassNamesMap != null) {
+			return _compatClassNamesMap;
+		}
+
+		_compatClassNamesMap = new HashMap<>();
+
+		String[] includes =
+			{"**/portal-compat-shared/src/com/liferay/compat/**/*.java"};
+
+		String baseDirName = getBaseDirName();
+
+		List<String> fileNames = new ArrayList<>();
+
+		for (int i = 0; i < ToolsUtil.PLUGINS_MAX_DIR_LEVEL; i++) {
+			File sharedDir = new File(baseDirName + "shared");
+
+			if (sharedDir.exists()) {
+				fileNames = getFileNames(baseDirName, new String[0], includes);
+
+				break;
+			}
+
+			baseDirName = baseDirName + "../";
+		}
+
+		for (String fileName : fileNames) {
+			File file = new File(fileName);
+
+			String content = FileUtil.read(file);
+
+			fileName = StringUtil.replace(
+				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+
+			fileName = StringUtil.replace(
+				fileName, CharPool.SLASH, CharPool.PERIOD);
+
+			int pos = fileName.indexOf("com.");
+
+			String compatClassName = fileName.substring(pos);
+
+			compatClassName = compatClassName.substring(
+				0, compatClassName.length() - 5);
+
+			String extendedClassName = StringUtil.replace(
+				compatClassName, "compat.", StringPool.BLANK);
+
+			if (content.contains("extends " + extendedClassName)) {
+				_compatClassNamesMap.put(compatClassName, extendedClassName);
+			}
+		}
+
+		return _compatClassNamesMap;
 	}
 
 	private Map<String, String> _compatClassNamesMap;

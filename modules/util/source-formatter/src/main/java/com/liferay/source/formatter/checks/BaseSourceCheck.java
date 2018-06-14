@@ -39,9 +39,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -239,57 +237,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 
 		return CheckstyleUtil.getAttributeValue(
 			checkName, attributeName, _checkstyleConfiguration);
-	}
-
-	protected Map<String, String> getCompatClassNamesMap() throws Exception {
-		Map<String, String> compatClassNamesMap = new HashMap<>();
-
-		String[] includes =
-			{"**/portal-compat-shared/src/com/liferay/compat/**/*.java"};
-
-		String baseDirName = _baseDirName;
-
-		List<String> fileNames = new ArrayList<>();
-
-		for (int i = 0; i < ToolsUtil.PLUGINS_MAX_DIR_LEVEL; i++) {
-			File sharedDir = new File(baseDirName + "shared");
-
-			if (sharedDir.exists()) {
-				fileNames = getFileNames(baseDirName, new String[0], includes);
-
-				break;
-			}
-
-			baseDirName = baseDirName + "../";
-		}
-
-		for (String fileName : fileNames) {
-			File file = new File(fileName);
-
-			String content = FileUtil.read(file);
-
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
-
-			fileName = StringUtil.replace(
-				fileName, CharPool.SLASH, CharPool.PERIOD);
-
-			int pos = fileName.indexOf("com.");
-
-			String compatClassName = fileName.substring(pos);
-
-			compatClassName = compatClassName.substring(
-				0, compatClassName.length() - 5);
-
-			String extendedClassName = StringUtil.replace(
-				compatClassName, "compat.", StringPool.BLANK);
-
-			if (content.contains("extends " + extendedClassName)) {
-				compatClassNamesMap.put(compatClassName, extendedClassName);
-			}
-		}
-
-		return compatClassNamesMap;
 	}
 
 	protected String getContent(String fileName, int level) throws Exception {

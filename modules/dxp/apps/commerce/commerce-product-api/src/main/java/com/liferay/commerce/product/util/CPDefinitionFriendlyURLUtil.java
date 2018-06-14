@@ -16,6 +16,7 @@ package com.liferay.commerce.product.util;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CPDefinitionFriendlyURLUtil {
 
@@ -32,13 +34,15 @@ public class CPDefinitionFriendlyURLUtil {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		String currentSiteURL =
-			PortalUtil.getPortalURL(themeDisplay) +
-				themeDisplay.getPathFriendlyURLPublic() +
-					group.getFriendlyURL();
+		StringBundler sb = new StringBundler(5);
 
-		return currentSiteURL + CPConstants.SEPARATOR_PRODUCT_URL +
-			cpCatalogEntry.getUrl();
+		sb.append(PortalUtil.getPortalURL(themeDisplay));
+		sb.append(themeDisplay.getPathFriendlyURLPublic());
+		sb.append(group.getFriendlyURL());
+		sb.append(CPConstants.SEPARATOR_PRODUCT_URL);
+		sb.append(cpCatalogEntry.getUrl());
+
+		return sb.toString();
 	}
 
 }

@@ -45,7 +45,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Renato Rego
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class DDLTest {
 

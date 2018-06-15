@@ -18,6 +18,10 @@
 
 <%
 SearchContainer categoryEntriesSearchContainer = (SearchContainer)request.getAttribute("view.jsp-categoryEntriesSearchContainer");
+
+long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
+
+MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, categoryId);
 %>
 
 <liferay-ui:search-container
@@ -58,8 +62,8 @@ SearchContainer categoryEntriesSearchContainer = (SearchContainer)request.getAtt
 			</h5>
 
 			<%
-			int subcategoriesCount = MBCategoryServiceUtil.getCategoriesCount(scopeGroupId, category.getCategoryId(), WorkflowConstants.STATUS_APPROVED);
-			int threadsCount = MBThreadServiceUtil.getThreadsCount(scopeGroupId, category.getCategoryId(), WorkflowConstants.STATUS_APPROVED);
+			int subcategoriesCount = categoryDisplay.getSubcategoriesCount(category);
+			int threadsCount = categoryDisplay.getSubcategoriesThreadsCount(category);
 			%>
 
 			<span class="h6 text-default">

@@ -161,7 +161,7 @@ renderResponse.setTitle(categoryDisplayName);
 						<liferay-ui:search-container-column-text
 							name="<%= columnLabel %>"
 						>
-							<aui:a href="<%= editFactoryInstanceURL %>"><strong><%= curConfigurationModel.getLabel() %></strong></aui:a>
+							<aui:a href="<%= editFactoryInstanceURL %>"><strong><%= HtmlUtil.escape(curConfigurationModel.getLabel()) %></strong></aui:a>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text

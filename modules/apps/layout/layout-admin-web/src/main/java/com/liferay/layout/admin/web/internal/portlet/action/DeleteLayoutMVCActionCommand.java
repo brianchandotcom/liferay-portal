@@ -68,6 +68,9 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 			ActionResponse actionResponse)
 		throws PortalException {
 
+		long layoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "layoutSetBranchId");
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -124,9 +127,7 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		serviceContext.setAttribute(
-			"layoutSetBranchId",
-			ParamUtil.getLong(actionRequest, "layoutSetBranchId"));
+		serviceContext.setAttribute("layoutSetBranchId", layoutSetBranchId);
 
 		_layoutService.deleteLayout(selPlid, serviceContext);
 	}

@@ -257,7 +257,7 @@ name = HtmlUtil.escapeJS(name);
 
 		initInstanceCallback: function() {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
-				window['<%= name %>'].init(<%= HtmlUtil.escapeJS(namespace + initMethod) %>());
+				window['<%= name %>'].init(getInitialContent());
 			</c:if>
 
 			var iframe = A.one('#<%= name %>_ifr');

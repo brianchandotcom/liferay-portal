@@ -313,6 +313,9 @@
 		<check name="WhitespaceCheck" />
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
+		<check name="PropertiesBuildIncludeDirsCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="PropertiesCommentsCheck" />
 		<check name="PropertiesDefinitionKeysCheck" />
 		<check name="PropertiesDependenciesFileCheck" />

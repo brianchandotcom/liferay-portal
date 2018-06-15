@@ -55,6 +55,6 @@ UADApplicationSummaryDisplay uadApplicationSummaryDisplay = (UADApplicationSumma
 
 	<liferay-ui:icon
 		message="delete"
-		url="<%= anonymizeUADEntitiesURL.toString() %>"
+		url="<%= deleteUADEntitiesURL.toString() %>"
 	/>
 </liferay-ui:icon-menu>

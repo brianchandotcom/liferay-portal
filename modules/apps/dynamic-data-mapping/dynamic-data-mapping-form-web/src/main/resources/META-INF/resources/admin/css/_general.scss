@@ -29,7 +29,7 @@
 		}
 
 		&.btn-primary {
-			margin-left: 0px;
+			margin-left: 0;
 		}
 	}
 }
@@ -297,7 +297,7 @@
 		.form-builder-content,
 		.lfr-ddm-form-content {
 			background: #FFF;
-			border-color:#E7E7ED;
+			border-color: #E7E7ED;
 			border-radius: 4px;
 			margin: 0 auto;
 			overflow: hidden;
@@ -307,6 +307,10 @@
 		.form-builder-field-list-empty .form-builder-field-list-add-button {
 			padding: 16px 0;
 			position: relative;
+		}
+
+		.form-builder-field-list-container .lfr-ddm-form-field-container.form-builder-field .form-group {
+			margin-bottom: 0;
 		}
 
 		.hide {

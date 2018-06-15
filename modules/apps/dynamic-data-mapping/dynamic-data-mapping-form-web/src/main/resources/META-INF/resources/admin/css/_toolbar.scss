@@ -2,4 +2,8 @@
 	.toolbar {
 		margin-bottom: 0;
 	}
+
+	&.container {
+		max-width: 1248px;
+	}
 }

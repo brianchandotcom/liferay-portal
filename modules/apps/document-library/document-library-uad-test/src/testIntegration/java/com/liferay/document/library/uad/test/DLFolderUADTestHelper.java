@@ -33,9 +33,15 @@ import org.osgi.service.component.annotations.Reference;
 public class DLFolderUADTestHelper {
 
 	public DLFolder addDLFolder(long userId) throws Exception {
+		return addDLFolder(userId, 0L);
+	}
+
+	public DLFolder addDLFolder(long userId, long parentFolderId)
+		throws Exception {
+
 		return _dlFolderLocalService.addFolder(
 			userId, TestPropsValues.getGroupId(), TestPropsValues.getGroupId(),
-			false, 0L, RandomTestUtil.randomString(),
+			false, parentFolderId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false,
 			ServiceContextTestUtil.getServiceContext());
 	}

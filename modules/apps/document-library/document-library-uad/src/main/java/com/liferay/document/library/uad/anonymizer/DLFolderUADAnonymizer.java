@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.uad.anonymizer;
 
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 
 import org.osgi.service.component.annotations.Component;
@@ -23,4 +25,14 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = UADAnonymizer.class)
 public class DLFolderUADAnonymizer extends BaseDLFolderUADAnonymizer {
+
+	@Override
+	public void delete(DLFolder dlFolder) throws PortalException {
+		if (dlFolderLocalService.fetchDLFolder(dlFolder.getFolderId()) !=
+				null) {
+
+			super.delete(dlFolder);
+		}
+	}
+
 }

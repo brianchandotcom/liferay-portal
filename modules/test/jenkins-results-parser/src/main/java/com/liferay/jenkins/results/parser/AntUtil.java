@@ -69,7 +69,8 @@ public class AntUtil {
 		}
 
 		if (!projectName.equals(project.getName())) {
-			targetName = projectName + "." + targetName;
+			targetName = JenkinsResultsParserUtil.combine(
+				projectName, ".", targetName);
 		}
 
 		if (parameters != null) {

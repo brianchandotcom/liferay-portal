@@ -16,6 +16,7 @@ package com.liferay.fragment.entry.processor.editable.parser.impl;
 
 import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import org.jsoup.Jsoup;
@@ -45,7 +46,7 @@ public class TextEditableElementParser implements EditableElementParser {
 
 	@Override
 	public void replace(Element element, String value) {
-		Document document = Jsoup.parseBodyFragment(value);
+		Document document = Jsoup.parseBodyFragment(HtmlUtil.escapeJS(value));
 
 		Document.OutputSettings outputSettings = new Document.OutputSettings();
 

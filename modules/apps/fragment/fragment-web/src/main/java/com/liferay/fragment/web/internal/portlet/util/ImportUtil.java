@@ -21,6 +21,7 @@ import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.exception.InvalidFileException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -31,6 +32,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -190,6 +193,19 @@ public class ImportUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		try {
+			_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(html);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			status = WorkflowConstants.STATUS_DRAFT;
+		}
+
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				themeDisplay.getScopeGroupId(), fragmentEntryKey);
@@ -197,13 +213,12 @@ public class ImportUtil {
 		if (fragmentEntry == null) {
 			_fragmentEntryService.addFragmentEntry(
 				themeDisplay.getScopeGroupId(), fragmentCollectionId,
-				fragmentEntryKey, name, css, html, js,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+				fragmentEntryKey, name, css, html, js, status, serviceContext);
 		}
 		else if (overwrite) {
 			_fragmentEntryService.updateFragmentEntry(
 				fragmentEntry.getFragmentEntryId(), name, css, html, js,
-				WorkflowConstants.STATUS_APPROVED);
+				status);
 		}
 		else {
 			throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
@@ -398,6 +413,8 @@ public class ImportUtil {
 
 	private static final String _DEFAULT_FRAGMENT_COLLECTION_KEY = "imported";
 
+	private static final Log _log = LogFactoryUtil.getLog(ImportUtil.class);
+
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
@@ -406,6 +423,9 @@ public class ImportUtil {
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

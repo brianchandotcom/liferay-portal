@@ -131,7 +131,9 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 					checked = ParamUtil.getBoolean(request, name, checked);
 				%>
 
-					<aui:input checked="<%= checked %>" label="<%= HtmlUtil.escape(oAuth2Feature) %>" name="<%= name %>" type="checkbox" />
+					<div class="supportedFeature">
+						<aui:input checked="<%= checked %>" label="<%= HtmlUtil.escape(oAuth2Feature) %>" name="<%= name %>" type="checkbox" />
+					</div>
 
 				<%
 				}

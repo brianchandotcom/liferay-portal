@@ -42,7 +42,7 @@ public interface ConfigurableScopeMapperConfiguration {
 	public String osgiJAXRSName();
 
 	@Meta.AD(
-		deflt = "GET\\,HEAD\\,OPTIONS=everything.readonly,PUT\\,POST\\,PATCH\\,DELETE=everything\\,everything.writeonly",
+		deflt = "GET\\,HEAD\\,OPTIONS=everything.read,PUT\\,POST\\,PATCH\\,DELETE=everything\\,everything.write",
 		description = "mapping-description", id = "mapping", name = "mapping",
 		required = false
 	)

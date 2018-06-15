@@ -15,7 +15,11 @@
 package com.liferay.calendar.internal.model.listener;
 
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.staging.model.listener.StagingModelListener;
@@ -41,6 +45,10 @@ public class CalendarResourceStagingModelListener
 	public void onAfterRemove(CalendarResource calendarResource)
 		throws ModelListenerException {
 
+		if (_skipEvent(calendarResource)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterRemove(calendarResource);
 	}
 
@@ -48,8 +56,39 @@ public class CalendarResourceStagingModelListener
 	public void onAfterUpdate(CalendarResource calendarResource)
 		throws ModelListenerException {
 
+		if (_skipEvent(calendarResource)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterUpdate(calendarResource);
 	}
+
+	private boolean _skipEvent(CalendarResource calendarResource) {
+		CalendarResource guestCalendarResource = null;
+
+		try {
+			guestCalendarResource =
+				CalendarResourceUtil.fetchGuestCalendarResource(
+					calendarResource.getCompanyId());
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe);
+			}
+		}
+
+		if ((guestCalendarResource != null) &&
+			(guestCalendarResource.getCalendarResourceId() ==
+				calendarResource.getCalendarResourceId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CalendarResourceStagingModelListener.class);
 
 	@Reference
 	private StagingModelListener<CalendarResource> _stagingModelListener;

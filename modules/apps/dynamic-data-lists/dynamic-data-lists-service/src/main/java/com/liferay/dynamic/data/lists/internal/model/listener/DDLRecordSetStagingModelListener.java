@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.internal.model.listener;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -34,6 +35,10 @@ public class DDLRecordSetStagingModelListener
 	public void onAfterCreate(DDLRecordSet ddlRecordSet)
 		throws ModelListenerException {
 
+		if (_skipEvent(ddlRecordSet)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterCreate(ddlRecordSet);
 	}
 
@@ -48,7 +53,21 @@ public class DDLRecordSetStagingModelListener
 	public void onAfterUpdate(DDLRecordSet ddlRecordSet)
 		throws ModelListenerException {
 
+		if (_skipEvent(ddlRecordSet)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterUpdate(ddlRecordSet);
+	}
+
+	private boolean _skipEvent(DDLRecordSet ddlRecordSet) {
+		if (ddlRecordSet.getScope() !=
+				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

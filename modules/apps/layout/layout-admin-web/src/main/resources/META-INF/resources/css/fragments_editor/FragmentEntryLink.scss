@@ -80,9 +80,16 @@
 	}
 }
 
-.fragment-entry-link-wrapper:focus,
-.fragment-entry-link-wrapper:focus-within,
-.fragment-entry-link-wrapper:hover {
+@mixin fragment-entry-link-wrapper-focus {
+	box-shadow: 0 0 0 $fragmentEntryLinkFocusedBorderWidth $fragmentEntryLinkBorderColor;
+	outline: none;
+
+	.fragment-entry-link-control {
+		box-shadow: 0 0 0 $fragmentEntryLinkFocusedBorderWidth $fragmentEntryLinkBorderColor;
+	}
+}
+
+@mixin fragment-entry-link-wrapper-hover {
 	box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
 	z-index: $fragmentEntryLinkControlHoverZIndex;
 
@@ -95,12 +102,17 @@
 	}
 }
 
-.fragment-entry-link-wrapper:focus,
-.fragment-entry-link-wrapper:focus-within {
-	box-shadow: 0 0 0 $fragmentEntryLinkFocusedBorderWidth $fragmentEntryLinkBorderColor;
-	outline: none;
+.fragment-entry-link-wrapper:hover {
+	@include fragment-entry-link-wrapper-hover;
+}
 
-	.fragment-entry-link-control {
-		box-shadow: 0 0 0 $fragmentEntryLinkFocusedBorderWidth $fragmentEntryLinkBorderColor;
-	}
+.fragment-entry-link-wrapper:focus {
+	@include fragment-entry-link-wrapper-hover;
+	@include fragment-entry-link-wrapper-focus;
+
+}
+
+.fragment-entry-link-wrapper:focus-within {
+	@include fragment-entry-link-wrapper-hover;
+	@include fragment-entry-link-wrapper-focus;
 }

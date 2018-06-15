@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.model.Group;
@@ -93,17 +94,6 @@ public class MBDiscussionPermissionImplTest {
 	public void testAddDiscussionPermissionWhenUserIsDiscussionOwnerButDoesNotHaveNotFileEntryAddDiscussionPermission()
 		throws Exception {
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_siteUser1);
-
-		DiscussionPermission discussionPermission =
-			_commentManager.getDiscussionPermission(permissionChecker);
-
-		Assert.assertTrue(
-			discussionPermission.hasAddPermission(
-				TestPropsValues.getCompanyId(), _group.getGroupId(),
-				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
-
 		_addComment(_siteUser1);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
@@ -122,12 +112,47 @@ public class MBDiscussionPermissionImplTest {
 				ActionKeys.ADD_DISCUSSION);
 		}
 
-		permissionChecker = PermissionCheckerFactoryUtil.create(_siteUser1);
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_siteUser1);
 
-		discussionPermission = _commentManager.getDiscussionPermission(
-			permissionChecker);
+		DiscussionPermission discussionPermission =
+			_commentManager.getDiscussionPermission(permissionChecker);
 
 		Assert.assertFalse(
+			discussionPermission.hasAddPermission(
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
+	}
+
+	@Test
+	public void testBannedSiteMemberCannotAddComment() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		_mbBanLocalService.addBan(
+			_user.getUserId(), _siteUser1.getUserId(), serviceContext);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_siteUser1);
+
+		DiscussionPermission discussionPermission =
+			_commentManager.getDiscussionPermission(permissionChecker);
+
+		Assert.assertFalse(
+			discussionPermission.hasAddPermission(
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
+	}
+
+	@Test
+	public void testSiteMemberCanAddComment() throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_siteUser1);
+
+		DiscussionPermission discussionPermission =
+			_commentManager.getDiscussionPermission(permissionChecker);
+
+		Assert.assertTrue(
 			discussionPermission.hasAddPermission(
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
 				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
@@ -234,6 +259,9 @@ public class MBDiscussionPermissionImplTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private MBBanLocalService _mbBanLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

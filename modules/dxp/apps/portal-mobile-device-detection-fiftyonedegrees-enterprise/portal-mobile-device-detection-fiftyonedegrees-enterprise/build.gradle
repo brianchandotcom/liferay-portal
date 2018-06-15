@@ -1,12 +1,5 @@
-import com.liferay.gradle.util.FileUtil
-
-task downloadDATs
-
-String repositoryPrivatePassword = System.getProperty("repository.private.password")
-String repositoryPrivateUsername = System.getProperty("repository.private.username")
-
-classes {
-	dependsOn downloadDATs
+configurations {
+	dat
 }
 
 dependencies {
@@ -18,16 +11,16 @@ dependencies {
 	compileOnly project(":apps:portal-mobile-device-detection-fiftyonedegrees:portal-mobile-device-detection-fiftyonedegrees-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal:portal-profile-api")
+
+	dat ext: "gz", group: "com.liferay", name: "com.51degrees.dat.enterprise", version: "3.2-20180611"
 }
 
-downloadDATs {
-	doLast {
-		File dir = new File(processResources.destinationDir, "META-INF")
+processResources {
+	into("META-INF") {
+		from configurations.dat
 
-		FileUtil.get(
-			project,
-			"https://repository.liferay.com/nexus/content/repositories/liferay-private-releases/com/liferay/com.51degrees.dat.enterprise/3.2-20180611/com.51degrees.dat.enterprise-3.2-20180611.gz",
-			repositoryPrivateUsername, repositoryPrivatePassword,
-			new File(dir, "51Degrees-EnterpriseV3_2.dat.gz"), false, false)
+		rename {
+			"51Degrees-EnterpriseV3_2.dat.gz"
+		}
 	}
 }

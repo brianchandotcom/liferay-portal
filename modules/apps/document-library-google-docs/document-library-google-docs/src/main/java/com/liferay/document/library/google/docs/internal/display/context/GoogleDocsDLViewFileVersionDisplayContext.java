@@ -86,6 +86,15 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = super.getMenu();
 
+		// See LPS-79987
+
+		if (Validator.isNull(
+				_googleDocsMetadataHelper.getFieldValue(
+					GoogleDocsConstants.DDM_FIELD_NAME_URL))) {
+
+			return menu;
+		}
+
 		List<MenuItem> menuItems = menu.getMenuItems();
 
 		menuItems.removeIf(

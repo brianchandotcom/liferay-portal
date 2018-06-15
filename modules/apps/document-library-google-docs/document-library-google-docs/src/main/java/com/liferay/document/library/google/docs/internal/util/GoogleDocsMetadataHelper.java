@@ -183,6 +183,7 @@ public class GoogleDocsMetadataHelper {
 
 			ServiceContext serviceContext = new ServiceContext();
 
+			serviceContext.setAttribute("validateDDMFormValues", Boolean.FALSE);
 			serviceContext.setScopeGroupId(_dlFileVersion.getGroupId());
 			serviceContext.setUserId(_dlFileVersion.getUserId());
 

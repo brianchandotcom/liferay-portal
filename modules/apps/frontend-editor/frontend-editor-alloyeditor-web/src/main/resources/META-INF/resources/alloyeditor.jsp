@@ -175,9 +175,14 @@ name = HtmlUtil.escapeJS(name);
 
 		editorConfig.removePlugins = editorConfig.removePlugins ? editorConfig.removePlugins + ',ae_embed' : 'ae_embed';
 
+		var uiNode = Liferay.Util.getOpener() !== window.self ?
+			document.querySelector('#main-content') :
+			null;
+
 		editorConfig = A.merge(
 			{
-				title: false
+				title: false,
+				uiNode: uiNode
 			},
 			editorConfig
 		);
@@ -222,6 +227,7 @@ name = HtmlUtil.escapeJS(name);
 					onInitMethod: '<%= HtmlUtil.escapeJS(namespace + onInitMethod) %>',
 				</c:if>
 
+				portletId: '<%= portletId %>',
 				plugins: plugins,
 				textMode: <%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>,
 
@@ -234,6 +240,8 @@ name = HtmlUtil.escapeJS(name);
 		).render();
 
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#onEditorCreate" %>' />
+
+		Liferay.namespace('EDITORS').alloyEditor.addInstance();
 	};
 
 	window['<%= name %>'] = {
@@ -253,6 +261,8 @@ name = HtmlUtil.escapeJS(name);
 			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
+
+			Liferay.namespace('EDITORS').alloyEditor.removeInstance();
 		},
 
 		dispose: function() {
@@ -335,18 +345,4 @@ name = HtmlUtil.escapeJS(name);
 	<c:if test="<%= autoCreate %>">
 		window['<%= name %>'].initEditor();
 	</c:if>
-
-	var destroyInstance = function(event) {
-		if (event.portletId === '<%= portletId %>') {
-			try {
-				window['<%= name %>'].destroy();
-			}
-			catch (e) {
-			}
-
-			Liferay.detach('destroyPortlet', destroyInstance);
-		}
-	};
-
-	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>

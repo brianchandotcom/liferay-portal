@@ -43,6 +43,11 @@ AUI.add(
 						validator: '_validateEditorMethod'
 					},
 
+					portletId: {
+						validator: Lang.isString,
+						value: ''
+					},
+
 					textMode: {
 						validator: Lang.isBoolean,
 						value: {}
@@ -373,7 +378,13 @@ AUI.add(
 
 						window[editorNamespace].instanceReady = true;
 
-						Liferay.component(editorNamespace, window[editorNamespace]);
+						Liferay.component(
+							editorNamespace,
+							window[editorNamespace],
+							{
+								portletId: instance.get('portletId')
+							}
+						);
 
 						// LPS-73775
 

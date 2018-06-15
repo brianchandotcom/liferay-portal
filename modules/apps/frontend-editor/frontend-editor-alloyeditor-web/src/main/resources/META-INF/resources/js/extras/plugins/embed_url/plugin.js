@@ -166,7 +166,7 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 	const resizeElement = function(el, width, height) {
 		const wrapperElement = el.parentElement;
 
-		if (wrapperElement) {
+		if (wrapperElement && width > 0 && height > 0) {
 			const rect = wrapperElement.getBoundingClientRect();
 
 			const pwidth = width >= rect.width ? 100 : Math.floor((width / rect.width) * 100);
@@ -200,20 +200,25 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 				const selection = editor.getSelection();
 
 				if (selection) {
-					const wrapperElement = selection.root.findOne('[data-cke-widget-wrapper]');
+					const wrapperElement = selection.root.find('[data-cke-widget-wrapper]');
 
 					if (wrapperElement) {
-						const imageElement = wrapperElement.findOne('img');
-						const widgetElement = wrapperElement.findOne('[data-widget="embedurl"]');
+						const elementList = wrapperElement.$;
+						if (elementList.length > 0) {
+							const lastElement = new CKEDITOR.dom.element(elementList[elementList.length - 1]);
 
-						if (imageElement && widgetElement) {
-							const range = editor.createRange();
+							const imageElement = lastElement.findOne('img');
+							const widgetElement = lastElement.findOne('[data-widget="embedurl"]');
 
-							range.setStart(widgetElement, 0);
-							range.setEnd(imageElement, 1);
+							if (imageElement && widgetElement) {
+								const range = editor.createRange();
 
-							selection.selectRanges([range]);
-							selection.selectElement(wrapperElement);
+								range.setStart(widgetElement, 0);
+								range.setEnd(imageElement, 1);
+
+								selection.selectRanges([range]);
+								selection.selectElement(lastElement);
+							}
 						}
 					}
 				}

@@ -44,7 +44,29 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 	<script data-senna-track="temporary" type="text/javascript">
 		AlloyEditor.regexBasePath = /(^|.*[\\\/])(?:liferay-alloy-editor[^/]+|liferay-alloy-editor)\.js(?:\?.*|;.*)?$/i;
 
-		Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
+		var alloyEditorDisposeResources = false;
+		var alloyEditorInstances = 0;
+
+		var cleanupAlloyEditorResources = function() {
+			if (!alloyEditorInstances && alloyEditorDisposeResources) {
+				window.AlloyEditor = undefined;
+				window.CKEDITOR = undefined;
+
+				alloyEditorInstances = 0;
+				alloyEditorDisposeResources = false;
+			}
+		}
+
+		Liferay.namespace('EDITORS').alloyEditor = {
+			addInstance: function() {
+				alloyEditorInstances++;
+			},
+			removeInstance() {
+				alloyEditorInstances--;
+
+				cleanupAlloyEditorResources();
+			}
+		}
 
 		CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
 			CKEDITOR.scriptLoader.load(scripts, success, failure);
@@ -54,13 +76,14 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 			return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
 		};
 
-		var destroyGlobalEditors = function() {
-			window.AlloyEditor = undefined;
-			window.CKEDITOR = undefined;
+		var destroyGlobalAlloyEditor = function() {
+			alloyEditorDisposeResources = true;
 
-			Liferay.detach('beforeScreenFlip', destroyGlobalEditors);
+			cleanupAlloyEditorResources();
+
+			Liferay.detach('beforeScreenFlip', destroyGlobalAlloyEditor);
 		};
 
-		Liferay.on('beforeScreenFlip', destroyGlobalEditors);
+		Liferay.on('beforeScreenFlip', destroyGlobalAlloyEditor);
 	</script>
 </liferay-util:html-top>

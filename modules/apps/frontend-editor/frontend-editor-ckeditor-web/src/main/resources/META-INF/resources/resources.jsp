@@ -44,8 +44,6 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 	<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.ckeditor.web#" + editorName + "#additionalResources" %>' />
 
 	<script data-senna-track="temporary" type="text/javascript">
-		Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
-
 		CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
 			CKEDITOR.scriptLoader.load(scripts, success, failure);
 		};
@@ -54,12 +52,37 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 			return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
 		};
 
-		var destroyGlobalEditor = function() {
-			window.CKEDITOR = undefined;
+		var ckEditorDisposeResources = false;
+		var ckEditorInstances = 0;
 
-			Liferay.detach('beforeScreenFlip', destroyGlobalEditor);
+		var cleanupCkEditorResources = function() {
+			if (!ckEditorInstances && ckEditorDisposeResources) {
+				window.CKEDITOR = undefined;
+
+				ckEditorInstances = 0;
+				ckEditorDisposeResources = false;
+			}
+		}
+
+		Liferay.namespace('EDITORS').ckeditor = {
+			addInstance: function() {
+				ckEditorInstances++;
+			},
+			removeInstance() {
+				ckEditorInstances--;
+
+				cleanupCkEditorResources();
+			}
+		}
+
+		var destroyGlobalCkEditor = function() {
+			ckEditorDisposeResources = true;
+
+			cleanupCkEditorResources();
+
+			Liferay.detach('beforeScreenFlip', destroyGlobalCkEditor);
 		};
 
-		Liferay.on('beforeScreenFlip', destroyGlobalEditor);
+		Liferay.on('beforeScreenFlip', destroyGlobalCkEditor);
 	</script>
 </liferay-util:html-top>

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Map;
@@ -50,6 +51,16 @@ public class WikiTextEditorConfigContributor
 		jsonObject.put("disallowedContent", "br");
 		jsonObject.put(
 			"extraPlugins", "ae_placeholder,ae_selectionregion,ae_uicore");
+
+		String removePlugins = jsonObject.getString("removePlugins");
+
+		if (Validator.isNotNull(removePlugins)) {
+			removePlugins = removePlugins + ",magicline";
+		}
+		else {
+			removePlugins = "magicline";
+		}
+
 		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 	}
 

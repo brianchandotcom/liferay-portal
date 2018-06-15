@@ -14,10 +14,9 @@
 
 package com.liferay.lang.builder;
 
+import com.liferay.lang.builder.comparator.LangBuilderCategoryComparator;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageValidator;
@@ -37,8 +36,6 @@ import io.github.firemaples.translate.Translate;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import java.nio.charset.StandardCharsets;
@@ -53,6 +50,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * @author Brian Wing Shun Chan
@@ -262,6 +261,25 @@ public class LangBuilder {
 		return string.regionMatches(true, 0, prefix, 0, prefix.length());
 	}
 
+	private void _addMessage(
+		Map<LangBuilderCategory, Map<String, String>> messages, String key,
+		String value) {
+
+		LangBuilderCategory langBuilderCategory = _getLangBuilderCategory(key);
+
+		Map<String, String> categoryMessages = messages.get(
+			langBuilderCategory);
+
+		if (categoryMessages == null) {
+			categoryMessages = new TreeMap<>(
+				new NaturalOrderStringComparator(true, true));
+		}
+
+		categoryMessages.put(key, value);
+
+		messages.put(langBuilderCategory, categoryMessages);
+	}
+
 	private void _copyProperties(File file, String languageId)
 		throws IOException {
 
@@ -307,241 +325,139 @@ public class LangBuilder {
 			}
 		}
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content));
-			UnsyncBufferedWriter unsyncBufferedWriter =
-				new UnsyncBufferedWriter(
-					new OutputStreamWriter(
-						new FileOutputStream(propertiesFile),
-						StringPool.UTF8))) {
+		StringBundler sb = new StringBundler();
 
-			boolean firstLine = true;
-			int state = 0;
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				line = line.trim();
 
-				int pos = line.indexOf("=");
+				String[] array = line.split("=", 2);
 
-				if (pos != -1) {
-					String key = line.substring(0, pos);
-					String value = line.substring(pos + 1);
+				if (array.length != 2) {
+					sb.append(line);
+					sb.append("\n");
 
-					if (((state == 1) && !key.startsWith("lang.")) ||
-						((state == 2) && !key.startsWith("javax.portlet.")) ||
-						((state == 3) && !key.startsWith("category.")) ||
-						((state == 4) && !key.startsWith("model.resource.")) ||
-						((state == 5) && !key.startsWith("action.")) ||
-						((state == 7) && !key.startsWith("country.")) ||
-						((state == 8) && !key.startsWith("currency.")) ||
-						((state == 9) && !key.startsWith("language.")) ||
-						((state != 9) && key.startsWith("language."))) {
+					continue;
+				}
 
-						throw new RuntimeException(
-							StringBundler.concat(
-								"File ", languageId, " with state ",
-								String.valueOf(state), " has key ", key));
-					}
+				String key = array[0];
+				String value = array[1];
 
-					String translatedText = properties.getProperty(key);
+				String translatedText = properties.getProperty(key);
 
-					if (_keysWithUpdatedValues.contains(key)) {
-						translatedText = null;
-					}
+				if (_keysWithUpdatedValues.contains(key)) {
+					translatedText = null;
+				}
 
-					if ((translatedText == null) &&
-						(parentProperties != null)) {
+				if ((translatedText == null) && (parentProperties != null)) {
+					translatedText = parentProperties.getProperty(key);
+				}
 
-						translatedText = parentProperties.getProperty(key);
-					}
+				if ((translatedText == null) && (_renameKeys != null)) {
+					String renameKey = _renameKeys.getProperty(key);
 
-					if ((translatedText == null) && (_renameKeys != null)) {
-						String renameKey = _renameKeys.getProperty(key);
+					if (renameKey != null) {
+						translatedText = properties.getProperty(key);
 
-						if (renameKey != null) {
-							translatedText = properties.getProperty(key);
+						if ((translatedText == null) &&
+							(parentProperties != null)) {
 
-							if ((translatedText == null) &&
-								(parentProperties != null)) {
-
-								translatedText = parentProperties.getProperty(
-									key);
-							}
+							translatedText = parentProperties.getProperty(key);
 						}
-					}
-
-					if (translatedText != null) {
-						if (translatedText.endsWith(AUTOMATIC_COPY)) {
-							translatedText = "";
-						}
-					}
-
-					if ((translatedText == null) || translatedText.equals("")) {
-						if (line.contains("{") || line.contains("<")) {
-							translatedText = value + AUTOMATIC_COPY;
-						}
-						else if (line.contains("[")) {
-							pos = line.indexOf("[");
-
-							String baseKey = line.substring(0, pos);
-
-							String translatedBaseKey = properties.getProperty(
-								baseKey);
-
-							if (Validator.isNotNull(translatedBaseKey)) {
-								translatedText = translatedBaseKey;
-							}
-							else {
-								translatedText = value + AUTOMATIC_COPY;
-							}
-						}
-						else if (LanguageValidator.isSpecialPropertyKey(key)) {
-							translatedText = _getSpecialPropertyValue(key);
-						}
-						else if (languageId.equals("el") &&
-								 (key.equals("enabled") || key.equals("on") ||
-								  key.equals("on-date"))) {
-
-							translatedText = "";
-						}
-						else if (languageId.equals("es") && key.equals("am")) {
-							translatedText = "";
-						}
-						else if (languageId.equals("fi") &&
-								 (key.equals("on") || key.equals("the"))) {
-
-							translatedText = "";
-						}
-						else if (languageId.equals("it") && key.equals("am")) {
-							translatedText = "";
-						}
-						else if (languageId.equals("ja") &&
-								 (key.equals("any") || key.equals("anytime") ||
-								  key.equals("down") || key.equals("on") ||
-								  key.equals("on-date") || key.equals("the"))) {
-
-							translatedText = "";
-						}
-						else if (languageId.equals("ko") && key.equals("the")) {
-							translatedText = "";
-						}
-						else {
-							translatedText = _translate(
-								"en", languageId, key, value, 0);
-
-							if (Validator.isNull(translatedText)) {
-								translatedText = value + AUTOMATIC_COPY;
-							}
-							else if (!key.startsWith("country.") &&
-									 !key.startsWith("language.")) {
-
-								translatedText =
-									translatedText + AUTOMATIC_TRANSLATION;
-							}
-						}
-					}
-
-					if (Validator.isNotNull(translatedText)) {
-						translatedText = _fixTranslation(translatedText);
-
-						if (firstLine) {
-							firstLine = false;
-						}
-						else {
-							unsyncBufferedWriter.newLine();
-						}
-
-						unsyncBufferedWriter.write(key + "=" + translatedText);
-
-						unsyncBufferedWriter.flush();
 					}
 				}
-				else {
-					if (_startsWithIgnoreCase(line, "## Language settings")) {
-						if (state == 1) {
-							throw new RuntimeException(languageId);
-						}
 
-						state = 1;
+				if (translatedText != null) {
+					if (translatedText.endsWith(AUTOMATIC_COPY)) {
+						translatedText = "";
 					}
-					else if (_startsWithIgnoreCase(
-								line, "## Portlet descriptions and titles")) {
+				}
 
-						if (state == 2) {
-							throw new RuntimeException(languageId);
-						}
-
-						state = 2;
+				if ((translatedText == null) || translatedText.equals("")) {
+					if (line.contains("{") || line.contains("<")) {
+						translatedText = value + AUTOMATIC_COPY;
 					}
-					else if (_startsWithIgnoreCase(
-								line, "## Category titles")) {
+					else if (line.contains("[")) {
+						int pos = line.indexOf("[");
 
-						if (state == 3) {
-							throw new RuntimeException(languageId);
+						String baseKey = line.substring(0, pos);
+
+						String translatedBaseKey = properties.getProperty(
+							baseKey);
+
+						if (Validator.isNotNull(translatedBaseKey)) {
+							translatedText = translatedBaseKey;
 						}
-
-						state = 3;
-					}
-					else if (_startsWithIgnoreCase(
-								line, "## Model resources")) {
-
-						if (state == 4) {
-							throw new RuntimeException(languageId);
+						else {
+							translatedText = value + AUTOMATIC_COPY;
 						}
-
-						state = 4;
 					}
-					else if (_startsWithIgnoreCase(line, "## Action names")) {
-						if (state == 5) {
-							throw new RuntimeException(languageId);
-						}
-
-						state = 5;
+					else if (LanguageValidator.isSpecialPropertyKey(key)) {
+						translatedText = _getSpecialPropertyValue(key);
 					}
-					else if (_startsWithIgnoreCase(line, "## Messages")) {
-						if (state == 6) {
-							throw new RuntimeException(languageId);
-						}
+					else if (languageId.equals("el") &&
+							 (key.equals("enabled") || key.equals("on") ||
+							  key.equals("on-date"))) {
 
-						state = 6;
+						translatedText = "";
 					}
-					else if (_startsWithIgnoreCase(line, "## Country")) {
-						if (state == 7) {
-							throw new RuntimeException(languageId);
-						}
-
-						state = 7;
+					else if (languageId.equals("es") && key.equals("am")) {
+						translatedText = "";
 					}
-					else if (_startsWithIgnoreCase(line, "## Currency")) {
-						if (state == 8) {
-							throw new RuntimeException(languageId);
-						}
+					else if (languageId.equals("fi") &&
+							 (key.equals("on") || key.equals("the"))) {
 
-						state = 8;
+						translatedText = "";
 					}
-					else if (_startsWithIgnoreCase(line, "## Language")) {
-						if (state == 9) {
-							throw new RuntimeException(languageId);
-						}
-
-						state = 9;
+					else if (languageId.equals("it") && key.equals("am")) {
+						translatedText = "";
 					}
+					else if (languageId.equals("ja") &&
+							 (key.equals("any") || key.equals("anytime") ||
+							  key.equals("down") || key.equals("on") ||
+							  key.equals("on-date") || key.equals("the"))) {
 
-					if (firstLine) {
-						firstLine = false;
+						translatedText = "";
+					}
+					else if (languageId.equals("ko") && key.equals("the")) {
+						translatedText = "";
 					}
 					else {
-						unsyncBufferedWriter.newLine();
+						translatedText = _translate(
+							"en", languageId, key, value, 0);
+
+						if (Validator.isNull(translatedText)) {
+							translatedText = value + AUTOMATIC_COPY;
+						}
+						else if (!key.startsWith("country.") &&
+								 !key.startsWith("language.")) {
+
+							translatedText =
+								translatedText + AUTOMATIC_TRANSLATION;
+						}
 					}
+				}
 
-					unsyncBufferedWriter.write(line);
+				if (Validator.isNotNull(translatedText)) {
+					translatedText = _fixTranslation(translatedText);
 
-					unsyncBufferedWriter.flush();
+					sb.append(key);
+					sb.append(StringPool.EQUAL);
+					sb.append(translatedText);
+					sb.append("\n");
 				}
 			}
 		}
+
+		sb.setIndex(sb.index() - 2);
+
+		content = sb.toString();
+
+		_write(propertiesFile, content);
 	}
 
 	private String _fixEnglishTranslation(String key, String value) {
@@ -581,6 +497,25 @@ public class LangBuilder {
 			});
 
 		return value;
+	}
+
+	private LangBuilderCategory _getLangBuilderCategory(String key) {
+		LangBuilderCategory messagesCategory = null;
+
+		for (LangBuilderCategory langBuilderCategory :
+				LangBuilderCategory.values()) {
+
+			String prefix = langBuilderCategory.getPrefix();
+
+			if (Validator.isNull(prefix)) {
+				messagesCategory = langBuilderCategory;
+			}
+			else if (key.startsWith(prefix)) {
+				return langBuilderCategory;
+			}
+		}
+
+		return messagesCategory;
 	}
 
 	private String _getMicrosoftLanguageId(String languageId) {
@@ -646,69 +581,76 @@ public class LangBuilder {
 
 		String content = _read(propertiesFile);
 
+		Map<LangBuilderCategory, Map<String, String>> messages = new TreeMap<>(
+			new LangBuilderCategoryComparator());
+
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content));
-			UnsyncBufferedWriter unsyncBufferedWriter =
-				new UnsyncBufferedWriter(new FileWriter(propertiesFile))) {
-
-			Map<String, String> messages = new TreeMap<>(
-				new NaturalOrderStringComparator(true, true));
-
-			boolean begin = false;
-			boolean firstLine = true;
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			String line = null;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
-				int pos = line.indexOf("=");
+				String[] array = line.split("=", 2);
 
-				if (pos != -1) {
-					String key = line.substring(0, pos);
-
-					String value = line.substring(pos + 1);
-
-					if (Validator.isNotNull(value)) {
-						value = _fixTranslation(line.substring(pos + 1));
-
-						if (_titleCapitalization) {
-							value = _fixEnglishTranslation(key, value);
-						}
-
-						messages.put(key, value);
-					}
-				}
-				else {
-					if (begin && line.equals(StringPool.BLANK)) {
-						_sortAndWrite(
-							unsyncBufferedWriter, messages, firstLine);
-					}
-
-					if (line.equals(StringPool.BLANK)) {
-						begin = !begin;
-					}
-					else if (line.startsWith("##")) {
-						begin = false;
-					}
-
-					if (firstLine) {
-						firstLine = false;
-					}
-					else {
-						unsyncBufferedWriter.newLine();
-					}
-
-					unsyncBufferedWriter.write(line);
+				if (array.length != 2) {
+					continue;
 				}
 
-				unsyncBufferedWriter.flush();
-			}
+				String key = array[0];
+				String value = array[1];
 
-			if (!messages.isEmpty()) {
-				_sortAndWrite(unsyncBufferedWriter, messages, firstLine);
+				if (Validator.isNull(key) || Validator.isNull(value)) {
+					continue;
+				}
+
+				value = _fixTranslation(value);
+
+				if (_titleCapitalization) {
+					value = _fixEnglishTranslation(key, value);
+				}
+
+				_addMessage(messages, key, value);
 			}
 		}
 
-		return _read(propertiesFile);
+		if (messages.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (Map.Entry<LangBuilderCategory, Map<String, String>> entry1 :
+				messages.entrySet()) {
+
+			LangBuilderCategory langBuilderCategory = entry1.getKey();
+
+			sb.append("##\n");
+			sb.append("## ");
+			sb.append(langBuilderCategory.getDescription());
+			sb.append("\n");
+			sb.append("##\n\n");
+
+			Map<String, String> categoryMessages = entry1.getValue();
+
+			for (Map.Entry<String, String> entry2 :
+					categoryMessages.entrySet()) {
+
+				sb.append(entry2.getKey());
+				sb.append(StringPool.EQUAL);
+				sb.append(entry2.getValue());
+				sb.append("\n");
+			}
+
+			sb.append("\n");
+		}
+
+		sb.setIndex(sb.index() - 2);
+
+		content = sb.toString();
+
+		_write(propertiesFile, content);
+
+		return content;
 	}
 
 	private String _read(File file) throws IOException {
@@ -723,26 +665,6 @@ public class LangBuilder {
 		try (FileInputStream fileInputStream = new FileInputStream(file)) {
 			return PropertiesUtil.load(fileInputStream, StringPool.UTF8);
 		}
-	}
-
-	private void _sortAndWrite(
-			UnsyncBufferedWriter unsyncBufferedWriter,
-			Map<String, String> messages, boolean firstLine)
-		throws IOException {
-
-		boolean firstEntry = true;
-
-		for (Map.Entry<String, String> entry : messages.entrySet()) {
-			if (!firstLine || !firstEntry) {
-				unsyncBufferedWriter.newLine();
-			}
-
-			firstEntry = false;
-
-			unsyncBufferedWriter.write(entry.getKey() + "=" + entry.getValue());
-		}
-
-		messages.clear();
 	}
 
 	private String _translate(
@@ -805,6 +727,10 @@ public class LangBuilder {
 		}
 
 		return toText;
+	}
+
+	private void _write(File file, String s) throws IOException {
+		FileUtils.writeStringToFile(file, s, StringPool.UTF8);
 	}
 
 	private final String[] _excludedLanguageIds;

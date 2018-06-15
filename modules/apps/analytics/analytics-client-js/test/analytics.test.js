@@ -151,7 +151,7 @@ describe('Analytics Client', () => {
 		});
 
 		it('should report identity changes to the Identity Service', () => {
-			fetchMock.mock(/identity/ig, () => Promise.resolve(200));
+			fetchMock.mock('*', () => Promise.resolve(200));
 
 			Analytics.reset();
 			Analytics.dispose();
@@ -169,12 +169,12 @@ describe('Analytics Client', () => {
 				fetchMock.restore();
 				fetchMock.mock(/asahlfr/ig, () => Promise.resolve(200));
 				fetchMock.mock(
-					/send-identity-context/,
+					/identity/ig,
 					function(url) {
 						identityCalled += 1;
 						return '';
 					}
-				)
+				);
 			})
 			.then(() => Analytics.setIdentity({email: 'john@liferay.com'}))
 			.then(() => expect(identityCalled).to.equal(1));

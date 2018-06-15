@@ -711,20 +711,20 @@ public class BookmarksEntryLocalServiceImpl
 	}
 
 	protected long getFolder(BookmarksEntry entry, long folderId) {
-		if ((entry.getFolderId() != folderId) &&
-			(folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+		if ((entry.getFolderId() == folderId) ||
+			(folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-			BookmarksFolder newFolder =
-				bookmarksFolderPersistence.fetchByPrimaryKey(folderId);
-
-			if ((newFolder == null) ||
-				(entry.getGroupId() != newFolder.getGroupId())) {
-
-				folderId = entry.getFolderId();
-			}
+			return folderId;
 		}
 
-		return folderId;
+		BookmarksFolder folder = bookmarksFolderPersistence.fetchByPrimaryKey(
+			folderId);
+
+		if ((folder != null) && (entry.getGroupId() == folder.getGroupId())) {
+			return folderId;
+		}
+
+		return entry.getFolderId();
 	}
 
 	protected void notifySubscribers(

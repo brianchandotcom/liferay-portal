@@ -2,29 +2,10 @@
 
 .portlet-dynamic-data-mapping-data-provider {
 	.form {
-		.help-block {
-			position: absolute;
-		}
-
-		.help-icon:hover {
-			color: #FFF;
-		}
-
 		.input-localized {
 			.help-block {
 				margin-top: 21px;
 			}
-		}
-	}
-
-	.form-control {
-		font-size: 14px;
-		height: 40px;
-	}
-
-	@include sm {
-		.form-control {
-			font-size: 16px;
 		}
 	}
 

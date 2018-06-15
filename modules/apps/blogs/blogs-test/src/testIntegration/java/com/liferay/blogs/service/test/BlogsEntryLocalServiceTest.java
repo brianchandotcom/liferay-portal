@@ -128,6 +128,44 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddCoverImageWithCoverImageURL() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		String coverImageURL = StringUtil.randomString();
+
+		BlogsEntryLocalServiceUtil.addCoverImage(
+			entry.getEntryId(), new ImageSelector(coverImageURL));
+
+		BlogsEntry updatedEntry = BlogsEntryLocalServiceUtil.getEntry(
+			entry.getEntryId());
+
+		Assert.assertEquals(0, updatedEntry.getCoverImageFileEntryId());
+		Assert.assertEquals(coverImageURL, updatedEntry.getCoverImageURL());
+		Assert.assertFalse(updatedEntry.isSmallImage());
+	}
+
+	@Test
+	public void testAddCoverImageWithImageBytes() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		byte[] bytes = FileUtil.getBytes(
+			RandomTestUtil.randomInputStream(randomValue -> true));
+
+		BlogsEntryLocalServiceUtil.addCoverImage(
+			entry.getEntryId(),
+			new ImageSelector(
+				bytes, StringUtil.randomString() + ".bin",
+				ContentTypes.APPLICATION_OCTET_STREAM, StringPool.BLANK));
+
+		BlogsEntry updatedEntry = BlogsEntryLocalServiceUtil.getEntry(
+			entry.getEntryId());
+
+		Assert.assertNotEquals(0, updatedEntry.getCoverImageFileEntryId());
+		Assert.assertEquals(StringPool.BLANK, updatedEntry.getCoverImageURL());
+		Assert.assertFalse(updatedEntry.isSmallImage());
+	}
+
+	@Test
 	public void testAddCoverImageWithURL() throws Exception {
 		BlogsEntry entry = addEntry(false);
 
@@ -342,6 +380,7 @@ public class BlogsEntryLocalServiceTest {
 
 		Assert.assertEquals(0, updatedEntry.getCoverImageFileEntryId());
 		Assert.assertEquals(StringPool.BLANK, updatedEntry.getCoverImageURL());
+		Assert.assertFalse(updatedEntry.isSmallImage());
 	}
 
 	@Test
@@ -393,6 +432,23 @@ public class BlogsEntryLocalServiceTest {
 		Folder folder = portletFileEntry.getFolder();
 
 		Assert.assertEquals(BlogsConstants.SERVICE_NAME, folder.getName());
+	}
+
+	@Test
+	public void testAddSmallImageWithSmallImageURL() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		String imageURL = StringUtil.randomString();
+
+		BlogsEntryLocalServiceUtil.addSmallImage(
+			entry.getEntryId(), new ImageSelector(imageURL));
+
+		BlogsEntry updatedEntry = BlogsEntryLocalServiceUtil.getEntry(
+			entry.getEntryId());
+
+		Assert.assertEquals(0, updatedEntry.getSmallImageFileEntryId());
+		Assert.assertEquals(imageURL, updatedEntry.getSmallImageURL());
+		Assert.assertTrue(updatedEntry.isSmallImage());
 	}
 
 	@Test(expected = NoSuchEntryException.class)

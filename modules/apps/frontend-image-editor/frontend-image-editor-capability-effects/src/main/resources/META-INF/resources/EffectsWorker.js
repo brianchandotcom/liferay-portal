@@ -47,6 +47,8 @@ onmessage = function(event) {
 	}
 
 	postMessage(imageData);
+
+	close();
 };
 
 /**

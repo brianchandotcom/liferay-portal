@@ -137,10 +137,25 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 		String line1 = getLine(detailAST.getLineNo() - 1);
 		String line2 = getLine(afterPlusLineNo - 1);
 
-		int tabCount = _getLeadingTabCount(line1);
+		int tabCount1 = _getLeadingTabCount(line1);
+		int tabCount2 = _getLeadingTabCount(line2);
 
-		if ((tabCount + 1) != _getLeadingTabCount(line2)) {
-			log(afterPlusLineNo, _MSG_INCORRECT_TABBING, tabCount + 1);
+		if (tabCount1 == tabCount2) {
+			DetailAST firstChildAST = detailAST.getFirstChild();
+
+			if (firstChildAST != null) {
+				DetailAST lastChildAST = firstChildAST.getLastChild();
+
+				if ((lastChildAST != null) &&
+					(lastChildAST.getType() == TokenTypes.METHOD_CALL)) {
+
+					return;
+				}
+			}
+		}
+
+		if ((tabCount1 + 1) != tabCount2) {
+			log(afterPlusLineNo, _MSG_INCORRECT_TABBING, tabCount1 + 1);
 		}
 	}
 

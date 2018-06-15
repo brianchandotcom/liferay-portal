@@ -51,14 +51,25 @@ public class EventUtil
 	public static final String UNDEPLOYING = "org/osgi/service/web/UNDEPLOYING";
 
 	public EventUtil(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_enabled = GetterUtil.getBoolean(
+			bundleContext.getProperty("wab.event.enabled"));
 
-		_logger = new Logger(bundleContext);
+		if (_enabled) {
+			_bundleContext = bundleContext;
 
-		_webExtenderBundle = _bundleContext.getBundle();
+			_logger = new Logger(bundleContext);
 
-		_eventAdminServiceTracker = ServiceTrackerFactory.open(
-			_bundleContext, EventAdmin.class, this);
+			_webExtenderBundle = _bundleContext.getBundle();
+
+			_eventAdminServiceTracker = ServiceTrackerFactory.open(
+				_bundleContext, EventAdmin.class, this);
+		}
+		else {
+			_bundleContext = null;
+			_logger = null;
+			_webExtenderBundle = null;
+			_eventAdminServiceTracker = null;
+		}
 	}
 
 	@Override
@@ -71,6 +82,10 @@ public class EventUtil
 	}
 
 	public void close() {
+		if (!_enabled) {
+			return;
+		}
+
 		_eventAdminServiceTracker.close();
 	}
 
@@ -91,6 +106,10 @@ public class EventUtil
 	public void sendEvent(
 		Bundle bundle, String eventTopic, Exception exception,
 		boolean collision) {
+
+		if (!_enabled) {
+			return;
+		}
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -181,6 +200,7 @@ public class EventUtil
 	}
 
 	private final BundleContext _bundleContext;
+	private final boolean _enabled;
 	private EventAdmin _eventAdmin;
 	private final ServiceTracker<EventAdmin, EventAdmin>
 		_eventAdminServiceTracker;

@@ -20,12 +20,16 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -70,6 +74,18 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 				portletDataContext, layoutPageTemplateEntry,
 				layoutPageTemplateCollection,
 				PortletDataContext.REFERENCE_TYPE_PARENT);
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				layoutPageTemplateEntry.getGroupId(),
+				_portal.getClassNameId(LayoutPageTemplateEntry.class),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layoutPageTemplateEntry, fragmentEntryLink,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 
 		Element entryElement = portletDataContext.getExportDataElement(
@@ -147,6 +163,10 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 					portletDataContext, importedLayoutPageTemplateEntry);
 		}
 
+		importFragmentEntryLinks(
+			portletDataContext, layoutPageTemplateEntry,
+			importedLayoutPageTemplateEntry);
+
 		portletDataContext.importClassedModel(
 			layoutPageTemplateEntry, importedLayoutPageTemplateEntry);
 	}
@@ -158,9 +178,54 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
+	protected void importFragmentEntryLinks(
+			PortletDataContext portletDataContext,
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			LayoutPageTemplateEntry importedLayoutPageTemplateEntry)
+		throws Exception {
+
+		_fragmentEntryLinkLocalService.
+			deleteLayoutPageTemplateEntryFragmentEntryLinks(
+				portletDataContext.getScopeGroupId(),
+				_portal.getClassNameId(LayoutPageTemplateEntry.class),
+				importedLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+		List<Element> fragmentEntryLinkElements =
+			portletDataContext.getReferenceDataElements(
+				layoutPageTemplateEntry, FragmentEntryLink.class);
+
+		for (Element fragmentEntryLinkElement : fragmentEntryLinkElements) {
+			String fragmentEntryLinkPath =
+				fragmentEntryLinkElement.attributeValue("path");
+
+			FragmentEntryLink fragmentEntryLink =
+				(FragmentEntryLink)portletDataContext.getZipEntryAsObject(
+					fragmentEntryLinkPath);
+
+			fragmentEntryLink.setClassNameId(
+				_portal.getClassNameId(LayoutPageTemplateEntry.class));
+			fragmentEntryLink.setClassPK(
+				importedLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, fragmentEntryLink);
+		}
+	}
+
+	@Override
+	protected boolean isSkipImportReferenceStagedModels() {
+		return true;
+	}
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 	@Reference
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)",

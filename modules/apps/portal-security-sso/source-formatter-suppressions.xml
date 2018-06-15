@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="PackageinfoBNDExportPackageCheck" files="/modules/apps/portal-security-sso/portal-security-sso-openid-connect-api/src/main/resources/net/jcip/annotations/packageinfo" />
-	</source-check>
-</suppressions>

@@ -91,7 +91,7 @@ public class MBDiscussionPermissionImplTest {
 	}
 
 	@Test
-	public void testAddDiscussionPermissionWhenUserIsDiscussionOwnerButDoesNotHaveNotFileEntryAddDiscussionPermission()
+	public void testAddDiscussionPermissionWhenUserIsDiscussionOwnerButDoesNotHaveNotAddDiscussionPermission()
 		throws Exception {
 
 		_addComment(_siteUser1);

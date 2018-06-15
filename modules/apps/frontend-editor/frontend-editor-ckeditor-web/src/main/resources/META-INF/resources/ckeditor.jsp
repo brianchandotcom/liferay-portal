@@ -140,6 +140,8 @@ name = HtmlUtil.escapeJS(name);
 		return data;
 	};
 
+	var eventHandles = [];
+
 	window['<%= name %>'] = {
 		create: function() {
 			if (!window['<%= name %>'].instanceReady) {
@@ -157,6 +159,8 @@ name = HtmlUtil.escapeJS(name);
 			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
+
+			Liferay.namespace('EDITORS').ckeditor.removeInstance();
 		},
 
 		dispose: function() {
@@ -167,6 +171,8 @@ name = HtmlUtil.escapeJS(name);
 
 				window['<%= name %>'].instanceReady = false;
 			}
+
+			(new A.EventHandle(eventHandles)).detach();
 
 			var editorEl = document.getElementById('<%= name %>');
 
@@ -381,9 +387,9 @@ name = HtmlUtil.escapeJS(name);
 			editorNode.attr('contenteditable', true);
 			editorNode.addClass('lfr-editable');
 
-			var eventHandles = [
+			eventHandles.push(
 				A.Do.after(afterVal, editorNode, 'val', this)
-			];
+			);
 		}
 
 		function initData() {
@@ -417,7 +423,13 @@ name = HtmlUtil.escapeJS(name);
 
 			window['<%= name %>'].instanceReady = true;
 
-			Liferay.component('<%= name %>', window['<%= name %>']);
+			Liferay.component(
+				'<%= name %>',
+				window['<%= name %>'],
+				{
+					portletId: '<%= portletId %>'
+				}
+			);
 		}
 
 		currentToolbarSet = getToolbarSet(initialToolbarSet);
@@ -447,6 +459,8 @@ name = HtmlUtil.escapeJS(name);
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
 
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.ckeditor.web#" + editorName + "#onEditorCreate" %>' />
+
+		Liferay.namespace('EDITORS').ckeditor.addInstance();
 
 		<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
 			inlineEditor = new Liferay.CKEditorInline(
@@ -567,33 +581,6 @@ name = HtmlUtil.escapeJS(name);
 						)
 					);
 				</c:if>
-
-				var destroyInstance = function(event) {
-					if (event.portletId === '<%= portletId %>') {
-						try {
-							var ckeditorInstances = window.CKEDITOR.instances;
-
-							A.Object.each(
-								ckeditorInstances,
-								function(value, key) {
-									var inst = ckeditorInstances[key];
-
-									delete ckeditorInstances[key];
-
-									inst.destroy();
-								}
-							);
-						}
-						catch (e) {
-						}
-
-						(new A.EventHandle(eventHandles)).detach();
-
-						Liferay.detach('destroyPortlet', destroyInstance);
-					}
-				};
-
-				Liferay.on('destroyPortlet', destroyInstance);
 			}
 		);
 

@@ -308,8 +308,11 @@
 			border-color: #E7E7ED;
 			border-radius: 4px;
 			margin: 0 auto;
-			overflow: hidden;
 			width: auto;
+		}
+
+		.form-builder-content {
+			overflow: hidden;
 		}
 
 		.form-builder-field-list-empty .form-builder-field-list-add-button {

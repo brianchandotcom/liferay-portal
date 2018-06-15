@@ -379,16 +379,12 @@ if (!CKEDITOR.plugins.get('embedurl')) {
 							if (!styles) {
 								const iframe = instance.wrapper.findOne('iframe');
 
-								const height = iframe.getAttribute('height');
+								const bounds = instance.wrapper.$.getBoundingClientRect();
 								const width = iframe.getAttribute('width');
 
-								const bounds = instance.wrapper.$.getBoundingClientRect();
-
-								const pheight = height >= bounds.height ? 100 : Math.round((height / bounds.height) * 100);
 								const pwidth = width >= bounds.width ? 100 : Math.round((width / bounds.width) * 100);
 
 								styles = {
-									height: `${pheight}%`,
 									width: `${pwidth}%`
 								};
 							}

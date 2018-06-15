@@ -74,7 +74,8 @@ public class MBDiscussionPermissionImplTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 		_user = TestPropsValues.getUser();
-		_siteUser = UserTestUtil.addUser(_group.getGroupId());
+		_siteUser1 = UserTestUtil.addUser(_group.getGroupId());
+		_siteUser2 = UserTestUtil.addUser(_group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
@@ -93,7 +94,7 @@ public class MBDiscussionPermissionImplTest {
 		throws Exception {
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_siteUser);
+			PermissionCheckerFactoryUtil.create(_siteUser1);
 
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(permissionChecker);
@@ -103,7 +104,7 @@ public class MBDiscussionPermissionImplTest {
 				TestPropsValues.getCompanyId(), _group.getGroupId(),
 				DLFileEntry.class.getName(), _fileEntry.getFileEntryId()));
 
-		_addComment(_siteUser);
+		_addComment(_siteUser1);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
 			TestPropsValues.getCompanyId());
@@ -121,7 +122,7 @@ public class MBDiscussionPermissionImplTest {
 				ActionKeys.ADD_DISCUSSION);
 		}
 
-		permissionChecker = PermissionCheckerFactoryUtil.create(_siteUser);
+		permissionChecker = PermissionCheckerFactoryUtil.create(_siteUser1);
 
 		discussionPermission = _commentManager.getDiscussionPermission(
 			permissionChecker);
@@ -134,15 +135,42 @@ public class MBDiscussionPermissionImplTest {
 
 	@Test
 	public void testUserCannotUpdateHisComment() throws Exception {
-		long commentId = _addComment(_siteUser);
+		long commentId = _addComment(_siteUser1);
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_siteUser);
+			PermissionCheckerFactoryUtil.create(_siteUser1);
 
 		DiscussionPermission discussionPermission =
 			_commentManager.getDiscussionPermission(permissionChecker);
 
 		Assert.assertFalse(discussionPermission.hasUpdatePermission(commentId));
+	}
+
+	@Test
+	public void testUserCannotUpdateSomeoneElseCommentIfPropsEnabled()
+		throws Exception {
+
+		boolean discussionCommentsAlwaysEditableByOwner =
+			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER;
+
+		try {
+			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER = true;
+
+			long commentId = _addComment(_siteUser1);
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(_siteUser2);
+
+			DiscussionPermission discussionPermission =
+				_commentManager.getDiscussionPermission(permissionChecker);
+
+			Assert.assertFalse(
+				discussionPermission.hasUpdatePermission(commentId));
+		}
+		finally {
+			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER =
+				discussionCommentsAlwaysEditableByOwner;
+		}
 	}
 
 	@Test
@@ -153,10 +181,10 @@ public class MBDiscussionPermissionImplTest {
 		try {
 			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER = true;
 
-			long commentId = _addComment(_siteUser);
+			long commentId = _addComment(_siteUser1);
 
 			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(_siteUser);
+				PermissionCheckerFactoryUtil.create(_siteUser1);
 
 			DiscussionPermission discussionPermission =
 				_commentManager.getDiscussionPermission(permissionChecker);
@@ -211,7 +239,10 @@ public class MBDiscussionPermissionImplTest {
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@DeleteAfterTestRun
-	private User _siteUser;
+	private User _siteUser1;
+
+	@DeleteAfterTestRun
+	private User _siteUser2;
 
 	private User _user;
 

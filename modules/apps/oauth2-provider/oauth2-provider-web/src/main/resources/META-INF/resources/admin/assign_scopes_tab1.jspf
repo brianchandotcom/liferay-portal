@@ -103,13 +103,30 @@
 										</c:choose>
 									</c:if>
 
-									<c:if test="<%= Validator.isNotNull(scopeAlias) %>">
-										<div>
+									<div>
+
+										<%
+										List<String> relatedScopeAliases = new ArrayList<>(globalScopeAliases);
+
+										if (Validator.isNotNull(scopeAlias)) {
+											relatedScopeAliases.add(scopeAlias);
+										}
+
+										Collections.sort(relatedScopeAliases);
+
+										for (String relatedScopeAlias : relatedScopeAliases) {
+										%>
+
 											<span class="badge badge-secondary">
-												<span class="badge-item"><%= HtmlUtil.escapeAttribute(scopeAlias) %></span>
+												<span class="badge-item<c:if test="<%= !relatedScopeAlias.equals(scopeAlias) %>"> global-scope-alias-reference</c:if>"><%= HtmlUtil.escapeAttribute(relatedScopeAlias) %></span>
 											</span>
-										</div>
-									</c:if>
+
+										<%
+										}
+										%>
+
+									</div>
+
 								</div>
 							</li>
 

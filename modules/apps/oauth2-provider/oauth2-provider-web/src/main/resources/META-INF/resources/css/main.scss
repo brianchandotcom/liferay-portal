@@ -19,6 +19,9 @@ $grayTextColor: #6B6C7E;
 }
 
 .portlet-oauth2-provider-admin {
+	.badge-item.global-scope-alias-reference {
+		color: $grayTextColor;
+	}
 	.hidden {
 		display: none;
 	}

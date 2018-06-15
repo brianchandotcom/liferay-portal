@@ -37,14 +37,31 @@
 		visibility: visible;
 	}
 
-	&:focus,
-	&:focus-within {
+	@mixin site-navigation-menu-item-focus {
 		outline: none;
 	}
 
-	&__content:focus > .card,
-	&__content:focus-within .card,
-	&__content:hover .card {
+	@mixin site-navigation-menu-item-card-focus {
 		box-shadow: 0 0 0 2px #8ABFFD;
+	}
+
+	&:focus {
+		@include site-navigation-menu-item-focus;
+	}
+
+	&:focus-within {
+		@include site-navigation-menu-item-focus;
+	}
+
+	&__content:focus > .card {
+		@include site-navigation-menu-item-card-focus;
+	}
+
+	&__content:focus-within > .card {
+		@include site-navigation-menu-item-card-focus;
+	}
+
+	&__content:hover > .card {
+		@include site-navigation-menu-item-card-focus;
 	}
 }

@@ -23,10 +23,17 @@ lfr-editable {
 		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.6);
 	}
 
-	&:focus,
-	&:focus-within {
+	@mixin lfr-editable-focus {
 		background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
 		box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
+	}
+
+	&:focus {
+		@include lfr-editable-focus;
+	}
+
+	&:focus-within {
+		@include lfr-editable-focus;
 	}
 
 	.fragment-entry-link-list.translating & {
@@ -42,10 +49,17 @@ lfr-editable {
 			box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.6);
 		}
 
-		&:focus,
-		&:focus-within {
+		@mixin translating-lfr-editable-focus {
 			background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
 			box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
+		}
+
+		&:focus {
+			@include translating-lfr-editable-focus;
+		}
+
+		&:focus-within {
+			@include translating-lfr-editable-focus;
 		}
 	}
 

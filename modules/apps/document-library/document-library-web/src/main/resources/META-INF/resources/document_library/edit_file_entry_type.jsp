@@ -147,13 +147,13 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 				</aui:fieldset>
 			</c:if>
 		</aui:fieldset-group>
+
+		<aui:button-row>
+			<aui:button type="submit" />
+
+			<aui:button href="<%= redirect %>" type="cancel" />
+		</aui:button-row>
 	</aui:form>
-
-	<aui:button-row>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
 </div>
 
 <aui:script>

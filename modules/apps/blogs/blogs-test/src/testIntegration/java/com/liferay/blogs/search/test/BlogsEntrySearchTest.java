@@ -55,73 +55,73 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testLocalizedSearch() throws Exception {
+	public void testLocalizedSearch() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testParentBaseModelUserPermissions() throws Exception {
+	public void testParentBaseModelUserPermissions() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchAttachments() throws Exception {
+	public void testSearchAttachments() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchByDDMStructureField() throws Exception {
+	public void testSearchByDDMStructureField() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchByKeywordsInsideParentBaseModel() throws Exception {
+	public void testSearchByKeywordsInsideParentBaseModel() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchExpireAllVersions() throws Exception {
+	public void testSearchExpireAllVersions() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchExpireLatestVersion() throws Exception {
+	public void testSearchExpireLatestVersion() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchMyEntries() throws Exception {
+	public void testSearchMyEntries() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchRecentEntries() throws Exception {
+	public void testSearchRecentEntries() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchStatus() throws Exception {
+	public void testSearchStatus() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchVersions() throws Exception {
+	public void testSearchVersions() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchWithinDDMStructure() throws Exception {
+	public void testSearchWithinDDMStructure() {
 	}
 
 	@Override

@@ -59,25 +59,25 @@ public class BlogsEntryAssetSearchTest extends BaseAssetSearchTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testClassTypeIds1() throws Exception {
+	public void testClassTypeIds1() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testClassTypeIds2() throws Exception {
+	public void testClassTypeIds2() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testOrderByExpirationDateAsc() throws Exception {
+	public void testOrderByExpirationDateAsc() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testOrderByExpirationDateDesc() throws Exception {
+	public void testOrderByExpirationDateDesc() {
 	}
 
 	@Override

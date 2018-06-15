@@ -125,17 +125,14 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					portletName, fragmentEntryLink, instanceId,
 					defaultPreferences);
 			}
-
-			if (Validator.isNull(portletPreferences)) {
+			else {
 				Portlet portlet = _portletLocalService.getPortletById(
 					portletName);
 
-				portletPreferences = portlet.getDefaultPreferences();
+				portletPreferences = _getPreferences(
+					portletName, fragmentEntryLink, instanceId,
+					portlet.getDefaultPreferences());
 			}
-
-			Document preferencesDocument = Jsoup.parse(portletPreferences);
-
-			portletPreferences = preferencesDocument.html();
 
 			runtimeTagElement.attr("defaultPreferences", portletPreferences);
 
@@ -360,7 +357,12 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				group.getCompanyId(), 0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
 				defaultPlid, portletId, defaultPreferences);
 
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+		Document preferencesDocument = _getDocument(
+			PortletPreferencesFactoryUtil.toXML(portletPreferences));
+
+		Element preferencesBody = preferencesDocument.body();
+
+		return preferencesBody.html();
 	}
 
 	@Reference

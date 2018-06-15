@@ -14,14 +14,23 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+import java.io.IOException;
+
 import java.util.Map;
 
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
 import org.apache.tools.ant.RuntimeConfigurable;
 import org.apache.tools.ant.Task;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+
 /**
  * @author Cesar Polanco
+ * @author Michael Hashimoto
  */
 public class AntUtil {
 
@@ -41,6 +50,62 @@ public class AntUtil {
 		task.setRuntimeConfigurableWrapper(runtimeConfigurable);
 
 		task.perform();
+	}
+
+	public static void callTarget(
+		Project project, File baseDir, File buildFile, String targetName,
+		Map<String, String> parameters) {
+
+		if (targetName == null) {
+			targetName = project.getDefaultTarget();
+		}
+
+		String projectName = project.getName();
+
+		if (buildFile != null) {
+			ProjectHelper.configureProject(project, buildFile);
+
+			projectName = _getProjectName(buildFile);
+		}
+
+		if (!projectName.equals(project.getName())) {
+			targetName = projectName + "." + targetName;
+		}
+
+		if (parameters != null) {
+			for (Map.Entry<String, String> parameter : parameters.entrySet()) {
+				project.setUserProperty(
+					parameter.getKey(), parameter.getValue());
+			}
+		}
+
+		File projectBaseDir = project.getBaseDir();
+
+		try {
+			if (baseDir != null) {
+				project.setBaseDir(baseDir);
+			}
+
+			project.executeTarget(targetName);
+		}
+		finally {
+			project.setBaseDir(projectBaseDir);
+		}
+	}
+
+	private static String _getProjectName(File buildFile) {
+		try {
+			String buildFileContent = JenkinsResultsParserUtil.read(buildFile);
+
+			Document document = Dom4JUtil.parse(buildFileContent);
+
+			Element element = document.getRootElement();
+
+			return element.attributeValue("name");
+		}
+		catch (DocumentException | IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

@@ -1160,21 +1160,21 @@ public class LayoutsAdminDisplayContext {
 		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+			jsonObject.put(
+				"active",
+				layoutSetBranch.getLayoutSetBranchId() ==
+					_getActiveLayoutSetBranchId());
+			jsonObject.put("hasChild", true);
+			jsonObject.put("plid", LayoutConstants.DEFAULT_PLID);
+			jsonObject.put(
+				"title", LanguageUtil.get(_request, layoutSetBranch.getName()));
+
 			PortletURL portletURL = getPortletURL();
 
 			portletURL.setParameter(
 				"layoutSetBranchId",
 				String.valueOf(layoutSetBranch.getLayoutSetBranchId()));
 
-			jsonObject.put(
-				"active",
-				layoutSetBranch.getLayoutSetBranchId() ==
-					_getActiveLayoutSetBranchId());
-
-			jsonObject.put("hasChild", true);
-			jsonObject.put("plid", LayoutConstants.DEFAULT_PLID);
-			jsonObject.put(
-				"title", LanguageUtil.get(_request, layoutSetBranch.getName()));
 			jsonObject.put("url", portletURL.toString());
 
 			jsonArray.put(jsonObject);

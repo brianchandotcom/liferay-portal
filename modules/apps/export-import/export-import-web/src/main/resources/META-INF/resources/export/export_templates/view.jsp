@@ -57,10 +57,15 @@ if (liveGroup == null) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
+<%
+ExportTemplatesToolbarDisplayContext exportTemplatesToolbarDisplayContext =
+	new ExportTemplatesToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, liveGroupId, company, portletURL);
+%>
+
 <clay:management-toolbar
-	creationMenu="<%= exportTemplatesToolbarDisplayContext.getCreationMenu() %>"
-	searchActionURL="<%= exportTemplatesToolbarDisplayContext.getSearchActionURL() %>"
+	displayContext="<%= exportTemplatesToolbarDisplayContext %>"
 	searchFormName="searchFm"
+	selectable="false"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= true %>"
 />
@@ -68,32 +73,8 @@ if (liveGroup == null) {
 <div class="container-fluid-1280">
 	<aui:form action="<%= portletURL %>">
 		<liferay-ui:search-container
-			displayTerms="<%= new ExportImportConfigurationDisplayTerms(renderRequest) %>"
-			emptyResultsMessage="there-are-no-saved-export-templates"
-			iteratorURL="<%= portletURL %>"
-			orderByCol="name"
-			orderByComparator="<%= new ExportImportConfigurationNameComparator(true) %>"
-			orderByType="asc"
-			searchTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
+			searchContainer="<%= exportTemplatesToolbarDisplayContext.getSearchContainer() %>"
 		>
-			<liferay-ui:search-container-results>
-
-				<%
-				int exportImportConfigurationType = ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT;
-
-				long originalGroupId = groupId;
-
-				groupId = liveGroupId;
-				%>
-
-				<%@ include file="/export_import_configuration_search_results.jspf" %>
-
-				<%
-				groupId = originalGroupId;
-				%>
-
-			</liferay-ui:search-container-results>
-
 			<liferay-ui:search-container-row
 				className="com.liferay.exportimport.kernel.model.ExportImportConfiguration"
 				keyProperty="exportImportConfigurationId"

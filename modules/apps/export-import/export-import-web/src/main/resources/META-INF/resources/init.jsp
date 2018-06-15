@@ -64,7 +64,6 @@ page import="com.liferay.exportimport.web.internal.dao.search.ExportImportResult
 page import="com.liferay.exportimport.web.internal.display.context.ExportImportToolbarDisplayContext" %><%@
 page import="com.liferay.exportimport.web.internal.display.context.ExportTemplatesToolbarDisplayContext" %><%@
 page import="com.liferay.exportimport.web.internal.portlet.action.ExportImportMVCActionCommand" %><%@
-page import="com.liferay.exportimport.web.internal.search.ExportImportConfigurationDisplayTerms" %><%@
 page import="com.liferay.exportimport.web.internal.search.ExportImportConfigurationSearchTerms" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -200,9 +199,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 ExportImportToolbarDisplayContext exportImportToolbarDisplayContext =
 	new ExportImportToolbarDisplayContext(request, pageContext, liferayPortletResponse);
-
-ExportTemplatesToolbarDisplayContext exportTemplatesToolbarDisplayContext =
-	new ExportTemplatesToolbarDisplayContext(request, pageContext, liferayPortletResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

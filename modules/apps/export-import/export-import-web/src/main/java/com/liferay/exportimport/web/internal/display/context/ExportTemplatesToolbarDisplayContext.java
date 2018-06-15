@@ -14,37 +14,64 @@
 
 package com.liferay.exportimport.web.internal.display.context;
 
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.exportimport.util.comparator.ExportImportConfigurationNameComparator;
+import com.liferay.exportimport.web.internal.search.ExportImportConfigurationDisplayTerms;
+import com.liferay.exportimport.web.internal.search.ExportImportConfigurationSearchTerms;
+import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.BaseManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Péter Alius
+ * @author Péter Borkuti
  */
-public class ExportTemplatesToolbarDisplayContext {
+public class ExportTemplatesToolbarDisplayContext
+	extends BaseManagementToolbarDisplayContext {
 
 	public ExportTemplatesToolbarDisplayContext(
-		HttpServletRequest request, PageContext pageContext,
-		LiferayPortletResponse portletResponse) {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse,
+		HttpServletRequest request, long liveGroupId, Company company,
+		PortletURL iteratorURL) {
 
-		_request = request;
+		super(liferayPortletRequest, liferayPortletResponse, request);
 
-		_portletResponse = portletResponse;
+		searchContainer = _createSearchContainer(
+			liveGroupId, company, iteratorURL);
 	}
 
+	public String getClearResultsURL() {
+		PortletURL clearResultsURL = getRenderURL();
+
+		clearResultsURL.setParameter(
+			"mvcPath", "/export/export_templates/view.jsp");
+
+		return clearResultsURL.toString();
+	}
+
+	@Override
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
 				GroupDisplayContextHelper groupDisplayContextHelper =
-					new GroupDisplayContextHelper(_request);
+					new GroupDisplayContextHelper(request);
 
 				addPrimaryDropdownItem(
 					dropdownItem -> {
@@ -53,29 +80,82 @@ public class ExportTemplatesToolbarDisplayContext {
 							"editExportConfiguration", Constants.CMD,
 							Constants.ADD, "groupId",
 							String.valueOf(
-								ParamUtil.getLong(_request, "groupId")),
+								ParamUtil.getLong(request, "groupId")),
 							"liveGroupId",
 							String.valueOf(
 								groupDisplayContextHelper.getLiveGroupId()),
 							"privateLayout", Boolean.FALSE.toString());
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "new"));
+						dropdownItem.setLabel(LanguageUtil.get(request, "new"));
 					});
 			}
 		};
 	}
 
+	@Override
+	public int getItemsTotal() {
+		return searchContainer.getTotal();
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		PortletURL searchActionURL = getRenderURL();
+
+		searchActionURL.setParameter(
+			"mvcRenderCommandName", "viewExportConfigurations");
 
 		return searchActionURL.toString();
 	}
 
-	protected PortletURL getRenderURL() {
-		return _portletResponse.createRenderURL();
+	public SearchContainer getSearchContainer() {
+		return searchContainer;
 	}
 
-	private final LiferayPortletResponse _portletResponse;
-	private final HttpServletRequest _request;
+	protected PortletURL getRenderURL() {
+		return liferayPortletResponse.createRenderURL();
+	}
+
+	protected SearchContainer searchContainer;
+
+	private SearchContainer _createSearchContainer(
+		long liveGroupId, Company company, PortletURL iteratorURL) {
+
+		OrderByComparator orderByComparator =
+			new ExportImportConfigurationNameComparator(
+				"asc".equals(getOrderByType()));
+		ExportImportConfigurationSearchTerms searchTerms =
+			new ExportImportConfigurationSearchTerms(liferayPortletRequest);
+
+		SearchContainer searchContainer = new SearchContainer(
+			liferayPortletRequest,
+			new ExportImportConfigurationDisplayTerms(liferayPortletRequest),
+			searchTerms, SearchContainer.DEFAULT_CUR_PARAM,
+			SearchContainer.DEFAULT_DELTA, iteratorURL, null,
+			"there-are-no-saved-export-templates");
+
+		searchContainer.setOrderByCol("name");
+		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByType(getOrderByType());
+
+		int exportImportConfigurationType =
+			ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT;
+
+		List<ExportImportConfiguration> results =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfigurations(
+					company.getCompanyId(), liveGroupId,
+					searchTerms.getKeywords(), exportImportConfigurationType,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator());
+		int total =
+			ExportImportConfigurationLocalServiceUtil.
+				getExportImportConfigurationsCount(
+					company.getCompanyId(), liveGroupId,
+					searchTerms.getKeywords(), exportImportConfigurationType);
+
+		searchContainer.setResults(results);
+		searchContainer.setTotal(total);
+
+		return searchContainer;
+	}
 
 }

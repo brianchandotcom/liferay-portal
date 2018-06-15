@@ -544,6 +544,8 @@
 	</command>
 
 	<command name="AddCreatedStructureForImportedTemplate" priority="5">
+		<description message="This is a use case for LPS-82492." />
+
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -589,6 +591,8 @@
 			<var name="larFileName" value="content-display-templates.lar" />
 			<var name="uploadFrom" value="dependencies" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="Templates" />
@@ -1205,6 +1209,8 @@
 	</command>
 
 	<command name="AddWebContentFromImportedStructureAndTemplate" priority="5">
+		<description message="This is a use case for LPS-82492." />
+
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1227,6 +1233,8 @@
 			<var name="larFileName" value="frontPage-structures.lar" />
 			<var name="uploadFrom" value="dependencies" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="Navigator#gotoNavItem">
 			<var name="navItem" value="Structures" />

@@ -572,7 +572,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 			String value = new String(chars, start, length);
 
-			_hasURI = _uri.equals(value.replaceAll("^\\s*(.*)\\s*$", "$1"));
+			_hasURI = _uri.equals(
+				value.replaceAll("^\\s*([^\\s]*)\\s*$", "$1"));
 
 			_inURI = false;
 		}

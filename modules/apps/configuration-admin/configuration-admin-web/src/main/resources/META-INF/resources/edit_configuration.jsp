@@ -122,7 +122,7 @@ renderResponse.setTitle(categoryDisplayName);
 					%>
 
 					<h2>
-						<%= configurationTitle %>
+						<%= HtmlUtil.escape(configurationTitle) %>
 
 						<c:if test="<%= configurationModel.hasConfiguration() %>">
 							<liferay-ui:icon-menu

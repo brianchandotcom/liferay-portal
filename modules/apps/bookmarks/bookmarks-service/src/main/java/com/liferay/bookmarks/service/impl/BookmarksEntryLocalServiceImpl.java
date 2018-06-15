@@ -27,8 +27,6 @@ import com.liferay.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -313,11 +311,10 @@ public class BookmarksEntryLocalServiceImpl
 				groupId, WorkflowConstants.STATUS_APPROVED, start, end,
 				orderByComparator);
 		}
-		else {
-			return bookmarksEntryPersistence.findByG_U_S(
-				groupId, userId, WorkflowConstants.STATUS_APPROVED, start, end,
-				orderByComparator);
-		}
+
+		return bookmarksEntryPersistence.findByG_U_S(
+			groupId, userId, WorkflowConstants.STATUS_APPROVED, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -331,10 +328,9 @@ public class BookmarksEntryLocalServiceImpl
 		if (userId <= 0) {
 			return getGroupEntriesCount(groupId);
 		}
-		else {
-			return bookmarksEntryPersistence.countByG_U_S(
-				groupId, userId, WorkflowConstants.STATUS_APPROVED);
-		}
+
+		return bookmarksEntryPersistence.countByG_U_S(
+			groupId, userId, WorkflowConstants.STATUS_APPROVED);
 	}
 
 	/**
@@ -356,9 +352,7 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setFolderId(parentFolderId);
 		entry.setTreePath(entry.buildTreePath());
 
-		bookmarksEntryPersistence.update(entry);
-
-		return entry;
+		return bookmarksEntryPersistence.update(entry);
 	}
 
 	@Override
@@ -533,49 +527,37 @@ public class BookmarksEntryLocalServiceImpl
 			getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property folderIdProperty = PropertyFactoryUtil.forName(
+					"folderId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property folderIdProperty = PropertyFactoryUtil.forName(
-						"folderId");
+				dynamicQuery.add(folderIdProperty.eq(folderId));
 
-					dynamicQuery.add(folderIdProperty.eq(folderId));
+				Property treePathProperty = PropertyFactoryUtil.forName(
+					"treePath");
 
-					Property treePathProperty = PropertyFactoryUtil.forName(
-						"treePath");
-
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.or(
-							treePathProperty.isNull(),
-							treePathProperty.ne(treePath)));
-				}
-
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.or(
+						treePathProperty.isNull(),
+						treePathProperty.ne(treePath)));
 			});
 
 		final Indexer<BookmarksEntry> indexer = IndexerRegistryUtil.getIndexer(
 			BookmarksEntry.class);
 
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
+			(BookmarksEntry entry) -> {
+				entry.setTreePath(treePath);
 
-				@Override
-				public void performAction(BookmarksEntry entry)
-					throws PortalException {
+				updateBookmarksEntry(entry);
 
-					entry.setTreePath(treePath);
-
-					updateBookmarksEntry(entry);
-
-					if (!reindex) {
-						return;
-					}
-
-					Document document = indexer.getDocument(entry);
-
-					indexableActionableDynamicQuery.addDocuments(document);
+				if (!reindex) {
+					return;
 				}
 
+				Document document = indexer.getDocument(entry);
+
+				indexableActionableDynamicQuery.addDocuments(document);
 			});
 
 		indexableActionableDynamicQuery.performActions();
@@ -727,20 +709,20 @@ public class BookmarksEntryLocalServiceImpl
 	}
 
 	protected long getFolder(BookmarksEntry entry, long folderId) {
-		if ((entry.getFolderId() != folderId) &&
-			(folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+		if ((entry.getFolderId() == folderId) ||
+			(folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-			BookmarksFolder newFolder =
-				bookmarksFolderPersistence.fetchByPrimaryKey(folderId);
-
-			if ((newFolder == null) ||
-				(entry.getGroupId() != newFolder.getGroupId())) {
-
-				folderId = entry.getFolderId();
-			}
+			return folderId;
 		}
 
-		return folderId;
+		BookmarksFolder folder = bookmarksFolderPersistence.fetchByPrimaryKey(
+			folderId);
+
+		if ((folder != null) && (entry.getGroupId() == folder.getGroupId())) {
+			return folderId;
+		}
+
+		return entry.getFolderId();
 	}
 
 	protected void notifySubscribers(
@@ -801,8 +783,8 @@ public class BookmarksEntryLocalServiceImpl
 		String fromAddress =
 			bookmarksGroupServiceOverriddenConfiguration.emailFromAddress();
 
-		LocalizedValuesMap subjectLocalizedValuesMap = null;
-		LocalizedValuesMap bodyLocalizedValuesMap = null;
+		final LocalizedValuesMap subjectLocalizedValuesMap;
+		final LocalizedValuesMap bodyLocalizedValuesMap;
 
 		if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =

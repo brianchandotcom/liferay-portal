@@ -37,8 +37,9 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSe
 		),
 		@DDMFormRule(
 			actions = {
-				"setVisible('paginationStartParameterName', equals(getValue('pagination'), true))",
-				"setVisible('paginationEndParameterName', equals(getValue('pagination'), true))",
+				"setVisible('pagination', false)",
+				"setVisible('paginationStartParameterName', false)",
+				"setVisible('paginationEndParameterName', false)",
 				"setRequired('paginationStartParameterName', equals(getValue('pagination'), true))",
 				"setRequired('paginationEndParameterName', equals(getValue('pagination'), true))"
 			},

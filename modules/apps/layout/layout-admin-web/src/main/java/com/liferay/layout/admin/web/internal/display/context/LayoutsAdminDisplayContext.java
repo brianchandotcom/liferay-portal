@@ -996,7 +996,11 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private long _getActiveLayoutSetBranchId() throws PortalException {
-		long activeLayoutSetBranchId = ParamUtil.getLong(
+		if (_activeLayoutSetBranchId != null) {
+			return _activeLayoutSetBranchId;
+		}
+
+		_activeLayoutSetBranchId = ParamUtil.getLong(
 			_request, "layoutSetBranchId");
 
 		Layout layout = getSelLayout();
@@ -1006,7 +1010,8 @@ public class LayoutsAdminDisplayContext {
 				layout);
 
 			if (layoutRevision != null) {
-				activeLayoutSetBranchId = layoutRevision.getLayoutSetBranchId();
+				_activeLayoutSetBranchId =
+					layoutRevision.getLayoutSetBranchId();
 			}
 		}
 
@@ -1014,15 +1019,15 @@ public class LayoutsAdminDisplayContext {
 			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(
 				_themeDisplay.getScopeGroupId(), isPrivatePages());
 
-		if ((activeLayoutSetBranchId == 0) && !layoutSetBranches.isEmpty()) {
+		if ((_activeLayoutSetBranchId == 0) && !layoutSetBranches.isEmpty()) {
 			LayoutSetBranch layoutSetBranch =
 				LayoutSetBranchLocalServiceUtil.getMasterLayoutSetBranch(
 					_themeDisplay.getScopeGroupId(), isPrivateLayout());
 
-			activeLayoutSetBranchId = layoutSetBranch.getLayoutSetBranchId();
+			_activeLayoutSetBranchId = layoutSetBranch.getLayoutSetBranchId();
 		}
 
-		return activeLayoutSetBranchId;
+		return _activeLayoutSetBranchId;
 	}
 
 	private JSONObject _getBreadcrumbEntryJSONObject(long plid, String title) {
@@ -1152,8 +1157,6 @@ public class LayoutsAdminDisplayContext {
 			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(
 				_themeDisplay.getScopeGroupId(), isPrivatePages());
 
-		long activeLayoutSetBranchId = _getActiveLayoutSetBranchId();
-
 		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -1166,7 +1169,7 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put(
 				"active",
 				layoutSetBranch.getLayoutSetBranchId() ==
-					activeLayoutSetBranchId);
+					_getActiveLayoutSetBranchId());
 
 			jsonObject.put("hasChild", true);
 			jsonObject.put("plid", LayoutConstants.DEFAULT_PLID);
@@ -1328,6 +1331,7 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
+	private Long _activeLayoutSetBranchId;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;

@@ -33,8 +33,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -97,9 +98,15 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 				sb.append(line);
 				sb.append("\n");
 			}
-			else if (_isValidBundleSymbolicName(dependencyName)) {
-				sb.append(line);
-				sb.append("\n");
+			else {
+				String dependencyVersion = _getDependencyVersion(line);
+
+				if (_isValidBundleSymbolicName(
+						dependencyName, dependencyVersion)) {
+
+					sb.append(line);
+					sb.append("\n");
+				}
 			}
 		}
 
@@ -151,19 +158,30 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		return matcher.group(1);
 	}
 
-	private synchronized Set<String> _getEmptyExportPackageBundleSymbolicNames()
+	private String _getDependencyVersion(String dependency) {
+		Matcher matcher = _dependencyVersionPattern.matcher(dependency);
+
+		if (!matcher.find()) {
+			return StringPool.BLANK;
+		}
+
+		return matcher.group(1);
+	}
+
+	private synchronized Map<String, String>
+			_getEmptyExportPackageBundleSymbolicMap()
 		throws Exception {
 
-		if (_emptyExportPackageBundleSymbolicNames != null) {
-			return _emptyExportPackageBundleSymbolicNames;
+		if (_emptyExportPackageBundleSymbolicMap != null) {
+			return _emptyExportPackageBundleSymbolicMap;
 		}
 
 		File portalDir = getPortalDir();
 
 		if (portalDir == null) {
-			_emptyExportPackageBundleSymbolicNames = Collections.emptySet();
+			_emptyExportPackageBundleSymbolicMap = Collections.emptyMap();
 
-			return _emptyExportPackageBundleSymbolicNames;
+			return _emptyExportPackageBundleSymbolicMap;
 		}
 
 		final List<File> files = new ArrayList<>();
@@ -195,7 +213,7 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 
 			});
 
-		_emptyExportPackageBundleSymbolicNames = new HashSet<>();
+		_emptyExportPackageBundleSymbolicMap = new HashMap<>();
 
 		for (File file : files) {
 			String content = FileUtil.read(file);
@@ -210,21 +228,35 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 			if ((bundleSymbolicName != null) &&
 				bundleSymbolicName.startsWith("com.liferay.")) {
 
-				_emptyExportPackageBundleSymbolicNames.add(bundleSymbolicName);
+				String bundleVersion = BNDSourceUtil.getDefinitionValue(
+					content, "Bundle-Version");
+
+				_emptyExportPackageBundleSymbolicMap.put(
+					bundleSymbolicName, bundleVersion);
 			}
 		}
 
-		return _emptyExportPackageBundleSymbolicNames;
+		return _emptyExportPackageBundleSymbolicMap;
 	}
 
-	private boolean _isValidBundleSymbolicName(String dependencyName)
+	private boolean _isValidBundleSymbolicName(
+			String dependencyName, String dependencyVersion)
 		throws Exception {
 
+		Map<String, String> emptyExportPackageBundleSymbolicMap =
+			_getEmptyExportPackageBundleSymbolicMap();
+
 		Set<String> emptyExportPackageBundleSymbolicNames =
-			_getEmptyExportPackageBundleSymbolicNames();
+			emptyExportPackageBundleSymbolicMap.keySet();
 
 		if (!dependencyName.startsWith("com.liferay.") ||
 			!emptyExportPackageBundleSymbolicNames.contains(dependencyName)) {
+
+			return true;
+		}
+
+		if (!dependencyVersion.equals(
+				emptyExportPackageBundleSymbolicMap.get(dependencyName))) {
 
 			return true;
 		}
@@ -242,6 +274,8 @@ public class GradleExportedPackageDependenciesCheck extends BaseFileCheck {
 		"(\n|\\A)(\t*)dependencies \\{\n");
 	private final Pattern _dependencyNamePattern = Pattern.compile(
 		".*, name: \"([^\"]*)\".*");
-	private Set<String> _emptyExportPackageBundleSymbolicNames;
+	private final Pattern _dependencyVersionPattern = Pattern.compile(
+		".*, version: \"([^\"]*)\".*");
+	private Map<String, String> _emptyExportPackageBundleSymbolicMap;
 
 }

@@ -36,7 +36,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,8 +48,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -71,6 +75,8 @@ public class ImportUtil {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_invalidFragmentEntriesNames = new ArrayList<>();
 
 		ZipFile zipFile = new ZipFile(file);
 
@@ -114,36 +120,41 @@ public class ImportUtil {
 				fragmentCollectionFolder.getFragmentEntries(), overwrite);
 		}
 
-		if (MapUtil.isEmpty(orphanFragmentEntries)) {
-			return;
-		}
-
-		if (fragmentCollectionId <= 0) {
-			FragmentCollection fragmentCollection =
-				_fragmentCollectionLocalService.fetchFragmentCollection(
-					themeDisplay.getScopeGroupId(),
-					_DEFAULT_FRAGMENT_COLLECTION_KEY);
-
-			if (fragmentCollection == null) {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(actionRequest);
-
-				fragmentCollection =
-					_fragmentCollectionService.addFragmentCollection(
+		if (MapUtil.isNotEmpty(orphanFragmentEntries)) {
+			if (fragmentCollectionId <= 0) {
+				FragmentCollection fragmentCollection =
+					_fragmentCollectionLocalService.fetchFragmentCollection(
 						themeDisplay.getScopeGroupId(),
-						_DEFAULT_FRAGMENT_COLLECTION_KEY,
-						LanguageUtil.get(
-							_portal.getHttpServletRequest(actionRequest),
-							_DEFAULT_FRAGMENT_COLLECTION_KEY),
-						StringPool.BLANK, serviceContext);
+						_DEFAULT_FRAGMENT_COLLECTION_KEY);
+
+				if (fragmentCollection == null) {
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(actionRequest);
+
+					fragmentCollection =
+						_fragmentCollectionService.addFragmentCollection(
+							themeDisplay.getScopeGroupId(),
+							_DEFAULT_FRAGMENT_COLLECTION_KEY,
+							LanguageUtil.get(
+								_portal.getHttpServletRequest(actionRequest),
+								_DEFAULT_FRAGMENT_COLLECTION_KEY),
+							StringPool.BLANK, serviceContext);
+				}
+
+				fragmentCollectionId =
+					fragmentCollection.getFragmentCollectionId();
 			}
 
-			fragmentCollectionId = fragmentCollection.getFragmentCollectionId();
+			_importFragmentEntries(
+				actionRequest, zipFile, fragmentCollectionId,
+				orphanFragmentEntries, overwrite);
 		}
 
-		_importFragmentEntries(
-			actionRequest, zipFile, fragmentCollectionId, orphanFragmentEntries,
-			overwrite);
+		if (ListUtil.isNotEmpty(_invalidFragmentEntriesNames)) {
+			SessionMessages.add(
+				actionRequest, "invalidFragmentEntriesNames",
+				_invalidFragmentEntriesNames);
+		}
 	}
 
 	private FragmentCollection _addFragmentCollection(
@@ -204,6 +215,8 @@ public class ImportUtil {
 			}
 
 			status = WorkflowConstants.STATUS_DRAFT;
+
+			_invalidFragmentEntriesNames.add(name);
 		}
 
 		FragmentEntry fragmentEntry =
@@ -429,6 +442,8 @@ public class ImportUtil {
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	private List<String> _invalidFragmentEntriesNames;
 
 	@Reference
 	private Portal _portal;

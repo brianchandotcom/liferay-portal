@@ -33,6 +33,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -65,6 +66,23 @@ public class DLFolderUADAnonymizerTest
 	@After
 	public void tearDown() throws Exception {
 		_dlFolderUADTestHelper.cleanUpDependencies(_dlFolders);
+	}
+
+	@Test
+	public void testDeleteDependentFolders() throws Exception {
+		DLFolder parentDLFolder = _dlFolderUADTestHelper.addDLFolder(
+			user.getUserId());
+
+		_dlFolders.add(parentDLFolder);
+
+		DLFolder childDLFolder = _dlFolderUADTestHelper.addDLFolder(
+			user.getUserId(), parentDLFolder.getFolderId());
+
+		_dlFolders.add(childDLFolder);
+
+		_uadAnonymizer.delete(parentDLFolder);
+
+		_uadAnonymizer.delete(childDLFolder);
 	}
 
 	@Override

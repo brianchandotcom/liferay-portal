@@ -21,6 +21,7 @@ import com.liferay.fragment.exception.FragmentCollectionNameException;
 import com.liferay.fragment.exception.InvalidFileException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -31,9 +32,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,8 +48,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -68,6 +75,8 @@ public class ImportUtil {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_invalidFragmentEntriesNames = new ArrayList<>();
 
 		ZipFile zipFile = new ZipFile(file);
 
@@ -111,36 +120,41 @@ public class ImportUtil {
 				fragmentCollectionFolder.getFragmentEntries(), overwrite);
 		}
 
-		if (MapUtil.isEmpty(orphanFragmentEntries)) {
-			return;
-		}
-
-		if (fragmentCollectionId <= 0) {
-			FragmentCollection fragmentCollection =
-				_fragmentCollectionLocalService.fetchFragmentCollection(
-					themeDisplay.getScopeGroupId(),
-					_DEFAULT_FRAGMENT_COLLECTION_KEY);
-
-			if (fragmentCollection == null) {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(actionRequest);
-
-				fragmentCollection =
-					_fragmentCollectionService.addFragmentCollection(
+		if (MapUtil.isNotEmpty(orphanFragmentEntries)) {
+			if (fragmentCollectionId <= 0) {
+				FragmentCollection fragmentCollection =
+					_fragmentCollectionLocalService.fetchFragmentCollection(
 						themeDisplay.getScopeGroupId(),
-						_DEFAULT_FRAGMENT_COLLECTION_KEY,
-						LanguageUtil.get(
-							_portal.getHttpServletRequest(actionRequest),
-							_DEFAULT_FRAGMENT_COLLECTION_KEY),
-						StringPool.BLANK, serviceContext);
+						_DEFAULT_FRAGMENT_COLLECTION_KEY);
+
+				if (fragmentCollection == null) {
+					ServiceContext serviceContext =
+						ServiceContextFactory.getInstance(actionRequest);
+
+					fragmentCollection =
+						_fragmentCollectionService.addFragmentCollection(
+							themeDisplay.getScopeGroupId(),
+							_DEFAULT_FRAGMENT_COLLECTION_KEY,
+							LanguageUtil.get(
+								_portal.getHttpServletRequest(actionRequest),
+								_DEFAULT_FRAGMENT_COLLECTION_KEY),
+							StringPool.BLANK, serviceContext);
+				}
+
+				fragmentCollectionId =
+					fragmentCollection.getFragmentCollectionId();
 			}
 
-			fragmentCollectionId = fragmentCollection.getFragmentCollectionId();
+			_importFragmentEntries(
+				actionRequest, zipFile, fragmentCollectionId,
+				orphanFragmentEntries, overwrite);
 		}
 
-		_importFragmentEntries(
-			actionRequest, zipFile, fragmentCollectionId, orphanFragmentEntries,
-			overwrite);
+		if (ListUtil.isNotEmpty(_invalidFragmentEntriesNames)) {
+			SessionMessages.add(
+				actionRequest, "invalidFragmentEntriesNames",
+				_invalidFragmentEntriesNames);
+		}
 	}
 
 	private FragmentCollection _addFragmentCollection(
@@ -194,19 +208,34 @@ public class ImportUtil {
 			_fragmentEntryLocalService.fetchFragmentEntry(
 				themeDisplay.getScopeGroupId(), fragmentEntryKey);
 
+		if ((fragmentEntry != null) && !overwrite) {
+			throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
+		}
+
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		try {
+			_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(html);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			status = WorkflowConstants.STATUS_DRAFT;
+
+			_invalidFragmentEntriesNames.add(name);
+		}
+
 		if (fragmentEntry == null) {
 			_fragmentEntryService.addFragmentEntry(
 				themeDisplay.getScopeGroupId(), fragmentCollectionId,
-				fragmentEntryKey, name, css, html, js,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
-		}
-		else if (overwrite) {
-			_fragmentEntryService.updateFragmentEntry(
-				fragmentEntry.getFragmentEntryId(), name, css, html, js,
-				WorkflowConstants.STATUS_APPROVED);
+				fragmentEntryKey, name, css, html, js, status, serviceContext);
 		}
 		else {
-			throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
+			_fragmentEntryService.updateFragmentEntry(
+				fragmentEntry.getFragmentEntryId(), name, css, html, js,
+				status);
 		}
 	}
 
@@ -398,6 +427,8 @@ public class ImportUtil {
 
 	private static final String _DEFAULT_FRAGMENT_COLLECTION_KEY = "imported";
 
+	private static final Log _log = LogFactoryUtil.getLog(ImportUtil.class);
+
 	@Reference
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
@@ -408,7 +439,12 @@ public class ImportUtil {
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
+
+	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	private List<String> _invalidFragmentEntriesNames;
 
 	@Reference
 	private Portal _portal;

@@ -75,9 +75,9 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("cssPath", path + "/src/index.css");
-		jsonObject.put("htmlPath", path + "/src/index.html");
-		jsonObject.put("jsPath", path + "/src/index.js");
+		jsonObject.put("cssPath", "src/index.css");
+		jsonObject.put("htmlPath", "src/index.html");
+		jsonObject.put("jsPath", "src/index.js");
 		jsonObject.put("name", getName());
 
 		zipWriter.addEntry(

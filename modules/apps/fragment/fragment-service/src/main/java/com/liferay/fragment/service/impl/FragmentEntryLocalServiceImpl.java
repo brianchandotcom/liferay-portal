@@ -462,7 +462,7 @@ public class FragmentEntryLocalServiceImpl
 		if (fragmentEntryKey != null) {
 			fragmentEntryKey = fragmentEntryKey.trim();
 
-			return StringUtil.toUpperCase(fragmentEntryKey);
+			return StringUtil.toLowerCase(fragmentEntryKey);
 		}
 
 		return StringPool.BLANK;

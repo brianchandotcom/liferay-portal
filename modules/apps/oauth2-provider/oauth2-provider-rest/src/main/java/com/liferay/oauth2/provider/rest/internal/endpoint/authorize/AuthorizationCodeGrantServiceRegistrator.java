@@ -17,11 +17,16 @@ package com.liferay.oauth2.provider.rest.internal.endpoint.authorize;
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
 import java.util.Map;
 
+import javax.ws.rs.core.Response;
+
+import org.apache.cxf.rs.security.oauth2.common.OOBAuthorizationResponse;
 import org.apache.cxf.rs.security.oauth2.provider.SubjectCreator;
 import org.apache.cxf.rs.security.oauth2.services.AuthorizationCodeGrantService;
 
@@ -56,7 +61,20 @@ public class AuthorizationCodeGrantServiceRegistrator {
 		}
 
 		AuthorizationCodeGrantService authorizationCodeGrantService =
-			new AuthorizationCodeGrantService();
+			new AuthorizationCodeGrantService() {
+
+				@Override
+				protected Response deliverOOBResponse(
+					OOBAuthorizationResponse response) {
+
+					_log.error(
+						"No redirect_uri specified in request for client " +
+							response.getClientId());
+
+					return Response.status(500).build();
+				}
+
+			};
 
 		authorizationCodeGrantService.setCanSupportPublicClients(
 			oAuth2ProviderConfiguration.allowAuthorizationCodePKCEGrant());
@@ -85,6 +103,9 @@ public class AuthorizationCodeGrantServiceRegistrator {
 			_serviceRegistration.unregister();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AuthorizationCodeGrantServiceRegistrator.class);
 
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;

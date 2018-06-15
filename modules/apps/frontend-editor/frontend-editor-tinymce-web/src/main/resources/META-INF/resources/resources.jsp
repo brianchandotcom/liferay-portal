@@ -33,14 +33,37 @@ String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUT
 	<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.tinymce.web#" + editorName + "#additionalResources" %>' />
 
 	<script data-senna-track="temporary" type="text/javascript">
-		Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
+		var tinymceInstances = 0;
+		var disposeResources = false;
 
-		var destroyGlobalEditor = function() {
-			window.tinyMCE = undefined;
+		var cleanupGlobals = function() {
+			if (!tinymceInstances && disposeResources) {
+				window.tinyMCE = undefined;
 
-			Liferay.detach('beforeScreenFlip', destroyGlobalEditor);
+				tinymceInstances = 0;
+				disposeResources = false;
+			}
+		}
+
+		Liferay.namespace('EDITORS').tinymce = {
+			addInstance: function() {
+				tinymceInstances++;
+			},
+			removeInstance() {
+				tinymceInstances--;
+
+				cleanupGlobals();
+			}
+		}
+
+		var destroyGlobalEditors = function() {
+			disposeResources = true;
+
+			cleanupGlobals();
+
+			Liferay.detach('beforeScreenFlip', destroyGlobalEditors);
 		};
 
-		Liferay.on('beforeScreenFlip', destroyGlobalEditor);
+		Liferay.on('beforeScreenFlip', destroyGlobalEditors);
 	</script>
 </liferay-util:html-top>

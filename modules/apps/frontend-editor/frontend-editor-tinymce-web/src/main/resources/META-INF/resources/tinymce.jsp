@@ -119,6 +119,8 @@ name = HtmlUtil.escapeJS(name);
 			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
+
+			Liferay.namespace('EDITORS').tinymce.removeInstance();
 		},
 
 		dispose: function() {
@@ -249,6 +251,8 @@ name = HtmlUtil.escapeJS(name);
 			var tinyMCEEditor = tinyMCE.editors['<%= name %>'];
 
 			<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.tinymce.web#" + editorName + "#onEditorCreate" %>' />
+
+			Liferay.namespace('EDITORS').tinymce.addInstance();
 		},
 
 		initInstanceCallback: function() {
@@ -274,7 +278,13 @@ name = HtmlUtil.escapeJS(name);
 
 			window['<%= name %>'].instanceReady = true;
 
-			Liferay.component('<%= name %>', window['<%= name %>']);
+			Liferay.component(
+				'<%= name %>',
+				window['<%= name %>'],
+				{
+					portletId: '<%= portletId %>'
+				}
+			);
 		},
 
 		instanceReady: false,
@@ -300,18 +310,4 @@ name = HtmlUtil.escapeJS(name);
 	<c:if test="<%= autoCreate %>">
 		window['<%= name %>'].initEditor();
 	</c:if>
-
-	var destroyInstance = function(event) {
-		if (event.portletId === '<%= portletId %>') {
-			try {
-				window['<%= name %>'].destroy();
-			}
-			catch (e) {
-			}
-
-			Liferay.detach('destroyPortlet', destroyInstance);
-		}
-	};
-
-	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>

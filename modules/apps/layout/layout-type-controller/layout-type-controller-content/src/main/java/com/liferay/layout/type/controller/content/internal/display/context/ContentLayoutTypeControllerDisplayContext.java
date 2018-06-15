@@ -14,6 +14,7 @@
 
 package com.liferay.layout.type.controller.content.internal.display.context;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
@@ -53,7 +54,8 @@ public class ContentLayoutTypeControllerDisplayContext {
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			sb.append(
 				FragmentEntryRenderUtil.renderFragmentEntryLink(
-					fragmentEntryLink, _request, _response));
+					fragmentEntryLink, FragmentEntryLinkConstants.VIEW,
+					_request, _response));
 		}
 
 		String renderedContent = sb.toString();

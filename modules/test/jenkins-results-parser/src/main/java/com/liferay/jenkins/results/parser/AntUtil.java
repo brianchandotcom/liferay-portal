@@ -82,15 +82,23 @@ public class AntUtil {
 
 		File projectBaseDir = project.getBaseDir();
 
+		boolean useBaseDir = false;
+
+		if ((baseDir != null) && !baseDir.equals(projectBaseDir)) {
+			useBaseDir = true;
+		}
+
 		try {
-			if (baseDir != null) {
+			if (useBaseDir) {
 				project.setBaseDir(baseDir);
 			}
 
 			project.executeTarget(targetName);
 		}
 		finally {
-			project.setBaseDir(projectBaseDir);
+			if (useBaseDir) {
+				project.setBaseDir(projectBaseDir);
+			}
 		}
 	}
 

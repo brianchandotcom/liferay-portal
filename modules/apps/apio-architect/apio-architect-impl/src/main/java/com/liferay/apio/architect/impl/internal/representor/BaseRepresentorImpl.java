@@ -23,7 +23,7 @@ import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.impl.internal.related.RelatedModelImpl;
 import com.liferay.apio.architect.impl.internal.unsafe.Unsafe;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.related.RelatedModel;
 import com.liferay.apio.architect.representor.BaseRepresentor;
 import com.liferay.apio.architect.representor.NestedRepresentor;
@@ -94,12 +94,12 @@ public abstract class BaseRepresentorImpl<T> implements BaseRepresentor<T> {
 	}
 
 	@Override
-	public List<FieldFunction<T, Function<Language, String>>>
+	public List<FieldFunction<T, Function<AcceptLanguage, String>>>
 		getLocalizedStringFunctions() {
 
 		return Optional.ofNullable(
 			fieldFunctions.get("LOCALIZED")
-		).<List<FieldFunction<T, Function<Language, String>>>>map(
+		).<List<FieldFunction<T, Function<AcceptLanguage, String>>>>map(
 			Unsafe::unsafeCast
 		).orElseGet(
 			Collections::emptyList
@@ -233,7 +233,7 @@ public abstract class BaseRepresentorImpl<T> implements BaseRepresentor<T> {
 	 * @review
 	 */
 	protected void addLanguageFunction(
-		String key, Function<T, Function<Language, String>> function) {
+		String key, Function<T, Function<AcceptLanguage, String>> function) {
 
 		_addFieldFunction(key, function, "LOCALIZED");
 	}
@@ -452,10 +452,13 @@ public abstract class BaseRepresentorImpl<T> implements BaseRepresentor<T> {
 
 			@Override
 			public V addLocalizedStringByLanguage(
-				String key, BiFunction<T, Language, String> stringFunction) {
+				String key,
+				BiFunction<T, AcceptLanguage, String> stringFunction) {
 
 				baseRepresentor.addLanguageFunction(
-					key, t -> language -> stringFunction.apply(t, language));
+					key,
+					t -> acceptLanguage -> stringFunction.apply(
+						t, acceptLanguage));
 
 				return _this;
 			}
@@ -466,8 +469,8 @@ public abstract class BaseRepresentorImpl<T> implements BaseRepresentor<T> {
 
 				return addLocalizedStringByLanguage(
 					key,
-					(t, language) -> stringFunction.apply(
-						t, language.getPreferredLocale()));
+					(t, acceptLanguage) -> stringFunction.apply(
+						t, acceptLanguage.getPreferredLocale()));
 			}
 
 			@Override

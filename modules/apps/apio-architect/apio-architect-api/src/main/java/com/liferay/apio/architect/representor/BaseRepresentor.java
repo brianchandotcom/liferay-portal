@@ -21,7 +21,7 @@ import com.liferay.apio.architect.alias.representor.FieldFunction;
 import com.liferay.apio.architect.alias.representor.NestedFieldFunction;
 import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.related.RelatedModel;
 
 import java.util.Date;
@@ -99,7 +99,7 @@ public interface BaseRepresentor<T> {
 	 * @return the list containing the localized string field names and
 	 *         functions
 	 */
-	public List<FieldFunction<T, Function<Language, String>>>
+	public List<FieldFunction<T, Function<AcceptLanguage, String>>>
 		getLocalizedStringFunctions();
 
 	/**
@@ -244,7 +244,7 @@ public interface BaseRepresentor<T> {
 		 * @return builder's step
 		 */
 		public U addLocalizedStringByLanguage(
-			String key, BiFunction<T, Language, String> stringFunction);
+			String key, BiFunction<T, AcceptLanguage, String> stringFunction);
 
 		/**
 		 * Provides information about a resource localized string field.

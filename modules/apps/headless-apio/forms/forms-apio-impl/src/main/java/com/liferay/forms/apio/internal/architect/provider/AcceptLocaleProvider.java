@@ -12,26 +12,24 @@
  * details.
  */
 
-package com.liferay.apio.architect.language;
+package com.liferay.forms.apio.internal.architect.provider;
 
-import static co.unruly.matchers.StreamMatchers.contains;
+import com.liferay.apio.architect.provider.Provider;
+import com.liferay.forms.apio.internal.architect.locale.AcceptLocale;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import javax.servlet.http.HttpServletRequest;
 
-import java.util.Locale;
-
-import org.junit.Test;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Alejandro Hernández
  */
-public class LanguageTest {
+@Component
+public class AcceptLocaleProvider implements Provider<AcceptLocale> {
 
-	@Test
-	public void testGetPreferredLocaleReturnOnlyPreferredLocaleByDefault() {
-		Language language = Locale::getDefault;
-
-		assertThat(language.getLocales(), contains(Locale.getDefault()));
+	@Override
+	public AcceptLocale createContext(HttpServletRequest httpServletRequest) {
+		return httpServletRequest::getLocale;
 	}
 
 }

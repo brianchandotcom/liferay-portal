@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.impl.internal.provider;
 
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.provider.Provider;
 
 import java.util.Collections;
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Lets resources provide the requested {@link Language} as a parameter in the
+ * Lets resources provide the requested {@link AcceptLanguage} as a parameter in the
  * methods of any of the routes builders.
  *
  * <p>
@@ -42,11 +42,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Alejandro Hernández
  */
 @Component
-public class LanguageProvider implements Provider<Language> {
+public class AcceptLanguageProvider implements Provider<AcceptLanguage> {
 
 	@Override
-	public Language createContext(HttpServletRequest httpServletRequest) {
-		return new Language() {
+	public AcceptLanguage createContext(HttpServletRequest httpServletRequest) {
+		return new AcceptLanguage() {
 
 			@Override
 			public Stream<Locale> getLocales() {

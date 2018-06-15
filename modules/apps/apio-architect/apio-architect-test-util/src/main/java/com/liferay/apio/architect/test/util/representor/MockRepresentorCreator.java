@@ -71,7 +71,8 @@ public class MockRepresentorCreator {
 		).addLinkedModel(
 			"linked", SecondEmbeddedId.class, __ -> "second"
 		).addLocalizedStringByLanguage(
-			"localizedString", (firstEmbeddedModel, language) -> "Translated"
+			"localizedString",
+			(firstEmbeddedModel, acceptLanguage) -> "Translated"
 		).addNumber(
 			"number", __ -> 42
 		).addNumberList(
@@ -130,9 +131,9 @@ public class MockRepresentorCreator {
 		).addLink(
 			"link2", "community.liferay.com"
 		).addLocalizedStringByLanguage(
-			"localizedString1", (model, language) -> "Translated 1"
+			"localizedString1", (model, acceptLanguage) -> "Translated 1"
 		).addLocalizedStringByLanguage(
-			"localizedString2", (model, language) -> "Translated 2"
+			"localizedString2", (model, acceptLanguage) -> "Translated 2"
 		).addNumber(
 			"number1", __ -> 2017
 		).addNumber(
@@ -202,9 +203,9 @@ public class MockRepresentorCreator {
 			).addLink(
 				"link4", ""
 			).addLocalizedStringByLanguage(
-				"localizedString3", (model, language) -> null
+				"localizedString3", (model, acceptLanguage) -> null
 			).addLocalizedStringByLanguage(
-				"localizedString4", (model, language) -> ""
+				"localizedString4", (model, acceptLanguage) -> ""
 			).addNumber(
 				"number3", __ -> null
 			).addString(

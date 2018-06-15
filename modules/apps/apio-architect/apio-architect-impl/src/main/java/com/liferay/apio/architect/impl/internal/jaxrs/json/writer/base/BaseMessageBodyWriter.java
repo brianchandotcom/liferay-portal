@@ -29,7 +29,7 @@ import com.liferay.apio.architect.impl.internal.url.ServerURL;
 import com.liferay.apio.architect.impl.internal.wiring.osgi.manager.provider.ProviderManager;
 import com.liferay.apio.architect.impl.internal.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.impl.internal.wiring.osgi.manager.router.ItemRouterManager;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.single.model.SingleModel;
 
@@ -145,7 +145,7 @@ public abstract class BaseMessageBodyWriter<T, S extends MessageMapper>
 				)
 			).language(
 				providerManager.provideOptional(
-					_httpServletRequest, Language.class
+					_httpServletRequest, AcceptLanguage.class
 				).orElse(
 					Locale::getDefault
 				)

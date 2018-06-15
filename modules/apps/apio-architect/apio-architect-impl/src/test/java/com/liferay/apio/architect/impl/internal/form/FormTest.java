@@ -46,7 +46,7 @@ import com.liferay.apio.architect.form.Form.Builder;
 import com.liferay.apio.architect.form.FormField;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.impl.internal.form.FormImpl.BuilderImpl;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -92,10 +92,10 @@ public class FormTest {
 
 		assertThat(form.getId(), is("1/2/3"));
 
-		Language language = Locale::getDefault;
+		AcceptLanguage acceptLanguage = Locale::getDefault;
 
-		String title = form.getTitle(language);
-		String description = form.getDescription(language);
+		String title = form.getTitle(acceptLanguage);
+		String description = form.getDescription(acceptLanguage);
 
 		List<FormField> formFields = form.getFormFields();
 

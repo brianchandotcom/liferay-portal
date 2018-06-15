@@ -66,11 +66,12 @@ public class FormWriter {
 
 		_formMessageMapper.mapFormURL(jsonObjectBuilder, url);
 
-		String title = _form.getTitle(_requestInfo.getLanguage());
+		String title = _form.getTitle(_requestInfo.getAcceptLanguage());
 
 		_formMessageMapper.mapFormTitle(jsonObjectBuilder, title);
 
-		String description = _form.getDescription(_requestInfo.getLanguage());
+		String description = _form.getDescription(
+			_requestInfo.getAcceptLanguage());
 
 		_formMessageMapper.mapFormDescription(jsonObjectBuilder, description);
 

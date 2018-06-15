@@ -86,7 +86,7 @@ public class FieldsWriterTest {
 		);
 
 		Mockito.when(
-			_requestInfo.getLanguage()
+			_requestInfo.getAcceptLanguage()
 		).thenReturn(
 			Locale::getDefault
 		);

@@ -62,7 +62,7 @@ import com.liferay.apio.architect.form.Body;
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.FormField;
 import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Collections;
@@ -122,8 +122,8 @@ public class FormImpl<T> implements Form<T> {
 	}
 
 	@Override
-	public String getDescription(Language language) {
-		return _descriptionFunction.apply(language);
+	public String getDescription(AcceptLanguage acceptLanguage) {
+		return _descriptionFunction.apply(acceptLanguage);
 	}
 
 	@Override
@@ -183,8 +183,8 @@ public class FormImpl<T> implements Form<T> {
 	}
 
 	@Override
-	public String getTitle(Language language) {
-		return _titleFunction.apply(language);
+	public String getTitle(AcceptLanguage acceptLanguage) {
+		return _titleFunction.apply(acceptLanguage);
 	}
 
 	public static class BuilderImpl<T>
@@ -483,7 +483,7 @@ public class FormImpl<T> implements Form<T> {
 
 		@Override
 		public ConstructorStep<T> description(
-			Function<Language, String> descriptionFunction) {
+			Function<AcceptLanguage, String> descriptionFunction) {
 
 			_form._descriptionFunction = descriptionFunction;
 
@@ -492,7 +492,7 @@ public class FormImpl<T> implements Form<T> {
 
 		@Override
 		public DescriptionStep<T> title(
-			Function<Language, String> titleFunction) {
+			Function<AcceptLanguage, String> titleFunction) {
 
 			_form._titleFunction = titleFunction;
 
@@ -510,7 +510,7 @@ public class FormImpl<T> implements Form<T> {
 		_identifierFunction = identifierFunction;
 	}
 
-	private Function<Language, String> _descriptionFunction;
+	private Function<AcceptLanguage, String> _descriptionFunction;
 	private final String _id;
 	private final IdentifierFunction<?> _identifierFunction;
 	private final Map<String, Function<T, Consumer<List<Boolean>>>>
@@ -566,6 +566,6 @@ public class FormImpl<T> implements Form<T> {
 	private final Map<String, Function<T, Consumer<String>>> _requiredStrings =
 		new HashMap<>();
 	private Supplier<T> _supplier;
-	private Function<Language, String> _titleFunction;
+	private Function<AcceptLanguage, String> _titleFunction;
 
 }

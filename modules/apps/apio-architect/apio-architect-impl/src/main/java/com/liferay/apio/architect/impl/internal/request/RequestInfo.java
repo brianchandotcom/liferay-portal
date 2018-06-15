@@ -17,7 +17,7 @@ package com.liferay.apio.architect.impl.internal.request;
 import com.liferay.apio.architect.impl.internal.response.control.Embedded;
 import com.liferay.apio.architect.impl.internal.response.control.Fields;
 import com.liferay.apio.architect.impl.internal.url.ServerURL;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 
 import java.util.function.Function;
 
@@ -41,6 +41,15 @@ public class RequestInfo {
 	 */
 	public static RequestInfo create(Function<Builder, RequestInfo> function) {
 		return function.apply(new Builder());
+	}
+
+	/**
+	 * Returns the information about the accept language
+	 *
+	 * @return the information about the accept language
+	 */
+	public AcceptLanguage getAcceptLanguage() {
+		return _acceptLanguage;
 	}
 
 	/**
@@ -72,15 +81,6 @@ public class RequestInfo {
 
 	public HttpServletRequest getHttpServletRequest() {
 		return _httpServletRequest;
-	}
-
-	/**
-	 * Returns the information about the language
-	 *
-	 * @return the information about the language
-	 */
-	public Language getLanguage() {
-		return _language;
 	}
 
 	/**
@@ -176,13 +176,13 @@ public class RequestInfo {
 		public class LanguageStep {
 
 			/**
-			 * Adds information about the language to the builder.
+			 * Adds information about the accept language to the builder.
 			 *
-			 * @param  language the request's selected language
+			 * @param  acceptLanguage the request's selected accept language
 			 * @return the builder's next step
 			 */
-			public BuildStep language(Language language) {
-				_language = language;
+			public BuildStep language(AcceptLanguage acceptLanguage) {
+				_acceptLanguage = acceptLanguage;
 
 				return new BuildStep();
 			}
@@ -205,17 +205,17 @@ public class RequestInfo {
 
 		}
 
+		private AcceptLanguage _acceptLanguage;
 		private Embedded _embedded;
 		private Fields _fields;
 		private HttpHeaders _httpHeaders;
 		private HttpServletRequest _httpServletRequest;
-		private Language _language;
 		private ServerURL _serverURL;
 
 	}
 
 	private RequestInfo(Builder builder) {
-		_language = builder._language;
+		_acceptLanguage = builder._acceptLanguage;
 		_fields = builder._fields;
 		_httpHeaders = builder._httpHeaders;
 		_serverURL = builder._serverURL;
@@ -223,11 +223,11 @@ public class RequestInfo {
 		_httpServletRequest = builder._httpServletRequest;
 	}
 
+	private final AcceptLanguage _acceptLanguage;
 	private final Embedded _embedded;
 	private final Fields _fields;
 	private final HttpHeaders _httpHeaders;
 	private final HttpServletRequest _httpServletRequest;
-	private final Language _language;
 	private final ServerURL _serverURL;
 
 }

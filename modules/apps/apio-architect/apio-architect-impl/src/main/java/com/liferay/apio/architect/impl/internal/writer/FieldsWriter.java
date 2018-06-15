@@ -250,7 +250,7 @@ public class FieldsWriter<T> {
 		writeFields(
 			BaseRepresentor::getLocalizedStringFunctions,
 			writeField(
-				function -> function.apply(_requestInfo.getLanguage()),
+				function -> function.apply(_requestInfo.getAcceptLanguage()),
 				biConsumer));
 	}
 

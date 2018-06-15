@@ -19,7 +19,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.asList;
 
 import com.liferay.apio.architect.file.BinaryFile;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 
 import java.io.ByteArrayInputStream;
 
@@ -39,8 +39,8 @@ public class Dummy {
 		this.id = id;
 	}
 
-	public String getLocalizedString1(Language language) {
-		Locale locale = language.getPreferredLocale();
+	public String getLocalizedString1(AcceptLanguage acceptLanguage) {
+		Locale locale = acceptLanguage.getPreferredLocale();
 
 		return locale.getLanguage() + "1";
 	}

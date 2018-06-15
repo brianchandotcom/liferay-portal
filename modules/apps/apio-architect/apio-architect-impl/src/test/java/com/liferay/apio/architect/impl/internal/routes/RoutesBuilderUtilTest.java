@@ -24,7 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -58,7 +58,7 @@ public class RoutesBuilderUtilTest {
 		throws Exception {
 
 		provideConsumer(
-			PROVIDE_FUNCTION, Language.class, Long.class, Integer.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class, Long.class, Integer.class,
 			Boolean.class,
 			(string, aLong, integer, aBoolean) -> {
 				throw new AssertionError("This lambda should not be called");
@@ -68,7 +68,7 @@ public class RoutesBuilderUtilTest {
 	@Test
 	public void testFiveParameterProvideMethodFailsIfNoProvider() {
 		Try<Object> aTry = provide(
-			PROVIDE_FUNCTION, Language.class, Long.class, Integer.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class, Long.class, Integer.class,
 			Boolean.class, Float.class,
 			(string, aLong, integer, aBoolean, list) -> {
 				throw new AssertionError("This lambda should not be called");
@@ -100,7 +100,7 @@ public class RoutesBuilderUtilTest {
 		throws Exception {
 
 		provideConsumer(
-			PROVIDE_FUNCTION, Language.class, Long.class, Integer.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class, Long.class, Integer.class,
 			Boolean.class,
 			(string, aLong, integer, aBoolean) -> {
 				throw new AssertionError("This lambda should not be called");
@@ -125,7 +125,7 @@ public class RoutesBuilderUtilTest {
 	@Test
 	public void testFourParameterProvideMethodFailsIfNoProvider() {
 		Try<Object> aTry = provide(
-			PROVIDE_FUNCTION, Language.class, Long.class, Integer.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class, Long.class, Integer.class,
 			Boolean.class,
 			(string, aLong, integer, aBoolean) -> {
 				throw new AssertionError("This lambda should not be called");
@@ -156,7 +156,7 @@ public class RoutesBuilderUtilTest {
 		throws Exception {
 
 		provideConsumer(
-			PROVIDE_FUNCTION, Language.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class,
 			string -> {
 				throw new AssertionError("This lambda should not be called");
 			});
@@ -174,7 +174,7 @@ public class RoutesBuilderUtilTest {
 	@Test
 	public void testOneParameterProvideMethodFailsIfNoProvider() {
 		Try<Object> aTry = provide(
-			PROVIDE_FUNCTION, Language.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class,
 			string -> {
 				throw new AssertionError("This lambda should not be called");
 			});
@@ -200,7 +200,7 @@ public class RoutesBuilderUtilTest {
 		throws Exception {
 
 		provideConsumer(
-			PROVIDE_FUNCTION, Language.class, Long.class, Integer.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class, Long.class, Integer.class,
 			(string, aLong, integer) -> {
 				throw new AssertionError("This lambda should not be called");
 			});
@@ -222,7 +222,7 @@ public class RoutesBuilderUtilTest {
 	@Test
 	public void testThreeParameterProvideMethodFailsIfNoProvider() {
 		Try<Object> aTry = provide(
-			PROVIDE_FUNCTION, Language.class, Long.class, Integer.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class, Long.class, Integer.class,
 			(string, aLong, integer) -> {
 				throw new AssertionError("This lambda should not be called");
 			});
@@ -250,7 +250,7 @@ public class RoutesBuilderUtilTest {
 		throws Exception {
 
 		provideConsumer(
-			PROVIDE_FUNCTION, Language.class, Long.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class, Long.class,
 			(string, aLong) -> {
 				throw new AssertionError("This lambda should not be called");
 			});
@@ -271,7 +271,7 @@ public class RoutesBuilderUtilTest {
 	@Test
 	public void testTwoParameterProvideMethodFailsIfNoProvider() {
 		Try<Object> aTry = provide(
-			PROVIDE_FUNCTION, Language.class, Long.class,
+			PROVIDE_FUNCTION, AcceptLanguage.class, Long.class,
 			(string, aLong) -> {
 				throw new AssertionError("This lambda should not be called");
 			});

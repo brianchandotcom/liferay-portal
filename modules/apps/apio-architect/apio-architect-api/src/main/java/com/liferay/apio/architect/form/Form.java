@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.apio.architect.file.BinaryFile;
 import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.apio.architect.language.Language;
+import com.liferay.apio.architect.language.AcceptLanguage;
 
 import java.util.Date;
 import java.util.List;
@@ -53,12 +53,12 @@ public interface Form<T> {
 
 	/**
 	 * Returns this form's description, which depends on the HTTP request
-	 * language.
+	 * accept language.
 	 *
-	 * @param  language the HTTP request language information
+	 * @param  acceptLanguage the HTTP request accept language information
 	 * @return the form's description
 	 */
-	public String getDescription(Language language);
+	public String getDescription(AcceptLanguage acceptLanguage);
 
 	/**
 	 * Returns the list of fields from this {@code Form}.
@@ -84,12 +84,12 @@ public interface Form<T> {
 	public List<T> getList(Body body);
 
 	/**
-	 * Returns the form's title, which depends on the HTTP request language.
+	 * Returns the form's title, which depends on the HTTP request accept language.
 	 *
-	 * @param  language the HTTP request language information
+	 * @param  acceptLanguage the HTTP request accept language information
 	 * @return the form's title
 	 */
-	public String getTitle(Language language);
+	public String getTitle(AcceptLanguage acceptLanguage);
 
 	/**
 	 * Creates and populates a {@code Form} of type {@code T}.
@@ -108,7 +108,7 @@ public interface Form<T> {
 		 * @return the updated builder
 		 */
 		public DescriptionStep<T> title(
-			Function<Language, String> titleFunction);
+			Function<AcceptLanguage, String> titleFunction);
 
 		@ProviderType
 		public interface ConstructorStep<T> {
@@ -136,7 +136,7 @@ public interface Form<T> {
 			 * @return the updated builder
 			 */
 			public ConstructorStep<T> description(
-				Function<Language, String> descriptionFunction);
+				Function<AcceptLanguage, String> descriptionFunction);
 
 		}
 

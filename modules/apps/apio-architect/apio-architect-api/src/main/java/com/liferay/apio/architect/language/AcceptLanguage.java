@@ -26,7 +26,7 @@ import java.util.stream.Stream;
  */
 @ConsumerType
 @FunctionalInterface
-public interface Language {
+public interface AcceptLanguage {
 
 	/**
 	 * Returns the {@code Stream} of the request's preferred {@code Locale}, in

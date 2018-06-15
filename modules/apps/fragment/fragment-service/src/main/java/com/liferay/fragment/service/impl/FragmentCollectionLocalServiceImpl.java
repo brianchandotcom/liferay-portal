@@ -250,7 +250,7 @@ public class FragmentCollectionLocalServiceImpl
 		if (fragmentCollectionKey != null) {
 			fragmentCollectionKey = fragmentCollectionKey.trim();
 
-			return StringUtil.toUpperCase(fragmentCollectionKey);
+			return StringUtil.toLowerCase(fragmentCollectionKey);
 		}
 
 		return StringPool.BLANK;

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -142,6 +143,31 @@ public class MBDiscussionPermissionImplTest {
 			_commentManager.getDiscussionPermission(permissionChecker);
 
 		Assert.assertFalse(discussionPermission.hasUpdatePermission(commentId));
+	}
+
+	@Test
+	public void testUserCanUpdateHisCommentIfPropsEnabled() throws Exception {
+		boolean discussionCommentsAlwaysEditableByOwner =
+			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER;
+
+		try {
+			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER = true;
+
+			long commentId = _addComment(_siteUser);
+
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(_siteUser);
+
+			DiscussionPermission discussionPermission =
+				_commentManager.getDiscussionPermission(permissionChecker);
+
+			Assert.assertTrue(
+				discussionPermission.hasUpdatePermission(commentId));
+		}
+		finally {
+			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER =
+				discussionCommentsAlwaysEditableByOwner;
+		}
 	}
 
 	private long _addComment(User user) throws Exception {

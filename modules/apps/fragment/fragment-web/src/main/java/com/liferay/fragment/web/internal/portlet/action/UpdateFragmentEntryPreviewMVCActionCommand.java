@@ -103,6 +103,10 @@ public class UpdateFragmentEntryPreviewMVCActionCommand
 			fragmentEntryId, fileEntry.getFileEntryId());
 
 		TempFileEntryUtil.deleteTempFileEntry(tempFileEntry.getFileEntryId());
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
 	@Reference

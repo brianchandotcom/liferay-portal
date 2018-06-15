@@ -15,7 +15,12 @@
 package com.liferay.dynamic.data.lists.internal.model.listener;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.staging.model.listener.StagingModelListener;
@@ -34,6 +39,10 @@ public class DDLRecordStagingModelListener
 	public void onAfterCreate(DDLRecord ddlRecord)
 		throws ModelListenerException {
 
+		if (_skipEvent(ddlRecord)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterCreate(ddlRecord);
 	}
 
@@ -48,8 +57,34 @@ public class DDLRecordStagingModelListener
 	public void onAfterUpdate(DDLRecord ddlRecord)
 		throws ModelListenerException {
 
+		if (_skipEvent(ddlRecord)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterUpdate(ddlRecord);
 	}
+
+	private boolean _skipEvent(DDLRecord ddlRecord) {
+		try {
+			DDLRecordSet recordSet = ddlRecord.getRecordSet();
+
+			if (recordSet.getScope() !=
+					DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) {
+
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDLRecordStagingModelListener.class);
 
 	@Reference
 	private StagingModelListener<DDLRecord> _stagingModelListener;

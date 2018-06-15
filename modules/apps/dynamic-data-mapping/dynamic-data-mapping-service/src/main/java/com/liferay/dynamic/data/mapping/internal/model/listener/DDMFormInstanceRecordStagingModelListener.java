@@ -15,9 +15,17 @@
 package com.liferay.dynamic.data.mapping.internal.model.listener;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.staging.model.listener.StagingModelListener;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,6 +42,10 @@ public class DDMFormInstanceRecordStagingModelListener
 	public void onAfterCreate(DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws ModelListenerException {
 
+		if (_skipEvent(ddmFormInstanceRecord)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterCreate(ddmFormInstanceRecord);
 	}
 
@@ -48,8 +60,44 @@ public class DDMFormInstanceRecordStagingModelListener
 	public void onAfterUpdate(DDMFormInstanceRecord ddmFormInstanceRecord)
 		throws ModelListenerException {
 
+		if (_skipEvent(ddmFormInstanceRecord)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterUpdate(ddmFormInstanceRecord);
 	}
+
+	private boolean _skipEvent(DDMFormInstanceRecord ddmFormInstanceRecord) {
+		try {
+			DDMFormInstanceRecordVersion formInstanceRecordVersion =
+				ddmFormInstanceRecord.getFormInstanceRecordVersion();
+
+			StagedModelDataHandler stagedModelDataHandler =
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					ExportImportClassedModelUtil.getClassName(
+						formInstanceRecordVersion));
+
+			int[] exportableStatuses =
+				stagedModelDataHandler.getExportableStatuses();
+
+			if (!ArrayUtil.contains(
+					exportableStatuses,
+					formInstanceRecordVersion.getStatus())) {
+
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe);
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormInstanceRecordStagingModelListener.class);
 
 	@Reference
 	private StagingModelListener<DDMFormInstanceRecord> _stagingModelListener;

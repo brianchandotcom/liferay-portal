@@ -352,9 +352,7 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setFolderId(parentFolderId);
 		entry.setTreePath(entry.buildTreePath());
 
-		bookmarksEntryPersistence.update(entry);
-
-		return entry;
+		return bookmarksEntryPersistence.update(entry);
 	}
 
 	@Override

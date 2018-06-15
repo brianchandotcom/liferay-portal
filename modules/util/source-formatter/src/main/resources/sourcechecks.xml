@@ -34,6 +34,9 @@
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
 	</source-processor>
+	<source-processor name="ConfigSourceProcessor">
+		<check name="ConfigDefinitionKeysCheck" />
+	</source-processor>
 	<source-processor name="CQLSourceProcessor">
 		<check name="CQLKeywordCheck" />
 		<check name="WhitespaceCheck">
@@ -47,9 +50,6 @@
 		<check name="CSSImportsCheck" />
 		<check name="CSSPropertiesOrderCheck" />
 		<check name="CSSWhitespaceCheck" />
-	</source-processor>
-	<source-processor name="ConfigSourceProcessor">
-		<check name="ConfigDefinitionKeysCheck" />
 	</source-processor>
 	<source-processor name="DockerfileSourceProcessor">
 		<check name="DockerfileEmptyLinesCheck" />

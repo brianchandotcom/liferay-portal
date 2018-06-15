@@ -60,7 +60,7 @@ if (filterManageableOrganizations) {
 		<%
 		ViewOrganizationsManagementToolbarDisplayContext viewOrganizationsManagementToolbarDisplayContext = new ViewOrganizationsManagementToolbarDisplayContext(request, renderRequest, renderResponse, displayStyle);
 
-		SearchContainer searchContainer = viewOrganizationsManagementToolbarDisplayContext.getSearchContainer(organizationParams);
+		SearchContainer searchContainer = viewOrganizationsManagementToolbarDisplayContext.getSearchContainer(organizationParams, filterManageableOrganizations);
 		%>
 
 		<clay:management-toolbar

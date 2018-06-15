@@ -181,7 +181,8 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 	}
 
 	public SearchContainer getSearchContainer(
-			LinkedHashMap<String, Object> organizationParams)
+			LinkedHashMap<String, Object> organizationParams,
+			boolean filterManageableOrganizations)
 		throws Exception {
 
 		if (_organizationSearch != null) {
@@ -211,7 +212,7 @@ public class ViewOrganizationsManagementToolbarDisplayContext {
 
 		String keywords = organizationSearchTerms.getKeywords();
 
-		if (Validator.isNotNull(keywords)) {
+		if (Validator.isNotNull(keywords) || filterManageableOrganizations) {
 			parentOrganizationId =
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 		}

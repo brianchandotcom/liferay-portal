@@ -19,6 +19,7 @@ import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -202,7 +203,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			ps.setLong(1, increment());
 			ps.setLong(2, companyId);
 			ps.setString(3, "com.liferay.portlet.journal");
-			ps.setInt(4, 4);
+			ps.setInt(4, ResourceConstants.SCOPE_INDIVIDUAL);
 			ps.setString(5, primKey);
 			ps.setLong(6, roleId);
 			ps.setLong(7, 0);

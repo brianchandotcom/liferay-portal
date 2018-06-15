@@ -1464,7 +1464,15 @@ public class PortalImpl implements Portal {
 		groupFriendlyURL = groupFriendlyURL.concat(canonicalLayoutFriendlyURL);
 
 		if (includeQueryString) {
-			groupFriendlyURL = groupFriendlyURL.concat(parametersURL);
+			if (groupFriendlyURL.endsWith(StringPool.SLASH) &&
+				parametersURL.startsWith(StringPool.SLASH)) {
+
+				groupFriendlyURL = groupFriendlyURL.concat(
+					parametersURL.substring(1));
+			}
+			else {
+				groupFriendlyURL = groupFriendlyURL.concat(parametersURL);
+			}
 		}
 
 		return groupFriendlyURL;
@@ -5593,7 +5601,7 @@ public class PortalImpl implements Portal {
 		}
 
 		for (int i = persistentHttpServletRequestWrappers.size() - 1; i >= 0;
-				i--) {
+			i--) {
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
 				persistentHttpServletRequestWrappers.get(i);

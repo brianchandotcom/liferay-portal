@@ -1,3 +1,5 @@
+@import "mixins/site_navigation_menu_item_states";
+
 .site-navigation-menu-item {
 	box-sizing: border-box;
 	max-width: 100%;
@@ -35,14 +37,6 @@
 	&:focus > &__content &__drag-icon,
 	&__content:hover &__drag-icon {
 		visibility: visible;
-	}
-
-	@mixin site-navigation-menu-item-focus {
-		outline: none;
-	}
-
-	@mixin site-navigation-menu-item-card-focus {
-		box-shadow: 0 0 0 2px #8ABFFD;
 	}
 
 	&:focus {

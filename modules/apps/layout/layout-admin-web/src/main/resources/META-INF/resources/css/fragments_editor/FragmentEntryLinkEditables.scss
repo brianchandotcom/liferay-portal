@@ -1,4 +1,6 @@
-@import "./variables";
+@import "mixins/lfr_editable_states";
+
+@import "variables";
 
 lfr-editable {
 	background-size: $fragmentEditableFieldGridSize $fragmentEditableFieldGridSize;
@@ -23,11 +25,6 @@ lfr-editable {
 		box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.6);
 	}
 
-	@mixin lfr-editable-focus {
-		background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
-		box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
-	}
-
 	&:focus {
 		@include lfr-editable-focus;
 	}
@@ -47,11 +44,6 @@ lfr-editable {
 
 		&:hover {
 			box-shadow: 0 0 0 1px fade_out($fragmentEditableFieldGridAccentColor, 0.6);
-		}
-
-		@mixin translating-lfr-editable-focus {
-			background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
-			box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
 		}
 
 		&:focus {

@@ -17,12 +17,11 @@ package com.liferay.mentions.web.internal.portlet;
 import com.liferay.mentions.constants.MentionsPortletKeys;
 import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.mentions.util.MentionsUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageConstants;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -38,8 +36,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.kernel.util.SocialInteractionsConfiguration;
 import com.liferay.social.kernel.util.SocialInteractionsConfigurationUtil;
-import com.liferay.taglib.util.LexiconUtil;
-import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
+import com.liferay.taglib.ui.UserPortraitTag;
 
 import java.util.List;
 
@@ -168,42 +165,18 @@ public class MentionsPortlet extends MVCPortlet {
 	private String _getUserPortraitHTML(User user, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		boolean imageDefaultUseInitials =
-			_userFileUploadsSettings.isImageDefaultUseInitials();
+		return UserPortraitTag.getUserPortraitHTML(
+			user, StringPool.BLANK, () -> user.getInitials(),
+			() -> {
+				try {
+					return user.getPortraitURL(themeDisplay);
+				}
+				catch (PortalException pe) {
+					_log.error(pe, pe);
+				}
 
-		long userPortraitId = 0;
-
-		if (user != null) {
-			userPortraitId = user.getPortraitId();
-
-			if (LanguageConstants.VALUE_IMAGE.equals(
-					LanguageUtil.get(
-						user.getLocale(),
-						LanguageConstants.KEY_USER_DEFAULT_PORTRAIT,
-						LanguageConstants.VALUE_INITIALS))) {
-
-				imageDefaultUseInitials = false;
-			}
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<div class=\"");
-
-		if (imageDefaultUseInitials && (userPortraitId == 0)) {
-			sb.append(LexiconUtil.getUserColorCssClass(user));
-			sb.append(" user-icon user-icon-default\"><span>");
-			sb.append(user.getInitials());
-			sb.append("</span></div>");
-		}
-		else {
-			sb.append(" aspect-ratio-bg-cover user-icon\" ");
-			sb.append("style=\"background-image:url(");
-			sb.append(HtmlUtil.escape(user.getPortraitURL(themeDisplay)));
-			sb.append(")\"></div>");
-		}
-
-		return sb.toString();
+				return StringPool.BLANK;
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -213,8 +186,5 @@ public class MentionsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserFileUploadsSettings _userFileUploadsSettings;
 
 }

@@ -204,6 +204,14 @@ public class ImportUtil {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				themeDisplay.getScopeGroupId(), fragmentEntryKey);
+
+		if ((fragmentEntry != null) && !overwrite) {
+			throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
+		}
+
 		int status = WorkflowConstants.STATUS_APPROVED;
 
 		try {
@@ -219,22 +227,15 @@ public class ImportUtil {
 			_invalidFragmentEntriesNames.add(name);
 		}
 
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.fetchFragmentEntry(
-				themeDisplay.getScopeGroupId(), fragmentEntryKey);
-
 		if (fragmentEntry == null) {
 			_fragmentEntryService.addFragmentEntry(
 				themeDisplay.getScopeGroupId(), fragmentCollectionId,
 				fragmentEntryKey, name, css, html, js, status, serviceContext);
 		}
-		else if (overwrite) {
+		else {
 			_fragmentEntryService.updateFragmentEntry(
 				fragmentEntry.getFragmentEntryId(), name, css, html, js,
 				status);
-		}
-		else {
-			throw new DuplicateFragmentEntryKeyException(fragmentEntryKey);
 		}
 	}
 

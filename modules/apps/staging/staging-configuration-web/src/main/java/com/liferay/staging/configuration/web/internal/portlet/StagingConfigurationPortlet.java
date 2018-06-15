@@ -148,10 +148,16 @@ public class StagingConfigurationPortlet extends MVCPortlet {
 
 			stagedGroup = liveGroup.isStagedRemotely();
 
-			_stagingLocalService.enableRemoteStaging(
-				themeDisplay.getUserId(), liveGroup, branchingPublic,
-				branchingPrivate, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId, serviceContext);
+			try {
+				_stagingLocalService.enableRemoteStaging(
+					themeDisplay.getUserId(), liveGroup, branchingPublic,
+					branchingPrivate, remoteAddress, remotePort,
+					remotePathContext, secureConnection, remoteGroupId,
+					serviceContext);
+			}
+			catch (Exception e) {
+				SessionErrors.add(actionRequest, Exception.class, e);
+			}
 		}
 		else if (stagingType == StagingConstants.TYPE_NOT_STAGED) {
 			_stagingLocalService.disableStaging(liveGroup, serviceContext);

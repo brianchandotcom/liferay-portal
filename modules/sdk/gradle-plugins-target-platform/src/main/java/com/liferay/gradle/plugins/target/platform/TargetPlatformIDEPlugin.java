@@ -24,7 +24,10 @@ import io.spring.gradle.dependencymanagement.dsl.DependencyManagementConfigurer;
 import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension;
 import io.spring.gradle.dependencymanagement.dsl.ImportsHandler;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -33,16 +36,26 @@ import java.util.Set;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.UnknownDomainObjectException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaBasePlugin;
+import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
 import org.gradle.plugins.ide.eclipse.model.EclipseModel;
+import org.gradle.plugins.ide.idea.IdeaPlugin;
+import org.gradle.plugins.ide.idea.model.IdeaModel;
+import org.gradle.plugins.ide.idea.model.IdeaModule;
+import org.gradle.plugins.ide.idea.model.internal.GeneratedIdeaScope;
 
 /**
  * @author Gregory Amerson
+ * @author Simon Jiang
  */
 public class TargetPlatformIDEPlugin implements Plugin<Project> {
 
@@ -53,6 +66,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, IdeaPlugin.class);
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, JavaBasePlugin.class);
 		GradleUtil.applyPlugin(project, TargetPlatformPlugin.class);
@@ -71,6 +85,8 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 				targetPlatformIDEExtension);
 
 		_configureEclipseModel(project, targetPlatformIDEConfiguration);
+
+		_configureIdeaProjectModel(project, targetPlatformIDEConfiguration);
 	}
 
 	private Configuration _addConfigurationTargetPlatformIDE(
@@ -217,4 +233,48 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 		plusConfigurations.add(targetPlatformIDEConfiguration);
 	}
 
+	private void _configureIdeaProjectModel(Project project, Configuration targetPlatformIDEConfiguration) {
+		IdeaModel ideaModel = GradleUtil.getExtension(project, IdeaModel.class);
+
+		IdeaModule module = ideaModel.getModule();
+
+		Map<String, Map<String, Collection<Configuration>>> scopes = module.getScopes();
+
+		Map<String, Collection<Configuration>> compileScope = scopes.get(GeneratedIdeaScope.PROVIDED.name());
+
+		if (compileScope == null) {
+			compileScope = new HashMap<>();
+		}
+
+		Collection<Configuration> collection = compileScope.get("plus");
+
+		if (collection == null) {
+			collection = Collections.synchronizedCollection(new ArrayList<Configuration>());
+		}
+
+		collection.add(targetPlatformIDEConfiguration);
+
+		compileScope.put("plus", collection);
+
+		scopes.put(GeneratedIdeaScope.PROVIDED.name(), compileScope);
+
+		module.setScopes(scopes);
+
+		JavaPluginConvention javaPluginConvention = GradleUtil.getConvention(project, JavaPluginConvention.class);
+
+		SourceSetContainer sourceSets = javaPluginConvention.getSourceSets();
+
+		SourceSet mainSet = null;
+
+		try {
+			mainSet = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME);
+		}
+		catch( UnknownDomainObjectException e ) {
+			mainSet = sourceSets.create(SourceSet.MAIN_SOURCE_SET_NAME);
+		}
+
+		FileCollection compileClasspath = mainSet.getCompileClasspath();
+
+		compileClasspath.plus(targetPlatformIDEConfiguration);
+	}
 }

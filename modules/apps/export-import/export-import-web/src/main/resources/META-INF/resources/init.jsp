@@ -199,7 +199,7 @@ int timeZoneOffset = timeZone.getOffset(calendar.getTimeInMillis());
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 ExportImportToolbarDisplayContext exportImportToolbarDisplayContext =
-	new ExportImportToolbarDisplayContext(request, pageContext, liferayPortletResponse);
+	new ExportImportToolbarDisplayContext(request, liferayPortletResponse);
 
 ExportTemplatesToolbarDisplayContext exportTemplatesToolbarDisplayContext =
 	new ExportTemplatesToolbarDisplayContext(request, pageContext, liferayPortletResponse);

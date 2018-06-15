@@ -20,6 +20,7 @@
 	actionDropdownItems="<%= exportImportToolbarDisplayContext.getActionDropdownItems() %>"
 	creationMenu="<%= exportImportToolbarDisplayContext.getCreationMenu() %>"
 	filterDropdownItems="<%= exportImportToolbarDisplayContext.getFilterDropdownItems() %>"
+	searchContainerId="<%= exportImportToolbarDisplayContext.getSearchContainerId() %>"
 	showCreationMenu="<%= true %>"
 	showSearch="<%= false %>"
 	sortingOrder="<%= exportImportToolbarDisplayContext.getSortingOrder() %>"

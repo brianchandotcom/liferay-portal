@@ -51,8 +51,13 @@ class Analytics {
 		};
 
 		instance.config = config;
-		instance.identityEndpoint =
+
+		const analyticsKey = config.analyticsKey;
+
+		instance.asahIdentityEndpoint = `https://osbasahfarobackend-asahlfr.lfr.io/${analyticsKey}/identity/`;
+		instance.lcsIdentityEndpoint =
 			'https://ec-dev.liferay.com:8095/api/identitycontextgateway/send-identity-context';
+
 		instance.events = storage.get(STORAGE_KEY_EVENTS) || [];
 		instance.isFlushInProgress = false;
 
@@ -161,9 +166,7 @@ class Analytics {
 
 			this._persist(STORAGE_KEY_USER_ID, userId);
 
-			const identity = storage.get(STORAGE_KEY_IDENTITY_HASH);
-
-			return this._sendIdentity(identity, userId).then(() => userId);
+			return Promise.resolve(userId);
 		}
 	}
 
@@ -195,7 +198,9 @@ class Analytics {
 			mode: 'cors',
 		};
 
-		return fetch(this.identityEndpoint, request);
+		fetch(this.asahIdentityEndpoint, request);
+
+		return fetch(this.lcsIdentityEndpoint, request);
 	}
 
 	/**

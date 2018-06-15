@@ -1043,11 +1043,22 @@ AUI.add(
 
 						var inputs = contentNode.all('.field');
 
+						var portletDataNode = instance.byId('PORTLET_DATA_' + portletId);
+
+						var portletChecked = portletDataNode.attr('checked');
+
 						var selectedContent = [];
 
 						inputs.each(
 							function(item, index, collection) {
-								var checked = item.attr(STR_CHECKED);
+								var checked = false;
+
+								if (portletChecked) {
+									checked = item.attr(STR_CHECKED);
+								}
+								else {
+									item.attr(STR_CHECKED, false);
+								}
 
 								if (checked) {
 									selectedContent.push(item.attr('data-name'));
@@ -1056,7 +1067,7 @@ AUI.add(
 						);
 
 						if (selectedContent.length === 0) {
-							instance.byId('PORTLET_DATA_' + portletId).attr('checked', false);
+							portletDataNode.attr('checked', false);
 
 							instance.byId('showChangeContent_' + portletId).hide();
 						}

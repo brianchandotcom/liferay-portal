@@ -29,10 +29,12 @@ import com.liferay.oauth2.provider.web.internal.display.context.OAuth2AuthorizeP
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
@@ -76,6 +78,14 @@ public class ViewAuthorizationRequestMVCRenderCommand
 			_portal.getHttpServletRequest(renderRequest));
 
 		Map<String, String> oAuth2Parameters = getOAuth2Parameters(request);
+
+		String redirectURI = oAuth2Parameters.get("redirect_uri");
+
+		if (Validator.isBlank(redirectURI)) {
+			SessionErrors.add(renderRequest, "missingRedirectURI");
+
+			return "/authorize/error.jsp";
+		}
 
 		String clientId = oAuth2Parameters.get("client_id");
 

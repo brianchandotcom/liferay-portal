@@ -463,7 +463,16 @@ if (Validator.isNull(liferayAnalyticsKey)) {
 				}
 			);
 
-			Analytics.send('view', 'Layout');
+			if (themeDisplay.isSignedIn()) {
+				Analytics.setIdentity(
+					{
+						email: '<%= HtmlUtil.escapeJS(user.getEmailAddress()) %>',
+						name: '<%= HtmlUtil.escapeJS(user.getFullName()) %>'
+					}
+				);
+			}
+
+			Analytics.send('pageViewed', 'Page');
 
 			<c:if test="<%= PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED %>">
 				Liferay.on(
@@ -473,7 +482,16 @@ if (Validator.isNull(liferayAnalyticsKey)) {
 
 						Analytics.create(config);
 
-						Analytics.send('view', 'Layout', {'page': event.path});
+						if (themeDisplay.isSignedIn()) {
+							Analytics.setIdentity(
+								{
+									email: '<%= HtmlUtil.escapeJS(user.getEmailAddress()) %>',
+									name: '<%= HtmlUtil.escapeJS(user.getFullName()) %>'
+								}
+							);
+						}
+
+						Analytics.send('pageViewed', 'Page', {'page': event.path});
 					}
 				);
 			</c:if>

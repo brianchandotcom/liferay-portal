@@ -1,7 +1,7 @@
 import AnalyticsClient from '../../src/analytics';
 import {assert, expect} from 'chai';
 
-const applicationId = 'Forms';
+const applicationId = 'Form';
 
 let Analytics;
 
@@ -18,6 +18,7 @@ describe('Forms Plugin', () => {
 			writable: false
 		});
 
+		fetchMock.mock('*', () => 200);
 		Analytics = AnalyticsClient.create();
 	});
 

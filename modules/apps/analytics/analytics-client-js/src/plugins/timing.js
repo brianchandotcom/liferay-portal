@@ -1,4 +1,4 @@
-const applicationId = 'Timing';
+const applicationId = 'Page';
 
 /**
  * Sends page load information on the window load event
@@ -12,7 +12,7 @@ function onload(analytics) {
 		pageLoadTime,
 	};
 
-	analytics.send('load', applicationId, props);
+	analytics.send('pageLoaded', applicationId, props);
 }
 
 /**
@@ -27,7 +27,7 @@ function unload(analytics) {
 		viewDuration,
 	};
 
-	analytics.send('unload', applicationId, props);
+	analytics.send('pageUnloaded', applicationId, props);
 }
 
 /**

@@ -166,6 +166,16 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 						document.title = '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>';
 					</c:if>
 
+					function <portlet:namespace />fireFormView() {
+						Liferay.fire(
+							'ddmFormView',
+							{
+								formId: <%= formInstanceId %>,
+								title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>'
+							}
+						);
+					}
+
 					<c:choose>
 						<c:when test="<%= ddmFormDisplayContext.isAutosaveEnabled() %>">
 							var <portlet:namespace />form;
@@ -194,24 +204,6 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 								}
 
 								<portlet:namespace />intervalId = setInterval(<portlet:namespace />autoSave, 60000);
-							}
-
-							function <portlet:namespace />fireFormView() {
-								Liferay.fire(
-									'ddmFormView',
-									{
-										formId: <%= formInstanceId %>,
-										title: '<%= HtmlUtil.escape(formInstance.getName(displayLocale)) %>'
-									}
-								);
-
-								Liferay.fire(
-									'ddmFormPageShow',
-									{
-										formId: <%= formInstanceId %>,
-										page: 1
-									}
-								);
 							}
 
 							<portlet:namespace />form = Liferay.component('<%= ddmFormDisplayContext.getContainerId() %>DDMForm');
@@ -254,6 +246,8 @@ Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 							}
 
 							<portlet:namespace />startAutoExtendSession();
+
+							<portlet:namespace />fireFormView();
 						</c:otherwise>
 					</c:choose>
 				</aui:script>

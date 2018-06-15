@@ -10,6 +10,7 @@ describe('Analytics Plugin Integration', () => {
 	});
 
 	beforeEach(() => {
+		fetchMock.mock('*', () => 200);
 		Analytics = AnalyticsClient.create();
 	});
 

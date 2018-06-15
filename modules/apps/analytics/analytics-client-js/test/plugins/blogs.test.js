@@ -2,7 +2,7 @@ import AnalyticsClient from '../../src/analytics';
 import dom from 'metal-dom';
 import {assert, expect} from 'chai';
 
-const applicationId = 'Blogs';
+const applicationId = 'Blog';
 
 const googleUrl = 'http://google.com/';
 
@@ -30,6 +30,7 @@ describe('Blogs Plugin', () => {
 			writable: false
 		});
 
+		fetchMock.mock('*', () => 200);
 		Analytics = AnalyticsClient.create();
 	});
 

@@ -119,7 +119,7 @@ AUI.add(
 						if (instance._isFormView()) {
 							instance.get('ruleBuilder').render(instance.one('#ruleBuilder'));
 							instance.createCopyPublishFormURLPopover();
-							instance.createPublishTooltip();
+							instance.createAutoSaveTooltip();
 						}
 					},
 
@@ -220,7 +220,7 @@ AUI.add(
 						if (instance._isFormView()) {
 							instance.get('ruleBuilder').destroy();
 							instance._copyPublishFormURLPopover.destroy();
-							instance._publishTooltip.destroy();
+							instance._autoSaveTooltip.destroy();
 						}
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
@@ -234,6 +234,22 @@ AUI.add(
 						if (instance.isNotAllowedKey(e, textLimit) && (charCode != 91)) {
 							e.preventDefault();
 						}
+					},
+
+					createAutoSaveTooltip: function() {
+						var instance = this;
+
+						instance._autoSaveTooltip = new A.TooltipDelegate(
+							{
+								cssClass: 'clay-tooltip',
+								position: 'bottom',
+								trigger: '#autosaveMessage',
+								triggerHideEvent: ['blur', 'mouseleave'],
+								triggerShowEvent: ['focus', 'mouseover'],
+								visible: false,
+								zIndex: 900
+							}
+						);
 					},
 
 					createCopyPublishFormURLPopover: function() {
@@ -271,21 +287,6 @@ AUI.add(
 								}
 							);
 						}
-					},
-
-					createPublishTooltip: function() {
-						var instance = this;
-
-						instance._publishTooltip = new A.TooltipDelegate(
-							{
-								position: 'left',
-								trigger: '.publish-icon',
-								triggerHideEvent: ['blur', 'mouseleave'],
-								triggerShowEvent: ['focus', 'mouseover'],
-								visible: false,
-								zIndex: 900
-							}
-						);
 					},
 
 					disableDescriptionEditor: function() {
@@ -1141,7 +1142,13 @@ AUI.add(
 							]
 						);
 
-						instance.one('#autosaveMessage').set('innerHTML', autosaveMessage);
+						var autoSaveMessage = instance.one('#autosaveMessage');
+
+						autoSaveMessage.set('innerHTML', autosaveMessage);
+
+						var title = Liferay.Language.get('every-change-is-automatically-saved');
+
+						autoSaveMessage.attr('title', title);
 					}
 				}
 			}

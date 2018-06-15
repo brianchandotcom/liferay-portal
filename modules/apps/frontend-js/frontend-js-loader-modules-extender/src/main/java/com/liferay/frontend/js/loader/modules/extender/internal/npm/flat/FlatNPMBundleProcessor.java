@@ -170,7 +170,7 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 	}
 
 	private String _normalizeModuleContent(String moduleContent) {
-		moduleContent = moduleContent.replaceAll("\n", " ");
+		moduleContent = StringUtil.replace(moduleContent, '\n', ' ');
 
 		int index = moduleContent.indexOf("Liferay.Loader.define(");
 
@@ -232,8 +232,9 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 		for (int i = 0; i < dependencies.length; i++) {
 			dependencies[i] = dependencies[i].trim();
-			dependencies[i] = dependencies[i].replaceAll("'", "");
-			dependencies[i] = dependencies[i].replaceAll("\"", "");
+
+			dependencies[i] = StringUtil.removeChars(
+				dependencies[i], '\'', '\"');
 		}
 
 		return Arrays.asList(dependencies);

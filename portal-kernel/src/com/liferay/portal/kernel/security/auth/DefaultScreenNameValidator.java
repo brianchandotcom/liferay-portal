@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.security.auth;
 
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -62,8 +62,7 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 			String specialChars = PropsUtil.get(
 				PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS);
 
-			_specialChars = specialChars.replaceAll(
-				StringPool.SLASH, StringPool.BLANK);
+			_specialChars = StringUtil.removeChar(specialChars, CharPool.SLASH);
 		}
 
 		return _specialChars;

@@ -22,12 +22,14 @@ import com.liferay.opensocial.model.OAuthConsumer;
 import com.liferay.opensocial.model.OAuthConsumerConstants;
 import com.liferay.opensocial.model.impl.OAuthConsumerImpl;
 import com.liferay.opensocial.util.PortletPropsValues;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.apache.shindig.gadgets.oauth.OAuthStore;
 
@@ -70,7 +72,7 @@ public class LiferayOAuthStoreProvider implements Provider<OAuthStore> {
 
 		String path = PropsUtil.get(PropsKeys.LIFERAY_HOME).concat(_KEY_DIR);
 
-		path = path.replaceAll(StringPool.QUOTE, StringPool.BLANK);
+		path = StringUtil.removeChar(path, CharPool.QUOTE);
 
 		keyFileName = path.concat(keyFileName);
 

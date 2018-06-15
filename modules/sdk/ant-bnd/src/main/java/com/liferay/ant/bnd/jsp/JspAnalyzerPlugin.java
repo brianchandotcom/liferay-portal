@@ -114,7 +114,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected void addApiUses(Analyzer analyzer, String originalContent) {
-		String content = originalContent.replaceAll("<%--[\\s\\S]*?--%>", "");
+		String content = _removeComments(originalContent);
 
 		int contentX = -1;
 		int contentY = content.length();
@@ -456,7 +456,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected Set<String> getTaglibURIs(String originalContent) {
-		String content = originalContent.replaceAll("<%--[\\s\\S]*?--%>", "");
+		String content = _removeComments(originalContent);
 
 		int contentX = -1;
 		int contentY = content.length();
@@ -520,6 +520,12 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 		return false;
 	}
 
+	private static String _removeComments(String content) {
+		Matcher matcher = _commentPattern.matcher(content);
+
+		return matcher.replaceAll("");
+	}
+
 	private static final String[] _JSTL_CORE_URIS = {
 		"http://java.sun.com/jsp/jstl/core", "http://java.sun.com/jsp/jstl/fmt",
 		"http://java.sun.com/jsp/jstl/functions",
@@ -532,6 +538,8 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 	private static final String[] _REQUIRED_PACKAGE_NAMES =
 		{"javax.servlet", "javax.servlet.http"};
 
+	private static final Pattern _commentPattern = Pattern.compile(
+		"<%--[\\s\\S]*?--%>");
 	private static final Pattern _packagePattern = Pattern.compile(
 		"[_A-Za-z$][_A-Za-z0-9$]*(\\.[_A-Za-z$][_A-Za-z0-9$]*)*");
 	private static final Pattern _staticImportPattern = Pattern.compile(
@@ -570,9 +578,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 				return;
 			}
 
-			String value = new String(chars, start, length);
-
-			_hasURI = _uri.equals(value.replaceAll("^\\s*(.*)\\s*$", "$1"));
+			_hasURI = _uri.equals(_trim(chars, start, length));
 
 			_inURI = false;
 		}
@@ -590,6 +596,30 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			if (qName.equals("uri")) {
 				_inURI = true;
 			}
+		}
+
+		private String _trim(char[] chars, int start, int length) {
+			int end = start + length;
+
+			for (int i = start; i < end; i++) {
+				if (Character.isWhitespace(chars[i])) {
+					start++;
+				}
+				else {
+					break;
+				}
+			}
+
+			for (int i = end - 1; i >= start; i--) {
+				if (Character.isWhitespace(chars[i])) {
+					end--;
+				}
+				else {
+					break;
+				}
+			}
+
+			return new String(chars, start, end - start);
 		}
 
 		private boolean _hasURI;

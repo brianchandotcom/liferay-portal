@@ -15,7 +15,6 @@
 package com.liferay.forms.apio.internal.architect.resource;
 
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -34,6 +33,7 @@ import com.liferay.forms.apio.architect.identifier.FormInstanceIdentifier;
 import com.liferay.forms.apio.architect.identifier.FormInstanceRecordIdentifier;
 import com.liferay.forms.apio.internal.FormInstanceRecordServiceContext;
 import com.liferay.forms.apio.internal.architect.form.FormInstanceRecordForm;
+import com.liferay.forms.apio.internal.architect.locale.AcceptLocale;
 import com.liferay.forms.apio.internal.helper.FormInstanceRecordResourceHelper;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -66,7 +66,7 @@ public class FormInstanceRecordNestedCollectionResource
 		return builder.addGetter(
 			this::_getPageItems
 		).addCreator(
-			this::_addFormInstanceRecord, Language.class,
+			this::_addFormInstanceRecord, AcceptLocale.class,
 			FormInstanceRecordServiceContext.class,
 			(credentials, aLong) -> true, FormInstanceRecordForm::buildForm
 		).build();
@@ -84,7 +84,7 @@ public class FormInstanceRecordNestedCollectionResource
 		return builder.addGetter(
 			_ddmFormInstanceRecordService::getFormInstanceRecord
 		).addUpdater(
-			this::_updateFormInstanceRecord, Language.class,
+			this::_updateFormInstanceRecord, AcceptLocale.class,
 			FormInstanceRecordServiceContext.class,
 			(credentials, aLong) -> true, FormInstanceRecordForm::buildForm
 		).build();
@@ -126,7 +126,8 @@ public class FormInstanceRecordNestedCollectionResource
 
 	private DDMFormInstanceRecord _addFormInstanceRecord(
 			long ddmFormInstanceId,
-			FormInstanceRecordForm formInstanceRecordForm, Language language,
+			FormInstanceRecordForm formInstanceRecordForm,
+			AcceptLocale acceptLocale,
 			FormInstanceRecordServiceContext formInstanceRecordServiceContext)
 		throws PortalException {
 
@@ -138,7 +139,7 @@ public class FormInstanceRecordNestedCollectionResource
 		DDMFormValues ddmFormValues =
 			FormInstanceRecordResourceHelper.getDDMFormValues(
 				formInstanceRecordForm.getFieldValues(),
-				ddmStructure.getDDMForm(), language.getPreferredLocale());
+				ddmStructure.getDDMForm(), acceptLocale.get());
 
 		ServiceContext serviceContext =
 			formInstanceRecordServiceContext.getServiceContext();
@@ -197,7 +198,8 @@ public class FormInstanceRecordNestedCollectionResource
 
 	private DDMFormInstanceRecord _updateFormInstanceRecord(
 			long formInstanceRecordId,
-			FormInstanceRecordForm formInstanceRecordForm, Language language,
+			FormInstanceRecordForm formInstanceRecordForm,
+			AcceptLocale acceptLocale,
 			FormInstanceRecordServiceContext formInstanceRecordServiceContext)
 		throws PortalException {
 
@@ -213,7 +215,7 @@ public class FormInstanceRecordNestedCollectionResource
 		DDMFormValues ddmFormValues =
 			FormInstanceRecordResourceHelper.getDDMFormValues(
 				formInstanceRecordForm.getFieldValues(),
-				ddmStructure.getDDMForm(), language.getPreferredLocale());
+				ddmStructure.getDDMForm(), acceptLocale.get());
 
 		ServiceContext serviceContext =
 			formInstanceRecordServiceContext.getServiceContext();

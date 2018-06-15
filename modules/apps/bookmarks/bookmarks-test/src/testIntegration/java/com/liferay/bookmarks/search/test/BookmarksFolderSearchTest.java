@@ -59,13 +59,13 @@ public class BookmarksFolderSearchTest extends BaseSearchTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testLocalizedSearch() throws Exception {
+	public void testLocalizedSearch() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchAttachments() throws Exception {
+	public void testSearchAttachments() {
 	}
 
 	@Override
@@ -89,55 +89,55 @@ public class BookmarksFolderSearchTest extends BaseSearchTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testSearchByDDMStructureField() throws Exception {
+	public void testSearchByDDMStructureField() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchComments() throws Exception {
+	public void testSearchComments() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchExpireAllVersions() throws Exception {
+	public void testSearchExpireAllVersions() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchExpireLatestVersion() throws Exception {
+	public void testSearchExpireLatestVersion() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchMyEntries() throws Exception {
+	public void testSearchMyEntries() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchRecentEntries() throws Exception {
+	public void testSearchRecentEntries() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchStatus() throws Exception {
+	public void testSearchStatus() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchVersions() throws Exception {
+	public void testSearchVersions() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchWithinDDMStructure() throws Exception {
+	public void testSearchWithinDDMStructure() {
 	}
 
 	@Override
@@ -194,9 +194,8 @@ public class BookmarksFolderSearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected BaseModel<?> updateBaseModel(
-			BaseModel<?> baseModel, String keywords,
-			ServiceContext serviceContext)
-		throws Exception {
+		BaseModel<?> baseModel, String keywords,
+		ServiceContext serviceContext) {
 
 		BookmarksFolder folder = (BookmarksFolder)baseModel;
 

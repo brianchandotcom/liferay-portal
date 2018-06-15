@@ -63,55 +63,55 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testLocalizedSearch() throws Exception {
+	public void testLocalizedSearch() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchAttachments() throws Exception {
+	public void testSearchAttachments() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchByDDMStructureField() throws Exception {
+	public void testSearchByDDMStructureField() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchComments() throws Exception {
+	public void testSearchComments() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchExpireAllVersions() throws Exception {
+	public void testSearchExpireAllVersions() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchExpireLatestVersion() throws Exception {
+	public void testSearchExpireLatestVersion() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchStatus() throws Exception {
+	public void testSearchStatus() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchVersions() throws Exception {
+	public void testSearchVersions() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSearchWithinDDMStructure() throws Exception {
+	public void testSearchWithinDDMStructure() {
 	}
 
 	@Override

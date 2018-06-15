@@ -242,18 +242,21 @@ public class JournalArticleIndexer
 			return;
 		}
 
-		String formatPattern = PropsUtil.get(
-			PropsKeys.INDEX_DATE_FORMAT_PATTERN);
-
-		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			formatPattern);
-
 		DateRangeFilterBuilder dateRangeFilterBuilder =
 			_filterBuilders.dateRangeFilterBuilder();
 
 		dateRangeFilterBuilder.setFieldName(Field.EXPIRATION_DATE);
+
+		String formatPattern = PropsUtil.get(
+			PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+
 		dateRangeFilterBuilder.setFormat(formatPattern);
+
+		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			formatPattern);
+
 		dateRangeFilterBuilder.setFrom(dateFormat.format(new Date()));
+
 		dateRangeFilterBuilder.setIncludeLower(false);
 		dateRangeFilterBuilder.setIncludeUpper(false);
 

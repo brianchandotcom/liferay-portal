@@ -28,8 +28,6 @@ import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -531,49 +529,37 @@ public class BookmarksEntryLocalServiceImpl
 			getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
+			dynamicQuery -> {
+				Property folderIdProperty = PropertyFactoryUtil.forName(
+					"folderId");
 
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property folderIdProperty = PropertyFactoryUtil.forName(
-						"folderId");
+				dynamicQuery.add(folderIdProperty.eq(folderId));
 
-					dynamicQuery.add(folderIdProperty.eq(folderId));
+				Property treePathProperty = PropertyFactoryUtil.forName(
+					"treePath");
 
-					Property treePathProperty = PropertyFactoryUtil.forName(
-						"treePath");
-
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.or(
-							treePathProperty.isNull(),
-							treePathProperty.ne(treePath)));
-				}
-
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.or(
+						treePathProperty.isNull(),
+						treePathProperty.ne(treePath)));
 			});
 
 		final Indexer<BookmarksEntry> indexer = IndexerRegistryUtil.getIndexer(
 			BookmarksEntry.class);
 
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
+			(BookmarksEntry entry) -> {
+				entry.setTreePath(treePath);
 
-				@Override
-				public void performAction(BookmarksEntry entry)
-					throws PortalException {
+				updateBookmarksEntry(entry);
 
-					entry.setTreePath(treePath);
-
-					updateBookmarksEntry(entry);
-
-					if (!reindex) {
-						return;
-					}
-
-					Document document = indexer.getDocument(entry);
-
-					indexableActionableDynamicQuery.addDocuments(document);
+				if (!reindex) {
+					return;
 				}
 
+				Document document = indexer.getDocument(entry);
+
+				indexableActionableDynamicQuery.addDocuments(document);
 			});
 
 		indexableActionableDynamicQuery.performActions();

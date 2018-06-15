@@ -1187,9 +1187,6 @@ public class LayoutsAdminDisplayContext {
 			long parentLayoutId, boolean privateLayout)
 		throws Exception {
 
-		long layoutSetBranchId = ParamUtil.getLong(
-			_request, "layoutSetBranchId", _getActiveLayoutSetBranchId());
-
 		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
@@ -1207,9 +1204,7 @@ public class LayoutsAdminDisplayContext {
 				continue;
 			}
 
-			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
-
-			if (layoutSetBranchId > 0) {
+			if (_getActiveLayoutSetBranchId() > 0) {
 				LayoutRevision layoutRevision =
 					LayoutStagingUtil.getLayoutRevision(layout);
 
@@ -1217,6 +1212,8 @@ public class LayoutsAdminDisplayContext {
 					continue;
 				}
 			}
+
+			JSONObject layoutJSONObject = JSONFactoryUtil.createJSONObject();
 
 			layoutJSONObject.put(
 				"actionURLs", _getActionURLsJSONObject(layout));
@@ -1250,7 +1247,8 @@ public class LayoutsAdminDisplayContext {
 				portletURL.setParameter(
 					"selPlid", String.valueOf(layout.getPlid()));
 				portletURL.setParameter(
-					"layoutSetBranchId", String.valueOf(layoutSetBranchId));
+					"layoutSetBranchId",
+					String.valueOf(_getActiveLayoutSetBranchId()));
 
 				layoutJSONObject.put("url", portletURL.toString());
 			}

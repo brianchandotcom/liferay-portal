@@ -44,12 +44,15 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 	public Getter getGetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
-		String methodName = "get".concat(
-			TextFormatter.format(propertyName, TextFormatter.G));
+		String methodNameSuffix = TextFormatter.format(
+			propertyName, TextFormatter.G);
+
+		String getterMethodName = "get".concat(methodNameSuffix);
 
 		try {
-			return new LiferayPropertyGetter(
-				clazz.getMethod(methodName), propertyName);
+			Method getterMethod = clazz.getMethod(getterMethodName);
+
+			return new LiferayPropertyGetter(getterMethod, propertyName);
 		}
 		catch (NoSuchMethodException nsme) {
 			if (_log.isWarnEnabled()) {
@@ -69,12 +72,19 @@ public class LiferayPropertyAccessor extends BasicPropertyAccessor {
 	public Setter getSetter(Class clazz, String propertyName)
 		throws PropertyNotFoundException {
 
-		String methodName = "set".concat(
-			TextFormatter.format(propertyName, TextFormatter.G));
+		String methodNameSuffix = TextFormatter.format(
+			propertyName, TextFormatter.G);
+
+		String getterMethodName = "get".concat(methodNameSuffix);
+		String setterMethodName = "set".concat(methodNameSuffix);
 
 		try {
-			return new LiferayPropertySetter(
-				clazz.getMethod(methodName), propertyName);
+			Method getterMethod = clazz.getMethod(getterMethodName);
+
+			Method setterMethod = clazz.getMethod(
+				setterMethodName, getterMethod.getReturnType());
+
+			return new LiferayPropertySetter(setterMethod, propertyName);
 		}
 		catch (NoSuchMethodException nsme) {
 			if (_log.isWarnEnabled()) {

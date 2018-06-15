@@ -453,7 +453,7 @@ public class LangBuilder {
 			}
 		}
 
-		sb.setIndex(sb.index() - 2);
+		sb.setIndex(sb.index() - 1);
 
 		content = sb.toString();
 

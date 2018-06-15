@@ -212,6 +212,11 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		}
 	}
 
+	@Override
+	protected boolean isSkipImportReferenceStagedModels() {
+		return true;
+	}
+
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 

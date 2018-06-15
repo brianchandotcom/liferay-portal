@@ -74,6 +74,8 @@ public class GroupSearchProvider {
 
 			List<Group> groups = getAllGroups(portletRequest);
 
+			groups.sort(groupSearch.getOrderByComparator());
+
 			groupSearch.setTotal(groups.size());
 
 			results = ListUtil.subList(

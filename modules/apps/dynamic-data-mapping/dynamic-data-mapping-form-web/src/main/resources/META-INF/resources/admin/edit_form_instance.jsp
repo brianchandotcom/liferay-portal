@@ -48,32 +48,30 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
 	/>
 
-	<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button">
-		<svg class="lexicon-icon">
-			<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
-		</svg>
-	</button>
+	<nav class="management-bar management-bar-light navbar toolbar-group-field">
+		<div class="autosave-bar container toolbar">
+			<div class="navbar-form navbar-form-autofit navbar-overlay toolbar-group-content">
+				<span class="autosave-feedback management-bar-text" id="<portlet:namespace />autosaveMessage"></span>
+			</div>
 
-	<div class="autosave-bar management-bar management-bar-default">
-		<div class="container-fluid-1280">
-			<div class="toolbar">
-				<div class="toolbar-group-field">
-				</div>
-
-				<div class="toolbar-group-content">
-					<span class="autosave-feedback management-bar-text" id="<portlet:namespace />autosaveMessage"></span>
-				</div>
-
-				<div class="toolbar-group-field">
-					<button class="btn btn-link publish-icon <%= (formInstance == null) ? "hide" : "" %>" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" title="<liferay-ui:message key="copy-url" />" type="button">
+			<ul class="navbar-nav toolbar-group-field">
+				<li class="nav-item">
+					<button class="btn btn-secondary nav-btn nav-btn-monospaced publish-icon <%= (formInstance == null) ? "hide" : "" %>" data-original-title="<liferay-ui:message key="copy-url" />" id="<portlet:namespace />publishIcon" title="<liferay-ui:message key="copy-url" />" type="button">
 						<svg class="lexicon-icon">
 							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>link" />
 						</svg>
 					</button>
-				</div>
-			</div>
+				</li>
+				<li class="nav-item">
+					<button class="btn btn-primary lfr-ddm-add-field nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none">
+						<svg class="lexicon-icon">
+							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
+						</svg>
+					</button>
+				</li>
+			</ul>
 		</div>
-	</div>
+	</nav>
 
 	<div class="container-fluid-1280">
 		<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= false %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />

@@ -52,7 +52,8 @@ page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %><%@
 page import="com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil" %><%@
 page import="com.liferay.site.navigation.type.SiteNavigationMenuItemType" %><%@
 page import="com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
+page import="com.liferay.taglib.aui.AUIUtil" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@

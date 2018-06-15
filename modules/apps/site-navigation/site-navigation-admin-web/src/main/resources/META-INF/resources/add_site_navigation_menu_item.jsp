@@ -52,7 +52,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 		<aui:fieldset>
 
 			<%
-			siteNavigationMenuItemType.renderAddPage(request, response);
+			siteNavigationMenuItemType.renderAddPage(request, PipingServletResponse.createPipingServletResponse(pageContext));
 			%>
 
 		</aui:fieldset>

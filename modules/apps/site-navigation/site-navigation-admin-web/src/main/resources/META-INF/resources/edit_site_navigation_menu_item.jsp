@@ -35,7 +35,7 @@ SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTy
 	<aui:input name="parentSiteNavigationMenuItemId" type="hidden" value="<%= siteNavigationMenuItem.getParentSiteNavigationMenuItemId() %>" />
 
 	<%
-	siteNavigationMenuItemType.renderEditPage(request, response, siteNavigationMenuItem);
+	siteNavigationMenuItemType.renderEditPage(request, PipingServletResponse.createPipingServletResponse(pageContext), siteNavigationMenuItem);
 	%>
 
 	<aui:button-row>

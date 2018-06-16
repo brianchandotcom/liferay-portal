@@ -22,7 +22,7 @@ const clayToast = new ClayToast.default(
                 }
             }
         },
-        message: '$message$',
+        message: '$message$'.replace(/&amp;/g, '&'),
         spritemap: '$pathThemeImages$/lexicon/icons.svg',
         style: 'success',
         title: '$title$'

@@ -18,11 +18,14 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -58,8 +61,16 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("assetDisplayPageEntryId", getAssetDisplayPageEntryId());
-		attributes.put("assetEntryId", getAssetEntryId());
+		attributes.put("groupId", getGroupId());
+		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("layoutPageTemplateEntryId",
 			getLayoutPageTemplateEntryId());
 		attributes.put("type", getType());
@@ -69,6 +80,12 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long assetDisplayPageEntryId = (Long)attributes.get(
 				"assetDisplayPageEntryId");
 
@@ -76,10 +93,52 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 			setAssetDisplayPageEntryId(assetDisplayPageEntryId);
 		}
 
-		Long assetEntryId = (Long)attributes.get("assetEntryId");
+		Long groupId = (Long)attributes.get("groupId");
 
-		if (assetEntryId != null) {
-			setAssetEntryId(assetEntryId);
+		if (groupId != null) {
+			setGroupId(groupId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
+		}
+
+		Long classNameId = (Long)attributes.get("classNameId");
+
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		Long layoutPageTemplateEntryId = (Long)attributes.get(
@@ -117,18 +176,68 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	}
 
 	/**
-	* Returns the asset entry ID of this asset display page entry.
+	* Returns the fully qualified class name of this asset display page entry.
 	*
-	* @return the asset entry ID of this asset display page entry
+	* @return the fully qualified class name of this asset display page entry
 	*/
 	@Override
-	public long getAssetEntryId() {
-		return _assetDisplayPageEntry.getAssetEntryId();
+	public String getClassName() {
+		return _assetDisplayPageEntry.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this asset display page entry.
+	*
+	* @return the class name ID of this asset display page entry
+	*/
+	@Override
+	public long getClassNameId() {
+		return _assetDisplayPageEntry.getClassNameId();
+	}
+
+	/**
+	* Returns the class pk of this asset display page entry.
+	*
+	* @return the class pk of this asset display page entry
+	*/
+	@Override
+	public long getClassPK() {
+		return _assetDisplayPageEntry.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this asset display page entry.
+	*
+	* @return the company ID of this asset display page entry
+	*/
+	@Override
+	public long getCompanyId() {
+		return _assetDisplayPageEntry.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this asset display page entry.
+	*
+	* @return the create date of this asset display page entry
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _assetDisplayPageEntry.getCreateDate();
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _assetDisplayPageEntry.getExpandoBridge();
+	}
+
+	/**
+	* Returns the group ID of this asset display page entry.
+	*
+	* @return the group ID of this asset display page entry
+	*/
+	@Override
+	public long getGroupId() {
+		return _assetDisplayPageEntry.getGroupId();
 	}
 
 	/**
@@ -139,6 +248,16 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	@Override
 	public long getLayoutPageTemplateEntryId() {
 		return _assetDisplayPageEntry.getLayoutPageTemplateEntryId();
+	}
+
+	/**
+	* Returns the modified date of this asset display page entry.
+	*
+	* @return the modified date of this asset display page entry
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _assetDisplayPageEntry.getModifiedDate();
 	}
 
 	/**
@@ -164,6 +283,46 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	@Override
 	public int getType() {
 		return _assetDisplayPageEntry.getType();
+	}
+
+	/**
+	* Returns the user ID of this asset display page entry.
+	*
+	* @return the user ID of this asset display page entry
+	*/
+	@Override
+	public long getUserId() {
+		return _assetDisplayPageEntry.getUserId();
+	}
+
+	/**
+	* Returns the user name of this asset display page entry.
+	*
+	* @return the user name of this asset display page entry
+	*/
+	@Override
+	public String getUserName() {
+		return _assetDisplayPageEntry.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this asset display page entry.
+	*
+	* @return the user uuid of this asset display page entry
+	*/
+	@Override
+	public String getUserUuid() {
+		return _assetDisplayPageEntry.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this asset display page entry.
+	*
+	* @return the uuid of this asset display page entry
+	*/
+	@Override
+	public String getUuid() {
+		return _assetDisplayPageEntry.getUuid();
 	}
 
 	@Override
@@ -201,19 +360,54 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 		_assetDisplayPageEntry.setAssetDisplayPageEntryId(assetDisplayPageEntryId);
 	}
 
-	/**
-	* Sets the asset entry ID of this asset display page entry.
-	*
-	* @param assetEntryId the asset entry ID of this asset display page entry
-	*/
-	@Override
-	public void setAssetEntryId(long assetEntryId) {
-		_assetDisplayPageEntry.setAssetEntryId(assetEntryId);
-	}
-
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_assetDisplayPageEntry.setCachedModel(cachedModel);
+	}
+
+	@Override
+	public void setClassName(String className) {
+		_assetDisplayPageEntry.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this asset display page entry.
+	*
+	* @param classNameId the class name ID of this asset display page entry
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_assetDisplayPageEntry.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class pk of this asset display page entry.
+	*
+	* @param classPK the class pk of this asset display page entry
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_assetDisplayPageEntry.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this asset display page entry.
+	*
+	* @param companyId the company ID of this asset display page entry
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_assetDisplayPageEntry.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this asset display page entry.
+	*
+	* @param createDate the create date of this asset display page entry
+	*/
+	@Override
+	public void setCreateDate(Date createDate) {
+		_assetDisplayPageEntry.setCreateDate(createDate);
 	}
 
 	@Override
@@ -233,6 +427,16 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	}
 
 	/**
+	* Sets the group ID of this asset display page entry.
+	*
+	* @param groupId the group ID of this asset display page entry
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_assetDisplayPageEntry.setGroupId(groupId);
+	}
+
+	/**
 	* Sets the layout page template entry ID of this asset display page entry.
 	*
 	* @param layoutPageTemplateEntryId the layout page template entry ID of this asset display page entry
@@ -240,6 +444,16 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	@Override
 	public void setLayoutPageTemplateEntryId(long layoutPageTemplateEntryId) {
 		_assetDisplayPageEntry.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
+	}
+
+	/**
+	* Sets the modified date of this asset display page entry.
+	*
+	* @param modifiedDate the modified date of this asset display page entry
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_assetDisplayPageEntry.setModifiedDate(modifiedDate);
 	}
 
 	@Override
@@ -270,6 +484,46 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 	@Override
 	public void setType(int type) {
 		_assetDisplayPageEntry.setType(type);
+	}
+
+	/**
+	* Sets the user ID of this asset display page entry.
+	*
+	* @param userId the user ID of this asset display page entry
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_assetDisplayPageEntry.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this asset display page entry.
+	*
+	* @param userName the user name of this asset display page entry
+	*/
+	@Override
+	public void setUserName(String userName) {
+		_assetDisplayPageEntry.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this asset display page entry.
+	*
+	* @param userUuid the user uuid of this asset display page entry
+	*/
+	@Override
+	public void setUserUuid(String userUuid) {
+		_assetDisplayPageEntry.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this asset display page entry.
+	*
+	* @param uuid the uuid of this asset display page entry
+	*/
+	@Override
+	public void setUuid(String uuid) {
+		_assetDisplayPageEntry.setUuid(uuid);
 	}
 
 	@Override
@@ -315,6 +569,11 @@ public class AssetDisplayPageEntryWrapper implements AssetDisplayPageEntry,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _assetDisplayPageEntry.getStagedModelType();
 	}
 
 	@Override

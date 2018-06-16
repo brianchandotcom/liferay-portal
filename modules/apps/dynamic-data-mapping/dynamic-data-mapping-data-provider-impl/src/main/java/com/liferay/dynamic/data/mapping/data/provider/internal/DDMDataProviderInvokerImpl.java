@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse.Status;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
-import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -33,13 +32,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import com.netflix.hystrix.HystrixCommand;
-import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.netflix.hystrix.HystrixCommandKey;
-import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import com.netflix.hystrix.exception.HystrixRuntimeException.FailureType;
 
@@ -263,64 +257,5 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMDataProviderInvokerImpl.class);
-
-	static class DDMDataProviderInvokeCommand
-		extends HystrixCommand<DDMDataProviderResponse> {
-
-		public DDMDataProviderInvokeCommand(
-			String ddmDataProviderInstanceName, DDMDataProvider ddmDataProvider,
-			DDMDataProviderRequest ddmDataProviderRequest) {
-
-			super(
-				Setter.withGroupKey(_hystrixCommandGroupKey).andCommandKey(
-					HystrixCommandKey.Factory.asKey(
-						"DDMDataProviderInvokeCommand#" +
-							ddmDataProviderInstanceName)).
-					andCommandPropertiesDefaults(
-						HystrixCommandProperties.Setter().
-							withExecutionTimeoutInMilliseconds(
-								getTimeout(ddmDataProviderRequest))));
-
-			_ddmDataProvider = ddmDataProvider;
-			_ddmDataProviderRequest = ddmDataProviderRequest;
-		}
-
-		protected static int getTimeout(
-			DDMDataProviderRequest ddmDataProviderRequest) {
-
-			DDMDataProviderContext ddmDataProviderContext =
-				ddmDataProviderRequest.getDDMDataProviderContext();
-
-			DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
-				ddmDataProviderContext.getSettingsInstance(
-					DDMRESTDataProviderSettings.class);
-
-			int timeout = GetterUtil.getInteger(
-				ddmRESTDataProviderSettings.timeout());
-
-			if ((timeout >= _MIN_TIMEOUT) && (timeout <= _MAX_TIMEOUT)) {
-				return timeout;
-			}
-
-			return _MIN_TIMEOUT;
-		}
-
-		@Override
-		protected DDMDataProviderResponse run() throws Exception {
-			return _ddmDataProvider.getData(_ddmDataProviderRequest);
-		}
-
-		private static final int _MAX_TIMEOUT = 30000;
-
-		private static final int _MIN_TIMEOUT = 1000;
-
-		private static final HystrixCommandGroupKey _hystrixCommandGroupKey =
-			HystrixCommandGroupKey.Factory.asKey(
-				"DDMDataProviderInvokeCommandGroup");
-
-		private final DDMDataProvider _ddmDataProvider;
-		private final DDMDataProviderRequest _ddmDataProviderRequest;
-
-	}
 
 }

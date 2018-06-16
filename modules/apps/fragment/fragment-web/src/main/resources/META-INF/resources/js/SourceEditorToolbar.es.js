@@ -31,16 +31,6 @@ class SourceEditorToolbar extends Component {
 	}
 
 	/**
-	 * Toggles toolbar visibility.
-	 * @private
-	 * @review
-	 */
-
-	_handleToggleIconClick() {
-		this.hidden = !this.hidden;
-	}
-
-	/**
 	 * Updates _syntaxLabel attribute mapping the given syntax
 	 * @param {!string} syntax
 	 * @private
@@ -70,51 +60,6 @@ SourceEditorToolbar.SYNTAX_LABEL = {
  */
 
 SourceEditorToolbar.STATE = {
-
-	/**
-	 * Is toolbar hidden?
-	 * @default false
-	 * @instance
-	 * @memberOf SourceEditorToolbar
-	 * @review
-	 * @type {!boolean}
-	 */
-
-	hidden: Config.bool().value(false),
-
-	/**
-	 * Toolbar items
-	 * @default undefined
-	 * @instance
-	 * @memberOf SourceEditorToolbar
-	 * @review
-	 * @type {!Array<{
-	 *   icon: string,
-	 *   title: string,
-	 *   handler: function
-	 * }>}
-	 */
-
-	items: Config.arrayOf(
-		Config.shapeOf(
-			{
-				handler: Config.func(),
-				icon: Config.string(),
-				title: Config.string()
-			}
-		)
-	).required(),
-
-	/**
-	 * Path to images.
-	 * @default undefined
-	 * @instance
-	 * @memberOf SourceEditorToolbar
-	 * @review
-	 * @type {!string}
-	 */
-
-	spritemap: Config.string().required(),
 
 	/**
 	 * Syntax used for the editor toolbar.

@@ -7,11 +7,6 @@
 	{@param initialContent: string}
 	{@param spritemap: string}
 	{@param syntax: string}
-	{@param toolbarItems: list<[
-		handler: any,
-		icon: string,
-		title: string
-	]>}
 	{@param? codeHeader: string}
 	{@param? codeHeaderHelp: html|string}
 	{@param? codeFooter: string}
@@ -19,8 +14,6 @@
 
 	<div class="source-editor">
 		{call com.liferay.fragment.web.SourceEditorToolbar.render}
-			{param hidden: true /}
-			{param items: $toolbarItems /}
 			{param spritemap: $spritemap /}
 			{param syntax: $syntax /}
 		{/call}

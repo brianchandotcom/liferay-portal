@@ -18,11 +18,18 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.GroupedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
+
+import java.util.Date;
 
 /**
  * The base model interface for the AssetDisplayPageEntry service. Represents a row in the &quot;AssetDisplayPageEntry&quot; database table, with each column mapped to a property of this class.
@@ -38,7 +45,9 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface AssetDisplayPageEntryModel extends BaseModel<AssetDisplayPageEntry> {
+public interface AssetDisplayPageEntryModel extends AttachedModel,
+	BaseModel<AssetDisplayPageEntry>, GroupedModel, ShardedModel,
+	StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,6 +69,23 @@ public interface AssetDisplayPageEntryModel extends BaseModel<AssetDisplayPageEn
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this asset display page entry.
+	 *
+	 * @return the uuid of this asset display page entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this asset display page entry.
+	 *
+	 * @param uuid the uuid of this asset display page entry
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the asset display page entry ID of this asset display page entry.
 	 *
 	 * @return the asset display page entry ID of this asset display page entry
@@ -74,18 +100,159 @@ public interface AssetDisplayPageEntryModel extends BaseModel<AssetDisplayPageEn
 	public void setAssetDisplayPageEntryId(long assetDisplayPageEntryId);
 
 	/**
-	 * Returns the asset entry ID of this asset display page entry.
+	 * Returns the group ID of this asset display page entry.
 	 *
-	 * @return the asset entry ID of this asset display page entry
+	 * @return the group ID of this asset display page entry
 	 */
-	public long getAssetEntryId();
+	@Override
+	public long getGroupId();
 
 	/**
-	 * Sets the asset entry ID of this asset display page entry.
+	 * Sets the group ID of this asset display page entry.
 	 *
-	 * @param assetEntryId the asset entry ID of this asset display page entry
+	 * @param groupId the group ID of this asset display page entry
 	 */
-	public void setAssetEntryId(long assetEntryId);
+	@Override
+	public void setGroupId(long groupId);
+
+	/**
+	 * Returns the company ID of this asset display page entry.
+	 *
+	 * @return the company ID of this asset display page entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this asset display page entry.
+	 *
+	 * @param companyId the company ID of this asset display page entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this asset display page entry.
+	 *
+	 * @return the user ID of this asset display page entry
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this asset display page entry.
+	 *
+	 * @param userId the user ID of this asset display page entry
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this asset display page entry.
+	 *
+	 * @return the user uuid of this asset display page entry
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this asset display page entry.
+	 *
+	 * @param userUuid the user uuid of this asset display page entry
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this asset display page entry.
+	 *
+	 * @return the user name of this asset display page entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this asset display page entry.
+	 *
+	 * @param userName the user name of this asset display page entry
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this asset display page entry.
+	 *
+	 * @return the create date of this asset display page entry
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this asset display page entry.
+	 *
+	 * @param createDate the create date of this asset display page entry
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this asset display page entry.
+	 *
+	 * @return the modified date of this asset display page entry
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this asset display page entry.
+	 *
+	 * @param modifiedDate the modified date of this asset display page entry
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the fully qualified class name of this asset display page entry.
+	 *
+	 * @return the fully qualified class name of this asset display page entry
+	 */
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
+
+	/**
+	 * Returns the class name ID of this asset display page entry.
+	 *
+	 * @return the class name ID of this asset display page entry
+	 */
+	@Override
+	public long getClassNameId();
+
+	/**
+	 * Sets the class name ID of this asset display page entry.
+	 *
+	 * @param classNameId the class name ID of this asset display page entry
+	 */
+	@Override
+	public void setClassNameId(long classNameId);
+
+	/**
+	 * Returns the class pk of this asset display page entry.
+	 *
+	 * @return the class pk of this asset display page entry
+	 */
+	@Override
+	public long getClassPK();
+
+	/**
+	 * Sets the class pk of this asset display page entry.
+	 *
+	 * @param classPK the class pk of this asset display page entry
+	 */
+	@Override
+	public void setClassPK(long classPK);
 
 	/**
 	 * Returns the layout page template entry ID of this asset display page entry.

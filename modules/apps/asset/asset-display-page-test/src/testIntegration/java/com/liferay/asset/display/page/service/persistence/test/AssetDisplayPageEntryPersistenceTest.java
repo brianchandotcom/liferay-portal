@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -55,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -122,7 +124,23 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 		AssetDisplayPageEntry newAssetDisplayPageEntry = _persistence.create(pk);
 
-		newAssetDisplayPageEntry.setAssetEntryId(RandomTestUtil.nextLong());
+		newAssetDisplayPageEntry.setUuid(RandomTestUtil.randomString());
+
+		newAssetDisplayPageEntry.setGroupId(RandomTestUtil.nextLong());
+
+		newAssetDisplayPageEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		newAssetDisplayPageEntry.setUserId(RandomTestUtil.nextLong());
+
+		newAssetDisplayPageEntry.setUserName(RandomTestUtil.randomString());
+
+		newAssetDisplayPageEntry.setCreateDate(RandomTestUtil.nextDate());
+
+		newAssetDisplayPageEntry.setModifiedDate(RandomTestUtil.nextDate());
+
+		newAssetDisplayPageEntry.setClassNameId(RandomTestUtil.nextLong());
+
+		newAssetDisplayPageEntry.setClassPK(RandomTestUtil.nextLong());
 
 		newAssetDisplayPageEntry.setLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 
@@ -133,10 +151,28 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 		AssetDisplayPageEntry existingAssetDisplayPageEntry = _persistence.findByPrimaryKey(newAssetDisplayPageEntry.getPrimaryKey());
 
+		Assert.assertEquals(existingAssetDisplayPageEntry.getUuid(),
+			newAssetDisplayPageEntry.getUuid());
 		Assert.assertEquals(existingAssetDisplayPageEntry.getAssetDisplayPageEntryId(),
 			newAssetDisplayPageEntry.getAssetDisplayPageEntryId());
-		Assert.assertEquals(existingAssetDisplayPageEntry.getAssetEntryId(),
-			newAssetDisplayPageEntry.getAssetEntryId());
+		Assert.assertEquals(existingAssetDisplayPageEntry.getGroupId(),
+			newAssetDisplayPageEntry.getGroupId());
+		Assert.assertEquals(existingAssetDisplayPageEntry.getCompanyId(),
+			newAssetDisplayPageEntry.getCompanyId());
+		Assert.assertEquals(existingAssetDisplayPageEntry.getUserId(),
+			newAssetDisplayPageEntry.getUserId());
+		Assert.assertEquals(existingAssetDisplayPageEntry.getUserName(),
+			newAssetDisplayPageEntry.getUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAssetDisplayPageEntry.getCreateDate()),
+			Time.getShortTimestamp(newAssetDisplayPageEntry.getCreateDate()));
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingAssetDisplayPageEntry.getModifiedDate()),
+			Time.getShortTimestamp(newAssetDisplayPageEntry.getModifiedDate()));
+		Assert.assertEquals(existingAssetDisplayPageEntry.getClassNameId(),
+			newAssetDisplayPageEntry.getClassNameId());
+		Assert.assertEquals(existingAssetDisplayPageEntry.getClassPK(),
+			newAssetDisplayPageEntry.getClassPK());
 		Assert.assertEquals(existingAssetDisplayPageEntry.getLayoutPageTemplateEntryId(),
 			newAssetDisplayPageEntry.getLayoutPageTemplateEntryId());
 		Assert.assertEquals(existingAssetDisplayPageEntry.getType(),
@@ -144,10 +180,37 @@ public class AssetDisplayPageEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByAssetEntryId() throws Exception {
-		_persistence.countByAssetEntryId(RandomTestUtil.nextLong());
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
 
-		_persistence.countByAssetEntryId(0L);
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
 	}
 
 	@Test
@@ -156,6 +219,14 @@ public class AssetDisplayPageEntryPersistenceTest {
 		_persistence.countByLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 
 		_persistence.countByLayoutPageTemplateEntryId(0L);
+	}
+
+	@Test
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
@@ -183,7 +254,9 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 	protected OrderByComparator<AssetDisplayPageEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetDisplayPageEntry",
-			"assetDisplayPageEntryId", true, "assetEntryId", true,
+			"uuid", true, "assetDisplayPageEntryId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true,
 			"layoutPageTemplateEntryId", true, "type", true);
 	}
 
@@ -397,10 +470,23 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 		AssetDisplayPageEntry existingAssetDisplayPageEntry = _persistence.findByPrimaryKey(newAssetDisplayPageEntry.getPrimaryKey());
 
+		Assert.assertTrue(Objects.equals(
+				existingAssetDisplayPageEntry.getUuid(),
+				ReflectionTestUtil.invoke(existingAssetDisplayPageEntry,
+					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(
-				existingAssetDisplayPageEntry.getAssetEntryId()),
+				existingAssetDisplayPageEntry.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingAssetDisplayPageEntry,
-				"getOriginalAssetEntryId", new Class<?>[0]));
+				"getOriginalGroupId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(
+				existingAssetDisplayPageEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetDisplayPageEntry,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingAssetDisplayPageEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingAssetDisplayPageEntry,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected AssetDisplayPageEntry addAssetDisplayPageEntry()
@@ -409,7 +495,23 @@ public class AssetDisplayPageEntryPersistenceTest {
 
 		AssetDisplayPageEntry assetDisplayPageEntry = _persistence.create(pk);
 
-		assetDisplayPageEntry.setAssetEntryId(RandomTestUtil.nextLong());
+		assetDisplayPageEntry.setUuid(RandomTestUtil.randomString());
+
+		assetDisplayPageEntry.setGroupId(RandomTestUtil.nextLong());
+
+		assetDisplayPageEntry.setCompanyId(RandomTestUtil.nextLong());
+
+		assetDisplayPageEntry.setUserId(RandomTestUtil.nextLong());
+
+		assetDisplayPageEntry.setUserName(RandomTestUtil.randomString());
+
+		assetDisplayPageEntry.setCreateDate(RandomTestUtil.nextDate());
+
+		assetDisplayPageEntry.setModifiedDate(RandomTestUtil.nextDate());
+
+		assetDisplayPageEntry.setClassNameId(RandomTestUtil.nextLong());
+
+		assetDisplayPageEntry.setClassPK(RandomTestUtil.nextLong());
 
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(RandomTestUtil.nextLong());
 

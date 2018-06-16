@@ -644,14 +644,6 @@ AUI.add(
 						var instance = this;
 
 						A.one('.lfr-ddm-add-rule').addClass('hide');
-
-						var navBar = A.one('.navbar');
-
-						var navBarList = navBar.one('ul');
-
-						var selectedItem = navBarList.one('li.active');
-
-						selectedItem.addClass('disabled');
 					},
 
 					_onRulesChange: function(val) {

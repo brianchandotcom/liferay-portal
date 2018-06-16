@@ -42,12 +42,11 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 </portlet:actionURL>
 
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">
-	<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item id="showForm" label='<%= LanguageUtil.get(request, "builder") %>' selected="<%= true %>" />
-			<aui:nav-item id="showRules" label='<%= LanguageUtil.get(request, "rules") %>' />
-		</aui:nav>
-	</aui:nav-bar>
+	<clay:navigation-bar
+		componentId="formsNavigationBar"
+		inverted="<%= true %>"
+		navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
+	/>
 
 	<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button">
 		<svg class="lexicon-icon">

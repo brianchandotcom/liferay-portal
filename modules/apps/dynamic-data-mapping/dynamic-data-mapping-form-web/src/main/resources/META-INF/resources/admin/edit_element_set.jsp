@@ -47,11 +47,10 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 </portlet:actionURL>
 
 <div class="hide portlet-forms" id="<portlet:namespace />formContainer">
-	<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item id="showElementSet" label='<%= LanguageUtil.get(request, "builder") %>' selected="<%= true %>" />
-		</aui:nav>
-	</aui:nav-bar>
+	<clay:navigation-bar
+		inverted="<%= true %>"
+		navigationItems="<%= ddmFormAdminDisplayContext.getElementSetBuilderNavigationItems() %>"
+	/>
 
 	<div class="container-fluid-1280">
 		<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= false %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />

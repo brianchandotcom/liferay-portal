@@ -338,6 +338,19 @@
 	}
 }
 
+.portlet-forms-admin {
+	#formsNavigationBar .nav-item {
+		.nav-link {
+			color: #CDCED9;
+			cursor: pointer;
+
+			&.active, &:hover {
+				color: #FFF;
+			}
+		}
+	}
+}
+
 .portal-popup {
 	.portlet-column {
 		padding: 0;

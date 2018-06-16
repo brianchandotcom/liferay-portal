@@ -326,6 +326,22 @@ public class DDMFormAdminDisplayContext {
 		return _DISPLAY_VIEWS;
 	}
 
+	public List<NavigationItem> getElementSetBuilderNavigationItems() {
+		HttpServletRequest request = formAdminRequestHelper.getRequest();
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							LanguageUtil.get(request, "builder"));
+					});
+			}
+		};
+	}
+
 	public List<DropdownItem> getFilterItemsDropdownItems() {
 		HttpServletRequest request = formAdminRequestHelper.getRequest();
 
@@ -345,6 +361,31 @@ public class DDMFormAdminDisplayContext {
 							getOrderByDropdownItems());
 						dropdownGroupItem.setLabel(
 							LanguageUtil.get(request, "order-by"));
+					});
+			}
+		};
+	}
+
+	public List<NavigationItem> getFormBuilderNavigationItems() {
+		HttpServletRequest request = formAdminRequestHelper.getRequest();
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.putData("action", "showForm");
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							LanguageUtil.get(request, "builder"));
+					});
+
+				add(
+					navigationItem -> {
+						navigationItem.putData("action", "showRules");
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							LanguageUtil.get(request, "rules"));
 					});
 			}
 		};

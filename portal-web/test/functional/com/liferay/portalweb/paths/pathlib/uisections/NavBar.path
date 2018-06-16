@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_TITLE_LINK</td>
+	<td>//a[contains(@class,'nav-link')]//span[contains(text(),'${key_assetTitle}')]/../../a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGNEES</td>
 	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Assignees')]</td>
 	<td></td>

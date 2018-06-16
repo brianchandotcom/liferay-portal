@@ -249,6 +249,9 @@ public class DDMStructureStagedModelDataHandlerTest
 				"username", "test@liferay.com"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"timeout", "1000"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"value", "nameCurrentValue"));
 
 		return ddmFormValues;

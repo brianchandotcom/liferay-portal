@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.data.provider.internal;
+package com.liferay.dynamic.data.mapping.data.provider.internal.rest;
 
-import com.liferay.dynamic.data.mapping.data.provider.internal.rest.DDMRESTDataProviderSettings;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -59,7 +59,7 @@ public class DDMRESTDataProviderSettingsTest {
 		Map<String, DDMFormField> ddmFormFields = ddmForm.getDDMFormFieldsMap(
 			false);
 
-		Assert.assertEquals(ddmFormFields.toString(), 11, ddmFormFields.size());
+		Assert.assertEquals(ddmFormFields.toString(), 12, ddmFormFields.size());
 
 		assertCacheable(ddmFormFields.get("cacheable"));
 		assertFilterable(ddmFormFields.get("filterable"));
@@ -72,6 +72,7 @@ public class DDMRESTDataProviderSettingsTest {
 		assertPassword(ddmFormFields.get("password"));
 		assertStartPaginationParameterName(
 			ddmFormFields.get("paginationStartParameterName"));
+		assertTimeout(ddmFormFields.get("timeout"));
 		assertURL(ddmFormFields.get("url"));
 		assertUsername(ddmFormFields.get("username"));
 	}
@@ -301,6 +302,27 @@ public class DDMRESTDataProviderSettingsTest {
 
 		Assert.assertEquals("string", ddmFormField.getDataType());
 		Assert.assertEquals("text", ddmFormField.getType());
+	}
+
+	protected void assertTimeout(DDMFormField ddmFormField) {
+		Assert.assertNotNull(ddmFormField);
+
+		Assert.assertTrue(ddmFormField.isRequired());
+
+		Assert.assertEquals("integer", ddmFormField.getDataType());
+
+		Map<String, Object> properties = ddmFormField.getProperties();
+
+		Assert.assertTrue(properties.containsKey("placeholder"));
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			ddmFormField.getDDMFormFieldValidation();
+
+		Assert.assertEquals(
+			"(timeout >= 1000) && (timeout <= 30000)",
+			ddmFormFieldValidation.getExpression());
+
+		Assert.assertEquals("numeric", ddmFormField.getType());
 	}
 
 	protected void assertURL(DDMFormField ddmFormField) {

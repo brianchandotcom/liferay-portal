@@ -261,6 +261,9 @@ public class DDMDataProviderPaginatorServletTest {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"username", "test@liferay.com"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"timeout", "1000"));
 
 		ddmFormValues.addDDMFormFieldValue(
 			createOutputParameter(

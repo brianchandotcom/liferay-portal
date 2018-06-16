@@ -91,6 +91,9 @@ public class DDMDataProviderTestUtil {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"username", "test@liferay.com"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"timeout", "1000"));
 
 		if (inputParameterSettings != null) {
 			for (DDMDataProviderInputParametersSettings inputParameterSetting :

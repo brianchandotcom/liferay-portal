@@ -154,9 +154,8 @@ public class AssetDisplayLayoutTypeController
 		long groupId, AssetEntry assetEntry) {
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.
-				fetchAssetDisplayPageEntryByAssetEntryId(
-					assetEntry.getEntryId());
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				assetEntry.getClassNameId(), assetEntry.getClassPK());
 
 		if ((assetDisplayPageEntry == null) ||
 			(assetDisplayPageEntry.getType() ==

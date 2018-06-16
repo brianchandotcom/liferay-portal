@@ -23,7 +23,8 @@
 
 		<!-- Other fields -->
 
-		<column name="assetEntryId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
 		<column name="layoutPageTemplateEntryId" type="long" />
 		<column name="type" type="int" />
 
@@ -32,13 +33,13 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="AssetEntryId" return-type="AssetDisplayPageEntry" unique="true">
-			<finder-column name="assetEntryId" />
-		</finder>
 		<finder name="LayoutPageTemplateEntryId" return-type="Collection">
 			<finder-column name="layoutPageTemplateEntryId" />
 		</finder>
-
+		<finder name="C_C" return-type="AssetDisplayPageEntry" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 </service-builder>

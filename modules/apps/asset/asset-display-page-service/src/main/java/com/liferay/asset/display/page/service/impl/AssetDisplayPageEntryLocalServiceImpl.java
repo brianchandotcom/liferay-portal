@@ -18,6 +18,10 @@ import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.base.AssetDisplayPageEntryLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Date;
 
 /**
  * @author Eudaldo Alonso
@@ -27,23 +31,28 @@ public class AssetDisplayPageEntryLocalServiceImpl
 
 	@Override
 	public AssetDisplayPageEntry addAssetDisplayPageEntry(
-		long assetEntryId, long layoutPageTemplateEntryId) {
+			long userId, long groupId, long classNameId, long classPK,
+			long layoutPageTemplateEntryId, int type,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-		return addAssetDisplayPageEntry(
-			assetEntryId, layoutPageTemplateEntryId,
-			AssetDisplayPageConstants.TYPE_DEFAULT);
-	}
-
-	@Override
-	public AssetDisplayPageEntry addAssetDisplayPageEntry(
-		long assetEntryId, long layoutPageTemplateEntryId, int type) {
+		User user = userLocalService.getUser(userId);
 
 		long assetDisplayPageEntryId = counterLocalService.increment();
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			assetDisplayPageEntryPersistence.create(assetDisplayPageEntryId);
 
-		assetDisplayPageEntry.setAssetEntryId(assetEntryId);
+		assetDisplayPageEntry.setGroupId(groupId);
+		assetDisplayPageEntry.setCompanyId(user.getCompanyId());
+		assetDisplayPageEntry.setUserId(user.getUserId());
+		assetDisplayPageEntry.setUserName(user.getFullName());
+		assetDisplayPageEntry.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		assetDisplayPageEntry.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		assetDisplayPageEntry.setClassNameId(classNameId);
+		assetDisplayPageEntry.setClassPK(classPK);
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);
@@ -54,18 +63,29 @@ public class AssetDisplayPageEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteAssetDisplayPageEntryByAssetEntryId(long assetEntryId)
+	public AssetDisplayPageEntry addAssetDisplayPageEntry(
+			long userId, long groupId, long classNameId, long classPK,
+			long layoutPageTemplateEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		assetDisplayPageEntryPersistence.removeByAssetEntryId(assetEntryId);
+		return addAssetDisplayPageEntry(
+			userId, groupId, classNameId, classPK, layoutPageTemplateEntryId,
+			AssetDisplayPageConstants.TYPE_DEFAULT, serviceContext);
 	}
 
 	@Override
-	public AssetDisplayPageEntry fetchAssetDisplayPageEntryByAssetEntryId(
-		long assetEntryId) {
+	public void deleteAssetDisplayPageEntry(long classNameId, long classPK)
+		throws PortalException {
 
-		return assetDisplayPageEntryPersistence.fetchByAssetEntryId(
-			assetEntryId);
+		assetDisplayPageEntryPersistence.removeByC_C(classNameId, classPK);
+	}
+
+	@Override
+	public AssetDisplayPageEntry fetchAssetDisplayPageEntry(
+		long classNameId, long classPK) {
+
+		return assetDisplayPageEntryPersistence.fetchByC_C(
+			classNameId, classPK);
 	}
 
 	@Override

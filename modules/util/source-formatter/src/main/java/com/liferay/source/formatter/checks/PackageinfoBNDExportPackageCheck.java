@@ -59,13 +59,36 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 			return Collections.emptyList();
 		}
 
-		Matcher matcher = _exportsPattern.matcher(bndSettings.getContent());
+		Matcher matcher = _exportPackagePattern.matcher(
+			bndSettings.getContent());
 
 		if (!matcher.find()) {
 			return Collections.emptyList();
 		}
 
 		List<String> exportPackages = new ArrayList<>();
+
+		for (String line : StringUtil.splitLines(matcher.group(3))) {
+			line = StringUtil.trim(line);
+
+			if (Validator.isNull(line) || line.equals("\\")) {
+				continue;
+			}
+
+			line = StringUtil.removeSubstring(line, ",\\");
+
+			if (line.indexOf(StringPool.SEMICOLON) != -1) {
+				line = line.substring(0, line.indexOf(StringPool.SEMICOLON));
+			}
+
+			exportPackages.add(line.replace(CharPool.PERIOD, CharPool.SLASH));
+		}
+
+		matcher = _exportContentsPattern.matcher(bndSettings.getContent());
+
+		if (!matcher.find()) {
+			return exportPackages;
+		}
 
 		for (String line : StringUtil.splitLines(matcher.group(3))) {
 			line = StringUtil.trim(line);
@@ -101,7 +124,10 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 		return false;
 	}
 
-	private final Pattern _exportsPattern = Pattern.compile(
+	private final Pattern _exportContentsPattern = Pattern.compile(
+		"\n-exportcontents:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
+		Pattern.DOTALL | Pattern.MULTILINE);
+	private final Pattern _exportPackagePattern = Pattern.compile(
 		"\nExport-Package:(\\\\\n| )((.*?)(\n[^\t]|\\Z))",
 		Pattern.DOTALL | Pattern.MULTILINE);
 

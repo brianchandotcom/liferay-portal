@@ -67,8 +67,9 @@ public abstract class LiferayBaseReader<T> extends AbstractBoundedReader<T> {
 						TLiferayInputProperties) {
 
 					resourceURL =
-						liferayConnectionResourceBaseProperties.resource.
-							resource.getValue();
+						liferayConnectionResourceBaseProperties.
+							liferayResourceProperties.resourceStringProperty.
+								getValue();
 				}
 
 				BoundedSource boundedSource = getCurrentSource();

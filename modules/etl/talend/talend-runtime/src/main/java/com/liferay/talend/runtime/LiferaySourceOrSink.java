@@ -461,7 +461,7 @@ public class LiferaySourceOrSink
 			String endpoint = restClient.getEndpoint();
 
 			if (!endpoint.equals(
-					liferayConnectionProperties.endpoint.getValue())) {
+					liferayConnectionProperties.endpointProperty.getValue())) {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
@@ -496,7 +496,8 @@ public class LiferaySourceOrSink
 			getEffectiveConnection(runtimeContainer);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("New REST Client with \"{}\" endpoint", resourceURL);
+			_log.debug(
+				"New REST Client with \"{}\" endpointProperty", resourceURL);
 		}
 
 		return new RESTClient(resourceURL, liferayConnectionProperties);
@@ -580,18 +581,20 @@ public class LiferaySourceOrSink
 			getEffectiveConnection(runtimeContainer);
 
 		boolean anonymousLogin =
-			liferayConnectionProperties.anonymousLogin.getValue();
-		String endpoint = liferayConnectionProperties.endpoint.getValue();
-		String password = liferayConnectionProperties.password.getValue();
-		String userId = liferayConnectionProperties.userId.getValue();
+			liferayConnectionProperties.anonymousLoginProperty.getValue();
+		String endpoint =
+			liferayConnectionProperties.endpointProperty.getValue();
+		String password =
+			liferayConnectionProperties.passwordProperty.getValue();
+		String userId = liferayConnectionProperties.userIdProperty.getValue();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Validate endpoint: {}",
-				liferayConnectionProperties.endpoint.getValue());
+				"Validate endpointProperty: {}",
+				liferayConnectionProperties.endpointProperty.getValue());
 			_log.debug(
 				"Validate user ID: {}",
-				liferayConnectionProperties.userId.getValue());
+				liferayConnectionProperties.userIdProperty.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =

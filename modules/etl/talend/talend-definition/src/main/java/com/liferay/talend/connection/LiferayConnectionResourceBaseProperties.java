@@ -61,11 +61,11 @@ public abstract class LiferayConnectionResourceBaseProperties
 				_log.debug("Using a reference connection properties");
 				_log.debug(
 					"User ID: " +
-						referencedLiferayConnectionProperties.userId.
+						referencedLiferayConnectionProperties.userIdProperty.
 							getValue());
 				_log.debug(
 					"Endpoint: " +
-						referencedLiferayConnectionProperties.endpoint.
+						referencedLiferayConnectionProperties.endpointProperty.
 							getValue());
 			}
 
@@ -74,9 +74,11 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"User ID: " + liferayConnectionProperties.userId.getValue());
+				"User ID: " +
+					liferayConnectionProperties.userIdProperty.getValue());
 			_log.debug(
-				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
+				"Endpoint: " +
+					liferayConnectionProperties.endpointProperty.getValue());
 		}
 
 		return liferayConnectionProperties;
@@ -84,23 +86,23 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 	@Override
 	public LiferayConnectionProperties getLiferayConnectionProperties() {
-		return connection;
+		return liferayConnectionProperties;
 	}
 
 	public Schema getSchema() {
-		return resource.main.schema.getValue();
+		return liferayResourceProperties.mainSchemaProperties.schema.getValue();
 	}
 
 	@Override
 	public void refreshLayout(Form form) {
 		super.refreshLayout(form);
 
-		for (Form childForm : connection.getForms()) {
-			connection.refreshLayout(childForm);
+		for (Form childForm : liferayConnectionProperties.getForms()) {
+			liferayConnectionProperties.refreshLayout(childForm);
 		}
 
-		for (Form childForm : resource.getForms()) {
-			resource.refreshLayout(childForm);
+		for (Form childForm : liferayResourceProperties.getForms()) {
+			liferayResourceProperties.refreshLayout(childForm);
 		}
 	}
 
@@ -110,9 +112,9 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 		Form mainForm = new Form(this, Form.MAIN);
 
-		mainForm.addRow(connection.getForm(Form.REFERENCE));
+		mainForm.addRow(liferayConnectionProperties.getForm(Form.REFERENCE));
 
-		mainForm.addRow(resource.getForm(Form.REFERENCE));
+		mainForm.addRow(liferayResourceProperties.getForm(Form.REFERENCE));
 
 		refreshLayout(mainForm);
 	}
@@ -121,19 +123,23 @@ public abstract class LiferayConnectionResourceBaseProperties
 	public void setupProperties() {
 		super.setupProperties();
 
-		resource = new LiferayResourceProperties("resource");
+		liferayResourceProperties = new LiferayResourceProperties(
+			"liferayResourceProperties");
 
-		resource.connection = connection;
+		liferayResourceProperties.liferayConnectionProperties =
+			liferayConnectionProperties;
 
-		resource.setupProperties();
+		liferayResourceProperties.setupProperties();
 	}
 
-	public LiferayConnectionProperties connection =
-		new LiferayConnectionProperties("connection");
-	public LiferayResourceProperties resource;
+	public LiferayConnectionProperties liferayConnectionProperties =
+		new LiferayConnectionProperties("liferayConnectionProperties");
+	public LiferayResourceProperties liferayResourceProperties;
 
 	protected transient PropertyPathConnector mainConnector =
-		new PropertyPathConnector(Connector.MAIN_NAME, "resource.main");
+		new PropertyPathConnector(
+			Connector.MAIN_NAME,
+			"liferayResourceProperties.mainSchemaProperties");
 	protected transient Schema temporaryMainSchema =
 		SchemaProperties.EMPTY_SCHEMA;
 

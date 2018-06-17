@@ -95,9 +95,14 @@ public class TLiferayOutputProperties
 		super(name);
 	}
 
-	public ValidationResult afterCalculateSchema() throws Exception {
+	public ValidationResult afterCalculateSchemaPresentationItem()
+		throws Exception {
+
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resource.resource.getValue());
+			_log.debug(
+				"Resource URL: " +
+					liferayResourceProperties.resourceStringProperty.
+						getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -122,7 +127,7 @@ public class TLiferayOutputProperties
 					ValidationResult.Result.OK) {
 
 				setValidationResult(
-					validateOperations(), validationResultMutable);
+					validateOperationsProperty(), validationResultMutable);
 			}
 
 			if (validationResultMutable.getStatus() ==
@@ -141,7 +146,8 @@ public class TLiferayOutputProperties
 					Schema schema = _getOperationSchema(
 						liferaySourceOrSinkRuntime, supportedOperation);
 
-					resource.main.schema.setValue(schema);
+					liferayResourceProperties.mainSchemaProperties.schema.
+						setValue(schema);
 					temporaryMainSchema = schema;
 
 					_updateOutputSchemas();
@@ -168,9 +174,9 @@ public class TLiferayOutputProperties
 		return validationResultMutable;
 	}
 
-	public void afterOperations() {
+	public void afterOperationsProperty() {
 		if (_log.isDebugEnabled()) {
-			Action action = operations.getValue();
+			Action action = operationsProperty.getValue();
 
 			_log.debug("Selected method: " + action.getMethodName());
 		}
@@ -190,14 +196,15 @@ public class TLiferayOutputProperties
 
 		Form mainForm = getForm(Form.MAIN);
 
-		Widget operationsWidget = Widget.widget(operations);
+		Widget operationsWidget = Widget.widget(operationsProperty);
 
 		operationsWidget.setLongRunning(true);
 		operationsWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
 
 		mainForm.addRow(operationsWidget);
 
-		Widget calculateSchemaWidget = Widget.widget(calculateSchema);
+		Widget calculateSchemaWidget = Widget.widget(
+			calculateSchemaPresentationItem);
 
 		calculateSchemaWidget.setLongRunning(true);
 		calculateSchemaWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
@@ -206,23 +213,25 @@ public class TLiferayOutputProperties
 
 		Form advancedForm = new Form(this, Form.ADVANCED);
 
-		advancedForm.addRow(dieOnError);
+		advancedForm.addRow(dieOnErrorProperty);
 	}
 
 	@Override
 	public void setupProperties() {
 		super.setupProperties();
 
-		dieOnError.setValue(true);
-		operations.setValue(Action.Upsert);
+		dieOnErrorProperty.setValue(true);
+		operationsProperty.setValue(Action.Upsert);
 
-		resource = new ResourcePropertiesHelper("resource");
+		liferayResourceProperties = new LiferayResourcePropertiesHelper(
+			"liferayResourceProperties");
 
-		resource.connection = connection;
+		liferayResourceProperties.liferayConnectionProperties =
+			liferayConnectionProperties;
 
-		resource.setupProperties();
+		liferayResourceProperties.setupProperties();
 
-		resource.setSchemaListener(
+		liferayResourceProperties.setSchemaListener(
 			new ISchemaListener() {
 
 				/**
@@ -231,7 +240,9 @@ public class TLiferayOutputProperties
 				 */
 				@Override
 				public void afterSchema() {
-					Schema schema = resource.main.schema.getValue();
+					Schema schema =
+						liferayResourceProperties.mainSchemaProperties.schema.
+							getValue();
 
 					if (_log.isTraceEnabled()) {
 						_log.trace("Schema details:\n" + schema.toString());
@@ -240,7 +251,8 @@ public class TLiferayOutputProperties
 					}
 
 					if (schema.equals(SchemaProperties.EMPTY_SCHEMA)) {
-						resource.main.schema.setValue(temporaryMainSchema);
+						liferayResourceProperties.mainSchemaProperties.schema.
+							setValue(temporaryMainSchema);
 					}
 				}
 
@@ -257,9 +269,12 @@ public class TLiferayOutputProperties
 		validationResultMutable.setStatus(validationResult.getStatus());
 	}
 
-	public ValidationResult validateOperations() throws Exception {
+	public ValidationResult validateOperationsProperty() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resource.resource.getValue());
+			_log.debug(
+				"Resource URL: " +
+					liferayResourceProperties.resourceStringProperty.
+						getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -309,30 +324,35 @@ public class TLiferayOutputProperties
 		return validationResultMutable;
 	}
 
-	public transient PresentationItem calculateSchema = new PresentationItem(
-		"calculateSchema", "Calculate Schema");
-	public Property<Boolean> dieOnError = PropertyFactory.newBoolean(
-		"dieOnError");
-	public Property<Action> operations = PropertyFactory.newEnum(
-		"operations", Action.class);
-	public SchemaProperties schemaFlow = new SchemaProperties("schemaFlow");
-	public SchemaProperties schemaReject = new SchemaProperties("schemaReject");
+	public transient PresentationItem calculateSchemaPresentationItem =
+		new PresentationItem(
+			"calculateSchemaPresentationItem", "Calculate Schema");
+	public Property<Boolean> dieOnErrorProperty = PropertyFactory.newBoolean(
+		"dieOnErrorProperty");
+	public Property<Action> operationsProperty = PropertyFactory.newEnum(
+		"operationsProperty", Action.class);
+	public SchemaProperties schemaFlowSchemaProperties = new SchemaProperties(
+		"schemaFlowSchemaProperties");
+	public SchemaProperties schemaRejectSchemaProperties = new SchemaProperties(
+		"schemaRejectSchemaProperties");
 
 	/**
-	 * Have to use an explicit class to get the override of afterResource(), an
-	 * anonymous class cannot be public and thus cannot be called via Talend's
-	 * reflection mechanism.
+	 * Have to use an explicit class to get the override of
+	 * afterResourceStringProperty(), an anonymous class cannot be public and
+	 * thus cannot be called via Talend's reflection mechanism.
 	 */
-	public class ResourcePropertiesHelper extends LiferayResourceProperties {
+	public class LiferayResourcePropertiesHelper
+		extends LiferayResourceProperties {
 
-		public ResourcePropertiesHelper(String name) {
+		public LiferayResourcePropertiesHelper(String name) {
 			super(name);
 		}
 
 		@Override
-		public ValidationResult afterResource() throws Exception {
+		public ValidationResult afterResourceStringProperty() throws Exception {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Resource URL: " + resource.getValue());
+				_log.debug(
+					"Resource URL: " + resourceStringProperty.getValue());
 			}
 
 			refreshLayout(getForm(Form.MAIN));
@@ -365,9 +385,11 @@ public class TLiferayOutputProperties
 			TLiferayOutputProperties.class);
 
 	protected transient PropertyPathConnector flowConnector =
-		new PropertyPathConnector(Connector.MAIN_NAME, "schemaFlow");
+		new PropertyPathConnector(
+			Connector.MAIN_NAME, "schemaFlowSchemaProperties");
 	protected transient PropertyPathConnector rejectConnector =
-		new PropertyPathConnector(Connector.REJECT_NAME, "schemaReject");
+		new PropertyPathConnector(
+			Connector.REJECT_NAME, "schemaRejectSchemaProperties");
 
 	private String _getAvailableOperations(Stream<Operation> operationStream) {
 		String availableOperations = operationStream.map(
@@ -412,7 +434,8 @@ public class TLiferayOutputProperties
 
 		supportedOperations.addAll(
 			liferaySourceOrSinkRuntime.getResourceSupportedOperations(
-				resource.resource.getStringValue()));
+				liferayResourceProperties.resourceStringProperty.
+					getStringValue()));
 
 		Supplier<Stream<Operation>> operationStreamSupplier =
 			() -> supportedOperations.stream();
@@ -420,7 +443,7 @@ public class TLiferayOutputProperties
 		final String availableOperations = _getAvailableOperations(
 			operationStreamSupplier.get());
 
-		Action action = operations.getValue();
+		Action action = operationsProperty.getValue();
 
 		String method = action.getMethodName();
 
@@ -454,7 +477,8 @@ public class TLiferayOutputProperties
 		Schema initialSchema = Schema.createRecord(
 			"liferay", null, null, false, fields);
 
-		resource.main.schema.setValue(initialSchema);
+		liferayResourceProperties.mainSchemaProperties.schema.setValue(
+			initialSchema);
 
 		_updateOutputSchemas();
 	}
@@ -464,13 +488,14 @@ public class TLiferayOutputProperties
 			_log.debug("Update output schemas");
 		}
 
-		Schema inputSchema = resource.main.schema.getValue();
+		Schema inputSchema =
+			liferayResourceProperties.mainSchemaProperties.schema.getValue();
 
-		schemaFlow.schema.setValue(inputSchema);
+		schemaFlowSchemaProperties.schema.setValue(inputSchema);
 
 		Schema rejectSchema = createRejectSchema(inputSchema);
 
-		schemaReject.schema.setValue(rejectSchema);
+		schemaRejectSchemaProperties.schema.setValue(rejectSchema);
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

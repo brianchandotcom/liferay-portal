@@ -52,10 +52,12 @@ public class TLiferayInputProperties
 	/**
 	 * Refreshes form after "Guess Schema" button was processed
 	 */
-	public void afterGuessSchema() {
+	public void afterGuessSchemaPresentationItem() {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Selected resource URL: " + resource.resource.getValue());
+				"Selected resource URL: " +
+					liferayResourceProperties.resourceStringProperty.
+						getValue());
 		}
 
 		refreshLayout(getForm(Form.MAIN));
@@ -72,7 +74,8 @@ public class TLiferayInputProperties
 		if (formName.equals(Form.MAIN) ||
 			formName.equals(LiferayConnectionProperties.FORM_WIZARD)) {
 
-			PropertiesUtils.setHidden(form, guessSchema, hideDevWidgets);
+			PropertiesUtils.setHidden(
+				form, guessSchemaPresentationItem, hideDevWidgets);
 		}
 	}
 
@@ -82,7 +85,7 @@ public class TLiferayInputProperties
 
 		Form mainForm = getForm(Form.MAIN);
 
-		Widget guessButtonWidget = Widget.widget(guessSchema);
+		Widget guessButtonWidget = Widget.widget(guessSchemaPresentationItem);
 
 		guessButtonWidget.setLongRunning(true);
 		guessButtonWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
@@ -95,7 +98,7 @@ public class TLiferayInputProperties
 		super.setupProperties();
 	}
 
-	public ValidationResult validateGuessSchema() {
+	public ValidationResult validateGuessSchemaPresentationItem() {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -119,9 +122,11 @@ public class TLiferayInputProperties
 					Schema runtimeSchema =
 						liferaySourceOrSinkRuntime.
 							getInputResourceCollectionSchema(
-								resource.resource.getValue());
+								liferayResourceProperties.
+									resourceStringProperty.getValue());
 
-					resource.main.schema.setValue(runtimeSchema);
+					liferayResourceProperties.mainSchemaProperties.schema.
+						setValue(runtimeSchema);
 				}
 				catch (IOException ioe) {
 					return ExceptionUtils.exceptionToValidationResult(ioe);
@@ -132,8 +137,8 @@ public class TLiferayInputProperties
 		}
 	}
 
-	public transient PresentationItem guessSchema = new PresentationItem(
-		"guessSchema", "Guess Schema");
+	public transient PresentationItem guessSchemaPresentationItem =
+		new PresentationItem("guessSchemaPresentationItem", "Guess Schema");
 
 	@Override
 	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(
@@ -143,7 +148,7 @@ public class TLiferayInputProperties
 			return Collections.singleton(mainConnector);
 		}
 
-		return Collections.<PropertyPathConnector>emptySet();
+		return Collections.emptySet();
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

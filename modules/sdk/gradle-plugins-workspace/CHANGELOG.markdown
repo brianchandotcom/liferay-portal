@@ -201,7 +201,7 @@ Gradle plugin to the root project if the `target.platform.version` property in
 - [LPS-79453]: Add support for Ext OSGi modules.
 - [LPS-79453]: Add support for Ext plugins.
 
-## 1.10.1 - *(Unreleased)*
+## 1.10.1 - 2018-06-15
 
 ### Changed
 - [LPS-77875]: Update the [Liferay Portal Tools Bundle Support] dependency to

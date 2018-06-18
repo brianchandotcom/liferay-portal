@@ -326,14 +326,6 @@ public class CPCompareContentDisplayContext {
 		return portletURL.toString();
 	}
 
-	public double getDepth(CPCatalogEntry cpCatalogEntry)
-		throws PortalException {
-
-		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
-
-		return cpDefinition.getDepth();
-	}
-
 	public String getDimensionCPMeasurementUnitName() {
 		CPMeasurementUnit cpMeasurementUnit =
 			_cpMeasurementUnitService.fetchPrimaryCPMeasurementUnit(
@@ -354,14 +346,6 @@ public class CPCompareContentDisplayContext {
 	public long getDisplayStyleGroupId() {
 		return
 			_cpCompareContentPortletInstanceConfiguration.displayStyleGroupId();
-	}
-
-	public double getHeight(CPCatalogEntry cpCatalogEntry)
-		throws PortalException {
-
-		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
-
-		return cpDefinition.getHeight();
 	}
 
 	public int getProductsLimit() {

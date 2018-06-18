@@ -61,8 +61,18 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 	}
 
 	@Override
+	public double getDepth() {
+		return _cpDefinition.getDepth();
+	}
+
+	@Override
 	public String getDescription() {
 		return _cpDefinition.getDescription(_languageId);
+	}
+
+	@Override
+	public double getHeight() {
+		return _cpDefinition.getHeight();
 	}
 
 	@Override

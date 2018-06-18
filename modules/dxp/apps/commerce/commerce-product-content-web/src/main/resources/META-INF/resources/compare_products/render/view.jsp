@@ -104,7 +104,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
 				%>
 
-					<td><%= cpCompareContentDisplayContext.getDepth(cpCatalogEntry) %></td>
+					<td><%= cpCatalogEntry.getDepth() %></td>
 
 				<%
 				}
@@ -118,7 +118,7 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
 				%>
 
-					<td><%= cpCompareContentDisplayContext.getHeight(cpCatalogEntry) %></td>
+					<td><%= cpCatalogEntry.getHeight() %></td>
 
 				<%
 				}

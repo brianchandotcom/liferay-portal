@@ -43,8 +43,20 @@ public class IndexCPCatalogEntryImpl implements CPCatalogEntry {
 	}
 
 	@Override
+	public double getDepth() {
+		return GetterUtil.getDouble(
+			_document.get(CPDefinitionIndexer.FIELD_DEPTH));
+	}
+
+	@Override
 	public String getDescription() {
 		return _document.get(_locale, Field.DESCRIPTION);
+	}
+
+	@Override
+	public double getHeight() {
+		return GetterUtil.getDouble(
+			_document.get(CPDefinitionIndexer.FIELD_HEIGHT));
 	}
 
 	@Override

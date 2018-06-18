@@ -23,7 +23,11 @@ public interface CPCatalogEntry {
 
 	public String getDefaultImageFileUrl();
 
+	public double getDepth();
+
 	public String getDescription();
+
+	public double getHeight();
 
 	public String getName();
 

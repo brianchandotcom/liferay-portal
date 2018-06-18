@@ -141,17 +141,18 @@ SearchContainer userSearchContainer = selectOrganizationUsersManagementToolbarDi
 		'rowToggled',
 		function(event) {
 			var selectedItems = event.elements.allSelectedElements;
-			var unselectedItems = event.elements.allElements.filter('input[type=checkbox]:enabled:not(:checked)');
 
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= HtmlUtil.escapeJS(eventName) %>',
-				{
+			var result = {};
+
+			if (!selectedItems.isEmpty()) {
+				result = {
 					data: {
-						selected: selectedItems.get('value').join(','),
-						unselected: unselectedItems.get('value').join(',')
+						value: selectedItems.get('value').join(',')
 					}
-				}
-			);
+				};
+			}
+
+			Liferay.Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 		}
 	);
 </aui:script>

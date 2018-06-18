@@ -61,7 +61,8 @@ public class TagResourceHandler {
 
 		_bundle = FrameworkUtil.getBundle(bundleClass);
 
-		Dictionary<String, String> headers = _bundle.getHeaders();
+		Dictionary<String, String> headers = _bundle.getHeaders(
+			StringPool.BLANK);
 
 		_webContextPath = headers.get("Web-ContextPath");
 	}

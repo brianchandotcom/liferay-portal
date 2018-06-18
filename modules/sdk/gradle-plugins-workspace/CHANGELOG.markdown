@@ -216,8 +216,12 @@ version 2.2.4.
 ## 1.10.1 - 2018-06-15
 
 ### Changed
+- [LPS-77875]: Update the private constant `_DEFAULT_REPOSITORY_URL` to
+`https://repository-cdn.liferay.com/nexus/content/groups/public`.
 - [LPS-77875]: Update the [Liferay Portal Tools Bundle Support] dependency to
 version 3.2.5.
+- [LPS-82534]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.46.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -271,3 +275,4 @@ version 3.2.5.
 [LPS-80281]: https://issues.liferay.com/browse/LPS-80281
 [LPS-80517]: https://issues.liferay.com/browse/LPS-80517
 [LPS-80950]: https://issues.liferay.com/browse/LPS-80950
+[LPS-82534]: https://issues.liferay.com/browse/LPS-82534

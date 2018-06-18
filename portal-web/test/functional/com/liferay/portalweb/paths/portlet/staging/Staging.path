@@ -11,7 +11,7 @@
 <!--PROCESSES-->
 <tr>
 	<td>SCHEDULED</td>
-	<td>//ul[contains(@id,'StagingProcessesPortlet')]/li/a[contains(@title,'Scheduled')]</td>
+	<td>//a//span[contains(.,'Scheduled')]</td>
 	<td></td>
 </tr>
 <tr>

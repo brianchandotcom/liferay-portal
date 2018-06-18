@@ -77,9 +77,9 @@ public class CommerceOrganizationServiceImpl
 			organizationId, emailAddresses, serviceContext);
 	}
 
+	@Override
 	public void deleteOrganization(long organizationId) throws PortalException {
 		organizationLocalService.deleteOrganization(organizationId);
-
 	}
 
 	@Override

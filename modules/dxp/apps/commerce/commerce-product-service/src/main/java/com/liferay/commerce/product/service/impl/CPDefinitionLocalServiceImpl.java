@@ -459,6 +459,7 @@ public class CPDefinitionLocalServiceImpl
 		}
 	}
 
+	@Override
 	public CPDefinition fetchByExternalReferenceCode(
 		String externalReferenceCode) {
 
@@ -1345,6 +1346,7 @@ public class CPDefinitionLocalServiceImpl
 		return cpDefinitionPersistence.update(cpDefinition);
 	}
 
+	@Override
 	public CPDefinition upsertCPDefinition(
 			Map<Locale, String> nameMap,
 			Map<Locale, String> shortDescriptionMap,

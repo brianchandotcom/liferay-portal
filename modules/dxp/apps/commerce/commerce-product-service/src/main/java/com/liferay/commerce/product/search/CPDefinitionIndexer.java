@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.product.search;
 
+import com.liferay.commerce.product.catalog.rule.CPRuleType;
+import com.liferay.commerce.product.catalog.rule.CPRuleTypeRegistry;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -422,6 +424,10 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addKeyword(type, linkedProductIds);
 		}
 
+		for (CPRuleType cpRuleType : _cpRuleTypeRegistry.getCPRuleTypes()) {
+			cpRuleType.contributeToDocument(document);
+		}
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_cpDefinitionLocalService.getDefaultImage(
 				cpDefinition.getCPDefinitionId());
@@ -557,6 +563,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPRuleTypeRegistry _cpRuleTypeRegistry;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

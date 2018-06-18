@@ -56,7 +56,7 @@ PluginPackage selPluginPackage = selTheme.getPluginPackage();
 					<h4><liferay-ui:message key="author" /></h4>
 
 					<p class="text-default">
-						<a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></a>
+						<aui:a href="<%= HtmlUtil.escapeHREF(selPluginPackage.getPageURL()) %>" target="_blank"><%= HtmlUtil.escape(selPluginPackage.getAuthor()) %></aui:a>
 					</p>
 				</c:if>
 			</aui:col>

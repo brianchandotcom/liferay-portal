@@ -4,24 +4,9 @@
  * FragmentEditor
  */
 {template .render}
-	{@param cssToolbarItems: list<[
-		handler: any,
-		icon: string,
-		title: string
-	]>}
-	{@param htmlToolbarItems: list<[
-		handler: any,
-		icon: string,
-		title: string
-	]>}
 	{@param initialCSS: string}
 	{@param initialHTML: string}
 	{@param initialJS: string}
-	{@param jsToolbarItems: list<[
-		handler: any,
-		icon: string,
-		title: string
-	]>}
 	{@param previewFragmentEntryURL: string}
 	{@param namespace: string}
 	{@param renderFragmentEntryURL: string}
@@ -39,7 +24,6 @@
 			{param initialContent: $initialHTML /}
 			{param spritemap: $spritemap /}
 			{param syntax: 'html' /}
-			{param toolbarItems: $htmlToolbarItems /}
 		{/call}
 
 		{call com.liferay.fragment.web.SourceEditor.render}
@@ -47,7 +31,6 @@
 			{param initialContent: $initialCSS /}
 			{param spritemap: $spritemap /}
 			{param syntax: 'css' /}
-			{param toolbarItems: $cssToolbarItems /}
 		{/call}
 
 		{let $element kind="text"}
@@ -64,7 +47,6 @@
 			{param initialContent: $initialJS /}
 			{param spritemap: $spritemap /}
 			{param syntax: 'javascript' /}
-			{param toolbarItems: $jsToolbarItems /}
 		{/call}
 
 		{call com.liferay.fragment.web.FragmentPreview.render}

@@ -35,6 +35,7 @@ if (Validator.isNotNull(trashDisplayContext.getKeywords())) {
 	actionDropdownItems="<%= trashDisplayContext.getActionDropdownItems() %>"
 	clearResultsURL="<%= trashDisplayContext.getClearResultsURL() %>"
 	componentId="trashWebManagementToolbar"
+	disabled="<%= trashDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= trashDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= trashDisplayContext.getTotalItems() %>"

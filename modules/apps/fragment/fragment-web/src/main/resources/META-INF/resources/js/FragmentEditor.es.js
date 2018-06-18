@@ -100,52 +100,6 @@ class FragmentEditor extends Component {
 FragmentEditor.STATE = {
 
 	/**
-	 * Toolbar items for CSS editor.
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @review
-	 * @type {Array<{
-	 *   icon: !string,
-	 *   title: !string,
-	 *   handler: !function
-	 * }>}
-	 */
-
-	cssToolbarItems: Config.arrayOf(
-		Config.shapeOf(
-			{
-				handler: Config.func().required(),
-				icon: Config.string().required(),
-				title: Config.string().required()
-			}
-		)
-	).value([]),
-
-	/**
-	 * Toolbar items for HTML editor.
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @review
-	 * @type {Array<{
-	 *   icon: !string,
-	 *   title: !string,
-	 *   handler: !function
-	 * }>}
-	 */
-
-	htmlToolbarItems: Config.arrayOf(
-		Config.shapeOf(
-			{
-				handler: Config.func().required(),
-				icon: Config.string().required(),
-				title: Config.string().required()
-			}
-		)
-	).value([]),
-
-	/**
 	 * Initial HTML sent to the editor
 	 * @instance
 	 * @memberOf FragmentEditor
@@ -171,29 +125,6 @@ FragmentEditor.STATE = {
 	 */
 
 	initialJS: Config.string().required(),
-
-	/**
-	 * Toolbar items for JS editor.
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentEditor
-	 * @review
-	 * @type {Array<{
-	 *   icon: !string,
-	 *   title: !string,
-	 *   handler: !function
-	 * }>}
-	 */
-
-	jsToolbarItems: Config.arrayOf(
-		Config.shapeOf(
-			{
-				handler: Config.func().required(),
-				icon: Config.string().required(),
-				title: Config.string().required()
-			}
-		)
-	).value([]),
 
 	/**
 	 * Namespace of the portlet being used.

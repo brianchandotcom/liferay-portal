@@ -12,21 +12,31 @@
 	{@param? viewType: string}
 
 	<div class="select-layout">
-		<nav class="management-bar navbar navbar-light">
-			<div class="navbar-form navbar-form-autofit">
-				<div class="container-fluid">
-					<div class="input-group input-group-inset">
-						<div class="input-group-input">
-							<input class="form-control" data-oninput="_searchNodes" name="{$namespace}filterKeywords" placeholder="{msg desc=""}search{/msg}" type="text">
-						</div>
+		<nav class="management-bar management-bar-light navbar navbar-expand-md">
+			<div class="container">
+				<div class="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down">
+					<div class="container">
+						<form role="search">
+							<div class="input-group">
+								<div class="input-group-item">
+									<input class="form-control input-group-inset input-group-inset-after" data-oninput="_searchNodes" name="{$namespace}filterKeywords" placeholder="{msg desc=""}search-for{/msg}" type="text" />
 
-						<span class="input-group-inset-item">
-							<button class="btn btn-unstyled" type="button">
-								<svg class="lexicon-icon">
-									<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#search"></use>
-								</svg>
-							</button>
-						</span>
+									<span class="input-group-inset-item input-group-inset-item-after">
+										<button class="btn btn-unstyled navbar-breakpoint-d-none" type="button">
+											<svg aria-hidden="true" class="lexicon-icon lexicon-icon-times">
+												<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#times"></use>
+											</svg>
+										</button>
+
+										<button class="btn btn-unstyled navbar-breakpoint-d-block" type="button">
+											<svg aria-hidden="true" class="lexicon-icon lexicon-icon-search">
+												<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#search"></use>
+											</svg>
+										</button>
+									</span>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

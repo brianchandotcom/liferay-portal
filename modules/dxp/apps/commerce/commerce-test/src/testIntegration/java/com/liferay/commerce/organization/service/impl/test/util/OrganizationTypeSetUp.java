@@ -31,7 +31,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 public class OrganizationTypeSetUp {
 
-	public static void setUpEnvironment() throws Exception {
+	public OrganizationTypeSetUp(ConfigurationAdmin configurationAdmin) {
+		_configurationAdmin = configurationAdmin;
+	}
+
+	public void setUpEnvironment() throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			_getConfigurationFilter(_ORGANIZATION_TYPE_CONFIGURATION_PID));
 
@@ -42,7 +46,7 @@ public class OrganizationTypeSetUp {
 		}
 	}
 
-	public static void tearDownEnvironment() throws Exception {
+	public void tearDownEnvironment() throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			_getConfigurationFilter(_ORGANIZATION_TYPE_CONFIGURATION_PID));
 
@@ -80,11 +84,7 @@ public class OrganizationTypeSetUp {
 		}
 	}
 
-	public OrganizationTypeSetUp(ConfigurationAdmin configurationAdmin) {
-		_configurationAdmin = configurationAdmin;
-	}
-
-	private static void _createOrganizationType(String organizationType)
+	private void _createOrganizationType(String organizationType)
 		throws Exception {
 
 		Configuration configuration =
@@ -95,7 +95,7 @@ public class OrganizationTypeSetUp {
 			_getOrganizationTypeProperties(configuration, organizationType));
 	}
 
-	private static String _getConfigurationFilter(String configurationPid) {
+	private String _getConfigurationFilter(String configurationPid) {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(StringPool.OPEN_PARENTHESIS);
@@ -107,7 +107,7 @@ public class OrganizationTypeSetUp {
 		return sb.toString();
 	}
 
-	private static String[] _getOrganizationTypeChildrenTypes(
+	private String[] _getOrganizationTypeChildrenTypes(
 		String organizationType) {
 
 		if (organizationType.equals(OrganizationConstants.TYPE_ORGANIZATION)) {
@@ -128,7 +128,7 @@ public class OrganizationTypeSetUp {
 		return new String[0];
 	}
 
-	private static Dictionary<String, Object> _getOrganizationTypeProperties(
+	private Dictionary<String, Object> _getOrganizationTypeProperties(
 		Configuration configuration, String organizationType) {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
@@ -154,7 +154,7 @@ public class OrganizationTypeSetUp {
 		return properties;
 	}
 
-	private static void _updateOrganizationType(
+	private void _updateOrganizationType(
 			Configuration[] configurations, String organizationType)
 		throws Exception {
 
@@ -186,7 +186,7 @@ public class OrganizationTypeSetUp {
 		new String[] {OrganizationConstants.TYPE_ORGANIZATION},
 		CommerceOrganizationConstants.TYPES);
 
-	private static final ConfigurationAdmin _configurationAdmin;
-	private static Configuration[] _savedConfigurations;
+	private final ConfigurationAdmin _configurationAdmin;
+	private Configuration[] _savedConfigurations;
 
 }

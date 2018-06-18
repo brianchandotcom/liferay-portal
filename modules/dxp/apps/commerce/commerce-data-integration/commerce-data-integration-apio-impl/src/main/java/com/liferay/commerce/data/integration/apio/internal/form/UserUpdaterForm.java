@@ -30,7 +30,7 @@ public class UserUpdaterForm {
 		return formBuilder.title(
 			__ -> "The person updater form"
 		).description(
-			__ -> "This form can be used to update an user"
+			__ -> "This form can be used to update a user"
 		).constructor(
 			UserUpdaterForm::new
 		).addOptionalString(

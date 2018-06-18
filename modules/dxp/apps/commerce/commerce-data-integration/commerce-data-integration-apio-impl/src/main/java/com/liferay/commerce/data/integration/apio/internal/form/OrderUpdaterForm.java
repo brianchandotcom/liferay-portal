@@ -11,7 +11,7 @@ public class OrderUpdaterForm {
 		Form.Builder<OrderUpdaterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The account creator form"
+			__ -> "The order creator form"
 		).description(
 			__ -> "This form can be used to create a account"
 		).constructor(

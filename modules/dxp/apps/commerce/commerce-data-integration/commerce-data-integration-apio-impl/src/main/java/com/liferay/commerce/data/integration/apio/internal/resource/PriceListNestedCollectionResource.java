@@ -101,7 +101,7 @@ public class PriceListNestedCollectionResource
 		Representor.Builder<CommercePriceList, Long> builder) {
 
 		return builder.types(
-			"PriceListX"
+			"PriceList"
 		).identifier(
 			CommercePriceList::getCommercePriceListId
 		).addBidirectionalModel(

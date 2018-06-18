@@ -85,7 +85,7 @@ public class CountryNestedCollectionResource
 		).addBoolean(
 			"billingAllowed", CommerceCountry::getBillingAllowed
 		).addBoolean(
-			"ShippingAllowed", CommerceCountry::getShippingAllowed
+			"shippingAllowed", CommerceCountry::getShippingAllowed
 		).build();
 	}
 

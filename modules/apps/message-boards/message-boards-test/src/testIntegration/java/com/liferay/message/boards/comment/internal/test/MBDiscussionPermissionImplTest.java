@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -179,7 +180,9 @@ public class MBDiscussionPermissionImplTest {
 			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER;
 
 		try {
-			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER = true;
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class,
+				"DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER", true);
 
 			long commentId = _addComment(_siteUser1);
 
@@ -193,8 +196,10 @@ public class MBDiscussionPermissionImplTest {
 				discussionPermission.hasUpdatePermission(commentId));
 		}
 		finally {
-			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER =
-				discussionCommentsAlwaysEditableByOwner;
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class,
+				"DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER",
+				discussionCommentsAlwaysEditableByOwner);
 		}
 	}
 
@@ -204,7 +209,9 @@ public class MBDiscussionPermissionImplTest {
 			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER;
 
 		try {
-			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER = true;
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class,
+				"DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER", true);
 
 			long commentId = _addComment(_siteUser1);
 
@@ -218,8 +225,10 @@ public class MBDiscussionPermissionImplTest {
 				discussionPermission.hasUpdatePermission(commentId));
 		}
 		finally {
-			PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER =
-				discussionCommentsAlwaysEditableByOwner;
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class,
+				"DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER",
+				discussionCommentsAlwaysEditableByOwner);
 		}
 	}
 

@@ -107,10 +107,9 @@ public class CPDefinitionServiceUtil {
 		getService().deleteAssetCategoryCPDefinition(cpDefinitionId, categoryId);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinition deleteCPDefinition(
-		long cpDefinitionId)
+	public static void deleteCPDefinition(long cpDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPDefinition(cpDefinitionId);
+		getService().deleteCPDefinition(cpDefinitionId);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition fetchCPDefinition(
@@ -148,12 +147,6 @@ public class CPDefinitionServiceUtil {
 
 	public static int getCPDefinitionsCountByCategoryId(long categoryId) {
 		return getService().getCPDefinitionsCountByCategoryId(categoryId);
-	}
-
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntry getDefaultImage(
-		long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDefaultImage(cpDefinitionId);
 	}
 
 	public static String getLayoutUuid(long cpDefinitionId)
@@ -213,37 +206,6 @@ public class CPDefinitionServiceUtil {
 		java.util.Map<java.util.Locale, String> metaTitleMap,
 		java.util.Map<java.util.Locale, String> metaDescriptionMap,
 		java.util.Map<java.util.Locale, String> metaKeywordsMap,
-		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
-		boolean shipSeparately, double shippingExtraPrice, double width,
-		double height, double depth, double weight, long cpTaxCategoryId,
-		boolean taxExempt, boolean telcoOrElectronics, String ddmStructureKey,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCPDefinition(cpDefinitionId, nameMap,
-			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaDescriptionMap, metaKeywordsMap, ignoreSKUCombinations,
-			shippable, freeShipping, shipSeparately, shippingExtraPrice, width,
-			height, depth, weight, cpTaxCategoryId, taxExempt,
-			telcoOrElectronics, ddmStructureKey, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
-		long cpDefinitionId, java.util.Map<java.util.Locale, String> nameMap,
-		java.util.Map<java.util.Locale, String> shortDescriptionMap,
-		java.util.Map<java.util.Locale, String> descriptionMap,
-		java.util.Map<java.util.Locale, String> urlTitleMap,
-		java.util.Map<java.util.Locale, String> metaTitleMap,
-		java.util.Map<java.util.Locale, String> metaDescriptionMap,
-		java.util.Map<java.util.Locale, String> metaKeywordsMap,
 		boolean ignoreSKUCombinations, String ddmStructureKey,
 		boolean published, int displayDateMonth, int displayDateDay,
 		int displayDateYear, int displayDateHour, int displayDateMinute,
@@ -271,15 +233,6 @@ public class CPDefinitionServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinition updateCPDefinitionIgnoreSKUCombinations(
-		long cpDefinitionId, boolean ignoreSKUCombinations,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCPDefinitionIgnoreSKUCombinations(cpDefinitionId,
-			ignoreSKUCombinations, serviceContext);
-	}
-
 	public static void updateCPDisplayLayout(long cpDefinitionId,
 		String layoutUuid,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -298,16 +251,6 @@ public class CPDefinitionServiceUtil {
 				   .updateShippingInfo(cpDefinitionId, shippable, freeShipping,
 			shipSeparately, shippingExtraPrice, width, height, depth, weight,
 			serviceContext);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinition updateStatus(
-		long userId, long cpDefinitionId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateStatus(userId, cpDefinitionId, status,
-			serviceContext, workflowContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinition updateTaxCategoryInfo(

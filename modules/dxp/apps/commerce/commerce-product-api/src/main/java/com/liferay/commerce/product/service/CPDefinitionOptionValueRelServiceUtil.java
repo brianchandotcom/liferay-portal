@@ -53,18 +53,11 @@ public class CPDefinitionOptionValueRelServiceUtil {
 			nameMap, priority, key, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
-		com.liferay.commerce.product.model.CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
+	public static void deleteCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+		getService()
+			.deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRel fetchCPDefinitionOptionValueRel(
@@ -118,11 +111,6 @@ public class CPDefinitionOptionValueRelServiceUtil {
 	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionValueRel> searchCPDefinitionOptionValueRels(

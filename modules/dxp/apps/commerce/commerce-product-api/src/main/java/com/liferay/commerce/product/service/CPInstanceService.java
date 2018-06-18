@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
@@ -34,12 +33,9 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.io.Serializable;
-
 import java.math.BigDecimal;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the remote service interface for CPInstance. Methods of this
@@ -74,33 +70,14 @@ public interface CPInstanceService extends BaseService {
 		int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPInstance addCPInstance(long cpDefinitionId, String sku,
-		String gtin, String manufacturerPartNumber, boolean purchasable,
-		String ddmContent, double width, double height, double depth,
-		double weight, BigDecimal price, BigDecimal promoPrice,
-		BigDecimal cost, boolean published, String externalReferenceCode,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		ServiceContext serviceContext) throws PortalException;
-
 	public void buildCPInstances(long cpDefinitionId,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPInstance deleteCPInstance(CPInstance cpInstance)
-		throws PortalException;
-
-	public CPInstance deleteCPInstance(long cpInstanceId)
-		throws PortalException;
+	public void deleteCPInstance(long cpInstanceId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPInstance fetchCPInstance(long cpInstanceId)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId,
-		int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPInstance> getCPDefinitionInstances(long cpDefinitionId,
@@ -114,10 +91,6 @@ public interface CPInstanceService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPInstance getCPInstance(long cpInstanceId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPInstance getCPInstance(long cpDefinitionId, String sku)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -141,9 +114,6 @@ public interface CPInstanceService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPInstance> searchCPDefinitionInstances(
 		long companyId, long groupId, long cpDefinitionId, String keywords,
 		int status, int start, int end, Sort sort) throws PortalException;
@@ -165,16 +135,6 @@ public interface CPInstanceService extends BaseService {
 		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPInstance updateCPInstance(long cpInstanceId, String sku,
-		String gtin, String manufacturerPartNumber, boolean purchasable,
-		double width, double height, double depth, double weight,
-		BigDecimal price, BigDecimal promoPrice, BigDecimal cost,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		ServiceContext serviceContext) throws PortalException;
-
 	public CPInstance updatePricingInfo(long cpInstanceId, BigDecimal price,
 		BigDecimal promoPrice, BigDecimal cost, ServiceContext serviceContext)
 		throws PortalException;
@@ -182,8 +142,4 @@ public interface CPInstanceService extends BaseService {
 	public CPInstance updateShippingInfo(long cpInstanceId, double width,
 		double height, double depth, double weight,
 		ServiceContext serviceContext) throws PortalException;
-
-	public CPInstance updateStatus(long userId, long cpInstanceId, int status,
-		ServiceContext serviceContext, Map<String, Serializable> workflowContext)
-		throws PortalException;
 }

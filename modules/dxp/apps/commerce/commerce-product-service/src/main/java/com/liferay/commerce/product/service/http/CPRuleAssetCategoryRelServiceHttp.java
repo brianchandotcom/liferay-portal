@@ -149,46 +149,13 @@ public class CPRuleAssetCategoryRelServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPRuleAssetCategoryRel getCPRuleAssetCategoryRel(
-		HttpPrincipal httpPrincipal, long cpRuleAssetCategoryRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPRuleAssetCategoryRelServiceUtil.class,
-					"getCPRuleAssetCategoryRel",
-					_getCPRuleAssetCategoryRelParameterTypes3);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpRuleAssetCategoryRelId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.product.model.CPRuleAssetCategoryRel)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static java.util.List<com.liferay.commerce.product.model.CPRuleAssetCategoryRel> getCPRuleAssetCategoryRels(
 		HttpPrincipal httpPrincipal, long cpRuleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPRuleAssetCategoryRelServiceUtil.class,
 					"getCPRuleAssetCategoryRels",
-					_getCPRuleAssetCategoryRelsParameterTypes4);
+					_getCPRuleAssetCategoryRelsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, cpRuleId);
 
@@ -224,10 +191,7 @@ public class CPRuleAssetCategoryRelServiceHttp {
 	private static final Class<?>[] _getAssetCategoryIdsParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPRuleAssetCategoryRelParameterTypes3 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getCPRuleAssetCategoryRelsParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getCPRuleAssetCategoryRelsParameterTypes3 = new Class[] {
 			long.class
 		};
 }

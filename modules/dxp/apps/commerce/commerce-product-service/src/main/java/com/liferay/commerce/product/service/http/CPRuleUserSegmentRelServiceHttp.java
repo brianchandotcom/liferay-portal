@@ -119,39 +119,6 @@ public class CPRuleUserSegmentRelServiceHttp {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPRuleUserSegmentRel getCPRuleUserSegmentRel(
-		HttpPrincipal httpPrincipal, long cpRuleUserSegmentRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPRuleUserSegmentRelServiceUtil.class,
-					"getCPRuleUserSegmentRel",
-					_getCPRuleUserSegmentRelParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					cpRuleUserSegmentRelId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (com.liferay.commerce.product.model.CPRuleUserSegmentRel)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static java.util.List<com.liferay.commerce.product.model.CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
 		HttpPrincipal httpPrincipal, long cpRuleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRuleUserSegmentRel> orderByComparator)
@@ -159,7 +126,7 @@ public class CPRuleUserSegmentRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPRuleUserSegmentRelServiceUtil.class,
 					"getCPRuleUserSegmentRels",
-					_getCPRuleUserSegmentRelsParameterTypes3);
+					_getCPRuleUserSegmentRelsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpRuleId, start, end, orderByComparator);
@@ -192,7 +159,7 @@ public class CPRuleUserSegmentRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPRuleUserSegmentRelServiceUtil.class,
 					"getCPRuleUserSegmentRelsCount",
-					_getCPRuleUserSegmentRelsCountParameterTypes4);
+					_getCPRuleUserSegmentRelsCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, cpRuleId);
 
@@ -226,13 +193,10 @@ public class CPRuleUserSegmentRelServiceHttp {
 	private static final Class<?>[] _deleteCPRuleUserSegmentRelParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCPRuleUserSegmentRelParameterTypes2 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getCPRuleUserSegmentRelsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getCPRuleUserSegmentRelsParameterTypes2 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCPRuleUserSegmentRelsCountParameterTypes4 =
+	private static final Class<?>[] _getCPRuleUserSegmentRelsCountParameterTypes3 =
 		new Class[] { long.class };
 }

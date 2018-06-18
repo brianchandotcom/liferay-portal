@@ -93,12 +93,10 @@ public class CPOptionCategoryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionCategorySoap deleteCPOptionCategory(
-		long cpOptionCategoryId) throws RemoteException {
+	public static void deleteCPOptionCategory(long cpOptionCategoryId)
+		throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPOptionCategory returnValue = CPOptionCategoryServiceUtil.deleteCPOptionCategory(cpOptionCategoryId);
-
-			return com.liferay.commerce.product.model.CPOptionCategorySoap.toSoapModel(returnValue);
+			CPOptionCategoryServiceUtil.deleteCPOptionCategory(cpOptionCategoryId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

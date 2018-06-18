@@ -42,10 +42,9 @@ public class CPDefinitionLinkServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
-		long cpDefinitionLinkId)
+	public static void deleteCPDefinitionLink(long cpDefinitionLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPDefinitionLink(cpDefinitionLinkId);
+		getService().deleteCPDefinitionLink(cpDefinitionLinkId);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionLink fetchCPDefinitionLink(

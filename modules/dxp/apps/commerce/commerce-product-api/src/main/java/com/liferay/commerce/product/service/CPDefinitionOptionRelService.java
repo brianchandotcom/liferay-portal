@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
@@ -63,25 +61,11 @@ public interface CPDefinitionOptionRelService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionOptionRelServiceUtil} to access the cp definition option rel remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionOptionRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
-		long cpOptionId, boolean importOptionValue,
-		ServiceContext serviceContext) throws PortalException;
-
-	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
-		long cpOptionId, Map<Locale, String> nameMap,
-		Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-		double priority, boolean facetable, boolean required,
-		boolean skuContributor, boolean importOptionValue,
-		ServiceContext serviceContext) throws PortalException;
-
-	public CPDefinitionOptionRel addCPDefinitionOptionRel(long cpDefinitionId,
 		long cpOptionId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
-		CPDefinitionOptionRel cpDefinitionOptionRel) throws PortalException;
-
-	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
-		long cpDefinitionOptionRelId) throws PortalException;
+	public void deleteCPDefinitionOptionRel(long cpDefinitionOptionRelId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDefinitionOptionRel fetchCPDefinitionOptionRel(
@@ -119,9 +103,6 @@ public interface CPDefinitionOptionRelService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPDefinitionOptionRel> searchCPDefinitionOptionRels(

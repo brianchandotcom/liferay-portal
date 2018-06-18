@@ -55,8 +55,8 @@ import com.liferay.portal.kernel.util.MethodKey;
  */
 @ProviderType
 public class CPDefinitionLinkServiceHttp {
-	public static com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
-		HttpPrincipal httpPrincipal, long cpDefinitionLinkId)
+	public static void deleteCPDefinitionLink(HttpPrincipal httpPrincipal,
+		long cpDefinitionLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionLinkServiceUtil.class,
@@ -66,10 +66,8 @@ public class CPDefinitionLinkServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionLinkId);
 
-			Object returnObj = null;
-
 			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -78,8 +76,6 @@ public class CPDefinitionLinkServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
-
-			return (com.liferay.commerce.product.model.CPDefinitionLink)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

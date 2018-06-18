@@ -44,17 +44,9 @@ public class CPOptionValueServiceWrapper implements CPOptionValueService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPOptionValue deleteCPOptionValue(
-		com.liferay.commerce.product.model.CPOptionValue cpOptionValue)
+	public void deleteCPOptionValue(long cpOptionValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionValueService.deleteCPOptionValue(cpOptionValue);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOptionValue deleteCPOptionValue(
-		long cpOptionValueId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionValueService.deleteCPOptionValue(cpOptionValueId);
+		_cpOptionValueService.deleteCPOptionValue(cpOptionValueId);
 	}
 
 	@Override
@@ -71,28 +63,6 @@ public class CPOptionValueServiceWrapper implements CPOptionValueService,
 		return _cpOptionValueService.getCPOptionValue(cpOptionValueId);
 	}
 
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
-		long cpOptionId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionValueService.getCPOptionValues(cpOptionId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
-		long cpOptionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionValue> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionValueService.getCPOptionValues(cpOptionId, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public int getCPOptionValuesCount(long cpOptionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionValueService.getCPOptionValuesCount(cpOptionId);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -101,21 +71,6 @@ public class CPOptionValueServiceWrapper implements CPOptionValueService,
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _cpOptionValueService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return _cpOptionValueService.search(searchContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOptionValue> searchCPOptionValues(
-		long companyId, long groupId, long cpOptionId, String keywords,
-		int start, int end, com.liferay.portal.kernel.search.Sort sort)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionValueService.searchCPOptionValues(companyId, groupId,
-			cpOptionId, keywords, start, end, sort);
 	}
 
 	@Override

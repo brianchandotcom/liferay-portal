@@ -100,30 +100,10 @@ public class CPAttachmentFileEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap deleteCPAttachmentFileEntry(
-		com.liferay.commerce.product.model.CPAttachmentFileEntrySoap cpAttachmentFileEntry)
+	public static void deleteCPAttachmentFileEntry(long cpAttachmentFileEntryId)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
-				CPAttachmentFileEntryServiceUtil.deleteCPAttachmentFileEntry(com.liferay.commerce.product.model.impl.CPAttachmentFileEntryModelImpl.toModel(
-						cpAttachmentFileEntry));
-
-			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap deleteCPAttachmentFileEntry(
-		long cpAttachmentFileEntryId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
-				CPAttachmentFileEntryServiceUtil.deleteCPAttachmentFileEntry(cpAttachmentFileEntryId);
-
-			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
+			CPAttachmentFileEntryServiceUtil.deleteCPAttachmentFileEntry(cpAttachmentFileEntryId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

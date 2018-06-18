@@ -60,16 +60,9 @@ public class CPAttachmentFileEntryServiceUtil {
 			neverExpire, titleMap, json, priority, type, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntry deleteCPAttachmentFileEntry(
-		com.liferay.commerce.product.model.CPAttachmentFileEntry cpAttachmentFileEntry)
+	public static void deleteCPAttachmentFileEntry(long cpAttachmentFileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPAttachmentFileEntry(cpAttachmentFileEntry);
-	}
-
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntry deleteCPAttachmentFileEntry(
-		long cpAttachmentFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPAttachmentFileEntry(cpAttachmentFileEntryId);
+		getService().deleteCPAttachmentFileEntry(cpAttachmentFileEntryId);
 	}
 
 	public static com.liferay.commerce.product.model.CPAttachmentFileEntry fetchCPAttachmentFileEntry(
@@ -135,16 +128,6 @@ public class CPAttachmentFileEntryServiceUtil {
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, neverExpire, titleMap, json, priority, type,
 			serviceContext);
-	}
-
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntry updateStatus(
-		long userId, long cpAttachmentFileEntryId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateStatus(userId, cpAttachmentFileEntryId, status,
-			serviceContext, workflowContext);
 	}
 
 	public static CPAttachmentFileEntryService getService() {

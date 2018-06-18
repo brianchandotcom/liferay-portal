@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
@@ -80,14 +78,16 @@ public interface CPOptionService extends BaseService {
 	public CPOption getCPOption(long cpOptionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPOption> getCPOptions(long groupId, int start, int end);
+	public List<CPOption> getCPOptions(long groupId, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPOption> getCPOptions(long groupId, int start, int end,
-		OrderByComparator<CPOption> orderByComparator);
+		OrderByComparator<CPOption> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPOptionsCount(long groupId);
+	public int getCPOptionsCount(long groupId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -97,20 +97,8 @@ public interface CPOptionService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Hits search(SearchContext searchContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPOption> searchCPOptions(long companyId,
 		long groupId, String keywords, int start, int end, Sort sort)
-		throws PortalException;
-
-	public CPOption setFacetable(long cpOptionId, boolean facetable)
-		throws PortalException;
-
-	public CPOption setRequired(long cpOptionId, boolean required)
-		throws PortalException;
-
-	public CPOption setSkuContributor(long cpOptionId, boolean skuContributor)
 		throws PortalException;
 
 	public CPOption updateCPOption(long cpOptionId,

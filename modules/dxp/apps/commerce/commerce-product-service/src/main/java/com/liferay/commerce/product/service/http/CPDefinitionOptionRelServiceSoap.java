@@ -70,53 +70,6 @@ import java.util.Map;
 @ProviderType
 public class CPDefinitionOptionRelServiceSoap {
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap addCPDefinitionOptionRel(
-		long cpDefinitionId, long cpOptionId, boolean importOptionValue,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
-				CPDefinitionOptionRelServiceUtil.addCPDefinitionOptionRel(cpDefinitionId,
-					cpOptionId, importOptionValue, serviceContext);
-
-			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap addCPDefinitionOptionRel(
-		long cpDefinitionId, long cpOptionId, String[] nameMapLanguageIds,
-		String[] nameMapValues, String[] descriptionMapLanguageIds,
-		String[] descriptionMapValues, String ddmFormFieldTypeName,
-		double priority, boolean facetable, boolean required,
-		boolean skuContributor, boolean importOptionValue,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
-					nameMapValues);
-			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
-					descriptionMapValues);
-
-			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
-				CPDefinitionOptionRelServiceUtil.addCPDefinitionOptionRel(cpDefinitionId,
-					cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
-					priority, facetable, required, skuContributor,
-					importOptionValue, serviceContext);
-
-			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap addCPDefinitionOptionRel(
 		long cpDefinitionId, long cpOptionId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -134,30 +87,10 @@ public class CPDefinitionOptionRelServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap deleteCPDefinitionOptionRel(
-		com.liferay.commerce.product.model.CPDefinitionOptionRelSoap cpDefinitionOptionRel)
+	public static void deleteCPDefinitionOptionRel(long cpDefinitionOptionRelId)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
-				CPDefinitionOptionRelServiceUtil.deleteCPDefinitionOptionRel(com.liferay.commerce.product.model.impl.CPDefinitionOptionRelModelImpl.toModel(
-						cpDefinitionOptionRel));
-
-			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRelSoap deleteCPDefinitionOptionRel(
-		long cpDefinitionOptionRelId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinitionOptionRel returnValue =
-				CPDefinitionOptionRelServiceUtil.deleteCPDefinitionOptionRel(cpDefinitionOptionRelId);
-
-			return com.liferay.commerce.product.model.CPDefinitionOptionRelSoap.toSoapModel(returnValue);
+			CPDefinitionOptionRelServiceUtil.deleteCPDefinitionOptionRel(cpDefinitionOptionRelId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

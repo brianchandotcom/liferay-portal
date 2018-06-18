@@ -46,17 +46,10 @@ public class CPDefinitionOptionValueRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
-		com.liferay.commerce.product.model.CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionOptionValueRelService.deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
+	public void deleteCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionOptionValueRelService.deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+		_cpDefinitionOptionValueRelService.deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
 	}
 
 	@Override
@@ -111,12 +104,6 @@ public class CPDefinitionOptionValueRelServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _cpDefinitionOptionValueRelService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return _cpDefinitionOptionValueRelService.search(searchContext);
 	}
 
 	@Override

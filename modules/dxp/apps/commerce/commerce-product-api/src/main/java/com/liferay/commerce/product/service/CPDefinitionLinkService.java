@@ -56,7 +56,7 @@ public interface CPDefinitionLinkService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CPDefinitionLinkServiceUtil} to access the cp definition link remote service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
+	public void deleteCPDefinitionLink(long cpDefinitionLinkId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

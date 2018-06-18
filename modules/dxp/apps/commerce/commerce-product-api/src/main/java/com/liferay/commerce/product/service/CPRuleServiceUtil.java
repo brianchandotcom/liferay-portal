@@ -49,10 +49,9 @@ public class CPRuleServiceUtil {
 		return getService().addCPRule(name, active, type, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPRule deleteCPRule(
-		long cpRuleId)
+	public static void deleteCPRule(long cpRuleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPRule(cpRuleId);
+		getService().deleteCPRule(cpRuleId);
 	}
 
 	public static com.liferay.commerce.product.model.CPRule getCPRule(
@@ -88,12 +87,6 @@ public class CPRuleServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchCPRules(companyId, groupId, keywords, start, end, sort);
-	}
-
-	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPRule> searchCPRules(
-		com.liferay.portal.kernel.search.SearchContext searchContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().searchCPRules(searchContext);
 	}
 
 	public static com.liferay.commerce.product.model.CPRule updateCPRule(

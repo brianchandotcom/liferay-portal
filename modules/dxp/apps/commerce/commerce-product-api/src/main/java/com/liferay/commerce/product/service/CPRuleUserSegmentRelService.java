@@ -64,10 +64,6 @@ public interface CPRuleUserSegmentRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPRuleUserSegmentRel getCPRuleUserSegmentRel(
-		long cpRuleUserSegmentRelId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPRuleUserSegmentRel> getCPRuleUserSegmentRels(long cpRuleId,
 		int start, int end,
 		OrderByComparator<CPRuleUserSegmentRel> orderByComparator)

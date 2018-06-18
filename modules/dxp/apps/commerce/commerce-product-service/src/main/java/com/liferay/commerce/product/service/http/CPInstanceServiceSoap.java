@@ -92,37 +92,6 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPInstanceSoap addCPInstance(
-		long cpDefinitionId, String sku, String gtin,
-		String manufacturerPartNumber, boolean purchasable, String ddmContent,
-		double width, double height, double depth, double weight,
-		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-		java.math.BigDecimal cost, boolean published,
-		String externalReferenceCode, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.addCPInstance(cpDefinitionId,
-					sku, gtin, manufacturerPartNumber, purchasable, ddmContent,
-					width, height, depth, weight, price, promoPrice, cost,
-					published, externalReferenceCode, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
-
-			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void buildCPInstances(long cpDefinitionId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -137,28 +106,10 @@ public class CPInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPInstanceSoap deleteCPInstance(
-		com.liferay.commerce.product.model.CPInstanceSoap cpInstance)
+	public static void deleteCPInstance(long cpInstanceId)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.deleteCPInstance(com.liferay.commerce.product.model.impl.CPInstanceModelImpl.toModel(
-						cpInstance));
-
-			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPInstanceSoap deleteCPInstance(
-		long cpInstanceId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.deleteCPInstance(cpInstanceId);
-
-			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
+			CPInstanceServiceUtil.deleteCPInstance(cpInstanceId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -173,22 +124,6 @@ public class CPInstanceServiceSoap {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.fetchCPInstance(cpInstanceId);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPInstanceSoap[] getCPDefinitionInstances(
-		long cpDefinitionId, int start, int end) throws RemoteException {
-		try {
-			java.util.List<com.liferay.commerce.product.model.CPInstance> returnValue =
-				CPInstanceServiceUtil.getCPDefinitionInstances(cpDefinitionId,
-					start, end);
-
-			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -234,21 +169,6 @@ public class CPInstanceServiceSoap {
 		long cpInstanceId) throws RemoteException {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.getCPInstance(cpInstanceId);
-
-			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPInstanceSoap getCPInstance(
-		long cpDefinitionId, String sku) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.getCPInstance(cpDefinitionId,
-					sku);
 
 			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
 		}
@@ -318,35 +238,6 @@ public class CPInstanceServiceSoap {
 		try {
 			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.updateCPInstance(cpInstanceId,
 					sku, gtin, manufacturerPartNumber, purchasable, published,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
-
-			return com.liferay.commerce.product.model.CPInstanceSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPInstanceSoap updateCPInstance(
-		long cpInstanceId, String sku, String gtin,
-		String manufacturerPartNumber, boolean purchasable, double width,
-		double height, double depth, double weight, java.math.BigDecimal price,
-		java.math.BigDecimal promoPrice, java.math.BigDecimal cost,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPInstance returnValue = CPInstanceServiceUtil.updateCPInstance(cpInstanceId,
-					sku, gtin, manufacturerPartNumber, purchasable, width,
-					height, depth, weight, price, promoPrice, cost, published,
 					displayDateMonth, displayDateDay, displayDateYear,
 					displayDateHour, displayDateMinute, expirationDateMonth,
 					expirationDateDay, expirationDateYear, expirationDateHour,

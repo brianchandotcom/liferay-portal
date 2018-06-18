@@ -189,12 +189,10 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionSoap deleteCPDefinition(
-		long cpDefinitionId) throws RemoteException {
+	public static void deleteCPDefinition(long cpDefinitionId)
+		throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.deleteCPDefinition(cpDefinitionId);
-
-			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
+			CPDefinitionServiceUtil.deleteCPDefinition(cpDefinitionId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -297,21 +295,6 @@ public class CPDefinitionServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPAttachmentFileEntrySoap getDefaultImage(
-		long cpDefinitionId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPAttachmentFileEntry returnValue =
-				CPDefinitionServiceUtil.getDefaultImage(cpDefinitionId);
-
-			return com.liferay.commerce.product.model.CPAttachmentFileEntrySoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static String getLayoutUuid(long cpDefinitionId)
 		throws RemoteException {
 		try {
@@ -358,62 +341,6 @@ public class CPDefinitionServiceSoap {
 		throws RemoteException {
 		try {
 			CPDefinitionServiceUtil.restoreCPDefinitionFromTrash(cpDefinitionId);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinition(
-		long cpDefinitionId, String[] nameMapLanguageIds,
-		String[] nameMapValues, String[] shortDescriptionMapLanguageIds,
-		String[] shortDescriptionMapValues, String[] descriptionMapLanguageIds,
-		String[] descriptionMapValues, String[] urlTitleMapLanguageIds,
-		String[] urlTitleMapValues, String[] metaTitleMapLanguageIds,
-		String[] metaTitleMapValues, String[] metaDescriptionMapLanguageIds,
-		String[] metaDescriptionMapValues, String[] metaKeywordsMapLanguageIds,
-		String[] metaKeywordsMapValues, boolean ignoreSKUCombinations,
-		boolean shippable, boolean freeShipping, boolean shipSeparately,
-		double shippingExtraPrice, double width, double height, double depth,
-		double weight, long cpTaxCategoryId, boolean taxExempt,
-		boolean telcoOrElectronics, String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
-					nameMapValues);
-			Map<Locale, String> shortDescriptionMap = LocalizationUtil.getLocalizationMap(shortDescriptionMapLanguageIds,
-					shortDescriptionMapValues);
-			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
-					descriptionMapValues);
-			Map<Locale, String> urlTitleMap = LocalizationUtil.getLocalizationMap(urlTitleMapLanguageIds,
-					urlTitleMapValues);
-			Map<Locale, String> metaTitleMap = LocalizationUtil.getLocalizationMap(metaTitleMapLanguageIds,
-					metaTitleMapValues);
-			Map<Locale, String> metaDescriptionMap = LocalizationUtil.getLocalizationMap(metaDescriptionMapLanguageIds,
-					metaDescriptionMapValues);
-			Map<Locale, String> metaKeywordsMap = LocalizationUtil.getLocalizationMap(metaKeywordsMapLanguageIds,
-					metaKeywordsMapValues);
-
-			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinition(cpDefinitionId,
-					nameMap, shortDescriptionMap, descriptionMap, urlTitleMap,
-					metaTitleMap, metaDescriptionMap, metaKeywordsMap,
-					ignoreSKUCombinations, shippable, freeShipping,
-					shipSeparately, shippingExtraPrice, width, height, depth,
-					weight, cpTaxCategoryId, taxExempt, telcoOrElectronics,
-					ddmStructureKey, published, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
-
-			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -479,23 +406,6 @@ public class CPDefinitionServiceSoap {
 		try {
 			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinitionCategorization(cpDefinitionId,
 					serviceContext);
-
-			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionSoap updateCPDefinitionIgnoreSKUCombinations(
-		long cpDefinitionId, boolean ignoreSKUCombinations,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinition returnValue = CPDefinitionServiceUtil.updateCPDefinitionIgnoreSKUCombinations(cpDefinitionId,
-					ignoreSKUCombinations, serviceContext);
 
 			return com.liferay.commerce.product.model.CPDefinitionSoap.toSoapModel(returnValue);
 		}

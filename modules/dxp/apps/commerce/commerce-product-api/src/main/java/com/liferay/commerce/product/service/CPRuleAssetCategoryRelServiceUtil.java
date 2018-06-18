@@ -62,12 +62,6 @@ public class CPRuleAssetCategoryRelServiceUtil {
 		return getService().getAssetCategoryIds(cpRuleId);
 	}
 
-	public static com.liferay.commerce.product.model.CPRuleAssetCategoryRel getCPRuleAssetCategoryRel(
-		long cpRuleAssetCategoryRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPRuleAssetCategoryRel(cpRuleAssetCategoryRelId);
-	}
-
 	public static java.util.List<com.liferay.commerce.product.model.CPRuleAssetCategoryRel> getCPRuleAssetCategoryRels(
 		long cpRuleId)
 		throws com.liferay.portal.kernel.exception.PortalException {

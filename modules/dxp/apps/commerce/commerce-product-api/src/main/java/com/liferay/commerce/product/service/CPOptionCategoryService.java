@@ -62,7 +62,7 @@ public interface CPOptionCategoryService extends BaseService {
 		Map<Locale, String> descriptionMap, double priority, String key,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPOptionCategory deleteCPOptionCategory(long cpOptionCategoryId)
+	public void deleteCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -71,15 +71,17 @@ public interface CPOptionCategoryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPOptionCategory> getCPOptionCategories(long groupId,
-		int start, int end);
+		int start, int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPOptionCategory> getCPOptionCategories(long groupId,
 		int start, int end,
-		OrderByComparator<CPOptionCategory> orderByComparator);
+		OrderByComparator<CPOptionCategory> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCPOptionCategoriesCount(long groupId);
+	public int getCPOptionCategoriesCount(long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)

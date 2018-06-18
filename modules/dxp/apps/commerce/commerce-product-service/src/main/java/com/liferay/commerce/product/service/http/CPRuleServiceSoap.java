@@ -82,12 +82,9 @@ public class CPRuleServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPRuleSoap deleteCPRule(
-		long cpRuleId) throws RemoteException {
+	public static void deleteCPRule(long cpRuleId) throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPRule returnValue = CPRuleServiceUtil.deleteCPRule(cpRuleId);
-
-			return com.liferay.commerce.product.model.CPRuleSoap.toSoapModel(returnValue);
+			CPRuleServiceUtil.deleteCPRule(cpRuleId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

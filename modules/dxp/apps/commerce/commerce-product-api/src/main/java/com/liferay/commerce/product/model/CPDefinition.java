@@ -63,6 +63,9 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 
 	public java.util.List<CPInstance> getCPInstances();
 
+	public String getDefaultImageFileURL()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public String getDefaultImageThumbnailSrc(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws Exception;
@@ -82,6 +85,8 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 	public java.util.Map<java.util.Locale, String> getNameMap();
 
 	public java.util.Map<java.util.Locale, String> getShortDescriptionMap();
+
+	public String getURL(String languageId);
 
 	public java.util.Map<java.util.Locale, String> getUrlTitleMap();
 

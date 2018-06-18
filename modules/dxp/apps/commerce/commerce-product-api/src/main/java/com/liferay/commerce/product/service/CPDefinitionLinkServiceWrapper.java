@@ -34,10 +34,9 @@ public class CPDefinitionLinkServiceWrapper implements CPDefinitionLinkService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPDefinitionLink deleteCPDefinitionLink(
-		long cpDefinitionLinkId)
+	public void deleteCPDefinitionLink(long cpDefinitionLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpDefinitionLinkService.deleteCPDefinitionLink(cpDefinitionLinkId);
+		_cpDefinitionLinkService.deleteCPDefinitionLink(cpDefinitionLinkId);
 	}
 
 	@Override

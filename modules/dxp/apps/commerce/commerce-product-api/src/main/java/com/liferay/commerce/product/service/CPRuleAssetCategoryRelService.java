@@ -66,10 +66,6 @@ public interface CPRuleAssetCategoryRelService extends BaseService {
 	public long[] getAssetCategoryIds(long cpRuleId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPRuleAssetCategoryRel getCPRuleAssetCategoryRel(
-		long cpRuleAssetCategoryRelId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPRuleAssetCategoryRel> getCPRuleAssetCategoryRels(
 		long cpRuleId) throws PortalException;
 

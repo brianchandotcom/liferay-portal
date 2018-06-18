@@ -78,17 +78,20 @@ public class CPOptionServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
-		long groupId, int start, int end) {
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPOptions(groupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPOptions(groupId, start, end, orderByComparator);
 	}
 
-	public static int getCPOptionsCount(long groupId) {
+	public static int getCPOptionsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPOptionsCount(groupId);
 	}
 
@@ -101,11 +104,6 @@ public class CPOptionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
-	}
-
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
 		long companyId, long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
@@ -113,24 +111,6 @@ public class CPOptionServiceUtil {
 		return getService()
 				   .searchCPOptions(companyId, groupId, keywords, start, end,
 			sort);
-	}
-
-	public static com.liferay.commerce.product.model.CPOption setFacetable(
-		long cpOptionId, boolean facetable)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().setFacetable(cpOptionId, facetable);
-	}
-
-	public static com.liferay.commerce.product.model.CPOption setRequired(
-		long cpOptionId, boolean required)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().setRequired(cpOptionId, required);
-	}
-
-	public static com.liferay.commerce.product.model.CPOption setSkuContributor(
-		long cpOptionId, boolean skuContributor)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().setSkuContributor(cpOptionId, skuContributor);
 	}
 
 	public static com.liferay.commerce.product.model.CPOption updateCPOption(

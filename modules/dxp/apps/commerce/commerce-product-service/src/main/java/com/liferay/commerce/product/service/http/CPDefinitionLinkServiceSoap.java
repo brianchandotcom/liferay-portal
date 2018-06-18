@@ -65,12 +65,10 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CPDefinitionLinkServiceSoap {
-	public static com.liferay.commerce.product.model.CPDefinitionLinkSoap deleteCPDefinitionLink(
-		long cpDefinitionLinkId) throws RemoteException {
+	public static void deleteCPDefinitionLink(long cpDefinitionLinkId)
+		throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPDefinitionLink returnValue = CPDefinitionLinkServiceUtil.deleteCPDefinitionLink(cpDefinitionLinkId);
-
-			return com.liferay.commerce.product.model.CPDefinitionLinkSoap.toSoapModel(returnValue);
+			CPDefinitionLinkServiceUtil.deleteCPDefinitionLink(cpDefinitionLinkId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -43,29 +43,6 @@ public class CPDefinitionOptionRelServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDefinitionOptionRelServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
-		long cpDefinitionId, long cpOptionId, boolean importOptionValue,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCPDefinitionOptionRel(cpDefinitionId, cpOptionId,
-			importOptionValue, serviceContext);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
-		long cpDefinitionId, long cpOptionId,
-		java.util.Map<java.util.Locale, String> nameMap,
-		java.util.Map<java.util.Locale, String> descriptionMap,
-		String ddmFormFieldTypeName, double priority, boolean facetable,
-		boolean required, boolean skuContributor, boolean importOptionValue,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addCPDefinitionOptionRel(cpDefinitionId, cpOptionId,
-			nameMap, descriptionMap, ddmFormFieldTypeName, priority, facetable,
-			required, skuContributor, importOptionValue, serviceContext);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel addCPDefinitionOptionRel(
 		long cpDefinitionId, long cpOptionId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -74,16 +51,9 @@ public class CPDefinitionOptionRelServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel deleteCPDefinitionOptionRel(
-		com.liferay.commerce.product.model.CPDefinitionOptionRel cpDefinitionOptionRel)
+	public static void deleteCPDefinitionOptionRel(long cpDefinitionOptionRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPDefinitionOptionRel(cpDefinitionOptionRel);
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionRel deleteCPDefinitionOptionRel(
-		long cpDefinitionOptionRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPDefinitionOptionRel(cpDefinitionOptionRelId);
+		getService().deleteCPDefinitionOptionRel(cpDefinitionOptionRelId);
 	}
 
 	public static com.liferay.commerce.product.model.CPDefinitionOptionRel fetchCPDefinitionOptionRel(
@@ -140,11 +110,6 @@ public class CPDefinitionOptionRelServiceUtil {
 	*/
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return getService().search(searchContext);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPDefinitionOptionRel> searchCPDefinitionOptionRels(

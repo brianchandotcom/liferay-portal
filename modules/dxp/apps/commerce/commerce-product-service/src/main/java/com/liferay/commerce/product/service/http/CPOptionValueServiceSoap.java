@@ -90,28 +90,10 @@ public class CPOptionValueServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionValueSoap deleteCPOptionValue(
-		com.liferay.commerce.product.model.CPOptionValueSoap cpOptionValue)
+	public static void deleteCPOptionValue(long cpOptionValueId)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPOptionValue returnValue = CPOptionValueServiceUtil.deleteCPOptionValue(com.liferay.commerce.product.model.impl.CPOptionValueModelImpl.toModel(
-						cpOptionValue));
-
-			return com.liferay.commerce.product.model.CPOptionValueSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPOptionValueSoap deleteCPOptionValue(
-		long cpOptionValueId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPOptionValue returnValue = CPOptionValueServiceUtil.deleteCPOptionValue(cpOptionValueId);
-
-			return com.liferay.commerce.product.model.CPOptionValueSoap.toSoapModel(returnValue);
+			CPOptionValueServiceUtil.deleteCPOptionValue(cpOptionValueId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -140,54 +122,6 @@ public class CPOptionValueServiceSoap {
 			com.liferay.commerce.product.model.CPOptionValue returnValue = CPOptionValueServiceUtil.getCPOptionValue(cpOptionValueId);
 
 			return com.liferay.commerce.product.model.CPOptionValueSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPOptionValueSoap[] getCPOptionValues(
-		long cpOptionId, int start, int end) throws RemoteException {
-		try {
-			java.util.List<com.liferay.commerce.product.model.CPOptionValue> returnValue =
-				CPOptionValueServiceUtil.getCPOptionValues(cpOptionId, start,
-					end);
-
-			return com.liferay.commerce.product.model.CPOptionValueSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPOptionValueSoap[] getCPOptionValues(
-		long cpOptionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionValue> orderByComparator)
-		throws RemoteException {
-		try {
-			java.util.List<com.liferay.commerce.product.model.CPOptionValue> returnValue =
-				CPOptionValueServiceUtil.getCPOptionValues(cpOptionId, start,
-					end, orderByComparator);
-
-			return com.liferay.commerce.product.model.CPOptionValueSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static int getCPOptionValuesCount(long cpOptionId)
-		throws RemoteException {
-		try {
-			int returnValue = CPOptionValueServiceUtil.getCPOptionValuesCount(cpOptionId);
-
-			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

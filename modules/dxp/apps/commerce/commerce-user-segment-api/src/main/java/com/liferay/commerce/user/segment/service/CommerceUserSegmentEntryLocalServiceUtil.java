@@ -266,6 +266,12 @@ public class CommerceUserSegmentEntryLocalServiceUtil {
 				   .getCommerceUserSegmentEntry(commerceUserSegmentEntryId);
 	}
 
+	public static com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry getCommerceUserSegmentEntry(
+		long groupId, String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceUserSegmentEntry(groupId, key);
+	}
+
 	public static long[] getCommerceUserSegmentEntryIds(long groupId,
 		long organizationId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -393,6 +393,12 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	@Override
+	public String getDefaultImageFileURL()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinition.getDefaultImageFileURL();
+	}
+
+	@Override
 	public String getDefaultImageThumbnailSrc(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws Exception {
@@ -870,6 +876,11 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
 		return _cpDefinition.getTrashHandler();
+	}
+
+	@Override
+	public String getURL(String languageId) {
+		return _cpDefinition.getURL(languageId);
 	}
 
 	@Override

@@ -16,7 +16,6 @@ package com.liferay.commerce.product.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,8 +31,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
@@ -95,7 +92,7 @@ public interface CPDefinitionService extends BaseService {
 	public void deleteAssetCategoryCPDefinition(long cpDefinitionId,
 		long categoryId) throws PortalException;
 
-	public CPDefinition deleteCPDefinition(long cpDefinitionId)
+	public void deleteCPDefinition(long cpDefinitionId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -121,10 +118,6 @@ public interface CPDefinitionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionsCountByCategoryId(long categoryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPAttachmentFileEntry getDefaultImage(long cpDefinitionId)
-		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getLayoutUuid(long cpDefinitionId) throws PortalException;
@@ -163,22 +156,6 @@ public interface CPDefinitionService extends BaseService {
 		Map<Locale, String> metaTitleMap,
 		Map<Locale, String> metaDescriptionMap,
 		Map<Locale, String> metaKeywordsMap, boolean ignoreSKUCombinations,
-		boolean shippable, boolean freeShipping, boolean shipSeparately,
-		double shippingExtraPrice, double width, double height, double depth,
-		double weight, long cpTaxCategoryId, boolean taxExempt,
-		boolean telcoOrElectronics, String ddmStructureKey, boolean published,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
-		ServiceContext serviceContext) throws PortalException;
-
-	public CPDefinition updateCPDefinition(long cpDefinitionId,
-		Map<Locale, String> nameMap, Map<Locale, String> shortDescriptionMap,
-		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
-		Map<Locale, String> metaTitleMap,
-		Map<Locale, String> metaDescriptionMap,
-		Map<Locale, String> metaKeywordsMap, boolean ignoreSKUCombinations,
 		String ddmStructureKey, boolean published, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -189,10 +166,6 @@ public interface CPDefinitionService extends BaseService {
 	public CPDefinition updateCPDefinitionCategorization(long cpDefinitionId,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPDefinition updateCPDefinitionIgnoreSKUCombinations(
-		long cpDefinitionId, boolean ignoreSKUCombinations,
-		ServiceContext serviceContext) throws PortalException;
-
 	public void updateCPDisplayLayout(long cpDefinitionId, String layoutUuid,
 		ServiceContext serviceContext) throws PortalException;
 
@@ -200,10 +173,6 @@ public interface CPDefinitionService extends BaseService {
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
 		double weight, ServiceContext serviceContext) throws PortalException;
-
-	public CPDefinition updateStatus(long userId, long cpDefinitionId,
-		int status, ServiceContext serviceContext,
-		Map<String, Serializable> workflowContext) throws PortalException;
 
 	public CPDefinition updateTaxCategoryInfo(long cpDefinitionId,
 		long cpTaxCategoryId, boolean taxExempt, boolean telcoOrElectronics)

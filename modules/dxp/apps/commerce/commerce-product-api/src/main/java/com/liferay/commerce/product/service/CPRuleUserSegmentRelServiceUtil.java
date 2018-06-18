@@ -56,12 +56,6 @@ public class CPRuleUserSegmentRelServiceUtil {
 		getService().deleteCPRuleUserSegmentRel(cpRuleUserSegmentRelId);
 	}
 
-	public static com.liferay.commerce.product.model.CPRuleUserSegmentRel getCPRuleUserSegmentRel(
-		long cpRuleUserSegmentRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPRuleUserSegmentRel(cpRuleUserSegmentRelId);
-	}
-
 	public static java.util.List<com.liferay.commerce.product.model.CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
 		long cpRuleId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPRuleUserSegmentRel> orderByComparator)

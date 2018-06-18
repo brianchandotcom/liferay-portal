@@ -91,30 +91,10 @@ public class CPDefinitionOptionValueRelServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap deleteCPDefinitionOptionValueRel(
-		com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap cpDefinitionOptionValueRel)
-		throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPDefinitionOptionValueRel returnValue =
-				CPDefinitionOptionValueRelServiceUtil.deleteCPDefinitionOptionValueRel(com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelModelImpl.toModel(
-						cpDefinitionOptionValueRel));
-
-			return com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap deleteCPDefinitionOptionValueRel(
+	public static void deleteCPDefinitionOptionValueRel(
 		long cpDefinitionOptionValueRelId) throws RemoteException {
 		try {
-			com.liferay.commerce.product.model.CPDefinitionOptionValueRel returnValue =
-				CPDefinitionOptionValueRelServiceUtil.deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
-
-			return com.liferay.commerce.product.model.CPDefinitionOptionValueRelSoap.toSoapModel(returnValue);
+			CPDefinitionOptionValueRelServiceUtil.deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

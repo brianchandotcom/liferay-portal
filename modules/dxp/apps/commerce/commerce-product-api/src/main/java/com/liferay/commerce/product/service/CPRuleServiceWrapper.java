@@ -41,9 +41,9 @@ public class CPRuleServiceWrapper implements CPRuleService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPRule deleteCPRule(long cpRuleId)
+	public void deleteCPRule(long cpRuleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpRuleService.deleteCPRule(cpRuleId);
+		_cpRuleService.deleteCPRule(cpRuleId);
 	}
 
 	@Override
@@ -83,13 +83,6 @@ public class CPRuleServiceWrapper implements CPRuleService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpRuleService.searchCPRules(companyId, groupId, keywords,
 			start, end, sort);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPRule> searchCPRules(
-		com.liferay.portal.kernel.search.SearchContext searchContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpRuleService.searchCPRules(searchContext);
 	}
 
 	@Override

@@ -109,21 +109,6 @@ public class CPRuleAssetCategoryRelServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.product.model.CPRuleAssetCategoryRelSoap getCPRuleAssetCategoryRel(
-		long cpRuleAssetCategoryRelId) throws RemoteException {
-		try {
-			com.liferay.commerce.product.model.CPRuleAssetCategoryRel returnValue =
-				CPRuleAssetCategoryRelServiceUtil.getCPRuleAssetCategoryRel(cpRuleAssetCategoryRelId);
-
-			return com.liferay.commerce.product.model.CPRuleAssetCategoryRelSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static com.liferay.commerce.product.model.CPRuleAssetCategoryRelSoap[] getCPRuleAssetCategoryRels(
 		long cpRuleId) throws RemoteException {
 		try {

@@ -74,20 +74,23 @@ public class CPOptionServiceWrapper implements CPOptionService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
-		long groupId, int start, int end) {
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.getCPOptions(groupId, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.getCPOptions(groupId, start, end,
 			orderByComparator);
 	}
 
 	@Override
-	public int getCPOptionsCount(long groupId) {
+	public int getCPOptionsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.getCPOptionsCount(groupId);
 	}
 
@@ -102,39 +105,12 @@ public class CPOptionServiceWrapper implements CPOptionService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return _cpOptionService.search(searchContext);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.product.model.CPOption> searchCPOptions(
 		long companyId, long groupId, String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort sort)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpOptionService.searchCPOptions(companyId, groupId, keywords,
 			start, end, sort);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOption setFacetable(
-		long cpOptionId, boolean facetable)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionService.setFacetable(cpOptionId, facetable);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOption setRequired(
-		long cpOptionId, boolean required)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionService.setRequired(cpOptionId, required);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOption setSkuContributor(
-		long cpOptionId, boolean skuContributor)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpOptionService.setSkuContributor(cpOptionId, skuContributor);
 	}
 
 	@Override

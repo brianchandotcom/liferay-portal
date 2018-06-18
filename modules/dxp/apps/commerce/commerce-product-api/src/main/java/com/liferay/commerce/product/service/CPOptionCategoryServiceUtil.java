@@ -53,10 +53,9 @@ public class CPOptionCategoryServiceUtil {
 			key, serviceContext);
 	}
 
-	public static com.liferay.commerce.product.model.CPOptionCategory deleteCPOptionCategory(
-		long cpOptionCategoryId)
+	public static void deleteCPOptionCategory(long cpOptionCategoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPOptionCategory(cpOptionCategoryId);
+		getService().deleteCPOptionCategory(cpOptionCategoryId);
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionCategory fetchCPOptionCategory(
@@ -66,18 +65,21 @@ public class CPOptionCategoryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
-		long groupId, int start, int end) {
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPOptionCategories(groupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPOptionCategory> getCPOptionCategories(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionCategory> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOptionCategory> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getCPOptionCategories(groupId, start, end, orderByComparator);
 	}
 
-	public static int getCPOptionCategoriesCount(long groupId) {
+	public static int getCPOptionCategoriesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCPOptionCategoriesCount(groupId);
 	}
 

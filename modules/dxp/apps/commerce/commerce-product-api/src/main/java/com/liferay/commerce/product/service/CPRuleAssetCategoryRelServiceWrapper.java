@@ -56,13 +56,6 @@ public class CPRuleAssetCategoryRelServiceWrapper
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPRuleAssetCategoryRel getCPRuleAssetCategoryRel(
-		long cpRuleAssetCategoryRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpRuleAssetCategoryRelService.getCPRuleAssetCategoryRel(cpRuleAssetCategoryRelId);
-	}
-
-	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPRuleAssetCategoryRel> getCPRuleAssetCategoryRels(
 		long cpRuleId)
 		throws com.liferay.portal.kernel.exception.PortalException {

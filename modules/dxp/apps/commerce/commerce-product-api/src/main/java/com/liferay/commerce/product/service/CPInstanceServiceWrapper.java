@@ -51,29 +51,6 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPInstance addCPInstance(
-		long cpDefinitionId, String sku, String gtin,
-		String manufacturerPartNumber, boolean purchasable, String ddmContent,
-		double width, double height, double depth, double weight,
-		java.math.BigDecimal price, java.math.BigDecimal promoPrice,
-		java.math.BigDecimal cost, boolean published,
-		String externalReferenceCode, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.addCPInstance(cpDefinitionId, sku, gtin,
-			manufacturerPartNumber, purchasable, ddmContent, width, height,
-			depth, weight, price, promoPrice, cost, published,
-			externalReferenceCode, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
-	}
-
-	@Override
 	public void buildCPInstances(long cpDefinitionId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -81,17 +58,9 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPInstance deleteCPInstance(
-		com.liferay.commerce.product.model.CPInstance cpInstance)
+	public void deleteCPInstance(long cpInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.deleteCPInstance(cpInstance);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPInstance deleteCPInstance(
-		long cpInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.deleteCPInstance(cpInstanceId);
+		_cpInstanceService.deleteCPInstance(cpInstanceId);
 	}
 
 	@Override
@@ -99,14 +68,6 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 		long cpInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceService.fetchCPInstance(cpInstanceId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPDefinitionInstances(
-		long cpDefinitionId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.getCPDefinitionInstances(cpDefinitionId,
-			start, end);
 	}
 
 	@Override
@@ -130,13 +91,6 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 		long cpInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceService.getCPInstance(cpInstanceId);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPInstance getCPInstance(
-		long cpDefinitionId, String sku)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.getCPInstance(cpDefinitionId, sku);
 	}
 
 	@Override
@@ -169,12 +123,6 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _cpInstanceService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.search.Hits search(
-		com.liferay.portal.kernel.search.SearchContext searchContext) {
-		return _cpInstanceService.search(searchContext);
 	}
 
 	@Override
@@ -222,27 +170,6 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPInstance updateCPInstance(
-		long cpInstanceId, String sku, String gtin,
-		String manufacturerPartNumber, boolean purchasable, double width,
-		double height, double depth, double weight, java.math.BigDecimal price,
-		java.math.BigDecimal promoPrice, java.math.BigDecimal cost,
-		boolean published, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
-		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.updateCPInstance(cpInstanceId, sku, gtin,
-			manufacturerPartNumber, purchasable, width, height, depth, weight,
-			price, promoPrice, cost, published, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
-	}
-
-	@Override
 	public com.liferay.commerce.product.model.CPInstance updatePricingInfo(
 		long cpInstanceId, java.math.BigDecimal price,
 		java.math.BigDecimal promoPrice, java.math.BigDecimal cost,
@@ -260,16 +187,6 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _cpInstanceService.updateShippingInfo(cpInstanceId, width,
 			height, depth, weight, serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPInstance updateStatus(
-		long userId, long cpInstanceId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext,
-		java.util.Map<String, java.io.Serializable> workflowContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.updateStatus(userId, cpInstanceId, status,
-			serviceContext, workflowContext);
 	}
 
 	@Override

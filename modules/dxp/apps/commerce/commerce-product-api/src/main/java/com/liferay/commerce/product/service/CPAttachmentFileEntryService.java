@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.io.Serializable;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -71,11 +69,8 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		Map<Locale, String> titleMap, String json, double priority, int type,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
-		CPAttachmentFileEntry cpAttachmentFileEntry) throws PortalException;
-
-	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
-		long cpAttachmentFileEntryId) throws PortalException;
+	public void deleteCPAttachmentFileEntry(long cpAttachmentFileEntryId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPAttachmentFileEntry fetchCPAttachmentFileEntry(
@@ -116,9 +111,4 @@ public interface CPAttachmentFileEntryService extends BaseService {
 		int expirationDateMinute, boolean neverExpire,
 		Map<Locale, String> titleMap, String json, double priority, int type,
 		ServiceContext serviceContext) throws PortalException;
-
-	public CPAttachmentFileEntry updateStatus(long userId,
-		long cpAttachmentFileEntryId, int status,
-		ServiceContext serviceContext, Map<String, Serializable> workflowContext)
-		throws PortalException;
 }

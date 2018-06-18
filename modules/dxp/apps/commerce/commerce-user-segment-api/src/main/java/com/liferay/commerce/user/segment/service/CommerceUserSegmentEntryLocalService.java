@@ -244,6 +244,10 @@ public interface CommerceUserSegmentEntryLocalService extends BaseLocalService,
 		long commerceUserSegmentEntryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceUserSegmentEntry getCommerceUserSegmentEntry(long groupId,
+		String key) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getCommerceUserSegmentEntryIds(long groupId,
 		long organizationId, long userId) throws PortalException;
 

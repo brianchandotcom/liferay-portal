@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
@@ -62,7 +61,7 @@ public interface CPRuleService extends BaseService {
 	public CPRule addCPRule(String name, boolean active, String type,
 		ServiceContext serviceContext) throws PortalException;
 
-	public CPRule deleteCPRule(long cpRuleId) throws PortalException;
+	public void deleteCPRule(long cpRuleId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPRule getCPRule(long cpRuleId) throws PortalException;
@@ -85,10 +84,6 @@ public interface CPRuleService extends BaseService {
 	public BaseModelSearchResult<CPRule> searchCPRules(long companyId,
 		long groupId, String keywords, int start, int end, Sort sort)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BaseModelSearchResult<CPRule> searchCPRules(
-		SearchContext searchContext) throws PortalException;
 
 	public CPRule updateCPRule(long cpRuleId, String name, boolean active,
 		String type, ServiceContext serviceContext) throws PortalException;

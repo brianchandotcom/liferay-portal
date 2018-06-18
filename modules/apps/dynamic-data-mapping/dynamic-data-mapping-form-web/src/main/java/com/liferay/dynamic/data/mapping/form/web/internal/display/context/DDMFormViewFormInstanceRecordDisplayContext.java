@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,9 +37,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -56,11 +59,13 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse,
 		DDMFormInstanceRecordLocalService formInstanceRecordLocalService,
+		DDMFormInstanceVersionLocalService formInstanceVersionLocalService,
 		DDMFormRenderer formRenderer, DDMFormValuesFactory formValuesFactory,
 		DDMFormValuesMerger formValuesMerger) {
 
 		_httpServletResponse = httpServletResponse;
 		_ddmFormInstanceRecordLocalService = formInstanceRecordLocalService;
+		_ddmFormInstanceVersionLocalService = formInstanceVersionLocalService;
 		_ddmFormRenderer = formRenderer;
 		_ddmFormValuesFactory = formValuesFactory;
 		_ddmFormValuesMerger = formValuesMerger;
@@ -92,8 +97,17 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		formRenderingContext.setDDMFormValues(formValues);
 		formRenderingContext.setLocale(formValues.getDefaultLocale());
 
+		DDMFormInstanceVersion latestApprovedFormInstanceVersion =
+			_ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
+				formInstance.getFormInstanceId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		DDMStructureVersion latestApprovedStructureVersion =
+			latestApprovedFormInstanceVersion.getStructureVersion();
+
 		updateDDMFormFields(
-			structureVersion.getDDMForm(), structureVersion.getDDMForm());
+			structureVersion.getDDMForm(),
+			latestApprovedStructureVersion.getDDMForm());
 
 		DDMFormLayout formLayout = structureVersion.getDDMFormLayout();
 
@@ -220,6 +234,10 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 	protected void updateDDMFormFields(
 		DDMForm currentForm, DDMForm latestForm) {
 
+		if (Objects.equals(currentForm, latestForm)) {
+			return;
+		}
+
 		Map<String, DDMFormField> latestDDMFormFieldMap =
 			latestForm.getDDMFormFieldsMap(true);
 
@@ -231,6 +249,8 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 	private final DDMFormAdminRequestHelper _ddmFormAdminRequestHelper;
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
+	private final DDMFormInstanceVersionLocalService
+		_ddmFormInstanceVersionLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;

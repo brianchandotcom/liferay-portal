@@ -42,8 +42,15 @@ public class PortletTitleComparator
 	public PortletTitleComparator(
 		ServletContext servletContext, Locale locale) {
 
+		this(servletContext, locale, true);
+	}
+
+	public PortletTitleComparator(
+		ServletContext servletContext, Locale locale, boolean ascending) {
+
 		_servletContext = servletContext;
 		_locale = locale;
+		_ascending = ascending;
 
 		_collator = CollatorUtil.getInstance(_locale);
 	}
@@ -78,9 +85,17 @@ public class PortletTitleComparator
 			return -1;
 		}
 
-		return _collator.compare(portletTitle1, portletTitle2);
+		int value = _collator.compare(portletTitle1, portletTitle2);
+
+		if (_ascending) {
+			return value;
+		}
+		else {
+			return -value;
+		}
 	}
 
+	private final boolean _ascending;
 	private final Collator _collator;
 	private final Locale _locale;
 	private final ServletContext _servletContext;

@@ -76,6 +76,7 @@ public class FragmentCollectionLocalServiceImpl
 		FragmentCollection fragmentCollection =
 			fragmentCollectionPersistence.create(fragmentCollectionId);
 
+		fragmentCollection.setUuid(serviceContext.getUuid());
 		fragmentCollection.setGroupId(groupId);
 		fragmentCollection.setCompanyId(user.getCompanyId());
 		fragmentCollection.setUserId(user.getUserId());

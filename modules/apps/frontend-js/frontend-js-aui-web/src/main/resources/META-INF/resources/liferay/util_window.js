@@ -96,12 +96,6 @@ AUI.add(
 					return A.Widget.getByNode(node);
 				},
 
-				getById: function(id) {
-					var instance = this;
-
-					return instance._map[id];
-				},
-
 				getWindow: function(config) {
 					var instance = this;
 

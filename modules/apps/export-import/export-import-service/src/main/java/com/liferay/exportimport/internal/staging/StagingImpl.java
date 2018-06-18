@@ -142,6 +142,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.http.GroupServiceHttp;
+import com.liferay.portal.service.http.LayoutServiceHttp;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
@@ -3684,6 +3685,8 @@ public class StagingImpl implements Staging {
 			Map<String, String[]> parameterMap, boolean copyFromLive)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(userId);
+
 		Layout sourceLayout = _layoutLocalService.getLayout(plid);
 
 		Group scopeGroup = sourceLayout.getScopeGroup();
@@ -3713,33 +3716,44 @@ public class StagingImpl implements Staging {
 		else {
 			stagingGroup = sourceLayout.getGroup();
 
-			liveGroup = stagingGroup.getLiveGroup();
+			StagingGroupHelper stagingGroupHelper =
+				StagingGroupHelperUtil.getStagingGroupHelper();
+
+			liveGroup = stagingGroupHelper.fetchLiveGroup(stagingGroup);
 
 			targetLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 				sourceLayout.getUuid(), liveGroup.getGroupId(),
 				sourceLayout.isPrivateLayout());
 		}
 
+		long targetLayoutPlid = 0;
+
+		if (stagingGroup.isStagedRemotely()) {
+			HttpPrincipal httpPrincipal = new HttpPrincipal(
+				buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
+				user.getLogin(), user.getPassword(),
+				user.isPasswordEncrypted());
+
+			targetLayoutPlid = LayoutServiceHttp.getLayoutPlid(
+				httpPrincipal, sourceLayout.getUuid(), liveGroup.getGroupId(),
+				sourceLayout.isPrivateLayout());
+		}
+		else if (targetLayout != null) {
+			targetLayoutPlid = targetLayout.getPlid();
+		}
+
 		if (copyFromLive) {
 			return publishPortlet(
 				userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
-				targetLayout.getPlid(), sourceLayout.getPlid(), portletId,
+				targetLayoutPlid, sourceLayout.getPlid(), portletId,
 				parameterMap);
 		}
 
-		long targetGroupId = 0;
-
-		if (stagingGroup.isStagedRemotely()) {
-			targetGroupId = stagingGroup.getRemoteLiveGroupId();
-		}
-		else {
-			targetGroupId = liveGroup.getGroupId();
-		}
+		long targetGroupId = liveGroup.getGroupId();
 
 		return publishPortlet(
 			userId, stagingGroup.getGroupId(), targetGroupId,
-			sourceLayout.getPlid(), targetLayout.getPlid(), portletId,
-			parameterMap);
+			sourceLayout.getPlid(), targetLayoutPlid, portletId, parameterMap);
 	}
 
 	/**

@@ -98,7 +98,7 @@
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
-	<td>//input[contains(@name,'DELETIONS')]</td>
+	<td>//input[contains(@name,'DELETIONS')]//following-sibling::span</td>
 	<td></td>
 </tr>
 <tr>

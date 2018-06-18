@@ -78,7 +78,7 @@ public class JournalFolderModelResourcePermissionRegistrar {
 	}
 
 	@Deactivate
-	public void deacitvate() {
+	public void deactivate() {
 		_serviceRegistration.unregister();
 	}
 

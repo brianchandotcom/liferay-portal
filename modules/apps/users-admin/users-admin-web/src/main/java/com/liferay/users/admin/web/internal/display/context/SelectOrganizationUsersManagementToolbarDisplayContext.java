@@ -124,12 +124,6 @@ public class SelectOrganizationUsersManagementToolbarDisplayContext {
 			String.valueOf(_organization.getOrganizationId()));
 		portletURL.setParameter("displayStyle", _displayStyle);
 
-		String eventName = ParamUtil.getString(
-			_request, "eventName",
-			_renderResponse.getNamespace() + "selectOrganization");
-
-		portletURL.setParameter("eventName", eventName);
-
 		String[] keywords = ParamUtil.getStringValues(_request, "keywords");
 
 		if (ArrayUtil.isNotEmpty(keywords)) {

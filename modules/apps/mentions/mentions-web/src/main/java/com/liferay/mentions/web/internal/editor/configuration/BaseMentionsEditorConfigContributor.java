@@ -62,11 +62,13 @@ public class BaseMentionsEditorConfigContributor
 		triggerJSONObject.put("tplReplace", "{mention}");
 
 		String tpl = StringBundler.concat(
-			"<div class=\"autofit-row\">",
+			"<div class=\"p-1 autofit-row autofit-row-center\">",
 			"<div class=\"autofit-col inline-item-before\">{portraitHTML}",
-			"</div><div class=\"autofit-col autofit-col-expand\" ",
-			"style=\"margin-top: .35rem;\">",
-			"<h4>{fullName} <small>@{screenName}</small></h4></div></div>");
+			"</div><div class=\"autofit-col autofit-col-expand\">",
+			"<strong class=\"truncate-text\">{fullName}</strong>",
+			"<div class=\"autofit-col-expand\">",
+			"<small class=\"truncate-text\">@{screenName}</small></div></div>",
+			"</div>");
 
 		triggerJSONObject.put("tplResults", tpl);
 

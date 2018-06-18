@@ -33,7 +33,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 
 						<c:choose>
 							<c:when test="<%= ListUtil.isNotEmpty(fragmentCollections) %>">
-								<div class="align-items-center autofit-row">
+								<div class="autofit-row autofit-row-center">
 									<div class="autofit-col autofit-col-expand">
 										<strong class="text-uppercase">
 											<liferay-ui:message key="collections" />
@@ -116,7 +116,7 @@ List<FragmentCollection> fragmentCollections = FragmentCollectionServiceUtil.get
 			<c:if test="<%= fragmentCollection != null %>">
 				<div class="sheet">
 					<h3 class="sheet-title">
-						<div class="align-items-center autofit-row">
+						<div class="autofit-row autofit-row-center">
 							<div class="autofit-col">
 								<%= HtmlUtil.escape(fragmentCollection.getName()) %>
 							</div>

@@ -162,18 +162,23 @@
 
 			<sequential>
 				<local name="app.name" />
+				<local name="app.suite" />
 				<local name="Liferay-Releng-Suite" />
 
 				<basename file="@{app.dir}" property="app.name" />
 
 				<property file="@{app.dir}/app.bnd" />
 
+				<condition else="${app.name}" property="app.suite" value="${Liferay-Releng-Suite}">
+					<isset property="Liferay-Releng-Suite" />
+				</condition>
+
 				<if>
 					<or>
-						<equals arg1="${Liferay-Releng-Suite}" arg2="collaboration" />
-						<equals arg1="${Liferay-Releng-Suite}" arg2="forms-and-workflow" />
-						<equals arg1="${Liferay-Releng-Suite}" arg2="foundation" />
-						<equals arg1="${Liferay-Releng-Suite}" arg2="web-experience" />
+						<equals arg1="${app.suite}" arg2="collaboration" />
+						<equals arg1="${app.suite}" arg2="forms-and-workflow" />
+						<equals arg1="${app.suite}" arg2="foundation" />
+						<equals arg1="${app.suite}" arg2="web-experience" />
 					</or>
 					<then>
 						<ant inheritAll="false" target="build-app-lpkg">

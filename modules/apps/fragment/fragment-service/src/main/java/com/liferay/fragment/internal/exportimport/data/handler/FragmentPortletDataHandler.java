@@ -69,7 +69,7 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public boolean isStaged() {
-		return false;
+		return true;
 	}
 
 	public boolean validateSchemaVersion(String schemaVersion) {
@@ -87,6 +87,7 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "entries", true, false, null,
 				FragmentEntry.class.getName()));
 		setImportControls(getExportControls());
+		setPublishToLiveByDefault(true);
 	}
 
 	@Override

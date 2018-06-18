@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -321,10 +322,23 @@ public class SiteNavigationMenuDisplayContext {
 			return _navigationMenuType;
 		}
 
-		_navigationMenuType = ParamUtil.getInteger(
-			_request, "siteNavigationMenuType",
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int defaultValue =
 			_siteNavigationMenuPortletInstanceConfiguration.
-				siteNavigationMenuType());
+				siteNavigationMenuType();
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isPrivateLayout()) {
+			defaultValue =
+				_siteNavigationMenuPortletInstanceConfiguration.
+					siteNavigationPrivateMenuType();
+		}
+
+		_navigationMenuType = ParamUtil.getInteger(
+			_request, "siteNavigationMenuType", defaultValue);
 
 		return _navigationMenuType;
 	}

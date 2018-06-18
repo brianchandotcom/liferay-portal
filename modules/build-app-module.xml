@@ -378,7 +378,7 @@
 		</loadfile>
 
 		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${artifact.name}-${artifact.version}.war">
-			<equals arg1="${lp.version}" arg2="7.0.0" />
+			<equals arg1="${lp.version.major}" arg2="7.0" />
 		</condition>
 
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${artifact.version}.war" />
@@ -398,7 +398,7 @@
 		<property file="docroot/WEB-INF/liferay-plugin-package.properties" />
 
 		<condition property="artifact.location.dest" value="${osgi.dir}/marketplace/${artifact.name}-${lp.version}.${module-incremental-version}.war">
-			<equals arg1="${lp.version}" arg2="7.0.0" />
+			<equals arg1="${lp.version.major}" arg2="7.0" />
 		</condition>
 
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${lpkg.title.prefix}${liferay.releng.app.title} - Impl/${artifact.name}-${lp.version}.${module-incremental-version}.war" />

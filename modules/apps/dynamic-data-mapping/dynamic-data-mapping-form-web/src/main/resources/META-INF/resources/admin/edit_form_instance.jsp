@@ -63,7 +63,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					</button>
 				</li>
 				<li class="nav-item">
-					<button class="btn btn-primary lfr-ddm-add-field nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none">
+					<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none">
 						<svg class="lexicon-icon">
 							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
 						</svg>

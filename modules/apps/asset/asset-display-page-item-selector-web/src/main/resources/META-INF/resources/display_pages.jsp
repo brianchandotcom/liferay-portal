@@ -22,6 +22,7 @@ AssetDisplayPagesItemSelectorViewDisplayContext assetDisplayPagesItemSelectorVie
 
 <clay:management-toolbar
 	clearResultsURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getClearResultsURL() %>"
+	disabled="<%= assetDisplayPagesItemSelectorViewDisplayContext.isDisabledManagementBar() %>"
 	filterDropdownItems="<%= assetDisplayPagesItemSelectorViewDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= assetDisplayPagesItemSelectorViewDisplayContext.getTotalItems() %>"
 	searchActionURL="<%= assetDisplayPagesItemSelectorViewDisplayContext.getSearchActionURL() %>"

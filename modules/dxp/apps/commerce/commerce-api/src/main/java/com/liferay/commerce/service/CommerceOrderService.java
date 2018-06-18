@@ -114,6 +114,11 @@ public interface CommerceOrderService extends BaseService {
 		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrders(long groupId, int start,
+		int end, OrderByComparator<CommerceOrder> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrders(long siteGroupId,
 		int[] orderStatuses) throws PortalException;
 
@@ -124,16 +129,10 @@ public interface CommerceOrderService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrder> getCommerceOrdersByGroupId(long groupId,
-		int start, int end, OrderByComparator<CommerceOrder> orderByComparator)
-		throws PortalException;
+	public int getCommerceOrdersCount(long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrdersCount(long groupId, long orderUserId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrdersCountByGroupId(long groupId)
 		throws PortalException;
 
 	/**

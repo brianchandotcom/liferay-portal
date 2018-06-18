@@ -611,14 +611,13 @@ public class CommerceOrderServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByGroupId(
+	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
-					"getCommerceOrdersByGroupId",
-					_getCommerceOrdersByGroupIdParameterTypes17);
+					"getCommerceOrders", _getCommerceOrdersParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -678,13 +677,13 @@ public class CommerceOrderServiceHttp {
 		}
 	}
 
-	public static int getCommerceOrdersCountByGroupId(
-		HttpPrincipal httpPrincipal, long groupId)
+	public static int getCommerceOrdersCount(HttpPrincipal httpPrincipal,
+		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
-					"getCommerceOrdersCountByGroupId",
-					_getCommerceOrdersCountByGroupIdParameterTypes19);
+					"getCommerceOrdersCount",
+					_getCommerceOrdersCountParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -1144,15 +1143,16 @@ public class CommerceOrderServiceHttp {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceOrdersByGroupIdParameterTypes17 = new Class[] {
+	private static final Class<?>[] _getCommerceOrdersParameterTypes17 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCommerceOrdersCountParameterTypes18 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _getCommerceOrdersCountByGroupIdParameterTypes19 =
-		new Class[] { long.class };
+	private static final Class<?>[] _getCommerceOrdersCountParameterTypes19 = new Class[] {
+			long.class
+		};
 	private static final Class<?>[] _mergeGuestCommerceOrderParameterTypes20 = new Class[] {
 			long.class, long.class,
 			com.liferay.commerce.context.CommerceContext.class,

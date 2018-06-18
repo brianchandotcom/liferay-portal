@@ -286,6 +286,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public List<CommerceOrder> getCommerceOrders(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrders(long groupId, int start,
+		int end, OrderByComparator<CommerceOrder> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrders(long siteGroupId,
 		int[] orderStatuses);
 
@@ -297,10 +301,6 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrdersByBillingAddress(
 		long billingAddressId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrder> getCommerceOrdersByGroupId(long groupId,
-		int start, int end, OrderByComparator<CommerceOrder> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrdersByShippingAddress(
@@ -341,10 +341,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public int getCommerceOrdersCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrdersCount(long groupId, long orderUserId);
+	public int getCommerceOrdersCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrdersCountByGroupId(long groupId);
+	public int getCommerceOrdersCount(long groupId, long orderUserId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(

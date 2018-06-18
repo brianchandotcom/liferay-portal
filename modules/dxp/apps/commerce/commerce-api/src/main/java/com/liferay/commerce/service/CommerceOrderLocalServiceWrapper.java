@@ -368,6 +368,14 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
+		return _commerceOrderLocalService.getCommerceOrders(groupId, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
 		long siteGroupId, int[] orderStatuses) {
 		return _commerceOrderLocalService.getCommerceOrders(siteGroupId,
 			orderStatuses);
@@ -385,14 +393,6 @@ public class CommerceOrderLocalServiceWrapper
 	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByBillingAddress(
 		long billingAddressId) {
 		return _commerceOrderLocalService.getCommerceOrdersByBillingAddress(billingAddressId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrdersByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
-		return _commerceOrderLocalService.getCommerceOrdersByGroupId(groupId,
-			start, end, orderByComparator);
 	}
 
 	@Override
@@ -444,14 +444,14 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceOrdersCount(long groupId, long orderUserId) {
-		return _commerceOrderLocalService.getCommerceOrdersCount(groupId,
-			orderUserId);
+	public int getCommerceOrdersCount(long groupId) {
+		return _commerceOrderLocalService.getCommerceOrdersCount(groupId);
 	}
 
 	@Override
-	public int getCommerceOrdersCountByGroupId(long groupId) {
-		return _commerceOrderLocalService.getCommerceOrdersCountByGroupId(groupId);
+	public int getCommerceOrdersCount(long groupId, long orderUserId) {
+		return _commerceOrderLocalService.getCommerceOrdersCount(groupId,
+			orderUserId);
 	}
 
 	@Override

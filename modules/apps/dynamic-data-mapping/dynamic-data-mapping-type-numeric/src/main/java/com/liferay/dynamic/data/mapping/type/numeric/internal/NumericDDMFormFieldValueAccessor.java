@@ -14,12 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.type.numeric.internal;
 
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.type.numeric.internal.util.NumericDDMFormFieldUtil;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -29,45 +29,37 @@ import java.util.Locale;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marcellus Tavares
+ * @author Rafael Praxedes
  */
-@Component(immediate = true, property = "ddm.form.field.type.name=numeric")
-public class NumericDDMFormFieldValueRenderer
-	implements DDMFormFieldValueRenderer {
+@Component(
+	immediate = true, property = "ddm.form.field.type.name=numeric",
+	service = {
+		DDMFormFieldValueAccessor.class, NumericDDMFormFieldValueAccessor.class
+	}
+)
+public class NumericDDMFormFieldValueAccessor
+	implements DDMFormFieldValueAccessor<Number> {
 
 	@Override
-	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
-		Number number = getNumber(ddmFormFieldValue);
-
-		if (number != null) {
-			NumberFormat numberFormat = NumericDDMFormFieldUtil.getNumberFormat(
-				locale);
-
-			return numberFormat.format(number);
-		}
-
-		return StringPool.BLANK;
-	}
-
-	protected Number getNumber(DDMFormFieldValue ddmFormFieldValue) {
+	public Number getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		Value value = ddmFormFieldValue.getValue();
 
-		Locale locale = value.getDefaultLocale();
+		try {
+			NumberFormat formatter = NumericDDMFormFieldUtil.getNumberFormat(
+				locale);
 
-		String valueString = value.getString(locale);
-
-		if (Validator.isNotNull(valueString)) {
-			try {
-				NumberFormat formatter =
-					NumericDDMFormFieldUtil.getNumberFormat(locale);
-
-				return formatter.parse(valueString);
-			}
-			catch (ParseException pe) {
+			return formatter.parse(value.getString(locale));
+		}
+		catch (ParseException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
 			}
 		}
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		NumericDDMFormFieldValueAccessor.class);
 
 }

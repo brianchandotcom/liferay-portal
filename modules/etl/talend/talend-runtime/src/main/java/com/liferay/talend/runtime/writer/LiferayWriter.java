@@ -133,7 +133,8 @@ public class LiferayWriter
 
 		try {
 			_liferaySink.doApioPutRequest(
-				_runtimeContainer, singleResourceUri.toASCIIString(), objectNode);
+				_runtimeContainer, singleResourceUri.toASCIIString(),
+				objectNode);
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {
@@ -295,7 +296,8 @@ public class LiferayWriter
 			Type fieldType = unwrappedSchema.getType();
 
 			if (fieldType == Schema.Type.STRING) {
-				objectNode.put(fieldName, (String)indexedRecord.get(field.pos()));
+				objectNode.put(
+					fieldName, (String)indexedRecord.get(field.pos()));
 			}
 			else if (fieldType == Schema.Type.NULL) {
 				objectNode.put(fieldName, "");

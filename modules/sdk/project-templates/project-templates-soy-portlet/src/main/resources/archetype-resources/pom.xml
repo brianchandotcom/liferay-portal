@@ -9,18 +9,6 @@
 	<groupId>${groupId}</groupId>
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
-#if (${liferayVersion.startsWith("7.1")})
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<name>nexus</name>
-			<url>https://repository-cdn.liferay.com/nexus/content/groups/public</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-#end
 	<properties>
 		<node.modules.dir>${project.basedir}/node_modules</node.modules.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

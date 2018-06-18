@@ -213,13 +213,6 @@ div.portlet-forms-admin .form-builder-layout .layout-row-container-row .layout-r
 }
 
 .lfr-ddm-plus-button.btn {
-	cursor: pointer;
-	padding: 0.43125rem 0.67125rem;
-	position: fixed;
-	right: 20px;
-	top: 75px;
-	z-index: 20;
-
 	@include respond-to(phone) {
 		top: 54px;
 	}

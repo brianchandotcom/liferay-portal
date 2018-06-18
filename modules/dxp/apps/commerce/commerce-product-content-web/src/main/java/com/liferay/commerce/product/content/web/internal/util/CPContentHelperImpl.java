@@ -31,7 +31,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
-import com.liferay.commerce.product.service.CPOptionCategoryService;
+import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPContentContributor;
@@ -214,7 +214,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public List<CPOptionCategory> getCPOptionCategories(long groupId) {
-		return _cpOptionCategoryService.getCPOptionCategories(
+		return _cpOptionCategoryLocalService.getCPOptionCategories(
 			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -409,7 +409,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private CPOptionCategoryService _cpOptionCategoryService;
+	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;

@@ -103,7 +103,9 @@ public class CPDefinitionSpecificationOptionValueDisplayContext extends
 			getCPDefinitionSpecificationOptionValueId();
 	}
 
-	public List<CPOptionCategory> getCPOptionCategories() {
+	public List<CPOptionCategory> getCPOptionCategories()
+		throws PortalException {
+
 		return _cpOptionCategoryService.getCPOptionCategories(
 			getScopeGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}

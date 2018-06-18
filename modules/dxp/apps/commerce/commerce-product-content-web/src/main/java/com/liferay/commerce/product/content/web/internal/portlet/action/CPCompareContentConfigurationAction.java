@@ -22,7 +22,7 @@ import com.liferay.commerce.product.content.web.internal.display.context.CPCompa
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
-import com.liferay.commerce.product.service.CPOptionCategoryService;
+import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
@@ -58,7 +58,7 @@ public class CPCompareContentConfigurationAction
 					_cpContentListRendererRegistry, _cpDefinitionService,
 					_cpDefinitionSpecificationOptionValueService,
 					_cpInstanceHelper, _cpMeasurementUnitService,
-					_cpOptionCategoryService, _cpTypeServicesTracker,
+					_cpOptionCategoryLocalService, _cpTypeServicesTracker,
 					_ddmFormFieldTypeServicesTracker, httpServletRequest);
 
 			httpServletRequest.setAttribute(
@@ -108,7 +108,7 @@ public class CPCompareContentConfigurationAction
 	private CPMeasurementUnitService _cpMeasurementUnitService;
 
 	@Reference
-	private CPOptionCategoryService _cpOptionCategoryService;
+	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;

@@ -14,11 +14,9 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
-import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.base.CPDefinitionSpecificationOptionValueServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,13 +50,6 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 
 		_cpSpecificationOptionModelResourcePermission.check(
 			getPermissionChecker(), cpSpecificationOptionId, ActionKeys.VIEW);
-
-		if (cpOptionCategoryId !=
-				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID) {
-
-			_cpOptionCategoryModelResourcePermission.check(
-				getPermissionChecker(), cpOptionCategoryId, ActionKeys.VIEW);
-		}
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			addCPDefinitionSpecificationOptionValue(
@@ -205,13 +196,6 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 			cpDefinitionSpecificationOptionValue.getCPSpecificationOption(),
 			ActionKeys.VIEW);
 
-		if (cpOptionCategoryId !=
-				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID) {
-
-			_cpOptionCategoryModelResourcePermission.check(
-				getPermissionChecker(), cpOptionCategoryId, ActionKeys.VIEW);
-		}
-
 		return cpDefinitionSpecificationOptionValueLocalService.
 			updateCPDefinitionSpecificationOptionValue(
 				cpDefinitionSpecificationOptionValueId, cpOptionCategoryId,
@@ -223,12 +207,6 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 			ModelResourcePermissionFactory.getInstance(
 				CPDefinitionSpecificationOptionValueServiceImpl.class,
 				"_cpDefinitionModelResourcePermission", CPDefinition.class);
-	private static volatile ModelResourcePermission<CPOptionCategory>
-		_cpOptionCategoryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CPDefinitionSpecificationOptionValueServiceImpl.class,
-				"_cpOptionCategoryModelResourcePermission",
-				CPOptionCategory.class);
 	private static volatile ModelResourcePermission<CPSpecificationOption>
 		_cpSpecificationOptionModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

@@ -55,12 +55,7 @@ public class CPOptionCategoryServiceImpl
 		throws PortalException {
 
 		CPOptionCategory cpOptionCategory =
-			cpOptionCategoryLocalService.getCPOptionCategory(
-				cpOptionCategoryId);
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), cpOptionCategory.getGroupId(),
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_OPTION_CATEGORIES);
+			cpOptionCategoryService.getCPOptionCategory(cpOptionCategoryId);
 
 		return cpOptionCategoryLocalService.deleteCPOptionCategory(
 			cpOptionCategory);
@@ -70,13 +65,27 @@ public class CPOptionCategoryServiceImpl
 	public CPOptionCategory fetchCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException {
 
-		return cpOptionCategoryLocalService.fetchCPOptionCategory(
-			cpOptionCategoryId);
+		CPOptionCategory cpOptionCategory =
+			cpOptionCategoryLocalService.fetchCPOptionCategory(
+				cpOptionCategoryId);
+
+		if (cpOptionCategory != null) {
+			_portletResourcePermission.check(
+				getPermissionChecker(), cpOptionCategory.getGroupId(),
+				CPActionKeys.MANAGE_COMMERCE_PRODUCT_OPTION_CATEGORIES);
+		}
+
+		return cpOptionCategory;
 	}
 
 	@Override
 	public List<CPOptionCategory> getCPOptionCategories(
-		long groupId, int start, int end) {
+			long groupId, int start, int end)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_OPTION_CATEGORIES);
 
 		return cpOptionCategoryLocalService.getCPOptionCategories(
 			groupId, start, end);
@@ -84,15 +93,24 @@ public class CPOptionCategoryServiceImpl
 
 	@Override
 	public List<CPOptionCategory> getCPOptionCategories(
-		long groupId, int start, int end,
-		OrderByComparator<CPOptionCategory> orderByComparator) {
+			long groupId, int start, int end,
+			OrderByComparator<CPOptionCategory> orderByComparator)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_OPTION_CATEGORIES);
 
 		return cpOptionCategoryLocalService.getCPOptionCategories(
 			groupId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCPOptionCategoriesCount(long groupId) {
+	public int getCPOptionCategoriesCount(long groupId) throws PortalException {
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_OPTION_CATEGORIES);
+
 		return cpOptionCategoryLocalService.getCPOptionCategoriesCount(groupId);
 	}
 
@@ -100,8 +118,15 @@ public class CPOptionCategoryServiceImpl
 	public CPOptionCategory getCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException {
 
-		return cpOptionCategoryLocalService.getCPOptionCategory(
-			cpOptionCategoryId);
+		CPOptionCategory cpOptionCategory =
+			cpOptionCategoryLocalService.getCPOptionCategory(
+				cpOptionCategoryId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), cpOptionCategory.getGroupId(),
+			CPActionKeys.MANAGE_COMMERCE_PRODUCT_OPTION_CATEGORIES);
+
+		return cpOptionCategory;
 	}
 
 	@Override
@@ -112,12 +137,7 @@ public class CPOptionCategoryServiceImpl
 		throws PortalException {
 
 		CPOptionCategory cpOptionCategory =
-			cpOptionCategoryLocalService.getCPOptionCategory(
-				cpOptionCategoryId);
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), cpOptionCategory.getGroupId(),
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_OPTION_CATEGORIES);
+			cpOptionCategoryService.getCPOptionCategory(cpOptionCategoryId);
 
 		return cpOptionCategoryLocalService.updateCPOptionCategory(
 			cpOptionCategory.getCPOptionCategoryId(), titleMap, descriptionMap,

@@ -35,7 +35,7 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
-import com.liferay.commerce.product.service.CPOptionCategoryService;
+import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPCompareUtil;
@@ -63,7 +63,6 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -81,7 +80,7 @@ public class CPCompareContentDisplayContext {
 				cpDefinitionSpecificationOptionValueService,
 			CPInstanceHelper cpInstanceHelper,
 			CPMeasurementUnitService cpMeasurementUnitService,
-			CPOptionCategoryService cpOptionCategoryService,
+			CPOptionCategoryLocalService cpOptionCategoryLocalService,
 			CPTypeServicesTracker cpTypeServicesTracker,
 			DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 			HttpServletRequest httpServletRequest)
@@ -96,7 +95,7 @@ public class CPCompareContentDisplayContext {
 			cpDefinitionSpecificationOptionValueService;
 		_cpInstanceHelper = cpInstanceHelper;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
-		_cpOptionCategoryService = cpOptionCategoryService;
+		_cpOptionCategoryLocalService = cpOptionCategoryLocalService;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 
@@ -249,7 +248,7 @@ public class CPCompareContentDisplayContext {
 	}
 
 	public List<CPOptionCategory> getCPOptionCategories() {
-		return _cpOptionCategoryService.getCPOptionCategories(
+		return _cpOptionCategoryLocalService.getCPOptionCategories(
 			_cpRequestHelper.getScopeGroupId(), QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);
 	}
@@ -522,7 +521,7 @@ public class CPCompareContentDisplayContext {
 		_cpDefinitionSpecificationOptionValueService;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
-	private final CPOptionCategoryService _cpOptionCategoryService;
+	private final CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 	private final CPRequestHelper _cpRequestHelper;
 	private final CPTypeServicesTracker _cpTypeServicesTracker;
 	private final DDMFormFieldTypeServicesTracker

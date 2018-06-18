@@ -28,6 +28,14 @@ class SelectMappingTypeDialog extends Component {
 		) {
 			this._handleMappingTypeSelectChange();
 		}
+
+		if (
+			this._mappingSubtypes &&
+			this._mappingSubtypes.length === 1 &&
+			!this._selectedMappingSubtypeId
+		) {
+			this._handleMappingSubtypeSelectChange();
+		}
 	}
 
 	/**

@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.convert.documentlibrary.DLStoreConverter;
+import com.liferay.portal.convert.documentlibrary.DLStoreConverterStoreProvider;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -40,7 +41,16 @@ import org.osgi.service.component.annotations.Reference;
 public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 
 	@Override
-	public void migrate(final DLStoreConverter dlStoreConverter)
+	public void migrate(DLStoreConverter dlStoreConverter)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void migrate(
+			final DLStoreConverter dlStoreConverter,
+			DLStoreConverterStoreProvider dlStoreConverterStoreProvider)
 		throws PortalException {
 
 		int count = _amImageEntryLocalService.getAMImageEntriesCount();
@@ -59,13 +69,15 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 				String fileVersionPath = AMStoreUtil.getFileVersionPath(
 					fileVersion, amImageEntry.getConfigurationUuid());
 
-				Store sourceStore = dlStoreConverter.getSourceStore();
+				Store sourceStore =
+					dlStoreConverterStoreProvider.getSourceStore();
 
 				try (InputStream is = sourceStore.getFileAsStream(
 						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,
 						fileVersionPath)) {
 
-					Store targetStore = dlStoreConverter.getTargetStore();
+					Store targetStore =
+						dlStoreConverterStoreProvider.getTargetStore();
 
 					targetStore.addFile(
 						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,

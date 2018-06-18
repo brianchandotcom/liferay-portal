@@ -107,16 +107,6 @@ public class DocumentLibraryConvertProcess
 	}
 
 	@Override
-	public Store getSourceStore() {
-		return _sourceStore;
-	}
-
-	@Override
-	public Store getTargetStore() {
-		return _targetStore;
-	}
-
-	@Override
 	public boolean isEnabled() {
 		return true;
 	}
@@ -157,15 +147,19 @@ public class DocumentLibraryConvertProcess
 
 	@Override
 	protected void doConvert() throws Exception {
-		StoreFactory storeFactory = StoreFactory.getInstance();
+		DLStoreConverterStoreProvider dlStoreConverterStoreProvider =
+			new DLStoreConverterStoreProvider(getTargetStoreClassName());
 
-		_sourceStore = storeFactory.getStore();
+		_sourceStore = dlStoreConverterStoreProvider.getSourceStore();
 
 		String targetStoreClassName = getTargetStoreClassName();
 
-		_targetStore = storeFactory.getStore(targetStoreClassName);
+		_targetStore = dlStoreConverterStoreProvider.getTargetStore();
 
 		migratePortlets();
+		migrateDLStoreConvertProcesses(dlStoreConverterStoreProvider);
+
+		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		storeFactory.setStore(targetStoreClassName);
 
@@ -237,6 +231,20 @@ public class DocumentLibraryConvertProcess
 
 		if (isDeleteFilesFromSourceStore()) {
 			DLPreviewableProcessor.deleteFiles();
+		}
+	}
+
+	protected void migrateDLStoreConvertProcesses(
+			DLStoreConverterStoreProvider dlStoreConverterStoreProvider)
+		throws PortalException {
+
+		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
+			_getDLStoreConvertProcesses();
+
+		for (DLStoreConvertProcess dlStoreConvertProcess :
+				dlStoreConvertProcesses) {
+
+			dlStoreConvertProcess.migrate(this, dlStoreConverterStoreProvider);
 		}
 	}
 
@@ -319,15 +327,6 @@ public class DocumentLibraryConvertProcess
 		migrateDL();
 		migrateGeneratedFiles(DLPreviewableProcessor.THUMBNAIL_PATH);
 		migrateGeneratedFiles(DLPreviewableProcessor.PREVIEW_PATH);
-
-		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
-			_getDLStoreConvertProcesses();
-
-		for (DLStoreConvertProcess dlStoreConvertProcess :
-				dlStoreConvertProcesses) {
-
-			dlStoreConvertProcess.migrate(this);
-		}
 	}
 
 	private Collection<DLStoreConvertProcess> _getDLStoreConvertProcesses() {

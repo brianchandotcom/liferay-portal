@@ -14,17 +14,12 @@
 
 package com.liferay.portal.convert.documentlibrary;
 
-import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Iván Zaera
  */
 public interface DLStoreConverter {
-
-	public Store getSourceStore();
-
-	public Store getTargetStore();
 
 	public void migrateDLFileEntry(
 		long companyId, long repositoryId, FileEntry fileEntry);

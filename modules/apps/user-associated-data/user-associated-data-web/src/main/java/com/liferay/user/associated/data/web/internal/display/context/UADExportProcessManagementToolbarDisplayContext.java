@@ -17,6 +17,7 @@ package com.liferay.user.associated.data.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.BaseManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SafeConsumer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -53,7 +54,8 @@ public class UADExportProcessManagementToolbarDisplayContext
 						"backURL", PortalUtil.getCurrentURL(request), "p_u_i_d",
 						String.valueOf(selectedUser.getUserId()));
 
-					dropdownItem.setLabel("add-export-processes");
+					dropdownItem.setLabel(
+						LanguageUtil.get(request, "add-export-processes"));
 				}));
 
 		return creationMenu;

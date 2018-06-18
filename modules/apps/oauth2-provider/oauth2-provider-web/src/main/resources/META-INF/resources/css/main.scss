@@ -19,11 +19,23 @@ $grayTextColor: #6B6C7E;
 }
 
 .portlet-oauth2-provider-admin {
+	.badge-item.global-scope-alias-reference {
+		color: $grayTextColor;
+	}
 	.hidden {
 		display: none;
 	}
 	.inline {
 		display: inline-block;
+	}
+	.list-group .list-group-title {
+		font-weight: normal;
+	}
+	.panel-header .form-group {
+		margin-bottom: 0;
+	}
+	.sheet .panel-group .panel-body {
+		margin-bottom: 0;
 	}
 }
 

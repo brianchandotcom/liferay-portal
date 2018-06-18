@@ -22,8 +22,9 @@ import com.liferay.frontend.taglib.util.TagAccessor;
 import com.liferay.frontend.taglib.util.TagResourceHandler;
 import com.liferay.petra.string.StringPool;
 
-import javax.servlet.jsp.PageContext;
 import java.util.Map;
+
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Chema Balsas

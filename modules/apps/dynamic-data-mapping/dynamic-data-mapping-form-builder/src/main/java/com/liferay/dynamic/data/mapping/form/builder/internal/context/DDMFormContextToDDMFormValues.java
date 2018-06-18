@@ -161,7 +161,7 @@ public class DDMFormContextToDDMFormValues
 
 		if (ddmFormField.isLocalizable()) {
 			Value value = getLocalizedValue(
-				fieldJSONObject.getJSONObject("value"));
+				fieldJSONObject.getJSONObject("localizedValue"));
 
 			ddmFormFieldValue.setValue(value);
 		}

@@ -16,13 +16,41 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout", false);
+
+PortletURL portletURL = currentURLObj;
+%>
+
+<clay:navigation-bar
+	navigationItems="<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(!privateLayout);
+						navigationItem.setHref(portletURL, "privateLayout", false);
+						navigationItem.setLabel(LanguageUtil.get(request, "public-pages"));
+					});
+
+				add(
+					navigationItem -> {
+						navigationItem.setActive(privateLayout);
+						navigationItem.setHref(portletURL, "privateLayout", true);
+						navigationItem.setLabel(LanguageUtil.get(request, "private-pages"));
+					});
+			}
+		}
+	%>"
+/>
+
 <aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= scopeGroupId %>" />
 
 <aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="">
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= false %>" />
+<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= privateLayout %>" />
 
 <liferay-layout:select-layout
 	componentId='<%= liferayPortletResponse.getNamespace() + "selectLayout" %>'
@@ -30,7 +58,7 @@
 	multiSelection="<%= true %>"
 	namespace="<%= liferayPortletResponse.getNamespace() %>"
 	pathThemeImages="<%= themeDisplay.getPathThemeImages() %>"
-	privateLayout="<%= false %>"
+	privateLayout="<%= privateLayout %>"
 />
 
 <aui:script>

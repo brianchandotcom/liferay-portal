@@ -114,7 +114,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.GROUP_ID, Field.MODIFIED_DATE, Field.NAME,
 			Field.SCOPE_GROUP_ID, Field.UID);
-		setFilterSearch(true);
 	}
 
 	@Override
@@ -166,6 +165,16 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			linkFilter.addValue(String.valueOf(definitionLinkCPDefinitionId));
 
 			contextBooleanFilter.add(linkFilter, BooleanClauseOccur.MUST);
+		}
+
+		boolean filterByCPRuleTypes = GetterUtil.getBoolean(
+			searchContext.getAttribute("filterByCPRuleTypes"));
+
+		if (filterByCPRuleTypes) {
+			for (CPRuleType cpRuleType : _cpRuleTypeRegistry.getCPRuleTypes()) {
+				cpRuleType.postProcessContextBooleanFilter(
+					contextBooleanFilter, searchContext);
+			}
 		}
 	}
 

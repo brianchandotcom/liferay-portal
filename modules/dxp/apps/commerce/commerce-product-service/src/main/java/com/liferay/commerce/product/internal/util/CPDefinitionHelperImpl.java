@@ -131,6 +131,8 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		cpDefinitionSearcher.setCPQuery(cpQuery);
 
+		searchContext.setAttribute("filterByCPRuleTypes", Boolean.TRUE);
+
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {groupId});
 

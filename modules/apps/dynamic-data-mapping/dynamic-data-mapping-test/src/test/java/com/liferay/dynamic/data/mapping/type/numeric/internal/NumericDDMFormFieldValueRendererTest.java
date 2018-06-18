@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.type.numeric.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -101,9 +102,13 @@ public class NumericDDMFormFieldValueRendererTest {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
+		LocalizedValue localizedValue = new LocalizedValue();
+
+		localizedValue.addString(LocaleUtil.US, "111222333.25");
+
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"Numeric", new UnlocalizedValue("111222333.25"));
+				"Numeric", localizedValue);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 

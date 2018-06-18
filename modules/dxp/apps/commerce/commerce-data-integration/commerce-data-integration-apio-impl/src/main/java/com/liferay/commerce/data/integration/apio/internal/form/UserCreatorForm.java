@@ -15,7 +15,8 @@
 package com.liferay.commerce.data.integration.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.commerce.data.integration.apio.internal.util.UserHelper;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Calendar;
@@ -62,7 +63,7 @@ public class UserCreatorForm {
 	}
 
 	public long[] getAccountIds() {
-		return UserHelper.convertLongListToArray(_accountIds);
+		return ArrayUtil.toLongArray(_accountIds);
 	}
 
 	public String getAlternateName() {
@@ -106,7 +107,7 @@ public class UserCreatorForm {
 	}
 
 	public long[] getRoleIds() {
-		return UserHelper.convertLongListToArray(_roleIds);
+		return ArrayUtil.toLongArray(_roleIds);
 	}
 
 	public boolean hasAlternateName() {
@@ -126,7 +127,7 @@ public class UserCreatorForm {
 	}
 
 	private void _setBirthDate(Date birthDate) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
 		calendar.setTime(birthDate);
 

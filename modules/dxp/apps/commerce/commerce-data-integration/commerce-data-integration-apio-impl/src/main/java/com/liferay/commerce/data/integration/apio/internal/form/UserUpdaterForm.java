@@ -15,7 +15,7 @@
 package com.liferay.commerce.data.integration.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
-import com.liferay.commerce.data.integration.apio.internal.util.UserHelper;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class UserUpdaterForm {
 	}
 
 	public long[] getAccountIds() {
-		return UserHelper.convertLongListToArray(_accountIds);
+		return ArrayUtil.toLongArray(_accountIds);
 	}
 
 	public String getAlternateName() {
@@ -81,7 +81,7 @@ public class UserUpdaterForm {
 	}
 
 	public long[] getRoleIds() {
-		return UserHelper.convertLongListToArray(_roleIds);
+		return ArrayUtil.toLongArray(_roleIds);
 	}
 
 	public void setAlternateName(String alternateName) {

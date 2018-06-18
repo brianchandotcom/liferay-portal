@@ -12,15 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.search.solr.facet;
+package com.liferay.portal.search.solr.internal.facet;
 
 import com.liferay.portal.kernel.search.facet.Facet;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-public interface FacetProcessor<T> {
+public class FacetUtil {
 
-	public void processFacet(T searchQuery, Facet facet);
+	public static String getAggregationName(Facet facet) {
+		if (facet instanceof com.liferay.portal.search.facet.Facet) {
+			return ((com.liferay.portal.search.facet.Facet)facet).
+				getAggregationName();
+		}
+
+		return facet.getFieldName();
+	}
 
 }

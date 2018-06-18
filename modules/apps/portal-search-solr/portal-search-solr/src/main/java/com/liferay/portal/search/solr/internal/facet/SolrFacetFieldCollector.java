@@ -14,36 +14,34 @@
 
 package com.liferay.portal.search.solr.internal.facet;
 
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.solr.client.solrj.response.FacetField;
-import org.apache.solr.client.solrj.response.FacetField.Count;
+import org.apache.solr.common.util.NamedList;
 
 /**
  * @author Raymond Augé
  */
 public class SolrFacetFieldCollector implements FacetCollector {
 
-	public SolrFacetFieldCollector(String fieldName, FacetField facetField) {
-		_fieldName = fieldName;
+	public SolrFacetFieldCollector(Facet facet, NamedList namedList) {
+		String name = FacetUtil.getAggregationName(facet);
 
-		List<Count> counts = facetField.getValues();
+		List<NamedList> list = _getBuckets((NamedList)namedList.get(name));
 
-		if (ListUtil.isNotEmpty(counts)) {
-			for (Count count : counts) {
-				if (count.getCount() > 0) {
-					_counts.put(count.getName(), count);
-				}
-			}
-		}
+		_counts = _getCountsInSameOrder(list);
+
+		_fieldName = name;
 	}
 
 	@Override
@@ -53,15 +51,8 @@ public class SolrFacetFieldCollector implements FacetCollector {
 
 	@Override
 	public TermCollector getTermCollector(String term) {
-		Count count = _counts.get(term);
-
-		int occurences = 0;
-
-		if (count != null) {
-			occurences = (int)count.getCount();
-		}
-
-		return new DefaultTermCollector(term, occurences);
+		return new DefaultTermCollector(
+			term, GetterUtil.getInteger(_counts.get(term)));
 	}
 
 	@Override
@@ -72,13 +63,9 @@ public class SolrFacetFieldCollector implements FacetCollector {
 
 		List<TermCollector> termCollectors = new ArrayList<>();
 
-		for (Map.Entry<String, Count> entry : _counts.entrySet()) {
-			Count count = entry.getValue();
-
-			TermCollector termCollector = new DefaultTermCollector(
-				entry.getKey(), (int)count.getCount());
-
-			termCollectors.add(termCollector);
+		for (Map.Entry<String, Integer> entry : _counts.entrySet()) {
+			termCollectors.add(
+				new DefaultTermCollector(entry.getKey(), entry.getValue()));
 		}
 
 		_termCollectors = termCollectors;
@@ -86,7 +73,32 @@ public class SolrFacetFieldCollector implements FacetCollector {
 		return _termCollectors;
 	}
 
-	private final Map<String, Count> _counts = new LinkedHashMap<>();
+	private static List<NamedList> _getBuckets(NamedList namedList) {
+		if (namedList == null) {
+			return null;
+		}
+
+		return (List<NamedList>)namedList.get("buckets");
+	}
+
+	private static Map<String, Integer> _getCountsInSameOrder(
+		List<NamedList> list) {
+
+		if (ListUtil.isEmpty(list)) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Integer> map = new LinkedHashMap<>();
+
+		for (NamedList namedList : list) {
+			map.put(
+				(String)namedList.get("val"), (Integer)namedList.get("count"));
+		}
+
+		return map;
+	}
+
+	private final Map<String, Integer> _counts;
 	private final String _fieldName;
 	private List<TermCollector> _termCollectors;
 

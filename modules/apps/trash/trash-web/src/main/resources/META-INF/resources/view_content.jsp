@@ -56,6 +56,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 		<clay:management-toolbar
 			clearResultsURL="<%= trashDisplayContext.getContentClearResultsURL() %>"
 			componentId="trashContentWebManagementToolbar"
+			disabled="<%= (trashHandler.getTrashModelsCount(classPK) <= 0) && Validator.isNull(trashDisplayContext.getKeywords()) %>"
 			filterDropdownItems="<%= trashDisplayContext.getContentFilterDropdownItems() %>"
 			infoPanelId="infoPanelId"
 			itemsTotal="<%= trashHandler.getTrashModelsCount(classPK) %>"

@@ -597,6 +597,18 @@ public class TrashDisplayContext {
 		return false;
 	}
 
+	public boolean isDisabledManagementBar() throws PortalException {
+		if (getTotalItems() > 0) {
+			return false;
+		}
+
+		if (Validator.isNotNull(getKeywords())) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isIconView() {
 		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;

@@ -15,6 +15,7 @@
 package com.liferay.commerce.data.integration.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +50,7 @@ public class RoleForm {
 	}
 
 	public Map<Locale, String> getDescriptionMap() {
-		return Collections.singletonMap(Locale.getDefault(), _description);
+		return Collections.singletonMap(LocaleUtil.getDefault(), _description);
 	}
 
 	public String getName() {
@@ -61,7 +62,7 @@ public class RoleForm {
 	}
 
 	public Map<Locale, String> getTitleMap() {
-		return Collections.singletonMap(Locale.getDefault(), _title);
+		return Collections.singletonMap(LocaleUtil.getDefault(), _title);
 	}
 
 	public List<Long> getUserIds() {

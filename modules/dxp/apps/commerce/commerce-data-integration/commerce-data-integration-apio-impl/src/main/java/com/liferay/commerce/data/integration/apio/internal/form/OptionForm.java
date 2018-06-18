@@ -15,6 +15,7 @@
 package com.liferay.commerce.data.integration.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -46,7 +47,7 @@ public class OptionForm {
 	}
 
 	public Map<Locale, String> getDescriptionMap() {
-		return Collections.singletonMap(Locale.getDefault(), _descritpion);
+		return Collections.singletonMap(LocaleUtil.getDefault(), _descritpion);
 	}
 
 	public String getDescritpion() {
@@ -66,7 +67,7 @@ public class OptionForm {
 	}
 
 	public Map<Locale, String> getNameMap() {
-		return Collections.singletonMap(Locale.getDefault(), _name);
+		return Collections.singletonMap(LocaleUtil.getDefault(), _name);
 	}
 
 	private void _setDescription(String descritpion) {

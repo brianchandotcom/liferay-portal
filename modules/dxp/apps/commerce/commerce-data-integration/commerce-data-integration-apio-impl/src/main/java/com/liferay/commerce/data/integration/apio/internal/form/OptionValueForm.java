@@ -15,6 +15,7 @@
 package com.liferay.commerce.data.integration.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -50,7 +51,7 @@ public class OptionValueForm {
 	}
 
 	public Map<Locale, String> getNameMap() {
-		return Collections.singletonMap(Locale.getDefault(), _name);
+		return Collections.singletonMap(LocaleUtil.getDefault(), _name);
 	}
 
 	private void _setKey(String key) {

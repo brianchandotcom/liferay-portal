@@ -16,6 +16,7 @@ package com.liferay.commerce.data.integration.apio.internal.form;
 
 import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.form.Form.Builder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +74,7 @@ public class ProductCreatorForm {
 	}
 
 	public Map<Locale, String> getDescriptionMap() {
-		return Collections.singletonMap(Locale.getDefault(), _description);
+		return Collections.singletonMap(LocaleUtil.getDefault(), _description);
 	}
 
 	public String getExternalReferenceCode() {
@@ -85,11 +86,11 @@ public class ProductCreatorForm {
 	}
 
 	public Map<Locale, String> getShortDescriptionMap() {
-		return Collections.singletonMap(Locale.getDefault(), _shortDescritpion);
+		return Collections.singletonMap(LocaleUtil.getDefault(), _shortDescritpion);
 	}
 
 	public Map<Locale, String> getTitleMap() {
-		return Collections.singletonMap(Locale.getDefault(), _title);
+		return Collections.singletonMap(LocaleUtil.getDefault(), _title);
 	}
 
 	private void _setAssetCategoryIds(List<Long> assetCategoryIds) {

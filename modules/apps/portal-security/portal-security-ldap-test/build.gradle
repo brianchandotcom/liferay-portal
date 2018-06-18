@@ -1,9 +1,9 @@
 dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "3.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "3.0.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.dto", version: "1.0.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
 	testIntegrationCompile project(":apps:portal-security:portal-security-ldap-api")
 	testIntegrationCompile project(":core:petra:petra-string")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

@@ -192,8 +192,12 @@ Gradle plugin to the root project if the `target.platform.version` property in
 ## 1.9.2 - 2018-05-02
 
 ### Changed
+- [LPS-75479]: Update the [Liferay Portal Tools Bundle Support] dependency to
+version 3.2.2.
+- [LPS-78537]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.2.
 - [LPS-80281]: Update the [Liferay Gradle Plugins] dependency to version
-3.11.27.
+3.11.28.
 
 ## 1.10.0 - 2018-05-26
 
@@ -201,14 +205,28 @@ Gradle plugin to the root project if the `target.platform.version` property in
 - [LPS-79453]: Add support for Ext OSGi modules.
 - [LPS-79453]: Add support for Ext plugins.
 
+### Changed
+- [LPS-80222]: Update the [Liferay Gradle Plugins Target Platform] dependency to
+version 1.0.1.
+- [LPS-80517]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.19.
+- [LPS-80950]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.4.
+
 ## 1.10.1 - 2018-06-15
 
 ### Changed
+- [LPS-77875]: Update the private constant `_DEFAULT_REPOSITORY_URL` to
+`https://repository-cdn.liferay.com/nexus/content/groups/public`.
 - [LPS-77875]: Update the [Liferay Portal Tools Bundle Support] dependency to
 version 3.2.5.
+- [LPS-82534]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.46.
 
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
+[Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
+[Liferay Gradle Plugins Target Platform]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-target-platform
 [Liferay Portal Tools Bundle Support]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-bundle-support
 [Liferay Portal Tools Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-theme-builder
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
@@ -250,6 +268,11 @@ version 3.2.5.
 [LPS-77586]: https://issues.liferay.com/browse/LPS-77586
 [LPS-77875]: https://issues.liferay.com/browse/LPS-77875
 [LPS-78149]: https://issues.liferay.com/browse/LPS-78149
+[LPS-78537]: https://issues.liferay.com/browse/LPS-78537
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
 [LPS-79453]: https://issues.liferay.com/browse/LPS-79453
+[LPS-80222]: https://issues.liferay.com/browse/LPS-80222
 [LPS-80281]: https://issues.liferay.com/browse/LPS-80281
+[LPS-80517]: https://issues.liferay.com/browse/LPS-80517
+[LPS-80950]: https://issues.liferay.com/browse/LPS-80950
+[LPS-82534]: https://issues.liferay.com/browse/LPS-82534

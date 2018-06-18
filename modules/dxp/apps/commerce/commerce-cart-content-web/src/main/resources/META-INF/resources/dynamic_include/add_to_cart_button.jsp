@@ -17,8 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPDefinition cpDefinition = (CPDefinition)request.getAttribute("cpDefinition");
-CPInstance cpInstance = (CPInstance)request.getAttribute("cpInstance");
+CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
+CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
+CPInstance cpInstance = cpContentHelper.getDefaultCPInstance(request);
 
 long cpInstanceId = 0;
 
@@ -26,14 +27,14 @@ if (cpInstance != null) {
 	cpInstanceId = cpInstance.getCPInstanceId();
 }
 
-String productContentId = renderResponse.getNamespace() + cpDefinition.getCPDefinitionId() + "ProductContent";
-String quantityInputId = renderResponse.getNamespace() + cpDefinition.getCPDefinitionId() + "Quantity";
+String productContentId = renderResponse.getNamespace() + cpCatalogEntry.getCPDefinitionId() + "ProductContent";
+String quantityInputId = renderResponse.getNamespace() + cpCatalogEntry.getCPDefinitionId() + "Quantity";
 %>
 
-<liferay-commerce:quantity-input CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>" useSelect="<%= true %>" />
+<liferay-commerce:quantity-input CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>" useSelect="<%= true %>" />
 
 <liferay-commerce-cart:add-to-cart
-	CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>"
+	CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
 	CPInstanceId="<%= cpInstanceId %>"
 	elementClasses="btn-lg btn-default"
 	productContentId='<%= productContentId %>'

@@ -17,8 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPDefinition cpDefinition = (CPDefinition)request.getAttribute("cpDefinition");
-CPInstance cpInstance = (CPInstance)request.getAttribute("cpInstance");
+CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
+CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
+CPInstance cpInstance = cpContentHelper.getDefaultCPInstance(request);
 
 long cpInstanceId = 0;
 
@@ -28,7 +29,7 @@ if (cpInstance != null) {
 %>
 
 <liferay-commerce-wish-list:add-to-wish-list
-	CPDefinitionId="<%= cpDefinition.getCPDefinitionId() %>"
+	CPDefinitionId="<%= cpCatalogEntry.getCPDefinitionId() %>"
 	CPInstanceId="<%= cpInstanceId %>"
 	elementClasses="btn-lg btn-default"
 />

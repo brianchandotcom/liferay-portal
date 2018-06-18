@@ -74,6 +74,12 @@ public interface SiteNavigationMenuPortletInstanceConfiguration {
 	@Meta.AD(deflt = "1", name = "site-navigation-menu-type", required = false)
 	public int siteNavigationMenuType();
 
+	@Meta.AD(
+		deflt = "4", name = "site-navigation-private-menu-type",
+		required = false
+	)
+	public int siteNavigationPrivateMenuType();
+
 	@Meta.AD(deflt = "0", name = "display-depth", required = false)
 	public int displayDepth();
 

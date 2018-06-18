@@ -20,7 +20,7 @@ import com.liferay.commerce.product.content.render.list.CPContentListRendererReg
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
@@ -86,7 +86,7 @@ public class CPCompareContentPortlet extends MVCPortlet {
 				new CPCompareContentDisplayContext(
 					_cpCatalogEntryFactory, _cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDefinitionService,
-					_cpDefinitionSpecificationOptionValueService,
+					_cpDefinitionSpecificationOptionValueLocalService,
 					_cpInstanceHelper, _cpMeasurementUnitService,
 					_cpOptionCategoryLocalService, _cpTypeServicesTracker,
 					_ddmFormFieldTypeServicesTracker, httpServletRequest);
@@ -119,8 +119,8 @@ public class CPCompareContentPortlet extends MVCPortlet {
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private CPDefinitionSpecificationOptionValueService
-		_cpDefinitionSpecificationOptionValueService;
+	private CPDefinitionSpecificationOptionValueLocalService
+		_cpDefinitionSpecificationOptionValueLocalService;
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;

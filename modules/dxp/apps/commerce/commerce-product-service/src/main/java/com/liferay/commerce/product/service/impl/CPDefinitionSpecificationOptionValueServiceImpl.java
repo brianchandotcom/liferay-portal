@@ -14,10 +14,8 @@
 
 package com.liferay.commerce.product.service.impl;
 
-import com.liferay.commerce.product.exception.NoSuchCPDefinitionSpecificationOptionValueException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
-import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.base.CPDefinitionSpecificationOptionValueServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -25,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,9 +44,6 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
-
-		_cpSpecificationOptionModelResourcePermission.check(
-			getPermissionChecker(), cpSpecificationOptionId, ActionKeys.VIEW);
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			addCPDefinitionSpecificationOptionValue(
@@ -83,24 +77,42 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 				long cpDefinitionSpecificationOptionValueId)
 		throws PortalException {
 
-		try {
-			return getCPDefinitionSpecificationOptionValue(
-				cpDefinitionSpecificationOptionValueId);
-		}
-		catch (NoSuchCPDefinitionSpecificationOptionValueException nscpdsove) {
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				cpDefinitionSpecificationOptionValueLocalService.
+					fetchCPDefinitionSpecificationOptionValue(
+						cpDefinitionSpecificationOptionValueId);
+
+		if (cpDefinitionSpecificationOptionValue != null) {
+			_cpDefinitionModelResourcePermission.check(
+				getPermissionChecker(),
+				cpDefinitionSpecificationOptionValue.getCPDefinition(),
+				ActionKeys.VIEW);
 		}
 
-		return null;
+		return cpDefinitionSpecificationOptionValue;
 	}
 
 	@Override
 	public CPDefinitionSpecificationOptionValue
-		fetchCPDefinitionSpecificationOptionValue(
-			long cpDefinitionId, long cpSpecificationOptionId) {
-
-		return cpDefinitionSpecificationOptionValueLocalService.
 			fetchCPDefinitionSpecificationOptionValue(
-				cpDefinitionId, cpSpecificationOptionId);
+				long cpDefinitionId, long cpSpecificationOptionId)
+		throws PortalException {
+
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue =
+				cpDefinitionSpecificationOptionValueLocalService.
+					fetchCPDefinitionSpecificationOptionValue(
+						cpDefinitionId, cpSpecificationOptionId);
+
+		if (cpDefinitionSpecificationOptionValue != null) {
+			_cpDefinitionModelResourcePermission.check(
+				getPermissionChecker(),
+				cpDefinitionSpecificationOptionValue.getCPDefinition(),
+				ActionKeys.VIEW);
+		}
+
+		return cpDefinitionSpecificationOptionValue;
 	}
 
 	@Override
@@ -120,11 +132,6 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 			cpDefinitionSpecificationOptionValue.getCPDefinitionId(),
 			ActionKeys.VIEW);
 
-		_cpSpecificationOptionModelResourcePermission.check(
-			getPermissionChecker(),
-			cpDefinitionSpecificationOptionValue.getCPSpecificationOptionId(),
-			ActionKeys.VIEW);
-
 		return cpDefinitionSpecificationOptionValue;
 	}
 
@@ -136,37 +143,18 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
-		List<CPDefinitionSpecificationOptionValue>
-			cpDefinitionSpecificationOptionValues =
-				cpDefinitionSpecificationOptionValueLocalService.
-					getCPDefinitionSpecificationOptionValues(cpDefinitionId);
-
-		List<CPDefinitionSpecificationOptionValue>
-			filteredCPDefinitionSpecificationOptionValues = new ArrayList<>(
-				cpDefinitionSpecificationOptionValues.size());
-
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					cpDefinitionSpecificationOptionValues) {
-
-			if (_cpSpecificationOptionModelResourcePermission.contains(
-					getPermissionChecker(),
-					cpDefinitionSpecificationOptionValue.
-						getCPSpecificationOptionId(),
-					ActionKeys.VIEW)) {
-
-				filteredCPDefinitionSpecificationOptionValues.add(
-					cpDefinitionSpecificationOptionValue);
-			}
-		}
-
-		return filteredCPDefinitionSpecificationOptionValues;
+		return cpDefinitionSpecificationOptionValueLocalService.
+			getCPDefinitionSpecificationOptionValues(cpDefinitionId);
 	}
 
 	@Override
 	public List<CPDefinitionSpecificationOptionValue>
-		getCPDefinitionSpecificationOptionValues(
-			long cpDefinitionId, long cpOptionCategoryId) {
+			getCPDefinitionSpecificationOptionValues(
+				long cpDefinitionId, long cpOptionCategoryId)
+		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			getCPDefinitionSpecificationOptionValues(
@@ -183,18 +171,14 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
-				cpDefinitionSpecificationOptionValuePersistence.
-					findByPrimaryKey(cpDefinitionSpecificationOptionValueId);
+				cpDefinitionSpecificationOptionValueLocalService.
+					getCPDefinitionSpecificationOptionValue(
+						cpDefinitionSpecificationOptionValueId);
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(),
 			cpDefinitionSpecificationOptionValue.getCPDefinition(),
 			ActionKeys.UPDATE);
-
-		_cpSpecificationOptionModelResourcePermission.check(
-			getPermissionChecker(),
-			cpDefinitionSpecificationOptionValue.getCPSpecificationOption(),
-			ActionKeys.VIEW);
 
 		return cpDefinitionSpecificationOptionValueLocalService.
 			updateCPDefinitionSpecificationOptionValue(
@@ -207,11 +191,5 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 			ModelResourcePermissionFactory.getInstance(
 				CPDefinitionSpecificationOptionValueServiceImpl.class,
 				"_cpDefinitionModelResourcePermission", CPDefinition.class);
-	private static volatile ModelResourcePermission<CPSpecificationOption>
-		_cpSpecificationOptionModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				CPDefinitionSpecificationOptionValueServiceImpl.class,
-				"_cpSpecificationOptionModelResourcePermission",
-				CPSpecificationOption.class);
 
 }

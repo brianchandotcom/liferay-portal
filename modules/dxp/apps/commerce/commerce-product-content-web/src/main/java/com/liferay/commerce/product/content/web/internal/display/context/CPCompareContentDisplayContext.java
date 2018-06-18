@@ -33,7 +33,7 @@ import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.type.CPType;
@@ -63,6 +63,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -76,8 +77,8 @@ public class CPCompareContentDisplayContext {
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
 			CPDefinitionService cpDefinitionService,
-			CPDefinitionSpecificationOptionValueService
-				cpDefinitionSpecificationOptionValueService,
+			CPDefinitionSpecificationOptionValueLocalService
+				cpDefinitionSpecificationOptionValueLocalService,
 			CPInstanceHelper cpInstanceHelper,
 			CPMeasurementUnitService cpMeasurementUnitService,
 			CPOptionCategoryLocalService cpOptionCategoryLocalService,
@@ -91,8 +92,8 @@ public class CPCompareContentDisplayContext {
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
 		_cpDefinitionService = cpDefinitionService;
-		_cpDefinitionSpecificationOptionValueService =
-			cpDefinitionSpecificationOptionValueService;
+		_cpDefinitionSpecificationOptionValueLocalService =
+			cpDefinitionSpecificationOptionValueLocalService;
 		_cpInstanceHelper = cpInstanceHelper;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
 		_cpOptionCategoryLocalService = cpOptionCategoryLocalService;
@@ -235,7 +236,7 @@ public class CPCompareContentDisplayContext {
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue =
-				_cpDefinitionSpecificationOptionValueService.
+				_cpDefinitionSpecificationOptionValueLocalService.
 					fetchCPDefinitionSpecificationOptionValue(
 						cpDefinitionId, cpSpecificationOptionId);
 
@@ -517,8 +518,8 @@ public class CPCompareContentDisplayContext {
 	private final CPContentListRendererRegistry _cpContentListRendererRegistry;
 	private final List<Long> _cpDefinitionIds;
 	private final CPDefinitionService _cpDefinitionService;
-	private final CPDefinitionSpecificationOptionValueService
-		_cpDefinitionSpecificationOptionValueService;
+	private final CPDefinitionSpecificationOptionValueLocalService
+		_cpDefinitionSpecificationOptionValueLocalService;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 	private final CPOptionCategoryLocalService _cpOptionCategoryLocalService;

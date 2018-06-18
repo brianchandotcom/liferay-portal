@@ -17,6 +17,7 @@ package com.liferay.mentions.web.internal.portlet;
 import com.liferay.mentions.constants.MentionsPortletKeys;
 import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.mentions.util.MentionsUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.kernel.util.SocialInteractionsConfiguration;
 import com.liferay.social.kernel.util.SocialInteractionsConfigurationUtil;
+import com.liferay.taglib.ui.UserPortraitTag;
 
 import java.util.List;
 
@@ -143,7 +145,8 @@ public class MentionsPortlet extends MVCPortlet {
 
 			jsonObject.put("mention", mention);
 
-			jsonObject.put("portraitURL", user.getPortraitURL(themeDisplay));
+			jsonObject.put(
+				"portraitHTML", _getUserPortraitHTML(user, themeDisplay));
 			jsonObject.put("screenName", user.getScreenName());
 
 			jsonArray.put(jsonObject);
@@ -157,6 +160,23 @@ public class MentionsPortlet extends MVCPortlet {
 		MentionsUserFinder mentionsUserFinder) {
 
 		_mentionsUserFinder = mentionsUserFinder;
+	}
+
+	private String _getUserPortraitHTML(User user, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return UserPortraitTag.getUserPortraitHTML(
+			user, StringPool.BLANK, () -> user.getInitials(),
+			() -> {
+				try {
+					return user.getPortraitURL(themeDisplay);
+				}
+				catch (PortalException pe) {
+					_log.error(pe, pe);
+				}
+
+				return StringPool.BLANK;
+			});
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

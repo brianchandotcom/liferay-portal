@@ -301,23 +301,6 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		return filteredDDMFormFieldParameterNames;
 	}
 
-	protected Set<Locale> getAvailableLocales(String[] availableLanguageIds) {
-		Set<Locale> availableLocales = new HashSet<>();
-
-		for (String availableLanguageId : availableLanguageIds) {
-			Locale availableLocale = LocaleUtil.fromLanguageId(
-				availableLanguageId);
-
-			availableLocales.add(availableLocale);
-		}
-
-		if (availableLocales.isEmpty()) {
-			availableLocales.add(LocaleThreadLocal.getSiteDefaultLocale());
-		}
-
-		return availableLocales;
-	}
-
 	protected String[] getDDMFormFieldParameterNameParts(
 		String ddmFormFieldParameterName) {
 
@@ -634,19 +617,9 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		DDMFormFieldValue ddmFormFieldValue, Set<Locale> availableLocales,
 		Locale defaultLocale) {
 
-		Locale httpServletRequestLocale = LocaleUtil.fromLanguageId(
-			LanguageUtil.getLanguageId(httpServletRequest));
-
-		Locale ddmFormFieldParameterValueLocale = defaultLocale;
-
-		if (availableLocales.contains(httpServletRequestLocale)) {
-			ddmFormFieldParameterValueLocale = httpServletRequestLocale;
-		}
-
 		String ddmFormFieldParameterValue = getDDMFormFieldParameterValue(
 			httpServletRequest, fieldType, ddmFormFieldParameterName,
-			predefinedValue.getString(defaultLocale),
-			ddmFormFieldParameterValueLocale);
+			predefinedValue.getString(defaultLocale), defaultLocale);
 
 		Value value = new UnlocalizedValue(ddmFormFieldParameterValue);
 

@@ -106,7 +106,7 @@ public class OrderNoteNestedCollectionResource
 		Pagination pagination, Long commerceOrderId) {
 
 		try {
-			List<CommerceOrderNote> notes =
+			List<CommerceOrderNote> commerceOrderNotes =
 				_commerceOrderNoteService.getCommerceOrderNotes(
 					commerceOrderId, pagination.getStartPosition(),
 					pagination.getEndPosition());
@@ -114,7 +114,7 @@ public class OrderNoteNestedCollectionResource
 			int total = _commerceOrderNoteService.getCommerceOrderNotesCount(
 				commerceOrderId);
 
-			return new PageItems<>(notes, total);
+			return new PageItems<>(commerceOrderNotes, total);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

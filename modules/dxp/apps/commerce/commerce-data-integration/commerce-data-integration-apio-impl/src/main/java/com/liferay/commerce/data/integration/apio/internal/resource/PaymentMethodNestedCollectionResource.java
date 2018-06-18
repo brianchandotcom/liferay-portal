@@ -108,15 +108,15 @@ public class PaymentMethodNestedCollectionResource
 	private PageItems<CommercePaymentMethod> _getPageItems(
 		Pagination pagination, Long webSiteId) {
 
-		List<CommercePaymentMethod> paymentMethods =
+		List<CommercePaymentMethod> commercePaymentMethods =
 			_commercePaymentMethodService.getCommercePaymentMethods(
 				webSiteId, false);
 
-		int count =
+		int total =
 			_commercePaymentMethodService.getCommercePaymentMethodsCount(
 				webSiteId, false);
 
-		return new PageItems<>(paymentMethods, count);
+		return new PageItems<>(commercePaymentMethods, total);
 	}
 
 	@Reference

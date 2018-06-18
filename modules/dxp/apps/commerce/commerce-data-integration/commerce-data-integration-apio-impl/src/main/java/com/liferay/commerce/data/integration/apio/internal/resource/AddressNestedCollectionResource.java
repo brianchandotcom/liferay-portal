@@ -132,10 +132,10 @@ public class AddressNestedCollectionResource
 			Long organizationId, AddressForm addressForm)
 		throws PortalException {
 
-		Organization account = _commerceOrganizationService.getOrganization(
+		Organization organization = _commerceOrganizationService.getOrganization(
 			organizationId);
 
-		Group group = account.getGroup();
+		Group group = organization.getGroup();
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			group.getGroupId());
@@ -154,12 +154,12 @@ public class AddressNestedCollectionResource
 		Pagination pagination, Long organizationId) {
 
 		try {
-			Organization account = _commerceOrganizationService.getOrganization(
+			Organization organization = _commerceOrganizationService.getOrganization(
 				organizationId);
 
-			Group group = account.getGroup();
+			Group group = organization.getGroup();
 
-			List<CommerceAddress> addresses =
+			List<CommerceAddress> commerceAddresses =
 				_commerceAddressService.getCommerceAddresses(
 					group.getGroupId(), group.getClassName(),
 					group.getClassPK());
@@ -167,7 +167,7 @@ public class AddressNestedCollectionResource
 			int total = _commerceAddressService.getCommerceAddressesCount(
 				group.getGroupId(), group.getClassName(), group.getClassPK());
 
-			return new PageItems<>(addresses, total);
+			return new PageItems<>(commerceAddresses, total);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

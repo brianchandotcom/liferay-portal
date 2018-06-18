@@ -126,17 +126,17 @@ public class UserCollectionResource
 		).build();
 	}
 
-	private static Date _getBirthday(UserWrapper user) {
+	private static Date _getBirthday(UserWrapper userWrapper) {
 		return Try.fromFallible(
-			user::getBirthday
+			userWrapper::getBirthday
 		).orElse(
 			null
 		);
 	}
 
-	private static String _getGender(UserWrapper user) {
+	private static String _getGender(UserWrapper userWrapper) {
 		return Try.fromFallible(
-			user::isMale
+			userWrapper::isMale
 		).map(
 			male -> male ? "male" : "female"
 		).orElse(
@@ -199,9 +199,9 @@ public class UserCollectionResource
 			Collectors.toList()
 		);
 
-		int count = _userService.getCompanyUsersCount(company.getCompanyId());
+		int total = _userService.getCompanyUsersCount(company.getCompanyId());
 
-		return new PageItems<>(userWrappers, count);
+		return new PageItems<>(userWrappers, total);
 	}
 
 	private List<Long> _getRolesToAdd(

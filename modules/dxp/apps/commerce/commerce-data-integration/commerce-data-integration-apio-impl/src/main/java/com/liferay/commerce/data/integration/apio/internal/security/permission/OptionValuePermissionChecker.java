@@ -39,12 +39,12 @@ import org.osgi.service.component.annotations.Reference;
 public class OptionValuePermissionChecker {
 
 	public BiFunction<Credentials, Long, Boolean> forAdding() {
-		return (credentials, identifier) -> {
+		return (credentials, cpOptionValueId) -> {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPOptionValue> optionValueTry = Try.fromFallible(
-				() -> _cpOptionValueService.fetchCPOptionValue(identifier));
+				() -> _cpOptionValueService.fetchCPOptionValue(cpOptionValueId));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
@@ -66,12 +66,12 @@ public class OptionValuePermissionChecker {
 	}
 
 	public BiFunction<Credentials, Long, Boolean> forUpdating() {
-		return (credentials, identifier) -> {
+		return (credentials, cpOptionValueId) -> {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
 			Try<CPOptionValue> optionValueTry = Try.fromFallible(
-				() -> _cpOptionValueService.fetchCPOptionValue(identifier));
+				() -> _cpOptionValueService.fetchCPOptionValue(cpOptionValueId));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(

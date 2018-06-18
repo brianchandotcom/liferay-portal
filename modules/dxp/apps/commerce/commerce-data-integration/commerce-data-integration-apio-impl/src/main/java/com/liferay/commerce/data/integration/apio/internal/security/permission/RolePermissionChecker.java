@@ -56,12 +56,12 @@ public class RolePermissionChecker {
 	}
 
 	public BiFunction<Credentials, Long, Boolean> forUpdating() {
-		return (credentials, identifier) -> {
+		return (credentials, roleId) -> {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
 			Try<Role> roleTry = Try.fromFallible(
-				() -> _roleService.fetchRole(identifier));
+				() -> _roleService.fetchRole(roleId));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(

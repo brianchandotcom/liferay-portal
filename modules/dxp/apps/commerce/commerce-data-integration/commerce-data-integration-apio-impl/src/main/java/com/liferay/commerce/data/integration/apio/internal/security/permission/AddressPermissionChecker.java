@@ -39,12 +39,12 @@ import org.osgi.service.component.annotations.Reference;
 public class AddressPermissionChecker {
 
 	public BiFunction<Credentials, Long, Boolean> forAdding() {
-		return (credentials, identifier) -> {
+		return (credentials, commerceAddressId) -> {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
 			Try<CommerceAddress> commerceAddressTry = Try.fromFallible(
-				() -> _commerceAddressService.fetchCommerceAddress(identifier));
+				() -> _commerceAddressService.fetchCommerceAddress(commerceAddressId));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(
@@ -66,12 +66,12 @@ public class AddressPermissionChecker {
 	}
 
 	public BiFunction<Credentials, Long, Boolean> forUpdating() {
-		return (credentials, identifier) -> {
+		return (credentials, commerceAddressId) -> {
 			Try<PermissionChecker> permissionCheckerTry =
 				_getPermissionCheckerTry(credentials);
 
 			Try<CommerceAddress> commerceAddressTry = Try.fromFallible(
-				() -> _commerceAddressService.fetchCommerceAddress(identifier));
+				() -> _commerceAddressService.fetchCommerceAddress(commerceAddressId));
 
 			return permissionCheckerTry.map(
 				permissionChecker -> _portletResourcePermission.contains(

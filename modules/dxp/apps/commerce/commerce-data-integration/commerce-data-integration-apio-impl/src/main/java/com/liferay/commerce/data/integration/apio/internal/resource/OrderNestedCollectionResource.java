@@ -124,12 +124,12 @@ public class OrderNestedCollectionResource
 		Pagination pagination, Long organizationId) {
 
 		try {
-			Organization account = _commerceOrganizationService.getOrganization(
+			Organization organization = _commerceOrganizationService.getOrganization(
 				organizationId);
 
-			Group group = account.getGroup();
+			Group group = organization.getGroup();
 
-			List<CommerceOrder> orders =
+			List<CommerceOrder> commerceOrders =
 				_commerceOrderService.getCommerceOrdersByGroupId(
 					group.getGroupId(), pagination.getStartPosition(),
 					pagination.getEndPosition(), null);
@@ -137,7 +137,7 @@ public class OrderNestedCollectionResource
 			int total = _commerceOrderService.getCommerceOrdersCountByGroupId(
 				group.getGroupId());
 
-			return new PageItems<>(orders, total);
+			return new PageItems<>(commerceOrders, total);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -145,12 +145,12 @@ public class OrderNestedCollectionResource
 	}
 
 	private CommerceOrder _updateCommerceOrder(
-			Long commerceOrderId, OrderUpdaterForm orderForm)
+			Long commerceOrderId, OrderUpdaterForm orderUpdaterForm)
 		throws PortalException {
 
 		return _orderHelper.updateCommerceOrder(
-			commerceOrderId, orderForm.getOrderStatus(),
-			orderForm.getPaymentStatus());
+			commerceOrderId, orderUpdaterForm.getOrderStatus(),
+			orderUpdaterForm.getPaymentStatus());
 	}
 
 	@Reference

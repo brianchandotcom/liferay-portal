@@ -106,15 +106,15 @@ public class CountryNestedCollectionResource
 	private PageItems<CommerceCountry> _getPageItems(
 		Pagination pagination, Long webSiteId) {
 
-		List<CommerceCountry> countries =
+		List<CommerceCountry> commerceCountries =
 			_commerceCountryService.getCommerceCountries(
 				webSiteId, pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
 
-		int count = _commerceCountryService.getCommerceCountriesCount(
+		int total = _commerceCountryService.getCommerceCountriesCount(
 			webSiteId);
 
-		return new PageItems<>(countries, count);
+		return new PageItems<>(commerceCountries, total);
 	}
 
 	@Reference

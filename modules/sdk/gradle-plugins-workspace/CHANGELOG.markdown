@@ -205,6 +205,14 @@ version 2.2.2.
 - [LPS-79453]: Add support for Ext OSGi modules.
 - [LPS-79453]: Add support for Ext plugins.
 
+### Changed
+- [LPS-80222]: Update the [Liferay Gradle Plugins Target Platform] dependency to
+version 1.0.1.
+- [LPS-80517]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.19.
+- [LPS-80950]: Update the [Liferay Gradle Plugins Poshi Runner] dependency to
+version 2.2.4.
+
 ## 1.10.1 - 2018-06-15
 
 ### Changed
@@ -214,6 +222,7 @@ version 3.2.5.
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
+[Liferay Gradle Plugins Target Platform]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-target-platform
 [Liferay Portal Tools Bundle Support]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-bundle-support
 [Liferay Portal Tools Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-theme-builder
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
@@ -258,4 +267,7 @@ version 3.2.5.
 [LPS-78537]: https://issues.liferay.com/browse/LPS-78537
 [LPS-78911]: https://issues.liferay.com/browse/LPS-78911
 [LPS-79453]: https://issues.liferay.com/browse/LPS-79453
+[LPS-80222]: https://issues.liferay.com/browse/LPS-80222
 [LPS-80281]: https://issues.liferay.com/browse/LPS-80281
+[LPS-80517]: https://issues.liferay.com/browse/LPS-80517
+[LPS-80950]: https://issues.liferay.com/browse/LPS-80950

@@ -51,17 +51,25 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		// Site navigation menu
 
-		SiteNavigationMenu siteNavigationMenu = addSiteNavigationMenu(
+		SiteNavigationMenu privateSiteNavigationMenu = addSiteNavigationMenu(
+			userId, groupId, "Default Private",
+			SiteNavigationConstants.TYPE_PRIVATE, false, serviceContext);
+
+		SiteNavigationMenu publicSiteNavigationMenu = addSiteNavigationMenu(
 			userId, groupId, "Default", SiteNavigationConstants.TYPE_PRIMARY,
 			true, serviceContext);
 
 		// Site navigation menu items
 
 		_addSiteNavigationMenuItems(
-			siteNavigationMenu, 0, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			serviceContext);
+			privateSiteNavigationMenu, 0, true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
 
-		return siteNavigationMenu;
+		_addSiteNavigationMenuItems(
+			publicSiteNavigationMenu, 0, false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
+
+		return publicSiteNavigationMenu;
 	}
 
 	@Override
@@ -320,8 +328,8 @@ public class SiteNavigationMenuLocalServiceImpl
 
 	private void _addSiteNavigationMenuItems(
 			SiteNavigationMenu siteNavigationMenu,
-			long parentSiteNavigationMenuId, long layoutId,
-			ServiceContext serviceContext)
+			long parentSiteNavigationMenuId, boolean privateLayout,
+			long layoutId, ServiceContext serviceContext)
 		throws PortalException {
 
 		SiteNavigationMenuItemType siteNavigationMenuItemType =
@@ -333,7 +341,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		}
 
 		List<Layout> layouts = layoutLocalService.getLayouts(
-			siteNavigationMenu.getGroupId(), false, layoutId);
+			siteNavigationMenu.getGroupId(), privateLayout, layoutId);
 
 		for (Layout layout : layouts) {
 			if (layout.isHidden()) {
@@ -355,7 +363,7 @@ public class SiteNavigationMenuLocalServiceImpl
 			_addSiteNavigationMenuItems(
 				siteNavigationMenu,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-				layout.getLayoutId(), serviceContext);
+				privateLayout, layout.getLayoutId(), serviceContext);
 		}
 	}
 

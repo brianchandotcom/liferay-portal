@@ -9,6 +9,7 @@ import {object} from 'metal';
 
 const KEY_ENTER = 13;
 
+let _destroyCallback;
 let _editableElement;
 let _editor;
 let _editorEventHandler;
@@ -31,6 +32,8 @@ function destroy() {
 		_editableElement = null;
 		_editor = null;
 		_editorEventHandler = null;
+
+		_destroyCallback();
 	}
 }
 
@@ -57,7 +60,8 @@ function init(
 	fragmentEntryLinkId,
 	portletNamespace,
 	options,
-	callback
+	callback,
+	destroyCallback
 ) {
 	destroy();
 
@@ -78,6 +82,7 @@ function init(
 
 	_editableElement = editableElement;
 	_editorEventHandler = new EventHandler();
+	_destroyCallback = destroyCallback;
 
 	_editor = AlloyEditor.editable(
 		wrapper,
@@ -110,6 +115,13 @@ function init(
 		nativeEditor.on(
 			'actionPerformed',
 			() => callback(nativeEditor.getData())
+		)
+	);
+
+	_editorEventHandler.add(
+		nativeEditor.on(
+			'blur',
+			() => _destroyCallback()
 		)
 	);
 

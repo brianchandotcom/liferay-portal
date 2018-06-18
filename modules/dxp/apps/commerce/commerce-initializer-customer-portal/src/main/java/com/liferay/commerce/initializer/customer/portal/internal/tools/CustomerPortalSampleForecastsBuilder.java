@@ -58,9 +58,9 @@ public class CustomerPortalSampleForecastsBuilder {
 		JSONArray productsJSONArray = new JSONArray(productsJSON);
 
 		for (int customerId = 0;
-			customerId <=
-				CustomerPortalSiteInitializer.ACCOUNT_ORGANIZATIONS_COUNT;
-			customerId++) {
+				customerId <=
+					CustomerPortalSiteInitializer.ACCOUNT_ORGANIZATIONS_COUNT;
+				customerId++) {
 
 			_writeForecasts(
 				outputDirPath, customerId,
@@ -160,7 +160,7 @@ public class CustomerPortalSampleForecastsBuilder {
 		}
 
 		for (long time = Math.negateExact(_TIME); time <= _TIME;
-			time += increment) {
+				time += increment) {
 
 			value = _addRandomIncrement(value, valueVolatility, null);
 

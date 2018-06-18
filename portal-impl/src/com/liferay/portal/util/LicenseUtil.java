@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.OSDetector;
@@ -598,6 +599,12 @@ public class LicenseUtil {
 			catch (Exception e) {
 				_log.error(e, e);
 			}
+		}
+
+		if (JavaDetector.isIBM()) {
+			Runtime runtime = Runtime.getRuntime();
+
+			return runtime.availableProcessors();
 		}
 
 		Sigar sigar = null;

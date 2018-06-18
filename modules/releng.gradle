@@ -230,6 +230,10 @@ prepareMajorIncrement {
 		Closure<Void> convertToProjectDependenciesClosure = {
 			File dir ->
 
+			if (dir.parentFile.name == "util") {
+				return
+			}
+
 			File buildGradleFile = new File(dir, "build.gradle")
 
 			if (!buildGradleFile.exists()) {

@@ -196,9 +196,16 @@ public class OrphanPortletsDisplayContext {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
 
+		boolean orderByAsc = false;
+
+		if (Objects.equals(getOrderByType(), "asc")) {
+			orderByAsc = true;
+		}
+
 		PortletTitleComparator portletTitleComparator =
 			new PortletTitleComparator(
-				request.getServletContext(), themeDisplay.getLocale());
+				request.getServletContext(), themeDisplay.getLocale(),
+				orderByAsc);
 
 		orphanPortlets = ListUtil.sort(orphanPortlets, portletTitleComparator);
 

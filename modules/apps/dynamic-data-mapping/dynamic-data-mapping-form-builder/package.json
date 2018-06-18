@@ -19,5 +19,5 @@
 	"scripts": {
 		"build": "metalsoy && babel -d classes/META-INF/resources/templates src/main/resources/META-INF/resources/templates && liferay-npm-bundler && rimraf src/**/*.soy.js"
 	},
-	"version": "1.0.0"
+	"version": "2.0.0"
 }

@@ -36,5 +36,5 @@
 		"csf": "csf src/**/*.js src/**/*.scss src/**/*.soy",
 		"format": "npm run csf -- -i"
 	},
-	"version": "2.0.0"
+	"version": "3.0.0"
 }

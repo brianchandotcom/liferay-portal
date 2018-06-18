@@ -29,5 +29,5 @@
 		"build": "babel --source-maps -d classes/META-INF/resources src/main/resources/META-INF/resources && liferay-npm-bundler",
 		"test": "jest"
 	},
-	"version": "3.0.0"
+	"version": "4.0.0"
 }

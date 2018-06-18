@@ -15,5 +15,5 @@
 		"metal-cli": "4.4.0"
 	},
 	"name": "portal-portlet-bridge-soy-impl",
-	"version": "1.0.0"
+	"version": "2.0.0"
 }

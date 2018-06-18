@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools Data Partitioning SQL Builder
 Bundle-SymbolicName: com.liferay.portal.tools.data.partitioning.sql.builder
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.portal.tools.data.partitioning.sql.builder.exporter,\
 	com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context,\

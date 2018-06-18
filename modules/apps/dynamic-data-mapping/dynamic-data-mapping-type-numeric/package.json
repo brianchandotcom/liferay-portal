@@ -20,5 +20,5 @@
 	"scripts": {
 		"build": "metalsoy && babel -d classes/META-INF/resources src/main/resources/META-INF/resources --ignore config.js,numeric_field.js && liferay-npm-bundler && rimraf src/**/*.soy.js"
 	},
-	"version": "1.0.0"
+	"version": "2.0.0"
 }

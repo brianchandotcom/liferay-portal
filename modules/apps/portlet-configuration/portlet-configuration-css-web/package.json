@@ -13,5 +13,5 @@
 		"csf": "csf src/**/*.es.js",
 		"format": "npm run csf -- -i"
 	},
-	"version": "3.0.0"
+	"version": "4.0.0"
 }

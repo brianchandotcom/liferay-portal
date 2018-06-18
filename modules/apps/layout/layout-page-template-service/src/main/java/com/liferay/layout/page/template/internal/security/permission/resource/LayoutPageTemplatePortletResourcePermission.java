@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.security.permission.resource;
+package com.liferay.layout.page.template.internal.security.permission.resource;
 
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;

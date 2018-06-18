@@ -97,7 +97,7 @@ public class JournalArticleModelResourcePermissionRegistrar {
 	}
 
 	@Deactivate
-	public void deacitvate() {
+	public void deactivate() {
 		_serviceRegistration.unregister();
 	}
 

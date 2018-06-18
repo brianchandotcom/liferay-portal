@@ -54,14 +54,16 @@ String replyTo = PortalUtil.escapeRedirect(oAuth2Parameters.get("reply_to"));
 						</h1>
 
 						<p class="application-wants-permissions text-truncate">
-							<liferay-ui:message key="application-wants-permissions-to-access" />
+							<liferay-ui:message key="this-application-wants-the-following-permissions" />
 						</p>
 
 						<ul class="list-group">
 
 							<%
 							for (String applicationName : assignableScopes.getApplicationNames()) {
-								String applicationScopeDescription = StringUtil.merge(assignableScopes.getApplicationScopeDescription(applicationName), ", ");
+								String[] messageArguments = new String[2];
+								messageArguments[0] = HtmlUtil.escape(assignableScopes.getApplicationDescription(applicationName));
+								messageArguments[1] = HtmlUtil.escape(StringUtil.merge(assignableScopes.getApplicationScopeDescription(applicationName), ", "));
 							%>
 
 								<li class="list-group-item list-group-item-flex">
@@ -72,8 +74,7 @@ String replyTo = PortalUtil.escapeRedirect(oAuth2Parameters.get("reply_to"));
 									</div>
 
 									<div class="autofit-col autofit-col-expand">
-										<h4 class="list-group-title text-truncate"><%= HtmlUtil.escape(assignableScopes.getApplicationDescription(applicationName)) %></h4>
-										<p class="list-group-subtitle text-truncate"><%= applicationScopeDescription %></p>
+										<liferay-ui:message arguments="<%= messageArguments %>" key="for-x-y" />
 									</div>
 								</li>
 

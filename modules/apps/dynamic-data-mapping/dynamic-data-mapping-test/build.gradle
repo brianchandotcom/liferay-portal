@@ -51,9 +51,9 @@ dependencies {
 	testCompile project(":core:petra:petra-memory")
 	testCompile project(":core:petra:petra-string")
 
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "4.1.9.RELEASE"
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")
 	testIntegrationCompile project(":apps:portal:portal-upgrade-api")
 	testIntegrationCompile project(":core:registry-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

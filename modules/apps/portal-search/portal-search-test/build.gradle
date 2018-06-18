@@ -8,6 +8,7 @@ dependencies {
 	testCompile project(":apps:portal-search:portal-search-test-util")
 	testCompile project(":core:petra:petra-lang")
 
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "3.0.0"
 	testIntegrationCompile project(":apps:blogs:blogs-api")
 	testIntegrationCompile project(":apps:blogs:blogs-service")
@@ -17,5 +18,4 @@ dependencies {
 	testIntegrationCompile project(":apps:portal-search:portal-search-api")
 	testIntegrationCompile project(":apps:static:osgi:osgi-util")
 	testIntegrationCompile project(":core:petra:petra-string")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

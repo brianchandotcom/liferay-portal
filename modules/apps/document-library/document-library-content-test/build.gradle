@@ -2,6 +2,6 @@ sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
 dependencies {
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile project(":apps:document-library:document-library-content-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

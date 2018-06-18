@@ -29,6 +29,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Collections;
 import java.util.List;
@@ -76,6 +77,27 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		super.exportStagedModel(portletDataContext, stagedModel);
 
 		if (ExportImportThreadLocal.isStagingInProcess()) {
+			Element importDataRootElement =
+				portletDataContext.getImportDataRootElement();
+
+			Element importDataElement = null;
+
+			try {
+				portletDataContext.setImportDataRootElement(
+					portletDataContext.getExportDataRootElement());
+
+				importDataElement = portletDataContext.getImportDataElement(
+					stagedModel);
+			}
+			finally {
+				portletDataContext.setImportDataRootElement(
+					importDataRootElement);
+			}
+
+			if (importDataElement == null) {
+				return;
+			}
+
 			ChangesetCollection changesetCollection =
 				ChangesetCollectionLocalServiceUtil.fetchChangesetCollection(
 					portletDataContext.getScopeGroupId(),

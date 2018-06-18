@@ -253,6 +253,13 @@ public class ChangesetEntryLocalServiceUtil {
 				   .getChangesetEntriesCount(changesetCollectionId, classNameId);
 	}
 
+	public static long getChangesetEntriesCount(long changesetCollectionId,
+		long classNameId, java.util.Set<Long> classPKs) {
+		return getService()
+				   .getChangesetEntriesCount(changesetCollectionId,
+			classNameId, classPKs);
+	}
+
 	/**
 	* Returns the changeset entry with the primary key.
 	*

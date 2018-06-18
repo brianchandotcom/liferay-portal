@@ -264,6 +264,13 @@ public class ChangesetEntryLocalServiceWrapper
 			classNameId);
 	}
 
+	@Override
+	public long getChangesetEntriesCount(long changesetCollectionId,
+		long classNameId, java.util.Set<Long> classPKs) {
+		return _changesetEntryLocalService.getChangesetEntriesCount(changesetCollectionId,
+			classNameId, classPKs);
+	}
+
 	/**
 	* Returns the changeset entry with the primary key.
 	*

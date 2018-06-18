@@ -221,6 +221,8 @@ public class StagingImpl implements Staging {
 			if (!ArrayUtil.contains(
 					exportableStatuses, workflowedModel.getStatus())) {
 
+				removeModelFromChangesetCollection(model);
+
 				return;
 			}
 		}

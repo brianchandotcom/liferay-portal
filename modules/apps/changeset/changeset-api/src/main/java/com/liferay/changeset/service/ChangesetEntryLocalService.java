@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Provides the local service interface for ChangesetEntry. Methods of this
@@ -217,6 +218,10 @@ public interface ChangesetEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getChangesetEntriesCount(long changesetCollectionId,
 		long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getChangesetEntriesCount(long changesetCollectionId,
+		long classNameId, Set<Long> classPKs);
 
 	/**
 	* Returns the changeset entry with the primary key.

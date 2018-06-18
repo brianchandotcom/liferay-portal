@@ -184,23 +184,34 @@ class Analytics {
 			userId,
 		};
 
-		const body = JSON.stringify(bodyData);
-		const headers = new Headers();
+		const storedIdentityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
+		const newIdentityHash = hash(bodyData);
 
-		headers.append('Content-Type', 'application/json');
+		if (newIdentityHash !== storedIdentityHash) {
+			instance._persist(STORAGE_KEY_IDENTITY_HASH, newIdentityHash);
 
-		const request = {
-			body,
-			cache: 'default',
-			credentials: 'same-origin',
-			headers,
-			method: 'POST',
-			mode: 'cors',
-		};
+			const body = JSON.stringify(bodyData);
+			const headers = new Headers();
 
-		fetch(this.asahIdentityEndpoint, request);
+			headers.append('Content-Type', 'application/json');
 
-		return fetch(this.lcsIdentityEndpoint, request);
+			const request = {
+				body,
+				cache: 'default',
+				credentials: 'same-origin',
+				headers,
+				method: 'POST',
+				mode: 'cors',
+			};
+
+			fetch(this.asahIdentityEndpoint, request);
+
+			return fetch(this.lcsIdentityEndpoint, request).then(
+				() => newIdentityHash
+			);
+		}
+
+		return Promise.resolve(storedIdentityHash);
 	}
 
 	/**
@@ -220,7 +231,12 @@ class Analytics {
 			);
 
 			result = Promise.race([
-				this._getUserId().then(instance._sendData),
+				this._getUserId().then(userId =>
+					Promise.all([
+						this._sendIdentity(this.config.identity, userId),
+						instance._sendData(userId),
+					])
+				),
 				this._timeout(REQUEST_TIMEOUT),
 			])
 				.then(() => {
@@ -312,18 +328,11 @@ class Analytics {
 	 * @return {Promise} A promise resolved with the generated identity hash
 	 */
 	setIdentity(identity) {
-		const storedIdentityHash = storage.get(STORAGE_KEY_IDENTITY_HASH);
-		const newIdentityHash = hash(identity);
+		this.config.identity = identity;
 
-		if (newIdentityHash !== storedIdentityHash) {
-			storage.set(STORAGE_KEY_IDENTITY_HASH, newIdentityHash);
-
-			return this._getUserId()
-				.then(userId => this._sendIdentity(identity, userId))
-				.then(() => newIdentityHash);
-		}
-
-		return Promise.resolve(storedIdentityHash);
+		return this._getUserId().then(userId =>
+			this._sendIdentity(identity, userId)
+		);
 	}
 
 	/**

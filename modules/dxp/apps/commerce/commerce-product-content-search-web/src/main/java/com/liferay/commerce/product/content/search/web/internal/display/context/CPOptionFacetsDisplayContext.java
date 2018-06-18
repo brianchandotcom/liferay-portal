@@ -16,7 +16,7 @@ package com.liferay.commerce.product.content.search.web.internal.display.context
 
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPOption;
-import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -35,11 +35,11 @@ import javax.portlet.RenderRequest;
 public class CPOptionFacetsDisplayContext {
 
 	public CPOptionFacetsDisplayContext(
-		CPOptionService cpOptionService, RenderRequest renderRequest,
+		CPOptionLocalService cpOptionLocalService, RenderRequest renderRequest,
 		List<Facet> facets,
 		PortletSharedSearchResponse portletSharedSearchResponse) {
 
-		_cpOptionService = cpOptionService;
+		_cpOptionLocalService = cpOptionLocalService;
 		_renderRequest = renderRequest;
 		_facets = facets;
 		_portletSharedSearchResponse = portletSharedSearchResponse;
@@ -53,7 +53,7 @@ public class CPOptionFacetsDisplayContext {
 		String cpOptionKey =
 			CPOptionFacetsUtil.getCPOptionKeyFromIndexFieldName(fieldName);
 
-		CPOption cpOption = _cpOptionService.fetchCPOption(
+		CPOption cpOption = _cpOptionLocalService.fetchCPOption(
 			groupId, cpOptionKey);
 
 		return cpOption;
@@ -104,7 +104,7 @@ public class CPOptionFacetsDisplayContext {
 		return false;
 	}
 
-	private final CPOptionService _cpOptionService;
+	private final CPOptionLocalService _cpOptionLocalService;
 	private final List<Facet> _facets;
 	private final Locale _locale;
 	private final PortletSharedSearchResponse _portletSharedSearchResponse;

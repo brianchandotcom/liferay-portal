@@ -20,7 +20,7 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
-import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -148,7 +148,7 @@ public class CPOptionFacetsPortlet
 
 			CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext =
 				new CPOptionFacetsDisplayContext(
-					_cpOptionService, renderRequest, filledFacets,
+					_cpOptionLocalService, renderRequest, filledFacets,
 					portletSharedSearchResponse);
 
 			renderRequest.setAttribute(
@@ -237,7 +237,7 @@ public class CPOptionFacetsPortlet
 		CPOptionFacetsPortlet.class);
 
 	@Reference
-	private CPOptionService _cpOptionService;
+	private CPOptionLocalService _cpOptionLocalService;
 
 	@Reference
 	private Portal _portal;

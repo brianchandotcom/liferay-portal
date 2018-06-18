@@ -45,7 +45,7 @@ public class SiteNavigationMenuLocalServiceImpl
 	extends SiteNavigationMenuLocalServiceBaseImpl {
 
 	@Override
-	public SiteNavigationMenu addDefaultSiteNavigationMenu(
+	public void addDefaultSiteNavigationMenu(
 			long userId, long groupId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -68,8 +68,6 @@ public class SiteNavigationMenuLocalServiceImpl
 		_addSiteNavigationMenuItems(
 			publicSiteNavigationMenu, 0, false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
-
-		return publicSiteNavigationMenu;
 	}
 
 	@Override

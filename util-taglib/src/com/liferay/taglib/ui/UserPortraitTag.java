@@ -47,21 +47,6 @@ import javax.servlet.jsp.JspWriter;
  */
 public class UserPortraitTag extends IncludeTag {
 
-	@Override
-	public int processEndTag() throws Exception {
-		User user = getUser();
-
-		JspWriter jspWriter = pageContext.getOut();
-
-		String userPortraitHTML = getUserPortraitHTML(
-			user, _cssClass, () -> getUserInitials(user),
-			() -> getPortraitURL(user));
-
-		jspWriter.write(userPortraitHTML);
-
-		return EVAL_PAGE;
-	}
-
 	public static String getUserPortraitHTML(
 		User user, String cssClass, Supplier<String> userInitialsSupplier,
 		Supplier<String> userPortraitURLSupplier) {
@@ -97,14 +82,28 @@ public class UserPortraitTag extends IncludeTag {
 		}
 		else {
 			sb.append(cssClass);
-			sb.append(
-				" aspect-ratio-bg-cover user-icon\" style=\"background-image:");
-			sb.append("url(");
+			sb.append(" aspect-ratio-bg-cover user-icon\" ");
+			sb.append("style=\"background-image:url(");
 			sb.append(HtmlUtil.escape(userPortraitURLSupplier.get()));
 			sb.append(")\"></div>");
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public int processEndTag() throws Exception {
+		User user = getUser();
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		String userPortraitHTML = getUserPortraitHTML(
+			user, _cssClass, () -> getUserInitials(user),
+			() -> getPortraitURL(user));
+
+		jspWriter.write(userPortraitHTML);
+
+		return EVAL_PAGE;
 	}
 
 	public void setCssClass(String cssClass) {

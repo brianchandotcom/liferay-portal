@@ -14,7 +14,9 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowNavigationDisplayContext;
@@ -86,7 +88,9 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 
-		this.resourceBundleLoader = resourceBundleLoader;
+		this.resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	protected ResourceBundleLoader resourceBundleLoader;

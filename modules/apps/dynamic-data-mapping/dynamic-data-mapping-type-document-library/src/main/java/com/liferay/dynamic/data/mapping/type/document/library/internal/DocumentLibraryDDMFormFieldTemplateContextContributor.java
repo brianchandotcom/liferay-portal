@@ -28,7 +28,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -181,10 +184,17 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader();
 
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+		ResourceBundle portalResourceBundle =
+			portalResourceBundleLoader.loadResourceBundle(locale);
+
+		ResourceBundle portletResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return new AggregateResourceBundle(
+			portletResourceBundle, portalResourceBundle);
 	}
 
 	@Reference

@@ -130,11 +130,11 @@ public class OrderNestedCollectionResource
 			Group group = organization.getGroup();
 
 			List<CommerceOrder> commerceOrders =
-				_commerceOrderService.getCommerceOrdersByGroupId(
+				_commerceOrderService.getCommerceOrders(
 					group.getGroupId(), pagination.getStartPosition(),
 					pagination.getEndPosition(), null);
 
-			int total = _commerceOrderService.getCommerceOrdersCountByGroupId(
+			int total = _commerceOrderService.getCommerceOrdersCount(
 				group.getGroupId());
 
 			return new PageItems<>(commerceOrders, total);

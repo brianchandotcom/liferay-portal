@@ -123,6 +123,11 @@ public class FragmentEntryStagedModelRepository
 	}
 
 	@Override
+	public FragmentEntry getStagedModel(long id) throws PortalException {
+		return _fragmentEntryLocalService.getFragmentEntry(id);
+	}
+
+	@Override
 	public FragmentEntry saveStagedModel(FragmentEntry fragmentEntry)
 		throws PortalException {
 

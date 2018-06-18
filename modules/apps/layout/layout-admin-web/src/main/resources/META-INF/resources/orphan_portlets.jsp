@@ -43,7 +43,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 />
 
 <div class="container-fluid-1280">
-	<div class="text-muted">
+	<div class="alert alert-warning" role="alert">
+		<span class="alert-indicator">
+			<aui:icon image="warning-full" markupView="lexicon" />
+		</span>
+
+		<strong class="lead"><liferay-ui:message key="warning" />:</strong>
+
 		<c:choose>
 			<c:when test="<%= selLayout.isLayoutPrototypeLinkActive() %>">
 				<liferay-ui:message key="layout-inherits-from-a-prototype-widgets-cannot-be-manipulated" />
@@ -52,6 +58,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 				<liferay-ui:message key="warning-preferences-of-selected-widgets-will-be-reset-or-deleted" />
 			</c:otherwise>
 		</c:choose>
+
+		<button aria-label="Close" class="close" data-dismiss="alert" type="button">
+			<aui:icon image="times" markupView="lexicon" />
+		</button>
 	</div>
 
 	<portlet:actionURL name="/layout/delete_orphan_portlets" var="deleteOrphanPortletsURL">

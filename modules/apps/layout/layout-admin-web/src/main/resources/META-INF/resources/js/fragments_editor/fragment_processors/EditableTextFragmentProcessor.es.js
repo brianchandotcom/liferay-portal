@@ -123,7 +123,7 @@ function init(
 	_editorEventHandler.add(
 		nativeEditor.on(
 			'blur',
-			destroy
+			() => requestAnimationFrame(destroy)
 		)
 	);
 

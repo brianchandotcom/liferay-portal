@@ -210,6 +210,7 @@ public class OrphanPortletsDisplayContext {
 
 		portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 		portletURL.setParameter("backURL", getBackURL());
+		portletURL.setParameter("displayStyle", getDisplayStyle());
 
 		return portletURL;
 	}

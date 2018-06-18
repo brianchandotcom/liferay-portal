@@ -88,7 +88,7 @@ public class AccountHelper {
 					}
 				}
 				catch (PortalException pe) {
-					_log.error("Error on add member", pe);
+					_log.error("Unable to add member", pe);
 				}
 			}
 		}

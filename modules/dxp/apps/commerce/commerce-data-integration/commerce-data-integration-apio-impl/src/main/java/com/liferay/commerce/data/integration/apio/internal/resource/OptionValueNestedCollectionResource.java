@@ -133,7 +133,7 @@ public class OptionValueNestedCollectionResource
 		catch (CPOptionValueKeyException cpovke) {
 			throw new BadRequestException(
 				String.format(
-					"CPOptionValue key '%s' already been defined",
+					"An option value with key '%s' already exists",
 					optionValueForm.getKey()),
 				cpovke);
 		}

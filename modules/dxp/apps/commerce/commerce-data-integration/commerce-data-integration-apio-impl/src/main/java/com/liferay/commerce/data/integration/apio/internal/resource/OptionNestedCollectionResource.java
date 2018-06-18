@@ -134,6 +134,7 @@ public class OptionNestedCollectionResource
 			throw new BadRequestException(
 				String.format(
 					"CPOption key '%s' already been defined",
+                    "An option with key '%s' already exists",
 					optionForm.getKey()),
 				cpoke);
 		}

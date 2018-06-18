@@ -160,7 +160,7 @@ public class AccountCollectionResource
 			}
 		}
 		catch (PortalException pe) {
-			_log.error("Error to retrieve users", pe);
+			_log.error("Unable to retrieve user", pe);
 		}
 
 		return userIds;

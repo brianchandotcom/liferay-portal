@@ -17,11 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(assetCategoriesDisplayContext.getCategoriesRedirect());
-
-renderResponse.setTitle(assetCategoriesDisplayContext.getCategoryTitle());
-
 AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVocabulary(), assetCategoriesDisplayContext.getCategory(), request, renderResponse);
 %>
 

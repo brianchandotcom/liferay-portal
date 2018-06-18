@@ -316,7 +316,8 @@ prepareMajorIncrement {
 
 					return all
 				}
-				else if (versionString.indexOf('.') == -1) {
+
+				if (versionString.indexOf('.') == -1) {
 					newVersionString = "1"
 				}
 				else {

@@ -965,6 +965,18 @@ public class LayoutsAdminDisplayContext {
 			}
 		}
 
+		LayoutSetBranch currentUserLayoutSetBranch =
+			LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
+				_themeDisplay.getUserId(), _themeDisplay.getScopeGroupId(),
+				isPrivateLayout(), 0, 0);
+
+		if ((_activeLayoutSetBranchId == 0) &&
+			(currentUserLayoutSetBranch != null)) {
+
+			_activeLayoutSetBranchId =
+				currentUserLayoutSetBranch.getLayoutSetBranchId();
+		}
+
 		List<LayoutSetBranch> layoutSetBranches =
 			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(
 				_themeDisplay.getScopeGroupId(), isPrivatePages());

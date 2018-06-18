@@ -538,6 +538,21 @@ public class LayoutServiceUtil {
 	}
 
 	/**
+	* Returns the layout's plid that matches the parameters.
+	*
+	* @param uuid the layout's UUID
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @return the matching layout's plid
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static long getLayoutPlid(String uuid, long groupId,
+		boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutPlid(uuid, groupId, privateLayout);
+	}
+
+	/**
 	* Returns the layout references for all the layouts that belong to the
 	* company and belong to the portlet that matches the preferences.
 	*

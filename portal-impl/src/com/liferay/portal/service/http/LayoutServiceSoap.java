@@ -439,6 +439,30 @@ public class LayoutServiceSoap {
 	}
 
 	/**
+	* Returns the layout's plid that matches the parameters.
+	*
+	* @param uuid the layout's UUID
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @return the matching layout's plid
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static long getLayoutPlid(String uuid, long groupId,
+		boolean privateLayout) throws RemoteException {
+		try {
+			long returnValue = LayoutServiceUtil.getLayoutPlid(uuid, groupId,
+					privateLayout);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the layout references for all the layouts that belong to the
 	* company and belong to the portlet that matches the preferences.
 	*

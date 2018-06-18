@@ -441,6 +441,34 @@ public class SourceFormatter {
 		_sourceFormatterArgs.addRecentChangesFileNames(dependentFileNames);
 	}
 
+	private void _excludeWorkingDirCheckoutPrivateApps() throws Exception {
+		if (!_isPortalSource()) {
+			return;
+		}
+
+		File file = new File(_getPortalDir(), "working.dir.properties");
+
+		if (!file.exists()) {
+			return;
+		}
+
+		Properties properties = _getProperties(file);
+
+		for (Object key : properties.keySet()) {
+			String s = (String)key;
+
+			if (s.matches("working.dir.checkout.private.apps.(\\w)+.dirs")) {
+				List<String> dirs = ListUtil.fromString(
+					properties.getProperty(s), StringPool.COMMA);
+
+				for (String dir : dirs) {
+					_sourceFormatterExcludes.addDefaultExcludeSyntaxPatterns(
+						_getExcludeSyntaxPatterns("**/" + dir + "/**"));
+				}
+			}
+		}
+	}
+
 	private List<String> _getCheckNames() {
 		List<String> checkNames = new ArrayList<>();
 
@@ -521,6 +549,18 @@ public class SourceFormatter {
 		return pluginsInsideModulesDirectoryNames;
 	}
 
+	private File _getPortalDir() {
+		File portalImplDir = SourceFormatterUtil.getFile(
+			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
+			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalImplDir == null) {
+			return null;
+		}
+
+		return portalImplDir.getParentFile();
+	}
+
 	private String _getProjectPathPrefix() throws Exception {
 		if (!_subrepository) {
 			return null;
@@ -561,6 +601,8 @@ public class SourceFormatter {
 	private void _init() throws Exception {
 		_sourceFormatterExcludes = new SourceFormatterExcludes(
 			SetUtil.fromArray(DEFAULT_EXCLUDE_SYNTAX_PATTERNS));
+
+		_excludeWorkingDirCheckoutPrivateApps();
 
 		// Find properties file in any parent directory
 

@@ -128,7 +128,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		throws Exception {
 
 		int[] statuses = GetterUtil.getIntegerValues(
-			searchContext.getAttribute(Field.STATUS), null);
+			searchContext.getAttribute(Field.STATUS));
 
 		if (ArrayUtil.isEmpty(statuses)) {
 			int status = GetterUtil.getInteger(
@@ -153,10 +153,10 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		}
 
 		String definitionLinkType = GetterUtil.getString(
-			searchContext.getAttribute("definitionLinkType"), null);
+			searchContext.getAttribute("definitionLinkType"));
 
 		long definitionLinkCPDefinitionId = GetterUtil.getLong(
-			searchContext.getAttribute("definitionLinkCPDefinitionId"), -1);
+			searchContext.getAttribute("definitionLinkCPDefinitionId"));
 
 		if (Validator.isNotNull(definitionLinkType) &&
 			(definitionLinkCPDefinitionId > 0)) {

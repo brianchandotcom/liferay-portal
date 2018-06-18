@@ -188,7 +188,7 @@ prepareMajorIncrement {
 					return FileVisitResult.SKIP_SUBTREE
 				}
 
-				if (_isGitRepoReadOnly(it)) {
+				if (it.name.endsWith("-test") || _isGitRepoReadOnly(it)) {
 					return FileVisitResult.SKIP_SUBTREE
 				}
 

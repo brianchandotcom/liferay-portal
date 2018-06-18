@@ -351,6 +351,9 @@ public class SiteNavigationMenuDisplayContext {
 		if (type == SiteNavigationConstants.TYPE_PRIMARY) {
 			typeKey = "primary-navigation";
 		}
+		else if (type == SiteNavigationConstants.TYPE_PRIVATE) {
+			typeKey = "private-navigation";
+		}
 		else if (type == SiteNavigationConstants.TYPE_SECONDARY) {
 			typeKey = "secondary-navigation";
 		}

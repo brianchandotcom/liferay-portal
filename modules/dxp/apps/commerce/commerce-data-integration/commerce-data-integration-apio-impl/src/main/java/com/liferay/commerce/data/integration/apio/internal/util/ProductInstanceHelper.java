@@ -80,10 +80,9 @@ public class ProductInstanceHelper {
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);
-
-		searchContext.setStart(start);
-		searchContext.setEnd(end);
 		searchContext.setCompanyId(serviceContext.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setStart(start);
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -101,8 +100,8 @@ public class ProductInstanceHelper {
 			CPInstanceIndexer.FIELD_GTIN,
 			CPInstanceIndexer.FIELD_EXTERNAL_REFERENCE_CODE);
 
-		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);
+		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setScoreEnabled(false);
 
 		if (sort != null) {

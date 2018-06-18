@@ -73,10 +73,9 @@ public class OptionValueHelper {
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);
-
-		searchContext.setStart(start);
-		searchContext.setEnd(end);
 		searchContext.setCompanyId(serviceContext.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setStart(start);
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -90,8 +89,8 @@ public class OptionValueHelper {
 			CPOptionValueIndexer.FIELD_CP_OPTION_ID, Field.CREATE_DATE,
 			Field.ENTRY_CLASS_PK, Field.NAME, CPOptionValueIndexer.FIELD_KEY);
 
-		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);
+		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setScoreEnabled(false);
 
 		if (sort != null) {
@@ -120,8 +119,8 @@ public class OptionValueHelper {
 		CPOptionValue cpOptionValue = _cpOptionValueService.getCPOptionValue(
 			cpOptionValueId);
 
-		cpOptionValue.setNameMap(nameMap);
 		cpOptionValue.setKey(key);
+		cpOptionValue.setNameMap(nameMap);
 
 		ServiceContext serviceContext = _getServiceContext(
 			cpOptionValue.getCPOption());
@@ -139,8 +138,8 @@ public class OptionValueHelper {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setCompanyId(cpOption.getCompanyId());
-		serviceContext.setUserId(cpOption.getUserId());
 		serviceContext.setScopeGroupId(cpOption.getGroupId());
+		serviceContext.setUserId(cpOption.getUserId());
 
 		return serviceContext;
 	}

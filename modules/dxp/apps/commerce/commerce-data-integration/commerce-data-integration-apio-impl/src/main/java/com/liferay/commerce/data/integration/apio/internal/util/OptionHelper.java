@@ -71,14 +71,13 @@ public class OptionHelper {
 		attributes.put("params", params);
 
 		searchContext.setAttributes(attributes);
-
-		searchContext.setStart(start);
-		searchContext.setEnd(end);
 		searchContext.setCompanyId(serviceContext.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setStart(start);
 
 		long groupId = serviceContext.getScopeGroupId();
 
-		if (groupId != 0) {
+		if (groupId > 0) {
 			searchContext.setGroupIds(new long[] {groupId});
 		}
 
@@ -91,8 +90,8 @@ public class OptionHelper {
 			CPOptionIndexer.FIELD_OPTION_VALUE_NAME,
 			CPOptionIndexer.FIELD_DDM_FORM_FIELD_TYPE_NAME);
 
-		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setHighlightEnabled(false);
+		queryConfig.setLocale(serviceContext.getLocale());
 		queryConfig.setScoreEnabled(false);
 
 		if (sort != null) {
@@ -121,10 +120,10 @@ public class OptionHelper {
 
 		CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
 
-		cpOption.setNameMap(nameMap);
-		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setDDMFormFieldTypeName(fieldType);
+		cpOption.setDescriptionMap(descriptionMap);
 		cpOption.setKey(key);
+		cpOption.setNameMap(nameMap);
 
 		ServiceContext serviceContext = _getServiceContext(
 			cpOption.getGroupId());
@@ -147,9 +146,9 @@ public class OptionHelper {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setCompanyId(user.getCompanyId());
+		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setTimeZone(user.getTimeZone());
 		serviceContext.setUserId(user.getUserId());
-		serviceContext.setScopeGroupId(groupId);
 
 		return serviceContext;
 	}

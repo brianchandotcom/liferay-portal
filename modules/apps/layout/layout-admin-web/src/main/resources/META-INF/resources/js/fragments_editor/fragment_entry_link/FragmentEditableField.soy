@@ -7,6 +7,7 @@
 	{@param content: html}
 	{@param editableId: string}
 	{@param type: string}
+	{@param? _editing: bool}
 	{@param? _handleEditableClick: any}
 	{@param? _handleEditableMouseEnter: any}
 	{@param? _handleEditableMouseLeave: any}
@@ -30,7 +31,7 @@
 	>
 		{$content}
 
-		{if $_showTooltip and $_tooltipAlignElement and $_tooltipButtons}
+		{if not $_editing and $_showTooltip and $_tooltipAlignElement and $_tooltipButtons}
 			{call com.liferay.layout.admin.web.FragmentEditableFieldTooltip.render}
 				{param alignElement: $_tooltipAlignElement /}
 				{param buttons: $_tooltipButtons /}

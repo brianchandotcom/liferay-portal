@@ -151,8 +151,13 @@ class FragmentEditableField extends Component {
 			this.fragmentEntryLinkId,
 			this.portletNamespace,
 			this.processorsOptions,
-			this._handleEditableChanged
+			this._handleEditableChanged,
+			() => {
+				this._editing = false;
+			}
 		);
+
+		this._editing = true;
 	}
 
 	/**
@@ -210,7 +215,9 @@ class FragmentEditableField extends Component {
 			this._tooltipLabel = '';
 		}
 
-		if (getActiveEditableElement() !== this.refs.editable) {
+		if ((this.showMapping && !this._editing) ||
+				getActiveEditableElement() !== this.refs.editable) {
+
 			if (!this.showMapping) {
 				this._showTooltip = false;
 				this._enableEditor();
@@ -232,7 +239,7 @@ class FragmentEditableField extends Component {
 	 */
 
 	_handleEditableMouseEnter() {
-		if (this.editableValues.mappedField && !this._showTooltip) {
+		if (!this._editing && this.editableValues.mappedField && !this._showTooltip) {
 			this._showTooltip = true;
 			this._tooltipLabel = this.editableValues.mappedField;
 		}
@@ -245,7 +252,7 @@ class FragmentEditableField extends Component {
 	 */
 
 	_handleEditableMouseLeave() {
-		if (this._tooltipLabel) {
+		if (this._tooltipLabel && !this._editing) {
 			this._showTooltip = false;
 			this._tooltipLabel = '';
 		}
@@ -426,6 +433,18 @@ FragmentEditableField.STATE = {
 	 */
 
 	showMapping: Config.bool().required(),
+
+	/**
+	 * Flag indicating if the editable editor is active.
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentEditableField
+	 * @private
+	 * @review
+	 * @type {boolean}
+	 */
+
+	_editing: Config.internal().bool().value(false),
 
 	/**
 	 * Flag indicating if the editable editor should be enabled.

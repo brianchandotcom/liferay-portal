@@ -38,6 +38,13 @@ public class SiteNavigationMenuItemStagingModelListener
 	}
 
 	@Override
+	public void onAfterRemove(SiteNavigationMenuItem siteNavigationMenuItem)
+		throws ModelListenerException {
+
+		_stagingModelListener.onAfterRemove(siteNavigationMenuItem);
+	}
+
+	@Override
 	public void onAfterUpdate(SiteNavigationMenuItem siteNavigationMenuItem)
 		throws ModelListenerException {
 

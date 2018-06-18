@@ -260,22 +260,31 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public ResourceBundle getResourceBundle(Locale locale) {
-		if (_resourceBundleLoader == null) {
-			StringBundler sb = new StringBundler(5);
+		ResourceBundleLoader resourceBundleLoader = _resourceBundleLoader;
 
-			sb.append("(resource.bundle.base.name=");
-			sb.append(getResourceBundleBaseName());
-			sb.append(")(servlet.context.name=");
-			sb.append(_servletContext.getServletContextName());
-			sb.append(")");
+		if (resourceBundleLoader == null) {
+			synchronized (this) {
+				if (_resourceBundleLoader == null) {
+					StringBundler sb = new StringBundler(5);
 
-			_resourceBundleLoader =
-				ServiceProxyFactory.newServiceTrackedInstance(
-					ResourceBundleLoader.class, PortletBagImpl.class, this,
-					"_resourceBundleLoader", sb.toString(), false);
+					sb.append("(resource.bundle.base.name=");
+					sb.append(getResourceBundleBaseName());
+					sb.append(")(servlet.context.name=");
+					sb.append(_servletContext.getServletContextName());
+					sb.append(")");
+
+					_resourceBundleLoader =
+						ServiceProxyFactory.newServiceTrackedInstance(
+							ResourceBundleLoader.class, PortletBagImpl.class,
+							this, "_resourceBundleLoader", sb.toString(),
+							false);
+				}
+
+				resourceBundleLoader = _resourceBundleLoader;
+			}
 		}
 
-		return _resourceBundleLoader.loadResourceBundle(locale);
+		return resourceBundleLoader.loadResourceBundle(locale);
 	}
 
 	@Override

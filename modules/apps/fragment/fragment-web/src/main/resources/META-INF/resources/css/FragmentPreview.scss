@@ -4,7 +4,8 @@
 
 .fragment-preview {
 	background-color: $editorBackgroundColor;
-	border: solid $editorBorderColor $editorBorderWidth;
+	border-bottom: solid $editorBorderWidth $editorBorderColor;
+	border-right: solid $editorBorderWidth $editorBorderColor;
 	box-sizing: border-box;
 	height: $editorHeight;
 	min-height: $editorMinHeight;

@@ -3,7 +3,8 @@
 @import "variables";
 
 .source-editor {
-	border: solid $editorBorderWidth $editorBorderColor;
+	border-bottom: solid $editorBorderWidth $editorBorderColor;
+	border-right: solid $editorBorderWidth $editorBorderColor;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
@@ -30,10 +31,10 @@
 	&__fixed-text {
 		background-color: #FFF;
 		border-bottom: solid thin #F0F0F0;
-		border-left: 5ch solid #F0F0F0;
+		border-left: 2.25ch solid #F0F0F0;
 		font-size: 0.85rem;
 		line-height: 1.5rem;
-		padding: 0 0 0 0.5ch;
+		padding: 0 0 0 0.75ch;
 
 		&__help {
 			margin-right: 0.55rem;

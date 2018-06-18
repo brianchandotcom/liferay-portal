@@ -56,62 +56,26 @@ public class UserUpdaterForm {
 		return UserHelper.convertLongListToArray(_accountIds);
 	}
 
-	/**
-	 * Returns the person's alternate name
-	 *
-	 * @return the person's alternate name
-	 * @review
-	 */
 	public String getAlternateName() {
 		return _alternateName;
 	}
 
-	/**
-	 * Returns the person's email
-	 *
-	 * @return the person's email
-	 * @review
-	 */
 	public String getEmail() {
 		return _email;
 	}
 
-	/**
-	 * Returns the person's family name
-	 *
-	 * @return the person's family name
-	 * @review
-	 */
 	public String getFamilyName() {
 		return _familyName;
 	}
 
-	/**
-	 * Returns the person's given name
-	 *
-	 * @return the person's given name
-	 * @review
-	 */
 	public String getGivenName() {
 		return _givenName;
 	}
 
-	/**
-	 * Returns the person's job title
-	 *
-	 * @return the person's job title
-	 * @review
-	 */
 	public String getJobTitle() {
 		return _jobTitle;
 	}
 
-	/**
-	 * Returns the person's password
-	 *
-	 * @return the person's password
-	 * @review
-	 */
 	public String getPassword() {
 		return _password;
 	}

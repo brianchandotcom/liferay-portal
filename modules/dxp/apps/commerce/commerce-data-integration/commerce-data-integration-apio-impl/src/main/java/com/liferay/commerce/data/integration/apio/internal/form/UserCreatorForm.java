@@ -65,102 +65,42 @@ public class UserCreatorForm {
 		return UserHelper.convertLongListToArray(_accountIds);
 	}
 
-	/**
-	 * Returns the person's alternate name
-	 *
-	 * @return the person's alternate name
-	 * @review
-	 */
 	public String getAlternateName() {
 		return _alternateName;
 	}
 
-	/**
-	 * Returns the person's birthday day
-	 *
-	 * @return the person's birthday day
-	 * @review
-	 */
 	public int getBirthdayDay() {
 		return _birthdayDay;
 	}
 
-	/**
-	 * Returns the person's birthday month
-	 *
-	 * @return the person's birthday month
-	 * @review
-	 */
 	public int getBirthdayMonth() {
 		return _birthdayMonth;
 	}
 
-	/**
-	 * Returns the person's birthday year
-	 *
-	 * @return the person's birthday year
-	 * @review
-	 */
 	public int getBirthdayYear() {
 		return _birthdayYear;
 	}
 
-	/**
-	 * Returns the person's email
-	 *
-	 * @return the person's email
-	 * @review
-	 */
 	public String getEmail() {
 		return _email;
 	}
 
-	/**
-	 * Returns the person's family name
-	 *
-	 * @return the person's family name
-	 * @review
-	 */
 	public String getFamilyName() {
 		return _familyName;
 	}
 
-	/**
-	 * Returns the person's given name
-	 *
-	 * @return the person's given name
-	 * @review
-	 */
 	public String getGivenName() {
 		return _givenName;
 	}
 
-	/**
-	 * Returns the person's job title
-	 *
-	 * @return the person's job title
-	 * @review
-	 */
 	public String getJobTitle() {
 		return _jobTitle;
 	}
 
-	/**
-	 * Returns the person's password (first attempt)
-	 *
-	 * @return the person's password (first attempt)
-	 * @review
-	 */
 	public String getPassword1() {
 		return _password1;
 	}
 
-	/**
-	 * Returns the person's password (second attempt)
-	 *
-	 * @return the person's password (second attempt)
-	 * @review
-	 */
 	public String getPassword2() {
 		return _password2;
 	}
@@ -169,23 +109,10 @@ public class UserCreatorForm {
 		return UserHelper.convertLongListToArray(_roleIds);
 	}
 
-	/**
-	 * Checks if the person has an alternate name
-	 *
-	 * @return {@code true} if the person has an alternate name; {@code false}
-	 *         otherwise
-	 * @review
-	 */
 	public boolean hasAlternateName() {
 		return Validator.isNull(_alternateName);
 	}
 
-	/**
-	 * Checks if the person is a male
-	 *
-	 * @return {@code true} if the person is a male; {@code false} otherwise
-	 * @review
-	 */
 	public boolean isMale() {
 		return _male;
 	}

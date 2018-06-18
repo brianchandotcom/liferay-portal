@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.organization.service.impl;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.base.CommerceOrganizationServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
@@ -79,6 +81,11 @@ public class CommerceOrganizationServiceImpl
 
 	@Override
 	public void deleteOrganization(long organizationId) throws PortalException {
+
+		OrganizationPermissionUtil.check(
+			getPermissionChecker(), organizationId,
+			ActionKeys.DELETE);
+
 		organizationLocalService.deleteOrganization(organizationId);
 	}
 

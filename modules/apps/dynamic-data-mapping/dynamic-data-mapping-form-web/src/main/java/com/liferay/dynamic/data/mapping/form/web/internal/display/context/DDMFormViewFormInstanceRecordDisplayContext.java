@@ -83,14 +83,11 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		DDMStructureVersion structureVersion =
 			formInstanceVersion.getStructureVersion();
 
-		DDMFormValues formValues = _ddmFormValuesFactory.create(
-			renderRequest, structureVersion.getDDMForm());
-
-		formValues = _ddmFormValuesMerger.merge(
-			formInstanceRecord.getDDMFormValues(), formValues);
-
 		DDMFormRenderingContext formRenderingContext =
 			createDDMFormRenderingContext(structureVersion.getDDMForm());
+
+		DDMFormValues formValues = getDDMFormValues(
+			renderRequest, formInstanceRecord, structureVersion);
 
 		formRenderingContext.setDDMFormValues(formValues);
 
@@ -151,6 +148,25 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 					DDMFormWebKeys.DYNAMIC_DATA_MAPPING_FORM_INSTANCE_RECORD);
 
 		return formInstanceRecord;
+	}
+
+	protected DDMFormValues getDDMFormValues(
+			RenderRequest renderRequest,
+			DDMFormInstanceRecord formInstanceRecord,
+			DDMStructureVersion structureVersion)
+		throws PortalException {
+
+		DDMFormValues formValues = formInstanceRecord.getDDMFormValues();
+
+		DDMFormValues mergedFormValues = _ddmFormValuesMerger.merge(
+			formValues,
+			_ddmFormValuesFactory.create(
+				renderRequest, structureVersion.getDDMForm()));
+
+		mergedFormValues.setAvailableLocales(formValues.getAvailableLocales());
+		mergedFormValues.setDefaultLocale(formValues.getDefaultLocale());
+
+		return mergedFormValues;
 	}
 
 	protected boolean isDDMFormFieldRemoved(

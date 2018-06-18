@@ -81,7 +81,16 @@ public class CommerceOrganizationLocalServiceImplTest {
 
 	@Test
 	public void testGetAccountOrganization() throws Exception {
-		frutillaRule.scenario("");
+		frutillaRule.scenario(
+			"Get the parent organization account starting from a given " +
+				"organization"
+		).given(
+			"An organization and its parent organiation"
+		).when(
+			"Getting the Account Organization"
+		).then(
+			"I get the parent organization"
+		);
 
 		_organization = CommerceOrganizationTestUtil.addOrganization(
 			_group.getGroupId(), _parentOrganization.getOrganizationId());
@@ -97,6 +106,16 @@ public class CommerceOrganizationLocalServiceImplTest {
 
 	@Test
 	public void testGetOrganizationPrimaryAddress() throws Exception {
+		frutillaRule.scenario(
+			"Get the primary address for an organization"
+		).given(
+			"An organization"
+		).when(
+			"Getting the primary address of the organization"
+		).then(
+			"I get the primary address of the organization"
+		);
+
 		_organization = CommerceOrganizationTestUtil.addOrganization(
 			_group.getGroupId(), _parentOrganization.getOrganizationId());
 

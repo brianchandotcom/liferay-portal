@@ -20,7 +20,7 @@
 String iconURL = ParamUtil.getString(request, "iconURL");
 %>
 
-<div class="search-container-icon">
+<div class="search-container-icon sticker sticker-secondary">
 	<c:choose>
 		<c:when test='<%= iconURL.contains(".svg#") %>'>
 			<svg class="lexicon-icon">

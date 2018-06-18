@@ -28,7 +28,7 @@
 	Dictionary<String, String> headers = bundle.getHeaders(StringPool.BLANK);
 	%>
 
-	<h5 class="text-default">
+	<h2 class="list-group-title">
 		<c:choose>
 			<c:when test="<%= bundle.getState() == BundleStateConstants.RESOLVED %>">
 				<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_NAME)) %>
@@ -47,17 +47,17 @@
 				</a>
 			</c:otherwise>
 		</c:choose>
-	</h5>
+	</h2>
 
-	<h6 class="text-default">
+	<p class="list-group-text">
 		<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(headers.get(BundleConstants.BUNDLE_DESCRIPTION)) %>
-	</h6>
+	</p>
 
-	<h6 class="text-default">
+	<p class="list-group-text">
 		<%= bundle.getSymbolicName() %>
-	</h6>
+	</p>
 
-	<div class="additional-info text-default">
+	<div class="additional-info list-group-subtext">
 		<div class="additional-info-item">
 			<strong>
 				<liferay-ui:message key="version" />:

@@ -23,17 +23,17 @@
 <liferay-ui:search-container-column-text
 	colspan="<%= 2 %>"
 >
-	<h5>
+	<h2 class="list-group-title">
 		<a href="<%= HtmlUtil.escapeHREF(moduleGroupDisplay.getDisplayURL(renderResponse)) %>">
 			<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getTitle()) %>
 		</a>
-	</h5>
+	</h2>
 
-	<h6 class="text-default">
+	<p class="list-group-text">
 		<%= MarketplaceAppManagerUtil.getSearchContainerFieldText(moduleGroupDisplay.getDescription()) %>
-	</h6>
+	</p>
 
-	<div class="additional-info text-default">
+	<div class="additional-info list-group-subtext">
 		<div class="additional-info-item">
 			<strong>
 				<liferay-ui:message key="version" />:

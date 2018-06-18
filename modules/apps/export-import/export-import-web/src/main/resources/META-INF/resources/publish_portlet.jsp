@@ -34,6 +34,11 @@ if (!layout.isTypeControlPanel()) {
 			if (stagingGroup.isLayout()) {
 				targetLayout = LayoutLocalServiceUtil.getLayout(liveGroup.getClassPK());
 			}
+			else if (stagingGroup.isStagedRemotely()) {
+				HttpPrincipal httpPrincipal = new HttpPrincipal(StagingUtil.buildRemoteURL(stagingGroup.getTypeSettingsProperties()), user.getLogin(), user.getPassword(), user.isPasswordEncrypted());
+
+				LayoutServiceHttp.getLayoutPlid(httpPrincipal, layout.getUuid(), stagingGroup.getRemoteLiveGroupId(), layout.isPrivateLayout());
+			}
 			else {
 				targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
 			}

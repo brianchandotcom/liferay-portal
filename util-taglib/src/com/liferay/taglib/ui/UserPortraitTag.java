@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -36,6 +37,7 @@ import com.liferay.taglib.util.TagResourceBundleUtil;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
@@ -51,7 +53,22 @@ public class UserPortraitTag extends IncludeTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		jspWriter.write("<div class=\"");
+		String userPortraitHTML = getUserPortraitHTML(
+			user, _cssClass, () -> getUserInitials(user),
+			() -> getPortraitURL(user));
+
+		jspWriter.write(userPortraitHTML);
+
+		return EVAL_PAGE;
+	}
+
+	public static String getUserPortraitHTML(
+		User user, String cssClass, Supplier<String> userInitialsSupplier,
+		Supplier<String> userPortraitURLSupplier) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("<div class=\"");
 
 		boolean imageDefaultUseInitials =
 			_userFileUploadsSettings.isImageDefaultUseInitials();
@@ -71,23 +88,23 @@ public class UserPortraitTag extends IncludeTag {
 		}
 
 		if (imageDefaultUseInitials && (userPortraitId == 0)) {
-			jspWriter.write(LexiconUtil.getUserColorCssClass(user));
-			jspWriter.write(" ");
-			jspWriter.write(_cssClass);
-			jspWriter.write(" user-icon user-icon-default\"><span>");
-			jspWriter.write(getUserInitials(user));
-			jspWriter.write("</span></div>");
+			sb.append(LexiconUtil.getUserColorCssClass(user));
+			sb.append(" ");
+			sb.append(cssClass);
+			sb.append(" user-icon user-icon-default\"><span>");
+			sb.append(userInitialsSupplier.get());
+			sb.append("</span></div>");
 		}
 		else {
-			jspWriter.write(_cssClass);
-			jspWriter.write(
-				" aspect-ratio-bg-cover user-icon\" style=\"background-image:" +
-					"url(");
-			jspWriter.write(HtmlUtil.escape(getPortraitURL(user)));
-			jspWriter.write(")\"></div>");
+			sb.append(cssClass);
+			sb.append(
+				" aspect-ratio-bg-cover user-icon\" style=\"background-image:");
+			sb.append("url(");
+			sb.append(HtmlUtil.escape(userPortraitURLSupplier.get()));
+			sb.append(")\"></div>");
 		}
 
-		return EVAL_PAGE;
+		return sb.toString();
 	}
 
 	public void setCssClass(String cssClass) {

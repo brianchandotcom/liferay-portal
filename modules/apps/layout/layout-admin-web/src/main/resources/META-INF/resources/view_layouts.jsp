@@ -29,13 +29,9 @@
 	actionDropdownItems="<%= layoutsAdminDisplayContext.getActionDropdownItems() %>"
 	componentId="pagesManagementToolbar"
 	creationMenu="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() ? layoutsAdminDisplayContext.getCreationMenu() : null %>"
-	filterDropdownItems="<%= layoutsAdminDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= layoutsAdminDisplayContext.getTotalItems() %>"
 	searchContainerId="pages"
-	searchFormName="searchFm"
 	showSearch="<%= false %>"
-	sortingOrder="<%= layoutsAdminDisplayContext.getOrderByType() %>"
-	sortingURL="<%= layoutsAdminDisplayContext.getSortingURL() %>"
 />
 
 <liferay-ui:error exception="<%= LayoutTypeException.class %>">

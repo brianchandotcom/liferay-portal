@@ -27,7 +27,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionNameComparator;
-import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,7 +55,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -297,20 +295,6 @@ public class LayoutsAdminDisplayContext {
 		return editLayoutURL.toString();
 	}
 
-	public List<DropdownItem> getFilterDropdownItems() {
-		return new DropdownItemList() {
-			{
-				addGroup(
-					dropdownGroupItem -> {
-						dropdownGroupItem.setDropdownItems(
-							_getOrderByDropdownItems());
-						dropdownGroupItem.setLabel(
-							LanguageUtil.get(_request, "order-by"));
-					});
-			}
-		};
-	}
-
 	public long getFirstLayoutPageTemplateCollectionId() {
 		LayoutPageTemplateCollectionService
 			layoutPageTemplateCollectionService =
@@ -477,28 +461,6 @@ public class LayoutsAdminDisplayContext {
 		};
 	}
 
-	public String getOrderByCol() {
-		if (Validator.isNotNull(_orderByCol)) {
-			return _orderByCol;
-		}
-
-		_orderByCol = ParamUtil.getString(
-			_liferayPortletRequest, "orderByCol", "create-date");
-
-		return _orderByCol;
-	}
-
-	public String getOrderByType() {
-		if (Validator.isNotNull(_orderByType)) {
-			return _orderByType;
-		}
-
-		_orderByType = ParamUtil.getString(
-			_liferayPortletRequest, "orderByType", "asc");
-
-		return _orderByType;
-	}
-
 	public String getOrphanPortletsURL(Layout layout) {
 		PortletURL orphanPortletsURL =
 			_liferayPortletResponse.createRenderURL();
@@ -571,8 +533,6 @@ public class LayoutsAdminDisplayContext {
 		portletURL.setParameter("mvcRenderCommandName", "/layout/view");
 		portletURL.setParameter("tabs1", getTabs1());
 		portletURL.setParameter("navigation", getNavigation());
-		portletURL.setParameter("orderByCol", getOrderByCol());
-		portletURL.setParameter("orderByType", getOrderByType());
 
 		return portletURL;
 	}
@@ -726,16 +686,6 @@ public class LayoutsAdminDisplayContext {
 			_liferayPortletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
 		return _selPlid;
-	}
-
-	public String getSortingURL() {
-		PortletURL sortingURL = getPortletURL();
-
-		sortingURL.setParameter(
-			"orderByType",
-			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc");
-
-		return sortingURL.toString();
 	}
 
 	public Group getStagingGroup() {
@@ -1191,7 +1141,7 @@ public class LayoutsAdminDisplayContext {
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			getSelGroupId(), privateLayout, parentLayoutId, true,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, _getOrderByComparator());
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		for (Layout layout : layouts) {
 			UnicodeProperties typeSettingsProperties =
@@ -1260,38 +1210,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return layoutsJSONArray;
-	}
-
-	private OrderByComparator _getOrderByComparator() {
-		boolean orderByAsc = false;
-
-		if (Objects.equals(getOrderByType(), "asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<Layout> orderByComparator = null;
-
-		if (Objects.equals(getOrderByCol(), "create-date")) {
-			orderByComparator = new LayoutCreateDateComparator(orderByAsc);
-		}
-
-		return orderByComparator;
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems() {
-		return new DropdownItemList() {
-			{
-				add(
-					dropdownItem -> {
-						dropdownItem.setActive(
-							Objects.equals(getOrderByCol(), "create-date"));
-						dropdownItem.setHref(
-							getPortletURL(), "orderByCol", "create-date");
-						dropdownItem.setLabel(
-							LanguageUtil.get(_request, "create-date"));
-					});
-			}
-		};
 	}
 
 	private String _getTitle(boolean privatePages) {

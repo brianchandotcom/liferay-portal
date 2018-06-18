@@ -1,3 +1,5 @@
+@import "mixins/site_navigation_menu_item_states";
+
 .site-navigation-menu-item {
 	box-sizing: border-box;
 	max-width: 100%;
@@ -37,14 +39,23 @@
 		visibility: visible;
 	}
 
-	&:focus,
-	&:focus-within {
-		outline: none;
+	&:focus {
+		@include site-navigation-menu-item-focus;
 	}
 
-	&__content:focus > .card,
-	&__content:focus-within .card,
-	&__content:hover .card {
-		box-shadow: 0 0 0 2px #8ABFFD;
+	&:focus-within {
+		@include site-navigation-menu-item-focus;
+	}
+
+	&__content:focus > .card {
+		@include site-navigation-menu-item-card-focus;
+	}
+
+	&__content:focus-within > .card {
+		@include site-navigation-menu-item-card-focus;
+	}
+
+	&__content:hover > .card {
+		@include site-navigation-menu-item-card-focus;
 	}
 }

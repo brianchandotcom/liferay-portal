@@ -1,0 +1,11 @@
+@import "../variables";
+
+@mixin lfr-editable-focus() {
+	background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
+	box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
+}
+
+@mixin translating-lfr-editable-focus() {
+	background-color: fade_out($fragmentEditableFieldGridAccentColor, 0.9);
+	box-shadow: 0 0 0 1px $fragmentEditableFieldGridAccentColor;
+}

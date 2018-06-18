@@ -17,6 +17,7 @@ package com.liferay.site.navigation.service.impl;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -51,23 +52,37 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		// Site navigation menu
 
-		SiteNavigationMenu privateSiteNavigationMenu = addSiteNavigationMenu(
-			userId, groupId, "Default Private",
-			SiteNavigationConstants.TYPE_PRIVATE, false, serviceContext);
+		Group group = groupLocalService.fetchGroup(groupId);
 
-		SiteNavigationMenu publicSiteNavigationMenu = addSiteNavigationMenu(
-			userId, groupId, "Default", SiteNavigationConstants.TYPE_PRIMARY,
-			true, serviceContext);
+		SiteNavigationMenu privateSiteNavigationMenu = null;
+
+		if (layoutLocalService.hasLayouts(group, true)) {
+			privateSiteNavigationMenu = addSiteNavigationMenu(
+				userId, groupId, "Default Private",
+				SiteNavigationConstants.TYPE_PRIVATE, false, serviceContext);
+		}
+
+		SiteNavigationMenu publicSiteNavigationMenu = null;
+
+		if (layoutLocalService.hasLayouts(group, false)) {
+			publicSiteNavigationMenu = addSiteNavigationMenu(
+				userId, groupId, "Default",
+				SiteNavigationConstants.TYPE_PRIMARY, true, serviceContext);
+		}
 
 		// Site navigation menu items
 
-		_addSiteNavigationMenuItems(
-			privateSiteNavigationMenu, 0, true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
+		if (privateSiteNavigationMenu != null) {
+			_addSiteNavigationMenuItems(
+				privateSiteNavigationMenu, 0, true,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
+		}
 
-		_addSiteNavigationMenuItems(
-			publicSiteNavigationMenu, 0, false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
+		if (publicSiteNavigationMenu != null) {
+			_addSiteNavigationMenuItems(
+				publicSiteNavigationMenu, 0, false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, serviceContext);
+		}
 	}
 
 	@Override

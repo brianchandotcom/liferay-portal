@@ -40,6 +40,7 @@ class FragmentEditableField extends Component {
 	created() {
 		this._handleBeforeNavigate = this._handleBeforeNavigate.bind(this);
 		this._handleEditableChanged = this._handleEditableChanged.bind(this);
+		this._handleEditableDestroyed = this._handleEditableDestroyed.bind(this);
 
 		this._beforeNavigateHandler = Liferay.on(
 			'beforeNavigate',
@@ -152,9 +153,7 @@ class FragmentEditableField extends Component {
 			this.portletNamespace,
 			this.processorsOptions,
 			this._handleEditableChanged,
-			() => {
-				this._editing = false;
-			}
+			this._handleEditableDestroyed
 		);
 
 		this._editing = true;
@@ -230,6 +229,16 @@ class FragmentEditableField extends Component {
 				this._handleEditableMouseEnter();
 			}
 		}
+	}
+
+	/**
+	 * Callback executed when the exiting editor is destroyed
+	 * @private
+	 * @review
+	 */
+
+	_handleEditableDestroyed() {
+		this._editing = false;
 	}
 
 	/**

@@ -13,7 +13,7 @@ const RETURN_TYPES = {
  * @param {Event} changeEvent
  * @param {HTMLElement} editableElement
  * @param {string} fragmentEntryLinkId
- * @param {function} callback
+ * @param {function} changedCallback
  * @private
  */
 
@@ -21,7 +21,7 @@ function _handleImageEditorChange(
 	changeEvent,
 	editableElement,
 	fragmentEntryLinkId,
-	callback
+	changedCallback
 ) {
 	const imageElement = editableElement.querySelector('img');
 	const selectedItem = changeEvent.newVal;
@@ -39,7 +39,7 @@ function _handleImageEditorChange(
 
 		imageElement.src = url;
 
-		callback(url);
+		changedCallback(url);
 	}
 }
 
@@ -59,7 +59,8 @@ function destroy() {
  * @param {string} fragmentEntryLinkId
  * @param {string} portletNamespace
  * @param {{imageSelectorURL: string}} options
- * @param {function} callback
+ * @param {function} changedCallback
+ * @param {function} destroyedCallback
  * @review
  */
 
@@ -68,7 +69,8 @@ function init(
 	fragmentEntryLinkId,
 	portletNamespace,
 	options,
-	callback
+	changedCallback,
+	destroyedCallback
 ) {
 	const eventName = `${portletNamespace}selectImage`;
 	const title = Liferay.Language.get('select');
@@ -86,8 +88,14 @@ function init(
 								changeEvent,
 								editableElement,
 								fragmentEntryLinkId,
-								callback
+								changedCallback
 							);
+						},
+
+						visibleChange: (change) => {
+							if (change.newVal === false) {
+								destroyedCallback();
+							}
 						}
 					},
 					title,

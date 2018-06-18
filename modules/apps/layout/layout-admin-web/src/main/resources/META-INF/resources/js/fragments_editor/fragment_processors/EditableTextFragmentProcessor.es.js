@@ -9,6 +9,7 @@ import {object} from 'metal';
 
 const KEY_ENTER = 13;
 
+let _destroyedCallback;
 let _editableElement;
 let _editor;
 let _editorEventHandler;
@@ -31,6 +32,9 @@ function destroy() {
 		_editableElement = null;
 		_editor = null;
 		_editorEventHandler = null;
+
+		_destroyedCallback();
+		_destroyedCallback = null;
 	}
 }
 
@@ -49,7 +53,8 @@ function getActiveEditableElement() {
  * @param {string} fragmentEntryLinkId
  * @param {string} portletNamespace
  * @param {Object} options
- * @param {function} callback
+ * @param {function} changedCallback
+ * @param {function} destroyedCallback
  */
 
 function init(
@@ -57,7 +62,8 @@ function init(
 	fragmentEntryLinkId,
 	portletNamespace,
 	options,
-	callback
+	changedCallback,
+	destroyedCallback
 ) {
 	destroy();
 
@@ -78,6 +84,7 @@ function init(
 
 	_editableElement = editableElement;
 	_editorEventHandler = new EventHandler();
+	_destroyedCallback = destroyedCallback;
 
 	_editor = AlloyEditor.editable(
 		wrapper,
@@ -102,14 +109,21 @@ function init(
 	_editorEventHandler.add(
 		nativeEditor.on(
 			'change',
-			() => callback(nativeEditor.getData())
+			() => changedCallback(nativeEditor.getData())
 		)
 	);
 
 	_editorEventHandler.add(
 		nativeEditor.on(
 			'actionPerformed',
-			() => callback(nativeEditor.getData())
+			() => changedCallback(nativeEditor.getData())
+		)
+	);
+
+	_editorEventHandler.add(
+		nativeEditor.on(
+			'blur',
+			() => requestAnimationFrame(destroy)
 		)
 	);
 

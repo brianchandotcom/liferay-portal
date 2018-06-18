@@ -1,0 +1,23 @@
+@import "../variables";
+
+@mixin fragment-entry-link-wrapper-focus() {
+	box-shadow: 0 0 0 $fragmentEntryLinkFocusedBorderWidth $fragmentEntryLinkBorderColor;
+	outline: none;
+
+	.fragment-entry-link-control {
+		box-shadow: 0 0 0 $fragmentEntryLinkFocusedBorderWidth $fragmentEntryLinkBorderColor;
+	}
+}
+
+@mixin fragment-entry-link-wrapper-hover() {
+	box-shadow: 0 0 0 $fragmentEntryLinkBorderWidth $fragmentEntryLinkBorderColor;
+	z-index: $fragmentEntryLinkControlHoverZIndex;
+
+	.fragment-entry-link-control {
+		opacity: 1;
+		pointer-events: all;
+		transform: translateY(1px);
+		transition: box-shadow ease 0.3s, transform ease 0.2s, opacity ease 0.3s;
+		z-index: $fragmentEntryLinkControlHoverZIndex;
+	}
+}

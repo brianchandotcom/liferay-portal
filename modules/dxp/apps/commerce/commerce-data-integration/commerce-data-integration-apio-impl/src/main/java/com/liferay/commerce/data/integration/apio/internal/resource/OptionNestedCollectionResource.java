@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -197,7 +198,7 @@ public class OptionNestedCollectionResource
 
 			Hits hits = indexer.search(searchContext);
 
-			List<Document> documents = Collections.<Document>emptyList();
+			List<Document> documents = new ArrayList<>();
 
 			if (hits.getLength() > 0) {
 				documents = hits.toList();

@@ -19,7 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -34,16 +33,6 @@ public class UserHelper {
 		LongStream longStream = Arrays.stream(values);
 
 		return longStream.boxed().collect(Collectors.toList());
-	}
-
-	public static long[] convertLongListToArray(List<Long> list) {
-		if (list == null) {
-			return new long[0];
-		}
-
-		Stream<Long> stream = list.stream();
-
-		return stream.mapToLong(l -> l).toArray();
 	}
 
 }

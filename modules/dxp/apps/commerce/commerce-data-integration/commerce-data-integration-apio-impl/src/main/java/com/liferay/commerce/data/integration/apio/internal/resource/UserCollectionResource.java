@@ -15,7 +15,6 @@
 package com.liferay.commerce.data.integration.apio.internal.resource;
 
 import static com.liferay.commerce.data.integration.apio.internal.util.UserHelper.convertLongArrayToList;
-import static com.liferay.commerce.data.integration.apio.internal.util.UserHelper.convertLongListToArray;
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
 import com.liferay.apio.architect.functional.Try;
@@ -43,18 +42,17 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -187,17 +185,14 @@ public class UserCollectionResource
 			Pagination pagination, Company company)
 		throws PortalException {
 
-		List<UserWrapper> userWrappers = Stream.of(
-			_userService.getCompanyUsers(
+		List<User> users = _userService.getCompanyUsers(
 				company.getCompanyId(), pagination.getStartPosition(),
-				pagination.getEndPosition())
-		).flatMap(
-			List::stream
-		).map(
-			user -> new UserWrapper(user)
-		).collect(
-			Collectors.toList()
-		);
+				pagination.getEndPosition());
+
+		List<UserWrapper> userWrappers = new ArrayList<>(users.size());
+		for (User user : users) {
+			userWrappers.add(new UserWrapper(user));
+		}
 
 		int total = _userService.getCompanyUsersCount(company.getCompanyId());
 
@@ -207,19 +202,29 @@ public class UserCollectionResource
 	private List<Long> _getRolesToAdd(
 		List<Long> oldRoleIds, List<Long> newRoleIds) {
 
-		Stream<Long> newRoleIdsStream = newRoleIds.stream();
+		List<Long> roleIdsToAdd = new ArrayList<>();
 
-		return newRoleIdsStream.filter(
-			role -> !oldRoleIds.contains(role)).collect(Collectors.toList());
+		for (Long roleId : newRoleIds) {
+			if (!oldRoleIds.contains(roleId)) {
+				roleIdsToAdd.add(roleId);
+			}
+		}
+
+		return roleIdsToAdd;
 	}
 
 	private List<Long> _getRolesToRemove(
 		List<Long> newRoleIds, List<Long> oldRoleIds) {
 
-		Stream<Long> oldRoleIdsStream = oldRoleIds.stream();
+		List<Long> roleIdsToRemove = new ArrayList<>();
 
-		return oldRoleIdsStream.filter(
-			role -> !newRoleIds.contains(role)).collect(Collectors.toList());
+		for (Long roleId : oldRoleIds) {
+			if (!newRoleIds.contains(roleId)) {
+				roleIdsToRemove.add(roleId);
+			}
+		}
+
+		return roleIdsToRemove;
 	}
 
 	private UserWrapper _getUserWrapper(long userId) throws PortalException {
@@ -239,12 +244,12 @@ public class UserCollectionResource
 		List<Long> roleIdsToRemove = _getRolesToRemove(newRoleIds, oldRoleIds);
 
 		_roleService.unsetUserRoles(
-			user.getUserId(), convertLongListToArray(roleIdsToRemove));
+			user.getUserId(), ArrayUtil.toLongArray(roleIdsToRemove));
 
 		List<Long> roleIdsToAdd = _getRolesToAdd(oldRoleIds, newRoleIds);
 
 		_roleService.addUserRoles(
-			user.getUserId(), convertLongListToArray(roleIdsToAdd));
+			user.getUserId(), ArrayUtil.toLongArray(roleIdsToAdd));
 	}
 
 	private UserWrapper _updateUser(

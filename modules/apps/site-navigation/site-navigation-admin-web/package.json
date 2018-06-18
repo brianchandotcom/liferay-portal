@@ -13,7 +13,7 @@
 	"name": "site-navigation-menu-web",
 	"scripts": {
 		"checkFormat": "npm run csf",
-		"csf": "csf src/**/*.es.js",
+		"csf": "csf src/**/*.es.js src/**/*.scss",
 		"format": "npm run csf -- -i"
 	},
 	"version": "1.0.0"

@@ -35,7 +35,13 @@
 	}
 
 	.form-builder-layout .layout-row-container-row .layout-row {
-		.col.col-empty.col-empty-over, .col.lfr-initial-col {
+		.col.col-empty.col-empty-over {
+			background-color: $light-100;
+			border: 2px dashed $light-blue-200;
+			border-radius: 4px;
+		}
+
+		.col.col-empty.lfr-initial-col {
 			background-color: #F7F8F9;
 			border: 2px dashed #A7A9BC;
 			border-radius: 4px;

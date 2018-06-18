@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
 public class AssetCategoryCPRuleTypeImpl implements CPRuleType {
 
 	@Override
-	public void contributeToDocument(CPRuleType cpRuleType, Document document) {
+	public void contributeToDocument(Document document) {
 	}
 
 	@Override
@@ -57,8 +57,7 @@ public class AssetCategoryCPRuleTypeImpl implements CPRuleType {
 
 	@Override
 	public boolean isSatisfied(
-			CPDefinition cpDefinition, CPRuleType cpRuleType,
-			ServiceContext serviceContext)
+			CPDefinition cpDefinition, ServiceContext serviceContext)
 		throws PortalException {
 
 		return false;

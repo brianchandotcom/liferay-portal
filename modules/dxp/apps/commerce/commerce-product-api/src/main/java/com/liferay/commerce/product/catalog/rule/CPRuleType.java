@@ -31,15 +31,14 @@ import java.util.Locale;
 @ProviderType
 public interface CPRuleType {
 
-	public void contributeToDocument(CPRuleType cpRuleType, Document document);
+	public void contributeToDocument(Document document);
 
 	public String getKey();
 
 	public String getLabel(Locale locale);
 
 	public boolean isSatisfied(
-			CPDefinition cpDefinition, CPRuleType cpRuleType,
-			ServiceContext serviceContext)
+			CPDefinition cpDefinition, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void postProcessContextBooleanFilter(

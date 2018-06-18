@@ -146,7 +146,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 		<portlet:param name="userGroupId" value="<%= String.valueOf(userGroupId) %>" />
 	</portlet:renderURL>
 
-	var addUsers = function(event) {
+	function <portlet:namespace />addUsers(event) {
 		var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 			{
 				eventName: '<portlet:namespace />selectUsers',
@@ -179,7 +179,7 @@ PortletURL portletURL = editUserGroupAssignmentsManagementToolbarDisplayContext.
 	Liferay.componentReady('editUserGroupAssignmentsManagementToolbar').then(
 		function(managementToolbar) {
 			managementToolbar.on('actionItemClicked', <portlet:namespace />removeUsers);
-			managementToolbar.on('creationButtonClicked', addUsers);
+			managementToolbar.on('creationButtonClicked', <portlet:namespace />addUsers);
 		}
 	);
 </aui:script>

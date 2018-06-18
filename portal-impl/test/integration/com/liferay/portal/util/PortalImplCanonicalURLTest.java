@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -134,6 +136,32 @@ public class PortalImplCanonicalURLTest {
 			_defaultGrouplayout2 = LayoutTestUtil.addLayout(
 				_defaultGroup.getGroupId());
 		}
+	}
+
+	@Test
+	public void testCanonicalURLWithoutQueryString() throws Exception {
+		String portalDomain = "localhost";
+
+		String completeURL = generateURL(
+			portalDomain, "8080", "/en", _group.getFriendlyURL(),
+			_layout1.getFriendlyURL(), false);
+
+		completeURL = HttpUtil.addParameter(
+			completeURL, "_ga", "2.237928582.786466685.1515402734-1365236376");
+
+		ThemeDisplay themeDisplay = createThemeDisplay(
+			portalDomain, _group, 8080, false);
+
+		String canonicalURL = PortalUtil.getCanonicalURL(
+			completeURL, themeDisplay, _layout1, true, true);
+
+		String expectedCanonicalURL = HttpUtil.removeParameter(
+			canonicalURL, "_ga");
+
+		String actualCanonicalURL = PortalUtil.getCanonicalURL(
+			completeURL, themeDisplay, _layout1, true, false);
+
+		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL);
 	}
 
 	@Test
@@ -356,6 +384,42 @@ public class PortalImplCanonicalURLTest {
 			"/home2", false, false);
 	}
 
+	protected ThemeDisplay createThemeDisplay(
+			String portalDomain, Group group, int serverPort, boolean secure)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
+		themeDisplay.setPortalDomain(portalDomain);
+
+		if (secure) {
+			themeDisplay.setPortalURL(Http.HTTPS_WITH_SLASH + portalDomain);
+		}
+		else {
+			themeDisplay.setPortalURL(Http.HTTP_WITH_SLASH + portalDomain);
+		}
+
+		themeDisplay.setSecure(secure);
+
+		int index = portalDomain.indexOf(CharPool.COLON);
+
+		if (index != -1) {
+			serverPort = GetterUtil.getIntegerStrict(
+				portalDomain.substring(index + 1));
+		}
+
+		themeDisplay.setServerPort(serverPort);
+		themeDisplay.setSiteGroupId(group.getGroupId());
+
+		return themeDisplay;
+	}
+
 	protected String generateURL(
 		String portalDomain, String port, String i18nPath,
 		String groupFriendlyURL, String layoutFriendlyURL, boolean secure) {
@@ -419,12 +483,8 @@ public class PortalImplCanonicalURLTest {
 
 		int index = portalDomain.indexOf(CharPool.COLON);
 
-		int serverPort = Http.HTTP_PORT;
-
 		if (index != -1) {
 			port = portalDomain.substring(index + 1);
-
-			serverPort = GetterUtil.getIntegerStrict(port);
 		}
 
 		String completeURL = generateURL(
@@ -433,25 +493,8 @@ public class PortalImplCanonicalURLTest {
 
 		setVirtualHost(layout.getCompanyId(), virtualHostname);
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(company);
-		themeDisplay.setLayoutSet(group.getPublicLayoutSet());
-		themeDisplay.setPortalDomain(portalDomain);
-
-		if (secure) {
-			themeDisplay.setPortalURL(Http.HTTPS_WITH_SLASH + portalDomain);
-		}
-		else {
-			themeDisplay.setPortalURL(Http.HTTP_WITH_SLASH + portalDomain);
-		}
-
-		themeDisplay.setSecure(secure);
-		themeDisplay.setServerPort(serverPort);
-		themeDisplay.setSiteGroupId(group.getGroupId());
+		ThemeDisplay themeDisplay = createThemeDisplay(
+			portalDomain, group, Http.HTTP_PORT, secure);
 
 		String expectedGroupFriendlyURL = StringPool.BLANK;
 

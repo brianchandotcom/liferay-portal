@@ -188,7 +188,9 @@ prepareMajorIncrement {
 					return FileVisitResult.SKIP_SUBTREE
 				}
 
-				if (it.name.endsWith("-test") || _isGitRepoReadOnly(it)) {
+				File relengIgnoreMarkerFile = new File(it, ".lfrbuild-releng-ignore")
+
+				if (it.name.endsWith("-test") || relengIgnoreMarkerFile.exists() || _isGitRepoReadOnly(it)) {
 					return FileVisitResult.SKIP_SUBTREE
 				}
 

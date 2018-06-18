@@ -492,8 +492,14 @@ AUI.add(
 
 						var ruleButton = A.one('.lfr-ddm-add-rule');
 
+						var publishButton = A.one('.publish-icon');
+
 						if (ruleButton) {
 							ruleButton.replaceClass('lfr-ddm-add-rule', 'lfr-ddm-add-field');
+						}
+
+						if (publishButton) {
+							publishButton.removeClass('hide');
 						}
 					},
 
@@ -502,8 +508,14 @@ AUI.add(
 
 						var addButton = A.one('.lfr-ddm-add-field');
 
+						var publishButton = A.one('.publish-icon');
+
 						if (addButton) {
 							addButton.replaceClass('lfr-ddm-add-field', 'lfr-ddm-add-rule');
+						}
+
+						if (publishButton) {
+							publishButton.addClass('hide');
 						}
 					},
 
@@ -512,7 +524,11 @@ AUI.add(
 
 						instance._updateAutosaveBar(event.saveAsDraft, event.modifiedDate);
 
-						A.one('.publish-icon').removeClass('hide');
+						var ruleBuilder = A.one('.lfr-ddm-add-rule');
+
+						if (!ruleBuilder) {
+							A.one('.publish-icon').removeClass('hide');
+						}
 					},
 
 					_afterEditingLocaleChange: function(event) {

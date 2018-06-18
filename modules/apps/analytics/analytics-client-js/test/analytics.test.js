@@ -78,10 +78,12 @@ describe('Analytics Client', () => {
 		});
 
 		it('should prevent overlapping requests', (done) => {
+			fetchMock.mock(/identity/ig, () => Promise.resolve(200));
+
 			let fetchCalled = 0;
 
 			fetchMock.mock(
-				'*',
+				/send-analytics-events$/,
 				function() {
 					fetchCalled += 1;
 
@@ -140,14 +142,14 @@ describe('Analytics Client', () => {
 
 			const previousIdentityHash = localStorage.getItem(STORAGE_KEY_IDENTITY);
 
-			Analytics.setIdentity({
+			return Analytics.setIdentity({
 				email: 'john@liferay.com',
 				name: 'John'
+			}).then(() => {
+				const currentIdentityHash = localStorage.getItem(STORAGE_KEY_IDENTITY);
+
+				expect(currentIdentityHash).not.to.equal(previousIdentityHash);
 			});
-
-			const currentIdentityHash = localStorage.getItem(STORAGE_KEY_IDENTITY);
-
-			expect(currentIdentityHash).not.to.equal(previousIdentityHash);
 		});
 
 		it('should report identity changes to the Identity Service', () => {
@@ -223,7 +225,7 @@ describe('Analytics Client', () => {
 			fetchMock.mock(/send-identity-context$/, () => Promise.resolve({}));
 
 			fetchMock.mock(
-				/send\-analytics\-events$/,
+				/send-analytics-events$/,
 				function() {
 					// Send events while flush is in progress
 					sendDummyEvents(Analytics, 7);

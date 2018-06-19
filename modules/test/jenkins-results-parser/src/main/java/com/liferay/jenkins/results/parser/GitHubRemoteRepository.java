@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 
 import java.io.IOException;
 
@@ -123,11 +124,12 @@ public class GitHubRemoteRepository extends RemoteRepository {
 
 		try {
 			if (jsonObject == null) {
-				JenkinsResultsParserUtil.toString(labelRequestURL);
+				JenkinsResultsParserUtil.toString(labelRequestURL, "DELETE");
 			}
 			else {
 				JenkinsResultsParserUtil.toString(
-					labelRequestURL, jsonObject.toString());
+					labelRequestURL, HttpRequestMethod.PATCH,
+					jsonObject.toString());
 			}
 
 			_repositoryLabels.remove(_getLabelRequestURL());

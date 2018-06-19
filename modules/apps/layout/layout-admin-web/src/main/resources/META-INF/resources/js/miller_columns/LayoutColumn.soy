@@ -168,6 +168,15 @@
 							</a>
 						{/if}
 
+						{if $layoutColumnItem.actionURLs['markAsHomePageLayoutURL']}
+							<a
+								class="dropdown-item"
+								href="{$layoutColumnItem.actionURLs['markAsHomePageLayoutURL']}"
+							>
+								{msg desc=""}mark-as-home-page{/msg}
+							</a>
+						{/if}
+
 						{if $layoutColumnItem.actionURLs['copyLayoutURL']}
 							<a
 								class="dropdown-item"

@@ -395,6 +395,20 @@ public class LayoutsAdminDisplayContext {
 		return _groupDisplayContextHelper.getLiveGroupId();
 	}
 
+	public String getMarkAsHomePageLayoutURL(Layout layout) {
+		PortletURL markAsHomePageLayoutURL =
+			_liferayPortletResponse.createActionURL();
+
+		markAsHomePageLayoutURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/mark_as_home_page_layout");
+		markAsHomePageLayoutURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		markAsHomePageLayoutURL.setParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+
+		return markAsHomePageLayoutURL.toString();
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -930,6 +944,13 @@ public class LayoutsAdminDisplayContext {
 
 		if (isShowConfigureAction(layout)) {
 			jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
+		}
+
+		if (layout.getParentLayoutId() ==
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+
+			jsonObject.put(
+				"markAsHomePageLayoutURL", getMarkAsHomePageLayoutURL(layout));
 		}
 
 		if (isShowOrphanPortletsAction(layout)) {

@@ -74,10 +74,9 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 		for (long tagId : tagIds) {
 			AssetTag assetTag = assetTagLocalService.getTag(tagId);
 
-			long groupId = assetTag.getGroupId();
-
 			AssetTagsPermission.check(
-				getPermissionChecker(), groupId, ActionKeys.MANAGE_TAG);
+				getPermissionChecker(), assetTag.getGroupId(),
+				ActionKeys.MANAGE_TAG);
 
 			assetTagLocalService.deleteTag(tagId);
 		}
@@ -225,10 +224,9 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 	public void mergeTags(long fromTagId, long toTagId) throws PortalException {
 		AssetTag assetTag = assetTagLocalService.getTag(fromTagId);
 
-		long groupId = assetTag.getGroupId();
-
 		AssetTagsPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_TAG);
+			getPermissionChecker(), assetTag.getGroupId(),
+			ActionKeys.MANAGE_TAG);
 
 		assetTagLocalService.mergeTags(fromTagId, toTagId);
 	}
@@ -261,10 +259,9 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 
 		AssetTag assetTag = assetTagLocalService.getTag(tagId);
 
-		long groupId = assetTag.getGroupId();
-
 		AssetTagsPermission.check(
-			getPermissionChecker(), groupId, ActionKeys.MANAGE_TAG);
+			getPermissionChecker(), assetTag.getGroupId(),
+			ActionKeys.MANAGE_TAG);
 
 		return assetTagLocalService.updateTag(
 			getUserId(), tagId, name, serviceContext);

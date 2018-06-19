@@ -298,16 +298,9 @@ public class PortletBagFactory {
 	private Object _newInstance(Class<?> interfaceClass, String implClassName)
 		throws Exception {
 
-		return _newInstance(new Class<?>[] {interfaceClass}, implClassName);
-	}
-
-	private Object _newInstance(
-			Class<?>[] interfaceClasses, String implClassName)
-		throws Exception {
-
 		if (_warFile) {
 			return ProxyFactory.newInstance(
-				_classLoader, interfaceClasses, implClassName);
+				_classLoader, new Class<?>[] {interfaceClass}, implClassName);
 		}
 		else {
 			Class<?> clazz = _classLoader.loadClass(implClassName);

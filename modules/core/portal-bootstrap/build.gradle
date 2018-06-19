@@ -1,11 +1,11 @@
 import aQute.bnd.osgi.Domain
 
+import com.liferay.gradle.plugins.tasks.ExecuteBndTask
 import com.liferay.gradle.util.copy.RenameDependencyClosure
-
-import org.dm.gradle.plugins.bundle.JarBuilder
 
 task copySystemPackagesExtraLibs(type: Copy)
 task copySystemPackagesExtraManifest(type: Copy)
+task executeBnd(type: ExecuteBndTask)
 
 String buildProfile = System.properties["build.profile"]
 
@@ -21,17 +21,16 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 		dependsOn copySystemPackagesExtraLibs
 
 		doLast {
-			Clock clock = new Clock()
-
-			JarBuilder jarBuilder = bundle.jarBuilderFactory.create()
-
-			jarBuilder.withBase projectDir
-
 			Map<String, String> properties = liferayOSGi.bundleDefaultInstructions
 
 			properties["-check"] = "imports"
 			properties["-fixupmessages"] = '"Classpath is empty. Private-Package ...";is:=ignore'
 			properties["-include"] = "system.packages.extra.bnd"
+
+			Properties bndProperties = GUtil.loadProperties(file("system.packages.extra.bnd"))
+
+			properties["Bundle-SymbolicName"] = bndProperties.getProperty("Bundle-SymbolicName")
+			properties["Bundle-Version"] = project.version
 
 			File portalImplJarFile = configurations.compileOnly.find {
 				it.name.startsWith "com.liferay.portal.impl-"
@@ -41,31 +40,18 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 
 			properties["Provide-Capability"] = portalImplJarDomain.provideCapability.toString()
 
-			jarBuilder.withClasspath new File[0]
-			jarBuilder.withFailOnError true
-			jarBuilder.withName "system.packages.extra"
-			jarBuilder.withProperties properties
-			jarBuilder.withResources new File[0]
+			executeBnd.properties properties
 
-			jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs.findAll {
-				it.directory
-			}
-
-			jarBuilder.withTrace false
-			jarBuilder.withVersion project.version
-
-			systemPackagesExtraManifestFile.parentFile.mkdirs()
-
-			systemPackagesExtraManifestFile.withOutputStream {
-				jarBuilder.writeManifestTo it
-			}
-
-			logger.lifecycle "Building the system.packages.extra.mf file took {}.", clock.time
+			executeBnd.baseDir = projectDir
+			executeBnd.classpath = files()
+			executeBnd.failOnError = true
+			executeBnd.outputFile systemPackagesExtraManifestFile
+			executeBnd.resourceDirs = files()
+			executeBnd.setSourceDirs files(sourceSets.main.allSource.srcDirs.findAll {it.directory})
+			executeBnd.writeManifest = true
 		}
-	}
 
-	jar {
-		dependsOn buildSystemPackagesExtraManifest
+		finalizedBy executeBnd
 	}
 }
 else {

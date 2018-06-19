@@ -14,9 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_1_x;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -43,11 +41,8 @@ public class UpgradeAssetTagsPermission extends UpgradeProcess {
 	protected void renameResourceAction() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
-				StringBundler.concat(
-					"update ResourceAction set actionId = '",
-					ActionKeys.MANAGE_TAG, "' where actionId = '",
-					ActionKeys.ADD_TAG,
-					"' and name = 'com.liferay.asset.tags'"));
+				"update ResourceAction set actionId = 'MANAGE_TAG' where " +
+					"actionId = 'ADD_TAG' and name = 'com.liferay.asset.tags'");
 		}
 	}
 

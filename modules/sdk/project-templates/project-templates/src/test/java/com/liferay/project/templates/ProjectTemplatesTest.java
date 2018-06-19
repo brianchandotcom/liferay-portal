@@ -1806,7 +1806,7 @@ public class ProjectTemplatesTest {
 
 		_testPomXmlContainsDependency(
 			pomXmlPath, "com.liferay.portal", "com.liferay.portal.kernel",
-			"3.0.0-SNAPSHOT");
+			"3.0.0");
 
 		_testPomXmlContainsDependency(
 			pomXmlPath, "javax.portlet", "portlet-api", "3.0.0");

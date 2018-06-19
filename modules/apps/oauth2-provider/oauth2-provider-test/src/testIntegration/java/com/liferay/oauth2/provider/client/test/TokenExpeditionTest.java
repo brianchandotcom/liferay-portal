@@ -123,7 +123,7 @@ public class TokenExpeditionTest extends BaseClientTestCase {
 		invocationBuilder = authorize(webTarget.request(), tokenString);
 
 		Assert.assertEquals(
-			"everything.read", invocationBuilder.get(String.class));
+			"everything.readonly", invocationBuilder.get(String.class));
 
 		invocationBuilder =
 			webTarget.request().header("Authorization", "Bearer ");

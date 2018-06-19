@@ -25,8 +25,6 @@ import com.liferay.document.library.kernel.util.comparator.FileVersionVersionCom
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.BaseConvertProcess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -203,17 +201,6 @@ public class DocumentLibraryConvertProcess
 		ActionableDynamicQuery actionableDynamicQuery =
 			DLFileVersionLocalServiceUtil.getActionableDynamicQuery();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property groupIdProperty = PropertyFactoryUtil.forName(
-					"groupId");
-
-				Property repositoryIdProperty = PropertyFactoryUtil.forName(
-					"repositoryId");
-
-				dynamicQuery.add(
-					groupIdProperty.eqProperty(repositoryIdProperty));
-			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileVersion dlFileVersion) -> {
 				DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();

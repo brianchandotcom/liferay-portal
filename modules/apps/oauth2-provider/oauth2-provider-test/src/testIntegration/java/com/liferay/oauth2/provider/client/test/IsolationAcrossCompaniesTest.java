@@ -59,7 +59,7 @@ public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 
 		builder = builder.header("Host", "host1.xyz");
 
-		Assert.assertEquals("everything.read", builder.get(String.class));
+		Assert.assertEquals("everything.readonly", builder.get(String.class));
 
 		builder = builder.header("Host", "host2.xyz");
 

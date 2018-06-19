@@ -67,7 +67,7 @@ public class AnnotationsAndHttpPrefixApplicationClientTest
 
 		builder = authorize(webTarget.request(), tokenString);
 
-		Assert.assertEquals("everything.read", builder.get(String.class));
+		Assert.assertEquals("everything.readonly", builder.get(String.class));
 
 		tokenString = getToken("oauthTestApplicationWrong");
 

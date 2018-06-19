@@ -228,10 +228,6 @@ public class DocumentLibraryConvertProcess
 			});
 
 		actionableDynamicQuery.performActions();
-
-		if (isDeleteFilesFromSourceStore()) {
-			DLPreviewableProcessor.deleteFiles();
-		}
 	}
 
 	protected void migrateDLStoreConvertProcesses(

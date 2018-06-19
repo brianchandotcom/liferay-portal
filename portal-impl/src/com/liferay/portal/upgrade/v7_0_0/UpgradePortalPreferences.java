@@ -101,8 +101,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"PortalPreferences ",
-								String.valueOf(portalPreferencesId),
+								"PortalPreferences ", portalPreferencesId,
 								" contains invalid XML, resetting to default"));
 					}
 

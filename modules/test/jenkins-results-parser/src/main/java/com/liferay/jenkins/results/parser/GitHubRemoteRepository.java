@@ -160,9 +160,8 @@ public class GitHubRemoteRepository extends RemoteRepository {
 	}
 
 	private String _getLabelRequestURL() {
-		return JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", getUsername(), "/", getName(),
-			"/labels");
+		return JenkinsResultsParserUtil.getGitHubApiURL(
+			getName(), getUsername(), "/labels");
 	}
 
 	private static final Map<String, List<Label>> _repositoryLabels =

@@ -651,6 +651,14 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static String getGitHubApiURL(
+		String repositoryName, String username, String path) {
+
+		return combine(
+			"https://api.github.com/repos/", username, "/", repositoryName,
+			path);
+	}
+
 	public static String getHostName(String defaultHostName) {
 		try {
 			InetAddress inetAddress = InetAddress.getLocalHost();

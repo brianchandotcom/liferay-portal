@@ -14,23 +14,35 @@
 
 package com.liferay.commerce.product.internal.security.permission.resource;
 
+import com.liferay.commerce.product.catalog.rule.CPRuleType;
+import com.liferay.commerce.product.catalog.rule.CPRuleTypeRegistry;
 import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPRule;
+import com.liferay.commerce.product.util.CPRulesThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CPDefinitionModelResourcePermissionLogic
 	implements ModelResourcePermissionLogic<CPDefinition> {
 
 	public CPDefinitionModelResourcePermissionLogic(
+		CPRuleTypeRegistry cpRuleTypeRegistry,
 		PortletResourcePermission portletResourcePermission) {
 
+		_cpRuleTypeRegistry = cpRuleTypeRegistry;
 		_portletResourcePermission = portletResourcePermission;
 	}
 
@@ -41,39 +53,38 @@ public class CPDefinitionModelResourcePermissionLogic
 		throws PortalException {
 
 		if (permissionChecker.isCompanyAdmin(cpDefinition.getCompanyId()) ||
-			permissionChecker.isGroupAdmin(cpDefinition.getGroupId())) {
+			permissionChecker.isGroupAdmin(cpDefinition.getGroupId()) ||
+			_portletResourcePermission.contains(
+				permissionChecker, cpDefinition.getGroupId(),
+				CPActionKeys.MANAGE_CATALOG)) {
 
 			return true;
 		}
 
-		if (actionId.equals(ActionKeys.DELETE) ||
-			actionId.equals(ActionKeys.UPDATE) ||
-			actionId.equals(ActionKeys.VIEW)) {
+		if (actionId.equals(ActionKeys.VIEW) && cpDefinition.isApproved() &&
+			cpDefinition.isPublished()) {
 
-			return _hasPermission(
-				permissionChecker, cpDefinition.getGroupId(),
-				CPActionKeys.MANAGE_CATALOG);
-		}
+			List<CPRule> cpRules = CPRulesThreadLocal.getCPRules();
 
-		return _hasPermission(
-			permissionChecker, cpDefinition.getGroupId(), actionId);
-	}
+			if (ListUtil.isNotEmpty(cpRules)) {
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
 
-	private boolean _hasPermission(
-		PermissionChecker permissionChecker, long groupId,
-		String... actionIds) {
+				for (CPRule cpRule : cpRules) {
+					CPRuleType cpRuleType = _cpRuleTypeRegistry.getCPRuleType(
+						cpRule.getType());
 
-		for (String actionId : actionIds) {
-			if (_portletResourcePermission.contains(
-					permissionChecker, groupId, actionId)) {
-
-				return true;
+					if (cpRuleType.isSatisfied(cpDefinition, serviceContext)) {
+						return true;
+					}
+				}
 			}
 		}
 
 		return false;
 	}
 
+	private final CPRuleTypeRegistry _cpRuleTypeRegistry;
 	private final PortletResourcePermission _portletResourcePermission;
 
 }

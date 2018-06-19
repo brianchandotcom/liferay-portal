@@ -16,17 +16,9 @@ package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.internal.constants.LegacyDLKeys;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
-import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeItem;
-import com.liferay.portal.configuration.upgrade.PrefsPropsValueType;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.PrefsProps;
-
-import javax.portlet.PortletPreferences;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
+import com.liferay.portal.kernel.util.KeyValuePair;
 
 /**
  * @author Drew Brokke
@@ -34,12 +26,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class UpgradeDLConfiguration extends UpgradeProcess {
 
 	public UpgradeDLConfiguration(
-		ConfigurationAdmin configurationAdmin, PrefsProps prefsProps,
-		PrefsPropsToConfigurationUpgrade prefsPropsToConfigurationUpgrade) {
+		PrefsPropsToConfigurationUpgradeHelper
+			prefsPropsToConfigurationUpgradeHelper) {
 
-		_configurationAdmin = configurationAdmin;
-		_prefsProps = prefsProps;
-		_prefsPropsToConfigurationUpgrade = prefsPropsToConfigurationUpgrade;
+		_prefsPropsToConfigurationUpgradeHelper =
+			prefsPropsToConfigurationUpgradeHelper;
 	}
 
 	@Override
@@ -48,28 +39,13 @@ public class UpgradeDLConfiguration extends UpgradeProcess {
 	}
 
 	private void _upgradeConfiguration() throws Exception {
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			DLConfiguration.class.getName(), StringPool.QUESTION);
-		PortletPreferences portletPreferences = _prefsProps.getPreferences();
-
-		PrefsPropsToConfigurationUpgradeItem[]
-			prefsPropsToConfigurationUpgradeItems = {
-				new PrefsPropsToConfigurationUpgradeItem(
-					LegacyDLKeys.DL_FILE_EXTENSIONS,
-					PrefsPropsValueType.STRING_ARRAY, "fileExtensions"),
-				new PrefsPropsToConfigurationUpgradeItem(
-					LegacyDLKeys.DL_FILE_MAX_SIZE, PrefsPropsValueType.LONG,
-					"fileMaxSize")
-			};
-
-		_prefsPropsToConfigurationUpgrade.upgradePrefsPropsToConfiguration(
-			portletPreferences, configuration,
-			prefsPropsToConfigurationUpgradeItems);
+		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
+			DLConfiguration.class,
+			new KeyValuePair(LegacyDLKeys.DL_FILE_EXTENSIONS, "fileExtensions"),
+			new KeyValuePair(LegacyDLKeys.DL_FILE_MAX_SIZE, "fileMaxSize"));
 	}
 
-	private final ConfigurationAdmin _configurationAdmin;
-	private final PrefsProps _prefsProps;
-	private final PrefsPropsToConfigurationUpgrade
-		_prefsPropsToConfigurationUpgrade;
+	private final PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 }

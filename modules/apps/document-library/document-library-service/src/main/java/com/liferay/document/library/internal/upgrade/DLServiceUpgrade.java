@@ -19,12 +19,10 @@ import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLConfigurati
 import com.liferay.document.library.internal.upgrade.v1_0_1.UpgradeDLFileEntryConfiguration;
 import com.liferay.document.library.internal.upgrade.v1_0_2.UpgradeDLFileShortcut;
 import com.liferay.document.library.kernel.store.Store;
-import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgrade;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,24 +40,16 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"1.0.0", "1.0.1",
-			new UpgradeDLConfiguration(
-				_configurationAdmin, _prefsProps,
-				_prefsPropsToConfigurationUpgrade),
+			new UpgradeDLConfiguration(_prefsPropsToConfigurationUpgradeHelper),
 			new UpgradeDLFileEntryConfiguration(
-				_configurationAdmin, _prefsProps,
-				_prefsPropsToConfigurationUpgrade));
+				_prefsPropsToConfigurationUpgradeHelper));
 
 		registry.register("1.0.1", "1.0.2", new UpgradeDLFileShortcut());
 	}
 
 	@Reference
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private PrefsProps _prefsProps;
-
-	@Reference
-	private PrefsPropsToConfigurationUpgrade _prefsPropsToConfigurationUpgrade;
+	private PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 	@Reference(target = "(dl.store.upgrade=true)")
 	private Store _store;

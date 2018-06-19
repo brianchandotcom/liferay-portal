@@ -662,7 +662,7 @@ public class LayoutPageTemplateEntryServiceImpl
 				LayoutPageTemplateEntry.class);
 
 	@ServiceReference(
-		filterString = "(component.name=*.LayoutPageTemplatePortletResourcePermission)",
+		filterString = "(component.name=com.liferay.layout.page.template.internal.security.permission.resource.LayoutPageTemplatePortletResourcePermission)",
 		type = PortletResourcePermission.class
 	)
 	private static volatile PortletResourcePermission

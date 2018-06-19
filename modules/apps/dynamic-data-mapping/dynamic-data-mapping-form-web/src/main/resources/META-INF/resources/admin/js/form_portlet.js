@@ -1127,10 +1127,10 @@ AUI.add(
 						var message = '';
 
 						if (savedAsDraft) {
-							message = Liferay.Language.get('draft-saved-on-x');
+							message = Liferay.Language.get('draft-x');
 						}
 						else {
-							message = Liferay.Language.get('saved-on-x');
+							message = Liferay.Language.get('saved-x');
 						}
 
 						var autosaveMessage = A.Lang.sub(

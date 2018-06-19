@@ -332,7 +332,7 @@ public class CPPublisherConfigurationDisplayContext
 				"eventName", _getPortletNamespace() + "selectTag");
 			portletURL.setParameter(
 				"groupIds",
-				StringUtil.valueOf(cpContentRequestHelper.getScopeGroupId()));
+				String.valueOf(cpContentRequestHelper.getScopeGroupId()));
 			portletURL.setParameter("selectedTagNames", "{selectedTagNames}");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 

@@ -24,8 +24,7 @@ class FragmentEntryLinkList extends Component {
 				const index = this.fragmentEntryLinks.indexOf(
 					this.fragmentEntryLinks.find(
 						fragmentEntryLink => (
-							fragmentEntryLink.fragmentEntryLinkId ===
-							fragmentEntryLinkId
+							fragmentEntryLink.fragmentEntryLinkId === fragmentEntryLinkId
 						)
 					)
 				);

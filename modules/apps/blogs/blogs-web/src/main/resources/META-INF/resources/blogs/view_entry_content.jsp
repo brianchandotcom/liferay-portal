@@ -83,7 +83,7 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 
 				<div class="autofit-col autofit-col-expand">
 					<div class="autofit-row">
-						<div class="autofit-col autofit-col-expand">
+						<div class="autofit-col">
 							<a class="username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
 
 							<div class="text-secondary">

@@ -100,6 +100,7 @@ Layout.STATE = {
 					actionURLs: Config.object().required(),
 					active: Config.bool().required(),
 					hasChild: Config.bool().required(),
+					homePage: Config.bool().required(),
 					homePageTitle: Config.string().required(),
 					plid: Config.string().required(),
 					title: Config.string().required(),

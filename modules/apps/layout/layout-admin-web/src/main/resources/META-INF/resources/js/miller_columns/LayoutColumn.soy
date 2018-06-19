@@ -9,6 +9,7 @@
 		active: bool,
 		description: string,
 		hasChild: bool,
+		homePage: bool,
 		homePageTitle: string,
 		plid: string,
 		title: string,
@@ -61,6 +62,7 @@
 		active: bool,
 		description: string,
 		hasChild: bool,
+		homePage: bool,
 		homePageTitle: string,
 		plid: string,
 		title: string,
@@ -102,6 +104,13 @@
 			{if $layoutColumnItem.description}
 				<h6 class="list-group-subtitle text-truncate">
 					{$layoutColumnItem.description}
+
+					{if $layoutColumnItem.homePage}
+						&nbsp;
+						<span class="label label-secondary">
+							<span class="label-item label-item-expand">{msg desc=""}home-page{/msg}</span>
+						</span>
+					{/if}
 				</h6>
 			{/if}
 		</div>

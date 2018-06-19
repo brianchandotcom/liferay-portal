@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
- * @author Andrew Betts
+ * @author Eduardo Pérez
  */
 public class UpgradeAssetTagsPermission extends UpgradeProcess {
 

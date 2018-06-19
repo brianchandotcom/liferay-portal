@@ -82,13 +82,8 @@ public class RegionNestedCollectionResource
 		).build();
 	}
 
-	private CommerceRegion _getCommerceRegion(Long commerceRegionId) {
-		try {
-			return _commerceRegionService.getCommerceRegion(commerceRegionId);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+	private CommerceRegion _getCommerceRegion(Long commerceRegionId) throws PortalException {
+		return _commerceRegionService.getCommerceRegion(commerceRegionId);
 	}
 
 	private PageItems<CommerceRegion> _getPageItems(

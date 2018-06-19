@@ -150,27 +150,22 @@ public class AddressNestedCollectionResource
 	}
 
 	private PageItems<CommerceAddress> _getPageItems(
-		Pagination pagination, Long organizationId) {
+		Pagination pagination, Long organizationId) throws PortalException {
 
-		try {
-			Organization organization = _commerceOrganizationService.getOrganization(
-				organizationId);
+		Organization organization = _commerceOrganizationService.getOrganization(
+			organizationId);
 
-			Group group = organization.getGroup();
+		Group group = organization.getGroup();
 
-			List<CommerceAddress> commerceAddresses =
-				_commerceAddressService.getCommerceAddresses(
-					group.getGroupId(), group.getClassName(),
-					group.getClassPK());
+		List<CommerceAddress> commerceAddresses =
+			_commerceAddressService.getCommerceAddresses(
+				group.getGroupId(), group.getClassName(),
+				group.getClassPK());
 
-			int total = _commerceAddressService.getCommerceAddressesCount(
-				group.getGroupId(), group.getClassName(), group.getClassPK());
+		int total = _commerceAddressService.getCommerceAddressesCount(
+			group.getGroupId(), group.getClassName(), group.getClassPK());
 
-			return new PageItems<>(commerceAddresses, total);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+		return new PageItems<>(commerceAddresses, total);
 	}
 
 	private CommerceAddress _updateCommerceAddress(

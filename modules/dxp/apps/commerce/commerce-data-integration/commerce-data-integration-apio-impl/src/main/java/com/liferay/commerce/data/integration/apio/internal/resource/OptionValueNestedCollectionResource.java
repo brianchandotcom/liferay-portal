@@ -117,7 +117,7 @@ public class OptionValueNestedCollectionResource
 	}
 
 	private Document _addCPOptionValue(
-		Long cpOptionId, OptionValueForm optionValueForm) {
+		Long cpOptionId, OptionValueForm optionValueForm) throws PortalException {
 
 		try {
 			CPOptionValue cpOptionValue =
@@ -137,102 +137,84 @@ public class OptionValueNestedCollectionResource
 					optionValueForm.getKey()),
 				cpovke);
 		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
 	}
 
-	private Document _getOptionValue(Long cpOptionValueId) {
-		try {
-			ServiceContext serviceContext =
-				_productIndexerHelper.getServiceContext();
+	private Document _getOptionValue(Long cpOptionValueId) throws PortalException {
+        ServiceContext serviceContext =
+            _productIndexerHelper.getServiceContext();
 
-			SearchContext searchContext = _optionValueHelper.buildSearchContext(
-				String.valueOf(cpOptionValueId), null, null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null, serviceContext);
+        SearchContext searchContext = _optionValueHelper.buildSearchContext(
+            String.valueOf(cpOptionValueId), null, null, QueryUtil.ALL_POS,
+            QueryUtil.ALL_POS, null, serviceContext);
 
-			Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-				CPOptionValue.class);
+        Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
+            CPOptionValue.class);
 
-			Hits hits = indexer.search(searchContext);
+        Hits hits = indexer.search(searchContext);
 
-			if (hits.getLength() == 0) {
-				throw new NotFoundException(
-					"Unable to find option value with ID " + cpOptionValueId);
-			}
+        if (hits.getLength() == 0) {
+            throw new NotFoundException(
+                "Unable to find option value with ID " + cpOptionValueId);
+        }
 
-			if (hits.getLength() > 1) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"More than one option value found with ID " +
-							cpOptionValueId);
-				}
+        if (hits.getLength() > 1) {
+            if (_log.isWarnEnabled()) {
+                _log.warn(
+                    "More than one option value found with ID " +
+                        cpOptionValueId);
+            }
 
-				CPOptionValue cpOptionValue =
-					_cpOptionValueService.getCPOptionValue(cpOptionValueId);
+            CPOptionValue cpOptionValue =
+                _cpOptionValueService.getCPOptionValue(cpOptionValueId);
 
-				return indexer.getDocument(cpOptionValue);
-			}
+            return indexer.getDocument(cpOptionValue);
+        }
 
-			List<Document> documents = hits.toList();
+        List<Document> documents = hits.toList();
 
-			return documents.get(0);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+        return documents.get(0);
 	}
 
 	private PageItems<Document> _getPageItems(
-		Pagination pagination, Long cpOptionId) {
+		Pagination pagination, Long cpOptionId) throws PortalException {
 
-		try {
-			CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
+        CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
 
-			ServiceContext serviceContext =
-				_productIndexerHelper.getServiceContext(
-					cpOption.getGroupId(), new long[0]);
+        ServiceContext serviceContext =
+            _productIndexerHelper.getServiceContext(
+                cpOption.getGroupId(), new long[0]);
 
-			SearchContext searchContext = _optionValueHelper.buildSearchContext(
-				null, String.valueOf(cpOptionId), null,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null, serviceContext);
+        SearchContext searchContext = _optionValueHelper.buildSearchContext(
+            null, String.valueOf(cpOptionId), null,
+            pagination.getStartPosition(), pagination.getEndPosition(),
+            null, serviceContext);
 
-			Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-				CPOptionValue.class);
+        Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
+            CPOptionValue.class);
 
-			Hits hits = indexer.search(searchContext);
+        Hits hits = indexer.search(searchContext);
 
-			List<Document> documents = Collections.<Document>emptyList();
+        List<Document> documents = Collections.<Document>emptyList();
 
-			if (hits.getLength() > 0) {
-				documents = hits.toList();
-			}
+        if (hits.getLength() > 0) {
+            documents = hits.toList();
+        }
 
-			return new PageItems<>(documents, hits.getLength());
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+        return new PageItems<>(documents, hits.getLength());
 	}
 
 	private Document _updateCPOptionValue(
-		Long cpOptionValueId, OptionValueForm optionValueForm) {
+		Long cpOptionValueId, OptionValueForm optionValueForm) throws PortalException {
 
-		try {
-			CPOptionValue cpOptionValue =
-				_optionValueHelper.updateCPOptionValue(
-					cpOptionValueId, optionValueForm.getNameMap(),
-					optionValueForm.getKey());
+        CPOptionValue cpOptionValue =
+            _optionValueHelper.updateCPOptionValue(
+                cpOptionValueId, optionValueForm.getNameMap(),
+                optionValueForm.getKey());
 
-			Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-				CPOptionValue.class);
+        Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
+            CPOptionValue.class);
 
-			return indexer.getDocument(cpOptionValue);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+        return indexer.getDocument(cpOptionValue);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

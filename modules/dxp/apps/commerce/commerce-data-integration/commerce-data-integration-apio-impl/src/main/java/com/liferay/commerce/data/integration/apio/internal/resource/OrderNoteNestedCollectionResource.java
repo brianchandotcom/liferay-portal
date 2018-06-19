@@ -92,33 +92,23 @@ public class OrderNoteNestedCollectionResource
 		).build();
 	}
 
-	private CommerceOrderNote _getCommerceOrderNote(Long commerceOrderNoteId) {
-		try {
-			return _commerceOrderNoteService.getCommerceOrderNote(
-				commerceOrderNoteId);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+	private CommerceOrderNote _getCommerceOrderNote(Long commerceOrderNoteId) throws PortalException {
+		return _commerceOrderNoteService.getCommerceOrderNote(
+			commerceOrderNoteId);
 	}
 
 	private PageItems<CommerceOrderNote> _getPageItems(
-		Pagination pagination, Long commerceOrderId) {
+		Pagination pagination, Long commerceOrderId) throws PortalException {
 
-		try {
-			List<CommerceOrderNote> commerceOrderNotes =
-				_commerceOrderNoteService.getCommerceOrderNotes(
-					commerceOrderId, pagination.getStartPosition(),
-					pagination.getEndPosition());
+		List<CommerceOrderNote> commerceOrderNotes =
+			_commerceOrderNoteService.getCommerceOrderNotes(
+				commerceOrderId, pagination.getStartPosition(),
+				pagination.getEndPosition());
 
-			int total = _commerceOrderNoteService.getCommerceOrderNotesCount(
-				commerceOrderId);
+		int total = _commerceOrderNoteService.getCommerceOrderNotesCount(
+			commerceOrderId);
 
-			return new PageItems<>(commerceOrderNotes, total);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+		return new PageItems<>(commerceOrderNotes, total);
 	}
 
 	@Reference

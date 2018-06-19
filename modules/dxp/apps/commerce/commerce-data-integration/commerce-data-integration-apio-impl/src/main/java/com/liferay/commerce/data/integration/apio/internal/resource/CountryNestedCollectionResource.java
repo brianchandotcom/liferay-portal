@@ -89,14 +89,9 @@ public class CountryNestedCollectionResource
 		).build();
 	}
 
-	private CommerceCountry _getCommerceCountry(Long commerceCountryId) {
-		try {
-			return _commerceCountryService.getCommerceCountry(
-				commerceCountryId);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+	private CommerceCountry _getCommerceCountry(Long commerceCountryId) throws PortalException {
+		return _commerceCountryService.getCommerceCountry(
+			commerceCountryId);
 	}
 
 	private String _getName(CommerceCountry commerceCountry, Locale locale) {

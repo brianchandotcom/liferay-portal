@@ -118,7 +118,7 @@ public class OptionNestedCollectionResource
 		).build();
 	}
 
-	private Document _addCPOption(Long webSiteId, OptionForm optionForm) {
+	private Document _addCPOption(Long webSiteId, OptionForm optionForm) throws PortalException {
 		try {
 			CPOption cpOption = _optionHelper.createCPOption(
 				webSiteId, optionForm.getNameMap(),
@@ -133,59 +133,49 @@ public class OptionNestedCollectionResource
 		catch (CPOptionKeyException cpoke) {
 			throw new BadRequestException(
 				String.format(
-					"CPOption key '%s' already been defined",
                     "An option with key '%s' already exists",
 					optionForm.getKey()),
 				cpoke);
 		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
 	}
 
-	private Document _getOption(Long cpOptionId) {
-		try {
-			ServiceContext serviceContext =
-				_productIndexerHelper.getServiceContext();
+	private Document _getOption(Long cpOptionId) throws PortalException {
+        ServiceContext serviceContext =
+            _productIndexerHelper.getServiceContext();
 
-			SearchContext searchContext = _optionHelper.buildSearchContext(
-				String.valueOf(cpOptionId), String.valueOf(cpOptionId),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null, serviceContext);
+        SearchContext searchContext = _optionHelper.buildSearchContext(
+            String.valueOf(cpOptionId), String.valueOf(cpOptionId),
+            QueryUtil.ALL_POS, QueryUtil.ALL_POS, null, serviceContext);
 
-			Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-				CPOption.class);
+        Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
+            CPOption.class);
 
-			Hits hits = indexer.search(searchContext);
+        Hits hits = indexer.search(searchContext);
 
-			if (hits.getLength() == 0) {
-				throw new NotFoundException(
-					"Unable to find option with ID " + cpOptionId);
-			}
+        if (hits.getLength() == 0) {
+            throw new NotFoundException(
+                "Unable to find option with ID " + cpOptionId);
+        }
 
-			if (hits.getLength() > 1) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"More than one option found with ID " + cpOptionId);
-				}
+        if (hits.getLength() > 1) {
+            if (_log.isWarnEnabled()) {
+                _log.warn(
+                    "More than one option found with ID " + cpOptionId);
+            }
 
-				CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
+            CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
 
-				return indexer.getDocument(cpOption);
-			}
+            return indexer.getDocument(cpOption);
+        }
 
-			List<Document> documents = hits.toList();
+        List<Document> documents = hits.toList();
 
-			return documents.get(0);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+        return documents.get(0);
 	}
 
 	private PageItems<Document> _getPageItems(
-		Pagination pagination, Long webSiteId) {
+		Pagination pagination, Long webSiteId) throws PortalException {
 
-		try {
 			ServiceContext serviceContext =
 				_productIndexerHelper.getServiceContext(webSiteId, new long[0]);
 
@@ -205,27 +195,18 @@ public class OptionNestedCollectionResource
 			}
 
 			return new PageItems<>(documents, hits.getLength());
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
 	}
 
-	private Document _updateCPOption(Long cpOptionId, OptionForm optionForm) {
-		try {
-			CPOption cpOption = _optionHelper.updateCPOption(
-				cpOptionId, optionForm.getNameMap(),
-				optionForm.getDescriptionMap(), optionForm.getFieldType(),
-				optionForm.getKey());
+	private Document _updateCPOption(Long cpOptionId, OptionForm optionForm) throws PortalException {
+        CPOption cpOption = _optionHelper.updateCPOption(
+            cpOptionId, optionForm.getNameMap(),
+            optionForm.getDescriptionMap(), optionForm.getFieldType(),
+            optionForm.getKey());
 
-			Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-				CPOption.class);
+        Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
+            CPOption.class);
 
-			return indexer.getDocument(cpOption);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+        return indexer.getDocument(cpOption);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

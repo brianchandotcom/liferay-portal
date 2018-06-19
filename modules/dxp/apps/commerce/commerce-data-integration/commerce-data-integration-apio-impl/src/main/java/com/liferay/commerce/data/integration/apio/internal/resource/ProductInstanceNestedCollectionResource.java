@@ -128,109 +128,83 @@ public class ProductInstanceNestedCollectionResource
 			Long cpDefinitionId, ProductInstanceCreatorForm form)
 		throws PortalException {
 
-		try {
-			CPInstance cpInstance = _productInstanceHelper.upsertCPInstance(
-				cpDefinitionId, form.getSku(), form.getGtin(),
-				form.getManufacturerPartNumber(), form.getPurchasable(),
-				form.getWidth(), form.getHeight(), form.getDepth(),
-				form.getWeight(), form.getCost(), form.getPrice(),
-				form.getPromoPrice(), form.getPublished(),
-				form.getDisplayDate(), form.getExpirationDate(),
-				form.getNeverExpire(), form.getExternalReferenceCode());
+		CPInstance cpInstance = _productInstanceHelper.upsertCPInstance(
+			cpDefinitionId, form.getSku(), form.getGtin(),
+			form.getManufacturerPartNumber(), form.getPurchasable(),
+			form.getWidth(), form.getHeight(), form.getDepth(),
+			form.getWeight(), form.getCost(), form.getPrice(),
+			form.getPromoPrice(), form.getPublished(),
+			form.getDisplayDate(), form.getExpirationDate(),
+			form.getNeverExpire(), form.getExternalReferenceCode());
 
-			Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
-				CPInstance.class);
+		Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
+			CPInstance.class);
+
+		return indexer.getDocument(cpInstance);
+	}
+
+	private Document _getCPInstance(Long cpInstanceId) throws PortalException {
+		ServiceContext serviceContext =
+			_productIndexerHelper.getServiceContext();
+
+		SearchContext searchContext =
+			_productInstanceHelper.buildSearchContext(
+				String.valueOf(cpInstanceId), null,
+				String.valueOf(cpInstanceId), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null, serviceContext);
+
+		Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
+			CPInstance.class);
+
+		Hits hits = indexer.search(searchContext);
+
+		if (hits.getLength() == 0) {
+			throw new NotFoundException(
+				"Unable to find product with ID " + cpInstanceId);
+		}
+
+		if (hits.getLength() > 1) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"More than one document found for SKU with ID " +
+						cpInstanceId);
+			}
+
+			CPInstance cpInstance = _cpInstanceService.getCPInstance(
+				cpInstanceId);
 
 			return indexer.getDocument(cpInstance);
 		}
-		catch (CPInstanceDisplayDateException cpidde) {
-			throw new BadRequestException(
-				"Display Date no defined on Product Instance " + form.getSku(),
-				cpidde);
-		}
-		catch (CPInstanceExpirationDateException cpiede) {
-			throw new BadRequestException(
-				"Expiration Date no defined on Product Instance " +
-					form.getSku(),
-				cpiede);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
 
-	private Document _getCPInstance(Long cpInstanceId) {
-		try {
-			ServiceContext serviceContext =
-				_productIndexerHelper.getServiceContext();
+		List<Document> documents = hits.toList();
 
-			SearchContext searchContext =
-				_productInstanceHelper.buildSearchContext(
-					String.valueOf(cpInstanceId), null,
-					String.valueOf(cpInstanceId), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null, serviceContext);
-
-			Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
-				CPInstance.class);
-
-			Hits hits = indexer.search(searchContext);
-
-			if (hits.getLength() == 0) {
-				throw new NotFoundException(
-					"Unable to find product with ID " + cpInstanceId);
-			}
-
-			if (hits.getLength() > 1) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"More than one document found for SKU with ID " +
-							cpInstanceId);
-				}
-
-				CPInstance cpInstance = _cpInstanceService.getCPInstance(
-					cpInstanceId);
-
-				return indexer.getDocument(cpInstance);
-			}
-
-			List<Document> documents = hits.toList();
-
-			return documents.get(0);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+		return documents.get(0);
 	}
 
 	private PageItems<Document> _getPageItems(
-		Pagination pagination, Long cpDefinitionId) {
+		Pagination pagination, Long cpDefinitionId) throws PortalException {
 
-		try {
-			ServiceContext serviceContext =
-				_productIndexerHelper.getServiceContext();
+		ServiceContext serviceContext =
+			_productIndexerHelper.getServiceContext();
 
-			SearchContext searchContext =
-				_productInstanceHelper.buildSearchContext(
-					null, String.valueOf(cpDefinitionId), null,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null, serviceContext);
+		SearchContext searchContext =
+			_productInstanceHelper.buildSearchContext(
+				null, String.valueOf(cpDefinitionId), null,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				null, serviceContext);
 
-			Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
-				CPInstance.class);
+		Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
+			CPInstance.class);
 
-			Hits hits = indexer.search(searchContext);
+		Hits hits = indexer.search(searchContext);
 
-			List<Document> documents = Collections.<Document>emptyList();
+		List<Document> documents = Collections.<Document>emptyList();
 
-			if (hits.getLength() > 0) {
-				documents = hits.toList();
-			}
-
-			return new PageItems<>(documents, hits.getLength());
+		if (hits.getLength() > 0) {
+			documents = hits.toList();
 		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+
+		return new PageItems<>(documents, hits.getLength());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -109,37 +109,27 @@ public class OrderNestedCollectionResource
 		).build();
 	}
 
-	private CommerceOrder _getCommerceOrder(Long commerceOrderId) {
-		try {
-			return _commerceOrderService.getCommerceOrder(commerceOrderId);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+	private CommerceOrder _getCommerceOrder(Long commerceOrderId) throws PortalException {
+		return _commerceOrderService.getCommerceOrder(commerceOrderId);
 	}
 
 	private PageItems<CommerceOrder> _getPageItems(
-		Pagination pagination, Long organizationId) {
+		Pagination pagination, Long organizationId) throws PortalException {
 
-		try {
-			Organization organization = _commerceOrganizationService.getOrganization(
-				organizationId);
+		Organization organization = _commerceOrganizationService.getOrganization(
+			organizationId);
 
-			Group group = organization.getGroup();
+		Group group = organization.getGroup();
 
-			List<CommerceOrder> commerceOrders =
-				_commerceOrderService.getCommerceOrders(
-					group.getGroupId(), pagination.getStartPosition(),
-					pagination.getEndPosition(), null);
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderService.getCommerceOrders(
+				group.getGroupId(), pagination.getStartPosition(),
+				pagination.getEndPosition(), null);
 
-			int total = _commerceOrderService.getCommerceOrdersCount(
-				group.getGroupId());
+		int total = _commerceOrderService.getCommerceOrdersCount(
+			group.getGroupId());
 
-			return new PageItems<>(commerceOrders, total);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+		return new PageItems<>(commerceOrders, total);
 	}
 
 	private CommerceOrder _updateCommerceOrder(

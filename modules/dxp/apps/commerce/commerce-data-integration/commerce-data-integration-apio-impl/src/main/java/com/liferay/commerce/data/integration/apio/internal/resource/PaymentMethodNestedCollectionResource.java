@@ -94,15 +94,10 @@ public class PaymentMethodNestedCollectionResource
 	}
 
 	private CommercePaymentMethod _getCommercePaymentMethod(
-		Long commercePaymentMethodId) {
+		Long commercePaymentMethodId) throws PortalException {
 
-		try {
-			return _commercePaymentMethodService.getCommercePaymentMethod(
-				commercePaymentMethodId);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+		return _commercePaymentMethodService.getCommercePaymentMethod(
+			commercePaymentMethodId);
 	}
 
 	private PageItems<CommercePaymentMethod> _getPageItems(

@@ -167,6 +167,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<gradle-execute dir="${project.dir}/modules" task="generateLicenseReport">
 			<arg value="-Dbuild.profile=portal" />
+			<arg value="-DgenerateLicenseReport.skipPrivate=${build.lib.versions.skip.private}" />
 			<arg value="-Dlicense.report.enabled=true" />
 			<arg value="-Dlicense.report.output.dir=${project.dir}/tmp/license-reports" />
 		</gradle-execute>

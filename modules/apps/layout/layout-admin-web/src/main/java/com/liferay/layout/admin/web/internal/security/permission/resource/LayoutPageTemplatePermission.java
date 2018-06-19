@@ -34,7 +34,7 @@ public class LayoutPageTemplatePermission {
 	}
 
 	@Reference(
-		target = "(component.name=*.LayoutPageTemplatePortletResourcePermission)",
+		target = "(component.name=com.liferay.layout.page.template.internal.security.permission.resource.LayoutPageTemplatePortletResourcePermission)",
 		unbind = "-"
 	)
 	protected void setPortletResourcePermission(

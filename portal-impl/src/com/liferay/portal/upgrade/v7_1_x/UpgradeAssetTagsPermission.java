@@ -25,11 +25,12 @@ public class UpgradeAssetTagsPermission extends UpgradeProcess {
 
 	@Override
 	public void doUpgrade() throws Exception {
-		deleteIndividualResourcePermissions();
+		deleteResourcePermissions();
+
 		renameResourceAction();
 	}
 
-	protected void deleteIndividualResourcePermissions() throws Exception {
+	protected void deleteResourcePermissions() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				"delete from ResourcePermission where name = " +

@@ -92,7 +92,8 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			}
 
 			for (int i = 0; i < labelsJSONArray.length(); i++) {
-				labels.add(new Label((JSONObject)labelsJSONArray.get(i)));
+				labels.add(
+					LabelFactory.newLabel((JSONObject)labelsJSONArray.get(i)));
 			}
 
 			page++;

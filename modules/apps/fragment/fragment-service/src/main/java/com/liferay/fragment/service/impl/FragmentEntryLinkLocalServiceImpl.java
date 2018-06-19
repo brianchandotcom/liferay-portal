@@ -129,7 +129,8 @@ public class FragmentEntryLinkLocalServiceImpl
 			fragmentEntryLinkPersistence.findByGroupId(groupId);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			deleteFragmentEntryLink(fragmentEntryLink);
+			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLink);
 		}
 	}
 
@@ -148,7 +149,8 @@ public class FragmentEntryLinkLocalServiceImpl
 		}
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			fragmentEntryLinkPersistence.remove(fragmentEntryLink);
+			fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+				fragmentEntryLink);
 
 			deletedFragmentEntryLinks.add(fragmentEntryLink);
 		}

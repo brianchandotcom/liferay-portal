@@ -239,6 +239,52 @@ public class SiteNavigationMenuDisplayContext {
 		return _rootMenuItemType;
 	}
 
+	public long getSelectSiteNavigationMenuId() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int siteNavigationMenuType = getSiteNavigationMenuType();
+
+		long siteNavigationMenuId = getSiteNavigationMenuId();
+
+		if ((siteNavigationMenuType == -1) && (siteNavigationMenuId <= 0)) {
+			SiteNavigationMenu siteNavigationMenu =
+				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
+					themeDisplay.getScopeGroupId(),
+					_getDefaultSelectSiteNavigationMenuType());
+
+			if (siteNavigationMenu != null) {
+				return siteNavigationMenu.getSiteNavigationMenuId();
+			}
+
+			return 0;
+		}
+
+		if (siteNavigationMenuType > 0) {
+			SiteNavigationMenu siteNavigationMenu =
+				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
+					themeDisplay.getScopeGroupId(), siteNavigationMenuType);
+
+			if (siteNavigationMenu != null) {
+				return siteNavigationMenu.getSiteNavigationMenuId();
+			}
+
+			return 0;
+		}
+
+		return siteNavigationMenuId;
+	}
+
+	public int getSelectSiteNavigationMenuType() {
+		int selectSiteNavigationMenuType = getSiteNavigationMenuType();
+
+		if (selectSiteNavigationMenuType > 0) {
+			return selectSiteNavigationMenuType;
+		}
+
+		return _getDefaultSelectSiteNavigationMenuType();
+	}
+
 	public SiteNavigationMenu getSiteNavigationMenu() {
 		if (_siteNavigationMenu != null) {
 			return _siteNavigationMenu;
@@ -263,25 +309,6 @@ public class SiteNavigationMenuDisplayContext {
 	public long getSiteNavigationMenuId() {
 		if (_siteNavigationMenuId != null) {
 			return _siteNavigationMenuId;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (getSiteNavigationMenuType() > 0) {
-			SiteNavigationMenu siteNavigationMenu =
-				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
-					themeDisplay.getScopeGroupId(),
-					getSiteNavigationMenuType());
-
-			if (siteNavigationMenu != null) {
-				_siteNavigationMenuId =
-					siteNavigationMenu.getSiteNavigationMenuId();
-
-				return _siteNavigationMenuId;
-			}
-
-			return 0;
 		}
 
 		_siteNavigationMenuId = ParamUtil.getLong(
@@ -322,25 +349,12 @@ public class SiteNavigationMenuDisplayContext {
 			return _navigationMenuType;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		int defaultValue =
+		int siteNavigationMenuType =
 			_siteNavigationMenuPortletInstanceConfiguration.
 				siteNavigationMenuType();
 
-		if (defaultValue == -1) {
-			defaultValue = SiteNavigationConstants.TYPE_PRIMARY;
-
-			Layout layout = themeDisplay.getLayout();
-
-			if (layout.isPrivateLayout()) {
-				defaultValue = SiteNavigationConstants.TYPE_PRIVATE;
-			}
-		}
-
 		_navigationMenuType = ParamUtil.getInteger(
-			_request, "siteNavigationMenuType", defaultValue);
+			_request, "siteNavigationMenuType", siteNavigationMenuType);
 
 		return _navigationMenuType;
 	}
@@ -376,6 +390,31 @@ public class SiteNavigationMenuDisplayContext {
 			_siteNavigationMenuPortletInstanceConfiguration.preview());
 
 		return _preview;
+	}
+
+	public boolean isSiteNavigationMenuSelected() {
+		if ((_siteNavigationMenuPortletInstanceConfiguration.
+				siteNavigationMenuId() > 0) &&
+			(_siteNavigationMenuPortletInstanceConfiguration.
+				siteNavigationMenuType() == -1)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private int _getDefaultSelectSiteNavigationMenuType() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isPrivateLayout()) {
+			return SiteNavigationConstants.TYPE_PRIVATE;
+		}
+
+		return SiteNavigationConstants.TYPE_PRIMARY;
 	}
 
 	private String _ddmTemplateKey;

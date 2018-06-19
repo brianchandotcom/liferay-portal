@@ -15,7 +15,10 @@
 package com.liferay.portal.convert.documentlibrary;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.comparator.FileVersionVersionComparator;
@@ -40,7 +43,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
@@ -50,7 +52,6 @@ import com.liferay.registry.RegistryUtil;
 import java.io.InputStream;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -200,7 +201,7 @@ public class DocumentLibraryConvertProcess
 			"Migrating " + count + " documents and media files");
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
+			DLFileVersionLocalServiceUtil.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -214,9 +215,17 @@ public class DocumentLibraryConvertProcess
 					groupIdProperty.eqProperty(repositoryIdProperty));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(DLFileEntry dlFileEntry) -> migrateDLFileEntry(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				new LiferayFileEntry(dlFileEntry)));
+			(DLFileVersion dlFileVersion) -> {
+				DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
+
+				long dataRepositoryId = DLFolderConstants.getDataRepositoryId(
+					dlFileVersion.getRepositoryId(),
+					dlFileVersion.getFolderId());
+
+				migrateFile(
+					dlFileVersion.getCompanyId(), dataRepositoryId,
+					dlFileEntry.getName(), dlFileVersion.getVersion());
+			});
 
 		actionableDynamicQuery.performActions();
 

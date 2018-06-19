@@ -3691,17 +3691,20 @@ public class StagingImpl implements Staging {
 
 		Group scopeGroup = sourceLayout.getScopeGroup();
 
-		Group stagingGroup = null;
 		Group liveGroup = null;
+		Group stagingGroup = null;
 
-		Layout targetLayout = null;
+		long targetGroupId = 0L;
+		long targetLayoutPlid = 0L;
 
 		if (sourceLayout.isTypeControlPanel()) {
 			stagingGroup = _groupLocalService.fetchGroup(scopeGroupId);
 
 			liveGroup = stagingGroup.getLiveGroup();
 
-			targetLayout = sourceLayout;
+			targetGroupId = liveGroup.getGroupId();
+
+			targetLayoutPlid = sourceLayout.getPlid();
 		}
 		else if (sourceLayout.hasScopeGroup() &&
 				 (scopeGroup.getGroupId() == scopeGroupId)) {
@@ -3710,36 +3713,40 @@ public class StagingImpl implements Staging {
 
 			liveGroup = stagingGroup.getLiveGroup();
 
-			targetLayout = _layoutLocalService.getLayout(
+			targetGroupId = liveGroup.getGroupId();
+
+			Layout layout = _layoutLocalService.getLayout(
 				liveGroup.getClassPK());
+
+			targetLayoutPlid = layout.getPlid();
 		}
 		else {
 			stagingGroup = sourceLayout.getGroup();
 
-			StagingGroupHelper stagingGroupHelper =
-				StagingGroupHelperUtil.getStagingGroupHelper();
+			if (stagingGroup.isStagedRemotely()) {
+				targetGroupId = stagingGroup.getRemoteLiveGroupId();
 
-			liveGroup = stagingGroupHelper.fetchLiveGroup(stagingGroup);
+				HttpPrincipal httpPrincipal = new HttpPrincipal(
+					buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
+					user.getLogin(), user.getPassword(),
+					user.isPasswordEncrypted());
 
-			targetLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-				sourceLayout.getUuid(), liveGroup.getGroupId(),
-				sourceLayout.isPrivateLayout());
-		}
+				targetLayoutPlid = LayoutServiceHttp.getLayoutPlid(
+					httpPrincipal, sourceLayout.getUuid(),
+					stagingGroup.getRemoteLiveGroupId(),
+					sourceLayout.isPrivateLayout());
+			}
+			else {
+				liveGroup = stagingGroup.getLiveGroup();
 
-		long targetLayoutPlid = 0;
+				targetGroupId = liveGroup.getGroupId();
 
-		if (stagingGroup.isStagedRemotely()) {
-			HttpPrincipal httpPrincipal = new HttpPrincipal(
-				buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
-				user.getLogin(), user.getPassword(),
-				user.isPasswordEncrypted());
+				Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					sourceLayout.getUuid(), liveGroup.getGroupId(),
+					sourceLayout.isPrivateLayout());
 
-			targetLayoutPlid = LayoutServiceHttp.getLayoutPlid(
-				httpPrincipal, sourceLayout.getUuid(), liveGroup.getGroupId(),
-				sourceLayout.isPrivateLayout());
-		}
-		else if (targetLayout != null) {
-			targetLayoutPlid = targetLayout.getPlid();
+				targetLayoutPlid = layout.getPlid();
+			}
 		}
 
 		if (copyFromLive) {
@@ -3748,8 +3755,6 @@ public class StagingImpl implements Staging {
 				targetLayoutPlid, sourceLayout.getPlid(), portletId,
 				parameterMap);
 		}
-
-		long targetGroupId = liveGroup.getGroupId();
 
 		return publishPortlet(
 			userId, stagingGroup.getGroupId(), targetGroupId,

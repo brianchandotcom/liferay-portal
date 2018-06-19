@@ -5,7 +5,6 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 task copySystemPackagesExtraLibs(type: Copy)
 task copySystemPackagesExtraManifest(type: Copy)
-task executeBnd(type: ExecuteBndTask)
 
 String buildProfile = System.properties["build.profile"]
 
@@ -14,44 +13,49 @@ File systemPackagesExtraManifestFile = file("system.packages.extra.mf")
 if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists()) {
 	systemPackagesExtraManifestFile = new File(buildDir, "system.packages.extra.mf")
 
-	task buildSystemPackagesExtraManifest
+	task buildSystemPackagesExtraManifest(type: ExecuteBndTask)
 
 	buildSystemPackagesExtraManifest {
+		classpath = files()
+
 		dependsOn classes
 		dependsOn copySystemPackagesExtraLibs
 
-		doLast {
-			Map<String, String> properties = liferayOSGi.bundleDefaultInstructions
+		outputFile = systemPackagesExtraManifestFile
 
-			properties["-check"] = "imports"
-			properties["-fixupmessages"] = '"Classpath is empty. Private-Package ...";is:=ignore'
-			properties["-include"] = "system.packages.extra.bnd"
+		properties liferayOSGi.bundleDefaultInstructions
 
+		property "-check", "imports"
+		property "-fixupmessages", '"Classpath is empty. Private-Package ...";is:=ignore'
+		property "-include", "system.packages.extra.bnd"
+
+		property "Bundle-SymbolicName", {
 			Properties bndProperties = GUtil.loadProperties(file("system.packages.extra.bnd"))
 
-			properties["Bundle-SymbolicName"] = bndProperties.getProperty("Bundle-SymbolicName")
-			properties["Bundle-Version"] = project.version
+			bndProperties.getProperty("Bundle-SymbolicName")
+		}
 
+		property "Bundle-Version", {
+			project.version
+		}
+
+		property "Provide-Capability", {
 			File portalImplJarFile = configurations.compileOnly.find {
 				it.name.startsWith "com.liferay.portal.impl-"
 			}
 
 			Domain portalImplJarDomain = Domain.domain(portalImplJarFile)
 
-			properties["Provide-Capability"] = portalImplJarDomain.provideCapability.toString()
-
-			executeBnd.properties properties
-
-			executeBnd.baseDir = projectDir
-			executeBnd.classpath = files()
-			executeBnd.failOnError = true
-			executeBnd.outputFile systemPackagesExtraManifestFile
-			executeBnd.resourceDirs = files()
-			executeBnd.setSourceDirs files(sourceSets.main.allSource.srcDirs.findAll {it.directory})
-			executeBnd.writeManifest = true
+			portalImplJarDomain.provideCapability.toString()
 		}
 
-		finalizedBy executeBnd
+		resourceDirs = files()
+		sourceDirs = files(sourceSets.main.allSource.srcDirs.findAll { it.directory })
+		writeManifest = true
+	}
+
+	jar {
+		dependsOn buildSystemPackagesExtraManifest
 	}
 }
 else {

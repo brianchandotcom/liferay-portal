@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.content.search.web.internal.display.context;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
@@ -27,6 +26,7 @@ import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
@@ -59,10 +59,10 @@ import javax.servlet.http.HttpServletRequest;
 public class CPSearchResultsDisplayContext {
 
 	public CPSearchResultsDisplayContext(
-			CPCatalogEntryFactory cpCatalogEntryFactory,
 			CPContentListEntryRendererRegistry
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
+			CPDefinitionHelper cpDefinitionHelper,
 			CPDefinitionLinkTypeRegistry cpDefinitionLinkTypeRegistry,
 			CPInstanceHelper cpInstanceHelper,
 			CPTypeServicesTracker cpTypeServicesTracker,
@@ -70,10 +70,10 @@ public class CPSearchResultsDisplayContext {
 			PortletSharedSearchResponse portletSharedSearchResponse)
 		throws ConfigurationException {
 
-		_cpCatalogEntryFactory = cpCatalogEntryFactory;
 		_cpContentListEntryRendererRegistry =
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
+		_cpDefinitionHelper = cpDefinitionHelper;
 		_cpDefinitionLinkTypeRegistry = cpDefinitionLinkTypeRegistry;
 		_cpInstanceHelper = cpInstanceHelper;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
@@ -331,7 +331,7 @@ public class CPSearchResultsDisplayContext {
 
 		for (Document document : documents) {
 			cpCatalogEntries.add(
-				_cpCatalogEntryFactory.create(
+				_cpDefinitionHelper.getCPCatalogEntry(
 					document, _cpRequestHelper.getLocale()));
 		}
 
@@ -351,10 +351,10 @@ public class CPSearchResultsDisplayContext {
 		return urlString;
 	}
 
-	private final CPCatalogEntryFactory _cpCatalogEntryFactory;
 	private final CPContentListEntryRendererRegistry
 		_cpContentListEntryRendererRegistry;
 	private final CPContentListRendererRegistry _cpContentListRendererRegistry;
+	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;
 	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPRequestHelper _cpRequestHelper;

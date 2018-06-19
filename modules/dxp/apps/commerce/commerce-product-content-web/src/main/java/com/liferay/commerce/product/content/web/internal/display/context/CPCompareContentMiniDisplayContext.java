@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
@@ -26,6 +25,7 @@ import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPCompareUtil;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -52,19 +52,19 @@ import javax.servlet.http.HttpServletRequest;
 public class CPCompareContentMiniDisplayContext {
 
 	public CPCompareContentMiniDisplayContext(
-			CPCatalogEntryFactory cpCatalogEntryFactory,
 			CPContentListEntryRendererRegistry
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
+			CPDefinitionHelper cpDefinitionHelper,
 			CPTypeServicesTracker cpTypeServicesTracker,
 			LayoutLocalService layoutLocalService,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		_cpCatalogEntryFactory = cpCatalogEntryFactory;
 		_cpContentListEntryRendererRegistry =
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
+		_cpDefinitionHelper = cpDefinitionHelper;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
 		_layoutLocalService = layoutLocalService;
 
@@ -118,7 +118,7 @@ public class CPCompareContentMiniDisplayContext {
 
 		for (Long cpDefinitionId : _cpDefinitionIds) {
 			cpCatalogEntries.add(
-				_cpCatalogEntryFactory.create(
+				_cpDefinitionHelper.getCPCatalogEntry(
 					cpDefinitionId, _cpRequestHelper.getLocale()));
 		}
 
@@ -292,12 +292,12 @@ public class CPCompareContentMiniDisplayContext {
 		}
 	}
 
-	private final CPCatalogEntryFactory _cpCatalogEntryFactory;
 	private final CPCompareContentMiniPortletInstanceConfiguration
 		_cpCompareContentMiniPortletInstanceConfiguration;
 	private final CPContentListEntryRendererRegistry
 		_cpContentListEntryRendererRegistry;
 	private final CPContentListRendererRegistry _cpContentListRendererRegistry;
+	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final List<Long> _cpDefinitionIds;
 	private final CPRequestHelper _cpRequestHelper;
 	private final CPTypeServicesTracker _cpTypeServicesTracker;

@@ -14,16 +14,16 @@
 
 package com.liferay.commerce.product.content.web.internal.portlet;
 
-import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -84,8 +84,9 @@ public class CPCompareContentPortlet extends MVCPortlet {
 
 			CPCompareContentDisplayContext cpCompareContentDisplayContext =
 				new CPCompareContentDisplayContext(
-					_cpCatalogEntryFactory, _cpContentListEntryRendererRegistry,
-					_cpContentListRendererRegistry, _cpDefinitionService,
+					_cpContentListEntryRendererRegistry,
+					_cpContentListRendererRegistry, _cpDefinitionHelper,
+					_cpDefinitionLocalService,
 					_cpDefinitionSpecificationOptionValueLocalService,
 					_cpInstanceHelper, _cpMeasurementUnitService,
 					_cpOptionCategoryLocalService, _cpTypeServicesTracker,
@@ -106,9 +107,6 @@ public class CPCompareContentPortlet extends MVCPortlet {
 		CPCompareContentPortlet.class);
 
 	@Reference
-	private CPCatalogEntryFactory _cpCatalogEntryFactory;
-
-	@Reference
 	private CPContentListEntryRendererRegistry
 		_cpContentListEntryRendererRegistry;
 
@@ -116,7 +114,10 @@ public class CPCompareContentPortlet extends MVCPortlet {
 	private CPContentListRendererRegistry _cpContentListRendererRegistry;
 
 	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionSpecificationOptionValueLocalService

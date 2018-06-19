@@ -15,18 +15,12 @@
 package com.liferay.commerce.product.internal.catalog;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
-import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
@@ -34,20 +28,11 @@ import java.util.Map;
 public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 
 	public DatabaseCPCatalogEntryImpl(
-			CPDefinition cpDefinition,
-			CPDefinitionLocalService cpDefinitionLocalService,
-			CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService,
-			Locale locale, Portal portal)
-		throws PortalException {
+		CPDefinition cpDefinition, Locale locale) {
 
 		_cpDefinition = cpDefinition;
 
-		_defaultImageFileURL = _getDefaultImageFileURL(
-			cpDefinition, cpDefinitionLocalService);
 		_languageId = LanguageUtil.getLanguageId(locale);
-
-		_url = _getURL(
-			cpDefinition, cpFriendlyURLEntryLocalService, _languageId, portal);
 	}
 
 	@Override
@@ -57,7 +42,12 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 
 	@Override
 	public String getDefaultImageFileUrl() {
-		return _defaultImageFileURL;
+		try {
+			return _cpDefinition.getDefaultImageFileURL();
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	@Override
@@ -97,7 +87,7 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 
 	@Override
 	public String getUrl() {
-		return _url;
+		return _cpDefinition.getURL(_languageId);
 	}
 
 	@Override
@@ -105,43 +95,7 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 		return _cpDefinition.isIgnoreSKUCombinations();
 	}
 
-	private static String _getDefaultImageFileURL(
-			CPDefinition cpDefinition,
-			CPDefinitionLocalService cpDefinitionLocalService)
-		throws PortalException {
-
-		CPAttachmentFileEntry cpAttachmentFileEntry =
-			cpDefinitionLocalService.getDefaultImage(
-				cpDefinition.getCPDefinitionId());
-
-		if (cpAttachmentFileEntry == null) {
-			return null;
-		}
-
-		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
-
-		return DLUtil.getDownloadURL(
-			fileEntry, fileEntry.getFileVersion(), null, null);
-	}
-
-	private static String _getURL(
-		CPDefinition cpDefinition,
-		CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService,
-		String languageId, Portal portal) {
-
-		long classNameId = portal.getClassNameId(CPDefinition.class);
-
-		Map<String, String> languageIdToUrlTitleMap =
-			cpFriendlyURLEntryLocalService.getLanguageIdToUrlTitleMap(
-				cpDefinition.getGroupId(), classNameId,
-				cpDefinition.getCPDefinitionId());
-
-		return languageIdToUrlTitleMap.get(languageId);
-	}
-
 	private final CPDefinition _cpDefinition;
-	private final String _defaultImageFileURL;
 	private final String _languageId;
-	private final String _url;
 
 }

@@ -17,7 +17,6 @@ package com.liferay.commerce.product.definitions.web.internal.portlet;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
@@ -25,6 +24,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -98,7 +98,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 					languageId, true);
 		}
 
-		CPCatalogEntry cpCatalogEntry = _cpCatalogEntryFactory.create(
+		CPCatalogEntry cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
 			cpFriendlyURLEntry.getClassPK(), locale);
 
 		Layout layout = getProductLayout(
@@ -225,7 +225,7 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
-	private CPCatalogEntryFactory _cpCatalogEntryFactory;
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

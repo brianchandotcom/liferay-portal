@@ -18,12 +18,12 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -71,8 +71,9 @@ public class CPPublisherWebHelper {
 				rootElement.elementText("product-id"));
 
 			try {
-				CPCatalogEntry cpCatalogEntry = _cpCatalogEntryFactory.create(
-					cpDefinitionId, themeDisplay.getLocale());
+				CPCatalogEntry cpCatalogEntry =
+					_cpDefinitionHelper.getCPCatalogEntry(
+						cpDefinitionId, themeDisplay.getLocale());
 
 				if (cpCatalogEntry != null) {
 					cpCatalogEntries.add(cpCatalogEntry);
@@ -324,7 +325,7 @@ public class CPPublisherWebHelper {
 	private AssetTagLocalService _assetTagLocalService;
 
 	@Reference
-	private CPCatalogEntryFactory _cpCatalogEntryFactory;
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

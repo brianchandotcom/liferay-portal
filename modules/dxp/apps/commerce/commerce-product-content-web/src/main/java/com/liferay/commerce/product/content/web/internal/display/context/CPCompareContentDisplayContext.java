@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
@@ -32,13 +31,14 @@ import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
-import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPCompareUtil;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.petra.string.StringPool;
@@ -72,11 +72,11 @@ import javax.servlet.http.HttpServletRequest;
 public class CPCompareContentDisplayContext {
 
 	public CPCompareContentDisplayContext(
-			CPCatalogEntryFactory cpCatalogEntryFactory,
 			CPContentListEntryRendererRegistry
 				cpContentListEntryRendererRegistry,
 			CPContentListRendererRegistry cpContentListRendererRegistry,
-			CPDefinitionService cpDefinitionService,
+			CPDefinitionHelper cpDefinitionHelper,
+			CPDefinitionLocalService cpDefinitionLocalService,
 			CPDefinitionSpecificationOptionValueLocalService
 				cpDefinitionSpecificationOptionValueLocalService,
 			CPInstanceHelper cpInstanceHelper,
@@ -87,11 +87,11 @@ public class CPCompareContentDisplayContext {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		_cpCatalogEntryFactory = cpCatalogEntryFactory;
 		_cpContentListEntryRendererRegistry =
 			cpContentListEntryRendererRegistry;
 		_cpContentListRendererRegistry = cpContentListRendererRegistry;
-		_cpDefinitionService = cpDefinitionService;
+		_cpDefinitionHelper = cpDefinitionHelper;
+		_cpDefinitionLocalService = cpDefinitionLocalService;
 		_cpDefinitionSpecificationOptionValueLocalService =
 			cpDefinitionSpecificationOptionValueLocalService;
 		_cpInstanceHelper = cpInstanceHelper;
@@ -132,7 +132,7 @@ public class CPCompareContentDisplayContext {
 
 		for (Long cpDefinitionId : _cpDefinitionIds) {
 			cpCatalogEntries.add(
-				_cpCatalogEntryFactory.create(
+				_cpDefinitionHelper.getCPCatalogEntry(
 					cpDefinitionId, _cpRequestHelper.getLocale()));
 		}
 
@@ -212,7 +212,8 @@ public class CPCompareContentDisplayContext {
 			CPCatalogEntry cpCatalogEntry, String cpDefinitionOptionRelName)
 		throws PortalException {
 
-		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpCatalogEntry.getCPDefinitionId());
 
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
 				cpDefinition.getCPDefinitionOptionRels()) {
@@ -427,13 +428,6 @@ public class CPCompareContentDisplayContext {
 		}
 	}
 
-	protected CPDefinition getCPDefinition(CPCatalogEntry cpCatalogEntry)
-		throws PortalException {
-
-		return _cpDefinitionService.getCPDefinition(
-			cpCatalogEntry.getCPDefinitionId());
-	}
-
 	protected List<String> getCPDefinitionOptionValueRels(
 		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels,
 		Locale locale) {
@@ -456,7 +450,8 @@ public class CPCompareContentDisplayContext {
 
 		List<CPSpecificationOption> cpSpecificationOptions = new ArrayList<>();
 
-		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpCatalogEntry.getCPDefinitionId());
 
 		for (CPDefinitionSpecificationOptionValue
 				cpDefinitionSpecificationOptionValue :
@@ -488,7 +483,8 @@ public class CPCompareContentDisplayContext {
 		List<CPDefinitionOptionRel> multiValueCPDefinitionOptionRels =
 			new ArrayList<>();
 
-		CPDefinition cpDefinition = getCPDefinition(cpCatalogEntry);
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			cpCatalogEntry.getCPDefinitionId());
 
 		for (CPDefinitionOptionRel cpDefinitionOptionRel :
 				cpDefinition.getCPDefinitionOptionRels()) {
@@ -510,14 +506,14 @@ public class CPCompareContentDisplayContext {
 		return multiValueCPDefinitionOptionRels;
 	}
 
-	private final CPCatalogEntryFactory _cpCatalogEntryFactory;
 	private final CPCompareContentPortletInstanceConfiguration
 		_cpCompareContentPortletInstanceConfiguration;
 	private final CPContentListEntryRendererRegistry
 		_cpContentListEntryRendererRegistry;
 	private final CPContentListRendererRegistry _cpContentListRendererRegistry;
+	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final List<Long> _cpDefinitionIds;
-	private final CPDefinitionService _cpDefinitionService;
+	private final CPDefinitionLocalService _cpDefinitionLocalService;
 	private final CPDefinitionSpecificationOptionValueLocalService
 		_cpDefinitionSpecificationOptionValueLocalService;
 	private final CPInstanceHelper _cpInstanceHelper;

@@ -15,13 +15,15 @@
 package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
+import com.liferay.commerce.product.internal.catalog.DatabaseCPCatalogEntryImpl;
+import com.liferay.commerce.product.internal.catalog.IndexCPCatalogEntryImpl;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.search.CPDefinitionSearcher;
+import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
@@ -54,6 +56,21 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class CPDefinitionHelperImpl implements CPDefinitionHelper {
+
+	@Override
+	public CPCatalogEntry getCPCatalogEntry(Document document, Locale locale) {
+		return new IndexCPCatalogEntryImpl(document, locale);
+	}
+
+	@Override
+	public CPCatalogEntry getCPCatalogEntry(long cpDefinitionId, Locale locale)
+		throws PortalException {
+
+		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
+			cpDefinitionId);
+
+		return new DatabaseCPCatalogEntryImpl(cpDefinition, locale);
+	}
 
 	@Override
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)
@@ -113,8 +130,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		for (Document document : documents) {
 			cpCatalogEntries.add(
-				_cpCatalogEntryFactory.create(
-					document, searchContext.getLocale()));
+				getCPCatalogEntry(document, searchContext.getLocale()));
 		}
 
 		return new CPDataSourceResult(cpCatalogEntries, hits.getLength());
@@ -192,25 +208,11 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		return sortType;
 	}
 
-	private boolean _isVisible(CPDefinition cpDefinition) {
-		if (!cpDefinition.isPublished()) {
-			return false;
-		}
-
-		if (!cpDefinition.isApproved()) {
-			return false;
-		}
-
-		//TODO Permission checking
-
-		return true;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionHelperImpl.class);
 
 	@Reference
-	private CPCatalogEntryFactory _cpCatalogEntryFactory;
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;

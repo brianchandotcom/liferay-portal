@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.content.search.web.internal.portlet.action;
 
-import com.liferay.commerce.product.catalog.CPCatalogEntryFactory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
@@ -22,6 +21,7 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -63,8 +63,8 @@ public class CPSearchResultsConfigurationAction
 		try {
 			CPSearchResultsDisplayContext cpSearchResultsDisplayContext =
 				new CPSearchResultsDisplayContext(
-					_cpCatalogEntryFactory, _cpContentListEntryRendererRegistry,
-					_cpContentListRendererRegistry,
+					_cpContentListEntryRendererRegistry,
+					_cpContentListRendererRegistry, _cpDefinitionHelper,
 					_cpDefinitionLinkTypeRegistry, _cpInstanceHelper,
 					_cpTypeServicesTracker, httpServletRequest,
 					portletSharedSearchResponse);
@@ -92,14 +92,14 @@ public class CPSearchResultsConfigurationAction
 		CPSearchResultsConfigurationAction.class);
 
 	@Reference
-	private CPCatalogEntryFactory _cpCatalogEntryFactory;
-
-	@Reference
 	private CPContentListEntryRendererRegistry
 		_cpContentListEntryRendererRegistry;
 
 	@Reference
 	private CPContentListRendererRegistry _cpContentListRendererRegistry;
+
+	@Reference
+	private CPDefinitionHelper _cpDefinitionHelper;
 
 	@Reference
 	private CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;

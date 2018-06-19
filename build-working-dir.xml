@@ -61,7 +61,7 @@
 				]]>
 			</script>
 
-			<echo>git checkout refs/tags/git-tag-portal-private-apps -- ${checkout.private.apps.dirs.git}</echo>
+			<echo>git checkout refs/tags/git-tag-portal-private-apps -- ${checkout.private.apps.dirs.git} :!*/app.changelog :!*/app.properties</echo>
 
 			<exec executable="git" failonerror="true">
 				<arg value="checkout" />

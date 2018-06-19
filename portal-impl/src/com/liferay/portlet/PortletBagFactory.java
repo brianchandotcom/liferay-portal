@@ -295,18 +295,18 @@ public class PortletBagFactory {
 		return (javax.portlet.Portlet)portletClass.newInstance();
 	}
 
-	private Object _newInstance(Class<?> interfaceClass, String implClassName)
+	private <T> T _newInstance(
+			Class<? extends T> interfaceClass, String implClassName)
 		throws Exception {
 
 		if (_warFile) {
-			return ProxyFactory.newInstance(
+			return (T)ProxyFactory.newInstance(
 				_classLoader, new Class<?>[] {interfaceClass}, implClassName);
 		}
-		else {
-			Class<?> clazz = _classLoader.loadClass(implClassName);
 
-			return clazz.newInstance();
-		}
+		Class<?> clazz = _classLoader.loadClass(implClassName);
+
+		return (T)clazz.newInstance();
 	}
 
 	private void _registerAssetRendererFactoryInstances(
@@ -336,7 +336,7 @@ public class PortletBagFactory {
 
 			if (assetRendererEnabledValue) {
 				AssetRendererFactory<?> assetRendererFactoryInstance =
-					(AssetRendererFactory<?>)_newInstance(
+					_newInstance(
 						AssetRendererFactory.class, assetRendererFactoryClass);
 
 				assetRendererFactoryInstance.setClassName(
@@ -363,7 +363,7 @@ public class PortletBagFactory {
 				portlet.getAtomCollectionAdapterClasses()) {
 
 			AtomCollectionAdapter<?> atomCollectionAdapterInstance =
-				(AtomCollectionAdapter<?>)_newInstance(
+				_newInstance(
 					AtomCollectionAdapter.class, atomCollectionAdapterClass);
 
 			ServiceRegistration<?> serviceRegistration =
@@ -381,10 +381,9 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getConfigurationActionClass())) {
-			ConfigurationAction configurationAction =
-				(ConfigurationAction)_newInstance(
-					ConfigurationAction.class,
-					portlet.getConfigurationActionClass());
+			ConfigurationAction configurationAction = _newInstance(
+				ConfigurationAction.class,
+				portlet.getConfigurationActionClass());
 
 			ServiceRegistration<?> serviceRegistration =
 				registry.registerService(
@@ -400,10 +399,8 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getControlPanelEntryClass())) {
-			ControlPanelEntry controlPanelEntryInstance =
-				(ControlPanelEntry)_newInstance(
-					ControlPanelEntry.class,
-					portlet.getControlPanelEntryClass());
+			ControlPanelEntry controlPanelEntryInstance = _newInstance(
+				ControlPanelEntry.class, portlet.getControlPanelEntryClass());
 
 			ServiceRegistration<?> serviceRegistration =
 				registry.registerService(
@@ -423,7 +420,7 @@ public class PortletBagFactory {
 				portlet.getCustomAttributesDisplayClasses()) {
 
 			CustomAttributesDisplay customAttributesDisplayInstance =
-				(CustomAttributesDisplay)_newInstance(
+				_newInstance(
 					CustomAttributesDisplay.class,
 					customAttributesDisplayClass);
 
@@ -450,10 +447,8 @@ public class PortletBagFactory {
 			new FriendlyURLMapperTrackerImpl(portlet);
 
 		if (Validator.isNotNull(portlet.getFriendlyURLMapperClass())) {
-			FriendlyURLMapper friendlyURLMapper =
-				(FriendlyURLMapper)_newInstance(
-					FriendlyURLMapper.class,
-					portlet.getFriendlyURLMapperClass());
+			FriendlyURLMapper friendlyURLMapper = _newInstance(
+				FriendlyURLMapper.class, portlet.getFriendlyURLMapperClass());
 
 			friendlyURLMapperTracker.register(friendlyURLMapper);
 		}
@@ -467,7 +462,7 @@ public class PortletBagFactory {
 		throws Exception {
 
 		for (String indexerClass : portlet.getIndexerClasses()) {
-			Indexer<?> indexerInstance = (Indexer<?>)_newInstance(
+			Indexer<?> indexerInstance = _newInstance(
 				Indexer.class, indexerClass);
 
 			ServiceRegistration<?> serviceRegistration =
@@ -484,7 +479,7 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getOpenSearchClass())) {
-			OpenSearch openSearch = (OpenSearch)_newInstance(
+			OpenSearch openSearch = _newInstance(
 				OpenSearch.class, portlet.getOpenSearchClass());
 
 			ServiceRegistration<?> serviceRegistration =
@@ -501,10 +496,9 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getPermissionPropagatorClass())) {
-			PermissionPropagator permissionPropagatorInstance =
-				(PermissionPropagator)_newInstance(
-					PermissionPropagator.class,
-					portlet.getPermissionPropagatorClass());
+			PermissionPropagator permissionPropagatorInstance = _newInstance(
+				PermissionPropagator.class,
+				portlet.getPermissionPropagatorClass());
 
 			ServiceRegistration<?> serviceRegistration =
 				registry.registerService(
@@ -521,9 +515,8 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getPollerProcessorClass())) {
-			PollerProcessor pollerProcessorInstance =
-				(PollerProcessor)_newInstance(
-					PollerProcessor.class, portlet.getPollerProcessorClass());
+			PollerProcessor pollerProcessorInstance = _newInstance(
+				PollerProcessor.class, portlet.getPollerProcessorClass());
 
 			ServiceRegistration<?> serviceRegistration =
 				registry.registerService(
@@ -539,10 +532,8 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getPopMessageListenerClass())) {
-			MessageListener popMessageListenerInstance =
-				(MessageListener)_newInstance(
-					MessageListener.class,
-					portlet.getPopMessageListenerClass());
+			MessageListener popMessageListenerInstance = _newInstance(
+				MessageListener.class, portlet.getPopMessageListenerClass());
 
 			ServiceRegistration<?> serviceRegistration =
 				registry.registerService(
@@ -559,10 +550,8 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getPortletDataHandlerClass())) {
-			PortletDataHandler portletDataHandlerInstance =
-				(PortletDataHandler)_newInstance(
-					PortletDataHandler.class,
-					portlet.getPortletDataHandlerClass());
+			PortletDataHandler portletDataHandlerInstance = _newInstance(
+				PortletDataHandler.class, portlet.getPortletDataHandlerClass());
 
 			portletDataHandlerInstance.setPortletId(portlet.getPortletId());
 
@@ -581,10 +570,9 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getPortletLayoutListenerClass())) {
-			PortletLayoutListener portletLayoutListener =
-				(PortletLayoutListener)_newInstance(
-					PortletLayoutListener.class,
-					portlet.getPortletLayoutListenerClass());
+			PortletLayoutListener portletLayoutListener = _newInstance(
+				PortletLayoutListener.class,
+				portlet.getPortletLayoutListenerClass());
 
 			ServiceRegistration<?> serviceRegistration =
 				registry.registerService(
@@ -601,10 +589,8 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getPreferencesValidator())) {
-			PreferencesValidator preferencesValidatorInstance =
-				(PreferencesValidator)_newInstance(
-					PreferencesValidator.class,
-					portlet.getPreferencesValidator());
+			PreferencesValidator preferencesValidatorInstance = _newInstance(
+				PreferencesValidator.class, portlet.getPreferencesValidator());
 
 			try {
 				if (PropsValues.PREFERENCE_VALIDATE_ON_STARTUP) {
@@ -671,7 +657,7 @@ public class PortletBagFactory {
 				portlet.getSocialActivityInterpreterClasses()) {
 
 			SocialActivityInterpreter socialActivityInterpreterInstance =
-				(SocialActivityInterpreter)_newInstance(
+				_newInstance(
 					SocialActivityInterpreter.class,
 					socialActivityInterpreterClass);
 
@@ -695,7 +681,7 @@ public class PortletBagFactory {
 
 		if (Validator.isNotNull(portlet.getSocialRequestInterpreterClass())) {
 			SocialRequestInterpreter socialRequestInterpreterInstance =
-				(SocialRequestInterpreter)_newInstance(
+				_newInstance(
 					SocialRequestInterpreter.class,
 					portlet.getSocialRequestInterpreterClass());
 
@@ -719,9 +705,8 @@ public class PortletBagFactory {
 		for (String stagedModelDataHandlerClass :
 				portlet.getStagedModelDataHandlerClasses()) {
 
-			StagedModelDataHandler<?> stagedModelDataHandler =
-				(StagedModelDataHandler<?>)_newInstance(
-					StagedModelDataHandler.class, stagedModelDataHandlerClass);
+			StagedModelDataHandler<?> stagedModelDataHandler = _newInstance(
+				StagedModelDataHandler.class, stagedModelDataHandlerClass);
 
 			ServiceRegistration<?> serviceRegistration =
 				registry.registerService(
@@ -738,7 +723,7 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
-			TemplateHandler templateHandler = (TemplateHandler)_newInstance(
+			TemplateHandler templateHandler = _newInstance(
 				TemplateHandler.class, portlet.getTemplateHandlerClass());
 
 			ServiceRegistration<?> serviceRegistration =
@@ -755,7 +740,7 @@ public class PortletBagFactory {
 		throws Exception {
 
 		for (String trashHandlerClass : portlet.getTrashHandlerClasses()) {
-			TrashHandler trashHandlerInstance = (TrashHandler)_newInstance(
+			TrashHandler trashHandlerInstance = _newInstance(
 				TrashHandler.class, trashHandlerClass);
 
 			ServiceRegistration<?> serviceRegistration =
@@ -772,7 +757,7 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getURLEncoderClass())) {
-			URLEncoder urlEncoder = (URLEncoder)_newInstance(
+			URLEncoder urlEncoder = _newInstance(
 				URLEncoder.class, portlet.getURLEncoderClass());
 
 			ServiceRegistration<?> serviceRegistration =
@@ -854,7 +839,7 @@ public class PortletBagFactory {
 				portlet.getUserNotificationHandlerClasses()) {
 
 			UserNotificationHandler userNotificationHandlerInstance =
-				(UserNotificationHandler)_newInstance(
+				_newInstance(
 					UserNotificationHandler.class,
 					userNotificationHandlerClass);
 
@@ -875,7 +860,7 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getWebDAVStorageClass())) {
-			WebDAVStorage webDAVStorageInstance = (WebDAVStorage)_newInstance(
+			WebDAVStorage webDAVStorageInstance = _newInstance(
 				WebDAVStorage.class, portlet.getWebDAVStorageClass());
 
 			Map<String, Object> webDAVProperties = new HashMap<>();
@@ -897,9 +882,8 @@ public class PortletBagFactory {
 		for (String workflowHandlerClass :
 				portlet.getWorkflowHandlerClasses()) {
 
-			WorkflowHandler<?> workflowHandlerInstance =
-				(WorkflowHandler<?>)_newInstance(
-					WorkflowHandler.class, workflowHandlerClass);
+			WorkflowHandler<?> workflowHandlerInstance = _newInstance(
+				WorkflowHandler.class, workflowHandlerClass);
 
 			ServiceRegistration<?> serviceRegistration =
 				registry.registerService(
@@ -915,7 +899,7 @@ public class PortletBagFactory {
 		throws Exception {
 
 		if (Validator.isNotNull(portlet.getXmlRpcMethodClass())) {
-			Method xmlRpcMethodInstance = (Method)_newInstance(
+			Method xmlRpcMethodInstance = _newInstance(
 				Method.class, portlet.getXmlRpcMethodClass());
 
 			ServiceRegistration<?> serviceRegistration =

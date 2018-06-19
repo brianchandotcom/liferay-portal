@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Edit')]</td>
+	<td>//a/span[@class='taglib-text ' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

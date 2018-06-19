@@ -92,7 +92,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 
 				String oldPreferences = rs.getString("preferences");
 
-				String newPreferences = null;
+				String newPreferences;
 
 				try {
 					newPreferences = convertStagingPreferencesToJSON(

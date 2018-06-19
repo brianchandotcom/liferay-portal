@@ -15,7 +15,7 @@
 package com.liferay.commerce.wish.list.taglib.servlet.taglib;
 
 import com.liferay.commerce.wish.list.constants.CommerceWishListPortletKeys;
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -36,7 +36,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Marco Leo
  */
-public class AddToWishListTag extends TemplateRendererTag {
+public class AddToWishListTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {

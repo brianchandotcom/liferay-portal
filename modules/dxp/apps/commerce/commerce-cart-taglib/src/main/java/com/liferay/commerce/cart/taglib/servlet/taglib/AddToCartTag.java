@@ -18,7 +18,7 @@ import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryServiceUtil;
-import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
+import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -38,7 +38,7 @@ import javax.portlet.WindowStateException;
 /**
  * @author Marco Leo
  */
-public class AddToCartTag extends TemplateRendererTag {
+public class AddToCartTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {

@@ -127,7 +127,8 @@ public class FragmentCollectionLocalServiceImpl
 		FragmentCollection fragmentCollection = getFragmentCollection(
 			fragmentCollectionId);
 
-		return deleteFragmentCollection(fragmentCollection);
+		return fragmentCollectionLocalService.deleteFragmentCollection(
+			fragmentCollection);
 	}
 
 	@Override

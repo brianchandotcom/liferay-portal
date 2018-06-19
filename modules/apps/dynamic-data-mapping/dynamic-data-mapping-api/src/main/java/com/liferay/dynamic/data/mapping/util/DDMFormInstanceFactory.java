@@ -68,9 +68,9 @@ public class DDMFormInstanceFactory {
 		implements InvocationHandler {
 
 		public DDMFormInstanceInvocationHandler(
-			T clazz, DDMFormValues ddmFormValues, Locale locale) {
+			Class<T> clazz, DDMFormValues ddmFormValues, Locale locale) {
 
-			_clazz = clazz;
+			_ddmFormFactoryHelper = new DDMFormFactoryHelper(clazz);
 			_ddmFormValues = ddmFormValues;
 			_locale = locale;
 
@@ -86,7 +86,7 @@ public class DDMFormInstanceFactory {
 			}
 
 			DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
-				new DDMFormFieldFactoryHelper(method);
+				new DDMFormFieldFactoryHelper(_ddmFormFactoryHelper, method);
 
 			List<DDMFormFieldValue> ddmFormFieldValues =
 				_ddmFormFieldValuesMap.get(
@@ -308,7 +308,7 @@ public class DDMFormInstanceFactory {
 			return valueString;
 		}
 
-		private final T _clazz;
+		private final DDMFormFactoryHelper _ddmFormFactoryHelper;
 		private final Map<String, List<DDMFormFieldValue>>
 			_ddmFormFieldValuesMap;
 		private final DDMFormValues _ddmFormValues;

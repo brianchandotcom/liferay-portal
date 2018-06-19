@@ -21,21 +21,16 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -45,10 +40,22 @@ import java.util.Set;
  */
 public class DDMFormFieldFactoryHelper {
 
-	public DDMFormFieldFactoryHelper(Method method) {
+	public DDMFormFieldFactoryHelper(
+		DDMFormFactoryHelper ddmFormFactoryHelper, Method method) {
+
+		_ddmFormFactoryHelper = ddmFormFactoryHelper;
 		_method = method;
 
 		_ddmFormField = method.getAnnotation(DDMFormField.class);
+	}
+
+	/**
+	 * @deprecated As of 5.0.0, replaced by {@link #DDMFormFieldFactoryHelper(
+	 *             DDMFormFactoryHelper, Method)}
+	 */
+	@Deprecated
+	public DDMFormFieldFactoryHelper(Method method) {
+		this(new DDMFormFactoryHelper(method.getDeclaringClass()), method);
 	}
 
 	public com.liferay.dynamic.data.mapping.model.DDMFormField
@@ -96,29 +103,17 @@ public class DDMFormFieldFactoryHelper {
 		return ddmFormField;
 	}
 
+	/**
+	 * @deprecated As of 5.0.0, replaced by {@link
+	 *             DDMFormFactoryHelper#collectResourceBundles(Class, List,
+	 *             Locale)}
+	 */
+	@Deprecated
 	protected void collectResourceBundles(
 		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
 
-		for (Class<?> interfaceClass : clazz.getInterfaces()) {
-			collectResourceBundles(interfaceClass, resourceBundles, locale);
-		}
-
-		String resourceBundleBaseName = getResourceBundleBaseName(clazz);
-
-		if (Validator.isNull(resourceBundleBaseName)) {
-			return;
-		}
-
-		try {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				resourceBundleBaseName, locale, clazz.getClassLoader());
-
-			if (resourceBundle != null) {
-				resourceBundles.add(resourceBundle);
-			}
-		}
-		catch (MissingResourceException mre) {
-		}
+		_ddmFormFactoryHelper.collectResourceBundles(
+			clazz, resourceBundles, locale);
 	}
 
 	protected LocalizedValue createLocalizedValue(String property) {
@@ -315,7 +310,8 @@ public class DDMFormFieldFactoryHelper {
 	}
 
 	protected String getLocalizedValue(Locale locale, String value) {
-		ResourceBundle resourceBundle = getResourceBundle(locale);
+		ResourceBundle resourceBundle = _ddmFormFactoryHelper.getResourceBundle(
+			locale);
 
 		return LanguageUtil.get(resourceBundle, value);
 	}
@@ -355,35 +351,22 @@ public class DDMFormFieldFactoryHelper {
 		return localizedValue;
 	}
 
+	/**
+	 * @deprecated As of 5.0.0, replaced by {@link
+	 *             DDMFormFactoryHelper#getResourceBundle(Locale)}
+	 */
+	@Deprecated
 	protected ResourceBundle getResourceBundle(Locale locale) {
-		List<ResourceBundle> resourceBundles = new ArrayList<>();
-
-		ResourceBundle portalResourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, PortalClassLoaderUtil.getClassLoader());
-
-		resourceBundles.add(portalResourceBundle);
-
-		collectResourceBundles(
-			_method.getDeclaringClass(), resourceBundles, locale);
-
-		ResourceBundle[] resourceBundlesArray = resourceBundles.toArray(
-			new ResourceBundle[resourceBundles.size()]);
-
-		return new AggregateResourceBundle(resourceBundlesArray);
+		return _ddmFormFactoryHelper.getResourceBundle(locale);
 	}
 
+	/**
+	 * @deprecated As of 5.0.0, replaced by {@link
+	 *             DDMFormFactoryHelper#getResourceBundleBaseName()}
+	 */
+	@Deprecated
 	protected String getResourceBundleBaseName(Class<?> clazz) {
-		if (!clazz.isAnnotationPresent(DDMForm.class)) {
-			return null;
-		}
-
-		DDMForm ddmForm = clazz.getAnnotation(DDMForm.class);
-
-		if (Validator.isNotNull(ddmForm.localization())) {
-			return ddmForm.localization();
-		}
-
-		return "content.Language";
+		return _ddmFormFactoryHelper.getResourceBundleBaseName();
 	}
 
 	protected boolean isDDMFormFieldLocalizable() {
@@ -443,6 +426,7 @@ public class DDMFormFieldFactoryHelper {
 	}
 
 	private Set<Locale> _availableLocales;
+	private final DDMFormFactoryHelper _ddmFormFactoryHelper;
 	private final DDMFormField _ddmFormField;
 	private Locale _defaultLocale;
 	private final Method _method;

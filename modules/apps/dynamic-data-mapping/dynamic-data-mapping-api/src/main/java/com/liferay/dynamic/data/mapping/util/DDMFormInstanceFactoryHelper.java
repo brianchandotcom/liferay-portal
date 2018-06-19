@@ -83,7 +83,7 @@ public class DDMFormInstanceFactoryHelper {
 
 		for (Method method : ddmFormFactoryHelper.getDDMFormFieldMethods()) {
 			DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
-				new DDMFormFieldFactoryHelper(method);
+				new DDMFormFieldFactoryHelper(ddmFormFactoryHelper, method);
 
 			_ddmFormFieldMethodNameMap.put(
 				ddmFormFieldFactoryHelper.getDDMFormFieldName(),

@@ -50,6 +50,7 @@ import com.liferay.registry.RegistryUtil;
 import java.io.InputStream;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -124,17 +125,7 @@ public class DocumentLibraryConvertProcess
 
 		String fileName = ((DLFileEntry)model).getName();
 
-		List<FileVersion> fileVersions = getFileVersions(fileEntry);
-
-		if (fileVersions.isEmpty()) {
-			String versionNumber = Store.VERSION_DEFAULT;
-
-			migrateFile(companyId, repositoryId, fileName, versionNumber);
-
-			return;
-		}
-
-		for (FileVersion fileVersion : fileVersions) {
+		for (FileVersion fileVersion : getFileVersions(fileEntry)) {
 			String versionNumber = fileVersion.getVersion();
 
 			migrateFile(companyId, repositoryId, fileName, versionNumber);

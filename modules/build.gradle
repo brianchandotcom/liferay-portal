@@ -254,18 +254,24 @@ gradle.taskGraph.useFilter {
 	boolean skipReadOnly = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipReadOnly"))
 
 	if (skipReadOnly) {
-		boolean publicBranch = GradleUtil.getProperty(task.project, "liferay.releng.public", false)
-
-		if (publicBranch && task.project.path.startsWith(":private:")) {
-			return false
-		}
-
 		File gitRepoDir = _getRootDir(task.project.projectDir, ".gitrepo")
 
 		if (gitRepoDir != null) {
 			File gitRepoFile = new File(gitRepoDir, ".gitrepo")
 
 			if (gitRepoFile.text.contains("mode = pull")) {
+				return false
+			}
+		}
+	}
+
+	if (task.project.path.startsWith(":private:")) {
+		boolean publicBranch = GradleUtil.getProperty(task.project, "liferay.releng.public", false)
+
+		if (publicBranch) {
+			boolean skipPrivate = Boolean.parseBoolean(GradleUtil.getTaskPrefixedProperty(task, "skipPrivate"))
+
+			if (skipPrivate || skipReadOnly) {
 				return false
 			}
 		}

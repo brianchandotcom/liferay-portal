@@ -20,6 +20,7 @@ import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionExcepti
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaTitleException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
@@ -27,14 +28,17 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalServiceUtil;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalServiceUtil;
+import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -174,6 +178,21 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public String getDefaultImageFileURL() throws PortalException {
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			CPDefinitionLocalServiceUtil.getDefaultImage(getCPDefinitionId());
+
+		if (cpAttachmentFileEntry == null) {
+			return null;
+		}
+
+		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+		return DLUtil.getDownloadURL(
+			fileEntry, fileEntry.getFileVersion(), null, null);
+	}
+
+	@Override
 	public String getDefaultImageThumbnailSrc(ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -287,6 +306,17 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 				getCPDefinitionId());
 
 		return _shortDescriptionMap;
+	}
+
+	@Override
+	public String getURL(String languageId) {
+		long classNameId = PortalUtil.getClassNameId(CPDefinition.class);
+
+		Map<String, String> languageIdToUrlTitleMap =
+			CPFriendlyURLEntryLocalServiceUtil.getLanguageIdToUrlTitleMap(
+				getGroupId(), classNameId, getCPDefinitionId());
+
+		return languageIdToUrlTitleMap.get(languageId);
 	}
 
 	@Override

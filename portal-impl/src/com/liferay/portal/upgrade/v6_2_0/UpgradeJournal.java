@@ -575,6 +575,28 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 	}
 
+	protected void updateJournalArticleClassNameIdAndClassPK(
+			long journalStructureId, Long ddmStructureId)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update JournalArticle set classNameId = ?, classPK = ? " +
+					"where classNameId = ? and classPK = ?")) {
+
+			String ddmStructureClassName =
+				"com.liferay.portlet.dynamicdatamapping.model.DDMStructure";
+			String journalStructureClassName =
+				"com.liferay.portlet.journal.model.JournalStructure";
+
+			ps.setLong(1, PortalUtil.getClassNameId(ddmStructureClassName));
+			ps.setLong(2, ddmStructureId);
+			ps.setLong(3, PortalUtil.getClassNameId(journalStructureClassName));
+			ps.setLong(4, journalStructureId);
+
+			ps.execute();
+		}
+	}
+
 	protected void updateJournalResourcePermission() throws Exception {
 		long guestRoleId = getRoleId("Guest");
 		long ownerRoleId = getRoleId("Owner");
@@ -973,6 +995,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			uuid_, ddmStructureId, groupId, companyId, userId, userName,
 			createDate, modifiedDate, parentStructureId, structureId, name,
 			description, xsd);
+
+		updateJournalArticleClassNameIdAndClassPK(id_, ddmStructureId);
 
 		updateResourcePermission(
 			companyId, "com.liferay.portlet.journal.model.JournalStructure",

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -37,10 +38,12 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -481,10 +484,15 @@ public class CommerceOrganizationLocalServiceImpl
 				address.isPrimary());
 		}
 
+		List<ListType> listTypes = _listTypeLocalService.getListTypes(
+			Organization.class.getName() + ListTypeConstants.ADDRESS);
+
+		ListType listType = listTypes.get(0);
+
 		addressLocalService.addAddress(
 			serviceContext.getUserId(), className, classPK, street1, street2,
-			street3, city, zip, regionId, countryId, statusId, false, true,
-			serviceContext);
+			street3, city, zip, regionId, countryId, listType.getListTypeId(),
+			false, true, serviceContext);
 	}
 
 	protected void updateEmailAddress(
@@ -501,9 +509,14 @@ public class CommerceOrganizationLocalServiceImpl
 				emailAddress.isPrimary());
 		}
 
+		List<ListType> listTypes = _listTypeLocalService.getListTypes(
+			Organization.class.getName() + ListTypeConstants.EMAIL_ADDRESS);
+
+		ListType listType = listTypes.get(0);
+
 		emailAddressLocalService.addEmailAddress(
-			serviceContext.getUserId(), className, classPK, address, statusId,
-			true, serviceContext);
+			serviceContext.getUserId(), className, classPK, address,
+			listType.getListTypeId(), true, serviceContext);
 	}
 
 	private String _getUniqueName(long companyId, String name, int count) {
@@ -518,5 +531,8 @@ public class CommerceOrganizationLocalServiceImpl
 
 		return name;
 	}
+
+	@ServiceReference(type = ListTypeLocalService.class)
+	private ListTypeLocalService _listTypeLocalService;
 
 }

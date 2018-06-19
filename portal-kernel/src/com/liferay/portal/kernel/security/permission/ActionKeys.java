@@ -196,6 +196,8 @@ public class ActionKeys {
 	public static final String MANAGE_SUBORGANIZATIONS =
 		"MANAGE_SUBORGANIZATIONS";
 
+	public static final String MANAGE_TAG = "MANAGE_TAG";
+
 	public static final String MANAGE_TEAMS = "MANAGE_TEAMS";
 
 	public static final String MANAGE_USERS = "MANAGE_USERS";

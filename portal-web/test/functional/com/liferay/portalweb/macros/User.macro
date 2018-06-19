@@ -957,22 +957,22 @@
 	</command>
 
 	<command name="deleteCP">
+		<execute function="Click" locator1="Dropdown#FILTER_AND_ORDER" />
+
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="Inactive">
+			<var name="key_menuItem" value="Inactive" />
+		</execute>
+
 		<if>
-			<condition function="IsElementPresent" locator1="Select#USER_STATUS" />
+			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_1" />
 			<then>
-				<execute function="Select" locator1="Select#USER_STATUS" value1="Inactive" />
-				<if>
-					<condition function="IsElementPresent" locator1="Checkbox#SELECT_ALL" />
-					<then>
-						<execute function="Click" locator1="Checkbox#SELECT_ALL" />
+				<execute macro="PortletEntry#selectAll" />
 
-						<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+				<execute function="ClickNoError" locator1="Icon#DELETE" />
 
-						<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
+				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to permanently delete the selected users?" />
 
-						<execute macro="Alert#viewSuccessMessage" />
-					</then>
-				</if>
+				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</if>
 	</command>

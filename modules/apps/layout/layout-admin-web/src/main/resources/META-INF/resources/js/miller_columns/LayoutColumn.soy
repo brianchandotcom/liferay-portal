@@ -9,6 +9,7 @@
 		active: bool,
 		description: string,
 		hasChild: bool,
+		homePageTitle: string,
 		plid: string,
 		title: string,
 		url: string
@@ -60,6 +61,7 @@
 		active: bool,
 		description: string,
 		hasChild: bool,
+		homePageTitle: string,
 		plid: string,
 		title: string,
 		url: string
@@ -171,6 +173,9 @@
 						{if $layoutColumnItem.actionURLs['markAsHomePageLayoutURL']}
 							<a
 								class="dropdown-item"
+								data-home-page-title="{$layoutColumnItem.homePageTitle}"
+								data-onclick="_handleMarkAsHomePageLayoutClick"
+								data-title="{$layoutColumnItem.title}"
 								href="{$layoutColumnItem.actionURLs['markAsHomePageLayoutURL']}"
 							>
 								{msg desc=""}mark-as-home-page{/msg}

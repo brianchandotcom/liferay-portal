@@ -1069,6 +1069,19 @@ public class LayoutsAdminDisplayContext {
 		return jsonObject;
 	}
 
+	private String _getHomePageTitle(boolean privateLayout) {
+		if (_homePageTitle != null) {
+			return _homePageTitle;
+		}
+
+		Layout defaultLayout = LayoutLocalServiceUtil.fetchDefaultLayout(
+			getSelGroupId(), privateLayout);
+
+		_homePageTitle = defaultLayout.getName(_themeDisplay.getLocale());
+
+		return _homePageTitle;
+	}
+
 	private JSONArray _getLayoutColumnsJSONArray() throws Exception {
 		JSONArray layoutColumnsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -1210,6 +1223,8 @@ public class LayoutsAdminDisplayContext {
 
 			layoutJSONObject.put("hasChild", childLayoutsCount > 0);
 
+			layoutJSONObject.put(
+				"homePageTitle", _getHomePageTitle(privateLayout));
 			layoutJSONObject.put("plid", layout.getPlid());
 
 			if (childLayoutsCount > 0) {
@@ -1270,6 +1285,7 @@ public class LayoutsAdminDisplayContext {
 
 	private Long _activeLayoutSetBranchId;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
+	private String _homePageTitle;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
 	private final LiferayPortletRequest _liferayPortletRequest;

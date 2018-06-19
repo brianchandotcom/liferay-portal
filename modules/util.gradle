@@ -263,8 +263,10 @@ private void _createSetUpPortalToolTasks() {
 				dependencyNotation
 			}
 
-			doFirst {
-				delete destinationDir
+			if (ivyXmlFile.parentFile.name != "sdk") {
+				doFirst {
+					delete destinationDir
+				}
 			}
 
 			inputFile = ivyXmlFile

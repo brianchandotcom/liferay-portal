@@ -112,6 +112,16 @@ public class PullRequest {
 		return _ownerUsername;
 	}
 
+	public GitHubRemoteRepository getRepository() {
+		if (_repository == null) {
+			_repository =
+				(GitHubRemoteRepository)RepositoryFactory.getRemoteRepository(
+					"github.com", _repositoryName, getOwnerUsername());
+		}
+
+		return _repository;
+	}
+
 	public String getRepositoryName() {
 		return _repositoryName;
 	}
@@ -385,6 +395,7 @@ public class PullRequest {
 	private final List<Label> _labels = new ArrayList<>();
 	private Integer _number;
 	private String _ownerUsername;
+	private GitHubRemoteRepository _repository;
 	private String _repositoryName;
 	private final String _testSuiteName;
 	private TestSuiteStatus _testSuiteStatus = TestSuiteStatus.MISSING;

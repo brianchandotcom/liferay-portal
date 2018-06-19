@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
+
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -71,6 +73,56 @@ public class PullRequest {
 		if (addedLabel) {
 			updateGithub();
 		}
+	}
+
+	public boolean addLabel(String labelName) {
+		if (hasLabel(labelName)) {
+			return true;
+		}
+
+		GitHubRemoteRepository gitHubRemoteRepository = getRepository();
+
+		List<Label> repositoryLabels = gitHubRemoteRepository.getLabels();
+
+		boolean found = false;
+
+		for (Label label : repositoryLabels) {
+			if (labelName.equals(label.getName())) {
+				found = true;
+
+				break;
+			}
+		}
+
+		if (!found) {
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Label ", labelName, " does not exist in ",
+					getRepositoryName()));
+
+			return false;
+		}
+
+		JSONArray jsonArray = new JSONArray(1);
+
+		jsonArray.put(labelName);
+
+		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+			getRepositoryName(), getOwnerUsername(),
+			"issues/" + getNumber() + "/labels");
+
+		try {
+			JenkinsResultsParserUtil.toString(url, jsonArray.toString());
+		}
+		catch (IOException ioe) {
+			System.out.println("Unable to add label " + labelName);
+
+			ioe.printStackTrace();
+
+			return false;
+		}
+
+		return true;
 	}
 
 	public Commit getCommit() {
@@ -167,6 +219,16 @@ public class PullRequest {
 		return baseJSONObject.getString("sha");
 	}
 
+	public boolean hasLabel(String labelName) {
+		for (Label label : _labels) {
+			if (labelName.equals(label.getName())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isAutoCloseCommentAvailable() {
 		String path = JenkinsResultsParserUtil.combine(
 			"issues/", getNumber(), "/comments?page=");
@@ -217,6 +279,27 @@ public class PullRequest {
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
+		}
+	}
+
+	public void removeLabel(String labelName) {
+		if (!hasLabel(labelName)) {
+			return;
+		}
+
+		String path = JenkinsResultsParserUtil.combine(
+			"issues/", getNumber(), "/labels/", labelName);
+
+		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+			getRepositoryName(), getOwnerUsername(), path);
+
+		try {
+			JenkinsResultsParserUtil.toString(url, HttpRequestMethod.DELETE);
+		}
+		catch (IOException ioe) {
+			System.out.println("Unable to remove label " + labelName);
+
+			ioe.printStackTrace();
 		}
 	}
 

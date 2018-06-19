@@ -14,17 +14,25 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,16 +47,28 @@ public class RestrictionsFactoryTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() {
+		DB db = DBManagerUtil.getDB();
+
+		DBType dbType = db.getDBType();
+
+		_databaseInMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
+				new Filter(dbType.getName())));
+
+		Assume.assumeTrue(_databaseInMaxParameters > 0);
+	}
+
 	@Test
 	public void testInWithDatabaseInMaxParametersValue() {
-		_testInMaxParametersValue(
-			PropsValues.DATABASE_IN_MAX_PARAMETERS, false);
+		_testInMaxParametersValue(_databaseInMaxParameters, false);
 	}
 
 	@Test
 	public void testInWithMoreThanDatabaseInMaxParametersValue() {
-		_testInMaxParametersValue(
-			PropsValues.DATABASE_IN_MAX_PARAMETERS + 1, true);
+		_testInMaxParametersValue(_databaseInMaxParameters + 1, true);
 	}
 
 	private void _testInMaxParametersValue(
@@ -68,5 +88,7 @@ public class RestrictionsFactoryTest {
 			clazz.getName(), expectedDisjunction,
 			criterion instanceof Disjunction);
 	}
+
+	private int _databaseInMaxParameters;
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -114,7 +113,7 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 					continue;
 				}
 
-				ps2.setClob(1, new UnsyncStringReader(newPreferences));
+				ps2.setString(1, newPreferences);
 
 				ps2.setLong(2, portalPreferencesId);
 

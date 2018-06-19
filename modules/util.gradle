@@ -263,8 +263,16 @@ private void _createSetUpPortalToolTasks() {
 				dependencyNotation
 			}
 
+			doFirst {
+				delete destinationDir
+			}
+
 			inputFile = ivyXmlFile
 			into new File(portalToolDir, "lib")
+
+			outputs.upToDateWhen {
+				false
+			}
 		}
 
 		setUpPortalTools.dependsOn copyIvyDependenciesTask

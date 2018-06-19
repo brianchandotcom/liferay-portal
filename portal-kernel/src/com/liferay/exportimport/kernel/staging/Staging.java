@@ -87,6 +87,10 @@ public interface Staging {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public void checkRemoteLiveLayoutPlid(
+			long userId, long stagingGroupId, long plid)
+		throws PortalException;
+
 	public long copyFromLive(PortletRequest portletRequest)
 		throws PortalException;
 

@@ -16,6 +16,7 @@ package com.liferay.configuration.admin.web.internal.display;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 
@@ -46,6 +47,10 @@ public class ConfigurationCategoryDisplay {
 			ResourceBundleLoaderUtil.
 				getResourceBundleLoaderByBundleSymbolicName(
 					_configurationCategory.getBundleSymbolicName());
+
+		resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);

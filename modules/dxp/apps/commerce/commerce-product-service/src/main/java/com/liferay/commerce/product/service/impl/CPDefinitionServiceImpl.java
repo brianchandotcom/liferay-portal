@@ -123,13 +123,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public CPDefinition deleteCPDefinition(long cpDefinitionId)
-		throws PortalException {
-
+	public void deleteCPDefinition(long cpDefinitionId) throws PortalException {
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpDefinitionId, ActionKeys.DELETE);
 
-		return cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId);
+		cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId);
 	}
 
 	@Override

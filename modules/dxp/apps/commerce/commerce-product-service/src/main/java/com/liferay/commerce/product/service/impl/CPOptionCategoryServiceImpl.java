@@ -51,14 +51,13 @@ public class CPOptionCategoryServiceImpl
 	}
 
 	@Override
-	public CPOptionCategory deleteCPOptionCategory(long cpOptionCategoryId)
+	public void deleteCPOptionCategory(long cpOptionCategoryId)
 		throws PortalException {
 
 		CPOptionCategory cpOptionCategory =
 			cpOptionCategoryService.getCPOptionCategory(cpOptionCategoryId);
 
-		return cpOptionCategoryLocalService.deleteCPOptionCategory(
-			cpOptionCategory);
+		cpOptionCategoryLocalService.deleteCPOptionCategory(cpOptionCategory);
 	}
 
 	@Override

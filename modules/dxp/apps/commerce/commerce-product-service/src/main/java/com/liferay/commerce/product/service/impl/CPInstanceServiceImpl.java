@@ -108,20 +108,16 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public CPInstance deleteCPInstance(CPInstance cpInstance)
-		throws PortalException {
-
+	public void deleteCPInstance(CPInstance cpInstance) throws PortalException {
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
 
-		return cpInstanceLocalService.deleteCPInstance(cpInstance);
+		cpInstanceLocalService.deleteCPInstance(cpInstance);
 	}
 
 	@Override
-	public CPInstance deleteCPInstance(long cpInstanceId)
-		throws PortalException {
-
+	public void deleteCPInstance(long cpInstanceId) throws PortalException {
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
 
@@ -129,7 +125,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			getPermissionChecker(), cpInstance.getCPDefinitionId(),
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
 
-		return cpInstanceLocalService.deleteCPInstance(cpInstance);
+		cpInstanceLocalService.deleteCPInstance(cpInstance);
 	}
 
 	@Override

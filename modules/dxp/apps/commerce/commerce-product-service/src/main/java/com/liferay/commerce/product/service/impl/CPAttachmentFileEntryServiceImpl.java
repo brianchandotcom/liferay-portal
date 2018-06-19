@@ -68,24 +68,23 @@ public class CPAttachmentFileEntryServiceImpl
 	}
 
 	@Override
-	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
+	public void deleteCPAttachmentFileEntry(
 			CPAttachmentFileEntry cpAttachmentFileEntry)
 		throws PortalException {
 
 		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntry);
 
-		return cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
+		cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
 			cpAttachmentFileEntry);
 	}
 
 	@Override
-	public CPAttachmentFileEntry deleteCPAttachmentFileEntry(
-			long cpAttachmentFileEntryId)
+	public void deleteCPAttachmentFileEntry(long cpAttachmentFileEntryId)
 		throws PortalException {
 
 		checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
 
-		return cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
+		cpAttachmentFileEntryLocalService.deleteCPAttachmentFileEntry(
 			cpAttachmentFileEntryId);
 	}
 

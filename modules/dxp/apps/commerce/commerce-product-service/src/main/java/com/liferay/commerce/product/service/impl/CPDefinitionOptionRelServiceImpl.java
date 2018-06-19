@@ -82,7 +82,7 @@ public class CPDefinitionOptionRelServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
+	public void deleteCPDefinitionOptionRel(
 			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
 
@@ -90,13 +90,12 @@ public class CPDefinitionOptionRelServiceImpl
 			getPermissionChecker(), cpDefinitionOptionRel.getCPDefinitionId(),
 			ActionKeys.UPDATE);
 
-		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+		cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
 			cpDefinitionOptionRel);
 	}
 
 	@Override
-	public CPDefinitionOptionRel deleteCPDefinitionOptionRel(
-			long cpDefinitionOptionRelId)
+	public void deleteCPDefinitionOptionRel(long cpDefinitionOptionRelId)
 		throws PortalException {
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
@@ -107,7 +106,7 @@ public class CPDefinitionOptionRelServiceImpl
 			getPermissionChecker(), cpDefinitionOptionRel.getCPDefinitionId(),
 			ActionKeys.UPDATE);
 
-		return cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
+		cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
 			cpDefinitionOptionRel);
 	}
 
@@ -217,6 +216,9 @@ public class CPDefinitionOptionRelServiceImpl
 				String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
 		return cpDefinitionOptionRelLocalService.searchCPDefinitionOptionRels(
 			companyId, groupId, cpDefinitionId, keywords, start, end, sort);
 	}
@@ -239,9 +241,9 @@ public class CPDefinitionOptionRelServiceImpl
 			ActionKeys.UPDATE);
 
 		return cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
-			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
-			serviceContext);
+			cpDefinitionOptionRel.getCPDefinitionOptionRelId(), cpOptionId,
+			nameMap, descriptionMap, ddmFormFieldTypeName, priority, facetable,
+			required, skuContributor, serviceContext);
 	}
 
 	private static volatile ModelResourcePermission<CPDefinition>

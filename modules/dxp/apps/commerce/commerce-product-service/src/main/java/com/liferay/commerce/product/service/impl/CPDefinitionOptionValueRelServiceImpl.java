@@ -60,7 +60,7 @@ public class CPDefinitionOptionValueRelServiceImpl
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
+	public void deleteCPDefinitionOptionValueRel(
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws PortalException {
 
@@ -72,12 +72,12 @@ public class CPDefinitionOptionValueRelServiceImpl
 			getPermissionChecker(), cpDefinitionOptionRel.getCPDefinitionId(),
 			ActionKeys.UPDATE);
 
-		return cpDefinitionOptionValueRelLocalService.
-			deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
+		cpDefinitionOptionValueRelLocalService.deleteCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRel);
 	}
 
 	@Override
-	public CPDefinitionOptionValueRel deleteCPDefinitionOptionValueRel(
+	public void deleteCPDefinitionOptionValueRel(
 			long cpDefinitionOptionValueRelId)
 		throws PortalException {
 
@@ -93,8 +93,8 @@ public class CPDefinitionOptionValueRelServiceImpl
 			getPermissionChecker(), cpDefinitionOptionRel.getCPDefinitionId(),
 			ActionKeys.UPDATE);
 
-		return cpDefinitionOptionValueRelLocalService.
-			deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+		cpDefinitionOptionValueRelLocalService.deleteCPDefinitionOptionValueRel(
+			cpDefinitionOptionValueRelId);
 	}
 
 	@Override

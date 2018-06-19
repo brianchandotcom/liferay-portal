@@ -53,18 +53,18 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 	}
 
 	@Override
-	public CPOptionValue deleteCPOptionValue(CPOptionValue cpOptionValue)
+	public void deleteCPOptionValue(CPOptionValue cpOptionValue)
 		throws PortalException {
 
 		_cpOptionModelResourcePermission.check(
 			getPermissionChecker(), cpOptionValue.getCPOptionId(),
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_OPTION_VALUE);
 
-		return cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
+		cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
 	}
 
 	@Override
-	public CPOptionValue deleteCPOptionValue(long cpOptionValueId)
+	public void deleteCPOptionValue(long cpOptionValueId)
 		throws PortalException {
 
 		CPOptionValue cpOptionValue =
@@ -74,7 +74,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			getPermissionChecker(), cpOptionValue.getCPOptionId(),
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_OPTION_VALUE);
 
-		return cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
+		cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
 	}
 
 	@Override

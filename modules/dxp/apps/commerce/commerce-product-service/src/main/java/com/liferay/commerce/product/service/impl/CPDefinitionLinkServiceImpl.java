@@ -34,7 +34,7 @@ public class CPDefinitionLinkServiceImpl
 	extends CPDefinitionLinkServiceBaseImpl {
 
 	@Override
-	public CPDefinitionLink deleteCPDefinitionLink(long cpDefinitionLinkId)
+	public void deleteCPDefinitionLink(long cpDefinitionLinkId)
 		throws PortalException {
 
 		CPDefinitionLink cpDefinitionLink =
@@ -48,8 +48,7 @@ public class CPDefinitionLinkServiceImpl
 			getPermissionChecker(), cpDefinitionLink.getCPDefinition2(),
 			ActionKeys.UPDATE);
 
-		return cpDefinitionLinkLocalService.deleteCPDefinitionLink(
-			cpDefinitionLinkId);
+		cpDefinitionLinkLocalService.deleteCPDefinitionLink(cpDefinitionLinkId);
 	}
 
 	@Override

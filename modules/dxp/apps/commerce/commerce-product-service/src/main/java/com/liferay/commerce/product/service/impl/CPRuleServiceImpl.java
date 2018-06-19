@@ -52,11 +52,11 @@ public class CPRuleServiceImpl extends CPRuleServiceBaseImpl {
 	}
 
 	@Override
-	public CPRule deleteCPRule(long cpRuleId) throws PortalException {
+	public void deleteCPRule(long cpRuleId) throws PortalException {
 		_cpRuleResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.DELETE);
 
-		return cpRuleLocalService.deleteCPRule(cpRuleId);
+		cpRuleLocalService.deleteCPRule(cpRuleId);
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUt
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.util.PortalTools;
@@ -47,6 +48,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		_configureNode(project, portalVersion);
 		_configureTaskNpmInstall(project, portalVersion);
 
+		_configureTaskNpmRunBuild(project);
 		_configureTasksPublishNodeModule(project);
 	}
 
@@ -79,6 +81,18 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 		if (Validator.isNull(portalVersion)) {
 			npmInstallTask.setUseNpmCI(Boolean.TRUE);
+		}
+	}
+
+	private void _configureTaskNpmRunBuild(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		ExecuteNpmTask executeNpmTask =
+			(ExecuteNpmTask)taskContainer.findByName(
+				NodePlugin.NPM_RUN_BUILD_TASK_NAME);
+
+		if (executeNpmTask != null) {
+			executeNpmTask.environment("CI", "1");
 		}
 	}
 

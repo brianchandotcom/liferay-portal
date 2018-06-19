@@ -67,7 +67,7 @@ String viewEntryURL = assetRenderer.getURLView(liferayPortletResponse, WindowSta
 
 			<div class="autofit-col autofit-col-expand">
 				<div class="autofit-row">
-					<div class="autofit-col autofit-col-expand">
+					<div class="autofit-col">
 						<a class="username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
 
 						<div class="text-secondary">

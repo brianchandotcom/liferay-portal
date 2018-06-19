@@ -98,7 +98,7 @@
 
 							<div class="autofit-col autofit-col-expand">
 								<div class="autofit-row">
-									<div class="autofit-col autofit-col-expand">
+									<div class="autofit-col">
 										<#if serviceLocator??>
 											<#assign
 												userLocalService = serviceLocator.findService("com.liferay.portal.kernel.service.UserLocalService")

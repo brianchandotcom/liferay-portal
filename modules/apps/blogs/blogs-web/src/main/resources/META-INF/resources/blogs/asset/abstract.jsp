@@ -45,7 +45,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 			<div class="autofit-col autofit-col-expand">
 				<div class="autofit-row">
-					<div class="autofit-col autofit-col-expand">
+					<div class="autofit-col">
 						<a class="username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
 
 						<div>

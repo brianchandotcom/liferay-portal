@@ -20,7 +20,6 @@ import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.service.base.CPRuleServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -98,14 +97,6 @@ public class CPRuleServiceImpl extends CPRuleServiceBaseImpl {
 
 		return cpRuleLocalService.searchCPRules(
 			companyId, groupId, keywords, start, end, sort);
-	}
-
-	@Override
-	public BaseModelSearchResult<CPRule> searchCPRules(
-			SearchContext searchContext)
-		throws PortalException {
-
-		return cpRuleLocalService.searchCPRules(searchContext);
 	}
 
 	@Override

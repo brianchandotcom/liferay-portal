@@ -65,22 +65,6 @@ public class CPRuleUserSegmentRelServiceImpl
 	}
 
 	@Override
-	public CPRuleUserSegmentRel getCPRuleUserSegmentRel(
-			long cpRuleUserSegmentRelId)
-		throws PortalException {
-
-		CPRuleUserSegmentRel cpRuleUserSegmentRel =
-			cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRel(
-				cpRuleUserSegmentRelId);
-
-		_cpRuleResourcePermission.check(
-			getPermissionChecker(), cpRuleUserSegmentRel.getCPRuleId(),
-			ActionKeys.VIEW);
-
-		return cpRuleUserSegmentRel;
-	}
-
-	@Override
 	public List<CPRuleUserSegmentRel> getCPRuleUserSegmentRels(
 			long cpRuleId, int start, int end,
 			OrderByComparator<CPRuleUserSegmentRel> orderByComparator)

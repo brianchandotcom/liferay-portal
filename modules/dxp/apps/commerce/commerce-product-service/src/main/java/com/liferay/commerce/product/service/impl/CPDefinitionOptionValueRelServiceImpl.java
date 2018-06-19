@@ -20,8 +20,6 @@ import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.base.CPDefinitionOptionValueRelServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -57,23 +55,6 @@ public class CPDefinitionOptionValueRelServiceImpl
 			addCPDefinitionOptionValueRel(
 				cpDefinitionOptionRelId, nameMap, priority, key,
 				serviceContext);
-	}
-
-	@Override
-	public void deleteCPDefinitionOptionValueRel(
-			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
-		throws PortalException {
-
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
-				cpDefinitionOptionValueRel.getCPDefinitionOptionRelId());
-
-		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpDefinitionOptionRel.getCPDefinitionId(),
-			ActionKeys.UPDATE);
-
-		cpDefinitionOptionValueRelLocalService.deleteCPDefinitionOptionValueRel(
-			cpDefinitionOptionValueRel);
 	}
 
 	@Override
@@ -198,11 +179,6 @@ public class CPDefinitionOptionValueRelServiceImpl
 
 		return cpDefinitionOptionValueRelLocalService.
 			getCPDefinitionOptionValueRelsCount(cpDefinitionOptionRelId);
-	}
-
-	@Override
-	public Hits search(SearchContext searchContext) {
-		return cpDefinitionOptionValueRelLocalService.search(searchContext);
 	}
 
 	@Override

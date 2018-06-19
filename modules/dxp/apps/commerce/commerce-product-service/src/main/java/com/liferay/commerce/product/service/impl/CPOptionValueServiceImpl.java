@@ -19,17 +19,11 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -50,17 +44,6 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 
 		return cpOptionValueLocalService.addCPOptionValue(
 			cpOptionId, titleMap, priority, key, serviceContext);
-	}
-
-	@Override
-	public void deleteCPOptionValue(CPOptionValue cpOptionValue)
-		throws PortalException {
-
-		_cpOptionModelResourcePermission.check(
-			getPermissionChecker(), cpOptionValue.getCPOptionId(),
-			CPActionKeys.DELETE_COMMERCE_PRODUCT_OPTION_VALUE);
-
-		cpOptionValueLocalService.deleteCPOptionValue(cpOptionValue);
 	}
 
 	@Override
@@ -105,54 +88,6 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 			ActionKeys.VIEW);
 
 		return cpOptionValue;
-	}
-
-	@Override
-	public List<CPOptionValue> getCPOptionValues(
-			long cpOptionId, int start, int end)
-		throws PortalException {
-
-		_cpOptionModelResourcePermission.check(
-			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
-
-		return cpOptionValueLocalService.getCPOptionValues(
-			cpOptionId, start, end);
-	}
-
-	@Override
-	public List<CPOptionValue> getCPOptionValues(
-			long cpOptionId, int start, int end,
-			OrderByComparator<CPOptionValue> orderByComparator)
-		throws PortalException {
-
-		_cpOptionModelResourcePermission.check(
-			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
-
-		return cpOptionValueLocalService.getCPOptionValues(
-			cpOptionId, start, end, orderByComparator);
-	}
-
-	@Override
-	public int getCPOptionValuesCount(long cpOptionId) throws PortalException {
-		_cpOptionModelResourcePermission.check(
-			getPermissionChecker(), cpOptionId, ActionKeys.VIEW);
-
-		return cpOptionValueLocalService.getCPOptionValuesCount(cpOptionId);
-	}
-
-	@Override
-	public Hits search(SearchContext searchContext) {
-		return cpOptionValueLocalService.search(searchContext);
-	}
-
-	@Override
-	public BaseModelSearchResult<CPOptionValue> searchCPOptionValues(
-			long companyId, long groupId, long cpOptionId, String keywords,
-			int start, int end, Sort sort)
-		throws PortalException {
-
-		return cpOptionValueLocalService.searchCPOptionValues(
-			companyId, groupId, cpOptionId, keywords, start, end, sort);
 	}
 
 	@Override

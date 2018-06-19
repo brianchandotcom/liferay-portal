@@ -95,28 +95,6 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 
 	@Override
 	public CPDefinitionSpecificationOptionValue
-			fetchCPDefinitionSpecificationOptionValue(
-				long cpDefinitionId, long cpSpecificationOptionId)
-		throws PortalException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue =
-				cpDefinitionSpecificationOptionValueLocalService.
-					fetchCPDefinitionSpecificationOptionValue(
-						cpDefinitionId, cpSpecificationOptionId);
-
-		if (cpDefinitionSpecificationOptionValue != null) {
-			_cpDefinitionModelResourcePermission.check(
-				getPermissionChecker(),
-				cpDefinitionSpecificationOptionValue.getCPDefinition(),
-				ActionKeys.VIEW);
-		}
-
-		return cpDefinitionSpecificationOptionValue;
-	}
-
-	@Override
-	public CPDefinitionSpecificationOptionValue
 			getCPDefinitionSpecificationOptionValue(
 				long cpDefinitionSpecificationOptionValueId)
 		throws PortalException {

@@ -20,7 +20,6 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.base.CPInstanceServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -29,12 +28,9 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.io.Serializable;
-
 import java.math.BigDecimal;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Marco Leo
@@ -68,34 +64,6 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public CPInstance addCPInstance(
-			long cpDefinitionId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable,
-			String ddmContent, double width, double height, double depth,
-			double weight, BigDecimal price, BigDecimal promoPrice,
-			BigDecimal cost, boolean published, String externalReferenceCode,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException {
-
-		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
-
-		return cpInstanceLocalService.addCPInstance(
-			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
-			ddmContent, width, height, depth, weight, price, promoPrice, cost,
-			published, externalReferenceCode, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
-	}
-
-	@Override
 	public void buildCPInstances(
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException {
@@ -105,15 +73,6 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
 
 		cpInstanceLocalService.buildCPInstances(cpDefinitionId, serviceContext);
-	}
-
-	@Override
-	public void deleteCPInstance(CPInstance cpInstance) throws PortalException {
-		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpInstance.getCPDefinitionId(),
-			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
-
-		cpInstanceLocalService.deleteCPInstance(cpInstance);
 	}
 
 	@Override
@@ -142,18 +101,6 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		}
 
 		return cpInstance;
-	}
-
-	@Override
-	public List<CPInstance> getCPDefinitionInstances(
-			long cpDefinitionId, int start, int end)
-		throws PortalException {
-
-		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
-
-		return cpInstanceLocalService.getCPDefinitionInstances(
-			cpDefinitionId, start, end);
 	}
 
 	@Override
@@ -193,13 +140,6 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public CPInstance getCPInstance(long cpDefinitionId, String sku)
-		throws PortalException {
-
-		return cpInstanceLocalService.getCPInstance(cpDefinitionId, sku);
-	}
-
-	@Override
 	public CPInstance getCPInstance(String externalReferenceCode)
 		throws PortalException {
 
@@ -228,11 +168,6 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		throws PortalException {
 
 		return cpInstanceLocalService.getCPInstancesCount(groupId, status);
-	}
-
-	@Override
-	public Hits search(SearchContext searchContext) {
-		return cpInstanceLocalService.search(searchContext);
 	}
 
 	@Override
@@ -292,35 +227,6 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public CPInstance updateCPInstance(
-			long cpInstanceId, String sku, String gtin,
-			String manufacturerPartNumber, boolean purchasable, double width,
-			double height, double depth, double weight, BigDecimal price,
-			BigDecimal promoPrice, BigDecimal cost, boolean published,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException {
-
-		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
-			cpInstanceId);
-
-		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpInstance.getCPDefinitionId(),
-			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
-
-		return cpInstanceLocalService.updateCPInstance(
-			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable, width,
-			height, depth, weight, price, promoPrice, cost, published,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, serviceContext);
-	}
-
-	@Override
 	public CPInstance updatePricingInfo(
 			long cpInstanceId, BigDecimal price, BigDecimal promoPrice,
 			BigDecimal cost, ServiceContext serviceContext)
@@ -352,24 +258,6 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		return cpInstanceLocalService.updateShippingInfo(
 			cpInstanceId, width, height, depth, weight, serviceContext);
-	}
-
-	@Override
-	public CPInstance updateStatus(
-			long userId, long cpInstanceId, int status,
-			ServiceContext serviceContext,
-			Map<String, Serializable> workflowContext)
-		throws PortalException {
-
-		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
-			cpInstanceId);
-
-		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpInstance.getCPDefinitionId(),
-			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
-
-		return cpInstanceLocalService.updateStatus(
-			userId, cpInstanceId, status, serviceContext, workflowContext);
 	}
 
 	private static volatile ModelResourcePermission<CPDefinition>

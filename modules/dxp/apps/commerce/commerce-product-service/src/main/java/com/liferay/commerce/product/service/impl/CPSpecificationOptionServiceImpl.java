@@ -78,15 +78,6 @@ public class CPSpecificationOptionServiceImpl
 	}
 
 	@Override
-	public CPSpecificationOption fetchCPSpecificationOption(
-			long groupId, String key)
-		throws PortalException {
-
-		return cpSpecificationOptionLocalService.fetchCPSpecificationOption(
-			groupId, key);
-	}
-
-	@Override
 	public CPSpecificationOption getCPSpecificationOption(
 			long cpSpecificationOptionId)
 		throws PortalException {

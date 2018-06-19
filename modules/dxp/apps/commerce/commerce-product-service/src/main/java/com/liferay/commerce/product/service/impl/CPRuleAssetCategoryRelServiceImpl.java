@@ -71,22 +71,6 @@ public class CPRuleAssetCategoryRelServiceImpl
 	}
 
 	@Override
-	public CPRuleAssetCategoryRel getCPRuleAssetCategoryRel(
-			long cpRuleAssetCategoryRelId)
-		throws PortalException {
-
-		CPRuleAssetCategoryRel cpRuleAssetCategoryRel =
-			cpRuleAssetCategoryRelLocalService.getCPRuleAssetCategoryRel(
-				cpRuleAssetCategoryRelId);
-
-		_cpRuleResourcePermission.check(
-			getPermissionChecker(), cpRuleAssetCategoryRel.getCPRuleId(),
-			ActionKeys.VIEW);
-
-		return cpRuleAssetCategoryRel;
-	}
-
-	@Override
 	public List<CPRuleAssetCategoryRel> getCPRuleAssetCategoryRels(
 			long cpRuleId)
 		throws PortalException {

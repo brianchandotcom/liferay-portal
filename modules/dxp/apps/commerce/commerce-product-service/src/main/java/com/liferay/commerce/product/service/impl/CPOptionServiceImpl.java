@@ -20,14 +20,10 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.base.CPOptionServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -133,22 +129,6 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	}
 
 	@Override
-	public Hits search(SearchContext searchContext) throws PortalException {
-		long[] groupIds = searchContext.getGroupIds();
-
-		if (ArrayUtil.isEmpty(groupIds)) {
-			throw new PrincipalException();
-		}
-
-		for (long groupId : groupIds) {
-			_portletResourcePermission.check(
-				getPermissionChecker(), groupId, CPActionKeys.MANAGE_CATALOG);
-		}
-
-		return cpOptionLocalService.search(searchContext);
-	}
-
-	@Override
 	public BaseModelSearchResult<CPOption> searchCPOptions(
 			long companyId, long groupId, String keywords, int start, int end,
 			Sort sort)
@@ -159,36 +139,6 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 
 		return cpOptionLocalService.searchCPOptions(
 			companyId, groupId, keywords, start, end, sort);
-	}
-
-	@Override
-	public CPOption setFacetable(long cpOptionId, boolean facetable)
-		throws PortalException {
-
-		CPOption cpOption = cpOptionService.getCPOption(cpOptionId);
-
-		return cpOptionLocalService.setFacetable(
-			cpOption.getCPOptionId(), facetable);
-	}
-
-	@Override
-	public CPOption setRequired(long cpOptionId, boolean required)
-		throws PortalException {
-
-		CPOption cpOption = cpOptionService.getCPOption(cpOptionId);
-
-		return cpOptionLocalService.setRequired(
-			cpOption.getCPOptionId(), required);
-	}
-
-	@Override
-	public CPOption setSkuContributor(long cpOptionId, boolean skuContributor)
-		throws PortalException {
-
-		CPOption cpOption = cpOptionService.getCPOption(cpOptionId);
-
-		return cpOptionLocalService.setSkuContributor(
-			cpOption.getCPOptionId(), skuContributor);
 	}
 
 	@Override

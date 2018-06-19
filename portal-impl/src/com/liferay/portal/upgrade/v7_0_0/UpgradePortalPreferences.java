@@ -99,11 +99,13 @@ public class UpgradePortalPreferences extends UpgradeProcess {
 						oldPreferences);
 				}
 				catch (DocumentException de) {
-					_log.error(
-						StringBundler.concat(
-							"PortalPreferences ",
-							String.valueOf(portalPreferencesId),
-							" contains invalid XML, resetting to default"));
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"PortalPreferences ",
+								String.valueOf(portalPreferencesId),
+								" contains invalid XML, resetting to default"));
+					}
 
 					newPreferences = PortletConstants.DEFAULT_PREFERENCES;
 				}

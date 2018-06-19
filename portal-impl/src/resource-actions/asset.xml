@@ -82,12 +82,12 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
-				<action-key>ADD_TAG</action-key>
+				<action-key>MANAGE_TAG</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>ADD_TAG</action-key>
+				<action-key>MANAGE_TAG</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

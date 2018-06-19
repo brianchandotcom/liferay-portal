@@ -67,11 +67,6 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		return false;
 	}
 
-	@Override
-	public boolean isStaged() {
-		return true;
-	}
-
 	public boolean validateSchemaVersion(String schemaVersion) {
 		return _portletDataHandlerHelper.validateSchemaVersion(
 			schemaVersion, getSchemaVersion());

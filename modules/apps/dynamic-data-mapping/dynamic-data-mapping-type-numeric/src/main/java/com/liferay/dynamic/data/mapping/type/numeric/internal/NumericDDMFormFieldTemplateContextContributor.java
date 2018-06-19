@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -68,11 +67,14 @@ public class NumericDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"placeholder",
 			getValueString(placeholder, locale, ddmFormFieldRenderingContext));
+
+		String predefinedValue = getValueString(
+			ddmFormField.getPredefinedValue(), locale,
+			ddmFormFieldRenderingContext);
+
 		parameters.put(
-			"predefinedValue",
-			getValueString(
-				ddmFormField.getPredefinedValue(), locale,
-				ddmFormFieldRenderingContext));
+			"predefinedValue", getFormattedValue(predefinedValue, locale));
+
 		parameters.put("symbols", getSymbolsMap(locale));
 
 		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
@@ -82,15 +84,10 @@ public class NumericDDMFormFieldTemplateContextContributor
 			"tooltip",
 			getValueString(tooltip, locale, ddmFormFieldRenderingContext));
 
-		String value = ddmFormFieldRenderingContext.getValue();
+		String value = HtmlUtil.extractText(
+			ddmFormFieldRenderingContext.getValue());
 
-		if (Validator.isNotNull(value)) {
-			NumberFormat numberFormat = NumericDDMFormFieldUtil.getNumberFormat(
-				locale);
-
-			parameters.put(
-				"value", numberFormat.format(GetterUtil.getNumber(value)));
-		}
+		parameters.put("value", getFormattedValue(value, locale));
 
 		return parameters;
 	}
@@ -113,6 +110,17 @@ public class NumericDDMFormFieldTemplateContextContributor
 		}
 
 		return ddmFormField.getDataType();
+	}
+
+	protected String getFormattedValue(String value, Locale locale) {
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		DecimalFormat numberFormat = NumericDDMFormFieldUtil.getNumberFormat(
+			locale);
+
+		return numberFormat.format(GetterUtil.getNumber(value));
 	}
 
 	protected Map<String, String> getSymbolsMap(Locale locale) {

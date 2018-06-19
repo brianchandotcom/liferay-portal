@@ -61,7 +61,7 @@ public class AnnotatedApplicationClientTest extends BaseClientTestCase {
 				this::parseTokenString));
 
 		Assert.assertEquals(
-			"everything.read", invocationBuilder.get(String.class));
+			"everything.readonly", invocationBuilder.get(String.class));
 
 		invocationBuilder = authorize(
 			webTarget.request(), getToken("oauthTestApplicationBefore"));

@@ -1,13 +1,13 @@
 {
 	"dependencies": {
-		"metal-dom": "^2.16.2",
+		"metal": "^2.5.18",
 		"metal-soy": "^2.5.11",
 		"metal-state": "^2.13.2"
 	},
 	"devDependencies": {
 		"check-source-formatting": "^2.0.6",
-		"liferay-module-config-generator": "^1.1.10",
-		"metal-cli": "^4.2.0"
+		"liferay-module-config-generator": "^1.3.3",
+		"metal-cli": "^4.4.0"
 	},
 	"name": "commerce-cart-taglib",
 	"scripts": {

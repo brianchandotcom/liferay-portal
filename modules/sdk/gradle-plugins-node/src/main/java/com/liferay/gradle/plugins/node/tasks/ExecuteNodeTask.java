@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Map;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.logging.Logger;
@@ -46,6 +47,18 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	public ExecuteNodeTask args(Object... args) {
 		_nodeExecutor.args(args);
+
+		return this;
+	}
+
+	public ExecuteNodeTask environment(Map<?, ?> environment) {
+		_nodeExecutor.environment(environment);
+
+		return this;
+	}
+
+	public ExecuteNodeTask environment(Object key, Object value) {
+		_nodeExecutor.environment(key, value);
 
 		return this;
 	}
@@ -97,6 +110,10 @@ public class ExecuteNodeTask extends DefaultTask {
 		return _nodeExecutor.getCommand();
 	}
 
+	public Map<?, ?> getEnvironment() {
+		return _nodeExecutor.getEnvironment();
+	}
+
 	public File getNodeDir() {
 		return _nodeExecutor.getNodeDir();
 	}
@@ -127,6 +144,10 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	public void setCommand(Object command) {
 		_nodeExecutor.setCommand(command);
+	}
+
+	public void setEnvironment(Map<?, ?> environment) {
+		_nodeExecutor.setEnvironment(environment);
 	}
 
 	public void setInheritProxy(boolean inheritProxy) {

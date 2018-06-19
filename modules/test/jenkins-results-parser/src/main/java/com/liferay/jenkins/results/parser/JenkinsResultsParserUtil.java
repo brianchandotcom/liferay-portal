@@ -655,8 +655,8 @@ public class JenkinsResultsParserUtil {
 		String repositoryName, String username, String path) {
 
 		return combine(
-			"https://api.github.com/repos/", username, "/", repositoryName,
-			path);
+			"https://api.github.com/repos/", username, "/", repositoryName, "/",
+			path.replaceFirst("^/*", ""));
 	}
 
 	public static String getHostName(String defaultHostName) {

@@ -136,7 +136,7 @@
 			<message key="whitespace.incorrect" value="The value of ''{0}'' should not have spaces around ''='', see LPS-70526" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FrameworkBundleCheck">
-			<message key="bundle.get.headers.use" value="Use ''Bundle.getHeaders(java.lang.String locale)'' statement instead ''Bundle.getHeader()''" />
+			<message key="bundle.get.headers.use" value="Use ''Bundle.getHeaders(java.lang.String locale)'' statement instead ''Bundle.getHeaders()''. See https://github.com/liferay/liferay-portal/blob/master/modules/util/source-formatter/documentation/framework_bundle.markdown" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FullyQualifiedNameCheck">
 			<message key="import.statement.use" value="Use import statement instead of Fully Qualified Name for ''{0}'" />

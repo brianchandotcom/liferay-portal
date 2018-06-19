@@ -22,8 +22,8 @@ String layoutTemplateIdPrefix = (String)request.getAttribute("liferay-ui:layout-
 List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribute("liferay-ui:layout-templates-list:layoutTemplates");
 %>
 
-<div class="lfr-page-layouts row">
-	<ul class="list-unstyled">
+<div class="container-fluid lfr-page-layouts">
+	<ul class="list-unstyled row">
 
 		<%
 		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);

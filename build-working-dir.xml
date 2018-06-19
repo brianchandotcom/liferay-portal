@@ -17,6 +17,7 @@
 		<attribute name="checkout.private.apps.branch" />
 		<attribute name="checkout.private.apps.dirs" />
 		<attribute name="checkout.private.apps.sha" />
+		<attribute name="checkout.private.branch.name" />
 
 		<sequential>
 			<fetch-portal
@@ -50,6 +51,7 @@
 			</fail>
 
 			<local name="checkout.private.apps.dirs.git" />
+			<local name="checkout.private.apps.releng.dir" />
 
 			<property name="checkout.private.apps.dirs.git" value="@{checkout.private.apps.dirs}" />
 
@@ -58,6 +60,16 @@
 					var checkoutPrivateAppsDirs = project.getProperty("checkout.private.apps.dirs.git");
 
 					project.setProperty("checkout.private.apps.dirs.git", checkoutPrivateAppsDirs.replace(",", " "));
+
+					var checkoutPrivateAppsDirsArray = checkoutPrivateAppsDirs.split(",");
+
+					for (i = 0; i < checkoutPrivateAppsDirsArray.length; i++) {
+						var checkoutPrivateAppsDir = checkoutPrivateAppsDirsArray[i];
+
+						if (checkoutPrivateAppsDir.contains("/.releng/")) {
+							project.setProperty("checkout.private.apps.releng.dir", checkoutPrivateAppsDir);
+						}
+					}
 				]]>
 			</script>
 
@@ -68,8 +80,6 @@
 				<arg value="refs/tags/git-tag-portal-private-apps" />
 				<arg value="--" />
 				<arg line="${checkout.private.apps.dirs.git}" />
-				<arg value=":!*/app.changelog" />
-				<arg value=":!*/app.properties" />
 			</exec>
 
 			<exec executable="git">
@@ -83,6 +93,30 @@
 				<arg value="--delete" />
 				<arg value="git-tag-portal-private-apps" />
 			</exec>
+
+			<local name="app.portal.build" />
+
+			<property name="app.portal.build" value="${lp.version[@{checkout.private.branch.name}]}" />
+
+			<script language="javascript">
+				<![CDATA[
+					var appPortalBuild = project.getProperty("app.portal.build");
+
+					project.setProperty("app.portal.build", appPortalBuild.replace(/\./g, ""));
+				]]>
+			</script>
+
+			<replaceregexp
+				byline="true"
+				if:set="checkout.private.apps.releng.dir"
+				match="app.portal.build=.*"
+				replace="app.portal.build=${app.portal.build}"
+			>
+				<fileset
+					dir="${checkout.private.apps.releng.dir}"
+					includes="**/app.properties"
+				/>
+			</replaceregexp>
 		</sequential>
 	</macrodef>
 
@@ -488,6 +522,7 @@
 					task.setDynamicAttribute("checkout.private.apps.branch", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".branch"));
 					task.setDynamicAttribute("checkout.private.apps.dirs", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".dirs"));
 					task.setDynamicAttribute("checkout.private.apps.sha", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".sha"));
+					task.setDynamicAttribute("checkout.private.branch.name", project.getProperty("private.branch.name"));
 
 					task.perform();
 				}

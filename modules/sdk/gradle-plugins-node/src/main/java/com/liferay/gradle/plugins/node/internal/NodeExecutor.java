@@ -175,8 +175,9 @@ public class NodeExecutor {
 
 		if (_logger.isInfoEnabled()) {
 			_logger.info(
-				"Running {} from {}", processBuilder.command(),
-				processBuilder.directory());
+				"Running {} from {} with environment variables {}",
+				processBuilder.command(), processBuilder.directory(),
+				processBuilder.environment());
 		}
 
 		Process process = processBuilder.start();

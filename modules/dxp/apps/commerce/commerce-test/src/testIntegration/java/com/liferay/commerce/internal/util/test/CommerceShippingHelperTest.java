@@ -172,11 +172,6 @@ public class CommerceShippingHelperTest {
 		_cpInstanceLocalService.updateCPInstance(cpInstance);
 	}
 
-	private static double _getVolume(CPInstance cpInstance) {
-		return cpInstance.getWidth() * cpInstance.getHeight() *
-			cpInstance.getDepth();
-	}
-
 	private static CommerceWarehouse _commerceWarehouse;
 
 	@Inject

@@ -166,10 +166,11 @@ public class CentralSubrepository {
 	private String _getMergePullRequestURL() throws IOException {
 		String subrepositoryUpstreamCommit = getSubrepositoryUpstreamCommit();
 
-		String url = JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", _subrepositoryUsername, "/",
-			_subrepositoryName, "/commits/", subrepositoryUpstreamCommit,
-			"/statuses");
+		String path = JenkinsResultsParserUtil.combine(
+			"commits/", subrepositoryUpstreamCommit, "/statuses");
+
+		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+			_subrepositoryName, _subrepositoryUsername, path);
 
 		for (int i = 0; i < 15; i++) {
 			JSONArray statusesJSONArray = new JSONArray(
@@ -228,10 +229,11 @@ public class CentralSubrepository {
 	}
 
 	private String _getSubrepositoryUpstreamCommit() throws IOException {
-		String url = JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", _subrepositoryUsername, "/",
-			_subrepositoryName, "/git/refs/heads/",
-			_subrepositoryUpstreamBranchName);
+		String path = JenkinsResultsParserUtil.combine(
+			"git/refs/heads/", _subrepositoryUpstreamBranchName);
+
+		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+			_subrepositoryDirectory, _subrepositoryUsername, path);
 
 		JSONObject branchJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			url, false);

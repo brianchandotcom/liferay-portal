@@ -158,9 +158,11 @@ public class PullRequest {
 	}
 
 	public boolean isAutoCloseCommentAvailable() {
-		String url = JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", getOwnerUsername(), "/",
-			getRepositoryName(), "/issues/", getNumber(), "/comments?page=");
+		String path = JenkinsResultsParserUtil.combine(
+			"issues/", getNumber(), "/comments?page=");
+
+		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+			getRepositoryName(), getOwnerUsername(), path);
 
 		try {
 			int i = 1;
@@ -302,9 +304,8 @@ public class PullRequest {
 	}
 
 	protected String getURL() {
-		return JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", _ownerUsername, "/",
-			_repositoryName, "/pulls/", _number.toString());
+		return JenkinsResultsParserUtil.getGitHubApiURL(
+			_repositoryName, _ownerUsername, "pulls/" + _number);
 	}
 
 	protected void removeTestSuiteLabels() {

@@ -40,7 +40,7 @@ public class CPRuleUserSegmentRelServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleId,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_RULE_USER_SEGMENT);
 
@@ -56,7 +56,7 @@ public class CPRuleUserSegmentRelServiceImpl
 			cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRel(
 				cpRuleUserSegmentRelId);
 
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleUserSegmentRel.getCPRuleId(),
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_RULE_USER_SEGMENT);
 
@@ -70,7 +70,7 @@ public class CPRuleUserSegmentRelServiceImpl
 			OrderByComparator<CPRuleUserSegmentRel> orderByComparator)
 		throws PortalException {
 
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.VIEW);
 
 		return cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRels(
@@ -81,7 +81,7 @@ public class CPRuleUserSegmentRelServiceImpl
 	public int getCPRuleUserSegmentRelsCount(long cpRuleId)
 		throws PortalException {
 
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.VIEW);
 
 		return cpRuleUserSegmentRelLocalService.getCPRuleUserSegmentRelsCount(
@@ -89,8 +89,9 @@ public class CPRuleUserSegmentRelServiceImpl
 	}
 
 	private static volatile ModelResourcePermission<CPRule>
-		_cpRuleResourcePermission = ModelResourcePermissionFactory.getInstance(
-			CPRuleUserSegmentRelServiceImpl.class, "_cpRuleResourcePermission",
-			CPRule.class);
+		_cpRuleModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPRuleUserSegmentRelServiceImpl.class,
+				"_cpRuleModelResourcePermission", CPRule.class);
 
 }

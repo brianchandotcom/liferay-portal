@@ -38,7 +38,7 @@ public class CPRuleAssetCategoryRelServiceImpl
 			long cpRuleId, long assetCategoryId, ServiceContext serviceContext)
 		throws PortalException {
 
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleId,
 			CPActionKeys.ADD_COMMERCE_PRODUCT_RULE_CATEGORY_REL);
 
@@ -54,7 +54,7 @@ public class CPRuleAssetCategoryRelServiceImpl
 			cpRuleAssetCategoryRelLocalService.getCPRuleAssetCategoryRel(
 				cpRuleAssetCategoryRelId);
 
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleAssetCategoryRel.getCPRuleId(),
 			CPActionKeys.DELETE_COMMERCE_PRODUCT_RULE_CATEGORY_REL);
 
@@ -64,7 +64,7 @@ public class CPRuleAssetCategoryRelServiceImpl
 
 	@Override
 	public long[] getAssetCategoryIds(long cpRuleId) throws PortalException {
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.VIEW);
 
 		return cpRuleAssetCategoryRelLocalService.getAssetCategoryIds(cpRuleId);
@@ -75,7 +75,7 @@ public class CPRuleAssetCategoryRelServiceImpl
 			long cpRuleId)
 		throws PortalException {
 
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.VIEW);
 
 		return cpRuleAssetCategoryRelLocalService.getCPRuleAssetCategoryRels(
@@ -83,8 +83,9 @@ public class CPRuleAssetCategoryRelServiceImpl
 	}
 
 	private static volatile ModelResourcePermission<CPRule>
-		_cpRuleResourcePermission = ModelResourcePermissionFactory.getInstance(
-			CPRuleUserSegmentRelServiceImpl.class, "_cpRuleResourcePermission",
-			CPRule.class);
+		_cpRuleModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPRuleUserSegmentRelServiceImpl.class,
+				"_cpRuleModelResourcePermission", CPRule.class);
 
 }

@@ -52,7 +52,7 @@ public class CPRuleServiceImpl extends CPRuleServiceBaseImpl {
 
 	@Override
 	public void deleteCPRule(long cpRuleId) throws PortalException {
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.DELETE);
 
 		cpRuleLocalService.deleteCPRule(cpRuleId);
@@ -60,7 +60,7 @@ public class CPRuleServiceImpl extends CPRuleServiceBaseImpl {
 
 	@Override
 	public CPRule getCPRule(long cpRuleId) throws PortalException {
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.VIEW);
 
 		return cpRuleLocalService.getCPRule(cpRuleId);
@@ -105,7 +105,7 @@ public class CPRuleServiceImpl extends CPRuleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_cpRuleResourcePermission.check(
+		_cpRuleModelResourcePermission.check(
 			getPermissionChecker(), cpRuleId, ActionKeys.UPDATE);
 
 		return cpRuleLocalService.updateCPRule(
@@ -113,8 +113,10 @@ public class CPRuleServiceImpl extends CPRuleServiceBaseImpl {
 	}
 
 	private static volatile ModelResourcePermission<CPRule>
-		_cpRuleResourcePermission = ModelResourcePermissionFactory.getInstance(
-			CPRuleServiceImpl.class, "_cpRuleResourcePermission", CPRule.class);
+		_cpRuleModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CPRuleServiceImpl.class, "_cpRuleModelResourcePermission",
+				CPRule.class);
 	private static volatile PortletResourcePermission
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(

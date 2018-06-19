@@ -15,11 +15,10 @@
 package com.liferay.captcha.internal.upgrade;
 
 import com.liferay.captcha.internal.upgrade.v1_0_0.UpgradeCaptchaConfiguration;
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,13 +34,12 @@ public class CaptchaUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"0.0.1", "1.0.0",
-			new UpgradeCaptchaConfiguration(_configurationAdmin, _prefsProps));
+			new UpgradeCaptchaConfiguration(
+				_prefsPropsToConfigurationUpgradeHelper));
 	}
 
 	@Reference
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private PrefsProps _prefsProps;
+	private PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 }

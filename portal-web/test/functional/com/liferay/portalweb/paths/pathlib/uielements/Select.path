@@ -214,11 +214,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_STATUS</td>
-	<td>//select[contains(@id,'StatusSelect')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VERSION</td>
 	<td>//div[label[contains(.,'Version')]]/select</td>
 	<td></td>

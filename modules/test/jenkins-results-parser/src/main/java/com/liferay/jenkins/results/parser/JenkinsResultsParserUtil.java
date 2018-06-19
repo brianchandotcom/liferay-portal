@@ -1362,8 +1362,8 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		String response = toString(
-			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
-			httpAuthorization);
+			url, checkCache, maxRetries, null, postContent, retryPeriod,
+			timeout, httpAuthorization);
 
 		if ((response == null) ||
 			response.endsWith("was truncated due to its size.")) {
@@ -1439,8 +1439,8 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		String response = toString(
-			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
-			httpAuthorization);
+			url, checkCache, maxRetries, null, postContent, retryPeriod,
+			timeout, httpAuthorization);
 
 		if ((response == null) ||
 			response.endsWith("was truncated due to its size.")) {
@@ -1478,7 +1478,7 @@ public class JenkinsResultsParserUtil {
 
 	public static String toString(String url) throws IOException {
 		return toString(
-			url, true, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
+			url, true, _MAX_RETRIES_DEFAULT, null, null, _RETRY_PERIOD_DEFAULT,
 			_TIMEOUT_DEFAULT, null);
 	}
 
@@ -1486,17 +1486,185 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toString(
-			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
-			_TIMEOUT_DEFAULT, null);
+			url, checkCache, _MAX_RETRIES_DEFAULT, null, null,
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
 	}
 
 	public static String toString(String url, boolean checkCache, int timeout)
 		throws IOException {
 
 		return toString(
-			url, checkCache, _MAX_RETRIES_DEFAULT, null, _RETRY_PERIOD_DEFAULT,
-			timeout, null);
+			url, checkCache, _MAX_RETRIES_DEFAULT, null, null,
+			_RETRY_PERIOD_DEFAULT, timeout, null);
 	}
+
+	public static String toString(
+			String url, boolean checkCache, int maxRetries,
+			HttpRequestMethod method, String postContent, int retryPeriod,
+			int timeout, HTTPAuthorization httpAuthorizationHeader)
+		throws IOException {
+
+	if (method == null) {
+		if (postContent != null) {
+			method = HttpRequestMethod.POST;
+		}
+		else {
+			method = HttpRequestMethod.GET;
+		}
+	}
+
+	url = fixURL(url);
+
+	String key = url.replace("//", "/");
+
+	if (checkCache && !url.startsWith("file:")) {
+		if (debug) {
+			System.out.println("Loading " + url);
+		}
+
+		String response = getCachedText(_TO_STRING_CACHE_PREFIX + key);
+
+		if (response != null) {
+			return response;
+		}
+	}
+
+	int retryCount = 0;
+
+	while (true) {
+		try {
+			if (debug) {
+				System.out.println("Downloading " + url);
+			}
+
+			if ((httpAuthorizationHeader == null) &&
+				url.startsWith("https://api.github.com")) {
+
+				Properties buildProperties = getBuildProperties();
+
+				httpAuthorizationHeader = new TokenHTTPAuthorization(
+					buildProperties.getProperty("github.access.token"));
+			}
+
+			URL urlObject = new URL(url);
+
+			URLConnection urlConnection = urlObject.openConnection();
+
+			if (urlConnection instanceof HttpURLConnection) {
+				HttpURLConnection httpURLConnection =
+					(HttpURLConnection)urlConnection;
+
+				if (method == HttpRequestMethod.PATCH) {
+					httpURLConnection.setRequestMethod("POST");
+
+					httpURLConnection.setRequestProperty(
+						"X-HTTP-Method-Override", "PATCH");
+				}
+				else {
+					httpURLConnection.setRequestMethod(method.name());
+				}
+
+				if (url.startsWith("https://api.github.com") &&
+					httpURLConnection instanceof HttpsURLConnection) {
+
+					SSLContext sslContext = null;
+
+					try {
+						if (getJavaVersionNumber() < 1.8F) {
+							sslContext = SSLContext.getInstance("TLSv1.2");
+
+							sslContext.init(null, null, null);
+
+							HttpsURLConnection httpsURLConnection =
+								(HttpsURLConnection)httpURLConnection;
+
+							httpsURLConnection.setSSLSocketFactory(
+								sslContext.getSocketFactory());
+						}
+					}
+					catch (KeyManagementException |
+						   NoSuchAlgorithmException e) {
+
+						throw new RuntimeException(
+							"Unable to set SSL context to TLS v1.2", e);
+					}
+				}
+
+				if (httpAuthorizationHeader != null) {
+					httpURLConnection.setRequestProperty(
+						"Authorization", httpAuthorizationHeader.toString());
+					httpURLConnection.setRequestProperty(
+						"Content-Type", "application/json");
+				}
+
+				if (postContent != null) {
+					httpURLConnection.setRequestMethod("POST");
+
+					httpURLConnection.setDoOutput(true);
+
+					try (OutputStream outputStream =
+							httpURLConnection.getOutputStream()) {
+
+						outputStream.write(postContent.getBytes("UTF-8"));
+
+						outputStream.flush();
+					}
+				}
+			}
+
+			if (timeout != 0) {
+				urlConnection.setConnectTimeout(timeout);
+				urlConnection.setReadTimeout(timeout);
+			}
+
+			StringBuilder sb = new StringBuilder();
+
+			int bytes = 0;
+			String line = null;
+
+			try (BufferedReader bufferedReader = new BufferedReader(
+					new InputStreamReader(urlConnection.getInputStream()))) {
+
+				while ((line = bufferedReader.readLine()) != null) {
+					byte[] lineBytes = line.getBytes();
+
+					bytes += lineBytes.length;
+
+					if (bytes > (30 * 1024 * 1024)) {
+						sb.append("Response for ");
+						sb.append(url);
+						sb.append(" was truncated due to its size.");
+
+						break;
+					}
+
+					sb.append(line);
+					sb.append("\n");
+				}
+			}
+
+			if (checkCache && !url.startsWith("file:") &&
+				(bytes < (3 * 1024 * 1024))) {
+
+				saveToCacheFile(_TO_STRING_CACHE_PREFIX + key, sb.toString());
+			}
+
+			return sb.toString();
+		}
+		catch (IOException ioe) {
+			retryCount++;
+
+			if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
+				throw ioe;
+			}
+
+			System.out.println(
+				"Retrying " + url + " in " + retryPeriod + " seconds");
+
+			sleep(1000 * retryPeriod);
+		}
+	}
+}
 
 	public static String toString(
 			String url, boolean checkCache, int maxRetries, int retryPeriod,
@@ -1504,7 +1672,8 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toString(
-			url, checkCache, maxRetries, null, retryPeriod, timeout, null);
+			url, checkCache, maxRetries, null, null, retryPeriod, timeout,
+			null);
 	}
 
 	public static String toString(
@@ -1513,169 +1682,32 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toString(
-			url, checkCache, maxRetries, postContent, retryPeriod, timeout,
-			null);
+			url, checkCache, maxRetries, null, postContent, retryPeriod,
+			timeout, null);
+	}
+
+	public static String toString(String url, HttpRequestMethod method)
+		throws IOException {
+
+		return toString(
+			url, true, _MAX_RETRIES_DEFAULT, method, null,
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
 	}
 
 	public static String toString(
-			String url, boolean checkCache, int maxRetries, String postContent,
-			int retryPeriod, int timeout,
-			HTTPAuthorization httpAuthorizationHeader)
+			String url, HttpRequestMethod method, String postContent)
 		throws IOException {
 
-		url = fixURL(url);
-
-		String key = url.replace("//", "/");
-
-		if (checkCache && !url.startsWith("file:")) {
-			if (debug) {
-				System.out.println("Loading " + url);
-			}
-
-			String response = getCachedText(_TO_STRING_CACHE_PREFIX + key);
-
-			if (response != null) {
-				return response;
-			}
-		}
-
-		int retryCount = 0;
-
-		while (true) {
-			try {
-				if (debug) {
-					System.out.println("Downloading " + url);
-				}
-
-				if ((httpAuthorizationHeader == null) &&
-					url.startsWith("https://api.github.com")) {
-
-					Properties buildProperties = getBuildProperties();
-
-					httpAuthorizationHeader = new TokenHTTPAuthorization(
-						buildProperties.getProperty("github.access.token"));
-				}
-
-				URL urlObject = new URL(url);
-
-				URLConnection urlConnection = urlObject.openConnection();
-
-				if (urlConnection instanceof HttpURLConnection) {
-					HttpURLConnection httpURLConnection =
-						(HttpURLConnection)urlConnection;
-
-					if (url.startsWith("https://api.github.com") &&
-						httpURLConnection instanceof HttpsURLConnection) {
-
-						SSLContext sslContext = null;
-
-						try {
-							if (getJavaVersionNumber() < 1.8F) {
-								sslContext = SSLContext.getInstance("TLSv1.2");
-
-								sslContext.init(null, null, null);
-
-								HttpsURLConnection httpsURLConnection =
-									(HttpsURLConnection)httpURLConnection;
-
-								httpsURLConnection.setSSLSocketFactory(
-									sslContext.getSocketFactory());
-							}
-						}
-						catch (KeyManagementException |
-							   NoSuchAlgorithmException e) {
-
-							throw new RuntimeException(
-								"Unable to set SSL context to TLS v1.2", e);
-						}
-					}
-
-					if (httpAuthorizationHeader != null) {
-						httpURLConnection.setRequestMethod("GET");
-
-						httpURLConnection.setRequestProperty(
-							"Authorization",
-							httpAuthorizationHeader.toString());
-						httpURLConnection.setRequestProperty(
-							"Content-Type", "application/json");
-					}
-
-					if (postContent != null) {
-						httpURLConnection.setRequestMethod("POST");
-
-						httpURLConnection.setDoOutput(true);
-
-						try (OutputStream outputStream =
-								httpURLConnection.getOutputStream()) {
-
-							outputStream.write(postContent.getBytes("UTF-8"));
-
-							outputStream.flush();
-						}
-					}
-				}
-
-				if (timeout != 0) {
-					urlConnection.setConnectTimeout(timeout);
-					urlConnection.setReadTimeout(timeout);
-				}
-
-				StringBuilder sb = new StringBuilder();
-
-				int bytes = 0;
-				String line = null;
-
-				try (BufferedReader bufferedReader = new BufferedReader(
-						new InputStreamReader(
-							urlConnection.getInputStream()))) {
-
-					while ((line = bufferedReader.readLine()) != null) {
-						byte[] lineBytes = line.getBytes();
-
-						bytes += lineBytes.length;
-
-						if (bytes > (30 * 1024 * 1024)) {
-							sb.append("Response for ");
-							sb.append(url);
-							sb.append(" was truncated due to its size.");
-
-							break;
-						}
-
-						sb.append(line);
-						sb.append("\n");
-					}
-				}
-
-				if (checkCache && !url.startsWith("file:") &&
-					(bytes < (3 * 1024 * 1024))) {
-
-					saveToCacheFile(
-						_TO_STRING_CACHE_PREFIX + key, sb.toString());
-				}
-
-				return sb.toString();
-			}
-			catch (IOException ioe) {
-				retryCount++;
-
-				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
-					throw ioe;
-				}
-
-				System.out.println(
-					"Retrying " + url + " in " + retryPeriod + " seconds");
-
-				sleep(1000 * retryPeriod);
-			}
-		}
+	return toString(
+		url, false, _MAX_RETRIES_DEFAULT, method, postContent,
+		_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
 	}
 
 	public static String toString(String url, String postContent)
 		throws IOException {
 
 		return toString(
-			url, false, _MAX_RETRIES_DEFAULT, postContent,
+			url, false, _MAX_RETRIES_DEFAULT, null, postContent,
 			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
 	}
 
@@ -1684,7 +1716,7 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		return toString(
-			url, false, _MAX_RETRIES_DEFAULT, postContent,
+			url, false, _MAX_RETRIES_DEFAULT, null, postContent,
 			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, httpAuthorization);
 	}
 
@@ -1756,6 +1788,12 @@ public class JenkinsResultsParserUtil {
 		}
 
 		protected Type type;
+
+	}
+
+	public static enum HttpRequestMethod {
+
+		DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT, TRACE;
 
 	}
 

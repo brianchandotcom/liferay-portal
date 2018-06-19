@@ -157,6 +157,13 @@
 					<include name="private/apps/*" />
 					<exclude name="${build.exclude.dirs}" />
 					<exclude name="apps/static/*" />
+					<present targetdir="${modules.dir}">
+						<mapper
+							from="*"
+							to="*/app.bnd"
+							type="glob"
+						/>
+					</present>
 				</dirset>
 			</path>
 

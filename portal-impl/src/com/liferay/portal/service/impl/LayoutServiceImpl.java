@@ -868,7 +868,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the layout's plid matching the UUID, group, and privacy.
+	 * Returns the layout's plid that matches the parameters.
 	 *
 	 * @param  uuid the layout's UUID
 	 * @param  groupId the primary key of the group

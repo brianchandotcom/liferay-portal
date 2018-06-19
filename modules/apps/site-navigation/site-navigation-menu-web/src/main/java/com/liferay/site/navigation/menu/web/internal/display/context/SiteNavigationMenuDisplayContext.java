@@ -329,12 +329,14 @@ public class SiteNavigationMenuDisplayContext {
 			_siteNavigationMenuPortletInstanceConfiguration.
 				siteNavigationMenuType();
 
-		Layout layout = themeDisplay.getLayout();
+		if (defaultValue == -1) {
+			defaultValue = SiteNavigationConstants.TYPE_PRIMARY;
 
-		if (layout.isPrivateLayout()) {
-			defaultValue =
-				_siteNavigationMenuPortletInstanceConfiguration.
-					siteNavigationPrivateMenuType();
+			Layout layout = themeDisplay.getLayout();
+
+			if (layout.isPrivateLayout()) {
+				defaultValue = SiteNavigationConstants.TYPE_PRIVATE;
+			}
 		}
 
 		_navigationMenuType = ParamUtil.getInteger(

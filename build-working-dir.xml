@@ -17,6 +17,7 @@
 		<attribute name="checkout.private.apps.branch" />
 		<attribute name="checkout.private.apps.dirs" />
 		<attribute name="checkout.private.apps.sha" />
+		<attribute name="checkout.private.branch.name" />
 
 		<sequential>
 			<fetch-portal
@@ -68,8 +69,6 @@
 				<arg value="refs/tags/git-tag-portal-private-apps" />
 				<arg value="--" />
 				<arg line="${checkout.private.apps.dirs.git}" />
-				<arg value=":!*/app.changelog" />
-				<arg value=":!*/app.properties" />
 			</exec>
 
 			<exec executable="git">
@@ -77,6 +76,31 @@
 				<arg value="HEAD" />
 				<arg value="." />
 			</exec>
+
+			<local name="new.app.portal.build" />
+			<local name="old.app.portal.build" />
+
+			<property name="new.app.portal.build" value="${lp.version[@{checkout.private.branch.name}]}" />
+			<property name="old.app.portal.build" value="${lp.version[@{checkout.private.apps.branch}]}" />
+
+			<script language="javascript">
+				<![CDATA[
+					var newAppPortalBuild = project.getProperty("new.app.portal.build");
+
+					project.setProperty("new.app.portal.build", newAppPortalBuild.replace(/\./g, ""));
+
+					var oldAppPortalBuild = project.getProperty("old.app.portal.build");
+
+					project.setProperty("old.app.portal.build", oldAppPortalBuild.replace(/\./g, ""));
+				]]>
+			</script>
+
+			<replace
+				dir="modules/.releng/private/apps/"
+				includes="**/app.properties"
+				token="app.portal.build=${old.app.portal.build}"
+				value="app.portal.build=${new.app.portal.build}"
+			/>
 
 			<exec executable="git">
 				<arg value="tag" />
@@ -488,6 +512,7 @@
 					task.setDynamicAttribute("checkout.private.apps.branch", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".branch"));
 					task.setDynamicAttribute("checkout.private.apps.dirs", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".dirs"));
 					task.setDynamicAttribute("checkout.private.apps.sha", project.getProperty("working.dir.checkout.private.apps." + projectNames[i] + ".sha"));
+					task.setDynamicAttribute("checkout.private.branch.name", project.getProperty("private.branch.name"));
 
 					task.perform();
 				}

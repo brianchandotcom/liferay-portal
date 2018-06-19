@@ -48,7 +48,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
 	/>
 
-	<nav class="management-bar management-bar-light navbar toolbar-group-field">
+	<nav class="management-bar management-bar-light navbar navbar-expand-md toolbar-group-field">
 		<div class="autosave-bar container toolbar">
 			<div class="navbar-form navbar-form-autofit navbar-overlay toolbar-group-content">
 				<span class="autosave-feedback management-bar-text" id="<portlet:namespace />autosaveMessage"></span>
@@ -63,7 +63,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					</button>
 				</li>
 				<li class="nav-item">
-					<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced navbar-breakpoint-down-d-none">
+					<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced">
 						<svg class="lexicon-icon">
 							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
 						</svg>

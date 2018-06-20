@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -71,9 +72,12 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 
 			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
+			boolean ldapPasswordPolicyEnabled =
+				LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId());
+
 			if ((user.getLastLoginDate() == null) &&
-				((passwordPolicy == null) ||
-				 (passwordPolicy.isChangeable() &&
+				(((passwordPolicy == null) && !ldapPasswordPolicyEnabled) ||
+				 ((passwordPolicy != null) && passwordPolicy.isChangeable() &&
 				  passwordPolicy.isChangeRequired()))) {
 
 				passwordReset = true;

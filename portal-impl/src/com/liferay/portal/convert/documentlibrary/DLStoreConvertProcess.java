@@ -14,6 +14,7 @@
 
 package com.liferay.portal.convert.documentlibrary;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -22,15 +23,15 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface DLStoreConvertProcess {
 
-	public void migrate(DLStoreConverter dlStoreConverter)
-		throws PortalException;
-
-	public default void migrate(
-			DLStoreConverter dlStoreConverter,
-			DLStoreConverterStoreProvider dlStoreConverterStoreProvider)
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #migrate(Store, Store)}
+	 */
+	@Deprecated
+	public default void migrate(DLStoreConverter dlStoreConverter)
 		throws PortalException {
-
-		migrate(dlStoreConverter);
 	}
+
+	public void migrate(Store sourceStore, Store targetStore)
+		throws PortalException;
 
 }

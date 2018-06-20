@@ -17,8 +17,11 @@ package com.liferay.portal.convert.documentlibrary;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
+ * @deprecated As of 7.0.0, with no direct replacement
+ *
  * @author Iván Zaera
  */
+@Deprecated
 public interface DLStoreConverter {
 
 	public void migrateDLFileEntry(

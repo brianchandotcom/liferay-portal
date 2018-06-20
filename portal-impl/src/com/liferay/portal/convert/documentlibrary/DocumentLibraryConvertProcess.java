@@ -137,19 +137,15 @@ public class DocumentLibraryConvertProcess
 
 	@Override
 	protected void doConvert() throws Exception {
-		DLStoreConverterStoreProvider dlStoreConverterStoreProvider =
-			new DLStoreConverterStoreProvider(getTargetStoreClassName());
+		migratePortlets();
 
-		_sourceStore = dlStoreConverterStoreProvider.getSourceStore();
+		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		String targetStoreClassName = getTargetStoreClassName();
 
-		_targetStore = dlStoreConverterStoreProvider.getTargetStore();
-
-		migratePortlets();
-		migrateDLStoreConvertProcesses(dlStoreConverterStoreProvider);
-
-		StoreFactory storeFactory = StoreFactory.getInstance();
+		migrateDLStoreConvertProcesses(
+			storeFactory.getStore(),
+			storeFactory.getStore(targetStoreClassName));
 
 		storeFactory.setStore(targetStoreClassName);
 
@@ -218,7 +214,7 @@ public class DocumentLibraryConvertProcess
 	}
 
 	protected void migrateDLStoreConvertProcesses(
-			DLStoreConverterStoreProvider dlStoreConverterStoreProvider)
+			Store sourceStore, Store targetStore)
 		throws PortalException {
 
 		Collection<DLStoreConvertProcess> dlStoreConvertProcesses =
@@ -227,7 +223,7 @@ public class DocumentLibraryConvertProcess
 		for (DLStoreConvertProcess dlStoreConvertProcess :
 				dlStoreConvertProcesses) {
 
-			dlStoreConvertProcess.migrate(this, dlStoreConverterStoreProvider);
+			dlStoreConvertProcess.migrate(sourceStore, targetStore);
 		}
 	}
 

@@ -33,6 +33,10 @@ import org.json.JSONObject;
 public class GitHubRemoteRepository extends RemoteRepository {
 
 	public void addLabel(String color, String description, String name) {
+		if (hasLabel(name)) {
+			return;
+		}
+
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("color", color);
@@ -104,8 +108,28 @@ public class GitHubRemoteRepository extends RemoteRepository {
 		return labels;
 	}
 
+	public boolean hasLabel(String labelName) {
+		List<Label> labels = getLabels();
+
+		for (Label label : labels) {
+			if (labelName.equals(label.getName())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public void updateLabel(
 		String color, String description, String name, Label oldLabel) {
+
+		if (!hasLabel(oldLabel.getName())) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to update or delete label ", oldLabel.getName(),
+					" because it does not exist in the ", getName(),
+					" repository"));
+		}
 
 		JSONObject jsonObject = null;
 

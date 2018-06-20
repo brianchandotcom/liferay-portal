@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -61,27 +59,28 @@ public class CPDefinitionModelResourcePermissionLogic
 			return true;
 		}
 
-		if (actionId.equals(ActionKeys.VIEW) && cpDefinition.isApproved() &&
-			cpDefinition.isPublished()) {
+		if (!actionId.equals(ActionKeys.VIEW) || !cpDefinition.isApproved() ||
+			!cpDefinition.isPublished()) {
 
-			List<CPRule> cpRules = CPRulesThreadLocal.getCPRules();
+			return false;
+		}
 
-			if (ListUtil.isNotEmpty(cpRules)) {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
+		List<CPRule> cpRules = CPRulesThreadLocal.getCPRules();
 
-				for (CPRule cpRule : cpRules) {
-					CPRuleType cpRuleType = _cpRuleTypeRegistry.getCPRuleType(
-						cpRule.getType());
+		if (ListUtil.isEmpty(cpRules)) {
+			return false;
+		}
 
-					if (cpRuleType.isSatisfied(cpDefinition, serviceContext)) {
-						return true;
-					}
-				}
+		for (CPRule cpRule : cpRules) {
+			CPRuleType cpRuleType = _cpRuleTypeRegistry.getCPRuleType(
+				cpRule.getType());
+
+			if (!cpRuleType.isSatisfied(cpDefinition, cpRule)) {
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	private final CPRuleTypeRegistry _cpRuleTypeRegistry;

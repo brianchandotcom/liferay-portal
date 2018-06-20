@@ -74,6 +74,7 @@ dependencies {
 	compileOnly project(":private:apps:commerce:commerce-product-api")
 	compileOnly project(":private:apps:commerce:commerce-product-content-api")
 	compileOnly project(":private:apps:commerce:commerce-taglib")
+	compileOnly project(":private:apps:commerce:commerce-user-segment-api")
 }
 
 formatJSON {

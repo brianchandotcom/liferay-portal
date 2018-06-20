@@ -48,7 +48,6 @@ public class CPRulesPreAction extends Action {
 
 		try {
 			long groupId = _portal.getScopeGroupId(httpServletRequest);
-
 			long[] commerceUserSegmentEntryIds =
 				_commerceUserSegmentHelper.getCommerceUserSegmentIds(
 					httpServletRequest);

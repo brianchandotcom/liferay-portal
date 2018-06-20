@@ -207,6 +207,14 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public CommerceUserSegmentEntry getCommerceUserSegmentEntry(
+			long groupId, String key)
+		throws PortalException {
+
+		return commerceUserSegmentEntryPersistence.findByG_K(groupId, key);
+	}
+
+	@Override
 	public long[] getCommerceUserSegmentEntryIds(
 			long groupId, long organizationId, long userId)
 		throws PortalException {
@@ -255,34 +263,12 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			commerceUserSegmentEntryPersistence.fetchByG_K(
-				serviceContext.getScopeGroupId(),
-				CommerceUserSegmentEntryConstants.KEY_GUEST);
-
-		if (commerceUserSegmentEntry != null) {
-			return;
-		}
-
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		nameMap.put(
-			serviceContext.getLocale(),
-			CommerceUserSegmentEntryConstants.KEY_GUEST);
-
-		commerceUserSegmentEntry =
-			commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
-				nameMap, CommerceUserSegmentEntryConstants.KEY_GUEST, true,
-				true, 0, serviceContext);
-
-		Role role = roleLocalService.getRole(
-			serviceContext.getCompanyId(), RoleConstants.GUEST);
-
-		commerceUserSegmentCriterionLocalService.
-			addCommerceUserSegmentCriterion(
-				commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-				CommerceUserSegmentCriterionConstants.TYPE_ROLE,
-				String.valueOf(role.getRoleId()), 0, serviceContext);
+		addSystemCommerceUserSegmentEntry(
+			CommerceUserSegmentEntryConstants.KEY_GUEST, RoleConstants.GUEST,
+			serviceContext);
+		addSystemCommerceUserSegmentEntry(
+			CommerceUserSegmentEntryConstants.KEY_USER, RoleConstants.USER,
+			serviceContext);
 	}
 
 	@Override
@@ -478,6 +464,36 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 
 			throw new CommerceUserSegmentEntryKeyException();
 		}
+	}
+
+	private void addSystemCommerceUserSegmentEntry(
+			String key, String roleName, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceUserSegmentEntry commerceUserSegmentEntry =
+			commerceUserSegmentEntryPersistence.fetchByG_K(
+				serviceContext.getScopeGroupId(), key);
+
+		if (commerceUserSegmentEntry != null) {
+			return;
+		}
+
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		nameMap.put(serviceContext.getLocale(), key);
+
+		commerceUserSegmentEntry =
+			commerceUserSegmentEntryLocalService.addCommerceUserSegmentEntry(
+				nameMap, key, true, true, 0, serviceContext);
+
+		Role role = roleLocalService.getRole(
+			serviceContext.getCompanyId(), roleName);
+
+		commerceUserSegmentCriterionLocalService.
+			addCommerceUserSegmentCriterion(
+				commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+				CommerceUserSegmentCriterionConstants.TYPE_ROLE,
+				String.valueOf(role.getRoleId()), 0, serviceContext);
 	}
 
 	private static final String[] _SELECTED_FIELD_NAMES =

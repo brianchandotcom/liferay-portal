@@ -12,20 +12,22 @@
  * details.
  */
 
-package com.liferay.commerce.product.search;
+package com.liferay.commerce.product.internal.search;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.search.CPDefinitionIndexer;
+import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -44,11 +46,12 @@ import java.util.Map;
  */
 public class CPDefinitionSearcher extends BaseSearcher {
 
-	public static Indexer<?> getInstance() {
-		return new CPDefinitionSearcher();
-	}
+	public CPDefinitionSearcher(
+		CPDefinitionHelper cpDefinitionHelper, CPQuery cpQuery) {
 
-	public CPDefinitionSearcher() {
+		_cpDefinitionHelper = cpDefinitionHelper;
+		_cpQuery = cpQuery;
+
 		setDefaultSelectedFieldNames(
 			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.UID, Field.NAME,
 			Field.DESCRIPTION, Field.URL,
@@ -63,8 +66,24 @@ public class CPDefinitionSearcher extends BaseSearcher {
 		return new String[] {CPDefinition.class.getName()};
 	}
 
-	public void setCPQuery(CPQuery cpQuery) {
-		_cpQuery = cpQuery;
+	@Override
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+		throws Exception {
+
+		super.postProcessContextBooleanFilter(
+			contextBooleanFilter, searchContext);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		Filter filter = _cpDefinitionHelper.getCPRuleFilter(
+			permissionChecker, _cpQuery.getUserId(),
+			_cpQuery.getOrganizationId());
+
+		if (filter != null) {
+			contextBooleanFilter.add(filter, BooleanClauseOccur.MUST);
+		}
 	}
 
 	protected void addImpossibleTerm(
@@ -422,6 +441,7 @@ public class CPDefinitionSearcher extends BaseSearcher {
 		queryBooleanFilter.add(tagIgsTermsFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
-	private CPQuery _cpQuery;
+	private final CPDefinitionHelper _cpDefinitionHelper;
+	private final CPQuery _cpQuery;
 
 }

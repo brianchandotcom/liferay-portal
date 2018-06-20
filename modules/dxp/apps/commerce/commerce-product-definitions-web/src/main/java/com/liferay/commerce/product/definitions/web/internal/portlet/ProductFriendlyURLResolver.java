@@ -16,20 +16,26 @@ package com.liferay.commerce.product.definitions.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
+import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.product.service.CPRuleLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPRulesThreadLocal;
+import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Http;
@@ -97,6 +103,8 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 					groupId, classNameId, cpFriendlyURLEntry.getPrimaryKey(),
 					languageId, true);
 		}
+
+		_initCPRulesThreadLocal(groupId, httpServletRequest);
 
 		CPCatalogEntry cpCatalogEntry = _cpDefinitionHelper.getCPCatalogEntry(
 			cpFriendlyURLEntry.getClassPK(), locale);
@@ -189,11 +197,10 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 					languageId, true);
 		}
 
-		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
-			cpFriendlyURLEntry.getClassPK());
+		_initCPRulesThreadLocal(groupId, httpServletRequest);
 
 		Layout layout = getProductLayout(
-			groupId, privateLayout, cpDefinition.getCPDefinitionId());
+			groupId, privateLayout, cpFriendlyURLEntry.getClassPK());
 
 		return new LayoutFriendlyURLComposite(
 			layout, getURLSeparator() + cpFriendlyURLEntry.getUrlTitle());
@@ -221,8 +228,44 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 		return _layoutLocalService.getLayout(plid);
 	}
 
+	private void _initCPRulesThreadLocal(
+			long groupId, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		if (ListUtil.isNotEmpty(CPRulesThreadLocal.getCPRules())) {
+			return;
+		}
+
+		long userId = _portal.getUserId(httpServletRequest);
+
+		Organization organization =
+			_commerceOrganizationHelper.getCurrentOrganization(
+				httpServletRequest);
+
+		long organizationId = 0;
+
+		if (organization != null) {
+			organizationId = organization.getOrganizationId();
+		}
+
+		long[] commerceUserSegmentEntryIds =
+			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
+				groupId, organizationId, userId);
+
+		List<CPRule> cpRules = _cpRuleLocalService.getCPRules(
+			groupId, commerceUserSegmentEntryIds);
+
+		CPRulesThreadLocal.setCPRules(cpRules);
+	}
+
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
+
+	@Reference
+	private CommerceUserSegmentHelper _commerceUserSegmentHelper;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
@@ -232,6 +275,9 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
+
+	@Reference
+	private CPRuleLocalService _cpRuleLocalService;
 
 	@Reference
 	private Http _http;

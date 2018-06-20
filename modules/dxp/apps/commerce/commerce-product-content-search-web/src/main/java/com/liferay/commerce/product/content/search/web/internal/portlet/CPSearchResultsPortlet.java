@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.content.search.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
@@ -26,8 +27,11 @@ import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -36,7 +40,9 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -95,61 +101,12 @@ public class CPSearchResultsPortlet
 	public void contribute(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
-		RenderRequest renderRequest =
-			portletSharedSearchSettings.getRenderRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		try {
-			_cpSearchResultsPortletInstanceConfiguration =
-				portletDisplay.getPortletInstanceConfiguration(
-					CPSearchResultsPortletInstanceConfiguration.class);
+			_contribute(portletSharedSearchSettings);
 		}
-		catch (ConfigurationException ce) {
-			_log.error(ce, ce);
+		catch (PortalException pe) {
+			throw new SystemException(pe);
 		}
-
-		Optional<String> parameterValueOptional =
-			portletSharedSearchSettings.getParameter("q");
-
-		portletSharedSearchSettings.setKeywords(
-			parameterValueOptional.orElse(StringPool.STAR));
-
-		portletSharedSearchSettings.addCondition(
-			new BooleanClauseImpl<Query>(
-				new TermQueryImpl(
-					Field.ENTRY_CLASS_NAME, CPDefinition.class.getName()),
-				BooleanClauseOccur.MUST));
-
-		AssetCategory assetCategory = (AssetCategory)renderRequest.getAttribute(
-			WebKeys.ASSET_CATEGORY);
-
-		if (assetCategory != null) {
-			portletSharedSearchSettings.addCondition(
-				new BooleanClauseImpl<Query>(
-					new TermQueryImpl(
-						Field.ASSET_CATEGORY_IDS,
-						String.valueOf(assetCategory.getCategoryId())),
-					BooleanClauseOccur.MUST));
-		}
-
-		SearchContext searchContext =
-			portletSharedSearchSettings.getSearchContext();
-
-		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
-
-		queryConfig.setHighlightEnabled(false);
-
-		searchContext.setSorts(SortFactoryUtil.create(Field.NAME, false));
-
-		filterByThisSite(portletSharedSearchSettings);
-
-		paginate(
-			_cpSearchResultsPortletInstanceConfiguration,
-			portletSharedSearchSettings);
 	}
 
 	@Override
@@ -180,27 +137,6 @@ public class CPSearchResultsPortlet
 		}
 
 		super.render(renderRequest, renderResponse);
-	}
-
-	protected void filterByThisSite(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		long groupIdOptional = getScopeGroupId(portletSharedSearchSettings);
-
-		portletSharedSearchSettings.addCondition(
-			new BooleanClauseImpl<Query>(
-				new TermQueryImpl(
-					Field.GROUP_ID, String.valueOf(groupIdOptional)),
-				BooleanClauseOccur.MUST));
-	}
-
-	protected long getScopeGroupId(
-		PortletSharedSearchSettings portletSharedSearchSettings) {
-
-		ThemeDisplay themeDisplay =
-			portletSharedSearchSettings.getThemeDisplay();
-
-		return themeDisplay.getScopeGroupId();
 	}
 
 	protected void paginate(
@@ -238,8 +174,99 @@ public class CPSearchResultsPortlet
 		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
 	}
 
+	private void _contribute(
+			PortletSharedSearchSettings portletSharedSearchSettings)
+		throws PortalException {
+
+		RenderRequest renderRequest =
+			portletSharedSearchSettings.getRenderRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Optional<String> parameterValueOptional =
+			portletSharedSearchSettings.getParameter("q");
+
+		portletSharedSearchSettings.setKeywords(
+			parameterValueOptional.orElse(StringPool.STAR));
+
+		portletSharedSearchSettings.addCondition(
+			new BooleanClauseImpl<Query>(
+				new TermQueryImpl(
+					Field.ENTRY_CLASS_NAME, CPDefinition.class.getName()),
+				BooleanClauseOccur.MUST));
+
+		AssetCategory assetCategory = (AssetCategory)renderRequest.getAttribute(
+			WebKeys.ASSET_CATEGORY);
+
+		if (assetCategory != null) {
+			portletSharedSearchSettings.addCondition(
+				new BooleanClauseImpl<Query>(
+					new TermQueryImpl(
+						Field.ASSET_CATEGORY_IDS,
+						String.valueOf(assetCategory.getCategoryId())),
+					BooleanClauseOccur.MUST));
+		}
+
+		SearchContext searchContext =
+			portletSharedSearchSettings.getSearchContext();
+
+		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+
+		searchContext.setSorts(SortFactoryUtil.create(Field.NAME, false));
+
+		portletSharedSearchSettings.addCondition(
+			new BooleanClauseImpl<Query>(
+				new TermQueryImpl(
+					Field.GROUP_ID,
+					String.valueOf(themeDisplay.getScopeGroupId())),
+				BooleanClauseOccur.MUST));
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		Organization organization =
+			_commerceOrganizationHelper.getCurrentOrganization(
+				httpServletRequest);
+
+		long organizationId = 0;
+
+		if (organization != null) {
+			organizationId = organization.getOrganizationId();
+		}
+
+		BooleanFilter booleanFilter = _cpDefinitionHelper.getCPRuleFilter(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			organizationId);
+
+		if (booleanFilter != null) {
+			Query query = new MatchAllQuery();
+
+			query.setPreBooleanFilter(booleanFilter);
+
+			portletSharedSearchSettings.addCondition(
+				new BooleanClauseImpl<>(query, BooleanClauseOccur.MUST));
+		}
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		CPSearchResultsPortletInstanceConfiguration
+			cpSearchResultsPortletInstanceConfiguration =
+				portletDisplay.getPortletInstanceConfiguration(
+					CPSearchResultsPortletInstanceConfiguration.class);
+
+		paginate(
+			cpSearchResultsPortletInstanceConfiguration,
+			portletSharedSearchSettings);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSearchResultsPortlet.class);
+
+	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
 	private CPContentListEntryRendererRegistry
@@ -256,9 +283,6 @@ public class CPSearchResultsPortlet
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
-
-	private CPSearchResultsPortletInstanceConfiguration
-		_cpSearchResultsPortletInstanceConfiguration;
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;

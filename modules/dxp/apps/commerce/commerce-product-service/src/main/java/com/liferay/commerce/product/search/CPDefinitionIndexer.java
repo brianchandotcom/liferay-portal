@@ -166,16 +166,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 			contextBooleanFilter.add(linkFilter, BooleanClauseOccur.MUST);
 		}
-
-		boolean filterByCPRuleTypes = GetterUtil.getBoolean(
-			searchContext.getAttribute("filterByCPRuleTypes"));
-
-		if (filterByCPRuleTypes) {
-			for (CPRuleType cpRuleType : _cpRuleTypeRegistry.getCPRuleTypes()) {
-				cpRuleType.postProcessContextBooleanFilter(
-					contextBooleanFilter, searchContext);
-			}
-		}
 	}
 
 	@Override
@@ -433,10 +423,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addKeyword(type, linkedProductIds);
 		}
 
-		for (CPRuleType cpRuleType : _cpRuleTypeRegistry.getCPRuleTypes()) {
-			cpRuleType.contributeToDocument(document);
-		}
-
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_cpDefinitionLocalService.getDefaultImage(
 				cpDefinition.getCPDefinitionId());
@@ -452,6 +438,10 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 				FIELD_DEFAULT_IMAGE_FILE_URL,
 				DLUtil.getDownloadURL(
 					fileEntry, fileEntry.getFileVersion(), null, null));
+		}
+
+		for (CPRuleType cpRuleType : _cpRuleTypeRegistry.getCPRuleTypes()) {
+			cpRuleType.contributeDocument(document, cpDefinition);
 		}
 
 		if (_log.isDebugEnabled()) {

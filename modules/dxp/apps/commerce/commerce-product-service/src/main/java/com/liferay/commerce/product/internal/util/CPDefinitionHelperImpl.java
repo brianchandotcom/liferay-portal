@@ -16,30 +16,41 @@ package com.liferay.commerce.product.internal.util;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
+import com.liferay.commerce.product.catalog.rule.CPRuleType;
+import com.liferay.commerce.product.catalog.rule.CPRuleTypeRegistry;
+import com.liferay.commerce.product.constants.CPActionKeys;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.internal.catalog.DatabaseCPCatalogEntryImpl;
 import com.liferay.commerce.product.internal.catalog.IndexCPCatalogEntryImpl;
+import com.liferay.commerce.product.internal.search.CPDefinitionSearcher;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
-import com.liferay.commerce.product.search.CPDefinitionSearcher;
+import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
+import com.liferay.commerce.product.service.CPRuleLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.user.segment.util.CommerceUserSegmentHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -70,6 +81,48 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			cpDefinitionId);
 
 		return new DatabaseCPCatalogEntryImpl(cpDefinition, locale);
+	}
+
+	@Override
+	public BooleanFilter getCPRuleFilter(
+			PermissionChecker permissionChecker, long groupId,
+			long organizationId)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (permissionChecker.isCompanyAdmin(group.getCompanyId()) ||
+			permissionChecker.isGroupAdmin(groupId) ||
+			_portletResourcePermission.contains(
+				permissionChecker, groupId, CPActionKeys.MANAGE_CATALOG)) {
+
+			return null;
+		}
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		long[] commerceUserSegmentEntryIds =
+			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
+				groupId, organizationId, permissionChecker.getUserId());
+
+		List<CPRule> cpRules = _cpRuleLocalService.getCPRules(
+			groupId, commerceUserSegmentEntryIds);
+
+		if (ListUtil.isEmpty(cpRules)) {
+			booleanFilter.addTerm(
+				Field.ENTRY_CLASS_PK, "-1", BooleanClauseOccur.MUST);
+		}
+		else {
+			for (CPRule cpRule : cpRules) {
+				CPRuleType cpRuleType = _cpRuleTypeRegistry.getCPRuleType(
+					cpRule.getType());
+
+				cpRuleType.postProcessContextBooleanFilter(
+					booleanFilter, cpRule);
+			}
+		}
+
+		return booleanFilter;
 	}
 
 	@Override
@@ -122,8 +175,6 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		CPDefinitionSearcher cpDefinitionSearcher = _getCPDefinitionSearcher(
 			groupId, searchContext, cpQuery, start, end);
 
-		cpDefinitionSearcher.setCPQuery(cpQuery);
-
 		Hits hits = cpDefinitionSearcher.search(searchContext);
 
 		Document[] documents = hits.getDocs();
@@ -140,14 +191,8 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		long groupId, SearchContext searchContext, CPQuery cpQuery, int start,
 		int end) {
 
-		Indexer<?> searcher = CPDefinitionSearcher.getInstance();
-
-		CPDefinitionSearcher cpDefinitionSearcher =
-			(CPDefinitionSearcher)searcher;
-
-		cpDefinitionSearcher.setCPQuery(cpQuery);
-
-		searchContext.setAttribute("filterByCPRuleTypes", Boolean.TRUE);
+		CPDefinitionSearcher cpDefinitionSearcher = new CPDefinitionSearcher(
+			this, cpQuery);
 
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {groupId});
@@ -212,12 +257,27 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 		CPDefinitionHelperImpl.class);
 
 	@Reference
+	private CommerceUserSegmentHelper _commerceUserSegmentHelper;
+
+	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPFriendlyURLEntryLocalService _cpFriendlyURLEntryLocalService;
 
 	@Reference
+	private CPRuleLocalService _cpRuleLocalService;
+
+	@Reference
+	private CPRuleTypeRegistry _cpRuleTypeRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

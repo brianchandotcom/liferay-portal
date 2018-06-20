@@ -22,6 +22,8 @@ import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.Locale;
@@ -36,6 +38,11 @@ public interface CPDefinitionHelper {
 	public CPCatalogEntry getCPCatalogEntry(Document document, Locale locale);
 
 	public CPCatalogEntry getCPCatalogEntry(long cpDefinitionId, Locale locale)
+		throws PortalException;
+
+	public BooleanFilter getCPRuleFilter(
+			PermissionChecker permissionChecker, long groupId,
+			long organizationId)
 		throws PortalException;
 
 	public String getFriendlyURL(long cpDefinitionId, ThemeDisplay themeDisplay)

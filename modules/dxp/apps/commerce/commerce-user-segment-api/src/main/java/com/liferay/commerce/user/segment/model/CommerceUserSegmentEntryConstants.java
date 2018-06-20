@@ -21,4 +21,6 @@ public class CommerceUserSegmentEntryConstants {
 
 	public static final String KEY_GUEST = "guest";
 
+	public static final String KEY_USER = "user";
+
 }

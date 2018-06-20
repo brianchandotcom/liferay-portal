@@ -60,23 +60,9 @@ public class CPQuery {
 		}
 	}
 
-	public CPQuery() {
-	}
-
-	public CPQuery(CPQuery cpQuery) {
-		setAllCategoryIds(cpQuery.getAllCategoryIds());
-		setAllTagIdsArray(cpQuery.getAllTagIdsArray());
-		setAnyCategoryIds(cpQuery.getAnyCategoryIds());
-		setAnyTagIds(cpQuery.getAnyTagIds());
-		setAttributes(cpQuery.getAttributes());
-		setNotAllCategoryIds(cpQuery.getNotAllCategoryIds());
-		setNotAllTagIdsArray(cpQuery.getNotAllTagIdsArray());
-		setNotAnyCategoryIds(cpQuery.getNotAnyCategoryIds());
-		setNotAnyTagIds(cpQuery.getNotAnyTagIds());
-		setOrderByCol1(cpQuery.getOrderByCol1());
-		setOrderByCol2(cpQuery.getOrderByCol2());
-		setOrderByType1(cpQuery.getOrderByType1());
-		setOrderByType2(cpQuery.getOrderByType2());
+	public CPQuery(long userId, long organizationId) {
+		_userId = userId;
+		_organizationId = organizationId;
 	}
 
 	public void addAllTagIdsArray(long[] allTagsIds) {
@@ -178,6 +164,14 @@ public class CPQuery {
 
 	public String getOrderByType2() {
 		return checkOrderByType(_orderByType2);
+	}
+
+	public long getOrganizationId() {
+		return _organizationId;
+	}
+
+	public long getUserId() {
+		return _userId;
 	}
 
 	public void setAllCategoryIds(long[] allCategoryIds) {
@@ -395,6 +389,8 @@ public class CPQuery {
 	private String _orderByCol2;
 	private String _orderByType1;
 	private String _orderByType2;
+	private final long _organizationId;
 	private String _toString;
+	private final long _userId;
 
 }

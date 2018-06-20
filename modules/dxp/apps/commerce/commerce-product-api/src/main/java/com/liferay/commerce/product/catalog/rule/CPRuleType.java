@@ -17,11 +17,10 @@ package com.liferay.commerce.product.catalog.rule;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPRule;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Locale;
 
@@ -31,18 +30,18 @@ import java.util.Locale;
 @ProviderType
 public interface CPRuleType {
 
-	public void contributeToDocument(Document document);
+	public void contributeDocument(Document document, CPDefinition cpDefinition)
+		throws PortalException;
 
 	public String getKey();
 
 	public String getLabel(Locale locale);
 
-	public boolean isSatisfied(
-			CPDefinition cpDefinition, ServiceContext serviceContext)
+	public boolean isSatisfied(CPDefinition cpDefinition, CPRule cpRule)
 		throws PortalException;
 
 	public void postProcessContextBooleanFilter(
-			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+			BooleanFilter contextBooleanFilter, CPRule cpRule)
 		throws PortalException;
 
 }

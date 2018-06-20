@@ -25,25 +25,34 @@ import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationLocalService;
+import com.liferay.commerce.product.constants.CPRuleConstants;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPRuleAssetCategoryRelLocalService;
+import com.liferay.commerce.product.service.CPRuleLocalService;
+import com.liferay.commerce.product.service.CPRuleUserSegmentRelLocalService;
 import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
 import com.liferay.commerce.service.CommerceWarehouseLocalService;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntry;
+import com.liferay.commerce.user.segment.model.CommerceUserSegmentEntryConstants;
+import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -104,6 +113,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(
 	immediate = true,
@@ -161,6 +171,8 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 			createRoles(serviceContext);
 
 			importProducts(serviceContext);
+
+			createCatalogRules(serviceContext);
 
 			_customerPortalThemePortletSettingsInitializer.initialize(
 				serviceContext);
@@ -377,6 +389,39 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 		_addDemoAccountOrganizations(
 			group.getOrganizationId(), group.getNameCurrentValue(),
 			ACCOUNT_ORGANIZATIONS_COUNT, serviceContext);
+	}
+
+	protected void createCatalogRules(ServiceContext serviceContext)
+		throws PortalException {
+
+		CPRule cpRule = _cpRuleLocalService.addCPRule(
+			"all", true, CPRuleConstants.TYPE_ASSET_CATEGORY, serviceContext);
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.getGroupVocabulary(
+				serviceContext.getScopeGroupId(), _COMMERCE_VOCABULARY);
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getVocabularyCategories(
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (AssetCategory assetCategory : assetCategories) {
+			_cpRuleAssetCategoryRelLocalService.addCPRuleAssetCategoryRel(
+				cpRule.getCPRuleId(), assetCategory.getCategoryId(),
+				serviceContext);
+		}
+
+		CommerceUserSegmentEntry commerceUserSegmentEntry =
+			_commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntry(
+				serviceContext.getScopeGroupId(),
+				CommerceUserSegmentEntryConstants.KEY_USER);
+
+		_cpRuleUserSegmentRelLocalService.addCPRuleUserSegmentRel(
+			cpRule.getCPRuleId(),
+			commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			serviceContext);
 	}
 
 	protected void createCommerceRoles(JSONArray jsonArray) throws Exception {
@@ -831,6 +876,10 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 	)
 	private Portlet _commerceUserPortlet;
 
+	@Reference
+	private CommerceUserSegmentEntryLocalService
+		_commerceUserSegmentEntryLocalService;
+
 	@Reference(
 		target = "(javax.portlet.name=com_liferay_commerce_product_type_virtual_order_content_web_internal_portlet_CommerceVirtualOrderItemContentPortlet)"
 	)
@@ -884,6 +933,16 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPRuleAssetCategoryRelLocalService
+		_cpRuleAssetCategoryRelLocalService;
+
+	@Reference
+	private CPRuleLocalService _cpRuleLocalService;
+
+	@Reference
+	private CPRuleUserSegmentRelLocalService _cpRuleUserSegmentRelLocalService;
 
 	@Reference(
 		target = "(javax.portlet.name=com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet)"

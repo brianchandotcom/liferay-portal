@@ -266,4 +266,10 @@
 		padding-left: setter($input-group-addon-padding-x, $input-padding-x);
 		padding-right: setter($input-group-addon-padding-x, $input-padding-x);
 	}
+
+	.form-group-item {
+		> .form-group {
+			margin-bottom: 0;
+		}
+	}
 }

@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AuthorizeScreenConfiguration {
 
 	@Meta.AD(
-		deflt = "/group/guest/authorize-oauth2-application",
+		deflt = "/?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AuthorizePortlet&p_p_state=maximized",
 		description = "authorize-screen-url-description",
 		id = "authorize.screen.url", name = "authorize-screen-url",
 		required = false

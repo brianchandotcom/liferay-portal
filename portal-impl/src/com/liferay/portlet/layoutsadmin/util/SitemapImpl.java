@@ -231,6 +231,10 @@ public class SitemapImpl implements Sitemap {
 			}
 		}
 
+		if (!rootElement.hasContent()) {
+			return StringPool.BLANK;
+		}
+
 		return document.asXML();
 	}
 

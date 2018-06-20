@@ -54,9 +54,9 @@
 
 		<var method="selenium#getElementValue('//span[contains(@class,\'lfr-input-time\')]/input')" name="time" />
 
-		<var group="3" input="${time}" name="ampm" pattern="([0-9]*):([0-9]*) ([A-Z]*)" />
-		<var group="1" input="${time}" name="hours" pattern="([0-9]*):([0-9]*) ([A-Z]*)" />
-		<var group="2" input="${time}" name="minutes" pattern="([0-9]*):([0-9]*) ([A-Z]*)" />
+		<var method="RegexUtil#replace('${time}', '([0-9]*):([0-9]*) ([A-Z]*)', '3')" name="ampm" />
+		<var method="RegexUtil#replace('${time}', '([0-9]*):([0-9]*) ([A-Z]*)', '1')" name="hours" />
+		<var method="RegexUtil#replace('${time}', '([0-9]*):([0-9]*) ([A-Z]*)', '2')" name="minutes" />
 
 		<if>
 			<equals arg1="${minutes}" arg2="58" />

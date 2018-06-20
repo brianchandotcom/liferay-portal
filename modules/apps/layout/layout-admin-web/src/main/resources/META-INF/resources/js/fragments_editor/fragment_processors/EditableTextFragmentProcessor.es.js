@@ -123,7 +123,11 @@ function init(
 	_editorEventHandler.add(
 		nativeEditor.on(
 			'blur',
-			() => requestAnimationFrame(destroy)
+			(event) => {
+				if (_editor._mainUI.state.hidden) {
+					requestAnimationFrame(destroy);
+				}
+			}
 		)
 	);
 

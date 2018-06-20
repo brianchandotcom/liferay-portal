@@ -29,9 +29,8 @@ public class OAuthConstants {
 		"/portal/oauth/request_token";
 
 	public static final String[] PUBLIC_PATHS = {
-		OAuthConstants.PUBLIC_PATH_ACCESS_TOKEN,
-		OAuthConstants.PUBLIC_PATH_AUTHORIZE,
-		OAuthConstants.PUBLIC_PATH_REQUEST_TOKEN
+		PUBLIC_PATH_ACCESS_TOKEN, PUBLIC_PATH_AUTHORIZE,
+		PUBLIC_PATH_REQUEST_TOKEN
 	};
 
 }

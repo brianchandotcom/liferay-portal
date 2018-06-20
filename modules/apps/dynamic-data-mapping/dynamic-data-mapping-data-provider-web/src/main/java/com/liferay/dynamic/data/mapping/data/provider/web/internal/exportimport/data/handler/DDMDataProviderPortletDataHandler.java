@@ -129,7 +129,9 @@ public class DDMDataProviderPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {DDMDataProviderInstance.class.getName()});
+				new StagedModelType[] {
+					new StagedModelType(DDMDataProviderInstance.class.getName())
+				});
 
 			return;
 		}

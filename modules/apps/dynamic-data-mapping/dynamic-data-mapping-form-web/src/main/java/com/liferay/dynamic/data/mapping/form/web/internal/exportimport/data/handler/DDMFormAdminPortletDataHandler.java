@@ -207,9 +207,9 @@ public class DDMFormAdminPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					DDMFormInstance.class.getName(),
-					DDMFormInstanceRecord.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(DDMFormInstance.class.getName()),
+					new StagedModelType(DDMFormInstanceRecord.class.getName())
 				});
 
 			return;

@@ -167,7 +167,10 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext)) {
 
 			_staging.populateLastPublishDateCounts(
-				portletDataContext, new String[] {BlogsEntry.class.getName()});
+				portletDataContext,
+				new StagedModelType[] {
+					new StagedModelType(BlogsEntry.class.getName())
+				});
 
 			return;
 		}

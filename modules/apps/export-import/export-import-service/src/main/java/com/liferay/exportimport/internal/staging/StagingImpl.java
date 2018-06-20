@@ -58,7 +58,9 @@ import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -90,6 +92,8 @@ import com.liferay.portal.kernel.model.RecentLayoutBranch;
 import com.liferay.portal.kernel.model.RecentLayoutRevision;
 import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.model.TypedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.WorkflowedModel;
@@ -164,6 +168,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -2161,7 +2166,8 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public void populateLastPublishDateCounts(
-			PortletDataContext portletDataContext, String[] classNames)
+			PortletDataContext portletDataContext,
+			StagedModelType[] stagedModelTypes)
 		throws PortalException {
 
 		ManifestSummary manifestSummary =
@@ -2172,9 +2178,7 @@ public class StagingImpl implements Staging {
 				portletDataContext.getScopeGroupId(),
 				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
 
-		for (String className : classNames) {
-			StagedModelType stagedModelType = new StagedModelType(className);
-
+		for (StagedModelType stagedModelType : stagedModelTypes) {
 			long modelAdditionCount = manifestSummary.getModelAdditionCount(
 				stagedModelType);
 
@@ -2183,10 +2187,47 @@ public class StagingImpl implements Staging {
 			}
 
 			if (changesetCollection != null) {
-				modelAdditionCount =
-					_changesetEntryLocalService.getChangesetEntriesCount(
-						changesetCollection.getChangesetCollectionId(),
-						_portal.getClassNameId(className));
+				if (stagedModelType.getReferrerClassName() == null) {
+					modelAdditionCount =
+						_changesetEntryLocalService.getChangesetEntriesCount(
+							changesetCollection.getChangesetCollectionId(),
+							stagedModelType.getClassNameId());
+				}
+				else {
+					StagedModelRepository<?> stagedModelRepository =
+						StagedModelRepositoryRegistryUtil.
+							getStagedModelRepository(
+								stagedModelType.getClassName());
+
+					if (stagedModelRepository != null) {
+						List<ChangesetEntry> changesetEntries =
+							_changesetEntryLocalService.fetchChangesetEntries(
+								changesetCollection.getChangesetCollectionId(),
+								stagedModelType.getClassNameId());
+
+						modelAdditionCount = 0;
+
+						for (ChangesetEntry changesetEntry : changesetEntries) {
+							StagedModel stagedModel =
+								stagedModelRepository.getStagedModel(
+									changesetEntry.getClassPK());
+
+							if (stagedModel instanceof TypedModel) {
+								TypedModel typedModel = (TypedModel)stagedModel;
+
+								String className = typedModel.getClassName();
+
+								if (Objects.equals(
+										className,
+										stagedModelType.
+											getReferrerClassName())) {
+
+									modelAdditionCount++;
+								}
+							}
+						}
+					}
+				}
 
 				manifestSummary.addModelAdditionCount(
 					stagedModelType, modelAdditionCount);

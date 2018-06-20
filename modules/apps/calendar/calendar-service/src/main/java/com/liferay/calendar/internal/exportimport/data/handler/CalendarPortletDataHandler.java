@@ -292,10 +292,12 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					Calendar.class.getName(), CalendarBooking.class.getName(),
-					CalendarNotificationTemplate.class.getName(),
-					CalendarResource.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(Calendar.class.getName()),
+					new StagedModelType(CalendarBooking.class.getName()),
+					new StagedModelType(
+						CalendarNotificationTemplate.class.getName()),
+					new StagedModelType(CalendarResource.class.getName())
 				});
 
 			return;

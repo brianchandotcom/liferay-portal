@@ -231,8 +231,9 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					DDLRecord.class.getName(), DDLRecordSet.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(DDLRecord.class.getName()),
+					new StagedModelType(DDLRecordSet.class.getName())
 				});
 
 			return;

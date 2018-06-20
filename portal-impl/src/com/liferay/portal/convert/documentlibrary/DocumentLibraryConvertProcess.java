@@ -127,16 +127,6 @@ public class DocumentLibraryConvertProcess extends BaseConvertProcess {
 			fileVersions, new FileVersionVersionComparator(true));
 	}
 
-	protected String getSourceStoreClassName() {
-		StoreFactory storeFactory = StoreFactory.getInstance();
-
-		Store sourceStore = storeFactory.getStore();
-
-		Class<?> clazz = sourceStore.getClass();
-
-		return clazz.getName();
-	}
-
 	protected String getTargetStoreClassName() {
 		String[] values = getParameterValues();
 

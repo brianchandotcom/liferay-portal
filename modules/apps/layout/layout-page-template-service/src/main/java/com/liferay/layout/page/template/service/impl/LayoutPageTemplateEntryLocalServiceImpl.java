@@ -125,6 +125,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntryPersistence.create(
 				layoutPageTemplateEntryId);
 
+		layoutPageTemplateEntry.setUuid(serviceContext.getUuid());
 		layoutPageTemplateEntry.setGroupId(groupId);
 		layoutPageTemplateEntry.setCompanyId(user.getCompanyId());
 		layoutPageTemplateEntry.setUserId(user.getUserId());

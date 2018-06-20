@@ -90,116 +90,35 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ENTRY_ICON-->
+<!--ENTRY_CARDS-->
 <tr>
-	<td>ENTRY_ICON_THUMBNAIL</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'icon-vertical-card-container')]</td>
+	<td>ENTRY_CARDS_THUMBNAIL</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'vertical-card-container')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_ICON_THUMBNAIL_GENERIC</td>
+	<td>ENTRY_CARDS_THUMBNAIL_GENERIC</td>
 	<td>//div[@class='entry-thumbnail']/img</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_ICON_MENULIST_ICON</td>
+	<td>ENTRY_CARDS_MENULIST_ICON</td>
 	<td>//div[@data-title='${key_webContentTitle}']//a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_ICON_CHECKBOX</td>
+	<td>ENTRY_CARDS_CHECKBOX</td>
 	<td>//div[@data-title='${key_webContentTitle}']//input[contains(@name,'rowIdsJournal')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_ICON_TITLE</td>
+	<td>ENTRY_CARDS_TITLE</td>
 	<td>//div[@data-title='${key_webContentTitle}']//span[@class='entry-title']/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_ICON_WORKFLOW_STATUS</td>
+	<td>ENTRY_CARDS_WORKFLOW_STATUS</td>
 	<td>//div[@data-title='${key_webContentTitle}']//span[@class='workflow-status']/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ENTRY_DESCRIPTIVE-->
-<tr>
-	<td>ENTRY_DESCRIPTIVE_THUMBNAIL</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC</td>
-	<td>//*[@data-qa-id='rowItemContent']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_MENULIST_ICON</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//a[contains(@class,'dropdown-toggle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_CHECKBOX</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_TITLE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_TITLE_COPY</td>
-	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a)[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_TITLE_ON_LIVE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//h5</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_VERSION</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Version')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_LAST_MODIFIED</td>
-	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h6[contains(.,'modified')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_CREATED</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Created')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_DISPLAY_DATE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Display Date')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_CATEGORY</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_CATEGORY_COPY</td>
-	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_TAG</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-tags') and contains(.,'${key_tagName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTRY_DESCRIPTIVE_WORKFLOW_STATUS</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[@class='workflow-status']/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,12 +128,93 @@
 </tr>
 <!--ENTRY_LIST-->
 <tr>
+	<td>ENTRY_LIST_THUMBNAIL</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_THUMBNAIL_GENERIC</td>
+	<td>//*[@data-qa-id='rowItemContent']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_MENULIST_ICON</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_CHECKBOX</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_LIST_TITLE</td>
-	<td>//tr[contains(.,'${key_webContentTitle}')]//a</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_TITLE_COPY</td>
+	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_TITLE_ON_LIVE</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//h5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_VERSION</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Version')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_LAST_MODIFIED</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//h6[contains(.,'modified')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_CREATED</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Created')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_DISPLAY_DATE</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Display Date')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_CATEGORY</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_CATEGORY_COPY</td>
+	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_LIST_TAG</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-tags') and contains(.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_LIST_WORKFLOW_STATUS</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//span[@class='workflow-status']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_TABLE-->
+<tr>
+	<td>ENTRY_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_WORKFLOW_STATUS</td>
 	<td>//tr[contains(.,'${key_webContentTitle}')]//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>

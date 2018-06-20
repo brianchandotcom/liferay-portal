@@ -437,8 +437,9 @@
 	</command>
 
 	<command name="manageDeviceFamilyActions">
-		<execute macro="LexiconEntry#gotoEllipsisMenuItem">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Manage Actions" />
+			<var name="rowEntry" value="${deviceFamilyName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

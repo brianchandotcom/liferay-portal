@@ -900,8 +900,8 @@
 
 				<var name="key_webContentTitle" value="${webContentTitleEdit}" />
 
-				<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitleEdit}" />
+				<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_LIST_THUMBNAIL" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_LIST_TITLE" value1="${webContentTitleEdit}" />
 			</else>
 		</if>
 	</command>
@@ -1054,7 +1054,7 @@
 
 	<command name="expireCP">
 		<for list="${webContentTitleList}" param="webContentTitle">
-			<execute function="Check" locator1="WC#ENTRY_DESCRIPTIVE_CHECKBOX">
+			<execute function="Check" locator1="WC#ENTRY_LIST_CHECKBOX">
 				<var name="key_webContentTitle" value="${webContentTitle}" />
 			</execute>
 		</for>
@@ -1121,7 +1121,7 @@
 
 	<command name="moveArticlesToFolderCP">
 		<for list="${webContentArticlesList}" param="webContentTitle">
-			<execute function="Check" locator1="WC#ENTRY_DESCRIPTIVE_CHECKBOX">
+			<execute function="Check" locator1="WC#ENTRY_LIST_CHECKBOX">
 				<var name="key_webContentTitle" value="${webContentTitle}" />
 			</execute>
 		</for>
@@ -1232,7 +1232,7 @@
 			</else>
 		</if>
 
-		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
+		<execute function="Click" locator1="WC#ENTRY_LIST_MENULIST_ICON" />
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#ANY_MENU_ITEM" value1="Move to Recycle Bin">
 			<var name="key_menuItem" value="Move to Recycle Bin" />
@@ -1454,7 +1454,7 @@
 		</execute>
 
 		<if>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="WC#ENTRY_LIST_THUMBNAIL_GENERIC" />
 			<then>
 				<execute macro="PortletEntry#selectAll" />
 
@@ -1512,7 +1512,7 @@
 			<var name="displayStyle" value="table" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="WC#ENTRY_LIST_WORKFLOW_STATUS" value1="Approved" />
+		<execute function="AssertTextEquals" locator1="WC#ENTRY_TABLE_WORKFLOW_STATUS" value1="Approved" />
 	</command>
 
 	<command name="viewAudioViaWCD">
@@ -1576,12 +1576,12 @@
 			<var name="displayStyle" value="list" />
 		</execute>
 
-		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL">
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_LIST_THUMBNAIL">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<for list="${categoryNameList}" param="categoryName">
-			<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_CATEGORY" value1="${categoryName}">
+			<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_LIST_CATEGORY" value1="${categoryName}">
 				<var name="key_categoryName" value="${categoryName}" />
 			</execute>
 		</for>
@@ -1689,8 +1689,8 @@
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" />
+		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_LIST_THUMBNAIL" />
+		<execute function="AssertElementNotPresent" locator1="WC#ENTRY_LIST_TITLE" />
 	</command>
 
 	<command name="viewDefaultPGViaWCD">
@@ -1721,7 +1721,7 @@
 			<var name="displayStyle" value="cards" />
 		</execute>
 
-		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_ICON_THUMBNAIL">
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_CARDS_THUMBNAIL">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -1729,7 +1729,7 @@
 			<var name="displayStyle" value="list" />
 		</execute>
 
-		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL">
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_LIST_THUMBNAIL">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -1737,7 +1737,7 @@
 			<var name="displayStyle" value="table" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="WC#ENTRY_LIST_TITLE">
+		<execute function="AssertElementPresent" locator1="WC#ENTRY_TABLE_TITLE">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
@@ -2041,10 +2041,10 @@
 		<if>
 			<equals arg1="${onLive}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE_ON_LIVE" value1="${webContentTitle}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_LIST_TITLE_ON_LIVE" value1="${webContentTitle}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_LIST_TITLE" value1="${webContentTitle}" />
 			</else>
 		</if>
 	</command>
@@ -2090,7 +2090,7 @@
 	</command>
 
 	<command name="viewUserEditCP">
-		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_LAST_MODIFIED" value1="${userFirstLast}">
+		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_LIST_LAST_MODIFIED" value1="${userFirstLast}">
 			<var name="key_webContentTitle" value="${webContentTitle}" />
 		</execute>
 

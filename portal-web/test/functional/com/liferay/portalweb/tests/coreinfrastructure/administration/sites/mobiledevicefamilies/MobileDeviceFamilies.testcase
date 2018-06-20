@@ -151,9 +151,12 @@
 		<execute macro="Page#manageDeviceFamilyActions">
 			<var name="actionName" value="Mobile Device Family Test Action" />
 			<var name="actionType" value="Redirect to Site" />
+			<var name="deviceFamilyName" value="Linux Family Name" />
 			<var name="pageName" value="Page for Linux" />
 			<var name="siteName" value="Site Name" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="Page#selectMobileDeviceFamily">
 			<var name="deviceFamilyName" value="Windows Device Family Name" />
@@ -162,6 +165,7 @@
 		<execute macro="Page#manageDeviceFamilyActions">
 			<var name="actionName" value="Windows Device Family Test Action" />
 			<var name="actionType" value="Redirect to Site" />
+			<var name="deviceFamilyName" value="Windows Device Family Name" />
 			<var name="pageName" value="Page for Windows" />
 			<var name="siteName" value="Site Name" />
 		</execute>

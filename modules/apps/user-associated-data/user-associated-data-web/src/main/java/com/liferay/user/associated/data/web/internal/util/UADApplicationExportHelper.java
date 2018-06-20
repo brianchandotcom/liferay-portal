@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.user.associated.data.display.UADDisplay;
 import com.liferay.user.associated.data.exporter.UADExporter;
 import com.liferay.user.associated.data.web.internal.display.UADApplicationExportDisplay;
 import com.liferay.user.associated.data.web.internal.export.background.task.UADExportBackgroundTaskManagerUtil;
@@ -61,8 +62,18 @@ public class UADApplicationExportHelper {
 	public UADApplicationExportDisplay getUADApplicationExportDisplay(
 		String applicationKey, long groupId, long userId) {
 
-		List<UADExporter> uadExporters =
-			_uadRegistry.getApplicationUADExporters(applicationKey);
+		Stream<UADDisplay> uadDisplayStream =
+			_uadRegistry.getApplicationUADDisplayStream(applicationKey);
+
+		List<UADExporter> uadExporters = uadDisplayStream.map(
+			UADDisplay::getTypeClass
+		).map(
+			Class::getName
+		).map(
+			key -> _uadRegistry.getUADExporter(key)
+		).collect(
+			Collectors.toList()
+		);
 
 		int applicationDataCount = 0;
 
@@ -83,10 +94,10 @@ public class UADApplicationExportHelper {
 	public List<UADApplicationExportDisplay> getUADApplicationExportDisplays(
 		long groupId, long userId) {
 
-		Set<String> exporterApplicationKeys =
-			_uadRegistry.getApplicationUADExportersKeySet();
+		Set<String> applicationUADDisplayKeySet =
+			_uadRegistry.getApplicationUADDisplaysKeySet();
 
-		Iterator<String> iterator = exporterApplicationKeys.iterator();
+		Iterator<String> iterator = applicationUADDisplayKeySet.iterator();
 
 		List<UADApplicationExportDisplay> uadApplicationExportDisplays =
 			new ArrayList<>();

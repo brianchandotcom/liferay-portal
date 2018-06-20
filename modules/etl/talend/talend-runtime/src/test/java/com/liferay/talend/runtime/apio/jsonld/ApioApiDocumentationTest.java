@@ -78,7 +78,7 @@ public class ApioApiDocumentationTest {
 
 		ApioApiDocumentation.SupportedClass supportedClass =
 			supportedClassStream.filter(
-				clazz -> "Commerce".equals(clazz.getName())
+				clazz -> "Comment".equals(clazz.getName())
 			).findFirst(
 			).orElseThrow(
 				() -> new AssertionError(

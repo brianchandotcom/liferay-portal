@@ -52,16 +52,16 @@
 				-d active=true
 		</var>
 
-		<echo>## Adding a 'Group' with the following info using JSONWS:</echo>
+		<echo message="## Adding a 'Group' with the following info using JSONWS:" />
 
 		<if>
 			<isset var="groupDescription" />
 			<then>
-				<echo>## * Group Description: ${groupDescription}</echo>
+				<echo message="## * Group Description: ${groupDescription}" />
 			</then>
 		</if>
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
@@ -125,13 +125,13 @@
 			<return name="userEmailAddress" />
 		</execute>
 
-		<echo>## Assign a 'Group Role' to a 'User' with the following info using JSONWS:</echo>
+		<echo message="## Assign a 'Group Role' to a 'User' with the following info using JSONWS:" />
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
-		<echo>## * Role Name: ${roleTitle}</echo>
+		<echo message="## * Role Name: ${roleTitle}" />
 
-		<echo>## * User Email Address: ${userEmailAddress}</echo>
+		<echo message="## * User Email Address: ${userEmailAddress}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
@@ -180,11 +180,11 @@
 			<return name="userEmailAddress" />
 		</execute>
 
-		<echo>## Assigning a 'User' to an 'Group' with the following info using JSONWS:</echo>
+		<echo message="## Assigning a 'User' to an 'Group' with the following info using JSONWS:" />
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
-		<echo>## * User Email Address: ${userEmailAddress}</echo>
+		<echo message="## * User Email Address: ${userEmailAddress}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
@@ -208,9 +208,9 @@
 			<return name="groupName" />
 		</execute>
 
-		<echo>## Deleting a 'Group' with the following info using JSONWS:</echo>
+		<echo message="## Deleting a 'Group' with the following info using JSONWS:" />
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
 		<execute macro="JSONCompany#getPortalURL">
 			<return name="portalURL" />

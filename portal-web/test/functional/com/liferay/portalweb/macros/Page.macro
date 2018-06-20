@@ -395,7 +395,7 @@
 
 		<var method="StringUtil#extractFirst('${partialPageURL}', '&amp;')" name="groupId" />
 
-		<echo>## * Group ID: ${groupId}</echo>
+		<echo message="## * Group ID: ${groupId}" />
 
 		<return value="${groupId}" />
 	</command>

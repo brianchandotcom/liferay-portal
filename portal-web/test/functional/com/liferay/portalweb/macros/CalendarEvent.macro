@@ -976,9 +976,9 @@
 		<var method="DateUtil#getCurrentDayOfWeek()" name="currentDay" />
 		<var method="DateUtil#getCurrentHour()" name="currentHour" />
 
-		<echo> The current day is: ${currentDay} </echo>
+		<echo message=" The current day is: ${currentDay} " />
 
-		<echo> The current hour is: ${currentHour} </echo>
+		<echo message=" The current hour is: ${currentHour} " />
 
 		<if>
 			<and>

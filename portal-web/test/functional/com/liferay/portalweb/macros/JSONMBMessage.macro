@@ -22,13 +22,13 @@
 				-d entryURL='javascript:alert(3)'
 		</var>
 
-		<echo>## Adding a 'Message' with the following info using JSONWS:</echo>
+		<echo message="## Adding a 'Message' with the following info using JSONWS:" />
 
-		<echo>## * Parent messageId: ${messageId}</echo>
+		<echo message="## * Parent messageId: ${messageId}" />
 
-		<echo>## * Subject: ${threadSubject}</echo>
+		<echo message="## * Subject: ${threadSubject}" />
 
-		<echo>## * Body: ${threadBody}</echo>
+		<echo message="## * Body: ${threadBody}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />

@@ -84,17 +84,17 @@
 				-d sendEmail=true
 		</var>
 
-		<echo>## Adding a 'User' with the following info using JSONWS:</echo>
+		<echo message="## Adding a 'User' with the following info using JSONWS:" />
 
-		<echo>## * Company ID: ${companyId}</echo>
+		<echo message="## * Company ID: ${companyId}" />
 
-		<echo>## * Email Address: ${userEmailAddress}</echo>
+		<echo message="## * Email Address: ${userEmailAddress}" />
 
-		<echo>## * First Name: ${userFirstName}</echo>
+		<echo message="## * First Name: ${userFirstName}" />
 
-		<echo>## * Last Name: ${userLastName}</echo>
+		<echo message="## * Last Name: ${userLastName}" />
 
-		<echo>## * Screen Name: ${userScreenName}</echo>
+		<echo message="## * Screen Name: ${userScreenName}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
@@ -128,9 +128,9 @@
 				-d userId=${userId}
 		</var>
 
-		<echo>## Deleting a 'User' with the following info using JSONWS:</echo>
+		<echo message="## Deleting a 'User' with the following info using JSONWS:" />
 
-		<echo>## * Email Address: ${userEmailAddress}</echo>
+		<echo message="## * Email Address: ${userEmailAddress}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />

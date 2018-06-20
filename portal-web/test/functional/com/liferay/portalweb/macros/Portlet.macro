@@ -160,7 +160,7 @@
 
 				<var method="MathUtil#sum('${shutdownPauseCount}', '1')" name="shutdownPauseCount" />
 
-				<echo>Shutdown pause count: ${shutdownPauseCount}</echo>
+				<echo message="Shutdown pause count: ${shutdownPauseCount}" />
 			</then>
 		</while>
 	</command>
@@ -184,7 +184,7 @@
 
 				<var method="MathUtil#sum('${startupPauseCount}', '1')" name="startupPauseCount" />
 
-				<echo>Startup pause count: ${startupPauseCount}</echo>
+				<echo message="Startup pause count: ${startupPauseCount}" />
 			</then>
 		</while>
 	</command>

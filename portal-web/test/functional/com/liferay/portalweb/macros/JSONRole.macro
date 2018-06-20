@@ -84,25 +84,25 @@
 				-d subtype=
 		</var>
 
-		<echo>## Adding a 'Role' with the following info using JSONWS:</echo>
+		<echo message="## Adding a 'Role' with the following info using JSONWS:" />
 
 		<if>
 			<isset var="roleDescription" />
 			<then>
-				<echo>## * Role Description: ${roleDescription}</echo>
+				<echo message="## * Role Description: ${roleDescription}" />
 			</then>
 		</if>
 
-		<echo>## * Role Name: ${roleTitle}</echo>
+		<echo message="## * Role Name: ${roleTitle}" />
 
 		<if>
 			<isset var="roleKey" />
 			<then>
-				<echo>## * Role Title: ${roleKey}</echo>
+				<echo message="## * Role Title: ${roleKey}" />
 			</then>
 		</if>
 
-		<echo>## * Role Type: ${roleType}</echo>
+		<echo message="## * Role Type: ${roleType}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
@@ -151,11 +151,11 @@
 			<return name="userEmailAddress" />
 		</execute>
 
-		<echo>## Assigning a 'User' to a 'Role' with the following info using JSONWS:</echo>
+		<echo message="## Assigning a 'User' to a 'Role' with the following info using JSONWS:" />
 
-		<echo>## * Role Name: ${roleTitle}</echo>
+		<echo message="## * Role Name: ${roleTitle}" />
 
-		<echo>## * User Email Address: ${userEmailAddress}</echo>
+		<echo message="## * User Email Address: ${userEmailAddress}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />

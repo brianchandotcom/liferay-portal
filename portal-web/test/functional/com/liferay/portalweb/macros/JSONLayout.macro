@@ -46,11 +46,11 @@
 			<return name="groupName" />
 		</execute>
 
-		<echo>## Adding a 'Layout' with the following info using JSONWS:</echo>
+		<echo message="## Adding a 'Layout' with the following info using JSONWS:" />
 
-		<echo>## * Group Name: ${groupName}</echo>
+		<echo message="## * Group Name: ${groupName}" />
 
-		<echo>## * Layout Name: ${layoutName}</echo>
+		<echo message="## * Layout Name: ${layoutName}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />

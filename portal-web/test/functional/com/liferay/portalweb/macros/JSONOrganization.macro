@@ -41,11 +41,11 @@
 				-d site=${organizationSite}
 		</var>
 
-		<echo>## Adding a 'Organization' with the following info using jsonws:</echo>
+		<echo message="## Adding a 'Organization' with the following info using jsonws:" />
 
-		<echo>## * Organization Name: ${organizationName}</echo>
+		<echo message="## * Organization Name: ${organizationName}" />
 
-		<echo>## * Organization Site: ${organizationSite}</echo>
+		<echo message="## * Organization Site: ${organizationSite}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
@@ -94,11 +94,11 @@
 			<return name="userEmailAddress" />
 		</execute>
 
-		<echo>## Assigning a 'User' to an 'Organization' with the following info using JSONWS:</echo>
+		<echo message="## Assigning a 'User' to an 'Organization' with the following info using JSONWS:" />
 
-		<echo>## * Organization Name: ${organizationName}</echo>
+		<echo message="## * Organization Name: ${organizationName}" />
 
-		<echo>## * User Email Address: ${userEmailAddress}</echo>
+		<echo message="## * User Email Address: ${userEmailAddress}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
@@ -132,9 +132,9 @@
 			<return name="organizationName" />
 		</execute>
 
-		<echo>## Deleting an 'Organization' with the following info using JSONWS:</echo>
+		<echo message="## Deleting an 'Organization' with the following info using JSONWS:" />
 
-		<echo>## * Organization Name: ${organizationName}</echo>
+		<echo message="## * Organization Name: ${organizationName}" />
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />

@@ -63,7 +63,7 @@ public abstract class BaseMBCategoryDemoDataCreatorImpl
 			}
 			catch (NoSuchMessageException nsme) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsme);
+					_log.warn(nsme, nsme);
 				}
 			}
 

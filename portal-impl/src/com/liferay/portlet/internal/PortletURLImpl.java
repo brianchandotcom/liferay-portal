@@ -795,7 +795,7 @@ public class PortletURLImpl
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		Key key = _getKey();

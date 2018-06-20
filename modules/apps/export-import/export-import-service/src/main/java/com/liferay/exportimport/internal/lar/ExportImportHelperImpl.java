@@ -1152,7 +1152,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					}
 					catch (NoSuchLayoutException nsle) {
 						if (_log.isWarnEnabled()) {
-							_log.warn(nsle);
+							_log.warn(nsle, nsle);
 						}
 					}
 				}

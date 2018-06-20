@@ -386,7 +386,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		Portlet portlet, PrincipalException pe) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(pe);
+			_log.debug(pe, pe);
 		}
 
 		if (_log.isWarnEnabled()) {
@@ -434,7 +434,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		Portlet portlet, PrincipalException pe) {
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(pe);
+			_log.debug(pe, pe);
 		}
 
 		response.setHeader(

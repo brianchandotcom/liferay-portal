@@ -54,7 +54,7 @@ public class MPIHelperUtil {
 			alive = spi.isAlive();
 		}
 		catch (RemoteException re) {
-			_log.error(re);
+			_log.error(re, re);
 		}
 
 		if (alive) {

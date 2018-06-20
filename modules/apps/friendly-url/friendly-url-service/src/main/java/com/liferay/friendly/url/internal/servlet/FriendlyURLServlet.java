@@ -324,7 +324,7 @@ public class FriendlyURLServlet extends HttpServlet {
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe);
+				_log.warn(pe, pe);
 			}
 
 			if (pe instanceof NoSuchGroupException ||

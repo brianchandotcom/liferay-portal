@@ -1803,7 +1803,7 @@ public class AssetPublisherUtil {
 		}
 		catch (IOException ioe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(ioe);
+				_log.warn(ioe, ioe);
 			}
 		}
 

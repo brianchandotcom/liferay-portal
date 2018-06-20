@@ -1757,7 +1757,7 @@ public class ServicePreAction extends Action {
 				}
 				catch (NoSuchGroupException nsge) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(nsge);
+						_log.warn(nsge, nsge);
 					}
 
 					return layouts;

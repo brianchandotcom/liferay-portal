@@ -46,7 +46,7 @@ public class SearchPortletPermissionUtil {
 				portal.getPortletId(renderRequest), ActionKeys.CONFIGURATION);
 		}
 		catch (PortalException pe) {
-			_log.error(pe);
+			_log.error(pe, pe);
 
 			return false;
 		}

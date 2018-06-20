@@ -280,7 +280,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			}
 		}
 		catch (PrincipalException pe) {
-			_log.error(pe);
+			_log.error(pe, pe);
 		}
 
 		tag.setUserId(0);

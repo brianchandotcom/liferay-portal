@@ -67,7 +67,7 @@ public class TunnelAuthVerifier implements AuthVerifier {
 		}
 		catch (AuthException ae) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ae);
+				_log.debug(ae, ae);
 			}
 
 			HttpServletResponse response = accessControlContext.getResponse();

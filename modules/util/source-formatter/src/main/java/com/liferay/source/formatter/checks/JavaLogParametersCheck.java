@@ -14,9 +14,13 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
+import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -25,7 +29,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaLogStringBundlerCheck extends BaseFileCheck {
+public class JavaLogParametersCheck extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isPortalCheck() {
@@ -34,42 +38,66 @@ public class JavaLogStringBundlerCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+		String fileName, String absolutePath, JavaTerm javaTerm,
+		String fileContent) {
 
-		Matcher matcher1 = _logPattern.matcher(content);
+		String content = javaTerm.getContent();
 
-		while (matcher1.find()) {
-			if (ToolsUtil.isInsideQuotes(content, matcher1.start())) {
+		Matcher matcher = _logPattern.matcher(content);
+
+		while (matcher.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.start())) {
 				continue;
 			}
 
 			List<String> parametersList = JavaSourceUtil.getParameterList(
-				matcher1.group());
+				matcher.group());
+
+			if (parametersList.isEmpty()) {
+				continue;
+			}
 
 			String firstParameter = StringUtil.trim(parametersList.get(0));
 
-			Matcher matcher2 = _sbPattern.matcher(firstParameter);
+			if (!Validator.isVariableName(firstParameter)) {
+				continue;
+			}
 
-			if (matcher2.find()) {
-				String sbVariableName = matcher2.group(2);
+			String variableTypeName = getVariableTypeName(
+				content, fileContent, firstParameter);
 
-				String newFirstParameter = StringUtil.replaceFirst(
-					firstParameter, sbVariableName,
-					sbVariableName + ".toString()", matcher2.start(2));
+			if (variableTypeName == null) {
+				continue;
+			}
+
+			if (variableTypeName.equals("StringBundler")) {
+				return StringUtil.replaceFirst(
+					content, firstParameter, firstParameter + ".toString()",
+					matcher.start(2));
+			}
+
+			if ((parametersList.size() == 1) &&
+				variableTypeName.endsWith("Exception")) {
 
 				return StringUtil.replaceFirst(
-					content, firstParameter, newFirstParameter,
-					matcher1.start());
+					content, firstParameter,
+					StringBundler.concat(
+						firstParameter, StringPool.COMMA_AND_SPACE,
+						firstParameter),
+					matcher.start(2));
 			}
 		}
 
 		return content;
 	}
 
+	@Override
+	protected String[] getCheckableJavaTermNames() {
+		return new String[] {JAVA_CONSTRUCTOR, JAVA_METHOD};
+	}
+
 	private final Pattern _logPattern = Pattern.compile(
 		"_log\\.(debug|error|fatal|info|trace|warn)\\((.+?)\\);\n",
 		Pattern.DOTALL);
-	private final Pattern _sbPattern = Pattern.compile(
-		"^(.*\\+\\s+)?(_?(sb|\\w*SB)([0-9]*)?)(\\w\\+.+)?$", Pattern.DOTALL);
 
 }

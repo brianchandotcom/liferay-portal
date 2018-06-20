@@ -39,7 +39,7 @@ public class AddressImpl extends AddressBaseImpl {
 			country = new CountryImpl();
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(e);
+				_log.warn(e, e);
 			}
 		}
 
@@ -57,7 +57,7 @@ public class AddressImpl extends AddressBaseImpl {
 			region = new RegionImpl();
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(e);
+				_log.warn(e, e);
 			}
 		}
 
@@ -75,7 +75,7 @@ public class AddressImpl extends AddressBaseImpl {
 			type = new ListTypeImpl();
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(e);
+				_log.warn(e, e);
 			}
 		}
 

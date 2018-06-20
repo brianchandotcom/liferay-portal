@@ -14,6 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -146,6 +150,25 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 				stagingGroupId, privateLayout, layout.getLayoutId(),
 				layout.getTypeSettingsProperties());
 
+			List<FragmentEntryLink> fragmentEntryLinks =
+				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+					copyLayout.getGroupId(),
+					_portal.getClassNameId(Layout.class), copyLayout.getPlid());
+
+			if (ListUtil.isNotEmpty(fragmentEntryLinks)) {
+				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+					_fragmentEntryLinkLocalService.addFragmentEntryLink(
+						serviceContext.getUserId(),
+						serviceContext.getScopeGroupId(), 0,
+						fragmentEntryLink.getFragmentEntryId(),
+						_portal.getClassNameId(Layout.class), layout.getPlid(),
+						fragmentEntryLink.getCss(), fragmentEntryLink.getHtml(),
+						fragmentEntryLink.getJs(),
+						fragmentEntryLink.getEditableValues(),
+						fragmentEntryLink.getPosition(), serviceContext);
+				}
+			}
+
 			jsonObject.put("redirectURL", getRedirectURL(actionResponse));
 
 			JSONPortletResponseUtil.writeJSON(
@@ -182,6 +205,9 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ActionUtil _actionUtil;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

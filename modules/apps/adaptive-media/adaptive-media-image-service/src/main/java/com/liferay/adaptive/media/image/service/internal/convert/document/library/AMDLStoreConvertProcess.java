@@ -42,6 +42,19 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 	public void copy(Store sourceStore, Store targetStore)
 		throws PortalException {
 
+		_transfer(sourceStore, targetStore, false);
+	}
+
+	@Override
+	public void move(Store sourceStore, Store targetStore)
+		throws PortalException {
+
+		_transfer(sourceStore, targetStore, true);
+	}
+
+	private void _transfer(Store sourceStore, Store targetStore, boolean delete)
+		throws PortalException {
+
 		int count = _amImageEntryLocalService.getAMImageEntriesCount();
 
 		MaintenanceUtil.appendStatus(
@@ -65,6 +78,12 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 					targetStore.addFile(
 						amImageEntry.getCompanyId(), CompanyConstants.SYSTEM,
 						fileVersionPath, is);
+
+					if (delete) {
+						sourceStore.deleteFile(
+							amImageEntry.getCompanyId(),
+							CompanyConstants.SYSTEM, fileVersionPath);
+					}
 				}
 				catch (IOException ioe) {
 					throw new PortalException(ioe);
@@ -72,13 +91,6 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 			});
 
 		actionableDynamicQuery.performActions();
-	}
-
-	@Override
-	public void move(Store sourceStore, Store targetStore)
-		throws PortalException {
-
-		copy(sourceStore, targetStore);
 	}
 
 	@Reference

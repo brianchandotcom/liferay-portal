@@ -25,9 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.Set;
-
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan

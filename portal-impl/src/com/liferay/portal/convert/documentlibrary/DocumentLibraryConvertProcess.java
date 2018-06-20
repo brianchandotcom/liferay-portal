@@ -223,7 +223,12 @@ public class DocumentLibraryConvertProcess
 		for (DLStoreConvertProcess dlStoreConvertProcess :
 				dlStoreConvertProcesses) {
 
-			dlStoreConvertProcess.migrate(sourceStore, targetStore);
+			if (isDeleteFilesFromSourceStore()) {
+				dlStoreConvertProcess.move(sourceStore, targetStore);
+			}
+			else {
+				dlStoreConvertProcess.copy(sourceStore, targetStore);
+			}
 		}
 	}
 

@@ -23,15 +23,18 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface DLStoreConvertProcess {
 
+	public void copy(Store sourceStore, Store targetStore)
+		throws PortalException;
+
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #migrate(Store, Store)}
+	 * @deprecated As of 7.0.0, replaced by {@link #copy(Store, Store)}
 	 */
 	@Deprecated
 	public default void migrate(DLStoreConverter dlStoreConverter)
 		throws PortalException {
 	}
 
-	public void migrate(Store sourceStore, Store targetStore)
+	public void move(Store sourceStore, Store targetStore)
 		throws PortalException;
 
 }

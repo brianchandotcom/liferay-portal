@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 
 	@Override
-	public void migrate(Store sourceStore, Store targetStore)
+	public void copy(Store sourceStore, Store targetStore)
 		throws PortalException {
 
 		int count = _amImageEntryLocalService.getAMImageEntriesCount();
@@ -72,6 +72,13 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 			});
 
 		actionableDynamicQuery.performActions();
+	}
+
+	@Override
+	public void move(Store sourceStore, Store targetStore)
+		throws PortalException {
+
+		copy(sourceStore, targetStore);
 	}
 
 	@Reference

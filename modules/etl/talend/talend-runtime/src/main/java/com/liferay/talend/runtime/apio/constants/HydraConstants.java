@@ -50,6 +50,8 @@ public interface HydraConstants {
 
 		public static final String REQUIRED = "required";
 
+		public static final String SUPPORTED_CLASS = "supportedClass";
+
 		public static final String SUPPORTED_PROPERTY = "supportedProperty";
 
 		public static final String TITLE = "title";

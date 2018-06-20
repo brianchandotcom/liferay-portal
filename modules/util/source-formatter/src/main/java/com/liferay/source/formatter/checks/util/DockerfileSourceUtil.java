@@ -43,7 +43,7 @@ public class DockerfileSourceUtil {
 			return StringPool.BLANK;
 		}
 
-		if (endsWithBackSlash(line) || endsWithBackSlash(previousLine)) {
+		if (endsWithBackSlash(previousLine)) {
 			return StringPool.BLANK;
 		}
 

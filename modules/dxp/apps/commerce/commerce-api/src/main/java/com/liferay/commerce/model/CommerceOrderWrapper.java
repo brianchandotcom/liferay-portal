@@ -85,7 +85,6 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("total", getTotal());
 		attributes.put("advanceStatus", getAdvanceStatus());
 		attributes.put("paymentStatus", getPaymentStatus());
-		attributes.put("shippingStatus", getShippingStatus());
 		attributes.put("orderStatus", getOrderStatus());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -236,12 +235,6 @@ public class CommerceOrderWrapper implements CommerceOrder,
 
 		if (paymentStatus != null) {
 			setPaymentStatus(paymentStatus);
-		}
-
-		Integer shippingStatus = (Integer)attributes.get("shippingStatus");
-
-		if (shippingStatus != null) {
-			setShippingStatus(shippingStatus);
 		}
 
 		Integer orderStatus = (Integer)attributes.get("orderStatus");
@@ -569,16 +562,6 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public BigDecimal getShippingPrice() {
 		return _commerceOrder.getShippingPrice();
-	}
-
-	/**
-	* Returns the shipping status of this commerce order.
-	*
-	* @return the shipping status of this commerce order
-	*/
-	@Override
-	public int getShippingStatus() {
-		return _commerceOrder.getShippingStatus();
 	}
 
 	/**
@@ -1069,16 +1052,6 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setShippingPrice(BigDecimal shippingPrice) {
 		_commerceOrder.setShippingPrice(shippingPrice);
-	}
-
-	/**
-	* Sets the shipping status of this commerce order.
-	*
-	* @param shippingStatus the shipping status of this commerce order
-	*/
-	@Override
-	public void setShippingStatus(int shippingStatus) {
-		_commerceOrder.setShippingStatus(shippingStatus);
 	}
 
 	/**

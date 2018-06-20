@@ -192,6 +192,10 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderItem> getAvailableForShipmentCommerceOrderItems(
+		long commerceOrderId);
+
 	/**
 	* Returns the commerce order item with the primary key.
 	*
@@ -225,10 +229,6 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	public List<CommerceOrderItem> getCommerceOrderItems(long commerceOrderId,
 		int start, int end,
 		OrderByComparator<CommerceOrderItem> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrderItem> getCommerceOrderItems(
-		long commerceWarehouseId, long commerceAddressId, int start, int end);
 
 	/**
 	* Returns the number of commerce order items.

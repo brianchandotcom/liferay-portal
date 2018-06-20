@@ -209,6 +209,12 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem> getAvailableForShipmentCommerceOrderItems(
+		long commerceOrderId) {
+		return getService()
+				   .getAvailableForShipmentCommerceOrderItems(commerceOrderId);
+	}
+
 	/**
 	* Returns the commerce order item with the primary key.
 	*
@@ -249,13 +255,6 @@ public class CommerceOrderItemLocalServiceUtil {
 		return getService()
 				   .getCommerceOrderItems(commerceOrderId, start, end,
 			orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem> getCommerceOrderItems(
-		long commerceWarehouseId, long commerceAddressId, int start, int end) {
-		return getService()
-				   .getCommerceOrderItems(commerceWarehouseId,
-			commerceAddressId, start, end);
 	}
 
 	/**

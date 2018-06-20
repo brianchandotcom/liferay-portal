@@ -65,7 +65,7 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{commerceShipmentId=");
 		sb.append(commerceShipmentId);
@@ -81,20 +81,22 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", siteGroupId=");
+		sb.append(siteGroupId);
+		sb.append(", shipmentOrganizationId=");
+		sb.append(shipmentOrganizationId);
 		sb.append(", shipmentUserId=");
 		sb.append(shipmentUserId);
 		sb.append(", commerceAddressId=");
 		sb.append(commerceAddressId);
 		sb.append(", commerceShippingMethodId=");
 		sb.append(commerceShippingMethodId);
-		sb.append(", commerceWarehouseId=");
-		sb.append(commerceWarehouseId);
+		sb.append(", shippingOptionName=");
+		sb.append(shippingOptionName);
 		sb.append(", carrier=");
 		sb.append(carrier);
 		sb.append(", trackingNumber=");
 		sb.append(trackingNumber);
-		sb.append(", expectedDuration=");
-		sb.append(expectedDuration);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", shippingDate=");
@@ -136,10 +138,18 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 			commerceShipmentImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		commerceShipmentImpl.setSiteGroupId(siteGroupId);
+		commerceShipmentImpl.setShipmentOrganizationId(shipmentOrganizationId);
 		commerceShipmentImpl.setShipmentUserId(shipmentUserId);
 		commerceShipmentImpl.setCommerceAddressId(commerceAddressId);
 		commerceShipmentImpl.setCommerceShippingMethodId(commerceShippingMethodId);
-		commerceShipmentImpl.setCommerceWarehouseId(commerceWarehouseId);
+
+		if (shippingOptionName == null) {
+			commerceShipmentImpl.setShippingOptionName("");
+		}
+		else {
+			commerceShipmentImpl.setShippingOptionName(shippingOptionName);
+		}
 
 		if (carrier == null) {
 			commerceShipmentImpl.setCarrier("");
@@ -155,7 +165,6 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 			commerceShipmentImpl.setTrackingNumber(trackingNumber);
 		}
 
-		commerceShipmentImpl.setExpectedDuration(expectedDuration);
 		commerceShipmentImpl.setStatus(status);
 
 		if (shippingDate == Long.MIN_VALUE) {
@@ -190,17 +199,18 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		siteGroupId = objectInput.readLong();
+
+		shipmentOrganizationId = objectInput.readLong();
+
 		shipmentUserId = objectInput.readLong();
 
 		commerceAddressId = objectInput.readLong();
 
 		commerceShippingMethodId = objectInput.readLong();
-
-		commerceWarehouseId = objectInput.readLong();
+		shippingOptionName = objectInput.readUTF();
 		carrier = objectInput.readUTF();
 		trackingNumber = objectInput.readUTF();
-
-		expectedDuration = objectInput.readInt();
 
 		status = objectInput.readInt();
 		shippingDate = objectInput.readLong();
@@ -228,13 +238,22 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(siteGroupId);
+
+		objectOutput.writeLong(shipmentOrganizationId);
+
 		objectOutput.writeLong(shipmentUserId);
 
 		objectOutput.writeLong(commerceAddressId);
 
 		objectOutput.writeLong(commerceShippingMethodId);
 
-		objectOutput.writeLong(commerceWarehouseId);
+		if (shippingOptionName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(shippingOptionName);
+		}
 
 		if (carrier == null) {
 			objectOutput.writeUTF("");
@@ -250,8 +269,6 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 			objectOutput.writeUTF(trackingNumber);
 		}
 
-		objectOutput.writeInt(expectedDuration);
-
 		objectOutput.writeInt(status);
 		objectOutput.writeLong(shippingDate);
 		objectOutput.writeLong(expectedDate);
@@ -264,13 +281,14 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long siteGroupId;
+	public long shipmentOrganizationId;
 	public long shipmentUserId;
 	public long commerceAddressId;
 	public long commerceShippingMethodId;
-	public long commerceWarehouseId;
+	public String shippingOptionName;
 	public String carrier;
 	public String trackingNumber;
-	public int expectedDuration;
 	public int status;
 	public long shippingDate;
 	public long expectedDate;

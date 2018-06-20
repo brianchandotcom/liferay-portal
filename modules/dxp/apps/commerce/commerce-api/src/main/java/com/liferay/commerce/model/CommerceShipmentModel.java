@@ -193,6 +193,34 @@ public interface CommerceShipmentModel extends BaseModel<CommerceShipment>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the site group ID of this commerce shipment.
+	 *
+	 * @return the site group ID of this commerce shipment
+	 */
+	public long getSiteGroupId();
+
+	/**
+	 * Sets the site group ID of this commerce shipment.
+	 *
+	 * @param siteGroupId the site group ID of this commerce shipment
+	 */
+	public void setSiteGroupId(long siteGroupId);
+
+	/**
+	 * Returns the shipment organization ID of this commerce shipment.
+	 *
+	 * @return the shipment organization ID of this commerce shipment
+	 */
+	public long getShipmentOrganizationId();
+
+	/**
+	 * Sets the shipment organization ID of this commerce shipment.
+	 *
+	 * @param shipmentOrganizationId the shipment organization ID of this commerce shipment
+	 */
+	public void setShipmentOrganizationId(long shipmentOrganizationId);
+
+	/**
 	 * Returns the shipment user ID of this commerce shipment.
 	 *
 	 * @return the shipment user ID of this commerce shipment
@@ -249,18 +277,19 @@ public interface CommerceShipmentModel extends BaseModel<CommerceShipment>,
 	public void setCommerceShippingMethodId(long commerceShippingMethodId);
 
 	/**
-	 * Returns the commerce warehouse ID of this commerce shipment.
+	 * Returns the shipping option name of this commerce shipment.
 	 *
-	 * @return the commerce warehouse ID of this commerce shipment
+	 * @return the shipping option name of this commerce shipment
 	 */
-	public long getCommerceWarehouseId();
+	@AutoEscape
+	public String getShippingOptionName();
 
 	/**
-	 * Sets the commerce warehouse ID of this commerce shipment.
+	 * Sets the shipping option name of this commerce shipment.
 	 *
-	 * @param commerceWarehouseId the commerce warehouse ID of this commerce shipment
+	 * @param shippingOptionName the shipping option name of this commerce shipment
 	 */
-	public void setCommerceWarehouseId(long commerceWarehouseId);
+	public void setShippingOptionName(String shippingOptionName);
 
 	/**
 	 * Returns the carrier of this commerce shipment.
@@ -291,20 +320,6 @@ public interface CommerceShipmentModel extends BaseModel<CommerceShipment>,
 	 * @param trackingNumber the tracking number of this commerce shipment
 	 */
 	public void setTrackingNumber(String trackingNumber);
-
-	/**
-	 * Returns the expected duration of this commerce shipment.
-	 *
-	 * @return the expected duration of this commerce shipment
-	 */
-	public int getExpectedDuration();
-
-	/**
-	 * Sets the expected duration of this commerce shipment.
-	 *
-	 * @param expectedDuration the expected duration of this commerce shipment
-	 */
-	public void setExpectedDuration(int expectedDuration);
 
 	/**
 	 * Returns the status of this commerce shipment.

@@ -57,8 +57,9 @@ public interface CommerceShipmentItemService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceShipmentItemServiceUtil} to access the commerce shipment item remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceShipmentItemServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceShipmentItem addCommerceShipmentItem(
-		long commerceShipmentId, long commerceOrderItemId, int quantity,
-		ServiceContext serviceContext) throws PortalException;
+		long commerceShipmentId, long commerceOrderItemId,
+		long commerceWarehouseId, int quantity, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCommerceShipmentItem(long commerceShipmentItemId)
 		throws PortalException;
@@ -66,6 +67,10 @@ public interface CommerceShipmentItemService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceShipmentItem fetchCommerceShipmentItem(
 		long commerceShipmentItemId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceOrderItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShipmentItem> getCommerceShipmentItems(

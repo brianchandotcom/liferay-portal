@@ -270,6 +270,169 @@ public class CommerceShipmentUtil {
 	}
 
 	/**
+	* Returns all the commerce shipments where siteGroupId = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @return the matching commerce shipments
+	*/
+	public static List<CommerceShipment> findBySiteGroupId(long siteGroupId) {
+		return getPersistence().findBySiteGroupId(siteGroupId);
+	}
+
+	/**
+	* Returns a range of all the commerce shipments where siteGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceShipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param siteGroupId the site group ID
+	* @param start the lower bound of the range of commerce shipments
+	* @param end the upper bound of the range of commerce shipments (not inclusive)
+	* @return the range of matching commerce shipments
+	*/
+	public static List<CommerceShipment> findBySiteGroupId(long siteGroupId,
+		int start, int end) {
+		return getPersistence().findBySiteGroupId(siteGroupId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce shipments where siteGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceShipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param siteGroupId the site group ID
+	* @param start the lower bound of the range of commerce shipments
+	* @param end the upper bound of the range of commerce shipments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce shipments
+	*/
+	public static List<CommerceShipment> findBySiteGroupId(long siteGroupId,
+		int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+		return getPersistence()
+				   .findBySiteGroupId(siteGroupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce shipments where siteGroupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceShipmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param siteGroupId the site group ID
+	* @param start the lower bound of the range of commerce shipments
+	* @param end the upper bound of the range of commerce shipments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce shipments
+	*/
+	public static List<CommerceShipment> findBySiteGroupId(long siteGroupId,
+		int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findBySiteGroupId(siteGroupId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce shipment in the ordered set where siteGroupId = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce shipment
+	* @throws NoSuchShipmentException if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment findBySiteGroupId_First(long siteGroupId,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+		return getPersistence()
+				   .findBySiteGroupId_First(siteGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce shipment in the ordered set where siteGroupId = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment fetchBySiteGroupId_First(long siteGroupId,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+		return getPersistence()
+				   .fetchBySiteGroupId_First(siteGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce shipment in the ordered set where siteGroupId = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce shipment
+	* @throws NoSuchShipmentException if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment findBySiteGroupId_Last(long siteGroupId,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+		return getPersistence()
+				   .findBySiteGroupId_Last(siteGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce shipment in the ordered set where siteGroupId = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	*/
+	public static CommerceShipment fetchBySiteGroupId_Last(long siteGroupId,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+		return getPersistence()
+				   .fetchBySiteGroupId_Last(siteGroupId, orderByComparator);
+	}
+
+	/**
+	* Returns the commerce shipments before and after the current commerce shipment in the ordered set where siteGroupId = &#63;.
+	*
+	* @param commerceShipmentId the primary key of the current commerce shipment
+	* @param siteGroupId the site group ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce shipment
+	* @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
+	*/
+	public static CommerceShipment[] findBySiteGroupId_PrevAndNext(
+		long commerceShipmentId, long siteGroupId,
+		OrderByComparator<CommerceShipment> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchShipmentException {
+		return getPersistence()
+				   .findBySiteGroupId_PrevAndNext(commerceShipmentId,
+			siteGroupId, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce shipments where siteGroupId = &#63; from the database.
+	*
+	* @param siteGroupId the site group ID
+	*/
+	public static void removeBySiteGroupId(long siteGroupId) {
+		getPersistence().removeBySiteGroupId(siteGroupId);
+	}
+
+	/**
+	* Returns the number of commerce shipments where siteGroupId = &#63;.
+	*
+	* @param siteGroupId the site group ID
+	* @return the number of matching commerce shipments
+	*/
+	public static int countBySiteGroupId(long siteGroupId) {
+		return getPersistence().countBySiteGroupId(siteGroupId);
+	}
+
+	/**
 	* Caches the commerce shipment in the entity cache if it is enabled.
 	*
 	* @param commerceShipment the commerce shipment

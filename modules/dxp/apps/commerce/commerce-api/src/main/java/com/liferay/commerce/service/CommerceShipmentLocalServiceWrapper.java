@@ -48,22 +48,11 @@ public class CommerceShipmentLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceShipment addCommerceShipment(
-		long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, long commerceWarehouseId,
-		String carrier, String trackingNumber, int expectedDuration,
-		int status, int shippingDateMonth, int shippingDateDay,
-		int shippingDateYear, int shippingDateHour, int shippingDateMinute,
-		int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-		int expectedDateHour, int expectedDateMinute,
+		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceShipmentLocalService.addCommerceShipment(shipmentUserId,
-			commerceAddressId, commerceShippingMethodId, commerceWarehouseId,
-			carrier, trackingNumber, expectedDuration, status,
-			shippingDateMonth, shippingDateDay, shippingDateYear,
-			shippingDateHour, shippingDateMinute, expectedDateMonth,
-			expectedDateDay, expectedDateYear, expectedDateHour,
-			expectedDateMinute, serviceContext);
+		return _commerceShipmentLocalService.addCommerceShipment(commerceOrderId,
+			serviceContext);
 	}
 
 	/**
@@ -243,10 +232,18 @@ public class CommerceShipmentLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipments(
+	public java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
-		return _commerceShipmentLocalService.getCommerceShipments(groupId,
+		return _commerceShipmentLocalService.getCommerceShipmentsByGroupId(groupId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsBySiteGroupId(
+		long siteGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
+		return _commerceShipmentLocalService.getCommerceShipmentsBySiteGroupId(siteGroupId,
 			start, end, orderByComparator);
 	}
 
@@ -261,8 +258,13 @@ public class CommerceShipmentLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceShipmentsCount(long groupId) {
-		return _commerceShipmentLocalService.getCommerceShipmentsCount(groupId);
+	public int getCommerceShipmentsCountByGroupId(long groupId) {
+		return _commerceShipmentLocalService.getCommerceShipmentsCountByGroupId(groupId);
+	}
+
+	@Override
+	public int getCommerceShipmentsCountBySiteGroupId(long siteGroupId) {
+		return _commerceShipmentLocalService.getCommerceShipmentsCountBySiteGroupId(siteGroupId);
 	}
 
 	@Override
@@ -301,20 +303,17 @@ public class CommerceShipmentLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceShipment updateCommerceShipment(
-		long commerceShipmentId, long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, String carrier, String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
-		int shippingDateDay, int shippingDateYear, int shippingDateHour,
-		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
-		int expectedDateYear, int expectedDateHour, int expectedDateMinute)
+		long commerceShipmentId, String carrier, String trackingNumber,
+		int status, int shippingDateMonth, int shippingDateDay,
+		int shippingDateYear, int shippingDateHour, int shippingDateMinute,
+		int expectedDateMonth, int expectedDateDay, int expectedDateYear,
+		int expectedDateHour, int expectedDateMinute)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceShipmentLocalService.updateCommerceShipment(commerceShipmentId,
-			shipmentUserId, commerceAddressId, commerceShippingMethodId,
-			carrier, trackingNumber, expectedDuration, status,
-			shippingDateMonth, shippingDateDay, shippingDateYear,
-			shippingDateHour, shippingDateMinute, expectedDateMonth,
-			expectedDateDay, expectedDateYear, expectedDateHour,
-			expectedDateMinute);
+			carrier, trackingNumber, status, shippingDateMonth,
+			shippingDateDay, shippingDateYear, shippingDateHour,
+			shippingDateMinute, expectedDateMonth, expectedDateDay,
+			expectedDateYear, expectedDateHour, expectedDateMinute);
 	}
 
 	@Override

@@ -36,11 +36,12 @@ public class CommerceShipmentItemServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceShipmentItem addCommerceShipmentItem(
-		long commerceShipmentId, long commerceOrderItemId, int quantity,
+		long commerceShipmentId, long commerceOrderItemId,
+		long commerceWarehouseId, int quantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceShipmentItemService.addCommerceShipmentItem(commerceShipmentId,
-			commerceOrderItemId, quantity, serviceContext);
+			commerceOrderItemId, commerceWarehouseId, quantity, serviceContext);
 	}
 
 	@Override
@@ -53,6 +54,12 @@ public class CommerceShipmentItemServiceWrapper
 	public com.liferay.commerce.model.CommerceShipmentItem fetchCommerceShipmentItem(
 		long commerceShipmentItemId) {
 		return _commerceShipmentItemService.fetchCommerceShipmentItem(commerceShipmentItemId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceOrderItemId) {
+		return _commerceShipmentItemService.getCommerceShipmentItems(commerceOrderItemId);
 	}
 
 	@Override

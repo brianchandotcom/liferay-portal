@@ -66,12 +66,14 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceShipmentItemServiceSoap {
 	public static com.liferay.commerce.model.CommerceShipmentItemSoap addCommerceShipmentItem(
-		long commerceShipmentId, long commerceOrderItemId, int quantity,
+		long commerceShipmentId, long commerceOrderItemId,
+		long commerceWarehouseId, int quantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceShipmentItem returnValue = CommerceShipmentItemServiceUtil.addCommerceShipmentItem(commerceShipmentId,
-					commerceOrderItemId, quantity, serviceContext);
+					commerceOrderItemId, commerceWarehouseId, quantity,
+					serviceContext);
 
 			return com.liferay.commerce.model.CommerceShipmentItemSoap.toSoapModel(returnValue);
 		}
@@ -100,6 +102,21 @@ public class CommerceShipmentItemServiceSoap {
 			com.liferay.commerce.model.CommerceShipmentItem returnValue = CommerceShipmentItemServiceUtil.fetchCommerceShipmentItem(commerceShipmentItemId);
 
 			return com.liferay.commerce.model.CommerceShipmentItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceShipmentItemSoap[] getCommerceShipmentItems(
+		long commerceOrderItemId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceShipmentItem> returnValue =
+				CommerceShipmentItemServiceUtil.getCommerceShipmentItems(commerceOrderItemId);
+
+			return com.liferay.commerce.model.CommerceShipmentItemSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

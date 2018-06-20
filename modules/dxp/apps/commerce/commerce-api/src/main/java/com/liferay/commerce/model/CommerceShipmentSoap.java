@@ -41,13 +41,14 @@ public class CommerceShipmentSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setSiteGroupId(model.getSiteGroupId());
+		soapModel.setShipmentOrganizationId(model.getShipmentOrganizationId());
 		soapModel.setShipmentUserId(model.getShipmentUserId());
 		soapModel.setCommerceAddressId(model.getCommerceAddressId());
 		soapModel.setCommerceShippingMethodId(model.getCommerceShippingMethodId());
-		soapModel.setCommerceWarehouseId(model.getCommerceWarehouseId());
+		soapModel.setShippingOptionName(model.getShippingOptionName());
 		soapModel.setCarrier(model.getCarrier());
 		soapModel.setTrackingNumber(model.getTrackingNumber());
-		soapModel.setExpectedDuration(model.getExpectedDuration());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setShippingDate(model.getShippingDate());
 		soapModel.setExpectedDate(model.getExpectedDate());
@@ -161,6 +162,22 @@ public class CommerceShipmentSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getSiteGroupId() {
+		return _siteGroupId;
+	}
+
+	public void setSiteGroupId(long siteGroupId) {
+		_siteGroupId = siteGroupId;
+	}
+
+	public long getShipmentOrganizationId() {
+		return _shipmentOrganizationId;
+	}
+
+	public void setShipmentOrganizationId(long shipmentOrganizationId) {
+		_shipmentOrganizationId = shipmentOrganizationId;
+	}
+
 	public long getShipmentUserId() {
 		return _shipmentUserId;
 	}
@@ -185,12 +202,12 @@ public class CommerceShipmentSoap implements Serializable {
 		_commerceShippingMethodId = commerceShippingMethodId;
 	}
 
-	public long getCommerceWarehouseId() {
-		return _commerceWarehouseId;
+	public String getShippingOptionName() {
+		return _shippingOptionName;
 	}
 
-	public void setCommerceWarehouseId(long commerceWarehouseId) {
-		_commerceWarehouseId = commerceWarehouseId;
+	public void setShippingOptionName(String shippingOptionName) {
+		_shippingOptionName = shippingOptionName;
 	}
 
 	public String getCarrier() {
@@ -207,14 +224,6 @@ public class CommerceShipmentSoap implements Serializable {
 
 	public void setTrackingNumber(String trackingNumber) {
 		_trackingNumber = trackingNumber;
-	}
-
-	public int getExpectedDuration() {
-		return _expectedDuration;
-	}
-
-	public void setExpectedDuration(int expectedDuration) {
-		_expectedDuration = expectedDuration;
 	}
 
 	public int getStatus() {
@@ -248,13 +257,14 @@ public class CommerceShipmentSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _siteGroupId;
+	private long _shipmentOrganizationId;
 	private long _shipmentUserId;
 	private long _commerceAddressId;
 	private long _commerceShippingMethodId;
-	private long _commerceWarehouseId;
+	private String _shippingOptionName;
 	private String _carrier;
 	private String _trackingNumber;
-	private int _expectedDuration;
 	private int _status;
 	private Date _shippingDate;
 	private Date _expectedDate;

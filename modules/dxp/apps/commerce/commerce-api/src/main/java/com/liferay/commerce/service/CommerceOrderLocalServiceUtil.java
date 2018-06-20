@@ -60,8 +60,7 @@ public class CommerceOrderLocalServiceUtil {
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		String shippingOptionName, String purchaseOrderNumber,
 		java.math.BigDecimal subtotal, java.math.BigDecimal shippingPrice,
-		java.math.BigDecimal total, int paymentStatus, int shippingStatus,
-		int orderStatus,
+		java.math.BigDecimal total, int paymentStatus, int orderStatus,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -69,8 +68,8 @@ public class CommerceOrderLocalServiceUtil {
 			orderUserId, commerceCurrencyId, billingAddressId,
 			shippingAddressId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, purchaseOrderNumber,
-			subtotal, shippingPrice, total, paymentStatus, shippingStatus,
-			orderStatus, serviceContext);
+			subtotal, shippingPrice, total, paymentStatus, orderStatus,
+			serviceContext);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addOrganizationCommerceOrder(
@@ -341,6 +340,11 @@ public class CommerceOrderLocalServiceUtil {
 	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
 		int start, int end) {
 		return getService().getCommerceOrders(start, end);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
+		long siteGroupId, int[] orderStatuses) {
+		return getService().getCommerceOrders(siteGroupId, orderStatuses);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(

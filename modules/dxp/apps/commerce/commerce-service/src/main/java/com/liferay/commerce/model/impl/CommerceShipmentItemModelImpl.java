@@ -80,6 +80,7 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceShipmentId", Types.BIGINT },
 			{ "commerceOrderItemId", Types.BIGINT },
+			{ "commerceWarehouseId", Types.BIGINT },
 			{ "quantity", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -94,10 +95,11 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceShipmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceOrderItemId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceWarehouseId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceShipmentItem (commerceShipmentItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShipmentId LONG,commerceOrderItemId LONG,quantity INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceShipmentItem (commerceShipmentItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceShipmentId LONG,commerceOrderItemId LONG,commerceWarehouseId LONG,quantity INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceShipmentItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceShipmentItem.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceShipmentItem.createDate DESC";
@@ -140,6 +142,7 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceShipmentId(soapModel.getCommerceShipmentId());
 		model.setCommerceOrderItemId(soapModel.getCommerceOrderItemId());
+		model.setCommerceWarehouseId(soapModel.getCommerceWarehouseId());
 		model.setQuantity(soapModel.getQuantity());
 
 		return model;
@@ -215,6 +218,7 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceShipmentId", getCommerceShipmentId());
 		attributes.put("commerceOrderItemId", getCommerceOrderItemId());
+		attributes.put("commerceWarehouseId", getCommerceWarehouseId());
 		attributes.put("quantity", getQuantity());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -278,6 +282,12 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 
 		if (commerceOrderItemId != null) {
 			setCommerceOrderItemId(commerceOrderItemId);
+		}
+
+		Long commerceWarehouseId = (Long)attributes.get("commerceWarehouseId");
+
+		if (commerceWarehouseId != null) {
+			setCommerceWarehouseId(commerceWarehouseId);
 		}
 
 		Integer quantity = (Integer)attributes.get("quantity");
@@ -441,6 +451,17 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 
 	@JSON
 	@Override
+	public long getCommerceWarehouseId() {
+		return _commerceWarehouseId;
+	}
+
+	@Override
+	public void setCommerceWarehouseId(long commerceWarehouseId) {
+		_commerceWarehouseId = commerceWarehouseId;
+	}
+
+	@JSON
+	@Override
 	public int getQuantity() {
 		return _quantity;
 	}
@@ -490,6 +511,7 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 		commerceShipmentItemImpl.setModifiedDate(getModifiedDate());
 		commerceShipmentItemImpl.setCommerceShipmentId(getCommerceShipmentId());
 		commerceShipmentItemImpl.setCommerceOrderItemId(getCommerceOrderItemId());
+		commerceShipmentItemImpl.setCommerceWarehouseId(getCommerceWarehouseId());
 		commerceShipmentItemImpl.setQuantity(getQuantity());
 
 		commerceShipmentItemImpl.resetOriginalValues();
@@ -609,6 +631,8 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 
 		commerceShipmentItemCacheModel.commerceOrderItemId = getCommerceOrderItemId();
 
+		commerceShipmentItemCacheModel.commerceWarehouseId = getCommerceWarehouseId();
+
 		commerceShipmentItemCacheModel.quantity = getQuantity();
 
 		return commerceShipmentItemCacheModel;
@@ -616,7 +640,7 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{commerceShipmentItemId=");
 		sb.append(getCommerceShipmentItemId());
@@ -636,6 +660,8 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 		sb.append(getCommerceShipmentId());
 		sb.append(", commerceOrderItemId=");
 		sb.append(getCommerceOrderItemId());
+		sb.append(", commerceWarehouseId=");
+		sb.append(getCommerceWarehouseId());
 		sb.append(", quantity=");
 		sb.append(getQuantity());
 		sb.append("}");
@@ -645,7 +671,7 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceShipmentItem");
@@ -688,6 +714,10 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 		sb.append(getCommerceOrderItemId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>commerceWarehouseId</column-name><column-value><![CDATA[");
+		sb.append(getCommerceWarehouseId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>quantity</column-name><column-value><![CDATA[");
 		sb.append(getQuantity());
 		sb.append("]]></column-value></column>");
@@ -715,6 +745,7 @@ public class CommerceShipmentItemModelImpl extends BaseModelImpl<CommerceShipmen
 	private long _originalCommerceShipmentId;
 	private boolean _setOriginalCommerceShipmentId;
 	private long _commerceOrderItemId;
+	private long _commerceWarehouseId;
 	private int _quantity;
 	private long _columnBitmask;
 	private CommerceShipmentItem _escapedModel;

@@ -441,20 +441,6 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	public void setPaymentStatus(int paymentStatus);
 
 	/**
-	 * Returns the shipping status of this commerce order.
-	 *
-	 * @return the shipping status of this commerce order
-	 */
-	public int getShippingStatus();
-
-	/**
-	 * Sets the shipping status of this commerce order.
-	 *
-	 * @param shippingStatus the shipping status of this commerce order
-	 */
-	public void setShippingStatus(int shippingStatus);
-
-	/**
 	 * Returns the order status of this commerce order.
 	 *
 	 * @return the order status of this commerce order

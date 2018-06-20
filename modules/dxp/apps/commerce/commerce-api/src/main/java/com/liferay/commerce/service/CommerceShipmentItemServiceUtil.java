@@ -43,12 +43,13 @@ public class CommerceShipmentItemServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceShipmentItemServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceShipmentItem addCommerceShipmentItem(
-		long commerceShipmentId, long commerceOrderItemId, int quantity,
+		long commerceShipmentId, long commerceOrderItemId,
+		long commerceWarehouseId, int quantity,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceShipmentItem(commerceShipmentId,
-			commerceOrderItemId, quantity, serviceContext);
+			commerceOrderItemId, commerceWarehouseId, quantity, serviceContext);
 	}
 
 	public static void deleteCommerceShipmentItem(long commerceShipmentItemId)
@@ -59,6 +60,11 @@ public class CommerceShipmentItemServiceUtil {
 	public static com.liferay.commerce.model.CommerceShipmentItem fetchCommerceShipmentItem(
 		long commerceShipmentItemId) {
 		return getService().fetchCommerceShipmentItem(commerceShipmentItemId);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceOrderItemId) {
+		return getService().getCommerceShipmentItems(commerceOrderItemId);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceShipmentItem> getCommerceShipmentItems(

@@ -56,13 +56,7 @@ public interface CommerceShipmentService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceShipmentServiceUtil} to access the commerce shipment remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceShipmentServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceShipment addCommerceShipment(long shipmentUserId,
-		long commerceAddressId, long commerceShippingMethodId,
-		long commerceWarehouseId, String carrier, String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
-		int shippingDateDay, int shippingDateYear, int shippingDateHour,
-		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
-		int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+	public CommerceShipment addCommerceShipment(long commerceOrderId,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCommerceShipment(long commerceShipmentId)
@@ -73,11 +67,20 @@ public interface CommerceShipmentService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShipment> getCommerceShipments(long groupId, int start,
-		int end, OrderByComparator<CommerceShipment> orderByComparator);
+	public List<CommerceShipment> getCommerceShipmentsByGroupId(long groupId,
+		int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceShipmentsCount(long groupId);
+	public List<CommerceShipment> getCommerceShipmentsBySiteGroupId(
+		long siteGroupId, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShipmentsCountByGroupId(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShipmentsCountBySiteGroupId(long siteGroupId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -87,11 +90,9 @@ public interface CommerceShipmentService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public CommerceShipment updateCommerceShipment(long commerceShipmentId,
-		long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, String carrier, String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
-		int shippingDateDay, int shippingDateYear, int shippingDateHour,
-		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
-		int expectedDateYear, int expectedDateHour, int expectedDateMinute)
-		throws PortalException;
+		String carrier, String trackingNumber, int status,
+		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
+		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
+		int expectedDateDay, int expectedDateYear, int expectedDateHour,
+		int expectedDateMinute) throws PortalException;
 }

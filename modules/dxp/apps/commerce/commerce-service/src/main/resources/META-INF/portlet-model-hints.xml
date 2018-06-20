@@ -115,7 +115,6 @@
 		<field name="total" type="BigDecimal" />
 		<field name="advanceStatus" type="String" />
 		<field name="paymentStatus" type="int" />
-		<field name="shippingStatus" type="int" />
 		<field name="orderStatus" type="int" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
@@ -220,13 +219,14 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="siteGroupId" type="long" />
+		<field name="shipmentOrganizationId" type="long" />
 		<field name="shipmentUserId" type="long" />
 		<field name="commerceAddressId" type="long" />
 		<field name="commerceShippingMethodId" type="long" />
-		<field name="commerceWarehouseId" type="long" />
+		<field name="shippingOptionName" type="String" />
 		<field name="carrier" type="String" />
 		<field name="trackingNumber" type="String" />
-		<field name="expectedDuration" type="int" />
 		<field name="status" type="int" />
 		<field name="shippingDate" type="Date" />
 		<field name="expectedDate" type="Date" />
@@ -241,6 +241,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceShipmentId" type="long" />
 		<field name="commerceOrderItemId" type="long" />
+		<field name="commerceWarehouseId" type="long" />
 		<field name="quantity" type="int" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceShippingMethod">

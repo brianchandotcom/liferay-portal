@@ -138,6 +138,8 @@ public class CommerceShipmentItemPersistenceTest {
 
 		newCommerceShipmentItem.setCommerceOrderItemId(RandomTestUtil.nextLong());
 
+		newCommerceShipmentItem.setCommerceWarehouseId(RandomTestUtil.nextLong());
+
 		newCommerceShipmentItem.setQuantity(RandomTestUtil.nextInt());
 
 		_commerceShipmentItems.add(_persistence.update(newCommerceShipmentItem));
@@ -164,6 +166,8 @@ public class CommerceShipmentItemPersistenceTest {
 			newCommerceShipmentItem.getCommerceShipmentId());
 		Assert.assertEquals(existingCommerceShipmentItem.getCommerceOrderItemId(),
 			newCommerceShipmentItem.getCommerceOrderItemId());
+		Assert.assertEquals(existingCommerceShipmentItem.getCommerceWarehouseId(),
+			newCommerceShipmentItem.getCommerceWarehouseId());
 		Assert.assertEquals(existingCommerceShipmentItem.getQuantity(),
 			newCommerceShipmentItem.getQuantity());
 	}
@@ -210,7 +214,8 @@ public class CommerceShipmentItemPersistenceTest {
 			"commerceShipmentItemId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "commerceShipmentId", true,
-			"commerceOrderItemId", true, "quantity", true);
+			"commerceOrderItemId", true, "commerceWarehouseId", true,
+			"quantity", true);
 	}
 
 	@Test
@@ -432,6 +437,8 @@ public class CommerceShipmentItemPersistenceTest {
 		commerceShipmentItem.setCommerceShipmentId(RandomTestUtil.nextLong());
 
 		commerceShipmentItem.setCommerceOrderItemId(RandomTestUtil.nextLong());
+
+		commerceShipmentItem.setCommerceWarehouseId(RandomTestUtil.nextLong());
 
 		commerceShipmentItem.setQuantity(RandomTestUtil.nextInt());
 

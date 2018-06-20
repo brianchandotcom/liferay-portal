@@ -87,8 +87,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		String shippingOptionName, String purchaseOrderNumber,
 		BigDecimal subtotal, BigDecimal shippingPrice, BigDecimal total,
-		int paymentStatus, int shippingStatus, int orderStatus,
-		ServiceContext serviceContext) throws PortalException;
+		int paymentStatus, int orderStatus, ServiceContext serviceContext)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addOrganizationCommerceOrder(long groupId,
@@ -284,6 +284,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrders(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrder> getCommerceOrders(long siteGroupId,
+		int[] orderStatuses);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrder> getCommerceOrders(long groupId,

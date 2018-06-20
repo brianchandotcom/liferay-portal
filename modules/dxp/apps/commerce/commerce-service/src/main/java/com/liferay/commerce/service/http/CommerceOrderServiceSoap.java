@@ -294,6 +294,22 @@ public class CommerceOrderServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderSoap[] getCommerceOrders(
+		long siteGroupId, int[] orderStatuses) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceOrder> returnValue =
+				CommerceOrderServiceUtil.getCommerceOrders(siteGroupId,
+					orderStatuses);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderSoap[] getCommerceOrders(
 		long groupId, long orderUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
 		throws RemoteException {

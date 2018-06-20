@@ -221,6 +221,20 @@ public interface CommerceShipmentItemModel extends BaseModel<CommerceShipmentIte
 	public void setCommerceOrderItemId(long commerceOrderItemId);
 
 	/**
+	 * Returns the commerce warehouse ID of this commerce shipment item.
+	 *
+	 * @return the commerce warehouse ID of this commerce shipment item
+	 */
+	public long getCommerceWarehouseId();
+
+	/**
+	 * Sets the commerce warehouse ID of this commerce shipment item.
+	 *
+	 * @param commerceWarehouseId the commerce warehouse ID of this commerce shipment item
+	 */
+	public void setCommerceWarehouseId(long commerceWarehouseId);
+
+	/**
 	 * Returns the quantity of this commerce shipment item.
 	 *
 	 * @return the quantity of this commerce shipment item

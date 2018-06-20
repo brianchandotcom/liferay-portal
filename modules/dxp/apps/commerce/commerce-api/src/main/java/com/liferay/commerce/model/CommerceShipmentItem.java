@@ -57,4 +57,7 @@ public interface CommerceShipmentItem extends CommerceShipmentItemModel,
 		};
 
 	public CommerceOrderItem fetchCommerceOrderItem();
+
+	public CommerceShipment getCommerceShipment()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

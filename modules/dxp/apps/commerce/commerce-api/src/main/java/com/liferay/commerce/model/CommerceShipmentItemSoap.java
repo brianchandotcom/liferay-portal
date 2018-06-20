@@ -44,6 +44,7 @@ public class CommerceShipmentItemSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceShipmentId(model.getCommerceShipmentId());
 		soapModel.setCommerceOrderItemId(model.getCommerceOrderItemId());
+		soapModel.setCommerceWarehouseId(model.getCommerceWarehouseId());
 		soapModel.setQuantity(model.getQuantity());
 
 		return soapModel;
@@ -172,6 +173,14 @@ public class CommerceShipmentItemSoap implements Serializable {
 		_commerceOrderItemId = commerceOrderItemId;
 	}
 
+	public long getCommerceWarehouseId() {
+		return _commerceWarehouseId;
+	}
+
+	public void setCommerceWarehouseId(long commerceWarehouseId) {
+		_commerceWarehouseId = commerceWarehouseId;
+	}
+
 	public int getQuantity() {
 		return _quantity;
 	}
@@ -189,5 +198,6 @@ public class CommerceShipmentItemSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _commerceShipmentId;
 	private long _commerceOrderItemId;
+	private long _commerceWarehouseId;
 	private int _quantity;
 }

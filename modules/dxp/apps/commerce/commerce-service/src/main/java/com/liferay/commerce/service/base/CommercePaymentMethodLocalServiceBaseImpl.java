@@ -25,6 +25,7 @@ import com.liferay.commerce.service.persistence.CommerceAddressRestrictionPersis
 import com.liferay.commerce.service.persistence.CommerceAvailabilityEstimatePersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
+import com.liferay.commerce.service.persistence.CommerceOrderFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
@@ -32,6 +33,7 @@ import com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
 import com.liferay.commerce.service.persistence.CommerceRegionPersistence;
+import com.liferay.commerce.service.persistence.CommerceShipmentItemFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
@@ -557,6 +559,24 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce order finder.
+	 *
+	 * @return the commerce order finder
+	 */
+	public CommerceOrderFinder getCommerceOrderFinder() {
+		return commerceOrderFinder;
+	}
+
+	/**
+	 * Sets the commerce order finder.
+	 *
+	 * @param commerceOrderFinder the commerce order finder
+	 */
+	public void setCommerceOrderFinder(CommerceOrderFinder commerceOrderFinder) {
+		this.commerceOrderFinder = commerceOrderFinder;
+	}
+
+	/**
 	 * Returns the commerce order item local service.
 	 *
 	 * @return the commerce order item local service
@@ -839,6 +859,25 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	public void setCommerceShipmentItemPersistence(
 		CommerceShipmentItemPersistence commerceShipmentItemPersistence) {
 		this.commerceShipmentItemPersistence = commerceShipmentItemPersistence;
+	}
+
+	/**
+	 * Returns the commerce shipment item finder.
+	 *
+	 * @return the commerce shipment item finder
+	 */
+	public CommerceShipmentItemFinder getCommerceShipmentItemFinder() {
+		return commerceShipmentItemFinder;
+	}
+
+	/**
+	 * Sets the commerce shipment item finder.
+	 *
+	 * @param commerceShipmentItemFinder the commerce shipment item finder
+	 */
+	public void setCommerceShipmentItemFinder(
+		CommerceShipmentItemFinder commerceShipmentItemFinder) {
+		this.commerceShipmentItemFinder = commerceShipmentItemFinder;
 	}
 
 	/**
@@ -1331,6 +1370,8 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceOrderLocalService commerceOrderLocalService;
 	@BeanReference(type = CommerceOrderPersistence.class)
 	protected CommerceOrderPersistence commerceOrderPersistence;
+	@BeanReference(type = CommerceOrderFinder.class)
+	protected CommerceOrderFinder commerceOrderFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceOrderItemLocalService.class)
 	protected com.liferay.commerce.service.CommerceOrderItemLocalService commerceOrderItemLocalService;
 	@BeanReference(type = CommerceOrderItemPersistence.class)
@@ -1361,6 +1402,8 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceShipmentItemLocalService commerceShipmentItemLocalService;
 	@BeanReference(type = CommerceShipmentItemPersistence.class)
 	protected CommerceShipmentItemPersistence commerceShipmentItemPersistence;
+	@BeanReference(type = CommerceShipmentItemFinder.class)
+	protected CommerceShipmentItemFinder commerceShipmentItemFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceShippingMethodLocalService.class)
 	protected com.liferay.commerce.service.CommerceShippingMethodLocalService commerceShippingMethodLocalService;
 	@BeanReference(type = CommerceShippingMethodPersistence.class)

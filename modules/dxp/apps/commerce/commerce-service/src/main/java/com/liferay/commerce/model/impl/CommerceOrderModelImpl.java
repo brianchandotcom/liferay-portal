@@ -100,7 +100,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "total", Types.DECIMAL },
 			{ "advanceStatus", Types.VARCHAR },
 			{ "paymentStatus", Types.INTEGER },
-			{ "shippingStatus", Types.INTEGER },
 			{ "orderStatus", Types.INTEGER },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
@@ -133,7 +132,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("total", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("advanceStatus", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("paymentStatus", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("shippingStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("orderStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -141,7 +139,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,orderOrganizationId LONG,orderUserId LONG,commerceCurrencyId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(255) null,purchaseOrderNumber VARCHAR(75) null,subtotal DECIMAL(30, 16) null,shippingPrice DECIMAL(30, 16) null,total DECIMAL(30, 16) null,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteGroupId LONG,orderOrganizationId LONG,orderUserId LONG,commerceCurrencyId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(255) null,purchaseOrderNumber VARCHAR(75) null,subtotal DECIMAL(30, 16) null,shippingPrice DECIMAL(30, 16) null,total DECIMAL(30, 16) null,advanceStatus VARCHAR(75) null,paymentStatus INTEGER,orderStatus INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -203,7 +201,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		model.setTotal(soapModel.getTotal());
 		model.setAdvanceStatus(soapModel.getAdvanceStatus());
 		model.setPaymentStatus(soapModel.getPaymentStatus());
-		model.setShippingStatus(soapModel.getShippingStatus());
 		model.setOrderStatus(soapModel.getOrderStatus());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
@@ -296,7 +293,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		attributes.put("total", getTotal());
 		attributes.put("advanceStatus", getAdvanceStatus());
 		attributes.put("paymentStatus", getPaymentStatus());
-		attributes.put("shippingStatus", getShippingStatus());
 		attributes.put("orderStatus", getOrderStatus());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -450,12 +446,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		if (paymentStatus != null) {
 			setPaymentStatus(paymentStatus);
-		}
-
-		Integer shippingStatus = (Integer)attributes.get("shippingStatus");
-
-		if (shippingStatus != null) {
-			setShippingStatus(shippingStatus);
 		}
 
 		Integer orderStatus = (Integer)attributes.get("orderStatus");
@@ -897,17 +887,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@JSON
 	@Override
-	public int getShippingStatus() {
-		return _shippingStatus;
-	}
-
-	@Override
-	public void setShippingStatus(int shippingStatus) {
-		_shippingStatus = shippingStatus;
-	}
-
-	@JSON
-	@Override
 	public int getOrderStatus() {
 		return _orderStatus;
 	}
@@ -1134,7 +1113,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderImpl.setTotal(getTotal());
 		commerceOrderImpl.setAdvanceStatus(getAdvanceStatus());
 		commerceOrderImpl.setPaymentStatus(getPaymentStatus());
-		commerceOrderImpl.setShippingStatus(getShippingStatus());
 		commerceOrderImpl.setOrderStatus(getOrderStatus());
 		commerceOrderImpl.setStatus(getStatus());
 		commerceOrderImpl.setStatusByUserId(getStatusByUserId());
@@ -1333,8 +1311,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderCacheModel.paymentStatus = getPaymentStatus();
 
-		commerceOrderCacheModel.shippingStatus = getShippingStatus();
-
 		commerceOrderCacheModel.orderStatus = getOrderStatus();
 
 		commerceOrderCacheModel.status = getStatus();
@@ -1363,7 +1339,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1411,8 +1387,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getAdvanceStatus());
 		sb.append(", paymentStatus=");
 		sb.append(getPaymentStatus());
-		sb.append(", shippingStatus=");
-		sb.append(getShippingStatus());
 		sb.append(", orderStatus=");
 		sb.append(getOrderStatus());
 		sb.append(", status=");
@@ -1430,7 +1404,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
+		StringBundler sb = new StringBundler(88);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrder");
@@ -1529,10 +1503,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getPaymentStatus());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>shippingStatus</column-name><column-value><![CDATA[");
-		sb.append(getShippingStatus());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>orderStatus</column-name><column-value><![CDATA[");
 		sb.append(getOrderStatus());
 		sb.append("]]></column-value></column>");
@@ -1600,7 +1570,6 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private BigDecimal _total;
 	private String _advanceStatus;
 	private int _paymentStatus;
-	private int _shippingStatus;
 	private int _orderStatus;
 	private int _originalOrderStatus;
 	private boolean _setOriginalOrderStatus;

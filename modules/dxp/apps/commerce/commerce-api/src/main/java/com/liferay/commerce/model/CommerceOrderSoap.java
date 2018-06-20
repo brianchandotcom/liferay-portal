@@ -59,7 +59,6 @@ public class CommerceOrderSoap implements Serializable {
 		soapModel.setTotal(model.getTotal());
 		soapModel.setAdvanceStatus(model.getAdvanceStatus());
 		soapModel.setPaymentStatus(model.getPaymentStatus());
-		soapModel.setShippingStatus(model.getShippingStatus());
 		soapModel.setOrderStatus(model.getOrderStatus());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
@@ -301,14 +300,6 @@ public class CommerceOrderSoap implements Serializable {
 		_paymentStatus = paymentStatus;
 	}
 
-	public int getShippingStatus() {
-		return _shippingStatus;
-	}
-
-	public void setShippingStatus(int shippingStatus) {
-		_shippingStatus = shippingStatus;
-	}
-
 	public int getOrderStatus() {
 		return _orderStatus;
 	}
@@ -372,7 +363,6 @@ public class CommerceOrderSoap implements Serializable {
 	private BigDecimal _total;
 	private String _advanceStatus;
 	private int _paymentStatus;
-	private int _shippingStatus;
 	private int _orderStatus;
 	private int _status;
 	private long _statusByUserId;

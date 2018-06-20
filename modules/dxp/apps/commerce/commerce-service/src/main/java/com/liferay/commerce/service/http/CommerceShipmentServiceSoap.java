@@ -66,23 +66,11 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceShipmentServiceSoap {
 	public static com.liferay.commerce.model.CommerceShipmentSoap addCommerceShipment(
-		long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, long commerceWarehouseId,
-		String carrier, String trackingNumber, int expectedDuration,
-		int status, int shippingDateMonth, int shippingDateDay,
-		int shippingDateYear, int shippingDateHour, int shippingDateMinute,
-		int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-		int expectedDateHour, int expectedDateMinute,
+		long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.commerce.model.CommerceShipment returnValue = CommerceShipmentServiceUtil.addCommerceShipment(shipmentUserId,
-					commerceAddressId, commerceShippingMethodId,
-					commerceWarehouseId, carrier, trackingNumber,
-					expectedDuration, status, shippingDateMonth,
-					shippingDateDay, shippingDateYear, shippingDateHour,
-					shippingDateMinute, expectedDateMonth, expectedDateDay,
-					expectedDateYear, expectedDateHour, expectedDateMinute,
+			com.liferay.commerce.model.CommerceShipment returnValue = CommerceShipmentServiceUtil.addCommerceShipment(commerceOrderId,
 					serviceContext);
 
 			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModel(returnValue);
@@ -120,13 +108,13 @@ public class CommerceShipmentServiceSoap {
 		}
 	}
 
-	public static com.liferay.commerce.model.CommerceShipmentSoap[] getCommerceShipments(
+	public static com.liferay.commerce.model.CommerceShipmentSoap[] getCommerceShipmentsByGroupId(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceShipment> returnValue =
-				CommerceShipmentServiceUtil.getCommerceShipments(groupId,
+				CommerceShipmentServiceUtil.getCommerceShipmentsByGroupId(groupId,
 					start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModels(returnValue);
@@ -138,10 +126,42 @@ public class CommerceShipmentServiceSoap {
 		}
 	}
 
-	public static int getCommerceShipmentsCount(long groupId)
+	public static com.liferay.commerce.model.CommerceShipmentSoap[] getCommerceShipmentsBySiteGroupId(
+		long siteGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator)
 		throws RemoteException {
 		try {
-			int returnValue = CommerceShipmentServiceUtil.getCommerceShipmentsCount(groupId);
+			java.util.List<com.liferay.commerce.model.CommerceShipment> returnValue =
+				CommerceShipmentServiceUtil.getCommerceShipmentsBySiteGroupId(siteGroupId,
+					start, end, orderByComparator);
+
+			return com.liferay.commerce.model.CommerceShipmentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceShipmentsCountByGroupId(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceShipmentServiceUtil.getCommerceShipmentsCountByGroupId(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceShipmentsCountBySiteGroupId(long siteGroupId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceShipmentServiceUtil.getCommerceShipmentsCountBySiteGroupId(siteGroupId);
 
 			return returnValue;
 		}
@@ -153,18 +173,14 @@ public class CommerceShipmentServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceShipmentSoap updateCommerceShipment(
-		long commerceShipmentId, long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, String carrier, String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
-		int shippingDateDay, int shippingDateYear, int shippingDateHour,
-		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
-		int expectedDateYear, int expectedDateHour, int expectedDateMinute)
-		throws RemoteException {
+		long commerceShipmentId, String carrier, String trackingNumber,
+		int status, int shippingDateMonth, int shippingDateDay,
+		int shippingDateYear, int shippingDateHour, int shippingDateMinute,
+		int expectedDateMonth, int expectedDateDay, int expectedDateYear,
+		int expectedDateHour, int expectedDateMinute) throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceShipment returnValue = CommerceShipmentServiceUtil.updateCommerceShipment(commerceShipmentId,
-					shipmentUserId, commerceAddressId,
-					commerceShippingMethodId, carrier, trackingNumber,
-					expectedDuration, status, shippingDateMonth,
+					carrier, trackingNumber, status, shippingDateMonth,
 					shippingDateDay, shippingDateYear, shippingDateHour,
 					shippingDateMinute, expectedDateMonth, expectedDateDay,
 					expectedDateYear, expectedDateHour, expectedDateMinute);

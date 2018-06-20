@@ -65,6 +65,13 @@ public class CommerceOrderItemServiceUtil {
 		return getService().fetchCommerceOrderItem(commerceOrderItemId);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem> getAvailableForShipmentCommerceOrderItems(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getAvailableForShipmentCommerceOrderItems(commerceOrderId);
+	}
+
 	public static com.liferay.commerce.model.CommerceOrderItem getCommerceOrderItem(
 		long commerceOrderItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -85,6 +92,14 @@ public class CommerceOrderItemServiceUtil {
 	public static int getCommerceOrderItemsQuantity(long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceOrderItemsQuantity(commerceOrderId);
+	}
+
+	public static int getCommerceWarehouseItemQuantity(
+		long commerceOrderItemId, long commerceWarehouseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceWarehouseItemQuantity(commerceOrderItemId,
+			commerceWarehouseId);
 	}
 
 	/**

@@ -67,7 +67,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -115,8 +115,6 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(advanceStatus);
 		sb.append(", paymentStatus=");
 		sb.append(paymentStatus);
-		sb.append(", shippingStatus=");
-		sb.append(shippingStatus);
 		sb.append(", orderStatus=");
 		sb.append(orderStatus);
 		sb.append(", status=");
@@ -204,7 +202,6 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		}
 
 		commerceOrderImpl.setPaymentStatus(paymentStatus);
-		commerceOrderImpl.setShippingStatus(shippingStatus);
 		commerceOrderImpl.setOrderStatus(orderStatus);
 		commerceOrderImpl.setStatus(status);
 		commerceOrderImpl.setStatusByUserId(statusByUserId);
@@ -267,8 +264,6 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		advanceStatus = objectInput.readUTF();
 
 		paymentStatus = objectInput.readInt();
-
-		shippingStatus = objectInput.readInt();
 
 		orderStatus = objectInput.readInt();
 
@@ -350,8 +345,6 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		objectOutput.writeInt(paymentStatus);
 
-		objectOutput.writeInt(shippingStatus);
-
 		objectOutput.writeInt(orderStatus);
 
 		objectOutput.writeInt(status);
@@ -391,7 +384,6 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public BigDecimal total;
 	public String advanceStatus;
 	public int paymentStatus;
-	public int shippingStatus;
 	public int orderStatus;
 	public int status;
 	public long statusByUserId;

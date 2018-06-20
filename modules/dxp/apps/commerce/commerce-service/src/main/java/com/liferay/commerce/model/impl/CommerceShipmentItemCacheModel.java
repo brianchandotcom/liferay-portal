@@ -65,7 +65,7 @@ public class CommerceShipmentItemCacheModel implements CacheModel<CommerceShipme
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{commerceShipmentItemId=");
 		sb.append(commerceShipmentItemId);
@@ -85,6 +85,8 @@ public class CommerceShipmentItemCacheModel implements CacheModel<CommerceShipme
 		sb.append(commerceShipmentId);
 		sb.append(", commerceOrderItemId=");
 		sb.append(commerceOrderItemId);
+		sb.append(", commerceWarehouseId=");
+		sb.append(commerceWarehouseId);
 		sb.append(", quantity=");
 		sb.append(quantity);
 		sb.append("}");
@@ -124,6 +126,7 @@ public class CommerceShipmentItemCacheModel implements CacheModel<CommerceShipme
 
 		commerceShipmentItemImpl.setCommerceShipmentId(commerceShipmentId);
 		commerceShipmentItemImpl.setCommerceOrderItemId(commerceOrderItemId);
+		commerceShipmentItemImpl.setCommerceWarehouseId(commerceWarehouseId);
 		commerceShipmentItemImpl.setQuantity(quantity);
 
 		commerceShipmentItemImpl.resetOriginalValues();
@@ -147,6 +150,8 @@ public class CommerceShipmentItemCacheModel implements CacheModel<CommerceShipme
 		commerceShipmentId = objectInput.readLong();
 
 		commerceOrderItemId = objectInput.readLong();
+
+		commerceWarehouseId = objectInput.readLong();
 
 		quantity = objectInput.readInt();
 	}
@@ -176,6 +181,8 @@ public class CommerceShipmentItemCacheModel implements CacheModel<CommerceShipme
 
 		objectOutput.writeLong(commerceOrderItemId);
 
+		objectOutput.writeLong(commerceWarehouseId);
+
 		objectOutput.writeInt(quantity);
 	}
 
@@ -188,5 +195,6 @@ public class CommerceShipmentItemCacheModel implements CacheModel<CommerceShipme
 	public long modifiedDate;
 	public long commerceShipmentId;
 	public long commerceOrderItemId;
+	public long commerceWarehouseId;
 	public int quantity;
 }

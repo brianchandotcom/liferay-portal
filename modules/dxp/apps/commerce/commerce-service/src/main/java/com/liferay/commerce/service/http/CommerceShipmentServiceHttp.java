@@ -56,13 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceShipmentServiceHttp {
 	public static com.liferay.commerce.model.CommerceShipment addCommerceShipment(
-		HttpPrincipal httpPrincipal, long shipmentUserId,
-		long commerceAddressId, long commerceShippingMethodId,
-		long commerceWarehouseId, String carrier, String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
-		int shippingDateDay, int shippingDateYear, int shippingDateHour,
-		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
-		int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+		HttpPrincipal httpPrincipal, long commerceOrderId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -70,13 +64,7 @@ public class CommerceShipmentServiceHttp {
 					"addCommerceShipment", _addCommerceShipmentParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					shipmentUserId, commerceAddressId,
-					commerceShippingMethodId, commerceWarehouseId, carrier,
-					trackingNumber, expectedDuration, status,
-					shippingDateMonth, shippingDateDay, shippingDateYear,
-					shippingDateHour, shippingDateMinute, expectedDateMonth,
-					expectedDateDay, expectedDateYear, expectedDateHour,
-					expectedDateMinute, serviceContext);
+					commerceOrderId, serviceContext);
 
 			Object returnObj = null;
 
@@ -161,12 +149,13 @@ public class CommerceShipmentServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipments(
+	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsByGroupId(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
-					"getCommerceShipments", _getCommerceShipmentsParameterTypes3);
+					"getCommerceShipmentsByGroupId",
+					_getCommerceShipmentsByGroupIdParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -189,12 +178,41 @@ public class CommerceShipmentServiceHttp {
 		}
 	}
 
-	public static int getCommerceShipmentsCount(HttpPrincipal httpPrincipal,
-		long groupId) {
+	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipmentsBySiteGroupId(
+		HttpPrincipal httpPrincipal, long siteGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
-					"getCommerceShipmentsCount",
-					_getCommerceShipmentsCountParameterTypes4);
+					"getCommerceShipmentsBySiteGroupId",
+					_getCommerceShipmentsBySiteGroupIdParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					siteGroupId, start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.model.CommerceShipment>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static int getCommerceShipmentsCountByGroupId(
+		HttpPrincipal httpPrincipal, long groupId) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
+					"getCommerceShipmentsCountByGroupId",
+					_getCommerceShipmentsCountByGroupIdParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -216,11 +234,37 @@ public class CommerceShipmentServiceHttp {
 		}
 	}
 
+	public static int getCommerceShipmentsCountBySiteGroupId(
+		HttpPrincipal httpPrincipal, long siteGroupId) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
+					"getCommerceShipmentsCountBySiteGroupId",
+					_getCommerceShipmentsCountBySiteGroupIdParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					siteGroupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceShipment updateCommerceShipment(
-		HttpPrincipal httpPrincipal, long commerceShipmentId,
-		long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, String carrier, String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
+		HttpPrincipal httpPrincipal, long commerceShipmentId, String carrier,
+		String trackingNumber, int status, int shippingDateMonth,
 		int shippingDateDay, int shippingDateYear, int shippingDateHour,
 		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
 		int expectedDateYear, int expectedDateHour, int expectedDateMinute)
@@ -228,15 +272,14 @@ public class CommerceShipmentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
 					"updateCommerceShipment",
-					_updateCommerceShipmentParameterTypes5);
+					_updateCommerceShipmentParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					commerceShipmentId, shipmentUserId, commerceAddressId,
-					commerceShippingMethodId, carrier, trackingNumber,
-					expectedDuration, status, shippingDateMonth,
-					shippingDateDay, shippingDateYear, shippingDateHour,
-					shippingDateMinute, expectedDateMonth, expectedDateDay,
-					expectedDateYear, expectedDateHour, expectedDateMinute);
+					commerceShipmentId, carrier, trackingNumber, status,
+					shippingDateMonth, shippingDateDay, shippingDateYear,
+					shippingDateHour, shippingDateMinute, expectedDateMonth,
+					expectedDateDay, expectedDateYear, expectedDateHour,
+					expectedDateMinute);
 
 			Object returnObj = null;
 
@@ -262,10 +305,7 @@ public class CommerceShipmentServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceShipmentServiceHttp.class);
 	private static final Class<?>[] _addCommerceShipmentParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, long.class, String.class,
-			String.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceShipmentParameterTypes1 = new Class[] {
 			long.class
@@ -273,17 +313,23 @@ public class CommerceShipmentServiceHttp {
 	private static final Class<?>[] _getCommerceShipmentParameterTypes2 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceShipmentsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getCommerceShipmentsByGroupIdParameterTypes3 =
+		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceShipmentsCountParameterTypes4 = new Class[] {
-			long.class
+	private static final Class<?>[] _getCommerceShipmentsBySiteGroupIdParameterTypes4 =
+		new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _updateCommerceShipmentParameterTypes5 = new Class[] {
-			long.class, long.class, long.class, long.class, String.class,
-			String.class, int.class, int.class, int.class, int.class, int.class,
+	private static final Class<?>[] _getCommerceShipmentsCountByGroupIdParameterTypes5 =
+		new Class[] { long.class };
+	private static final Class<?>[] _getCommerceShipmentsCountBySiteGroupIdParameterTypes6 =
+		new Class[] { long.class };
+	private static final Class<?>[] _updateCommerceShipmentParameterTypes7 = new Class[] {
+			long.class, String.class, String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class
+			int.class, int.class, int.class
 		};
 }

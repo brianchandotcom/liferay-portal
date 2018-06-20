@@ -22,11 +22,11 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface CommerceOrderItemFinder {
-	public java.util.List<com.liferay.commerce.model.CommerceOrderItem> findByC_C(
-		long commerceWarehouseId, long commerceAddressId);
+	public java.util.List<com.liferay.commerce.model.CommerceOrderItem> findByAvailableQuantity(
+		long commerceOrderId);
 
-	public java.util.List<com.liferay.commerce.model.CommerceOrderItem> findByC_C(
-		long commerceWarehouseId, long commerceAddressId, int start, int end);
+	public java.util.List<com.liferay.commerce.model.CommerceOrderItem> findByAvailableQuantity(
+		long commerceOrderId, int start, int end);
 
 	public int getCommerceOrderItemsQuantity(long commerceOrderId);
 

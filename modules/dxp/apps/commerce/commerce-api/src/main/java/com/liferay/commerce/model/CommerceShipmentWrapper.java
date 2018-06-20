@@ -65,13 +65,14 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("siteGroupId", getSiteGroupId());
+		attributes.put("shipmentOrganizationId", getShipmentOrganizationId());
 		attributes.put("shipmentUserId", getShipmentUserId());
 		attributes.put("commerceAddressId", getCommerceAddressId());
 		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
-		attributes.put("commerceWarehouseId", getCommerceWarehouseId());
+		attributes.put("shippingOptionName", getShippingOptionName());
 		attributes.put("carrier", getCarrier());
 		attributes.put("trackingNumber", getTrackingNumber());
-		attributes.put("expectedDuration", getExpectedDuration());
 		attributes.put("status", getStatus());
 		attributes.put("shippingDate", getShippingDate());
 		attributes.put("expectedDate", getExpectedDate());
@@ -123,6 +124,19 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 			setModifiedDate(modifiedDate);
 		}
 
+		Long siteGroupId = (Long)attributes.get("siteGroupId");
+
+		if (siteGroupId != null) {
+			setSiteGroupId(siteGroupId);
+		}
+
+		Long shipmentOrganizationId = (Long)attributes.get(
+				"shipmentOrganizationId");
+
+		if (shipmentOrganizationId != null) {
+			setShipmentOrganizationId(shipmentOrganizationId);
+		}
+
 		Long shipmentUserId = (Long)attributes.get("shipmentUserId");
 
 		if (shipmentUserId != null) {
@@ -142,10 +156,10 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 			setCommerceShippingMethodId(commerceShippingMethodId);
 		}
 
-		Long commerceWarehouseId = (Long)attributes.get("commerceWarehouseId");
+		String shippingOptionName = (String)attributes.get("shippingOptionName");
 
-		if (commerceWarehouseId != null) {
-			setCommerceWarehouseId(commerceWarehouseId);
+		if (shippingOptionName != null) {
+			setShippingOptionName(shippingOptionName);
 		}
 
 		String carrier = (String)attributes.get("carrier");
@@ -158,12 +172,6 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 
 		if (trackingNumber != null) {
 			setTrackingNumber(trackingNumber);
-		}
-
-		Integer expectedDuration = (Integer)attributes.get("expectedDuration");
-
-		if (expectedDuration != null) {
-			setExpectedDuration(expectedDuration);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -205,11 +213,6 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 		return _commerceShipment.fetchCommerceShippingMethod();
 	}
 
-	@Override
-	public CommerceWarehouse fetchCommerceWarehouse() {
-		return _commerceShipment.fetchCommerceWarehouse();
-	}
-
 	/**
 	* Returns the carrier of this commerce shipment.
 	*
@@ -240,6 +243,12 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 		return _commerceShipment.getCommerceShipmentId();
 	}
 
+	@Override
+	public CommerceShippingMethod getCommerceShippingMethod()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceShipment.getCommerceShippingMethod();
+	}
+
 	/**
 	* Returns the commerce shipping method ID of this commerce shipment.
 	*
@@ -248,16 +257,6 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	@Override
 	public long getCommerceShippingMethodId() {
 		return _commerceShipment.getCommerceShippingMethodId();
-	}
-
-	/**
-	* Returns the commerce warehouse ID of this commerce shipment.
-	*
-	* @return the commerce warehouse ID of this commerce shipment
-	*/
-	@Override
-	public long getCommerceWarehouseId() {
-		return _commerceShipment.getCommerceWarehouseId();
 	}
 
 	/**
@@ -281,6 +280,17 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	}
 
 	@Override
+	public long getCustomerId() {
+		return _commerceShipment.getCustomerId();
+	}
+
+	@Override
+	public String getCustomerName()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceShipment.getCustomerName();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _commerceShipment.getExpandoBridge();
 	}
@@ -293,16 +303,6 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	@Override
 	public Date getExpectedDate() {
 		return _commerceShipment.getExpectedDate();
-	}
-
-	/**
-	* Returns the expected duration of this commerce shipment.
-	*
-	* @return the expected duration of this commerce shipment
-	*/
-	@Override
-	public int getExpectedDuration() {
-		return _commerceShipment.getExpectedDuration();
 	}
 
 	/**
@@ -340,6 +340,28 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 		return _commerceShipment.getPrimaryKeyObj();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Organization getShipmentOrganization()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceShipment.getShipmentOrganization();
+	}
+
+	/**
+	* Returns the shipment organization ID of this commerce shipment.
+	*
+	* @return the shipment organization ID of this commerce shipment
+	*/
+	@Override
+	public long getShipmentOrganizationId() {
+		return _commerceShipment.getShipmentOrganizationId();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.User getShipmentUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceShipment.getShipmentUser();
+	}
+
 	/**
 	* Returns the shipment user ID of this commerce shipment.
 	*
@@ -368,6 +390,26 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	@Override
 	public Date getShippingDate() {
 		return _commerceShipment.getShippingDate();
+	}
+
+	/**
+	* Returns the shipping option name of this commerce shipment.
+	*
+	* @return the shipping option name of this commerce shipment
+	*/
+	@Override
+	public String getShippingOptionName() {
+		return _commerceShipment.getShippingOptionName();
+	}
+
+	/**
+	* Returns the site group ID of this commerce shipment.
+	*
+	* @return the site group ID of this commerce shipment
+	*/
+	@Override
+	public long getSiteGroupId() {
+		return _commerceShipment.getSiteGroupId();
 	}
 
 	/**
@@ -491,16 +533,6 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	}
 
 	/**
-	* Sets the commerce warehouse ID of this commerce shipment.
-	*
-	* @param commerceWarehouseId the commerce warehouse ID of this commerce shipment
-	*/
-	@Override
-	public void setCommerceWarehouseId(long commerceWarehouseId) {
-		_commerceShipment.setCommerceWarehouseId(commerceWarehouseId);
-	}
-
-	/**
 	* Sets the company ID of this commerce shipment.
 	*
 	* @param companyId the company ID of this commerce shipment
@@ -547,16 +579,6 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	}
 
 	/**
-	* Sets the expected duration of this commerce shipment.
-	*
-	* @param expectedDuration the expected duration of this commerce shipment
-	*/
-	@Override
-	public void setExpectedDuration(int expectedDuration) {
-		_commerceShipment.setExpectedDuration(expectedDuration);
-	}
-
-	/**
 	* Sets the group ID of this commerce shipment.
 	*
 	* @param groupId the group ID of this commerce shipment
@@ -597,6 +619,16 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	}
 
 	/**
+	* Sets the shipment organization ID of this commerce shipment.
+	*
+	* @param shipmentOrganizationId the shipment organization ID of this commerce shipment
+	*/
+	@Override
+	public void setShipmentOrganizationId(long shipmentOrganizationId) {
+		_commerceShipment.setShipmentOrganizationId(shipmentOrganizationId);
+	}
+
+	/**
 	* Sets the shipment user ID of this commerce shipment.
 	*
 	* @param shipmentUserId the shipment user ID of this commerce shipment
@@ -624,6 +656,26 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	@Override
 	public void setShippingDate(Date shippingDate) {
 		_commerceShipment.setShippingDate(shippingDate);
+	}
+
+	/**
+	* Sets the shipping option name of this commerce shipment.
+	*
+	* @param shippingOptionName the shipping option name of this commerce shipment
+	*/
+	@Override
+	public void setShippingOptionName(String shippingOptionName) {
+		_commerceShipment.setShippingOptionName(shippingOptionName);
+	}
+
+	/**
+	* Sets the site group ID of this commerce shipment.
+	*
+	* @param siteGroupId the site group ID of this commerce shipment
+	*/
+	@Override
+	public void setSiteGroupId(long siteGroupId) {
+		_commerceShipment.setSiteGroupId(siteGroupId);
 	}
 
 	/**

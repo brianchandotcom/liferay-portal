@@ -28,6 +28,7 @@ long fragmentCollectionId = ParamUtil.getLong(request, "fragmentCollectionId");
 
 <liferay-frontend:edit-form
 	action="<%= importURL %>"
+	enctype="multipart/form-data"
 	name="fm"
 >
 	<liferay-frontend:edit-form-body>

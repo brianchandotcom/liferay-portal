@@ -224,7 +224,8 @@ public class AlloyEditorConfigContributor
 
 		jsonObject.put(
 			"buttons",
-			toJSONArray("['imageLeft', 'imageCenter', 'imageRight', 'link']"));
+			toJSONArray(
+				"['imageLeft', 'imageCenter', 'imageRight', 'linkBrowse']"));
 		jsonObject.put("name", "image");
 		jsonObject.put("test", "AlloyEditor.SelectionTest.image");
 

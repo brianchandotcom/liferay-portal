@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
+import java.util.Objects;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,6 +55,10 @@ public class LayoutCustomizationSettingsFormNavigatorEntry
 
 		if (group == null) {
 			_log.error("Unable to display form for customization settings");
+		}
+
+		if (Objects.equals(layout.getType(), "content")) {
+			return false;
 		}
 
 		if (!group.isUser() && layout.isTypePortlet()) {

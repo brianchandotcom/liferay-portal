@@ -86,7 +86,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 
 		_configureEclipseModel(project, targetPlatformIDEConfiguration);
 
-		_configureIdeaProjectModel(project, targetPlatformIDEConfiguration);
+		_configureIdeaModel(project, targetPlatformIDEConfiguration);
 	}
 
 	private Configuration _addConfigurationTargetPlatformIDE(
@@ -233,7 +233,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 		plusConfigurations.add(targetPlatformIDEConfiguration);
 	}
 
-	private void _configureIdeaProjectModel(Project project, Configuration targetPlatformIDEConfiguration) {
+	private void _configureIdeaModel(Project project, Configuration targetPlatformIDEConfiguration) {
 		IdeaModel ideaModel = GradleUtil.getExtension(project, IdeaModel.class);
 
 		IdeaModule module = ideaModel.getModule();

@@ -88,7 +88,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 						<strong>
 					</c:if>
 
-					<liferay-ui:message key="<%= layoutBranchDisplayContext.getLayoutBranchDisplayName(layoutBranch) %>" localizeKey="<%= false %>" />
+					<liferay-ui:message key="<%= HtmlUtil.escape(layoutBranchDisplayContext.getLayoutBranchDisplayName(layoutBranch)) %>" localizeKey="<%= false %>" />
 
 					<c:if test="<%= layoutBranch.isMaster() %>">
 						<i class="icon-asterisk"></i>

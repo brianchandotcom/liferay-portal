@@ -190,7 +190,7 @@ public class DDMFormInstanceLocalServiceImpl
 		long structureId = ddmFormInstance.getStructureId();
 
 		if (ddmStructureLocalService.fetchDDMStructure(structureId) != null) {
-			ddmStructureLocalService.deleteDDMStructure(structureId);
+			ddmStructureLocalService.deleteStructure(structureId);
 		}
 
 		resourceLocalService.deleteResource(

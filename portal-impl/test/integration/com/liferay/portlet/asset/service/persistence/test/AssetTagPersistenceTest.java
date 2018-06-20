@@ -267,12 +267,6 @@ public class AssetTagPersistenceTest {
 			getOrderByComparator());
 	}
 
-	@Test
-	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, getOrderByComparator());
-	}
-
 	protected OrderByComparator<AssetTag> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetTag", "uuid", true,
 			"tagId", true, "groupId", true, "companyId", true, "userId", true,

@@ -407,7 +407,7 @@ public class AssetTagsDisplayContext {
 				themeDisplay.getPermissionChecker(),
 				AssetTagsPermission.RESOURCE_NAME,
 				AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN,
-				themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG)) {
+				themeDisplay.getSiteGroupId(), ActionKeys.MANAGE_TAG)) {
 
 			return isShowTagsActionMenu();
 		}

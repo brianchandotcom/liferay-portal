@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class JavaLogStringBundlerCheck extends BaseFileCheck {
+public class JavaLogParametersCheck extends BaseFileCheck {
 
 	@Override
 	public boolean isPortalCheck() {

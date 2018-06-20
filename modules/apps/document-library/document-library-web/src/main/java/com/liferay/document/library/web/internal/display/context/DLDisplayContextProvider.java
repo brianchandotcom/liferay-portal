@@ -214,16 +214,6 @@ public class DLDisplayContextProvider {
 		_dlDisplayContextFactories.close();
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.document.library.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	private ServiceTrackerList<DLDisplayContextFactory, DLDisplayContextFactory>
 		_dlDisplayContextFactories;
 
@@ -240,7 +230,13 @@ public class DLDisplayContextProvider {
 	@Reference
 	private DLValidator _dlValidator;
 
-	private ResourceBundleLoader _resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.document.library.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
+
 	private StorageEngine _storageEngine;
 
 }

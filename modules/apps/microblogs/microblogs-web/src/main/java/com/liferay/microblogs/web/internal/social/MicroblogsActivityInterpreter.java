@@ -33,6 +33,8 @@ import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jonathan Lee
@@ -126,16 +128,6 @@ public class MicroblogsActivityInterpreter
 		_microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.microblogs.web)",
-		unbind = "-"
-	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_resourceBundleLoader = resourceBundleLoader;
-	}
-
 	private static final String[] _CLASS_NAMES =
 		{MicroblogsEntry.class.getName()};
 
@@ -147,6 +139,11 @@ public class MicroblogsActivityInterpreter
 	private ModelResourcePermission<MicroblogsEntry>
 		_microblogsEntryModelResourcePermission;
 
-	private ResourceBundleLoader _resourceBundleLoader;
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.microblogs.web)"
+	)
+	private volatile ResourceBundleLoader _resourceBundleLoader;
 
 }

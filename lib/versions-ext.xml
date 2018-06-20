@@ -1049,30 +1049,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/axiom-api.jar</file-name>
-				<version>1.2.10</version>
-				<project-name>Axiom</project-name>
-				<project-url>http://ws.apache.org/commons/axiom</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/axiom-impl.jar</file-name>
-				<version>1.2.10</version>
-				<project-name>Axiom</project-name>
-				<project-url>http://ws.apache.org/commons/axiom</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/axis.jar</file-name>
 				<version>1.4</version>
 				<project-name>Axis</project-name>

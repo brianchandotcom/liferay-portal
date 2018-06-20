@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
@@ -71,6 +73,17 @@ public class JavaLogParametersCheck extends BaseJavaTermCheck {
 			if (variableTypeName.equals("StringBundler")) {
 				return StringUtil.replaceFirst(
 					content, firstParameter, firstParameter + ".toString()",
+					matcher.start(2));
+			}
+
+			if ((parametersList.size() == 1) &&
+				variableTypeName.endsWith("Exception")) {
+
+				return StringUtil.replaceFirst(
+					content, firstParameter,
+					StringBundler.concat(
+						firstParameter, StringPool.COMMA_AND_SPACE,
+						firstParameter),
 					matcher.start(2));
 			}
 		}

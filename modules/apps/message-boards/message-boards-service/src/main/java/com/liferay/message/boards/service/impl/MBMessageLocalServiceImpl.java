@@ -287,7 +287,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subject = getSubject(subject, body);
 
-		body = getBody(subject, body);
+		body = getBody(subject, body, format);
 
 		Map<String, Object> options = new HashMap<>();
 
@@ -1953,9 +1953,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
-	protected String getBody(String subject, String body) {
+	protected String getBody(String subject, String body, String format) {
 		if (Validator.isNull(body)) {
-			return HtmlUtil.escape(subject);
+			if ("html".equals(format)) {
+				return HtmlUtil.escape(subject);
+			}
+			else {
+				return subject;
+			}
 		}
 
 		return body;
@@ -2676,7 +2681,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subject = getSubject(subject, body);
 
-		body = getBody(subject, body);
+		body = getBody(subject, body, message.getFormat());
 
 		Map<String, Object> options = new HashMap<>();
 

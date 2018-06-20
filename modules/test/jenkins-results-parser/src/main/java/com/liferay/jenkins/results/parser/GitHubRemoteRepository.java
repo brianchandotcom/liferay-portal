@@ -82,7 +82,8 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			try {
 				labelsJSONArray = JenkinsResultsParserUtil.toJSONArray(
 					JenkinsResultsParserUtil.combine(
-						labelRequestURL, "?page=", String.valueOf(page)));
+						labelRequestURL, "?page=", String.valueOf(page)),
+					false);
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(
@@ -149,7 +150,8 @@ public class GitHubRemoteRepository extends RemoteRepository {
 
 		try {
 			if (jsonObject == null) {
-				JenkinsResultsParserUtil.toString(labelRequestURL, "DELETE");
+				JenkinsResultsParserUtil.toString(
+					labelRequestURL, false, HttpRequestMethod.DELETE);
 			}
 			else {
 				JenkinsResultsParserUtil.toString(

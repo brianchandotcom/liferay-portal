@@ -116,8 +116,6 @@
 			</then>
 		</if>
 
-		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
-
 		<if>
 			<condition function="IsNotVisible" locator1="ControlMenuAddPanel#CLOSE_ADD_PANEL" />
 			<then>
@@ -134,7 +132,7 @@
 
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
 
-		<execute macro-desktop="Portlet#_clickAddPortlet" macro-mobile="Portlet#_mobileClickAddPortlet">
+		<execute macro="Portlet#_clickAddPortlet">
 			<var name="portletName" value="${portletName}" />
 		</execute>
 

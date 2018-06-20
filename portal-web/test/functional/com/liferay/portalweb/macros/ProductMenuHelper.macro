@@ -99,8 +99,6 @@
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PORTLET" value1="${portlet}">
 			<var name="key_portlet" value="${portlet}" />
 		</execute>
-
-		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 	</command>
 
 	<command name="gotoTab">

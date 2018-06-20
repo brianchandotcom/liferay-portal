@@ -17,7 +17,7 @@ package com.liferay.commerce.data.integration.apio.internal.util;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.search.CPOptionIndexer;
 import com.liferay.commerce.product.service.CPDefinitionService;
-import com.liferay.commerce.product.service.CPOptionService;
+import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
@@ -29,16 +29,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -108,7 +106,7 @@ public class OptionHelper {
 
 		ServiceContext serviceContext = _getServiceContext(webSiteId);
 
-		return _cpOptionService.addCPOption(
+		return _cpOptionLocalService.addCPOption(
 			nameMap, descriptionMap, fieldType, false, false, false, key,
 			serviceContext);
 	}
@@ -118,7 +116,7 @@ public class OptionHelper {
 			Map<Locale, String> descriptionMap, String fieldType, String key)
 		throws PortalException {
 
-		CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
+		CPOption cpOption = _cpOptionLocalService.getCPOption(cpOptionId);
 
 		cpOption.setDDMFormFieldTypeName(fieldType);
 		cpOption.setDescriptionMap(descriptionMap);
@@ -128,7 +126,7 @@ public class OptionHelper {
 		ServiceContext serviceContext = _getServiceContext(
 			cpOption.getGroupId());
 
-		return _cpOptionService.updateCPOption(
+		return _cpOptionLocalService.updateCPOption(
 			cpOptionId, cpOption.getNameMap(), cpOption.getDescriptionMap(),
 			cpOption.getDDMFormFieldTypeName(), cpOption.getFacetable(),
 			cpOption.getRequired(), cpOption.getSkuContributor(),
@@ -157,7 +155,7 @@ public class OptionHelper {
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private CPOptionService _cpOptionService;
+	private CPOptionLocalService _cpOptionLocalService;
 
 	@Reference
 	private ProductIndexerHelper _productIndexerHelper;

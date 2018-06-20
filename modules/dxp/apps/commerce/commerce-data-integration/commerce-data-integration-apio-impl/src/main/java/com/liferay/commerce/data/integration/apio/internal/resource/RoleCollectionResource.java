@@ -25,18 +25,17 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.RoleIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.UserIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.RoleForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.RolePermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.RoleHelper;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 import java.util.Locale;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -52,7 +51,8 @@ public class RoleCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addRole, _rolePermissionChecker::forAdding,
+			this::_addRole,
+			_hasPermission::forAdding,
 			RoleForm::buildForm
 		).build();
 	}
@@ -70,9 +70,10 @@ public class RoleCollectionResource
 			this::_getRole
 		).addRemover(
 			idempotent(_roleLocalService::deleteRole),
-			_rolePermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).addUpdater(
-			this::_updateRole, _rolePermissionChecker.forUpdating()::apply,
+			this::_updateRole,
+			_hasPermission::forUpdating,
 			RoleForm::buildForm
 		).build();
 	}
@@ -145,7 +146,9 @@ public class RoleCollectionResource
 	@Reference
 	private RoleLocalService _roleLocalService;
 
-	@Reference
-	private RolePermissionChecker _rolePermissionChecker;
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Role)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

@@ -25,22 +25,20 @@ import com.liferay.commerce.data.integration.apio.identifiers.AddressIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.CountryIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.RegionIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.AddressForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.AddressPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.ServiceContextHelper;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.util.List;
-
-import javax.ws.rs.ServerErrorException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.ws.rs.ServerErrorException;
+import java.util.List;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -59,7 +57,8 @@ public class AddressNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCommerceAddress,
-			_addressPermissionChecker.forAdding()::apply, AddressForm::buildForm
+			_hasPermission.forAddingIn(AddressIdentifier.class),
+			AddressForm::buildForm
 		).build();
 	}
 
@@ -76,10 +75,10 @@ public class AddressNestedCollectionResource
 			_commerceAddressService::getCommerceAddress
 		).addRemover(
 			_commerceAddressService::deleteCommerceAddress,
-			_addressPermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).addUpdater(
 			this::_updateCommerceAddress,
-			_addressPermissionChecker.forUpdating()::apply,
+			_hasPermission::forUpdating,
 			AddressForm::buildForm
 		).build();
 	}
@@ -189,9 +188,6 @@ public class AddressNestedCollectionResource
 	}
 
 	@Reference
-	private AddressPermissionChecker _addressPermissionChecker;
-
-	@Reference
 	private CommerceAddressService _commerceAddressService;
 
 	@Reference
@@ -199,5 +195,10 @@ public class AddressNestedCollectionResource
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;
+
+	@Reference(
+			target = "(model.class.name=com.liferay.commerce.model.CommerceAddress)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

@@ -12,22 +12,20 @@ import com.liferay.commerce.data.integration.apio.identifiers.AddressIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.OrderIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.PaymentMethodIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.OrderUpdaterForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.OrderPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.OrderHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-
-import java.util.List;
-
-import javax.ws.rs.ServerErrorException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.ws.rs.ServerErrorException;
+import java.util.List;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -60,7 +58,7 @@ public class OrderNestedCollectionResource
 			this::_getCommerceOrder
 		).addUpdater(
 			this::_updateCommerceOrder,
-			_orderPermissionChecker.forUpdating()::apply,
+			_hasPermission::forUpdating,
 			OrderUpdaterForm::buildForm
 		).build();
 	}
@@ -162,7 +160,9 @@ public class OrderNestedCollectionResource
 	@Reference
 	private OrderHelper _orderHelper;
 
-	@Reference
-	private OrderPermissionChecker _orderPermissionChecker;
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

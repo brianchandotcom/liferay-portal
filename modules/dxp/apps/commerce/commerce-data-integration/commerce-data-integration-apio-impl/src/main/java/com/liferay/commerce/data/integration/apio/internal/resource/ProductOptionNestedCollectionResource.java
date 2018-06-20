@@ -26,7 +26,6 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductDefinitionIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductOptionIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.ProductOptionForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.ProductOptionPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductOptionHelper;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -34,6 +33,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.search.CPDefinitionOptionRelIndexer;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -48,15 +48,13 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.util.Collections;
-import java.util.List;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Zoltán Takács
@@ -75,7 +73,7 @@ public class ProductOptionNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCPDefinitionOptionRel,
-			_productOptionPermissionChecker.forAdding()::apply,
+			_hasPermission.forAddingIn(ProductOptionIdentifier.class),
 			ProductOptionForm::buildForm
 		).build();
 	}
@@ -95,7 +93,7 @@ public class ProductOptionNestedCollectionResource
 			idempotent(
 				_cpDefinitionOptionRelService::
 					deleteCPDefinitionOptionRel),
-			_productOptionPermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -251,9 +249,12 @@ public class ProductOptionNestedCollectionResource
 	private ProductIndexerHelper _productIndexerHelper;
 
 	@Reference
-	private ProductOptionPermissionChecker _productOptionPermissionChecker;
-
-	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionRel)"
+	)
+	private HasPermission<Long> _hasPermission;
+
 
 }

@@ -25,7 +25,6 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductDefinitionIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.ProductCreatorForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.ProductPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductDefinitionHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
@@ -34,6 +33,7 @@ import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -48,16 +48,14 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Provides the information necessary to expose <a
@@ -80,7 +78,7 @@ public class ProductNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCPDefinition,
-			_productPermissionChecker.forAdding()::apply,
+			_hasPermission.forAddingIn(ProductDefinitionIdentifier.class),
 			ProductCreatorForm::buildForm
 		).build();
 	}
@@ -98,7 +96,7 @@ public class ProductNestedCollectionResource
 			this::_getCPDefinition
 		).addRemover(
 			idempotent(_cpDefinitionService::deleteCPDefinition),
-			_productPermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -270,7 +268,9 @@ public class ProductNestedCollectionResource
 	@Reference
 	private ProductIndexerHelper _productIndexerHelper;
 
-	@Reference
-	private ProductPermissionChecker _productPermissionChecker;
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

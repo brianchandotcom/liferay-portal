@@ -25,11 +25,11 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.AccountIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.AccountForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.AccountPermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.AccountHelper;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,12 +41,11 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -63,7 +62,8 @@ public class AccountCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addAccount, _accountPermissionChecker.forAdding()::apply,
+			this::_addAccount,
+			_hasPermission.forAddingIn(AccountIdentifier.class),
 			AccountForm::buildForm
 		).build();
 	}
@@ -81,10 +81,10 @@ public class AccountCollectionResource
 			_commerceOrganizationService::getOrganization
 		).addRemover(
 			idempotent(_commerceOrganizationService::deleteOrganization),
-			_accountPermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).addUpdater(
 			this::_updateAccount, Company.class,
-			_accountPermissionChecker.forUpdating()::apply,
+			_hasPermission::forUpdating,
 			AccountForm::buildForm
 		).build();
 	}
@@ -182,9 +182,6 @@ public class AccountCollectionResource
 	private AccountHelper _accountHelper;
 
 	@Reference
-	private AccountPermissionChecker _accountPermissionChecker;
-
-	@Reference
 	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
@@ -192,5 +189,10 @@ public class AccountCollectionResource
 
 	@Reference
 	private UserService _userService;
+
+    @Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"
+    )
+    private HasPermission<Long> _hasPermission;
 
 }

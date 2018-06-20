@@ -27,8 +27,8 @@ import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.UserIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.UserCreatorForm;
 import com.liferay.commerce.data.integration.apio.internal.form.UserUpdaterForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.UserPermissionChecker;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -68,7 +68,7 @@ public class UserCollectionResource
 		return builder.addGetter(
 			this::_getPageItems, Company.class
 		).addCreator(
-			this::_addUser, Company.class, _userPermissionChecker::forAdding,
+			this::_addUser, Company.class, _hasPermission::forAdding,
 			UserCreatorForm::buildForm
 		).build();
 	}
@@ -86,9 +86,9 @@ public class UserCollectionResource
 			this::_getUserWrapper
 		).addRemover(
 			idempotent(_userService::deleteUser),
-			_userPermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).addUpdater(
-			this::_updateUser, _userPermissionChecker.forUpdating()::apply,
+			this::_updateUser, _hasPermission::forUpdating,
 			UserUpdaterForm::buildForm
 		).build();
 	}
@@ -290,9 +290,11 @@ public class UserCollectionResource
 	private UserLocalService _userLocalService;
 
 	@Reference
-	private UserPermissionChecker _userPermissionChecker;
-
-	@Reference
 	private UserService _userService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

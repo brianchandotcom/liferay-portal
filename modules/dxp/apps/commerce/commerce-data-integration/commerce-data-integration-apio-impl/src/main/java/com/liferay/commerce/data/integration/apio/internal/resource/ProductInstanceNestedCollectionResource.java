@@ -26,7 +26,6 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductDefinitionIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductInstanceIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.ProductInstanceCreatorForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.ProductInstancePermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductInstanceHelper;
 import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
@@ -34,6 +33,7 @@ import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -45,16 +45,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.util.Collections;
-import java.util.List;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -73,7 +71,7 @@ public class ProductInstanceNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCPInstance,
-			_productInstancePermissionChecker.forAdding()::apply,
+			_hasPermission.forAddingIn(ProductInstanceIdentifier.class),
 			ProductInstanceCreatorForm::buildForm
 		).build();
 	}
@@ -91,7 +89,7 @@ public class ProductInstanceNestedCollectionResource
 			this::_getCPInstance
 		).addRemover(
 			idempotent(_cpInstanceService::deleteCPInstance),
-			_productInstancePermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).build();
 	}
 
@@ -247,7 +245,9 @@ public class ProductInstanceNestedCollectionResource
 	@Reference
 	private ProductInstanceHelper _productInstanceHelper;
 
-	@Reference
-	private ProductInstancePermissionChecker _productInstancePermissionChecker;
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPInstance)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

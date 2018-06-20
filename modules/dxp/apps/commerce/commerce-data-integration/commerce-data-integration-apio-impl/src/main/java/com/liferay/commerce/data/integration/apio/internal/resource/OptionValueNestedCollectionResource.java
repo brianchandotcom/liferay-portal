@@ -25,7 +25,6 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.OptionIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.OptionValueIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.OptionValueForm;
-import com.liferay.commerce.data.integration.apio.internal.security.permission.OptionValuePermissionChecker;
 import com.liferay.commerce.data.integration.apio.internal.util.OptionValueHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPOptionValueKeyException;
@@ -34,6 +33,7 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.search.CPOptionValueIndexer;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionValueService;
+import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -45,16 +45,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.util.Collections;
-import java.util.List;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.ServerErrorException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -73,7 +71,7 @@ public class OptionValueNestedCollectionResource
 			this::_getPageItems
 		).addCreator(
 			this::_addCPOptionValue,
-			_optionValuePermissionChecker.forAdding()::apply,
+			_hasPermission.forAddingIn(OptionValueIdentifier.class),
 			OptionValueForm::buildForm
 		).build();
 	}
@@ -91,10 +89,10 @@ public class OptionValueNestedCollectionResource
 			this::_getOptionValue
 		).addRemover(
 			idempotent(_cpOptionValueService::deleteCPOptionValue),
-			_optionValuePermissionChecker.forDeleting()::apply
+			_hasPermission::forDeleting
 		).addUpdater(
 			this::_updateCPOptionValue,
-			_optionValuePermissionChecker.forUpdating()::apply,
+			_hasPermission::forUpdating,
 			OptionValueForm::buildForm
 		).build();
 	}
@@ -250,9 +248,11 @@ public class OptionValueNestedCollectionResource
 	private OptionValueHelper _optionValueHelper;
 
 	@Reference
-	private OptionValuePermissionChecker _optionValuePermissionChecker;
-
-	@Reference
 	private ProductIndexerHelper _productIndexerHelper;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.product.model.CPOptionValue)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 }

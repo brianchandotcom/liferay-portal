@@ -14,6 +14,10 @@
 
 package com.liferay.commerce.product.test.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.commerce.product.configuration.CPOptionConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -48,6 +52,33 @@ import java.util.Map;
  * @author Andrea Di Giorgi
  */
 public class CPTestUtil {
+
+	public static AssetCategory addCategoryToCPDefinitions(
+			long groupId, long... cpDefinitionIds)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				serviceContext.getUserId(), groupId,
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+			serviceContext.getUserId(), groupId, RandomTestUtil.randomString(),
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		serviceContext.setAssetCategoryIds(
+			new long[] {assetCategory.getCategoryId()});
+
+		for (long cpDefinitionId : cpDefinitionIds) {
+			CPDefinitionLocalServiceUtil.updateCPDefinitionCategorization(
+				cpDefinitionId, serviceContext);
+		}
+
+		return assetCategory;
+	}
 
 	public static CPDefinition addCPDefinition(
 			long groupId, boolean ignoreSKUCombinations,

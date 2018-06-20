@@ -269,13 +269,13 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 				}
 			}
 
-			if (!_allowUnmatched && !anyMatch) {
+			if (anyMatch) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringBundler.concat(
 							"Path ", path,
-							" was not allowed because it does not match any ",
-							"patterns"));
+							" was not allowed because it does not have ",
+							"required scopes"));
 				}
 
 				return false;
@@ -283,14 +283,20 @@ public class ConfigurableScopeCheckerFeature implements Feature {
 			else if (_allowUnmatched) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Path " + path +
-							" was approved, does not match any patterns");
-
-					return true;
+						StringBundler.concat(
+							"Path ", path,
+							" was approved, does not match any patterns"));
 				}
+
+				return true;
 			}
-			else {
-				return false;
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Path ", path,
+						" was not allowed because it does not match any ",
+						"patterns"));
 			}
 
 			return false;

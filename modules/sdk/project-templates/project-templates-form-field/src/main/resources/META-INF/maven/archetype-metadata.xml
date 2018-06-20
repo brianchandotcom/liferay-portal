@@ -19,6 +19,7 @@
 			<includes>
 				<include>.babelrc</include>
 				<include>.gitignore</include>
+				<include>.npmbundlerrc</include>
 				<include>bnd.bnd</include>
 				<include>build.gradle</include>
 				<include>package.json</include>

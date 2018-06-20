@@ -8,6 +8,9 @@ Web-ContextPath: /${artifactId}-form-field#if (${buildType} != "gradle")
 #end
 -jsp: *.jsp,*.jspf
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
+#if (${liferayVersion.startsWith("7.1")})
+-plugin.npm: com.liferay.ant.bnd.npm.NpmAnalyzerPlugin
+#end
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
 -plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
 -sass: *#end

@@ -51,11 +51,11 @@
 		<if>
 			<contains string="${assetType}" substring="{assetType}" />
 			<then>
-				<var name="${assetType}" value="Web Content Article" />
+				<var name="assetType" value="Web Content Article" />
 				<if>
 					<contains string="${subType}" substring="{subType}" />
 					<then>
-						<var name="${subType}" value="Basic Web Content" />
+						<var name="subType" value="Basic Web Content" />
 					</then>
 				</if>
 			</then>

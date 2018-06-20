@@ -98,6 +98,29 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
+	public void testAddHtmlSubjectWithEmptyBodyMessageInBBCode()
+		throws Exception {
+
+		String subject = "<u>subject</u>";
+		String body = StringPool.BLANK;
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			subject, body, "bbcode", inputStreamOVPs, false, 0.0, false,
+			serviceContext);
+
+		Assert.assertEquals(subject, message.getSubject());
+		Assert.assertEquals(subject, message.getBody());
+	}
+
+	@Test
 	public void testAddMessageAttachment() throws Exception {
 		MBMessage message = addMessage(null, false);
 

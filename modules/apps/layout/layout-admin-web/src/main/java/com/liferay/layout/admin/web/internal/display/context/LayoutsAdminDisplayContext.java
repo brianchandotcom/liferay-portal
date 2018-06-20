@@ -986,21 +986,19 @@ public class LayoutsAdminDisplayContext {
 			}
 		}
 
-		LayoutSetBranch currentUserLayoutSetBranch =
-			LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
-				_themeDisplay.getUserId(), _themeDisplay.getScopeGroupId(),
-				isPrivateLayout(), 0, 0);
+		List<LayoutSetBranch> layoutSetBranches =
+			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(
+				_themeDisplay.getScopeGroupId(), isPrivatePages());
 
-		if ((_activeLayoutSetBranchId == 0) &&
-			(currentUserLayoutSetBranch != null)) {
+		if ((_activeLayoutSetBranchId == 0) && !layoutSetBranches.isEmpty()) {
+			LayoutSetBranch currentUserLayoutSetBranch =
+				LayoutSetBranchLocalServiceUtil.getUserLayoutSetBranch(
+					_themeDisplay.getUserId(), _themeDisplay.getScopeGroupId(),
+					isPrivateLayout(), 0, 0);
 
 			_activeLayoutSetBranchId =
 				currentUserLayoutSetBranch.getLayoutSetBranchId();
 		}
-
-		List<LayoutSetBranch> layoutSetBranches =
-			LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(
-				_themeDisplay.getScopeGroupId(), isPrivatePages());
 
 		if ((_activeLayoutSetBranchId == 0) && !layoutSetBranches.isEmpty()) {
 			LayoutSetBranch layoutSetBranch =

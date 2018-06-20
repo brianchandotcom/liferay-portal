@@ -20,6 +20,7 @@ import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,10 +71,11 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 				"modules.includes.required");
 
 			if (includedModulesRequired != null) {
-				includesPathMatchers.addAll(
-					getPathMatchers(
-						getFirstPropertyValue(includedModulesRequired),
-						modulesDir));
+				for (String requiredModule :
+						includedModulesRequired.split(",")) {
+
+					moduleDirsList.add(new File(modulesDir, requiredModule));
+				}
 			}
 
 			setTestClasses();
@@ -86,5 +88,7 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 	}
 
 	protected abstract void setTestClasses() throws IOException;
+
+	protected List<File> moduleDirsList = new ArrayList<>();
 
 }

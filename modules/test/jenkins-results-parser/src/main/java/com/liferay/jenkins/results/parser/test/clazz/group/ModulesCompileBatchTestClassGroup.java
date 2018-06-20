@@ -143,12 +143,7 @@ public class ModulesCompileBatchTestClassGroup
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 
-		List<File> moduleDirsList = portalGitWorkingDirectory.getModuleDirsList(
-			excludesPathMatchers, includesPathMatchers);
-
 		if (testRelevantChanges) {
-			moduleDirsList = new ArrayList<>();
-
 			List<File> modifiedModuleDirsList =
 				portalGitWorkingDirectory.getModifiedModuleDirsList(
 					excludesPathMatchers, includesPathMatchers);
@@ -162,6 +157,11 @@ public class ModulesCompileBatchTestClassGroup
 					moduleDirsList.add(modifiedModuleDir);
 				}
 			}
+		}
+		else {
+			moduleDirsList.addAll(
+				portalGitWorkingDirectory.getModuleDirsList(
+					excludesPathMatchers, includesPathMatchers));
 		}
 
 		File portalModulesBaseDir = new File(

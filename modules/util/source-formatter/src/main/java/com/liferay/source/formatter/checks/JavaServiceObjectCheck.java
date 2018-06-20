@@ -86,7 +86,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		while (matcher.find()) {
 			String variableName = matcher.group(1);
 
-			String variableTypeName = _getVariableTypeName(
+			String variableTypeName = getVariableTypeName(
 				content, fileContent, variableName);
 
 			if (variableTypeName == null) {
@@ -134,7 +134,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					previousSetterObjectName = setterObjectName;
 					previousVariableName = variableName;
 
-					variableTypeName = _getVariableTypeName(
+					variableTypeName = getVariableTypeName(
 						content, fileContent, variableName);
 
 					packageName = _getPackageName(
@@ -245,31 +245,6 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 
 		return _serviceXMLElementsMap.get(packageName);
-	}
-
-	private String _getVariableTypeName(
-		String content, String fileContent, String variableName) {
-
-		if (variableName == null) {
-			return null;
-		}
-
-		Pattern pattern = Pattern.compile(
-			"\\W(\\w+)\\s+" + variableName + "\\W");
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group(1);
-		}
-
-		matcher = pattern.matcher(fileContent);
-
-		if (matcher.find()) {
-			return matcher.group(1);
-		}
-
-		return null;
 	}
 
 	private boolean _isBooleanColumn(

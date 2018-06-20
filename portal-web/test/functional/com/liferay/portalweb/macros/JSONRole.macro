@@ -9,7 +9,7 @@
 					<return name="roleDescriptionEncoded" />
 				</execute>
 
-				<var name="roleDescriptionMap">{"en_US":"${roleDescriptionEncoded}"}</var>
+				<var name="roleDescriptionMap"><![CDATA[{"en_US":"${roleDescriptionEncoded}"}]]></var>
 			</then>
 			<else>
 				<var name="roleDescriptionMap" value="{}" />
@@ -39,7 +39,7 @@
 					<return name="roleKeyEncoded" />
 				</execute>
 
-				<var name="roleKeyMap">{"en_US":"${roleKeyEncoded}"}</var>
+				<var name="roleKeyMap"><![CDATA[{"en_US":"${roleKeyEncoded}"}]]></var>
 			</then>
 			<else>
 				<var name="roleKeyMap" value="{}" />
@@ -72,7 +72,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/role/add-role \
 				-u test@liferay.com:test \
 				-d className=com.liferay.portal.kernel.model.Role \
@@ -82,7 +82,7 @@
 				-d descriptionMap=${roleDescriptionMap} \
 				-d type=${roleTypeId} \
 				-d subtype=
-		</var>
+		]]></var>
 
 		<echo message="## Adding a 'Role' with the following info using JSONWS:" />
 
@@ -134,12 +134,12 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/add-role-users \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d userIds=${userId}
-		</var>
+		]]></var>
 
 		<execute macro="JSONRole#getRoleName">
 			<var name="roleId" value="${roleId}" />
@@ -278,10 +278,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/role/get-role/company-id/${companyId}/name/${roleTitleEncoded} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />
@@ -306,10 +306,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/role/get-role/role-id/${roleId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />

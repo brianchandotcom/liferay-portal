@@ -8,7 +8,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/mbmessage/add-message \
 				-u test@liferay.com:test \
 				-d parentMessageId=${messageId} \
@@ -20,7 +20,7 @@
 				-d priority=0 \
 				-d allowPingbacks=true \
 				-d entryURL='javascript:alert(3)'
-		</var>
+		]]></var>
 
 		<echo message="## Adding a 'Message' with the following info using JSONWS:" />
 

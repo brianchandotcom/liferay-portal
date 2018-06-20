@@ -54,7 +54,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/add-user \
 				-u test@liferay.com:test \
 				-d companyId=${companyId} \
@@ -82,7 +82,7 @@
 				-d roleIds= \
 				-d userGroupIds= \
 				-d sendEmail=true
-		</var>
+		]]></var>
 
 		<echo message="## Adding a 'User' with the following info using JSONWS:" />
 
@@ -122,11 +122,11 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/delete-user \
 				-u test@liferay.com:test \
 				-d userId=${userId}
-		</var>
+		]]></var>
 
 		<echo message="## Deleting a 'User' with the following info using JSONWS:" />
 
@@ -237,10 +237,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />
@@ -269,10 +269,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />
@@ -301,10 +301,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />
@@ -333,10 +333,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-company-users-count/company-id/${companyId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />
@@ -344,10 +344,10 @@
 			<return name="userCount" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/get-company-users/company-id/${companyId}/start/0/end/${userCount} \
 				-u test@liferay.com:test \
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />

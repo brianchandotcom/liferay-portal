@@ -39,7 +39,7 @@
 			<return name="groupId" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/resourcepermission/${method} \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
@@ -49,7 +49,7 @@
 				-d primKey=${primKey} \
 				-d roleId=${roleId} \
 				-d actionId=${resourceAction}
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />

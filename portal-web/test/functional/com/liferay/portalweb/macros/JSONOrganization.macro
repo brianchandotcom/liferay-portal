@@ -28,7 +28,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/organization/add-organization \
 				-u test@liferay.com:test \
 				-d parentOrganizationId=0 \
@@ -39,7 +39,7 @@
 				-d statusId=12017 \
 				-d comments= \
 				-d site=${organizationSite}
-		</var>
+		]]></var>
 
 		<echo message="## Adding a 'Organization' with the following info using jsonws:" />
 
@@ -77,12 +77,12 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/add-organization-users \
 				-u test@liferay.com:test \
 				-d organizationId=${organizationId} \
 				-d userIds=${userId}
-		</var>
+		]]></var>
 
 		<execute macro="JSONOrganization#getOrganizationName">
 			<var name="organizationId" value="${organizationId}" />
@@ -121,11 +121,11 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/organization/delete-organization \
 				-u test@liferay.com:test \
 				-d organizationId=${organizationId}
-		</var>
+		]]></var>
 
 		<execute macro="JSONOrganization#getOrganizationName">
 			<var name="organizationId" value="${organizationId}" />
@@ -232,10 +232,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/0 \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />
@@ -274,10 +274,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/organization/get-organization/organization-id/${organizationId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />

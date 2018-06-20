@@ -4,10 +4,10 @@
 			<return name="portalInstanceName" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			http://localhost:8080/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />

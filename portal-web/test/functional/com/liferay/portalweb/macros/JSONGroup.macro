@@ -9,7 +9,7 @@
 					<return name="groupDescriptionEncoded" />
 				</execute>
 
-				<var name="groupDescriptionMap">{"en_US":"${groupDescriptionEncoded}"}</var>
+				<var name="groupDescriptionMap"><![CDATA[{"en_US":"${groupDescriptionEncoded}"}]]></var>
 			</then>
 			<else>
 				<var name="groupDescriptionMap" value="{}" />
@@ -25,7 +25,7 @@
 					<return name="groupNameEncoded" />
 				</execute>
 
-				<var name="groupNameMap">{"en_US":"${groupNameEncoded}"}</var>
+				<var name="groupNameMap"><![CDATA[{"en_US":"${groupNameEncoded}"}]]></var>
 			</then>
 			<else>
 				<fail message="Please set 'groupName'." />
@@ -36,7 +36,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/group/add-group \
 				-u test@liferay.com:test \
 				-d parentGroupId=0 \
@@ -50,7 +50,7 @@
 				-d site=true \
 				-d inheritContent=false \
 				-d active=true
-		</var>
+		]]></var>
 
 		<echo message="## Adding a 'Group' with the following info using JSONWS:" />
 
@@ -102,13 +102,13 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/usergrouprole/add-user-group-roles \
 				-u test@liferay.com:test \
 				-d roleId=${roleId} \
 				-d groupId=${groupId} \
 				-d userIds=${userId}
-		</var>
+		]]></var>
 
 		<execute macro="JSONGroup#getGroupName">
 			<var name="groupId" value="${groupId}" />
@@ -163,12 +163,12 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/user/add-group-users \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
 				-d userIds=${userId}
-		</var>
+		]]></var>
 
 		<execute macro="JSONGroup#getGroupName">
 			<var name="groupId" value="${groupId}" />
@@ -216,11 +216,11 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/group/delete-group \
 				-u test@liferay.com:test \
 				-d groupId=${groupId}
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="post">
 			<arg value="${curl}" />
@@ -368,10 +368,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/group/get-groups/company-id/${companyId}/parent-group-id/0/site/true \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />
@@ -414,10 +414,10 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/group/get-group/group-id/${groupId} \
 				-u test@liferay.com:test
-		</var>
+		]]></var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />

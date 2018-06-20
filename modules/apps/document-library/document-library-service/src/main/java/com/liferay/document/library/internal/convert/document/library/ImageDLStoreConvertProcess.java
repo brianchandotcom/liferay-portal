@@ -28,8 +28,6 @@ import com.liferay.portal.util.MaintenanceUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.io.InputStream;
-
 /**
  * @author Adolfo Pérez
  */
@@ -66,14 +64,15 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 					image.getImageId() + StringPool.PERIOD + image.getType();
 
 				try {
-					InputStream is = sourceStore.getFileAsStream(
-						0, 0, fileName, Store.VERSION_DEFAULT);
-
-					targetStore.addFile(0, 0, fileName, is);
-
 					if (delete) {
-						sourceStore.deleteFile(
-							0, 0, fileName, Store.VERSION_DEFAULT);
+						sourceStore.moveFileToStore(
+							0L, 0L, fileName, Store.VERSION_DEFAULT,
+							targetStore);
+					}
+					else {
+						sourceStore.copyFileToStore(
+							0L, 0L, fileName, Store.VERSION_DEFAULT,
+							targetStore);
 					}
 				}
 				catch (Exception e) {

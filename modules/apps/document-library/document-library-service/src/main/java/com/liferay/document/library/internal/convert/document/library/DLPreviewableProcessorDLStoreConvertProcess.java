@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 
-import java.io.InputStream;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -86,18 +85,17 @@ public class DLPreviewableProcessorDLStoreConvertProcess
 						fileName, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 					try {
-						InputStream is = sourceStore.getFileAsStream(
-							companyId, DLPreviewableProcessor.REPOSITORY_ID,
-							actualFileName, Store.VERSION_DEFAULT);
-
-						targetStore.addFile(
-							companyId, DLPreviewableProcessor.REPOSITORY_ID,
-							fileName, is);
-
 						if (delete) {
-							sourceStore.deleteFile(
+							sourceStore.moveFileToStore(
 								companyId, DLPreviewableProcessor.REPOSITORY_ID,
-								actualFileName, Store.VERSION_DEFAULT);
+								actualFileName, Store.VERSION_DEFAULT,
+								targetStore);
+						}
+						else {
+							sourceStore.copyFileToStore(
+								companyId, DLPreviewableProcessor.REPOSITORY_ID,
+								actualFileName, Store.VERSION_DEFAULT,
+								targetStore);
 						}
 					}
 					catch (Exception e) {

@@ -29,8 +29,6 @@ import com.liferay.portal.util.MaintenanceUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.io.InputStream;
-
 /**
  * @author Adolfo Pérez
  */
@@ -72,28 +70,17 @@ public class DLFileVersionDLStoreConvertProcess
 					dlFileVersion.getFolderId());
 
 				try {
-					InputStream is = sourceStore.getFileAsStream(
-						dlFileVersion.getCompanyId(), repositoryId,
-						dlFileEntry.getName(), dlFileVersion.getVersion());
-
-					if (Store.VERSION_DEFAULT.equals(
-							dlFileVersion.getVersion())) {
-
-						targetStore.addFile(
-							dlFileVersion.getCompanyId(), repositoryId,
-							dlFileEntry.getName(), is);
-					}
-					else {
-						targetStore.updateFile(
+					if (delete) {
+						sourceStore.moveFileToStore(
 							dlFileVersion.getCompanyId(), repositoryId,
 							dlFileEntry.getName(), dlFileVersion.getVersion(),
-							is);
+							targetStore);
 					}
-
-					if (delete) {
-						sourceStore.deleteFile(
+					else {
+						sourceStore.copyFileToStore(
 							dlFileVersion.getCompanyId(), repositoryId,
-							dlFileEntry.getName(), dlFileVersion.getVersion());
+							dlFileEntry.getName(), dlFileVersion.getVersion(),
+							targetStore);
 					}
 				}
 				catch (Exception e) {

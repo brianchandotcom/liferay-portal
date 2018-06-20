@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Arrays;
 import java.util.Dictionary;
 
 import org.osgi.service.cm.Configuration;
@@ -48,53 +50,11 @@ public class UpgradeOrganizationTypesConfiguration extends UpgradeProcess {
 				_props.getArray(
 					LegacyOrganizationTypesKeys.ORGANIZATIONS_TYPES)) {
 
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put("name", organizationType);
-
-			Filter filter = new Filter(organizationType);
-
-			properties.put(
-				"childrenTypes",
-				GetterUtil.getStringValues(
-					_props.getArray(
-						LegacyOrganizationTypesKeys.
-							ORGANIZATIONS_CHILDREN_TYPES,
-						filter),
-					_organizationTypeConfiguration.childrenTypes()));
-			properties.put(
-				"countryEnabled",
-				GetterUtil.getBoolean(
-					_props.get(
-						LegacyOrganizationTypesKeys.
-							ORGANIZATIONS_COUNTRY_ENABLED,
-						filter),
-					_organizationTypeConfiguration.countryEnabled()));
-			properties.put(
-				"countryRequired",
-				GetterUtil.getBoolean(
-					_props.get(
-						LegacyOrganizationTypesKeys.
-							ORGANIZATIONS_COUNTRY_REQUIRED,
-						filter),
-					_organizationTypeConfiguration.countryRequired()));
-			properties.put(
-				"rootable",
-				GetterUtil.getBoolean(
-					_props.get(
-						LegacyOrganizationTypesKeys.ORGANIZATIONS_ROOTABLE,
-						filter),
-					_organizationTypeConfiguration.rootable()));
-
-			Configuration configuration = _getFactoryConfigurationInstance(
-				organizationType);
-
-			configuration.update(properties);
+			upgradeOrganizationTypeConfiguration(organizationType);
 		}
 	}
 
-	private Configuration _getFactoryConfigurationInstance(
-			String organizationType)
+	protected void upgradeOrganizationTypeConfiguration(String organizationType)
 		throws Exception {
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
@@ -103,11 +63,91 @@ public class UpgradeOrganizationTypesConfiguration extends UpgradeProcess {
 				")(name=", organizationType, "))"));
 
 		if (configurations != null) {
-			return configurations[0];
+			return;
 		}
 
-		return _configurationAdmin.createFactoryConfiguration(
-			_FACTORY_PID, StringPool.QUESTION);
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		if (!organizationType.equals(_organizationTypeConfiguration.name())) {
+			properties.put("name", organizationType);
+		}
+
+		Filter filter = new Filter(organizationType);
+
+		if (_props.contains(
+				_getPropertyName(
+					LegacyOrganizationTypesKeys.ORGANIZATIONS_CHILDREN_TYPES,
+					organizationType))) {
+
+			String[] childrenTypes = _props.getArray(
+				LegacyOrganizationTypesKeys.ORGANIZATIONS_CHILDREN_TYPES,
+				filter);
+
+			if (!Arrays.equals(
+					childrenTypes,
+					_organizationTypeConfiguration.childrenTypes())) {
+
+				properties.put("childrenTypes", childrenTypes);
+			}
+		}
+
+		boolean defaultCountryEnabled =
+			_organizationTypeConfiguration.countryEnabled();
+
+		boolean countryEnabled = GetterUtil.getBoolean(
+			_props.get(
+				LegacyOrganizationTypesKeys.ORGANIZATIONS_COUNTRY_ENABLED,
+				filter),
+			defaultCountryEnabled);
+
+		if (countryEnabled != defaultCountryEnabled) {
+			properties.put("countryEnabled", countryEnabled);
+		}
+
+		boolean defaultCountryRequired =
+			_organizationTypeConfiguration.countryRequired();
+
+		boolean countryRequired = GetterUtil.getBoolean(
+			_props.get(
+				LegacyOrganizationTypesKeys.ORGANIZATIONS_COUNTRY_REQUIRED,
+				filter),
+			defaultCountryRequired);
+
+		if (countryRequired != defaultCountryRequired) {
+			properties.put("countryRequired", countryRequired);
+		}
+
+		boolean defaultRootable = _organizationTypeConfiguration.rootable();
+
+		boolean rootable = GetterUtil.getBoolean(
+			_props.get(
+				LegacyOrganizationTypesKeys.ORGANIZATIONS_ROOTABLE, filter),
+			defaultRootable);
+
+		if (rootable != defaultRootable) {
+			properties.put("rootable", rootable);
+		}
+
+		if (properties.isEmpty()) {
+			return;
+		}
+
+		if (Validator.isNull(properties.get("name"))) {
+			properties.put("name", organizationType);
+		}
+
+		Configuration configuration =
+			_configurationAdmin.createFactoryConfiguration(
+				_FACTORY_PID, StringPool.QUESTION);
+
+		configuration.update(properties);
+	}
+
+	private String _getPropertyName(
+		String basePropertyName, String organizationType) {
+
+		return StringBundler.concat(
+			basePropertyName, "[", organizationType, "]");
 	}
 
 	private static final String _FACTORY_PID =

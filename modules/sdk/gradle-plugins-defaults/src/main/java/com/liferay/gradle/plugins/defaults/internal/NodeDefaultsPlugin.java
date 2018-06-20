@@ -92,7 +92,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 				NodePlugin.NPM_RUN_BUILD_TASK_NAME);
 
 		if (executeNpmTask != null) {
-			executeNpmTask.environment("CI", "1");
+			executeNpmTask.environment("LIFERAY_NPM_BUNDLER_NO_TRACKING", "1");
 		}
 	}
 

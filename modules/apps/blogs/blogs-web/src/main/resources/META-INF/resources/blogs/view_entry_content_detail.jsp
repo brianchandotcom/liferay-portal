@@ -116,9 +116,11 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 						<div class="autofit-col autofit-col-expand">
 							<div class="autofit-row">
 								<div class="autofit-col autofit-col-expand">
-									<a class="username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
+									<div class="text-truncate-inline">
+										<a class="text-truncate username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
+									</div>
 
-									<div>
+									<div class="autofit-row">
 										<span class="hide-accessible"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 
 										<c:if test="<%= blogsPortletInstanceConfiguration.enableReadingTime() %>">

@@ -352,6 +352,10 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		CPCatalogEntry cpCatalogEntry = getCPCatalogEntry(httpServletRequest);
 
+		if (cpCatalogEntry == null) {
+			return;
+		}
+
 		RenderRequest renderRequest =
 			(RenderRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);

@@ -18,8 +18,6 @@
 
 <%
 CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepName();
 %>
 
 <div class="row">
@@ -35,6 +33,7 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 				<ul class="commerce-multi-step-nav multi-step-indicator-label-top multi-step-nav multi-step-nav-collapse-sm">
 
 					<%
+					String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepName();
 					boolean complete = true;
 					int step = 1;
 

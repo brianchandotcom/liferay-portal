@@ -61,7 +61,7 @@ public class CheckoutDisplayContext {
 			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(
 				checkoutStepName);
 
-		if (commerceCheckoutStep == null) {
+		if ((commerceCheckoutStep == null) && (_commerceOrder != null)) {
 			List<CommerceCheckoutStep> commerceCheckoutSteps =
 				_commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
 					_httpServletRequest, _httpServletResponse);
@@ -105,6 +105,10 @@ public class CheckoutDisplayContext {
 	}
 
 	public boolean isEmptyCommerceOrder() {
+		if (_commerceOrder == null) {
+			return true;
+		}
+
 		List<CommerceOrderItem> commerceOrderItems =
 			_commerceOrder.getCommerceOrderItems();
 

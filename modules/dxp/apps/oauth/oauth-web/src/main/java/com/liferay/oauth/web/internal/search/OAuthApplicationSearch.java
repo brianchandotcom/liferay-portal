@@ -107,7 +107,7 @@ public class OAuthApplicationSearch extends SearchContainer<OAuthApplication> {
 			setOrderByComparator(orderByComparator);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 	}
 

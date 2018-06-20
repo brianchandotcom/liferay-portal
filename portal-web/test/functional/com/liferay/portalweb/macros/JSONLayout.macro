@@ -27,7 +27,7 @@
 			<return name="portalURL" />
 		</execute>
 
-		<var name="curl">
+		<var name="curl"><![CDATA[
 			${portalURL}/api/jsonws/layout/add-layout \
 				-u test@liferay.com:test \
 				-d groupId=${groupId} \
@@ -39,7 +39,7 @@
 				-d type=portlet \
 				-d hidden=false \
 				-d friendlyURL=
-		</var>
+		]]></var>
 
 		<execute macro="JSONGroup#getGroupName">
 			<var name="groupId" value="${groupId}" />

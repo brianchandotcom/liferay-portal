@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.application-type=full-page-application",
 		"com.liferay.portlet.css-class-wrapper=portlet-oauth2-provider-authorize",
 		"com.liferay.portlet.display-category=category.hidden",
@@ -38,7 +39,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.template-path=/authorize/",
 		"javax.portlet.init-param.view-template=/authorize/authorize.jsp",
 		"javax.portlet.name=" + OAuth2ProviderPortletKeys.OAUTH2_AUTHORIZE,
-		"javax.portlet.resource-bundle=content.Language"
+		"javax.portlet.resource-bundle=content.Language",
+		"portlet.add.default.resource.check.whitelist=" + OAuth2ProviderPortletKeys.OAUTH2_AUTHORIZE
 	},
 	service = Portlet.class
 )

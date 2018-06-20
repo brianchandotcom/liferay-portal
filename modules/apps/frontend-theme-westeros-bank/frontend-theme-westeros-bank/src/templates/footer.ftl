@@ -3,7 +3,7 @@
 		<div class="container-fluid container-fluid-max-xl">
 			<div class="row">
 				<div class="ml-auto nav small text-uppercase" role="menubar">
-					<#assign preferencesMap = {"displayDepth": "1", "portletSetupPortletDecoratorId": "barebones"} />
+					<#assign preferencesMap = {"displayDepth": "1", "portletSetupPortletDecoratorId": "barebone"} />
 
 					<@liferay.navigation_menu
 						default_preferences=freeMarkerPortletPreferences.getPreferences(preferencesMap)

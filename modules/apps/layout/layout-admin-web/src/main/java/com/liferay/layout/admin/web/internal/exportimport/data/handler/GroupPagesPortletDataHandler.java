@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "page-template";
+	public static final String NAMESPACE = "page-templates";
 
 	public static final String SCHEMA_VERSION = "1.0.0";
 
@@ -88,6 +88,7 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "page-templates", true, false, null,
 				LayoutPageTemplateEntry.class.getName(),
 				StagedModelType.REFERRER_CLASS_NAME_ALL));
+		setPublishToLiveByDefault(true);
 		setStagingControls(getExportControls());
 	}
 

@@ -14,12 +14,11 @@
 
 package com.liferay.portal.upload.internal.upgrade;
 
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upload.internal.upgrade.v1_0_0.UpgradeUploadServletRequestConfiguration;
 
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -36,13 +35,11 @@ public class UploadUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"0.0.1", "1.0.0",
 			new UpgradeUploadServletRequestConfiguration(
-				_configurationAdmin, _prefsProps));
+				_prefsPropsToConfigurationUpgradeHelper));
 	}
 
 	@Reference
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private PrefsProps _prefsProps;
+	private PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 }

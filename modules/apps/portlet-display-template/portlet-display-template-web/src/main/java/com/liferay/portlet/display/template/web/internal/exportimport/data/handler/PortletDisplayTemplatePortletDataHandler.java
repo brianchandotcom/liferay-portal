@@ -151,16 +151,8 @@ public class PortletDisplayTemplatePortletDataHandler
 		if (ExportImportDateUtil.isRangeFromLastPublishDate(
 				portletDataContext)) {
 
-			StagedModelType[] stagedModelTypes = getStagedModelTypes();
-
-			String[] classNames = new String[stagedModelTypes.length];
-
-			for (int i = 0; i < stagedModelTypes.length; i++) {
-				classNames[i] = stagedModelTypes[i].getClassName();
-			}
-
 			_staging.populateLastPublishDateCounts(
-				portletDataContext, classNames);
+				portletDataContext, getStagedModelTypes());
 
 			return;
 		}

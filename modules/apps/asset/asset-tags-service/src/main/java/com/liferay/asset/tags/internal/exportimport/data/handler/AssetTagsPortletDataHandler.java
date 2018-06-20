@@ -158,7 +158,10 @@ public class AssetTagsPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext)) {
 
 			_staging.populateLastPublishDateCounts(
-				portletDataContext, new String[] {AssetTag.class.getName()});
+				portletDataContext,
+				new StagedModelType[] {
+					new StagedModelType(AssetTag.class.getName())
+				});
 
 			return;
 		}

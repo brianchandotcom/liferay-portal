@@ -177,6 +177,10 @@ public interface ChangesetEntryLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ChangesetEntry> fetchChangesetEntries(
+		long changesetCollectionId, long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ChangesetEntry fetchChangesetEntry(long changesetEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

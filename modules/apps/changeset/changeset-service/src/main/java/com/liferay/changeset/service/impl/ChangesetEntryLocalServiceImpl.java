@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.SetUtil;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -90,6 +91,14 @@ public class ChangesetEntryLocalServiceImpl
 		if (changesetEntry != null) {
 			changesetEntryLocalService.deleteChangesetEntry(changesetEntry);
 		}
+	}
+
+	@Override
+	public List<ChangesetEntry> fetchChangesetEntries(
+		long changesetCollectionId, long classNameId) {
+
+		return changesetEntryPersistence.findByC_C(
+			changesetCollectionId, classNameId);
 	}
 
 	@Override

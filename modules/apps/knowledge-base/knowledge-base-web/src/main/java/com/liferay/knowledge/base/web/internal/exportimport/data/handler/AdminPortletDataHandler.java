@@ -212,9 +212,10 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					KBArticle.class.getName(), KBComment.class.getName(),
-					KBTemplate.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(KBArticle.class.getName()),
+					new StagedModelType(KBComment.class.getName()),
+					new StagedModelType(KBTemplate.class.getName())
 				});
 
 			return;

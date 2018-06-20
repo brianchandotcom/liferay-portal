@@ -194,6 +194,12 @@ public class ChangesetEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static java.util.List<com.liferay.changeset.model.ChangesetEntry> fetchChangesetEntries(
+		long changesetCollectionId, long classNameId) {
+		return getService()
+				   .fetchChangesetEntries(changesetCollectionId, classNameId);
+	}
+
 	public static com.liferay.changeset.model.ChangesetEntry fetchChangesetEntry(
 		long changesetEntryId) {
 		return getService().fetchChangesetEntry(changesetEntryId);

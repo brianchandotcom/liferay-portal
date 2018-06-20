@@ -492,9 +492,21 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 				if ((portletDataAll || controlValue) &&
 					(portletDataHandlerBoolean.getClassName() != null)) {
 
-					parameterMap.put(
-						portletDataHandlerBoolean.getClassName(),
-						new String[] {Boolean.TRUE.toString()});
+					if (portletDataHandlerBoolean.getReferrerClassName() ==
+							null) {
+
+						parameterMap.put(
+							portletDataHandlerBoolean.getClassName(),
+							new String[] {Boolean.TRUE.toString()});
+					}
+					else {
+						parameterMap.put(
+							portletDataHandlerBoolean.getClassName() +
+								StringPool.POUND +
+									portletDataHandlerBoolean.
+										getReferrerClassName(),
+							new String[] {Boolean.TRUE.toString()});
+					}
 				}
 			}
 		}

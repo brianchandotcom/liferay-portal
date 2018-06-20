@@ -199,9 +199,10 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					PollsChoice.class.getName(), PollsQuestion.class.getName(),
-					PollsVote.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(PollsChoice.class.getName()),
+					new StagedModelType(PollsQuestion.class.getName()),
+					new StagedModelType(PollsVote.class.getName())
 				});
 
 			return;

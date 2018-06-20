@@ -391,9 +391,15 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					DDMStructure.class.getName(), DDMTemplate.class.getName(),
-					JournalFeed.class.getName(), JournalFolder.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(
+						DDMStructure.class.getName(),
+						JournalArticle.class.getName()),
+					new StagedModelType(
+						DDMTemplate.class.getName(),
+						DDMStructure.class.getName()),
+					new StagedModelType(JournalFeed.class.getName()),
+					new StagedModelType(JournalFolder.class.getName())
 				});
 
 			_populateJournalArticleLastPublishDateCounts(portletDataContext);

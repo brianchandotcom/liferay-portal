@@ -263,10 +263,12 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					MBBan.class.getName(), MBCategory.class.getName(),
-					MBMessage.class.getName(), MBThread.class.getName(),
-					MBThreadFlag.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(MBBan.class.getName()),
+					new StagedModelType(MBCategory.class.getName()),
+					new StagedModelType(MBMessage.class.getName()),
+					new StagedModelType(MBThread.class.getName()),
+					new StagedModelType(MBThreadFlag.class.getName())
 				});
 
 			return;

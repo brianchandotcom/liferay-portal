@@ -149,6 +149,24 @@ class FragmentsEditor extends Component {
 	}
 
 	/**
+	 * Gets a fragmentEntryLink index for the given fragmentEntryLinkId
+	 * @param {!string} fragmentEntryLinkId
+	 * @private
+	 * @return {number} fragmentEntryLink index or -1 if it's not found
+	 */
+
+	_getFragmentEntryLinkIndex(fragmentEntryLinkId) {
+		return this.fragmentEntryLinks.indexOf(
+			this.fragmentEntryLinks.find(
+				fragmentEntryLink => (
+					fragmentEntryLink.fragmentEntryLinkId ===
+					fragmentEntryLinkId
+				)
+			)
+		);
+	}
+
+	/**
 	 * Gets a new FragmentEntryLink position.
 	 * @returns {number}
 	 * @private
@@ -313,10 +331,8 @@ class FragmentsEditor extends Component {
 						response.fragmentEntryLinkId
 					).then(
 						content => {
-							const index = this.fragmentEntryLinks.findIndex(
-								_fragmentEntryLink => {
-									return _fragmentEntryLink.fragmentEntryLinkId === response.fragmentEntryLinkId;
-								}
+							const index = this._getFragmentEntryLinkIndex(
+								response.fragmentEntryLinkId
 							);
 
 							if (index !== -1) {
@@ -366,8 +382,8 @@ class FragmentsEditor extends Component {
 
 	_handleFragmentMove(data) {
 		const direction = data.direction;
-		const index = this.fragmentEntryLinks.findIndex(
-			fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId === data.fragmentEntryLinkId
+		const index = this._getFragmentEntryLinkIndex(
+			data.fragmentEntryLinkId
 		);
 
 		if (
@@ -422,8 +438,8 @@ class FragmentsEditor extends Component {
 	 */
 
 	_handleFragmentRemove(data) {
-		const index = this.fragmentEntryLinks.findIndex(
-			fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId === data.fragmentEntryLinkId
+		const index = this._getFragmentEntryLinkIndex(
+			data.fragmentEntryLinkId
 		);
 
 		if (index !== -1) {
@@ -621,9 +637,8 @@ class FragmentsEditor extends Component {
 			fragmentEntryLinkId
 		);
 
-		const index = this.fragmentEntryLinks.findIndex(
-			fragmentEntryLink => fragmentEntryLinkId ===
-				fragmentEntryLink.fragmentEntryLinkId
+		const index = this._getFragmentEntryLinkIndex(
+			fragmentEntryLinkId
 		);
 
 		if (component && index !== -1) {
@@ -819,6 +834,38 @@ FragmentsEditor.STATE = {
 	).required(),
 
 	/**
+	 * List of fragment instances being used, the order
+	 * of the elements in this array defines their position.
+	 * @default []
+	 * @instance
+	 * @memberOf FragmentsEditor
+	 * @review
+	 * @type {Array<{
+	 *   config: Object,
+	 *   content: string,
+	 *   editableValues: Object,
+	 *   fragmentEntryId: !string,
+	 *   fragmentEntryLinkId: !string,
+	 *   name: !string,
+	 *   position: !number
+	 * }>}
+	 */
+
+	fragmentEntryLinks: Config.arrayOf(
+		Config.shapeOf(
+			{
+				config: Config.object().value({}),
+				content: Config.any().value(''),
+				editableValues: Config.object().value({}),
+				fragmentEntryId: Config.string().required(),
+				fragmentEntryLinkId: Config.string().required(),
+				name: Config.string().required(),
+				position: Config.number().required()
+			}
+		)
+	).value([]),
+
+	/**
 	 * URL for obtaining the class types of an asset
 	 * created.
 	 * @default undefined
@@ -863,38 +910,6 @@ FragmentsEditor.STATE = {
 	 */
 
 	imageSelectorURL: Config.string().required(),
-
-	/**
-	 * List of fragment instances being used, the order
-	 * of the elements in this array defines their position.
-	 * @default []
-	 * @instance
-	 * @memberOf FragmentsEditor
-	 * @review
-	 * @type {Array<{
-	 *   config: Object,
-	 *   content: string,
-	 *   editableValues: Object,
-	 *   fragmentEntryId: !string,
-	 *   fragmentEntryLinkId: !string,
-	 *   name: !string,
-	 *   position: !number
-	 * }>}
-	 */
-
-	fragmentEntryLinks: Config.arrayOf(
-		Config.shapeOf(
-			{
-				config: Config.object().value({}),
-				content: Config.any().value(''),
-				editableValues: Config.object().value({}),
-				fragmentEntryId: Config.string().required(),
-				fragmentEntryLinkId: Config.string().required(),
-				name: Config.string().required(),
-				position: Config.number().required()
-			}
-		)
-	).value([]),
 
 	/**
 	 * URL for getting the list of mapping fields

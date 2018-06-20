@@ -16,9 +16,12 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,9 +31,12 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -75,6 +81,31 @@ public class DDMFormFactoryHelper {
 		}
 	}
 
+	protected void collectResourceBundles(
+		Class<?> clazz, List<ResourceBundle> resourceBundles, Locale locale) {
+
+		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+			collectResourceBundles(interfaceClass, resourceBundles, locale);
+		}
+
+		String resourceBundleBaseName = getResourceBundleBaseName();
+
+		if (Validator.isNull(resourceBundleBaseName)) {
+			return;
+		}
+
+		try {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				resourceBundleBaseName, locale, clazz.getClassLoader());
+
+			if (resourceBundle != null) {
+				resourceBundles.add(resourceBundle);
+			}
+		}
+		catch (MissingResourceException mre) {
+		}
+	}
+
 	protected Set<Locale> getAvailableLocales() {
 		if (Validator.isNull(_ddmForm.availableLanguageIds())) {
 			Locale defaultLocale = getDefaultLocale();
@@ -110,7 +141,7 @@ public class DDMFormFactoryHelper {
 
 		for (Method method : getDDMFormFieldMethods()) {
 			DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
-				new DDMFormFieldFactoryHelper(method);
+				new DDMFormFieldFactoryHelper(this, method);
 
 			ddmFormFieldFactoryHelper.setAvailableLocales(_availableLocales);
 			ddmFormFieldFactoryHelper.setDefaultLocale(_defaultLocale);
@@ -151,6 +182,46 @@ public class DDMFormFactoryHelper {
 		return LocaleUtil.fromLanguageId(_ddmForm.defaultLanguageId());
 	}
 
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		if (_resourceBundles == null) {
+			_resourceBundles = new HashMap<>();
+		}
+
+		return _resourceBundles.computeIfAbsent(
+			locale,
+			key -> {
+				List<ResourceBundle> resourceBundles = new ArrayList<>();
+
+				ResourceBundle portalResourceBundle =
+					ResourceBundleUtil.getBundle(
+						"content.Language", locale,
+						PortalClassLoaderUtil.getClassLoader());
+
+				resourceBundles.add(portalResourceBundle);
+
+				collectResourceBundles(_clazz, resourceBundles, locale);
+
+				ResourceBundle[] resourceBundlesArray = resourceBundles.toArray(
+					new ResourceBundle[resourceBundles.size()]);
+
+				return new AggregateResourceBundle(resourceBundlesArray);
+			});
+	}
+
+	protected String getResourceBundleBaseName() {
+		if (!_clazz.isAnnotationPresent(DDMForm.class)) {
+			return null;
+		}
+
+		DDMForm ddmForm = _clazz.getAnnotation(DDMForm.class);
+
+		if (Validator.isNotNull(ddmForm.localization())) {
+			return ddmForm.localization();
+		}
+
+		return "content.Language";
+	}
+
 	private static final Class<? extends Annotation>
 		_DDM_FORM_FIELD_ANNOTATION =
 			com.liferay.dynamic.data.mapping.annotations.DDMFormField.class;
@@ -159,5 +230,6 @@ public class DDMFormFactoryHelper {
 	private final Class<?> _clazz;
 	private final DDMForm _ddmForm;
 	private final Locale _defaultLocale;
+	private Map<Locale, ResourceBundle> _resourceBundles;
 
 }

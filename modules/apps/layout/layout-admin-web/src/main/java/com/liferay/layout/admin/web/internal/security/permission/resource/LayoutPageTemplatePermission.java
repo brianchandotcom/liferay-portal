@@ -14,8 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.security.permission.resource;
 
-import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,23 +29,20 @@ public class LayoutPageTemplatePermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return _layoutPageTemplatePortletResourcePermission.contains(
+		return _portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);
 	}
 
 	@Reference(
-		target = "(resource.name=" + LayoutPageTemplateConstants.RESOURCE_NAME + ")",
+		target = "(component.name=com.liferay.layout.page.template.internal.security.permission.resource.LayoutPageTemplatePortletResourcePermission)",
 		unbind = "-"
 	)
-	protected void setLayoutPageTemplatePortletResourcePermission(
-		LayoutPageTemplatePortletResourcePermission
-			layoutPageTemplatePortletResourcePermission) {
+	protected void setPortletResourcePermission(
+		PortletResourcePermission portletResourcePermission) {
 
-		_layoutPageTemplatePortletResourcePermission =
-			layoutPageTemplatePortletResourcePermission;
+		_portletResourcePermission = portletResourcePermission;
 	}
 
-	private static LayoutPageTemplatePortletResourcePermission
-		_layoutPageTemplatePortletResourcePermission;
+	private static PortletResourcePermission _portletResourcePermission;
 
 }

@@ -24,9 +24,9 @@
 						<div class="container-fluid container-fluid-max-xl" id="headerTopBar">
 								<#if !stringUtil.equals(main_recursive_menu_class, "no-screen")>
 									<div class="${main_recursive_menu_class} nav navbar-nav">
-										<#assign preferencesMap = {"displayDepth": "1", "portletSetupPortletDecoratorId": "barebone"} />
+										<#assign topNavigationPreferencesMap = {"displayDepth": "1", "portletSetupPortletDecoratorId": "barebone"} />
 
-										<@liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences(preferencesMap) />
+										<@liferay.navigation_menu default_preferences=freeMarkerPortletPreferences.getPreferences(topNavigationPreferencesMap) />
 									</div>
 								</#if>
 

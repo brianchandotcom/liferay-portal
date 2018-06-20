@@ -1,6 +1,5 @@
 <#assign
 	portlet_display = portletDisplay
-
 	portlet_back_url = htmlUtil.escapeHREF(portlet_display.getURLBack())
 	portlet_content_css_class = "portlet-content"
 	portlet_display_name = htmlUtil.escape(portlet_display.getPortletDisplayName())
@@ -44,14 +43,41 @@
 	</#if>
 
 	<div class="${portlet_content_css_class}">
-		<#if portlet_display.isShowBackIcon()>
-			<a class="icon-monospaced portlet-icon-back text-default" href="${portlet_back_url}" title="<@liferay.language key="return-to-full-page" />">
-				<span class="icon-angle-left"></span>
-			</a>
-		</#if>
+		<@liferay_util["buffer"] var="portlet_header">
+			<@liferay_util["dynamic-include"] key="portlet_header_${portlet_display_root_portlet_id}" />
+		</@>
 
-		<#if !stringUtil.equals(portlet_display.getPortletDecoratorId(), "barebone")>
-			<h2 class="portlet-title-text">${portlet_title}</h2>
+		<#assign show_portlet_decorator = validator.isNotNull(portlet_display.getPortletDecoratorId()) && !stringUtil.equals(portlet_display.getPortletDecoratorId(), "barebone") />
+
+		<#if portlet_display.isShowBackIcon() || show_portlet_decorator || portlet_header?has_content>
+			<div class="autofit-float autofit-row portlet-header">
+				<#if portlet_display.isShowBackIcon()>
+					<div class="autofit-col">
+						<div class="autofit-section">
+							<a class="icon-monospaced portlet-icon-back text-default" href="${portlet_back_url}" title="<@liferay.language key="return-to-full-page" />">
+								<@liferay_ui["icon"]
+									icon="angle-left"
+									markupView="lexicon"
+								/>
+							</a>
+						</div>
+					</div>
+				</#if>
+
+				<#if show_portlet_decorator>
+					<div class="autofit-col autofit-col-expand">
+						<h2 class="portlet-title-text">${portlet_title}</h2>
+					</div>
+				</#if>
+
+				<#if portlet_header?has_content>
+					<div class="autofit-col autofit-col-end">
+						<div class="autofit-section">
+							${portlet_header}
+						</div>
+					</div>
+				</#if>
+			</div>
 		</#if>
 
 		${portlet_display.writeContent(writer)}

@@ -80,9 +80,8 @@
 					<var name="key_portletName" value="${portletName}" />
 				</execute>
 
-				<execute function="AssertClick" locator1="Language#LANGUAGE" value1="${textIcon}">
-					<var name="key_locale" value="${locale}" />
-					<var name="key_portletName" value="${portletName}" />
+				<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${textIcon}">
+					<var name="key_menuItem" value="${textIcon}" />
 				</execute>
 			</then>
 		</if>
@@ -137,9 +136,8 @@
 		</execute>
 
 		<for list="${missingLocales}" param="missingLocale">
-			<execute function="AssertElementNotPresent" locator1="Language#LANGUAGE">
-				<var name="key_locale" value="${missingLocale}" />
-				<var name="key_portletName" value="LanguagePortlet" />
+			<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="${missingLocale}">
+				<var name="key_menuItem" value="${missingLocale}" />
 			</execute>
 		</for>
 
@@ -154,9 +152,8 @@
 		</execute>
 
 		<for list="${currentLocales}" param="currentLocale">
-			<execute function="AssertElementPresent" locator1="Language#LANGUAGE">
-				<var name="key_locale" value="${currentLocale}" />
-				<var name="key_portletName" value="LanguagePortlet" />
+			<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="${currentLocale}">
+				<var name="key_menuItem" value="${currentLocale}" />
 			</execute>
 		</for>
 

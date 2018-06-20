@@ -3372,11 +3372,14 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<test-set-up>
 				<if>
-					<isset property="env.DIST_PATH" />
+					<and>
+						<or>
+							<matches pattern="https?://" string="${test.portal.bundle.war.url}" />
+							<matches pattern="https?://" string="${test.portal.bundle.zip.url}" />
+						</or>
+						<matches pattern="https?://" string="${test.sql.zip.url}" />
+					</and>
 					<then>
-						<prepare-test-environment />
-					</then>
-					<else>
 						<propertycopy from="app.server.${app.server.type}.bin.dir" name="test.app.server.bin.dir" />
 
 						<antcall inheritAll="false" target="prepare-test-bundle">
@@ -3403,7 +3406,16 @@ app.server.type=@{app.server.type}]]></echo>
 						<setup-testable-tomcat />
 
 						<setup-test-batch-testable-tomcat />
-					</else>
+					</then>
+					<elseif>
+						<and>
+							<available file="liferay-portal-bundle-${app.server.type}.zip" />
+							<available file="liferay-portal-source.zip" />
+						</and>
+						<then>
+							<prepare-test-environment app.server.type="${app.server.type}" />
+						</then>
+					</elseif>
 				</if>
 			</test-set-up>
 		</run-batch-test>

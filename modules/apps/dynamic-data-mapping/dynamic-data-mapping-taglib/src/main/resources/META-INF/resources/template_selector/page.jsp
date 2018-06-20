@@ -26,7 +26,7 @@ long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(theme
 Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 %>
 
-<div class="align-items-center autofit-row">
+<div class="autofit-row autofit-row-center">
 	<div class="autofit-col inline-item-before">
 		<aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
 

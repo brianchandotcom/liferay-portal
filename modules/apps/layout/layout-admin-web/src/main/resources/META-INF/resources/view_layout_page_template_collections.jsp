@@ -40,7 +40,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 
 						<c:choose>
 							<c:when test="<%= ListUtil.isNotEmpty(layoutPageTemplateCollections) %>">
-								<div class="align-items-center autofit-row">
+								<div class="autofit-row autofit-row-center">
 									<div class="autofit-col autofit-col-expand">
 										<strong class="text-uppercase">
 											<liferay-ui:message key="collections" />
@@ -112,7 +112,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 			<c:if test="<%= layoutPageTemplateCollection != null %>">
 				<div class="sheet">
 					<h3 class="sheet-title">
-						<div class="align-items-center autofit-row">
+						<div class="autofit-row autofit-row-center">
 							<div class="autofit-col">
 								<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
 							</div>

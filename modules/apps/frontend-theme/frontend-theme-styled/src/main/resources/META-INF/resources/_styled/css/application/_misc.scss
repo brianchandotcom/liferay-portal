@@ -47,18 +47,9 @@
 }
 
 .lfr-page-layouts {
+	padding: 0;
+
 	input[type="radio"]:checked + .card-horizontal {
 		box-shadow: inset 0 0 0 $card-horizontal-on-border-width $card-horizontal-on-border;
-	}
-
-	.lfr-layout-template {
-		label {
-			cursor: pointer;
-		}
-
-		.layout-template-entry {
-			height: 28px;
-			width: 28px;
-		}
 	}
 }

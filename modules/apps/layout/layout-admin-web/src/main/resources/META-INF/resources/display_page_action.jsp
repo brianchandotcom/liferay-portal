@@ -104,7 +104,7 @@ LayoutPageTemplateEntry layoutPageTemplateEntry = (LayoutPageTemplateEntry)row.g
 			icon='<%= layoutPageTemplateEntry.getDefaultTemplate() ? "check" : StringPool.BLANK %>'
 			iconCssClass="pull-right"
 			markupView="lexicon"
-			message="default"
+			message="mark-as-default"
 			onClick="<%= taglibOnClickPrimary %>"
 			url="javascript:;"
 		/>

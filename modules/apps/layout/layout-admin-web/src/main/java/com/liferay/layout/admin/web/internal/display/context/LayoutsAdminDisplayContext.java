@@ -395,6 +395,20 @@ public class LayoutsAdminDisplayContext {
 		return _groupDisplayContextHelper.getLiveGroupId();
 	}
 
+	public String getMarkAsHomePageLayoutURL(Layout layout) {
+		PortletURL markAsHomePageLayoutURL =
+			_liferayPortletResponse.createActionURL();
+
+		markAsHomePageLayoutURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/mark_as_home_page_layout");
+		markAsHomePageLayoutURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		markAsHomePageLayoutURL.setParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+
+		return markAsHomePageLayoutURL.toString();
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -932,6 +946,13 @@ public class LayoutsAdminDisplayContext {
 			jsonObject.put("editLayoutURL", getEditLayoutURL(layout));
 		}
 
+		if (layout.getParentLayoutId() ==
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+
+			jsonObject.put(
+				"markAsHomePageLayoutURL", getMarkAsHomePageLayoutURL(layout));
+		}
+
 		if (isShowOrphanPortletsAction(layout)) {
 			jsonObject.put("orphanPortletsURL", getOrphanPortletsURL(layout));
 		}
@@ -1058,6 +1079,30 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return jsonObject;
+	}
+
+	private long _getHomePagePlid(boolean privateLayout) {
+		if (_homePagePlid != null) {
+			return _homePagePlid;
+		}
+
+		_homePagePlid = LayoutLocalServiceUtil.getDefaultPlid(
+			getSelGroupId(), privateLayout);
+
+		return _homePagePlid;
+	}
+
+	private String _getHomePageTitle(boolean privateLayout) {
+		if (_homePageTitle != null) {
+			return _homePageTitle;
+		}
+
+		Layout defaultLayout = LayoutLocalServiceUtil.fetchDefaultLayout(
+			getSelGroupId(), privateLayout);
+
+		_homePageTitle = defaultLayout.getName(_themeDisplay.getLocale());
+
+		return _homePageTitle;
 	}
 
 	private JSONArray _getLayoutColumnsJSONArray() throws Exception {
@@ -1196,11 +1241,17 @@ public class LayoutsAdminDisplayContext {
 					_request, layoutTypeResourceBundle,
 					"layout.types." + layout.getType()));
 
+			layoutJSONObject.put(
+				"homePage",
+				_getHomePagePlid(privateLayout) == layout.getPlid());
+
 			int childLayoutsCount = LayoutLocalServiceUtil.getLayoutsCount(
 				getSelGroup(), isPrivatePages(), layout.getLayoutId());
 
 			layoutJSONObject.put("hasChild", childLayoutsCount > 0);
 
+			layoutJSONObject.put(
+				"homePageTitle", _getHomePageTitle(privateLayout));
 			layoutJSONObject.put("plid", layout.getPlid());
 
 			if (childLayoutsCount > 0) {
@@ -1261,6 +1312,8 @@ public class LayoutsAdminDisplayContext {
 
 	private Long _activeLayoutSetBranchId;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
+	private Long _homePagePlid;
+	private String _homePageTitle;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;
 	private final LiferayPortletRequest _liferayPortletRequest;

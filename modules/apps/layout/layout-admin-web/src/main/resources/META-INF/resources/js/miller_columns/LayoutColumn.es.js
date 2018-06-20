@@ -39,6 +39,25 @@ class LayoutColumn extends Component {
 	}
 
 	/**
+	 * Handle mark as home page layout click in order to set a layout as home
+	 * page.
+	 * @param {Event} event
+	 * @private
+	 */
+
+	_handleMarkAsHomePageLayoutClick(event) {
+		let confirmMessage = _.sub(
+			Liferay.Language.get('do-you-want-to-replace-x-for-x-as-the-home-page'),
+			event.delegateTarget.dataset.homePageTitle,
+			event.delegateTarget.dataset.title
+		);
+
+		if (!confirm(confirmMessage)) {
+			event.preventDefault();
+		}
+	}
+
+	/**
 	 * Handle permission item click in order to open the target href
 	 * in a dialog.
 	 * @param {Event} event
@@ -101,6 +120,8 @@ LayoutColumn.STATE = {
 				active: Config.bool().required(),
 				description: Config.string().required(),
 				hasChild: Config.bool().required(),
+				homePage: Config.bool().required(),
+				homePageTitle: Config.string().required(),
 				plid: Config.string().required(),
 				title: Config.string().required(),
 				url: Config.string().required()

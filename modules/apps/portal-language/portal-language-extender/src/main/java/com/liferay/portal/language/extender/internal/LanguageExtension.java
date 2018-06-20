@@ -114,7 +114,8 @@ public class LanguageExtension implements Extension {
 					bundleWiring.getClassLoader(), (String)baseName,
 					GetterUtil.getBoolean(
 						attributes.getOrDefault(
-							"exclude.portal.resources", "false")));
+							"exclude.portal.resources",
+							Boolean.FALSE.toString())));
 			}
 
 			if (resourceBundleLoader != null) {

@@ -58,7 +58,7 @@ public class AnnotatedApplicationPrefixHandlerClientTest
 		Invocation.Builder builder = authorize(
 			webTarget.request(), getToken("oauthTestApplication"));
 
-		Assert.assertEquals("everything.readonly", builder.get(String.class));
+		Assert.assertEquals("everything.read", builder.get(String.class));
 	}
 
 	public static class

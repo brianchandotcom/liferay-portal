@@ -72,7 +72,7 @@ public class RefreshTokenTest extends BaseClientTestCase {
 			webTarget.request(), accessTokenString);
 
 		Assert.assertEquals(
-			"everything.readonly", invocationBuilder.get(String.class));
+			"everything.read", invocationBuilder.get(String.class));
 
 		WebTarget tokenWebTarget = getTokenWebTarget();
 
@@ -93,7 +93,7 @@ public class RefreshTokenTest extends BaseClientTestCase {
 		invocationBuilder = authorize(webTarget.request(), tokenString);
 
 		Assert.assertEquals(
-			"everything.readonly", invocationBuilder.get(String.class));
+			"everything.read", invocationBuilder.get(String.class));
 
 		invocationBuilder = authorize(webTarget.request(), accessTokenString);
 

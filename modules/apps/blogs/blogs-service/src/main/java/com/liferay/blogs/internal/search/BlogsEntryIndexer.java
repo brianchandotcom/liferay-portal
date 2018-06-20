@@ -79,7 +79,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		return _blogsEntryFolderModelResourcePermission.contains(
+		return _blogsEntryModelResourcePermission.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
@@ -218,6 +218,6 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private ModelResourcePermission<BlogsEntry>
-		_blogsEntryFolderModelResourcePermission;
+		_blogsEntryModelResourcePermission;
 
 }

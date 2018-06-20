@@ -174,7 +174,7 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		return _blogsEntryFolderModelResourcePermission.contains(
+		return _blogsEntryModelResourcePermission.contains(
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
@@ -198,11 +198,12 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private static final String[] _CLASS_NAMES = {BlogsEntry.class.getName()};
 
+	private BlogsEntryLocalService _blogsEntryLocalService;
+
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
 	private ModelResourcePermission<BlogsEntry>
-		_blogsEntryFolderModelResourcePermission;
+		_blogsEntryModelResourcePermission;
 
-	private BlogsEntryLocalService _blogsEntryLocalService;
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

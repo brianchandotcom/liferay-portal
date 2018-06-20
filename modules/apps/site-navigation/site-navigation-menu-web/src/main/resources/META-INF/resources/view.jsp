@@ -18,13 +18,17 @@
 
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-created-succesfully") %>' targetNode="#controlMenuAlertsContainer" />
 
+<%
+int siteNavigationMenusCount = SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId);
+%>
+
 <c:choose>
-	<c:when test="<%= (SiteNavigationMenuLocalServiceUtil.getSiteNavigationMenusCount(scopeGroupId) > 0) && (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() > 0) && (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuId() <= 0) %>">
+	<c:when test="<%= (siteNavigationMenusCount > 0) && (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() > 0) && (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuId() <= 0) %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message arguments="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuTypeLabel() %>" key="there-is-no-x-available-for-the-current-site" />
 		</div>
 	</c:when>
-	<c:when test="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuId() == 0 %>">
+	<c:when test="<%= (siteNavigationMenusCount > 0) && (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuId() == 0) %>">
 		<div class="alert alert-info text-center">
 			<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="configure" /></aui:a>
 		</div>

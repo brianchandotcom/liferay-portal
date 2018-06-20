@@ -44,18 +44,6 @@ public class ApioForm extends ApioBaseResponse {
 	}
 
 	/**
-	 * Parses the supportedProperty JsonNode of the form
-	 *
-	 * @return description of the Form or empty string if not present in the
-	 *         String
-	 */
-	public String getDescription() {
-		JsonNode jsonNode = responseJsonNode.path(FieldNames.DESCRIPTION);
-
-		return jsonNode.asText();
-	}
-
-	/**
 	 * Determines the supported properties of the resource collection and
 	 * retruns them in a List
 	 *
@@ -120,17 +108,6 @@ public class ApioForm extends ApioBaseResponse {
 
 	public JsonNode getSupportedPropertiesJsonNode() {
 		return findJsonNode(FieldNames.SUPPORTED_PROPERTY);
-	}
-
-	/**
-	 * Parses the supportedProperty JsonNode of the form
-	 *
-	 * @return title of the Form or empty string if not present in the String
-	 */
-	public String getTitle() {
-		JsonNode jsonNode = responseJsonNode.path(FieldNames.TITLE);
-
-		return jsonNode.asText();
 	}
 
 	private void _validateForm() throws IOException {

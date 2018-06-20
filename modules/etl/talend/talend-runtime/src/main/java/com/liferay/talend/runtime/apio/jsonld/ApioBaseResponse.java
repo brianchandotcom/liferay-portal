@@ -16,6 +16,7 @@ package com.liferay.talend.runtime.apio.jsonld;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import com.liferay.talend.runtime.apio.constants.HydraConstants.FieldNames;
 import com.liferay.talend.runtime.apio.constants.JSONLDConstants;
 
 import java.io.IOException;
@@ -39,9 +40,32 @@ public abstract class ApioBaseResponse implements ApioResponse {
 		return findJsonNode(JSONLDConstants.CONTEXT);
 	}
 
+	/**
+	 * Parses the responseJsonNode JsonNode of the form
+	 *
+	 * @return description of the Form or empty string if not present in the
+	 *         String
+	 */
+	public String getDescription() {
+		JsonNode jsonNode = responseJsonNode.path(FieldNames.DESCRIPTION);
+
+		return jsonNode.asText();
+	}
+
 	@Override
 	public JsonNode getIdJsonNode() {
 		return findJsonNode(JSONLDConstants.ID);
+	}
+
+	/**
+	 * Parses the responseJsonNode JsonNode of the form
+	 *
+	 * @return title of the Form or empty string if not present in the String
+	 */
+	public String getTitle() {
+		JsonNode jsonNode = responseJsonNode.path(FieldNames.TITLE);
+
+		return jsonNode.asText();
 	}
 
 	@Override

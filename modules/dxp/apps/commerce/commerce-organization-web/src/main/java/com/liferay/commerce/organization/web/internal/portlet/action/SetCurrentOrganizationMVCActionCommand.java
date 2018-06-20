@@ -16,10 +16,15 @@ package com.liferay.commerce.organization.web.internal.portlet.action;
 
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,10 +63,27 @@ public class SetCurrentOrganizationMVCActionCommand
 			httpServletRequest, currentOrganizationId);
 
 		hideDefaultSuccessMessage(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		Layout layout = themeDisplay.getLayout();
+
+		String redirect = siteGroup.getDisplayURL(
+			themeDisplay, layout.isPrivateLayout());
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference
 	private CommerceOrganizationHelper _commerceOrganizationHelper;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

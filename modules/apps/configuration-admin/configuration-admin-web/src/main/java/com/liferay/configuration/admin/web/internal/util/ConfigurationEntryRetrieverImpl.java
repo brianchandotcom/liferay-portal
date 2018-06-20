@@ -25,6 +25,7 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenC
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -41,8 +42,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -100,6 +103,8 @@ public class ConfigurationEntryRetrieverImpl
 			if (curConfigurationCategory == null) {
 				curConfigurationCategory = new AdhocConfigurationCategory(
 					curConfigurationCategoryKey);
+
+				_registerConfigurationCategory(curConfigurationCategory);
 			}
 
 			ConfigurationCategorySectionDisplay
@@ -181,6 +186,8 @@ public class ConfigurationEntryRetrieverImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
 		_configurationCategoriesServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ConfigurationCategory.class, null,
@@ -220,6 +227,18 @@ public class ConfigurationEntryRetrieverImpl
 				});
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_configurationCategoriesServiceTrackerMap.close();
+		_configurationCategoryServiceTrackerMap.close();
+		_configurationScreenServiceTrackerMap.close();
+		_configurationScreensServiceTrackerMap.close();
+
+		_configurationCategoryServiceRegistrations.forEach(
+			configurationCategoryServiceRegistration ->
+				configurationCategoryServiceRegistration.unregister());
+	}
+
 	protected Comparator<ConfigurationEntry> getConfigurationEntryComparator() {
 		return new ConfigurationEntryComparator();
 	}
@@ -241,8 +260,22 @@ public class ConfigurationEntryRetrieverImpl
 		return configurationCategoriesSet;
 	}
 
+	private void _registerConfigurationCategory(
+		ConfigurationCategory configurationCategory) {
+
+		ServiceRegistration<ConfigurationCategory> serviceRegistration =
+			_bundleContext.registerService(
+				ConfigurationCategory.class, configurationCategory,
+				new HashMapDictionary<>());
+
+		_configurationCategoryServiceRegistrations.add(serviceRegistration);
+	}
+
+	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, List<ConfigurationCategory>>
 		_configurationCategoriesServiceTrackerMap;
+	private final Set<ServiceRegistration<ConfigurationCategory>>
+		_configurationCategoryServiceRegistrations = new HashSet<>();
 	private ServiceTrackerMap<String, ConfigurationCategory>
 		_configurationCategoryServiceTrackerMap;
 

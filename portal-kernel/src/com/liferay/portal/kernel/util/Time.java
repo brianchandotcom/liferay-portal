@@ -37,7 +37,7 @@ public class Time {
 
 	public static final long MINUTE = Time.SECOND * 60;
 
-	public static final long MONTH = Time.DAY * 30;
+	public static final long MONTH = DAY * 30;
 
 	public static final String RFC822_FORMAT = "EEE, dd MMM yyyy HH:mm:ss Z";
 
@@ -47,9 +47,9 @@ public class Time {
 
 	public static final String TIMESTAMP_FORMAT = "yyyyMMddkkmmssSSS";
 
-	public static final long WEEK = Time.DAY * 7;
+	public static final long WEEK = DAY * 7;
 
-	public static final long YEAR = Time.DAY * 365;
+	public static final long YEAR = DAY * 365;
 
 	public static Date getDate(Calendar cal) {
 		Calendar adjustedCal = CalendarFactoryUtil.getCalendar();

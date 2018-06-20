@@ -305,6 +305,20 @@ List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList
 			/>
 		</liferay-ui:search-container-column-text>
 
+		<liferay-ui:search-container-column-text>
+
+			<%
+			String viewCommerceShipmentsURL = commerceOrganizationOrderDisplayContext.getViewCommerceShipmentsURL(commerceOrderItem.getCommerceOrderItemId());
+			%>
+
+			<c:if test="<%= Validator.isNotNull(viewCommerceShipmentsURL) %>">
+				<liferay-ui:icon
+					iconCssClass="glyphicon glyphicon-plane"
+					url='<%= "javascript:" + renderResponse.getNamespace() + "viewCommerceOrderShipments('" + HtmlUtil.escapeJS(viewCommerceShipmentsURL) + "');" %>'
+				/>
+			</c:if>
+		</liferay-ui:search-container-column-text>
+
 		<c:if test="<%= commerceOrganizationOrderDisplayContext.hasPermission(commerceOrder, ActionKeys.UPDATE) && commerceOrder.isOpen() %>">
 			<liferay-ui:search-container-column-text>
 				<portlet:actionURL name="editCommerceOrderItem" var="deleteURL">
@@ -395,6 +409,24 @@ List<CommerceOrderValidatorResult> commerceOrderValidatorResults = new ArrayList
 		},
 		['aui-io-deprecated', 'liferay-util-window']
 	);
+
+	function <portlet:namespace/>viewCommerceOrderShipments(uri) {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					centered: true,
+					destroyOnClose: true,
+					modal: true
+				},
+				dialogIframe: {
+					bodyCssClass: 'dialog'
+				},
+				id: 'viewCommerceOrderShipmentsDialog',
+				title: '',
+				uri: uri
+			}
+		);
+	}
 
 	function <portlet:namespace />reorderCommerceOrder() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'reorder';

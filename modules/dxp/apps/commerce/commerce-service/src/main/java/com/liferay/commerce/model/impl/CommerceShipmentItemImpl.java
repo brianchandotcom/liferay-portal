@@ -17,7 +17,10 @@ package com.liferay.commerce.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
+import com.liferay.commerce.service.CommerceShipmentLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alessio Antonio Rendina
@@ -32,6 +35,12 @@ public class CommerceShipmentItemImpl extends CommerceShipmentItemBaseImpl {
 	public CommerceOrderItem fetchCommerceOrderItem() {
 		return CommerceOrderItemLocalServiceUtil.fetchCommerceOrderItem(
 			getCommerceOrderItemId());
+	}
+
+	@Override
+	public CommerceShipment getCommerceShipment() throws PortalException {
+		return CommerceShipmentLocalServiceUtil.getCommerceShipment(
+			getCommerceShipmentId());
 	}
 
 }

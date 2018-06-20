@@ -34,14 +34,7 @@ public class CommerceShipmentServiceImpl
 
 	@Override
 	public CommerceShipment addCommerceShipment(
-			long shipmentUserId, long commerceAddressId,
-			long commerceShippingMethodId, long commerceWarehouseId,
-			String carrier, String trackingNumber, int expectedDuration,
-			int status, int shippingDateMonth, int shippingDateDay,
-			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
-			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
-			int expectedDateHour, int expectedDateMinute,
-			ServiceContext serviceContext)
+			long commerceOrderId, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -49,12 +42,7 @@ public class CommerceShipmentServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentLocalService.addCommerceShipment(
-			shipmentUserId, commerceAddressId, commerceShippingMethodId,
-			commerceWarehouseId, carrier, trackingNumber, expectedDuration,
-			status, shippingDateMonth, shippingDateDay, shippingDateYear,
-			shippingDateHour, shippingDateMinute, expectedDateMonth,
-			expectedDateDay, expectedDateYear, expectedDateHour,
-			expectedDateMinute, serviceContext);
+			commerceOrderId, serviceContext);
 	}
 
 	@Override
@@ -87,24 +75,39 @@ public class CommerceShipmentServiceImpl
 	}
 
 	@Override
-	public List<CommerceShipment> getCommerceShipments(
+	public List<CommerceShipment> getCommerceShipmentsByGroupId(
 		long groupId, int start, int end,
 		OrderByComparator<CommerceShipment> orderByComparator) {
 
-		return commerceShipmentLocalService.getCommerceShipments(
+		return commerceShipmentLocalService.getCommerceShipmentsByGroupId(
 			groupId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceShipmentsCount(long groupId) {
-		return commerceShipmentLocalService.getCommerceShipmentsCount(groupId);
+	public List<CommerceShipment> getCommerceShipmentsBySiteGroupId(
+		long siteGroupId, int start, int end,
+		OrderByComparator<CommerceShipment> orderByComparator) {
+
+		return commerceShipmentLocalService.getCommerceShipmentsBySiteGroupId(
+			siteGroupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceShipmentsCountByGroupId(long groupId) {
+		return commerceShipmentLocalService.getCommerceShipmentsCountByGroupId(
+			groupId);
+	}
+
+	@Override
+	public int getCommerceShipmentsCountBySiteGroupId(long siteGroupId) {
+		return
+			commerceShipmentLocalService.getCommerceShipmentsCountBySiteGroupId(
+				siteGroupId);
 	}
 
 	@Override
 	public CommerceShipment updateCommerceShipment(
-			long commerceShipmentId, long shipmentUserId,
-			long commerceAddressId, long commerceShippingMethodId,
-			String carrier, String trackingNumber, int expectedDuration,
+			long commerceShipmentId, String carrier, String trackingNumber,
 			int status, int shippingDateMonth, int shippingDateDay,
 			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
 			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
@@ -119,9 +122,8 @@ public class CommerceShipmentServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentLocalService.updateCommerceShipment(
-			commerceShipmentId, shipmentUserId, commerceAddressId,
-			commerceShippingMethodId, carrier, trackingNumber, expectedDuration,
-			status, shippingDateMonth, shippingDateDay, shippingDateYear,
+			commerceShipmentId, carrier, trackingNumber, status,
+			shippingDateMonth, shippingDateDay, shippingDateYear,
 			shippingDateHour, shippingDateMinute, expectedDateMonth,
 			expectedDateDay, expectedDateYear, expectedDateHour,
 			expectedDateMinute);

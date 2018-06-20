@@ -29,8 +29,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
 <div class="container-fluid-1280">
-	<h1><liferay-ui:message key="shipments" /></h1>
-
 	<liferay-frontend:management-bar
 		searchContainerId="commerceShipments"
 	>
@@ -41,19 +39,21 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				selectedDisplayStyle="list"
 			/>
 
-			<portlet:renderURL var="addCommerceShipmentURL">
-				<portlet:param name="mvcRenderCommandName" value="editCommerceShipment" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</portlet:renderURL>
+			<c:if test="<%= commerceShipmentDisplayContext.hasManageCommerceShipmentsPermission() %>">
+				<portlet:renderURL var="addCommerceShipmentURL">
+					<portlet:param name="mvcRenderCommandName" value="editCommerceShipment" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:renderURL>
 
-			<liferay-frontend:add-menu
-				inline="<%= true %>"
-			>
-				<liferay-frontend:add-menu-item
-					title='<%= LanguageUtil.get(request, "add-shipment") %>'
-					url="<%= addCommerceShipmentURL.toString() %>"
-				/>
-			</liferay-frontend:add-menu>
+				<liferay-frontend:add-menu
+					inline="<%= true %>"
+				>
+					<liferay-frontend:add-menu-item
+						title='<%= LanguageUtil.get(request, "add-shipment") %>'
+						url="<%= addCommerceShipmentURL %>"
+					/>
+				</liferay-frontend:add-menu>
+			</c:if>
 		</liferay-frontend:management-bar-buttons>
 
 		<liferay-frontend:management-bar-filters>
@@ -82,10 +82,9 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						keyProperty="commerceShipmentId"
 						modelVar="commerceShipment"
 					>
-						<liferay-ui:search-container-column-status
-							cssClass="table-cell-content"
+						<liferay-ui:search-container-column-text
 							name="status"
-							status="<%= commerceShipment.getStatus() %>"
+							value="<%= commerceShipmentDisplayContext.getCommerceShipmentStatusLabel(commerceShipment.getStatus()) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
@@ -107,10 +106,16 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 								<%
 								CommerceRegion commerceRegion = commerceAddress.getCommerceRegion();
+
+								String commerceRegionCode = StringPool.BLANK;
+
+								if (commerceRegion != null) {
+									commerceRegionCode = commerceRegion.getCode() + StringPool.SPACE;
+								}
 								%>
 
 								<p><%= HtmlUtil.escape(commerceAddress.getStreet1()) %></p>
-								<p><%= HtmlUtil.escape(commerceAddress.getCity() + StringPool.COMMA_AND_SPACE + commerceRegion.getCode() + StringPool.SPACE + commerceAddress.getZip()) %></p>
+								<p><%= HtmlUtil.escape(commerceAddress.getCity() + StringPool.COMMA_AND_SPACE + commerceRegionCode + commerceAddress.getZip()) %></p>
 							</c:if>
 						</liferay-ui:search-container-column-text>
 

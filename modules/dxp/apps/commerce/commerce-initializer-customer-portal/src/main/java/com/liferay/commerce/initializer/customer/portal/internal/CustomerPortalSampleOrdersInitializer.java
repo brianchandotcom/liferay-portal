@@ -122,7 +122,6 @@ public class CustomerPortalSampleOrdersInitializer
 				commerceCurrency.getCommerceCurrencyId(), 0, 0, 0, 0, null,
 				null, total, BigDecimal.ZERO, total,
 				CommerceOrderConstants.PAYMENT_STATUS_PAID,
-				CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 				CommerceOrderConstants.ORDER_STATUS_TRANSMITTED,
 				serviceContext);
 

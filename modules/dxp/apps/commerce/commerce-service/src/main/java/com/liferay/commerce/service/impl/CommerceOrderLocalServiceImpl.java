@@ -112,7 +112,7 @@ public class CommerceOrderLocalServiceImpl
 			long commerceShippingMethodId, String shippingOptionName,
 			String purchaseOrderNumber, BigDecimal subtotal,
 			BigDecimal shippingPrice, BigDecimal total, int paymentStatus,
-			int shippingStatus, int orderStatus, ServiceContext serviceContext)
+			int orderStatus, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce order
@@ -162,7 +162,6 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setShippingPrice(shippingPrice);
 		commerceOrder.setTotal(total);
 		commerceOrder.setPaymentStatus(paymentStatus);
-		commerceOrder.setShippingStatus(shippingStatus);
 		commerceOrder.setOrderStatus(orderStatus);
 		commerceOrder.setStatus(WorkflowConstants.STATUS_DRAFT);
 		commerceOrder.setStatusByUserId(user.getUserId());
@@ -202,7 +201,6 @@ public class CommerceOrderLocalServiceImpl
 			siteGroupId, orderOrganizationId, userId, 0, 0, shippingAddressId,
 			0, 0, null, purchaseOrderNumber, BigDecimal.ZERO, BigDecimal.ZERO,
 			BigDecimal.ZERO, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
-			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
 	}
 
@@ -236,7 +234,6 @@ public class CommerceOrderLocalServiceImpl
 			groupId, 0, orderUserId, 0, 0, 0, 0, 0, null, null, BigDecimal.ZERO,
 			BigDecimal.ZERO, BigDecimal.ZERO,
 			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
-			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
 	}
 
@@ -537,6 +534,13 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
+		long siteGroupId, int[] orderStatuses) {
+
+		return commerceOrderFinder.findByS_O(siteGroupId, orderStatuses);
+	}
+
+	@Override
+	public List<CommerceOrder> getCommerceOrders(
 		long groupId, long orderUserId, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator) {
 
@@ -658,7 +662,6 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.getSubtotal(), commerceOrder.getShippingPrice(),
 			commerceOrder.getTotal(),
 			CommerceOrderConstants.PAYMENT_STATUS_PENDING,
-			CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 			CommerceOrderConstants.ORDER_STATUS_OPEN, serviceContext);
 
 		// Commerce order items

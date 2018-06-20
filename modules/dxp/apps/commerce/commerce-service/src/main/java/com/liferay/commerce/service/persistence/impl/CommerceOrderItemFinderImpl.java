@@ -36,8 +36,8 @@ import java.util.List;
 public class CommerceOrderItemFinderImpl
 	extends CommerceOrderItemFinderBaseImpl implements CommerceOrderItemFinder {
 
-	public static final String FIND_BY_C_C =
-		CommerceOrderItemFinder.class.getName() + ".findByC_C";
+	public static final String FIND_BY_AVAILABLE_QUANTITY =
+		CommerceOrderItemFinder.class.getName() + ".findByAvailableQuantity";
 
 	public static final String GET_COMMERCE_ORDER_ITEMS_QUANTITY =
 		CommerceOrderItemFinder.class.getName() +
@@ -49,24 +49,23 @@ public class CommerceOrderItemFinderImpl
 	public static final String SUM_VALUE = "SUM_VALUE";
 
 	@Override
-	public List<CommerceOrderItem> findByC_C(
-		long commerceWarehouseId, long commerceAddressId) {
+	public List<CommerceOrderItem> findByAvailableQuantity(
+		long commerceOrderId) {
 
-		return findByC_C(
-			commerceWarehouseId, commerceAddressId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		return findByAvailableQuantity(
+			commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
-	public List<CommerceOrderItem> findByC_C(
-		long commerceWarehouseId, long commerceAddressId, int start, int end) {
+	public List<CommerceOrderItem> findByAvailableQuantity(
+		long commerceOrderId, int start, int end) {
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = _customSQL.get(getClass(), FIND_BY_C_C);
+			String sql = _customSQL.get(getClass(), FIND_BY_AVAILABLE_QUANTITY);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -74,8 +73,7 @@ public class CommerceOrderItemFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(commerceWarehouseId);
-			qPos.add(commerceAddressId);
+			qPos.add(commerceOrderId);
 
 			return (List<CommerceOrderItem>)QueryUtil.list(
 				q, getDialect(), start, end);

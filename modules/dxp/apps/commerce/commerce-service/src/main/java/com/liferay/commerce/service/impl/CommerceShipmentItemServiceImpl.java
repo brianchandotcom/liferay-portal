@@ -34,7 +34,8 @@ public class CommerceShipmentItemServiceImpl
 
 	@Override
 	public CommerceShipmentItem addCommerceShipmentItem(
-			long commerceShipmentId, long commerceOrderItemId, int quantity,
+			long commerceShipmentId, long commerceOrderItemId,
+			long commerceWarehouseId, int quantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -43,7 +44,8 @@ public class CommerceShipmentItemServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		return commerceShipmentItemLocalService.addCommerceShipmentItem(
-			commerceShipmentId, commerceOrderItemId, quantity, serviceContext);
+			commerceShipmentId, commerceOrderItemId, commerceWarehouseId,
+			quantity, serviceContext);
 	}
 
 	@Override
@@ -68,6 +70,14 @@ public class CommerceShipmentItemServiceImpl
 
 		return commerceShipmentItemLocalService.fetchCommerceShipmentItem(
 			commerceShipmentItemId);
+	}
+
+	@Override
+	public List<CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceOrderItemId) {
+
+		return commerceShipmentItemLocalService.getCommerceShipmentItems(
+			commerceOrderItemId);
 	}
 
 	@Override

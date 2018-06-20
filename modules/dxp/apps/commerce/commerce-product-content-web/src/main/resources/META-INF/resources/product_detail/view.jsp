@@ -43,11 +43,22 @@ request.setAttribute("cpInstance", cpInstance);
 		/>
 	</c:when>
 	<c:when test="<%= cpContentConfigurationDisplayContext.isSelectionStyleCustomRenderer() %>">
+		<c:choose>
+			<c:when test="<%= cpCatalogEntry == null %>">
+				<c:if test="<%= permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="no-product-to-display" />
+					</div>
+				</c:if>
+			</c:when>
+			<c:otherwise>
 
-		<%
-		cpContentHelper.renderCPType(request, response);
-		%>
+				<%
+				cpContentHelper.renderCPType(request, response);
+				%>
 
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 	</c:otherwise>

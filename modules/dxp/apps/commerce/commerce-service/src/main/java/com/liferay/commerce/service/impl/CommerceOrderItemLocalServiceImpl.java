@@ -179,6 +179,13 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceOrderItem> getAvailableForShipmentCommerceOrderItems(
+		long commerceOrderId) {
+
+		return commerceOrderItemFinder.findByAvailableQuantity(commerceOrderId);
+	}
+
+	@Override
 	public List<CommerceOrderItem> getCommerceOrderItems(
 		long commerceOrderId, int start, int end) {
 
@@ -193,14 +200,6 @@ public class CommerceOrderItemLocalServiceImpl
 
 		return commerceOrderItemPersistence.findByCommerceOrderId(
 			commerceOrderId, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<CommerceOrderItem> getCommerceOrderItems(
-		long commerceWarehouseId, long commerceAddressId, int start, int end) {
-
-		return commerceOrderItemFinder.findByC_C(
-			commerceWarehouseId, commerceAddressId, start, end);
 	}
 
 	@Override

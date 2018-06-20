@@ -170,7 +170,7 @@
 		]
 	},
 	{
-		"hidden": true,
+		"hidden": false,
 		"icon" : "icon-map-marker.png",
 		"layoutTemplateId": "1_column",
 		"name": "Shipments",
@@ -178,7 +178,7 @@
 			{
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": 0,
-				"portletName": "com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet"
+				"portletName": "com_liferay_commerce_shipment_content_web_internal_portlet_CommerceShipmentContentPortlet"
 			}
 		]
 	},

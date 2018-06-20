@@ -12,13 +12,18 @@
  * details.
  */
 
-package com.liferay.commerce.item.selector.criterion;
-
-import com.liferay.item.selector.BaseItemSelectorCriterion;
+package com.liferay.commerce.shipment.web.internal.servlet.taglib.ui;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CommerceOrderItemItemSelectorCriterion
-	extends BaseItemSelectorCriterion {
+public class CommerceShipmentScreenNavigationConstants {
+
+	public static final String CATEGORY_KEY_DETAILS = "details";
+
+	public static final String CATEGORY_KEY_ITEMS = "items";
+
+	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_SHIPMENT =
+		"commerce.shipment.form";
+
 }

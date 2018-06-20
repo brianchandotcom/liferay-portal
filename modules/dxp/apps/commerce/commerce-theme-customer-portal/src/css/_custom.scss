@@ -1009,6 +1009,33 @@ a[type="button"] {
 	}
 }
 
+// Shipments
+
+.shipment-details-header {
+	background-color: #393B4A;
+
+	@include border-top-radius($border-radius);
+
+	color: rgba(255, 255, 255, 0.65);
+	font-size: 0.75rem;
+
+	.autofit-col {
+		padding: $grid-gutter-width / 2;
+
+		@include media-breakpoint-up(md) {
+			padding: 1.5rem;
+		}
+	}
+}
+
+.shipment-details-title {
+	@include clay-text-typography($order-details-title);
+}
+
+.shipment-details-subtitle {
+	@include clay-text-typography($order-details-subtitle);
+}
+
 // Cart Content Mini
 
 .commerce-order-items-header {

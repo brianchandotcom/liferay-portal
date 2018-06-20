@@ -16,9 +16,7 @@ package com.liferay.commerce.shipment.web.internal.display.context;
 
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceShipment;
-import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
-import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
@@ -29,12 +27,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -46,14 +41,11 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseCommerceShipmentDisplayContext<T> {
 
 	public BaseCommerceShipmentDisplayContext(
-		ActionHelper actionHelper,
-		CommerceShippingMethodLocalService commerceShippingMethodLocalService,
-		HttpServletRequest httpServletRequest, String portalPreferenceNamespace,
+		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+		String portalPreferenceNamespace,
 		PortletResourcePermission portletResourcePermission) {
 
 		this.actionHelper = actionHelper;
-		this.commerceShippingMethodLocalService =
-			commerceShippingMethodLocalService;
 		this.httpServletRequest = httpServletRequest;
 		this.portletResourcePermission = portletResourcePermission;
 
@@ -90,15 +82,6 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 		}
 
 		return commerceShipment.getCommerceShipmentId();
-	}
-
-	public List<CommerceShippingMethod> getCommerceShippingMethods() {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		return commerceShippingMethodLocalService.getCommerceShippingMethods(
-			themeDisplay.getScopeGroupId(), true);
 	}
 
 	public String getDisplayStyle() {
@@ -234,18 +217,6 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 	}
 
-	public boolean isSearch() {
-		return false;
-	}
-
-	public boolean isShowInfoPanel() {
-		if (isSearch()) {
-			return false;
-		}
-
-		return true;
-	}
-
 	public void setDefaultOrderByCol(String defaultOrderByCol) {
 		_defaultOrderByCol = defaultOrderByCol;
 	}
@@ -277,8 +248,6 @@ public abstract class BaseCommerceShipmentDisplayContext<T> {
 	}
 
 	protected final ActionHelper actionHelper;
-	protected final CommerceShippingMethodLocalService
-		commerceShippingMethodLocalService;
 	protected final CPRequestHelper cpRequestHelper;
 	protected final HttpServletRequest httpServletRequest;
 	protected final LiferayPortletRequest liferayPortletRequest;

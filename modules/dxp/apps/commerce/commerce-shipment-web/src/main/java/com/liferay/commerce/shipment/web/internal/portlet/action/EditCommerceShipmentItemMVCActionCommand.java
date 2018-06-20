@@ -19,22 +19,17 @@ import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.NoSuchShipmentItemException;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
-import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
-import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -58,42 +53,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceShipmentItemMVCActionCommand
 	extends BaseMVCActionCommand {
-
-	protected void addCommerceShipmentItems(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] addCommerceOrderItemIds = null;
-
-		long commerceShipmentId = ParamUtil.getLong(
-			actionRequest, "commerceShipmentId");
-		long commerceOrderItemId = ParamUtil.getLong(
-			actionRequest, "commerceOrderItemId");
-
-		if (commerceOrderItemId > 0) {
-			addCommerceOrderItemIds = new long[] {commerceOrderItemId};
-		}
-		else {
-			addCommerceOrderItemIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "commerceOrderItemIds"), 0L);
-		}
-
-		CommerceShipment commerceShipment =
-			_commerceShipmentService.getCommerceShipment(commerceShipmentId);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceShipmentItem.class.getName(), actionRequest);
-
-		for (long addCommerceOrderItemId : addCommerceOrderItemIds) {
-			int commerceWarehouseItemQuantity =
-				_commerceOrderItemLocalService.getCommerceWarehouseItemQuantity(
-					addCommerceOrderItemId,
-					commerceShipment.getCommerceWarehouseId());
-
-			_commerceShipmentItemService.addCommerceShipmentItem(
-				commerceShipmentId, addCommerceOrderItemId,
-				commerceWarehouseItemQuantity, serviceContext);
-		}
-	}
 
 	protected void deleteCommerceShipmentItems(ActionRequest actionRequest)
 		throws PortalException {
@@ -129,10 +88,7 @@ public class EditCommerceShipmentItemMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.ADD)) {
-				addCommerceShipmentItems(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
+			if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceShipmentItems(actionRequest);
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
@@ -207,15 +163,6 @@ public class EditCommerceShipmentItemMVCActionCommand
 	}
 
 	@Reference
-	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
-
-	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
-
-	@Reference
-	private CommerceShipmentService _commerceShipmentService;
-
-	@Reference
-	private Portal _portal;
 
 }

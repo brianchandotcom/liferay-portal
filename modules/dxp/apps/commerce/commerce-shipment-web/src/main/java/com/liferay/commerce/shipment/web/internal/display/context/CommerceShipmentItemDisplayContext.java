@@ -14,30 +14,18 @@
 
 package com.liferay.commerce.shipment.web.internal.display.context;
 
-import com.liferay.commerce.item.selector.criterion.CommerceOrderItemItemSelectorCriterion;
-import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
-import com.liferay.commerce.model.CommerceWarehouse;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
-import com.liferay.commerce.service.CommerceShippingMethodLocalService;
-import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.shipment.web.internal.util.CommerceShipmentPortletUtil;
-import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -51,24 +39,58 @@ public class CommerceShipmentItemDisplayContext
 	extends BaseCommerceShipmentDisplayContext<CommerceShipmentItem> {
 
 	public CommerceShipmentItemDisplayContext(
-			ActionHelper actionHelper,
-			CommerceShippingMethodLocalService
-				commerceShippingMethodLocalService,
-			HttpServletRequest httpServletRequest,
-			CommerceShipmentItemService commerceShipmentItemService,
-			CommerceWarehouseService commerceWarehouseService,
-			ItemSelector itemSelector,
-			PortletResourcePermission portletResourcePermission)
-		throws PortalException {
+		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
+		CommerceOrderItemService commerceOrderItemService,
+		CommerceShipmentItemService commerceShipmentItemService,
+		PortletResourcePermission portletResourcePermission) {
 
 		super(
-			actionHelper, commerceShippingMethodLocalService,
-			httpServletRequest, CommerceShipmentItem.class.getSimpleName(),
+			actionHelper, httpServletRequest,
+			CommerceShipmentItem.class.getSimpleName(),
 			portletResourcePermission);
 
+		_commerceOrderItemService = commerceOrderItemService;
 		_commerceShipmentItemService = commerceShipmentItemService;
-		_commerceWarehouseService = commerceWarehouseService;
-		_itemSelector = itemSelector;
+	}
+
+	public String getAddCommerceShipmentItemsURL() throws PortalException {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		SearchContainer<CommerceShipmentItem>
+			commerceShipmentItemSearchContainer = getSearchContainer();
+
+		List<CommerceShipmentItem> commerceShipmentItems =
+			commerceShipmentItemSearchContainer.getResults();
+
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(httpServletRequest));
+
+		if (getCommerceShipmentId() > 0) {
+			portletURL.setParameter(
+				"commerceShipmentId", String.valueOf(getCommerceShipmentId()));
+		}
+
+		if (commerceShipmentItems.isEmpty()) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "editCommerceShipment");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "selectCommerceShipmentItems");
+
+			CommerceShipmentItem commerceShipmentItem =
+				commerceShipmentItems.get(0);
+
+			CommerceOrderItem commerceOrderItem =
+				_commerceOrderItemService.getCommerceOrderItem(
+					commerceShipmentItem.getCommerceOrderItemId());
+
+			portletURL.setParameter(
+				"commerceOrderId",
+				String.valueOf(commerceOrderItem.getCommerceOrderId()));
+		}
+
+		return portletURL.toString();
 	}
 
 	public CommerceShipmentItem getCommerceShipmentItem()
@@ -92,76 +114,6 @@ public class CommerceShipmentItemDisplayContext
 		}
 
 		return commerceShipmentItem.getCommerceShipmentItemId();
-	}
-
-	public String getCommerceWarehouseName(long commerceWarehouseId)
-		throws PortalException {
-
-		CommerceWarehouse commerceWarehouse =
-			_commerceWarehouseService.getCommerceWarehouse(commerceWarehouseId);
-
-		return commerceWarehouse.getName();
-	}
-
-	public CPDefinition getCPDefinition(long commerceShipmentItemId)
-		throws PortalException {
-
-		CPDefinition cpDefinition = null;
-
-		CPInstance cpInstance = getCPInstance(commerceShipmentItemId);
-
-		if (cpInstance != null) {
-			cpDefinition = cpInstance.getCPDefinition();
-		}
-
-		return cpDefinition;
-	}
-
-	public CPInstance getCPInstance(long commerceShipmentItemId)
-		throws PortalException {
-
-		CPInstance cpInstance = null;
-
-		CommerceShipmentItem commerceShipmentItem =
-			_commerceShipmentItemService.fetchCommerceShipmentItem(
-				commerceShipmentItemId);
-
-		if (commerceShipmentItem != null) {
-			CommerceOrderItem commerceOrderItem =
-				commerceShipmentItem.fetchCommerceOrderItem();
-
-			if (commerceOrderItem != null) {
-				cpInstance = commerceOrderItem.getCPInstance();
-			}
-		}
-
-		return cpInstance;
-	}
-
-	public String getItemSelectorUrl() throws PortalException {
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(
-				cpRequestHelper.getRenderRequest());
-
-		CommerceOrderItemItemSelectorCriterion
-			commerceOrderItemItemSelectorCriterion =
-				new CommerceOrderItemItemSelectorCriterion();
-
-		commerceOrderItemItemSelectorCriterion.
-			setDesiredItemSelectorReturnTypes(
-				Collections.<ItemSelectorReturnType>singletonList(
-					new UUIDItemSelectorReturnType()));
-
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, "orderItemsSelectItem",
-			commerceOrderItemItemSelectorCriterion);
-
-		itemSelectorURL.setParameter(
-			"commerceWarehouseId", String.valueOf(getCommerceWarehouseId()));
-		itemSelectorURL.setParameter(
-			"commerceAddressId", String.valueOf(getCommerceAddressId()));
-
-		return itemSelectorURL.toString();
 	}
 
 	@Override
@@ -210,44 +162,8 @@ public class CommerceShipmentItemDisplayContext
 		return searchContainer;
 	}
 
-	protected long getCommerceAddressId() throws PortalException {
-		long commerceAddressId = 0;
-
-		CommerceShipment commerceShipment = getCommerceShipment();
-
-		if (commerceShipment != null) {
-			CommerceAddress commerceAddress =
-				commerceShipment.fetchCommerceAddress();
-
-			if (commerceAddress != null) {
-				commerceAddressId = commerceAddress.getCommerceAddressId();
-			}
-		}
-
-		return commerceAddressId;
-	}
-
-	protected long getCommerceWarehouseId() throws PortalException {
-		long commerceWarehouseId = 0;
-
-		CommerceShipment commerceShipment = getCommerceShipment();
-
-		if (commerceShipment != null) {
-			CommerceWarehouse commerceWarehouse =
-				commerceShipment.fetchCommerceWarehouse();
-
-			if (commerceWarehouse != null) {
-				commerceWarehouseId =
-					commerceWarehouse.getCommerceWarehouseId();
-			}
-		}
-
-		return commerceWarehouseId;
-	}
-
+	private final CommerceOrderItemService _commerceOrderItemService;
 	private CommerceShipmentItem _commerceShipmentItem;
 	private final CommerceShipmentItemService _commerceShipmentItemService;
-	private final CommerceWarehouseService _commerceWarehouseService;
-	private final ItemSelector _itemSelector;
 
 }

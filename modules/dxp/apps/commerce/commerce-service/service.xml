@@ -254,7 +254,6 @@
 		<column name="total" type="BigDecimal" />
 		<column name="advanceStatus" type="String" />
 		<column name="paymentStatus" type="int" />
-		<column name="shippingStatus" type="int" />
 		<column name="orderStatus" type="int" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -550,13 +549,14 @@
 
 		<!-- Other fields -->
 
+		<column name="siteGroupId" type="long" />
+		<column name="shipmentOrganizationId" type="long" />
 		<column name="shipmentUserId" type="long" />
 		<column name="commerceAddressId" type="long" />
 		<column name="commerceShippingMethodId" type="long" />
-		<column name="commerceWarehouseId" type="long" />
+		<column name="shippingOptionName" type="String" />
 		<column name="carrier" type="String" />
 		<column name="trackingNumber" type="String" />
-		<column name="expectedDuration" type="int" />
 		<column name="status" type="int" />
 		<column name="shippingDate" type="Date" />
 		<column name="expectedDate" type="Date" />
@@ -571,6 +571,9 @@
 
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
+		</finder>
+		<finder name="SiteGroupId" return-type="Collection">
+			<finder-column name="siteGroupId" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="CommerceShipmentItem" remote-service="true">
@@ -595,6 +598,7 @@
 
 		<column name="commerceShipmentId" type="long" />
 		<column name="commerceOrderItemId" type="long" />
+		<column name="commerceWarehouseId" type="long" />
 		<column name="quantity" type="int" />
 
 		<!-- Order -->
@@ -905,6 +909,7 @@
 		<exception>CommerceShipmentExpectedDate</exception>
 		<exception>CommerceShipmentItemQuantity</exception>
 		<exception>CommerceShipmentShippingDate</exception>
+		<exception>CommerceShipmentStatus</exception>
 		<exception>CommerceShippingEngine</exception>
 		<exception>CommerceShippingMethodEngineKey</exception>
 		<exception>CommerceShippingMethodName</exception>

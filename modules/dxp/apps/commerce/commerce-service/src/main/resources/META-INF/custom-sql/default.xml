@@ -21,21 +21,29 @@
 				CommerceCountry.priority
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.findByC_C">
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.findByS_O">
+		<![CDATA[
+			SELECT
+				DISTINCT {CommerceOrder.*}
+			FROM
+				CommerceOrder
+			INNER JOIN
+				CommerceOrderItem ON
+					CommerceOrderItem.commerceOrderId = CommerceOrder.commerceOrderId
+			WHERE
+				(CommerceOrder.siteGroupId = ?) AND
+				(CommerceOrder.orderStatus IN ([$ORDER_STATUS$])) AND
+				(CommerceOrderItem.quantity > CommerceOrderItem.shippedQuantity)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.findByAvailableQuantity">
 		<![CDATA[
 			SELECT
 				{CommerceOrderItem.*}
 			FROM
 				CommerceOrderItem
-			INNER JOIN
-				CommerceOrder ON
-					CommerceOrder.commerceOrderId = CommerceOrderItem.commerceOrderId
-			INNER JOIN
-				CommerceWarehouseItem ON
-					CommerceWarehouseItem.CPInstanceId = CommerceOrderItem.CPInstanceId
 			WHERE
-				(CommerceWarehouseItem.commerceWarehouseId = ?) AND
-				(CommerceOrder.shippingAddressId = ?) AND
+				(CommerceOrderItem.commerceOrderId = ?) AND
 				(CommerceOrderItem.quantity > CommerceOrderItem.shippedQuantity)
 		]]>
 	</sql>
@@ -65,6 +73,19 @@
 				(CommerceOrderItem.CPInstanceId = ?) AND
 				(CommerceShipmentItem.commerceOrderItemId IS NULL) AND
 				(CommerceOrder.status <> ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceShipmentItemFinder.findByCommerceOrderItemId">
+		<![CDATA[
+			SELECT
+				{CommerceShipmentItem.*}
+			FROM
+				CommerceShipmentItem
+			INNER JOIN
+				CommerceOrderItem ON
+					CommerceOrderItem.commerceOrderItemId = CommerceShipmentItem.commerceOrderItemId
+			WHERE
+				CommerceOrderItem.commerceOrderItemId = ?
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.countByG_N_D_S_C_Z_C">

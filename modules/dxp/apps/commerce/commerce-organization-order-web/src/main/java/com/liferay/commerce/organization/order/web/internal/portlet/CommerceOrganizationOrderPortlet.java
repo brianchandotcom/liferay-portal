@@ -24,6 +24,7 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
@@ -98,6 +99,7 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 						_commerceAddressService, _commerceOrderItemService,
 						_commerceOrderLocalService, _commerceOrderNoteService,
 						_commerceOrderService, _commercePriceCalculation,
+						_commerceShipmentItemService,
 						_commerceShippingEngineRegistry, _cpInstanceHelper,
 						_jsonFactory, _modelResourcePermission, renderRequest);
 
@@ -129,6 +131,9 @@ public class CommerceOrganizationOrderPortlet extends MVCPortlet {
 
 	@Reference
 	private CommercePriceCalculation _commercePriceCalculation;
+
+	@Reference
+	private CommerceShipmentItemService _commerceShipmentItemService;
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;

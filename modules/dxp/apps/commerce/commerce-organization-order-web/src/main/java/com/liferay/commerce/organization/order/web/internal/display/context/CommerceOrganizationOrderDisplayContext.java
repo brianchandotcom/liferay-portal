@@ -17,6 +17,7 @@ package com.liferay.commerce.organization.order.web.internal.display.context;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
+import com.liferay.commerce.constants.CommerceShipmentConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceAddress;
@@ -24,6 +25,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommercePaymentMethod;
+import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.organization.order.web.internal.configuration.CommerceOrganizationOpenOrderPortletInstanceConfiguration;
@@ -37,6 +39,7 @@ import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -53,6 +56,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -99,6 +103,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrganizationOrderDisplayContext {
 
@@ -109,6 +114,7 @@ public class CommerceOrganizationOrderDisplayContext {
 			CommerceOrderNoteService commerceOrderNoteService,
 			CommerceOrderService commerceOrderService,
 			CommercePriceCalculation commercePriceCalculation,
+			CommerceShipmentItemService commerceShipmentItemService,
 			CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 			CPInstanceHelper cpInstanceHelper, JSONFactory jsonFactory,
 			ModelResourcePermission<CommerceOrder> modelResourcePermission,
@@ -121,6 +127,7 @@ public class CommerceOrganizationOrderDisplayContext {
 		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrderService = commerceOrderService;
 		_commercePriceCalculation = commercePriceCalculation;
+		_commerceShipmentItemService = commerceShipmentItemService;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_cpInstanceHelper = cpInstanceHelper;
 		_jsonFactory = jsonFactory;
@@ -132,9 +139,6 @@ public class CommerceOrganizationOrderDisplayContext {
 		ThemeDisplay themeDisplay =
 			_commerceOrganizationOrderRequestHelper.getThemeDisplay();
 
-		CommerceContext commerceContext =
-			_commerceOrganizationOrderRequestHelper.getCommerceContext();
-
 		_commerceOrderDateFormatDate = FastDateFormatFactoryUtil.getDate(
 			DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
@@ -145,6 +149,9 @@ public class CommerceOrganizationOrderDisplayContext {
 			FastDateFormatFactoryUtil.getDateTime(
 				DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
+
+		CommerceContext commerceContext =
+			_commerceOrganizationOrderRequestHelper.getCommerceContext();
 
 		_currentCommerceOrder = commerceContext.getCommerceOrder();
 
@@ -381,6 +388,19 @@ public class CommerceOrganizationOrderDisplayContext {
 			_commerceOrganizationOrderRequestHelper.getLocale());
 	}
 
+	public List<CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceOrderItemId) {
+
+		return _commerceShipmentItemService.getCommerceShipmentItems(
+			commerceOrderItemId);
+	}
+
+	public String getCommerceShipmentStatusLabel(int status) {
+		return LanguageUtil.get(
+			_commerceOrganizationOrderRequestHelper.getLocale(),
+			CommerceShipmentConstants.getShipmentStatusLabel(status));
+	}
+
 	public String getDisplayStyle() {
 		return _commerceOrganizationOpenOrderPortletInstanceConfiguration.
 			displayStyle();
@@ -475,6 +495,30 @@ public class CommerceOrganizationOrderDisplayContext {
 		}
 
 		return _searchContainer;
+	}
+
+	public String getViewCommerceShipmentsURL(long commerceOrderItemId)
+		throws Exception {
+
+		List<CommerceShipmentItem> commerceShipmentItems =
+			getCommerceShipmentItems(commerceOrderItemId);
+
+		if (commerceShipmentItems.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		LiferayPortletResponse liferayPortletResponse =
+			_commerceOrganizationOrderRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewCommerceOrderShipments");
+		portletURL.setParameter(
+			"commerceOrderItemId", String.valueOf(commerceOrderItemId));
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
 	}
 
 	public boolean hasPermission(CommerceOrder commerceOrder, String actionId)
@@ -822,6 +866,7 @@ public class CommerceOrganizationOrderDisplayContext {
 	private final CommerceOrganizationOrderRequestHelper
 		_commerceOrganizationOrderRequestHelper;
 	private final CommercePriceCalculation _commercePriceCalculation;
+	private final CommerceShipmentItemService _commerceShipmentItemService;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;
 	private final CPInstanceHelper _cpInstanceHelper;

@@ -85,6 +85,18 @@ public class CommerceOrderItemServiceImpl
 	}
 
 	@Override
+	public List<CommerceOrderItem> getAvailableForShipmentCommerceOrderItems(
+			long commerceOrderId)
+		throws PortalException {
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderId, ActionKeys.VIEW);
+
+		return commerceOrderItemLocalService.
+			getAvailableForShipmentCommerceOrderItems(commerceOrderId);
+	}
+
+	@Override
 	public CommerceOrderItem getCommerceOrderItem(long commerceOrderItemId)
 		throws PortalException {
 
@@ -131,6 +143,23 @@ public class CommerceOrderItemServiceImpl
 
 		return commerceOrderItemLocalService.getCommerceOrderItemsQuantity(
 			commerceOrderId);
+	}
+
+	@Override
+	public int getCommerceWarehouseItemQuantity(
+			long commerceOrderItemId, long commerceWarehouseId)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+			ActionKeys.VIEW);
+
+		return commerceOrderItemLocalService.getCommerceWarehouseItemQuantity(
+			commerceOrderItemId, commerceWarehouseId);
 	}
 
 	@Override

@@ -17,7 +17,6 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -47,7 +46,8 @@ public class CommerceShipmentItemLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceShipmentItem addCommerceShipmentItem(
-			long commerceShipmentId, long commerceOrderItemId, int quantity,
+			long commerceShipmentId, long commerceOrderItemId,
+			long commerceWarehouseId, int quantity,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -67,6 +67,7 @@ public class CommerceShipmentItemLocalServiceImpl
 		commerceShipmentItem.setUserName(user.getFullName());
 		commerceShipmentItem.setCommerceShipmentId(commerceShipmentId);
 		commerceShipmentItem.setCommerceOrderItemId(commerceOrderItemId);
+		commerceShipmentItem.setCommerceWarehouseId(commerceWarehouseId);
 		commerceShipmentItem.setQuantity(quantity);
 
 		commerceShipmentItem = commerceShipmentItemPersistence.update(
@@ -81,7 +82,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		// Commerce low stock activity
 
 		_checkCommerceLowStockActivity(
-			commerceOrderItem, commerceShipmentId, quantity);
+			commerceOrderItem, commerceShipmentItem.getCommerceShipmentItemId(),
+			quantity);
 
 		return commerceShipmentItem;
 	}
@@ -116,7 +118,8 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		try {
 			_checkCommerceLowStockActivity(
-				commerceOrderItem, commerceShipmentItem.getCommerceShipmentId(),
+				commerceOrderItem,
+				commerceShipmentItem.getCommerceShipmentItemId(),
 				shippedQuantity);
 		}
 		catch (PortalException pe) {
@@ -151,6 +154,14 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceShipmentItemLocalService.deleteCommerceShipmentItem(
 				commerceShipmentItem);
 		}
+	}
+
+	@Override
+	public List<CommerceShipmentItem> getCommerceShipmentItems(
+		long commerceOrderItemId) {
+
+		return commerceShipmentItemFinder.findByCommerceOrderItemId(
+			commerceOrderItemId);
 	}
 
 	@Override
@@ -194,8 +205,7 @@ public class CommerceShipmentItemLocalServiceImpl
 				commerceShipmentItem.getCommerceOrderItemId());
 
 		validate(
-			commerceOrderItem, commerceShipmentItem.getCommerceShipmentId(),
-			quantity, newQuantity);
+			commerceShipmentItem, commerceOrderItem, quantity, newQuantity);
 
 		commerceOrderItemLocalService.incrementShippedQuantity(
 			commerceOrderItem.getCommerceOrderItemId(), newQuantity);
@@ -203,31 +213,27 @@ public class CommerceShipmentItemLocalServiceImpl
 		// Commerce low stock activity
 
 		_checkCommerceLowStockActivity(
-			commerceOrderItem, commerceShipmentItem.getCommerceShipmentId(),
+			commerceOrderItem, commerceShipmentItem.getCommerceShipmentItemId(),
 			newQuantity);
 
 		return commerceShipmentItem;
 	}
 
 	protected void validate(
-			CommerceOrderItem commerceOrderItem, long commerceShipmentId,
-			int quantity, int newQuantity)
+			CommerceShipmentItem commerceShipmentItem,
+			CommerceOrderItem commerceOrderItem, int quantity, int newQuantity)
 		throws PortalException {
 
 		int availableQuantity =
 			commerceOrderItem.getQuantity() -
 				commerceOrderItem.getShippedQuantity();
 
-		CommerceShipment commerceShipment =
-			commerceShipmentLocalService.getCommerceShipment(
-				commerceShipmentId);
-
 		int commerceWarehouseQuantity =
 			commerceOrderItemLocalService.getCommerceWarehouseItemQuantity(
 				commerceOrderItem.getCommerceOrderItemId(),
-				commerceShipment.getCommerceWarehouseId());
+				commerceShipmentItem.getCommerceWarehouseId());
 
-		if ((quantity == 0) || (newQuantity > availableQuantity) ||
+		if ((quantity <= 0) || (newQuantity > availableQuantity) ||
 			(newQuantity > commerceWarehouseQuantity)) {
 
 			throw new CommerceShipmentItemQuantityException();
@@ -235,7 +241,7 @@ public class CommerceShipmentItemLocalServiceImpl
 	}
 
 	private void _checkCommerceLowStockActivity(
-			CommerceOrderItem commerceOrderItem, long commerceShipmentId,
+			CommerceOrderItem commerceOrderItem, long commerceShipmentItemId,
 			int quantity)
 		throws PortalException {
 
@@ -254,23 +260,27 @@ public class CommerceShipmentItemLocalServiceImpl
 			_commerceLowStockActivityRegistry.getCommerceLowStockActivity(
 				cpDefinitionInventory);
 
+		if (commerceLowStockActivity == null) {
+			return;
+		}
+
 		CommerceWarehouseItem commerceWarehouseItem =
 			_fetchCommerceWarehouseItem(
-				commerceShipmentId, commerceOrderItem.getCPInstanceId());
+				commerceShipmentItemId, commerceOrderItem.getCPInstanceId());
 
 		commerceLowStockActivity.check(commerceWarehouseItem, quantity);
 	}
 
 	private CommerceWarehouseItem _fetchCommerceWarehouseItem(
-			long commerceShipmentId, long cpInstanceId)
+			long commerceShipmentItemId, long cpInstanceId)
 		throws PortalException {
 
-		CommerceShipment commerceShipment =
-			commerceShipmentLocalService.getCommerceShipment(
-				commerceShipmentId);
+		CommerceShipmentItem commerceShipmentItem =
+			commerceShipmentItemPersistence.findByPrimaryKey(
+				commerceShipmentItemId);
 
 		return commerceWarehouseItemLocalService.fetchCommerceWarehouseItem(
-			commerceShipment.getCommerceWarehouseId(), cpInstanceId);
+			commerceShipmentItem.getCommerceWarehouseId(), cpInstanceId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

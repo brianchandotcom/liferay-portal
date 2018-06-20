@@ -18,10 +18,14 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
-import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -46,9 +50,68 @@ public class CommerceShipmentImpl extends CommerceShipmentBaseImpl {
 	}
 
 	@Override
-	public CommerceWarehouse fetchCommerceWarehouse() {
-		return CommerceWarehouseLocalServiceUtil.fetchCommerceWarehouse(
-			getCommerceWarehouseId());
+	public CommerceShippingMethod getCommerceShippingMethod()
+		throws PortalException {
+
+		long commerceShippingMethodId = getCommerceShippingMethodId();
+
+		if (commerceShippingMethodId > 0) {
+			return CommerceShippingMethodLocalServiceUtil.
+				getCommerceShippingMethod(commerceShippingMethodId);
+		}
+
+		return null;
+	}
+
+	@Override
+	public long getCustomerId() {
+		long customerId = getShipmentOrganizationId();
+
+		if (customerId <= 0) {
+			customerId = getShipmentUserId();
+		}
+
+		return customerId;
+	}
+
+	@Override
+	public String getCustomerName() throws PortalException {
+		Organization organization = getShipmentOrganization();
+
+		if (organization != null) {
+			return organization.getName();
+		}
+
+		User orderUser = getShipmentUser();
+
+		if (orderUser.isDefaultUser()) {
+			return RoleConstants.GUEST;
+		}
+
+		return orderUser.getFullName();
+	}
+
+	@Override
+	public Organization getShipmentOrganization() throws PortalException {
+		long orderOrganizationId = getShipmentOrganizationId();
+
+		if (orderOrganizationId <= 0) {
+			return null;
+		}
+
+		return OrganizationLocalServiceUtil.getOrganization(
+			orderOrganizationId);
+	}
+
+	@Override
+	public User getShipmentUser() throws PortalException {
+		long orderUserId = getShipmentUserId();
+
+		if (orderUserId <= 0) {
+			return null;
+		}
+
+		return UserLocalServiceUtil.getUser(orderUserId);
 	}
 
 }

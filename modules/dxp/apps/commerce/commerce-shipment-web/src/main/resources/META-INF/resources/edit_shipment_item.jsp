@@ -24,20 +24,15 @@ CommerceShipmentItem commerceShipmentItem = commerceShipmentItemDisplayContext.g
 long commerceShipmentId = commerceShipmentItemDisplayContext.getCommerceShipmentId();
 long commerceShipmentItemId = commerceShipmentItemDisplayContext.getCommerceShipmentItemId();
 
-PortletURL shipmentItemsURL = renderResponse.createRenderURL();
-
-shipmentItemsURL.setParameter("mvcRenderCommandName", "viewCommerceShipmentDetail");
-shipmentItemsURL.setParameter("commerceShipmentId", String.valueOf(commerceShipmentId));
-
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(shipmentItemsURL.toString());
+portletDisplay.setURLBack(redirect);
 %>
 
 <portlet:actionURL name="editCommerceShipmentItem" var="editCommerceShipmentItemActionURL" />
 
 <aui:form action="<%= editCommerceShipmentItemActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= shipmentItemsURL.toString() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="commerceShipmentId" type="hidden" value="<%= String.valueOf(commerceShipmentId) %>" />
 	<aui:input name="commerceShipmentItemId" type="hidden" value="<%= String.valueOf(commerceShipmentItemId) %>" />
 
@@ -49,5 +44,5 @@ portletDisplay.setURLBack(shipmentItemsURL.toString());
 
 	<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
 
-	<aui:button cssClass="btn-lg" href="<%= shipmentItemsURL.toString() %>" type="cancel" />
+	<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 </aui:form>

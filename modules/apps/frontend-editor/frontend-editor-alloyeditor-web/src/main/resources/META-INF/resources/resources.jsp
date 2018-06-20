@@ -61,7 +61,7 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 			addInstance: function() {
 				alloyEditorInstances++;
 			},
-			removeInstance() {
+			removeInstance: function() {
 				alloyEditorInstances--;
 
 				cleanupAlloyEditorResources();

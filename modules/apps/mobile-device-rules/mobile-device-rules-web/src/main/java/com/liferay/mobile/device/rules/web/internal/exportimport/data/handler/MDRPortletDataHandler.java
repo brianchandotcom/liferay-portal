@@ -82,9 +82,9 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "actions", true, false, null,
 				MDRAction.class.getName(), Layout.class.getName()));
-		setImportControls(getExportControls());
 		setPublishToLiveByDefault(
 			PropsValues.MOBILE_DEVICE_RULES_PUBLISH_TO_LIVE_BY_DEFAULT);
+		setStagingControls(getExportControls());
 	}
 
 	@Override

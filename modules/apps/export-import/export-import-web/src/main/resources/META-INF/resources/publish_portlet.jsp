@@ -34,6 +34,9 @@ if (!layout.isTypeControlPanel()) {
 			if (stagingGroup.isLayout()) {
 				targetLayout = LayoutLocalServiceUtil.getLayout(liveGroup.getClassPK());
 			}
+			else if (stagingGroup.isStagedRemotely()) {
+				StagingUtil.checkRemoteLiveLayoutPlid(user.getUserId(), stagingGroup.getGroupId(), layout.getPlid());
+			}
 			else {
 				targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
 			}

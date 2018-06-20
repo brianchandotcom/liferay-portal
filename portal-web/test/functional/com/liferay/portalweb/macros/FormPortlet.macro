@@ -5,7 +5,7 @@
 		<execute function="Click" locator1="FormPortlet#LOCALIZATION_BUTTON" />
 
 		<execute function="Click" locator1="FormPortlet#LOCALIZATION_OPTION">
-			<var name="key_locale" value="${locale}" />>
+			<var name="key_locale" value="${locale}" />
 		</execute>
 	</command>
 

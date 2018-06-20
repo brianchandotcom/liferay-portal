@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.javadoc.JavadocMethodImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,10 +40,12 @@ import java.lang.reflect.Method;
 import java.net.URL;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Igor Spasic
@@ -56,30 +59,20 @@ public class JavadocManagerImpl implements JavadocManager {
 			return;
 		}
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Loading Javadocs for \"" + servletContextName + '\"');
-		}
-
-		Document document = getDocument(classLoader);
-
-		if (document == null) {
-			return;
-		}
-
-		parseDocument(servletContextName, classLoader, document);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Loaded Javadocs for \"" + servletContextName + '\"');
-		}
+		_initQueue.add(new ObjectValuePair<>(servletContextName, classLoader));
 	}
 
 	@Override
 	public JavadocClass lookupJavadocClass(Class<?> clazz) {
+		_initialize();
+
 		return _javadocClasses.get(clazz);
 	}
 
 	@Override
 	public JavadocMethod lookupJavadocMethod(Method method) {
+		_initialize();
+
 		JavadocMethod javadocMethod = _javadocMethods.get(method);
 
 		if (javadocMethod != null) {
@@ -136,6 +129,8 @@ public class JavadocManagerImpl implements JavadocManager {
 
 	@Override
 	public void unload(String servletContextName) {
+		_initialize();
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Unloading Javadocs for \"" + servletContextName + '\"');
 		}
@@ -325,10 +320,50 @@ public class JavadocManagerImpl implements JavadocManager {
 		}
 	}
 
+	private void _initialize() {
+		if (!PropsValues.JAVADOC_MANAGER_ENABLED) {
+			return;
+		}
+
+		Iterator<ObjectValuePair<String, ClassLoader>> iterator =
+			_initQueue.iterator();
+
+		while (iterator.hasNext()) {
+			ObjectValuePair<String, ClassLoader> objectValuePair =
+				iterator.next();
+
+			iterator.remove();
+
+			String servletContextName = objectValuePair.getKey();
+			ClassLoader classLoader = objectValuePair.getValue();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Loading Javadocs for \"" + servletContextName + '\"');
+			}
+
+			Document document = getDocument(classLoader);
+
+			if (document == null) {
+				continue;
+			}
+
+			parseDocument(servletContextName, classLoader, document);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Loaded Javadocs for \"" + servletContextName + '\"');
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JavadocManagerImpl.class);
 
-	private final Map<Class<?>, JavadocClass> _javadocClasses = new HashMap<>();
-	private final Map<Method, JavadocMethod> _javadocMethods = new HashMap<>();
+	private final Queue<ObjectValuePair<String, ClassLoader>> _initQueue =
+		new ConcurrentLinkedQueue<>();
+	private final Map<Class<?>, JavadocClass> _javadocClasses =
+		new ConcurrentHashMap<>();
+	private final Map<Method, JavadocMethod> _javadocMethods =
+		new ConcurrentHashMap<>();
 
 }

@@ -67,7 +67,7 @@ public class ApioApiDocumentationTest {
 	}
 
 	@Test
-	public void testGetSupportedClasses() {
+	public void testGetSupportedClasses1() {
 		List<ApioApiDocumentation.SupportedClass> supportedClasses =
 			_apioApiDocumentation.getSupportedClasses();
 
@@ -100,6 +100,44 @@ public class ApioApiDocumentationTest {
 		Assert.assertThat(
 			propertyNames,
 			hasItems("dateCreated", "dateModified", "text", "author"));
+	}
+
+	@Test
+	public void testGetSupportedClasses2() {
+		List<ApioApiDocumentation.SupportedClass> supportedClasses =
+			_apioApiDocumentation.getSupportedClasses();
+
+		Assert.assertThat(supportedClasses.size(), equalTo(5));
+
+		Stream<ApioApiDocumentation.SupportedClass> supportedClassStream =
+			supportedClasses.stream();
+
+		ApioApiDocumentation.SupportedClass supportedClass =
+			supportedClassStream.filter(
+				clazz -> "BlogPosting".equals(clazz.getName())
+			).findFirst(
+			).orElseThrow(
+				() -> new AssertionError(
+					"Unable to find 'BlogPosting' Supported Class ")
+			);
+
+		List<Property> supportedProperties =
+			supportedClass.getSupportedProperties();
+
+		Stream<Property> propertyStream = supportedProperties.stream();
+
+		List<String> propertyNames = propertyStream.map(
+			Property::getName
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertThat(supportedProperties.size(), equalTo(8));
+		Assert.assertThat(
+			propertyNames,
+			hasItems(
+				"dateCreated", "dateModified", "alternativeHeadline",
+				"articleBody", "fileFormat", "headline", "creator", "comment"));
 	}
 
 	@Test

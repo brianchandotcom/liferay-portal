@@ -177,11 +177,8 @@ public class CPContentHelperImpl implements CPContentHelper {
 			return value;
 		}
 
-		CPCatalogEntry cpCatalogEntry = getCPCatalogEntry(
-			_portal.getHttpServletRequest(renderRequest));
-
 		List<CPContentRenderer> cpContentRenderers = getCPContentRenderers(
-			cpCatalogEntry.getProductTypeName());
+			type);
 
 		if (cpContentRenderers.isEmpty()) {
 			return StringPool.BLANK;

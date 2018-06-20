@@ -26,8 +26,6 @@ public interface CPContentRendererRegistry {
 
 	public CPContentRenderer getCPContentRenderer(String key);
 
-	public List<CPContentRenderer> getCPContentRenderers();
-
 	public List<CPContentRenderer> getCPContentRenderers(String cpType);
 
 }

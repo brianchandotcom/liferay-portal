@@ -64,11 +64,6 @@ public class CPContentRendererRegistryImpl
 	}
 
 	@Override
-	public List<CPContentRenderer> getCPContentRenderers() {
-		return getCPContentRenderers(null);
-	}
-
-	@Override
 	public List<CPContentRenderer> getCPContentRenderers(String cpType) {
 		List<CPContentRenderer> cpContentRenderers = new ArrayList<>();
 
@@ -79,11 +74,7 @@ public class CPContentRendererRegistryImpl
 		for (ServiceWrapper<CPContentRenderer> cpContentRendererServiceWrapper :
 				cpContentRendererServiceWrappers) {
 
-			if (Validator.isNull(cpType)) {
-				cpContentRenderers.add(
-					cpContentRendererServiceWrapper.getService());
-			}
-			else {
+			if (Validator.isNotNull(cpType)) {
 				Map<String, Object> cpContentRendererServiceWrapperProperties =
 					cpContentRendererServiceWrapper.getProperties();
 

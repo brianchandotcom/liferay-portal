@@ -305,7 +305,7 @@ public class AMImageRequestHandler
 			return Optional.of(Tuple.of(fileVersion, amImageAttributeMapping));
 		}
 		catch (AMRuntimeException | NumberFormatException e) {
-			_log.error(e);
+			_log.error(e, e);
 
 			return Optional.empty();
 		}

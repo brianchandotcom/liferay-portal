@@ -429,7 +429,7 @@ public class ServletResponseUtil {
 				isClientAbortException(ioe)) {
 
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe);
+					_log.warn(ioe, ioe);
 				}
 			}
 			else {
@@ -469,7 +469,7 @@ public class ServletResponseUtil {
 				isClientAbortException(ioe)) {
 
 				if (_log.isWarnEnabled()) {
-					_log.warn(ioe);
+					_log.warn(ioe, ioe);
 				}
 			}
 			else {

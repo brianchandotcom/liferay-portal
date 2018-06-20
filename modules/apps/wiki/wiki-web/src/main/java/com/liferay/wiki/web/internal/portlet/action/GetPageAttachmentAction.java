@@ -83,7 +83,7 @@ public class GetPageAttachmentAction extends BaseStrutsAction {
 				e instanceof NoSuchPageException) {
 
 				if (_log.isWarnEnabled()) {
-					_log.warn(e);
+					_log.warn(e, e);
 				}
 			}
 			else {

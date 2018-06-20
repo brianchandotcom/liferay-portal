@@ -50,7 +50,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				changesetCollection.getChangesetCollectionId());
 		}
 		catch (PortalException pe) {
-			_log.error(pe);
+			_log.error(pe, pe);
 		}
 	}
 

@@ -244,7 +244,7 @@ public class CacheFilter extends BasePortalFilter {
 				return plid;
 			}
 			catch (Exception e) {
-				_log.warn(e);
+				_log.warn(e, e);
 
 				return 0;
 			}

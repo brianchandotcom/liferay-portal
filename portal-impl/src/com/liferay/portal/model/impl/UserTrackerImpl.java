@@ -38,7 +38,7 @@ public class UserTrackerImpl extends UserTrackerBaseImpl {
 		}
 		catch (ArrayIndexOutOfBoundsException aioobe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(aioobe);
+				_log.warn(aioobe, aioobe);
 			}
 		}
 

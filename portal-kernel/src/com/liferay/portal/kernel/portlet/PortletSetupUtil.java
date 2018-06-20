@@ -60,7 +60,7 @@ public class PortletSetupUtil {
 			css = null;
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(e);
+				_log.warn(e, e);
 			}
 		}
 

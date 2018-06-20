@@ -42,7 +42,7 @@ public class Idempotent {
 			}
 			catch (NoSuchModelException nsme) {
 				if (_log.isInfoEnabled()) {
-					_log.info(nsme);
+					_log.info(nsme, nsme);
 				}
 			}
 		};

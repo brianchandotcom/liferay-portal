@@ -152,7 +152,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		return false;
@@ -591,7 +591,7 @@ public class ZoomPowwowServiceProvider extends BasePowwowServiceProvider {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 		}
 
 		return false;

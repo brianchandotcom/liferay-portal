@@ -58,7 +58,7 @@ public class DDMFormRuleEvaluator {
 		}
 		catch (DDMExpressionException ddmee) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmee);
+				_log.debug(ddmee, ddmee);
 			}
 
 			return false;
@@ -84,7 +84,7 @@ public class DDMFormRuleEvaluator {
 		}
 		catch (DDMExpressionException ddmee) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmee);
+				_log.debug(ddmee, ddmee);
 			}
 		}
 	}

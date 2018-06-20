@@ -256,7 +256,7 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 		}
 		catch (JSONException jsone) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsone);
+				_log.debug(jsone, jsone);
 			}
 
 			return type;

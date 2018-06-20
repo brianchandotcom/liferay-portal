@@ -93,7 +93,7 @@ public class ScopedConfigurationBeanConfigurationListener
 		}
 		catch (IllegalArgumentException | NullPointerException e) {
 			if (_log.isInfoEnabled()) {
-				_log.info(e);
+				_log.info(e, e);
 			}
 		}
 	}

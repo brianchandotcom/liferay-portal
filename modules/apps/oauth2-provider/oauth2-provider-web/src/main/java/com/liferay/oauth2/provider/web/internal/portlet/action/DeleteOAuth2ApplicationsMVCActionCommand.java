@@ -59,7 +59,7 @@ public class DeleteOAuth2ApplicationsMVCActionCommand
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe);
+				_log.debug(pe, pe);
 			}
 
 			SessionErrors.add(actionRequest, pe.getClass());

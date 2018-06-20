@@ -113,7 +113,7 @@ public class MediaQueryProviderImpl implements MediaQueryProvider {
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(pe);
+				_log.warn(pe, pe);
 			}
 
 			return Optional.empty();

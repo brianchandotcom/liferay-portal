@@ -137,7 +137,7 @@ public abstract class BaseOAuth2PortletDisplayContext {
 				OAuth2ProviderActionKeys.ACTION_VIEW_GRANTED_AUTHORIZATIONS);
 		}
 		catch (PortalException pe) {
-			_log.error(pe);
+			_log.error(pe, pe);
 
 			return false;
 		}

@@ -387,7 +387,7 @@ public class MailEngine {
 			_send(session, message, bulkAddresses, batchSize);
 		}
 		catch (SendFailedException sfe) {
-			_log.error(sfe);
+			_log.error(sfe, sfe);
 
 			if (_isThrowsExceptionOnFailure()) {
 				throw new MailEngineException(sfe);

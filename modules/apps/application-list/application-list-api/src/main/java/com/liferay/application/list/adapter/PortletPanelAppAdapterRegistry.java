@@ -57,7 +57,7 @@ public class PortletPanelAppAdapterRegistry {
 				serviceRegistration.unregister();
 			}
 			catch (IllegalStateException ise) {
-				_log.error(ise);
+				_log.error(ise, ise);
 			}
 		}
 

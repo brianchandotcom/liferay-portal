@@ -591,7 +591,7 @@ public abstract class BaseTestPreparatorBundleActivator
 				previousAutoCloseable.close();
 			}
 			catch (Exception e) {
-				_log.error(e);
+				_log.error(e, e);
 			}
 		}
 	}

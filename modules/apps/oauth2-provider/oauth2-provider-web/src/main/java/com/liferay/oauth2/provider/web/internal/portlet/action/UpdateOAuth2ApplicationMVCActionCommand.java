@@ -191,7 +191,7 @@ public class UpdateOAuth2ApplicationMVCActionCommand
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(pe);
+				_log.debug(pe, pe);
 			}
 
 			Class<?> peClass = pe.getClass();

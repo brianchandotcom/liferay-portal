@@ -77,7 +77,7 @@ public class DDMDataProviderPortletConfigurationIcon
 			portletURL.setParameter("backURL", getBackURL(portletRequest));
 		}
 		catch (WindowStateException wse) {
-			_log.error(wse);
+			_log.error(wse, wse);
 		}
 
 		return portletURL.toString();

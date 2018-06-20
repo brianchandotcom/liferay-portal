@@ -88,7 +88,7 @@ public class AllFunction implements DDMExpressionFunction {
 		}
 		catch (DDMExpressionException ddmee) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ddmee);
+				_log.debug(ddmee, ddmee);
 			}
 		}
 

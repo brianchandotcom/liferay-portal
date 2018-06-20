@@ -82,7 +82,7 @@ public abstract class BaseBlogsEntryDemoDataCreator
 			}
 			catch (NoSuchEntryException nsee) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nsee);
+					_log.warn(nsee, nsee);
 				}
 			}
 

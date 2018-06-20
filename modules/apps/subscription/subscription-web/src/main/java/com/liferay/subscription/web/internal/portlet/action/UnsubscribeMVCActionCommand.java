@@ -93,7 +93,7 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.sendRedirect(portletURL.toString());
 		}
 		catch (NoSuchSubscriptionException nsse) {
-			_log.error(nsse);
+			_log.error(nsse, nsse);
 
 			actionResponse.sendRedirect(portletURL.toString());
 		}

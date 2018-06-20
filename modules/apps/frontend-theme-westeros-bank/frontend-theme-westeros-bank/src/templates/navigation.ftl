@@ -9,20 +9,20 @@
 
 	<nav class="nav-header-global row" role="navigation">
 		<ul class="nav navbar-nav">
-			<#assign preferencesMap = {"displayDepth": "1", "portletSetupPortletDecoratorId": "barebone"} />
+			<#assign mainNavigationPreferencesMap = {"displayDepth": "1", "portletSetupPortletDecoratorId": "barebone"} />
 
 			<@liferay.navigation_menu
-				default_preferences=freeMarkerPortletPreferences.getPreferences(preferencesMap)
+				default_preferences=freeMarkerPortletPreferences.getPreferences(mainNavigationPreferencesMap)
 				instance_id="header_navigation_menu"
 			/>
 		</ul>
 	</nav>
 
 	<nav class="navbar-nav site-navigation" id="navigation" role="navigation">
-		<#assign preferencesMap = {"displayStyle": "ddmTemplate_NAVBAR-BLANK-JUSTIFIED-FTL", "portletSetupPortletDecoratorId": "barebone", "rootLayoutType": "relative"} />
+		<#assign secondaryNavigationPreferencesMap = {"displayStyle": "ddmTemplate_NAVBAR-BLANK-JUSTIFIED-FTL", "portletSetupPortletDecoratorId": "barebone", "rootLayoutType": "relative", "siteNavigationMenuId": "0", "siteNavigationMenuType": "0"} />
 
 		<@liferay.navigation_menu
-			default_preferences=freeMarkerPortletPreferences.getPreferences(preferencesMap)
+			default_preferences=freeMarkerPortletPreferences.getPreferences(secondaryNavigationPreferencesMap)
 			instance_id="main_navigation_menu"
 		/>
 	</nav>

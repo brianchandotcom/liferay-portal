@@ -105,7 +105,7 @@
 .video-preview {
 	background-color: $brand-bg-color-2;
 	color: $brand-color-3;
-	margin: 25px 0;
+	margin-bottom: 25px;
 	overflow: hidden;
 
 	@include media-query(null, $screen-xs-max) {
@@ -269,6 +269,10 @@
 	color: $brand-color-3;
 	padding-top: 20px;
 
+	> .container-fluid {
+		display: table;
+	}
+
 	a {
 		color: $brand-color-3;
 
@@ -316,7 +320,7 @@
 			background: rgba($brand-color-3, 0.06);
 			border-radius: 50%;
 			color: $brand-color-3;
-			display: table-cell;
+			display: inline-table;
 		}
 
 		h3 {
@@ -325,7 +329,7 @@
 		}
 
 		.txt {
-			display: table-cell;
+			display: inline-table;
 			vertical-align: middle;
 
 			@include sm {

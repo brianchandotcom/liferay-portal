@@ -141,6 +141,7 @@
 		<check name="JavaSignatureStylingCheck" />
 		<check name="JavaStaticBlockCheck" />
 		<check name="JavaStaticImportsCheck" />
+		<check name="JavaStaticVariableDependencyCheck" />
 		<check name="JavaStopWatchCheck" />
 		<check name="JavaStringBundlerConcatCheck">
 			<property name="enabled" value="false" />

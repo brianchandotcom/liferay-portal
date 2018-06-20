@@ -114,10 +114,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		assetTagPersistence.update(tag);
 
-		// Resources
-
-		resourceLocalService.addModelResources(tag, serviceContext);
-
 		return tag;
 	}
 

@@ -205,9 +205,9 @@ public class SiteNavigationMenuPortletDataHandler
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					SiteNavigationMenuItem.class.getName(),
-					SiteNavigationMenu.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(SiteNavigationMenuItem.class.getName()),
+					new StagedModelType(SiteNavigationMenu.class.getName())
 				});
 
 			return;

@@ -30,8 +30,7 @@ public class KBPortletKeys extends PortletKeys {
 		"com_liferay_knowledge_base_web_portlet_ArticlePortlet";
 
 	public static final String KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE =
-		KBPortletKeys.KNOWLEDGE_BASE_ARTICLE +
-			PortletConstants.INSTANCE_SEPARATOR + "0000";
+		KNOWLEDGE_BASE_ARTICLE + PortletConstants.INSTANCE_SEPARATOR + "0000";
 
 	public static final String KNOWLEDGE_BASE_DISPLAY =
 		"com_liferay_knowledge_base_web_portlet_DisplayPortlet";

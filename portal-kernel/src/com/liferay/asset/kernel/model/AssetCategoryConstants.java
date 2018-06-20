@@ -24,7 +24,7 @@ public class AssetCategoryConstants {
 	public static final long ALL_CLASS_NAME_ID = 0;
 
 	public static final String ALL_CLASS_NAME_IDS_AND_CLASS_TYPE_PKS =
-		AssetCategoryConstants.ALL_CLASS_NAME_ID + StringPool.COLON +
+		ALL_CLASS_NAME_ID + StringPool.COLON +
 			AssetCategoryConstants.ALL_CLASS_TYPE_PK;
 
 	public static final long ALL_CLASS_TYPE_PK = -1;

@@ -35,9 +35,9 @@ public class TestAnnotatedApplication extends Application {
 	}
 
 	@GET
-	@RequiresScope("everything.readonly")
+	@RequiresScope("everything.read")
 	public String getString() {
-		return "everything.readonly";
+		return "everything.read";
 	}
 
 	@GET

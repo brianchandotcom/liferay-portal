@@ -80,11 +80,9 @@
 								<div class="autofit-col autofit-col-expand">
 									<h4 class="list-group-title text-truncate">
 										<label for="<portlet:namespace /><%= id %>">
-											<%= HtmlUtil.escape(StringUtil.merge(assignableScopes.getApplicationScopeDescription(applicationName))) %>
+											<%= assignScopesDisplayContext.getApplicationScopeDescription(applicationName, assignableScopes, "<br />+ ") %>
 										</label>
 									</h4>
-
-									<p class="list-group-subtitle text-truncate"><%= HtmlUtil.escapeAttribute(scopeAlias) %></p>
 
 									<c:if test="<%= globalScopeAliasesString.length() > 0 %>">
 										<c:choose>
@@ -104,6 +102,31 @@
 											</c:otherwise>
 										</c:choose>
 									</c:if>
+
+									<div>
+
+										<%
+										List<String> relatedScopeAliases = new ArrayList<>(globalScopeAliases);
+
+										if (Validator.isNotNull(scopeAlias)) {
+											relatedScopeAliases.add(scopeAlias);
+										}
+
+										Collections.sort(relatedScopeAliases);
+
+										for (String relatedScopeAlias : relatedScopeAliases) {
+										%>
+
+											<span class="badge badge-secondary">
+												<span class="badge-item<c:if test="<%= !relatedScopeAlias.equals(scopeAlias) %>"> global-scope-alias-reference</c:if>"><%= HtmlUtil.escapeAttribute(relatedScopeAlias) %></span>
+											</span>
+
+										<%
+										}
+										%>
+
+									</div>
+
 								</div>
 							</li>
 

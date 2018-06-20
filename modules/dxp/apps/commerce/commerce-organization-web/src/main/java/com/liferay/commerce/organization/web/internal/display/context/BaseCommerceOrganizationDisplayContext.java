@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -192,8 +193,10 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		Organization organization = currentOrganization;
 
 		while (organization != null) {
-			if (organization.getOrganizationId() ==
-					topOrganization.getOrganizationId()) {
+			if ((organization.getOrganizationId() ==
+					topOrganization.getOrganizationId()) ||
+				(organization.getParentOrganizationId() ==
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID)) {
 
 				break;
 			}

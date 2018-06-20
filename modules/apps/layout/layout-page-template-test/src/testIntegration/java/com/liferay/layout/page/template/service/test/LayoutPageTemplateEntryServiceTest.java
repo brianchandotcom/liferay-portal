@@ -284,8 +284,10 @@ public class LayoutPageTemplateEntryServiceTest {
 				serviceContext);
 
 		AssetDisplayPageEntryLocalServiceUtil.addAssetDisplayPageEntry(
-			RandomTestUtil.randomLong(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			serviceContext);
 
 		LayoutPageTemplateEntryLocalServiceUtil.deleteLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());

@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing AssetDisplayPageEntry in entity cache.
  *
@@ -63,12 +65,28 @@ public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayP
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(25);
 
-		sb.append("{assetDisplayPageEntryId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", assetDisplayPageEntryId=");
 		sb.append(assetDisplayPageEntryId);
-		sb.append(", assetEntryId=");
-		sb.append(assetEntryId);
+		sb.append(", groupId=");
+		sb.append(groupId);
+		sb.append(", companyId=");
+		sb.append(companyId);
+		sb.append(", userId=");
+		sb.append(userId);
+		sb.append(", userName=");
+		sb.append(userName);
+		sb.append(", createDate=");
+		sb.append(createDate);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", layoutPageTemplateEntryId=");
 		sb.append(layoutPageTemplateEntryId);
 		sb.append(", type=");
@@ -82,8 +100,41 @@ public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayP
 	public AssetDisplayPageEntry toEntityModel() {
 		AssetDisplayPageEntryImpl assetDisplayPageEntryImpl = new AssetDisplayPageEntryImpl();
 
+		if (uuid == null) {
+			assetDisplayPageEntryImpl.setUuid("");
+		}
+		else {
+			assetDisplayPageEntryImpl.setUuid(uuid);
+		}
+
 		assetDisplayPageEntryImpl.setAssetDisplayPageEntryId(assetDisplayPageEntryId);
-		assetDisplayPageEntryImpl.setAssetEntryId(assetEntryId);
+		assetDisplayPageEntryImpl.setGroupId(groupId);
+		assetDisplayPageEntryImpl.setCompanyId(companyId);
+		assetDisplayPageEntryImpl.setUserId(userId);
+
+		if (userName == null) {
+			assetDisplayPageEntryImpl.setUserName("");
+		}
+		else {
+			assetDisplayPageEntryImpl.setUserName(userName);
+		}
+
+		if (createDate == Long.MIN_VALUE) {
+			assetDisplayPageEntryImpl.setCreateDate(null);
+		}
+		else {
+			assetDisplayPageEntryImpl.setCreateDate(new Date(createDate));
+		}
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			assetDisplayPageEntryImpl.setModifiedDate(null);
+		}
+		else {
+			assetDisplayPageEntryImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		assetDisplayPageEntryImpl.setClassNameId(classNameId);
+		assetDisplayPageEntryImpl.setClassPK(classPK);
 		assetDisplayPageEntryImpl.setLayoutPageTemplateEntryId(layoutPageTemplateEntryId);
 		assetDisplayPageEntryImpl.setType(type);
 
@@ -94,9 +145,22 @@ public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayP
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		assetDisplayPageEntryId = objectInput.readLong();
 
-		assetEntryId = objectInput.readLong();
+		groupId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
+
+		userId = objectInput.readLong();
+		userName = objectInput.readUTF();
+		createDate = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
+
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
 
 		layoutPageTemplateEntryId = objectInput.readLong();
 
@@ -106,17 +170,50 @@ public class AssetDisplayPageEntryCacheModel implements CacheModel<AssetDisplayP
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(assetDisplayPageEntryId);
 
-		objectOutput.writeLong(assetEntryId);
+		objectOutput.writeLong(groupId);
+
+		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(userId);
+
+		if (userName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(createDate);
+		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
 
 		objectOutput.writeLong(layoutPageTemplateEntryId);
 
 		objectOutput.writeInt(type);
 	}
 
+	public String uuid;
 	public long assetDisplayPageEntryId;
-	public long assetEntryId;
+	public long groupId;
+	public long companyId;
+	public long userId;
+	public String userName;
+	public long createDate;
+	public long modifiedDate;
+	public long classNameId;
+	public long classPK;
 	public long layoutPageTemplateEntryId;
 	public int type;
 }

@@ -923,7 +923,12 @@ public class JournalPortlet extends MVCPortlet {
 
 		// Asset display page
 
-		_updateAssetDisplayPage(article, assetDisplayPageId, displayPageType);
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_updateAssetDisplayPage(
+			themeDisplay.getUserId(), groupId, article, assetDisplayPageId,
+			displayPageType, serviceContext);
 
 		sendEditArticleRedirect(
 			actionRequest, actionResponse, article, oldUrlTitle);
@@ -1471,26 +1476,26 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	private void _updateAssetDisplayPage(
-			JournalArticle article, long assetDisplayPageId,
-			int displayPageType)
+			long userId, long groupId, JournalArticle article,
+			long assetDisplayPageId, int displayPageType,
+			ServiceContext serviceContext)
 		throws PortalException {
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
+		long classNameId = _portal.getClassNameId(JournalArticle.class);
+		long classPK = article.getResourcePrimKey();
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
-			_assetDisplayPageEntryLocalService.
-				fetchAssetDisplayPageEntryByAssetEntryId(
-					assetEntry.getEntryId());
+			_assetDisplayPageEntryLocalService.fetchAssetDisplayPageEntry(
+				classNameId, classPK);
 
 		if (assetDisplayPageEntry != null) {
-			_assetDisplayPageEntryLocalService.
-				deleteAssetDisplayPageEntryByAssetEntryId(
-					assetEntry.getEntryId());
+			_assetDisplayPageEntryLocalService.deleteAssetDisplayPageEntry(
+				classNameId, classPK);
 		}
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
-			assetEntry.getEntryId(), assetDisplayPageId, displayPageType);
+			userId, groupId, classNameId, classPK, assetDisplayPageId,
+			displayPageType, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);

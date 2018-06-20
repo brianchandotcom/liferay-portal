@@ -3,25 +3,43 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.asset.display.page">
 	<namespace>Asset</namespace>
-	<entity local-service="true" name="AssetDisplayPageEntry" remote-service="false">
+	<entity local-service="true" name="AssetDisplayPageEntry" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
 		<column name="assetDisplayPageEntryId" primary="true" type="long" />
 
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
 		<!-- Other fields -->
 
-		<column name="assetEntryId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
 		<column name="layoutPageTemplateEntryId" type="long" />
 		<column name="type" type="int" />
 
 		<!-- Finder methods -->
 
-		<finder name="AssetEntryId" return-type="AssetDisplayPageEntry" unique="true">
-			<finder-column name="assetEntryId" />
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
 		</finder>
 		<finder name="LayoutPageTemplateEntryId" return-type="Collection">
 			<finder-column name="layoutPageTemplateEntryId" />
 		</finder>
+		<finder name="C_C" return-type="AssetDisplayPageEntry" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 </service-builder>

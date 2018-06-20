@@ -111,7 +111,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
 		List<AssetRendererFactory<?>> assetRendererFactoryInstances =
-			_assetRendererFactoryInstances = null;
+			_assetRendererFactoryInstances;
 
 		if (assetRendererFactoryInstances == null) {
 			synchronized (this) {
@@ -133,7 +133,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<AtomCollectionAdapter<?>> getAtomCollectionAdapterInstances() {
 		List<AtomCollectionAdapter<?>> atomCollectionAdapterInstances =
-			_atomCollectionAdapterInstances = null;
+			_atomCollectionAdapterInstances;
 
 		if (atomCollectionAdapterInstances == null) {
 			synchronized (this) {
@@ -156,7 +156,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<ConfigurationAction> getConfigurationActionInstances() {
 		List<ConfigurationAction> configurationActionInstances =
-			_configurationActionInstances = null;
+			_configurationActionInstances;
 
 		if (configurationActionInstances == null) {
 			synchronized (this) {
@@ -176,7 +176,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<ControlPanelEntry> getControlPanelEntryInstances() {
 		List<ControlPanelEntry> controlPanelEntryInstances =
-			_controlPanelEntryInstances = null;
+			_controlPanelEntryInstances;
 
 		if (controlPanelEntryInstances == null) {
 			synchronized (this) {
@@ -196,7 +196,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
 		List<CustomAttributesDisplay> customAttributesDisplayInstances =
-			_customAttributesDisplayInstances = null;
+			_customAttributesDisplayInstances;
 
 		if (customAttributesDisplayInstances == null) {
 			synchronized (this) {
@@ -260,7 +260,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<PermissionPropagator> getPermissionPropagatorInstances() {
 		List<PermissionPropagator> permissionPropagatorInstances =
-			_permissionPropagatorInstances = null;
+			_permissionPropagatorInstances;
 
 		if (permissionPropagatorInstances == null) {
 			synchronized (this) {
@@ -280,7 +280,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<PollerProcessor> getPollerProcessorInstances() {
 		List<PollerProcessor> pollerProcessorInstances =
-			_pollerProcessorInstances = null;
+			_pollerProcessorInstances;
 
 		if (pollerProcessorInstances == null) {
 			synchronized (this) {
@@ -300,7 +300,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<MessageListener> getPopMessageListenerInstances() {
 		List<MessageListener> popMessageListenerInstances =
-			_popMessageListenerInstances = null;
+			_popMessageListenerInstances;
 
 		if (popMessageListenerInstances == null) {
 			synchronized (this) {
@@ -320,7 +320,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<PortletDataHandler> getPortletDataHandlerInstances() {
 		List<PortletDataHandler> portletDataHandlerInstances =
-			_portletDataHandlerInstances = null;
+			_portletDataHandlerInstances;
 
 		if (portletDataHandlerInstances == null) {
 			synchronized (this) {
@@ -345,7 +345,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<PortletLayoutListener> getPortletLayoutListenerInstances() {
 		List<PortletLayoutListener> portletLayoutListenerInstances =
-			_portletLayoutListenerInstances = null;
+			_portletLayoutListenerInstances;
 
 		if (portletLayoutListenerInstances == null) {
 			synchronized (this) {
@@ -371,7 +371,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<PreferencesValidator> getPreferencesValidatorInstances() {
 		List<PreferencesValidator> preferencesValidatorInstances =
-			_preferencesValidatorInstances = null;
+			_preferencesValidatorInstances;
 
 		if (preferencesValidatorInstances == null) {
 			synchronized (this) {
@@ -427,7 +427,7 @@ public class PortletBagImpl implements PortletBag {
 		getSchedulerEventMessageListeners() {
 
 		List<SchedulerEventMessageListener> schedulerEventMessageListeners =
-			_schedulerEventMessageListeners = null;
+			_schedulerEventMessageListeners;
 
 		if (schedulerEventMessageListeners == null) {
 			synchronized (this) {
@@ -456,7 +456,7 @@ public class PortletBagImpl implements PortletBag {
 		getSocialActivityInterpreterInstances() {
 
 		List<SocialActivityInterpreter> socialActivityInterpreterInstances =
-			_socialActivityInterpreterInstances = null;
+			_socialActivityInterpreterInstances;
 
 		if (socialActivityInterpreterInstances == null) {
 			synchronized (this) {
@@ -480,7 +480,7 @@ public class PortletBagImpl implements PortletBag {
 		getSocialRequestInterpreterInstances() {
 
 		List<SocialRequestInterpreter> socialRequestInterpreterInstances =
-			_socialRequestInterpreterInstances = null;
+			_socialRequestInterpreterInstances;
 
 		if (socialRequestInterpreterInstances == null) {
 			synchronized (this) {
@@ -504,7 +504,7 @@ public class PortletBagImpl implements PortletBag {
 		getStagedModelDataHandlerInstances() {
 
 		List<StagedModelDataHandler<?>> stagedModelDataHandlerInstances =
-			_stagedModelDataHandlerInstances = null;
+			_stagedModelDataHandlerInstances;
 
 		if (stagedModelDataHandlerInstances == null) {
 			synchronized (this) {
@@ -527,7 +527,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<TemplateHandler> getTemplateHandlerInstances() {
 		List<TemplateHandler> templateHandlerInstances =
-			_templateHandlerInstances = null;
+			_templateHandlerInstances;
 
 		if (templateHandlerInstances == null) {
 			synchronized (this) {
@@ -585,7 +585,7 @@ public class PortletBagImpl implements PortletBag {
 		getUserNotificationDefinitionInstances() {
 
 		List<UserNotificationDefinition> userNotificationDefinitionInstances =
-			_userNotificationDefinitionInstances = null;
+			_userNotificationDefinitionInstances;
 
 		if (userNotificationDefinitionInstances == null) {
 			synchronized (this) {
@@ -607,7 +607,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<UserNotificationHandler> getUserNotificationHandlerInstances() {
 		List<UserNotificationHandler> userNotificationHandlerInstances =
-			_userNotificationHandlerInstances = null;
+			_userNotificationHandlerInstances;
 
 		if (userNotificationHandlerInstances == null) {
 			synchronized (this) {
@@ -648,7 +648,7 @@ public class PortletBagImpl implements PortletBag {
 	@Override
 	public List<WorkflowHandler<?>> getWorkflowHandlerInstances() {
 		List<WorkflowHandler<?>> workflowHandlerInstances =
-			_workflowHandlerInstances = null;
+			_workflowHandlerInstances;
 
 		if (workflowHandlerInstances == null) {
 			synchronized (this) {

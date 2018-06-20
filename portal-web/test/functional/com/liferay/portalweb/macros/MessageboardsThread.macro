@@ -1255,7 +1255,15 @@
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSubject}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsThread#THREAD_USERNAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_SUBJECT" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="Header#H3_TITLE" value1="${threadBody}" />
+		<if>
+			<equals arg1="${sourceContent}" arg2="true" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="Header#H3_TITLE" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="Header#H3_TITLE" value1="${threadBody}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewPG">

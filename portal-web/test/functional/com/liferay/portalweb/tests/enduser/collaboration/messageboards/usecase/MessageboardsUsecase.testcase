@@ -1941,6 +1941,7 @@
 		</execute>
 
 		<execute macro="MessageboardsThread#viewNoXSSPG">
+			<var name="sourceContent" value="true" />
 			<var name="threadBody" value="[img]asd[font= onerror=alert(/This is an XSS Message/.source)//]FF[/font][/img]" />
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>

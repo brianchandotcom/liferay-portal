@@ -18,7 +18,7 @@
 
 	<%
 	for (Map.Entry<AssignableScopes, AssignScopesDisplayContext.Relations> scopeAliasAssignableScopesEntry : assignScopesDisplayContext.getGlobalAssignableScopesRelations().entrySet()) {
-		String scopeAlias = scopeAliasAssignableScopesEntry.getValue().getScopeAlias();
+		String scopeAlias = scopeAliasAssignableScopesEntry.getValue().getScopeAliases().stream().findAny().get();
 	%>
 
 		<div class="panel panel-secondary" id="<portlet:namespace /><%= scopeAlias %>">

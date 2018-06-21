@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.base.CPInstanceServiceBaseImpl;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -51,8 +54,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		throws PortalException {
 
 		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.addCPInstance(
 			cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
@@ -69,20 +71,18 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 		throws PortalException {
 
 		_cpDefinitionModelResourcePermission.check(
-			getPermissionChecker(), cpDefinitionId,
-			CPActionKeys.ADD_COMMERCE_PRODUCT_INSTANCE);
+			getPermissionChecker(), cpDefinitionId, ActionKeys.UPDATE);
 
 		cpInstanceLocalService.buildCPInstances(cpDefinitionId, serviceContext);
 	}
 
 	@Override
 	public void deleteCPInstance(long cpInstanceId) throws PortalException {
-		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
-			cpInstanceId);
+		CPInstance cpInstance = cpInstanceService.getCPInstance(cpInstanceId);
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpInstance.getCPDefinitionId(),
-			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
+			ActionKeys.UPDATE);
 
 		cpInstanceLocalService.deleteCPInstance(cpInstance);
 	}
@@ -145,6 +145,9 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			OrderByComparator<CPInstance> orderByComparator)
 		throws PortalException {
 
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, CPActionKeys.MANAGE_CATALOG);
+
 		return cpInstanceLocalService.getCPInstances(
 			groupId, status, start, end, orderByComparator);
 	}
@@ -152,6 +155,9 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 	@Override
 	public int getCPInstancesCount(long groupId, int status)
 		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, CPActionKeys.MANAGE_CATALOG);
 
 		return cpInstanceLocalService.getCPInstancesCount(groupId, status);
 	}
@@ -161,6 +167,9 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			long companyId, long groupId, long cpDefinitionId, String keywords,
 			int status, int start, int end, Sort sort)
 		throws PortalException {
+
+		_cpDefinitionModelResourcePermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
 
 		return cpInstanceLocalService.searchCPDefinitionInstances(
 			companyId, groupId, cpDefinitionId, keywords, status, start, end,
@@ -172,6 +181,9 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			long companyId, long groupId, String keywords, int status,
 			int start, int end, Sort sort)
 		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, CPActionKeys.MANAGE_CATALOG);
 
 		return cpInstanceLocalService.searchCPInstances(
 			companyId, groupId, keywords, status, start, end, sort);
@@ -202,7 +214,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpInstance.getCPDefinitionId(),
-			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+			ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.updateCPInstance(
 			cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable,
@@ -223,7 +235,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpInstance.getCPDefinitionId(),
-			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+			ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.updatePricingInfo(
 			cpInstanceId, price, promoPrice, cost, serviceContext);
@@ -240,7 +252,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), cpInstance.getCPDefinitionId(),
-			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+			ActionKeys.UPDATE);
 
 		return cpInstanceLocalService.updateShippingInfo(
 			cpInstanceId, width, height, depth, weight, serviceContext);
@@ -251,5 +263,10 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			ModelResourcePermissionFactory.getInstance(
 				CPInstanceServiceImpl.class,
 				"_cpDefinitionModelResourcePermission", CPDefinition.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CPDefinitionServiceImpl.class, "_portletResourcePermission",
+				CPConstants.RESOURCE_NAME);
 
 }

@@ -90,6 +90,14 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		}
 	}
 
+	protected String getVersion(int version, int draftVersion) {
+		if (version == 0) {
+			version = 1;
+		}
+
+		return version + StringPool.PERIOD + --draftVersion;
+	}
+
 	protected boolean hasApprovedKaleoDefinitionVersion(
 		long companyId, String name, int version, int draftVersion) {
 
@@ -108,14 +116,6 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		}
 
 		return false;
-	}
-
-	protected String getVersion(int version, int draftVersion) {
-		if (version == 0) {
-			version = 1;
-		}
-
-		return version + StringPool.PERIOD + --draftVersion;
 	}
 
 	protected void initKaleoDesignerModelsResourceActions() throws Exception {

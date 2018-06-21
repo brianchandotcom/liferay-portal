@@ -473,42 +473,21 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			boolean updateName)
 		throws Exception {
 
-		if (updateName) {
-			runSQL(
-				StringBundler.concat(
-					"update ResourcePermission set name = '", newRootPortletId,
-					"', primKey = replace(primKey, '_LAYOUT_", oldRootPortletId,
-					"', '_LAYOUT_", newRootPortletId, "') where name = '",
-					oldRootPortletId, "' and primKey like '%_LAYOUT_",
-					oldRootPortletId, "'"));
+		runSQL(
+			StringBundler.concat(
+				"update ResourcePermission set primKey = replace(primKey, ",
+				"'_LAYOUT_", oldRootPortletId, "', '_LAYOUT_", newRootPortletId,
+				"') where name = '", oldRootPortletId,
+				"' and primKey like '%_LAYOUT_", oldRootPortletId, "'"));
 
+		if (!newRootPortletId.contains("_INSTANCE_")) {
 			runSQL(
 				StringBundler.concat(
-					"update ResourcePermission set name = '", newRootPortletId,
-					"', primKey = replace(primKey, '_LAYOUT_", oldRootPortletId,
-					"_INSTANCE_', '_LAYOUT_", newRootPortletId, "_INSTANCE_') ",
-					"where name = '", oldRootPortletId,
-					"' and primKey like '%_LAYOUT_", oldRootPortletId,
-					"_INSTANCE_%'"));
-		}
-		else {
-			runSQL(
-				StringBundler.concat(
-					"update ResourcePermission set primKey = replace(primKey, ",
-					"'_LAYOUT_", oldRootPortletId, "', '_LAYOUT_",
-					newRootPortletId, "') where name = '", oldRootPortletId,
-					"' and primKey like '%_LAYOUT_", oldRootPortletId, "'"));
-
-			if (!newRootPortletId.contains("_INSTANCE_")) {
-				runSQL(
-					StringBundler.concat(
-						"update ResourcePermission set primKey = replace(",
-						"primKey, '_LAYOUT_", oldRootPortletId, "_INSTANCE_', ",
-						"'_LAYOUT_", newRootPortletId, "_INSTANCE_') where ",
-						"name = '", oldRootPortletId,
-						"' and primKey like '%_LAYOUT_", oldRootPortletId,
-						"_INSTANCE_%'"));
-			}
+					"update ResourcePermission set primKey = replace(",
+					"primKey, '_LAYOUT_", oldRootPortletId, "_INSTANCE_', ",
+					"'_LAYOUT_", newRootPortletId, "_INSTANCE_') where name = ",
+					"'", oldRootPortletId, "' and primKey like '%_LAYOUT_",
+					oldRootPortletId, "_INSTANCE_%'"));
 		}
 
 		if (updateName) {

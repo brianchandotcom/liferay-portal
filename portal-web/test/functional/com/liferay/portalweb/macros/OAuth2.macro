@@ -101,17 +101,9 @@
 					<isset var="resourceCheckList" />
 					<then>
 						<for list="${resourceCheckList}" param="scopeName">
-							<if>
-								<condition function="IsNotChecked" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
-									<var name="key_scopeName" value="${scopeName}" />
-								</condition>
-
-								<then>
-									<execute function="Check" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
-										<var name="key_scopeName" value="${scopeName}" />
-									</execute>
-								</then>
-							</if>
+							<execute function="Check" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
+								<var name="key_scopeName" value="${scopeName}" />
+							</execute>
 						</for>
 					</then>
 				</if>
@@ -120,17 +112,9 @@
 					<isset var="resourceUncheckList" />
 					<then>
 						<for list="${resourceUncheckList}" param="scopeName">
-							<if>
-								<condition function="IsChecked" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
-									<var name="key_scopeName" value="${scopeName}" />
-								</condition>
-
-								<then>
-									<execute function="Uncheck" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
-										<var name="key_scopeName" value="${scopeName}" />
-									</execute>
-								</then>
-							</if>
+							<execute function="Uncheck" locator1="OAuth2#ADMIN_RESOURCE_SCOPE_CHECKBOX">
+								<var name="key_scopeName" value="${scopeName}" />
+							</execute>
 						</for>
 					</then>
 				</if>
@@ -150,34 +134,18 @@
 				<if>
 					<isset var="checkGlobalScope" />
 					<then>
-						<if>
-							<condition function="IsNotChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-								<var name="key_scopeName" value="${checkGlobalScope}" />
-							</condition>
-
-							<then>
-								<execute function="Check" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-									<var name="key_scopeName" value="${checkGlobalScope}" />
-								</execute>
-							</then>
-						</if>
+						<execute function="Check" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+							<var name="key_scopeName" value="${checkGlobalScope}" />
+						</execute>
 					</then>
 				</if>
 
 				<if>
 					<isset var="uncheckGlobalScope" />
 					<then>
-						<if>
-							<condition function="IsChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-								<var name="key_scopeName" value="${checkGlobalScope}" />
-							</condition>
-
-							<then>
-								<execute function="Uncheck" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-									<var name="key_scopeName" value="${uncheckGlobalScope}" />
-								</execute>
-							</then>
-						</if>
+						<execute function="Uncheck" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
+							<var name="key_scopeName" value="${uncheckGlobalScope}" />
+						</execute>
 					</then>
 				</if>
 			</then>

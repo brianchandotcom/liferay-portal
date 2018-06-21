@@ -68,7 +68,7 @@ String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute(CKE
 			addInstance: function() {
 				ckEditorInstances++;
 			},
-			removeInstance() {
+			removeInstance: function() {
 				ckEditorInstances--;
 
 				cleanupCkEditorResources();

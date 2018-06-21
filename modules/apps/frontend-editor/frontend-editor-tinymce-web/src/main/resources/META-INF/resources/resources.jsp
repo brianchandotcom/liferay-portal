@@ -49,7 +49,7 @@ String editorName = (String)request.getAttribute(TinyMCEEditorConstants.ATTRIBUT
 			addInstance: function() {
 				tinymceInstances++;
 			},
-			removeInstance() {
+			removeInstance: function() {
 				tinymceInstances--;
 
 				cleanupGlobals();

@@ -16,6 +16,7 @@ package com.liferay.commerce.dashboard.web.internal.display.context;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.util.comparator.CPInstanceSkuComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -38,11 +39,13 @@ public class CommerceDashboardInstanceSelectorDisplayContext
 
 	public CommerceDashboardInstanceSelectorDisplayContext(
 			ConfigurationProvider configurationProvider,
+			CPInstanceLocalService cpInstanceLocalService,
 			CPInstanceService cpInstanceService, RenderRequest renderRequest)
 		throws PortalException {
 
 		super(configurationProvider, renderRequest);
 
+		_cpInstanceLocalService = cpInstanceLocalService;
 		_cpInstanceService = cpInstanceService;
 	}
 
@@ -71,7 +74,7 @@ public class CommerceDashboardInstanceSelectorDisplayContext
 	}
 
 	public List<CPInstance> getCPInstances() throws PortalException {
-		return _cpInstanceService.getCPInstances(
+		return _cpInstanceLocalService.getCPInstances(
 			commerceDashboardRequestHelper.getScopeGroupId(),
 			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new CPInstanceSkuComparator(true));
@@ -80,6 +83,7 @@ public class CommerceDashboardInstanceSelectorDisplayContext
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceDashboardInstanceSelectorDisplayContext.class);
 
+	private final CPInstanceLocalService _cpInstanceLocalService;
 	private final CPInstanceService _cpInstanceService;
 
 }

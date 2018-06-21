@@ -19,6 +19,7 @@ import com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashb
 import com.liferay.commerce.forecast.service.CommerceForecastEntryLocalService;
 import com.liferay.commerce.forecast.service.CommerceForecastValueLocalService;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.CompanyService;
@@ -73,7 +74,8 @@ public class CommerceDashboardForecastsChartPortlet extends MVCPortlet {
 						_commerceForecastEntryLocalService,
 						_commerceForecastValueLocalService,
 						_commerceOrganizationService, _companyService,
-						_configurationProvider, renderRequest);
+						_configurationProvider, _cpInstanceService,
+						renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -102,5 +104,8 @@ public class CommerceDashboardForecastsChartPortlet extends MVCPortlet {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 }

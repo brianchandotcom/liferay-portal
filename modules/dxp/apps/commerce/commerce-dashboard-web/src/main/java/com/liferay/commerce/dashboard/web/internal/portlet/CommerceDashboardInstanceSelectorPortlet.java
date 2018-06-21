@@ -16,6 +16,7 @@ package com.liferay.commerce.dashboard.web.internal.portlet;
 
 import com.liferay.commerce.dashboard.web.internal.constants.CommerceDashboardPortletKeys;
 import com.liferay.commerce.dashboard.web.internal.display.context.CommerceDashboardInstanceSelectorDisplayContext;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -69,8 +70,8 @@ public class CommerceDashboardInstanceSelectorPortlet extends MVCPortlet {
 			CommerceDashboardInstanceSelectorDisplayContext
 				commerceDashboardInstanceSelectorDisplayContext =
 					new CommerceDashboardInstanceSelectorDisplayContext(
-						_configurationProvider, _cpInstanceService,
-						renderRequest);
+						_configurationProvider, _cpInstanceLocalService,
+						_cpInstanceService, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -85,6 +86,9 @@ public class CommerceDashboardInstanceSelectorPortlet extends MVCPortlet {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

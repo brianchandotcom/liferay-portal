@@ -16,8 +16,12 @@ package com.liferay.commerce.dashboard.web.internal.portlet.action;
 
 import com.liferay.commerce.dashboard.web.internal.constants.CommerceDashboardPortletKeys;
 import com.liferay.commerce.dashboard.web.internal.util.CommerceDashboardUtil;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
+import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -28,6 +32,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -59,6 +64,20 @@ public class EditCommerceDashboardInstanceMVCActionCommand
 			cpInstanceIds = new LinkedHashMap<>();
 		}
 
+		try {
+			_cpInstanceService.getCPInstance(cpInstanceId);
+		}
+		catch (PortalException pe) {
+			if (pe instanceof NoSuchCPInstanceException ||
+				pe instanceof PrincipalException) {
+
+				cmd = Constants.REMOVE;
+			}
+			else {
+				throw pe;
+			}
+		}
+
 		if (cmd.equals(Constants.ADD) || cmd.equals(Constants.VIEW)) {
 			cpInstanceIds.put(cpInstanceId, true);
 		}
@@ -74,5 +93,8 @@ public class EditCommerceDashboardInstanceMVCActionCommand
 
 		hideDefaultSuccessMessage(actionRequest);
 	}
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 }

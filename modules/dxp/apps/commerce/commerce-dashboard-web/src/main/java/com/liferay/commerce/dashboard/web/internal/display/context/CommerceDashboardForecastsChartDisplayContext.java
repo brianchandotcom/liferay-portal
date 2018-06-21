@@ -24,6 +24,8 @@ import com.liferay.commerce.forecast.model.CommerceForecastValue;
 import com.liferay.commerce.forecast.service.CommerceForecastEntryLocalService;
 import com.liferay.commerce.forecast.service.CommerceForecastValueLocalService;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
+import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.frontend.taglib.chart.model.AxisY;
 import com.liferay.frontend.taglib.chart.model.MixedDataColumn;
 import com.liferay.frontend.taglib.chart.model.predictive.PredictiveChartConfig;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
@@ -77,7 +80,7 @@ public class CommerceDashboardForecastsChartDisplayContext
 			CommerceOrganizationService commerceOrganizationService,
 			CompanyService companyService,
 			ConfigurationProvider configurationProvider,
-			RenderRequest renderRequest)
+			CPInstanceService cpInstanceService, RenderRequest renderRequest)
 		throws PortalException {
 
 		super(configurationProvider, renderRequest);
@@ -86,6 +89,7 @@ public class CommerceDashboardForecastsChartDisplayContext
 		_commerceForecastValueLocalService = commerceForecastValueLocalService;
 		_commerceOrganizationService = commerceOrganizationService;
 		_companyService = companyService;
+		_cpInstanceService = cpInstanceService;
 
 		PortletDisplay portletDisplay =
 			commerceDashboardRequestHelper.getPortletDisplay();
@@ -333,11 +337,26 @@ public class CommerceDashboardForecastsChartDisplayContext
 				CommerceForecastEntry commerceForecastEntry = null;
 
 				if (entry.getValue()) {
+					long cpInstanceId = entry.getKey();
+
+					try {
+						_cpInstanceService.getCPInstance(cpInstanceId);
+					}
+					catch (PortalException pe) {
+						if (pe instanceof NoSuchCPInstanceException ||
+							pe instanceof PrincipalException) {
+
+							continue;
+						}
+
+						throw pe;
+					}
+
 					commerceForecastEntry =
 						_commerceForecastEntryLocalService.
 							fetchCommerceForecastEntry(
 								companyId, period, target, customerId,
-								entry.getKey());
+								cpInstanceId);
 				}
 
 				commerceForecastEntries.add(commerceForecastEntry);
@@ -427,6 +446,7 @@ public class CommerceDashboardForecastsChartDisplayContext
 		_commerceForecastValueLocalService;
 	private final CommerceOrganizationService _commerceOrganizationService;
 	private final CompanyService _companyService;
+	private final CPInstanceService _cpInstanceService;
 
 	private class ForecastChartEntry {
 

@@ -77,7 +77,7 @@ public class CommitFactory {
 	private static String _getCommitURL(
 		String gitHubUserName, String repositoryName, String sha) {
 
-		return JenkinsResultsParserUtil.getGitHubApiURL(
+		return JenkinsResultsParserUtil.getGitHubApiUrl(
 			repositoryName, gitHubUserName, "commits/" + sha);
 	}
 

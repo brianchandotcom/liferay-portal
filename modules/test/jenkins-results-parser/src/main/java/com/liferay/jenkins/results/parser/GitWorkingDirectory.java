@@ -363,7 +363,7 @@ public class GitWorkingDirectory {
 			"head", receiverUserName + ":" + pullRequestBranchName);
 		requestJSONObject.put("title", title);
 
-		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
 			_repositoryName, receiverUserName, "pulls");
 
 		JSONObject responseJSONObject = JenkinsResultsParserUtil.toJSONObject(

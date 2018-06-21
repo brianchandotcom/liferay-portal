@@ -80,7 +80,7 @@ public class PullRequest {
 
 		jsonArray.put(label.getName());
 
-		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getRepositoryName(), getOwnerUsername(),
 			"issues/" + getNumber() + "/labels");
 
@@ -196,7 +196,7 @@ public class PullRequest {
 		String path = JenkinsResultsParserUtil.combine(
 			"issues/", getNumber(), "/comments?page=");
 
-		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getRepositoryName(), getOwnerUsername(), path);
 
 		try {
@@ -253,7 +253,7 @@ public class PullRequest {
 		String path = JenkinsResultsParserUtil.combine(
 			"issues/", getNumber(), "/labels/", labelName);
 
-		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
 			getRepositoryName(), getOwnerUsername(), path);
 
 		try {
@@ -380,7 +380,7 @@ public class PullRequest {
 	}
 
 	protected String getURL() {
-		return JenkinsResultsParserUtil.getGitHubApiURL(
+		return JenkinsResultsParserUtil.getGitHubApiUrl(
 			_repositoryName, _ownerUsername, "pulls/" + _number);
 	}
 

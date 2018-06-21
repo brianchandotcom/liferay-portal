@@ -112,7 +112,7 @@ public class BaseCommit implements Commit {
 	}
 
 	protected String getGitHubStatusURL() {
-		return JenkinsResultsParserUtil.getGitHubApiURL(
+		return JenkinsResultsParserUtil.getGitHubApiUrl(
 			_repositoryName, _gitHubUserName, "statuses/" + getSHA());
 	}
 

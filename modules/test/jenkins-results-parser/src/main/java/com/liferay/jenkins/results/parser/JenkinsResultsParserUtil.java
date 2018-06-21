@@ -651,7 +651,7 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static String getGitHubApiURL(
+	public static String getGitHubApiUrl(
 		String repositoryName, String username, String path) {
 
 		return combine(

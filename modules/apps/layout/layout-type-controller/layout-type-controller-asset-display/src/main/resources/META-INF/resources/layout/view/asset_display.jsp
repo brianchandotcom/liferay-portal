@@ -27,9 +27,20 @@
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			sb.append(FragmentEntryRenderUtil.renderFragmentEntryLink(fragmentEntryLink, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE, fieldValues, request, response));
 		}
+
+		try {
+			request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 		%>
 
-		<%= sb.toString() %>
+			<%= sb.toString() %>
+
+		<%
+		}
+		finally {
+			request.removeAttribute(WebKeys.PORTLET_DECORATE);
+		}
+		%>
+
 	</c:when>
 	<c:when test="<%= assetEntry != null %>">
 		<div class="sheet">

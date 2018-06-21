@@ -97,8 +97,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				_itemSelector);
 		}
 
-		request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
-
 		String page = getViewPage();
 
 		if (layoutMode.equals(Constants.EDIT)) {

@@ -103,6 +103,7 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 		return cpRule;
 	}
 
+	@Override
 	public void cleanCPRulesCache(long groupId) {
 		MultiVMPoolUtil.removePortalCache("CP_RULES_" + groupId);
 	}

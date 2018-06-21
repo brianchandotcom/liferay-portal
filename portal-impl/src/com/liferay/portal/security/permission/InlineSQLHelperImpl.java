@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.permission;
 
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -243,6 +244,14 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		if (Validator.isNull(className)) {
 			throw new IllegalArgumentException("className is null");
+		}
+
+		if (className.equals(AssetTag.class.getName())) {
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Entity ", className,
+					" doesn't support inline permissions, use ",
+					"AssetTagsPermission instead"));
 		}
 
 		if (Validator.isNull(sql)) {

@@ -34,11 +34,17 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF};
+		return new int[] {TokenTypes.CLASS_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		if (parentAST != null) {
+			return;
+		}
+
 		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
 
 		if (!importNames.contains(
@@ -47,48 +53,11 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST annotationAST = AnnotationUtility.getAnnotation(
-			detailAST, "Reference");
+		List<DetailAST> detailASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF);
 
-		if (annotationAST == null) {
-			return;
-		}
-
-		String policyName = _getAnnotationMemberValue(
-			annotationAST, "policy", _POLICY_STATIC);
-
-		_checkGreedyOption(annotationAST, policyName);
-
-		if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
-			_checkVolatileVariable(detailAST, policyName);
-
-			return;
-		}
-
-		DetailAST classDefAST = DetailASTUtil.getParentWithTokenType(
-			detailAST, TokenTypes.CLASS_DEF);
-
-		if (classDefAST == null) {
-			return;
-		}
-
-		String unbindName = _getAnnotationMemberValue(
-			annotationAST, "unbind", null);
-
-		DetailAST identAST = detailAST.findFirstToken(TokenTypes.IDENT);
-
-		String methodName = identAST.getText();
-
-		String defaultUnbindMethodName = _getDefaultUnbindMethodName(
-			methodName);
-
-		_checkUnbind(
-			classDefAST, defaultUnbindMethodName, unbindName, policyName,
-			annotationAST.getLineNo());
-
-		if (policyName.endsWith(_POLICY_DYNAMIC) && (unbindName == null)) {
-			_checkDynamicMethod(
-				classDefAST, detailAST, methodName, defaultUnbindMethodName);
+		for (DetailAST curDetailAST : detailASTList) {
+			_checkReferenceAnnotation(curDetailAST);
 		}
 	}
 
@@ -151,6 +120,52 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 			policyName.endsWith(_POLICY_STATIC)) {
 
 			log(annotationAST.getLineNo(), _MSG_INCORRECT_GREEDY_POLICY_OPTION);
+		}
+	}
+
+	private void _checkReferenceAnnotation(DetailAST detailAST) {
+		DetailAST annotationAST = AnnotationUtility.getAnnotation(
+			detailAST, "Reference");
+
+		if (annotationAST == null) {
+			return;
+		}
+
+		String policyName = _getAnnotationMemberValue(
+			annotationAST, "policy", _POLICY_STATIC);
+
+		_checkGreedyOption(annotationAST, policyName);
+
+		if (detailAST.getType() == TokenTypes.VARIABLE_DEF) {
+			_checkVolatileVariable(detailAST, policyName);
+
+			return;
+		}
+
+		DetailAST classDefAST = DetailASTUtil.getParentWithTokenType(
+			detailAST, TokenTypes.CLASS_DEF);
+
+		if (classDefAST == null) {
+			return;
+		}
+
+		String unbindName = _getAnnotationMemberValue(
+			annotationAST, "unbind", null);
+
+		DetailAST identAST = detailAST.findFirstToken(TokenTypes.IDENT);
+
+		String methodName = identAST.getText();
+
+		String defaultUnbindMethodName = _getDefaultUnbindMethodName(
+			methodName);
+
+		_checkUnbind(
+			classDefAST, defaultUnbindMethodName, unbindName, policyName,
+			annotationAST.getLineNo());
+
+		if (policyName.endsWith(_POLICY_DYNAMIC) && (unbindName == null)) {
+			_checkDynamicMethod(
+				classDefAST, detailAST, methodName, defaultUnbindMethodName);
 		}
 	}
 

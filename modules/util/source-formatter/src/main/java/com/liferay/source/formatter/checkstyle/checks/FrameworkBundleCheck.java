@@ -28,17 +28,32 @@ public class FrameworkBundleCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
+		return new int[] {TokenTypes.CLASS_DEF};
 	}
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		if (parentAST != null) {
+			return;
+		}
+
 		List<String> importNames = DetailASTUtil.getImportNames(detailAST);
 
 		if (!importNames.contains("org.osgi.framework.Bundle")) {
 			return;
 		}
 
+		List<DetailAST> detailASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF);
+
+		for (DetailAST curDetailAST : detailASTList) {
+			_checkGetHeadersMethodCall(curDetailAST);
+		}
+	}
+
+	private void _checkGetHeadersMethodCall(DetailAST detailAST) {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
 			detailAST, "getHeaders");
 

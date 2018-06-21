@@ -57,55 +57,28 @@ public class PullRequest {
 		refresh();
 	}
 
-	public void addLabel(Label... labels) {
-		boolean addedLabel = false;
-
-		for (Label label : labels) {
-			if (_labels.contains(label)) {
-				continue;
-			}
-
-			_labels.add(label);
-
-			addedLabel = true;
-		}
-
-		if (addedLabel) {
-			updateGithub();
-		}
-	}
-
-	public boolean addLabel(String labelName) {
-		if (hasLabel(labelName)) {
+	public boolean addLabel(Label label) {
+		if ((label == null) || hasLabel(label.getName())) {
 			return true;
 		}
 
 		GitHubRemoteRepository gitHubRemoteRepository = getRepository();
 
-		List<Label> repositoryLabels = gitHubRemoteRepository.getLabels();
+		Label repositoryLabel = gitHubRemoteRepository.getLabel(
+			label.getName());
 
-		boolean found = false;
-
-		for (Label label : repositoryLabels) {
-			if (labelName.equals(label.getName())) {
-				found = true;
-
-				break;
-			}
-		}
-
-		if (!found) {
+		if (repositoryLabel == null) {
 			System.out.println(
 				JenkinsResultsParserUtil.combine(
-					"Label ", labelName, " does not exist in ",
+					"Label ", label.getName(), " does not exist in ",
 					getRepositoryName()));
 
 			return false;
 		}
 
-		JSONArray jsonArray = new JSONArray(1);
+		JSONArray jsonArray = new JSONArray();
 
-		jsonArray.put(labelName);
+		jsonArray.put(label.getName());
 
 		String url = JenkinsResultsParserUtil.getGitHubApiURL(
 			getRepositoryName(), getOwnerUsername(),
@@ -115,7 +88,7 @@ public class PullRequest {
 			JenkinsResultsParserUtil.toString(url, jsonArray.toString());
 		}
 		catch (IOException ioe) {
-			System.out.println("Unable to add label " + labelName);
+			System.out.println("Unable to add label " + label.getName());
 
 			ioe.printStackTrace();
 
@@ -274,7 +247,7 @@ public class PullRequest {
 			for (int i = 0; i < labelJSONArray.length(); i++) {
 				JSONObject labelJSONObject = labelJSONArray.getJSONObject(i);
 
-				_labels.add(LabelFactory.newLabel(labelJSONObject));
+				_labels.add(new Label(labelJSONObject, getRepository()));
 			}
 		}
 		catch (IOException ioe) {
@@ -295,6 +268,8 @@ public class PullRequest {
 
 		try {
 			JenkinsResultsParserUtil.toString(url, HttpRequestMethod.DELETE);
+
+			refresh();
 		}
 		catch (IOException ioe) {
 			System.out.println("Unable to remove label " + labelName);
@@ -312,8 +287,6 @@ public class PullRequest {
 
 		_testSuiteStatus = testSuiteStatus;
 
-		removeTestSuiteLabels();
-
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("ci:test");
@@ -323,12 +296,32 @@ public class PullRequest {
 			sb.append(_testSuiteName);
 		}
 
+		String testSuiteLabelPrefix = sb.toString();
+
+		for (Label label : getLabels()) {
+			String name = label.getName();
+
+			if (name.startsWith(testSuiteLabelPrefix)) {
+				removeLabel(name);
+			}
+		}
+
 		sb.append(" - ");
 		sb.append(StringUtils.lowerCase(testSuiteStatus.toString()));
 
-		addLabel(
-			LabelFactory.newLabel(
-				getLabelsURL(), sb.toString(), testSuiteStatus.getColor()));
+		GitHubRemoteRepository gitHubRemoteRepository = getRepository();
+
+		Label testSuiteLabel = gitHubRemoteRepository.getLabel(sb.toString());
+
+		if (testSuiteLabel == null) {
+			if (gitHubRemoteRepository.addLabel(
+					testSuiteStatus.getColor(), "", sb.toString())) {
+
+				testSuiteLabel = gitHubRemoteRepository.getLabel(sb.toString());
+			}
+		}
+
+		addLabel(testSuiteLabel);
 
 		if (targetURL == null) {
 			return;
@@ -401,51 +394,6 @@ public class PullRequest {
 			_repositoryName, _ownerUsername, "pulls/" + _number);
 	}
 
-	protected void removeTestSuiteLabels() {
-		String testSuiteStatusLowerCase = StringUtils.lowerCase(
-			_testSuiteStatus.toString());
-
-		List<Label> testSuiteLabels = new ArrayList<>();
-
-		for (Label label : _labels) {
-			String labelName = label.getName();
-
-			Matcher matcher = _testSuiteLabelNamePattern.matcher(labelName);
-
-			if (!matcher.find()) {
-				continue;
-			}
-
-			String testSuiteName = matcher.group("testSuiteName");
-
-			if (testSuiteName == null) {
-				testSuiteName = _TEST_SUITE_NAME_DEFAULT;
-			}
-
-			if (!testSuiteName.equals(_testSuiteName)) {
-				continue;
-			}
-
-			if (testSuiteStatusLowerCase.equals(
-					matcher.group("testSuiteStatus"))) {
-
-				continue;
-			}
-
-			testSuiteLabels.add(label);
-		}
-
-		if (testSuiteLabels.isEmpty()) {
-			return;
-		}
-
-		for (Label testSuiteLabel : testSuiteLabels) {
-			_labels.remove(testSuiteLabel);
-		}
-
-		updateGithub();
-	}
-
 	protected void updateGithub() {
 		JSONObject jsonObject = new JSONObject();
 
@@ -471,8 +419,6 @@ public class PullRequest {
 	private static final Pattern _htmlURLPattern = Pattern.compile(
 		"https://github.com/(?<owner>[^/]+)/(?<repository>[^/]+)/pull/" +
 			"(?<number>\\d+)");
-	private static final Pattern _testSuiteLabelNamePattern = Pattern.compile(
-		"ci:test(:(?<testSuiteName>[^\\s]+))? - (?<testSuiteStatus>[^\\s]+)");
 
 	private JSONObject _jsonObject;
 	private final List<Label> _labels = new ArrayList<>();

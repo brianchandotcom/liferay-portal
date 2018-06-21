@@ -66,7 +66,7 @@ public class CPRuleUserSegmentRelLocalServiceImpl
 
 		// Cache
 
-		cpRuleLocalService.cleanCPRulesChache(groupId);
+		cpRuleLocalService.cleanCPRulesCache(groupId);
 
 		return cpRuleUserSegmentRel;
 	}
@@ -85,8 +85,7 @@ public class CPRuleUserSegmentRelLocalServiceImpl
 
 		// Cache
 
-		cpRuleLocalService.cleanCPRulesChache(
-			cpRuleUserSegmentRel.getGroupId());
+		cpRuleLocalService.cleanCPRulesCache(cpRuleUserSegmentRel.getGroupId());
 
 		return cpRuleUserSegmentRel;
 	}

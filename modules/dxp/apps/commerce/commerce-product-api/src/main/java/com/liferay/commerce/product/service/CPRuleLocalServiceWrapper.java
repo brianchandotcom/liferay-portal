@@ -52,6 +52,11 @@ public class CPRuleLocalServiceWrapper implements CPRuleLocalService,
 		return _cpRuleLocalService.addCPRule(name, active, type, serviceContext);
 	}
 
+	@Override
+	public void cleanCPRulesChache(long groupId) {
+		_cpRuleLocalService.cleanCPRulesChache(groupId);
+	}
+
 	/**
 	* Creates a new cp rule with the primary key. Does not add the cp rule to the database.
 	*

@@ -61,6 +61,10 @@ public class CPRuleLocalServiceUtil {
 		return getService().addCPRule(name, active, type, serviceContext);
 	}
 
+	public static void cleanCPRulesChache(long groupId) {
+		getService().cleanCPRulesChache(groupId);
+	}
+
 	/**
 	* Creates a new cp rule with the primary key. Does not add the cp rule to the database.
 	*

@@ -80,6 +80,8 @@ public interface CPRuleLocalService extends BaseLocalService,
 	public CPRule addCPRule(String name, boolean active, String type,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void cleanCPRulesChache(long groupId);
+
 	/**
 	* Creates a new cp rule with the primary key. Does not add the cp rule to the database.
 	*

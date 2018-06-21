@@ -24,9 +24,13 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import java.net.URI;
 
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
@@ -372,14 +376,29 @@ public class ConfigurationPersistenceManager
 			configurationModelListener.onBeforeSave(pid, dictionary);
 		}
 
+		Dictionary<Object, Object> dictionaryCopy = _copyDictionary(dictionary);
+
+		String fileName = (String)dictionaryCopy.get(
+			_FELIX_FILE_INSTALL_FILENAME);
+
+		if (fileName != null) {
+			File file = new File(URI.create(fileName));
+
+			dictionaryCopy.put(_FELIX_FILE_INSTALL_FILENAME, file.getName());
+		}
+
 		Lock lock = _readWriteLock.writeLock();
 
 		try {
 			lock.lock();
 
-			storeInDatabase(pid, dictionary);
+			storeInDatabase(pid, dictionaryCopy);
 
-			_dictionaries.put(pid, _copyDictionary(dictionary));
+			if (fileName != null) {
+				dictionaryCopy.put(_FELIX_FILE_INSTALL_FILENAME, fileName);
+			}
+
+			_dictionaries.put(pid, dictionaryCopy);
 		}
 		finally {
 			lock.unlock();
@@ -588,16 +607,34 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected Dictionary<?, ?> toDictionary(String dictionaryString)
 		throws IOException {
 
-		return ConfigurationHandler.read(
+		Dictionary<Object, Object> dictionary = ConfigurationHandler.read(
 			new UnsyncByteArrayInputStream(
 				dictionaryString.getBytes(StringPool.UTF8)));
+
+		String fileName = (String)dictionary.get(_FELIX_FILE_INSTALL_FILENAME);
+
+		if (fileName != null) {
+			File file = new File(
+				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
+
+			file = file.getAbsoluteFile();
+
+			URI uri = file.toURI();
+
+			dictionary.put(_FELIX_FILE_INSTALL_FILENAME, uri.toString());
+		}
+
+		return dictionary;
 	}
 
-	private Dictionary<?, ?> _copyDictionary(Dictionary<?, ?> dictionary) {
-		Dictionary newDictionary = new HashMapDictionary<>();
+	private Dictionary<Object, Object> _copyDictionary(
+		Dictionary<?, ?> dictionary) {
+
+		Dictionary<Object, Object> newDictionary = new HashMapDictionary<>();
 
 		Enumeration<?> keys = dictionary.keys();
 
@@ -609,6 +646,9 @@ public class ConfigurationPersistenceManager
 
 		return newDictionary;
 	}
+
+	private static final String _FELIX_FILE_INSTALL_FILENAME =
+		"felix.fileinstall.filename";
 
 	private static final Dictionary<?, ?> _emptyDictionary = new Hashtable<>();
 

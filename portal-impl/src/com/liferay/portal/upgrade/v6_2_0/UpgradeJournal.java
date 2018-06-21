@@ -376,6 +376,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		return LocaleUtil.getSiteDefault();
 	}
 
+	protected long getJournalStructureClassNameId() {
+		return PortalUtil.getClassNameId(
+			"com.liferay.portlet.journal.model.JournalStructure");
+	}
+
 	@Override
 	protected String[] getPortletIds() {
 		return new String[] {
@@ -583,14 +588,9 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				"update JournalArticle set classNameId = ?, classPK = ? " +
 					"where classNameId = ? and classPK = ?")) {
 
-			String ddmStructureClassName =
-				"com.liferay.portlet.dynamicdatamapping.model.DDMStructure";
-			String journalStructureClassName =
-				"com.liferay.portlet.journal.model.JournalStructure";
-
-			ps.setLong(1, PortalUtil.getClassNameId(ddmStructureClassName));
+			ps.setLong(1, getDDMStructureClassNameId());
 			ps.setLong(2, ddmStructureId);
-			ps.setLong(3, PortalUtil.getClassNameId(journalStructureClassName));
+			ps.setLong(3, getJournalStructureClassNameId());
 			ps.setLong(4, journalStructureId);
 
 			ps.execute();

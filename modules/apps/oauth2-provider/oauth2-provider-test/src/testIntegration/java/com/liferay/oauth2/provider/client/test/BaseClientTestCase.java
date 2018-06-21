@@ -205,25 +205,7 @@ public abstract class BaseClientTestCase {
 	protected BiFunction<String, Invocation.Builder, Response>
 		getAuthorizationCode(String user, String password, String hostname) {
 
-		return (clientId, invocationBuilder) -> {
-			String authorizationCode = getAuthorizationCode(
-				user, password, hostname,
-				webTarget -> webTarget.queryParam(
-					"client_id", clientId
-				).queryParam(
-					"response_type", "code"
-				));
-
-			MultivaluedMap<String, String> formData =
-				new MultivaluedHashMap<>();
-
-			formData.add("client_id", clientId);
-			formData.add("client_secret", "oauthTestApplicationSecret");
-			formData.add("code", authorizationCode);
-			formData.add("grant_type", "authorization_code");
-
-			return invocationBuilder.post(Entity.form(formData));
-		};
+		return getAuthorizationCode(user, password, hostname, (String)null);
 	}
 
 	protected String getAuthorizationCode(
@@ -300,6 +282,39 @@ public abstract class BaseClientTestCase {
 		catch (URISyntaxException urise) {
 			throw new RuntimeException(urise);
 		}
+	}
+
+	protected BiFunction<String, Invocation.Builder, Response>
+		getAuthorizationCode(
+			String user, String password, String hostname, String scope) {
+
+		return (clientId, invocationBuilder) -> {
+			String authorizationCode = getAuthorizationCode(
+				user, password, hostname,
+				webTarget -> {
+					webTarget = webTarget.queryParam(
+						"client_id", clientId
+					).queryParam(
+						"response_type", "code"
+					);
+
+					if (scope != null) {
+						webTarget = webTarget.queryParam("scope", scope);
+					}
+
+					return webTarget;
+				});
+
+			MultivaluedMap<String, String> formData =
+				new MultivaluedHashMap<>();
+
+			formData.add("client_id", clientId);
+			formData.add("client_secret", "oauthTestApplicationSecret");
+			formData.add("code", authorizationCode);
+			formData.add("grant_type", "authorization_code");
+
+			return invocationBuilder.post(Entity.form(formData));
+		};
 	}
 
 	protected BiFunction<String, Invocation.Builder, Response>

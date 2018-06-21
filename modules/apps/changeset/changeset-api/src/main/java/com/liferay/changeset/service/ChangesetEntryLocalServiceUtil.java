@@ -240,6 +240,12 @@ public class ChangesetEntryLocalServiceUtil {
 		return getService().getChangesetEntries(start, end);
 	}
 
+	public static java.util.List<com.liferay.changeset.model.ChangesetEntry> getChangesetEntries(
+		long changesetCollectionId, long classNameId) {
+		return getService()
+				   .getChangesetEntries(changesetCollectionId, classNameId);
+	}
+
 	/**
 	* Returns the number of changeset entries.
 	*

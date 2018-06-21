@@ -207,6 +207,10 @@ public interface ChangesetEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ChangesetEntry> getChangesetEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ChangesetEntry> getChangesetEntries(
+		long changesetCollectionId, long classNameId);
+
 	/**
 	* Returns the number of changeset entries.
 	*

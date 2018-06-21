@@ -197,9 +197,9 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					BookmarksEntry.class.getName(),
-					BookmarksFolder.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(BookmarksEntry.class.getName()),
+					new StagedModelType(BookmarksFolder.class.getName())
 				});
 
 			return;

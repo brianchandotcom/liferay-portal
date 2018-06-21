@@ -74,8 +74,8 @@ public class CPDefinitionSearcher extends BaseSearcher {
 		long[] groupIds = searchContext.getGroupIds();
 
 		Filter filter = _cpDefinitionHelper.getCPRuleFilter(
-				permissionChecker, groupIds[0], _cpQuery.getUserId(),
-				_cpQuery.getOrganizationId());
+			permissionChecker, groupIds[0], _cpQuery.getUserId(),
+			_cpQuery.getOrganizationId());
 
 		if (filter != null) {
 			booleanFilter.add(filter, BooleanClauseOccur.MUST);

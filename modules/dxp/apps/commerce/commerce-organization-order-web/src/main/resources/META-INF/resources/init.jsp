@@ -30,7 +30,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.constants.CommerceOrderActionKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceOrderConstants" %><%@
-page import="com.liferay.commerce.constants.CommerceShipmentConstants" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderNoteContentException" %><%@
 page import="com.liferay.commerce.exception.CommerceOrderValidatorException" %><%@
 page import="com.liferay.commerce.exception.NoSuchOrderException" %><%@

@@ -218,44 +218,12 @@ public class CPOptionServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
-		HttpPrincipal httpPrincipal, long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"getCPOptions", _getCPOptionsParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.commerce.product.model.CPOption>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<com.liferay.commerce.product.model.CPOption> getCPOptions(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"getCPOptions", _getCPOptionsParameterTypes6);
+					"getCPOptions", _getCPOptionsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -287,7 +255,7 @@ public class CPOptionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"getCPOptionsCount", _getCPOptionsCountParameterTypes7);
+					"getCPOptionsCount", _getCPOptionsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -320,7 +288,7 @@ public class CPOptionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"searchCPOptions", _searchCPOptionsParameterTypes8);
+					"searchCPOptions", _searchCPOptionsParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupId, keywords, start, end, sort);
@@ -357,7 +325,7 @@ public class CPOptionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPOptionServiceUtil.class,
-					"updateCPOption", _updateCPOptionParameterTypes9);
+					"updateCPOption", _updateCPOptionParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpOptionId, nameMap, descriptionMap, ddmFormFieldTypeName,
@@ -404,20 +372,17 @@ public class CPOptionServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCPOptionsParameterTypes5 = new Class[] {
-			long.class, int.class, int.class
-		};
-	private static final Class<?>[] _getCPOptionsParameterTypes6 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCPOptionsCountParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getCPOptionsCountParameterTypes6 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _searchCPOptionsParameterTypes8 = new Class[] {
+	private static final Class<?>[] _searchCPOptionsParameterTypes7 = new Class[] {
 			long.class, long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort.class
 		};
-	private static final Class<?>[] _updateCPOptionParameterTypes9 = new Class[] {
+	private static final Class<?>[] _updateCPOptionParameterTypes8 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, String.class,
 			boolean.class, boolean.class, boolean.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

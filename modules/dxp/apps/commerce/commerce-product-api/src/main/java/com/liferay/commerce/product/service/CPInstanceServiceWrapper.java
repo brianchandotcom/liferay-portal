@@ -94,13 +94,6 @@ public class CPInstanceServiceWrapper implements CPInstanceService,
 	}
 
 	@Override
-	public com.liferay.commerce.product.model.CPInstance getCPInstance(
-		String externalReferenceCode)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _cpInstanceService.getCPInstance(externalReferenceCode);
-	}
-
-	@Override
 	public java.util.List<com.liferay.commerce.product.model.CPInstance> getCPInstances(
 		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPInstance> orderByComparator)

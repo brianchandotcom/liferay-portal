@@ -151,21 +151,6 @@ public class CPOptionServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPOptionSoap[] getCPOptions(
-		long groupId, int start, int end) throws RemoteException {
-		try {
-			java.util.List<com.liferay.commerce.product.model.CPOption> returnValue =
-				CPOptionServiceUtil.getCPOptions(groupId, start, end);
-
-			return com.liferay.commerce.product.model.CPOptionSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.product.model.CPOptionSoap[] getCPOptions(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.product.model.CPOption> orderByComparator)
 		throws RemoteException {

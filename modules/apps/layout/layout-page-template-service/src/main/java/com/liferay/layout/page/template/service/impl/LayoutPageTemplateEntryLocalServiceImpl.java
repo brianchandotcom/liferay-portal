@@ -410,12 +410,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			(defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId() !=
 				layoutPageTemplateEntryId)) {
 
+			layoutPageTemplateEntry.setModifiedDate(new Date());
 			defaultLayoutPageTemplateEntry.setDefaultTemplate(false);
 
 			layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
 				defaultLayoutPageTemplateEntry);
 		}
 
+		layoutPageTemplateEntry.setModifiedDate(new Date());
 		layoutPageTemplateEntry.setDefaultTemplate(defaultTemplate);
 
 		layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
@@ -433,6 +435,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntryPersistence.findByPrimaryKey(
 				layoutPageTemplateEntryId);
 
+		layoutPageTemplateEntry.setModifiedDate(new Date());
 		layoutPageTemplateEntry.setPreviewFileEntryId(previewFileEntryId);
 
 		return layoutPageTemplateEntryLocalService.
@@ -450,6 +453,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntryPersistence.findByPrimaryKey(
 				layoutPageTemplateEntryId);
 
+		layoutPageTemplateEntry.setModifiedDate(new Date());
 		layoutPageTemplateEntry.setStatus(status);
 		layoutPageTemplateEntry.setStatusByUserId(userId);
 		layoutPageTemplateEntry.setStatusByUserName(user.getScreenName());
@@ -470,6 +474,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntryPersistence.findByPrimaryKey(
 				layoutPageTemplateEntryId);
 
+		layoutPageTemplateEntry.setModifiedDate(new Date());
 		layoutPageTemplateEntry.setClassNameId(classNameId);
 		layoutPageTemplateEntry.setClassTypeId(classTypeId);
 
@@ -499,6 +504,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		validate(layoutPageTemplateEntry.getGroupId(), name);
 
+		layoutPageTemplateEntry.setModifiedDate(new Date());
 		layoutPageTemplateEntry.setName(name);
 
 		return layoutPageTemplateEntryLocalService.

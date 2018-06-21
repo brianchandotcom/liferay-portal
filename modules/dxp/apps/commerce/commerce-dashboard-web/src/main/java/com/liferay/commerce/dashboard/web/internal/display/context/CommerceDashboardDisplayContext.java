@@ -67,7 +67,7 @@ public class CommerceDashboardDisplayContext {
 			commerceDashboardRequestHelper.getTimeZone(),
 			commerceDashboardRequestHelper.getLocale());
 
-		calendar.add(Calendar.MONTH, 6);
+		calendar.add(Calendar.MONTH, 3);
 
 		_endDateDay = CommerceDashboardUtil.getSessionValue(
 			renderRequest, "endDateDay", calendar.get(Calendar.DATE));
@@ -76,7 +76,7 @@ public class CommerceDashboardDisplayContext {
 		_endDateYear = CommerceDashboardUtil.getSessionValue(
 			renderRequest, "endDateYear", calendar.get(Calendar.YEAR));
 
-		calendar.add(Calendar.YEAR, -1);
+		calendar.add(Calendar.MONTH, -6);
 
 		_startDateDay = CommerceDashboardUtil.getSessionValue(
 			renderRequest, "startDateDay", calendar.get(Calendar.DATE));

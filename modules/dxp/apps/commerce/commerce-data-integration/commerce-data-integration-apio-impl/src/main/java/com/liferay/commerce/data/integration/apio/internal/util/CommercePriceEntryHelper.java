@@ -21,11 +21,13 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.math.BigDecimal;
 
 import javax.ws.rs.NotFoundException;
-import java.math.BigDecimal;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zoltán Takács
@@ -84,22 +86,22 @@ public class CommercePriceEntryHelper {
 	}
 
 	public CommercePriceEntry upsertCommercePriceEntry(
-			Long commercePriceEntryId, Long commerceProductInstanceId, Long commercePriceListId,
-			String externalReferenceCode, String skuExternalReferenceCode,
-			Double price, Double promoPrice)
+			Long commercePriceEntryId, Long commerceProductInstanceId,
+			Long commercePriceListId, String externalReferenceCode,
+			String skuExternalReferenceCode, Double price, Double promoPrice)
 		throws PortalException {
 
 		CommercePriceList commercePriceList =
-			_Commerce_priceListHelper.getCommercePriceList(commercePriceListId);
+			_commercePriceListHelper.getCommercePriceList(commercePriceListId);
 
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			commercePriceList.getGroupId());
 
 		return _commercePriceEntryService.upsertCommercePriceEntry(
-			commercePriceEntryId, commerceProductInstanceId, commercePriceListId,
-			externalReferenceCode, BigDecimal.valueOf(price),
-			BigDecimal.valueOf(promoPrice), skuExternalReferenceCode,
-			serviceContext);
+			commercePriceEntryId, commerceProductInstanceId,
+			commercePriceListId, externalReferenceCode,
+			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
+			skuExternalReferenceCode, serviceContext);
 	}
 
 	private static CPInstance _getCPInstance(
@@ -124,7 +126,7 @@ public class CommercePriceEntryHelper {
 	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
-	private CommercePriceListHelper _Commerce_priceListHelper;
+	private CommercePriceListHelper _commercePriceListHelper;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

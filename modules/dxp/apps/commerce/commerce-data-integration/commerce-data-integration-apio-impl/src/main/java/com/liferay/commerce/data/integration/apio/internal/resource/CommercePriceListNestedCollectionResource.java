@@ -58,8 +58,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class CommercePriceListNestedCollectionResource
 	implements
-		NestedCollectionResource<CommercePriceList, Long,
-                CommercePriceListIdentifier, Long, WebSiteIdentifier> {
+		NestedCollectionResource<CommercePriceList,
+			Long, CommercePriceListIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CommercePriceList, Long, Long>
@@ -152,7 +152,8 @@ public class CommercePriceListNestedCollectionResource
 	}
 
 	private CommercePriceList _updateCommercePriceList(
-			Long commercePriceListId, CommercePriceListUpdaterForm commercePriceListUpdaterForm)
+			Long commercePriceListId,
+			CommercePriceListUpdaterForm commercePriceListUpdaterForm)
 		throws NotFoundException, PortalException {
 
 		try {
@@ -187,7 +188,8 @@ public class CommercePriceListNestedCollectionResource
 	}
 
 	private CommercePriceList _upsertCommercePriceList(
-			Long groupId, CommercePriceListUpserterForm commercePriceListUpserterForm)
+			Long groupId,
+			CommercePriceListUpserterForm commercePriceListUpserterForm)
 		throws PortalException {
 
 		try {
@@ -220,14 +222,14 @@ public class CommercePriceListNestedCollectionResource
 		CommercePriceListNestedCollectionResource.class);
 
 	@Reference
+	private CommercePriceListHelper _commercePriceListHelper;
+
+	@Reference
 	private CommercePriceListService _commercePriceListService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"
 	)
 	private HasPermission<Long> _hasPermission;
-
-	@Reference
-	private CommercePriceListHelper _commercePriceListHelper;
 
 }

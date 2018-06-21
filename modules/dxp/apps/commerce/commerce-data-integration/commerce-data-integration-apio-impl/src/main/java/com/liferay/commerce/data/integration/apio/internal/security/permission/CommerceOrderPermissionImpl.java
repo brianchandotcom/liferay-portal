@@ -26,6 +26,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,7 +46,7 @@ public class CommerceOrderPermissionImpl implements HasPermission<Long> {
 			return (credentials, groupId) ->
 				_portletResourcePermission.contains(
 					(PermissionChecker)credentials.get(), (Long)groupId,
-						CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 		}
 
 		return (credentials, s) -> false;
@@ -70,22 +71,21 @@ public class CommerceOrderPermissionImpl implements HasPermission<Long> {
 
 		return (credentials, commerceOrderId) -> {
 			CommerceOrder commerceOrder =
-				_commerceOrderService.fetchCommerceOrder(
-				commerceOrderId);
+				_commerceOrderService.fetchCommerceOrder(commerceOrderId);
 
 			return _portletResourcePermission.contains(
 				(PermissionChecker)credentials.get(),
-					commerceOrder.getGroupId(),
-					CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+				commerceOrder.getGroupId(),
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 		};
 	}
+
+	@Reference
+	private CommerceOrderService _commerceOrderService;
 
 	@Reference(
 		target = "(resource.name=" + CommerceConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private CommerceOrderService _commerceOrderService;
 
 }

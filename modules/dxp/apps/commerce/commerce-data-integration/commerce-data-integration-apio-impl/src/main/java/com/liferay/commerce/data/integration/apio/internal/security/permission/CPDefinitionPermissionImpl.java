@@ -27,6 +27,7 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -56,27 +57,27 @@ public class CPDefinitionPermissionImpl implements HasPermission<Long> {
 	public Boolean forDeleting(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, ActionKeys.DELETE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId, ActionKeys.DELETE);
 	}
 
 	@Override
 	public Boolean forUpdating(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, ActionKeys.UPDATE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId, ActionKeys.UPDATE);
 	}
 
 	private ThrowableTriFunction<Credentials, Long, String, Boolean>
 		_forItemRoutesOperations() {
 
 		return (credentials, cpDefinitionId, actionId) -> {
-			CPDefinition cpDefinition =
-				_cpDefinitionService.fetchCPDefinition(
-					cpDefinitionId);
+			CPDefinition cpDefinition = _cpDefinitionService.fetchCPDefinition(
+				cpDefinitionId);
 
 			return _portletResourcePermission.contains(
-				(PermissionChecker)credentials.get(),
-				cpDefinition.getGroupId(),
+				(PermissionChecker)credentials.get(), cpDefinition.getGroupId(),
 				actionId);
 		};
 	}
@@ -84,9 +85,7 @@ public class CPDefinitionPermissionImpl implements HasPermission<Long> {
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
-	@Reference(
-		target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")"
-	)
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 }

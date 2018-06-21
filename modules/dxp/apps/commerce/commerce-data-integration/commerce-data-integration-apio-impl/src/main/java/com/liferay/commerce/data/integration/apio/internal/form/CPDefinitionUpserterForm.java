@@ -86,7 +86,8 @@ public class CPDefinitionUpserterForm {
 	}
 
 	public Map<Locale, String> getShortDescriptionMap() {
-		return Collections.singletonMap(LocaleUtil.getDefault(), _shortDescritpion);
+		return Collections.singletonMap(
+			LocaleUtil.getDefault(), _shortDescritpion);
 	}
 
 	public Map<Locale, String> getTitleMap() {

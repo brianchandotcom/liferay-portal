@@ -35,12 +35,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import javax.ws.rs.NotFoundException;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.ws.rs.NotFoundException;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the information necessary to expose <a
@@ -53,7 +55,7 @@ import java.util.List;
 public class CPDefinitionNestedCollectionResource
 	implements
 		NestedCollectionResource<CPDefinition, Long,
-                CPDefinitionIdentifier, Long, WebSiteIdentifier> {
+			CPDefinitionIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CPDefinition, Long, Long> collectionRoutes(
@@ -97,38 +99,27 @@ public class CPDefinitionNestedCollectionResource
 			"webSite", "commerceProductDefinitions", WebSiteIdentifier.class,
 			CPDefinition::getGroupId
 		).addDate(
-			"dateCreated",
-			CPDefinition::getCreateDate
+			"dateCreated", CPDefinition::getCreateDate
 		).addDate(
-			"dateModified",
-			CPDefinition::getModifiedDate
+			"dateModified", CPDefinition::getModifiedDate
 		).addLinkedModel(
-			"author", PersonIdentifier.class,
-			CPDefinition::getUserId
+			"author", PersonIdentifier.class, CPDefinition::getUserId
 		).addString(
-			"description",
-			CPDefinition::getDescription
+			"description", CPDefinition::getDescription
 		).addString(
-			"productType",
-			CPDefinition::getProductTypeName
+			"productType", CPDefinition::getProductTypeName
 		).addString(
 			"name", CPDefinition::getName
 		).addString(
-			"externalReferenceCode",
-			CPDefinition::getExternalReferenceCode
+			"externalReferenceCode", CPDefinition::getExternalReferenceCode
 		).addStringList(
-			"skus",
-			this::_getSKUs
+			"skus", this::_getSKUs
 		).build();
 	}
 
-	private List<String> _getSKUs(CPDefinition cpDefinition) {
-		return Arrays.asList(_cpInstanceLocalService.getSKUs(
-			cpDefinition.getCPDefinitionId()));
-	}
-
 	private CPDefinition _addCPDefinition(
-		Long webSiteId, CPDefinitionUpserterForm cpDefinitionUpserterForm) throws PortalException {
+			Long webSiteId, CPDefinitionUpserterForm cpDefinitionUpserterForm)
+		throws PortalException {
 
 		try {
 			return _commerceProductDefinitionHelper.upsertCPDefinition(
@@ -149,21 +140,31 @@ public class CPDefinitionNestedCollectionResource
 	}
 
 	private PageItems<CPDefinition> _getPageItems(
-		Pagination pagination, Long webSiteId) throws PortalException {
+			Pagination pagination, Long webSiteId)
+		throws PortalException {
 
-		List<CPDefinition> cpDefinitions = _cpDefinitionService.getCPDefinitions(webSiteId, null, null, WorkflowConstants.STATUS_APPROVED,
-				pagination.getStartPosition(), pagination.getEndPosition(), null);
+		List<CPDefinition> cpDefinitions =
+			_cpDefinitionService.getCPDefinitions(
+				webSiteId, null, null, WorkflowConstants.STATUS_APPROVED,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				null);
 
-		int total = _cpDefinitionService.getCPDefinitionsCount(webSiteId, null, null, WorkflowConstants.STATUS_APPROVED);
+		int total = _cpDefinitionService.getCPDefinitionsCount(
+			webSiteId, null, null, WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(cpDefinitions, total);
 	}
 
-	@Reference
-	private CPDefinitionService _cpDefinitionService;
+	private List<String> _getSKUs(CPDefinition cpDefinition) {
+		return Arrays.asList(
+			_cpInstanceLocalService.getSKUs(cpDefinition.getCPDefinitionId()));
+	}
 
 	@Reference
 	private CommerceProductDefinitionHelper _commerceProductDefinitionHelper;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

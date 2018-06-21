@@ -35,10 +35,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zoltán Takács
@@ -47,11 +48,13 @@ import java.util.List;
 public class CPDefinitionOptionRelNestedCollectionResource
 	implements
 		NestedCollectionResource<CPDefinitionOptionRel, Long,
-				CPDefinitionOptionRelIdentifier, Long, CPDefinitionIdentifier> {
+			CPDefinitionOptionRelIdentifier, Long, CPDefinitionIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<CPDefinitionOptionRel, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<CPDefinitionOptionRel, Long, Long> builder) {
+	public NestedCollectionRoutes<CPDefinitionOptionRel, Long, Long>
+		collectionRoutes(NestedCollectionRoutes.Builder
+			<CPDefinitionOptionRel, Long, Long>
+			builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -90,14 +93,13 @@ public class CPDefinitionOptionRelNestedCollectionResource
 		).identifier(
 			CPDefinitionOptionRel::getCPDefinitionOptionRelId
 		).addBidirectionalModel(
-			"commerceProductDefinition", "commerceProductDefinitionOptions", CPDefinitionIdentifier.class,
+			"commerceProductDefinition", "commerceProductDefinitionOptions",
+			CPDefinitionIdentifier.class,
 			CPDefinitionOptionRel::getCPDefinitionId
 		).addDate(
-			"dateCreated",
-			CPDefinitionOptionRel::getCreateDate
+			"dateCreated", CPDefinitionOptionRel::getCreateDate
 		).addDate(
-			"dateModified",
-			CPDefinitionOptionRel::getModifiedDate
+			"dateModified", CPDefinitionOptionRel::getModifiedDate
 		).addLocalizedStringByLocale(
 			"name", CPDefinitionOptionRel::getName
 		).addLocalizedStringByLocale(
@@ -106,7 +108,9 @@ public class CPDefinitionOptionRelNestedCollectionResource
 	}
 
 	private CPDefinitionOptionRel _addCPDefinitionOptionRel(
-		Long cpDefinitionId, CPDefinitionOptionRelCreatorForm cpDefinitionOptionRelCreatorForm) throws PortalException {
+			Long cpDefinitionId,
+			CPDefinitionOptionRelCreatorForm cpDefinitionOptionRelCreatorForm)
+		throws PortalException {
 
 		User user = _userLocalService.getUserById(
 			PrincipalThreadLocal.getUserId());
@@ -123,17 +127,23 @@ public class CPDefinitionOptionRelNestedCollectionResource
 		serviceContext.setScopeGroupId(cpDefinition.getGroupId());
 
 		return _cpDefinitionOptionRelService.addCPDefinitionOptionRel(
-			cpDefinitionId, cpDefinitionOptionRelCreatorForm.getCommerceProductOptionId(),
+			cpDefinitionId,
+			cpDefinitionOptionRelCreatorForm.getCommerceProductOptionId(),
 			serviceContext);
 	}
 
 	private PageItems<CPDefinitionOptionRel> _getPageItems(
-		Pagination pagination, Long cpDefinitionId) throws PortalException {
+			Pagination pagination, Long cpDefinitionId)
+		throws PortalException {
 
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels = _cpDefinitionOptionRelService.getCPDefinitionOptionRels(cpDefinitionId,
-				pagination.getStartPosition(), pagination.getEndPosition());
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRels(
+				cpDefinitionId, pagination.getStartPosition(),
+				pagination.getEndPosition());
 
-		int total = _cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(cpDefinitionId);
+		int total =
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRelsCount(
+				cpDefinitionId);
 
 		return new PageItems<>(cpDefinitionOptionRels, total);
 	}
@@ -144,13 +154,12 @@ public class CPDefinitionOptionRelNestedCollectionResource
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
 
-	@Reference
-	private UserLocalService _userLocalService;
-
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionRel)"
 	)
 	private HasPermission<Long> _hasPermission;
 
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

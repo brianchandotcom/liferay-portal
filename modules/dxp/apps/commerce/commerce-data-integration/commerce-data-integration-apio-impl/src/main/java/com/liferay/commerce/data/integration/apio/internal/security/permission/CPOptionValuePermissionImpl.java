@@ -27,6 +27,7 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,7 +47,7 @@ public class CPOptionValuePermissionImpl implements HasPermission<Long> {
 			return (credentials, groupId) ->
 				_portletResourcePermission.contains(
 					(PermissionChecker)credentials.get(), (Long)groupId,
-						CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_VALUE);
+					CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION_VALUE);
 		}
 
 		return (credentials, s) -> false;
@@ -56,14 +57,17 @@ public class CPOptionValuePermissionImpl implements HasPermission<Long> {
 	public Boolean forDeleting(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, ActionKeys.DELETE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId, ActionKeys.DELETE);
 	}
 
 	@Override
 	public Boolean forUpdating(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, CPActionKeys.UPDATE_COMMERCE_PRODUCT_OPTION_VALUE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId,
+			CPActionKeys.UPDATE_COMMERCE_PRODUCT_OPTION_VALUE);
 	}
 
 	private ThrowableTriFunction<Credentials, Long, String, Boolean>
@@ -71,22 +75,18 @@ public class CPOptionValuePermissionImpl implements HasPermission<Long> {
 
 		return (credentials, cpOptionValueId, actionId) -> {
 			CPOptionValue cpOptionValue =
-				_cpOptionValueService.fetchCPOptionValue(
-					cpOptionValueId);
+				_cpOptionValueService.fetchCPOptionValue(cpOptionValueId);
 
 			return _portletResourcePermission.contains(
 				(PermissionChecker)credentials.get(),
-				cpOptionValue.getGroupId(),
-				actionId);
+				cpOptionValue.getGroupId(), actionId);
 		};
 	}
 
 	@Reference
 	private CPOptionValueService _cpOptionValueService;
 
-	@Reference(
-		target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")"
-	)
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 }

@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,7 +36,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "model.class.name=com.liferay.commerce.product.model.CPDefinitionOptionRel"
 )
-public class CPDefinitionOptionRelPermissionImpl implements HasPermission<Long> {
+public class CPDefinitionOptionRelPermissionImpl
+	implements HasPermission<Long> {
 
 	@Override
 	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(
@@ -55,14 +57,18 @@ public class CPDefinitionOptionRelPermissionImpl implements HasPermission<Long> 
 	public Boolean forDeleting(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId,
+			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
 	}
 
 	@Override
 	public Boolean forUpdating(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId,
+			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 	}
 
 	private ThrowableTriFunction<Credentials, Long, String, Boolean>
@@ -75,17 +81,14 @@ public class CPDefinitionOptionRelPermissionImpl implements HasPermission<Long> 
 
 			return _portletResourcePermission.contains(
 				(PermissionChecker)credentials.get(),
-				cpDefinitionOptionRel.getGroupId(),
-				actionId);
+				cpDefinitionOptionRel.getGroupId(), actionId);
 		};
 	}
 
 	@Reference
 	private CPDefinitionOptionRelService _cpDefinitionOptionRelService;
 
-	@Reference(
-		target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")"
-	)
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 }

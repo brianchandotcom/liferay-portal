@@ -92,7 +92,8 @@ public class CommercePaymentMethodNestedCollectionResource
 	}
 
 	private CommercePaymentMethod _getCommercePaymentMethod(
-		Long commercePaymentMethodId) throws PortalException {
+			Long commercePaymentMethodId)
+		throws PortalException {
 
 		return _commercePaymentMethodService.getCommercePaymentMethod(
 			commercePaymentMethodId);

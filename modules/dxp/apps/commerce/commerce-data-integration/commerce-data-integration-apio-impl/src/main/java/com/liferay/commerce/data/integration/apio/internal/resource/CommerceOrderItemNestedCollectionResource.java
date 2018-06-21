@@ -20,9 +20,9 @@ import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.NestedCollectionResource;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
+import com.liferay.commerce.data.integration.apio.identifiers.CPInstanceIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.CommerceOrderIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.CommerceOrderItemIdentifier;
-import com.liferay.commerce.data.integration.apio.identifiers.CPInstanceIdentifier;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
@@ -39,8 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class CommerceOrderItemNestedCollectionResource
 	implements
-		NestedCollectionResource<CommerceOrderItem, Long, CommerceOrderItemIdentifier,
-			Long, CommerceOrderIdentifier> {
+		NestedCollectionResource<CommerceOrderItem, Long,
+			CommerceOrderItemIdentifier, Long, CommerceOrderIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CommerceOrderItem, Long, Long>
@@ -76,8 +76,8 @@ public class CommerceOrderItemNestedCollectionResource
 		).identifier(
 			CommerceOrderItem::getCommerceOrderItemId
 		).addBidirectionalModel(
-			"commerceOrder", "commerceOrderItems", CommerceOrderIdentifier.class,
-			CommerceOrderItem::getCommerceOrderId
+			"commerceOrder", "commerceOrderItems",
+			CommerceOrderIdentifier.class, CommerceOrderItem::getCommerceOrderId
 		).addLinkedModel(
 			"cpInstance", CPInstanceIdentifier.class,
 			CommerceOrderItem::getCPInstanceId
@@ -100,13 +100,16 @@ public class CommerceOrderItemNestedCollectionResource
 		).build();
 	}
 
-	private CommerceOrderItem _getCommerceOrderItem(Long commerceOrderItemId) throws PortalException {
+	private CommerceOrderItem _getCommerceOrderItem(Long commerceOrderItemId)
+		throws PortalException {
+
 		return _commerceOrderItemService.getCommerceOrderItem(
 			commerceOrderItemId);
 	}
 
 	private PageItems<CommerceOrderItem> _getPageItems(
-		Pagination pagination, Long commerceOrderId) throws PortalException {
+			Pagination pagination, Long commerceOrderId)
+		throws PortalException {
 
 		List<CommerceOrderItem> commerceOrderItems =
 			_commerceOrderItemService.getCommerceOrderItems(

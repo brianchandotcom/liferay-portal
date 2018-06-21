@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,27 +56,29 @@ public class CPInstancePermissionImpl implements HasPermission<Long> {
 	public Boolean forDeleting(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId,
+			CPActionKeys.DELETE_COMMERCE_PRODUCT_INSTANCE);
 	}
 
 	@Override
 	public Boolean forUpdating(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId,
+			CPActionKeys.UPDATE_COMMERCE_PRODUCT_INSTANCE);
 	}
 
 	private ThrowableTriFunction<Credentials, Long, String, Boolean>
 		_forItemRoutesOperations() {
 
 		return (credentials, cpInstanceId, actionId) -> {
-			CPInstance cpInstance =
-				_cpInstanceService.fetchCPInstance(
-					cpInstanceId);
+			CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
+				cpInstanceId);
 
 			return _portletResourcePermission.contains(
-				(PermissionChecker)credentials.get(),
-					cpInstance.getGroupId(),
+				(PermissionChecker)credentials.get(), cpInstance.getGroupId(),
 				actionId);
 		};
 	}
@@ -83,9 +86,7 @@ public class CPInstancePermissionImpl implements HasPermission<Long> {
 	@Reference
 	private CPInstanceService _cpInstanceService;
 
-	@Reference(
-		target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")"
-	)
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 }

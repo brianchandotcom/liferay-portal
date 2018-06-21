@@ -50,7 +50,8 @@ public class CommerceTierPriceEntryUpserterForm {
 			CommerceTierPriceEntryUpserterForm::_setExternalReferenceCode
 		).addOptionalString(
 			"priceEntryExternalReferenceCode",
-			CommerceTierPriceEntryUpserterForm::_setPriceEntryExternalReferenceCode
+			CommerceTierPriceEntryUpserterForm::
+				_setPriceEntryExternalReferenceCode
 		).addRequiredLong(
 			"minQuantity", CommerceTierPriceEntryUpserterForm::_setMinQuantity
 		).addRequiredDouble(

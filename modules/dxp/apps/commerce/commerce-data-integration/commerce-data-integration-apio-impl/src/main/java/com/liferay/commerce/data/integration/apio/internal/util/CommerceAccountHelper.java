@@ -114,7 +114,8 @@ public class CommerceAccountHelper {
 			organization.getOrganizationId());
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(CommerceAccountHelper.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceAccountHelper.class);
 
 	@Reference
 	private CommerceOrganizationLocalService _commerceOrganizationLocalService;

@@ -46,7 +46,8 @@ public class CommercePriceEntryUpserterForm {
 			"commercePriceEntryId",
 			CommercePriceEntryUpserterForm::_setCommercePriceEntryId
 		).addOptionalLong(
-			"commerceProductInstanceId", CommercePriceEntryUpserterForm::_setCommerceProductInstanceId
+			"commerceProductInstanceId",
+			CommercePriceEntryUpserterForm::_setCommerceProductInstanceId
 		).addOptionalString(
 			"externalReferenceCode",
 			CommercePriceEntryUpserterForm::_setExternalReferenceCode
@@ -62,6 +63,10 @@ public class CommercePriceEntryUpserterForm {
 
 	public Long getCommercePriceEntryId() {
 		return _commercePriceEntryId;
+	}
+
+	public Long getCommerceProductInstanceId() {
+		return _commerceProductInstanceId;
 	}
 
 	public String getExternalReferenceCode() {
@@ -80,12 +85,12 @@ public class CommercePriceEntryUpserterForm {
 		return _skuExternalReferenceCode;
 	}
 
-	public Long getCommerceProductInstanceId() {
-		return _commerceProductInstanceId;
-	}
-
 	private void _setCommercePriceEntryId(Long commercePriceEntryId) {
 		_commercePriceEntryId = commercePriceEntryId;
+	}
+
+	private void _setCommerceProductInstanceId(Long commerceProductInstanceId) {
+		_commerceProductInstanceId = commerceProductInstanceId;
 	}
 
 	private void _setExternalReferenceCode(String externalReferenceCode) {
@@ -104,15 +109,11 @@ public class CommercePriceEntryUpserterForm {
 		_skuExternalReferenceCode = skuExternalReferenceCode;
 	}
 
-	private void _setCommerceProductInstanceId(Long commerceProductInstanceId) {
-		_commerceProductInstanceId = commerceProductInstanceId;
-	}
-
 	private Long _commercePriceEntryId = 0L;
+	private Long _commerceProductInstanceId = 0L;
 	private String _externalReferenceCode;
 	private Double _price;
 	private Double _promoPrice;
 	private String _skuExternalReferenceCode;
-	private Long _commerceProductInstanceId = 0L;
 
 }

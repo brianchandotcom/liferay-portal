@@ -31,11 +31,13 @@ import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -43,8 +45,8 @@ import java.util.List;
 @Component(immediate = true)
 public class CPOptionValueNestedCollectionResource
 	implements
-		NestedCollectionResource<CPOptionValue, Long, CPOptionValueIdentifier, Long,
-                CPOptionIdentifier> {
+		NestedCollectionResource<CPOptionValue, Long,
+			CPOptionValueIdentifier, Long, CPOptionIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CPOptionValue, Long, Long> collectionRoutes(
@@ -74,8 +76,7 @@ public class CPOptionValueNestedCollectionResource
 			idempotent(_cpOptionValueService::deleteCPOptionValue),
 			_hasPermission::forDeleting
 		).addUpdater(
-			this::_updateCPOptionValue,
-			_hasPermission::forUpdating,
+			this::_updateCPOptionValue, _hasPermission::forUpdating,
 			CPOptionValueCreatorForm::buildForm
 		).build();
 	}
@@ -89,8 +90,8 @@ public class CPOptionValueNestedCollectionResource
 		).identifier(
 			CPOptionValue::getCPOptionValueId
 		).addBidirectionalModel(
-			"commerceProductOption", "commerceProductOptionValues", CPOptionIdentifier.class,
-			CPOptionValue::getCPOptionId
+			"commerceProductOption", "commerceProductOptionValues",
+			CPOptionIdentifier.class, CPOptionValue::getCPOptionId
 		).addLocalizedStringByLocale(
 			"name", CPOptionValue::getName
 		).addString(
@@ -99,7 +100,8 @@ public class CPOptionValueNestedCollectionResource
 	}
 
 	private CPOptionValue _addCPOptionValue(
-		Long cpOptionId, CPOptionValueCreatorForm cpOptionValueCreatorForm) throws PortalException {
+			Long cpOptionId, CPOptionValueCreatorForm cpOptionValueCreatorForm)
+		throws PortalException {
 
 		try {
 			return _cpOptionValueHelper.createCPOptionValue(
@@ -116,28 +118,34 @@ public class CPOptionValueNestedCollectionResource
 	}
 
 	private PageItems<CPOptionValue> _getPageItems(
-		Pagination pagination, Long cpOptionId) throws PortalException {
+			Pagination pagination, Long cpOptionId)
+		throws PortalException {
 
-	    List<CPOptionValue> cpOptionValues = _cpOptionValueService.getCPOptionValues(cpOptionId, pagination.getStartPosition(), pagination.getEndPosition());
+		List<CPOptionValue> cpOptionValues =
+			_cpOptionValueService.getCPOptionValues(
+				cpOptionId, pagination.getStartPosition(),
+				pagination.getEndPosition());
 
-	    int total = _cpOptionValueService.getCPOptionValuesCount(cpOptionId);
+		int total = _cpOptionValueService.getCPOptionValuesCount(cpOptionId);
 
-        return new PageItems<>(cpOptionValues, total);
+		return new PageItems<>(cpOptionValues, total);
 	}
 
 	private CPOptionValue _updateCPOptionValue(
-		Long cpOptionValueId, CPOptionValueCreatorForm cpOptionValueCreatorForm) throws PortalException {
+			Long cpOptionValueId,
+			CPOptionValueCreatorForm cpOptionValueCreatorForm)
+		throws PortalException {
 
-        return _cpOptionValueHelper.updateCPOptionValue(
-            cpOptionValueId, cpOptionValueCreatorForm.getNameMap(),
-            cpOptionValueCreatorForm.getKey());
+		return _cpOptionValueHelper.updateCPOptionValue(
+			cpOptionValueId, cpOptionValueCreatorForm.getNameMap(),
+			cpOptionValueCreatorForm.getKey());
 	}
 
 	@Reference
-	private CPOptionValueService _cpOptionValueService;
+	private CPOptionValueHelper _cpOptionValueHelper;
 
 	@Reference
-	private CPOptionValueHelper _cpOptionValueHelper;
+	private CPOptionValueService _cpOptionValueService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPOptionValue)"

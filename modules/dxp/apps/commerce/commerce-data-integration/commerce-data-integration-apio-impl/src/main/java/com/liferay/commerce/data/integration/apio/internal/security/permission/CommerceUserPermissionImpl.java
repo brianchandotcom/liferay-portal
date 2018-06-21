@@ -25,15 +25,14 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserService;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
  */
-@Component(
-	property = "model.class.name=com.liferay.portal.kernel.model.User"
-)
+@Component(property = "model.class.name=com.liferay.portal.kernel.model.User")
 public class CommerceUserPermissionImpl implements HasPermission<Long> {
 
 	@Override
@@ -54,27 +53,26 @@ public class CommerceUserPermissionImpl implements HasPermission<Long> {
 	public Boolean forDeleting(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, ActionKeys.DELETE_USER);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId, ActionKeys.DELETE_USER);
 	}
 
 	@Override
 	public Boolean forUpdating(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, ActionKeys.UPDATE_USER);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId, ActionKeys.UPDATE_USER);
 	}
 
 	private ThrowableTriFunction<Credentials, Long, String, Boolean>
 		_forItemRoutesOperations() {
 
 		return (credentials, userId, actionId) -> {
-			User user =
-				_userService.getUserById(
-					userId);
+			User user = _userService.getUserById(userId);
 
 			return _portletResourcePermission.contains(
-				(PermissionChecker)credentials.get(),
-				user.getGroupId(),
+				(PermissionChecker)credentials.get(), user.getGroupId(),
 				actionId);
 		};
 	}

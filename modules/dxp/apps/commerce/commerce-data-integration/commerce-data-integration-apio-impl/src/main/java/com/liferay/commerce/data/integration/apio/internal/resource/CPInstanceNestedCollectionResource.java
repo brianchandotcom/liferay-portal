@@ -31,10 +31,11 @@ import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -42,8 +43,8 @@ import java.util.List;
 @Component(immediate = true)
 public class CPInstanceNestedCollectionResource
 	implements
-		NestedCollectionResource<CPInstance, Long, CPInstanceIdentifier,
-			Long, CPDefinitionIdentifier> {
+		NestedCollectionResource<CPInstance,
+			Long, CPInstanceIdentifier, Long, CPDefinitionIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CPInstance, Long, Long> collectionRoutes(
@@ -84,17 +85,14 @@ public class CPInstanceNestedCollectionResource
 		).identifier(
 			CPInstance::getCPInstanceId
 		).addBidirectionalModel(
-			"commerceProductDefinition", "commerceProductInstances", CPDefinitionIdentifier.class,
-			CPInstance::getCPDefinitionId
+			"commerceProductDefinition", "commerceProductInstances",
+			CPDefinitionIdentifier.class, CPInstance::getCPDefinitionId
 		).addDate(
-			"dateCreated",
-			CPInstance::getCreateDate
+			"dateCreated", CPInstance::getCreateDate
 		).addDate(
-			"dateModified",
-			CPInstance::getModifiedDate
+			"dateModified", CPInstance::getModifiedDate
 		).addString(
-			"externalReferenceCode",
-			CPInstance::getExternalReferenceCode
+			"externalReferenceCode", CPInstance::getExternalReferenceCode
 		).addString(
 			"sku", CPInstance::getSku
 		).build();
@@ -104,32 +102,44 @@ public class CPInstanceNestedCollectionResource
 			Long cpDefinitionId, CPInstanceUpserterForm cpInstanceUpserterForm)
 		throws PortalException {
 
-		return _CPInstanceHelper.upsertCPInstance(
-			cpDefinitionId, cpInstanceUpserterForm.getSku(), cpInstanceUpserterForm.getGtin(),
-			cpInstanceUpserterForm.getManufacturerPartNumber(), cpInstanceUpserterForm.getPurchasable(),
-			cpInstanceUpserterForm.getWidth(), cpInstanceUpserterForm.getHeight(), cpInstanceUpserterForm.getDepth(),
-			cpInstanceUpserterForm.getWeight(), cpInstanceUpserterForm.getCost(), cpInstanceUpserterForm.getPrice(),
-			cpInstanceUpserterForm.getPromoPrice(), cpInstanceUpserterForm.getPublished(),
-			cpInstanceUpserterForm.getDisplayDate(), cpInstanceUpserterForm.getExpirationDate(),
-			cpInstanceUpserterForm.getNeverExpire(), cpInstanceUpserterForm.getExternalReferenceCode());
+		return _cpInstanceHelper.upsertCPInstance(
+			cpDefinitionId, cpInstanceUpserterForm.getSku(),
+			cpInstanceUpserterForm.getGtin(),
+			cpInstanceUpserterForm.getManufacturerPartNumber(),
+			cpInstanceUpserterForm.getPurchasable(),
+			cpInstanceUpserterForm.getWidth(),
+			cpInstanceUpserterForm.getHeight(),
+			cpInstanceUpserterForm.getDepth(),
+			cpInstanceUpserterForm.getWeight(),
+			cpInstanceUpserterForm.getCost(), cpInstanceUpserterForm.getPrice(),
+			cpInstanceUpserterForm.getPromoPrice(),
+			cpInstanceUpserterForm.getPublished(),
+			cpInstanceUpserterForm.getDisplayDate(),
+			cpInstanceUpserterForm.getExpirationDate(),
+			cpInstanceUpserterForm.getNeverExpire(),
+			cpInstanceUpserterForm.getExternalReferenceCode());
 	}
 
 	private PageItems<CPInstance> _getPageItems(
-		Pagination pagination, Long cpDefinitionId) throws PortalException {
+			Pagination pagination, Long cpDefinitionId)
+		throws PortalException {
 
-		List<CPInstance> cpInstances = _cpInstanceService.getCPDefinitionInstances(cpDefinitionId,
-			pagination.getStartPosition(), pagination.getEndPosition());
+		List<CPInstance> cpInstances =
+			_cpInstanceService.getCPDefinitionInstances(
+				cpDefinitionId, pagination.getStartPosition(),
+				pagination.getEndPosition());
 
-		int total = _cpInstanceService.getCPDefinitionInstancesCount(cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
+		int total = _cpInstanceService.getCPDefinitionInstancesCount(
+			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
 
 		return new PageItems<>(cpInstances, total);
 	}
 
 	@Reference
-	private CPInstanceService _cpInstanceService;
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
-	private CPInstanceHelper _CPInstanceHelper;
+	private CPInstanceService _cpInstanceService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPInstance)"

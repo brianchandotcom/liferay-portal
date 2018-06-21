@@ -21,10 +21,11 @@ import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -32,8 +33,8 @@ import java.util.List;
 @Component(immediate = true)
 public class CommerceOrderNestedCollectionResource
 	implements
-		NestedCollectionResource<CommerceOrder, Long, CommerceOrderIdentifier, Long,
-                CommerceAccountIdentifier> {
+		NestedCollectionResource<CommerceOrder, Long,
+			CommerceOrderIdentifier, Long, CommerceAccountIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CommerceOrder, Long, Long> collectionRoutes(
@@ -56,8 +57,7 @@ public class CommerceOrderNestedCollectionResource
 		return builder.addGetter(
 			this::_getCommerceOrder
 		).addUpdater(
-			this::_updateCommerceOrder,
-			_hasPermission::forUpdating,
+			this::_updateCommerceOrder, _hasPermission::forUpdating,
 			CommerceOrderUpdaterForm::buildForm
 		).build();
 	}
@@ -71,7 +71,8 @@ public class CommerceOrderNestedCollectionResource
 		).identifier(
 			CommerceOrder::getCommerceOrderId
 		).addBidirectionalModel(
-			"commerceAccount", "commerceOrders", CommerceAccountIdentifier.class,
+			"commerceAccount", "commerceOrders",
+			CommerceAccountIdentifier.class,
 			CommerceOrder::getOrderOrganizationId
 		).addLinkedModel(
 			"commerceAccount", CommerceAccountIdentifier.class,
@@ -108,15 +109,18 @@ public class CommerceOrderNestedCollectionResource
 		).build();
 	}
 
-	private CommerceOrder _getCommerceOrder(Long commerceOrderId) throws PortalException {
+	private CommerceOrder _getCommerceOrder(Long commerceOrderId)
+		throws PortalException {
+
 		return _commerceOrderService.getCommerceOrder(commerceOrderId);
 	}
 
 	private PageItems<CommerceOrder> _getPageItems(
-		Pagination pagination, Long organizationId) throws PortalException {
+			Pagination pagination, Long organizationId)
+		throws PortalException {
 
-		Organization organization = _commerceOrganizationService.getOrganization(
-			organizationId);
+		Organization organization =
+			_commerceOrganizationService.getOrganization(organizationId);
 
 		Group group = organization.getGroup();
 
@@ -132,7 +136,8 @@ public class CommerceOrderNestedCollectionResource
 	}
 
 	private CommerceOrder _updateCommerceOrder(
-			Long commerceOrderId, CommerceOrderUpdaterForm commerceOrderUpdaterForm)
+			Long commerceOrderId,
+			CommerceOrderUpdaterForm commerceOrderUpdaterForm)
 		throws PortalException {
 
 		return _commerceOrderHelper.updateCommerceOrder(
@@ -141,13 +146,13 @@ public class CommerceOrderNestedCollectionResource
 	}
 
 	@Reference
+	private CommerceOrderHelper _commerceOrderHelper;
+
+	@Reference
 	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private CommerceOrganizationService _commerceOrganizationService;
-
-	@Reference
-	private CommerceOrderHelper _commerceOrderHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"

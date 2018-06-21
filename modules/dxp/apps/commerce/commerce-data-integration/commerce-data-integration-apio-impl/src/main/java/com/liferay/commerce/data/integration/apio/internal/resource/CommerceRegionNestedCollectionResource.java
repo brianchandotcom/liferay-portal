@@ -71,7 +71,8 @@ public class CommerceRegionNestedCollectionResource
 		).identifier(
 			CommerceRegion::getCommerceRegionId
 		).addBidirectionalModel(
-			"commerceCountry", "commerceRegions", CommerceCountryIdentifier.class,
+			"commerceCountry", "commerceRegions",
+			CommerceCountryIdentifier.class,
 			CommerceRegion::getCommerceCountryId
 		).addString(
 			"name", CommerceRegion::getName
@@ -80,7 +81,9 @@ public class CommerceRegionNestedCollectionResource
 		).build();
 	}
 
-	private CommerceRegion _getCommerceRegion(Long commerceRegionId) throws PortalException {
+	private CommerceRegion _getCommerceRegion(Long commerceRegionId)
+		throws PortalException {
+
 		return _commerceRegionService.getCommerceRegion(commerceRegionId);
 	}
 

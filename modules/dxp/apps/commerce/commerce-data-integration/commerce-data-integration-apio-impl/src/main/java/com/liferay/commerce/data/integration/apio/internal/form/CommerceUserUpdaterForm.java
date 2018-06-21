@@ -46,18 +46,19 @@ public class CommerceUserUpdaterForm {
 		).addRequiredString(
 			"password", CommerceUserUpdaterForm::setPassword
 		).addOptionalLongList(
-			"commerceAccountIds", CommerceUserUpdaterForm::_setCommerceAccountIds
+			"commerceAccountIds",
+			CommerceUserUpdaterForm::_setCommerceAccountIds
 		).addOptionalLongList(
 			"roleIds", CommerceUserUpdaterForm::_setRoleIds
 		).build();
 	}
 
-	public long[] getCommerceAccountIds() {
-		return ArrayUtil.toLongArray(_commerceAccountIds);
-	}
-
 	public String getAlternateName() {
 		return _alternateName;
+	}
+
+	public long[] getCommerceAccountIds() {
+		return ArrayUtil.toLongArray(_commerceAccountIds);
 	}
 
 	public String getEmail() {
@@ -116,8 +117,8 @@ public class CommerceUserUpdaterForm {
 		_roleIds = roleIds;
 	}
 
-	private List<Long> _commerceAccountIds;
 	private String _alternateName;
+	private List<Long> _commerceAccountIds;
 	private String _email;
 	private String _familyName;
 	private String _givenName;

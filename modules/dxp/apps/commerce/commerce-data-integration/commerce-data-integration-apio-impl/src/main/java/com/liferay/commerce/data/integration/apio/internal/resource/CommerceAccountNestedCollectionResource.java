@@ -41,11 +41,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -83,8 +84,7 @@ public class CommerceAccountNestedCollectionResource
 			idempotent(_commerceOrganizationService::deleteOrganization),
 			_hasPermission::forDeleting
 		).addUpdater(
-			this::_updateAccount, Company.class,
-			_hasPermission::forUpdating,
+			this::_updateAccount, Company.class, _hasPermission::forUpdating,
 			CommerceAccountCreatorForm::buildForm
 		).build();
 	}
@@ -98,7 +98,8 @@ public class CommerceAccountNestedCollectionResource
 		).identifier(
 			Organization::getOrganizationId
 		).addBidirectionalModel(
-			"website", "commerceAccounts", WebSiteIdentifier.class, this::_getSiteId
+			"website", "commerceAccounts", WebSiteIdentifier.class,
+			this::_getSiteId
 		).addLinkedModel(
 			"website", WebSiteIdentifier.class, this::_getSiteId
 		).addNumberList(
@@ -109,7 +110,8 @@ public class CommerceAccountNestedCollectionResource
 	}
 
 	private Organization _addAccount(
-			Long webSiteId, CommerceAccountCreatorForm commerceAccountCreatorForm)
+			Long webSiteId,
+			CommerceAccountCreatorForm commerceAccountCreatorForm)
 		throws Exception {
 
 		Group group = _groupLocalService.getGroup(webSiteId);
@@ -167,7 +169,9 @@ public class CommerceAccountNestedCollectionResource
 	}
 
 	private Organization _updateAccount(
-			Long accountId, CommerceAccountCreatorForm commerceAccountCreatorForm, Company company)
+			Long accountId,
+			CommerceAccountCreatorForm commerceAccountCreatorForm,
+			Company company)
 		throws PortalException {
 
 		return _commerceAccountHelper.updateAccount(
@@ -187,12 +191,12 @@ public class CommerceAccountNestedCollectionResource
 	@Reference
 	private GroupLocalService _groupLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"
+	)
+	private HasPermission<Long> _hasPermission;
+
 	@Reference
 	private UserService _userService;
-
-    @Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"
-    )
-    private HasPermission<Long> _hasPermission;
 
 }

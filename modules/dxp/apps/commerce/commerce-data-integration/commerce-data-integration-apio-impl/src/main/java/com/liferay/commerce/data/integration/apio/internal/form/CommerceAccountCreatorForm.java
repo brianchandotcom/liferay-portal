@@ -40,23 +40,23 @@ public class CommerceAccountCreatorForm {
 		).build();
 	}
 
-	public String getName() {
-		return _name;
-	}
-
 	public List<Long> getCommerceUserIds() {
 		return _commerceUserIds;
 	}
 
-	private void _setName(String name) {
-		_name = name;
+	public String getName() {
+		return _name;
 	}
 
 	private void _setCommerceUserIds(List<Long> commerceUserIds) {
 		_commerceUserIds = commerceUserIds;
 	}
 
-	private String _name;
+	private void _setName(String name) {
+		_name = name;
+	}
+
 	private List<Long> _commerceUserIds;
+	private String _name;
 
 }

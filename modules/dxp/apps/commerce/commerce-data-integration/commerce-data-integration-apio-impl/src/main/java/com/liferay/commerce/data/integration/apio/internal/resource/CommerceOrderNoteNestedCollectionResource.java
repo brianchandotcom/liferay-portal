@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class CommerceOrderNoteNestedCollectionResource
 	implements
-		NestedCollectionResource<CommerceOrderNote, Long, CommerceOrderNoteIdentifier,
-			Long, CommerceOrderIdentifier> {
+		NestedCollectionResource<CommerceOrderNote, Long,
+			CommerceOrderNoteIdentifier, Long, CommerceOrderIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CommerceOrderNote, Long, Long>
@@ -75,8 +75,8 @@ public class CommerceOrderNoteNestedCollectionResource
 		).identifier(
 			CommerceOrderNote::getCommerceOrderNoteId
 		).addBidirectionalModel(
-			"commerceOrder", "commerceOrderNotes", CommerceOrderIdentifier.class,
-			CommerceOrderNote::getCommerceOrderId
+			"commerceOrder", "commerceOrderNotes",
+			CommerceOrderIdentifier.class, CommerceOrderNote::getCommerceOrderId
 		).addString(
 			"content", CommerceOrderNote::getContent
 		).addBoolean(
@@ -90,13 +90,16 @@ public class CommerceOrderNoteNestedCollectionResource
 		).build();
 	}
 
-	private CommerceOrderNote _getCommerceOrderNote(Long commerceOrderNoteId) throws PortalException {
+	private CommerceOrderNote _getCommerceOrderNote(Long commerceOrderNoteId)
+		throws PortalException {
+
 		return _commerceOrderNoteService.getCommerceOrderNote(
 			commerceOrderNoteId);
 	}
 
 	private PageItems<CommerceOrderNote> _getPageItems(
-		Pagination pagination, Long commerceOrderId) throws PortalException {
+			Pagination pagination, Long commerceOrderId)
+		throws PortalException {
 
 		List<CommerceOrderNote> commerceOrderNotes =
 			_commerceOrderNoteService.getCommerceOrderNotes(

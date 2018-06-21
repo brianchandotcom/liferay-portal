@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.OrganizationService;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,7 +39,7 @@ public class CommerceAccountPermissionImpl implements HasPermission<Long> {
 
 	@Override
 	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(
-			Class<? extends Identifier<S>> identifierClass) {
+		Class<? extends Identifier<S>> identifierClass) {
 
 		if (identifierClass.equals(CommerceAccountIdentifier.class)) {
 			return (credentials, groupId) ->
@@ -54,27 +55,27 @@ public class CommerceAccountPermissionImpl implements HasPermission<Long> {
 	public Boolean forDeleting(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, ActionKeys.DELETE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId, ActionKeys.DELETE);
 	}
 
 	@Override
 	public Boolean forUpdating(Credentials credentials, Long entryId)
 		throws Exception {
 
-		return _forItemRoutesOperations().apply(credentials, entryId, ActionKeys.UPDATE);
+		return _forItemRoutesOperations().apply(
+			credentials, entryId, ActionKeys.UPDATE);
 	}
 
 	private ThrowableTriFunction<Credentials, Long, String, Boolean>
-	_forItemRoutesOperations() {
+		_forItemRoutesOperations() {
 
 		return (credentials, organizationId, actionId) -> {
-			Organization organization =
-				_organizationService.fetchOrganization(
-					organizationId);
+			Organization organization = _organizationService.fetchOrganization(
+				organizationId);
 
 			return _portletResourcePermission.contains(
-				(PermissionChecker)credentials.get(),
-				organization.getGroupId(),
+				(PermissionChecker)credentials.get(), organization.getGroupId(),
 				actionId);
 		};
 	}

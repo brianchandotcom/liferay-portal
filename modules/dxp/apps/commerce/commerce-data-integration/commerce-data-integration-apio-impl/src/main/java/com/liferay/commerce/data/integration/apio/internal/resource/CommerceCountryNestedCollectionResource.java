@@ -87,9 +87,10 @@ public class CommerceCountryNestedCollectionResource
 		).build();
 	}
 
-	private CommerceCountry _getCommerceCountry(Long commerceCountryId) throws PortalException {
-		return _commerceCountryService.getCommerceCountry(
-			commerceCountryId);
+	private CommerceCountry _getCommerceCountry(Long commerceCountryId)
+		throws PortalException {
+
+		return _commerceCountryService.getCommerceCountry(commerceCountryId);
 	}
 
 	private String _getName(CommerceCountry commerceCountry, Locale locale) {

@@ -31,11 +31,13 @@ import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 import javax.ws.rs.BadRequestException;
-import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -74,8 +76,7 @@ public class CPOptionNestedCollectionResource
 			idempotent(_cpOptionService::deleteCPOption),
 			_hasPermission::forDeleting
 		).addUpdater(
-			this::_updateCPOption,
-			_hasPermission::forUpdating,
+			this::_updateCPOption, _hasPermission::forUpdating,
 			CPOptionCreatorForm::buildForm
 		).build();
 	}
@@ -94,51 +95,60 @@ public class CPOptionNestedCollectionResource
 		).addLocalizedStringByLocale(
 			"name", CPOption::getName
 		).addString(
-			"fieldType",
-			CPOption::getDDMFormFieldTypeName
+			"fieldType", CPOption::getDDMFormFieldTypeName
 		).addString(
 			"key", CPOption::getKey
 		).build();
 	}
 
-	private CPOption _addCPOption(Long webSiteId, CPOptionCreatorForm cpOptionCreatorForm) throws PortalException {
+	private CPOption _addCPOption(
+			Long webSiteId, CPOptionCreatorForm cpOptionCreatorForm)
+		throws PortalException {
+
 		try {
 			return _cpOptionHelper.createCPOption(
 				webSiteId, cpOptionCreatorForm.getNameMap(),
-				cpOptionCreatorForm.getDescriptionMap(), cpOptionCreatorForm.getFieldType(),
+				cpOptionCreatorForm.getDescriptionMap(),
+				cpOptionCreatorForm.getFieldType(),
 				cpOptionCreatorForm.getKey());
 		}
 		catch (CPOptionKeyException cpoke) {
 			throw new BadRequestException(
 				String.format(
-                    "An option with key '%s' already exists",
+					"An option with key '%s' already exists",
 					cpOptionCreatorForm.getKey()),
 				cpoke);
 		}
 	}
 
 	private PageItems<CPOption> _getPageItems(
-		Pagination pagination, Long webSiteId) throws PortalException {
+			Pagination pagination, Long webSiteId)
+		throws PortalException {
 
-			List<CPOption> cpOptions = _cpOptionService.getCPOptions(webSiteId, pagination.getStartPosition(), pagination.getEndPosition());
+		List<CPOption> cpOptions = _cpOptionService.getCPOptions(
+			webSiteId, pagination.getStartPosition(),
+			pagination.getEndPosition());
 
-			int total = _cpOptionService.getCPOptionsCount(webSiteId);
+		int total = _cpOptionService.getCPOptionsCount(webSiteId);
 
-			return new PageItems<>(cpOptions, total);
+		return new PageItems<>(cpOptions, total);
 	}
 
-	private CPOption _updateCPOption(Long cpOptionId, CPOptionCreatorForm cpOptionCreatorForm) throws PortalException {
-        return _cpOptionHelper.updateCPOption(
-            cpOptionId, cpOptionCreatorForm.getNameMap(),
-            cpOptionCreatorForm.getDescriptionMap(), cpOptionCreatorForm.getFieldType(),
-            cpOptionCreatorForm.getKey());
-	}
+	private CPOption _updateCPOption(
+			Long cpOptionId, CPOptionCreatorForm cpOptionCreatorForm)
+		throws PortalException {
 
-	@Reference
-	private CPOptionService _cpOptionService;
+		return _cpOptionHelper.updateCPOption(
+			cpOptionId, cpOptionCreatorForm.getNameMap(),
+			cpOptionCreatorForm.getDescriptionMap(),
+			cpOptionCreatorForm.getFieldType(), cpOptionCreatorForm.getKey());
+	}
 
 	@Reference
 	private CPOptionHelper _cpOptionHelper;
+
+	@Reference
+	private CPOptionService _cpOptionService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)"

@@ -38,7 +38,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "model.class.name=com.liferay.commerce.price.list.model.CommerceTierPriceEntry"
 )
-public class CommerceTierPriceEntryHasPermissionImpl implements HasPermission<Long> {
+public class CommerceTierPriceEntryHasPermissionImpl
+	implements HasPermission<Long> {
 
 	@Override
 	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(

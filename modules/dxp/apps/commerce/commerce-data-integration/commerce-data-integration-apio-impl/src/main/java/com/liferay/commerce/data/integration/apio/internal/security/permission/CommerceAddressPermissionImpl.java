@@ -26,6 +26,7 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "model.class.name=com.liferay.commerce.model.CommerceAddress"
 )
-public class CommerceAddressPermissionImpl implements HasPermission<Long>  {
+public class CommerceAddressPermissionImpl implements HasPermission<Long> {
 
 	@Override
 	public <S> HasNestedAddingPermissionFunction<S> forAddingIn(
@@ -70,8 +71,7 @@ public class CommerceAddressPermissionImpl implements HasPermission<Long>  {
 
 		return (credentials, commerceAddressId) -> {
 			CommerceAddress commerceAddress =
-				_commerceAddressService.fetchCommerceAddress(
-					commerceAddressId);
+				_commerceAddressService.fetchCommerceAddress(commerceAddressId);
 
 			return _portletResourcePermission.contains(
 				(PermissionChecker)credentials.get(),

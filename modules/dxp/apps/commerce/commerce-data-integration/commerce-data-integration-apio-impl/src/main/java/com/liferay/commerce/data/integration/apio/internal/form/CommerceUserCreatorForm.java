@@ -56,17 +56,11 @@ public class CommerceUserCreatorForm {
 		).addRequiredString(
 			"password2", CommerceUserCreatorForm::_setPassword2
 		).addOptionalLongList(
-			"commerceAccountIds", CommerceUserCreatorForm::_setCommerceAccountIds
+			"commerceAccountIds",
+			CommerceUserCreatorForm::_setCommerceAccountIds
 		).addOptionalLongList(
 			"roleIds", CommerceUserCreatorForm::_setRoleIds
 		).build();
-	}
-
-	public long[] getCommerceAccountIds() {
-		if (_commerceAccountIds == null) {
-			return new long[0];
-		}
-		return ArrayUtil.toLongArray(_commerceAccountIds);
 	}
 
 	public String getAlternateName() {
@@ -83,6 +77,14 @@ public class CommerceUserCreatorForm {
 
 	public int getBirthdayYear() {
 		return _birthdayYear;
+	}
+
+	public long[] getCommerceAccountIds() {
+		if (_commerceAccountIds == null) {
+			return new long[0];
+		}
+
+		return ArrayUtil.toLongArray(_commerceAccountIds);
 	}
 
 	public String getEmail() {
@@ -125,10 +127,6 @@ public class CommerceUserCreatorForm {
 		return _male;
 	}
 
-	private void _setCommerceAccountIds(List<Long> commerceAccountIds) {
-		_commerceAccountIds = commerceAccountIds;
-	}
-
 	private void _setAlternateName(String alternateName) {
 		_alternateName = alternateName;
 	}
@@ -141,6 +139,10 @@ public class CommerceUserCreatorForm {
 		_birthdayMonth = calendar.get(Calendar.MONTH);
 		_birthdayDay = calendar.get(Calendar.DATE);
 		_birthdayYear = calendar.get(Calendar.YEAR);
+	}
+
+	private void _setCommerceAccountIds(List<Long> commerceAccountIds) {
+		_commerceAccountIds = commerceAccountIds;
 	}
 
 	private void _setEmail(String emailAddress) {
@@ -175,11 +177,11 @@ public class CommerceUserCreatorForm {
 		_roleIds = roleIds;
 	}
 
-	private List<Long> _commerceAccountIds;
 	private String _alternateName;
 	private int _birthdayDay;
 	private int _birthdayMonth;
 	private int _birthdayYear;
+	private List<Long> _commerceAccountIds;
 	private String _email;
 	private String _familyName;
 	private String _givenName;

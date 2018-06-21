@@ -25,10 +25,11 @@ import com.liferay.commerce.data.integration.apio.identifiers.CPDefinitionOption
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.portal.kernel.exception.PortalException;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zoltán Takács
@@ -37,11 +38,14 @@ import java.util.List;
 public class CPDefinitionOptionValueRelNestedCollectionResource
 	implements
 		NestedCollectionResource<CPDefinitionOptionValueRel, Long,
-				CPDefinitionOptionValueRelIdentifier, Long, CPDefinitionOptionRelIdentifier> {
+			CPDefinitionOptionValueRelIdentifier, Long,
+			CPDefinitionOptionRelIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<CPDefinitionOptionValueRel, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<CPDefinitionOptionValueRel, Long, Long> builder) {
+	public NestedCollectionRoutes<CPDefinitionOptionValueRel, Long, Long>
+		collectionRoutes(
+			NestedCollectionRoutes.
+				Builder<CPDefinitionOptionValueRel, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -71,32 +75,37 @@ public class CPDefinitionOptionValueRelNestedCollectionResource
 		).identifier(
 			CPDefinitionOptionValueRel::getCPDefinitionOptionValueRelId
 		).addBidirectionalModel(
-			"commerceProductDefinitionOption", "commerceProductDefinitionOptionValues",
+			"commerceProductDefinitionOption",
+			"commerceProductDefinitionOptionValues",
 			CPDefinitionOptionRelIdentifier.class,
 			CPDefinitionOptionValueRel::getCPDefinitionOptionRelId
 		).addDate(
-			"dateCreated",
-			CPDefinitionOptionValueRel::getCreateDate
+			"dateCreated", CPDefinitionOptionValueRel::getCreateDate
 		).addDate(
-			"dateModified",
-			CPDefinitionOptionValueRel::getModifiedDate
+			"dateModified", CPDefinitionOptionValueRel::getModifiedDate
 		).addLocalizedStringByLocale(
 			"name", CPDefinitionOptionValueRel::getName
 		).build();
 	}
 
 	private PageItems<CPDefinitionOptionValueRel> _getPageItems(
-		Pagination pagination, Long cpDefinitionOptionRelId) throws PortalException {
+			Pagination pagination, Long cpDefinitionOptionRelId)
+		throws PortalException {
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = _cpDefinitionOptionValueRelService.
-			getCPDefinitionOptionValueRels(cpDefinitionOptionRelId, pagination.getStartPosition(), pagination.getEndPosition());
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRels(
+				cpDefinitionOptionRelId, pagination.getStartPosition(),
+				pagination.getEndPosition());
 
-		int total = _cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRelsCount(cpDefinitionOptionRelId);
+		int total =
+			_cpDefinitionOptionValueRelService.
+				getCPDefinitionOptionValueRelsCount(cpDefinitionOptionRelId);
 
 		return new PageItems<>(cpDefinitionOptionValueRels, total);
 	}
 
 	@Reference
-	private CPDefinitionOptionValueRelService _cpDefinitionOptionValueRelService;
+	private CPDefinitionOptionValueRelService
+		_cpDefinitionOptionValueRelService;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserService;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,7 +34,9 @@ public class ServiceContextHelper {
 		return getServiceContext(0, new long[0]);
 	}
 
-	public ServiceContext getServiceContext(long groupId) throws PortalException {
+	public ServiceContext getServiceContext(long groupId)
+		throws PortalException {
+
 		return getServiceContext(groupId, new long[0]);
 	}
 
@@ -48,10 +51,10 @@ public class ServiceContextHelper {
 	 */
 	public ServiceContext getServiceContext(
 			long groupId, long[] assetCategoryIds)
-			throws PortalException {
+		throws PortalException {
 
 		ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+			ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext == null) {
 			serviceContext = new ServiceContext();

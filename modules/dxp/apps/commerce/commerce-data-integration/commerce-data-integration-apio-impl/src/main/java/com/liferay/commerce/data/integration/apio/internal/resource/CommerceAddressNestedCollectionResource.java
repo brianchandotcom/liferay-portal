@@ -34,10 +34,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.ServiceContext;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -45,8 +46,8 @@ import java.util.List;
 @Component(immediate = true)
 public class CommerceAddressNestedCollectionResource
 	implements
-		NestedCollectionResource<CommerceAddress, Long, CommerceAddressIdentifier, Long,
-                CommerceAccountIdentifier> {
+		NestedCollectionResource<CommerceAddress, Long,
+			CommerceAddressIdentifier, Long, CommerceAccountIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CommerceAddress, Long, Long> collectionRoutes(
@@ -76,8 +77,7 @@ public class CommerceAddressNestedCollectionResource
 			_commerceAddressService::deleteCommerceAddress,
 			_hasPermission::forDeleting
 		).addUpdater(
-			this::_updateCommerceAddress,
-			_hasPermission::forUpdating,
+			this::_updateCommerceAddress, _hasPermission::forUpdating,
 			CommerceAddressCreatorForm::buildForm
 		).build();
 	}
@@ -91,8 +91,8 @@ public class CommerceAddressNestedCollectionResource
 		).identifier(
 			CommerceAddress::getCommerceAddressId
 		).addBidirectionalModel(
-			"commerceAccount", "commerceAddresses", CommerceAccountIdentifier.class,
-			CommerceAddress::getClassPK
+			"commerceAccount", "commerceAddresses",
+			CommerceAccountIdentifier.class, CommerceAddress::getClassPK
 		).addString(
 			"name", CommerceAddress::getName
 		).addString(
@@ -127,11 +127,12 @@ public class CommerceAddressNestedCollectionResource
 	}
 
 	private CommerceAddress _addCommerceAddress(
-			Long organizationId, CommerceAddressCreatorForm commerceAddressCreatorForm)
+			Long organizationId,
+			CommerceAddressCreatorForm commerceAddressCreatorForm)
 		throws PortalException {
 
-		Organization organization = _commerceOrganizationService.getOrganization(
-			organizationId);
+		Organization organization =
+			_commerceOrganizationService.getOrganization(organizationId);
 
 		Group group = organization.getGroup();
 
@@ -139,27 +140,33 @@ public class CommerceAddressNestedCollectionResource
 			group.getGroupId());
 
 		return _commerceAddressService.addCommerceAddress(
-			group.getClassName(), group.getClassPK(), commerceAddressCreatorForm.getName(),
-			commerceAddressCreatorForm.getDescription(), commerceAddressCreatorForm.getStreet1(),
-			commerceAddressCreatorForm.getStreet2(), commerceAddressCreatorForm.getStreet3(),
-			commerceAddressCreatorForm.getCity(), commerceAddressCreatorForm.getZip(),
-			commerceAddressCreatorForm.getRegionId(), commerceAddressCreatorForm.getCountryId(),
-			commerceAddressCreatorForm.getPhoneNumber(), commerceAddressCreatorForm.getDefaultBilling(),
+			group.getClassName(), group.getClassPK(),
+			commerceAddressCreatorForm.getName(),
+			commerceAddressCreatorForm.getDescription(),
+			commerceAddressCreatorForm.getStreet1(),
+			commerceAddressCreatorForm.getStreet2(),
+			commerceAddressCreatorForm.getStreet3(),
+			commerceAddressCreatorForm.getCity(),
+			commerceAddressCreatorForm.getZip(),
+			commerceAddressCreatorForm.getRegionId(),
+			commerceAddressCreatorForm.getCountryId(),
+			commerceAddressCreatorForm.getPhoneNumber(),
+			commerceAddressCreatorForm.getDefaultBilling(),
 			commerceAddressCreatorForm.getDefaultShipping(), serviceContext);
 	}
 
 	private PageItems<CommerceAddress> _getPageItems(
-		Pagination pagination, Long organizationId) throws PortalException {
+			Pagination pagination, Long organizationId)
+		throws PortalException {
 
-		Organization organization = _commerceOrganizationService.getOrganization(
-			organizationId);
+		Organization organization =
+			_commerceOrganizationService.getOrganization(organizationId);
 
 		Group group = organization.getGroup();
 
 		List<CommerceAddress> commerceAddresses =
 			_commerceAddressService.getCommerceAddresses(
-				group.getGroupId(), group.getClassName(),
-				group.getClassPK());
+				group.getGroupId(), group.getClassName(), group.getClassPK());
 
 		int total = _commerceAddressService.getCommerceAddressesCount(
 			group.getGroupId(), group.getClassName(), group.getClassPK());
@@ -168,17 +175,24 @@ public class CommerceAddressNestedCollectionResource
 	}
 
 	private CommerceAddress _updateCommerceAddress(
-			Long commerceAddressId, CommerceAddressCreatorForm commerceAddressCreatorForm)
+			Long commerceAddressId,
+			CommerceAddressCreatorForm commerceAddressCreatorForm)
 		throws PortalException {
 
 		return _commerceAddressService.updateCommerceAddress(
 			commerceAddressId, commerceAddressCreatorForm.getName(),
-			commerceAddressCreatorForm.getDescription(), commerceAddressCreatorForm.getStreet1(),
-			commerceAddressCreatorForm.getStreet2(), commerceAddressCreatorForm.getStreet3(),
-			commerceAddressCreatorForm.getCity(), commerceAddressCreatorForm.getZip(),
-			commerceAddressCreatorForm.getRegionId(), commerceAddressCreatorForm.getCountryId(),
-			commerceAddressCreatorForm.getPhoneNumber(), commerceAddressCreatorForm.getDefaultBilling(),
-			commerceAddressCreatorForm.getDefaultShipping(), new ServiceContext());
+			commerceAddressCreatorForm.getDescription(),
+			commerceAddressCreatorForm.getStreet1(),
+			commerceAddressCreatorForm.getStreet2(),
+			commerceAddressCreatorForm.getStreet3(),
+			commerceAddressCreatorForm.getCity(),
+			commerceAddressCreatorForm.getZip(),
+			commerceAddressCreatorForm.getRegionId(),
+			commerceAddressCreatorForm.getCountryId(),
+			commerceAddressCreatorForm.getPhoneNumber(),
+			commerceAddressCreatorForm.getDefaultBilling(),
+			commerceAddressCreatorForm.getDefaultShipping(),
+			new ServiceContext());
 	}
 
 	@Reference
@@ -187,12 +201,12 @@ public class CommerceAddressNestedCollectionResource
 	@Reference
 	private CommerceOrganizationService _commerceOrganizationService;
 
-	@Reference
-	private ServiceContextHelper _serviceContextHelper;
-
 	@Reference(
-			target = "(model.class.name=com.liferay.commerce.model.CommerceAddress)"
+		target = "(model.class.name=com.liferay.commerce.model.CommerceAddress)"
 	)
 	private HasPermission<Long> _hasPermission;
+
+	@Reference
+	private ServiceContextHelper _serviceContextHelper;
 
 }

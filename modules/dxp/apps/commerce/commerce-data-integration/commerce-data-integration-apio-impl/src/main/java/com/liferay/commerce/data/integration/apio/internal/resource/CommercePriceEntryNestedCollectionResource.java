@@ -56,8 +56,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class CommercePriceEntryNestedCollectionResource
 	implements
-		NestedCollectionResource<CommercePriceEntry, Long,
-				CommercePriceEntryIdentifier, Long, CommercePriceListIdentifier> {
+		NestedCollectionResource<CommercePriceEntry,
+			Long, CommercePriceEntryIdentifier, Long,
+			CommercePriceListIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CommercePriceEntry, Long, Long>
@@ -103,7 +104,8 @@ public class CommercePriceEntryNestedCollectionResource
 		).identifier(
 			CommercePriceEntry::getCommercePriceEntryId
 		).addBidirectionalModel(
-			"commercePriceList", "commercePriceEntries", CommercePriceListIdentifier.class,
+			"commercePriceList", "commercePriceEntries",
+			CommercePriceListIdentifier.class,
 			CommercePriceEntry::getCommercePriceListId
 		).addBidirectionalModel(
 			"webSite", "commercePriceEntries", WebSiteIdentifier.class,
@@ -171,7 +173,8 @@ public class CommercePriceEntryNestedCollectionResource
 		try {
 			return _commercePriceEntryHelper.upsertCommercePriceEntry(
 				commercePriceEntryUpserterForm.getCommercePriceEntryId(),
-				commercePriceEntryUpserterForm.getCommerceProductInstanceId(), commercePriceListId,
+				commercePriceEntryUpserterForm.getCommerceProductInstanceId(),
+				commercePriceListId,
 				commercePriceEntryUpserterForm.getExternalReferenceCode(),
 				commercePriceEntryUpserterForm.getSkuExternalReferenceCode(),
 				commercePriceEntryUpserterForm.getPrice(),
@@ -192,14 +195,14 @@ public class CommercePriceEntryNestedCollectionResource
 		CommercePriceEntryNestedCollectionResource.class);
 
 	@Reference
+	private CommercePriceEntryHelper _commercePriceEntryHelper;
+
+	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceEntry)"
 	)
 	private HasPermission<Long> _hasPermission;
-
-	@Reference
-	private CommercePriceEntryHelper _commercePriceEntryHelper;
 
 }

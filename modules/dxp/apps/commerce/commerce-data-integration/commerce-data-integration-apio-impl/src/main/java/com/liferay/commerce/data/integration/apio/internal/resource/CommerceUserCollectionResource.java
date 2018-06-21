@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +51,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -85,8 +86,7 @@ public class CommerceUserCollectionResource
 		return builder.addGetter(
 			this::_getUserWrapper
 		).addRemover(
-			idempotent(_userService::deleteUser),
-			_hasPermission::forDeleting
+			idempotent(_userService::deleteUser), _hasPermission::forDeleting
 		).addUpdater(
 			this::_updateUser, _hasPermission::forUpdating,
 			CommerceUserUpdaterForm::buildForm
@@ -148,17 +148,21 @@ public class CommerceUserCollectionResource
 
 		User user = _userLocalService.addUser(
 			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), false,
-			commerceUserCreatorForm.getPassword1(), commerceUserCreatorForm.getPassword2(),
+			commerceUserCreatorForm.getPassword1(),
+			commerceUserCreatorForm.getPassword2(),
 			commerceUserCreatorForm.hasAlternateName(),
-			commerceUserCreatorForm.getAlternateName(), commerceUserCreatorForm.getEmail(), 0,
-			StringPool.BLANK, LocaleUtil.getDefault(),
-			commerceUserCreatorForm.getGivenName(), StringPool.BLANK,
-			commerceUserCreatorForm.getFamilyName(), 0, 0, commerceUserCreatorForm.isMale(),
+			commerceUserCreatorForm.getAlternateName(),
+			commerceUserCreatorForm.getEmail(), 0, StringPool.BLANK,
+			LocaleUtil.getDefault(), commerceUserCreatorForm.getGivenName(),
+			StringPool.BLANK, commerceUserCreatorForm.getFamilyName(), 0, 0,
+			commerceUserCreatorForm.isMale(),
 			commerceUserCreatorForm.getBirthdayMonth(),
-			commerceUserCreatorForm.getBirthdayDay(), commerceUserCreatorForm.getBirthdayYear(),
+			commerceUserCreatorForm.getBirthdayDay(),
+			commerceUserCreatorForm.getBirthdayYear(),
 			commerceUserCreatorForm.getJobTitle(), null,
-			commerceUserCreatorForm.getCommerceAccountIds(), commerceUserCreatorForm.getRoleIds(), null,
-			false, new ServiceContext());
+			commerceUserCreatorForm.getCommerceAccountIds(),
+			commerceUserCreatorForm.getRoleIds(), null, false,
+			new ServiceContext());
 
 		return new UserWrapper(user);
 	}
@@ -186,10 +190,11 @@ public class CommerceUserCollectionResource
 		throws PortalException {
 
 		List<User> users = _userService.getCompanyUsers(
-				company.getCompanyId(), pagination.getStartPosition(),
-				pagination.getEndPosition());
+			company.getCompanyId(), pagination.getStartPosition(),
+			pagination.getEndPosition());
 
 		List<UserWrapper> userWrappers = new ArrayList<>(users.size());
+
 		for (User user : users) {
 			userWrappers.add(new UserWrapper(user));
 		}
@@ -233,7 +238,8 @@ public class CommerceUserCollectionResource
 		return new UserWrapper(user);
 	}
 
-	private void _updateRoles(CommerceUserUpdaterForm commerceUserUpdaterForm, User user)
+	private void _updateRoles(
+			CommerceUserUpdaterForm commerceUserUpdaterForm, User user)
 		throws PortalException {
 
 		List<Long> newRoleIds = convertLongArrayToList(
@@ -269,7 +275,8 @@ public class CommerceUserCollectionResource
 
 		if (commerceUserUpdaterForm.getCommerceAccountIds() != null) {
 			_userService.updateOrganizations(
-				user.getUserId(), commerceUserUpdaterForm.getCommerceAccountIds(),
+				user.getUserId(),
+				commerceUserUpdaterForm.getCommerceAccountIds(),
 				new ServiceContext());
 		}
 
@@ -279,6 +286,11 @@ public class CommerceUserCollectionResource
 
 		return new UserWrapper(user);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private HasPermission<Long> _hasPermission;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
@@ -291,10 +303,5 @@ public class CommerceUserCollectionResource
 
 	@Reference
 	private UserService _userService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
-	)
-	private HasPermission<Long> _hasPermission;
 
 }

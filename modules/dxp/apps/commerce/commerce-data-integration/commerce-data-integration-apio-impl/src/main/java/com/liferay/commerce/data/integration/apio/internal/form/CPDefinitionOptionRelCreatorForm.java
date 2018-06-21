@@ -31,7 +31,8 @@ public class CPDefinitionOptionRelCreatorForm {
 		).constructor(
 			CPDefinitionOptionRelCreatorForm::new
 		).addRequiredLong(
-			"commerceProductOptionId", CPDefinitionOptionRelCreatorForm::_setCommerceProductOptionId
+			"commerceProductOptionId",
+			CPDefinitionOptionRelCreatorForm::_setCommerceProductOptionId
 		).build();
 	}
 

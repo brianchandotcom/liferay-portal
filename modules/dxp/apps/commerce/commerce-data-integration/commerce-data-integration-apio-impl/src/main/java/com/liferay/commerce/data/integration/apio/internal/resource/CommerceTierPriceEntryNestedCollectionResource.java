@@ -57,7 +57,8 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceTierPriceEntryNestedCollectionResource
 	implements
 		NestedCollectionResource<CommerceTierPriceEntry, Long,
-				CommerceTierPriceEntryIdentifier, Long, CommercePriceEntryIdentifier> {
+			CommerceTierPriceEntryIdentifier, Long,
+			CommercePriceEntryIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CommerceTierPriceEntry, Long, Long>
@@ -104,7 +105,8 @@ public class CommerceTierPriceEntryNestedCollectionResource
 		).identifier(
 			CommerceTierPriceEntry::getCommerceTierPriceEntryId
 		).addBidirectionalModel(
-			"commercePriceEntry", "commerceTierPriceEntries", CommercePriceEntryIdentifier.class,
+			"commercePriceEntry", "commerceTierPriceEntries",
+			CommercePriceEntryIdentifier.class,
 			CommerceTierPriceEntry::getCommercePriceEntryId
 		).addBidirectionalModel(
 			"webSite", "commerceTierPriceEntries", WebSiteIdentifier.class,
@@ -172,12 +174,14 @@ public class CommerceTierPriceEntryNestedCollectionResource
 
 	private CommerceTierPriceEntry _upsertCommerceTierPriceEntry(
 			Long commercePriceEntryId,
-			CommerceTierPriceEntryUpserterForm commerceTierPriceEntryUpserterForm)
+			CommerceTierPriceEntryUpserterForm
+				commerceTierPriceEntryUpserterForm)
 		throws PortalException {
 
 		try {
 			return _commerceTierPriceEntryHelper.upsertCommerceTierPriceEntry(
-				commerceTierPriceEntryUpserterForm.getCommerceTierPriceEntryId(),
+				commerceTierPriceEntryUpserterForm.
+					getCommerceTierPriceEntryId(),
 				commercePriceEntryId,
 				commerceTierPriceEntryUpserterForm.getMinQuantity(),
 				commerceTierPriceEntryUpserterForm.getPrice(),
@@ -203,14 +207,14 @@ public class CommerceTierPriceEntryNestedCollectionResource
 		CommerceTierPriceEntryNestedCollectionResource.class);
 
 	@Reference
+	private CommerceTierPriceEntryHelper _commerceTierPriceEntryHelper;
+
+	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.price.list.model.CommerceTierPriceEntry)"
 	)
 	private HasPermission<Long> _hasPermission;
-
-	@Reference
-	private CommerceTierPriceEntryHelper _commerceTierPriceEntryHelper;
 
 }

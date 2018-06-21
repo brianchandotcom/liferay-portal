@@ -39,8 +39,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class WebSitePriceEntryNestedCollectionRouter implements
-	NestedCollectionRouter<CommercePriceEntry, Long, CommercePriceEntryIdentifier,
-		Long, WebSiteIdentifier> {
+	NestedCollectionRouter<CommercePriceEntry,
+		Long, CommercePriceEntryIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
 	public NestedCollectionRoutes<CommercePriceEntry, Long, Long>

@@ -98,16 +98,6 @@ public class CPOptionServiceImpl extends CPOptionServiceBaseImpl {
 	}
 
 	@Override
-	public List<CPOption> getCPOptions(long groupId, int start, int end)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId, CPActionKeys.MANAGE_CATALOG);
-
-		return cpOptionLocalService.getCPOptions(groupId, start, end);
-	}
-
-	@Override
 	public List<CPOption> getCPOptions(
 			long groupId, int start, int end,
 			OrderByComparator<CPOption> orderByComparator)

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -43,6 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -231,7 +233,15 @@ public class NavigationMenuTag extends IncludeTag {
 
 		List<NavItem> navItems = new ArrayList<>();
 
-		long parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
+		long parentSiteNavigationMenuItemId = 0;
+
+		if (_rootItemType.equals("relative")) {
+			parentSiteNavigationMenuItemId = _getSiteNavigationMenuItemId(
+				themeDisplay.getLayout());
+		}
+		else if (_rootItemType.equals("select")) {
+			parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
+		}
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
@@ -322,6 +332,29 @@ public class NavigationMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+	}
+
+	private long _getSiteNavigationMenuItemId(Layout layout) {
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
+				_siteNavigationMenuId);
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+			unicodeProperties.fastLoad(
+				siteNavigationMenuItem.getTypeSettings());
+
+			String itemLayoutUuid = unicodeProperties.getProperty("layoutUuid");
+
+			if (Objects.equals(layout.getUuid(), itemLayoutUuid)) {
+				return siteNavigationMenuItem.getSiteNavigationMenuItemId();
+			}
+		}
+
+		return 0;
 	}
 
 	private static final String _PAGE = "/navigation/page.jsp";

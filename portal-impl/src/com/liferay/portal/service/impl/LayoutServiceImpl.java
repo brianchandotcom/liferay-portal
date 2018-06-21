@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.model.LayoutSoap;
+import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.model.User;
@@ -868,6 +869,28 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the layout's plid that matches the parameters.
+	 *
+	 * @param  uuid the layout's UUID
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @return the matching layout's plid
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public long getLayoutPlid(String uuid, long groupId, boolean privateLayout)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.getLayoutByUuidAndGroupId(
+			uuid, groupId, privateLayout);
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.VIEW);
+
+		return layout.getPlid();
+	}
+
+	/**
 	 * Returns the layout references for all the layouts that belong to the
 	 * company and belong to the portlet that matches the preferences.
 	 *
@@ -1011,6 +1034,30 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return layoutLocalService.hasLayout(uuid, groupId, privateLayout);
+	}
+
+	@Override
+	public boolean hasPortletId(long plid, String portletId)
+		throws PortalException {
+
+		Layout layout = layoutLocalService.fetchLayout(plid);
+
+		if (layout == null) {
+			return false;
+		}
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.VIEW);
+
+		LayoutType layoutType = layout.getLayoutType();
+
+		if ((layoutType instanceof LayoutTypePortlet) &&
+			((LayoutTypePortlet)layoutType).hasPortletId(portletId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

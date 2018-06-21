@@ -142,6 +142,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.http.GroupServiceHttp;
+import com.liferay.portal.service.http.LayoutServiceHttp;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
@@ -1859,6 +1860,24 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
+	public long getRemoteLayoutPlid(long userId, long stagingGroupId, long plid)
+		throws PortalException {
+
+		Group stagingGroup = _groupLocalService.fetchGroup(stagingGroupId);
+		User user = _userLocalService.fetchUser(userId);
+
+		HttpPrincipal httpPrincipal = new HttpPrincipal(
+			buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
+			user.getLogin(), user.getPassword(), user.isPasswordEncrypted());
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		return LayoutServiceHttp.getLayoutPlid(
+			httpPrincipal, layout.getUuid(),
+			stagingGroup.getRemoteLiveGroupId(), layout.isPrivateLayout());
+	}
+
+	@Override
 	public String getRemoteSiteURL(Group stagingGroup, boolean privateLayout)
 		throws PortalException {
 
@@ -2137,6 +2156,36 @@ public class StagingImpl implements Staging {
 
 		return isLayoutRevisionIncomplete(
 			layout.getPlid(), layoutRevision, layoutSetBranchId);
+	}
+
+	@Override
+	public boolean isRemoteLayoutHasPortletId(
+		long userId, long stagingGroupId, long plid, String portletId) {
+
+		Group stagingGroup = _groupLocalService.fetchGroup(stagingGroupId);
+		User user = _userLocalService.fetchUser(userId);
+
+		try {
+			HttpPrincipal httpPrincipal = new HttpPrincipal(
+				buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
+				user.getLogin(), user.getPassword(),
+				user.isPasswordEncrypted());
+
+			return LayoutServiceHttp.hasPortletId(
+				httpPrincipal, plid, portletId);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to decide if remote layout ",
+						String.valueOf(plid), " contains portletId ",
+						portletId),
+					pe);
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -3684,21 +3733,26 @@ public class StagingImpl implements Staging {
 			Map<String, String[]> parameterMap, boolean copyFromLive)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(userId);
+
 		Layout sourceLayout = _layoutLocalService.getLayout(plid);
 
 		Group scopeGroup = sourceLayout.getScopeGroup();
 
-		Group stagingGroup = null;
 		Group liveGroup = null;
+		Group stagingGroup = null;
 
-		Layout targetLayout = null;
+		long targetGroupId = 0L;
+		long targetLayoutPlid = 0L;
 
 		if (sourceLayout.isTypeControlPanel()) {
 			stagingGroup = _groupLocalService.fetchGroup(scopeGroupId);
 
 			liveGroup = stagingGroup.getLiveGroup();
 
-			targetLayout = sourceLayout;
+			targetGroupId = liveGroup.getGroupId();
+
+			targetLayoutPlid = sourceLayout.getPlid();
 		}
 		else if (sourceLayout.hasScopeGroup() &&
 				 (scopeGroup.getGroupId() == scopeGroupId)) {
@@ -3707,39 +3761,52 @@ public class StagingImpl implements Staging {
 
 			liveGroup = stagingGroup.getLiveGroup();
 
-			targetLayout = _layoutLocalService.getLayout(
+			targetGroupId = liveGroup.getGroupId();
+
+			Layout layout = _layoutLocalService.getLayout(
 				liveGroup.getClassPK());
+
+			targetLayoutPlid = layout.getPlid();
 		}
 		else {
 			stagingGroup = sourceLayout.getGroup();
 
-			liveGroup = stagingGroup.getLiveGroup();
+			if (stagingGroup.isStagedRemotely()) {
+				targetGroupId = stagingGroup.getRemoteLiveGroupId();
 
-			targetLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-				sourceLayout.getUuid(), liveGroup.getGroupId(),
-				sourceLayout.isPrivateLayout());
+				HttpPrincipal httpPrincipal = new HttpPrincipal(
+					buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
+					user.getLogin(), user.getPassword(),
+					user.isPasswordEncrypted());
+
+				targetLayoutPlid = LayoutServiceHttp.getLayoutPlid(
+					httpPrincipal, sourceLayout.getUuid(),
+					stagingGroup.getRemoteLiveGroupId(),
+					sourceLayout.isPrivateLayout());
+			}
+			else {
+				liveGroup = stagingGroup.getLiveGroup();
+
+				targetGroupId = liveGroup.getGroupId();
+
+				Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					sourceLayout.getUuid(), liveGroup.getGroupId(),
+					sourceLayout.isPrivateLayout());
+
+				targetLayoutPlid = layout.getPlid();
+			}
 		}
 
 		if (copyFromLive) {
 			return publishPortlet(
 				userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
-				targetLayout.getPlid(), sourceLayout.getPlid(), portletId,
+				targetLayoutPlid, sourceLayout.getPlid(), portletId,
 				parameterMap);
-		}
-
-		long targetGroupId = 0;
-
-		if (stagingGroup.isStagedRemotely()) {
-			targetGroupId = stagingGroup.getRemoteLiveGroupId();
-		}
-		else {
-			targetGroupId = liveGroup.getGroupId();
 		}
 
 		return publishPortlet(
 			userId, stagingGroup.getGroupId(), targetGroupId,
-			sourceLayout.getPlid(), targetLayout.getPlid(), portletId,
-			parameterMap);
+			sourceLayout.getPlid(), targetLayoutPlid, portletId, parameterMap);
 	}
 
 	/**

@@ -26,6 +26,8 @@ String errorMessageKey = StringPool.BLANK;
 Layout targetLayout = null;
 
 if (!layout.isTypeControlPanel()) {
+	long remoteLayoutPlid = 0;
+
 	if ((liveGroup == null) || (stagingGroup == null) || (group.isLayout() && (stagingGroup.getLiveGroupId() == 0))) {
 		errorMessageKey = "this-widget-is-placed-in-a-page-that-does-not-exist-in-the-live-site-publish-the-page-first";
 	}
@@ -33,6 +35,9 @@ if (!layout.isTypeControlPanel()) {
 		try {
 			if (stagingGroup.isLayout()) {
 				targetLayout = LayoutLocalServiceUtil.getLayout(liveGroup.getClassPK());
+			}
+			else if (stagingGroup.isStagedRemotely()) {
+				remoteLayoutPlid = StagingUtil.getRemoteLayoutPlid(user.getUserId(), stagingGroup.getGroupId(), layout.getPlid());
 			}
 			else {
 				targetLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(layout.getUuid(), liveGroup.getGroupId(), layout.isPrivateLayout());
@@ -46,6 +51,13 @@ if (!layout.isTypeControlPanel()) {
 			LayoutType layoutType = targetLayout.getLayoutType();
 
 			if (!(layoutType instanceof LayoutTypePortlet) || !((LayoutTypePortlet)layoutType).hasPortletId(selPortlet.getPortletId())) {
+				errorMessageKey = "this-widget-has-not-been-added-to-the-live-page-publish-the-page-first";
+			}
+		}
+		else if (stagingGroup.isStagedRemotely() && (remoteLayoutPlid > 0)) {
+			boolean remoteLayoutHasPortletId = StagingUtil.isRemoteLayoutHasPortletId(user.getUserId(), stagingGroup.getGroupId(), remoteLayoutPlid, selPortlet.getPortletId());
+
+			if (!remoteLayoutHasPortletId) {
 				errorMessageKey = "this-widget-has-not-been-added-to-the-live-page-publish-the-page-first";
 			}
 		}

@@ -2,14 +2,18 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 configurations {
 	arrayFind
+	arrayFrom
 	fetch
 	objectAssign
+	objectValues
 	urlSearchParams
 }
 
 task buildArrayFind(type: Copy)
+task buildArrayFrom(type: Copy)
 task buildFetch(type: Copy)
 task buildObjectAssign(type: Copy)
+task buildObjectValues(type: Copy)
 task buildUrlSearchParams(type: Copy)
 
 buildArrayFind {
@@ -25,6 +29,22 @@ buildArrayFind {
 
 	rename {
 		it.replace "index", "array.find"
+	}
+}
+
+buildArrayFrom {
+	eachFile new StripPathSegmentsAction(7)
+
+	from {
+		zipTree(configurations.arrayFrom.singleFile)
+	}
+
+	include "META-INF/resources/webjars/mdn-polyfills/5.8.0/src/Array.from/index.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+
+	rename {
+		it.replace "index", "array.from"
 	}
 }
 
@@ -56,6 +76,22 @@ buildObjectAssign {
 	}
 }
 
+buildObjectValues {
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.objectValues.singleFile)
+	}
+
+	include "META-INF/resources/webjars/object_values/0.1.2/index.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+
+	rename {
+		it.replace "index", "object.values"
+	}
+}
+
 buildUrlSearchParams {
 	eachFile new StripPathSegmentsAction(6)
 
@@ -74,13 +110,17 @@ buildUrlSearchParams {
 
 classes {
 	dependsOn buildArrayFind
+	dependsOn buildArrayFrom
 	dependsOn buildFetch
 	dependsOn buildObjectAssign
+	dependsOn buildObjectValues
 	dependsOn buildUrlSearchParams
 }
 
 dependencies {
 	arrayFind group: "org.webjars.bower", name: "Array.prototype.find", transitive: false, version: "1.0.0"
+
+	arrayFrom group: "org.webjars.npm", name: "mdn-polyfills", transitive: false, version: "5.8.0"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -92,6 +132,8 @@ dependencies {
 	fetch group: "org.webjars.npm", name: "whatwg-fetch", transitive: false, version: "2.0.4"
 
 	objectAssign group: "org.webjars.npm", name: "es6-object-assign", transitive: false, version: "1.1.0"
+
+	objectValues group: "org.webjars.npm", name: "object_values", transitive: false, version: "0.1.2"
 
 	urlSearchParams group: "org.webjars.npm", name: "url-search-params", transitive: false, version: "0.10.0"
 }

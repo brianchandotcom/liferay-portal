@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetTagUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,21 +43,27 @@ public class AssetTagPersistenceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
+	@Test(expected = IllegalArgumentException.class)
+	public void testFilterFindByGroupId() throws Exception {
 		User defaultUser = UserLocalServiceUtil.getDefaultUser(
 			TestPropsValues.getCompanyId());
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(defaultUser));
-	}
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testFilterFindByGroupId() throws Exception {
-		AssetTagPersistence assetTagPersistence = AssetTagUtil.getPersistence();
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(defaultUser));
 
-		assetTagPersistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			AssetTagPersistence assetTagPersistence =
+				AssetTagUtil.getPersistence();
+
+			assetTagPersistence.filterFindByGroupId(
+				0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 	}
 
 }

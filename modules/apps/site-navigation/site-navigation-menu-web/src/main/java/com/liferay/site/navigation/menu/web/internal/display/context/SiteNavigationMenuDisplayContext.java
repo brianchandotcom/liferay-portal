@@ -411,7 +411,14 @@ public class SiteNavigationMenuDisplayContext {
 		Layout layout = themeDisplay.getLayout();
 
 		if (layout.isPrivateLayout()) {
-			return SiteNavigationConstants.TYPE_PRIVATE;
+			SiteNavigationMenu siteNavigationMenu =
+				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
+					themeDisplay.getScopeGroupId(),
+					SiteNavigationConstants.TYPE_PRIVATE);
+
+			if (siteNavigationMenu != null) {
+				return SiteNavigationConstants.TYPE_PRIVATE;
+			}
 		}
 
 		return SiteNavigationConstants.TYPE_PRIMARY;

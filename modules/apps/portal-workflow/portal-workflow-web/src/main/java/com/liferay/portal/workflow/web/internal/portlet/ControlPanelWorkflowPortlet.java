@@ -14,9 +14,7 @@
 
 package com.liferay.portal.workflow.web.internal.portlet;
 
-import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.web.internal.display.context.WorkflowNavigationDisplayContext;
@@ -29,6 +27,8 @@ import javax.portlet.RenderRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adam Brandizzi
@@ -82,17 +82,10 @@ public class ControlPanelWorkflowPortlet extends BaseWorkflowPortlet {
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)",
-		unbind = "-"
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(bundle.symbolic.name=com.liferay.portal.workflow.web)"
 	)
-	protected void setResourceBundleLoader(
-		ResourceBundleLoader resourceBundleLoader) {
-
-		this.resourceBundleLoader = new AggregateResourceBundleLoader(
-			resourceBundleLoader,
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
-	}
-
-	protected ResourceBundleLoader resourceBundleLoader;
+	protected volatile ResourceBundleLoader resourceBundleLoader;
 
 }

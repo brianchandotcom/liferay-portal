@@ -114,16 +114,6 @@ public class PullRequest {
 		return _labels;
 	}
 
-	public String getLabelsURL() {
-		JSONObject baseJSONObject = _jsonObject.getJSONObject("base");
-
-		JSONObject repoJSONObject = baseJSONObject.getJSONObject("repo");
-
-		String labelsURL = repoJSONObject.getString("labels_url");
-
-		return StringUtils.replace(labelsURL, "{/name}", "");
-	}
-
 	public String getLocalSenderBranchName() {
 		return JenkinsResultsParserUtil.combine(
 			getSenderUsername(), "-", getNumber(), "-", getSenderBranchName());

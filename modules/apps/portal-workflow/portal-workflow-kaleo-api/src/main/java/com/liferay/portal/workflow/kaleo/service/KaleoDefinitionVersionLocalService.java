@@ -189,6 +189,10 @@ public interface KaleoDefinitionVersionLocalService extends BaseLocalService,
 		long kaleoDefinitionVersionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoDefinitionVersion fetchKaleoDefinitionVersion(long companyId,
+		String name, String version);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
 		long companyId, String name) throws PortalException;
 

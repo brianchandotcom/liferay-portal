@@ -263,10 +263,10 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		addSystemCommerceUserSegmentEntry(
+		_addSystemCommerceUserSegmentEntry(
 			CommerceUserSegmentEntryConstants.KEY_GUEST, RoleConstants.GUEST,
 			serviceContext);
-		addSystemCommerceUserSegmentEntry(
+		_addSystemCommerceUserSegmentEntry(
 			CommerceUserSegmentEntryConstants.KEY_USER, RoleConstants.USER,
 			serviceContext);
 	}
@@ -466,7 +466,7 @@ public class CommerceUserSegmentEntryLocalServiceImpl
 		}
 	}
 
-	private void addSystemCommerceUserSegmentEntry(
+	private void _addSystemCommerceUserSegmentEntry(
 			String key, String roleName, ServiceContext serviceContext)
 		throws PortalException {
 

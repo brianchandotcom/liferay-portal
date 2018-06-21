@@ -239,7 +239,7 @@ public class CPSearchResultsPortlet
 
 		BooleanFilter booleanFilter = _cpDefinitionHelper.getCPRuleFilter(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			organizationId);
+			themeDisplay.getUserId(), organizationId);
 
 		if (booleanFilter != null) {
 			Query query = new MatchAllQuery();

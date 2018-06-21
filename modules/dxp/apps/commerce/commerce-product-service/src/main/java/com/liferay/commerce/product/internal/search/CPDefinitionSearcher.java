@@ -62,28 +62,29 @@ public class CPDefinitionSearcher extends BaseSearcher {
 	}
 
 	@Override
-	public String[] getSearchClassNames() {
-		return new String[] {CPDefinition.class.getName()};
-	}
-
-	@Override
-	public void postProcessContextBooleanFilter(
-			BooleanFilter contextBooleanFilter, SearchContext searchContext)
+	public void addSearchUserId(
+			BooleanFilter booleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		super.postProcessContextBooleanFilter(
-			contextBooleanFilter, searchContext);
+		super.addSearchUserId(booleanFilter, searchContext);
 
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		long[] groupIds = searchContext.getGroupIds();
+
 		Filter filter = _cpDefinitionHelper.getCPRuleFilter(
-			permissionChecker, _cpQuery.getUserId(),
-			_cpQuery.getOrganizationId());
+				permissionChecker, groupIds[0], _cpQuery.getUserId(),
+				_cpQuery.getOrganizationId());
 
 		if (filter != null) {
-			contextBooleanFilter.add(filter, BooleanClauseOccur.MUST);
+			booleanFilter.add(filter, BooleanClauseOccur.MUST);
 		}
+	}
+
+	@Override
+	public String[] getSearchClassNames() {
+		return new String[] {CPDefinition.class.getName()};
 	}
 
 	protected void addImpossibleTerm(

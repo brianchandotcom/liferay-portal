@@ -85,7 +85,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Override
 	public BooleanFilter getCPRuleFilter(
-			PermissionChecker permissionChecker, long groupId,
+			PermissionChecker permissionChecker, long groupId, long userId,
 			long organizationId)
 		throws PortalException {
 
@@ -103,7 +103,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 		long[] commerceUserSegmentEntryIds =
 			_commerceUserSegmentHelper.getCommerceUserSegmentIds(
-				groupId, organizationId, permissionChecker.getUserId());
+				groupId, organizationId, userId);
 
 		List<CPRule> cpRules = _cpRuleLocalService.getCPRules(
 			groupId, commerceUserSegmentEntryIds);

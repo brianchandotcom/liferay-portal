@@ -41,7 +41,7 @@ public interface CPDefinitionHelper {
 		throws PortalException;
 
 	public BooleanFilter getCPRuleFilter(
-			PermissionChecker permissionChecker, long groupId,
+			PermissionChecker permissionChecker, long groupId, long userId,
 			long organizationId)
 		throws PortalException;
 

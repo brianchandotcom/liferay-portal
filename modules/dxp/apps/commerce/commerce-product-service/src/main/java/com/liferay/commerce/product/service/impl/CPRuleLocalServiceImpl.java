@@ -96,15 +96,14 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 
 		resourceLocalService.addModelResources(cpRule, serviceContext);
 
-		//Cache
+		// Cache
 
-		cleanCPRulesChache(groupId);
+		cleanCPRulesCache(groupId);
 
 		return cpRule;
 	}
 
-	@Override
-	public void cleanCPRulesChache(long groupId) {
+	public void cleanCPRulesCache(long groupId) {
 		MultiVMPoolUtil.removePortalCache("CP_RULES_" + groupId);
 	}
 
@@ -136,9 +135,9 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRows(cpRule.getCPRuleId());
 
-		//Cache
+		// Cache
 
-		cleanCPRulesChache(cpRule.getGroupId());
+		cleanCPRulesCache(cpRule.getGroupId());
 
 		return cpRule;
 	}
@@ -277,9 +276,9 @@ public class CPRuleLocalServiceImpl extends CPRuleLocalServiceBaseImpl {
 
 		cpRule = cpRulePersistence.update(cpRule);
 
-		//Cache
+		// Cache
 
-		cleanCPRulesChache(cpRule.getGroupId());
+		cleanCPRulesCache(cpRule.getGroupId());
 
 		return cpRule;
 	}

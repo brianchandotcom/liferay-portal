@@ -60,11 +60,11 @@ public class CPRuleUserSegmentRelLocalServiceImpl
 
 		cpRuleUserSegmentRelPersistence.update(cpRuleUserSegmentRel);
 
-		//CPRule
+		// Commerce product rule
 
 		reindexCPRule(cpRuleUserSegmentRel);
 
-		//Cache
+		// Cache
 
 		cpRuleLocalService.cleanCPRulesChache(groupId);
 
@@ -79,11 +79,11 @@ public class CPRuleUserSegmentRelLocalServiceImpl
 
 		cpRuleUserSegmentRelPersistence.remove(cpRuleUserSegmentRel);
 
-		//CPRule
+		// Commerce product rule
 
 		reindexCPRule(cpRuleUserSegmentRel);
 
-		//Cache
+		// Cache
 
 		cpRuleLocalService.cleanCPRulesChache(
 			cpRuleUserSegmentRel.getGroupId());

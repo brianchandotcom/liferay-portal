@@ -21,6 +21,7 @@ CommerceDashboardInstanceSelectorDisplayContext commerceDashboardInstanceSelecto
 
 List<CPInstance> cpInstances = commerceDashboardInstanceSelectorDisplayContext.getCPInstances();
 %>
+
 <div class="wrapper">
 	<c:choose>
 		<c:when test="<%= !cpInstances.isEmpty() %>">
@@ -76,9 +77,9 @@ List<CPInstance> cpInstances = commerceDashboardInstanceSelectorDisplayContext.g
 				%>
 
 					<li class="instances-list-item">
-						<div class='color-dot <%= visible ? "is-visible" : "is-hidden" %>' style="color: <%= color %>"></div>
+						<div class="color-dot <%= visible ? "is-visible" : "is-hidden" %>" style="color: <%= color %>"></div>
 
-						<div class='instance <%= visible ? "is-visible" : "is-hidden" %>'>
+						<div class="instance <%= visible ? "is-visible" : "is-hidden" %>">
 							<h4 class="instance-title"><%= HtmlUtil.escape(cpDefinition.getName(themeDisplay.getLanguageId())) %></h4>
 
 							<div class="instance-sku">

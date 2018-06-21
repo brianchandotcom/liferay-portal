@@ -90,7 +90,7 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		}
 	}
 
-	protected boolean existsApprovedKaleoDefinitionVersion(
+	protected boolean hasApprovedKaleoDefinitionVersion(
 		long companyId, String name, int version, int draftVersion) {
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
@@ -174,7 +174,7 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 				int version = rs.getInt("version");
 				int draftVersion = rs.getInt("draftVersion");
 
-				if (existsApprovedKaleoDefinitionVersion(
+				if (hasApprovedKaleoDefinitionVersion(
 						companyId, name, version, draftVersion)) {
 
 					continue;

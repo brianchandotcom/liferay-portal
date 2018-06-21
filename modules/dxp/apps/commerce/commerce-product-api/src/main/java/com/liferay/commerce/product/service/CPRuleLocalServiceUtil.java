@@ -61,8 +61,8 @@ public class CPRuleLocalServiceUtil {
 		return getService().addCPRule(name, active, type, serviceContext);
 	}
 
-	public static void cleanCPRulesChache(long groupId) {
-		getService().cleanCPRulesChache(groupId);
+	public static void cleanCPRulesCache(long groupId) {
+		getService().cleanCPRulesCache(groupId);
 	}
 
 	/**

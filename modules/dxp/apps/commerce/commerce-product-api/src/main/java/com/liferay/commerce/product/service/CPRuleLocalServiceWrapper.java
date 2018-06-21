@@ -53,8 +53,8 @@ public class CPRuleLocalServiceWrapper implements CPRuleLocalService,
 	}
 
 	@Override
-	public void cleanCPRulesChache(long groupId) {
-		_cpRuleLocalService.cleanCPRulesChache(groupId);
+	public void cleanCPRulesCache(long groupId) {
+		_cpRuleLocalService.cleanCPRulesCache(groupId);
 	}
 
 	/**

@@ -1446,7 +1446,7 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The folder you selected already has an entry with this name. Please select a different folder." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_MOVE_DUPLICATE_CONTENT" value1="The folder you selected already has an entry with this name. Please select a different folder." />
 			</then>
 			<else>
 				<execute macro="Alert#viewSuccessMessage" />

@@ -90,6 +90,26 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		}
 	}
 
+	protected boolean existsApprovedKaleoDefinitionVersion(
+		long companyId, String name, int version, int draftVersion) {
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
+				companyId, name, getVersion(version, draftVersion));
+
+		if (kaleoDefinitionVersion == null) {
+			return false;
+		}
+
+		if (kaleoDefinitionVersion.getStatus() ==
+				WorkflowConstants.STATUS_APPROVED) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected String getVersion(int version, int draftVersion) {
 		if (version == 0) {
 			version = 1;
@@ -153,6 +173,12 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 				String content = rs.getString("content");
 				int version = rs.getInt("version");
 				int draftVersion = rs.getInt("draftVersion");
+
+				if (existsApprovedKaleoDefinitionVersion(
+						companyId, name, version, draftVersion)) {
+
+					continue;
+				}
 
 				addKaleoDefinitionVersion(
 					groupId, companyId, userId, createDate, modifiedDate, name,

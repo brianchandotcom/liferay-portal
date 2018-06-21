@@ -18,6 +18,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
+
 import java.io.File;
 
 public class RepositoryFactory {
@@ -28,9 +30,7 @@ public class RepositoryFactory {
 		return new LocalRepository(repositoryDirectory, repositoryName);
 	}
 
-	public static RemoteRepository getRemoteRepository(
-		GitWorkingDirectory.Remote remote) {
-
+	public static RemoteRepository getRemoteRepository(Remote remote) {
 		String hostname = remote.getHostname();
 
 		if (hostname.equalsIgnoreCase("github.com")) {

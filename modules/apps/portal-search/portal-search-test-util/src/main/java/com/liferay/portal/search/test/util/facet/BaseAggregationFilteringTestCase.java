@@ -18,6 +18,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -33,9 +34,11 @@ import com.liferay.portal.search.internal.facet.modified.ModifiedFacetFactoryImp
 import com.liferay.portal.search.internal.facet.site.SiteFacetFactoryImpl;
 import com.liferay.portal.search.internal.facet.tag.AssetTagNamesFacetFactoryImpl;
 import com.liferay.portal.search.internal.facet.user.UserFacetFactoryImpl;
+import com.liferay.portal.search.internal.filter.FilterBuildersImpl;
 import com.liferay.portal.search.test.util.FacetsAssert;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
+import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.io.Serializable;
 
@@ -46,6 +49,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -65,14 +69,16 @@ public abstract class BaseAggregationFilteringTestCase
 
 	@Test
 	public void testAggregationUnfiltered() throws Exception {
-		addDocument("tab", "20180602100837", 111, "uab");
-		addDocument("tbc", "20180602100837", 222, "ucd");
-		addDocument("tde", "20180602100847", 222, "uab");
-		addDocument("tde", "20180602100857", 111, "ucd");
+		addDocument("tab", "20180602100837", 111, "u ab");
+		addDocument("tbc", "20180602100837", 222, "u cd");
+		addDocument("tde", "20180602100847", 222, "u ab");
+		addDocument("tde", "20180602100857", 111, "u cd");
 
 		assertSearch(
 			helper -> {
 				helper.search();
+
+				helper.assertResultCount(4);
 
 				helper.assertFrequencies(
 					MOD,
@@ -83,16 +89,17 @@ public abstract class BaseAggregationFilteringTestCase
 				helper.assertFrequencies(SIT, Arrays.asList("111=2", "222=2"));
 				helper.assertFrequencies(
 					TAG, Arrays.asList("tde=2", "tab=1", "tbc=1"));
-				helper.assertFrequencies(USE, Arrays.asList("uab=2", "ucd=2"));
+				helper.assertFrequencies(
+					USE, Arrays.asList("u ab=2", "u cd=2"));
 			});
 	}
 
 	@Test
 	public void testBasicFacetSelection() throws Exception {
-		addDocument("tab", "20180602100837", 111, "uab");
-		addDocument("tbc", "20180602100837", 222, "ucd");
-		addDocument("tde", "20180602100847", 222, "uab");
-		addDocument("tde", "20180602100857", 111, "ucd");
+		addDocument("tab", "20180602100837", 111, "u ab");
+		addDocument("tbc", "20180602100837", 222, "u cd");
+		addDocument("tde", "20180602100847", 222, "u ab");
+		addDocument("tde", "20180602100857", 111, "u cd");
 
 		assertSearch(
 			helper -> {
@@ -100,12 +107,14 @@ public abstract class BaseAggregationFilteringTestCase
 					SearchContextAttributes.ATTRIBUTE_KEY_BASIC_FACET_SELECTION,
 					Boolean.TRUE);
 
-				helper.select(MOD, "[20180602100830 TO 20180602100839]");
+				helper.select(MOD, "[20180602100850 TO 20180602100859]");
 				helper.select(SIT, "111");
 				helper.select(TAG, "tde");
-				helper.select(USE, "ucd");
+				helper.select(USE, "u cd");
 
 				helper.search();
+
+				helper.assertResultCount(1);
 
 				helper.assertFrequencies(
 					MOD,
@@ -116,22 +125,25 @@ public abstract class BaseAggregationFilteringTestCase
 				helper.assertFrequencies(SIT, Arrays.asList("111=2", "222=2"));
 				helper.assertFrequencies(
 					TAG, Arrays.asList("tde=2", "tab=1", "tbc=1"));
-				helper.assertFrequencies(USE, Arrays.asList("uab=2", "ucd=2"));
+				helper.assertFrequencies(
+					USE, Arrays.asList("u ab=2", "u cd=2"));
 			});
 	}
 
 	@Test
 	public void testSelectModified() throws Exception {
-		addDocument("tab", "20180602100837", 111, "uab");
-		addDocument("tbc", "20180602100837", 222, "ucd");
-		addDocument("tde", "20180602100847", 222, "uab");
-		addDocument("tde", "20180602100857", 111, "ucd");
+		addDocument("tab", "20180602100837", 111, "u ab");
+		addDocument("tbc", "20180602100837", 222, "u cd");
+		addDocument("tde", "20180602100847", 222, "u ab");
+		addDocument("tde", "20180602100857", 111, "u cd");
 
 		assertSearch(
 			helper -> {
 				helper.select(MOD, "[20180602100830 TO 20180602100839]");
 
 				helper.search();
+
+				helper.assertResultCount(2);
 
 				helper.assertFrequencies(
 					MOD,
@@ -141,22 +153,25 @@ public abstract class BaseAggregationFilteringTestCase
 						"[20180602100850 TO 20180602100859]=1"));
 				helper.assertFrequencies(SIT, Arrays.asList("111=1", "222=1"));
 				helper.assertFrequencies(TAG, Arrays.asList("tab=1", "tbc=1"));
-				helper.assertFrequencies(USE, Arrays.asList("uab=1", "ucd=1"));
+				helper.assertFrequencies(
+					USE, Arrays.asList("u ab=1", "u cd=1"));
 			});
 	}
 
 	@Test
 	public void testSelectSite() throws Exception {
-		addDocument("tab", "20180602100837", 111, "uab");
-		addDocument("tbc", "20180602100837", 222, "ucd");
-		addDocument("tde", "20180602100847", 222, "uab");
-		addDocument("tde", "20180602100857", 111, "ucd");
+		addDocument("tab", "20180602100837", 111, "u ab");
+		addDocument("tbc", "20180602100837", 222, "u cd");
+		addDocument("tde", "20180602100847", 222, "u ab");
+		addDocument("tde", "20180602100857", 111, "u cd");
 
 		assertSearch(
 			helper -> {
 				helper.select(SIT, "111");
 
 				helper.search();
+
+				helper.assertResultCount(2);
 
 				helper.assertFrequencies(
 					MOD,
@@ -166,22 +181,25 @@ public abstract class BaseAggregationFilteringTestCase
 						"[20180602100850 TO 20180602100859]=1"));
 				helper.assertFrequencies(SIT, Arrays.asList("111=2", "222=2"));
 				helper.assertFrequencies(TAG, Arrays.asList("tab=1", "tde=1"));
-				helper.assertFrequencies(USE, Arrays.asList("uab=1", "ucd=1"));
+				helper.assertFrequencies(
+					USE, Arrays.asList("u ab=1", "u cd=1"));
 			});
 	}
 
 	@Test
 	public void testSelectTag() throws Exception {
-		addDocument("tab", "20180602100837", 111, "uab");
-		addDocument("tbc", "20180602100837", 222, "ucd");
-		addDocument("tde", "20180602100847", 222, "uab");
-		addDocument("tde", "20180602100857", 111, "ucd");
+		addDocument("tab", "20180602100837", 111, "u ab");
+		addDocument("tbc", "20180602100837", 222, "u cd");
+		addDocument("tde", "20180602100847", 222, "u ab");
+		addDocument("tde", "20180602100857", 111, "u cd");
 
 		assertSearch(
 			helper -> {
 				helper.select(TAG, "tde");
 
 				helper.search();
+
+				helper.assertResultCount(2);
 
 				helper.assertFrequencies(
 					MOD,
@@ -192,22 +210,25 @@ public abstract class BaseAggregationFilteringTestCase
 				helper.assertFrequencies(SIT, Arrays.asList("111=1", "222=1"));
 				helper.assertFrequencies(
 					TAG, Arrays.asList("tde=2", "tab=1", "tbc=1"));
-				helper.assertFrequencies(USE, Arrays.asList("uab=1", "ucd=1"));
+				helper.assertFrequencies(
+					USE, Arrays.asList("u ab=1", "u cd=1"));
 			});
 	}
 
 	@Test
 	public void testSelectUser() throws Exception {
-		addDocument("tab", "20180602100837", 111, "uab");
-		addDocument("tbc", "20180602100837", 222, "ucd");
-		addDocument("tde", "20180602100847", 222, "uab");
-		addDocument("tde", "20180602100857", 111, "ucd");
+		addDocument("tab", "20180602100837", 111, "u ab");
+		addDocument("tbc", "20180602100837", 222, "u cd");
+		addDocument("tde", "20180602100847", 222, "u ab");
+		addDocument("tde", "20180602100857", 111, "u cd");
 
 		assertSearch(
 			helper -> {
-				helper.select(USE, "uab");
+				helper.select(USE, "u ab");
 
 				helper.search();
+
+				helper.assertResultCount(2);
 
 				helper.assertFrequencies(
 					MOD,
@@ -217,23 +238,26 @@ public abstract class BaseAggregationFilteringTestCase
 						"[20180602100850 TO 20180602100859]=0"));
 				helper.assertFrequencies(SIT, Arrays.asList("111=1", "222=1"));
 				helper.assertFrequencies(TAG, Arrays.asList("tab=1", "tde=1"));
-				helper.assertFrequencies(USE, Arrays.asList("uab=2", "ucd=2"));
+				helper.assertFrequencies(
+					USE, Arrays.asList("u ab=2", "u cd=2"));
 			});
 	}
 
 	@Test
 	public void testVariousSelectionsCombined() throws Exception {
-		addDocument("tab", "20180602100837", 111, "uab");
-		addDocument("tbc", "20180602100837", 222, "ucd");
-		addDocument("tde", "20180602100847", 222, "uab");
-		addDocument("tde", "20180602100857", 111, "ucd");
+		addDocument("tab", "20180602100837", 111, "u ab");
+		addDocument("tbc", "20180602100837", 222, "u cd");
+		addDocument("tde", "20180602100847", 222, "u ab");
+		addDocument("tde", "20180602100857", 111, "u cd");
 
 		assertSearch(
 			helper -> {
 				helper.select(TAG, "tde");
-				helper.select(USE, "ucd");
+				helper.select(USE, "u cd");
 
 				helper.search();
+
+				helper.assertResultCount(1);
 
 				helper.assertFrequencies(
 					MOD,
@@ -243,7 +267,8 @@ public abstract class BaseAggregationFilteringTestCase
 						"[20180602100850 TO 20180602100859]=1"));
 				helper.assertFrequencies(SIT, Arrays.asList("111=1"));
 				helper.assertFrequencies(TAG, Arrays.asList("tbc=1", "tde=1"));
-				helper.assertFrequencies(USE, Arrays.asList("uab=1", "ucd=1"));
+				helper.assertFrequencies(
+					USE, Arrays.asList("u ab=1", "u cd=1"));
 			});
 	}
 
@@ -290,6 +315,15 @@ public abstract class BaseAggregationFilteringTestCase
 			});
 	}
 
+	protected ModifiedFacetFactoryImpl createModifiedFacetFactory() {
+		return new ModifiedFacetFactoryImpl() {
+			{
+				dateFormatFactory = new DateFormatFactoryImpl();
+				filterBuilders = new FilterBuildersImpl();
+			}
+		};
+	}
+
 	protected Hits doSearch(SearchContext searchContext) {
 		try {
 			return search(searchContext);
@@ -319,7 +353,7 @@ public abstract class BaseAggregationFilteringTestCase
 	protected AssetTagNamesFacetFactory assetTagNamesFacetFactory =
 		new AssetTagNamesFacetFactoryImpl();
 	protected ModifiedFacetFactory modifiedFacetFactory =
-		new ModifiedFacetFactoryImpl();
+		createModifiedFacetFactory();
 	protected SiteFacetFactory siteFacetFactory = new SiteFacetFactoryImpl();
 	protected UserFacetFactory userFacetFactory = new UserFacetFactoryImpl();
 
@@ -341,8 +375,15 @@ public abstract class BaseAggregationFilteringTestCase
 				aggregationName, _searchContext, expected);
 		}
 
+		public void assertResultCount(int expected) {
+			Document[] documents = _hits.getDocs();
+
+			Assert.assertEquals(
+				Arrays.toString(documents), expected, documents.length);
+		}
+
 		public void search() {
-			doSearch(_searchContext);
+			_hits = doSearch(_searchContext);
 		}
 
 		public void select(String aggregationName, String... selections) {
@@ -381,6 +422,7 @@ public abstract class BaseAggregationFilteringTestCase
 			return facet;
 		}
 
+		private Hits _hits;
 		private final SearchContext _searchContext;
 
 	}

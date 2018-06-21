@@ -137,7 +137,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			editableElementParser.replace(element, value);
 		}
 
-		if (Objects.equals(mode, FragmentEntryLinkConstants.VIEW)) {
+		if (Objects.equals(
+				mode, FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE) ||
+			Objects.equals(mode, FragmentEntryLinkConstants.VIEW)) {
+
 			for (Element element : document.select(_LFR_EDITABLE)) {
 				Document elementDocument = _getDocument(element.html());
 

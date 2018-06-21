@@ -39,6 +39,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -246,12 +247,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			throw new IllegalArgumentException("className is null");
 		}
 
-		if (className.equals(AssetTag.class.getName())) {
+		if (Objects.equals(className, AssetTag.class.getName())) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
 					"Entity ", className,
 					" doesn't support inline permissions, use ",
-					"AssetTagsPermission instead"));
+					"AssetTagsPermission"));
 		}
 
 		if (Validator.isNull(sql)) {

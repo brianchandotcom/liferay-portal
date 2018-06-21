@@ -15,7 +15,6 @@
 package com.liferay.asset.kernel.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetTagUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -25,8 +24,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Before;
@@ -48,8 +45,6 @@ public class AssetTagPersistenceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_persistence = AssetTagUtil.getPersistence();
-
 		User defaultUser = UserLocalServiceUtil.getDefaultUser(
 			TestPropsValues.getCompanyId());
 
@@ -59,18 +54,10 @@ public class AssetTagPersistenceTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
-	}
+		AssetTagPersistence assetTagPersistence = AssetTagUtil.getPersistence();
 
-	protected OrderByComparator<AssetTag> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create(
-			"AssetTag", "uuid", true, "tagId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "assetCount", true,
-			"lastPublishDate", true);
+		assetTagPersistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
-
-	private AssetTagPersistence _persistence;
 
 }

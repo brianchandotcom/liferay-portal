@@ -12,16 +12,15 @@
  * details.
  */
 
-/**
- * @author Peter Yoo
- */
-
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory.Remote;
 
 import java.io.File;
 
+/**
+ * @author Peter Yoo
+ */
 public class RepositoryFactory {
 
 	public static LocalRepository getLocalRepository(

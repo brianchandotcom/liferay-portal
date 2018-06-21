@@ -14,12 +14,15 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.model.CPRuleUserSegmentRel;
 import com.liferay.commerce.product.service.base.CPRuleUserSegmentRelLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -57,6 +60,14 @@ public class CPRuleUserSegmentRelLocalServiceImpl
 
 		cpRuleUserSegmentRelPersistence.update(cpRuleUserSegmentRel);
 
+		//CPRule
+
+		reindexCPRule(cpRuleUserSegmentRel);
+
+		//Cache
+
+		cpRuleLocalService.cleanCPRulesChache(groupId);
+
 		return cpRuleUserSegmentRel;
 	}
 
@@ -67,6 +78,15 @@ public class CPRuleUserSegmentRelLocalServiceImpl
 		throws PortalException {
 
 		cpRuleUserSegmentRelPersistence.remove(cpRuleUserSegmentRel);
+
+		//CPRule
+
+		reindexCPRule(cpRuleUserSegmentRel);
+
+		//Cache
+
+		cpRuleLocalService.cleanCPRulesChache(
+			cpRuleUserSegmentRel.getGroupId());
 
 		return cpRuleUserSegmentRel;
 	}
@@ -118,6 +138,16 @@ public class CPRuleUserSegmentRelLocalServiceImpl
 	@Override
 	public int getCPRuleUserSegmentRelsCount(long cpRuleId) {
 		return cpRuleUserSegmentRelPersistence.countByCPRuleId(cpRuleId);
+	}
+
+	protected void reindexCPRule(CPRuleUserSegmentRel cpRuleUserSegmentRel)
+		throws PortalException {
+
+		Indexer<CPRule> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPRule.class);
+
+		indexer.reindex(
+			CPRule.class.getName(), cpRuleUserSegmentRel.getCPRuleId());
 	}
 
 }

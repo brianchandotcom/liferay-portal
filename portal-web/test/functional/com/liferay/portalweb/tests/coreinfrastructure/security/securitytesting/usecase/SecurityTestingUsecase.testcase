@@ -133,11 +133,13 @@
 
 		<execute macro="UserBar#gotoProfile" />
 
-		<execute function="AssertElementNotPresent" locator1="Home#APP_MANAGER_PRTLET_CONTENT">
-			<var name="key_contentName" value="Liferay Marketplace" />
+		<execute function="AssertElementNotPresent" locator1="ListGroupItem#ITEM_NAME">
+			<var name="key_itemName" value="Liferay Marketplace" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Home#APP_MANAGER_PORTLET_BODY" value1="Portlet is temporarily unavailable." />
+		<execute function="AssertTextEquals" locator1="Portlet#BODY" value1="Portlet is temporarily unavailable.">
+			<var name="portletName" value="App Manager" />
+		</execute>
 
 		<execute function="AssertConsoleTextPresent" value1="must be the company administrator to perform the action" />
 	</command>

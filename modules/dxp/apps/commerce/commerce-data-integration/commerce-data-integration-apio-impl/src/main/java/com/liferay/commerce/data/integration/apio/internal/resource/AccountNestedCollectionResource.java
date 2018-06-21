@@ -51,7 +51,7 @@ import java.util.List;
  * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true)
-public class AccountCollectionResource
+public class AccountNestedCollectionResource
 	implements NestedCollectionResource<Organization, Long,
 		AccountIdentifier, Long, WebSiteIdentifier> {
 
@@ -176,7 +176,7 @@ public class AccountCollectionResource
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AccountCollectionResource.class);
+		AccountNestedCollectionResource.class);
 
 	@Reference
 	private AccountHelper _accountHelper;

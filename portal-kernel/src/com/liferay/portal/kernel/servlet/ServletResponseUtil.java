@@ -690,7 +690,7 @@ public class ServletResponseUtil {
 
 				contentDispositionType = HttpHeaders.CONTENT_DISPOSITION_INLINE;
 
-				contentType = MimeTypesUtil.getContentType(fileName);
+				contentType = MimeTypesUtil.getExtensionContentType(extension);
 
 				response.setContentType(contentType);
 			}

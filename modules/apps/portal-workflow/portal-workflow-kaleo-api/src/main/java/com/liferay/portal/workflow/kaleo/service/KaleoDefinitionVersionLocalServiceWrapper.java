@@ -221,6 +221,13 @@ public class KaleoDefinitionVersionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion fetchKaleoDefinitionVersion(
+		long companyId, String name, String version) {
+		return _kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(companyId,
+			name, version);
+	}
+
+	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
 		long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

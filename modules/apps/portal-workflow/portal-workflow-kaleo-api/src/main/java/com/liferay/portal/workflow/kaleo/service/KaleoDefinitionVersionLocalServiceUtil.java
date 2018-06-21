@@ -212,6 +212,11 @@ public class KaleoDefinitionVersionLocalServiceUtil {
 		return getService().fetchKaleoDefinitionVersion(kaleoDefinitionVersionId);
 	}
 
+	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion fetchKaleoDefinitionVersion(
+		long companyId, String name, String version) {
+		return getService().fetchKaleoDefinitionVersion(companyId, name, version);
+	}
+
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
 		long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {

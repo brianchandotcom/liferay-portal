@@ -165,6 +165,10 @@ public class LayoutPageTemplateEntryStagedModelRepository
 			layoutPageTemplateEntry.getType());
 		existingLayoutPageTemplateEntry.setPreviewFileEntryId(
 			layoutPageTemplateEntry.getPreviewFileEntryId());
+		existingLayoutPageTemplateEntry.setDefaultTemplate(
+			layoutPageTemplateEntry.isDefaultTemplate());
+		existingLayoutPageTemplateEntry.setLayoutPrototypeId(
+			layoutPageTemplateEntry.getLayoutPrototypeId());
 		existingLayoutPageTemplateEntry.setStatus(
 			layoutPageTemplateEntry.getStatus());
 

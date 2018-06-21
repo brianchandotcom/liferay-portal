@@ -121,6 +121,8 @@ public class PortletRemoteStagingBackgroundTaskExecutor
 			file = layoutStagingCallable.getFile();
 			stagingRequestId = layoutStagingCallable.getStagingRequestId();
 
+			deleteExportedChangesetEntries();
+
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(

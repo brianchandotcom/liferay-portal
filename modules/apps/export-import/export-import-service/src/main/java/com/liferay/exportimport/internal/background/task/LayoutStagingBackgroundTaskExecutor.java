@@ -155,6 +155,8 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			file = layoutStagingCallable.getFile();
 
+			deleteExportedChangesetEntries();
+
 			ExportImportThreadLocal.setInitialLayoutStagingInProcess(false);
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 

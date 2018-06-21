@@ -78,6 +78,12 @@ public class ChangesetEntryLocalServiceUtil {
 		getService().deleteChangesetEntries(changesetCollectionId);
 	}
 
+	public static void deleteChangesetEntries(
+		java.util.Set<Long> changesetEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteChangesetEntries(changesetEntryIds);
+	}
+
 	/**
 	* Deletes the changeset entry from the database. Also notifies the appropriate model listeners.
 	*

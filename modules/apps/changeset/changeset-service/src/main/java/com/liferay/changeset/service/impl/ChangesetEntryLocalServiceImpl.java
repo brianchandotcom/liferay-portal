@@ -82,6 +82,31 @@ public class ChangesetEntryLocalServiceImpl
 	}
 
 	@Override
+	public void deleteChangesetEntries(Set<Long> changesetEntryIds)
+		throws PortalException {
+
+		if (SetUtil.isEmpty(changesetEntryIds)) {
+			return;
+		}
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.in(
+					"changesetEntryId", changesetEntryIds)));
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod<ChangesetEntry>)
+				changesetEntry ->
+					changesetEntryLocalService.deleteChangesetEntry(
+						changesetEntry));
+
+		actionableDynamicQuery.performActions();
+	}
+
+	@Override
 	public void deleteEntry(long changesetId, long classNameId, long classPK) {
 		ChangesetEntry changesetEntry =
 			changesetEntryLocalService.fetchChangesetEntry(

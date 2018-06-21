@@ -72,6 +72,12 @@ public class ChangesetEntryLocalServiceWrapper
 		_changesetEntryLocalService.deleteChangesetEntries(changesetCollectionId);
 	}
 
+	@Override
+	public void deleteChangesetEntries(java.util.Set<Long> changesetEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_changesetEntryLocalService.deleteChangesetEntries(changesetEntryIds);
+	}
+
 	/**
 	* Deletes the changeset entry from the database. Also notifies the appropriate model listeners.
 	*

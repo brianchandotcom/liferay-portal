@@ -135,6 +135,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			file = layoutStagingCallable.getFile();
 			stagingRequestId = layoutStagingCallable.getStagingRequestId();
 
+			deleteExportedChangesetEntries();
+
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(

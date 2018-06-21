@@ -43,11 +43,18 @@ if ((themeDisplay.isStatePopUp() || themeDisplay.isWidget() || layoutTypePortlet
 }
 else {
 	ContentLayoutTypeControllerDisplayContext contentLayoutTypeControllerDisplayContext = new ContentLayoutTypeControllerDisplayContext(request, response);
+
+	try {
+		request.setAttribute(WebKeys.PORTLET_DECORATE, Boolean.FALSE);
 %>
 
-	<%= contentLayoutTypeControllerDisplayContext.getRenderedContent() %>
+		<%= contentLayoutTypeControllerDisplayContext.getRenderedContent() %>
 
 <%
+	}
+	finally {
+		request.removeAttribute(WebKeys.PORTLET_DECORATE);
+	}
 }
 %>
 

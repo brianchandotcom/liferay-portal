@@ -4,65 +4,6 @@
 	}
 }
 
-.portlet-commerce-dashboard-instance-selector {
-	.instances-list {
-		font-size: 0.8rem;
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-
-		.color-dot {
-			border-radius: 10rem;
-			float: left;
-			height: 0.5rem;
-			margin: 0.4rem 0 0 0.4rem;
-			width: 0.5rem;
-		}
-
-		.instance, .instance-selected {
-			margin-left: 2rem;
-		}
-
-		.instance-selected {
-			display: none;
-
-			div {
-				display: inline-block;
-			}
-
-			.hide-show-link, .remove-link {
-				line-height: 3rem;
-			}
-		}
-
-		.instance-sku {
-			font-size: 0.7rem;
-		}
-
-		.instance-title {
-			font-size: 0.8rem;
-			font-weight: bold;
-			margin-bottom: 0;
-		}
-
-		li {
-			height: 3rem;
-
-			&:hover {
-				background-color: #EEE;
-
-				.instance {
-					display: none;
-				}
-
-				.instance-selected {
-					display: block;
-				}
-			}
-		}
-	}
-}
-
 .portlet-commerce-dashboard-kpi {
 	.kpi-value {
 		font-size: xx-large;

@@ -19,17 +19,38 @@
 }
 
 .portlet-commerce-organization-open-order {
-	.row{
+	.order-cards-row {
+		display: flex;
 		flex-wrap: nowrap;
+		margin-left: calc(-4rem - 10px);
+		margin-right: calc(-4rem - 10px);
 		overflow: auto;
+		padding-left: 4rem;
+		padding-right: 4rem;
 	}
 
 	.order-card{
+		align-items: center;
 		background-color: #F6F6F8;
-		padding: 20px;
+		border-radius: 4px;
+		display: flex;
+		flex: 1 0 300px;
+		font-size: 12px;
+		justify-content: space-between;
+		margin: 0 12px;
+		padding: 16px;
 
 		.order-id{
-			margin-top: 10px;
+			margin: 8px 0 3px;
+		}
+
+		.status {
+			border: 1px solid currentColor;
+			border-radius: 2px;
+			font-size: 10px;
+			line-height: 16px;
+			padding: 0 5px;
+			text-transform: uppercase;
 		}
 	}
 }

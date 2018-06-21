@@ -37,33 +37,32 @@ List<CommerceOrder> results = searchContainer.getResults();
 >
 	<c:choose>
 		<c:when test="<%= (commerceOrganizationOrderDisplayContext.getOrganization() != null) && (results.size() > 0) %>">
-			<div class="row" id="<portlet:namespace />openOrdersContainer">
+			<div class="order-cards-row" id="<portlet:namespace />openOrdersContainer">
 
 				<%
 				for (CommerceOrder commerceOrder : results) {
 				%>
 
-					<div class="col-md-3">
-						<div class="order-card">
-							<div class="row">
-								<div class="col-md-8">
-									<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showLabel="<%= false %>" status="<%= commerceOrder.getStatus() %>" />
+					<div class="order-card">
+						<div>
+							<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showLabel="<%= false %>" status="<%= commerceOrder.getStatus() %>" />
 
-									<h4 class="order-id"><aui:a href="<%= commerceOrganizationOrderDisplayContext.getOrderDetailURL(commerceOrder) %>" label="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" /></h4>
+							<h4 class="order-id"><aui:a href="<%= commerceOrganizationOrderDisplayContext.getOrderDetailURL(commerceOrder) %>" label="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" /></h4>
 
-									<h4><%= commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder) %></h4>
-								</div>
+							<div><strong><%= commerceOrganizationOrderDisplayContext.getCommerceOrderValue(commerceOrder) %></strong></div>
+						</div>
 
-								<div class="col-md-4">
-									<p class="text-muted"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) + StringPool.SPACE + commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) %></p>
+						<div class="text-right">
+							<p class="text-muted"><%= commerceOrganizationOrderDisplayContext.getCommerceOrderDate(commerceOrder) + StringPool.SPACE + commerceOrganizationOrderDisplayContext.getCommerceOrderTime(commerceOrder) %></p>
 
-									<%
-									request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
-									%>
+							<%
+							request.setAttribute("order_transition.jsp-commerceOrder", commerceOrder);
+							%>
 
-									<liferay-util:include page="/order_transition.jsp" servletContext="<%= application %>" />
-								</div>
-							</div>
+							<liferay-commerce:order-transitions
+								commerceOrderId="<%= commerceOrder.getCommerceOrderId() %>"
+								cssClass="btn btn-secondary btn-sm"
+							/>
 						</div>
 					</div>
 

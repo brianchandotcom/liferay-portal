@@ -328,6 +328,13 @@ public class StagingUtil {
 		return _staging.getRecentLayoutSetBranchId(user, layoutSetId);
 	}
 
+	public static long getRemoteLayoutPlid(
+			long userId, long stagingGroupId, long plid)
+		throws PortalException {
+
+		return _staging.getRemoteLayoutPlid(userId, stagingGroupId, plid);
+	}
+
 	public static String getRemoteSiteURL(
 			Group stagingGroup, boolean privateLayout)
 		throws PortalException {
@@ -427,6 +434,13 @@ public class StagingUtil {
 
 	public static boolean isIncomplete(Layout layout, long layoutSetBranchId) {
 		return _staging.isIncomplete(layout, layoutSetBranchId);
+	}
+
+	public static boolean isRemoteLayoutHasPortletId(
+		long userId, long stagingGroupId, long plid, String portletId) {
+
+		return _staging.isRemoteLayoutHasPortletId(
+			userId, stagingGroupId, plid, portletId);
 	}
 
 	/**

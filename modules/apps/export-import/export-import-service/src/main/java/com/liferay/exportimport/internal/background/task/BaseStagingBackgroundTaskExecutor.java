@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.internal.background.task;
 
+import com.liferay.changeset.service.ChangesetEntryLocalServiceUtil;
+import com.liferay.changeset.util.ChangesetThreadLocal;
 import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -64,6 +66,13 @@ public abstract class BaseStagingBackgroundTaskExecutor
 				backgroundTask.getBackgroundTaskId());
 
 		backgroundTaskStatus.clearAttributes();
+	}
+
+	protected void deleteExportedChangesetEntries() throws PortalException {
+		ChangesetEntryLocalServiceUtil.deleteChangesetEntries(
+			ChangesetThreadLocal.getExportedChangesetEntryIds());
+
+		ChangesetThreadLocal.clearExportedChangesetEntryIds();
 	}
 
 	protected void deleteTempLarOnFailure(File file) {

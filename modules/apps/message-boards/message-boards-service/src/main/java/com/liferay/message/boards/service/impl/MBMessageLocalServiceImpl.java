@@ -1955,7 +1955,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	protected String getBody(String subject, String body, String format) {
 		if (Validator.isNull(body)) {
-			if ("html".equals(format)) {
+			if (StringUtil.equals(format, "html")) {
 				return HtmlUtil.escape(subject);
 			}
 			else {

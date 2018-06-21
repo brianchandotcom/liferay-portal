@@ -26,7 +26,6 @@ import io.spring.gradle.dependencymanagement.dsl.ImportsHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -42,9 +41,7 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaBasePlugin;
-import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
-import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
 import org.gradle.plugins.ide.eclipse.model.EclipseModel;
@@ -233,48 +230,53 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 		plusConfigurations.add(targetPlatformIDEConfiguration);
 	}
 
-	private void _configureIdeaModel(Project project, Configuration targetPlatformIDEConfiguration) {
+	private void _configureIdeaModel(
+		Project project, Configuration targetPlatformIDEConfiguration) {
+
 		IdeaModel ideaModel = GradleUtil.getExtension(project, IdeaModel.class);
 
-		IdeaModule module = ideaModel.getModule();
+		IdeaModule ideaModule = ideaModel.getModule();
 
-		Map<String, Map<String, Collection<Configuration>>> scopes = module.getScopes();
+		Map<String, Map<String, Collection<Configuration>>> scopes =
+			ideaModule.getScopes();
 
-		Map<String, Collection<Configuration>> compileScope = scopes.get(GeneratedIdeaScope.PROVIDED.name());
+		GeneratedIdeaScope generatedIdeaScope = GeneratedIdeaScope.PROVIDED;
 
-		if (compileScope == null) {
-			compileScope = new HashMap<>();
+		Map<String, Collection<Configuration>> providedScope = scopes.get(
+			generatedIdeaScope.name());
+
+		if (providedScope == null) {
+			providedScope = new HashMap<>();
 		}
 
-		Collection<Configuration> collection = compileScope.get("plus");
+		Collection<Configuration> plus = providedScope.get("plus");
 
-		if (collection == null) {
-			collection = Collections.synchronizedCollection(new ArrayList<Configuration>());
+		if (plus == null) {
+			plus = new ArrayList<>();
 		}
 
-		collection.add(targetPlatformIDEConfiguration);
+		plus.add(targetPlatformIDEConfiguration);
 
-		compileScope.put("plus", collection);
+		providedScope.put("plus", plus);
 
-		scopes.put(GeneratedIdeaScope.PROVIDED.name(), compileScope);
+		scopes.put(generatedIdeaScope.name(), providedScope);
 
-		module.setScopes(scopes);
+		ideaModule.setScopes(scopes);
 
-		JavaPluginConvention javaPluginConvention = GradleUtil.getConvention(project, JavaPluginConvention.class);
-
-		SourceSetContainer sourceSets = javaPluginConvention.getSourceSets();
-
-		SourceSet mainSet = null;
+		SourceSet mainSourceSet = null;
 
 		try {
-			mainSet = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME);
+			mainSourceSet = GradleUtil.getSourceSet(
+				project, SourceSet.MAIN_SOURCE_SET_NAME);
 		}
-		catch( UnknownDomainObjectException e ) {
-			mainSet = sourceSets.create(SourceSet.MAIN_SOURCE_SET_NAME);
+		catch (UnknownDomainObjectException udoe) {
+			mainSourceSet = GradleUtil.addSourceSet(
+				project, SourceSet.MAIN_SOURCE_SET_NAME);
 		}
 
-		FileCollection compileClasspath = mainSet.getCompileClasspath();
+		FileCollection compileClasspath = mainSourceSet.getCompileClasspath();
 
 		compileClasspath.plus(targetPlatformIDEConfiguration);
 	}
+
 }

@@ -13,18 +13,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-#if (${liferayVersion.startsWith("7.1")})
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<name>nexus</name>
-			<url>https://repository-cdn.liferay.com/nexus/content/groups/public</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-#end
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -42,7 +30,7 @@
 		<dependency>
 			<groupId>com.liferay.portal</groupId>
 			<artifactId>com.liferay.portal.kernel</artifactId>
-			<version>3.0.0-SNAPSHOT</version>
+			<version>3.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 #end

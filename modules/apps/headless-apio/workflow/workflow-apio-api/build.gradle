@@ -1,0 +1,3 @@
+dependencies {
+	compileOnly project(":apps:apio-architect:apio-architect-api")
+}

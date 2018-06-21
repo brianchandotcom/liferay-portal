@@ -15,103 +15,22 @@
 package com.liferay.commerce.data.integration.apio.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.Serializable;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Zoltán Takács
  */
 @Component(immediate = true, service = ProductDefinitionHelper.class)
 public class ProductDefinitionHelper {
-
-	/**
-	 * Builds the SearchContext for finding {@link CPDefinition}'s {@link
-	 * com.liferay.portal.kernel.search.Document}.
-	 *
-	 * @param  entryClassPK
-	 * @param  keywords
-	 * @param  start
-	 * @param  end
-	 * @param  sort
-	 * @param  serviceContext
-	 * @return ServiceContext
-	 */
-	public SearchContext buildSearchContext(
-		String entryClassPK, String keywords, int start, int end, Sort sort,
-		ServiceContext serviceContext) {
-
-		SearchContext searchContext = new SearchContext();
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		if (Validator.isNotNull(entryClassPK)) {
-			attributes.put(Field.ENTRY_CLASS_PK, entryClassPK);
-		}
-
-		if (Validator.isNotNull(keywords)) {
-			searchContext.setKeywords(keywords);
-		}
-
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		attributes.put("params", params);
-
-		searchContext.setAttributes(attributes);
-
-		searchContext.setStart(start);
-		searchContext.setEnd(end);
-		searchContext.setCompanyId(serviceContext.getCompanyId());
-
-		long groupId = serviceContext.getScopeGroupId();
-
-		if (groupId != 0) {
-			searchContext.setGroupIds(new long[] {groupId});
-		}
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.addSelectedFieldNames(
-			CPDefinitionIndexer.FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID,
-			CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME,
-			CPDefinitionIndexer.FIELD_SKUS, Field.CREATE_DATE,
-			Field.ENTRY_CLASS_PK, Field.DESCRIPTION, Field.GROUP_ID,
-			Field.MODIFIED_DATE, Field.TITLE, Field.USER_ID,
-			CPDefinitionIndexer.FIELD_EXTERNAL_REFERENCE_CODE);
-
-		queryConfig.setLocale(serviceContext.getLocale());
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		return searchContext;
-	}
 
 	public CPDefinition upsertCPDefinition(
 			long groupId, Map<Locale, String> titleMap,
@@ -120,7 +39,7 @@ public class ProductDefinitionHelper {
 			long[] assetCategoryIds, String externalReferenceCode)
 		throws PortalException {
 
-		ServiceContext serviceContext = _productIndexerHelper.getServiceContext(
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			groupId, assetCategoryIds);
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
@@ -169,6 +88,6 @@ public class ProductDefinitionHelper {
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
-	private ProductIndexerHelper _productIndexerHelper;
+	private ServiceContextHelper _serviceContextHelper;
 
 }

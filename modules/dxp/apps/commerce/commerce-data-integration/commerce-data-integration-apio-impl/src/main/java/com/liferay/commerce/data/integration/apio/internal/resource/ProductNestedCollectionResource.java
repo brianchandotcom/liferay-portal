@@ -16,7 +16,6 @@ package com.liferay.commerce.data.integration.apio.internal.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -26,35 +25,21 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductDefinitionIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.ProductCreatorForm;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductDefinitionHelper;
-import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.person.apio.architect.identifier.PersonIdentifier;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -67,12 +52,12 @@ import java.util.List;
 @Component(immediate = true)
 public class ProductNestedCollectionResource
 	implements
-		NestedCollectionResource<Document, Long,
+		NestedCollectionResource<CPDefinition, Long,
 			ProductDefinitionIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Document, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Document, Long, Long> builder) {
+	public NestedCollectionRoutes<CPDefinition, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<CPDefinition, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -89,11 +74,11 @@ public class ProductNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<Document, Long> itemRoutes(
-		ItemRoutes.Builder<Document, Long> builder) {
+	public ItemRoutes<CPDefinition, Long> itemRoutes(
+		ItemRoutes.Builder<CPDefinition, Long> builder) {
 
 		return builder.addGetter(
-			this::_getCPDefinition
+			_cpDefinitionService::getCPDefinition
 		).addRemover(
 			idempotent(_cpDefinitionService::deleteCPDefinition),
 			_hasPermission::forDeleting
@@ -101,66 +86,59 @@ public class ProductNestedCollectionResource
 	}
 
 	@Override
-	public Representor<Document> representor(
-		Representor.Builder<Document, Long> builder) {
+	public Representor<CPDefinition> representor(
+		Representor.Builder<CPDefinition, Long> builder) {
 
 		return builder.types(
 			"Product"
 		).identifier(
-			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
+			CPDefinition::getCPDefinitionId
 		).addBidirectionalModel(
 			"webSite", "products", WebSiteIdentifier.class,
-			document -> GetterUtil.getLong(document.get(Field.GROUP_ID))
+			CPDefinition::getGroupId
 		).addDate(
 			"dateCreated",
-			document -> Try.fromFallible(
-				() -> document.getDate(Field.CREATE_DATE)
-			).getUnchecked()
+			CPDefinition::getCreateDate
 		).addDate(
 			"dateModified",
-			document -> Try.fromFallible(
-				() -> document.getDate(Field.MODIFIED_DATE)
-			).getUnchecked()
+			CPDefinition::getModifiedDate
 		).addLinkedModel(
 			"author", PersonIdentifier.class,
-			document -> GetterUtil.getLong(document.get(Field.USER_ID))
+			CPDefinition::getUserId
 		).addString(
-			"description", this::_getSafeDescription
+			"description",
+			CPDefinition::getDescription
 		).addString(
 			"productType",
-			document -> document.get(
-				CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME)
+			CPDefinition::getProductTypeName
 		).addString(
-			"name", document -> document.get(Field.TITLE)
+			"name", CPDefinition::getName
 		).addString(
 			"externalReferenceCode",
-			document -> document.get(
-				CPDefinitionIndexer.FIELD_EXTERNAL_REFERENCE_CODE)
+			CPDefinition::getExternalReferenceCode
 		).addStringList(
 			"skus",
-			document -> Arrays.asList(
-				document.getValues(CPDefinitionIndexer.FIELD_SKUS))
+			this::_getSKUs
 		).build();
 	}
 
-	private Document _addCPDefinition(
-		Long webSiteId, ProductCreatorForm productCreatorForm) {
+	private List<String> _getSKUs(CPDefinition cpDefinition) {
+		return Arrays.asList(_cpInstanceLocalService.getSKUs(
+			cpDefinition.getCPDefinitionId()));
+	}
+
+	private CPDefinition _addCPDefinition(
+		Long webSiteId, ProductCreatorForm productCreatorForm) throws PortalException {
 
 		try {
-			CPDefinition cpDefinition =
-				_productDefinitionHelper.upsertCPDefinition(
-					webSiteId, productCreatorForm.getTitleMap(),
-					productCreatorForm.getDescriptionMap(),
-					productCreatorForm.getShortDescriptionMap(),
-					productCreatorForm.getProductTypeName(),
-					ArrayUtil.toLongArray(
-						productCreatorForm.getAssetCategoryIds()),
-					productCreatorForm.getExternalReferenceCode());
-
-			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
-				CPDefinition.class);
-
-			return indexer.getDocument(cpDefinition);
+			return _productDefinitionHelper.upsertCPDefinition(
+				webSiteId, productCreatorForm.getTitleMap(),
+				productCreatorForm.getDescriptionMap(),
+				productCreatorForm.getShortDescriptionMap(),
+				productCreatorForm.getProductTypeName(),
+				ArrayUtil.toLongArray(
+					productCreatorForm.getAssetCategoryIds()),
+				productCreatorForm.getExternalReferenceCode());
 		}
 		catch (CPDefinitionProductTypeNameException cpdptne) {
 			throw new NotFoundException(
@@ -168,96 +146,18 @@ public class ProductNestedCollectionResource
 					productCreatorForm.getProductTypeName(),
 				cpdptne);
 		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
 	}
 
-	private Document _getCPDefinition(Long cpDefinitionId) {
-		try {
-			ServiceContext serviceContext =
-				_productIndexerHelper.getServiceContext();
+	private PageItems<CPDefinition> _getPageItems(
+		Pagination pagination, Long webSiteId) throws PortalException {
 
-			SearchContext searchContext =
-				_productDefinitionHelper.buildSearchContext(
-					String.valueOf(cpDefinitionId),
-					String.valueOf(cpDefinitionId), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null, serviceContext);
+		List<CPDefinition> cpDefinitions = _cpDefinitionService.getCPDefinitions(webSiteId, null, null, WorkflowConstants.STATUS_APPROVED,
+				pagination.getStartPosition(), pagination.getEndPosition(), null);
 
-			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
-				CPDefinition.class);
+		int total = _cpDefinitionService.getCPDefinitionsCount(webSiteId, null, null, WorkflowConstants.STATUS_APPROVED);
 
-			Hits hits = indexer.search(searchContext);
-
-			if (hits.getLength() == 0) {
-				throw new NotFoundException(
-					"Unable to find product with ID " + cpDefinitionId);
-			}
-
-			if (hits.getLength() > 1) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"More than one document found for product with ID " +
-							cpDefinitionId);
-				}
-
-				CPDefinition cpDefinition =
-					_cpDefinitionService.getCPDefinition(cpDefinitionId);
-
-				return indexer.getDocument(cpDefinition);
-			}
-
-			List<Document> documents = hits.toList();
-
-			return documents.get(0);
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
+		return new PageItems<>(cpDefinitions, total);
 	}
-
-	private PageItems<Document> _getPageItems(
-		Pagination pagination, Long webSiteId) {
-
-		try {
-			ServiceContext serviceContext =
-				_productIndexerHelper.getServiceContext(webSiteId, new long[0]);
-
-			SearchContext searchContext =
-				_productDefinitionHelper.buildSearchContext(
-					null, null, pagination.getStartPosition(),
-					pagination.getEndPosition(), null, serviceContext);
-
-			Indexer<CPDefinition> indexer = _productIndexerHelper.getIndexer(
-				CPDefinition.class);
-
-			Hits hits = indexer.search(searchContext);
-
-			List<Document> documents = Collections.<Document>emptyList();
-
-			if (hits.getLength() > 0) {
-				documents = hits.toList();
-			}
-
-			return new PageItems<>(documents, hits.getLength());
-		}
-		catch (PortalException pe) {
-			throw new ServerErrorException(500, pe);
-		}
-	}
-
-	private String _getSafeDescription(Document document) {
-		String description = document.get(Field.DESCRIPTION);
-
-		if (Validator.isNull(description)) {
-			description = StringPool.DASH;
-		}
-
-		return description;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductNestedCollectionResource.class);
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
@@ -266,7 +166,7 @@ public class ProductNestedCollectionResource
 	private ProductDefinitionHelper _productDefinitionHelper;
 
 	@Reference
-	private ProductIndexerHelper _productIndexerHelper;
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPDefinition)"

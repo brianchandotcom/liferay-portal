@@ -26,32 +26,15 @@ import com.liferay.commerce.data.integration.apio.identifiers.OptionIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.OptionValueIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.OptionValueForm;
 import com.liferay.commerce.data.integration.apio.internal.util.OptionValueHelper;
-import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPOptionValueKeyException;
-import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.search.CPOptionValueIndexer;
-import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,12 +43,12 @@ import java.util.List;
 @Component(immediate = true)
 public class OptionValueNestedCollectionResource
 	implements
-		NestedCollectionResource<Document, Long, OptionValueIdentifier, Long,
+		NestedCollectionResource<CPOptionValue, Long, OptionValueIdentifier, Long,
 			OptionIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Document, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Document, Long, Long> builder) {
+	public NestedCollectionRoutes<CPOptionValue, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<CPOptionValue, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -82,11 +65,11 @@ public class OptionValueNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<Document, Long> itemRoutes(
-		ItemRoutes.Builder<Document, Long> builder) {
+	public ItemRoutes<CPOptionValue, Long> itemRoutes(
+		ItemRoutes.Builder<CPOptionValue, Long> builder) {
 
 		return builder.addGetter(
-			this::_getOptionValue
+			_cpOptionValueService::getCPOptionValue
 		).addRemover(
 			idempotent(_cpOptionValueService::deleteCPOptionValue),
 			_hasPermission::forDeleting
@@ -98,37 +81,30 @@ public class OptionValueNestedCollectionResource
 	}
 
 	@Override
-	public Representor<Document> representor(
-		Representor.Builder<Document, Long> builder) {
+	public Representor<CPOptionValue> representor(
+		Representor.Builder<CPOptionValue, Long> builder) {
 
 		return builder.types(
 			"OptionValue"
 		).identifier(
-			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
+			CPOptionValue::getCPOptionValueId
 		).addBidirectionalModel(
 			"option", "values", OptionIdentifier.class,
-			document -> GetterUtil.getLong(
-				document.get(CPOptionValueIndexer.FIELD_CP_OPTION_ID))
+			CPOptionValue::getCPOptionId
 		).addString(
-			"name", document -> document.get(Field.NAME)
+			"name", CPOptionValue::getName
 		).addString(
-			"key", document -> document.get(CPOptionValueIndexer.FIELD_KEY)
+			"key", CPOptionValue::getKey
 		).build();
 	}
 
-	private Document _addCPOptionValue(
+	private CPOptionValue _addCPOptionValue(
 		Long cpOptionId, OptionValueForm optionValueForm) throws PortalException {
 
 		try {
-			CPOptionValue cpOptionValue =
-				_optionValueHelper.createCPOptionValue(
-					cpOptionId, optionValueForm.getNameMap(),
-					optionValueForm.getKey());
-
-			Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-				CPOptionValue.class);
-
-			return indexer.getDocument(cpOptionValue);
+			return _optionValueHelper.createCPOptionValue(
+				cpOptionId, optionValueForm.getNameMap(),
+				optionValueForm.getKey());
 		}
 		catch (CPOptionValueKeyException cpovke) {
 			throw new BadRequestException(
@@ -139,98 +115,29 @@ public class OptionValueNestedCollectionResource
 		}
 	}
 
-	private Document _getOptionValue(Long cpOptionValueId) throws PortalException {
-        ServiceContext serviceContext =
-            _productIndexerHelper.getServiceContext();
-
-        SearchContext searchContext = _optionValueHelper.buildSearchContext(
-            String.valueOf(cpOptionValueId), null, null, QueryUtil.ALL_POS,
-            QueryUtil.ALL_POS, null, serviceContext);
-
-        Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-            CPOptionValue.class);
-
-        Hits hits = indexer.search(searchContext);
-
-        if (hits.getLength() == 0) {
-            throw new NotFoundException(
-                "Unable to find option value with ID " + cpOptionValueId);
-        }
-
-        if (hits.getLength() > 1) {
-            if (_log.isWarnEnabled()) {
-                _log.warn(
-                    "More than one option value found with ID " +
-                        cpOptionValueId);
-            }
-
-            CPOptionValue cpOptionValue =
-                _cpOptionValueService.getCPOptionValue(cpOptionValueId);
-
-            return indexer.getDocument(cpOptionValue);
-        }
-
-        List<Document> documents = hits.toList();
-
-        return documents.get(0);
-	}
-
-	private PageItems<Document> _getPageItems(
+	private PageItems<CPOptionValue> _getPageItems(
 		Pagination pagination, Long cpOptionId) throws PortalException {
 
-        CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
+	    List<CPOptionValue> cpOptionValues = _cpOptionValueService.getCPOptionValues(cpOptionId, pagination.getStartPosition(), pagination.getEndPosition());
 
-        ServiceContext serviceContext =
-            _productIndexerHelper.getServiceContext(
-                cpOption.getGroupId(), new long[0]);
+	    int total = _cpOptionValueService.getCPOptionValuesCount(cpOptionId);
 
-        SearchContext searchContext = _optionValueHelper.buildSearchContext(
-            null, String.valueOf(cpOptionId), null,
-            pagination.getStartPosition(), pagination.getEndPosition(),
-            null, serviceContext);
-
-        Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-            CPOptionValue.class);
-
-        Hits hits = indexer.search(searchContext);
-
-        List<Document> documents = Collections.<Document>emptyList();
-
-        if (hits.getLength() > 0) {
-            documents = hits.toList();
-        }
-
-        return new PageItems<>(documents, hits.getLength());
+        return new PageItems<>(cpOptionValues, total);
 	}
 
-	private Document _updateCPOptionValue(
+	private CPOptionValue _updateCPOptionValue(
 		Long cpOptionValueId, OptionValueForm optionValueForm) throws PortalException {
 
-        CPOptionValue cpOptionValue =
-            _optionValueHelper.updateCPOptionValue(
-                cpOptionValueId, optionValueForm.getNameMap(),
-                optionValueForm.getKey());
-
-        Indexer<CPOptionValue> indexer = _productIndexerHelper.getIndexer(
-            CPOptionValue.class);
-
-        return indexer.getDocument(cpOptionValue);
+        return _optionValueHelper.updateCPOptionValue(
+            cpOptionValueId, optionValueForm.getNameMap(),
+            optionValueForm.getKey());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OptionValueNestedCollectionResource.class);
-
-	@Reference
-	private CPOptionService _cpOptionService;
 
 	@Reference
 	private CPOptionValueService _cpOptionValueService;
 
 	@Reference
 	private OptionValueHelper _optionValueHelper;
-
-	@Reference
-	private ProductIndexerHelper _productIndexerHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPOptionValue)"

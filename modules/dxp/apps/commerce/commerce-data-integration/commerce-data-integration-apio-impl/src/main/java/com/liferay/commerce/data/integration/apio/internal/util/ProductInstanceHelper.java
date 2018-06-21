@@ -16,100 +16,26 @@ package com.liferay.commerce.data.integration.apio.internal.util;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.search.CPDefinitionOptionRelIndexer;
-import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.io.Serializable;
-
-import java.math.BigDecimal;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true, service = ProductInstanceHelper.class)
 public class ProductInstanceHelper {
-
-	public SearchContext buildSearchContext(
-		String entryClassPK, String cpDefinitionId, String keywords, int start,
-		int end, Sort sort, ServiceContext serviceContext) {
-
-		SearchContext searchContext = new SearchContext();
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		if (Validator.isNotNull(cpDefinitionId)) {
-			attributes.put(
-				CPDefinitionOptionRelIndexer.FIELD_CP_DEFINITION_ID,
-				cpDefinitionId);
-		}
-
-		if (Validator.isNotNull(entryClassPK)) {
-			attributes.put(Field.ENTRY_CLASS_PK, entryClassPK);
-		}
-
-		if (Validator.isNotNull(keywords)) {
-			searchContext.setKeywords(keywords);
-		}
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		attributes.put("params", params);
-
-		searchContext.setAttributes(attributes);
-		searchContext.setCompanyId(serviceContext.getCompanyId());
-		searchContext.setEnd(end);
-		searchContext.setStart(start);
-
-		long groupId = serviceContext.getScopeGroupId();
-
-		if (groupId != 0) {
-			searchContext.setGroupIds(new long[] {groupId});
-		}
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.addSelectedFieldNames(
-			CPInstanceIndexer.FIELD_CP_DEFINITION_ID, Field.CREATE_DATE,
-			Field.ENTRY_CLASS_PK, CPInstanceIndexer.FIELD_SKU,
-			Field.MODIFIED_DATE,
-			CPInstanceIndexer.FIELD_MANUFACTURER_PART_NUMBER,
-			CPInstanceIndexer.FIELD_GTIN,
-			CPInstanceIndexer.FIELD_EXTERNAL_REFERENCE_CODE);
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setLocale(serviceContext.getLocale());
-		queryConfig.setScoreEnabled(false);
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		return searchContext;
-	}
 
 	public CPInstance upsertCPInstance(
 			long cpDefinitionId, String sku, String gtin,

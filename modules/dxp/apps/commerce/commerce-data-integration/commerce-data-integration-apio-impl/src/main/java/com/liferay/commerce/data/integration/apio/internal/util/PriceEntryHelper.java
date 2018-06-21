@@ -18,17 +18,14 @@ import com.liferay.apio.architect.functional.Try;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
-import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-
-import java.math.BigDecimal;
-
-import javax.ws.rs.NotFoundException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.ws.rs.NotFoundException;
+import java.math.BigDecimal;
 
 /**
  * @author Zoltán Takács
@@ -125,9 +122,6 @@ public class PriceEntryHelper {
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
-
-	@Reference
-	private CommercePriceListService _commercePriceListService;
 
 	@Reference
 	private PriceListHelper _priceListHelper;

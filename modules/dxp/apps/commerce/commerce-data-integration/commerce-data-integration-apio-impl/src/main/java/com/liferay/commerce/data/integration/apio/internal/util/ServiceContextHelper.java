@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserService;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,19 +29,29 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ServiceContextHelper.class)
 public class ServiceContextHelper {
 
+	public ServiceContext getServiceContext() throws PortalException {
+		return getServiceContext(0, new long[0]);
+	}
+
+	public ServiceContext getServiceContext(long groupId) throws PortalException {
+		return getServiceContext(groupId, new long[0]);
+	}
+
 	/**
-	 * Compose the ServiceContext object which needed for the operation on the
-	 * resource.
+	 * Compose the ServiceContext object which needed for operation on Product
+	 * related resources.
 	 *
 	 * @param  groupId
+	 * @param  assetCategoryIds
 	 * @return ServiceContext
 	 * @throws PortalException
 	 */
-	public ServiceContext getServiceContext(long groupId)
-		throws PortalException {
+	public ServiceContext getServiceContext(
+			long groupId, long[] assetCategoryIds)
+			throws PortalException {
 
 		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+				ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext == null) {
 			serviceContext = new ServiceContext();
@@ -52,6 +61,7 @@ public class ServiceContextHelper {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
 		serviceContext.setCompanyId(user.getCompanyId());
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setTimeZone(user.getTimeZone());

@@ -16,7 +16,6 @@ package com.liferay.commerce.data.integration.apio.internal.resource;
 
 import static com.liferay.portal.apio.idempotent.Idempotent.idempotent;
 
-import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -26,32 +25,15 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductDefinitionIdentifier;
 import com.liferay.commerce.data.integration.apio.identifiers.ProductInstanceIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.ProductInstanceCreatorForm;
-import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.data.integration.apio.internal.util.ProductInstanceHelper;
-import com.liferay.commerce.product.exception.CPInstanceDisplayDateException;
-import com.liferay.commerce.product.exception.CPInstanceExpirationDateException;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.search.CPInstanceIndexer;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,12 +42,12 @@ import java.util.List;
 @Component(immediate = true)
 public class ProductInstanceNestedCollectionResource
 	implements
-		NestedCollectionResource<Document, Long, ProductInstanceIdentifier,
+		NestedCollectionResource<CPInstance, Long, ProductInstanceIdentifier,
 			Long, ProductDefinitionIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Document, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Document, Long, Long> builder) {
+	public NestedCollectionRoutes<CPInstance, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<CPInstance, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -82,11 +64,11 @@ public class ProductInstanceNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<Document, Long> itemRoutes(
-		ItemRoutes.Builder<Document, Long> builder) {
+	public ItemRoutes<CPInstance, Long> itemRoutes(
+		ItemRoutes.Builder<CPInstance, Long> builder) {
 
 		return builder.addGetter(
-			this::_getCPInstance
+			_cpInstanceService::getCPInstance
 		).addRemover(
 			idempotent(_cpInstanceService::deleteCPInstance),
 			_hasPermission::forDeleting
@@ -94,41 +76,35 @@ public class ProductInstanceNestedCollectionResource
 	}
 
 	@Override
-	public Representor<Document> representor(
-		Representor.Builder<Document, Long> builder) {
+	public Representor<CPInstance> representor(
+		Representor.Builder<CPInstance, Long> builder) {
 
 		return builder.types(
 			"ProductSKUs"
 		).identifier(
-			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
+			CPInstance::getCPInstanceId
 		).addBidirectionalModel(
 			"product", "productSKUs", ProductDefinitionIdentifier.class,
-			document -> GetterUtil.getLong(
-				document.get(CPInstanceIndexer.FIELD_CP_DEFINITION_ID))
+			CPInstance::getCPDefinitionId
 		).addDate(
 			"dateCreated",
-			document -> Try.fromFallible(
-				() -> document.getDate(Field.CREATE_DATE)
-			).getUnchecked()
+			CPInstance::getCreateDate
 		).addDate(
 			"dateModified",
-			document -> Try.fromFallible(
-				() -> document.getDate(Field.MODIFIED_DATE)
-			).getUnchecked()
+			CPInstance::getModifiedDate
 		).addString(
 			"externalReferenceCode",
-			document -> document.get(
-				CPInstanceIndexer.FIELD_EXTERNAL_REFERENCE_CODE)
+			CPInstance::getExternalReferenceCode
 		).addString(
-			"sku", document -> document.get(CPInstanceIndexer.FIELD_SKU)
+			"sku", CPInstance::getSku
 		).build();
 	}
 
-	private Document _addCPInstance(
+	private CPInstance _addCPInstance(
 			Long cpDefinitionId, ProductInstanceCreatorForm form)
 		throws PortalException {
 
-		CPInstance cpInstance = _productInstanceHelper.upsertCPInstance(
+		return _productInstanceHelper.upsertCPInstance(
 			cpDefinitionId, form.getSku(), form.getGtin(),
 			form.getManufacturerPartNumber(), form.getPurchasable(),
 			form.getWidth(), form.getHeight(), form.getDepth(),
@@ -136,85 +112,21 @@ public class ProductInstanceNestedCollectionResource
 			form.getPromoPrice(), form.getPublished(),
 			form.getDisplayDate(), form.getExpirationDate(),
 			form.getNeverExpire(), form.getExternalReferenceCode());
-
-		Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
-			CPInstance.class);
-
-		return indexer.getDocument(cpInstance);
 	}
 
-	private Document _getCPInstance(Long cpInstanceId) throws PortalException {
-		ServiceContext serviceContext =
-			_productIndexerHelper.getServiceContext();
-
-		SearchContext searchContext =
-			_productInstanceHelper.buildSearchContext(
-				String.valueOf(cpInstanceId), null,
-				String.valueOf(cpInstanceId), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null, serviceContext);
-
-		Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
-			CPInstance.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		if (hits.getLength() == 0) {
-			throw new NotFoundException(
-				"Unable to find product with ID " + cpInstanceId);
-		}
-
-		if (hits.getLength() > 1) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"More than one document found for SKU with ID " +
-						cpInstanceId);
-			}
-
-			CPInstance cpInstance = _cpInstanceService.getCPInstance(
-				cpInstanceId);
-
-			return indexer.getDocument(cpInstance);
-		}
-
-		List<Document> documents = hits.toList();
-
-		return documents.get(0);
-	}
-
-	private PageItems<Document> _getPageItems(
+	private PageItems<CPInstance> _getPageItems(
 		Pagination pagination, Long cpDefinitionId) throws PortalException {
 
-		ServiceContext serviceContext =
-			_productIndexerHelper.getServiceContext();
+		List<CPInstance> cpInstances = _cpInstanceService.getCPDefinitionInstances(cpDefinitionId,
+			pagination.getStartPosition(), pagination.getEndPosition());
 
-		SearchContext searchContext =
-			_productInstanceHelper.buildSearchContext(
-				null, String.valueOf(cpDefinitionId), null,
-				pagination.getStartPosition(), pagination.getEndPosition(),
-				null, serviceContext);
+		int total = _cpInstanceService.getCPDefinitionInstancesCount(cpDefinitionId, WorkflowConstants.STATUS_APPROVED);
 
-		Indexer<CPInstance> indexer = _productIndexerHelper.getIndexer(
-			CPInstance.class);
-
-		Hits hits = indexer.search(searchContext);
-
-		List<Document> documents = Collections.<Document>emptyList();
-
-		if (hits.getLength() > 0) {
-			documents = hits.toList();
-		}
-
-		return new PageItems<>(documents, hits.getLength());
+		return new PageItems<>(cpInstances, total);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductInstanceNestedCollectionResource.class);
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
-
-	@Reference
-	private ProductIndexerHelper _productIndexerHelper;
 
 	@Reference
 	private ProductInstanceHelper _productInstanceHelper;

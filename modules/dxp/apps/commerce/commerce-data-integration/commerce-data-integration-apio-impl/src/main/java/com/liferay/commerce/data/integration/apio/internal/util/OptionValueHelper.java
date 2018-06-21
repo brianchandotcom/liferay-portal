@@ -16,89 +16,21 @@ package com.liferay.commerce.data.integration.apio.internal.util;
 
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
-import com.liferay.commerce.product.search.CPOptionValueIndexer;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.commerce.product.service.CPOptionValueService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.io.Serializable;
-
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Rodrigo Guedes de Souza
  */
 @Component(immediate = true, service = OptionValueHelper.class)
 public class OptionValueHelper {
-
-	public SearchContext buildSearchContext(
-		String entryClassPK, String cpOptionId, String keywords, int start,
-		int end, Sort sort, ServiceContext serviceContext) {
-
-		SearchContext searchContext = new SearchContext();
-
-		Map<String, Serializable> attributes = new HashMap<>();
-
-		if (Validator.isNotNull(entryClassPK)) {
-			attributes.put(Field.ENTRY_CLASS_PK, entryClassPK);
-		}
-
-		if (Validator.isNotNull(cpOptionId)) {
-			attributes.put(CPOptionValueIndexer.FIELD_CP_OPTION_ID, cpOptionId);
-		}
-
-		if (Validator.isNotNull(keywords)) {
-			searchContext.setKeywords(keywords);
-		}
-
-		attributes.put(Field.STATUS, WorkflowConstants.STATUS_APPROVED);
-
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("keywords", keywords);
-
-		attributes.put("params", params);
-
-		searchContext.setAttributes(attributes);
-		searchContext.setCompanyId(serviceContext.getCompanyId());
-		searchContext.setEnd(end);
-		searchContext.setStart(start);
-
-		long groupId = serviceContext.getScopeGroupId();
-
-		if (groupId != 0) {
-			searchContext.setGroupIds(new long[] {groupId});
-		}
-
-		QueryConfig queryConfig = searchContext.getQueryConfig();
-
-		queryConfig.addSelectedFieldNames(
-			CPOptionValueIndexer.FIELD_CP_OPTION_ID, Field.CREATE_DATE,
-			Field.ENTRY_CLASS_PK, Field.NAME, CPOptionValueIndexer.FIELD_KEY);
-
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setLocale(serviceContext.getLocale());
-		queryConfig.setScoreEnabled(false);
-
-		if (sort != null) {
-			searchContext.setSorts(sort);
-		}
-
-		return searchContext;
-	}
 
 	public CPOptionValue createCPOptionValue(
 			Long cpOptionId, Map<Locale, String> titleMap, String key)
@@ -130,8 +62,7 @@ public class OptionValueHelper {
 			cpOptionValue.getKey(), serviceContext);
 	}
 
-	private ServiceContext _getServiceContext(CPOption cpOption)
-		throws PortalException {
+	private ServiceContext _getServiceContext(CPOption cpOption) {
 
 		ServiceContext serviceContext = new ServiceContext();
 

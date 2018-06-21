@@ -25,32 +25,16 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.commerce.data.integration.apio.identifiers.OptionIdentifier;
 import com.liferay.commerce.data.integration.apio.internal.form.OptionForm;
 import com.liferay.commerce.data.integration.apio.internal.util.OptionHelper;
-import com.liferay.commerce.data.integration.apio.internal.util.ProductDefinitionHelper;
-import com.liferay.commerce.data.integration.apio.internal.util.ProductIndexerHelper;
 import com.liferay.commerce.product.exception.CPOptionKeyException;
 import com.liferay.commerce.product.model.CPOption;
-import com.liferay.commerce.product.search.CPOptionIndexer;
 import com.liferay.commerce.product.service.CPOptionService;
 import com.liferay.portal.apio.permission.HasPermission;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.NotFoundException;
-import javax.ws.rs.ServerErrorException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,12 +43,12 @@ import java.util.List;
 @Component(immediate = true)
 public class OptionNestedCollectionResource
 	implements
-		NestedCollectionResource<Document, Long, OptionIdentifier, Long,
+		NestedCollectionResource<CPOption, Long, OptionIdentifier, Long,
 			WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<Document, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<Document, Long, Long> builder) {
+	public NestedCollectionRoutes<CPOption, Long, Long> collectionRoutes(
+		NestedCollectionRoutes.Builder<CPOption, Long, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -81,11 +65,11 @@ public class OptionNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<Document, Long> itemRoutes(
-		ItemRoutes.Builder<Document, Long> builder) {
+	public ItemRoutes<CPOption, Long> itemRoutes(
+		ItemRoutes.Builder<CPOption, Long> builder) {
 
 		return builder.addGetter(
-			this::_getOption
+			_cpOptionService::getCPOption
 		).addRemover(
 			idempotent(_cpOptionService::deleteCPOption),
 			_hasPermission::forDeleting
@@ -97,38 +81,32 @@ public class OptionNestedCollectionResource
 	}
 
 	@Override
-	public Representor<Document> representor(
-		Representor.Builder<Document, Long> builder) {
+	public Representor<CPOption> representor(
+		Representor.Builder<CPOption, Long> builder) {
 
 		return builder.types(
 			"Option"
 		).identifier(
-			document -> GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))
+			CPOption::getCPOptionId
 		).addBidirectionalModel(
 			"webSite", "options", WebSiteIdentifier.class,
-			document -> GetterUtil.getLong(document.get(Field.GROUP_ID))
+			CPOption::getGroupId
 		).addString(
-			"name", document -> document.get(Field.NAME)
+			"name", CPOption::getName
 		).addString(
 			"fieldType",
-			document ->
-				document.get(CPOptionIndexer.FIELD_DDM_FORM_FIELD_TYPE_NAME)
+			CPOption::getDDMFormFieldTypeName
 		).addString(
-			"key", document -> document.get(CPOptionIndexer.FIELD_KEY)
+			"key", CPOption::getKey
 		).build();
 	}
 
-	private Document _addCPOption(Long webSiteId, OptionForm optionForm) throws PortalException {
+	private CPOption _addCPOption(Long webSiteId, OptionForm optionForm) throws PortalException {
 		try {
-			CPOption cpOption = _optionHelper.createCPOption(
+			return _optionHelper.createCPOption(
 				webSiteId, optionForm.getNameMap(),
 				optionForm.getDescriptionMap(), optionForm.getFieldType(),
 				optionForm.getKey());
-
-			Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-				CPOption.class);
-
-			return indexer.getDocument(cpOption);
 		}
 		catch (CPOptionKeyException cpoke) {
 			throw new BadRequestException(
@@ -139,90 +117,28 @@ public class OptionNestedCollectionResource
 		}
 	}
 
-	private Document _getOption(Long cpOptionId) throws PortalException {
-        ServiceContext serviceContext =
-            _productIndexerHelper.getServiceContext();
-
-        SearchContext searchContext = _optionHelper.buildSearchContext(
-            String.valueOf(cpOptionId), String.valueOf(cpOptionId),
-            QueryUtil.ALL_POS, QueryUtil.ALL_POS, null, serviceContext);
-
-        Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-            CPOption.class);
-
-        Hits hits = indexer.search(searchContext);
-
-        if (hits.getLength() == 0) {
-            throw new NotFoundException(
-                "Unable to find option with ID " + cpOptionId);
-        }
-
-        if (hits.getLength() > 1) {
-            if (_log.isWarnEnabled()) {
-                _log.warn(
-                    "More than one option found with ID " + cpOptionId);
-            }
-
-            CPOption cpOption = _cpOptionService.getCPOption(cpOptionId);
-
-            return indexer.getDocument(cpOption);
-        }
-
-        List<Document> documents = hits.toList();
-
-        return documents.get(0);
-	}
-
-	private PageItems<Document> _getPageItems(
+	private PageItems<CPOption> _getPageItems(
 		Pagination pagination, Long webSiteId) throws PortalException {
 
-			ServiceContext serviceContext =
-				_productIndexerHelper.getServiceContext(webSiteId, new long[0]);
+			List<CPOption> cpOptions = _cpOptionService.getCPOptions(webSiteId, pagination.getStartPosition(), pagination.getEndPosition());
 
-			SearchContext searchContext = _optionHelper.buildSearchContext(
-				null, null, pagination.getStartPosition(),
-				pagination.getEndPosition(), null, serviceContext);
+			int total = _cpOptionService.getCPOptionsCount(webSiteId);
 
-			Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-				CPOption.class);
-
-			Hits hits = indexer.search(searchContext);
-
-			List<Document> documents = new ArrayList<>();
-
-			if (hits.getLength() > 0) {
-				documents = hits.toList();
-			}
-
-			return new PageItems<>(documents, hits.getLength());
+			return new PageItems<>(cpOptions, total);
 	}
 
-	private Document _updateCPOption(Long cpOptionId, OptionForm optionForm) throws PortalException {
-        CPOption cpOption = _optionHelper.updateCPOption(
+	private CPOption _updateCPOption(Long cpOptionId, OptionForm optionForm) throws PortalException {
+        return _optionHelper.updateCPOption(
             cpOptionId, optionForm.getNameMap(),
             optionForm.getDescriptionMap(), optionForm.getFieldType(),
             optionForm.getKey());
-
-        Indexer<CPOption> indexer = _productIndexerHelper.getIndexer(
-            CPOption.class);
-
-        return indexer.getDocument(cpOption);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OptionNestedCollectionResource.class);
 
 	@Reference
 	private CPOptionService _cpOptionService;
 
 	@Reference
 	private OptionHelper _optionHelper;
-
-	@Reference
-	private ProductDefinitionHelper _productDefinitionHelper;
-
-	@Reference
-	private ProductIndexerHelper _productIndexerHelper;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CPOption)"

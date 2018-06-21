@@ -620,7 +620,7 @@
 					<isset var="checkedGlobalScope" />
 					<then>
 						<execute function="AssertChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-							<var name="key_scopeName" value="${scopeName}" />
+							<var name="key_scopeName" value="${checkedGlobalScope}" />
 						</execute>
 					</then>
 				</if>
@@ -629,7 +629,7 @@
 					<isset var="uncheckedGlobalScope" />
 					<then>
 						<execute function="AssertNotChecked" locator1="OAuth2#ADMIN_GLOBAL_SCOPE_CHECKBOX">
-							<var name="key_scopeName" value="${scopeName}" />
+							<var name="key_scopeName" value="${uncheckedGlobalScope}" />
 						</execute>
 					</then>
 				</if>

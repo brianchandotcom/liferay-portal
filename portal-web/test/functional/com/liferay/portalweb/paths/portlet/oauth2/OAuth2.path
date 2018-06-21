@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>ADMIN_GLOBAL_SCOPE_CHECKBOX</td>
-	<td>//div[contains(@id,'navGlobalScopes')]//div[normalize-space()='Everything']//input[@type='checkbox']</td>
+	<td>//div[contains(@id,'navGlobalScopes')]//div[normalize-space()='${key_scopeName}']//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>ADMIN_RESOURCE_SCOPE_CHECKBOX</td>
-	<td>//li[.//p[normalize-space()='${key_scopeName}']]//input[@type='checkbox']</td>
+	<td>//li[.//span[normalize-space()='${key_scopeName}']]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

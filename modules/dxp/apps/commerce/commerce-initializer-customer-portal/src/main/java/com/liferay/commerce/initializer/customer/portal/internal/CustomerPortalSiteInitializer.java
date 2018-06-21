@@ -52,7 +52,6 @@ import com.liferay.commerce.user.segment.service.CommerceUserSegmentEntryLocalSe
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -76,7 +75,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Portal;
@@ -170,9 +168,16 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 
 			createRoles(serviceContext);
 
-			importProducts(serviceContext);
+			AssetVocabulary assetVocabulary = _getAssetVocabulary(
+				_COMMERCE_VISIBILITY_VOCABULARY, serviceContext);
 
-			createCatalogRules(serviceContext);
+			AssetCategory visibleToUserAssetCategory = _getAssetCategory(
+				assetVocabulary.getVocabularyId(), "Visible to User",
+				serviceContext);
+
+			importProducts(visibleToUserAssetCategory, serviceContext);
+
+			createCPRule(visibleToUserAssetCategory, serviceContext);
 
 			_customerPortalThemePortletSettingsInitializer.initialize(
 				serviceContext);
@@ -203,36 +208,22 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	protected long[] addAssetCategories(
+	protected List<Long> addAssetCategories(
 			long vocabularyId, JSONArray jsonArray,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		List<Long> assetCategoryIdsList = new ArrayList<>();
+		List<Long> assetCategoryIds = new ArrayList<>();
 
 		long classNameId = _portal.getClassNameId(AssetCategory.class);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			String title = jsonArray.getString(i);
 
-			AssetCategory assetCategory =
-				_assetCategoryLocalService.fetchCategory(
-					serviceContext.getScopeGroupId(),
-					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, title,
-					vocabularyId);
+			AssetCategory assetCategory = _getAssetCategory(
+				vocabularyId, title, serviceContext);
 
-			if (assetCategory == null) {
-				Map<Locale, String> titleMap = Collections.singletonMap(
-					LocaleUtil.getSiteDefault(), title);
-
-				assetCategory = _assetCategoryLocalService.addCategory(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(),
-					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
-					null, vocabularyId, new String[0], serviceContext);
-			}
-
-			assetCategoryIdsList.add(assetCategory.getCategoryId());
+			assetCategoryIds.add(assetCategory.getCategoryId());
 
 			List<CPFriendlyURLEntry> cpFriendlyURLEntries =
 				_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntries(
@@ -250,7 +241,7 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 			}
 		}
 
-		return ListUtil.toLongArray(assetCategoryIdsList, Long::longValue);
+		return assetCategoryIds;
 	}
 
 	protected List<CommerceWarehouse> addCommerceWarehouses(
@@ -391,39 +382,6 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 			ACCOUNT_ORGANIZATIONS_COUNT, serviceContext);
 	}
 
-	protected void createCatalogRules(ServiceContext serviceContext)
-		throws PortalException {
-
-		CPRule cpRule = _cpRuleLocalService.addCPRule(
-			"all", true, CPRuleConstants.TYPE_ASSET_CATEGORY, serviceContext);
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.getGroupVocabulary(
-				serviceContext.getScopeGroupId(), _COMMERCE_VOCABULARY);
-
-		List<AssetCategory> assetCategories =
-			_assetCategoryLocalService.getVocabularyCategories(
-				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		for (AssetCategory assetCategory : assetCategories) {
-			_cpRuleAssetCategoryRelLocalService.addCPRuleAssetCategoryRel(
-				cpRule.getCPRuleId(), assetCategory.getCategoryId(),
-				serviceContext);
-		}
-
-		CommerceUserSegmentEntry commerceUserSegmentEntry =
-			_commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntry(
-				serviceContext.getScopeGroupId(),
-				CommerceUserSegmentEntryConstants.KEY_USER);
-
-		_cpRuleUserSegmentRelLocalService.addCPRuleUserSegmentRel(
-			cpRule.getCPRuleId(),
-			commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
-			serviceContext);
-	}
-
 	protected void createCommerceRoles(JSONArray jsonArray) throws Exception {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -436,10 +394,11 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 
 	protected CPDefinition createCPDefinition(
 			String title, String description, String sku,
-			long[] assetCategoryIds, ServiceContext serviceContext)
+			List<Long> assetCategoryIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		serviceContext.setAssetCategoryIds(assetCategoryIds);
+		serviceContext.setAssetCategoryIds(
+			ArrayUtil.toLongArray(assetCategoryIds));
 
 		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
 			serviceContext.getTimeZone());
@@ -488,6 +447,29 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 			StringPool.BLANK, serviceContext);
 	}
 
+	protected void createCPRule(
+			AssetCategory visibleToUserAssetCategory,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CPRule cpRule = _cpRuleLocalService.addCPRule(
+			"all", true, CPRuleConstants.TYPE_ASSET_CATEGORY, serviceContext);
+
+		_cpRuleAssetCategoryRelLocalService.addCPRuleAssetCategoryRel(
+			cpRule.getCPRuleId(), visibleToUserAssetCategory.getCategoryId(),
+			serviceContext);
+
+		CommerceUserSegmentEntry commerceUserSegmentEntry =
+			_commerceUserSegmentEntryLocalService.getCommerceUserSegmentEntry(
+				serviceContext.getScopeGroupId(),
+				CommerceUserSegmentEntryConstants.KEY_USER);
+
+		_cpRuleUserSegmentRelLocalService.addCPRuleUserSegmentRel(
+			cpRule.getCPRuleId(),
+			commerceUserSegmentEntry.getCommerceUserSegmentEntryId(),
+			serviceContext);
+	}
+
 	protected void createRoles(ServiceContext serviceContext) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -522,7 +504,9 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 		return serviceContext;
 	}
 
-	protected void importProducts(ServiceContext serviceContext)
+	protected void importProducts(
+			AssetCategory visibleToUserAssetCategory,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -532,15 +516,8 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(productsJSON);
 
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.fetchGroupVocabulary(
-				serviceContext.getScopeGroupId(), _COMMERCE_VOCABULARY);
-
-		if (assetVocabulary == null) {
-			assetVocabulary = _assetVocabularyLocalService.addVocabulary(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				_COMMERCE_VOCABULARY, serviceContext);
-		}
+		AssetVocabulary assetVocabulary = _getAssetVocabulary(
+			_COMMERCE_VOCABULARY, serviceContext);
 
 		List<CommerceWarehouse> commerceWarehouses = addCommerceWarehouses(
 			serviceContext);
@@ -566,8 +543,10 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 
 			//Asset categories
 
-			long[] assetCategoryIds = addAssetCategories(
+			List<Long> assetCategoryIds = addAssetCategories(
 				assetVocabulary.getVocabularyId(), categories, serviceContext);
+
+			assetCategoryIds.add(visibleToUserAssetCategory.getCategoryId());
 
 			// Commerce product definition
 
@@ -685,6 +664,45 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 			_getOrganizationTypeProperties(configuration, organizationType));
 	}
 
+	private AssetCategory _getAssetCategory(
+			long vocabularyId, String title, ServiceContext serviceContext)
+		throws PortalException {
+
+		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
+			serviceContext.getScopeGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, title,
+			vocabularyId);
+
+		if (assetCategory == null) {
+			Map<Locale, String> titleMap = Collections.singletonMap(
+				LocaleUtil.getSiteDefault(), title);
+
+			assetCategory = _assetCategoryLocalService.addCategory(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
+				null, vocabularyId, new String[0], serviceContext);
+		}
+
+		return assetCategory;
+	}
+
+	private AssetVocabulary _getAssetVocabulary(
+			String name, ServiceContext serviceContext)
+		throws PortalException {
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				serviceContext.getScopeGroupId(), name);
+
+		if (assetVocabulary == null) {
+			assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				name, serviceContext);
+		}
+
+		return assetVocabulary;
+	}
+
 	private String _getConfigurationFilter(String configurationPid) {
 		StringBundler sb = new StringBundler(5);
 
@@ -794,6 +812,9 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 	private static final String _COMMERCE_ROLE_CONFIGURATION_PID =
 		"com.liferay.commerce.user.web.internal.configuration." +
 			"CommerceRoleGroupServiceConfiguration";
+
+	private static final String _COMMERCE_VISIBILITY_VOCABULARY =
+		"Commerce Visibility";
 
 	private static final String _COMMERCE_VOCABULARY = "Commerce";
 

@@ -14,10 +14,10 @@
 
 package foo.portlet.portlet;
 
+import com.google.common.base.Strings;
+
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.UserLocalService;
-
-import foo.api.FooService;
 
 import foo.portlet.constants.FooPortletKeys;
 
@@ -45,8 +45,9 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FooPortlet extends MVCPortlet {
 
-	@Reference
-	private FooService _fooService;
+	public FooPortlet() {
+		Strings.repeat("foo", 10);
+	}
 
 	@Reference
 	private UserLocalService _userLocalService;

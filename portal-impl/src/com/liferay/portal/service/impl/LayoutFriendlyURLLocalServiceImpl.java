@@ -310,19 +310,42 @@ public class LayoutFriendlyURLLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		List<LayoutFriendlyURL> layoutFriendlyURLs = new ArrayList<>();
+		Map<String, LayoutFriendlyURL> layoutFriendlyURLMap = new HashMap<>();
+
+		for (LayoutFriendlyURL layoutFriendlyURL :
+				layoutFriendlyURLPersistence.findByPlid(plid)) {
+
+			layoutFriendlyURLMap.put(
+				layoutFriendlyURL.getLanguageId(), layoutFriendlyURL);
+		}
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs = new ArrayList<>(
+			friendlyURLMap.size());
 
 		for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 			String friendlyURL = friendlyURLMap.get(locale);
 			String languageId = LocaleUtil.toLanguageId(locale);
 
+			LayoutFriendlyURL layoutFriendlyURL = layoutFriendlyURLMap.get(
+				languageId);
+
 			if (Validator.isNull(friendlyURL)) {
-				deleteLayoutFriendlyURL(plid, languageId);
+				if (layoutFriendlyURL != null) {
+					deleteLayoutFriendlyURL(layoutFriendlyURL);
+				}
 			}
 			else {
-				LayoutFriendlyURL layoutFriendlyURL = updateLayoutFriendlyURL(
-					userId, companyId, groupId, plid, privateLayout,
-					friendlyURL, languageId, serviceContext);
+				if (layoutFriendlyURL == null) {
+					layoutFriendlyURL = addLayoutFriendlyURL(
+						userId, companyId, groupId, plid, privateLayout,
+						friendlyURL, languageId, serviceContext);
+				}
+				else {
+					layoutFriendlyURL.setFriendlyURL(friendlyURL);
+
+					layoutFriendlyURL = layoutFriendlyURLPersistence.update(
+						layoutFriendlyURL);
+				}
 
 				layoutFriendlyURLs.add(layoutFriendlyURL);
 			}

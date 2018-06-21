@@ -179,6 +179,18 @@ public class ConfigurationPersistenceManager
 					writeLock.unlock();
 				}
 			}
+			else {
+				readLock.unlock();
+				writeLock.lock();
+
+				try {
+					_verifyConfigurations();
+				}
+				finally {
+					readLock.lock();
+					writeLock.unlock();
+				}
+			}
 
 			populateDictionaries();
 		}
@@ -645,6 +657,57 @@ public class ConfigurationPersistenceManager
 		}
 
 		return newDictionary;
+	}
+
+	private void _verifyConfigurations() {
+		try (Connection connection = _dataSource.getConnection();
+			PreparedStatement selectPS = connection.prepareStatement(
+				buildSQL(
+					"select configurationId, dictionary from Configuration_ " +
+						"where dictionary like " +
+							"'%felix.fileinstall.filename=\"file:%'"));
+			PreparedStatement updatePS = connection.prepareStatement(
+				buildSQL(
+					"update Configuration_ set dictionary = ? where " +
+						"configurationId = ?"));
+			ResultSet rs = selectPS.executeQuery()) {
+
+			while (rs.next()) {
+				String pid = rs.getString(1);
+				String dictionaryString = rs.getString(2);
+
+				@SuppressWarnings("unchecked")
+				Dictionary<Object, Object> dictionary =
+					ConfigurationHandler.read(
+						new UnsyncByteArrayInputStream(
+							dictionaryString.getBytes(StringPool.UTF8)));
+
+				String fileName = (String)dictionary.get(
+					_FELIX_FILE_INSTALL_FILENAME);
+
+				if (fileName != null) {
+					File file = new File(URI.create(fileName));
+
+					dictionary.put(
+						_FELIX_FILE_INSTALL_FILENAME, file.getName());
+				}
+
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
+
+				ConfigurationHandler.write(
+					unsyncByteArrayOutputStream, dictionary);
+
+				updatePS.setString(1, unsyncByteArrayOutputStream.toString());
+
+				updatePS.setString(2, pid);
+
+				updatePS.executeUpdate();
+			}
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 	}
 
 	private static final String _FELIX_FILE_INSTALL_FILENAME =

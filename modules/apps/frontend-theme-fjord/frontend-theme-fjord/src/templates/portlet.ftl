@@ -26,7 +26,7 @@
 				</div>
 
 				<#foreach portletTitleMenu in portlet_title_menus>
-					<menu class="icon-monospaced portlet-title-menu portlet-topper-toolbar" id="portlet-title-menu_${portlet_id}_${portletTitleMenu_index}" type="toolbar">
+					<menu class="portlet-topper-toolbar" id="portlet-title-menu_${portlet_id}_${portletTitleMenu_index}" type="toolbar">
 						<@liferay_ui["menu"] menu=portletTitleMenu />
 					</menu>
 				</#foreach>
@@ -43,6 +43,43 @@
 	</#if>
 
 	<div class="${portlet_content_css_class}">
+		<@liferay_util["buffer"] var="portlet_header">
+			<@liferay_util["dynamic-include"] key="portlet_header_${portlet_display_root_portlet_id}" />
+		</@>
+
+		<#assign show_portlet_decorator = validator.isNotNull(portlet_display.getPortletDecoratorId()) && !stringUtil.equals(portlet_display.getPortletDecoratorId(), "barebone") />
+
+		<#if portlet_display.isShowBackIcon() || show_portlet_decorator || portlet_header?has_content>
+			<div class="autofit-float autofit-row portlet-header">
+				<#if portlet_display.isShowBackIcon()>
+					<div class="autofit-col">
+						<div class="autofit-section">
+							<a class="icon-monospaced portlet-icon-back text-default" href="${portlet_back_url}" title="<@liferay.language key="return-to-full-page" />">
+								<@liferay_ui["icon"]
+									icon="angle-left"
+									markupView="lexicon"
+								/>
+							</a>
+						</div>
+					</div>
+				</#if>
+
+				<#if show_portlet_decorator>
+					<div class="autofit-col autofit-col-expand">
+						<h2 class="portlet-title-text">${portlet_title}</h2>
+					</div>
+				</#if>
+
+				<#if portlet_header?has_content>
+					<div class="autofit-col autofit-col-end">
+						<div class="autofit-section">
+							${portlet_header}
+						</div>
+					</div>
+				</#if>
+			</div>
+		</#if>
+
 		${portlet_display.writeContent(writer)}
 	</div>
 </section>

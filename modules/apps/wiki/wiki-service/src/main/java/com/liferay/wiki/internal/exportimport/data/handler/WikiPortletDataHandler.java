@@ -218,8 +218,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 
 			_staging.populateLastPublishDateCounts(
 				portletDataContext,
-				new String[] {
-					WikiNode.class.getName(), WikiPage.class.getName()
+				new StagedModelType[] {
+					new StagedModelType(WikiNode.class.getName()),
+					new StagedModelType(WikiPage.class.getName())
 				});
 
 			return;

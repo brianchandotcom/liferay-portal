@@ -248,6 +248,13 @@ public class ChangesetEntryLocalServiceWrapper
 		return _changesetEntryLocalService.getChangesetEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.changeset.model.ChangesetEntry> getChangesetEntries(
+		long changesetCollectionId, long classNameId) {
+		return _changesetEntryLocalService.getChangesetEntries(changesetCollectionId,
+			classNameId);
+	}
+
 	/**
 	* Returns the number of changeset entries.
 	*

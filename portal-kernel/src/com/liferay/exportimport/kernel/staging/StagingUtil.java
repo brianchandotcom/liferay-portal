@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -439,6 +440,15 @@ public class StagingUtil {
 		throws PortalException {
 
 		_staging.lockGroup(userId, groupId);
+	}
+
+	public static void populateLastPublishDateCounts(
+			PortletDataContext portletDataContext,
+			StagedModelType[] stagedModelTypes)
+		throws PortalException {
+
+		_staging.populateLastPublishDateCounts(
+			portletDataContext, stagedModelTypes);
 	}
 
 	public static void populateLastPublishDateCounts(

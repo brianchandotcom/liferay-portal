@@ -133,7 +133,7 @@ public class CalendarBookingAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, null, CalendarPortletKeys.CALENDAR, 0, 0,
+			liferayPortletRequest, CalendarPortletKeys.CALENDAR,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");

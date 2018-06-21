@@ -148,7 +148,7 @@ public class CommentAssetRenderer
 		throws Exception {
 
 		PortletURL editPortletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, null, CommentPortletKeys.COMMENT, 0, 0,
+			liferayPortletRequest, CommentPortletKeys.COMMENT,
 			PortletRequest.RENDER_PHASE);
 
 		editPortletURL.setParameter(

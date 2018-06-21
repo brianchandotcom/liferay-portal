@@ -209,7 +209,7 @@ public class WikiPageAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, null, WikiPortletKeys.WIKI, 0, 0,
+			liferayPortletRequest, WikiPortletKeys.WIKI,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");

@@ -186,7 +186,7 @@ public class BlogsEntryAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, null, BlogsPortletKeys.BLOGS, 0, 0,
+			liferayPortletRequest, BlogsPortletKeys.BLOGS,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/edit_entry");

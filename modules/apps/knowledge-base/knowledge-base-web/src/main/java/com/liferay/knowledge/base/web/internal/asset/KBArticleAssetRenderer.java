@@ -111,8 +111,8 @@ public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, null, KBPortletKeys.KNOWLEDGE_BASE_ADMIN, 0,
-			0, PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
 		portletURL.setParameter(

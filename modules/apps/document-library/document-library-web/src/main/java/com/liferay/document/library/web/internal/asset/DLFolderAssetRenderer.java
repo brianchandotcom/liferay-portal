@@ -137,8 +137,8 @@ public class DLFolderAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, null, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
-			0, 0, PortletRequest.RENDER_PHASE);
+			liferayPortletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
+			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_folder");

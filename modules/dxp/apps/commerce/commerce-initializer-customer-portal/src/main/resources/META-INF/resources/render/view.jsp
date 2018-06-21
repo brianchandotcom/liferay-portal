@@ -25,7 +25,7 @@ CPInstance cpInstance = cpContentHelper.getDefaultCPInstance(request);
 long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 %>
 
-<div class="container-fluid product-detail" id="<portlet:namespace /><%= cpCatalogEntry.getCPDefinitionId() %>ProductContent">
+<div class="container-fluid product-detail" id="<portlet:namespace /><%= cpDefinitionId %>ProductContent">
 	<div class="product-detail-header">
 		<h2 class="commerce-title"><%= cpCatalogEntry.getName() %></h2>
 

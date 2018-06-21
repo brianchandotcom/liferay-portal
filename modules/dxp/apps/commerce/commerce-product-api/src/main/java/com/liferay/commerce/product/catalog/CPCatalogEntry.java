@@ -14,12 +14,16 @@
 
 package com.liferay.commerce.product.catalog;
 
+import java.util.List;
+
 /**
  * @author Marco Leo
  */
 public interface CPCatalogEntry {
 
 	public long getCPDefinitionId();
+
+	public List<CPSku> getCPSkus();
 
 	public String getDefaultImageFileUrl();
 
@@ -34,8 +38,6 @@ public interface CPCatalogEntry {
 	public String getProductTypeName();
 
 	public String getShortDescription();
-
-	public String getSku();
 
 	public String getUrl();
 

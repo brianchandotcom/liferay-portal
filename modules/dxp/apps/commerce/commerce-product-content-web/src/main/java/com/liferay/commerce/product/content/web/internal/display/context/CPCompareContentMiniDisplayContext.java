@@ -134,7 +134,7 @@ public class CPCompareContentMiniDisplayContext {
 
 		return
 			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderers(
-				getCPContentListRendererKey(), cpType);
+				CPPortletKeys.CP_COMPARE_CONTENT_MINI_WEB, cpType);
 	}
 
 	public String getCPContentListRendererKey() {
@@ -282,7 +282,7 @@ public class CPCompareContentMiniDisplayContext {
 		CPContentListEntryRenderer cpContentListEntryRenderer =
 			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderer(
 				getCPTypeListEntryRendererKey(cpType),
-				getCPContentListRendererKey(), cpType);
+				CPPortletKeys.CP_COMPARE_CONTENT_MINI_WEB, cpType);
 
 		if (cpContentListEntryRenderer != null) {
 			cpContentListEntryRenderer.render(

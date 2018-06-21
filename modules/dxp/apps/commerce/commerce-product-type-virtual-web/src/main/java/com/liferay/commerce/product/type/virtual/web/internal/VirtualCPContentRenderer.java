@@ -17,7 +17,7 @@ package com.liferay.commerce.product.type.virtual.web.internal;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.render.CPContentRenderer;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
-import com.liferay.commerce.product.type.virtual.web.internal.portlet.template.contributor.VirtualCPTypeHelper;
+import com.liferay.commerce.product.type.virtual.util.VirtualCPTypeHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;

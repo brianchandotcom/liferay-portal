@@ -17,6 +17,7 @@ package com.liferay.commerce.product.internal.util;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.constants.CPConstants;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.internal.catalog.DatabaseCPCatalogEntryImpl;
 import com.liferay.commerce.product.internal.catalog.IndexCPCatalogEntryImpl;
@@ -24,6 +25,7 @@ import com.liferay.commerce.product.internal.search.CPDefinitionSearcher;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +63,8 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Override
 	public CPCatalogEntry getCPCatalogEntry(Document document, Locale locale) {
-		return new IndexCPCatalogEntryImpl(document, locale);
+		return new IndexCPCatalogEntryImpl(
+			document, _cpDefinitionLocalService, locale);
 	}
 
 	@Override
@@ -100,12 +105,52 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			return StringPool.BLANK;
 		}
 
+		Layout layout = null;
+
 		Group group = themeDisplay.getScopeGroup();
 
-		String currentSiteURL =
-			_portal.getPortalURL(themeDisplay) +
-				themeDisplay.getPathFriendlyURLPublic() +
-					group.getFriendlyURL();
+		String layoutUuid = _cpDefinitionLocalService.getLayoutUuid(
+			cpDefinitionId);
+
+		if (Validator.isNotNull(layoutUuid)) {
+			try {
+				layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+					layoutUuid, group.getGroupId(), true);
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+			}
+
+			if (layout == null) {
+				try {
+					layout = _layoutLocalService.getLayoutByUuidAndGroupId(
+						layoutUuid, group.getGroupId(), false);
+				}
+				catch (PortalException pe) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(pe, pe);
+					}
+				}
+			}
+		}
+
+		if (layout == null) {
+			long plid = _portal.getPlidFromPortletId(
+				group.getGroupId(), CPPortletKeys.CP_CONTENT_WEB);
+
+			if (plid > 0) {
+				layout = _layoutLocalService.getLayout(plid);
+			}
+		}
+
+		if (layout == null) {
+			layout = themeDisplay.getLayout();
+		}
+
+		String currentSiteURL = _portal.getGroupFriendlyURL(
+			layout.getLayoutSet(), themeDisplay);
 
 		return currentSiteURL + CPConstants.SEPARATOR_PRODUCT_URL +
 			cpFriendlyURLEntry.getUrlTitle();
@@ -205,6 +250,9 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionHelperImpl.class);
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

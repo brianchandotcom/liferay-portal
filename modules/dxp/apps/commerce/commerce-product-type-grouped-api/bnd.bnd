@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.commerce.product.type.grouped.model,\
 	com.liferay.commerce.product.type.grouped.service,\
 	com.liferay.commerce.product.type.grouped.service.persistence,\
+	com.liferay.commerce.product.type.grouped.util,\
 	com.liferay.commerce.product.type.grouped.util.comparator
 Import-Package:\
 	com.liferay.portal.kernel.dao.search;version="[7.2.0,8.0.0)",\

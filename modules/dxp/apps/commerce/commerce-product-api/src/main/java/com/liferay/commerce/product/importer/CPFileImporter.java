@@ -39,7 +39,7 @@ public interface CPFileImporter {
 		throws Exception;
 
 	public void createLayouts(
-			JSONArray jsonArray, boolean privateLayout, ClassLoader classLoader,
+			JSONArray jsonArray, ClassLoader classLoader,
 			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception;
 
@@ -52,7 +52,9 @@ public interface CPFileImporter {
 			ServiceContext serviceContext)
 		throws Exception;
 
-	public void updateLookAndFeel(String themeId, ServiceContext serviceContext)
+	public void updateLookAndFeel(
+			String themeId, boolean privateLayout,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 }

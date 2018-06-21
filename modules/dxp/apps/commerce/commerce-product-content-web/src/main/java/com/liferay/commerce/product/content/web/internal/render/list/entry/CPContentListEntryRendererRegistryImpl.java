@@ -22,8 +22,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -45,10 +46,9 @@ public class CPContentListEntryRendererRegistryImpl
 
 	@Override
 	public CPContentListEntryRenderer getCPContentListEntryRenderer(
-		String key, String cpContentListRendererKey, String cpType) {
+		String key, String portletName, String cpType) {
 
-		if (Validator.isNull(key) ||
-			Validator.isNull(cpContentListRendererKey) ||
+		if (Validator.isNull(key) || Validator.isNull(portletName) ||
 			Validator.isNull(cpType)) {
 
 			return null;
@@ -70,18 +70,39 @@ public class CPContentListEntryRendererRegistryImpl
 		Map<String, Object> cpContentListEntryRendererServiceWrapperProperties =
 			cpContentListEntryRendererServiceWrapper.getProperties();
 
-		String value = MapUtil.getString(
-			cpContentListEntryRendererServiceWrapperProperties,
-			"commerce.product.content.list.renderer.key");
+		Object portletNameObject =
+			cpContentListEntryRendererServiceWrapperProperties.get(
+				"commerce.product.content.list.entry.renderer.portlet.name");
 
-		if (cpContentListRendererKey.equals(value)) {
-			String type = MapUtil.getString(
-				cpContentListEntryRendererServiceWrapperProperties,
+		if (portletNameObject instanceof String[]) {
+			String[] portletNames = GetterUtil.getStringValues(
+				portletNameObject);
+
+			if (!ArrayUtil.contains(portletNames, portletName)) {
+				return null;
+			}
+		}
+		else if (portletNameObject instanceof String &&
+				 !portletName.equals(GetterUtil.getString(portletNameObject))) {
+
+			return null;
+		}
+
+		Object typeObject =
+			cpContentListEntryRendererServiceWrapperProperties.get(
 				"commerce.product.content.list.entry.renderer.type");
 
-			if (cpType.equals(type)) {
+		if (typeObject instanceof String[]) {
+			String[] types = GetterUtil.getStringValues(typeObject);
+
+			if (ArrayUtil.contains(types, cpType)) {
 				return cpContentListEntryRendererServiceWrapper.getService();
 			}
+		}
+		else if (typeObject instanceof String &&
+				 cpType.equals(GetterUtil.getString(typeObject))) {
+
+			return cpContentListEntryRendererServiceWrapper.getService();
 		}
 
 		return null;
@@ -89,7 +110,7 @@ public class CPContentListEntryRendererRegistryImpl
 
 	@Override
 	public List<CPContentListEntryRenderer> getCPContentListEntryRenderers(
-		String cpContentListRendererKey, String cpType) {
+		String portletName, String cpType) {
 
 		List<CPContentListEntryRenderer> cpContentListEntryRenderers =
 			new ArrayList<>();
@@ -102,27 +123,51 @@ public class CPContentListEntryRendererRegistryImpl
 				cpContentListEntryRendererServiceWrapper :
 					cpContentListEntryRendererServiceWrappers) {
 
-			if (Validator.isNotNull(cpContentListRendererKey) &&
-				Validator.isNotNull(cpType)) {
+			if (Validator.isNull(portletName) || Validator.isNull(cpType)) {
+				continue;
+			}
 
-				Map<String, Object>
-					cpContentListRendererServiceWrapperProperties =
-						cpContentListEntryRendererServiceWrapper.
-							getProperties();
+			Map<String, Object>
+				cpContentListEntryRendererServiceWrapperProperties =
+					cpContentListEntryRendererServiceWrapper.getProperties();
 
-				String value = MapUtil.getString(
-					cpContentListRendererServiceWrapperProperties,
-					"commerce.product.content.list.renderer.key");
-				String type = MapUtil.getString(
-					cpContentListRendererServiceWrapperProperties,
+			Object portletNameObject =
+				cpContentListEntryRendererServiceWrapperProperties.get(
+					"commerce.product.content.list.entry.renderer.portlet." +
+						"name");
+
+			if (portletNameObject instanceof String[]) {
+				String[] portletNames = GetterUtil.getStringValues(
+					portletNameObject);
+
+				if (!ArrayUtil.contains(portletNames, portletName)) {
+					continue;
+				}
+			}
+			else if (portletNameObject instanceof String &&
+					 !portletName.equals(
+						 GetterUtil.getString(portletNameObject))) {
+
+				continue;
+			}
+
+			Object typeObject =
+				cpContentListEntryRendererServiceWrapperProperties.get(
 					"commerce.product.content.list.entry.renderer.type");
 
-				if (cpContentListRendererKey.equals(value) &&
-					cpType.equals(type)) {
+			if (typeObject instanceof String[]) {
+				String[] types = GetterUtil.getStringValues(typeObject);
 
+				if (ArrayUtil.contains(types, cpType)) {
 					cpContentListEntryRenderers.add(
 						cpContentListEntryRendererServiceWrapper.getService());
 				}
+			}
+			else if (typeObject instanceof String &&
+					 cpType.equals(GetterUtil.getString(typeObject))) {
+
+				cpContentListEntryRenderers.add(
+					cpContentListEntryRendererServiceWrapper.getService());
 			}
 		}
 

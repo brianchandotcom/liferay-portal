@@ -162,7 +162,7 @@ public class CustomerPortalSiteInitializer implements SiteInitializer {
 			configureB2BSite(groupId, serviceContext);
 
 			_cpFileImporter.updateLookAndFeel(
-				_CUSTOMER_PORTAL_THEME_ID, serviceContext);
+				_CUSTOMER_PORTAL_THEME_ID, true, serviceContext);
 
 			_customerPortalLayoutsInitializer.initialize(serviceContext);
 

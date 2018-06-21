@@ -39,8 +39,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"commerce.product.content.list.entry.renderer.key=" + CompareProductSimpleCPContentListEntryRenderer.KEY,
-		"commerce.product.content.list.entry.renderer.type=" + SimpleCPTypeConstants.NAME,
-		"commerce.product.content.list.renderer.key=" + CPPortletKeys.CP_COMPARE_CONTENT_WEB
+		"commerce.product.content.list.entry.renderer.portlet.name=" + CPPortletKeys.CP_COMPARE_CONTENT_WEB,
+		"commerce.product.content.list.entry.renderer.type=" + SimpleCPTypeConstants.NAME
 	},
 	service = CPContentListEntryRenderer.class
 )
@@ -59,7 +59,7 @@ public class CompareProductSimpleCPContentListEntryRenderer
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "default");
+		return LanguageUtil.get(resourceBundle, "compare");
 	}
 
 	@Override

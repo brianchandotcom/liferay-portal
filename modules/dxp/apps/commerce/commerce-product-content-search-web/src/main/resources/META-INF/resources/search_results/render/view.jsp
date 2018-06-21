@@ -17,11 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
+
 CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContainer();
+SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsDisplayContext.getSearchContainer();
 
-List<CPCatalogEntry> results = searchContainer.getResults();
+List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
 %>
 
 <c:choose>
@@ -29,10 +31,9 @@ List<CPCatalogEntry> results = searchContainer.getResults();
 		<div class="row">
 
 			<%
-			for (Object object : results) {
-				CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)object;
-
-				request.setAttribute("search_result.jsp-cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
+			for (CPCatalogEntry cpCatalogEntry : results) {
+				request.setAttribute("cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
+				request.setAttribute("cpContentListRenderer-cpContentHelper", cpContentHelper);
 
 				cpSearchResultsDisplayContext.renderCPContentListEntry(cpCatalogEntry);
 			}
@@ -50,7 +51,7 @@ List<CPCatalogEntry> results = searchContainer.getResults();
 <aui:form useNamespace="<%= false %>">
 	<liferay-ui:search-paginator
 		markupView="lexicon"
-		searchContainer="<%= searchContainer %>"
+		searchContainer="<%= cpCatalogEntrySearchContainer %>"
 		type="more"
 	/>
 </aui:form>

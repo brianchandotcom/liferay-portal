@@ -49,7 +49,7 @@ public class CustomerPortalLayoutsInitializer {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		_cpFileImporter.createLayouts(
-			jsonArray, false, classLoader,
+			jsonArray, classLoader,
 			CustomerPortalSiteInitializer.DEPENDENCY_PATH, serviceContext);
 	}
 

@@ -20,6 +20,8 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.web.internal.util.CPPublisherWebHelper;
@@ -28,6 +30,7 @@ import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -71,6 +74,7 @@ public class CPPublisherConfigurationDisplayContext
 		CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
 		CPContentListRendererRegistry cpContentListRendererRegistry,
 		CPDataSourceRegistry cpDataSourceRegistry,
+		CPInstanceHelper cpInstanceHelper,
 		CPPublisherWebHelper cpPublisherWebHelper,
 		CPTypeServicesTracker cpTypeServicesTracker,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
@@ -82,6 +86,7 @@ public class CPPublisherConfigurationDisplayContext
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetTagLocalService = assetTagLocalService;
 		_cpDataSourceRegistry = cpDataSourceRegistry;
+		_cpInstanceHelper = cpInstanceHelper;
 		_cpTypeServicesTracker = cpTypeServicesTracker;
 		_itemSelector = itemSelector;
 	}
@@ -243,6 +248,12 @@ public class CPPublisherConfigurationDisplayContext
 		return _cpTypeServicesTracker.getCPTypes();
 	}
 
+	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
+		throws Exception {
+
+		return _cpInstanceHelper.getDefaultCPSku(cpCatalogEntry);
+	}
+
 	public String getItemSelectorUrl() throws Exception {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(
@@ -380,6 +391,7 @@ public class CPPublisherConfigurationDisplayContext
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final AssetTagLocalService _assetTagLocalService;
 	private final CPDataSourceRegistry _cpDataSourceRegistry;
+	private final CPInstanceHelper _cpInstanceHelper;
 	private final CPTypeServicesTracker _cpTypeServicesTracker;
 	private final ItemSelector _itemSelector;
 	private String _orderByColumn1;

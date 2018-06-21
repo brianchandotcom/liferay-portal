@@ -17,6 +17,7 @@ package com.liferay.commerce.product.content.web.internal.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.constants.CPWebKeys;
@@ -237,6 +238,13 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		return _cpInstanceHelper.getCPInstance(
 			cpCatalogEntry.getCPDefinitionId(), null);
+	}
+
+	@Override
+	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
+		throws Exception {
+
+		return _cpInstanceHelper.getDefaultCPSku(cpCatalogEntry);
 	}
 
 	@Override

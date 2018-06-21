@@ -45,7 +45,7 @@ public class ADTFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 
 	@Override
 	public String getCategoryKey() {
-		return CPPublisherConstants.CATEGORY_KEY_PRODUCT_SELECTION;
+		return CPPublisherConstants.CATEGORY_KEY_RENDER_SELECTION;
 	}
 
 	@Override
@@ -91,10 +91,11 @@ public class ADTFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletPreferences portletPreferences =
-			portletDisplay.getPortletSetup();
+			themeDisplay.getStrictLayoutPortletSetup(
+				themeDisplay.getLayout(), portletDisplay.getPortletResource());
 
 		String renderSelection = GetterUtil.getString(
-			portletPreferences.getValue("renderSelection", "custom"));
+			portletPreferences.getValue("renderSelection", null), "custom");
 
 		if (renderSelection.equals("adt")) {
 			return true;

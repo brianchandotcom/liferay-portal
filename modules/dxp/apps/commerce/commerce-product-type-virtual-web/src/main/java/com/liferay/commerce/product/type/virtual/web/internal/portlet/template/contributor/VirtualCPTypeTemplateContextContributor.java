@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.portlet.template.contributor;
 
+import com.liferay.commerce.product.type.virtual.util.VirtualCPTypeHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;

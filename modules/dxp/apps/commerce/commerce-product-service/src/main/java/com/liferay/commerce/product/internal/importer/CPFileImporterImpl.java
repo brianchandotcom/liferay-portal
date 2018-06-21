@@ -133,13 +133,12 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 	@Override
 	public void createLayouts(
-			JSONArray jsonArray, boolean privateLayout, ClassLoader classLoader,
+			JSONArray jsonArray, ClassLoader classLoader,
 			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
 		createLayouts(
-			jsonArray, null, privateLayout, classLoader, dependenciesFilePath,
-			serviceContext);
+			jsonArray, null, classLoader, dependenciesFilePath, serviceContext);
 	}
 
 	@Override
@@ -199,11 +198,13 @@ public class CPFileImporterImpl implements CPFileImporter {
 	}
 
 	@Override
-	public void updateLookAndFeel(String themeId, ServiceContext serviceContext)
+	public void updateLookAndFeel(
+			String themeId, boolean privateLayout,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			serviceContext.getScopeGroupId(), false);
+			serviceContext.getScopeGroupId(), privateLayout);
 
 		UnicodeProperties typeSettingProperties =
 			layoutSet.getSettingsProperties();
@@ -222,8 +223,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 		setThemeSettingProperties(theme, typeSettingProperties);
 
 		_layoutSetLocalService.updateLookAndFeel(
-			serviceContext.getScopeGroupId(), false, themeId, StringPool.BLANK,
-			StringPool.BLANK);
+			serviceContext.getScopeGroupId(), privateLayout, themeId,
+			StringPool.BLANK, StringPool.BLANK);
 	}
 
 	protected void addLayoutPortlets(
@@ -331,9 +332,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 	}
 
 	protected void createLayout(
-			JSONObject jsonObject, Layout parentLayout, boolean privateLayout,
-			ClassLoader classLoader, String dependenciesFilePath,
-			ServiceContext serviceContext)
+			JSONObject jsonObject, Layout parentLayout, ClassLoader classLoader,
+			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
 		boolean hidden = jsonObject.getBoolean("hidden");
@@ -342,6 +342,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 			"layoutType", LayoutConstants.TYPE_PORTLET);
 		String name = jsonObject.getString("name");
 		String icon = jsonObject.getString("icon");
+		boolean privateLayout = jsonObject.getBoolean("privateLayout");
 
 		long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
@@ -391,23 +392,22 @@ public class CPFileImporterImpl implements CPFileImporter {
 			(sublayoutsJSONArray.length() > 0)) {
 
 			createLayouts(
-				sublayoutsJSONArray, layout, privateLayout, classLoader,
-				dependenciesFilePath, serviceContext);
+				sublayoutsJSONArray, layout, classLoader, dependenciesFilePath,
+				serviceContext);
 		}
 	}
 
 	protected void createLayouts(
-			JSONArray jsonArray, Layout parentLayout, boolean privateLayout,
-			ClassLoader classLoader, String dependenciesFilePath,
-			ServiceContext serviceContext)
+			JSONArray jsonArray, Layout parentLayout, ClassLoader classLoader,
+			String dependenciesFilePath, ServiceContext serviceContext)
 		throws Exception {
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			createLayout(
-				jsonObject, parentLayout, privateLayout, classLoader,
-				dependenciesFilePath, serviceContext);
+				jsonObject, parentLayout, classLoader, dependenciesFilePath,
+				serviceContext);
 		}
 	}
 

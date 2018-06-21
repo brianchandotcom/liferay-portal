@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("compare_product_mini.jsp-cpContentListRenderer-cpCatalogEntry");
-String deleteCompareProductURL = (String)request.getAttribute("compare_product_mini.jsp-cpContentListRenderer-deleteCompareProductURL");
+CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("cpContentListRenderer-cpCatalogEntry");
+String deleteCompareProductURL = (String)request.getAttribute("cpContentListRenderer-deleteCompareProductURL");
 %>
 
 <div class="autofit-row autofit-row-end">

@@ -16,6 +16,8 @@ package com.liferay.commerce.product.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
@@ -61,6 +63,9 @@ public interface CPInstanceHelper {
 			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
 			boolean skuContributor)
 		throws PortalException;
+
+	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
+		throws Exception;
 
 	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
 		throws PortalException;

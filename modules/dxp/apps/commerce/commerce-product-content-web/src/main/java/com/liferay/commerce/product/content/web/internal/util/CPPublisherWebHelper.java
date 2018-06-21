@@ -106,7 +106,7 @@ public class CPPublisherWebHelper {
 		PortletPreferences portletPreferences) {
 
 		String selectionStyle = GetterUtil.getString(
-			portletPreferences.getValue("selectionStyle", null), "dataSource");
+			portletPreferences.getValue("selectionStyle", null), "dynamic");
 
 		if (Objects.equals(selectionStyle, "dataSource")) {
 			return true;
@@ -128,7 +128,7 @@ public class CPPublisherWebHelper {
 
 	public boolean isManualSelection(PortletPreferences portletPreferences) {
 		String selectionStyle = GetterUtil.getString(
-			portletPreferences.getValue("selectionStyle", null), "manual");
+			portletPreferences.getValue("selectionStyle", null), "dynamic");
 
 		if (Objects.equals(selectionStyle, "manual")) {
 			return true;

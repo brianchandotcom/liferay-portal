@@ -22,6 +22,9 @@ public class CPPublisherConstants {
 	public static final String CATEGORY_KEY_PRODUCT_SELECTION =
 		"product-selection";
 
+	public static final String CATEGORY_KEY_RENDER_SELECTION =
+		"render-selection";
+
 	public static final String FORM_NAVIGATOR_ID_CONFIGURATION =
 		"product.publisher.configuration";
 

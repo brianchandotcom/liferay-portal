@@ -17,7 +17,7 @@ package com.liferay.commerce.product.type.grouped.web.internal;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.render.CPContentRenderer;
 import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
-import com.liferay.commerce.product.type.grouped.web.internal.portlet.template.contributor.GroupedCPTypeHelper;
+import com.liferay.commerce.product.type.grouped.util.GroupedCPTypeHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;

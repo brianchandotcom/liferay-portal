@@ -52,8 +52,8 @@ List<CPCatalogEntry> cpCatalogEntries = cpCompareContentMiniDisplayContext.getCP
 
 				<%
 				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
-					request.setAttribute("compare_product_mini.jsp-cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
-					request.setAttribute("compare_product_mini.jsp-cpContentListRenderer-deleteCompareProductURL", cpCompareContentMiniDisplayContext.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId()));
+					request.setAttribute("cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
+					request.setAttribute("cpContentListRenderer-deleteCompareProductURL", cpCompareContentMiniDisplayContext.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId()));
 				%>
 
 					<li class="card-page-item">

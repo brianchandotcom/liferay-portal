@@ -98,7 +98,7 @@ public class CPSearchResultsDisplayContext {
 
 		return
 			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderers(
-				getCPContentListRendererKey(), cpType);
+				CPPortletKeys.CP_SEARCH_RESULTS, cpType);
 	}
 
 	public String getCPContentListRendererKey() {
@@ -267,7 +267,7 @@ public class CPSearchResultsDisplayContext {
 		CPContentListEntryRenderer cpContentListEntryRenderer =
 			_cpContentListEntryRendererRegistry.getCPContentListEntryRenderer(
 				getCPTypeListEntryRendererKey(cpType),
-				getCPContentListRendererKey(), cpType);
+				CPPortletKeys.CP_SEARCH_RESULTS, cpType);
 
 		if (cpContentListEntryRenderer != null) {
 			cpContentListEntryRenderer.render(

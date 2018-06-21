@@ -25,9 +25,9 @@ import java.util.List;
 public interface CPContentListEntryRendererRegistry {
 
 	public CPContentListEntryRenderer getCPContentListEntryRenderer(
-		String key, String cpContentListRendererKey, String cpType);
+		String key, String portletName, String cpType);
 
 	public List<CPContentListEntryRenderer> getCPContentListEntryRenderers(
-		String cpContentListRendererKey, String cpType);
+		String portletName, String cpType);
 
 }

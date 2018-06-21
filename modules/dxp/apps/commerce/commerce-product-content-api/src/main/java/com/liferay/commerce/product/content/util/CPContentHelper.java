@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.render.CPContentRenderer;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
@@ -87,6 +88,9 @@ public interface CPContentHelper {
 
 	public CPInstance getDefaultCPInstance(
 			HttpServletRequest httpServletRequest)
+		throws Exception;
+
+	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
 		throws Exception;
 
 	public String getDownloadFileEntryURL(

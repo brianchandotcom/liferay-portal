@@ -65,11 +65,7 @@ public class FilterFormNavigatorEntry extends BaseJSPFormNavigatorEntry<Void> {
 
 	@Override
 	public boolean isVisible(User user, Void object) {
-		if (_isDynamicSelection()) {
-			return true;
-		}
-
-		return false;
+		return _isDynamicSelection();
 	}
 
 	@Override

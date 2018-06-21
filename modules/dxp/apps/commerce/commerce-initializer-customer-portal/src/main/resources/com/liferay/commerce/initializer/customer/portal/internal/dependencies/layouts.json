@@ -43,7 +43,8 @@
 					"target": 2
 				}
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"icon" : "icon-cube.png",
@@ -75,7 +76,8 @@
 				"layoutColumnPos": 2,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet"
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"hidden": true,
@@ -92,7 +94,8 @@
 				"layoutColumnPos": 1,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentMiniPortlet"
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"icon" : "icon-keyboard.png",
@@ -104,7 +107,8 @@
 				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_organization_order_web_internal_portlet_CommerceOrganizationOrderPortlet"
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"icon": "icon-folder-open.png",
@@ -144,7 +148,8 @@
 					"target": 1
 				}
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"layoutTemplateId": "1_column",
@@ -155,7 +160,8 @@
 				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_product_type_virtual_order_content_web_internal_portlet_CommerceVirtualOrderItemContentPortlet"
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"hidden": true,
@@ -167,7 +173,8 @@
 				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"hidden": false,
@@ -180,7 +187,8 @@
 				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_shipment_content_web_internal_portlet_CommerceShipmentContentPortlet"
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"layoutTemplateId": "1_column",
@@ -191,7 +199,8 @@
 				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_organization_web_internal_portlet_CommerceOrganizationPortlet"
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"hidden": true,
@@ -203,7 +212,8 @@
 				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_user_web_internal_portlet_CommerceUserPortlet"
 			}
-		]
+		],
+		"privateLayout": true
 	},
 	{
 		"hidden": true,
@@ -215,6 +225,7 @@
 				"layoutColumnPos": 0,
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCompareContentPortlet"
 			}
-		]
+		],
+		"privateLayout": true
 	}
 ]

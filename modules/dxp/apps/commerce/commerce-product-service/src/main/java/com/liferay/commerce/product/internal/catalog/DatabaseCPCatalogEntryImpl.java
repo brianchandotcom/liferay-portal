@@ -15,11 +15,15 @@
 package com.liferay.commerce.product.internal.catalog;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -38,6 +42,19 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 	@Override
 	public long getCPDefinitionId() {
 		return _cpDefinition.getCPDefinitionId();
+	}
+
+	@Override
+	public List<CPSku> getCPSkus() {
+		List<CPSku> cpSkus = new ArrayList<>();
+
+		List<CPInstance> cpInstances = _cpDefinition.getCPInstances();
+
+		for (CPInstance cpInstance : cpInstances) {
+			cpSkus.add(new CPSkuImpl(cpInstance));
+		}
+
+		return cpSkus;
 	}
 
 	@Override
@@ -78,11 +95,6 @@ public class DatabaseCPCatalogEntryImpl implements CPCatalogEntry {
 	@Override
 	public String getShortDescription() {
 		return _cpDefinition.getShortDescription(_languageId);
-	}
-
-	@Override
-	public String getSku() {
-		return null;
 	}
 
 	@Override

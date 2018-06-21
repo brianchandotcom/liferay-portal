@@ -38,7 +38,7 @@ public class RenderSelectionFormNavigatorEntry
 
 	@Override
 	public String getCategoryKey() {
-		return CPPublisherConstants.CATEGORY_KEY_PRODUCT_SELECTION;
+		return CPPublisherConstants.CATEGORY_KEY_RENDER_SELECTION;
 	}
 
 	@Override

@@ -36,9 +36,9 @@ List<CPOptionCategory> cpOptionCategories = cpCompareContentDisplayContext.getCP
 				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
 					CPInstance cpInstance = cpCompareContentDisplayContext.getDefaultCPInstance(cpCatalogEntry);
 
-					request.setAttribute("compare_product.jsp-cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
-					request.setAttribute("compare_product.jsp-cpContentListRenderer-cpInstance", cpInstance);
-					request.setAttribute("compare_product.jsp-cpContentListRenderer-deleteCompareProductURL", cpCompareContentDisplayContext.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId()));
+					request.setAttribute("cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
+					request.setAttribute("cpContentListRenderer-cpInstance", cpInstance);
+					request.setAttribute("cpContentListRenderer-deleteCompareProductURL", cpCompareContentDisplayContext.getDeleteCompareProductURL(cpCatalogEntry.getCPDefinitionId()));
 				%>
 
 					<td>

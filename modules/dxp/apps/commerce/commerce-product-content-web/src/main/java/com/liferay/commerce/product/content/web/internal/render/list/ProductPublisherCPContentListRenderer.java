@@ -37,8 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"commerce.product.content.list.renderer.key=" + CPPortletKeys.CP_PUBLISHER_WEB,
-		"commerce.product.content.list.renderer.portlet.name=" + CPPortletKeys.CP_PUBLISHER_WEB
+		"commerce.product.content.list.renderer.key=" + CPPortletKeys.CP_SEARCH_RESULTS,
+		"commerce.product.content.list.renderer.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS
 	},
 	service = CPContentListRenderer.class
 )
@@ -47,7 +47,7 @@ public class ProductPublisherCPContentListRenderer
 
 	@Override
 	public String getKey() {
-		return CPPortletKeys.CP_PUBLISHER_WEB;
+		return CPPortletKeys.CP_SEARCH_RESULTS;
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class ProductPublisherCPContentListRenderer
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "default");
+		return LanguageUtil.get(resourceBundle, "product-publisher");
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class ProductPublisherCPContentListRenderer
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
-			"/product_publisher/render/view.jsp");
+			"/product_publisher/render/list/view.jsp");
 	}
 
 	@Reference

@@ -62,7 +62,7 @@ public class BaseCPPublisherDisplayContext {
 		String cpType) {
 
 		return contentListEntryRendererRegistry.getCPContentListEntryRenderers(
-			getCPContentListRendererKey(), cpType);
+			CPPortletKeys.CP_PUBLISHER_WEB, cpType);
 	}
 
 	public String getCPContentListRendererKey() {

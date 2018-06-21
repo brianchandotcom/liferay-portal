@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.product.internal.util;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
+import com.liferay.commerce.product.catalog.CPSku;
+import com.liferay.commerce.product.internal.catalog.CPSkuImpl;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -395,6 +398,24 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		return _getDDMForm(
 			cpDefinitionId, locale, ignoreSKUCombinations, skuContributor,
 			false, false);
+	}
+
+	@Override
+	public CPSku getDefaultCPSku(CPCatalogEntry cpCatalogEntry)
+		throws Exception {
+
+		if (!cpCatalogEntry.isIgnoreSKUCombinations()) {
+			return null;
+		}
+
+		CPInstance cpInstance = getCPInstance(
+			cpCatalogEntry.getCPDefinitionId(), null);
+
+		if (cpInstance == null) {
+			return null;
+		}
+
+		return new CPSkuImpl(cpInstance);
 	}
 
 	@Override

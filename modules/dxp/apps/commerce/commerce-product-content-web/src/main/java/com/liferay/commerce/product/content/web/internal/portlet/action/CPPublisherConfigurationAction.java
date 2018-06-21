@@ -29,6 +29,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -86,8 +87,9 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 						_assetCategoryLocalService, _assetTagLocalService,
 						_cpContentListEntryRendererRegistry,
 						_cpContentListRendererRegistry, _cpDataSourceRegistry,
-						_cpPublisherWebHelper, _cpTypeServicesTracker,
-						httpServletRequest, _itemSelector);
+						_cpInstanceHelper, _cpPublisherWebHelper,
+						_cpTypeServicesTracker, httpServletRequest,
+						_itemSelector);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -141,9 +143,6 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 		}
 		else if (cmd.equals("add-selection")) {
 			addSelection(actionRequest, preferences);
-		}
-		else if (cmd.equals("list-renderer-selection")) {
-			setCPContentListRendererKey(actionRequest, preferences);
 		}
 		else if (cmd.equals("move-selection-down")) {
 			moveSelectionDown(actionRequest, preferences);
@@ -344,17 +343,6 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 		preferences.setValues("catalogEntryXml", newEntries);
 	}
 
-	protected void setCPContentListRendererKey(
-			ActionRequest actionRequest, PortletPreferences preferences)
-		throws Exception {
-
-		String cpContentListRendererKey = getParameter(
-			actionRequest, "cpContentListRendererKey");
-
-		preferences.setValue(
-			"cpContentListRendererKey", cpContentListRendererKey);
-	}
-
 	protected void setDataSource(
 			ActionRequest actionRequest, PortletPreferences preferences)
 		throws Exception {
@@ -507,6 +495,9 @@ public class CPPublisherConfigurationAction extends DefaultConfigurationAction {
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private CPPublisherWebHelper _cpPublisherWebHelper;

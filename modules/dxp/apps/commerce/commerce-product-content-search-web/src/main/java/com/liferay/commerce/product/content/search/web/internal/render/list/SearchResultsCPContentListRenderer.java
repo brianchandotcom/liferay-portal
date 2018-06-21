@@ -55,7 +55,7 @@ public class SearchResultsCPContentListRenderer
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "default");
+		return LanguageUtil.get(resourceBundle, "search-results");
 	}
 
 	@Override

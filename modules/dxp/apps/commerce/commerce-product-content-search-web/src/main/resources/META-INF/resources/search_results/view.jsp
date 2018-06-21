@@ -23,9 +23,9 @@ Map<String, Object> contextObjects = new HashMap<>();
 
 contextObjects.put("cpSearchResultsDisplayContext", cpSearchResultsDisplayContext);
 
-SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContainer();
+SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsDisplayContext.getSearchContainer();
 
-List<CPCatalogEntry> results = searchContainer.getResults();
+List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
 %>
 
 <c:choose>

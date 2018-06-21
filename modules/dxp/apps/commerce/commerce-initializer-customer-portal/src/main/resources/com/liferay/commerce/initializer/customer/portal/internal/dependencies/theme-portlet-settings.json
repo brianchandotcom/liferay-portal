@@ -6,9 +6,9 @@
 		"portletPreferences": {
 			"displayStyle": "",
 			"displayStyleGroupId": "",
-			"grouped--cpTypeRendererKey": "grouped",
+			"grouped--cpTypeRendererKey": "beryl",
 			"simple--cpTypeRendererKey": "beryl",
-			"virtual--cpTypeRendererKey": "virtual"
+			"virtual--cpTypeRendererKey": "beryl"
 		}
 	},
 	{
@@ -17,7 +17,10 @@
 		"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet",
 		"portletPreferences": {
 			"displayStyle": "",
-			"displayStyleGroupId": ""
+			"displayStyleGroupId": "",
+			"grouped--cpTypeListEntryRendererKey": "beryl",
+			"simple--cpTypeListEntryRendererKey": "beryl",
+			"virtual--cpTypeListEntryRendererKey": "beryl"
 		}
 	}
 ]

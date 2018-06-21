@@ -16,6 +16,7 @@ package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
+import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
@@ -166,7 +167,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		CPContentListEntryRenderer cpContentListEntryRenderer =
 			contentListEntryRendererRegistry.getCPContentListEntryRenderer(
 				getCPTypeListEntryRendererKey(cpType),
-				getCPContentListRendererKey(), cpType);
+				CPPortletKeys.CP_PUBLISHER_WEB, cpType);
 
 		if (cpContentListEntryRenderer != null) {
 			cpContentListEntryRenderer.render(

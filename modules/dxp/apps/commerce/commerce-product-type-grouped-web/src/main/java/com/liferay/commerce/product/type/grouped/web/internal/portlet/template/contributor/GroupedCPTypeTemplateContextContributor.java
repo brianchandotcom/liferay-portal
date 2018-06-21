@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.type.grouped.web.internal.portlet.template.contributor;
 
+import com.liferay.commerce.product.type.grouped.util.GroupedCPTypeHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;

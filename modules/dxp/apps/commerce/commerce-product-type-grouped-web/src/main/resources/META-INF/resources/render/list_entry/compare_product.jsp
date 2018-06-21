@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("compare_product.jsp-cpContentListRenderer-cpCatalogEntry");
-CPInstance cpInstance = (CPInstance)request.getAttribute("compare_product.jsp-cpContentListRenderer-cpInstance");
-String deleteCompareProductURL = (String)request.getAttribute("compare_product.jsp-cpContentListRenderer-deleteCompareProductURL");
+CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("cpContentListRenderer-cpCatalogEntry");
+CPInstance cpInstance = (CPInstance)request.getAttribute("cpContentListRenderer-cpInstance");
+String deleteCompareProductURL = (String)request.getAttribute("cpContentListRenderer-deleteCompareProductURL");
 %>
 
 <div class="card">

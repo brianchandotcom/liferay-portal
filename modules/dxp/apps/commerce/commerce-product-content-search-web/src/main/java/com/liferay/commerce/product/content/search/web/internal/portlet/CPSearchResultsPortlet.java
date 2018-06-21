@@ -16,10 +16,12 @@ package com.liferay.commerce.product.content.search.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.constants.CPContentWebKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
+import com.liferay.commerce.product.content.util.CPContentHelper;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
@@ -128,6 +130,9 @@ public class CPSearchResultsPortlet
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, cpSearchResultsDisplayContext);
+
+			renderRequest.setAttribute(
+				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);
 		}
 		catch (ConfigurationException ce) {
 			_log.error(ce, ce);
@@ -238,6 +243,9 @@ public class CPSearchResultsPortlet
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSearchResultsPortlet.class);
+
+	@Reference
+	private CPContentHelper _cpContentHelper;
 
 	@Reference
 	private CPContentListEntryRendererRegistry

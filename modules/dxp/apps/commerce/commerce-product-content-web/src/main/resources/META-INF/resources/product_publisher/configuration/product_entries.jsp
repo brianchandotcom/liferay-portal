@@ -1,5 +1,3 @@
-
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -84,10 +82,14 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 			value="<%= HtmlUtil.escape(cpCatalogEntry.getName()) %>"
 		/>
 
+		<%
+		CPSku cpSku = cpPublisherConfigurationDisplayContext.getDefaultCPSku(cpCatalogEntry);
+		%>
+
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"
 			name="sku"
-			value="<%= cpCatalogEntry.getSku() %>"
+			value="<%= (cpSku == null) ? StringPool.BLANK : cpSku.getSku() %>"
 		/>
 
 		<liferay-ui:search-container-column-jsp

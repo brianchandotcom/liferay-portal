@@ -66,11 +66,7 @@ public class DataSourceFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Void object) {
-		if (_isDataSourceSelection()) {
-			return true;
-		}
-
-		return false;
+		return _isDataSourceSelection();
 	}
 
 	@Override

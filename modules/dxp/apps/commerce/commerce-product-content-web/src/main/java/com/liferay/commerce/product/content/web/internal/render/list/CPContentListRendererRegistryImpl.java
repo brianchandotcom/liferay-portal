@@ -22,8 +22,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -84,11 +85,22 @@ public class CPContentListRendererRegistryImpl
 					cpContentListRendererServiceWrapperProperties =
 						cpContentListRendererServiceWrapper.getProperties();
 
-				String value = MapUtil.getString(
-					cpContentListRendererServiceWrapperProperties,
-					"commerce.product.content.list.renderer.portlet.name");
+				Object valueObject =
+					cpContentListRendererServiceWrapperProperties.get(
+						"commerce.product.content.list.renderer.portlet.name");
 
-				if (portletName.equals(value)) {
+				if (valueObject instanceof String[]) {
+					String[] values = GetterUtil.getStringValues(valueObject);
+
+					if (ArrayUtil.contains(values, portletName)) {
+						cpContentListRenderers.add(
+							cpContentListRendererServiceWrapper.getService());
+					}
+				}
+				else if (valueObject instanceof String &&
+						 portletName.equals(
+							 GetterUtil.getString(valueObject))) {
+
 					cpContentListRenderers.add(
 						cpContentListRendererServiceWrapper.getService());
 				}

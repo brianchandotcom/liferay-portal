@@ -1513,167 +1513,170 @@ public class JenkinsResultsParserUtil {
 			int timeout, HTTPAuthorization httpAuthorizationHeader)
 		throws IOException {
 
-	if (method == null) {
-		if (postContent != null) {
-			method = HttpRequestMethod.POST;
-		}
-		else {
-			method = HttpRequestMethod.GET;
-		}
-	}
-
-	url = fixURL(url);
-
-	String key = url.replace("//", "/");
-
-	if (checkCache && !url.startsWith("file:")) {
-		if (debug) {
-			System.out.println("Loading " + url);
+		if (method == null) {
+			if (postContent != null) {
+				method = HttpRequestMethod.POST;
+			}
+			else {
+				method = HttpRequestMethod.GET;
+			}
 		}
 
-		String response = getCachedText(_TO_STRING_CACHE_PREFIX + key);
+		url = fixURL(url);
 
-		if (response != null) {
-			return response;
-		}
-	}
+		String key = url.replace("//", "/");
 
-	int retryCount = 0;
-
-	while (true) {
-		try {
+		if (checkCache && !url.startsWith("file:")) {
 			if (debug) {
-				System.out.println("Downloading " + url);
+				System.out.println("Loading " + url);
 			}
 
-			if ((httpAuthorizationHeader == null) &&
-				url.startsWith("https://api.github.com")) {
+			String response = getCachedText(_TO_STRING_CACHE_PREFIX + key);
 
-				Properties buildProperties = getBuildProperties();
-
-				httpAuthorizationHeader = new TokenHTTPAuthorization(
-					buildProperties.getProperty("github.access.token"));
+			if (response != null) {
+				return response;
 			}
+		}
 
-			URL urlObject = new URL(url);
+		int retryCount = 0;
 
-			URLConnection urlConnection = urlObject.openConnection();
-
-			if (urlConnection instanceof HttpURLConnection) {
-				HttpURLConnection httpURLConnection =
-					(HttpURLConnection)urlConnection;
-
-				if (method == HttpRequestMethod.PATCH) {
-					httpURLConnection.setRequestMethod("POST");
-
-					httpURLConnection.setRequestProperty(
-						"X-HTTP-Method-Override", "PATCH");
-				}
-				else {
-					httpURLConnection.setRequestMethod(method.name());
+		while (true) {
+			try {
+				if (debug) {
+					System.out.println("Downloading " + url);
 				}
 
-				if (url.startsWith("https://api.github.com") &&
-					httpURLConnection instanceof HttpsURLConnection) {
+				if ((httpAuthorizationHeader == null) &&
+					url.startsWith("https://api.github.com")) {
 
-					SSLContext sslContext = null;
+					Properties buildProperties = getBuildProperties();
 
-					try {
-						if (getJavaVersionNumber() < 1.8F) {
-							sslContext = SSLContext.getInstance("TLSv1.2");
+					httpAuthorizationHeader = new TokenHTTPAuthorization(
+						buildProperties.getProperty("github.access.token"));
+				}
 
-							sslContext.init(null, null, null);
+				URL urlObject = new URL(url);
 
-							HttpsURLConnection httpsURLConnection =
-								(HttpsURLConnection)httpURLConnection;
+				URLConnection urlConnection = urlObject.openConnection();
 
-							httpsURLConnection.setSSLSocketFactory(
-								sslContext.getSocketFactory());
+				if (urlConnection instanceof HttpURLConnection) {
+					HttpURLConnection httpURLConnection =
+						(HttpURLConnection)urlConnection;
+
+					if (method == HttpRequestMethod.PATCH) {
+						httpURLConnection.setRequestMethod("POST");
+
+						httpURLConnection.setRequestProperty(
+							"X-HTTP-Method-Override", "PATCH");
+					}
+					else {
+						httpURLConnection.setRequestMethod(method.name());
+					}
+
+					if (url.startsWith("https://api.github.com") &&
+						httpURLConnection instanceof HttpsURLConnection) {
+
+						SSLContext sslContext = null;
+
+						try {
+							if (getJavaVersionNumber() < 1.8F) {
+								sslContext = SSLContext.getInstance("TLSv1.2");
+
+								sslContext.init(null, null, null);
+
+								HttpsURLConnection httpsURLConnection =
+									(HttpsURLConnection)httpURLConnection;
+
+								httpsURLConnection.setSSLSocketFactory(
+									sslContext.getSocketFactory());
+							}
+						}
+						catch (KeyManagementException |
+							   NoSuchAlgorithmException e) {
+
+							throw new RuntimeException(
+								"Unable to set SSL context to TLS v1.2", e);
 						}
 					}
-					catch (KeyManagementException |
-						   NoSuchAlgorithmException e) {
 
-						throw new RuntimeException(
-							"Unable to set SSL context to TLS v1.2", e);
+					if (httpAuthorizationHeader != null) {
+						httpURLConnection.setRequestProperty(
+							"Authorization",
+							httpAuthorizationHeader.toString());
+						httpURLConnection.setRequestProperty(
+							"Content-Type", "application/json");
+					}
+
+					if (postContent != null) {
+						httpURLConnection.setRequestMethod("POST");
+
+						httpURLConnection.setDoOutput(true);
+
+						try (OutputStream outputStream =
+								httpURLConnection.getOutputStream()) {
+
+							outputStream.write(postContent.getBytes("UTF-8"));
+
+							outputStream.flush();
+						}
 					}
 				}
 
-				if (httpAuthorizationHeader != null) {
-					httpURLConnection.setRequestProperty(
-						"Authorization", httpAuthorizationHeader.toString());
-					httpURLConnection.setRequestProperty(
-						"Content-Type", "application/json");
+				if (timeout != 0) {
+					urlConnection.setConnectTimeout(timeout);
+					urlConnection.setReadTimeout(timeout);
 				}
 
-				if (postContent != null) {
-					httpURLConnection.setRequestMethod("POST");
+				StringBuilder sb = new StringBuilder();
 
-					httpURLConnection.setDoOutput(true);
+				int bytes = 0;
+				String line = null;
 
-					try (OutputStream outputStream =
-							httpURLConnection.getOutputStream()) {
+				try (BufferedReader bufferedReader = new BufferedReader(
+						new InputStreamReader(
+							urlConnection.getInputStream()))) {
 
-						outputStream.write(postContent.getBytes("UTF-8"));
+					while ((line = bufferedReader.readLine()) != null) {
+						byte[] lineBytes = line.getBytes();
 
-						outputStream.flush();
+						bytes += lineBytes.length;
+
+						if (bytes > (30 * 1024 * 1024)) {
+							sb.append("Response for ");
+							sb.append(url);
+							sb.append(" was truncated due to its size.");
+
+							break;
+						}
+
+						sb.append(line);
+						sb.append("\n");
 					}
 				}
-			}
 
-			if (timeout != 0) {
-				urlConnection.setConnectTimeout(timeout);
-				urlConnection.setReadTimeout(timeout);
-			}
+				if (checkCache && !url.startsWith("file:") &&
+					(bytes < (3 * 1024 * 1024))) {
 
-			StringBuilder sb = new StringBuilder();
-
-			int bytes = 0;
-			String line = null;
-
-			try (BufferedReader bufferedReader = new BufferedReader(
-					new InputStreamReader(urlConnection.getInputStream()))) {
-
-				while ((line = bufferedReader.readLine()) != null) {
-					byte[] lineBytes = line.getBytes();
-
-					bytes += lineBytes.length;
-
-					if (bytes > (30 * 1024 * 1024)) {
-						sb.append("Response for ");
-						sb.append(url);
-						sb.append(" was truncated due to its size.");
-
-						break;
-					}
-
-					sb.append(line);
-					sb.append("\n");
+					saveToCacheFile(
+						_TO_STRING_CACHE_PREFIX + key, sb.toString());
 				}
+
+				return sb.toString();
 			}
+			catch (IOException ioe) {
+				retryCount++;
 
-			if (checkCache && !url.startsWith("file:") &&
-				(bytes < (3 * 1024 * 1024))) {
+				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
+					throw ioe;
+				}
 
-				saveToCacheFile(_TO_STRING_CACHE_PREFIX + key, sb.toString());
+				System.out.println(
+					"Retrying " + url + " in " + retryPeriod + " seconds");
+
+				sleep(1000 * retryPeriod);
 			}
-
-			return sb.toString();
-		}
-		catch (IOException ioe) {
-			retryCount++;
-
-			if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
-				throw ioe;
-			}
-
-			System.out.println(
-				"Retrying " + url + " in " + retryPeriod + " seconds");
-
-			sleep(1000 * retryPeriod);
 		}
 	}
-}
 
 	public static String toString(
 			String url, boolean checkCache, int maxRetries, int retryPeriod,
@@ -1707,9 +1710,9 @@ public class JenkinsResultsParserUtil {
 			String url, HttpRequestMethod method, String postContent)
 		throws IOException {
 
-	return toString(
-		url, false, _MAX_RETRIES_DEFAULT, method, postContent,
-		_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
+		return toString(
+			url, false, _MAX_RETRIES_DEFAULT, method, postContent,
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, null);
 	}
 
 	public static String toString(String url, String postContent)
@@ -1802,7 +1805,7 @@ public class JenkinsResultsParserUtil {
 
 	public static enum HttpRequestMethod {
 
-		DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT, TRACE;
+		DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT, TRACE
 
 	}
 

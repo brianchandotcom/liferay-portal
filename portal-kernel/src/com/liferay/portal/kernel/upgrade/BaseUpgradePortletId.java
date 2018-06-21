@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layouts.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -375,7 +374,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					typeSettings, oldRootPortletId, newRootPortletId,
 					exactMatch);
 
-				ps2.setClob(1, new UnsyncStringReader(newTypeSettings));
+				ps2.setString(1, newTypeSettings);
 
 				ps2.setLong(2, plid);
 

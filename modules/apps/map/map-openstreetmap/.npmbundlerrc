@@ -2,7 +2,7 @@
 	"config": {
 		"imports": {
 			"map-common": {
-				"/": "^3.0.0"
+				"/": "^4.0.0"
 			},
 			"frontend-js-metal-web": {
 				"metal": "^2.0.0",

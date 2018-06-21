@@ -109,7 +109,7 @@ public class CPOptionDemoDataCreatorHelper extends BaseCPDemoDataCreatorHelper {
 			}
 			catch (NoSuchCPOptionException nscpoe) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(nscpoe);
+					_log.warn(nscpoe, nscpoe);
 				}
 			}
 

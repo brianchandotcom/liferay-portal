@@ -108,7 +108,7 @@ public class EditCPOptionMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put("success", true);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 
 			String key = "your-request-failed-to-complete";
 

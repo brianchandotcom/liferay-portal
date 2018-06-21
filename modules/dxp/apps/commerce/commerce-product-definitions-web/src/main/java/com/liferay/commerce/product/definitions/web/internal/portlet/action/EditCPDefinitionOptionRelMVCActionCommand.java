@@ -142,7 +142,7 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			jsonObject.put("success", true);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			_log.error(e, e);
 
 			jsonObject.put(
 				"message",

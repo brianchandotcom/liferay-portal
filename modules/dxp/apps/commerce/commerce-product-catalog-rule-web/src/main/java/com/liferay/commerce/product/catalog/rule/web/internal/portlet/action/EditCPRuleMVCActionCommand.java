@@ -126,7 +126,7 @@ public class EditCPRuleMVCActionCommand extends BaseMVCActionCommand {
 				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
-				_log.error(t);
+				_log.error(t, t);
 			}
 		}
 	}

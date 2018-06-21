@@ -29,7 +29,8 @@
 								'liferay-map-base',
 								'liferay-notice',
 								'liferay-portlet-url',
-								'liferay-translation-manager'
+								'liferay-translation-manager',
+								'liferay-util-window'
 							]
 						},
 						'liferay-portlet-dynamic-data-mapping': {

@@ -173,6 +173,14 @@ public class KaleoDefinitionVersionLocalServiceImpl
 	}
 
 	@Override
+	public KaleoDefinitionVersion fetchKaleoDefinitionVersion(
+		long companyId, String name, String version) {
+
+		return kaleoDefinitionVersionPersistence.fetchByC_N_V(
+			companyId, name, version);
+	}
+
+	@Override
 	public KaleoDefinitionVersion fetchLatestKaleoDefinitionVersion(
 			long companyId, String name)
 		throws PortalException {

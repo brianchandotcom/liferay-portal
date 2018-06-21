@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.ArrayList;
@@ -75,6 +77,8 @@ public class InputAssetLinksDisplayContext {
 		_assetEntryId = GetterUtil.getLong(
 			(String)_request.getAttribute(
 				"liferay-asset:input-asset-links:assetEntryId"));
+		_className = GetterUtil.getString(
+			_request.getAttribute("liferay-asset:input-asset-links:className"));
 		_portletRequest = (PortletRequest)_request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 		_themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -199,8 +203,27 @@ public class InputAssetLinksDisplayContext {
 	public List<Map<String, Object>> getSelectorEntries() throws Exception {
 		List<Map<String, Object>> selectorEntries = new ArrayList<>();
 
+		AssetRendererFactory baseAssetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_className);
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		boolean baseAssetStaged = stagingGroupHelper.isStagedPortlet(
+			_themeDisplay.getScopeGroupId(),
+			baseAssetRendererFactory.getPortletId());
+
 		for (AssetRendererFactory<?> assetRendererFactory :
 				getAssetRendererFactories()) {
+
+			boolean assetStaged = stagingGroupHelper.isStagedPortlet(
+				_themeDisplay.getScopeGroupId(),
+				assetRendererFactory.getPortletId());
+
+			if (!baseAssetStaged && assetStaged) {
+				continue;
+			}
 
 			if (assetRendererFactory.isSupportsClassTypes()) {
 				selectorEntries.addAll(
@@ -511,6 +534,7 @@ public class InputAssetLinksDisplayContext {
 
 	private final long _assetEntryId;
 	private List<AssetLink> _assetLinks;
+	private final String _className;
 	private String _eventName;
 	private final PageContext _pageContext;
 	private final PortletRequest _portletRequest;

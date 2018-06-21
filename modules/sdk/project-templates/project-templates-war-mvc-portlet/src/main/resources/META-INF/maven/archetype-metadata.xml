@@ -31,6 +31,9 @@
 	<requiredProperties>
 		<requiredProperty key="author">
 		</requiredProperty>
+		<requiredProperty key="dependencyManagementEnabled">
+			<defaultValue>false</defaultValue>
+		</requiredProperty>
 		<requiredProperty key="liferayVersion">
 		</requiredProperty>
 		<requiredProperty key="projectType">

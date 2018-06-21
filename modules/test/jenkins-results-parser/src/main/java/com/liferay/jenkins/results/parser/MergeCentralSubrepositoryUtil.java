@@ -192,9 +192,9 @@ public class MergeCentralSubrepositoryUtil {
 		String subrepositoryUpstreamCommit =
 			centralSubrepository.getSubrepositoryUpstreamCommit();
 
-		String url = JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", receiverUserName, "/",
-			subrepositoryName, "/statuses/", subrepositoryUpstreamCommit);
+		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+			subrepositoryName, receiverUserName,
+			"statuses/" + subrepositoryUpstreamCommit);
 
 		JSONObject requestJSONObject = new JSONObject();
 
@@ -284,10 +284,9 @@ public class MergeCentralSubrepositoryUtil {
 			int page = 1;
 
 			while (page < 10) {
-				String url = JenkinsResultsParserUtil.combine(
-					"https://api.github.com/repos/", receiverUserName, "/",
+				String url = JenkinsResultsParserUtil.getGitHubApiURL(
 					centralGitWorkingDirectory.getRepositoryName(),
-					"/pulls?page=", String.valueOf(page));
+					receiverUserName, "pulls?page=" + String.valueOf(page));
 
 				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(url);
 

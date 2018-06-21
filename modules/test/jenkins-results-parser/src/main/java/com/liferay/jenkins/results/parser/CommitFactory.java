@@ -77,9 +77,8 @@ public class CommitFactory {
 	private static String _getCommitURL(
 		String gitHubUserName, String repositoryName, String sha) {
 
-		return JenkinsResultsParserUtil.combine(
-			"https://api.github.com/repos/", gitHubUserName, "/",
-			repositoryName, "/commits/", sha);
+		return JenkinsResultsParserUtil.getGitHubApiURL(
+			repositoryName, gitHubUserName, "commits/" + sha);
 	}
 
 	private static final Map<String, Commit> _commits = new HashMap<>();

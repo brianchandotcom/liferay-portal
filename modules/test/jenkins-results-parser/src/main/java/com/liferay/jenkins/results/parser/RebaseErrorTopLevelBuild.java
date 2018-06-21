@@ -118,17 +118,12 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 			Map<String, String> stopPropertiesTempMap)
 		throws IOException {
 
-		StringBuilder sb = new StringBuilder();
+		String url = JenkinsResultsParserUtil.getGitHubApiURL(
+			"liferay-portal-ee", getParameterValue("GITHUB_RECEIVER_USERNAME"),
+			"issues/comments/" +
+				stopPropertiesTempMap.get("TOP_LEVEL_GITHUB_COMMENT_ID"));
 
-		sb.append("https://api.github.com/repos/");
-		sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
-		sb.append("/");
-		sb.append("liferay-portal-ee");
-		sb.append("/issues/comments/");
-		sb.append(stopPropertiesTempMap.get("TOP_LEVEL_GITHUB_COMMENT_ID"));
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			sb.toString());
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(url);
 
 		String commentBody = jsonObject.getString("body");
 

@@ -32,9 +32,9 @@ import org.json.JSONObject;
  */
 public class GitHubRemoteRepository extends RemoteRepository {
 
-	public void addLabel(String color, String description, String name) {
+	public boolean addLabel(String color, String description, String name) {
 		if (hasLabel(name)) {
-			return;
+			return true;
 		}
 
 		JSONObject jsonObject = new JSONObject();
@@ -58,11 +58,25 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			System.out.println("Unable to add label " + name);
 
 			ioe.printStackTrace();
+
+			return false;
 		}
+
+		return true;
 	}
 
 	public void deleteLabel(Label oldLabel) {
 		updateLabel(null, null, null, oldLabel);
+	}
+
+	public Label getLabel(String name) {
+		for (Label label : getLabels()) {
+			if (name.equals(label.getName())) {
+				return label;
+			}
+		}
+
+		return null;
 	}
 
 	public List<Label> getLabels() {
@@ -97,8 +111,7 @@ public class GitHubRemoteRepository extends RemoteRepository {
 			}
 
 			for (int i = 0; i < labelsJSONArray.length(); i++) {
-				labels.add(
-					LabelFactory.newLabel((JSONObject)labelsJSONArray.get(i)));
+				labels.add(new Label((JSONObject)labelsJSONArray.get(i), this));
 			}
 
 			page++;
@@ -109,16 +122,12 @@ public class GitHubRemoteRepository extends RemoteRepository {
 		return labels;
 	}
 
-	public boolean hasLabel(String labelName) {
-		List<Label> labels = getLabels();
-
-		for (Label label : labels) {
-			if (labelName.equals(label.getName())) {
-				return true;
-			}
+	public boolean hasLabel(String name) {
+		if (getLabel(name) == null) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	public void updateLabel(

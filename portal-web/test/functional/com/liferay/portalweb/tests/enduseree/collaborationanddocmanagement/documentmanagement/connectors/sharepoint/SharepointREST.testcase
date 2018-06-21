@@ -1,7 +1,7 @@
 <definition component-name="portal-document-management-ee">
 	<property name="osgi.app.includes" value="sharepoint-rest" />
 	<property name="portal.ssl.enabled" value="true" />
-	<property name="portal.upstream" value="true" />
+	<property name="portal.upstream" value="false" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Documents Management" />
 
@@ -140,7 +140,689 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewRepository" priority="5">
+	<command name="CheckinDocument" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_3.txt" />
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#viewIconLockedCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute macro="DMDocument#viewCheckedoutCP">
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+
+		<execute macro="DMDocument#checkinCP">
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<var name="key_dmDocumentTitle" value="Document_3.txt" />
+
+		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_NOT_LOCKED" />
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedinCP">
+			<var name="dmDocumentVersionNumber" value="2.0" />
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+	</command>
+
+	<command name="DeleteDocumentInSubfolder" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMFolder#addSubfolderCP">
+			<var name="dmSubFolderName" value="DM Folder3 Name" />
+		</execute>
+
+		<execute macro="DMFolder#viewCP">
+			<var name="dmFolderName" value="DM Folder3 Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder3 Name" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_2.doc" />
+			<var name="dmDocumentTitle" value="Document_2.doc" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder3 Name" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_2.doc" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="Document_2.doc" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder3 Name" />
+		</execute>
+
+		<execute macro="DMDocument#deleteCP">
+			<var name="dmDocumentTitle" value="Document_2.doc" />
+			<var name="recycleBinDisabled" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoFolder">
+			<var name="dmFolderName" value="DM Folder3 Name" />
+		</execute>
+
+		<execute macro="DMDocument#cannotViewCP">
+			<var name="dmDocumentTitle" value="Document_2.doc" />
+		</execute>
+
+		<execute macro="DMDocument#viewDefaultCP" />
+	</command>
+
+	<command name="DeleteSubfolder" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMFolder#addSubfolderCP">
+			<var name="dmSubFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#deleteCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+			<var name="recycleBinDisabled" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMFolder#cannotViewCP">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="DMFolder#viewDefaultCP" />
+	</command>
+
+	<command name="EditDocumentFile" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_3.doc" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_3.doc" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentSize" value="24KB" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#editCP">
+			<var name="dmDocumentFileEdit" value="Document_2.jpg" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_3.doc" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentSize" value="30KB" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
+		</execute>
+
+		<execute macro="DMDocument#viewDocumentMetadataCP">
+			<var name="metadataData" value="image/jpeg" />
+			<var name="metadataLabel" value="Content Type" />
+		</execute>
+
+		<execute macro="DMDocument#cannotViewDocumentMetadataCP">
+			<var name="metadataData" value="ISO-8859-1" />
+			<var name="metadataLabel" value="Content Encoding" />
+		</execute>
+	</command>
+
+	<command name="MoveCheckedoutDocumentToFolder" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMFolder#addSubfolderCP">
+			<var name="dmSubFolderName" value="Sharepoint Subfolder" />
+		</execute>
+
+		<execute macro="DMFolder#viewCP">
+			<var name="dmFolderName" value="Sharepoint Subfolder" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentTitle" value="Document_1.txt" />
+		</execute>
+
+		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#viewIconLockedCP">
+			<var name="dmDocumentTitle" value="Document_1.txt" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_1.txt" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedoutCP">
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="icon" />
+		</execute>
+
+		<execute macro="DMDocument#moveToSubFolderCP">
+			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmFolderName" value="Sharepoint (${configurationName})" />
+			<var name="dmSubFolderName" value="Sharepoint Subfolder" />
+		</execute>
+
+		<execute macro="DMDocument#viewMovedToFolderCP">
+			<var name="dmDocumentTitle" value="Document_1.txt" />
+			<var name="dmFolderName" value="Sharepoint Subfolder" />
+		</execute>
+
+		<execute macro="DMDocument#viewIconLockedCP">
+			<var name="dmDocumentTitle" value="Document_1.txt" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_1.txt" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedoutCP">
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+	</command>
+
+	<command name="MoveDocumentToHome" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.odt" />
+			<var name="dmDocumentTitle" value="Document_1.odt" />
+		</execute>
+
+		<execute macro="DMDocument#moveToFolderCP">
+			<var name="dmDocumentTitle" value="Document_1.odt" />
+			<var name="dmFolderName" value="Home" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_1.odt" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="Document_1.odt" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#cannotViewCP">
+			<var name="dmDocumentTitle" value="Document_1.odt" />
+		</execute>
+	</command>
+
+	<command name="SearchDocumentViaHome" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_3.odt" />
+			<var name="dmDocumentTitle" value="Document_3.odt" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Document_3.odt" />
+		</execute>
+
+		<execute macro="DMDocument#viewSearchResultsCP">
+			<var name="dmDocumentTitle" value="Document_3.odt" />
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+	</command>
+
+	<command name="ViewDocumentAsGuest" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Build" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="sitePageType" value="Widget Page" />
+		</execute>
+
+		<execute macro="SitePages#configurePage">
+			<var name="columnName" value="1 Column" />
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="privacy" value="Public Pages" />
+			<var name="sitePageType" value="Widget Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoRepository">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="LexiconEntry#changeDisplayStyle">
+			<var name="displayStyle" value="list" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoRepository">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+	</command>
+
+	<command name="ViewEditedCheckedoutDocument" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.xls" />
+			<var name="dmDocumentTitle" value="Document_1.xls" />
+		</execute>
+
+		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Document_1.xls" />
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="Document_1.xls" />
+		</execute>
+
+		<execute macro="DMDocument#editCmd">
+			<var name="dmDocumentTitleEdit" value="Document_1_Edit.xls" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#viewIconLockedCP">
+			<var name="dmDocumentTitle" value="Document_1_Edit.xls" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_1_Edit.xls" />
+		</execute>
+
+		<execute macro="DMDocument#viewCheckedoutCP">
+			<var name="dmRepositoryName" value="true" />
+		</execute>
+	</command>
+
+	<command name="ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.docx" />
+			<var name="dmDocumentTitle" value="Document_1.docx" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="Document_1.docx" />
+		</execute>
+
+		<execute macro="DMDocument#editCmd">
+			<var name="dmDocumentTitleEdit" value="Document_1.jpg" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PUBLISH" />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The source file does not have the same extension as the original file." />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_1.docx" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="Document_1.docx" />
+		</execute>
+	</command>
+
+	<command name="ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval" priority="4">
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_3.docx" />
+			<var name="dmDocumentTitle" value="Document_3.docx" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="Document_3.docx" />
+		</execute>
+
+		<execute macro="DMDocument#editCmd">
+			<var name="dmDocumentTitleEdit" value="Document_3" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PUBLISH" />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="The source file does not have the same extension as the original file." />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="https://localhost:8443" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMRepository#gotoCP">
+			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="Document_3.docx" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="Document_3.docx" />
+		</execute>
+	</command>
+
+	<command name="ViewRepository" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint (${configurationName})" />
 		</execute>

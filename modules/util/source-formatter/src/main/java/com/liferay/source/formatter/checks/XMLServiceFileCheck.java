@@ -40,14 +40,6 @@ import org.dom4j.Element;
 public class XMLServiceFileCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_pluginsInsideModulesDirectoryNames =
-			getPluginsInsideModulesDirectoryNames();
-		_portalTablesContent = getContent(
-			"sql/portal-tables.sql", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-	}
-
-	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws Exception {
@@ -155,13 +147,27 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 		return columnNames;
 	}
 
+	private synchronized String _getPortalTablesContent() throws Exception {
+		if (_portalTablesContent != null) {
+			return _portalTablesContent;
+		}
+
+		_portalTablesContent = getContent(
+			"sql/portal-tables.sql", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		return _portalTablesContent;
+	}
+
 	private String _getTablesContent(String fileName, String absolutePath)
 		throws Exception {
 
-		if (isPortalSource() &&
-			!isModulesFile(absolutePath, _pluginsInsideModulesDirectoryNames)) {
+		List<String> pluginsInsideModulesDirectoryNames =
+			getPluginsInsideModulesDirectoryNames();
 
-			return _portalTablesContent;
+		if (isPortalSource() &&
+			!isModulesFile(absolutePath, pluginsInsideModulesDirectoryNames)) {
+
+			return _getPortalTablesContent();
 		}
 
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
@@ -190,7 +196,6 @@ public class XMLServiceFileCheck extends BaseFileCheck {
 	private static final String _SERVICE_FINDER_COLUMN_SORT_EXCLUDES =
 		"service.finder.column.sort.excludes";
 
-	private List<String> _pluginsInsideModulesDirectoryNames;
 	private String _portalTablesContent;
 
 	private class ServiceExceptionElementComparator extends ElementComparator {

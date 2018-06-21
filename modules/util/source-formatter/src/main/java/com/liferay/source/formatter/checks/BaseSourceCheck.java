@@ -401,21 +401,27 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return null;
 	}
 
-	protected Document getPortalCustomSQLDocument() throws Exception {
+	protected synchronized Document getPortalCustomSQLDocument()
+		throws Exception {
+
+		if (_portalCustomSQLDocument != null) {
+			return _portalCustomSQLDocument;
+		}
+
+		_portalCustomSQLDocument = DocumentHelper.createDocument();
+
 		if (!isPortalSource()) {
-			return null;
+			return _portalCustomSQLDocument;
 		}
 
 		String portalCustomSQLDefaultContent = getPortalContent(
 			"portal-impl/src/custom-sql/default.xml");
 
 		if (portalCustomSQLDefaultContent == null) {
-			return null;
+			return _portalCustomSQLDocument;
 		}
 
-		Document document = DocumentHelper.createDocument();
-
-		Element rootElement = document.addElement("custom-sql");
+		Element rootElement = _portalCustomSQLDocument.addElement("custom-sql");
 
 		Document customSQLDefaultDocument = SourceUtil.readXML(
 			portalCustomSQLDefaultContent);
@@ -445,7 +451,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			}
 		}
 
-		return document;
+		return _portalCustomSQLDocument;
 	}
 
 	protected File getPortalDir() {
@@ -760,6 +766,7 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	private boolean _enabled = true;
 	private int _maxLineLength;
 	private List<String> _pluginsInsideModulesDirectoryNames;
+	private Document _portalCustomSQLDocument;
 	private boolean _portalSource;
 	private String _projectName;
 	private String _projectPathPrefix;

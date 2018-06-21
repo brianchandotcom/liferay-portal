@@ -28,6 +28,9 @@
 		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>
+		<requiredProperty key="dependencyManagementEnabled">
+			<defaultValue>false</defaultValue>
+		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
 		</requiredProperty>

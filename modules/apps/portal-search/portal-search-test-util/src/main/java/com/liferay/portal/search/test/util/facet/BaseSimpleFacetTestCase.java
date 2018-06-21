@@ -21,12 +21,11 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.test.util.indexing.QueryContributor;
 import com.liferay.portal.search.test.util.indexing.QueryContributors;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+
+import org.junit.Test;
 
 /**
  * @author Bryan Engler
@@ -34,33 +33,158 @@ import java.util.List;
  */
 public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 
-	protected void assertFacet(
-			JSONObject jsonObject, List<String> expectedTerms)
-		throws Exception {
+	@Test
+	public void testFrequencyThreshold() throws Exception {
+		addDocuments(6, "one");
+		addDocuments(5, "two");
+		addDocuments(4, "three");
+		addDocuments(3, "four");
+		addDocuments(2, "five");
+		addDocuments(1, "six");
 
-		assertFacet(QueryContributors.dummy(), jsonObject, expectedTerms);
+		assertSearch(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				setFrequencyThreshold(facet, 4);
+				setMaxTerms(facet, 5);
+
+				helper.search();
+
+				helper.assertFrequencies(
+					facet, Arrays.asList("one=6", "two=5", "three=4"));
+			});
+
+		assertSearch(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				setFrequencyThreshold(facet, 4);
+				setMaxTerms(facet, 2);
+
+				helper.search();
+
+				helper.assertFrequencies(
+					facet, Arrays.asList("one=6", "two=5"));
+			});
 	}
 
-	protected void assertFacet(
-			QueryContributor queryContributor, JSONObject jsonObject,
-			List<String> expectedTerms)
-		throws Exception {
+	@Test
+	public void testMaxTerms() throws Exception {
+		addDocuments(6, "One");
+		addDocuments(5, "TWO");
+		addDocuments(4, "ThReE");
+		addDocuments(3, "four");
+		addDocuments(2, "fivE");
 
-		assertFacet(
-			searchContext -> createFacet(searchContext, jsonObject),
-			queryContributor, expectedTerms);
+		assertSearch(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				setMaxTerms(facet, 1);
+
+				helper.search();
+
+				helper.assertFrequencies(facet, Arrays.asList("One=6"));
+			});
+
+		assertSearch(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				setMaxTerms(facet, 5);
+
+				helper.search();
+
+				helper.assertFrequencies(
+					facet,
+					Arrays.asList(
+						"One=6", "TWO=5", "ThReE=4", "four=3", "fivE=2"));
+			});
 	}
 
-	protected Facet createFacet(
-		SearchContext searchContext, JSONObject jsonObject) {
+	@Test
+	public void testMaxTermsNegative() throws Exception {
+		addDocument("One");
 
+		assertSearch(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				setMaxTerms(facet, -25);
+
+				helper.search();
+
+				helper.assertFrequencies(facet, Arrays.asList("One=1"));
+			});
+	}
+
+	@Test
+	public void testMaxTermsZero() throws Exception {
+		addDocument("One");
+
+		assertSearch(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				setMaxTerms(facet, 0);
+
+				helper.search();
+
+				helper.assertFrequencies(facet, Arrays.asList("One=1"));
+			});
+	}
+
+	@Test
+	public void testSelection() throws Exception {
+		addDocuments(6, "one");
+		addDocuments(5, "two");
+		addDocuments(4, "three");
+		addDocuments(3, "four");
+		addDocuments(2, "five");
+
+		assertSearch(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				select(facet, "three", helper);
+
+				helper.search();
+
+				helper.assertResultCount(4);
+
+				helper.assertFrequencies(
+					facet,
+					Arrays.asList(
+						"one=6", "two=5", "three=4", "four=3", "five=2"));
+			});
+	}
+
+	@Test
+	public void testUnmatchedAreIgnored() throws Exception {
+		String presentButUnmatched = RandomTestUtil.randomString();
+
+		addDocument("One");
+		addDocument(presentButUnmatched);
+
+		assertSearch(
+			helper -> {
+				Facet facet = helper.addFacet(this::createFacet);
+
+				helper.search(
+					QueryContributors.mustNotTerm(
+						getField(), presentButUnmatched));
+
+				helper.assertFrequencies(facet, Arrays.asList("One=1"));
+			});
+	}
+
+	protected Facet createFacet(SearchContext searchContext) {
 		Facet facet = new SimpleFacet(searchContext);
 
+		initFacet(facet);
+
 		facet.setFieldName(Field.STATUS);
-
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
-
-		facetConfiguration.setDataJSONObject(jsonObject);
 
 		return facet;
 	}
@@ -70,77 +194,24 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 		return Field.STATUS;
 	}
 
-	protected void testFrequencyThreshold() throws Exception {
-		addDocuments(6, "one");
-		addDocuments(5, "two");
-		addDocuments(4, "three");
-		addDocuments(3, "four");
-		addDocuments(2, "five");
-		addDocuments(1, "six");
-
-		assertFacet(
-			setUpFrequencyThreshold(4, setUpMaxTerms(5)),
-			new ArrayList<String>() {
-				{
-					add("one=6");
-					add("two=5");
-					add("three=4");
-				}
-			});
-
-		assertFacet(
-			setUpFrequencyThreshold(4, setUpMaxTerms(2)),
-			new ArrayList<String>() {
-				{
-					add("one=6");
-					add("two=5");
-				}
-			});
+	protected void select(Facet facet, String value, Helper helper) {
+		helper.setSearchContextAttribute(facet.getFieldId(), value);
 	}
 
-	protected void testMaxTerms() throws Exception {
-		addDocuments(6, "One");
-		addDocuments(5, "TWO");
-		addDocuments(4, "ThReE");
-		addDocuments(3, "four");
-		addDocuments(2, "fivE");
+	protected void setFrequencyThreshold(Facet facet, int frequencyThreshold) {
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		assertFacet(setUpMaxTerms(1), Arrays.asList("One=6"));
+		JSONObject jsonObject = facetConfiguration.getData();
 
-		assertFacet(
-			setUpMaxTerms(5),
-			new ArrayList<String>() {
-				{
-					add("One=6");
-					add("TWO=5");
-					add("ThReE=4");
-					add("four=3");
-					add("fivE=2");
-				}
-			});
+		jsonObject.put("frequencyThreshold", frequencyThreshold);
 	}
 
-	protected void testMaxTermsNegative() throws Exception {
-		addDocument("One");
+	protected void setMaxTerms(Facet facet, int maxTerms) {
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		assertFacet(setUpMaxTerms(-25), Arrays.asList("One=1"));
-	}
+		JSONObject jsonObject = facetConfiguration.getData();
 
-	protected void testMaxTermsZero() throws Exception {
-		addDocument("One");
-
-		assertFacet(setUpMaxTerms(0), Arrays.asList("One=1"));
-	}
-
-	protected void testUnmatchedAreIgnored() throws Exception {
-		String presentButUnmatched = RandomTestUtil.randomString();
-
-		addDocument("One");
-		addDocument(presentButUnmatched);
-
-		assertFacet(
-			QueryContributors.mustNotTerm(getField(), presentButUnmatched),
-			createDataJSONObject(), Arrays.asList("One=1"));
+		jsonObject.put("maxTerms", maxTerms);
 	}
 
 }

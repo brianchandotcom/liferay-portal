@@ -403,14 +403,16 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		for (com.liferay.portal.kernel.model.PortletPreferences preferences :
 				portletPreferencesList) {
 
-			if (!Objects.equals(
+			if (Objects.equals(
 					preferences.getPreferences(), portletPreferencesXml)) {
 
-				preferences.setPreferences(portletPreferencesXml);
-
-				_portletPreferencesLocalService.updatePortletPreferences(
-					preferences);
+				continue;
 			}
+
+			preferences.setPreferences(portletPreferencesXml);
+
+			_portletPreferencesLocalService.updatePortletPreferences(
+				preferences);
 		}
 	}
 

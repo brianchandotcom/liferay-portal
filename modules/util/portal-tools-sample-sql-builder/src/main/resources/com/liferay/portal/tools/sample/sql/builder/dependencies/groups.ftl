@@ -12,6 +12,11 @@
 	_publicPageCount=1
 />
 
+<@insertGroup
+	_groupModel=dataFactory.userPersonalSiteGroupModel
+	_publicPageCount=1
+/>
+
 <#list dataFactory.groupModels as groupModel>
 	<#assign groupId = groupModel.groupId />
 

@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.content.search.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.CPContentListRendererRegistry;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRendererRegistry;
@@ -23,6 +22,7 @@ import com.liferay.commerce.product.content.search.web.internal.configuration.CP
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.search.CPDefinitionIndexer;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -40,9 +39,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -211,6 +208,9 @@ public class CPSearchResultsPortlet
 		SearchContext searchContext =
 			portletSharedSearchSettings.getSearchContext();
 
+		searchContext.setAttribute(
+			CPDefinitionIndexer.ATTRIBUTE_FILTER_BY_CP_RULES, Boolean.TRUE);
+
 		QueryConfig queryConfig = portletSharedSearchSettings.getQueryConfig();
 
 		queryConfig.setHighlightEnabled(false);
@@ -223,32 +223,6 @@ public class CPSearchResultsPortlet
 					Field.GROUP_ID,
 					String.valueOf(themeDisplay.getScopeGroupId())),
 				BooleanClauseOccur.MUST));
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
-		Organization organization =
-			_commerceOrganizationHelper.getCurrentOrganization(
-				httpServletRequest);
-
-		long organizationId = 0;
-
-		if (organization != null) {
-			organizationId = organization.getOrganizationId();
-		}
-
-		BooleanFilter booleanFilter = _cpDefinitionHelper.getCPRuleFilter(
-			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
-			themeDisplay.getUserId(), organizationId);
-
-		if (booleanFilter != null) {
-			Query query = new MatchAllQuery();
-
-			query.setPreBooleanFilter(booleanFilter);
-
-			portletSharedSearchSettings.addCondition(
-				new BooleanClauseImpl<>(query, BooleanClauseOccur.MUST));
-		}
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -264,9 +238,6 @@ public class CPSearchResultsPortlet
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPSearchResultsPortlet.class);
-
-	@Reference
-	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
 	private CPContentListEntryRendererRegistry

@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.search.CPDefinitionIndexer;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -46,10 +44,7 @@ import java.util.Map;
  */
 public class CPDefinitionSearcher extends BaseSearcher {
 
-	public CPDefinitionSearcher(
-		CPDefinitionHelper cpDefinitionHelper, CPQuery cpQuery) {
-
-		_cpDefinitionHelper = cpDefinitionHelper;
+	public CPDefinitionSearcher(CPQuery cpQuery) {
 		_cpQuery = cpQuery;
 
 		setDefaultSelectedFieldNames(
@@ -59,27 +54,6 @@ public class CPDefinitionSearcher extends BaseSearcher {
 			CPDefinitionIndexer.FIELD_DEPTH, CPDefinitionIndexer.FIELD_HEIGHT,
 			CPDefinitionIndexer.FIELD_IS_IGNORE_SKU_COMBINATIONS,
 			CPDefinitionIndexer.FIELD_PRODUCT_TYPE_NAME);
-	}
-
-	@Override
-	public void addSearchUserId(
-			BooleanFilter booleanFilter, SearchContext searchContext)
-		throws Exception {
-
-		super.addSearchUserId(booleanFilter, searchContext);
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		long[] groupIds = searchContext.getGroupIds();
-
-		Filter filter = _cpDefinitionHelper.getCPRuleFilter(
-			permissionChecker, groupIds[0], _cpQuery.getUserId(),
-			_cpQuery.getOrganizationId());
-
-		if (filter != null) {
-			booleanFilter.add(filter, BooleanClauseOccur.MUST);
-		}
 	}
 
 	@Override
@@ -442,7 +416,6 @@ public class CPDefinitionSearcher extends BaseSearcher {
 		queryBooleanFilter.add(tagIgsTermsFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
-	private final CPDefinitionHelper _cpDefinitionHelper;
 	private final CPQuery _cpQuery;
 
 }

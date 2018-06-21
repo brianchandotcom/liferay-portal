@@ -16,6 +16,8 @@ package com.liferay.commerce.product.search;
 
 import com.liferay.commerce.product.catalog.rule.CPRuleType;
 import com.liferay.commerce.product.catalog.rule.CPRuleTypeRegistry;
+import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -24,17 +26,20 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPRule;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.util.CPRulesThreadLocal;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -47,9 +52,14 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -72,6 +82,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = Indexer.class)
 public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
+
+	public static final String ATTRIBUTE_FILTER_BY_CP_RULES = "filterByCPRules";
 
 	public static final String CLASS_NAME = CPDefinition.class.getName();
 
@@ -166,6 +178,14 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 			contextBooleanFilter.add(linkFilter, BooleanClauseOccur.MUST);
 		}
+
+		if (GetterUtil.getBoolean(
+				searchContext.getAttribute(ATTRIBUTE_FILTER_BY_CP_RULES))) {
+
+			long[] groupIds = searchContext.getGroupIds();
+
+			addCPRulesFilters(contextBooleanFilter, groupIds[0]);
+		}
 	}
 
 	@Override
@@ -196,6 +216,39 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 			if (Validator.isNotNull(expandoAttributes)) {
 				addSearchExpando(searchQuery, searchContext, expandoAttributes);
+			}
+		}
+	}
+
+	protected void addCPRulesFilters(BooleanFilter booleanFilter, long groupId)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin(group.getCompanyId()) ||
+			permissionChecker.isGroupAdmin(groupId) ||
+			_portletResourcePermission.contains(
+				permissionChecker, groupId, CPActionKeys.MANAGE_CATALOG)) {
+
+			return;
+		}
+
+		List<CPRule> cpRules = CPRulesThreadLocal.getCPRules();
+
+		if (ListUtil.isEmpty(cpRules)) {
+			booleanFilter.addTerm(
+				Field.ENTRY_CLASS_PK, "-1", BooleanClauseOccur.MUST);
+		}
+		else {
+			for (CPRule cpRule : cpRules) {
+				CPRuleType cpRuleType = _cpRuleTypeRegistry.getCPRuleType(
+					cpRule.getType());
+
+				cpRuleType.postProcessContextBooleanFilter(
+					booleanFilter, cpRule);
 			}
 		}
 	}
@@ -567,6 +620,12 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 	private CPRuleTypeRegistry _cpRuleTypeRegistry;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference(target = "(resource.name=" + CPConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

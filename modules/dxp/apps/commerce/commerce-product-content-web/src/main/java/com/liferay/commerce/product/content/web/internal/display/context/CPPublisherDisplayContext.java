@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.content.web.internal.display.context;
 
-import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.content.render.list.CPContentListRenderer;
@@ -28,7 +27,6 @@ import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -56,7 +54,6 @@ import javax.servlet.http.HttpServletRequest;
 public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 	public CPPublisherDisplayContext(
-		CommerceOrganizationHelper commerceOrganizationHelper,
 		CPContentListEntryRendererRegistry contentListEntryRendererRegistry,
 		CPContentListRendererRegistry cpContentListRendererRegistry,
 		CPDataSourceRegistry cpDataSourceRegistry,
@@ -68,7 +65,6 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 			contentListEntryRendererRegistry, cpContentListRendererRegistry,
 			cpPublisherWebHelper, httpServletRequest);
 
-		_commerceOrganizationHelper = commerceOrganizationHelper;
 		_cpDataSourceRegistry = cpDataSourceRegistry;
 		_cpDefinitionHelper = cpDefinitionHelper;
 	}
@@ -203,18 +199,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 		searchContext.setKeywords(StringPool.STAR);
 
-		Organization organization =
-			_commerceOrganizationHelper.getCurrentOrganization(
-				cpContentRequestHelper.getRequest());
-
-		long organizationId = 0;
-
-		if (organization != null) {
-			organizationId = organization.getOrganizationId();
-		}
-
-		CPQuery cpQuery = new CPQuery(
-			cpContentRequestHelper.getUserId(), organizationId);
+		CPQuery cpQuery = new CPQuery();
 
 		cpPublisherWebHelper.setCategoriesAndTags(
 			cpContentRequestHelper.getScopeGroupId(), cpQuery,
@@ -230,7 +215,6 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		return cpDataSourceResult;
 	}
 
-	private final CommerceOrganizationHelper _commerceOrganizationHelper;
 	private final CPDataSourceRegistry _cpDataSourceRegistry;
 	private final CPDefinitionHelper _cpDefinitionHelper;
 	private SearchContainer<CPCatalogEntry> _searchContainer;

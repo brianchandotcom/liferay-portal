@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.product.internal.data.source;
 
-import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPQuery;
 import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration;
@@ -25,7 +24,6 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.Portal;
@@ -105,21 +103,8 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 
 		searchContext.setKeywords(StringPool.STAR);
 
-		Organization organization =
-			_commerceOrganizationHelper.getCurrentOrganization(
-				httpServletRequest);
-
-		long organizationId = 0;
-
-		if (organization != null) {
-			organizationId = organization.getOrganizationId();
-		}
-
-		CPQuery cpQuery = new CPQuery(
-			_portal.getUserId(httpServletRequest), organizationId);
-
 		return _cpDefinitionHelper.search(
-			groupId, searchContext, cpQuery, start, end);
+			groupId, searchContext, new CPQuery(), start, end);
 	}
 
 	@Activate
@@ -129,9 +114,6 @@ public class CPDataSourceDefinitionLinkTypeImpl implements CPDataSource {
 			ConfigurableUtil.createConfigurable(
 				CPDefinitionLinkTypeConfiguration.class, properties);
 	}
-
-	@Reference
-	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;

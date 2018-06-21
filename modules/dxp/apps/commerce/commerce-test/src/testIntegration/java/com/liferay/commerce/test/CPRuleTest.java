@@ -123,7 +123,7 @@ public class CPRuleTest {
 		SearchContext searchContext = _getSearchContext(
 			null, WorkflowConstants.STATUS_APPROVED);
 
-		CPQuery cpQuery = new CPQuery(_user1.getUserId(), 0);
+		CPQuery cpQuery = new CPQuery();
 
 		CPDataSourceResult cpDataSourceResult = _cpDefinitionHelper.search(
 			_group.getGroupId(), searchContext, cpQuery, QueryUtil.ALL_POS,
@@ -213,7 +213,7 @@ public class CPRuleTest {
 		SearchContext searchContext = _getSearchContext(
 			null, WorkflowConstants.STATUS_APPROVED);
 
-		CPQuery cpQuery = new CPQuery(_user1.getUserId(), 0);
+		CPQuery cpQuery = new CPQuery();
 
 		CPDataSourceResult cpDataSourceResult = _cpDefinitionHelper.search(
 			_group.getGroupId(), searchContext, cpQuery, QueryUtil.ALL_POS,

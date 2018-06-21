@@ -60,11 +60,6 @@ public class CPQuery {
 		}
 	}
 
-	public CPQuery(long userId, long organizationId) {
-		_userId = userId;
-		_organizationId = organizationId;
-	}
-
 	public void addAllTagIdsArray(long[] allTagsIds) {
 		if (allTagsIds.length == 0) {
 			return;
@@ -164,14 +159,6 @@ public class CPQuery {
 
 	public String getOrderByType2() {
 		return checkOrderByType(_orderByType2);
-	}
-
-	public long getOrganizationId() {
-		return _organizationId;
-	}
-
-	public long getUserId() {
-		return _userId;
 	}
 
 	public void setAllCategoryIds(long[] allCategoryIds) {
@@ -389,8 +376,6 @@ public class CPQuery {
 	private String _orderByCol2;
 	private String _orderByType1;
 	private String _orderByType2;
-	private final long _organizationId;
 	private String _toString;
-	private final long _userId;
 
 }

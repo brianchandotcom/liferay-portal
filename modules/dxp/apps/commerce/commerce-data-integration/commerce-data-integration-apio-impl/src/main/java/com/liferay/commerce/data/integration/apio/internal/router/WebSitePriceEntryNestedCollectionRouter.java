@@ -18,7 +18,7 @@ import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
-import com.liferay.commerce.data.integration.apio.identifiers.PriceEntryIdentifier;
+import com.liferay.commerce.data.integration.apio.identifiers.CommercePriceEntryIdentifier;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class WebSitePriceEntryNestedCollectionRouter implements
-	NestedCollectionRouter<CommercePriceEntry, Long, PriceEntryIdentifier,
+	NestedCollectionRouter<CommercePriceEntry, Long, CommercePriceEntryIdentifier,
 		Long, WebSiteIdentifier> {
 
 	@Override

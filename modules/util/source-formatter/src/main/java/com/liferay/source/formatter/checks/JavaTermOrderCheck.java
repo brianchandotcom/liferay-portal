@@ -29,11 +29,6 @@ import org.dom4j.Document;
 public class JavaTermOrderCheck extends BaseJavaTermCheck {
 
 	@Override
-	public void init() throws Exception {
-		_portalCustomSQLDocument = getPortalCustomSQLDocument();
-	}
-
-	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, JavaTerm javaTerm,
 			String fileContent)
@@ -53,9 +48,9 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 			className.endsWith("FinderImpl")) {
 
 			Document customSQLDocument = getCustomSQLDocument(
-				fileName, absolutePath, _portalCustomSQLDocument);
+				fileName, absolutePath, getPortalCustomSQLDocument());
 
-			if (customSQLDocument != null) {
+			if ((customSQLDocument != null) && customSQLDocument.hasContent()) {
 				customSQLContent = customSQLDocument.asXML();
 			}
 		}
@@ -127,7 +122,5 @@ public class JavaTermOrderCheck extends BaseJavaTermCheck {
 
 		return javaClass.getContent();
 	}
-
-	private Document _portalCustomSQLDocument;
 
 }

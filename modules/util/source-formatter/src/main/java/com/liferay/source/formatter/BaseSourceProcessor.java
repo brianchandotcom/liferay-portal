@@ -663,8 +663,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		sourceCheck.setPropertiesMap(_propertiesMap);
 		sourceCheck.setSourceFormatterExcludes(_sourceFormatterExcludes);
 		sourceCheck.setSubrepository(_subrepository);
-
-		sourceCheck.init();
 	}
 
 	private boolean _isMatchPath(String fileName) {

@@ -45,11 +45,6 @@ import java.util.regex.Pattern;
 public class LanguageKeysCheck extends BaseFileCheck {
 
 	@Override
-	public void init() throws Exception {
-		_portalLanguageProperties = _getPortalLanguageProperties();
-	}
-
-	@Override
 	public boolean isPortalCheck() {
 		return true;
 	}
@@ -59,9 +54,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (_portalLanguageProperties != null) {
-			_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
-		}
+		_checkLanguageKeys(fileName, absolutePath, content, getPatterns());
 
 		return content;
 	}
@@ -84,14 +77,22 @@ public class LanguageKeysCheck extends BaseFileCheck {
 			return;
 		}
 
+		Properties portalLanguageProperties = _getPortalLanguageProperties();
+
+		if (portalLanguageProperties.isEmpty()) {
+			return;
+		}
+
 		for (Pattern pattern : patterns) {
-			_checkLanguageKeys(fileName, absolutePath, content, pattern);
+			_checkLanguageKeys(
+				fileName, absolutePath, content, portalLanguageProperties,
+				pattern);
 		}
 	}
 
 	private void _checkLanguageKeys(
 			String fileName, String absolutePath, String content,
-			Pattern pattern)
+			Properties portalLanguageProperties, Pattern pattern)
 		throws Exception {
 
 		Matcher matcher = pattern.matcher(content);
@@ -112,7 +113,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 					languageKey.startsWith(StringPool.OPEN_CURLY_BRACE) ||
 					languageKey.startsWith(StringPool.PERIOD) ||
 					languageKey.startsWith(StringPool.UNDERLINE) ||
-					_portalLanguageProperties.containsKey(languageKey)) {
+					portalLanguageProperties.containsKey(languageKey)) {
 
 					continue;
 				}
@@ -483,20 +484,26 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private Properties _getPortalLanguageProperties() throws Exception {
+	private synchronized Properties _getPortalLanguageProperties()
+		throws Exception {
+
+		if (_portalLanguageProperties != null) {
+			return _portalLanguageProperties;
+		}
+
+		_portalLanguageProperties = new Properties();
+
 		String portalLanguagePropertiesContent = getPortalContent(
 			"portal-impl/src/content/Language.properties");
 
 		if (portalLanguagePropertiesContent == null) {
-			return null;
+			return _portalLanguageProperties;
 		}
 
-		Properties portalLanguageProperties = new Properties();
-
-		portalLanguageProperties.load(
+		_portalLanguageProperties.load(
 			new StringReader(portalLanguagePropertiesContent));
 
-		return portalLanguageProperties;
+		return _portalLanguageProperties;
 	}
 
 	private final Pattern _applyLangMergerPluginPattern = Pattern.compile(

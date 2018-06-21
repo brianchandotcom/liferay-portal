@@ -24,6 +24,9 @@ import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurato
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -53,14 +56,45 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 			return;
 		}
 
+		Pattern externalVersionPattern = Pattern.compile("([0-9]+)\\.([0-9]+)-([A-Za-z]+)([0-9]+)");
+
+		Matcher matcher = externalVersionPattern.matcher(targetPlatformVersion);
+
+		final String repositoryVersion;
+
+		if (matcher.matches()) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(matcher.group(1));
+			sb.append('.');
+			sb.append(matcher.group(2));
+			sb.append('.');
+
+			String label = matcher.group(3);
+
+			int labelNumber = Integer.parseInt(matcher.group(4));
+
+			if (label.startsWith("GA")) {
+				sb.append(labelNumber - 1);
+			}
+			else if (label.startsWith("sp")) {
+				sb.append(labelNumber);
+			}
+
+			repositoryVersion = sb.toString();
+		}
+		else {
+			repositoryVersion = targetPlatformVersion;
+		}
+
 		GradleUtil.applyPlugin(project, TargetPlatformIDEPlugin.class);
 
 		_configureConfigurationBundles(project);
 		_configureTargetPlatform(project);
 		_configureTargetPlatformIDE(project);
 
-		_addDependenciesTargetPlatformBoms(project, targetPlatformVersion);
-		_addDependenciesTargetPlatformDistro(project, targetPlatformVersion);
+		_addDependenciesTargetPlatformBoms(project, repositoryVersion);
+		_addDependenciesTargetPlatformDistro(project, repositoryVersion);
 	}
 
 	private TargetPlatformRootProjectConfigurator() {

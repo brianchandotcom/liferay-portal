@@ -284,17 +284,22 @@ public class JournalArticleStagedModelDataHandler
 			PortletDataContext portletDataContext, JournalArticle article)
 		throws Exception {
 
-		ChangesetCollection changesetCollection =
-			_changesetCollectionLocalService.fetchOrAddChangesetCollection(
-				portletDataContext.getGroupId(),
-				StagingConstants.RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
+		if (ExportImportThreadLocal.isStagingInProcess()) {
+			ChangesetCollection changesetCollection =
+				_changesetCollectionLocalService.fetchChangesetCollection(
+					portletDataContext.getGroupId(),
+					StagingConstants.
+						RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			JournalArticleResource.class);
+			if (changesetCollection != null) {
+				long classNameId = _classNameLocalService.getClassNameId(
+					JournalArticleResource.class);
 
-		_changesetEntryLocalService.deleteEntry(
-			changesetCollection.getChangesetCollectionId(), classNameId,
-			article.getResourcePrimKey());
+				_changesetEntryLocalService.deleteEntry(
+					changesetCollection.getChangesetCollectionId(), classNameId,
+					article.getResourcePrimKey());
+			}
+		}
 
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();

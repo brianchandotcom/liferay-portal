@@ -1,3 +1,11 @@
+allprojects {
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
 task runGradleTest
 
 runGradleTest {

@@ -14,10 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-
-import java.util.Random;
-
 import org.json.JSONObject;
 
 /**
@@ -25,14 +21,9 @@ import org.json.JSONObject;
  */
 public class Label {
 
-	public static boolean isValidLabelsURL(String labelsURL) {
-		if (labelsURL.matches(
-				"https://api.github.com/repos/[^/]+/[^/]+/labels")) {
-
-			return true;
-		}
-
-		return false;
+	public Label(JSONObject jsonObject, GitHubRemoteRepository repository) {
+		_jsonObject = jsonObject;
+		_repository = repository;
 	}
 
 	@Override
@@ -47,9 +38,10 @@ public class Label {
 
 		Label label = (Label)o;
 
+		String color = getColor();
 		String name = getName();
 
-		if (name.equals(label.getName())) {
+		if (color.equals(label.getColor()) && name.equals(label.getName())) {
 			return true;
 		}
 
@@ -60,8 +52,16 @@ public class Label {
 		return _jsonObject.getString("color");
 	}
 
+	public String getDescription() {
+		return _jsonObject.optString("description");
+	}
+
 	public String getName() {
 		return _jsonObject.getString("name");
+	}
+
+	public GitHubRemoteRepository getRepository() {
+		return _repository;
 	}
 
 	@Override
@@ -71,106 +71,12 @@ public class Label {
 		return name.hashCode();
 	}
 
-	public void setColor(String color) {
-		if (color == null) {
-			throw new IllegalArgumentException("Color is required");
-		}
-
-		if (!color.matches("[a-f0-9]{6}")) {
-			throw new RuntimeException("Invalid color " + color);
-		}
-
-		if (color.equals(getColor())) {
-			return;
-		}
-
-		_jsonObject.put("color", color);
-
-		_updateGithub();
-	}
-
 	@Override
 	public String toString() {
 		return _jsonObject.toString(4);
 	}
 
-	protected Label(JSONObject jsonObject) {
-		_jsonObject = jsonObject;
-	}
-
-	protected Label(String labelsURL, String name, String color) {
-		if (!isValidLabelsURL(labelsURL)) {
-			throw new IllegalArgumentException("Invalid url " + labelsURL);
-		}
-
-		if (color == null) {
-			color = _getRandomColor();
-		}
-
-		if (name == null) {
-			throw new IllegalArgumentException("Invalid name " + name);
-		}
-
-		_jsonObject = _getJSONObject(labelsURL, name, color);
-	}
-
-	private JSONObject _getJSONObject(
-		String labelsURL, String name, String color) {
-
-		try {
-			JSONObject colorJSONObject = new JSONObject();
-
-			colorJSONObject.put("color", color);
-
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.fixURL(
-					JenkinsResultsParserUtil.combine(labelsURL, "/", name)),
-				colorJSONObject.toString());
-
-			return jsonObject;
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
-
-			System.out.println("Creating missing label " + name);
-		}
-
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("color", color);
-		jsonObject.put("name", name);
-
-		try {
-			return JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.fixURL(labelsURL),
-				jsonObject.toString());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
-	private String _getRandomColor() {
-		Random random = new Random();
-
-		return String.format("%06x", random.nextInt(256 * 256 * 256));
-	}
-
-	private void _updateGithub() {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put("color", getColor());
-		jsonObject.put("name", getName());
-
-		try {
-			JenkinsResultsParserUtil.toJSONObject(
-				_jsonObject.getString("url"), jsonObject.toString());
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
 	private final JSONObject _jsonObject;
+	private final GitHubRemoteRepository _repository;
 
 }

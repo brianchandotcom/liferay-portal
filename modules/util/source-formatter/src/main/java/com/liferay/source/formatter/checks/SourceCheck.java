@@ -32,8 +32,6 @@ public interface SourceCheck {
 	public Set<SourceFormatterMessage> getSourceFormatterMessages(
 		String fileName);
 
-	public void init() throws Exception;
-
 	public boolean isEnabled();
 
 	public boolean isModulesCheck();

@@ -70,10 +70,6 @@ public abstract class BaseSourceCheck implements SourceCheck {
 	}
 
 	@Override
-	public void init() throws Exception {
-	}
-
-	@Override
 	public boolean isEnabled() {
 		return _enabled;
 	}

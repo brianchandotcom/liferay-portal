@@ -6,6 +6,7 @@
 		<portlet-name>com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet</portlet-name>
 		<permissions>
 			<supports>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>ADD_SITE_NAVIGATION_MENU</action-key>
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
@@ -17,6 +18,7 @@
 				<action-key>VIEW</action-key>
 			</guest-defaults>
 			<guest-unsupported>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>ADD_SITE_NAVIGATION_MENU</action-key>
 				<action-key>CONFIGURATION</action-key>
 			</guest-unsupported>

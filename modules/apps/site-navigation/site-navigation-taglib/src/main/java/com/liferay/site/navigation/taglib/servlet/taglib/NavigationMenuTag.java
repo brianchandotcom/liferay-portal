@@ -233,14 +233,11 @@ public class NavigationMenuTag extends IncludeTag {
 
 		List<NavItem> navItems = new ArrayList<>();
 
-		long parentSiteNavigationMenuItemId = 0;
+		long parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
 
 		if (_rootItemType.equals("relative")) {
-			parentSiteNavigationMenuItemId = _getSiteNavigationMenuItemId(
-				themeDisplay.getLayout());
-		}
-		else if (_rootItemType.equals("select")) {
-			parentSiteNavigationMenuItemId = GetterUtil.getLong(_rootItemId);
+			parentSiteNavigationMenuItemId =
+				_getRelativeSiteNavigationMenuItemId(themeDisplay.getLayout());
 		}
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
@@ -334,7 +331,7 @@ public class NavigationMenuTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 	}
 
-	private long _getSiteNavigationMenuItemId(Layout layout) {
+	private long _getRelativeSiteNavigationMenuItemId(Layout layout) {
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(
 				_siteNavigationMenuId);

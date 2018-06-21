@@ -20,9 +20,14 @@
 			<var name="button" value="Save" />
 		</execute>
 
-		<execute macro="Page#togglePageTemplateInheritChanges">
-			<var name="toggleValue" value="${inheritChanges}" />
-		</execute>
+		<if>
+			<isset var="inheritChanges" />
+			<then>
+				<execute macro="Page#togglePageTemplateInheritChanges">
+					<var name="toggleValue" value="${inheritChanges}" />
+				</execute>
+			</then>
+		</if>
 
 		<execute macro="Button#click">
 			<var name="button" value="Save" />

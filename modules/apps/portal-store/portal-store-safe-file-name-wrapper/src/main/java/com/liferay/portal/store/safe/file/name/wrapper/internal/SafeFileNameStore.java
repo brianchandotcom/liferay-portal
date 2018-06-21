@@ -17,6 +17,8 @@ package com.liferay.portal.store.safe.file.name.wrapper.internal;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.File;
@@ -42,6 +44,9 @@ public final class SafeFileNameStore implements Store {
 				_store.move(dirName, safeDirName);
 			}
 			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
 			}
 		}
 
@@ -131,6 +136,9 @@ public final class SafeFileNameStore implements Store {
 				return;
 			}
 			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
 			}
 		}
 
@@ -298,6 +306,9 @@ public final class SafeFileNameStore implements Store {
 				_store.move(dirName, safeDirName);
 			}
 			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e, e);
+				}
 			}
 		}
 
@@ -494,6 +505,9 @@ public final class SafeFileNameStore implements Store {
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SafeFileNameStore.class);
 
 	private final Store _store;
 

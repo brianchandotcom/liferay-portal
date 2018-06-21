@@ -19,9 +19,9 @@ import com.liferay.portal.search.test.util.facet.BaseSimpleFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 /**
- * @author Bryan Engler
+ * @author André de Oliveira
  */
-public class SimpleFacetTest extends BaseSimpleFacetTestCase {
+public class MultiValueFacetTest extends BaseSimpleFacetTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

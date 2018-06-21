@@ -18,26 +18,10 @@ import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.facet.BaseAssetTagNamesFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
-import org.junit.Test;
-
 /**
  * @author André de Oliveira
  */
 public class AssetTagNamesFacetTest extends BaseAssetTagNamesFacetTestCase {
-
-	@Override
-	@Test
-	public void testCaseInsensitiveSearchCaseSensitiveGrouping()
-		throws Exception {
-
-		super.testCaseInsensitiveSearchCaseSensitiveGrouping();
-	}
-
-	@Override
-	@Test
-	public void testKeysWithSpaces() throws Exception {
-		super.testKeysWithSpaces();
-	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {

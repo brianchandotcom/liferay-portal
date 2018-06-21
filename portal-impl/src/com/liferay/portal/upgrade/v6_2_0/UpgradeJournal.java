@@ -376,6 +376,11 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		return LocaleUtil.getSiteDefault();
 	}
 
+	protected long getJournalStructureClassNameId() {
+		return PortalUtil.getClassNameId(
+			"com.liferay.portlet.journal.model.JournalStructure");
+	}
+
 	@Override
 	protected String[] getPortletIds() {
 		return new String[] {
@@ -572,6 +577,23 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		if (type.equals("link_to_layout")) {
 			updateLinkToLayoutElements(groupId, element);
+		}
+	}
+
+	protected void updateJournalArticleClassNameIdAndClassPK(
+			long journalStructureId, Long ddmStructureId)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update JournalArticle set classNameId = ?, classPK = ? " +
+					"where classNameId = ? and classPK = ?")) {
+
+			ps.setLong(1, getDDMStructureClassNameId());
+			ps.setLong(2, ddmStructureId);
+			ps.setLong(3, getJournalStructureClassNameId());
+			ps.setLong(4, journalStructureId);
+
+			ps.execute();
 		}
 	}
 
@@ -973,6 +995,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			uuid_, ddmStructureId, groupId, companyId, userId, userName,
 			createDate, modifiedDate, parentStructureId, structureId, name,
 			description, xsd);
+
+		updateJournalArticleClassNameIdAndClassPK(id_, ddmStructureId);
 
 		updateResourcePermission(
 			companyId, "com.liferay.portlet.journal.model.JournalStructure",

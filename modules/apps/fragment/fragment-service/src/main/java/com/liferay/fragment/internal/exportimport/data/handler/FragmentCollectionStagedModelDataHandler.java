@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.xml.Element;
 
 import org.osgi.service.component.annotations.Component;
@@ -34,6 +35,22 @@ public class FragmentCollectionStagedModelDataHandler
 
 	public static final String[] CLASS_NAMES =
 		{FragmentCollection.class.getName()};
+
+	@Override
+	public void deleteStagedModel(FragmentCollection fragmentCollection)
+		throws PortalException {
+
+		_stagedModelRepository.deleteStagedModel(fragmentCollection);
+	}
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
+
+		_stagedModelRepository.deleteStagedModel(
+			uuid, groupId, className, extraData);
+	}
 
 	@Override
 	public String[] getClassNames() {

@@ -67,11 +67,6 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 		return false;
 	}
 
-	@Override
-	public boolean isStaged() {
-		return false;
-	}
-
 	public boolean validateSchemaVersion(String schemaVersion) {
 		return _portletDataHandlerHelper.validateSchemaVersion(
 			schemaVersion, getSchemaVersion());
@@ -86,7 +81,7 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "entries", true, false, null,
 				FragmentEntry.class.getName()));
-		setImportControls(getExportControls());
+		setPublishToLiveByDefault(true);
 	}
 
 	@Override

@@ -63,6 +63,7 @@ public class SiteTeamsPortletDataHandler extends BasePortletDataHandler {
 				Team.class.getName()));
 		setPublishToLiveByDefault(true);
 		setRank(80);
+		setStagingControls(getExportControls());
 	}
 
 	@Override

@@ -78,8 +78,8 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "ratings-entries", true, false, null,
 				RatingsEntry.class.getName(),
 				StagedModelType.REFERRER_CLASS_NAME_ALL));
-		setImportControls(getExportControls());
 		setPublishToLiveByDefault(true);
+		setStagingControls(getExportControls());
 	}
 
 	@Override

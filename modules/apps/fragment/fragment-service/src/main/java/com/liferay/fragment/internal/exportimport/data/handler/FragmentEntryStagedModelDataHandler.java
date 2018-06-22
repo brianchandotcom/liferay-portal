@@ -24,6 +24,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -42,6 +43,22 @@ public class FragmentEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<FragmentEntry> {
 
 	public static final String[] CLASS_NAMES = {FragmentEntry.class.getName()};
+
+	@Override
+	public void deleteStagedModel(FragmentEntry fragmentEntry)
+		throws PortalException {
+
+		_stagedModelRepository.deleteStagedModel(fragmentEntry);
+	}
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
+
+		_stagedModelRepository.deleteStagedModel(
+			uuid, groupId, className, extraData);
+	}
 
 	@Override
 	public String[] getClassNames() {

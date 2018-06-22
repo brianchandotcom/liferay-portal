@@ -25,8 +25,10 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -89,44 +91,9 @@ public class FragmentEntryLocalServiceImpl
 			int status, ServiceContext serviceContext)
 		throws PortalException {
 
-		// Fragment entry
-
-		User user = userLocalService.getUser(userId);
-
-		validate(name);
-
-		if (Validator.isNull(fragmentEntryKey)) {
-			fragmentEntryKey = _generateFragmentEntryKey(groupId, name);
-		}
-
-		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
-
-		validateFragmentEntryKey(groupId, fragmentEntryKey);
-
-		long fragmentEntryId = counterLocalService.increment();
-
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.create(
-			fragmentEntryId);
-
-		fragmentEntry.setGroupId(groupId);
-		fragmentEntry.setCompanyId(user.getCompanyId());
-		fragmentEntry.setUserId(user.getUserId());
-		fragmentEntry.setUserName(user.getFullName());
-		fragmentEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
-		fragmentEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
-		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
-		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
-		fragmentEntry.setName(name);
-		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
-		fragmentEntry.setStatus(status);
-		fragmentEntry.setStatusByUserId(userId);
-		fragmentEntry.setStatusByUserName(user.getFullName());
-		fragmentEntry.setStatusDate(new Date());
-
-		fragmentEntryPersistence.update(fragmentEntry);
-
-		return fragmentEntry;
+		return addFragmentEntry(
+			userId, groupId, fragmentCollectionId, fragmentEntryKey, name, null,
+			null, null, status, serviceContext);
 	}
 
 	@Override
@@ -177,14 +144,14 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
+		validate(name);
+
 		if (Validator.isNull(fragmentEntryKey)) {
-			fragmentEntryKey = String.valueOf(counterLocalService.increment());
-		}
-		else {
-			fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+			fragmentEntryKey = _generateFragmentEntryKey(groupId, name);
 		}
 
-		validate(name);
+		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
+
 		validateFragmentEntryKey(groupId, fragmentEntryKey);
 
 		if (WorkflowConstants.STATUS_APPROVED == status) {
@@ -198,6 +165,7 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.create(
 			fragmentEntryId);
 
+		fragmentEntry.setUuid(serviceContext.getUuid());
 		fragmentEntry.setGroupId(groupId);
 		fragmentEntry.setCompanyId(user.getCompanyId());
 		fragmentEntry.setUserId(user.getUserId());
@@ -223,6 +191,7 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
 		throws PortalException {
 
@@ -246,7 +215,7 @@ public class FragmentEntryLocalServiceImpl
 
 		FragmentEntry fragmentEntry = getFragmentEntry(fragmentEntryId);
 
-		return deleteFragmentEntry(fragmentEntry);
+		return fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
 	}
 
 	@Override

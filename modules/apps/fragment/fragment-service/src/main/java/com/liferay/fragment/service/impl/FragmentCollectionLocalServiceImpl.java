@@ -22,8 +22,10 @@ import com.liferay.fragment.service.base.FragmentCollectionLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -76,6 +78,7 @@ public class FragmentCollectionLocalServiceImpl
 		FragmentCollection fragmentCollection =
 			fragmentCollectionPersistence.create(fragmentCollectionId);
 
+		fragmentCollection.setUuid(serviceContext.getUuid());
 		fragmentCollection.setGroupId(groupId);
 		fragmentCollection.setCompanyId(user.getCompanyId());
 		fragmentCollection.setUserId(user.getUserId());
@@ -94,6 +97,7 @@ public class FragmentCollectionLocalServiceImpl
 	}
 
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public FragmentCollection deleteFragmentCollection(
 			FragmentCollection fragmentCollection)
 		throws PortalException {
@@ -123,7 +127,8 @@ public class FragmentCollectionLocalServiceImpl
 		FragmentCollection fragmentCollection = getFragmentCollection(
 			fragmentCollectionId);
 
-		return deleteFragmentCollection(fragmentCollection);
+		return fragmentCollectionLocalService.deleteFragmentCollection(
+			fragmentCollection);
 	}
 
 	@Override

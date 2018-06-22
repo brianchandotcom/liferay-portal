@@ -74,12 +74,12 @@
 			<then>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="Passwords may not be changed under the current password policy." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="Passwords may not be changed under the current password policy." />
 			</then>
 			<else>
 				<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="That password is invalid. Please enter in a different password." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_1" value1="That password is invalid. Please enter in a different password." />
 			</else>
 		</if>
 	</command>

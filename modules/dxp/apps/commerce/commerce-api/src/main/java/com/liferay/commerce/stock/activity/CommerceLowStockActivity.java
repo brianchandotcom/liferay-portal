@@ -27,7 +27,7 @@ import java.util.Locale;
 @ProviderType
 public interface CommerceLowStockActivity {
 
-	public void check(CommerceWarehouseItem commerceWarehouseItem, int quantity)
+	public void execute(CommerceWarehouseItem commerceWarehouseItem)
 		throws PortalException;
 
 	public String getKey();

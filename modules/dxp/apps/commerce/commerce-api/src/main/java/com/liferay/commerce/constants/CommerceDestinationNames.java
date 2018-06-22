@@ -21,4 +21,6 @@ public class CommerceDestinationNames {
 
 	public static final String ORDER_STATUS = "liferay/order_status";
 
+	public static final String STOCK_QUANTITY = "liferay/stock_quantity";
+
 }

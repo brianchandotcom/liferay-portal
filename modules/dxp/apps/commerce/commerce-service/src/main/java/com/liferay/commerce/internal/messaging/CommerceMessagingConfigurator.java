@@ -39,12 +39,18 @@ public class CommerceMessagingConfigurator {
 	protected void activate(BundleContext bundleContext) {
 		_orderStatusServiceRegistration = _registerDestination(
 			bundleContext, CommerceDestinationNames.ORDER_STATUS);
+		_stockQuantityServiceRegistration = _registerDestination(
+			bundleContext, CommerceDestinationNames.STOCK_QUANTITY);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		if (_orderStatusServiceRegistration != null) {
 			_orderStatusServiceRegistration.unregister();
+		}
+
+		if (_stockQuantityServiceRegistration != null) {
+			_stockQuantityServiceRegistration.unregister();
 		}
 	}
 
@@ -71,5 +77,7 @@ public class CommerceMessagingConfigurator {
 
 	private volatile ServiceRegistration<Destination>
 		_orderStatusServiceRegistration;
+	private volatile ServiceRegistration<Destination>
+		_stockQuantityServiceRegistration;
 
 }

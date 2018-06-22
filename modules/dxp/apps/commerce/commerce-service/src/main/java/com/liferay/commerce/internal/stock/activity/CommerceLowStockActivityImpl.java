@@ -14,14 +14,9 @@
 
 package com.liferay.commerce.internal.stock.activity;
 
-import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
-import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
-import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
-import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
-import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -47,35 +42,15 @@ public class CommerceLowStockActivityImpl implements CommerceLowStockActivity {
 	public static final String KEY = "default";
 
 	@Override
-	public void check(CommerceWarehouseItem commerceWarehouseItem, int quantity)
+	public void execute(CommerceWarehouseItem commerceWarehouseItem)
 		throws PortalException {
-
-		if (commerceWarehouseItem == null) {
-			return;
-		}
 
 		CPInstance cpInstance = commerceWarehouseItem.getCPInstance();
 
-		CPDefinitionInventory cpDefinitionInventory =
-			_cpDefinitionInventoryLocalService.
-				fetchCPDefinitionInventoryByCPDefinitionId(
-					cpInstance.getCPDefinitionId());
+		if (cpInstance.getPublished()) {
+			cpInstance.setPublished(false);
 
-		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
-			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
-				cpDefinitionInventory);
-
-		cpDefinitionInventoryEngine.updateStockQuantity(
-			commerceWarehouseItem, quantity);
-
-		int stockQuantity =
-			_commerceWarehouseItemLocalService.getCPInstanceQuantity(
-				cpInstance.getCPInstanceId());
-
-		if (stockQuantity <=
-				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance)) {
-
-			_updateCPInstance(cpInstance);
+			_cpInstanceLocalService.updateCPInstance(cpInstance);
 		}
 	}
 
@@ -88,26 +63,6 @@ public class CommerceLowStockActivityImpl implements CommerceLowStockActivity {
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "set-as-unpublished");
 	}
-
-	private void _updateCPInstance(CPInstance cpInstance) {
-		if (cpInstance.getPublished()) {
-			cpInstance.setPublished(false);
-
-			_cpInstanceLocalService.updateCPInstance(cpInstance);
-		}
-	}
-
-	@Reference
-	private CommerceWarehouseItemLocalService
-		_commerceWarehouseItemLocalService;
-
-	@Reference
-	private CPDefinitionInventoryEngineRegistry
-		_cpDefinitionInventoryEngineRegistry;
-
-	@Reference
-	private CPDefinitionInventoryLocalService
-		_cpDefinitionInventoryLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

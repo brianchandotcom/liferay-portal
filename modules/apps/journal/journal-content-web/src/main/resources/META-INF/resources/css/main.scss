@@ -28,4 +28,10 @@
 			visibility: visible;
 		}
 	}
+
+	&.portlet-barebone .portlet .portlet-header {
+		margin-bottom: 0;
+		position: absolute;
+		right: 1px;
+	}
 }

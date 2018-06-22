@@ -132,6 +132,8 @@ Method | Description
 ------ | -----------
 `ExecuteNodeTask args(Iterable<?> args)` | Adds arguments for the Node.js invocation.
 `ExecuteNodeTask args(Object... args)` | Adds arguments for the Node.js invocation.
+`ExecuteNodeTask environment(Map<?, ?> environment)` | Adds environment variables for the Node.js invocation.
+`ExecuteNodeTask environment(Object key, Object value)` | Adds an environment variable for the Node.js invocation.
 
 ### ExecuteNodeScriptTask
 

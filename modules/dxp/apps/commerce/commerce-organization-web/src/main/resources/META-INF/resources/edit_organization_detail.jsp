@@ -114,31 +114,35 @@ EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganiza
 
 			<aui:input name="emailAddressId" type="hidden" value="<%= emailAddress.getEmailAddressId() %>" />
 
-			<aui:input cssClass="email-field" inlineField="<%= true %>" label="email-address" name="address" width="150px" />
+			<aui:input cssClass="email-field" inlineField="<%= true %>" label="email-address" name="address" required="true" width="150px" />
 
 			<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
 
-			<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
-			<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
-			<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
-			<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
-			<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
-
 			<aui:input name="addressId" type="hidden" value="<%= address.getAddressId() %>" />
 
-			<aui:input name="street1" />
+			<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
+
+			<aui:input name="street1" required="true" />
 
 			<aui:input name="street2" />
 
 			<aui:input name="street3" />
 
-			<aui:select label="country" name='<%= "addressCountryId" %>' width="150px" />
+			<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
+
+			<aui:select label="country" name='<%= "addressCountryId" %>' required="true" width="150px" />
+
+			<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
 			<aui:select label="region" name='<%= "addressRegionId" %>' width="150px" />
 
+			<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
+
 			<aui:input label="postal-code" name="zip" width="150px" />
 
-			<aui:input name="city" />
+			<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
+
+			<aui:input name="city" required="true" />
 		</aui:fieldset>
 
 		<aui:fieldset cssClass="col-md-6">

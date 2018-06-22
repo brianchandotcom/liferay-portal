@@ -13,6 +13,7 @@ $grayTextColor: #6B6C7E;
 	.hidden {
 		display: none;
 	}
+
 	.padlock {
 		flex: 1;
 	}
@@ -22,18 +23,23 @@ $grayTextColor: #6B6C7E;
 	.badge-item.global-scope-alias-reference {
 		color: $grayTextColor;
 	}
+
 	.hidden {
 		display: none;
 	}
+
 	.inline {
 		display: inline-block;
 	}
+
 	.list-group .list-group-title {
 		font-weight: normal;
 	}
+
 	.panel-header .form-group {
 		margin-bottom: 0;
 	}
+
 	.sheet .panel-group .panel-body {
 		margin-bottom: 0;
 	}
@@ -42,9 +48,10 @@ $grayTextColor: #6B6C7E;
 .portlet-oauth2-provider-authorize {
 	.consent {
 		.panel-body {
-			padding: 1.25rem 1.25rem;
+			padding: 1.25rem;
 		}
-		.user-icon, .app-icon {
+
+		.app-icon, .user-icon {
 			display: inline-block;
 			height: 80px;
 			margin-bottom: 1.25rem;
@@ -53,7 +60,7 @@ $grayTextColor: #6B6C7E;
 		}
 
 		.user-icon {
-			font-size: 2.1875rem;
+			font-size: 2.188rem;
 			left: -16px;
 			line-height: 80px;
 			z-index: 1;
@@ -67,17 +74,16 @@ $grayTextColor: #6B6C7E;
 			margin-bottom: 2rem;
 		}
 
-		.list-group-item:first-child {
-			border: 0;
-		}
 		.list-group-item {
-			border-bottom-width: 0;
-			border-left-width: 0;
-			border-right-width: 0;
-			border-top: 1px solid $grayLineColor;
+			border: solid $grayLineColor;
+			border-width: 1px 0 0;
+
+			&:first-child {
+				border-width: 0;
+			}
 
 			.lexicon-icon-check {
-				fill: green;
+				fill: #080;
 			}
 		}
 
@@ -88,11 +94,9 @@ $grayTextColor: #6B6C7E;
 		}
 	}
 }
+
 .portlet-oauth2-provider-connected-applications {
 	.view-application {
-		.panel-body {
-			padding: 1.25rem 1.25rem;
-		}
 		.app-icon {
 			display: block;
 			margin-bottom: 1rem;
@@ -102,14 +106,17 @@ $grayTextColor: #6B6C7E;
 				max-width: 88px;
 			}
 		}
+
 		.application-information, .last-access, .authorization {
 			span {
 				color: $grayTextColor;
 			}
 		}
+
 		.list-group-item:first-child {
 			border: 0;
 		}
+
 		.list-group-item {
 			border-bottom-width: 0;
 			border-left-width: 0;
@@ -117,21 +124,28 @@ $grayTextColor: #6B6C7E;
 			border-top: 1px solid $grayLineColor;
 
 			.lexicon-icon-check {
-				fill: green;
+				fill: #080;
 			}
 		}
+
+		.panel-body {
+			padding: 1.25rem;
+		}
+
 		.activity, .permissions {
 			border-bottom: 1px solid $grayLineColor;
 			margin-bottom: 1rem;
 			margin-top: 2rem;
 			text-transform: uppercase;
 		}
+
 		.buttons {
-			margin: 2rem 0 0 0;
+			margin: 2rem 0 0;
 		}
+
 		.remove-access {
-			border-color: rgb(218,20,20);
-			color: rgb(218,20,20);
+			border-color: #DA1414;
+			color: #DA1414;
 		}
 	}
 }

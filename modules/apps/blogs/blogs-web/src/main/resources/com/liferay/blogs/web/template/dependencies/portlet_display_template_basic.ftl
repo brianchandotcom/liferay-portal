@@ -14,9 +14,9 @@
 							${viewEntryPortletURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
 						</#if>
 
-							<h3 class="title">
-								<a class="title-link" href="${viewEntryPortletURL.toString()}">${blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)}</a>
-							</h3>
+						<h3 class="title">
+							<a class="title-link" href="${viewEntryPortletURL.toString()}">${blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)}</a>
+						</h3>
 					</div>
 
 					<div class="autofit-col visible-interaction">

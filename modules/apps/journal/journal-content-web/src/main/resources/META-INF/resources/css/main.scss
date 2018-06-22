@@ -5,13 +5,20 @@
 		}
 	}
 
-	.portlet .visible-interaction {
+	.portlet .portlet-header .visible-interaction {
 		display: block;
 		visibility: hidden;
+
+		.lfr-icon-menu {
+			background-color: #FFFFFF;
+			border: solid 1px;
+			border-radius: 4px;
+			color: #0B5FFF;
+		}
 	}
 
 	@media only screen and (min-width: 768px) {
-		.portlet .visible-interaction {
+		.portlet .portlet-header .visible-interaction {
 			display: block;
 			visibility: hidden;
 		}
@@ -28,5 +35,6 @@
 	&.portlet-barebone .portlet .portlet-header {
 		margin-bottom: 0;
 		position: absolute;
+		right: 1px;
 	}
 }

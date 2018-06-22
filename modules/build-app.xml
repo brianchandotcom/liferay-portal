@@ -60,19 +60,19 @@
 		<if>
 			<resourcecount count="0" when="greater">
 				<fileset
-					dir="${osgi.dir}/marketplace"
+					dir="${output.dir}"
 					includes="*.jar,*.war"
 				/>
 			</resourcecount>
 			<then>
 				<antcall target="write-lpkg-marketplace-properties">
-					<param name="lpkg.dir" value="${osgi.dir}/marketplace" />
+					<param name="lpkg.dir" value="${output.dir}" />
 					<param name="title" value="${Liferay-Releng-App-Title}" />
 				</antcall>
 
 				<zip
-					basedir="${osgi.dir}/marketplace"
-					destfile="${osgi.dir}/marketplace/${Liferay-Releng-App-Title}.lpkg"
+					basedir="${output.dir}"
+					destfile="${output.dir}/${Liferay-Releng-App-Title}.lpkg"
 					includes="*.jar,*.war,liferay-marketplace.properties"
 				/>
 			</then>
@@ -81,7 +81,7 @@
 		<for param="lpkg.dir">
 			<path>
 				<dirset
-					dir="${osgi.dir}/marketplace"
+					dir="${output.dir}"
 				>
 					<include name="*/**" />
 					<exclude name="override" />
@@ -99,7 +99,7 @@
 
 				<zip
 					basedir="@{lpkg.dir}"
-					destfile="${osgi.dir}/marketplace/${lpkg.dir.name}.lpkg"
+					destfile="${output.dir}/${lpkg.dir.name}.lpkg"
 					includes="*.jar,*.war,liferay-marketplace.properties"
 				/>
 			</sequential>
@@ -107,7 +107,7 @@
 
 		<delete includeemptydirs="true">
 			<fileset
-				dir="${osgi.dir}/marketplace"
+				dir="${output.dir}"
 				excludes="override, *.lpkg"
 				includes="**/*"
 			/>
@@ -140,6 +140,7 @@
 			<sequential>
 				<antcall inheritall="false" target="build-app-lpkg">
 					<param name="app.name" value="@{app.name}" />
+					<param name="output.dir" value="${osgi.dir}/marketplace" />
 				</antcall>
 			</sequential>
 		</for>
@@ -156,7 +157,6 @@
 					<include name="apps/*" />
 					<include name="private/apps/*" />
 					<exclude name="${build.exclude.dirs}" />
-					<exclude name="apps/static/*" />
 					<present targetdir="${modules.dir}">
 						<mapper
 							from="*"
@@ -190,6 +190,7 @@
 					<then>
 						<ant inheritAll="false" target="build-app-lpkg">
 							<property name="app.name" value="${app.name}" />
+							<property name="output.dir" value="${osgi.dir}/marketplace" />
 						</ant>
 					</then>
 				</if>
@@ -198,6 +199,7 @@
 
 		<ant inheritAll="false" target="build-app-lpkg">
 			<property name="app.name" value="static" />
+			<property name="output.dir" value="${osgi.dir}/marketplace" />
 		</ant>
 	</target>
 
@@ -226,6 +228,7 @@
 					<then>
 						<ant inheritAll="false" target="build-app-lpkg">
 							<property name="app.name" value="${app.name}" />
+							<property name="output.dir" value="${osgi.dir}/marketplace" />
 						</ant>
 					</then>
 				</if>
@@ -372,6 +375,7 @@
 			<property name="lpkg.title.prefix" value="${lpkg.title.prefix}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
 			<property name="osgi.static.modules" value="${osgi.static.modules}" />
+			<property name="output.dir" value="${output.dir}" />
 			<property name="project.dir" value="${project.dir}" />
 		</subant>
 	</target>

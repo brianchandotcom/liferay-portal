@@ -167,12 +167,12 @@ public class ConfigurationPersistenceManager
 		try {
 			readLock.lock();
 
-			if (!hasConfigurationTable()) {
+			if (hasConfigurationTable()) {
 				readLock.unlock();
 				writeLock.lock();
 
 				try {
-					createConfigurationTable();
+					_verifyConfigurations();
 				}
 				finally {
 					readLock.lock();
@@ -184,7 +184,7 @@ public class ConfigurationPersistenceManager
 				writeLock.lock();
 
 				try {
-					_verifyConfigurations();
+					createConfigurationTable();
 				}
 				finally {
 					readLock.lock();

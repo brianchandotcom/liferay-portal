@@ -104,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_ENTER_A_UNIQUE_FOLDER</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter a unique folder name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_ENTER_A_UNIQUE_TITLE</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'The URL title is already in use. Please enter a unique URL title')]</td>
 	<td></td>
@@ -131,6 +136,11 @@
 <tr>
 	<td>ERROR_MODAL_CONTENT</td>
 	<td>//div[contains(@class,'modal-content')]//form[contains(@class,'form-feedback')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MOVE_DUPLICATE_CONTENT</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'The folder you selected already has an entry with this name. Please select a different folder')]</td>
 	<td></td>
 </tr>
 <tr>

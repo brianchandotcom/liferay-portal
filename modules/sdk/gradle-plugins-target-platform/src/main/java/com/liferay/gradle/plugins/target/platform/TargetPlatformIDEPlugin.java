@@ -79,7 +79,6 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 				targetPlatformIDEExtension);
 
 		_configureEclipseModel(project, targetPlatformIDEConfiguration);
-
 		_configureIdeaModel(project, targetPlatformIDEConfiguration);
 	}
 
@@ -237,10 +236,8 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 		Map<String, Map<String, Collection<Configuration>>> scopes =
 			ideaModule.getScopes();
 
-		GeneratedIdeaScope generatedIdeaScope = GeneratedIdeaScope.PROVIDED;
-
 		Map<String, Collection<Configuration>> providedScope = scopes.get(
-			generatedIdeaScope.name());
+			GeneratedIdeaScope.PROVIDED.name());
 
 		if (providedScope == null) {
 			providedScope = new HashMap<>();
@@ -256,7 +253,7 @@ public class TargetPlatformIDEPlugin implements Plugin<Project> {
 
 		providedScope.put("plus", plus);
 
-		scopes.put(generatedIdeaScope.name(), providedScope);
+		scopes.put(GeneratedIdeaScope.PROVIDED.name(), providedScope);
 
 		ideaModule.setScopes(scopes);
 	}

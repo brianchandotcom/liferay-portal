@@ -63,6 +63,19 @@ public class CPOptionValueServiceWrapper implements CPOptionValueService,
 		return _cpOptionValueService.getCPOptionValue(cpOptionValueId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
+		long cpOptionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionValueService.getCPOptionValues(cpOptionId, start, end);
+	}
+
+	@Override
+	public int getCPOptionValuesCount(long cpOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpOptionValueService.getCPOptionValuesCount(cpOptionId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

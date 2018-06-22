@@ -808,7 +808,7 @@ public class CPDefinitionServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionServiceUtil.class,
-					"upsertCPDefinition", _upsertCPDefinitionParameterTypes24);
+					"upsertCPDefinition", _upsertCPDefinitionParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nameMap,
 					shortDescriptionMap, descriptionMap, urlTitleMap,
@@ -931,7 +931,7 @@ public class CPDefinitionServiceHttp {
 	private static final Class<?>[] _updateTaxCategoryInfoParameterTypes20 = new Class[] {
 			long.class, long.class, boolean.class, boolean.class
 		};
-	private static final Class<?>[] _upsertCPDefinitionParameterTypes24 = new Class[] {
+	private static final Class<?>[] _upsertCPDefinitionParameterTypes21 = new Class[] {
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, String.class, boolean.class, boolean.class,

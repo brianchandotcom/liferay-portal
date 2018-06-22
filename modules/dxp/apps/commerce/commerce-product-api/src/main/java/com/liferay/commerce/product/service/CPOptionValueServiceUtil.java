@@ -69,6 +69,17 @@ public class CPOptionValueServiceUtil {
 		return getService().getCPOptionValue(cpOptionValueId);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPOptionValue> getCPOptionValues(
+		long cpOptionId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPOptionValues(cpOptionId, start, end);
+	}
+
+	public static int getCPOptionValuesCount(long cpOptionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCPOptionValuesCount(cpOptionId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

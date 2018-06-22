@@ -584,7 +584,7 @@ public class CPInstanceServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CPInstanceServiceUtil.class,
-					"upsertCPInstance", _upsertCPInstanceParameterTypes23);
+					"upsertCPInstance", _upsertCPInstanceParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionId, sku, gtin, manufacturerPartNumber,
@@ -676,8 +676,7 @@ public class CPInstanceServiceHttp {
 			long.class, double.class, double.class, double.class, double.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-
-	private static final Class<?>[] _upsertCPInstanceParameterTypes23 = new Class[] {
+	private static final Class<?>[] _upsertCPInstanceParameterTypes15 = new Class[] {
 			long.class, String.class, String.class, String.class, boolean.class,
 			String.class, double.class, double.class, double.class, double.class,
 			java.math.BigDecimal.class, java.math.BigDecimal.class,

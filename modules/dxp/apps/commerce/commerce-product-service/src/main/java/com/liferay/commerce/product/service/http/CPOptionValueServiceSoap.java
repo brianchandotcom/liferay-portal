@@ -151,5 +151,35 @@ public class CPOptionValueServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.product.model.CPOptionValueSoap[] getCPOptionValues(
+		long cpOptionId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.product.model.CPOptionValue> returnValue =
+				CPOptionValueServiceUtil.getCPOptionValues(cpOptionId, start,
+					end);
+
+			return com.liferay.commerce.product.model.CPOptionValueSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCPOptionValuesCount(long cpOptionId)
+		throws RemoteException {
+		try {
+			int returnValue = CPOptionValueServiceUtil.getCPOptionValuesCount(cpOptionId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CPOptionValueServiceSoap.class);
 }

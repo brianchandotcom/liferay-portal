@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,18 @@ public class NodeExecutor {
 		return args(Arrays.asList(args));
 	}
 
+	public NodeExecutor environment(Map<?, ?> environment) {
+		_environment.putAll(environment);
+
+		return this;
+	}
+
+	public NodeExecutor environment(Object key, Object value) {
+		_environment.put(key, value);
+
+		return this;
+	}
+
 	public void execute() throws Exception {
 		File workingDir = getWorkingDir();
 
@@ -79,6 +92,10 @@ public class NodeExecutor {
 
 	public String getCommand() {
 		return GradleUtil.toString(_command);
+	}
+
+	public Map<?, ?> getEnvironment() {
+		return _environment;
 	}
 
 	public File getNodeDir() {
@@ -109,6 +126,12 @@ public class NodeExecutor {
 
 	public void setCommand(Object command) {
 		_command = command;
+	}
+
+	public void setEnvironment(Map<?, ?> environment) {
+		_environment.clear();
+
+		environment(environment);
 	}
 
 	public void setInheritProxy(boolean inheritProxy) {
@@ -152,8 +175,9 @@ public class NodeExecutor {
 
 		if (_logger.isInfoEnabled()) {
 			_logger.info(
-				"Running {} from {}", processBuilder.command(),
-				processBuilder.directory());
+				"Running {} from {} with environment variables {}",
+				processBuilder.command(), processBuilder.directory(),
+				processBuilder.environment());
 		}
 
 		Process process = processBuilder.start();
@@ -346,6 +370,8 @@ public class NodeExecutor {
 	}
 
 	private void _updateEnvironment(Map<String, String> environment) {
+		GUtil.addToMap(environment, getEnvironment());
+
 		if (isInheritProxy()) {
 			_setNonProxyHosts(environment);
 			_setProxy(environment, "http");
@@ -378,6 +404,7 @@ public class NodeExecutor {
 
 	private final List<Object> _args = new ArrayList<>();
 	private Object _command = "node";
+	private final Map<Object, Object> _environment = new LinkedHashMap<>();
 	private boolean _inheritProxy = true;
 	private Object _nodeDir;
 	private final Project _project;

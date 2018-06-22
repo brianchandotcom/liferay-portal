@@ -494,25 +494,6 @@ public abstract class CPDefinitionLinkServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the cp display layout remote service.
-	 *
-	 * @return the cp display layout remote service
-	 */
-	public com.liferay.commerce.product.service.CPDisplayLayoutService getCPDisplayLayoutService() {
-		return cpDisplayLayoutService;
-	}
-
-	/**
-	 * Sets the cp display layout remote service.
-	 *
-	 * @param cpDisplayLayoutService the cp display layout remote service
-	 */
-	public void setCPDisplayLayoutService(
-		com.liferay.commerce.product.service.CPDisplayLayoutService cpDisplayLayoutService) {
-		this.cpDisplayLayoutService = cpDisplayLayoutService;
-	}
-
-	/**
 	 * Returns the cp display layout persistence.
 	 *
 	 * @return the cp display layout persistence
@@ -548,25 +529,6 @@ public abstract class CPDefinitionLinkServiceBaseImpl extends BaseServiceImpl
 	public void setCPFriendlyURLEntryLocalService(
 		com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService) {
 		this.cpFriendlyURLEntryLocalService = cpFriendlyURLEntryLocalService;
-	}
-
-	/**
-	 * Returns the cp friendly url entry remote service.
-	 *
-	 * @return the cp friendly url entry remote service
-	 */
-	public com.liferay.commerce.product.service.CPFriendlyURLEntryService getCPFriendlyURLEntryService() {
-		return cpFriendlyURLEntryService;
-	}
-
-	/**
-	 * Sets the cp friendly url entry remote service.
-	 *
-	 * @param cpFriendlyURLEntryService the cp friendly url entry remote service
-	 */
-	public void setCPFriendlyURLEntryService(
-		com.liferay.commerce.product.service.CPFriendlyURLEntryService cpFriendlyURLEntryService) {
-		this.cpFriendlyURLEntryService = cpFriendlyURLEntryService;
 	}
 
 	/**
@@ -1455,14 +1417,10 @@ public abstract class CPDefinitionLinkServiceBaseImpl extends BaseServiceImpl
 	protected CPDefinitionSpecificationOptionValuePersistence cpDefinitionSpecificationOptionValuePersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPDisplayLayoutLocalService.class)
 	protected com.liferay.commerce.product.service.CPDisplayLayoutLocalService cpDisplayLayoutLocalService;
-	@BeanReference(type = com.liferay.commerce.product.service.CPDisplayLayoutService.class)
-	protected com.liferay.commerce.product.service.CPDisplayLayoutService cpDisplayLayoutService;
 	@BeanReference(type = CPDisplayLayoutPersistence.class)
 	protected CPDisplayLayoutPersistence cpDisplayLayoutPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService.class)
 	protected com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService cpFriendlyURLEntryLocalService;
-	@BeanReference(type = com.liferay.commerce.product.service.CPFriendlyURLEntryService.class)
-	protected com.liferay.commerce.product.service.CPFriendlyURLEntryService cpFriendlyURLEntryService;
 	@BeanReference(type = CPFriendlyURLEntryPersistence.class)
 	protected CPFriendlyURLEntryPersistence cpFriendlyURLEntryPersistence;
 	@BeanReference(type = com.liferay.commerce.product.service.CPInstanceLocalService.class)

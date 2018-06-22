@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPFriendlyURLEntry;
 import com.liferay.commerce.product.model.CPFriendlyURLEntryModel;
-import com.liferay.commerce.product.model.CPFriendlyURLEntrySoap;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
@@ -27,7 +26,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -44,10 +42,8 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,7 +59,6 @@ import java.util.Map;
  * @see CPFriendlyURLEntryModel
  * @generated
  */
-@JSON(strict = true)
 @ProviderType
 public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntry>
 	implements CPFriendlyURLEntryModel {
@@ -130,58 +125,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 	public static final long MAIN_COLUMN_BITMASK = 32L;
 	public static final long URLTITLE_COLUMN_BITMASK = 64L;
 	public static final long UUID_COLUMN_BITMASK = 128L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static CPFriendlyURLEntry toModel(CPFriendlyURLEntrySoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CPFriendlyURLEntry model = new CPFriendlyURLEntryImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setCPFriendlyURLEntryId(soapModel.getCPFriendlyURLEntryId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setLanguageId(soapModel.getLanguageId());
-		model.setUrlTitle(soapModel.getUrlTitle());
-		model.setMain(soapModel.isMain());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<CPFriendlyURLEntry> toModels(
-		CPFriendlyURLEntrySoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CPFriendlyURLEntry> models = new ArrayList<CPFriendlyURLEntry>(soapModels.length);
-
-		for (CPFriendlyURLEntrySoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.commerce.product.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.commerce.product.model.CPFriendlyURLEntry"));
 
@@ -323,7 +266,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		}
 	}
 
-	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -347,7 +289,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@JSON
 	@Override
 	public long getCPFriendlyURLEntryId() {
 		return _CPFriendlyURLEntryId;
@@ -358,7 +299,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		_CPFriendlyURLEntryId = CPFriendlyURLEntryId;
 	}
 
-	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -381,7 +321,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		return _originalGroupId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -404,7 +343,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		return _originalCompanyId;
 	}
 
-	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -431,7 +369,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 	public void setUserUuid(String userUuid) {
 	}
 
-	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -447,7 +384,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		_userName = userName;
 	}
 
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -458,7 +394,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -495,7 +430,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		setClassNameId(classNameId);
 	}
 
-	@JSON
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
@@ -518,7 +452,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		return _originalClassNameId;
 	}
 
-	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -541,7 +474,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		return _originalClassPK;
 	}
 
-	@JSON
 	@Override
 	public String getLanguageId() {
 		if (_languageId == null) {
@@ -567,7 +499,6 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		return GetterUtil.getString(_originalLanguageId);
 	}
 
-	@JSON
 	@Override
 	public String getUrlTitle() {
 		if (_urlTitle == null) {
@@ -593,13 +524,11 @@ public class CPFriendlyURLEntryModelImpl extends BaseModelImpl<CPFriendlyURLEntr
 		return GetterUtil.getString(_originalUrlTitle);
 	}
 
-	@JSON
 	@Override
 	public boolean getMain() {
 		return _main;
 	}
 
-	@JSON
 	@Override
 	public boolean isMain() {
 		return _main;

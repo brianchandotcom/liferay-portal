@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CPDisplayLayoutModel;
-import com.liferay.commerce.product.model.CPDisplayLayoutSoap;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
@@ -27,7 +26,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -44,10 +42,8 @@ import java.io.Serializable;
 
 import java.sql.Types;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,7 +59,6 @@ import java.util.Map;
  * @see CPDisplayLayoutModel
  * @generated
  */
-@JSON(strict = true)
 @ProviderType
 public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 	implements CPDisplayLayoutModel {
@@ -124,56 +119,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long CPDISPLAYLAYOUTID_COLUMN_BITMASK = 32L;
-
-	/**
-	 * Converts the soap model instance into a normal model instance.
-	 *
-	 * @param soapModel the soap model instance to convert
-	 * @return the normal model instance
-	 */
-	public static CPDisplayLayout toModel(CPDisplayLayoutSoap soapModel) {
-		if (soapModel == null) {
-			return null;
-		}
-
-		CPDisplayLayout model = new CPDisplayLayoutImpl();
-
-		model.setUuid(soapModel.getUuid());
-		model.setCPDisplayLayoutId(soapModel.getCPDisplayLayoutId());
-		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
-		model.setUserId(soapModel.getUserId());
-		model.setUserName(soapModel.getUserName());
-		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setClassNameId(soapModel.getClassNameId());
-		model.setClassPK(soapModel.getClassPK());
-		model.setLayoutUuid(soapModel.getLayoutUuid());
-
-		return model;
-	}
-
-	/**
-	 * Converts the soap model instances into normal model instances.
-	 *
-	 * @param soapModels the soap model instances to convert
-	 * @return the normal model instances
-	 */
-	public static List<CPDisplayLayout> toModels(
-		CPDisplayLayoutSoap[] soapModels) {
-		if (soapModels == null) {
-			return null;
-		}
-
-		List<CPDisplayLayout> models = new ArrayList<CPDisplayLayout>(soapModels.length);
-
-		for (CPDisplayLayoutSoap soapModel : soapModels) {
-			models.add(toModel(soapModel));
-		}
-
-		return models;
-	}
-
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.commerce.product.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.commerce.product.model.CPDisplayLayout"));
 
@@ -301,7 +246,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		}
 	}
 
-	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -325,7 +269,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@JSON
 	@Override
 	public long getCPDisplayLayoutId() {
 		return _CPDisplayLayoutId;
@@ -336,7 +279,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		_CPDisplayLayoutId = CPDisplayLayoutId;
 	}
 
-	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -359,7 +301,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		return _originalGroupId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -382,7 +323,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		return _originalCompanyId;
 	}
 
-	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -409,7 +349,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 	public void setUserUuid(String userUuid) {
 	}
 
-	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -425,7 +364,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		_userName = userName;
 	}
 
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -436,7 +374,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -473,7 +410,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		setClassNameId(classNameId);
 	}
 
-	@JSON
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
@@ -496,7 +432,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		return _originalClassNameId;
 	}
 
-	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -519,7 +454,6 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		return _originalClassPK;
 	}
 
-	@JSON
 	@Override
 	public String getLayoutUuid() {
 		if (_layoutUuid == null) {

@@ -23,10 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.product.service.http.CPFriendlyURLEntryServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Marco Leo
- * @see com.liferay.commerce.product.service.http.CPFriendlyURLEntryServiceSoap
  * @generated
  */
 @ProviderType

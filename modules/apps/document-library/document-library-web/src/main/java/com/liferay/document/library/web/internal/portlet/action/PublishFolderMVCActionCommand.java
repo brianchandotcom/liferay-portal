@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
@@ -24,12 +23,14 @@ import com.liferay.exportimport.changeset.portlet.action.ExportImportChangesetMV
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,13 +60,14 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		final long folderId = ParamUtil.getLong(actionRequest, "folderId");
 
+		Folder folder = _dlAppLocalService.getFolder(folderId);
+
 		Changeset.Builder builder = Changeset.create();
 
 		Changeset changeset = builder.addStagedModel(
 			() -> _getFolder(folderId)
-		).addStagedModelHierarchy(
-			() -> _dlFolderLocalService.fetchFolder(folderId),
-			this::_getFoldersAndFileEntriesAndFileShortcuts
+		).addMultipleStagedModel(
+			() -> _getFoldersAndFileEntriesAndFileShortcuts(folder)
 		).build();
 
 		_exportImportChangesetMVCActionCommand.processPublishAction(
@@ -85,24 +87,46 @@ public class PublishFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private List<Object> _getFoldersAndFileEntriesAndFileShortcuts(
-		DLFolder folder) {
+	private List<StagedModel> _getFoldersAndFileEntriesAndFileShortcuts(
+		Folder folder) {
+
+		if (folder == null) {
+			return Collections.emptyList();
+		}
+
+		List<StagedModel> stagedModels = new ArrayList<>();
 
 		try {
-			return _dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
-				folder.getGroupId(), folder.getFolderId(),
-				WorkflowConstants.STATUS_APPROVED, true, -1, -1);
+			List<Object> children =
+				_dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
+					folder.getGroupId(), folder.getFolderId(),
+					WorkflowConstants.STATUS_ANY, false, -1, -1);
+
+			for (Object child : children) {
+				if (child instanceof Folder) {
+					Folder childFolder = (Folder)child;
+
+					stagedModels.add(childFolder);
+
+					stagedModels.addAll(
+						_getFoldersAndFileEntriesAndFileShortcuts(childFolder));
+				}
+				else {
+					stagedModels.add((StagedModel)child);
+				}
+			}
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get folders, file entries, file shortcuts for " +
-						"folder " + folder.getFolderId(),
+						"folder " +
+							folder.getFolderId(),
 					pe);
 			}
-
-			return Collections.emptyList();
 		}
+
+		return stagedModels;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

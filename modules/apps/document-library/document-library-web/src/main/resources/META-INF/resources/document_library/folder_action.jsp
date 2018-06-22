@@ -404,10 +404,11 @@ if ((row == null) && portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 		<c:if test="<%= (folder != null) && documentLibraryAdmin && hasExportImportPortletInfoPermission && inStagingGroup && portletStaged %>">
 			<portlet:actionURL name="/document_library/publish_folder" var="publishFolderURL">
 				<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+				<portlet:param name="backURL" value="<%= currentURL %>" />
 			</portlet:actionURL>
 
 			<liferay-ui:icon
-				message="publish"
+				message="publish-to-live"
 				url="<%= publishFolderURL %>"
 			/>
 		</c:if>

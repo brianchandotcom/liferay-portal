@@ -44,9 +44,9 @@ public class CPDefinitionUpserterForm {
 		Builder<CPDefinitionUpserterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The product creator form"
+			__ -> "The product upserter form"
 		).description(
-			__ -> "This form can be used to create a product"
+			__ -> "This form can be used to upsert a product"
 		).constructor(
 			CPDefinitionUpserterForm::new
 		).addOptionalLongList(

@@ -27,7 +27,7 @@ public class CommerceAddressCreatorForm {
 		return formBuilder.title(
 			__ -> "The address creator form"
 		).description(
-			__ -> "This form can be used to create a address"
+			__ -> "This form can be used to create an address"
 		).constructor(
 			CommerceAddressCreatorForm::new
 		).addRequiredString(

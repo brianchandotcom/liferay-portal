@@ -32,7 +32,7 @@ public class CommerceUserCreatorForm {
 		Form.Builder<CommerceUserCreatorForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The person creator form"
+			__ -> "The user creator form"
 		).description(
 			__ -> "This form can be used to create a user"
 		).constructor(

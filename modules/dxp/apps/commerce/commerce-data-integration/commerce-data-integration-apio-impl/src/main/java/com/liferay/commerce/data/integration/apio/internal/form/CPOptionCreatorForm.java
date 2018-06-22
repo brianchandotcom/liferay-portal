@@ -30,7 +30,7 @@ public class CPOptionCreatorForm {
 		Form.Builder<CPOptionCreatorForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The option form"
+			__ -> "The option creator form"
 		).description(
 			__ -> "This form can be used to create an option"
 		).constructor(
@@ -47,11 +47,11 @@ public class CPOptionCreatorForm {
 	}
 
 	public Map<Locale, String> getDescriptionMap() {
-		return Collections.singletonMap(LocaleUtil.getDefault(), _descritpion);
+		return Collections.singletonMap(LocaleUtil.getDefault(), _description);
 	}
 
-	public String getDescritpion() {
-		return _descritpion;
+	public String getDescription() {
+		return _description;
 	}
 
 	public String getFieldType() {
@@ -70,8 +70,8 @@ public class CPOptionCreatorForm {
 		return Collections.singletonMap(LocaleUtil.getDefault(), _name);
 	}
 
-	private void _setDescription(String descritpion) {
-		_descritpion = descritpion;
+	private void _setDescription(String description) {
+		_description = description;
 	}
 
 	private void _setFieldType(String fieldType) {
@@ -86,7 +86,7 @@ public class CPOptionCreatorForm {
 		_name = name;
 	}
 
-	private String _descritpion;
+	private String _description;
 	private String _fieldType;
 	private String _key;
 	private String _name;

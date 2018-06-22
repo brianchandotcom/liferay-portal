@@ -28,7 +28,7 @@ public class CommerceUserUpdaterForm {
 		Form.Builder<CommerceUserUpdaterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The person updater form"
+			__ -> "The user updater form"
 		).description(
 			__ -> "This form can be used to update a user"
 		).constructor(

@@ -27,9 +27,9 @@ public class CPInstanceUpserterForm {
 		Form.Builder<CPInstanceUpserterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The product instance creator form"
+			__ -> "The product instance upserter form"
 		).description(
-			__ -> "This form can be used to create a product instance"
+			__ -> "This form can be used to upsert a product instance"
 		).constructor(
 			CPInstanceUpserterForm::new
 		).addRequiredString(

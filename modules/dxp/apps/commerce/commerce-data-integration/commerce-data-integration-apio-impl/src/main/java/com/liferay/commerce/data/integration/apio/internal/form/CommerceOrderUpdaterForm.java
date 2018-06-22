@@ -25,9 +25,9 @@ public class CommerceOrderUpdaterForm {
 		Form.Builder<CommerceOrderUpdaterForm> formBuilder) {
 
 		return formBuilder.title(
-			__ -> "The order creator form"
+			__ -> "The order updater form"
 		).description(
-			__ -> "This form can be used to create a account"
+			__ -> "This form can be used to update an order"
 		).constructor(
 			CommerceOrderUpdaterForm::new
 		).addOptionalLong(

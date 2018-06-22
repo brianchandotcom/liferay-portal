@@ -4964,6 +4964,10 @@ to version 2.3.195.
 dependency to version 2.1.33.
 - [LPS-82568]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.4.12.
+- [LPS-82815]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 2.1.48.
+- [LPS-82815]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.231.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -5379,4 +5383,5 @@ version 2.4.12.
 [LPS-82469]: https://issues.liferay.com/browse/LPS-82469
 [LPS-82534]: https://issues.liferay.com/browse/LPS-82534
 [LPS-82568]: https://issues.liferay.com/browse/LPS-82568
+[LPS-82815]: https://issues.liferay.com/browse/LPS-82815
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

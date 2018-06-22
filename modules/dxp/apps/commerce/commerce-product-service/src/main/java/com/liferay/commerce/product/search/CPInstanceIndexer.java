@@ -69,11 +69,6 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 	public static final String FIELD_EXTERNAL_REFERENCE_CODE =
 		"externalReferenceCode";
 
-	public static final String FIELD_GTIN = "gtin";
-
-	public static final String FIELD_MANUFACTURER_PART_NUMBER =
-		"manufacturerPartNumber";
-
 	public static final String FIELD_PURCHASABLE = "purchasable";
 
 	public static final String FIELD_SKU = "sku";

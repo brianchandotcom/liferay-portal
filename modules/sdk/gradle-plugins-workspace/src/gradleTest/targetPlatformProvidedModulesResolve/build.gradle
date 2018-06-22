@@ -1,5 +1,13 @@
 task runGradleTest
 
+allprojects {
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
 dependencies {
 	providedModules group: "com.google.guava", name: "guava", version: "23.0"
 }
@@ -8,10 +16,8 @@ runGradleTest {
 	dependsOn resolve
 
 	doLast {
-		File bndrunFile = new File(buildDir, "resolve.bndrun")
+		File bndrunFile = new File(buildDir, "tmp/resolve/resolve.bndrun")
 
-		String bndrun = bndrunFile.text
-
-		assert bndrun.contains("foo.portlet;version='[1.0.0,1.0.1)")
+		assert bndrun.text.contains("foo.portlet;version='[1.0.0,1.0.1)")
 	}
 }

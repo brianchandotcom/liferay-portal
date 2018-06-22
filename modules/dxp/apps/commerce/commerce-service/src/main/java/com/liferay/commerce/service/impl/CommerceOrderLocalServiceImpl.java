@@ -534,18 +534,18 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
-		long siteGroupId, int[] orderStatuses) {
-
-		return commerceOrderFinder.findByS_O(siteGroupId, orderStatuses);
-	}
-
-	@Override
-	public List<CommerceOrder> getCommerceOrders(
 		long groupId, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator) {
 
 		return commerceOrderPersistence.findByGroupId(
 			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceOrder> getCommerceOrders(
+		long siteGroupId, int[] orderStatuses) {
+
+		return commerceOrderFinder.findByS_O(siteGroupId, orderStatuses);
 	}
 
 	@Override

@@ -296,6 +296,7 @@ public class CPInstanceServiceImpl extends CPInstanceServiceBaseImpl {
 			expirationDateHour, expirationDateMinute, neverExpire,
 			serviceContext);
 	}
+
 	private static volatile ModelResourcePermission<CPDefinition>
 		_cpDefinitionModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

@@ -769,7 +769,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			cpInstancePersistence.fetchByExternalReferenceCode(
 				externalReferenceCode);
 
-		if (Validator.isNull(cpInstance)) {
+		if (cpInstance == null) {
 			cpInstance = addCPInstance(
 				cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
 				ddmContent, width, height, depth, weight, price, promoPrice,

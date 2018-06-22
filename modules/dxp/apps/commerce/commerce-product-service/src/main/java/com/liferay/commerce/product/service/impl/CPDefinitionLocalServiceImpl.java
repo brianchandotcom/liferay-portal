@@ -1372,7 +1372,7 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinitionPersistence.fetchByExternalReferenceCode(
 				externalReferenceCode);
 
-		if (Validator.isNull(cpDefinition)) {
+		if (cpDefinition == null) {
 			cpDefinition = addCPDefinition(
 				nameMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 				metaTitleMap, metaDescriptionMap, metaKeywordsMap,

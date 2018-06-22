@@ -446,7 +446,7 @@ import ${apiPackagePath}.service.${entity.name}${sessionTypeName}Service;
 			 */
 			@Override
 			public ${entity.name} fetch${entity.name}ByReferenceCode(long companyId, String externalReferenceCode) <#if (serviceBaseExceptions?size gt 0)>throws ${stringUtil.merge(serviceBaseExceptions)} </#if>{
-				return ${entity.varName}Persistence.fetchByC_ERC(companyId, null);
+				return ${entity.varName}Persistence.fetchByC_ERC(companyId, externalReferenceCode);
 			}
 		</#if>
 

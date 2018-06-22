@@ -6,4 +6,5 @@ Import-Package:\
 	\
 	*
 Liferay-JS-Config: /META-INF/resources/js/config.js
+Liferay-Require-SchemaVersion: 2.0.0
 Web-ContextPath: /portal-search-web

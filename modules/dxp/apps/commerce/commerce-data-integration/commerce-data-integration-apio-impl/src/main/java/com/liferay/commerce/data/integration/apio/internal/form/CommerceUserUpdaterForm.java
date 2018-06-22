@@ -43,8 +43,6 @@ public class CommerceUserUpdaterForm {
 			"givenName", CommerceUserUpdaterForm::setGivenName
 		).addRequiredString(
 			"jobTitle", CommerceUserUpdaterForm::setJobTitle
-		).addRequiredString(
-			"password", CommerceUserUpdaterForm::setPassword
 		).addOptionalLongList(
 			"commerceAccountIds",
 			CommerceUserUpdaterForm::_setCommerceAccountIds
@@ -58,6 +56,9 @@ public class CommerceUserUpdaterForm {
 	}
 
 	public long[] getCommerceAccountIds() {
+		if (_commerceAccountIds == null) {
+			return new long[0];
+		}
 		return ArrayUtil.toLongArray(_commerceAccountIds);
 	}
 
@@ -77,11 +78,10 @@ public class CommerceUserUpdaterForm {
 		return _jobTitle;
 	}
 
-	public String getPassword() {
-		return _password;
-	}
-
 	public long[] getRoleIds() {
+		if (_commerceAccountIds == null) {
+			return new long[0];
+		}
 		return ArrayUtil.toLongArray(_roleIds);
 	}
 
@@ -105,10 +105,6 @@ public class CommerceUserUpdaterForm {
 		_jobTitle = jobTitle;
 	}
 
-	public void setPassword(String password) {
-		_password = password;
-	}
-
 	private void _setCommerceAccountIds(List<Long> accountIds) {
 		_commerceAccountIds = accountIds;
 	}
@@ -123,7 +119,6 @@ public class CommerceUserUpdaterForm {
 	private String _familyName;
 	private String _givenName;
 	private String _jobTitle;
-	private String _password;
 	private List<Long> _roleIds;
 
 }

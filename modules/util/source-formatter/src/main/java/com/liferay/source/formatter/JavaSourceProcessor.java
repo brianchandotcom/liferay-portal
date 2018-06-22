@@ -155,17 +155,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**/portal-web/test/**/*Test.java", "**/test/*-generated/**"
 		};
 
-		if (isSubrepository()) {
+		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
 			excludes = ArrayUtil.append(
-				excludes, _getPluginExcludes(StringPool.BLANK));
-		}
-		else {
-			for (String directoryName :
-					getPluginsInsideModulesDirectoryNames()) {
-
-				excludes = ArrayUtil.append(
-					excludes, _getPluginExcludes("**" + directoryName));
-			}
+				excludes, _getPluginExcludes("**" + directoryName));
 		}
 
 		fileNames.addAll(getFileNames(excludes, includes));

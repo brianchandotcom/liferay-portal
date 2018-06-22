@@ -88,7 +88,7 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "page-templates", true, false, null,
 				LayoutPageTemplateEntry.class.getName(),
 				StagedModelType.REFERRER_CLASS_NAME_ALL));
-		setImportControls(getExportControls());
+		setStagingControls(getExportControls());
 	}
 
 	@Override

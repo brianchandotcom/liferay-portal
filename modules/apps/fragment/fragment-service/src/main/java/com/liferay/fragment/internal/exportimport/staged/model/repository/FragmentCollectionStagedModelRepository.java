@@ -58,7 +58,7 @@ public class FragmentCollectionStagedModelRepository
 		}
 
 		return _fragmentCollectionLocalService.addFragmentCollection(
-			userId, serviceContext.getScopeGroupId(),
+			userId, fragmentCollection.getGroupId(),
 			fragmentCollection.getName(), fragmentCollection.getDescription(),
 			serviceContext);
 	}
@@ -119,6 +119,11 @@ public class FragmentCollectionStagedModelRepository
 
 		return _fragmentCollectionLocalService.getExportActionableDynamicQuery(
 			portletDataContext);
+	}
+
+	@Override
+	public FragmentCollection getStagedModel(long id) throws PortalException {
+		return _fragmentCollectionLocalService.getFragmentCollection(id);
 	}
 
 	@Override

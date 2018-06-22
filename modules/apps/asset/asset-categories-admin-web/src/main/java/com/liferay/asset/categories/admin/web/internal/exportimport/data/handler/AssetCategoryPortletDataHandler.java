@@ -73,6 +73,7 @@ public class AssetCategoryPortletDataHandler extends BasePortletDataHandler {
 				AssetVocabulary.class.getName()));
 		setPublishToLiveByDefault(true);
 		setRank(110);
+		setStagingControls(getExportControls());
 	}
 
 	@Override

@@ -78,6 +78,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "records", true, false, null,
 				DDLRecord.class.getName()));
+		setStagingControls(getExportControls());
 	}
 
 	/**

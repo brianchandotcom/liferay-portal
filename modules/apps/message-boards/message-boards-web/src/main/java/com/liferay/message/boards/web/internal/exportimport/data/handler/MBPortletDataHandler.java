@@ -108,9 +108,9 @@ public class MBPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "user-bans", true, false, null,
 				MBBan.class.getName()));
-		setImportControls(getExportControls());
 		setPublishToLiveByDefault(
 			PropsValues.MESSAGE_BOARDS_PUBLISH_TO_LIVE_BY_DEFAULT);
+		setStagingControls(getExportControls());
 	}
 
 	@Override

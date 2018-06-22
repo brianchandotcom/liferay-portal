@@ -80,6 +80,7 @@ public class AdminPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "kb-templates", true, false, null,
 				KBTemplate.class.getName()));
+		setStagingControls(getExportControls());
 	}
 
 	@Override

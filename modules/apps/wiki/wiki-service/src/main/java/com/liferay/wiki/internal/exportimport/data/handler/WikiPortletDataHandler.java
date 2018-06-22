@@ -116,7 +116,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "referenced-content")
 				},
 				WikiPage.class.getName()));
-		setImportControls(getExportControls());
+		setStagingControls(getExportControls());
 
 		_portalCache = _multiVMPool.getPortalCache(
 			WikiPageDisplay.class.getName());

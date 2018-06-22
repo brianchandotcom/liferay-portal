@@ -84,7 +84,7 @@ public class SiteNavigationMenuPortletDataHandler
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "navigation-menu-items", true, false, null,
 				SiteNavigationMenuItem.class.getName()));
-		setImportControls(getExportControls());
+		setStagingControls(getExportControls());
 	}
 
 	@Override

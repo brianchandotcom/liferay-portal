@@ -99,6 +99,7 @@ public class PortletDisplayTemplatePortletDataHandler
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "application-display-templates", true, true));
+		setStagingControls(getExportControls());
 	}
 
 	@Override

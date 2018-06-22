@@ -82,6 +82,7 @@ public class JournalContentPortletDataHandler extends BasePortletDataHandler {
 				JournalArticle.class.getName()));
 		setPublishToLiveByDefault(
 			JournalContentWebConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);
+		setStagingControls(getExportControls());
 	}
 
 	@Override

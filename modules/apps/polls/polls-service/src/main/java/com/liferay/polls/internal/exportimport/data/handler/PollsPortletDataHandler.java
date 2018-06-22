@@ -77,7 +77,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 						PollsVote.class.getName())
 				},
 				PollsQuestion.class.getName()));
-		setImportControls(getExportControls());
+		setStagingControls(getExportControls());
 	}
 
 	@Override

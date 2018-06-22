@@ -2423,7 +2423,7 @@
 			<var name="dmDocumentTitle" value="DM Document2 Title" />
 		</execute>
 
+		<execute function="AssertElementPresent" locator1="Checkbox#LEXICON_SELECT_ALL_INPUT" />
 		<execute function="AssertElementPresent" locator1="Checkbox#LEXICON_SELECT_ALL_CHECKED" />
-		<execute function="AssertElementPresent" locator1="Checkbox#LEXICON_DESELECT_ALL_BUTTON" />
 	</command>
 </definition>

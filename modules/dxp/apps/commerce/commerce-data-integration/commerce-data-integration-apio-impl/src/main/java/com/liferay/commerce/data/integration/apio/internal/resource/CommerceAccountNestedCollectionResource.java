@@ -162,7 +162,7 @@ public class CommerceAccountNestedCollectionResource
 			}
 		}
 		catch (PortalException pe) {
-			_log.error("Unable to retrieve user", pe);
+			_log.error("Unable to retrieve users", pe);
 		}
 
 		return userIds;

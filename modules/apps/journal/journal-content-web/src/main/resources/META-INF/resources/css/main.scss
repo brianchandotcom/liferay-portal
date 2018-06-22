@@ -4,4 +4,28 @@
 			max-width: 100%;
 		}
 	}
+
+	.portlet .portlet-header {
+		flex-wrap: nowrap;
+	}
+
+	.portlet .portlet-header .visible-interaction {
+		display: block;
+		visibility: hidden;
+	}
+
+	@media only screen and (min-width: 768px) {
+		.portlet .portlet-header .visible-interaction {
+			display: block;
+			visibility: hidden;
+		}
+	}
+
+	&:hover .portlet,
+	&:focus .portlet,
+	& .portlet.open {
+		.portlet-header .visible-interaction {
+			visibility: visible;
+		}
+	}
 }

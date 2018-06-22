@@ -249,7 +249,8 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	@Override
 	public AssetVocabulary fetchAssetVocabularyByReferenceCode(long companyId,
 		String externalReferenceCode) {
-		return assetVocabularyPersistence.fetchByC_ERC(companyId, null);
+		return assetVocabularyPersistence.fetchByC_ERC(companyId,
+			externalReferenceCode);
 	}
 
 	/**

@@ -105,48 +105,13 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 							<ul class="portlet-list">
 
 								<%
-								int layoutsCount = 0;
-
-								long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
-
-								if (layoutSetBranchId > 0) {
-									List<LayoutRevision> approvedLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_APPROVED);
-									List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_PENDING);
-
-									layoutsCount = approvedLayoutRevisions.size() + pendingLayoutRevisions.size();
-								}
-								else {
-									LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
-
-									layoutsCount = selLayoutSet.getPageCount();
-								}
-								%>
-
-								<liferay-util:buffer
-									var="badgeHTML"
-								>
-									<span class="badge badge-info">
-										<c:choose>
-											<c:when test="<%= layoutsCount == 0 %>">
-												<liferay-ui:message key="none" />
-											</c:when>
-											<c:otherwise>
-												<liferay-ui:message arguments='<%= new String[] {"<strong>" + String.valueOf(layoutsCount) + "</strong>", String.valueOf(layoutsCount)} %>' key="x-of-x" />
-											</c:otherwise>
-										</c:choose>
-									</span>
-								</liferay-util:buffer>
-
-								<li class="tree-item">
-									<liferay-ui:message arguments="<%= badgeHTML %>" key="pages-x" />
-								</li>
-
-								<%
 								Set<String> portletDataHandlerClassNames = new HashSet<String>();
 
 								List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
 
 								if (!dataSiteLevelPortlets.isEmpty()) {
+									boolean displayingChanges = false;
+
 									for (Portlet portlet : dataSiteLevelPortlets) {
 										PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
@@ -176,6 +141,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 										UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 
 										if (((exportModelCount > 0) || (modelDeletionCount > 0)) && GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault())) {
+											displayingChanges = true;
 								%>
 
 											<liferay-util:buffer
@@ -190,12 +156,64 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 												<liferay-ui:message key="<%= PortalUtil.getPortletTitle(portlet, application, locale) + StringPool.SPACE + badgeHTML %>" />
 											</li>
 
-								<%
+									<%
 										}
+									}
+
+									if (!displayingChanges) {
+									%>
+
+										<liferay-ui:message key="none" />
+
+								<%
 									}
 								}
 								%>
 
+							</ul>
+						</li>
+					</aui:fieldset>
+
+					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages-to-publish" markupView="lexicon">
+						<li class="options portlet-list-simple">
+							<ul class="portlet-list">
+
+								<%
+								int layoutsCount = 0;
+
+								long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
+
+								if (layoutSetBranchId > 0) {
+									List<LayoutRevision> approvedLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_APPROVED);
+									List<LayoutRevision> pendingLayoutRevisions = LayoutRevisionLocalServiceUtil.getLayoutRevisions(layoutSetBranchId, true, WorkflowConstants.STATUS_PENDING);
+
+									layoutsCount = approvedLayoutRevisions.size() + pendingLayoutRevisions.size();
+								}
+								else {
+									LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
+
+									layoutsCount = selLayoutSet.getPageCount();
+								}
+								%>
+
+								<liferay-util:buffer
+									var="badgeHTML"
+								>
+									<span class="badge badge-info">
+										<c:choose>
+											<c:when test="<%= layoutsCount == 0 %>">
+												<liferay-ui:message key="none" />
+											</c:when>
+											<c:otherwise>
+												<liferay-ui:message key='<%= "<strong>" + String.valueOf(layoutsCount) + "</strong>" %>' />
+											</c:otherwise>
+										</c:choose>
+									</span>
+								</liferay-util:buffer>
+
+								<li class="tree-item">
+									<liferay-ui:message arguments="<%= badgeHTML %>" key="pages-x" />
+								</li>
 							</ul>
 						</li>
 					</aui:fieldset>

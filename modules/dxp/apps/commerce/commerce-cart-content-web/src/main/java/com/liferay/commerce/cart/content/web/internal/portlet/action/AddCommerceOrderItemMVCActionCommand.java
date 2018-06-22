@@ -22,6 +22,8 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -79,10 +81,20 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);
 
-		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+		long cpDefinitionId = ParamUtil.getLong(
+			actionRequest, "cpDefinitionId");
 		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
 		String ddmFormValues = ParamUtil.getString(
 			actionRequest, "ddmFormValues");
+
+		long cpInstanceId = 0;
+
+		CPInstance cpInstance = _cpInstanceHelper.getCPInstance(
+			cpDefinitionId, ddmFormValues);
+
+		if (cpInstance != null) {
+			cpInstanceId = cpInstance.getCPInstanceId();
+		}
 
 		try {
 			CommerceOrder commerceOrder =
@@ -192,6 +204,9 @@ public class AddCommerceOrderItemMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
 	private JSONFactory _jsonFactory;

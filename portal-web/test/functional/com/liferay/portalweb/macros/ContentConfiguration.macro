@@ -3,7 +3,7 @@
 		<for list="${checkContentNameList}" param="contentName">
 			<var name="key_contentName" value="${contentName}" />
 
-			<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+			<execute function="Click" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 		</for>
 	</command>
 

@@ -83,7 +83,8 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 				}
 			}
 			catch (NumberFormatException nfe) {
-				throw new GradleException("Invalid version property value", nfe);
+				throw new GradleException(
+					"Invalid version property value", nfe);
 			}
 
 			repositoryVersion = sb.toString();
@@ -102,14 +103,6 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		_addDependenciesTargetPlatformBoms(project, repositoryVersion);
 		_addDependenciesTargetPlatformDistro(project, repositoryVersion);
-	}
-
-	private String _fixBadVersionNumbers(String version) {
-		if (version.equals("7.0.6")) {
-			return "7.0.6.1";
-		}
-
-		return version;
 	}
 
 	private TargetPlatformRootProjectConfigurator() {
@@ -208,6 +201,14 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		targetPlatformIDEExtension.includeGroups(
 			"com.liferay", "com.liferay.portal");
+	}
+
+	private String _fixBadVersionNumbers(String version) {
+		if (version.equals("7.0.6")) {
+			return "7.0.6.1";
+		}
+
+		return version;
 	}
 
 	private final Pattern _externalVersionPattern = Pattern.compile(

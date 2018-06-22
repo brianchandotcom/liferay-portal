@@ -5,6 +5,7 @@ configurations {
 	arrayFrom
 	fetch
 	objectAssign
+	objectEntries
 	objectValues
 	urlSearchParams
 }
@@ -13,6 +14,7 @@ task buildArrayFind(type: Copy)
 task buildArrayFrom(type: Copy)
 task buildFetch(type: Copy)
 task buildObjectAssign(type: Copy)
+task buildObjectEntries(type: Copy)
 task buildObjectValues(type: Copy)
 task buildUrlSearchParams(type: Copy)
 
@@ -76,6 +78,22 @@ buildObjectAssign {
 	}
 }
 
+buildObjectEntries {
+	eachFile new StripPathSegmentsAction(5)
+
+	from {
+		zipTree(configurations.objectEntries.singleFile)
+	}
+
+	include "META-INF/resources/webjars/object_entries/0.1.2/index.js"
+	includeEmptyDirs = false
+	into "classes/META-INF/resources"
+
+	rename {
+		it.replace "index", "object.entries"
+	}
+}
+
 buildObjectValues {
 	eachFile new StripPathSegmentsAction(5)
 
@@ -113,6 +131,7 @@ classes {
 	dependsOn buildArrayFrom
 	dependsOn buildFetch
 	dependsOn buildObjectAssign
+	dependsOn buildObjectEntries
 	dependsOn buildObjectValues
 	dependsOn buildUrlSearchParams
 }
@@ -132,6 +151,8 @@ dependencies {
 	fetch group: "org.webjars.npm", name: "whatwg-fetch", transitive: false, version: "2.0.4"
 
 	objectAssign group: "org.webjars.npm", name: "es6-object-assign", transitive: false, version: "1.1.0"
+
+	objectEntries group: "org.webjars.npm", name: "object_entries", transitive: false, version: "0.1.2"
 
 	objectValues group: "org.webjars.npm", name: "object_values", transitive: false, version: "0.1.2"
 

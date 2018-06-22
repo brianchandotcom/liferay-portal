@@ -691,7 +691,7 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="Documents and Media" />
-			<var name="configurationName" value="Documents &amp; Media Service" />
+			<var name="configurationName" value="Service" />
 			<var name="configurationScope" value="System Scope" />
 		</execute>
 

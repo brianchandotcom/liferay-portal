@@ -1421,7 +1421,7 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="Knowledge Base" />
-			<var name="configurationName" value="Knowledge Base Service" />
+			<var name="configurationName" value="Service" />
 			<var name="configurationScope" value="Site Scope" />
 		</execute>
 
@@ -1556,7 +1556,7 @@
 
 		<execute macro="SystemSettings#gotoConfiguration">
 			<var name="configurationCategory" value="Knowledge Base" />
-			<var name="configurationName" value="Knowledge Base Service" />
+			<var name="configurationName" value="Service" />
 			<var name="configurationScope" value="Site Scope" />
 		</execute>
 

@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_ENTER_A_VALID_EMAIL_ADDRESS</td>
+	<td>//div[@role='alert' and contains(.,'Please enter a valid email address.')] | //span[contains(@id,'title')]//div[contains(.,'Please enter a valid email address.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_ENTER_A_VALID_TITLE</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter a valid title')]</td>
 	<td></td>

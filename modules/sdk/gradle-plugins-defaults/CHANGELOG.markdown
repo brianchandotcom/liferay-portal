@@ -3892,10 +3892,15 @@ of a module includes transitive dependencies.
 
 ## 5.4.52 - 2018-06-21
 
-### Changed
-- [LPS-82568]: Set the `executeNpm` task `environment` property to
+### Added
+- [LPS-82568]: Set the `npmRunBuild` task `environment` property to
 `LIFERAY_NPM_BUNDLER_NO_TRACKING=1` by default to disable a prompt from
-`liferay-npm-bundler` about tracking data.
+[`liferay-npm-bundler`](https://github.com/liferay/liferay-npm-build-tools)
+about tracking data.
+
+### Changed
+- [LPS-82568]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+2.0.8.
 - [LPS-82815]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.54.
 

@@ -685,12 +685,9 @@ public class ConfigurationPersistenceManager
 				String fileName = (String)dictionary.get(
 					_FELIX_FILE_INSTALL_FILENAME);
 
-				if (fileName != null) {
-					File file = new File(URI.create(fileName));
+				File file = new File(URI.create(fileName));
 
-					dictionary.put(
-						_FELIX_FILE_INSTALL_FILENAME, file.getName());
-				}
+				dictionary.put(_FELIX_FILE_INSTALL_FILENAME, file.getName());
 
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();

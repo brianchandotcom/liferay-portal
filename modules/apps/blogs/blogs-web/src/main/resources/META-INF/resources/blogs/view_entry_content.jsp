@@ -44,7 +44,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 		<div class="widget-mode-simple-entry">
 			<div class="autofit-row widget-topbar">
 				<div class="autofit-col autofit-col-expand">
-					<aui:a cssClass="title-link" href="<%= viewEntryURL %>"><h3 class="title"><%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry)) %></h3></aui:a>
+					<h3 class="title">
+						<aui:a cssClass="title-link" href="<%= viewEntryURL %>"><%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry)) %></aui:a>
+					</h3>
 
 					<%
 					String subtitle = entry.getSubtitle();
@@ -84,7 +86,9 @@ RatingsStats ratingsStats = (RatingsStats)request.getAttribute("view_entry_conte
 				<div class="autofit-col autofit-col-expand">
 					<div class="autofit-row">
 						<div class="autofit-col autofit-col-expand">
-							<a class="username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
+							<div class="text-truncate-inline">
+								<a class="text-truncate username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
+							</div>
 
 							<div class="text-secondary">
 								<span class="hide-accessible"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />

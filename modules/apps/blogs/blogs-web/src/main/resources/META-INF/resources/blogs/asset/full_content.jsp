@@ -68,7 +68,9 @@ String viewEntryURL = assetRenderer.getURLView(liferayPortletResponse, WindowSta
 			<div class="autofit-col autofit-col-expand">
 				<div class="autofit-row">
 					<div class="autofit-col autofit-col-expand">
-						<a class="username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
+						<div class="text-truncate-inline">
+							<a class="text-truncate username" href="<%= entryUserURL %>"><%= entry.getUserName() %></a>
+						</div>
 
 						<div class="text-secondary">
 							<span class="hide-accessible"><liferay-ui:message key="published-date" /></span><liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />

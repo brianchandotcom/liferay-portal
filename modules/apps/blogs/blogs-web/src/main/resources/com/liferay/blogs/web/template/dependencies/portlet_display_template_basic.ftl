@@ -14,9 +14,9 @@
 							${viewEntryPortletURL.setParameter("entryId", curBlogEntry.getEntryId()?string)}
 						</#if>
 
-						<a class="title-link" href="${viewEntryPortletURL.toString()}">
-							<h3 class="title">${blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)}</h3>
-						</a>
+						<h3 class="title">
+							<a class="title-link" href="${viewEntryPortletURL.toString()}">${blogsEntryUtil.getDisplayTitle(resourceBundle, curBlogEntry)}</a>
+						</h3>
 					</div>
 
 					<div class="autofit-col visible-interaction">
@@ -95,7 +95,9 @@
 									</#if>
 								</#if>
 
-								<a href="${(entryUserURL?? && validator.isNotNull(entryUserURL))?then(entryUserURL, "")}" class="username">${curBlogEntry.getUserName()}</a>
+								<div class="text-truncate-inline">
+									<a href="${(entryUserURL?? && validator.isNotNull(entryUserURL))?then(entryUserURL, "")}" class="text-truncate username">${curBlogEntry.getUserName()}</a>
+								</div>
 
 								<div>
 									${dateUtil.getDate(curBlogEntry.getStatusDate(), "dd MMM", locale)}

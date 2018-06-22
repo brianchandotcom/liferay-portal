@@ -129,9 +129,9 @@ if (portletTitleBasedNavigation) {
 													<link href="<%= previousEntryURL.toString() %>" rel="prev" />
 												</liferay-util:html-top>
 
-												<a class="title-link" href="<%= previousEntryURL %>">
-													<h3 class="title"><%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry)) %></h3>
-												</a>
+												<h3 class="title"><a class="title-link" href="<%= previousEntryURL %>">
+													<%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, previousEntry)) %></a>
+												</h3>
 											</div>
 										</div>
 
@@ -156,7 +156,9 @@ if (portletTitleBasedNavigation) {
 											<div class="autofit-col autofit-col-expand">
 												<div class="autofit-row">
 													<div class="autofit-col autofit-col-expand">
-														<a class="username" href="<%= previousEntryUserURL %>"><%= previousEntry.getUserName() %></a>
+														<div class="text-truncate-inline">
+															<a class="text-truncate username" href="<%= previousEntryUserURL %>"><%= previousEntry.getUserName() %></a>
+														</div>
 
 														<div class="text-secondary">
 															<%= DateUtil.getDate(previousEntry.getStatusDate(), "dd MMM", locale) %>
@@ -290,9 +292,10 @@ if (portletTitleBasedNavigation) {
 													<link href="<%= nextEntryURL.toString() %>" rel="next" />
 												</liferay-util:html-top>
 
-												<a class="title-link" href="<%= nextEntryURL %>">
-													<h3 class="title"><%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry)) %></h3>
-												</a>
+												<h3 class="title">
+													<a class="title-link" href="<%= nextEntryURL %>">
+													<%= HtmlUtil.escape(BlogsEntryUtil.getDisplayTitle(resourceBundle, nextEntry)) %></a>
+												</h3>
 											</div>
 										</div>
 
@@ -317,7 +320,9 @@ if (portletTitleBasedNavigation) {
 											<div class="autofit-col autofit-col-expand">
 												<div class="autofit-row">
 													<div class="autofit-col autofit-col-expand">
-														<a class="username" href="<%= nextEntryUserURL %>"><%= nextEntry.getUserName() %></a>
+														<div class="text-truncate-inline">
+															<a class="text-truncate username" href="<%= nextEntryUserURL %>"><%= nextEntry.getUserName() %></a>
+														</div>
 
 														<div class="text-secondary">
 															<%= DateUtil.getDate(nextEntry.getStatusDate(), "dd MMM", locale) %>

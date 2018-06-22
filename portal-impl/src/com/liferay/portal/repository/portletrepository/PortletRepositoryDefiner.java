@@ -14,8 +14,11 @@
 
 package com.liferay.portal.repository.portletrepository;
 
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.PortalCapabilityLocator;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
@@ -44,6 +47,15 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 	@Override
 	public void registerCapabilities(
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
+
+		if (_portalCapabilityLocator == null) {
+			ReflectionUtil.throwException(
+				new UndeployedExternalRepositoryException(
+					StringBundler.concat(
+						"Repository definer ",
+						PortletRepositoryDefiner.class.getName(),
+						" is not yet fully initialized.")));
+		}
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
@@ -88,7 +100,7 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 	private static volatile PortalCapabilityLocator _portalCapabilityLocator =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalCapabilityLocator.class, PortletRepositoryDefiner.class,
-			"_portalCapabilityLocator", true);
+			"_portalCapabilityLocator", false, true);
 
 	private RepositoryFactory _repositoryFactory;
 

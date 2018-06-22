@@ -240,7 +240,7 @@ if (oAuth2Application.getOAuth2ApplicationScopeAliasesId() > 0) {
 				function() {
 					scopeAliases.push(this.val());
 				});
-			A.one('#<portlet:namespace />impliedScopeAliases').attr('value', scopeAliases.join(','));
+			A.one('#<portlet:namespace />impliedScopeAliases').attr('value', scopeAliases.join(' '));
 
 			document.<portlet:namespace/>fm.submit();
 		});

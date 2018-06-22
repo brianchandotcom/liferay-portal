@@ -153,6 +153,9 @@ public class LiferayOAuthDataProvider
 		ServerAuthorizationCodeGrant serverAuthorizationCodeGrant =
 			super.createCodeGrant(authorizationCodeRegistration);
 
+		serverAuthorizationCodeGrant.setRequestedScopes(
+			authorizationCodeRegistration.getRequestedScope());
+
 		_codeGrantsPortalCache.put(
 			serverAuthorizationCodeGrant.getCode(),
 			serverAuthorizationCodeGrant,

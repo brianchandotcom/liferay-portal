@@ -106,7 +106,7 @@ public class OAuth2JSONWSSAPEntryActivator {
 			"OAUTH2_everything.read.userprofile",
 			"com.liferay.portal.kernel.service.UserService#getCurrentUser"
 		},
-		{"OAUTH2_everything.write", "#add*\n#create*\n#update*\\n#delete*"}
+		{"OAUTH2_everything.write", "#add*\n#create*\n#update*\n#delete*"}
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -86,8 +86,8 @@ public class Archetyper {
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
 		String className = projectTemplatesArgs.getClassName();
-		String dependencyManagementEnabled =
-			projectTemplatesArgs.getDependencyManagementEnabled();
+		boolean dependencyManagementEnabled =
+			projectTemplatesArgs.isDependencyManagementEnabled();
 		String groupId = projectTemplatesArgs.getGroupId();
 		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
@@ -150,7 +150,7 @@ public class Archetyper {
 		_setProperty(properties, "className", className);
 		_setProperty(
 			properties, "dependencyManagementEnabled",
-			dependencyManagementEnabled);
+			String.valueOf(dependencyManagementEnabled));
 		_setProperty(properties, "liferayVersion", liferayVersion);
 		_setProperty(properties, "package", packageName);
 		_setProperty(properties, "projectType", projectType);

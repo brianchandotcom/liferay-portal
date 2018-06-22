@@ -11,7 +11,6 @@
  * @param? pathThemeImages
  * @param? selectedControl
  * @param? selectedTool
- * @param? strings
  *
  * Function References
  *
@@ -77,11 +76,11 @@
 			{/let}
 
 			<button {$saveButtonAttributes}>
-				<span class="lfr-btn-label">{$strings['save']}</span>
+				<span class="lfr-btn-label">{msg desc=""}save{/msg}</span>
 			</button>
 
 			<button class="btn btn-cancel btn-default btn-link" data-onclick="close_">
-				<span class="lfr-btn-label">{$strings['cancel']}</span>
+				<span class="lfr-btn-label">{msg desc=""}cancel{/msg}</span>
 			</button>
 		</div>
 	</div>
@@ -182,12 +181,11 @@
  * @param control
  * @param? pathThemeImages
  * @param selectedControl
- * @param strings
  */
 {template .tool_control}
 	<div class="controls-container d-flex {$selectedControl and $selectedControl.label == $control.label ? 'open' : ''}">
 		<div class="col-2 mt-4">
-			<button class="btn btn-link" data-onclick="accept">{$strings['apply']}</button>
+			<button class="btn btn-link" data-onclick="accept">{msg desc=""}apply{/msg}</button>
 		</div>
 
 		<div class="col-8 tool-controls">
@@ -200,7 +198,7 @@
 		</div>
 
 		<div class="col-2 mt-4">
-			<button class="btn btn-link" data-onclick="discard">{$strings['cancel']}</button>
+			<button class="btn btn-link" data-onclick="discard">{msg desc=""}cancel{/msg}</button>
 		</div>
 	</div>
 {/template}

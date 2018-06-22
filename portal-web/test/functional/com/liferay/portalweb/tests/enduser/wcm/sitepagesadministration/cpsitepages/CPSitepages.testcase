@@ -155,7 +155,7 @@
 
 		<for list="Site Child Page 1,Site Child Page 2,Site Child Page 3" param="childPageName">
 			<execute macro="Page#view">
-				<var name="depth" value="1" />
+				<var name="depth" value="2" />
 				<var name="pageName" value="${childPageName}" />
 				<var name="privacy" value="Public Pages" />
 			</execute>
@@ -198,7 +198,7 @@
 		</execute>
 
 		<execute macro="Page#view">
-			<var name="depth" value="1" />
+			<var name="depth" value="2" />
 			<var name="pageName" value="Site Child Page" />
 			<var name="privacy" value="Private Pages" />
 		</execute>
@@ -315,7 +315,7 @@
 		</execute>
 
 		<execute macro="Page#view">
-			<var name="depth" value="1" />
+			<var name="depth" value="2" />
 			<var name="pageName" value="Site Child Page" />
 			<var name="privacy" value="Public Pages" />
 		</execute>

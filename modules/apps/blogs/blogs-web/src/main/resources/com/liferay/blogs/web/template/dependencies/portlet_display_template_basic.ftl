@@ -99,7 +99,7 @@
 									<a href="${(entryUserURL?? && validator.isNotNull(entryUserURL))?then(entryUserURL, "")}" class="text-truncate username">${curBlogEntry.getUserName()}</a>
 								</div>
 
-								<div class="autofit-row">
+								<div>
 									${dateUtil.getDate(curBlogEntry.getStatusDate(), "dd MMM", locale)}
 
 									<#if blogsPortletInstanceConfiguration.enableReadingTime()>

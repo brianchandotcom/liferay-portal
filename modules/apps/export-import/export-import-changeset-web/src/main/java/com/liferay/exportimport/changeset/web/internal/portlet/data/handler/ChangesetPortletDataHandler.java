@@ -262,8 +262,8 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
-		boolean exportModel = MapUtil.getBoolean(
-			parameterMap, className.getValue());
+		boolean exportModel = _isExportModel(
+			portletDataContext, className.getValue());
 
 		if (!exportModel) {
 			if (!(stagedModel instanceof TypedModel)) {
@@ -287,6 +287,24 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext, stagedModel);
 
 		return true;
+	}
+
+	private boolean _isExportModel(
+		PortletDataContext portletDataContext, String className) {
+
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		boolean exportModel = MapUtil.getBoolean(parameterMap, className);
+
+		if (exportModel) {
+			return true;
+		}
+
+		return MapUtil.getBoolean(
+			parameterMap,
+			className + StringPool.POUND +
+				StagedModelType.REFERRER_CLASS_NAME_ALL);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

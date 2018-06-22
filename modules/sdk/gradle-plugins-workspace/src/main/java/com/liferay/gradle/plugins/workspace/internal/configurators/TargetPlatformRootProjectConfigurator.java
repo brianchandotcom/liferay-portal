@@ -28,6 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
@@ -59,7 +60,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		Matcher matcher = _externalVersionPattern.matcher(
 			targetPlatformVersion);
 
-		final String repositoryVersion;
+		String repositoryVersion = null;
 
 		if (matcher.matches()) {
 			StringBuilder sb = new StringBuilder();
@@ -82,9 +83,12 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 				}
 			}
 			catch (NumberFormatException nfe) {
+				throw new GradleException("Invalid version property value", nfe);
 			}
 
 			repositoryVersion = sb.toString();
+
+			repositoryVersion = _fixBadVersionNumbers(repositoryVersion);
 		}
 		else {
 			repositoryVersion = targetPlatformVersion;
@@ -98,6 +102,14 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		_addDependenciesTargetPlatformBoms(project, repositoryVersion);
 		_addDependenciesTargetPlatformDistro(project, repositoryVersion);
+	}
+
+	private String _fixBadVersionNumbers(String version) {
+		if (version.equals("7.0.6")) {
+			return "7.0.6.1";
+		}
+
+		return version;
 	}
 
 	private TargetPlatformRootProjectConfigurator() {

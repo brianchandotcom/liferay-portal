@@ -150,7 +150,7 @@ public class CPDefinitionHelperTest {
 	@Test
 	public void testSearchDraft() throws PortalException {
 		frutillaRule.scenario(
-			"Search for CPDefintions by 'draft' status"
+			"Search for CPDefinitions by 'draft' status"
 		).given(
 			"A collection of CPDefinitions"
 		).when(
@@ -181,7 +181,7 @@ public class CPDefinitionHelperTest {
 	@Test
 	public void testSearchName() throws PortalException {
 		frutillaRule.scenario(
-			"Search for CPDefintions by name"
+			"Search for CPDefinitions by name"
 		).given(
 			"A collection of CPDefinitions"
 		).when(
@@ -225,7 +225,7 @@ public class CPDefinitionHelperTest {
 	@Test
 	public void testSearchStar() throws PortalException {
 		frutillaRule.scenario(
-			"Search for CPDefintions without filters"
+			"Search for CPDefinitions without filters"
 		).given(
 			"A collection of CPDefinitions"
 		).when(

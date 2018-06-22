@@ -56,9 +56,16 @@ public class JavadocCheck extends BaseCheck {
 		if (javadoc != null) {
 			DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
-			log(
-				detailAST.getLineNo(), _MSG_MULTIPLE_JAVADOC,
-				nameAST.getText());
+			Object[] arguments = null;
+
+			if (nameAST == null) {
+				arguments = new Object[] {_getClassName()};
+			}
+			else {
+				arguments = new Object[] {nameAST.getText()};
+			}
+
+			log(detailAST.getLineNo(), _MSG_MULTIPLE_JAVADOC, arguments);
 		}
 	}
 
@@ -101,6 +108,17 @@ public class JavadocCheck extends BaseCheck {
 		}
 
 		return false;
+	}
+
+	private String _getClassName() {
+		FileContents fileContents = getFileContents();
+
+		String fileName = StringUtil.replace(
+			fileContents.getFileName(), '\\', '/');
+
+		int pos = fileName.lastIndexOf('/');
+
+		return fileName.substring(pos + 1, fileName.length() - 5);
 	}
 
 	private static final String _MSG_EMPTY_LINE = "javadoc.empty.line";

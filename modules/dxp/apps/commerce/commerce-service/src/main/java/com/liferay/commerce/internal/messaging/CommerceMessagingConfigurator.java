@@ -37,9 +37,23 @@ public class CommerceMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_orderStatusServiceRegistration = _registerDestination(
+			bundleContext, CommerceDestinationNames.ORDER_STATUS);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_orderStatusServiceRegistration != null) {
+			_orderStatusServiceRegistration.unregister();
+		}
+	}
+
+	private ServiceRegistration<Destination> _registerDestination(
+		BundleContext bundleContext, String destinationName) {
+
 		DestinationConfiguration destinationConfiguration =
 			DestinationConfiguration.createParallelDestinationConfiguration(
-				CommerceDestinationNames.ORDER_STATUS);
+				destinationName);
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);
@@ -48,20 +62,14 @@ public class CommerceMessagingConfigurator {
 
 		dictionary.put("destination.name", destination.getName());
 
-		_serviceRegistration = bundleContext.registerService(
+		return bundleContext.registerService(
 			Destination.class, destination, dictionary);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
 	}
 
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private volatile ServiceRegistration<Destination> _serviceRegistration;
+	private volatile ServiceRegistration<Destination>
+		_orderStatusServiceRegistration;
 
 }

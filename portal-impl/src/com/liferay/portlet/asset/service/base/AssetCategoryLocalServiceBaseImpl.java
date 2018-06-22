@@ -249,7 +249,8 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	@Override
 	public AssetCategory fetchAssetCategoryByReferenceCode(long companyId,
 		String externalReferenceCode) {
-		return assetCategoryPersistence.fetchByC_ERC(companyId, null);
+		return assetCategoryPersistence.fetchByC_ERC(companyId,
+			externalReferenceCode);
 	}
 
 	/**

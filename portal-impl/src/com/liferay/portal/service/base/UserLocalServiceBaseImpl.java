@@ -281,7 +281,7 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public User fetchUserByReferenceCode(long companyId,
 		String externalReferenceCode) {
-		return userPersistence.fetchByC_ERC(companyId, null);
+		return userPersistence.fetchByC_ERC(companyId, externalReferenceCode);
 	}
 
 	/**

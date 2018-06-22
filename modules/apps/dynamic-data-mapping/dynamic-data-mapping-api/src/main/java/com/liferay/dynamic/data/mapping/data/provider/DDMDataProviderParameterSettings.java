@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
+import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 
 /**
  * @author Rafael Praxedes
  */
+@DDMForm
 public interface DDMDataProviderParameterSettings {
 
 	@DDMFormField(

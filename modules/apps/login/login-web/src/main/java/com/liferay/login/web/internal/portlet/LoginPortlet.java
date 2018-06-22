@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.fragment.entry.processor.portlet.alias=sign-in",
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-login",
 		"com.liferay.portlet.display-category=category.tools",

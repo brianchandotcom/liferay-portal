@@ -98,6 +98,12 @@ public class WabFactory extends AbstractExtender {
 
 	@Override
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
+		String contextPath = WabUtil.getWebContextPath(bundle);
+
+		if (contextPath == null) {
+			return null;
+		}
+
 		return new WABExtension(bundle);
 	}
 

@@ -15,11 +15,13 @@
 package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.portlet.data.handler.helper.PortletDataHandlerHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -194,6 +196,20 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new StagedModelType[] {
+					new StagedModelType(
+						LayoutPageTemplateCollection.class.getName()),
+					new StagedModelType(LayoutPageTemplateEntry.class.getName())
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery
 			layoutPageTemplateCollectionExportActionableDynamicQuery =
 				_layoutPageTemplateCollectionStagedModelRepository.
@@ -230,5 +246,8 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private PortletDataHandlerHelper _portletDataHandlerHelper;
+
+	@Reference
+	private Staging _staging;
 
 }

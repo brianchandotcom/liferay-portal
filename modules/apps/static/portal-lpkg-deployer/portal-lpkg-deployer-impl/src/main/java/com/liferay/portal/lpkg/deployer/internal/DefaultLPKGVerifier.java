@@ -66,7 +66,9 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 				properties.load(inputStream);
 			}
 
-			String symbolicName = properties.getProperty("title");
+			String symbolicName = lpkgFile.getName();
+
+			symbolicName = symbolicName.substring(0, symbolicName.length() - 5);
 
 			if (Validator.isNull(symbolicName)) {
 				throw new LPKGVerifyException(

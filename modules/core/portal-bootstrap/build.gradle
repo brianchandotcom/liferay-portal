@@ -1,8 +1,7 @@
 import aQute.bnd.osgi.Domain
 
+import com.liferay.gradle.plugins.tasks.ExecuteBndTask
 import com.liferay.gradle.util.copy.RenameDependencyClosure
-
-import org.dm.gradle.plugins.bundle.JarBuilder
 
 task copySystemPackagesExtraLibs(type: Copy)
 task copySystemPackagesExtraManifest(type: Copy)
@@ -14,54 +13,45 @@ File systemPackagesExtraManifestFile = file("system.packages.extra.mf")
 if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists()) {
 	systemPackagesExtraManifestFile = new File(buildDir, "system.packages.extra.mf")
 
-	task buildSystemPackagesExtraManifest
+	task buildSystemPackagesExtraManifest(type: ExecuteBndTask)
 
 	buildSystemPackagesExtraManifest {
+		classpath = files()
+
 		dependsOn classes
 		dependsOn copySystemPackagesExtraLibs
 
-		doLast {
-			Clock clock = new Clock()
+		outputFile = systemPackagesExtraManifestFile
 
-			JarBuilder jarBuilder = bundle.jarBuilderFactory.create()
+		properties liferayOSGi.bundleDefaultInstructions
 
-			jarBuilder.withBase projectDir
+		property "-check", "imports"
+		property "-fixupmessages", '"Classpath is empty. Private-Package ...";is:=ignore'
+		property "-include", "system.packages.extra.bnd"
 
-			Map<String, String> properties = liferayOSGi.bundleDefaultInstructions
+		property "Bundle-SymbolicName", {
+			Properties bndProperties = GUtil.loadProperties(file("system.packages.extra.bnd"))
 
-			properties["-check"] = "imports"
-			properties["-fixupmessages"] = '"Classpath is empty. Private-Package ...";is:=ignore'
-			properties["-include"] = "system.packages.extra.bnd"
+			bndProperties.getProperty("Bundle-SymbolicName")
+		}
 
+		property "Bundle-Version", {
+			project.version
+		}
+
+		property "Provide-Capability", {
 			File portalImplJarFile = configurations.compileOnly.find {
 				it.name.startsWith "com.liferay.portal.impl-"
 			}
 
 			Domain portalImplJarDomain = Domain.domain(portalImplJarFile)
 
-			properties["Provide-Capability"] = portalImplJarDomain.provideCapability.toString()
-
-			jarBuilder.withClasspath new File[0]
-			jarBuilder.withFailOnError true
-			jarBuilder.withName "system.packages.extra"
-			jarBuilder.withProperties properties
-			jarBuilder.withResources new File[0]
-
-			jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs.findAll {
-				it.directory
-			}
-
-			jarBuilder.withTrace false
-			jarBuilder.withVersion project.version
-
-			systemPackagesExtraManifestFile.parentFile.mkdirs()
-
-			systemPackagesExtraManifestFile.withOutputStream {
-				jarBuilder.writeManifestTo it
-			}
-
-			logger.lifecycle "Building the system.packages.extra.mf file took {}.", clock.time
+			portalImplJarDomain.provideCapability.toString()
 		}
+
+		resourceDirs = files()
+		sourceDirs = files(sourceSets.main.allSource.srcDirs.findAll { it.directory })
+		writeManifest = true
 	}
 
 	jar {

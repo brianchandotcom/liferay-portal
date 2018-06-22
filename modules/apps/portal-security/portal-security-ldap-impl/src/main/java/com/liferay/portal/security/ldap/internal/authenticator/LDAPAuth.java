@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.naming.AuthenticationException;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.Attribute;
@@ -194,12 +195,32 @@ public class LDAPAuth implements Authenticator {
 				ldapAuthResult.setResponseControl(responseControls);
 			}
 			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
+				boolean authenticationException = false;
+
+				if (e instanceof AuthenticationException) {
+					authenticationException = true;
+				}
+
+				if (_log.isDebugEnabled()) {
+					if (authenticationException) {
+						_log.debug(
+							StringBundler.concat(
+								"Failed to bind to the LDAP server, wrong ",
+								"password provided for userDN ", userDN),
+							e);
+					}
+					else {
+						_log.debug(
+							"Failed to bind to the LDAP server with userDN " +
+								userDN,
+							e);
+					}
+				}
+				else if (_log.isWarnEnabled() && !authenticationException) {
 					_log.warn(
 						StringBundler.concat(
 							"Failed to bind to the LDAP server with userDN ",
-							userDN, " and password ", password),
-						e);
+							userDN, " :", e.getMessage()));
 				}
 
 				ldapAuthResult.setAuthenticated(false);

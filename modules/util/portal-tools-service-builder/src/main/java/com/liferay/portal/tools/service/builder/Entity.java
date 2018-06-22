@@ -1182,6 +1182,10 @@ public class Entity implements Comparable<Entity> {
 		}
 	}
 
+	public void setApiPackagePath(String apiPackagePath) {
+		_apiPackagePath = apiPackagePath;
+	}
+
 	public void setLocalizedEntity(Entity localizedEntity) {
 		_localizedEntity = localizedEntity;
 
@@ -1238,7 +1242,7 @@ public class Entity implements Comparable<Entity> {
 		"liferayTransactionManager";
 
 	private final String _alias;
-	private final String _apiPackagePath;
+	private String _apiPackagePath;
 	private List<EntityColumn> _blobEntityColumns;
 	private final boolean _cacheEnabled;
 	private final List<EntityColumn> _collectionEntityColumns;

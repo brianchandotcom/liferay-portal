@@ -29,8 +29,7 @@ public class Normalizer {
 			return s;
 		}
 
-		String normalizedText = TransliteratorHolder._transliterator.transform(
-			s);
+		String normalizedText = TransliteratorHolder.transform(s);
 
 		return StringUtil.replace(
 			normalizedText, _UNICODE_TEXT, _NORMALIZED_TEXT);
@@ -51,6 +50,10 @@ public class Normalizer {
 	private static final char[] _UNICODE_TEXT = {'\u0142', '\u02B9', '\u02BA'};
 
 	private static class TransliteratorHolder {
+
+		public static String transform(String s) {
+			return _transliterator.transform(s);
+		}
 
 		private static final Transliterator _transliterator =
 			Transliterator.getInstance(

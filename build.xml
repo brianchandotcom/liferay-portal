@@ -951,6 +951,8 @@ message.
 			/>
 		</unzip>
 
+		<deploy-properties />
+
 		<if>
 			<os family="unix" />
 			<then>

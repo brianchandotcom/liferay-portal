@@ -56,9 +56,8 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 			return;
 		}
 
-		Pattern externalVersionPattern = Pattern.compile("([0-9]+)\\.([0-9]+)-([A-Za-z]+)([0-9]+)");
-
-		Matcher matcher = externalVersionPattern.matcher(targetPlatformVersion);
+		Matcher matcher = _externalVersionPattern.matcher(
+			targetPlatformVersion);
 
 		final String repositoryVersion;
 
@@ -72,13 +71,17 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 			String label = matcher.group(3);
 
-			int labelNumber = Integer.parseInt(matcher.group(4));
+			try {
+				int labelNumber = Integer.parseInt(matcher.group(4));
 
-			if (label.startsWith("GA")) {
-				sb.append(labelNumber - 1);
+				if (label.startsWith("GA")) {
+					sb.append(labelNumber - 1);
+				}
+				else if (label.startsWith("sp")) {
+					sb.append(labelNumber);
+				}
 			}
-			else if (label.startsWith("sp")) {
-				sb.append(labelNumber);
+			catch (NumberFormatException nfe) {
 			}
 
 			repositoryVersion = sb.toString();
@@ -194,5 +197,8 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 		targetPlatformIDEExtension.includeGroups(
 			"com.liferay", "com.liferay.portal");
 	}
+
+	private final Pattern _externalVersionPattern = Pattern.compile(
+		"([0-9]+)\\.([0-9]+)-([A-Za-z]+)([0-9]+)");
 
 }

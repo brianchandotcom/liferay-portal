@@ -46,12 +46,12 @@ public class CPOptionCreatorForm {
 		).build();
 	}
 
-	public Map<Locale, String> getDescriptionMap() {
-		return Collections.singletonMap(LocaleUtil.getDefault(), _description);
-	}
-
 	public String getDescription() {
 		return _description;
+	}
+
+	public Map<Locale, String> getDescriptionMap() {
+		return Collections.singletonMap(LocaleUtil.getDefault(), _description);
 	}
 
 	public String getFieldType() {

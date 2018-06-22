@@ -48,8 +48,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,6 +56,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -246,7 +247,8 @@ public class CommerceUserCollectionResource
 			CommerceUserUpdaterForm commerceUserUpdaterForm, User user)
 		throws PortalException {
 
-		List<Long> newRoleIds = ListUtil.toList(commerceUserUpdaterForm.getRoleIds());
+		List<Long> newRoleIds = ListUtil.toList(
+			commerceUserUpdaterForm.getRoleIds());
 
 		List<Long> oldRoleIds = ListUtil.toList(user.getRoleIds());
 
@@ -291,25 +293,38 @@ public class CommerceUserCollectionResource
 		int birthdayDay = 0;
 		int birthdayYear = 0;
 
-		if (user.getBirthday() != null) {
-			Calendar calendarBirthday = CalendarFactoryUtil.getCalendar(user.getBirthday().getTime());
+		Date birthday = user.getBirthday();
+
+		if (birthday != null) {
+			Calendar calendarBirthday = CalendarFactoryUtil.getCalendar(
+				birthday.getTime());
+
 			birthdayDay = calendarBirthday.get(Calendar.DAY_OF_MONTH);
 			birthdayMonth = calendarBirthday.get(Calendar.MONTH);
 			birthdayYear = calendarBirthday.get(Calendar.YEAR);
 		}
 
-		List<UserGroupRole> userGroupRoles = _userGroupRoleLocalService.getUserGroupRoles(userId);
+		List<UserGroupRole> userGroupRoles =
+			_userGroupRoleLocalService.getUserGroupRoles(userId);
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext();
+		ServiceContext serviceContext =
+			_serviceContextHelper.getServiceContext();
 
-		user = _userLocalService.updateUser(user.getUserId(), user.getPassword(), null,
-				null, false, user.getReminderQueryQuestion(),
-				user.getReminderQueryAnswer(), commerceUserUpdaterForm.getAlternateName(), commerceUserUpdaterForm.getEmail(), user.getFacebookId(), user.getOpenId(),
-				false, null, user.getLanguageId(), user.getTimeZoneId(), user.getGreeting(), user.getComments(),
-				commerceUserUpdaterForm.getGivenName(), user.getMiddleName(), commerceUserUpdaterForm.getFamilyName(), prefixId, suffixId, user.getMale(),
-				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn, twitterSn, commerceUserUpdaterForm.getJobTitle(),
-				user.getGroupIds(), commerceUserUpdaterForm.getCommerceAccountIds(), commerceUserUpdaterForm.getRoleIds(), userGroupRoles, user.getUserGroupIds(),
-				serviceContext);
+		user = _userLocalService.updateUser(
+			user.getUserId(), user.getPassword(), null, null, false,
+			user.getReminderQueryQuestion(), user.getReminderQueryAnswer(),
+			commerceUserUpdaterForm.getAlternateName(),
+			commerceUserUpdaterForm.getEmail(), user.getFacebookId(),
+			user.getOpenId(), false, null, user.getLanguageId(),
+			user.getTimeZoneId(), user.getGreeting(), user.getComments(),
+			commerceUserUpdaterForm.getGivenName(), user.getMiddleName(),
+			commerceUserUpdaterForm.getFamilyName(), prefixId, suffixId,
+			user.getMale(), birthdayMonth, birthdayDay, birthdayYear, smsSn,
+			facebookSn, jabberSn, skypeSn, twitterSn,
+			commerceUserUpdaterForm.getJobTitle(), user.getGroupIds(),
+			commerceUserUpdaterForm.getCommerceAccountIds(),
+			commerceUserUpdaterForm.getRoleIds(), userGroupRoles,
+			user.getUserGroupIds(), serviceContext);
 
 		return new UserWrapper(user);
 	}
@@ -326,15 +341,15 @@ public class CommerceUserCollectionResource
 	private RoleService _roleService;
 
 	@Reference
-	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserService _userService;
+	private ServiceContextHelper _serviceContextHelper;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
-	private ServiceContextHelper _serviceContextHelper;
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserService _userService;
 
 }

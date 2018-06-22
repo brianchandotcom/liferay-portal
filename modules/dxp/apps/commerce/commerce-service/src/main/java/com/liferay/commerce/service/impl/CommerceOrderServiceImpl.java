@@ -258,6 +258,16 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
+			long groupId, int start, int end,
+			OrderByComparator<CommerceOrder> orderByComparator)
+		throws PortalException {
+
+		return commerceOrderLocalService.getCommerceOrders(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceOrder> getCommerceOrders(
 			long groupId, long orderUserId, int start, int end,
 			OrderByComparator<CommerceOrder> orderByComparator)
 		throws PortalException {
@@ -277,13 +287,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
-	public List<CommerceOrder> getCommerceOrders(
-			long groupId, int start, int end,
-			OrderByComparator<CommerceOrder> orderByComparator)
-		throws PortalException {
-
-		return commerceOrderLocalService.getCommerceOrders(
-			groupId, start, end, orderByComparator);
+	public int getCommerceOrdersCount(long groupId) throws PortalException {
+		return commerceOrderLocalService.getCommerceOrdersCount(groupId);
 	}
 
 	@Override
@@ -302,14 +307,6 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.getCommerceOrdersCount(
 			groupId, orderUserId);
-	}
-
-	@Override
-	public int getCommerceOrdersCount(long groupId)
-		throws PortalException {
-
-		return commerceOrderLocalService.getCommerceOrdersCount(
-			groupId);
 	}
 
 	@Override

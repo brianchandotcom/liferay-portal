@@ -59,6 +59,7 @@ public class CommerceUserUpdaterForm {
 		if (_commerceAccountIds == null) {
 			return new long[0];
 		}
+
 		return ArrayUtil.toLongArray(_commerceAccountIds);
 	}
 
@@ -82,6 +83,7 @@ public class CommerceUserUpdaterForm {
 		if (_commerceAccountIds == null) {
 			return new long[0];
 		}
+
 		return ArrayUtil.toLongArray(_roleIds);
 	}
 

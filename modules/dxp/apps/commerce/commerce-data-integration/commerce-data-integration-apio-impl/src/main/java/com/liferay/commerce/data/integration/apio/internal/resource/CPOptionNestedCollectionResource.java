@@ -127,7 +127,7 @@ public class CPOptionNestedCollectionResource
 
 		List<CPOption> cpOptions = _cpOptionService.getCPOptions(
 			webSiteId, pagination.getStartPosition(),
-			pagination.getEndPosition());
+			pagination.getEndPosition(), null);
 
 		int total = _cpOptionService.getCPOptionsCount(webSiteId);
 

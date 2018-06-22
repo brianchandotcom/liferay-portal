@@ -126,8 +126,9 @@ public class CPInstanceNestedCollectionResource
 
 		List<CPInstance> cpInstances =
 			_cpInstanceService.getCPDefinitionInstances(
-				cpDefinitionId, pagination.getStartPosition(),
-				pagination.getEndPosition());
+				cpDefinitionId, WorkflowConstants.STATUS_ANY,
+				pagination.getStartPosition(), pagination.getEndPosition(),
+				null);
 
 		int total = _cpInstanceService.getCPDefinitionInstancesCount(
 			cpDefinitionId, WorkflowConstants.STATUS_APPROVED);

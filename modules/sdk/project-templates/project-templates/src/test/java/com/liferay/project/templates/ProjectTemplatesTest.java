@@ -351,9 +351,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.3.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -365,7 +366,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.3.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 	}
 
 	@Test
@@ -425,9 +426,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.3.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -439,7 +441,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.3.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 	}
 
 	@Test
@@ -506,9 +508,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.3.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -521,7 +524,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.3.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 	}
 
 	@Test
@@ -581,9 +584,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -593,7 +597,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -604,9 +608,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -616,7 +621,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -691,9 +696,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -703,7 +709,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -883,9 +889,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -895,7 +902,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -929,9 +936,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -941,7 +949,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -952,9 +960,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1030,7 +1039,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1057,9 +1066,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1089,7 +1099,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1114,9 +1124,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1142,7 +1153,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1167,9 +1178,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1199,7 +1211,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1224,9 +1236,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1250,7 +1263,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1275,9 +1288,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1303,7 +1317,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1328,9 +1342,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1356,7 +1371,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -1432,9 +1447,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1444,7 +1460,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1567,9 +1583,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1581,7 +1598,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1641,9 +1658,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1653,7 +1671,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1723,9 +1741,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1737,7 +1756,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -1748,9 +1767,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -1760,7 +1780,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -2105,9 +2125,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -2118,7 +2139,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -2211,9 +2232,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -2224,7 +2246,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -2292,9 +2314,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.3.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -2306,7 +2329,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.3.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.3.0\"");
 	}
 
 	@Test
@@ -2518,9 +2541,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -2530,7 +2554,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -2609,9 +2633,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.6.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -2621,7 +2646,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.6.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.6.0\"");
 	}
 
 	@Test
@@ -2760,9 +2785,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -2775,7 +2801,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -2939,9 +2965,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -2951,7 +2978,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -3090,9 +3117,10 @@ public class ProjectTemplatesTest {
 
 		_testNotContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 
-		_testContains(gradleProjectDir, "build.gradle", _KERNEL_DEPENDECY);
+		_testContains(
+			gradleProjectDir, "build.gradle", _DEPENDENCY_PORTAL_KERNEL);
 	}
 
 	@Test
@@ -3102,7 +3130,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
-			_KERNEL_DEPENDECY + ", version: \"2.0.0\"");
+			_DEPENDENCY_PORTAL_KERNEL + ", version: \"2.0.0\"");
 	}
 
 	@Test
@@ -4977,6 +5005,10 @@ public class ProjectTemplatesTest {
 			"Javac-Deprecation", "Javac-Encoding"),
 		',');
 
+	private static final String _DEPENDENCY_PORTAL_KERNEL =
+		"compileOnly group: \"com.liferay.portal\", name: " +
+			"\"com.liferay.portal.kernel\"";
+
 	private static final String _FREEMARKER_PORTLET_VIEW_FTL_PREFIX =
 		"<#include \"init.ftl\">";
 
@@ -4991,10 +5023,6 @@ public class ProjectTemplatesTest {
 		"gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar",
 		"gradle/wrapper/gradle-wrapper.properties"
 	};
-
-	private static final String _KERNEL_DEPENDECY =
-		"compileOnly group: \"com.liferay.portal\", name: " +
-			"\"com.liferay.portal.kernel\"";
 
 	private static final String _MAVEN_GOAL_BUILD_SERVICE =
 		"service-builder:build";

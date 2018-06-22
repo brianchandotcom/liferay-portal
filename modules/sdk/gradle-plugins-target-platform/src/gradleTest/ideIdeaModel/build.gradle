@@ -13,10 +13,9 @@ runGradleTest {
 		assert plugins.hasPlugin("com.liferay.target.platform")
 
 		assert idea.module.name == "root"
-
 		assert idea.module.scopes["PROVIDED"]["plus"][0].name == "targetPlatformIDE"
 
-		Set ideaDependencies = idea.module.resolveDependencies()
+		Set<Dependency> ideaDependencies = idea.module.resolveDependencies()
 
 		assert ideaDependencies.size() == 653
 	}

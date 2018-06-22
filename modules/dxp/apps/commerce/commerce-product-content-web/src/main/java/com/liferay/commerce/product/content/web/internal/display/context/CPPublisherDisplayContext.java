@@ -162,6 +162,12 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 	public void renderCPContentListEntry(CPCatalogEntry cpCatalogEntry)
 		throws Exception {
 
+		HttpServletRequest httpServletRequest =
+			cpContentRequestHelper.getRequest();
+
+		httpServletRequest.setAttribute(
+			"cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
+
 		String cpType = cpCatalogEntry.getProductTypeName();
 
 		CPContentListEntryRenderer cpContentListEntryRenderer =
@@ -171,7 +177,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 
 		if (cpContentListEntryRenderer != null) {
 			cpContentListEntryRenderer.render(
-				cpCatalogEntry, cpContentRequestHelper.getRequest(),
+				cpCatalogEntry, httpServletRequest,
 				PortalUtil.getHttpServletResponse(
 					cpContentRequestHelper.getLiferayPortletResponse()));
 		}

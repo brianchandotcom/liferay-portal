@@ -29,7 +29,7 @@ public interface CommerceNotificationType {
 
 	public Map<String, String> getDefinitionTerms(Locale locale);
 
-	public String getFilledTerm(String term, Object object)
+	public String getFilledTerm(String term, Object object, Locale locale)
 		throws PortalException;
 
 	public String getKey();

@@ -63,7 +63,7 @@ public class OrderPlacedCommerceNotificationTypeImpl
 	}
 
 	@Override
-	public String getFilledTerm(String term, Object object)
+	public String getFilledTerm(String term, Object object, Locale locale)
 		throws PortalException {
 
 		if (!(object instanceof CommerceOrder)) {

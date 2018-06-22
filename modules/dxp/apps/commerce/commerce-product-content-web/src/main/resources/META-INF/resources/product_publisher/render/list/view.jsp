@@ -27,9 +27,7 @@ List<CPCatalogEntry> results = searchContainer.getResults();
 <div class="row">
 
 	<%
-	for (Object object : results) {
-		CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)object;
-
+	for (CPCatalogEntry cpCatalogEntry : results) {
 		request.setAttribute("cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
 
 		cpPublisherDisplayContext.renderCPContentListEntry(cpCatalogEntry);

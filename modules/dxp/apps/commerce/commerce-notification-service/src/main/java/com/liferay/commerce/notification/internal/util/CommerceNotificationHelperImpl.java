@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,7 +104,7 @@ public class CommerceNotificationHelperImpl
 
 	protected String formatString(
 			CommerceNotificationType commerceNotificationType, String content,
-			Object object)
+			Object object, Locale locale)
 		throws PortalException {
 
 		if (Validator.isNull(content)) {
@@ -121,7 +122,8 @@ public class CommerceNotificationHelperImpl
 		for (String placeholder : placeholders) {
 			content = content.replace(
 				placeholder,
-				commerceNotificationType.getFilledTerm(placeholder, object));
+				commerceNotificationType.getFilledTerm(
+					placeholder, object, locale));
 		}
 
 		return content;
@@ -137,12 +139,20 @@ public class CommerceNotificationHelperImpl
 
 		User user = _userLocalService.getUser(userId);
 
+		Locale siteDefaultLocale = _portal.getSiteDefaultLocale(groupId);
+		Locale userLocale = user.getLocale();
+
 		String fromName = commerceNotificationTemplate.getFromName(
 			user.getLanguageId());
-		String subject = commerceNotificationTemplate.getSubject(
-			user.getLanguageId());
-		String body = commerceNotificationTemplate.getBody(
-			user.getLanguageId());
+
+		String subject = formatString(
+			commerceNotificationType,
+			commerceNotificationTemplate.getSubject(userLocale), object,
+			userLocale);
+		String body = formatString(
+			commerceNotificationType,
+			commerceNotificationTemplate.getBody(userLocale), object,
+			userLocale);
 
 		if (Validator.isNull(fromName)) {
 			fromName = commerceNotificationTemplate.getFromName(
@@ -150,25 +160,28 @@ public class CommerceNotificationHelperImpl
 		}
 
 		if (Validator.isNull(subject)) {
-			subject = commerceNotificationTemplate.getSubject(
-				_portal.getSiteDefaultLocale(groupId));
+			subject = formatString(
+				commerceNotificationType,
+				commerceNotificationTemplate.getSubject(siteDefaultLocale),
+				object, siteDefaultLocale);
 		}
 
 		if (Validator.isNull(body)) {
-			body = commerceNotificationTemplate.getBody(
-				_portal.getSiteDefaultLocale(groupId));
+			formatString(
+				commerceNotificationType,
+				commerceNotificationTemplate.getBody(siteDefaultLocale), object,
+				siteDefaultLocale);
 		}
 
-		subject = formatString(commerceNotificationType, subject, object);
-		body = formatString(commerceNotificationType, body, object);
-
-		_commerceNotificationQueueEntryLocalService.addCommerceNotificationQueueEntry(
-			user.getUserId(), groupId,
-			commerceNotificationTemplate.getCommerceNotificationTemplateId(),
-			commerceNotificationTemplate.getFrom(), fromName,
-			user.getEmailAddress(), user.getFullName(),
-			commerceNotificationTemplate.getCc(),
-			commerceNotificationTemplate.getBcc(), subject, body, 0);
+		_commerceNotificationQueueEntryLocalService.
+			addCommerceNotificationQueueEntry(
+				user.getUserId(), groupId,
+				commerceNotificationTemplate.
+					getCommerceNotificationTemplateId(),
+				commerceNotificationTemplate.getFrom(), fromName,
+				user.getEmailAddress(), user.getFullName(),
+				commerceNotificationTemplate.getCc(),
+				commerceNotificationTemplate.getBcc(), subject, body, 0);
 	}
 
 	protected void sendNotificationsToUserIds(

@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
-
 CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 SearchContainer<CPCatalogEntry> cpCatalogEntrySearchContainer = cpSearchResultsDisplayContext.getSearchContainer();
@@ -33,7 +31,6 @@ List<CPCatalogEntry> results = cpCatalogEntrySearchContainer.getResults();
 			<%
 			for (CPCatalogEntry cpCatalogEntry : results) {
 				request.setAttribute("cpContentListRenderer-cpCatalogEntry", cpCatalogEntry);
-				request.setAttribute("cpContentListRenderer-cpContentHelper", cpContentHelper);
 
 				cpSearchResultsDisplayContext.renderCPContentListEntry(cpCatalogEntry);
 			}

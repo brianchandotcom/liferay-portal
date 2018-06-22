@@ -17,8 +17,8 @@
 <%@ include file="/render/init.jsp" %>
 
 <%
-CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute("cpContentListRenderer-cpContentHelper");
 CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("cpContentListRenderer-cpCatalogEntry");
+CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 
 CPSku cpSku = cpContentHelper.getDefaultCPSku(cpCatalogEntry);
 

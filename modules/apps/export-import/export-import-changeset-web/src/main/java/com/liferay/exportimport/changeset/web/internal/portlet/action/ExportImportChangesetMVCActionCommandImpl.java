@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -213,7 +214,12 @@ public class ExportImportChangesetMVCActionCommandImpl
 					themeDisplay.getUserId(), exportImportConfiguration);
 		}
 		else if (cmd.equals(Constants.PUBLISH)) {
-			Group scopeGroup = themeDisplay.getScopeGroup();
+			Group scopeGroup = _groupLocalService.fetchGroup(
+				ParamUtil.getLong(actionRequest, "groupId"));
+
+			if (scopeGroup == null) {
+				scopeGroup = themeDisplay.getScopeGroup();
+			}
 
 			if (!scopeGroup.isStagingGroup() &&
 				!scopeGroup.isStagedRemotely()) {
@@ -299,7 +305,7 @@ public class ExportImportChangesetMVCActionCommandImpl
 			Map<String, Serializable> settingsMap =
 				_exportImportConfigurationSettingsMapFactory.
 					buildPublishPortletSettingsMap(
-						themeDisplay.getUser(), themeDisplay.getScopeGroupId(),
+						themeDisplay.getUser(), scopeGroup.getGroupId(),
 						themeDisplay.getPlid(), liveGroupId, targetPlid,
 						ChangesetPortletKeys.CHANGESET, parameterMap);
 
@@ -338,6 +344,9 @@ public class ExportImportChangesetMVCActionCommandImpl
 
 	@Reference
 	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

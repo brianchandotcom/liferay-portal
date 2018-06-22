@@ -27,6 +27,7 @@
 	portletURL.setParameter("backURL", currentURL);
 	portletURL.setParameter("changesetUuid", changesetUuid);
 	portletURL.setParameter("portletId", portletDisplay.getId());
+	portletURL.setParameter("groupId", String.valueOf(entityGroupId));
 	%>
 
 	<liferay-ui:icon

@@ -30,10 +30,8 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.generic.StringQuery;
@@ -143,26 +141,7 @@ public class FacetedSearcherImpl
 		_addPreFilters(
 			fullQueryBooleanFilter, entryClassNameIndexerMap, searchContext);
 
-		Map<String, Facet> facets = searchContext.getFacets();
-
-		BooleanFilter facetBooleanFilter = new BooleanFilter();
-
-		for (Facet facet : facets.values()) {
-			BooleanClause<Filter> facetClause =
-				facet.getFacetFilterBooleanClause();
-
-			if (facetClause != null) {
-				facetBooleanFilter.add(
-					facetClause.getClause(),
-					facetClause.getBooleanClauseOccur());
-			}
-		}
-
 		BooleanQuery fullQuery = new BooleanQueryImpl();
-
-		if (facetBooleanFilter.hasClauses()) {
-			fullQuery.setPostFilter(facetBooleanFilter);
-		}
 
 		if (fullQueryBooleanFilter.hasClauses()) {
 			fullQuery.setPreBooleanFilter(fullQueryBooleanFilter);

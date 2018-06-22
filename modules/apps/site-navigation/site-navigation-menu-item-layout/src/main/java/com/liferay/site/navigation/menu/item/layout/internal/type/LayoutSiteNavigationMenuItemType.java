@@ -89,7 +89,8 @@ public class LayoutSiteNavigationMenuItemType
 			layout);
 
 		if ((layoutRevision != null) &&
-			(layoutRevision.getStatus() == WorkflowConstants.STATUS_DRAFT)) {
+			((layoutRevision.getStatus() == WorkflowConstants.STATUS_DRAFT) ||
+			 layoutRevision.isIncomplete())) {
 
 			return false;
 		}

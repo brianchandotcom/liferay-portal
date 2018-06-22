@@ -133,7 +133,9 @@ public class WorkflowDefinitionLinkDisplayContext {
 					_workflowDefinitionLinkRequestHelper.getCompanyId(),
 					defaultWorkflowDefinitionLink.getWorkflowDefinitionName());
 
-			return defaultWorkflowDefinition.getTitle();
+			return defaultWorkflowDefinition.getTitle(
+				LanguageUtil.getLanguageId(
+					_workflowDefinitionLinkRequestHelper.getLocale()));
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {

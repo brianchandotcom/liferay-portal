@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.internal.security.permission.CommerceOrderWorkflowPermissionChecker;
 import com.liferay.commerce.model.CommerceOrder;
@@ -455,7 +455,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				CommerceOrderServiceImpl.class, "_portletResourcePermission",
-				CommerceConstants.RESOURCE_NAME);
+				CommerceOrderConstants.RESOURCE_NAME);
 
 	@ServiceReference(type = CommerceOrderWorkflowPermissionChecker.class)
 	private CommerceOrderWorkflowPermissionChecker

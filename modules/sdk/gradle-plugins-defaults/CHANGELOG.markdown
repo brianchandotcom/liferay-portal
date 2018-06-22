@@ -3890,6 +3890,15 @@ of a module includes transitive dependencies.
 - [LPS-79679]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.53.
 
+## 5.4.52 - 2018-06-21
+
+### Changed
+- [LPS-82568]: Set the `executeNpm` task `environment` property to
+`LIFERAY_NPM_BUNDLER_NO_TRACKING=1` by default to disable a prompt from
+`liferay-npm-bundler` about tracking data.
+- [LPS-82568]: Update the [Liferay Gradle Plugins] dependency to version
+3.12.54.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public
@@ -4318,6 +4327,7 @@ of a module includes transitive dependencies.
 [LPS-82420]: https://issues.liferay.com/browse/LPS-82420
 [LPS-82433]: https://issues.liferay.com/browse/LPS-82433
 [LPS-82534]: https://issues.liferay.com/browse/LPS-82534
+[LPS-82568]: https://issues.liferay.com/browse/LPS-82568
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

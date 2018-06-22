@@ -392,6 +392,7 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public CPInstance fetchByExternalReferenceCode(
 		String externalReferenceCode) {
 

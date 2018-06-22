@@ -20,10 +20,12 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPOptionValue;
 import com.liferay.commerce.product.service.base.CPOptionValueServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -100,6 +102,27 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 		return cpOptionValueLocalService.updateCPOptionValue(
 			cpOptionValue.getCPOptionValueId(), titleMap, priority, key,
 			serviceContext);
+	}
+
+	@Override
+	public List<CPOptionValue> getCPOptionValues(
+		long cpOptionId, int start, int end)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), cpOptionId, CPActionKeys.MANAGE_CATALOG);
+
+		return cpOptionValueLocalService.getCPOptionValues(
+			cpOptionId, start, end);
+	}
+
+	@Override
+	public int getCPOptionValuesCount(long cpOptionId) throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), cpOptionId, CPActionKeys.MANAGE_CATALOG);
+
+		return cpOptionValueLocalService.getCPOptionValuesCount(cpOptionId);
 	}
 
 	private static volatile PortletResourcePermission

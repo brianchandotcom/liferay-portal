@@ -41,7 +41,7 @@ public class CPOptionValueServiceImpl extends CPOptionValueServiceBaseImpl {
 		CPOption cpOption = cpOptionLocalService.getCPOption(cpOptionId);
 
 		_portletResourcePermission.check(
-			getPermissionChecker(), cpOption.getCPOptionId(),
+			getPermissionChecker(), cpOption.getGroupId(),
 			CPActionKeys.MANAGE_CATALOG);
 
 		return cpOptionValueLocalService.addCPOptionValue(

@@ -52,15 +52,11 @@ public class CPOptionValueHelper {
 		CPOptionValue cpOptionValue = _cpOptionValueService.getCPOptionValue(
 			cpOptionValueId);
 
-		cpOptionValue.setKey(key);
-		cpOptionValue.setNameMap(nameMap);
-
 		ServiceContext serviceContext = _getServiceContext(
 			cpOptionValue.getCPOption());
 
 		return _cpOptionValueService.updateCPOptionValue(
-			cpOptionValueId, cpOptionValue.getNameMap(), 0,
-			cpOptionValue.getKey(), serviceContext);
+			cpOptionValueId, nameMap, 0, key, serviceContext);
 	}
 
 	private ServiceContext _getServiceContext(CPOption cpOption) {

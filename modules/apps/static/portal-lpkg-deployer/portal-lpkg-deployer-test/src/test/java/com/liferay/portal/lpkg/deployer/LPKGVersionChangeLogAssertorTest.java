@@ -14,8 +14,8 @@
 
 package com.liferay.portal.lpkg.deployer;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -24,10 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,16 +53,11 @@ public class LPKGVersionChangeLogAssertorTest {
 					continue;
 				}
 
-				try (ZipFile zipFile = new ZipFile(lpkgPath.toFile());
-					InputStream inputStream = zipFile.getInputStream(
-						new ZipEntry("liferay-marketplace.properties"))) {
+				File lpkgFile = lpkgPath.toFile();
 
-					Properties properties = new Properties();
+				String name = lpkgFile.getName();
 
-					properties.load(inputStream);
-
-					symbolicNames.add(properties.getProperty("title"));
-				}
+				symbolicNames.add(name.substring(0, name.length() - 5));
 			}
 		}
 

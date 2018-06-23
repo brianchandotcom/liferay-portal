@@ -14,32 +14,29 @@
 
 package com.liferay.portal.search.solr.internal.facet;
 
+import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.solr.common.util.NamedList;
 
 /**
  * @author Raymond Augé
  */
 public class SolrFacetQueryCollector implements FacetCollector {
 
-	public SolrFacetQueryCollector(
-		String fieldName, Map<String, Integer> facetQueries) {
+	public SolrFacetQueryCollector(Facet facet, NamedList namedList) {
+		String name = FacetUtil.getAggregationName(facet);
 
-		_fieldName = fieldName;
-
-		for (Map.Entry<String, Integer> entry : facetQueries.entrySet()) {
-			String term = _getTerm(entry.getKey());
-			Integer count = entry.getValue();
-
-			_counts.put(term, count);
-		}
+		_counts = _getCountsInSameOrder(namedList.asMap(0), name);
+		_fieldName = name;
 	}
 
 	@Override
@@ -75,11 +72,27 @@ public class SolrFacetQueryCollector implements FacetCollector {
 		return _termCollectors;
 	}
 
-	private String _getTerm(String term) {
-		return term.substring(_fieldName.length() + 1);
+	private static Map<String, Integer> _getCountsInSameOrder(
+		Map<String, NamedList> map1, String name) {
+
+		Map<String, Integer> map2 = new LinkedHashMap<>();
+
+		for (Map.Entry<String, NamedList> entry : map1.entrySet()) {
+			String bucket = entry.getKey();
+
+			if (bucket.startsWith(name)) {
+				NamedList namedList = entry.getValue();
+
+				map2.put(
+					bucket.substring(name.length() + 1),
+					(Integer)namedList.get("count"));
+			}
+		}
+
+		return map2;
 	}
 
-	private final Map<String, Integer> _counts = new HashMap<>();
+	private final Map<String, Integer> _counts;
 	private final String _fieldName;
 	private List<TermCollector> _termCollectors;
 

@@ -29,7 +29,7 @@ public class ModifiedFacetTest extends BaseModifiedFacetTestCase {
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
 		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			AssetTagNamesFacetTest.class.getSimpleName());
+			getClass());
 
 		ElasticsearchIndexingFixture elasticsearchIndexingFixture =
 			new ElasticsearchIndexingFixture(

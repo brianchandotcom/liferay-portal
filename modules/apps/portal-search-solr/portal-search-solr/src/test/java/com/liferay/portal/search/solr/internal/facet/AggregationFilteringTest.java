@@ -12,18 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.facet;
+package com.liferay.portal.search.solr.internal.facet;
 
-import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch6.internal.connection.LiferayIndexCreator;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.facet.BaseAggregationFilteringTestCase;
-import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import java.util.Collections;
 
-import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.apache.solr.client.solrj.SolrQuery;
 
 /**
  * @author André de Oliveira
@@ -31,7 +30,7 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 public class AggregationFilteringTest extends BaseAggregationFilteringTestCase {
 
 	protected void addFacetProcessor(
-		String className, FacetProcessor<SearchRequestBuilder> facetProcessor,
+		String className, FacetProcessor<SolrQuery> facetProcessor,
 		CompositeFacetProcessor compositeFacetProcessor) {
 
 		compositeFacetProcessor.setFacetProcessor(
@@ -40,32 +39,36 @@ public class AggregationFilteringTest extends BaseAggregationFilteringTestCase {
 
 	protected FacetProcessor createFacetProcessor() {
 		CompositeFacetProcessor compositeFacetProcessor =
-			new CompositeFacetProcessor() {
+			new CompositeFacetProcessor();
+
+		compositeFacetProcessor.setDefaultFacetProcessor(
+			new DefaultFacetProcessor() {
 				{
-					defaultFacetProcessor = new DefaultFacetProcessor();
+					jsonFactory = _jsonFactory;
 				}
-			};
+			});
 
 		addFacetProcessor(
 			"com.liferay.portal.search.internal.facet.ModifiedFacetImpl",
-			new ModifiedFacetProcessor(), compositeFacetProcessor);
+			new ModifiedFacetProcessor() {
+				{
+					jsonFactory = _jsonFactory;
+				}
+			},
+			compositeFacetProcessor);
 
 		return compositeFacetProcessor;
 	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			getClass());
+		SolrIndexingFixture solrIndexingFixture = new SolrIndexingFixture();
 
-		ElasticsearchIndexingFixture elasticsearchIndexingFixture =
-			new ElasticsearchIndexingFixture(
-				elasticsearchFixture, BaseIndexingTestCase.COMPANY_ID,
-				new LiferayIndexCreator(elasticsearchFixture));
+		solrIndexingFixture.setFacetProcessor(createFacetProcessor());
 
-		elasticsearchIndexingFixture.setFacetProcessor(createFacetProcessor());
-
-		return elasticsearchIndexingFixture;
+		return solrIndexingFixture;
 	}
+
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
 
 }

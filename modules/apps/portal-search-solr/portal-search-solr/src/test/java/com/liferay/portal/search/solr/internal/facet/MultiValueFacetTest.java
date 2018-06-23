@@ -14,15 +14,18 @@
 
 package com.liferay.portal.search.solr.internal.facet;
 
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
+import com.liferay.portal.search.test.util.facet.BaseSimpleFacetTestCase;
+import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-@Component(
-	immediate = true,
-	property = "class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet",
-	service = FacetProcessor.class
-)
-public class DateRangeFacetProcessor extends RangeFacetProcessor {
+public class MultiValueFacetTest extends BaseSimpleFacetTestCase {
+
+	@Override
+	protected IndexingFixture createIndexingFixture() {
+		return new SolrIndexingFixture();
+	}
+
 }

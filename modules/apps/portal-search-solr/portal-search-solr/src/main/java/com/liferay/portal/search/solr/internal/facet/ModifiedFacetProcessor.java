@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.solr.internal.facet;
 
-import com.liferay.portal.search.solr.facet.FacetProcessor;
-
 import org.osgi.service.component.annotations.Component;
 
 /**

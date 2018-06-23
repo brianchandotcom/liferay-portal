@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch6.internal.count;
+package com.liferay.portal.search.elasticsearch6.internal.facet;
 
 import com.liferay.portal.search.elasticsearch6.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch6.internal.connection.LiferayIndexCreator;
-import com.liferay.portal.search.test.util.count.BaseCountTestCase;
+import com.liferay.portal.search.test.util.facet.BaseMultiValueFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 /**
  * @author André de Oliveira
  */
-public class ElasticsearchCountTest extends BaseCountTestCase {
+public class MultiValueFacetTest extends BaseMultiValueFacetTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

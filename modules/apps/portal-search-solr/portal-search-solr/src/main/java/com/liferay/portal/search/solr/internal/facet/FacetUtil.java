@@ -14,15 +14,20 @@
 
 package com.liferay.portal.search.solr.internal.facet;
 
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.search.facet.Facet;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-@Component(
-	immediate = true,
-	property = "class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet",
-	service = FacetProcessor.class
-)
-public class DateRangeFacetProcessor extends RangeFacetProcessor {
+public class FacetUtil {
+
+	public static String getAggregationName(Facet facet) {
+		if (facet instanceof com.liferay.portal.search.facet.Facet) {
+			return ((com.liferay.portal.search.facet.Facet)facet).
+				getAggregationName();
+		}
+
+		return facet.getFieldName();
+	}
+
 }

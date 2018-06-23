@@ -14,7 +14,10 @@
 
 package com.liferay.portal.search.test.util.facet;
 
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
@@ -24,11 +27,15 @@ import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.QueryContributor;
 
+import java.io.Serializable;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.mockito.Mockito;
+import org.junit.Assert;
 
 /**
  * @author Bryan Engler
@@ -46,47 +53,40 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 		}
 	}
 
-	protected void assertFacet(
-			Function<SearchContext, ? extends Facet> function,
-			QueryContributor queryContributor, List<String> expectedTerms)
-		throws Exception {
-
+	protected void assertSearch(Consumer<Helper> consumer) throws Exception {
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS,
-			() -> doAssertFacet(function, queryContributor, expectedTerms));
+			() -> {
+				consumer.accept(new Helper());
+
+				return null;
+			});
 	}
 
-	protected JSONObject createDataJSONObject() {
-		JSONObject jsonObject = Mockito.mock(JSONObject.class);
-
-		Mockito.doAnswer(
-			invocation -> invocation.getArgumentAt(1, String.class)
-		).when(
-			jsonObject
-		).getString(
-			Mockito.anyString(), Mockito.anyString()
-		);
-
-		return jsonObject;
+	protected Hits doSearch(SearchContext searchContext) {
+		try {
+			return search(searchContext);
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	protected Void doAssertFacet(
-			Function<SearchContext, ? extends Facet> function,
-			QueryContributor queryContributor, List<String> expectedFrequencies)
-		throws Exception {
+	protected Hits doSearch(
+		SearchContext searchContext, QueryContributor queryContributor) {
 
-		SearchContext searchContext = createSearchContext();
-
-		Facet facet = function.apply(searchContext);
-
-		searchContext.addFacet(facet);
-
-		search(searchContext, queryContributor);
-
-		FacetsAssert.assertFrequencies(
-			facet.getFieldName(), searchContext, expectedFrequencies);
-
-		return null;
+		try {
+			return search(searchContext, queryContributor);
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	protected abstract String getField();
@@ -94,37 +94,56 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 	protected Facet initFacet(Facet facet) {
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		facetConfiguration.setDataJSONObject(createDataJSONObject());
+		facetConfiguration.setDataJSONObject(jsonFactory.createJSONObject());
 
 		return facet;
 	}
 
-	protected JSONObject setUpFrequencyThreshold(
-		int frequencyThreshold, JSONObject jsonObject) {
+	protected final JSONFactory jsonFactory = new JSONFactoryImpl();
 
-		Mockito.doReturn(
-			frequencyThreshold
-		).when(
-			jsonObject
-		).getInt(
-			"frequencyThreshold"
-		);
+	protected class Helper {
 
-		return jsonObject;
-	}
+		public Helper() {
+			_searchContext = createSearchContext();
+		}
 
-	protected JSONObject setUpMaxTerms(int maxTerms) {
-		JSONObject jsonObject = createDataJSONObject();
+		public <T extends Facet> T addFacet(
+			Function<SearchContext, ? extends T> function) {
 
-		Mockito.doReturn(
-			maxTerms
-		).when(
-			jsonObject
-		).getInt(
-			"maxTerms"
-		);
+			T facet = function.apply(_searchContext);
 
-		return jsonObject;
+			_searchContext.addFacet(facet);
+
+			return facet;
+		}
+
+		public void assertFrequencies(Facet facet, List<String> expected) {
+			FacetsAssert.assertFrequencies(
+				facet.getFieldName(), _searchContext, expected);
+		}
+
+		public void assertResultCount(int expected) {
+			Document[] documents = _hits.getDocs();
+
+			Assert.assertEquals(
+				Arrays.toString(documents), expected, documents.length);
+		}
+
+		public void search() {
+			_hits = doSearch(_searchContext);
+		}
+
+		public void search(QueryContributor queryContributor) {
+			_hits = doSearch(_searchContext, queryContributor);
+		}
+
+		public void setSearchContextAttribute(String name, Serializable value) {
+			_searchContext.setAttribute(name, value);
+		}
+
+		private Hits _hits;
+		private final SearchContext _searchContext;
+
 	}
 
 }

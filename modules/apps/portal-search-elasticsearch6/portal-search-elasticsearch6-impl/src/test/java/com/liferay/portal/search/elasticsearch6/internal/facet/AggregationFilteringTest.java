@@ -56,7 +56,7 @@ public class AggregationFilteringTest extends BaseAggregationFilteringTestCase {
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
 		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			AssetTagNamesFacetTest.class.getSimpleName());
+			getClass());
 
 		ElasticsearchIndexingFixture elasticsearchIndexingFixture =
 			new ElasticsearchIndexingFixture(

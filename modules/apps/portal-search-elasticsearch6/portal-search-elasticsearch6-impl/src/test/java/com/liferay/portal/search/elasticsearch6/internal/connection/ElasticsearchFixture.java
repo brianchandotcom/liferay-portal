@@ -55,6 +55,10 @@ import org.osgi.framework.BundleContext;
  */
 public class ElasticsearchFixture implements IndicesAdminClientSupplier {
 
+	public ElasticsearchFixture(Class clazz) {
+		this(clazz.getSimpleName());
+	}
+
 	public ElasticsearchFixture(String subdirName) {
 		this(subdirName, Collections.<String, Object>emptyMap());
 	}

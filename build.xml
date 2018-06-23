@@ -523,6 +523,17 @@ message.
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${app.server.type}" arg2="websphere" />
+			<then>
+				<move
+					file="${app.server.lib.global.dir}/portlet.jar"
+					force="true"
+					toDir="${app.server.websphere.dir}/javaext"
+				/>
+			</then>
+		</if>
+
 		<copy
 			file="tools/osgi-marketplace-override-README.markdown"
 			tofile="${liferay.home}/osgi/marketplace/override/README.markdown"
@@ -1207,6 +1218,13 @@ message.
 		<if>
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
+				<replace
+					file="${app.server.websphere.dir}/configuration/config.ini"
+				>
+					<replacetoken>com.ibm.CORBA,com.ibm</replacetoken>
+					<replacevalue>com.ibm.CORBA,javax.portlet,javax.portlet.filter,javax.portlet.annotations,com.ibm</replacevalue>
+				</replace>
+
 				<if>
 					<os family="unix" />
 					<then>

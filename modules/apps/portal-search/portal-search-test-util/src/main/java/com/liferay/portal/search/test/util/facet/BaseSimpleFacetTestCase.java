@@ -140,7 +140,7 @@ public abstract class BaseSimpleFacetTestCase extends BaseFacetTestCase {
 
 		assertFacet(
 			QueryContributors.mustNotTerm(getField(), presentButUnmatched),
-			createDataJSONObject(), Arrays.asList("One=1"));
+			jsonFactory.createJSONObject(), Arrays.asList("One=1"));
 	}
 
 }

@@ -15,7 +15,6 @@
 package com.liferay.portal.search.test.util.facet;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Field;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.internal.facet.modified.ModifiedFacetFactoryImpl;
@@ -40,8 +38,6 @@ import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Bryan Engler
@@ -108,66 +104,6 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 			dateMathExpressionWithAlphabeticalOrderSwitched, 1);
 	}
 
-	protected static JSONArray createRangeArray(String... ranges) {
-		JSONArray jsonArray = Mockito.mock(JSONArray.class);
-
-		Mockito.doReturn(
-			ranges.length
-		).when(
-			jsonArray
-		).length();
-
-		for (int i = 0; i < ranges.length; i++) {
-			Mockito.doReturn(
-				createRangeArrayElement(ranges[i])
-			).when(
-				jsonArray
-			).getJSONObject(
-				i
-			);
-		}
-
-		return jsonArray;
-	}
-
-	protected static JSONObject createRangeArrayElement(String range) {
-		JSONObject jsonObject = Mockito.mock(JSONObject.class);
-
-		Mockito.doReturn(
-			range
-		).when(
-			jsonObject
-		).getString(
-			"range"
-		);
-
-		return jsonObject;
-	}
-
-	protected static void setConfigurationRanges(
-		Facet facet, String... ranges) {
-
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
-
-		JSONObject jsonObject = facetConfiguration.getData();
-
-		Mockito.doReturn(
-			true
-		).when(
-			jsonObject
-		).has(
-			"ranges"
-		);
-
-		Mockito.doReturn(
-			createRangeArray(ranges)
-		).when(
-			jsonObject
-		).getJSONArray(
-			"ranges"
-		);
-	}
-
 	protected static void setCustomRange(Facet facet, String customRange) {
 		SearchContext searchContext = facet.getSearchContext();
 
@@ -197,56 +133,20 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 		return facet;
 	}
 
-	protected JSONArray createJSONArray() {
-		JSONArray jsonArray = Mockito.mock(JSONArray.class);
+	protected JSONArray createRangeArray(String... ranges) {
+		JSONArray jsonArray = jsonFactory.createJSONArray();
 
-		Mockito.doReturn(
-			1
-		).when(
-			jsonArray
-		).length();
-
-		Mockito.doReturn(
-			RandomTestUtil.randomString()
-		).when(
-			jsonArray
-		).getString(
-			0
-		);
+		for (String range : ranges) {
+			jsonArray.put(createRangeArrayElement(range));
+		}
 
 		return jsonArray;
 	}
 
-	protected JSONFactory createJSONFactory() {
-		JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
+	protected JSONObject createRangeArrayElement(String range) {
+		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		Mockito.doReturn(
-			createJSONObject()
-		).when(
-			jsonFactory
-		).createJSONObject();
-
-		return jsonFactory;
-	}
-
-	protected JSONObject createJSONObject() {
-		JSONObject jsonObject = Mockito.mock(JSONObject.class);
-
-		Mockito.doReturn(
-			true
-		).when(
-			jsonObject
-		).has(
-			"values"
-		);
-
-		Mockito.doReturn(
-			createJSONArray()
-		).when(
-			jsonObject
-		).getJSONArray(
-			"values"
-		);
+		jsonObject.put("range", range);
 
 		return jsonObject;
 	}
@@ -290,6 +190,14 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 	@Override
 	protected String getField() {
 		return Field.MODIFIED_DATE;
+	}
+
+	protected void setConfigurationRanges(Facet facet, String... ranges) {
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+
+		JSONObject jsonObject = facetConfiguration.getData();
+
+		jsonObject.put("ranges", createRangeArray(ranges));
 	}
 
 }

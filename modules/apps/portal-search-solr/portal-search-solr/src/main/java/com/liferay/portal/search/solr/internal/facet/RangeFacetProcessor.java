@@ -16,17 +16,25 @@ package com.liferay.portal.search.solr.internal.facet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.solr.facet.FacetProcessor;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -39,18 +47,33 @@ import org.osgi.service.component.annotations.Component;
 public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 
 	@Override
-	public void processFacet(SolrQuery solrQuery, Facet facet) {
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
+	public Map<String, JSONObject> processFacet(Facet facet) {
+		Map<String, JSONObject> map = new HashMap<>();
 
-		solrQuery.addFacetField(facetConfiguration.getFieldName());
+		addConfigurationRanges(map, facet);
+		addCustomRange(map, facet);
 
-		addConfigurationRanges(facetConfiguration, solrQuery);
+		return sort(map);
+	}
 
-		addCustomRange(facet, solrQuery);
+	protected static Map<String, JSONObject> sort(
+		Map<String, JSONObject> map1) {
+
+		List<String> keys = new ArrayList<>(map1.keySet());
+
+		Collections.sort(keys);
+
+		Map map2 = new LinkedHashMap<>(map1.size());
+
+		keys.forEach(key -> map2.put(key, map1.get(key)));
+
+		return map2;
 	}
 
 	protected void addConfigurationRanges(
-		FacetConfiguration facetConfiguration, SolrQuery solrQuery) {
+		Map<String, JSONObject> map, Facet facet) {
+
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
 		JSONObject jsonObject = facetConfiguration.getData();
 
@@ -65,14 +88,11 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 
 			String range = rangeJSONObject.getString("range");
 
-			String facetQuery =
-				facetConfiguration.getFieldName() + StringPool.COLON + range;
-
-			solrQuery.addFacetQuery(facetQuery);
+			putFacetParameters(map, facet, range);
 		}
 	}
 
-	protected void addCustomRange(Facet facet, SolrQuery solrQuery) {
+	protected void addCustomRange(Map<String, JSONObject> map, Facet facet) {
 		SearchContext searchContext = facet.getSearchContext();
 
 		String range = GetterUtil.getString(
@@ -82,12 +102,31 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 			return;
 		}
 
-		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
-
-		String facetQuery =
-			facetConfiguration.getFieldName() + StringPool.COLON + range;
-
-		solrQuery.addFacetQuery(facetQuery);
+		putFacetParameters(map, facet, range);
 	}
+
+	protected JSONObject getFacetParameters(Facet facet, String range) {
+		JSONObject jsonObject = jsonFactory.createJSONObject();
+
+		jsonObject.put("q", facet.getFieldName() + StringPool.COLON + range);
+
+		jsonObject.put("type", "query");
+
+		return jsonObject;
+	}
+
+	protected void putFacetParameters(
+		Map<String, JSONObject> map, Facet facet, String range) {
+
+		String name =
+			FacetUtil.getAggregationName(facet) + StringPool.UNDERLINE + range;
+
+		JSONObject jsonObject = getFacetParameters(facet, range);
+
+		map.put(name, jsonObject);
+	}
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 }

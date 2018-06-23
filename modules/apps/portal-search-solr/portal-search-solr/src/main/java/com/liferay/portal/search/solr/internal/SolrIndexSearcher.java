@@ -14,13 +14,17 @@
 
 package com.liferay.portal.search.solr.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexSearcher;
+import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -38,7 +42,8 @@ import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
@@ -50,28 +55,33 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.solr.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr.connection.SolrClientManager;
-import com.liferay.portal.search.solr.facet.FacetProcessor;
 import com.liferay.portal.search.solr.groupby.GroupByTranslator;
 import com.liferay.portal.search.solr.internal.facet.CompositeFacetProcessor;
+import com.liferay.portal.search.solr.internal.facet.FacetProcessor;
+import com.liferay.portal.search.solr.internal.facet.FacetUtil;
 import com.liferay.portal.search.solr.internal.facet.SolrFacetFieldCollector;
 import com.liferay.portal.search.solr.internal.facet.SolrFacetQueryCollector;
 import com.liferay.portal.search.solr.stats.StatsTranslator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.solr.client.solrj.SolrClient;
@@ -79,7 +89,6 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.apache.solr.client.solrj.SolrRequest.METHOD;
-import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import org.apache.solr.client.solrj.response.Group;
 import org.apache.solr.client.solrj.response.GroupCommand;
@@ -87,7 +96,7 @@ import org.apache.solr.client.solrj.response.GroupResponse;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
-import org.apache.solr.common.params.FacetParams;
+import org.apache.solr.common.util.NamedList;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -178,7 +187,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 				_log.info(
 					StringBundler.concat(
 						"Searching ", query.toString(), " took ",
-						String.valueOf(stopWatch.getTime()), " ms"));
+						stopWatch.getTime(), " ms"));
 			}
 		}
 	}
@@ -212,7 +221,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 				_log.info(
 					StringBundler.concat(
 						"Searching ", query.toString(), " took ",
-						String.valueOf(stopWatch.getTime()), " ms"));
+						stopWatch.getTime(), " ms"));
 			}
 		}
 	}
@@ -235,30 +244,58 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	protected void addFacets(SolrQuery solrQuery, SearchContext searchContext) {
 		Map<String, Facet> facets = searchContext.getFacets();
 
+		Map<String, JSONObject> jsonObjects = new LinkedHashMap<>();
+
+		List<String> postFilterQueries = new ArrayList<>();
+
+		FacetProcessorContext facetProcessorContext = getFacetProcessorContext(
+			facets, searchContext);
+
 		for (Facet facet : facets.values()) {
 			if (facet.isStatic()) {
 				continue;
 			}
 
-			FacetConfiguration facetConfiguration =
-				facet.getFacetConfiguration();
+			Map<String, JSONObject> facetParameters = getFacetParameters(facet);
 
-			_facetProcessor.processFacet(solrQuery, facet);
+			String tag = FacetUtil.getAggregationName(facet);
 
-			String facetSort = FacetParams.FACET_SORT_COUNT;
+			excludeTags(
+				facetParameters,
+				getExcludeTagsString(tag, facetProcessorContext));
 
-			String order = facetConfiguration.getOrder();
+			jsonObjects.putAll(facetParameters);
 
-			if (order.equals("OrderValueAsc")) {
-				facetSort = FacetParams.FACET_SORT_INDEX;
-			}
-
-			solrQuery.add(
-				"f." + facetConfiguration.getFieldName() + ".facet.sort",
-				facetSort);
+			addFilterQuery(postFilterQueries, facet, tag, searchContext);
 		}
 
-		solrQuery.setFacetLimit(-1);
+		if (!jsonObjects.isEmpty()) {
+			solrQuery.add("json.facet", getFacetString(jsonObjects));
+		}
+
+		if (!postFilterQueries.isEmpty()) {
+			solrQuery.setFilterQueries(
+				ArrayUtil.toStringArray(postFilterQueries));
+		}
+	}
+
+	protected void addFilterQuery(
+		List<String> filterQueries, Facet facet, String tag,
+		SearchContext searchContext) {
+
+		BooleanClause<Filter> booleanClause =
+			facet.getFacetFilterBooleanClause();
+
+		if (booleanClause == null) {
+			return;
+		}
+
+		String filterString = translate(booleanClause, searchContext);
+
+		filterQueries.add(
+			StringBundler.concat(
+				StringPool.OPEN_CURLY_BRACE, "!tag", StringPool.EQUAL, tag,
+				StringPool.CLOSE_CURLY_BRACE, filterString));
 	}
 
 	protected void addGroupBy(
@@ -466,11 +503,10 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			filterQueries.add(filterQuery);
 		}
 
-		if (query.getPostFilter() != null) {
-			String filterQuery = _filterTranslator.translate(
-				query.getPostFilter(), searchContext);
+		String[] postFilterQueries = solrQuery.getFilterQueries();
 
-			filterQueries.add(filterQuery);
+		if (!ArrayUtil.isEmpty(postFilterQueries)) {
+			Collections.addAll(filterQueries, postFilterQueries);
 		}
 
 		if (!filterQueries.isEmpty()) {
@@ -496,7 +532,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			_log.info(
 				StringBundler.concat(
 					"The search engine processed ", solrQueryString, " in ",
-					String.valueOf(queryResponse.getElapsedTime()), " ms"));
+					queryResponse.getElapsedTime(), " ms"));
 		}
 
 		return queryResponse;
@@ -526,6 +562,14 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		return hits;
 	}
 
+	protected void excludeTags(
+		Map<String, JSONObject> map, String excludeTagsString) {
+
+		for (JSONObject jsonObject : map.values()) {
+			jsonObject.put("excludeTags", excludeTagsString);
+		}
+	}
+
 	protected QueryResponse executeSearchRequest(SolrQuery solrQuery)
 		throws Exception {
 
@@ -534,24 +578,56 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		return solrClient.query(solrQuery, METHOD.POST);
 	}
 
+	protected String getExcludeTagsString(
+		String tag, FacetProcessorContext facetProcessorContext) {
+
+		Optional<String> optional =
+			facetProcessorContext.getExcludeTagsStringOptional();
+
+		return optional.orElse(tag);
+	}
+
 	protected FacetCollector getFacetCollector(
-		Facet facet, Map<String, FacetField> facetFieldsMap,
-		QueryResponse queryResponse) {
-
-		String fieldName = facet.getFieldName();
-
-		FacetCollector facetCollector = null;
+		Facet facet, NamedList namedList) {
 
 		if (facet instanceof RangeFacet) {
-			facetCollector = new SolrFacetQueryCollector(
-				fieldName, queryResponse.getFacetQuery());
-		}
-		else {
-			facetCollector = new SolrFacetFieldCollector(
-				fieldName, facetFieldsMap.get(fieldName));
+			return new SolrFacetQueryCollector(facet, namedList);
 		}
 
-		return facetCollector;
+		return new SolrFacetFieldCollector(facet, namedList);
+	}
+
+	protected Map<String, JSONObject> getFacetParameters(Facet facet) {
+		return _facetProcessor.processFacet(facet);
+	}
+
+	protected FacetProcessorContext getFacetProcessorContext(
+		Map<String, Facet> facets, SearchContext searchContext) {
+
+		boolean basicFacetSelection = GetterUtil.getBoolean(
+			searchContext.getAttribute(
+				SearchContextAttributes.ATTRIBUTE_KEY_BASIC_FACET_SELECTION));
+
+		return AggregationFilteringFacetProcessorContext.newInstance(
+			facets, basicFacetSelection);
+	}
+
+	protected String getFacetString(Map<String, JSONObject> jsonObjects) {
+		Set<Entry<String, JSONObject>> entrySet = jsonObjects.entrySet();
+
+		Stream<Entry<String, JSONObject>> stream = entrySet.stream();
+
+		String jsonString = stream.map(
+			entry -> StringBundler.concat(
+				StringPool.QUOTE, entry.getKey(), StringPool.QUOTE,
+				StringPool.COLON, entry.getValue())
+		).collect(
+			Collectors.joining(
+				StringPool.COMMA, StringPool.OPEN_CURLY_BRACE,
+				StringPool.CLOSE_CURLY_BRACE)
+		);
+
+		return jsonString;
 	}
 
 	protected String getSortFieldName(Sort sort, String scoreFieldName) {
@@ -683,6 +759,17 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		_statsTranslator = statsTranslator;
 	}
 
+	protected String translate(
+		BooleanClause<Filter> booleanClause, SearchContext searchContext) {
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		booleanFilter.add(
+			booleanClause.getClause(), booleanClause.getBooleanClauseOccur());
+
+		return _filterTranslator.translate(booleanFilter, searchContext);
+	}
+
 	protected String translateQuery(Query query, SearchContext searchContext) {
 		return _queryTranslator.translate(query, searchContext);
 	}
@@ -690,24 +777,19 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	protected void updateFacetCollectors(
 		QueryResponse queryResponse, SearchContext searchContext) {
 
-		List<FacetField> facetFields = queryResponse.getFacetFields();
+		NamedList namedList1 = queryResponse.getResponse();
 
-		if (ListUtil.isEmpty(facetFields)) {
+		NamedList namedList2 = (NamedList)namedList1.get("facets");
+
+		if (namedList2 == null) {
 			return;
-		}
-
-		Map<String, FacetField> facetFieldsMap = new HashMap<>();
-
-		for (FacetField facetField : facetFields) {
-			facetFieldsMap.put(facetField.getName(), facetField);
 		}
 
 		Map<String, Facet> facetsMap = searchContext.getFacets();
 
 		for (Facet facet : facetsMap.values()) {
 			if (!facet.isStatic()) {
-				facet.setFacetCollector(
-					getFacetCollector(facet, facetFieldsMap, queryResponse));
+				facet.setFacetCollector(getFacetCollector(facet, namedList2));
 			}
 		}
 	}
@@ -767,6 +849,9 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			hits.addStatsResults(statsResults);
 		}
 	}
+
+	@Reference
+	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected Props props;

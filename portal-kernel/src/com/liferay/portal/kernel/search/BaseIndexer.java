@@ -1269,17 +1269,6 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		BooleanFilter facetBooleanFilter = new BooleanFilter();
 
-		for (Facet facet : facets.values()) {
-			BooleanClause<Filter> filterBooleanClause =
-				facet.getFacetFilterBooleanClause();
-
-			if (filterBooleanClause != null) {
-				facetBooleanFilter.add(
-					filterBooleanClause.getClause(),
-					filterBooleanClause.getBooleanClauseOccur());
-			}
-		}
-
 		addFacetClause(searchContext, facetBooleanFilter, facets.values());
 
 		if (facetBooleanFilter.hasClauses()) {

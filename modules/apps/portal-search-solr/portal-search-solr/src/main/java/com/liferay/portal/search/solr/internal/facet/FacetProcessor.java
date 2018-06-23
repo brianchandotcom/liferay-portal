@@ -14,15 +14,16 @@
 
 package com.liferay.portal.search.solr.internal.facet;
 
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.facet.Facet;
+
+import java.util.Map;
 
 /**
  * @author Michael C. Han
  */
-@Component(
-	immediate = true,
-	property = "class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet",
-	service = FacetProcessor.class
-)
-public class DateRangeFacetProcessor extends RangeFacetProcessor {
+public interface FacetProcessor<T> {
+
+	public Map<String, JSONObject> processFacet(Facet facet);
+
 }

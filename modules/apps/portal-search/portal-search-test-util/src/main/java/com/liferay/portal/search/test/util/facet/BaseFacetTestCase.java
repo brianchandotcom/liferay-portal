@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.test.util.facet;
 
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
@@ -27,8 +29,6 @@ import com.liferay.portal.search.test.util.indexing.QueryContributor;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-
-import org.mockito.Mockito;
 
 /**
  * @author Bryan Engler
@@ -56,20 +56,6 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 			() -> doAssertFacet(function, queryContributor, expectedTerms));
 	}
 
-	protected JSONObject createDataJSONObject() {
-		JSONObject jsonObject = Mockito.mock(JSONObject.class);
-
-		Mockito.doAnswer(
-			invocation -> invocation.getArgumentAt(1, String.class)
-		).when(
-			jsonObject
-		).getString(
-			Mockito.anyString(), Mockito.anyString()
-		);
-
-		return jsonObject;
-	}
-
 	protected Void doAssertFacet(
 			Function<SearchContext, ? extends Facet> function,
 			QueryContributor queryContributor, List<String> expectedFrequencies)
@@ -94,7 +80,7 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 	protected Facet initFacet(Facet facet) {
 		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		facetConfiguration.setDataJSONObject(createDataJSONObject());
+		facetConfiguration.setDataJSONObject(jsonFactory.createJSONObject());
 
 		return facet;
 	}
@@ -102,29 +88,19 @@ public abstract class BaseFacetTestCase extends BaseIndexingTestCase {
 	protected JSONObject setUpFrequencyThreshold(
 		int frequencyThreshold, JSONObject jsonObject) {
 
-		Mockito.doReturn(
-			frequencyThreshold
-		).when(
-			jsonObject
-		).getInt(
-			"frequencyThreshold"
-		);
+		jsonObject.put("frequencyThreshold", frequencyThreshold);
 
 		return jsonObject;
 	}
 
 	protected JSONObject setUpMaxTerms(int maxTerms) {
-		JSONObject jsonObject = createDataJSONObject();
+		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		Mockito.doReturn(
-			maxTerms
-		).when(
-			jsonObject
-		).getInt(
-			"maxTerms"
-		);
+		jsonObject.put("maxTerms", maxTerms);
 
 		return jsonObject;
 	}
+
+	protected final JSONFactory jsonFactory = new JSONFactoryImpl();
 
 }

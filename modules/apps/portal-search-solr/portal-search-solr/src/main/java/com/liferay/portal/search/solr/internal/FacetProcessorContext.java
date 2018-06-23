@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.solr.facet;
+package com.liferay.portal.search.solr.internal;
 
-import com.liferay.portal.kernel.search.facet.Facet;
+import java.util.Optional;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-public interface FacetProcessor<T> {
+public interface FacetProcessorContext {
 
-	public void processFacet(T searchQuery, Facet facet);
+	public Optional<String> getExcludeTagsStringOptional();
 
 }

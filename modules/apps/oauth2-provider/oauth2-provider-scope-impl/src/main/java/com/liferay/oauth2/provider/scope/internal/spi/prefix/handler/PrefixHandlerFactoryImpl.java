@@ -138,14 +138,10 @@ public class PrefixHandlerFactoryImpl implements PrefixHandlerFactory {
 	protected Bundle getBundle(
 		Function<String, Object> propertyAccessorFunction) {
 
-		Object property = propertyAccessorFunction.apply(
-			"original.service.bundleid");
-
-		if (property == null) {
-			property = propertyAccessorFunction.apply("service.bundleid");
-		}
-
-		long bundleId = GetterUtil.getLong(property, -1L);
+		long bundleId = GetterUtil.getLong(
+			propertyAccessorFunction.apply("original.service.bundleid"),
+			GetterUtil.getLong(
+				propertyAccessorFunction.apply("service.bundleid"), -1L));
 
 		if (bundleId == -1) {
 			return null;

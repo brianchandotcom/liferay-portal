@@ -1060,6 +1060,8 @@ AUI.add(
 					_showFormBuilder: function() {
 						var instance = this;
 
+						Liferay.fire('showFormBuilder');
+
 						instance.one('#formBuilder').show();
 
 						A.one('.ddm-form-builder-buttons').removeClass('hide');

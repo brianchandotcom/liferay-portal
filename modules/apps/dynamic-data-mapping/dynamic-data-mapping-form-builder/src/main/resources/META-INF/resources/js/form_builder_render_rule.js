@@ -100,13 +100,12 @@ AUI.add(
 						boundingBox.delegate('click', A.bind(instance._handleDeleteActionClick, instance), '.action-card-delete');
 						boundingBox.delegate('click', A.bind(instance._handleSaveClick, instance), '.form-builder-rule-settings-save');
 
-						A.one('body').delegate('click', A.bind(instance._handleFormBuilderClick, instance), '#' + Liferay.DDM.Settings.portletNamespace + 'showForm');
-
 						instance.after(instance._toggleDeleteActionButton, instance, '_addAction');
 						instance.after(instance._validateRule, instance, '_addCondition');
 
 						instance.after('fieldsChange', A.bind(instance._afterFieldsChange, instance));
 						instance.after('pagesChange', A.bind(instance._afterPagesChange, instance));
+						Liferay.on('showFormBuilder', A.bind(instance._handleFormBuilderClick, instance));
 
 						instance.after('*:valueChange', A.bind(instance._afterValueChange, instance));
 

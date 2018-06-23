@@ -288,7 +288,7 @@ body .ddm-user-view-content {
 		}
 
 		.custom-control {
-			padding-bottom: 0px;
+			padding-bottom: 0;
 		}
 	}
 
@@ -472,24 +472,26 @@ body .ddm-user-view-content {
 	}
 }
 
-.form-group .form-check-inline {
-	margin-right: 11px;
-
-	.custom-control-label {
-		line-height: 24px;
-	}
+.form-check-inline .custom-control-label {
+	line-height: 24px;
 }
 
-.custom-control {
-	padding-bottom: 9px;
-}
-
-.form-group .custom-control-inline {
-	&.custom-control {
-		padding-bottom: 0px;
+.form-group {
+	.custom-control {
+		padding-bottom: 9px;
 	}
 
-	+ .custom-control-inline {
-		margin-left: 11px;
+	.form-check-inline {
+		margin-right: 11px;
+	}
+
+	.custom-control-inline {
+		&.custom-control {
+			padding-bottom: 0;
+		}
+
+		+ .custom-control-inline {
+			margin-left: 11px;
+		}
 	}
 }

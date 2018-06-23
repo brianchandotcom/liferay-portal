@@ -59,13 +59,33 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 			File modulesDir = new File(
 				portalGitWorkingDirectory.getWorkingDirectory(), "modules");
 
-			excludesPathMatchers.addAll(
-				getPathMatchers(
-					getFirstPropertyValue("modules.excludes"), modulesDir));
+			String upstreamBranchName =
+				portalGitWorkingDirectory.getUpstreamBranchName();
 
-			includesPathMatchers.addAll(
-				getPathMatchers(
-					getFirstPropertyValue("modules.includes"), modulesDir));
+			if (upstreamBranchName.startsWith("ee-") ||
+				upstreamBranchName.endsWith("-private")) {
+
+				excludesPathMatchers.addAll(
+					getPathMatchers(
+						getFirstPropertyValue("modules.excludes.private"),
+						modulesDir));
+
+				includesPathMatchers.addAll(
+					getPathMatchers(
+						getFirstPropertyValue("modules.includes.private"),
+						modulesDir));
+			}
+			else {
+				excludesPathMatchers.addAll(
+					getPathMatchers(
+						getFirstPropertyValue("modules.excludes.public"),
+						modulesDir));
+
+				includesPathMatchers.addAll(
+					getPathMatchers(
+						getFirstPropertyValue("modules.includes.public"),
+						modulesDir));
+			}
 
 			String includedModulesRequired = getFirstPropertyValue(
 				"modules.includes.required");

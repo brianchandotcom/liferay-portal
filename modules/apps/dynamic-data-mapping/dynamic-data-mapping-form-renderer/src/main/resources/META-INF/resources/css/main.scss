@@ -315,7 +315,7 @@ body .ddm-user-view-content {
 		border-bottom: 2px solid #65B6F0;
 	}
 
-	.form-control[disabled] + a {
+	.form-control[disabled] > a.select-arrow-down-container {
 		cursor: not-allowed;
 		opacity: 0.5;
 	}

@@ -75,7 +75,12 @@ public class ModulesSemVerBatchTestClassGroup
 							File buildFile = new File(
 								currentDirectory, "build.gradle");
 
-							if (buildFile.exists() && bndBndFile.exists()) {
+							File lfrRelengIgnoreFile = new File(
+								currentDirectory, ".lfrbuild-releng-ignore");
+
+							if (buildFile.exists() && bndBndFile.exists() &&
+								!lfrRelengIgnoreFile.exists()) {
+
 								modulesProjectDirs.add(currentDirectory);
 
 								return FileVisitResult.SKIP_SUBTREE;

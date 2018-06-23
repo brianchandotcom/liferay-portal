@@ -45,26 +45,11 @@ if (recordVersion != null) {
 
 String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
 
-if (Validator.isNull(defaultLanguageId)) {
-	defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
-}
-
-Locale[] availableLocales = {LocaleUtil.fromLanguageId(defaultLanguageId)};
-
-boolean changeableDefaultLanguage = ddlDisplayContext.changeableDefaultLanguage();
-
 if (ddmFormValues != null) {
-	Set<Locale> availableLocalesSet = ddmFormValues.getAvailableLocales();
-
-	availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
-
-	String ddmFormValueDefaultLanguageId = LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale());
-
-	if (!Objects.equals(defaultLanguageId, ddmFormValueDefaultLanguageId)) {
-		changeableDefaultLanguage = true;
-	}
-
-	defaultLanguageId = ddmFormValueDefaultLanguageId;
+	defaultLanguageId = LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale());
+}
+else if (Validator.isNull(defaultLanguageId)) {
+	defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 }
 
 String languageId = ParamUtil.getString(request, "languageId", defaultLanguageId);
@@ -181,10 +166,6 @@ else {
 				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
-
-				<c:if test="<%= !translating && !ddlDisplayContext.isFormView() %>">
-					<aui:translation-manager availableLocales="<%= availableLocales %>" changeableDefaultLanguage="<%= changeableDefaultLanguage %>" defaultLanguageId="<%= defaultLanguageId %>" id="translationManager" />
-				</c:if>
 
 				<%
 				long classNameId = PortalUtil.getClassNameId(DDMStructure.class);

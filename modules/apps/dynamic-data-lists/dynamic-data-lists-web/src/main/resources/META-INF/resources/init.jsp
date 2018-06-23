@@ -117,10 +117,8 @@ page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Objects" %><%@
-page import="java.util.Set" %>
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@

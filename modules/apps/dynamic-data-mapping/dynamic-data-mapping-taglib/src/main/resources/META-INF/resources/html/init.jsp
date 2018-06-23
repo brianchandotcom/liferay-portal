@@ -25,6 +25,7 @@ long classPK = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-d
 com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = (com.liferay.dynamic.data.mapping.storage.DDMFormValues)request.getAttribute("liferay-ddm:html:ddmFormValues");
 java.lang.String fieldsNamespace = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:html:fieldsNamespace"));
 boolean ignoreRequestValue = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:ignoreRequestValue")));
+boolean localizable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:localizable")), true);
 boolean readOnly = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:readOnly")));
 boolean repeatable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html:repeatable")), true);
 java.util.Locale requestedLocale = (java.util.Locale)request.getAttribute("liferay-ddm:html:requestedLocale");

@@ -24,6 +24,8 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.exception.ArticleContentException;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -595,6 +597,29 @@ public class JournalConverterImpl implements JournalConverter {
 
 			serializable = jsonArray.toString();
 		}
+		else if (DDMFormFieldType.JOURNAL_ARTICLE.equals(type)) {
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					dynamicContentElement.getText());
+
+				Long classPK = jsonObject.getLong("classPK");
+
+				if (Validator.isNotNull(classPK)) {
+					JournalArticle journalArticle =
+						_journalArticleLocalService.fetchLatestArticle(classPK);
+
+					String title = journalArticle.getTitle(defaultLocale);
+
+					jsonObject.put("title", title);
+				}
+
+				serializable = jsonObject.toString();
+			}
+			catch (JSONException jsone) {
+				serializable = FieldConstants.getSerializable(
+					dataType, dynamicContentElement.getText());
+			}
+		}
 		else {
 			serializable = FieldConstants.getSerializable(
 				dataType, dynamicContentElement.getText());
@@ -1106,6 +1131,9 @@ public class JournalConverterImpl implements JournalConverter {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	private final Map<String, String> _journalTypesToDDMTypes;
 

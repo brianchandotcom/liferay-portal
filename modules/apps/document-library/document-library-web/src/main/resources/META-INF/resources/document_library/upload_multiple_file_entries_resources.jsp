@@ -188,6 +188,7 @@ else {
 										classPK="<%= ddmStructure.getPrimaryKey() %>"
 										ddmFormValues="<%= ddmFormValues %>"
 										fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
+										localizable="<%= false %>"
 										requestedLocale="<%= locale %>"
 									/>
 								</div>

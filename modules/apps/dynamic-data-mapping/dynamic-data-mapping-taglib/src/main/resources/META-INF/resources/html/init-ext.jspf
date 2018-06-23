@@ -34,4 +34,10 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ddm_init-
 if (requestedLocale == null) {
 	requestedLocale = locale;
 }
+
+String hideClass = "";
+
+if (!localizable || readOnly) {
+	hideClass = "hide";
+}
 %>

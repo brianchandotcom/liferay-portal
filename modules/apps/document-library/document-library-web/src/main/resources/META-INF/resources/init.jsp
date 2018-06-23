@@ -119,7 +119,6 @@ page import="com.liferay.document.library.web.internal.security.permission.resou
 page import="com.liferay.document.library.web.internal.security.permission.resource.DLPermission" %><%@
 page import="com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings" %><%@
 page import="com.liferay.document.library.web.internal.util.DLBreadcrumbUtil" %><%@
-page import="com.liferay.document.library.web.internal.util.DLFileEntryTypeUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DLSubscriptionUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DLTrashUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DLWebComponentProvider" %><%@
@@ -247,7 +246,6 @@ page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Locale" %><%@
 page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@

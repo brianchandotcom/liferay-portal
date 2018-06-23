@@ -61,7 +61,6 @@ import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.journal.service.base.JournalArticleLocalServiceBaseImpl;
-import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.util.comparator.ArticleIDComparator;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
@@ -8522,9 +8521,6 @@ public class JournalArticleLocalServiceImpl
 
 	@ServiceReference(type = FriendlyURLEntryLocalService.class)
 	protected FriendlyURLEntryLocalService friendlyURLEntryLocalService;
-
-	@ServiceReference(type = JournalConverter.class)
-	protected JournalConverter journalConverter;
 
 	/**
 	 * @deprecated As of 4.0.0, with no direct replacement

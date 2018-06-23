@@ -31,74 +31,54 @@
 	<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated") />
 
 	<div class="form-group">
-		<#if localizable>
-			<@liferay_ui["input-localized"]
-				cssClass="${cssClass}"
-				editorName="${editorName}"
-				name="${namespacedFieldName}"
-				type="editor"
-				xml="${fieldValue}"
-			/>
+		<@liferay_ui["input-editor"]
+			contents="${fieldValue}"
+			contentsLanguageId="${requestedLocale}"
+			cssClass="${cssClass}"
+			editorName="${editorName}"
+			initMethod=""
+			name="${namespacedFieldName}Editor"
+			onChangeMethod="${namespacedFieldName}OnChangeEditor"
+			skipEditorLoading=skipEditorLoading
+			toolbarSet="${toolbarSet}"
+		/>
 
-			<@liferay_aui.input
-				name=namespacedFieldName
-				type="hidden"
-				value=fieldValue
-			>
-				<#if required>
-					<@liferay_aui.validator name="required" />
-				</#if>
-			</@>
-		<#else>
-			<@liferay_ui["input-editor"]
-				contents="${fieldValue}"
-				contentsLanguageId="${requestedLocale}"
-				cssClass="${cssClass}"
-				editorName="${editorName}"
-				initMethod=""
-				name="${namespacedFieldName}Editor"
-				onChangeMethod="${namespacedFieldName}OnChangeEditor"
-				skipEditorLoading=skipEditorLoading
-				toolbarSet="${toolbarSet}"
-			/>
+		<@liferay_aui.input
+			name=namespacedFieldName
+			type="hidden"
+			value=fieldValue
+		>
+			<#if required>
+				<@liferay_aui.validator name="required" />
+			</#if>
+		</@>
 
-			<@liferay_aui.input
-				name=namespacedFieldName
-				type="hidden"
-				value=fieldValue
-			>
-				<#if required>
-					<@liferay_aui.validator name="required" />
-				</#if>
-			</@>
+		<@liferay_aui.script>
+			Liferay.provide(
+				window,
+				'${portletNamespace}${namespacedFieldName}OnChangeEditor',
+				function() {
+					var A = AUI();
 
-			<@liferay_aui.script>
-				Liferay.provide(
-					window,
-					'${portletNamespace}${namespacedFieldName}OnChangeEditor',
-					function() {
-						var A = AUI();
+					var field = A.one('#${portletNamespace}${namespacedFieldName}');
 
-						var field = A.one('#${portletNamespace}${namespacedFieldName}');
+					field.val(window['${portletNamespace}${namespacedFieldName}Editor'].getHTML());
 
-						field.val(window['${portletNamespace}${namespacedFieldName}Editor'].getHTML());
+					var form = field.get('form');
 
-						var form = field.get('form');
+					if (form) {
+						var formName = form.get('name');
 
-						if (form) {
-							var formName = form.get('name');
+						var formValidator = Liferay.Form.get(formName).formValidator;
 
-							var formValidator = Liferay.Form.get(formName).formValidator;
-
-							if (formValidator) {
-								formValidator.validateField(field);
-							}
+						if (formValidator) {
+							formValidator.validateField(field);
 						}
-					},
-					['liferay-form']
-				);
-			</@>
-		</#if>
+					}
+				},
+				['liferay-form']
+			);
+		</@>
 	</div>
 
 	${fieldStructure.children}

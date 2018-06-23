@@ -144,7 +144,7 @@ if (!searchRestriction) {
 		/>
 	</div>
 
-	<div class="article-content-content">
+	<div class="article-content-content" style="border-top: solid 1px #ccc; margin-top: 24px; padding-top: 8px;">
 		<liferay-ddm:html
 			checkRequired="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>"
 			classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"

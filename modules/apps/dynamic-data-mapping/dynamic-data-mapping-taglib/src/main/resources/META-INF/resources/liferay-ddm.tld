@@ -44,6 +44,12 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>localizable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>readOnly</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

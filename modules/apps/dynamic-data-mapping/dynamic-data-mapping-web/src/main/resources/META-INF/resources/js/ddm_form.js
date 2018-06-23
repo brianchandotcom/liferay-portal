@@ -86,6 +86,7 @@ AUI.add(
 			},
 
 			displayLocale: {
+				valueFn: '_valueDisplayLocale'
 			},
 
 			fields: {
@@ -93,10 +94,6 @@ AUI.add(
 			},
 
 			mode: {
-			},
-
-			translationManager: {
-				getter: '_getTranslationManager'
 			},
 
 			values: {
@@ -123,6 +120,20 @@ AUI.add(
 				var fieldInstanceId = fieldNode.getData('fieldNamespace');
 
 				return fieldInstanceId.replace(INSTANCE_ID_PREFIX, '');
+			},
+
+			getDefaultLocale: function() {
+				var instance = this;
+
+				var defaultLocale = themeDisplay.getDefaultLanguageId();
+
+				var definition = instance.get('definition');
+
+				if (definition) {
+					defaultLocale = definition.defaultLanguageId;
+				}
+
+				return defaultLocale;
 			},
 
 			getFieldInfo: function(tree, key, value) {
@@ -209,12 +220,6 @@ AUI.add(
 
 				field.addTarget(form);
 
-				var translationManager = instance.get('translationManager');
-
-				if (translationManager) {
-					translationManager.addTarget(field);
-				}
-
 				return field;
 			},
 
@@ -263,16 +268,16 @@ AUI.add(
 				return portletURL.toString();
 			},
 
-			_getTranslationManager: function(translationManager) {
+			_valueDisplayLocale: function() {
 				var instance = this;
 
-				if (!A.instanceOf(instance, Liferay.DDM.Form)) {
-					var form = instance.getForm();
+				var displayLocale = instance.get('displayLocale');
 
-					translationManager = form.get('translationManager');
+				if (!displayLocale) {
+					displayLocale = instance.getDefaultLocale();
 				}
 
-				return translationManager;
+				return displayLocale;
 			},
 
 			_valueFields: function() {
@@ -345,12 +350,7 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance.after(
-							{
-								'translationmanager:deleteAvailableLocale': instance._afterDeleteAvailableLocale,
-								'translationmanager:editingLocaleChange': instance._afterEditingLocaleChange
-							}
-						);
+						Liferay.on('inputLocalized:localeChanged', A.bind('_onLocaleChanged', instance));
 					},
 
 					renderUI: function() {
@@ -361,7 +361,6 @@ AUI.add(
 							instance.syncRepeatablelUI();
 						}
 
-						instance.syncLabelUI();
 						instance.syncValueUI();
 
 						AArray.invoke(instance.get('fields'), 'renderUI');
@@ -385,26 +384,20 @@ AUI.add(
 
 						var localizationMap = instance.get('localizationMap');
 
-						if (!localizationMap[locale]) {
+						if (Lang.isUndefined(localizationMap[locale])) {
 							var predefinedValue = instance.getPredefinedValueByLocale(locale);
 
 							if (predefinedValue) {
 								localizationMap[locale] = predefinedValue;
 							}
 							else {
-								var name = instance.get('name');
+								var defaultLocale = instance.getDefaultLocale();
 
-								var field = instance.getFieldByNameInFieldDefinition(name);
-
-								if (field && field.type) {
-									var type = field.type;
-
-									if (type === 'radio' || type === 'select') {
-										localizationMap[locale] = instance.getValue();
-									}
-									else {
-										localizationMap[locale] = '';
-									}
+								if (defaultLocale && localizationMap[defaultLocale]) {
+									localizationMap[locale] = localizationMap[defaultLocale];
+								}
+								else {
+									localizationMap[locale] = '';
 								}
 							}
 						}
@@ -432,20 +425,6 @@ AUI.add(
 						field.set('parent', parent);
 
 						return field;
-					},
-
-					getDefaultLocale: function() {
-						var instance = this;
-
-						var defaultLocale = themeDisplay.getDefaultLanguageId();
-
-						var definition = instance.get('definition');
-
-						if (definition) {
-							defaultLocale = definition.defaultLanguageId;
-						}
-
-						return defaultLocale;
 					},
 
 					getFieldByNameInFieldDefinition: function(name) {
@@ -530,8 +509,16 @@ AUI.add(
 
 						var predefinedValue;
 
-						if (field && field.predefinedValue && field.predefinedValue[locale]) {
-							predefinedValue = field.predefinedValue[locale];
+						if (field) {
+							var type = field.type;
+
+							if (field.predefinedValue && field.predefinedValue[locale]) {
+								predefinedValue = field.predefinedValue[locale];
+							}
+
+							if ((type === 'select') && (predefinedValue === '[""]')) {
+								predefinedValue = '';
+							}
 						}
 
 						return predefinedValue;
@@ -589,26 +576,6 @@ AUI.add(
 						instance.get('container').remove(true);
 					},
 
-					removeNotAvailableLocales: function(localizationMap) {
-						var instance = this;
-
-						var parent = instance.get('parent');
-
-						var translationManager = parent.get('translationManager');
-
-						var availableLocales = translationManager.get('availableLocales');
-
-						if (availableLocales.length == 0) {
-							return;
-						}
-
-						for (var localization in localizationMap) {
-							if (availableLocales.indexOf(localization) == -1) {
-								delete localizationMap[localization];
-							}
-						}
-					},
-
 					renderRepeatableUI: function() {
 						var instance = this;
 
@@ -663,23 +630,7 @@ AUI.add(
 
 						if (Lang.isValue(value)) {
 							inputNode.val(value);
-
-							inputNode.set('defaultValue', value);
 						}
-					},
-
-					syncLabelUI: function() {
-						var instance = this;
-
-						var defaultLocale = instance.getDefaultLocale();
-
-						var fieldDefinition = instance.getFieldDefinition();
-
-						var labelsMap = fieldDefinition.label;
-
-						var label = labelsMap[instance.get('displayLocale')] || labelsMap[defaultLocale];
-
-						instance.setLabel(label);
 					},
 
 					syncReadOnlyUI: function() {
@@ -764,8 +715,6 @@ AUI.add(
 						if (dataType) {
 							instance.updateLocalizationMap(instance.get('displayLocale'));
 
-							instance.updateTranslationsDefaultValue();
-
 							fieldJSON.value = instance.get('localizationMap');
 
 							if (instance.get('localizable')) {
@@ -792,12 +741,6 @@ AUI.add(
 
 						var value = instance.getValue();
 
-						if (Lang.isObject(localizationMap)) {
-							if (AObject.keys(localizationMap).length != 0) {
-								this.removeNotAvailableLocales(localizationMap);
-							}
-						}
-
 						if (instance.get('localizable')) {
 							localizationMap[locale] = value;
 						}
@@ -806,27 +749,6 @@ AUI.add(
 						}
 
 						instance.set('localizationMap', localizationMap);
-					},
-
-					updateTranslationsDefaultValue: function() {
-						var instance = this;
-
-						var localizationMap = instance.get('localizationMap');
-						var parent = instance.get('parent');
-
-						var translationManager = parent.get('translationManager');
-
-						if (translationManager) {
-							translationManager.get('availableLocales').forEach(
-								function(item, index) {
-									var value = localizationMap[item];
-
-									if (Lang.isUndefined(value)) {
-										localizationMap[item] = instance.getValue();
-									}
-								}
-							);
-						}
 					},
 
 					_addFieldValidation: function(newField, originalField) {
@@ -872,53 +794,6 @@ AUI.add(
 						}
 					},
 
-					_afterDeleteAvailableLocale: function(event) {
-						var instance = this;
-
-						var localizationMap = instance.get('localizationMap');
-
-						delete localizationMap[event.locale];
-
-						instance.set('localizationMap', localizationMap);
-					},
-
-					_afterEditingLocaleChange: function(event) {
-						var instance = this;
-
-						var translationManager = event.target;
-
-						var availableLocales = translationManager.get('availableLocales');
-
-						var defaultLocale = translationManager.get('defaultLocale');
-
-						var changeableDefaultLanguage = translationManager.get('changeableDefaultLanguage');
-
-						if (changeableDefaultLanguage && availableLocales && (availableLocales.indexOf(defaultLocale) == -1)) {
-							availableLocales.push(defaultLocale);
-
-							instance.set('availableLocales', availableLocales);
-						}
-
-						var locales = [defaultLocale].concat(availableLocales);
-
-						if (locales.indexOf(event.prevVal) > -1) {
-							instance.updateLocalizationMap(event.prevVal);
-						}
-
-						if (locales.indexOf(event.newVal) > -1) {
-							instance.addLocaleToLocalizationMap(event.newVal);
-						}
-
-						var localizable = instance.get('localizable');
-
-						instance.set('displayLocale', event.newVal);
-						instance.set('readOnly', defaultLocale !== event.newVal && !localizable);
-
-						instance.syncLabelUI();
-						instance.syncValueUI();
-						instance.syncReadOnlyUI();
-					},
-
 					_getLocalizable: function() {
 						var instance = this;
 
@@ -948,6 +823,21 @@ AUI.add(
 						}
 
 						event.stopPropagation();
+					},
+
+					_onLocaleChanged: function(event) {
+						var instance = this;
+
+						var currentLocale = instance.get('displayLocale');
+						var displayLocale = event.item.getAttribute('data-value');
+
+						instance.updateLocalizationMap(currentLocale);
+						instance.addLocaleToLocalizationMap(displayLocale);
+
+						instance.set('displayLocale', displayLocale);
+
+						instance.syncValueUI();
+						instance.syncReadOnlyUI();
 					},
 
 					_removeFieldValidation: function(field) {
@@ -1131,17 +1021,19 @@ AUI.add(
 
 						var datePicker = instance.getDatePicker();
 
-						if (!datePicker) {
-							return '';
+						var value = '';
+
+						if (datePicker) {
+							var selectedDate = datePicker.getDate();
+
+							var formattedDate = A.DataType.Date.format(selectedDate);
+
+							var inputNode = instance.getInputNode();
+
+							value = inputNode.val() ? formattedDate : '';
 						}
 
-						var selectedDate = datePicker.getDate();
-
-						var formattedDate = A.DataType.Date.format(selectedDate);
-
-						var inputNode = instance.getInputNode();
-
-						return inputNode.val() ? formattedDate : '';
+						return value;
 					},
 
 					repeat: function() {
@@ -1184,6 +1076,9 @@ AUI.add(
 							date = DateMath.add(date, DateMath.MINUTES, date.getTimezoneOffset());
 
 							datePicker.selectDates(date);
+						}
+						else {
+							datePicker.selectDates('');
 						}
 					}
 				}
@@ -1406,9 +1301,13 @@ AUI.add(
 					syncUI: function() {
 						var instance = this;
 
-						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
-
 						var parsedValue = instance.getParsedValue(instance.getValue());
+
+						var titleNode = A.one('#' + instance.getInputName() + 'Title');
+
+						titleNode.val(parsedValue.title || '');
+
+						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
 
 						clearButtonNode.toggle(!!parsedValue.classPK);
 					},
@@ -1444,14 +1343,6 @@ AUI.add(
 						url.setWindowState('pop_up');
 
 						return url;
-					},
-
-					setTitle: function(title) {
-						var instance = this;
-
-						var titleNode = A.one('#' + instance.getInputName() + 'Title');
-
-						titleNode.val(title);
 					},
 
 					setValue: function(value) {
@@ -1519,7 +1410,6 @@ AUI.add(
 					_handleClearButtonClick: function() {
 						var instance = this;
 
-						instance.setTitle('');
 						instance.setValue('');
 					},
 
@@ -1542,12 +1432,11 @@ AUI.add(
 								if (event.details.length > 0) {
 									var selectedWebContent = event.details[0];
 
-									instance.setTitle(selectedWebContent.assettitle || '');
-
 									instance.setValue(
 										{
 											className: selectedWebContent.assetclassname,
-											classPK: selectedWebContent.assetclasspk
+											classPK: selectedWebContent.assetclasspk,
+											title: selectedWebContent.assettitle || ''
 										}
 									);
 								}
@@ -2789,58 +2678,12 @@ AUI.add(
 								'render': instance._afterRenderTextHTMLField
 							}
 						);
-
-						var eventHandles = [
-							Liferay.on('inputLocalized:localeChanged', A.bind('_onLocaleChanged', instance))
-						];
-
-						instance._eventHandles = eventHandles;
-
-						instance._updateValues();
-					},
-
-					destructor: function() {
-						var instance = this;
-
-						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					getEditor: function() {
 						var instance = this;
 
 						return window[instance.getInputName() + 'Editor'];
-					},
-
-					getInputName: function() {
-						var instance = this;
-
-						var inputNode;
-
-						if (instance.get('localizable')) {
-							var fieldsNamespace = instance.get('fieldsNamespace');
-							var portletNamespace = instance.get('portletNamespace');
-
-							var prefix = [portletNamespace];
-
-							if (fieldsNamespace) {
-								prefix.push(fieldsNamespace);
-							}
-
-							inputNode = prefix.concat(
-								[
-									instance.get('name'),
-									'_',
-									INSTANCE_ID_PREFIX,
-									'_',
-									instance.get('instanceId')
-								]
-							).join('');
-						}
-						else {
-							inputNode = TextHTMLField.superclass.getInputName().apply(instance, arguments);
-						}
-
-						return inputNode;
 					},
 
 					getValue: function() {
@@ -2886,28 +2729,6 @@ AUI.add(
 						instance.get('container').toggle(!readOnly);
 					},
 
-					updateTranslationsDefaultValue: function() {
-						var instance = this;
-
-						var inputLocalized = Liferay.component(instance.getInputName());
-						var localizationMap = instance.get('localizationMap');
-
-						if (inputLocalized) {
-							inputLocalized.get('items').forEach(
-								function(item) {
-									var value = inputLocalized.getValue(item);
-
-									if (value.trim() !== '') {
-										localizationMap[item] = value;
-									}
-								}
-							);
-						}
-						else {
-							TextHTMLField.superclass.updateTranslationsDefaultValue.apply(instance, arguments);
-						}
-					},
-
 					_afterRenderTextHTMLField: function() {
 						var instance = this;
 
@@ -2915,25 +2736,6 @@ AUI.add(
 
 						container.placeAfter(instance.readOnlyText);
 						container.placeAfter(instance.readOnlyLabel);
-					},
-
-					_onLocaleChanged: function(event) {
-						var instance = this;
-
-						var languageId = event.item.getAttribute('data-value');
-
-						instance.set('displayLocale', languageId);
-					},
-
-					_updateValues: function() {
-						var instance = this;
-
-						var inputLocalized = Liferay.component(instance.getInputName());
-						var localizationMap = instance.get('localizationMap');
-
-						for (var languageId in localizationMap) {
-							inputLocalized.updateInputLanguage(localizationMap[languageId], languageId);
-						}
 					}
 				}
 			}
@@ -3139,10 +2941,6 @@ AUI.add(
 						setter: A.one
 					},
 
-					displayLocale: {
-						valueFn: '_valueDisplayLocale'
-					},
-
 					formNode: {
 						valueFn: '_valueFormNode'
 					},
@@ -3158,10 +2956,6 @@ AUI.add(
 
 					requestedLocale: {
 						validator: Lang.isString
-					},
-
-					translationManager: {
-						valueFn: '_valueTranslationManager'
 					}
 				},
 
@@ -3214,10 +3008,6 @@ AUI.add(
 						AArray.invoke(instance.eventHandlers, 'detach');
 						AArray.invoke(instance.get('fields'), 'destroy');
 
-						if (instance._translationManagerHandle) {
-							instance._translationManagerHandle.detach();
-						}
-
 						instance.get('container').remove();
 
 						instance.eventHandlers = null;
@@ -3228,12 +3018,6 @@ AUI.add(
 								item.destroy();
 							}
 						);
-
-						var translationManager = instance.get('translationManager');
-
-						if (translationManager) {
-							translationManager.destroy();
-						}
 
 						instance.repeatableInstances = null;
 					},
@@ -3319,9 +3103,9 @@ AUI.add(
 
 										var dragNode = event.drag.get('node');
 
-										var dragNodeAncestor =  dragNode.ancestor();
+										var dragNodeAncestor = dragNode.ancestor();
 
-										if (dropNodeAncestor.get('id') != dragNodeAncestor.get('id')) {
+										if (dropNodeAncestor.get('id') !== dragNodeAncestor.get('id')) {
 											return false;
 										}
 
@@ -3475,37 +3259,6 @@ AUI.add(
 						instance.updateDDMFormInputValue();
 					},
 
-					_onTranslationManagerRegistered: function(event) {
-						var instance = this;
-
-						var translationManagerId = instance.get('portletNamespace') + 'translationManager';
-
-						var translationManager = instance.get('translationManager');
-
-						translationManager.destroy();
-
-						translationManager = Liferay.component(translationManagerId);
-
-						translationManager.addTarget(instance);
-
-						AArray.each(
-							instance.get('fields'),
-							function(field) {
-								translationManager.addTarget(field);
-							}
-						);
-
-						instance.set('translationManager', translationManager);
-					},
-
-					_valueDisplayLocale: function() {
-						var instance = this;
-
-						var translationManager = instance.get('translationManager');
-
-						return translationManager.get('editingLocale');
-					},
-
 					_valueFormNode: function() {
 						var instance = this;
 
@@ -3526,31 +3279,6 @@ AUI.add(
 						}
 
 						return Liferay.Form.get(formName);
-					},
-
-					_valueTranslationManager: function() {
-						var instance = this;
-
-						var translationManagerId = instance.get('portletNamespace') + 'translationManager';
-
-						var translationManager = Liferay.component(translationManagerId);
-
-						if (!translationManager) {
-							translationManager = new Liferay.TranslationManager(
-								{
-									defaultLocale: instance.get('requestedLocale') || themeDisplay.getLanguageId()
-								}
-							);
-
-							instance._translationManagerHandle = Liferay.once(
-								translationManagerId + ':registered',
-								instance._onTranslationManagerRegistered.bind(instance)
-							);
-						}
-
-						translationManager.addTarget(instance);
-
-						return translationManager;
 					}
 				}
 			}

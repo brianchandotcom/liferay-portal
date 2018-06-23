@@ -450,7 +450,7 @@ if (Validator.isNull(liferayAnalyticsKey)) {
 			a.src = u;
 			a.onload = c;
 			m.parentNode.insertBefore(a, m);
-		})('https://analytics-cdn.liferay.com', function() {
+		})('https://analytics-js-cdn.liferay.com', function() {
 			var config = {analyticsKey: '<%= HtmlUtil.escapeJS(liferayAnalyticsKey) %>'};
 
 			Analytics.create(config);

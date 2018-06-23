@@ -15,11 +15,13 @@
 package com.liferay.fragment.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.portlet.data.handler.helper.PortletDataHandlerHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.fragment.constants.FragmentConstants;
@@ -181,6 +183,19 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			_staging.populateLastPublishDateCounts(
+				portletDataContext,
+				new StagedModelType[] {
+					new StagedModelType(FragmentCollection.class.getName()),
+					new StagedModelType(FragmentEntry.class.getName())
+				});
+
+			return;
+		}
+
 		ActionableDynamicQuery fragmentCollectionExportActionableDynamicQuery =
 			_fragmentCollectionStagedModelRepository.
 				getExportActionableDynamicQuery(portletDataContext);
@@ -215,5 +230,8 @@ public class FragmentPortletDataHandler extends BasePortletDataHandler {
 
 	@Reference
 	private PortletDataHandlerHelper _portletDataHandlerHelper;
+
+	@Reference
+	private Staging _staging;
 
 }

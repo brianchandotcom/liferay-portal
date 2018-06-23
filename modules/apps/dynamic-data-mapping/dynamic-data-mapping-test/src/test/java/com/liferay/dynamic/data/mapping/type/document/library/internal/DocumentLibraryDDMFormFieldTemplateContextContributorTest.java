@@ -99,6 +99,26 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
+	public void testGetParametersShouldContainItemSelectorAuthToken() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+
+		DocumentLibraryDDMFormFieldTemplateContextContributor spy = createSpy();
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			new DDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setHttpServletRequest(
+			createHttpServletRequest());
+		ddmFormFieldRenderingContext.setValue(
+			"{\"uuid\": \"0000-1111\", \"title\": \"Title\"}");
+
+		Map<String, Object> parameters = spy.getParameters(
+			ddmFormField, ddmFormFieldRenderingContext);
+
+		Assert.assertEquals("token", parameters.get("itemSelectorAuthToken"));
+	}
+
+	@Test
 	public void testGetParametersShouldNotContainFileEntryURL() {
 		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
 
@@ -152,6 +172,14 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 			spy
 		).getResourceBundle(
 			Matchers.any(Locale.class)
+		);
+
+		stubber = doReturn("token");
+
+		stubber.when(
+			spy
+		).getItemSelectorAuthToken(
+			Matchers.any(HttpServletRequest.class)
 		);
 
 		return spy;

@@ -1,6 +1,8 @@
 <definition>
 	<command name="addPage">
-		<execute macro="LexiconEntry#gotoAdd" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Public Page" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEntry">
 			<var name="rowEntry" value="${pageTemplateName}" />

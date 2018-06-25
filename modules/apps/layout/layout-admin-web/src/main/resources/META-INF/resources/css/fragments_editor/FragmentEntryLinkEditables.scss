@@ -7,15 +7,10 @@ lfr-editable {
 	box-shadow: 0 0 0 1px transparent;
 	cursor: pointer;
 	display: inline-block;
+	min-height: 1em;
+	min-width: 2ch;
 	position: static;
 	transition: box-shadow ease 0.2s;
-
-	& > div[data-lfr-editable-id] {
-		display: inline-block;
-		min-height: 25px;
-		min-width: 25px;
-		outline: none;
-	}
 
 	&[type="image"] > img {
 		max-width: 100%;

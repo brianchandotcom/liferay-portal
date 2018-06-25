@@ -39,8 +39,8 @@
 
 				if (match) {
 					Analytics.send(
-						'downloaded',
-						'DocumentLibrary',
+						'documentDownloaded',
+						'Document',
 						{
 							groupId: match[1],
 							fileEntryUUID: match[4],

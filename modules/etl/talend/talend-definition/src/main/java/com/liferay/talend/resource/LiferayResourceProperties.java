@@ -24,6 +24,8 @@ import com.liferay.talend.utils.URIUtils;
 
 import java.io.IOException;
 
+import java.net.URI;
+
 import java.util.List;
 
 import org.apache.avro.Schema;
@@ -89,14 +91,17 @@ public class LiferayResourceProperties
 					ValidationResult.Result.OK) {
 
 				try {
+					URI resourceURI = URIUtils.setPaginationLimitOnURL(
+						resourceURL.getValue(), 1);
+
 					resource.setValue(
 						liferaySourceOrSinkRuntime.
 							getInputResourceCollectionType(
-								resourceURL.getStringValue()));
+								resourceURI.toString()));
 
 					Schema schema =
 						liferaySourceOrSinkRuntime.getEndpointSchema(
-							null, resourceURL.getStringValue());
+							null, resourceURI.toString());
 
 					main.schema.setValue(schema);
 				}

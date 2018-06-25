@@ -69,7 +69,7 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 			>
 				<liferay-frontend:add-menu-item
 					title='<%= LanguageUtil.get(resourceBundle, "add-notification-template") %>'
-					url="<%= addCommerceNotificationTemplateURL.toString() %>"
+					url="<%= addCommerceNotificationTemplateURL %>"
 				/>
 			</liferay-frontend:add-menu>
 		</c:if>
@@ -118,7 +118,7 @@ portletURL.setParameter("notificationNavigationItem", notificationNavigationItem
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="type"
-				value="<%= HtmlUtil.escape(commerceNotificationType.getLabel(locale)) %>"
+				value="<%= (commerceNotificationType == null) ? StringPool.BLANK : HtmlUtil.escape(commerceNotificationType.getLabel(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

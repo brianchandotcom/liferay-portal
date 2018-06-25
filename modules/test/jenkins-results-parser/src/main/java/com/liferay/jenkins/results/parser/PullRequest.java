@@ -18,8 +18,13 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 
 import java.io.IOException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,6 +101,39 @@ public class PullRequest {
 		}
 
 		return true;
+	}
+
+	public List<Comment> getComments() {
+		List<Comment> comments = new ArrayList<>();
+
+		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+			getRepositoryName(), getOwnerUsername(),
+			"issues/" + getNumber() + "/comments?page=");
+
+		int page = 1;
+
+		while (true) {
+			try {
+				JSONArray jsonArray = JenkinsResultsParserUtil.toJSONArray(
+					url + page);
+
+				if (jsonArray.length() == 0) {
+					break;
+				}
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					comments.add(new Comment(jsonArray.getJSONObject(i)));
+				}
+
+				page++;
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to get pull request comments", ioe);
+			}
+		}
+
+		return comments;
 	}
 
 	public Commit getCommit() {
@@ -193,37 +231,17 @@ public class PullRequest {
 	}
 
 	public boolean isAutoCloseCommentAvailable() {
-		String path = JenkinsResultsParserUtil.combine(
-			"issues/", getNumber(), "/comments?page=");
+		List<Comment> comments = getComments();
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
-			getRepositoryName(), getOwnerUsername(), path);
+		for (Comment comment : comments) {
+			String commentBody = comment.getBody();
 
-		try {
-			int i = 1;
-
-			while (true) {
-				String content = JenkinsResultsParserUtil.toString(
-					url + i, false);
-
-				if (content.contains("auto-close=\\\"false\\\"")) {
-					return true;
-				}
-
-				if (content.matches("\\s*\\[\\s*\\]\\s*")) {
-					break;
-				}
-
-				i++;
+			if (commentBody.contains("auto-close=\"false\"")) {
+				return true;
 			}
+		}
 
-			return false;
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to check for auto-close property in GitHub comments",
-				ioe);
-		}
+		return false;
 	}
 
 	public void refresh() {
@@ -362,6 +380,61 @@ public class PullRequest {
 		}
 
 		commit.setStatus(status, context, sb.toString(), targetURL);
+	}
+
+	public static class Comment {
+
+		public Comment(JSONObject commentJSONObject) {
+			_commentJSONObject = commentJSONObject;
+		}
+
+		public String getBody() {
+			return _commentJSONObject.getString("body");
+		}
+
+		public Date getCreatedDate() {
+			try {
+				return _ISO8601_UTC_DATE_FORMAT.parse(
+					_commentJSONObject.getString("created_at"));
+			}
+			catch (ParseException pe) {
+				throw new RuntimeException(
+					"Unable to parse created date " +
+						_commentJSONObject.getString("created_at"),
+					pe);
+			}
+		}
+
+		public String getId() {
+			return String.valueOf(_commentJSONObject.getInt("id"));
+		}
+
+		public Date getModifiedDate() {
+			try {
+				return _ISO8601_UTC_DATE_FORMAT.parse(
+					_commentJSONObject.getString("modified_at"));
+			}
+			catch (ParseException pe) {
+				throw new RuntimeException(
+					"Unable to parse modified date " +
+						_commentJSONObject.getString("modified_at"),
+					pe);
+			}
+		}
+
+		private static final SimpleDateFormat _ISO8601_UTC_DATE_FORMAT;
+
+		static {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm'Z'");
+
+			simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+			_ISO8601_UTC_DATE_FORMAT = simpleDateFormat;
+		}
+
+		private final JSONObject _commentJSONObject;
+
 	}
 
 	public static enum TestSuiteStatus {

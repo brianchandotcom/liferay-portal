@@ -38,7 +38,7 @@ import java.util.List;
  * @see KaleoDefinitionServiceUtil
  * @see com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionServiceBaseImpl
  * @see com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionServiceImpl
- * @deprecated As of 2.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated
@@ -57,14 +57,14 @@ public interface KaleoDefinitionService extends BaseService {
 	 */
 
 	/**
-	* @deprecated As of 2.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoDefinition> getKaleoDefinitions(int start, int end);
 
 	/**
-	* @deprecated As of 2.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

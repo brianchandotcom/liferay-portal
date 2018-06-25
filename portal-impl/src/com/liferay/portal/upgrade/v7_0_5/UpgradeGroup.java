@@ -48,7 +48,7 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	protected void rebuildTree(
@@ -192,7 +192,7 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	protected void updateTreePath() throws Exception {

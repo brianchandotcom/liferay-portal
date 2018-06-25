@@ -971,7 +971,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void exportPortlet(

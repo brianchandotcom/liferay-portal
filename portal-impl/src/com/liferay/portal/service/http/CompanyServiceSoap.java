@@ -362,9 +362,9 @@ public class CompanyServiceSoap {
 	* @param size the company's account size (optionally
 	<code>null</code>)
 	* @return the the company with the primary key
-	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
-	String, String, boolean, byte[], String, String, String,
-	String, String, String, String, String, String)}
+	* @deprecated As of Wilberforce, replaced by {@link #updateCompany(long,
+	String, String, String, boolean, byte[], String, String,
+	String, String, String, String, String, String, String)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.CompanySoap updateCompany(

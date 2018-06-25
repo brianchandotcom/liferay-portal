@@ -24,8 +24,8 @@ import com.liferay.registry.RegistryUtil;
 import org.junit.runner.Description;
 
 /**
- * @author Michael C. Han
- * @deprecated As of 3.3.0, with no direct replacement
+ * @author     Michael C. Han
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class PortalExecutorManagerTestCallback

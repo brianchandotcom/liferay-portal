@@ -42,8 +42,8 @@ public class AnnouncementsEntryServiceUtil {
 	 */
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, String,
-	String, String, String, Date, Date, int, boolean)}
+	* @deprecated As of Judson, replaced by {@link #addEntry(long, long,
+	String, String, String, String, Date, Date, int, boolean)}
 	*/
 	@Deprecated
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry addEntry(
@@ -103,7 +103,7 @@ public class AnnouncementsEntryServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
+	* @deprecated As of Judson, replaced by {@link #updateEntry(long, String,
 	String, String, String, Date, Date, int)}
 	*/
 	@Deprecated

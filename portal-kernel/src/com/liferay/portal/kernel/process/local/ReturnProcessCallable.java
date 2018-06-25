@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import java.io.Serializable;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class ReturnProcessCallable<T extends Serializable>

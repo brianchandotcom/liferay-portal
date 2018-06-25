@@ -33,7 +33,8 @@ public interface ScriptingExecutor {
 		throws ScriptingException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #eval(Set, Map, Set, File)}
+	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set,
+	 *             File)}
 	 */
 	@Deprecated
 	public Map<String, Object> eval(
@@ -48,7 +49,8 @@ public interface ScriptingExecutor {
 		throws ScriptingException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #eval(Set, Map, Set, String)}
+	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set,
+	 *             String)}
 	 */
 	@Deprecated
 	public Map<String, Object> eval(

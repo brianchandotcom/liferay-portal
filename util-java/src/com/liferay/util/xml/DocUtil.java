@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Alexander Chow
- * @see    com.liferay.petra.xml.DocUtil
- * @deprecated As of 7.0.0
+ * @author     Brian Wing Shun Chan
+ * @author     Alexander Chow
+ * @see        com.liferay.petra.xml.DocUtil
+ * @deprecated As of Judson
  */
 @Deprecated
 public class DocUtil {

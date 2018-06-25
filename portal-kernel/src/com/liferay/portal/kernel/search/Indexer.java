@@ -40,7 +40,7 @@ public interface Indexer<T> {
 	public String getClassName();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSearchClassNames}
+	 * @deprecated As of Wilberforce, replaced by {@link #getSearchClassNames}
 	 */
 	@Deprecated
 	public String[] getClassNames();
@@ -57,7 +57,7 @@ public interface Indexer<T> {
 	public IndexerPostProcessor[] getIndexerPostProcessors();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getClassName}
+	 * @deprecated As of Wilberforce, replaced by {@link #getClassName}
 	 */
 	@Deprecated
 	public String getPortletId();
@@ -67,22 +67,22 @@ public interface Indexer<T> {
 	public String getSearchEngineId();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.sort.SortFieldBuilder}
 	 */
 	@Deprecated
 	public String getSortField(String orderByCol);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.sort.SortFieldBuilder}
 	 */
 	@Deprecated
 	public String getSortField(String orderByCol, int sortType);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(Document, String,
-	 *             PortletRequest, PortletResponse)}
+	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(Document,
+	 *             String, PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	public Summary getSummary(Document document, Locale locale, String snippet)
@@ -132,7 +132,7 @@ public interface Indexer<T> {
 	 * @param      status
 	 * @return
 	 * @throws     Exception
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             RelatedEntryIndexer.isVisibleRelatedEntry(long, int)}
 	 */
 	@Deprecated
@@ -144,7 +144,7 @@ public interface Indexer<T> {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #postProcessContextBooleanFilter(BooleanFilter,
 	 *             SearchContext)}
 	 */
@@ -159,7 +159,7 @@ public interface Indexer<T> {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
 	 *             SearchContext)}
 	 */

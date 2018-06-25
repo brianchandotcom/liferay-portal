@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.model.ResourceBlock;
 import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
 
 /**
- * @author Alberto Chaparro
- * @deprecated As of 3.1.0, with no direct replacement
+ * @author     Alberto Chaparro
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class ResourceBlockTestUtil {

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 public class SchedulerEntryImpl implements SchedulerEntry {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #SchedulerEntryImpl(String,
+	 * @deprecated As of Judson, replaced by {@link #SchedulerEntryImpl(String,
 	 *             Trigger, String)}
 	 */
 	@Deprecated
@@ -59,7 +59,7 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public void setDescription(String description) {
@@ -67,7 +67,7 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public void setEventListenerClass(String eventListenerClass) {
@@ -75,7 +75,7 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public void setTrigger(Trigger trigger) {

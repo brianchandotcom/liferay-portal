@@ -37,8 +37,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Iván Zaera
- * @deprecated As of 2.0.0, replaced by {@link BaseWikiEngine}
+ * @author     Iván Zaera
+ * @deprecated As of Judson, replaced by {@link BaseWikiEngine}
  */
 @Deprecated
 public abstract class BaseInputEditorWikiEngine extends BaseWikiEngine {

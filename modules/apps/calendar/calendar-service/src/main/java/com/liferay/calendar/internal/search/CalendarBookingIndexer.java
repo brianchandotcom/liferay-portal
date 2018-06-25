@@ -54,9 +54,9 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @deprecated As of 3.0.0, since 7.1.0
- * @author Adam Victor Brandizzi
- * @author Eduardo Lundgren
+ * @author     Adam Victor Brandizzi
+ * @author     Eduardo Lundgren
+ * @deprecated As of Judson, since 7.1.0
  */
 @Deprecated
 public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
@@ -100,7 +100,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	@Override

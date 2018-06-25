@@ -48,8 +48,8 @@ public class ScriptingUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #eval(Set, Map, Set, String,
-	 *             String)}
+	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set,
+	 *             String, String)}
 	 */
 	@Deprecated
 	public static Map<String, Object> eval(
@@ -72,7 +72,7 @@ public class ScriptingUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #exec(Set, Map, String,
+	 * @deprecated As of Wilberforce, replaced by {@link #exec(Set, Map, String,
 	 *             String)}
 	 */
 	@Deprecated
@@ -87,7 +87,7 @@ public class ScriptingUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #_getScripting()}
+	 * @deprecated As of Judson, replaced by {@link #_getScripting()}
 	 */
 	@Deprecated
 	public static Scripting getScripting() {

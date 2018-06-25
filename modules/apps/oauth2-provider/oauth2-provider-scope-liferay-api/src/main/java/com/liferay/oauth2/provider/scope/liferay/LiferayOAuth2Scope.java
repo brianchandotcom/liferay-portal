@@ -26,10 +26,10 @@ import org.osgi.framework.Bundle;
 public interface LiferayOAuth2Scope {
 
 	/**
-	 * Name of the application that provides the scope.<br />
-	 * Usually refers to JAX-RS application name.
+	 * Name of the application that provides the scope.<br /> Usually refers to
+	 * JAX-RS application name.
 	 *
-	 * @return non-null application name
+	 * @return non-<code>null</code> application name
 	 * @review
 	 */
 	public String getApplicationName();
@@ -37,7 +37,7 @@ public interface LiferayOAuth2Scope {
 	/**
 	 * OSGi bundle context from which the application and scope is published.
 	 *
-	 * @return non-null OSGi bundle
+	 * @return non-<code>null</code> OSGi bundle
 	 * @review
 	 */
 	public Bundle getBundle();
@@ -45,7 +45,7 @@ public interface LiferayOAuth2Scope {
 	/**
 	 * Scope name as registered into OAuth2 Provider framework.
 	 *
-	 * @return non-null scope name
+	 * @return non-<code>null</code> scope name
 	 */
 	public String getScope();
 

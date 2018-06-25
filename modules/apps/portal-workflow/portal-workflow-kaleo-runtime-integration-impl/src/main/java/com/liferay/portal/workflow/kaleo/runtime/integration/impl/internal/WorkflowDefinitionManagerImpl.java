@@ -57,7 +57,7 @@ public class WorkflowDefinitionManagerImpl
 	implements WorkflowDefinitionManager {
 
 	/**
-	 * @deprecated As of 1.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #deployWorkflowDefinition(long, long, String, String,
 	 *             byte[])}
 	 */
@@ -189,7 +189,7 @@ public class WorkflowDefinitionManagerImpl
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #getLatestWorkflowDefinition(long, String)}
 	 */
 	@Deprecated

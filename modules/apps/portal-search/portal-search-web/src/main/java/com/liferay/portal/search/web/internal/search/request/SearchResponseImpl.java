@@ -47,7 +47,7 @@ public class SearchResponseImpl implements SearchResponse {
 	}
 
 	/**
-	 * @deprecated As of 1.3.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	@Override

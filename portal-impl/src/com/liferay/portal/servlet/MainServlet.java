@@ -1004,7 +1004,7 @@ public class MainServlet extends ActionServlet {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	protected void initServerDetector() throws Exception {
@@ -1158,7 +1158,7 @@ public class MainServlet extends ActionServlet {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	protected void processInactiveRequest(

@@ -21,8 +21,9 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import java.io.Serializable;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.cluster.MethodHandlerProcessCallable}
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson, moved to {@link
+ *             com.liferay.portal.internal.cluster.MethodHandlerProcessCallable}
  */
 @Deprecated
 public class MethodHandlerProcessCallable<T extends Serializable>

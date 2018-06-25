@@ -73,8 +73,9 @@ public class DDMStructureServiceUtil {
 	UUID, creation date, modification date, guest permissions,
 	and group permissions for the structure.
 	* @return the structure
-	* @deprecated As of 2.1.0, replaced by {@link #addStructure(long, long,
-	long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #addStructure(long,
+	long, long, Map, Map, DDMForm, DDMFormLayout,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure addStructure(
@@ -127,9 +128,9 @@ public class DDMStructureServiceUtil {
 	UUID, creation date, modification date, guest permissions,
 	and group permissions for the structure.
 	* @return the structure
-	* @deprecated As of 2.1.0, replaced by {@link #addStructure(long, long,
-	long, String, Map, Map, DDMForm, DDMFormLayout, String, int,
-	ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #addStructure(long,
+	long, long, String, Map, Map, DDMForm, DDMFormLayout, String,
+	int, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure addStructure(
@@ -187,8 +188,8 @@ public class DDMStructureServiceUtil {
 	Can set the UUID, creation date, modification date, guest
 	permissions, and group permissions for the structure.
 	* @return the structure
-	* @deprecated As of 2.1.0, replaced by {@link #addStructure(long, long,
-	String, long, String, Map, Map, DDMForm, DDMFormLayout,
+	* @deprecated As of Wilberforce, replaced by {@link #addStructure(long,
+	long, String, long, String, Map, Map, DDMForm, DDMFormLayout,
 	String, int, ServiceContext)}
 	*/
 	@Deprecated
@@ -586,8 +587,8 @@ public class DDMStructureServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated structure
-	* @deprecated As of 2.1.0, replaced by {@link #updateStructure(long, long,
-	long, String, Map, Map, DDMForm, DDMFormLayout,
+	* @deprecated As of Wilberforce, replaced by {@link #updateStructure(long,
+	long, long, String, Map, Map, DDMForm, DDMFormLayout,
 	ServiceContext)}
 	*/
 	@Deprecated
@@ -629,8 +630,8 @@ public class DDMStructureServiceUtil {
 	* @param serviceContext the service context to be applied. Can set the
 	modification date.
 	* @return the updated structure
-	* @deprecated As of 2.1.0, replaced by {@link #updateStructure(long, long,
-	Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #updateStructure(long,
+	long, Map, Map, DDMForm, DDMFormLayout, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure updateStructure(

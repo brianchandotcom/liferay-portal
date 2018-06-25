@@ -25,7 +25,7 @@ import com.liferay.portal.workflow.kaleo.definition.Definition;
 public interface WorkflowDeployer {
 
 	/**
-	 * @deprecated As of 1.0.0, replaced by {@link #deploy(String, String,
+	 * @deprecated As of Judson, replaced by {@link #deploy(String, String,
 	 *             Definition, ServiceContext)}
 	 */
 	@Deprecated

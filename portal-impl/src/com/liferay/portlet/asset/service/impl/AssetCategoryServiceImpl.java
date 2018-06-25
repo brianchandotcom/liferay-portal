@@ -96,7 +96,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, Replaced by {@link #deleteCategories(long[])}
+	 * @deprecated As of Wilberforce, Replaced by {@link
+	 *             #deleteCategories(long[])}
 	 */
 	@Deprecated
 	@Override
@@ -158,13 +159,13 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a range of assetCategories related to an AssetEntry with the given
-	 * "classNameId-classPK".
+	 * Returns a range of assetCategories related to an AssetEntry with the
+	 * given "classNameId-classPK".
 	 *
-	 * @param classNameId the className of the asset
-	 * @param classPK the classPK of the asset
-	 * @param start the lower bound of the range of results
-	 * @param end the upper bound of the range of results (not inclusive)
+	 * @param  classNameId the className of the asset
+	 * @param  classPK the classPK of the asset
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the matching assetCategories
 	 */
 	@Override
@@ -187,8 +188,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	 * Returns the number of assetCategories related to an AssetEntry with the
 	 * given "classNameId-classPK".
 	 *
-	 * @param classNameId the className of the asset
-	 * @param classPK the classPK of the asset
+	 * @param  classNameId the className of the asset
+	 * @param  classPK the classPK of the asset
 	 * @return the number of matching assetCategories
 	 */
 	@Override
@@ -225,10 +226,10 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	/**
 	 * eturns a range of child assetCategories.
 	 *
-	 * @param parentCategoryId the parent category id
-	 * @param start the lower bound of the range of results
-	 * @param end the upper bound of the range of results (not inclusive)
-	 * @param obc the comparator
+	 * @param  parentCategoryId the parent category ID
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
+	 * @param  obc the comparator
 	 * @return the matching categories
 	 * @throws PortalException
 	 */
@@ -256,7 +257,7 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	/**
 	 * Returns the number of child categories
 	 *
-	 * @param parentCategoryId the parent category id
+	 * @param  parentCategoryId the parent category ID
 	 * @return the number of child categories
 	 * @throws PortalException
 	 */

@@ -32,8 +32,8 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- * @author Michael C. Han
- * @deprecated As of 4.0.0, with no direct replacement
+ * @author     Michael C. Han
+ * @deprecated As of Judson, with no direct replacement
  */
 @Component(
 	immediate = true, service = SingleDestinationMessageSenderFactory.class

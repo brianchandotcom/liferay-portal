@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class ExceptionProcessCallable

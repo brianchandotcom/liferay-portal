@@ -61,7 +61,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #newServiceTrackedInstance(Class, Class, String)}
 	 */
 	@Deprecated
@@ -72,7 +72,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
 	 *             String, boolean)}
 	 */
@@ -85,7 +85,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
 	 *             String, String, boolean)}
 	 */
@@ -99,7 +99,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #newServiceTrackedInstance(Class, Class, String, String)}
 	 */
 	@Deprecated
@@ -113,7 +113,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
 	 *             String, boolean)}
 	 */
@@ -126,7 +126,7 @@ public class ProxyFactory {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
 	 *             String, String, boolean)}
 	 */

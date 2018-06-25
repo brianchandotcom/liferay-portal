@@ -76,7 +76,7 @@ public class DefaultLayoutPrototypesUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             LayoutPrototypeHelper#addLayoutPrototype}
 	 */
 	@Deprecated

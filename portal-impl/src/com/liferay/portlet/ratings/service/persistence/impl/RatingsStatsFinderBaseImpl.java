@@ -22,7 +22,7 @@ import com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated

@@ -299,15 +299,14 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Adds the file rank to the existing file entry. This method is only
 	 * supported by the Liferay repository.
 	 *
-	 * @param  repositoryId the primary key of the repository
-	 * @param  companyId the primary key of the company
-	 * @param  userId the primary key of the file rank's creator/owner
-	 * @param  fileEntryId the primary key of the file entry
-	 * @param  serviceContext the service context to be applied
-	 * @return the file rank
-	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#addFileRank}
+	 * @param      repositoryId the primary key of the repository
+	 * @param      companyId the primary key of the company
+	 * @param      userId the primary key of the file rank's creator/owner
+	 * @param      fileEntryId the primary key of the file entry
+	 * @param      serviceContext the service context to be applied
+	 * @return     the file rank
+	 * @deprecated As of Judson, replaced by {@link
+	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#addFileRank}
 	 */
 	@Deprecated
 	@Override
@@ -429,10 +428,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Deletes the file ranks associated to a given file entry. This method is
 	 * only supported by the Liferay repository.
 	 *
-	 * @param fileEntryId the primary key of the file entry
-	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByFileEntryId}
+	 * @param      fileEntryId the primary key of the file entry
+	 * @deprecated As of Judson, replaced by {@link
+	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByFileEntryId}
 	 */
 	@Deprecated
 	@Override
@@ -447,10 +445,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Deletes the file ranks associated to a given user. This method is only
 	 * supported by the Liferay repository.
 	 *
-	 * @param userId the primary key of the user
-	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByUserId}
+	 * @param      userId the primary key of the user
+	 * @deprecated As of Judson, replaced by {@link
+	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByUserId}
 	 */
 	@Deprecated
 	@Override
@@ -624,12 +621,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Returns the file ranks from the user. This method is only supported by
 	 * the Liferay repository.
 	 *
-	 * @param  repositoryId the primary key of the repository
-	 * @param  userId the primary key of the user
-	 * @return the file ranks from the user
-	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#getFileRanks}
+	 * @param      repositoryId the primary key of the repository
+	 * @param      userId the primary key of the user
+	 * @return     the file ranks from the user
+	 * @deprecated As of Judson, replaced by {@link
+	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#getFileRanks}
 	 */
 	@Deprecated
 	@Override
@@ -1097,15 +1093,14 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Updates a file rank to the existing file entry. This method is only
 	 * supported by the Liferay repository.
 	 *
-	 * @param  repositoryId the primary key of the file rank's repository
-	 * @param  companyId the primary key of the file rank's company
-	 * @param  userId the primary key of the file rank's creator/owner
-	 * @param  fileEntryId the primary key of the file rank's file entry
-	 * @param  serviceContext the service context to be applied
-	 * @return the file rank
-	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *            com.liferay.document.library.file.rank.service.DLFileRankLocalService#updateFileRank}
+	 * @param      repositoryId the primary key of the file rank's repository
+	 * @param      companyId the primary key of the file rank's company
+	 * @param      userId the primary key of the file rank's creator/owner
+	 * @param      fileEntryId the primary key of the file rank's file entry
+	 * @param      serviceContext the service context to be applied
+	 * @return     the file rank
+	 * @deprecated As of Judson, replaced by {@link
+	 *             com.liferay.document.library.file.rank.service.DLFileRankLocalService#updateFileRank}
 	 */
 	@Deprecated
 	@Override
@@ -1164,8 +1159,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateFileShortcuts(long,
-	 *             long)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #updateFileShortcuts(long, long)}
 	 */
 	@Deprecated
 	@Override

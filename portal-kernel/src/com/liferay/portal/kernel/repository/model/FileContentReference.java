@@ -101,7 +101,7 @@ public class FileContentReference {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #FileContentReference(long,
+	 * @deprecated As of Judson, replaced by {@link #FileContentReference(long,
 	 *             String, String, String, File, InputStream, long)}
 	 */
 	@Deprecated

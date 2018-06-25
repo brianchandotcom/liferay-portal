@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.model.ResourceBlock;
 import com.liferay.portal.kernel.model.ResourceConstants;
 
 /**
- * @author Preston Crary
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author     Preston Crary
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class ResourceBlockModelListener

@@ -432,7 +432,7 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 	 * Returns the trash handler for this bookmarks entry.
 	 *
 	 * @return the trash handler for this bookmarks entry
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

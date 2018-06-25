@@ -109,8 +109,8 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Adds the organization to the group.
 	 *
-	 * @param organizationId the primary key of the organization
 	 * @param groupId the primary key of the group
+	 * @param organizationId the primary key of the organization
 	 */
 	@Override
 	public void addGroupOrganization(long groupId, long organizationId) {
@@ -127,8 +127,8 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Adds the organization to the group.
 	 *
-	 * @param organization the organization
 	 * @param groupId the primary key of the group
+	 * @param organization the organization
 	 */
 	@Override
 	public void addGroupOrganization(long groupId, Organization organization) {
@@ -145,8 +145,8 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Adds the organizations to the group.
 	 *
-	 * @param organizations the organizations
 	 * @param groupId the primary key of the group
+	 * @param organizations the organizations
 	 */
 	@Override
 	public void addGroupOrganizations(
@@ -165,8 +165,8 @@ public class OrganizationLocalServiceImpl
 	/**
 	 * Adds the organizations to the group.
 	 *
-	 * @param organizationIds the primary keys of the organizations
 	 * @param groupId the primary key of the group
+	 * @param organizationIds the primary keys of the organizations
 	 */
 	@Override
 	public void addGroupOrganizations(long groupId, long[] organizationIds) {
@@ -2034,9 +2034,10 @@ public class OrganizationLocalServiceImpl
 	 *             names for the organization, and merge expando bridge
 	 *             attributes for the organization.
 	 * @return     the organization
-	 * @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
-	 *             long, long, String, String, long, long, long, String,
-	 *             boolean, byte[], boolean, ServiceContext)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #updateOrganization(long, long, long, String, String, long,
+	 *             long, long, String, boolean, byte[], boolean,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

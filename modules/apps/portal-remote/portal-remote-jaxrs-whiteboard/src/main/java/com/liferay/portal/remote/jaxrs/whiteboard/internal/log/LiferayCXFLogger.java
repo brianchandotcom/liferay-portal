@@ -23,11 +23,11 @@ import java.util.logging.LogRecord;
 import org.apache.cxf.common.logging.AbstractDelegatingLogger;
 
 /**
- * Logger for CXF that maps {@link java.util.logging.Logger} to Liferay
- * {@link Log}.
+ * Logger for CXF that maps {@link java.util.logging.Logger} to Liferay {@link
+ * Log}.
  *
  * @author Tomas Polesovsky
- * @see com.liferay.portal.kernel.log.Jdk14LogImpl
+ * @see    com.liferay.portal.kernel.log.Jdk14LogImpl
  * @review
  */
 public class LiferayCXFLogger extends AbstractDelegatingLogger {

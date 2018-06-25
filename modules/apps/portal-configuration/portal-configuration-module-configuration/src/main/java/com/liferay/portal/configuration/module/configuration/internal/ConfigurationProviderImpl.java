@@ -149,7 +149,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #getPortletInstanceConfiguration(Class, Layout, String)}
 	 */
 	@Deprecated

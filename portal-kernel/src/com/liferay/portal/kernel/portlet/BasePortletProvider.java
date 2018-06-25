@@ -46,7 +46,7 @@ public abstract class BasePortletProvider implements PortletProvider {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected long getPlid(ThemeDisplay themeDisplay) throws PortalException {

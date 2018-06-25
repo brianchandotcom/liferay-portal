@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.test.rule.callback.PortalExecutorManagerTestCallback;
 
 /**
- * @author Michael C. Han
- * @deprecated As of 3.3.0, with no direct replacement
+ * @author     Michael C. Han
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class PortalExecutorManagerTestRule

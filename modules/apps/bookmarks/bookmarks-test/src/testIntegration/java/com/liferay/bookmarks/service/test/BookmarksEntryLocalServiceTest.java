@@ -38,8 +38,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Michael C. Han
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author     Michael C. Han
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 @RunWith(Arquillian.class)

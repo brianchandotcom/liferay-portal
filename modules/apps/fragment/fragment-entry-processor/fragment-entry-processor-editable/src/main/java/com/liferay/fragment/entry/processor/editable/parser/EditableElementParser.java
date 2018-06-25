@@ -40,7 +40,7 @@ public interface EditableElementParser {
 	/**
 	 * Validates editable element
 	 *
-	 * @param element Editable element to validate
+	 * @param  element Editable element to validate
 	 * @throws FragmentEntryContentException In case of invalid editable element
 	 */
 	public default void validate(Element element)

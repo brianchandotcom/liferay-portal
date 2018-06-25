@@ -57,7 +57,7 @@ public class LayoutFinderImpl
 		LayoutFinder.class.getName() + ".findByC_P_P";
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

@@ -64,8 +64,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 		String title);
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #addPageResource(long, long,
-	String)}
+	* @deprecated As of Wilberforce, replaced by {@link #addPageResource(long,
+	long, String)}
 	*/
 	@Deprecated
 	public WikiPageResource addPageResource(long nodeId, String title);
@@ -224,8 +224,8 @@ public interface WikiPageResourceLocalService extends BaseLocalService,
 	public long getPageResourcePrimKey(long groupId, long nodeId, String title);
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #getPageResourcePrimKey(long,
-	long, String)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#getPageResourcePrimKey(long, long, String)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

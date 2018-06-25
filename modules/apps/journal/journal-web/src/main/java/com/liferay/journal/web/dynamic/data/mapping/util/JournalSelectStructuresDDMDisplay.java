@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.Portal;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
- * @deprecated As of 2.0.0, moved to {@link
+ * @author     Eudaldo Alonso
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.journal.web.internal.dynamic.data.mapping.util.JournalSelectStructuresDDMDisplay}
  */
 @Deprecated

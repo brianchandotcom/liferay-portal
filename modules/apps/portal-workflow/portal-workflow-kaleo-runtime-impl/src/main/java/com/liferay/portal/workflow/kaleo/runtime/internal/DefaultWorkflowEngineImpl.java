@@ -116,7 +116,7 @@ public class DefaultWorkflowEngineImpl
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #deployWorkflowDefinition(String, String, InputStream,
 	 *             ServiceContext)}
 	 */

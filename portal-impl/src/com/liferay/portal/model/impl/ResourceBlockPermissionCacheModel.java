@@ -32,7 +32,7 @@ import java.io.ObjectOutput;
  *
  * @author Brian Wing Shun Chan
  * @see ResourceBlockPermission
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated

@@ -44,7 +44,7 @@ public class ModuleLocalServiceUtil {
 	 */
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #addModule(long, String,
+	* @deprecated As of Judson, replaced by {@link #addModule(long, String,
 	String, String)}
 	*/
 	@Deprecated

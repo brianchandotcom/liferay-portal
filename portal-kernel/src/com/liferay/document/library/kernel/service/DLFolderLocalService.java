@@ -109,7 +109,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public DLFolder createDLFolder(long folderId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#deleteAllByGroup(long)}
 	*/
 	@Deprecated
 	public void deleteAll(long groupId) throws PortalException;
@@ -383,8 +384,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public long getFolderId(long companyId, long folderId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupFolderIds(long,
-	long)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#getGroupFolderIds(long, long)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -483,8 +484,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long repositoryId, long folderId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
-	long, long)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#getGroupSubfolderIds(List, long, long)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -538,8 +539,8 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public DLFolder updateDLFolder(DLFolder dlFolder);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, long, List, int, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
+	long, String, String, long, List, int, ServiceContext)}
 	*/
 	@Deprecated
 	public DLFolder updateFolder(long folderId, long parentFolderId,
@@ -554,7 +555,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
+	* @deprecated As of Wilberforce, replaced {@link #updateFolder(long, long,
 	String, String, long, List, int, ServiceContext)}
 	*/
 	@Deprecated
@@ -570,7 +571,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #
+	* @deprecated As of Wilberforce, replaced by {@link #
 	updateFolderAndFileEntryTypes(long, long, long, String,
 	String, long, List, int, ServiceContext)}
 	*/

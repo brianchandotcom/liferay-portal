@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Ferrer
- * @deprecated As of 4.0.0, with no direct replacement
+ * @author     Jorge Ferrer
+ * @deprecated As of Judson, with no direct replacement
  */
 @Component(
 	immediate = true,

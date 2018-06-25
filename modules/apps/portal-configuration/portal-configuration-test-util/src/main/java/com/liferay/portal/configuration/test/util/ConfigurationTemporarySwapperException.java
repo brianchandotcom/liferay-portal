@@ -17,8 +17,8 @@ package com.liferay.portal.configuration.test.util;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Drew Brokke
- * @deprecated As of 1.1.0, with no direct replacement
+ * @author     Drew Brokke
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class ConfigurationTemporarySwapperException extends PortalException {

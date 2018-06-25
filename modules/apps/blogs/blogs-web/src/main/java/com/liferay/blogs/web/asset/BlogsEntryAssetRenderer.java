@@ -60,7 +60,7 @@ public class BlogsEntryAssetRenderer
 	extends BaseJSPAssetRenderer<BlogsEntry> implements TrashRenderer {
 
 	/**
-	 * @deprecated As of 1.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #BlogsEntryAssetRenderer(BlogsEntry, ResourceBundleLoader)}
 	 */
 	@Deprecated
@@ -105,7 +105,7 @@ public class BlogsEntryAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

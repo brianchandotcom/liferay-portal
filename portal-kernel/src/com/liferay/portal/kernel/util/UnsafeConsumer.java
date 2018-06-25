@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.util;
 import java.util.Collection;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced with {@link
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson, replaced with {@link
  *             com.liferay.petra.function.UnsafeConsumer}
  */
 @Deprecated

@@ -19,9 +19,9 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Michael C. Han
- * @deprecated As of 3.1.0, replaced by {@link
- *              com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration}
+ * @author     Michael C. Han
+ * @deprecated As of Judson, replaced by {@link
+ *             com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration}
  */
 @Deprecated
 @ExtendedObjectClassDefinition(category = "infrastructure")

@@ -48,7 +48,7 @@ public class HeapUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #heapDump(boolean, boolean,
+	 * @deprecated As of Judson, replaced by {@link #heapDump(boolean, boolean,
 	 *             String, OutputProcessor)
 	 */
 	@Deprecated
@@ -68,7 +68,7 @@ public class HeapUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #heapDump(int, boolean,
+	 * @deprecated As of Judson, replaced by {@link #heapDump(int, boolean,
 	 *             boolean, String, OutputProcessor)
 	 */
 	@Deprecated

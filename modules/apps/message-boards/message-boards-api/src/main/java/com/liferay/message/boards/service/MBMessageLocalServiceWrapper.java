@@ -686,7 +686,7 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	/**
-	* @deprecated As of 2.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -941,7 +941,8 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	/**
-	* @deprecated As of 2.0.0, replaced by {@link #updateMessage(long, long, String, String, List, double, boolean, ServiceContext)}
+	* @deprecated As of Judson, replaced by {@link #updateMessage(long, long,
+	String, String, List, double, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	@Override

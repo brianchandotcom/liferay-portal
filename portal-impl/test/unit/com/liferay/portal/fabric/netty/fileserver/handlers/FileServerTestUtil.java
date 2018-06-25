@@ -95,8 +95,7 @@ public class FileServerTestUtil {
 	 *      |->subfolder3
 	 *                  |
 	 *                  |->subfolder4
-	 * </pre>
-	 * </p>
+	 * </pre></p>
 	 *
 	 * @param  folder the folder
 	 * @return the folder with new subfolders and files included in its

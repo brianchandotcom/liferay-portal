@@ -102,7 +102,7 @@ public class CategoryNestedCollectionResource
 			"category", "subCategories", CategoryIdentifier.class,
 			AssetCategory::getParentCategoryId
 		).addBidirectionalModel(
-			"vocabulary", "categories", VocabularyIdentifier.class,
+			"vocabulary", "vocabularyCategories", VocabularyIdentifier.class,
 			AssetCategory::getVocabularyId
 		).addDate(
 			"dateCreated", AssetCategory::getCreateDate

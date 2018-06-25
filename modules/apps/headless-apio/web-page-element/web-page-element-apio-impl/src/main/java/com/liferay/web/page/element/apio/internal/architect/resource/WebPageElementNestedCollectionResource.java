@@ -28,12 +28,19 @@ import com.liferay.person.apio.architect.identifier.PersonIdentifier;
 import com.liferay.portal.apio.permission.HasPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.site.apio.architect.identifier.WebSiteIdentifier;
 import com.liferay.web.page.element.apio.architect.identifier.WebPageElementIdentifier;
 import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementCreatorForm;
 import com.liferay.web.page.element.apio.internal.architect.form.WebPageElementUpdaterForm;
+import com.liferay.web.page.element.apio.internal.model.JournalArticleWrapper;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,17 +56,19 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class WebPageElementNestedCollectionResource
 	implements
-		NestedCollectionResource<JournalArticle, Long,
+		NestedCollectionResource<JournalArticleWrapper, Long,
 			WebPageElementIdentifier, Long, WebSiteIdentifier> {
 
 	@Override
-	public NestedCollectionRoutes<JournalArticle, Long, Long> collectionRoutes(
-		NestedCollectionRoutes.Builder<JournalArticle, Long, Long> builder) {
+	public NestedCollectionRoutes<JournalArticleWrapper, Long, Long>
+		collectionRoutes(
+			NestedCollectionRoutes.Builder<JournalArticleWrapper, Long, Long>
+				builder) {
 
 		return builder.addGetter(
-			this::_getPageItems
+			this::_getPageItems, ThemeDisplay.class
 		).addCreator(
-			this::_addJournalArticle,
+			this::_addJournalArticle, ThemeDisplay.class,
 			_hasPermission.forAddingIn(WebSiteIdentifier.class),
 			WebPageElementCreatorForm::buildForm
 		).build();
@@ -71,22 +80,22 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<JournalArticle, Long> itemRoutes(
-		ItemRoutes.Builder<JournalArticle, Long> builder) {
+	public ItemRoutes<JournalArticleWrapper, Long> itemRoutes(
+		ItemRoutes.Builder<JournalArticleWrapper, Long> builder) {
 
 		return builder.addGetter(
-			_journalArticleService::getArticle
+			this::_getJournalArticleWrapper, ThemeDisplay.class
 		).addRemover(
 			idempotent(this::_deleteJournalArticle), _hasPermission::forDeleting
 		).addUpdater(
-			this::_updateJournalArticle, _hasPermission::forUpdating,
-			WebPageElementUpdaterForm::buildForm
+			this::_updateJournalArticle, ThemeDisplay.class,
+			_hasPermission::forUpdating, WebPageElementUpdaterForm::buildForm
 		).build();
 	}
 
 	@Override
-	public Representor<JournalArticle> representor(
-		Representor.Builder<JournalArticle, Long> builder) {
+	public Representor<JournalArticleWrapper> representor(
+		Representor.Builder<JournalArticleWrapper, Long> builder) {
 
 		return builder.types(
 			"WebPageElement"
@@ -116,8 +125,9 @@ public class WebPageElementNestedCollectionResource
 		).build();
 	}
 
-	private JournalArticle _addJournalArticle(
-			long webSiteId, WebPageElementCreatorForm webPageElementCreatorForm)
+	private JournalArticleWrapper _addJournalArticle(
+			long webSiteId, WebPageElementCreatorForm webPageElementCreatorForm,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -126,7 +136,7 @@ public class WebPageElementNestedCollectionResource
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(webSiteId);
 
-		return _journalArticleService.addArticle(
+		JournalArticle journalArticle = _journalArticleService.addArticle(
 			webSiteId, 0, 0, 0, null, true,
 			webPageElementCreatorForm.getTitleMap(),
 			webPageElementCreatorForm.getDescriptionMap(),
@@ -139,6 +149,8 @@ public class WebPageElementNestedCollectionResource
 			webPageElementCreatorForm.getDisplayDateHour(),
 			webPageElementCreatorForm.getDisplayDateMinute(), 0, 0, 0, 0, 0,
 			true, 0, 0, 0, 0, 0, true, true, null, serviceContext);
+
+		return new JournalArticleWrapper(journalArticle, themeDisplay);
 	}
 
 	private void _deleteJournalArticle(long journalArticleId)
@@ -152,21 +164,39 @@ public class WebPageElementNestedCollectionResource
 			article.getArticleResourceUuid(), new ServiceContext());
 	}
 
-	private PageItems<JournalArticle> _getPageItems(
-		Pagination pagination, long webSiteId) {
+	private JournalArticleWrapper _getJournalArticleWrapper(
+			long articleId, ThemeDisplay themeDisplay)
+		throws PortalException {
 
-		List<JournalArticle> journalArticles =
-			_journalArticleService.getArticles(
-				webSiteId, 0, pagination.getStartPosition(),
-				pagination.getEndPosition(), null);
-		int count = _journalArticleService.getArticlesCount(webSiteId, 0);
+		JournalArticle article = _journalArticleService.getArticle(articleId);
 
-		return new PageItems<>(journalArticles, count);
+		return new JournalArticleWrapper(article, themeDisplay);
 	}
 
-	private JournalArticle _updateJournalArticle(
+	private PageItems<JournalArticleWrapper> _getPageItems(
+		Pagination pagination, long webSiteId, ThemeDisplay themeDisplay) {
+
+		List<JournalArticleWrapper> journalArticleWrappers = Stream.of(
+			_journalArticleService.getArticles(
+				webSiteId, 0, pagination.getStartPosition(),
+				pagination.getEndPosition(), null)
+		).flatMap(
+			List::stream
+		).map(
+			journalArticle -> new JournalArticleWrapper(
+				journalArticle, themeDisplay)
+		).collect(
+			Collectors.toList()
+		);
+		int count = _journalArticleService.getArticlesCount(webSiteId, 0);
+
+		return new PageItems<>(journalArticleWrappers, count);
+	}
+
+	private JournalArticleWrapper _updateJournalArticle(
 			long journalArticleId,
-			WebPageElementUpdaterForm webPageElementUpdaterForm)
+			WebPageElementUpdaterForm webPageElementUpdaterForm,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -175,7 +205,7 @@ public class WebPageElementNestedCollectionResource
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setScopeGroupId(webPageElementUpdaterForm.getGroup());
 
-		return _journalArticleService.updateArticle(
+		JournalArticle article = _journalArticleService.updateArticle(
 			webPageElementUpdaterForm.getUser(),
 			webPageElementUpdaterForm.getGroup(), 0,
 			String.valueOf(journalArticleId),
@@ -183,6 +213,8 @@ public class WebPageElementNestedCollectionResource
 			webPageElementUpdaterForm.getTitleMap(),
 			webPageElementUpdaterForm.getDescriptionMap(),
 			webPageElementUpdaterForm.getText(), null, serviceContext);
+
+		return new JournalArticleWrapper(article, themeDisplay);
 	}
 
 	@Reference(

@@ -114,7 +114,7 @@ EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganiza
 
 			<aui:input name="emailAddressId" type="hidden" value="<%= emailAddress.getEmailAddressId() %>" />
 
-			<aui:input cssClass="email-field" inlineField="<%= true %>" label="email-address" name="address" required="true" width="150px" />
+			<aui:input cssClass="email-field" inlineField="<%= true %>" label="email-address" name="address" required="<%= true %>" width="150px" />
 
 			<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
 
@@ -122,7 +122,7 @@ EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganiza
 
 			<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
 
-			<aui:input name="street1" required="true" />
+			<aui:input name="street1" required="<%= true %>" />
 
 			<aui:input name="street2" />
 
@@ -130,7 +130,7 @@ EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganiza
 
 			<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-			<aui:select label="country" name="addressCountryId" required="true" width="150px" />
+			<aui:select label="country" name="addressCountryId" required="<%= true %>" width="150px" />
 
 			<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
@@ -142,7 +142,7 @@ EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganiza
 
 			<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
 
-			<aui:input name="city" required="true" />
+			<aui:input name="city" required="<%= true %>" />
 		</aui:fieldset>
 
 		<aui:fieldset cssClass="col-md-6">

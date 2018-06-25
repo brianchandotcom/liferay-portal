@@ -149,6 +149,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				DLFileShortcutConstants.getClassName()));
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
 		setRank(90);
+		setStagingControls(getExportControls());
 
 		_dlExportableRepositoryPublishers = ServiceTrackerListFactory.open(
 			bundleContext, DLExportableRepositoryPublisher.class);

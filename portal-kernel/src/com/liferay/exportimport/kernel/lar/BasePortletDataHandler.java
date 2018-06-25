@@ -352,11 +352,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public PortletDataHandlerControl[] getStagingControls() {
-		if (ArrayUtil.isNotEmpty(_stagingControls)) {
-			return _stagingControls;
-		}
-
-		return _exportControls;
+		return _stagingControls;
 	}
 
 	@Override

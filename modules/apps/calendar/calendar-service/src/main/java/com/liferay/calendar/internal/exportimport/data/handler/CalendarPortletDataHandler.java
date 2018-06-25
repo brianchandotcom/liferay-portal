@@ -97,6 +97,7 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "referenced-content")
 				},
 				CalendarNotificationTemplate.class.getName()));
+		setStagingControls(getExportControls());
 	}
 
 	protected void addSkipGuestCalendarResourceCriterion(

@@ -38,6 +38,10 @@ public class FragmentControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
+		if (group.isStaged() && !group.isStagingGroup()) {
+			return false;
+		}
+
 		if (group.isCompany()) {
 			return true;
 		}

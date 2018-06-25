@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.service;
 
 /**
- * @author Connor McKay
+ * @author     Connor McKay
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

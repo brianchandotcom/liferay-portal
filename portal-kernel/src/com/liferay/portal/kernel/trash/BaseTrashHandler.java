@@ -72,8 +72,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #checkRestorableEntry(long,
-	 *             long, String)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #checkRestorableEntry(long, long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -117,7 +117,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getContainerModel(long)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getContainerModel(long)}
 	 */
 	@Deprecated
 	@Override

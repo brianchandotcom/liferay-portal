@@ -34,7 +34,8 @@ import java.util.Set;
 public class OutputData implements Mergeable<OutputData>, Serializable {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addDataSB(String, String, StringBundler)}
+	 * @deprecated As of Judson, replaced by {@link #addDataSB(String, String,
+	 *             StringBundler)}
 	 */
 	@Deprecated
 	public void addData(
@@ -145,7 +146,8 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #setDataSB(String, String, StringBundler)}
+	 * @deprecated As of Judson, replaced by {@link #setDataSB(String, String,
+	 *             StringBundler)}
 	 */
 	@Deprecated
 	public void setData(

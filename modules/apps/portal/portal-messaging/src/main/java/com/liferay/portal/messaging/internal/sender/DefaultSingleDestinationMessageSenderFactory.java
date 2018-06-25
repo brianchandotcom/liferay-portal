@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Judson, with no direct replacement
  */
 @Component(

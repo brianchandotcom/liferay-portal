@@ -452,8 +452,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #addTempFileEntry(long, long,
-	 *             String, String, InputStream, String)}
+	 * @deprecated As of Wilberforce, replaced by {@link #addTempFileEntry(long,
+	 *             long, String, String, InputStream, String)}
 	 */
 	@Deprecated
 	@Override
@@ -1644,8 +1644,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #movePageFromTrash(long,
-	 *             long, String, long, String)} *
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #movePageFromTrash(long, long, String, long, String)} *
 	 */
 	@Deprecated
 	@Override
@@ -2087,8 +2087,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #updateStatus(long, WikiPage,
-	 *             int, ServiceContext, Map)}
+	 * @deprecated As of Wilberforce, replaced by {@link #updateStatus(long,
+	 *             WikiPage, int, ServiceContext, Map)}
 	 */
 	@Deprecated
 	@Override

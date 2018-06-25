@@ -24,10 +24,10 @@ public class AlloyEditorConstants {
 	 * the {@link javax.servlet.http.HttpServletRequest}.
 	 *
 	 * <p>
-	 * Do not change this value unless you stop implementing the legacy
-	 * {@link com.liferay.portal.kernel.editor.Editor} interface and leave the
-	 * {@link com.liferay.frontend.editor.api.EditorRenderer} alone; otherwise,
-	 * the former will fail because it hard codes the use of this namespace.
+	 * Do not change this value unless you stop implementing the legacy {@link
+	 * com.liferay.portal.kernel.editor.Editor} interface and leave the {@link
+	 * com.liferay.frontend.editor.api.EditorRenderer} alone; otherwise, the
+	 * former will fail because it hard codes the use of this namespace.
 	 * </p>
 	 */
 	public static final String ATTRIBUTE_NAMESPACE = "liferay-ui:input-editor";

@@ -59,8 +59,8 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alberto Montero
- * @author Raymond Augé
+ * @author     Alberto Montero
+ * @author     Raymond Augé
  * @deprecated As of Judson, with no direct replacement
  */
 @Component(

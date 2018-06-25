@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
- * @author Alexander Chow
+ * @author     Alexander Chow
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

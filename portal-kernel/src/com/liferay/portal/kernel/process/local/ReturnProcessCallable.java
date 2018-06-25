@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.process.ProcessCallable;
 import java.io.Serializable;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

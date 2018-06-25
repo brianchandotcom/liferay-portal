@@ -28,9 +28,9 @@ import java.util.List;
 import org.jdom.IllegalDataException;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Eduardo Garcia
- * @see    com.liferay.rss.util.RSSUtil
+ * @author     Brian Wing Shun Chan
+ * @author     Eduardo Garcia
+ * @see        com.liferay.rss.util.RSSUtil
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

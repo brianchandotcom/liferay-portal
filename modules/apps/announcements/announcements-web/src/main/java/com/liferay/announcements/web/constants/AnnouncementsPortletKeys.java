@@ -15,7 +15,7 @@
 package com.liferay.announcements.web.constants;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.announcements.constants.AnnouncementsPortletKeys}
  */

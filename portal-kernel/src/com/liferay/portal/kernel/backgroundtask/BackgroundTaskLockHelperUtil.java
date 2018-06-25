@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 
 /**
- * @author Daniel Kocsis
+ * @author     Daniel Kocsis
  * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.background.task.internal.lock.BackgroundTaskLockHelper}
  */

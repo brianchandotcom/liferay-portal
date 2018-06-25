@@ -32,9 +32,9 @@ import org.dom4j.io.XMLWriter;
 import org.xml.sax.XMLReader;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Alan Zimmerman
- * @see    com.liferay.petra.xml.Dom4jUtil
+ * @author     Brian Wing Shun Chan
+ * @author     Alan Zimmerman
+ * @see        com.liferay.petra.xml.Dom4jUtil
  * @deprecated As of Judson
  */
 @Deprecated

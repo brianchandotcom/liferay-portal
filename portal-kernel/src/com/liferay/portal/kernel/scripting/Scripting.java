@@ -35,8 +35,8 @@ public interface Scripting {
 		throws ScriptingException;
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set, String,
-	 *             String)}
+	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set,
+	 *             String, String)}
 	 */
 	@Deprecated
 	public Map<String, Object> eval(

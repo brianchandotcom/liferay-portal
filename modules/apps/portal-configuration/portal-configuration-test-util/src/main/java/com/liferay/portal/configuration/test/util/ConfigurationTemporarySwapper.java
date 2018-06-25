@@ -32,8 +32,8 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 	/**
 	 * @deprecated As of Judson, replaced by {@link
-	 *             #ConfigurationTemporarySwapper(String,
-	 *             Dictionary<String, Object>)}
+	 *             #ConfigurationTemporarySwapper(String, Dictionary<String,
+	 *             Object>)}
 	 */
 	@Deprecated
 	public ConfigurationTemporarySwapper(

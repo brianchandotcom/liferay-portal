@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jonathan Lee
+ * @author     Jonathan Lee
  * @deprecated As of Judson, with no direct replacement
  */
 @Component(immediate = true)

@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusException;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

@@ -110,8 +110,8 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(Document, String,
-	 *             PortletRequest, PortletResponse)}
+	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(Document,
+	 *             String, PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	@Override

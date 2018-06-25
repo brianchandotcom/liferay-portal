@@ -51,7 +51,8 @@ public class ProcessUtil {
 		new ConsumerOutputProcessor();
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link EchoOutputProcessor#INSTANCE}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             EchoOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
 	public static final EchoOutputProcessor ECHO_OUTPUT_PROCESSOR =

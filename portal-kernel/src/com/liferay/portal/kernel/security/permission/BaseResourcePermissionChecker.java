@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
 /**
- * @author Preston Crary
+ * @author     Preston Crary
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

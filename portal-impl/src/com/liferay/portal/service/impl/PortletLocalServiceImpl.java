@@ -999,7 +999,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #loadGetPortletsMap(long))}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #loadGetPortletsMap(long))}
 	 */
 	@Deprecated
 	@Override

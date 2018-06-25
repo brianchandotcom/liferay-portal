@@ -36,7 +36,7 @@ import java.util.Set;
  * local service.
  * </p>
  *
- * @author Connor McKay
+ * @author     Connor McKay
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

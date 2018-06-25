@@ -548,7 +548,8 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link CMISFileVersion#getUserId()}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             CMISFileVersion#getUserId()}
 	 */
 	@Deprecated
 	@Override

@@ -127,8 +127,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * Provides utility methods for managing the configuration, managing scopes of
  * content, and obtaining lists of assets for the Asset Publisher portlet.
  *
- * @author Raymond Augé
- * @author Julio Camarero
+ * @author     Raymond Augé
+ * @author     Julio Camarero
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.asset.publisher.util.AssetPublisherHelper}
  */

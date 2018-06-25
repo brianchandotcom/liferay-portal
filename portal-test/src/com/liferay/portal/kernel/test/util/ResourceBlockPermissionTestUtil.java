@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Alberto Chaparro
+ * @author     Alberto Chaparro
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

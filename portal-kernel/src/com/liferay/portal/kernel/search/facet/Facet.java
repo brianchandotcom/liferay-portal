@@ -28,7 +28,8 @@ import com.liferay.portal.kernel.search.filter.Filter;
 public interface Facet {
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getFacetFilterBooleanClause}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getFacetFilterBooleanClause}
 	 */
 	@Deprecated
 	public BooleanClause<Query> getFacetClause();

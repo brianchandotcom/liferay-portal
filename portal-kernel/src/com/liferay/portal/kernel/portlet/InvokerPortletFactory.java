@@ -29,8 +29,8 @@ import javax.portlet.PortletException;
 public interface InvokerPortletFactory {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #create(
-	 *             com.liferay.portal.kernel.model.Portlet, Portlet,
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #create(com.liferay.portal.kernel.model.Portlet, Portlet,
 	 *             PortletConfig, PortletContext, InvokerFilterContainer,
 	 *             boolean, boolean, boolean, boolean, boolean)}
 	 */

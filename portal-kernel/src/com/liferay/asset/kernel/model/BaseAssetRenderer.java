@@ -160,8 +160,8 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(PortletRequest,
-	 *             PortletResponse)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getSummary(PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	@Override

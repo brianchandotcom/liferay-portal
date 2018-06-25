@@ -34,7 +34,8 @@ public class PortletCategoryKeys {
 	public static final String APPS = "apps";
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #CONTROL_PANEL_CONFIGURATION}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #CONTROL_PANEL_CONFIGURATION}
 	 */
 	@Deprecated
 	public static final String CONFIGURATION = "control_panel.configuration";
@@ -96,7 +97,8 @@ public class PortletCategoryKeys {
 		"site_administration.publishing";
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #SITE_ADMINISTRATION_MEMBERS}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #SITE_ADMINISTRATION_MEMBERS}
 	 */
 	@Deprecated
 	public static final String SITE_ADMINISTRATION_USERS =

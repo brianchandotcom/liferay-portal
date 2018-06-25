@@ -28,7 +28,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

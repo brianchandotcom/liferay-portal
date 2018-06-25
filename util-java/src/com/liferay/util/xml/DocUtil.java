@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Alexander Chow
- * @see    com.liferay.petra.xml.DocUtil
+ * @author     Brian Wing Shun Chan
+ * @author     Alexander Chow
+ * @see        com.liferay.petra.xml.DocUtil
  * @deprecated As of Judson
  */
 @Deprecated

@@ -336,8 +336,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(Document, String,
-	 *             PortletRequest, PortletResponse)}
+	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(Document,
+	 *             String, PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	@Override
@@ -734,8 +734,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 * @param      document
 	 * @param      className
 	 * @param      classPK
-	 * @deprecated As of Judson, no direct replacement. Logic now encapsulated in
-	 *             {@link com.liferay.portal.search.internal.contributor.
+	 * @deprecated As of Judson, no direct replacement. Logic now encapsulated
+	 *             in {@link com.liferay.portal.search.internal.contributor.
 	 *             document.AssetDocumentContrbutor}
 	 */
 	@Deprecated
@@ -932,8 +932,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 * @param      document
 	 * @param      field
 	 * @param      assetCategories
-	 * @deprecated As of Judson, no direct replacement. Logic not encapsulated in
-	 *             {@link com.liferay.portal.search.internal.contributor.
+	 * @deprecated As of Judson, no direct replacement. Logic not encapsulated
+	 *             in {@link com.liferay.portal.search.internal.contributor.
 	 *             document.AssetCategoryDocumentContrbutor}
 	 */
 	@Deprecated

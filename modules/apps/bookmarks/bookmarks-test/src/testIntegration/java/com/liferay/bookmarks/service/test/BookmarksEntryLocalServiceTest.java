@@ -38,7 +38,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

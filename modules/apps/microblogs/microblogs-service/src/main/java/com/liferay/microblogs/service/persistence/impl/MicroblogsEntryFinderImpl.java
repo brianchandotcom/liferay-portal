@@ -445,8 +445,8 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #countByC_CCNI_CCPK_ATN(long,
-	 *             long, long, String, boolean)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #countByC_CCNI_CCPK_ATN(long, long, long, String, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -705,8 +705,8 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #findByC_CCNI_ATN(long, long,
-	 *             String, int, int)}
+	 * @deprecated As of Judson, replaced by {@link #findByC_CCNI_ATN(long,
+	 *             long, String, int, int)}
 	 */
 	@Deprecated
 	@Override

@@ -340,8 +340,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getShort(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #getShort(PortletPreferences, String)}
 	 */
 	@Deprecated
 	@Override
@@ -352,8 +352,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getShort(PortletPreferences,
-	 *             String, short)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #getShort(PortletPreferences, String, short)}
 	 */
 	@Deprecated
 	@Override

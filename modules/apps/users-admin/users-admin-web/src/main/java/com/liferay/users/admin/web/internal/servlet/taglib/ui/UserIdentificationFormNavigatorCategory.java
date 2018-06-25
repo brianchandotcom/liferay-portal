@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import java.util.Locale;
 
 /**
- * @author Sergio González
+ * @author     Sergio González
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

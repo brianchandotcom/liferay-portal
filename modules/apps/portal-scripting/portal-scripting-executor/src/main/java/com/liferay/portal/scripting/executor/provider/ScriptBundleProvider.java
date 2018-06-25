@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import org.osgi.framework.Bundle;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.portal.scripting.ScriptBundleProvider}
  */

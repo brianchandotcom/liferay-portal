@@ -18,8 +18,8 @@ import com.liferay.knowledge.base.util.AdminHelper;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
 
 /**
- * @author Peter Shin
- * @author Brian Wing Shun Chan
+ * @author     Peter Shin
+ * @author     Brian Wing Shun Chan
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

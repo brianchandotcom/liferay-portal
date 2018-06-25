@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.string.StringPool;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Eduardo Garcia
+ * @author     Brian Wing Shun Chan
+ * @author     Eduardo Garcia
  * @deprecated As of Judson, replaced by {@link com.liferay.rss.util.RSSUtil}
  */
 @Deprecated

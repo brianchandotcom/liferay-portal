@@ -624,7 +624,7 @@ public class GroupFinderImpl
 	}
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

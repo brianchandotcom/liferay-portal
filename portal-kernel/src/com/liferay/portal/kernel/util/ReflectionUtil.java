@@ -28,9 +28,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Miguel Pastor
- * @author Shuyang Zhou
+ * @author     Brian Wing Shun Chan
+ * @author     Miguel Pastor
+ * @author     Shuyang Zhou
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.petra.reflect.ReflectionUtil}
  */

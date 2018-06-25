@@ -237,8 +237,8 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #publishStagingRequest(long,
-	 *             boolean, Map)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #publishStagingRequest(long, boolean, Map)}
 	 */
 	@Deprecated
 	@Override

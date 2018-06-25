@@ -138,9 +138,9 @@ public class AnnouncementsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #countByScope(
-	 *             long, long, long, long[], int, int, int, int, int, int, int,
-	 *             int, int, int, boolean, int)}
+	 * @deprecated As of Judson, replaced by {@link #countByScope(long, long,
+	 *             long, long[], int, int, int, int, int, int, int, int, int,
+	 *             int, boolean, int)}
 	 */
 	@Deprecated
 	@Override

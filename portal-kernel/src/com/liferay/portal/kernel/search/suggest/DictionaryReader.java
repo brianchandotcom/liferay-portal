@@ -26,7 +26,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.search.suggest.DictionaryReader}
  */

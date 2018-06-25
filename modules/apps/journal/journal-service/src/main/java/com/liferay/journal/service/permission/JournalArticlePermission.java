@@ -28,8 +28,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Raymond Augé
+ * @author     Brian Wing Shun Chan
+ * @author     Raymond Augé
  * @deprecated As of Judson, with no direct replacement
  */
 @Component(

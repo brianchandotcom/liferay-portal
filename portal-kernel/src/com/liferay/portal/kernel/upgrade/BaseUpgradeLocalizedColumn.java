@@ -77,9 +77,11 @@ public abstract class BaseUpgradeLocalizedColumn extends UpgradeProcess {
 	}
 
 	/**
-	* @deprecated As of Judson,
-	* use {@link BaseUpgradeLocalizedColumn#upgradeLocalizedColumn(ResourceBundleLoader, Class, String, String, String, String, long[])}
-	*/
+	 * @deprecated As of Judson, use {@link
+	 *             BaseUpgradeLocalizedColumn#upgradeLocalizedColumn(
+	 *             ResourceBundleLoader, Class, String, String, String, String,
+	 *             long[])}
+	 */
 	@Deprecated
 	protected void upgradeLocalizedColumn(
 			ResourceBundleLoader resourceBundleLoader, String tableName,

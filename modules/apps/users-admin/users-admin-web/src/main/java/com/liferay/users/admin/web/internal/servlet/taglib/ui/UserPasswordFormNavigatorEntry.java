@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 
 /**
- * @author Pei-Jung Lan
+ * @author     Pei-Jung Lan
  * @deprecated As of Judson, replaced by {@link
- * 		   com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserPasswordScreenNavigationEntry}
+ *             com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserPasswordScreenNavigationEntry}
  */
 @Deprecated
 public class UserPasswordFormNavigatorEntry extends BaseUserFormNavigatorEntry {

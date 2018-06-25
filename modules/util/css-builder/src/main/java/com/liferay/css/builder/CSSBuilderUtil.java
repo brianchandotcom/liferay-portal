@@ -15,12 +15,12 @@
 package com.liferay.css.builder;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Raymond Augé
- * @author Eduardo Lundgren
- * @author Shuyang Zhou
- * @deprecated As of Judson, replaced by
- *                          #{@link com.liferay.css.builder.internal.util.CSSBuilderUtil}
+ * @author     Brian Wing Shun Chan
+ * @author     Raymond Augé
+ * @author     Eduardo Lundgren
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson, replaced by #{@link
+ *             com.liferay.css.builder.internal.util.CSSBuilderUtil}
  */
 @Deprecated
 public class CSSBuilderUtil

@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.messaging.sender;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

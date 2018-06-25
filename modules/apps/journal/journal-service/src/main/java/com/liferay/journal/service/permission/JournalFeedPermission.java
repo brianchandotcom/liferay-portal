@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
  * @deprecated As of Judson, with no direct replacement
  */
 @Component(

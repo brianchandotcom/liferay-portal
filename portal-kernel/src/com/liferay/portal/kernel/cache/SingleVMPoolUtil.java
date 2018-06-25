@@ -31,7 +31,8 @@ public class SingleVMPoolUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getPortalCache(String)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getPortalCache(String)}
 	 */
 	@Deprecated
 	public static <K extends Serializable, V> PortalCache<K, V> getCache(
@@ -52,7 +53,8 @@ public class SingleVMPoolUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getPortalCacheManager()}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getPortalCacheManager()}
 	 */
 	@Deprecated
 	public static <K extends Serializable, V> PortalCacheManager<K, V>
@@ -81,7 +83,8 @@ public class SingleVMPoolUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #removePortalCache(String)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #removePortalCache(String)}
 	 */
 	@Deprecated
 	public static void removeCache(String portalCacheName) {

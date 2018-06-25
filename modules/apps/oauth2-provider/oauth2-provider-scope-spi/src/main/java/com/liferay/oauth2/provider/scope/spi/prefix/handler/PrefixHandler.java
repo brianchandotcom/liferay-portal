@@ -28,6 +28,7 @@ public interface PrefixHandler {
 
 	/**
 	 * A {@link PrefixHandler} that keeps the input unchanged.
+	 *
 	 * @review
 	 */
 	public static PrefixHandler PASSTHROUGH_PREFIXHANDLER =
@@ -47,17 +48,18 @@ public interface PrefixHandler {
 
 	/**
 	 * Adds the prefix to a given input.
-	 * @param input String to be prefixed.
+	 *
+	 * @param  input String to be prefixed.
 	 * @return a new String with the prefix.
 	 * @review
 	 */
 	public String addPrefix(String input);
 
 	/**
-	 * A new {@link PrefixHandler} taking into account the given
-	 * {@link PrefixHandler}
+	 * A new {@link PrefixHandler} taking into account the given {@link
+	 * PrefixHandler}
 	 *
-	 * @param prefixHandler the prefix handler to append.
+	 * @param  prefixHandler the prefix handler to append.
 	 * @return a new prefix handler combining both prefix handlers.
 	 * @review
 	 */

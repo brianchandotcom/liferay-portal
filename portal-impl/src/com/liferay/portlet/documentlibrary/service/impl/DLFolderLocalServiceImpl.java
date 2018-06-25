@@ -151,7 +151,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #deleteAllByGroup(long)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #deleteAllByGroup(long)}
 	 */
 	@Deprecated
 	@Override
@@ -379,8 +380,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getGroupFolderIds(long,
-	 *             long)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getGroupFolderIds(long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -592,8 +593,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getGroupSubfolderIds(List,
-	 *             long, long)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getGroupSubfolderIds(List, long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -772,8 +773,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #updateFolder(long, long,
-	 *             String, String, long, List, int, ServiceContext)}
+	 * @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
+	 *             long, String, String, long, List, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

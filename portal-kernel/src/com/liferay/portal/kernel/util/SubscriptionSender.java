@@ -496,7 +496,8 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #setCurrentUserId(long)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #setCurrentUserId(long)}
 	 */
 	@Deprecated
 	public void setUserId(long userId) {

@@ -35,7 +35,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Daniel Kocsis
+ * @author     Daniel Kocsis
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.exportimport.test.util.lar.BaseWorkflowedStagedModelDataHandlerTestCase}
  */

@@ -1300,8 +1300,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
-	*/
+	 * @deprecated As of Judson, with no direct replacement
+	 */
 	@Deprecated
 	@Override
 	public List<MBMessage> getNoAssetMessages() {
@@ -1699,7 +1699,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #updateMessage(long, long, String, String, List, double, boolean, ServiceContext)}
+	 * @deprecated As of Judson, replaced by {@link #updateMessage(long, long,
+	 *             String, String, List, double, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

@@ -193,7 +193,8 @@ public class SchedulerEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #_getSchedulerEngineHelper()}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #_getSchedulerEngineHelper()}
 	 */
 	@Deprecated
 	public static SchedulerEngineHelper getSchedulerEngineHelper() {

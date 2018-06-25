@@ -113,7 +113,8 @@ public class FinderPath {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #encodeLocalCacheKey(String)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #encodeLocalCacheKey(String)}
 	 */
 	@Deprecated
 	public Serializable encodeLocalCacheKey(Object[] arguments) {

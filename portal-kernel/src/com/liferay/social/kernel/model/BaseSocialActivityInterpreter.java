@@ -528,8 +528,8 @@ public abstract class BaseSocialActivityInterpreter
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getJSONValue(String, String,
-	 *             String)}
+	 * @deprecated As of Wilberforce, replaced by {@link #getJSONValue(String,
+	 *             String, String)}
 	 */
 	@Deprecated
 	protected String getValue(String json, String key, String defaultValue) {

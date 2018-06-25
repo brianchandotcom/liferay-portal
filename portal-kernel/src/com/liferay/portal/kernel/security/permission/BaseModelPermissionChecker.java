@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.security.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Miguel Pastor
+ * @author     Miguel Pastor
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.portal.kernel.security.permission.resource.
  *             ModelResourcePermission}

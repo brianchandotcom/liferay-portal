@@ -44,7 +44,7 @@ import java.nio.charset.CharsetEncoder;
 import java.util.List;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.search.suggest.BaseSpellCheckIndexWriter}
  */

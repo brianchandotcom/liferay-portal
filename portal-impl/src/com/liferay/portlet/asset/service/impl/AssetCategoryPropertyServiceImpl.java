@@ -21,8 +21,8 @@ import com.liferay.portlet.asset.service.base.AssetCategoryPropertyServiceBaseIm
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Jorge Ferrer
+ * @author     Brian Wing Shun Chan
+ * @author     Jorge Ferrer
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.asset.category.property.service.impl.AssetCategoryPropertyServiceImpl}
  */

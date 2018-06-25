@@ -14,9 +14,21 @@
 
 package com.liferay.talend.avro;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.avro.Schema;
 
+import org.talend.daikon.avro.AvroUtils;
+import org.talend.daikon.avro.LogicalTypeUtils;
+import org.talend.daikon.avro.SchemaConstants;
 import org.talend.daikon.avro.converter.AvroConverter;
+import org.talend.daikon.avro.converter.string.StringBooleanConverter;
+import org.talend.daikon.avro.converter.string.StringIntConverter;
+import org.talend.daikon.avro.converter.string.StringLongConverter;
+import org.talend.daikon.avro.converter.string.StringStringConverter;
+import org.talend.daikon.avro.converter.string.StringTimestampConverter;
 
 /**
  * @author Zoltán Takács
@@ -49,6 +61,52 @@ public abstract class BaseConverter<DatumT, AvroT>
 	@Override
 	public Schema getSchema() {
 		return _schema;
+	}
+
+	/**
+	 * Initialize converters per each schema field
+	 *
+	 * @param schema design schema
+	 */
+	protected void initConverters(Schema schema) {
+		List<Schema.Field> fields = schema.getFields();
+
+		avroConverters = new AvroConverter[fields.size()];
+
+		for (int i = 0; i < fields.size(); i++) {
+			Schema.Field field = fields.get(i);
+
+			Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
+
+			if (LogicalTypeUtils.isLogicalTimestampMillis(fieldSchema)) {
+				String datePattern = field.getProp(
+					SchemaConstants.TALEND_COLUMN_PATTERN);
+
+				avroConverters[i] = new StringTimestampConverter(datePattern);
+			}
+			else {
+				Schema.Type type = fieldSchema.getType();
+
+				avroConverters[i] = _converterRegistry.get(type);
+			}
+		}
+	}
+
+	/**
+	 * Stores converters. Array index corresponds to field index
+	 */
+	protected AvroConverter[] avroConverters;
+
+	private static final Map<Schema.Type, AvroConverter> _converterRegistry;
+
+	static {
+		_converterRegistry = new HashMap<>();
+
+		_converterRegistry.put(
+			Schema.Type.BOOLEAN, new StringBooleanConverter());
+		_converterRegistry.put(Schema.Type.INT, new StringIntConverter());
+		_converterRegistry.put(Schema.Type.LONG, new StringLongConverter());
+		_converterRegistry.put(Schema.Type.STRING, new StringStringConverter());
 	}
 
 	/**

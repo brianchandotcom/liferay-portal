@@ -46,12 +46,12 @@ public class SaveFormInstanceMVCResourceCommandTest {
 		Date date = calendar.getTime();
 
 		Assert.assertEquals(
-			"4/18/18 2:00 PM",
+			"Apr 18, 2018 2:00 PM",
 			_saveFormInstanceMVCResourceCommand.formatDate(
 				date, Locale.US, "UTC"));
 
 		Assert.assertEquals(
-			"4/18/18 11:00 AM",
+			"Apr 18, 2018 11:00 AM",
 			_saveFormInstanceMVCResourceCommand.formatDate(
 				date, Locale.US, "America/Sao_Paulo"));
 	}

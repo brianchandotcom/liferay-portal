@@ -67,6 +67,12 @@ public class ModulesSemVerBatchTestClassGroup
 								return FileVisitResult.CONTINUE;
 							}
 
+							String filePathString = filePath.toString();
+
+							if (filePathString.endsWith("-test")) {
+								return FileVisitResult.SKIP_SUBTREE;
+							}
+
 							File currentDirectory = filePath.toFile();
 
 							File bndBndFile = new File(

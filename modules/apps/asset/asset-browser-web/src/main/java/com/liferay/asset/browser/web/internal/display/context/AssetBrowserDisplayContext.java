@@ -301,46 +301,7 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		if (_getKeywords() != null) {
-			portletURL.setParameter("keywords", _getKeywords());
-		}
-
-		portletURL.setParameter("groupId", String.valueOf(_getGroupId()));
-
-		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
-
-		if (selectedGroupId > 0) {
-			portletURL.setParameter(
-				"selectedGroupId", String.valueOf(selectedGroupId));
-		}
-		else {
-			long[] selectedGroupIds = _getSelectedGroupIds();
-
-			if (selectedGroupIds.length > 0) {
-				portletURL.setParameter(
-					"selectedGroupIds", StringUtil.merge(selectedGroupIds));
-			}
-		}
-
-		portletURL.setParameter(
-			"refererAssetEntryId", String.valueOf(getRefererAssetEntryId()));
-		portletURL.setParameter("typeSelection", getTypeSelection());
-		portletURL.setParameter(
-			"subtypeSelectionId", String.valueOf(getSubtypeSelectionId()));
-
-		if (_getListable() != null) {
-			portletURL.setParameter("listable", String.valueOf(_getListable()));
-		}
-
-		portletURL.setParameter(
-			"showNonindexable", String.valueOf(_isShowNonindexable()));
-		portletURL.setParameter(
-			"showScheduled", String.valueOf(_isShowScheduled()));
-		portletURL.setParameter("eventName", getEventName());
-
-		return portletURL;
+		return _getPortletURL(false);
 	}
 
 	public long getRefererAssetEntryId() {
@@ -355,7 +316,7 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public String getSearchActionURL() {
-		PortletURL searchActionURL = getPortletURL();
+		PortletURL searchActionURL = _getPortletURL(true);
 
 		return searchActionURL.toString();
 	}
@@ -552,6 +513,49 @@ public class AssetBrowserDisplayContext {
 					});
 			}
 		};
+	}
+
+	private PortletURL _getPortletURL(boolean search) {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		if (!search && (_getKeywords() != null)) {
+			portletURL.setParameter("keywords", _getKeywords());
+		}
+
+		portletURL.setParameter("groupId", String.valueOf(_getGroupId()));
+
+		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
+
+		if (selectedGroupId > 0) {
+			portletURL.setParameter(
+				"selectedGroupId", String.valueOf(selectedGroupId));
+		}
+		else {
+			long[] selectedGroupIds = _getSelectedGroupIds();
+
+			if (selectedGroupIds.length > 0) {
+				portletURL.setParameter(
+					"selectedGroupIds", StringUtil.merge(selectedGroupIds));
+			}
+		}
+
+		portletURL.setParameter(
+			"refererAssetEntryId", String.valueOf(getRefererAssetEntryId()));
+		portletURL.setParameter("typeSelection", getTypeSelection());
+		portletURL.setParameter(
+			"subtypeSelectionId", String.valueOf(getSubtypeSelectionId()));
+
+		if (_getListable() != null) {
+			portletURL.setParameter("listable", String.valueOf(_getListable()));
+		}
+
+		portletURL.setParameter(
+			"showNonindexable", String.valueOf(_isShowNonindexable()));
+		portletURL.setParameter(
+			"showScheduled", String.valueOf(_isShowScheduled()));
+		portletURL.setParameter("eventName", getEventName());
+
+		return portletURL;
 	}
 
 	private long[] _getSelectedGroupIds() {

@@ -25,9 +25,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Mate Thurzo
- * @author Adolfo Pérez
+ * @author     Brian Wing Shun Chan
+ * @author     Mate Thurzo
+ * @author     Adolfo Pérez
  * @deprecated As of Judson, with no direct replacement
  */
 @Component(

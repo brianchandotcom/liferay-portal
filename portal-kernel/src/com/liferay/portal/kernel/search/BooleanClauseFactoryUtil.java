@@ -89,7 +89,8 @@ public class BooleanClauseFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link getBooleanClauseFactory()}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             getBooleanClauseFactory()}
 	 */
 	@Deprecated
 	public static BooleanClauseFactory getBooleanClauseFactory(

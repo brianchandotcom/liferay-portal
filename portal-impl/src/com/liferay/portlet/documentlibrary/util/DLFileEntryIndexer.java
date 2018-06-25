@@ -95,10 +95,9 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Raymond Augé
- * @author Alexander Chow
- *
+ * @author     Brian Wing Shun Chan
+ * @author     Raymond Augé
+ * @author     Alexander Chow
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.document.library.internal.search.DLFileEntryIndexer}
  */

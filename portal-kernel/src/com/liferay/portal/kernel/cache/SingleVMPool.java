@@ -25,7 +25,8 @@ public interface SingleVMPool {
 	public void clear();
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getPortalCache(String)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getPortalCache(String)}
 	 */
 	@Deprecated
 	public PortalCache<? extends Serializable, ?> getCache(
@@ -40,7 +41,8 @@ public interface SingleVMPool {
 		String portalCacheName, boolean blocking);
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getPortalCacheManager()}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getPortalCacheManager()}
 	 */
 	@Deprecated
 	public PortalCacheManager<? extends Serializable, ?> getCacheManager();
@@ -55,7 +57,8 @@ public interface SingleVMPool {
 		getPortalCacheManager();
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #removePortalCache(String)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #removePortalCache(String)}
 	 */
 	@Deprecated
 	public void removeCache(String portalCacheName);

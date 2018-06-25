@@ -48,8 +48,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
+ * @author     Adam Brandizzi
  * @deprecated As of Judson, since 7.1.0
- * @author Adam Brandizzi
  */
 @Deprecated
 public class CalendarIndexer extends BaseIndexer<Calendar> {

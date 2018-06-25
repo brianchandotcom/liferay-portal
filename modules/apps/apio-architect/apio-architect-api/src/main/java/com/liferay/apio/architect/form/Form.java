@@ -52,8 +52,8 @@ public interface Form<T> {
 	public T get(Body body);
 
 	/**
-	 * Returns this form's description, which depends on the HTTP request
-	 * accept language.
+	 * Returns this form's description, which depends on the HTTP request accept
+	 * language.
 	 *
 	 * @param  acceptLanguage the HTTP request accept language information
 	 * @return the form's description
@@ -84,7 +84,8 @@ public interface Form<T> {
 	public List<T> getList(Body body);
 
 	/**
-	 * Returns the form's title, which depends on the HTTP request accept language.
+	 * Returns the form's title, which depends on the HTTP request accept
+	 * language.
 	 *
 	 * @param  acceptLanguage the HTTP request accept language information
 	 * @return the form's title

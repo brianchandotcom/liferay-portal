@@ -131,8 +131,8 @@ public class Encryptor {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link
-	 *             DigesterUtil#digest(String, String...)}
+	 * @deprecated As of Judson, replaced by {@link DigesterUtil#digest(String,
+	 *             String...)}
 	 */
 	@Deprecated
 	public static String digest(String algorithm, String text) {

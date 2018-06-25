@@ -158,7 +158,9 @@ public class ExportImportConfigurationFactory {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link ExportImportConfigurationParameterMapFactoryUtil#buildParameterMap()}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             ExportImportConfigurationParameterMapFactoryUtil#buildParameterMap(
+	 *             )}
 	 */
 	@Deprecated
 	public static Map<String, String[]> getDefaultPublishingParameters(

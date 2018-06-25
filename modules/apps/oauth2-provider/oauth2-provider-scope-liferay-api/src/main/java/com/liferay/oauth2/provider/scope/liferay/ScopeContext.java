@@ -33,26 +33,30 @@ public interface ScopeContext {
 	/**
 	 * Sets access token string into the context to be used during security
 	 * check
+	 *
 	 * @param accessToken
 	 */
 	public void setAccessToken(String accessToken);
 
 	/**
 	 * Sets application name into the context to be used during security check
-	 * @param applicationName
+	 *
+	 * @param  applicationName
 	 * @review
 	 */
 	public void setApplicationName(String applicationName);
 
 	/**
 	 * Sets OSGi bundle into the context to be used during security check
-	 * @param bundle
+	 *
+	 * @param  bundle
 	 * @review
 	 */
 	public void setBundle(Bundle bundle);
 
 	/**
 	 * Sets request companyId into the context to be used during security check
+	 *
 	 * @param companyId
 	 */
 	public void setCompanyId(long companyId);

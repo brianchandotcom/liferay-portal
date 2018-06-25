@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Leonardo Barros
+ * @author     Leonardo Barros
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

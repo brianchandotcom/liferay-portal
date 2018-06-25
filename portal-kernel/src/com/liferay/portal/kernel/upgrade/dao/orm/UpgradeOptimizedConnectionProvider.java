@@ -20,7 +20,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * @author Cristina González
+ * @author     Cristina González
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

@@ -51,7 +51,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Judson, replaced by {@link com.liferay.petra.process.
  *             ClassPathUtil} and {@link com.liferay.portal.util.
  *             PortalClassPathUtil}

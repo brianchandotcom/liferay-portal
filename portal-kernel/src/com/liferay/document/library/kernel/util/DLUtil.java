@@ -220,8 +220,8 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getThumbnailSrc(FileEntry,
-	 *             ThemeDisplay)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getThumbnailSrc(FileEntry, ThemeDisplay)}
 	 */
 	@Deprecated
 	public static String getThumbnailSrc(
@@ -233,8 +233,8 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getThumbnailSrc(FileEntry,
-	 *             FileVersion, ThemeDisplay)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getThumbnailSrc(FileEntry, FileVersion, ThemeDisplay)}
 	 */
 	@Deprecated
 	public static String getThumbnailSrc(

@@ -2466,8 +2466,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      languageId the primary key of the language
 	 * @return     the updated layout
 	 * @throws     PortalException if a portal exception occurred
-	 * @deprecated As of Wilberforce, replaced by {@link #updateFriendlyURL(long,
-	 *             long, String, String)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #updateFriendlyURL(long, long, String, String)}
 	 */
 	@Deprecated
 	@Override

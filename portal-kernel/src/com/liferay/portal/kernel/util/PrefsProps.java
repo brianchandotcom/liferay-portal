@@ -188,16 +188,16 @@ public interface PrefsProps {
 	public short getShort(long companyId, String name, short defaultValue);
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getShort(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #getShort(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public short getShort(
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getShort(PortletPreferences,
-	 *             String, short)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #getShort(PortletPreferences, String, short)}
 	 */
 	@Deprecated
 	public short getShort(

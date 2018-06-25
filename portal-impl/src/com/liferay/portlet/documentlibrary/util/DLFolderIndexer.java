@@ -47,8 +47,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Alexander Chow
- *
+ * @author     Alexander Chow
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.document.library.internal.search.DLFolderIndexer}
  */

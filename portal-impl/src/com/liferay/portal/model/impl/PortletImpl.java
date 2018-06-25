@@ -3600,13 +3600,8 @@ public class PortletImpl extends PortletBaseImpl {
 	 * String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	 * String, String, String)} are to be referenced in the page's header.
 	 *
-	 * @param portletDependencyCssEnabled whether the CSS
-	 *        resource dependencies that are specified in <code>portlet.xml</code>,
-	 *        @{@link javax.portlet.annotations.Dependency},
-	 *        {@link javax.portlet.HeaderResponse#addDependency(String, String,
-	 *        String)}, or {@link javax.portlet.HeaderResponse#addDependency(
-	 *        String, String, String, String)} are to be referenced in the
-	 *        page's header
+	 * @param portletDependencyCssEnabled whether the CSS resource dependencies
+	 *        that are specified in <code>portlet.xml</code>,
 	 */
 	public void setPortletDependencyCssEnabled(
 		boolean portletDependencyCssEnabled) {
@@ -3621,13 +3616,13 @@ public class PortletImpl extends PortletBaseImpl {
 	 * String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	 * String, String, String)} are to be referenced in the page's header.
 	 *
-	 * @param portletDependencyJavaScriptEnabled whether the
-	 *        JavaScript resource dependencies specified in
-	 *        <code>portlet.xml</code>, @{@link javax.portlet.annotations.Dependency},
-	 *        {@link javax.portlet.HeaderResponse#addDependency(String, String,
-	 *        String)}, or {@link javax.portlet.HeaderResponse#addDependency(
-	 *        String, String, String, String)} are to be referenced in the
-	 *        page's header
+	 * @param portletDependencyJavaScriptEnabled whether the JavaScript resource
+	 *        dependencies specified in <code>portlet.xml</code>, @{@link
+	 *        javax.portlet.annotations.Dependency}, {@link
+	 *        javax.portlet.HeaderResponse#addDependency(String, String,
+	 *        String)}, or {@link
+	 *        javax.portlet.HeaderResponse#addDependency(String, String, String,
+	 *        String)} are to be referenced in the page's header
 	 */
 	public void setPortletDependencyJavaScriptEnabled(
 		boolean portletDependencyJavaScriptEnabled) {

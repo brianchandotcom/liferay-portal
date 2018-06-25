@@ -215,7 +215,8 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link #getPortalCacheManager()}
+		 * @deprecated As of Judson, replaced by {@link
+		 *             #getPortalCacheManager()}
 		 */
 		@Deprecated
 		@Override
@@ -446,7 +447,8 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link #getPortalCacheManager()}
+		 * @deprecated As of Judson, replaced by {@link
+		 *             #getPortalCacheManager()}
 		 */
 		@Deprecated
 		@Override

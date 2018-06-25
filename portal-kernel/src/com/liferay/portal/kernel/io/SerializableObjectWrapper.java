@@ -28,7 +28,7 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 /**
- * @author Tina Tian
+ * @author     Tina Tian
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

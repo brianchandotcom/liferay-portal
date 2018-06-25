@@ -327,8 +327,8 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	/**
 	 * Returns all the asset links of an AssetEntry.
 	 *
-	 * @param classNameId AssetEntry's classNameId
-	 * @param classPK AssetEntry's classPK
+	 * @param  classNameId AssetEntry's classNameId
+	 * @param  classPK AssetEntry's classPK
 	 * @return the asset links of the given entry params
 	 */
 	@Override

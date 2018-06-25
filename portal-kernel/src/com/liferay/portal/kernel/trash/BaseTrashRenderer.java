@@ -48,8 +48,8 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(PortletRequest,
-	 *             javax.portlet.PortletResponse)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getSummary(PortletRequest, javax.portlet.PortletResponse)}
 	 */
 	@Deprecated
 	@Override

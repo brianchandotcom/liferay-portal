@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
- * @author Pei-Jung Lan
+ * @author     Pei-Jung Lan
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

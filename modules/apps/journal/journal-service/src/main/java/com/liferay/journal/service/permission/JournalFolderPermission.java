@@ -26,8 +26,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Juan Fernández
- * @author Zsolt Berentey
+ * @author     Juan Fernández
+ * @author     Zsolt Berentey
  * @deprecated As of Judson, with no direct replacement
  */
 @Component(

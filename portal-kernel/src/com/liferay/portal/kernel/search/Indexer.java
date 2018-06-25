@@ -81,8 +81,8 @@ public interface Indexer<T> {
 	public String getSortField(String orderByCol, int sortType);
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(Document, String,
-	 *             PortletRequest, PortletResponse)}
+	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(Document,
+	 *             String, PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	public Summary getSummary(Document document, Locale locale, String snippet)

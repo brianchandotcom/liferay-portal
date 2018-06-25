@@ -15,8 +15,9 @@
 package com.liferay.portal.url.builder;
 
 /**
- * A builder that returns a main resource URL. Main resources live in
- * {@link com.liferay.portal.kernel.util.Portal#getPathMain()}.
+ * A builder that returns a main resource URL. Main resources live in {@link
+ * com.liferay.portal.kernel.util.Portal#getPathMain()}.
+ *
  * @author Iván Zaera Avellón
  * @review
  */

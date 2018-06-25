@@ -23,7 +23,7 @@ import java.io.NotSerializableException;
 import java.io.ObjectOutputStream;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

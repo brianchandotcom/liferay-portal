@@ -449,9 +449,10 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #findO_ByKeywords(long, long,
-	 *             String, String, String, Long, Long, LinkedHashMap<String,
-	 *             Object>, int, int, OrderByComparator<Organization>)}
+	 * @deprecated As of Judson, replaced by {@link #findO_ByKeywords(long,
+	 *             long, String, String, String, Long, Long,
+	 *             LinkedHashMap<String, Object>, int, int,
+	 *             OrderByComparator<Organization>)}
 	 */
 	@Deprecated
 	@Override

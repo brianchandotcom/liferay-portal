@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author Tina Tian
+ * @author     Tina Tian
  * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.search.internal.permission.DefaultSearchResultPermissionFilter}
  */

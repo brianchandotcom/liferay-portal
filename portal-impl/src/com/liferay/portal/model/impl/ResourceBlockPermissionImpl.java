@@ -23,7 +23,7 @@ package com.liferay.portal.model.impl;
  * actions allowed by this permission.
  * </p>
  *
- * @author Connor McKay
+ * @author     Connor McKay
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

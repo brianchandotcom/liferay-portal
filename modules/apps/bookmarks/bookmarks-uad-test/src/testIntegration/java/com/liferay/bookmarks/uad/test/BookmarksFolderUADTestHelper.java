@@ -58,10 +58,15 @@ public class BookmarksFolderUADTestHelper {
 	}
 
 	/**
-	 * Implement cleanUpDependencies(List<BookmarksFolder> bookmarksFolders) if tests require additional tear down logic.
+	 * Implement cleanUpDependencies(List<BookmarksFolder> bookmarksFolders) if
+	 * tests require additional tear down logic.
 	 *
 	 * <p>
-	 * Several UAD tests depend on creating one or more valid BookmarksFolders with specified user ID and status by user ID in order to execute correctly. Implement cleanUpDependencies(List<BookmarksFolder> bookmarksFolders) such that any additional objects created during the construction of bookmarksFolders are safely removed.
+	 * Several UAD tests depend on creating one or more valid BookmarksFolders
+	 * with specified user ID and status by user ID in order to execute
+	 * correctly. Implement cleanUpDependencies(List<BookmarksFolder>
+	 * bookmarksFolders) such that any additional objects created during the
+	 * construction of bookmarksFolders are safely removed.
 	 * </p>
 	 */
 	public void cleanUpDependencies(List<BookmarksFolder> bookmarksFolders)

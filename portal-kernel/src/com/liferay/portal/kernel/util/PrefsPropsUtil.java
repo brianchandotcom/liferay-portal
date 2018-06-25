@@ -315,8 +315,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getShort(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #getShort(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public static short getShort(
@@ -326,8 +326,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #getShort(PortletPreferences,
-	 *             String, short)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #getShort(PortletPreferences, String, short)}
 	 */
 	@Deprecated
 	public static short getShort(

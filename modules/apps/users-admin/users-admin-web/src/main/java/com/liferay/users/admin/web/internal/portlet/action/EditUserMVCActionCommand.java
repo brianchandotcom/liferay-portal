@@ -360,8 +360,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
-	*/
+	 * @deprecated As of Judson, with no direct replacement
+	 */
 	@Deprecated
 	protected List<AnnouncementsDelivery> getAnnouncementsDeliveries(
 		ActionRequest actionRequest) {
@@ -370,8 +370,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
-	*/
+	 * @deprecated As of Judson, with no direct replacement
+	 */
 	@Deprecated
 	protected List<AnnouncementsDelivery> getAnnouncementsDeliveries(
 			ActionRequest actionRequest, User user)
@@ -394,8 +394,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	/**
-	* @deprecated As of Judson, with no direct replacement
-	*/
+	 * @deprecated As of Judson, with no direct replacement
+	 */
 	@Deprecated
 	protected void setAnnouncementsDeliveryLocalService(
 		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {

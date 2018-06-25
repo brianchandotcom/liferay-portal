@@ -189,8 +189,8 @@ public class LocalProcessLauncher {
 		}
 
 		/**
-		 * @deprecated As of Judson, replaced by {@link #writeProcessCallable(
-		 *             ProcessCallable) }
+		 * @deprecated As of Judson, replaced by {@link
+		 *             #writeProcessCallable(ProcessCallable) }
 		 */
 		@Deprecated
 		public static com.liferay.portal.kernel.process.log.ProcessOutputStream

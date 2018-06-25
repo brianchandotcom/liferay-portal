@@ -25,7 +25,7 @@ import java.util.Map;
  * Manages a list resource block IDs and the actions that can be performed on
  * the resources in each.
  *
- * @author Connor McKay
+ * @author     Connor McKay
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

@@ -87,8 +87,8 @@ public interface AssetRenderer<T> extends Renderer {
 	public String getSummary();
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(PortletRequest,
-	 *             PortletResponse)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getSummary(PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	public String getSummary(Locale locale);

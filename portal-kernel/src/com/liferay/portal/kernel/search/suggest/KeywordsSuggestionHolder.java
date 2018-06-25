@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * @author Josef Sustacek
+ * @author     Josef Sustacek
  * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.search.web.internal.search.suggest.KeywordsSuggestionHolder}
  */

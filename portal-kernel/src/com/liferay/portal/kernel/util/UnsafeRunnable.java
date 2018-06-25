@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 /**
- * @author Adolfo Pérez
+ * @author     Adolfo Pérez
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

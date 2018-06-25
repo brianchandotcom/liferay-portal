@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
- * @author Eduardo Lundgren
+ * @author     Eduardo Lundgren
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

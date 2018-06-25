@@ -115,8 +115,9 @@ public class LayoutSetPrototypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #addLayoutSetPrototype(long,
-	 *             long, Map, Map, boolean, boolean, ServiceContext)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #addLayoutSetPrototype(long, long, Map, Map, boolean,
+	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

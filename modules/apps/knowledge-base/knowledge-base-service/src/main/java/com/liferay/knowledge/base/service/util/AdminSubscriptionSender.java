@@ -55,8 +55,9 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #AdminSubscriptionSender(
-	 *             KBArticle, ModelResourcePermission, ServiceContext)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #AdminSubscriptionSender(KBArticle, ModelResourcePermission,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	public AdminSubscriptionSender(

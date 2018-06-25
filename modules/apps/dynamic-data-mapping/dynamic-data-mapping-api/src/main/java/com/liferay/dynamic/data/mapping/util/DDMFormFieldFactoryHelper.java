@@ -50,8 +50,8 @@ public class DDMFormFieldFactoryHelper {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #DDMFormFieldFactoryHelper(
-	 *             DDMFormFactoryHelper, Method)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #DDMFormFieldFactoryHelper(DDMFormFactoryHelper, Method)}
 	 */
 	@Deprecated
 	public DDMFormFieldFactoryHelper(Method method) {

@@ -34,7 +34,7 @@ public interface ScopeMapper {
 	/**
 	 * Renames an application provided scope to new scope names
 	 *
-	 * @param scope application provided scope
+	 * @param  scope application provided scope
 	 * @return set of new names for the scope
 	 * @review
 	 */

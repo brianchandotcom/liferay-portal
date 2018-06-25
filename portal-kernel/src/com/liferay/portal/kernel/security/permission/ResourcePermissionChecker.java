@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.security.permission;
 
 /**
- * @author Miguel Pastor
+ * @author     Miguel Pastor
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.portal.kernel.security.permission.resource.
  *             PortletResourcePermission}

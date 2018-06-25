@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Yi-Chen Tsai
-*/
+ */
 public class TableUtil {
 
 	public static List<List<String>> getRawDataListFromString(

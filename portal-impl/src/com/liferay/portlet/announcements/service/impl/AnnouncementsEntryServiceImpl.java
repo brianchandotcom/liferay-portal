@@ -47,8 +47,8 @@ public class AnnouncementsEntryServiceImpl
 	extends AnnouncementsEntryServiceBaseImpl {
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #addEntry(long, long, String,
-	 *             String, String, String, Date, Date, int, boolean)}
+	 * @deprecated As of Judson, replaced by {@link #addEntry(long, long,
+	 *             String, String, String, String, Date, Date, int, boolean)}
 	 */
 	@Deprecated
 	@Override

@@ -19,7 +19,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * @author Michael C. Han
+ * @author     Michael C. Han
  * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.background.task.internal.ThreadLocalAwareBackgroundTaskExecutor}
  */

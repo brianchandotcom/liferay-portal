@@ -17,7 +17,7 @@ package com.liferay.journal.web.social;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 
 /**
- * @author Eduardo Garcia
+ * @author     Eduardo Garcia
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

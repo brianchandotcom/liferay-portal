@@ -22,7 +22,7 @@ import com.liferay.registry.ServiceTracker;
 import java.util.List;
 
 /**
- * @author David Mendez Gonzalez
+ * @author     David Mendez Gonzalez
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

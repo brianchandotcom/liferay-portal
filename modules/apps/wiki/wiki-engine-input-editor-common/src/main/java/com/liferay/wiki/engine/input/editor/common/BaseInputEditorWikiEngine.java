@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Iván Zaera
+ * @author     Iván Zaera
  * @deprecated As of Judson, replaced by {@link BaseWikiEngine}
  */
 @Deprecated

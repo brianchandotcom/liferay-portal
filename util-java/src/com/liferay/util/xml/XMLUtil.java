@@ -26,8 +26,8 @@ import java.io.IOException;
 import org.dom4j.DocumentException;
 
 /**
- * @author Leonardo Barros
- * @see    com.liferay.petra.xml.XMLUtil
+ * @author     Leonardo Barros
+ * @see        com.liferay.petra.xml.XMLUtil
  * @deprecated As of Judson
  */
 @Deprecated

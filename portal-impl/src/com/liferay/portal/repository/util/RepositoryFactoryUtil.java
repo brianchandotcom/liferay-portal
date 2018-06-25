@@ -25,7 +25,8 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author     Mika Koivisto
- * @deprecated As of Wilberforce, replaced by {@link ExternalRepositoryFactoryUtil}
+ * @deprecated As of Wilberforce, replaced by {@link
+ *             ExternalRepositoryFactoryUtil}
  */
 @Deprecated
 public class RepositoryFactoryUtil {

@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of Judson, replaced by {@link
  *             com.liferay.petra.function.UnsafeFunction}
  */

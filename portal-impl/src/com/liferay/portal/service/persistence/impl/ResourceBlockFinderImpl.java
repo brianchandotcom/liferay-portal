@@ -27,7 +27,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.util.Iterator;
 
 /**
- * @author Connor McKay
+ * @author     Connor McKay
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

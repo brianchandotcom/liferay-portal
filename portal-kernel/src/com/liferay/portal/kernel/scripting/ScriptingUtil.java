@@ -48,8 +48,8 @@ public class ScriptingUtil {
 	}
 
 	/**
-	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set, String,
-	 *             String)}
+	 * @deprecated As of Wilberforce, replaced by {@link #eval(Set, Map, Set,
+	 *             String, String)}
 	 */
 	@Deprecated
 	public static Map<String, Object> eval(

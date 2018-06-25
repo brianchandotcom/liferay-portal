@@ -3469,8 +3469,8 @@ public class StagingImpl implements Staging {
 	}
 
 	/**
-	 * @deprecated As of Judson, replaced by {@link #validateRemote(long, String,
-	 *             int, String, boolean, long)}
+	 * @deprecated As of Judson, replaced by {@link #validateRemote(long,
+	 *             String, int, String, boolean, long)}
 	 */
 	@Deprecated
 	@Override

@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Charles May
+ * @author     Brian Wing Shun Chan
+ * @author     Charles May
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

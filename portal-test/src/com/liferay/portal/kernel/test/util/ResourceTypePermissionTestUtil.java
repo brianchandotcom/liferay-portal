@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil;
 
 /**
- * @author Alberto Chaparro
+ * @author     Alberto Chaparro
  * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated

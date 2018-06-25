@@ -40,6 +40,16 @@ $grayTextColor: #6B6C7E;
 		margin-bottom: 0;
 	}
 
+	.pencil-wrapper {
+		button {
+			float: right;
+			margin-top: 1.6rem;
+		}
+		.input-text-wrapper {
+			margin-right: 4rem;
+		}
+	}
+
 	.sheet .panel-group .panel-body {
 		margin-bottom: 0;
 	}

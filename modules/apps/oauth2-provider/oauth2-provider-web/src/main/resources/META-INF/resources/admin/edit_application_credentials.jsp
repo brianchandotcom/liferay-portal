@@ -75,19 +75,19 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 
 					<c:if test="<%= oAuth2Application != null %>">
 						<aui:fieldset style="margin-bottom: 1em; border-bottom: 2px solid #F0F0F0;">
-							<aui:input name="clientId" readonly="true" required="<%= true %>" type="text" />
-
-							<aui:field-wrapper>
+							<div class="pencil-wrapper">
 								<aui:button href="" icon="icon-pencil" onClick='<%= renderResponse.getNamespace() + "showEditClientIdModal();" %>' value="" />
-							</aui:field-wrapper>
+
+								<aui:input name="clientId" readonly="true" required="<%= true %>" type="text" />
+							</div>
 
 							<aui:input name="originalClientId" type="hidden" value="<%= clientId %>" />
 
-							<aui:input name="clientSecret" readonly="true" type="password" value="<%= clientSecret %>" />
-
-							<aui:field-wrapper>
+							<div class="pencil-wrapper">
 								<aui:button href="" icon="icon-pencil" onClick='<%= renderResponse.getNamespace() + "showEditClientSecretModal();" %>' value="" />
-							</aui:field-wrapper>
+
+								<aui:input name="clientSecret" readonly="true" type="password" value="<%= clientSecret %>" />
+							</div>
 
 							<aui:input name="originalClientSecret" type="hidden" value="<%= clientSecret %>" />
 						</aui:fieldset>

@@ -1,7 +1,7 @@
 import middlewares from '../middlewares/defaults';
 
 const LCS_ENDPOINT =
-	'https://ec-dev.liferay.com:8095/api/analyticsgateway/send-analytics-events';
+	'https://analytics-gw.liferay.com/api/analyticsgateway/send-analytics-events';
 
 /**
  * Client used to abstract communication with the Analytics LCS Endpoint. It exposes

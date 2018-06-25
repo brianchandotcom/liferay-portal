@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,6 +55,7 @@ public class DDMFormAssetRenderer
 		DDMFormInstanceRecord formInstanceRecord,
 		DDMFormInstanceRecordVersion formInstanceRecordVersion,
 		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
+		DDMFormInstanceVersionLocalService formInstanceVersionLocalService,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMFormValuesMerger ddmFormValuesMerger,
@@ -63,6 +65,7 @@ public class DDMFormAssetRenderer
 		_formInstanceRecord = formInstanceRecord;
 		_formInstanceRecordVersion = formInstanceRecordVersion;
 		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
+		_ddmFormInstanceVersionLocalService = formInstanceVersionLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
@@ -196,8 +199,8 @@ public class DDMFormAssetRenderer
 			ddmFormViewFormInstanceRecordDisplayContext =
 				new DDMFormViewFormInstanceRecordDisplayContext(
 					request, response, _ddmFormInstanceRecordLocalService,
-					_ddmFormRenderer, _ddmFormValuesFactory,
-					_ddmFormValuesMerger);
+					_ddmFormInstanceVersionLocalService, _ddmFormRenderer,
+					_ddmFormValuesFactory, _ddmFormValuesMerger);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -213,6 +216,8 @@ public class DDMFormAssetRenderer
 		_ddmFormInstanceModelResourcePermission;
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
+	private final DDMFormInstanceVersionLocalService
+		_ddmFormInstanceVersionLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;

@@ -20,8 +20,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.type.numeric.internal.util.NumericDDMFormFieldUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -64,11 +67,14 @@ public class NumericDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"placeholder",
 			getValueString(placeholder, locale, ddmFormFieldRenderingContext));
+
+		String predefinedValue = getValueString(
+			ddmFormField.getPredefinedValue(), locale,
+			ddmFormFieldRenderingContext);
+
 		parameters.put(
-			"predefinedValue",
-			getValueString(
-				ddmFormField.getPredefinedValue(), locale,
-				ddmFormFieldRenderingContext));
+			"predefinedValue", getFormattedValue(predefinedValue, locale));
+
 		parameters.put("symbols", getSymbolsMap(locale));
 
 		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
@@ -77,6 +83,11 @@ public class NumericDDMFormFieldTemplateContextContributor
 		parameters.put(
 			"tooltip",
 			getValueString(tooltip, locale, ddmFormFieldRenderingContext));
+
+		String value = HtmlUtil.extractText(
+			ddmFormFieldRenderingContext.getValue());
+
+		parameters.put("value", getFormattedValue(value, locale));
 
 		return parameters;
 	}
@@ -101,16 +112,23 @@ public class NumericDDMFormFieldTemplateContextContributor
 		return ddmFormField.getDataType();
 	}
 
-	protected DecimalFormatSymbols getDecimalFormatSymbols(Locale locale) {
-		DecimalFormat formatter = (DecimalFormat)DecimalFormat.getInstance(
+	protected String getFormattedValue(String value, Locale locale) {
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		DecimalFormat numberFormat = NumericDDMFormFieldUtil.getNumberFormat(
 			locale);
 
-		return formatter.getDecimalFormatSymbols();
+		return numberFormat.format(GetterUtil.getNumber(value));
 	}
 
 	protected Map<String, String> getSymbolsMap(Locale locale) {
-		DecimalFormatSymbols decimalFormatSymbols = getDecimalFormatSymbols(
+		DecimalFormat formatter = NumericDDMFormFieldUtil.getNumberFormat(
 			locale);
+
+		DecimalFormatSymbols decimalFormatSymbols =
+			formatter.getDecimalFormatSymbols();
 
 		Map<String, String> symbolsMap = new HashMap<>();
 

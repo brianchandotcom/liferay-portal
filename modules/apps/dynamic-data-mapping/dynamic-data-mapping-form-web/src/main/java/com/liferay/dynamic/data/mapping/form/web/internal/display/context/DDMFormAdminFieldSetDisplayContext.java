@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -80,6 +81,7 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMFormWebConfiguration ddmFormWebConfiguration,
 		DDMFormInstanceRecordLocalService formInstanceRecordLocalService,
 		DDMFormInstanceService formInstanceService,
+		DDMFormInstanceVersionLocalService formInstanceVersionLocalService,
 		DDMFormFieldTypeServicesTracker formFieldTypeServicesTracker,
 		DDMFormFieldTypesJSONSerializer formFieldTypesJSONSerializer,
 		DDMFormRenderer formRenderer, DDMFormValuesFactory formValuesFactory,
@@ -93,10 +95,10 @@ public class DDMFormAdminFieldSetDisplayContext
 			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 			ddmExporterFactory, ddmFormWebConfiguration,
 			formInstanceRecordLocalService, formInstanceService,
-			formFieldTypeServicesTracker, formFieldTypesJSONSerializer,
-			formRenderer, formValuesFactory, formValuesMerger,
-			structureLocalService, structureService, jsonFactory,
-			storageEngine);
+			formInstanceVersionLocalService, formFieldTypeServicesTracker,
+			formFieldTypesJSONSerializer, formRenderer, formValuesFactory,
+			formValuesMerger, structureLocalService, structureService,
+			jsonFactory, storageEngine);
 	}
 
 	public List<DropdownItem> getActionItemsDropdownItems() {

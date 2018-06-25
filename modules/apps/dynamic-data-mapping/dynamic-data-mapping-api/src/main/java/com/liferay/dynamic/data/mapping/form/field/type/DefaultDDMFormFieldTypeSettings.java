@@ -90,7 +90,10 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public LocalizedValue label();
 
-	@DDMFormField(label = "%localizable", visibilityExpression = "FALSE")
+	@DDMFormField(
+		label = "%localizable", predefinedValue = "true",
+		visibilityExpression = "FALSE"
+	)
 	public boolean localizable();
 
 	@DDMFormField(

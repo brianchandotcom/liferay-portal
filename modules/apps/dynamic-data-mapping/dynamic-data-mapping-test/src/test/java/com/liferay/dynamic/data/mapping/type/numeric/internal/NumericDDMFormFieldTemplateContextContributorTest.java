@@ -111,21 +111,9 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetDecimalSymbolsWithAmericanLocale() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
-
-		ddmFormField.setProperty("dataType", "double");
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
-
-		Map<String, Object> parameters =
-			_numericDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, ddmFormFieldRenderingContext);
-
 		Map<String, String> separatorSymbolsMap =
-			(Map<String, String>)parameters.get("symbols");
+			_numericDDMFormFieldTemplateContextContributor.getSymbolsMap(
+				LocaleUtil.US);
 
 		Assert.assertEquals(".", separatorSymbolsMap.get("decimalSymbol"));
 		Assert.assertEquals(",", separatorSymbolsMap.get("thousandsSeparator"));
@@ -133,21 +121,9 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetDecimalSymbolsWithBrazilianLocale() {
-		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
-
-		ddmFormField.setProperty("dataType", "double");
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
-		ddmFormFieldRenderingContext.setLocale(LocaleUtil.BRAZIL);
-
-		Map<String, Object> parameters =
-			_numericDDMFormFieldTemplateContextContributor.getParameters(
-				ddmFormField, ddmFormFieldRenderingContext);
-
 		Map<String, String> separatorSymbolsMap =
-			(Map<String, String>)parameters.get("symbols");
+			_numericDDMFormFieldTemplateContextContributor.getSymbolsMap(
+				LocaleUtil.BRAZIL);
 
 		Assert.assertEquals(",", separatorSymbolsMap.get("decimalSymbol"));
 		Assert.assertEquals(".", separatorSymbolsMap.get("thousandsSeparator"));

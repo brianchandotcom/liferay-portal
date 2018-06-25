@@ -181,8 +181,9 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletOption" value="Configure" />
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">

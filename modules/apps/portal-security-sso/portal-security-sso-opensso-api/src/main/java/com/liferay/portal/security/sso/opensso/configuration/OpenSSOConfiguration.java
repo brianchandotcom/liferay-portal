@@ -29,7 +29,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  *
  * @author Michael C. Han
  */
-@ExtendedObjectClassDefinition(category = "sso")
+@ExtendedObjectClassDefinition(
+	category = "sso", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
 	localization = "content/Language", name = "opensso-configuration-name"

@@ -21,7 +21,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Thuong Dinh
  */
-@ExtendedObjectClassDefinition(category = "sso")
+@ExtendedObjectClassDefinition(
+	category = "sso", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration",
 	localization = "content/Language",

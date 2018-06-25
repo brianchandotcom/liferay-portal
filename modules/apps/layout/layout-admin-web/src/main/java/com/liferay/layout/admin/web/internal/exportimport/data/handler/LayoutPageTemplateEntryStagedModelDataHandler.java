@@ -125,6 +125,11 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
+		StagedModelDataHandlerUtil.importReferenceStagedModel(
+			portletDataContext, layoutPageTemplateEntry,
+			LayoutPageTemplateCollection.class,
+			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
+
 		Map<Long, Long> layoutPageTemplateCollectionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				LayoutPageTemplateCollection.class);

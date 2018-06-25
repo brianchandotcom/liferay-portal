@@ -3807,11 +3807,24 @@ public class StagingImpl implements Staging {
 		if (sourceLayout.isTypeControlPanel()) {
 			stagingGroup = _groupLocalService.fetchGroup(scopeGroupId);
 
-			liveGroup = stagingGroup.getLiveGroup();
+			if (stagingGroup.isStagedRemotely()) {
+				targetGroupId = stagingGroup.getRemoteLiveGroupId();
 
-			targetGroupId = liveGroup.getGroupId();
+				HttpPrincipal httpPrincipal = new HttpPrincipal(
+					buildRemoteURL(stagingGroup.getTypeSettingsProperties()),
+					user.getLogin(), user.getPassword(),
+					user.isPasswordEncrypted());
 
-			targetLayoutPlid = sourceLayout.getPlid();
+				targetLayoutPlid = LayoutServiceHttp.getControlPanelLayoutPlid(
+					httpPrincipal);
+			}
+			else {
+				liveGroup = stagingGroup.getLiveGroup();
+
+				targetGroupId = liveGroup.getGroupId();
+
+				targetLayoutPlid = sourceLayout.getPlid();
+			}
 		}
 		else if (sourceLayout.hasScopeGroup() &&
 				 (scopeGroup.getGroupId() == scopeGroupId)) {

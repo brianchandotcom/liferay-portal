@@ -34,9 +34,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.Validator;
 
-import com.netflix.hystrix.HystrixCommand;
-import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.netflix.hystrix.HystrixCommandKey;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import com.netflix.hystrix.exception.HystrixRuntimeException.FailureType;
 
@@ -260,36 +257,5 @@ public class DDMDataProviderInvokerImpl implements DDMDataProviderInvoker {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMDataProviderInvokerImpl.class);
-
-	private static class DDMDataProviderInvokeCommand
-		extends HystrixCommand<DDMDataProviderResponse> {
-
-		public DDMDataProviderInvokeCommand(
-			String ddmDataProviderInstanceName, DDMDataProvider ddmDataProvider,
-			DDMDataProviderRequest ddmDataProviderRequest) {
-
-			super(
-				Setter.withGroupKey(_hystrixCommandGroupKey).andCommandKey(
-					HystrixCommandKey.Factory.asKey(
-						"DDMDataProviderInvokeCommand#" +
-							ddmDataProviderInstanceName)));
-
-			_ddmDataProvider = ddmDataProvider;
-			_ddmDataProviderRequest = ddmDataProviderRequest;
-		}
-
-		@Override
-		protected DDMDataProviderResponse run() throws Exception {
-			return _ddmDataProvider.getData(_ddmDataProviderRequest);
-		}
-
-		private static final HystrixCommandGroupKey _hystrixCommandGroupKey =
-			HystrixCommandGroupKey.Factory.asKey(
-				"DDMDataProviderInvokeCommandGroup");
-
-		private final DDMDataProvider _ddmDataProvider;
-		private final DDMDataProviderRequest _ddmDataProviderRequest;
-
-	}
 
 }

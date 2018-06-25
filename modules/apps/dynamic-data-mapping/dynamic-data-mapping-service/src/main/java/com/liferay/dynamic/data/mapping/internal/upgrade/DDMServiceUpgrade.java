@@ -138,6 +138,8 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"2.0.2", "2.0.3",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3.
+				UpgradeDataProviderInstance(_jsonFactory),
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3.
 				UpgradeDDMFormInstanceSettings(_jsonFactory));
 	}
 

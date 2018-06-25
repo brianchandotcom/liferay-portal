@@ -37,8 +37,9 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSe
 		),
 		@DDMFormRule(
 			actions = {
-				"setVisible('paginationStartParameterName', equals(getValue('pagination'), true))",
-				"setVisible('paginationEndParameterName', equals(getValue('pagination'), true))",
+				"setVisible('pagination', false)",
+				"setVisible('paginationStartParameterName', false)",
+				"setVisible('paginationEndParameterName', false)",
 				"setRequired('paginationStartParameterName', equals(getValue('pagination'), true))",
 				"setRequired('paginationEndParameterName', equals(getValue('pagination'), true))"
 			},
@@ -58,8 +59,8 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSe
 								"url", "username", "password", "filterable",
 								"filterParameterName", "cacheable",
 								"pagination", "paginationStartParameterName",
-								"paginationEndParameterName", "inputParameters",
-								"outputParameters"
+								"paginationEndParameterName", "timeout",
+								"inputParameters", "outputParameters"
 							}
 						)
 					}
@@ -124,6 +125,18 @@ public interface DDMRESTDataProviderSettings
 		type = "password"
 	)
 	public String password();
+
+	@DDMFormField(
+		dataType = "integer", label = "%timeout", predefinedValue = "1000",
+		properties = {
+			"placeholder=%enter-time-in-milliseconds",
+			"tooltip=%data-provider-timeout-message"
+		},
+		required = true, type = "numeric",
+		validationErrorMessage = "%please-enter-an-integer-between-1000-and-30000-milliseconds",
+		validationExpression = "(timeout >= 1000) && (timeout <= 30000)"
+	)
+	public String timeout();
 
 	@DDMFormField(
 		label = "%url", properties = "placeholder=%enter-the-rest-service-url",

@@ -56,7 +56,7 @@ class Analytics {
 
 		instance.asahIdentityEndpoint = `https://osbasahfarobackend-asahlfr.lfr.io/${analyticsKey}/identity/`;
 		instance.lcsIdentityEndpoint =
-			'https://ec-dev.liferay.com:8095/api/identitycontextgateway/send-identity-context';
+			'https://analytics-gw.liferay.com/api/identitycontextgateway/send-identity-context';
 
 		instance.events = storage.get(STORAGE_KEY_EVENTS) || [];
 		instance.isFlushInProgress = false;

@@ -165,6 +165,8 @@ Export-Package:\
 	org.apache.ws.commons.schema.utils;version="2.2.3"
 Fragment-Host: org.apache.aries.jax.rs.whiteboard
 Import-Package:\
+	!com.ctc.wstx.*,\
+	\
 	!com.sun.*,\
 	\
 	!javax.enterprise.context.spi,\
@@ -187,6 +189,8 @@ Import-Package:\
 	!org.apache.velocity.*,\
 	!org.apache.xml.resolver.*,\
 	!org.apache.xmlbeans.*,\
+	\
+	!org.codehaus.stax2.*,\
 	\
 	!org.junit.*,\
 	\

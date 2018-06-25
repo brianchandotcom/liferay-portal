@@ -39,13 +39,14 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import javax.ws.rs.ProcessingException;
@@ -301,6 +302,11 @@ public class LiferaySourceOrSink
 		}
 		while (StringUtils.isNotBlank(nextPage) &&
 			   !lastPage.equals(actualPage));
+
+		Comparator<NamedThing> comparator = Comparator.comparing(
+			NamedThing::getDisplayName);
+
+		Collections.sort(webSitesList, comparator);
 
 		return webSitesList;
 	}
@@ -721,7 +727,7 @@ public class LiferaySourceOrSink
 	private Map<String, String> _getResourceCollectionsDescriptor(
 		JsonNode jsonNode) {
 
-		Map<String, String> resourcesMap = new HashMap<>();
+		Map<String, String> resourcesMap = new TreeMap<>();
 
 		JsonNode resourcesJsonNode = jsonNode.findPath(
 			JSONLDConstants.RESOURCES);
@@ -751,15 +757,21 @@ public class LiferaySourceOrSink
 
 		JsonNode contextJsonNode = apioSingleModel.getContextJsonNode();
 
-		Map<String, String> resourcesMap = new HashMap<>();
+		Map<String, String> resourcesMap = new TreeMap<>();
 		List<String> typeCoercionTermKeys = ApioUtils.getTypeCoercionTermKeys(
 			contextJsonNode);
 
 		for (String typeCoercionTermKey : typeCoercionTermKeys) {
+			JsonNode idJsonNode = apioSingleModel.getIdJsonNode();
 			JsonNode resourceHrefJsonNode = jsonNode.path(typeCoercionTermKey);
 
-			resourcesMap.put(
-				resourceHrefJsonNode.asText(), typeCoercionTermKey);
+			String id = idJsonNode.asText();
+			String resourceHref = resourceHrefJsonNode.asText();
+
+			if (resourceHref.startsWith(id)) {
+				resourcesMap.put(
+					resourceHrefJsonNode.asText(), typeCoercionTermKey);
+			}
 		}
 
 		return resourcesMap;

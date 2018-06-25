@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -67,18 +66,14 @@ public class DefaultLayoutSetPrototypesUtil {
 				locale, LanguageUtil.get(resourceBundle, descriptionKey));
 		}
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAttribute("addDefaultLayout", Boolean.FALSE);
+
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutSetPrototypeLocalServiceUtil.addLayoutSetPrototype(
 				defaultUserId, companyId, nameMap, descriptionMap, true, true,
-				new ServiceContext());
-
-		LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		LayoutLocalServiceUtil.deleteLayouts(
-			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			serviceContext);
+				serviceContext);
 
 		return layoutSetPrototype.getLayoutSet();
 	}

@@ -187,12 +187,6 @@ public class DDMFormInstanceLocalServiceImpl
 
 		deleteDDMFormInstance(ddmFormInstance);
 
-		long structureId = ddmFormInstance.getStructureId();
-
-		if (ddmStructureLocalService.fetchDDMStructure(structureId) != null) {
-			ddmStructureLocalService.deleteDDMStructure(structureId);
-		}
-
 		resourceLocalService.deleteResource(
 			ddmFormInstance.getCompanyId(), DDMFormInstance.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
@@ -203,6 +197,12 @@ public class DDMFormInstanceLocalServiceImpl
 
 		ddmFormInstanceVersionLocalService.deleteByFormInstanceId(
 			ddmFormInstance.getFormInstanceId());
+
+		long structureId = ddmFormInstance.getStructureId();
+
+		if (ddmStructureLocalService.fetchDDMStructure(structureId) != null) {
+			ddmStructureLocalService.deleteStructure(structureId);
+		}
 
 		workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 			ddmFormInstance.getCompanyId(), ddmFormInstance.getGroupId(),

@@ -81,7 +81,7 @@ public class NullSession implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of Bunyan
 	 */
 	@Deprecated
 	@Override

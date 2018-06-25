@@ -1044,7 +1044,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
-		long groupId, boolean privateLayout, String type) {
+		long groupId, boolean privateLayout, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.getLayouts(groupId, privateLayout, type);
 	}
 

@@ -25,7 +25,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
-* @author Brian Wing Shun Chan
+ * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class DDMFormInstanceRecordVersionImpl

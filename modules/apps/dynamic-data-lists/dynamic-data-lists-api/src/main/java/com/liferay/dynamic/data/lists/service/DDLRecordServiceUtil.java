@@ -82,8 +82,8 @@ public class DDLRecordServiceUtil {
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 1.1.0, replaced by {@link #addRecord(long, long, int,
-	DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #addRecord(long, long,
+	int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
@@ -110,8 +110,8 @@ public class DDLRecordServiceUtil {
 	the record.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 1.1.0, replaced by {@link #addRecord(long, long, int,
-	DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #addRecord(long, long,
+	int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
@@ -144,8 +144,8 @@ public class DDLRecordServiceUtil {
 	set the record modified date.
 	* @return the affected record
 	* @throws PortalException
-	* @deprecated As of 1.1.0, replaced by {@link #updateRecord(long, boolean,
-	int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #updateRecord(long,
+	boolean, int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord deleteRecordLocale(
@@ -206,8 +206,8 @@ public class DDLRecordServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #revertRecord(long, String,
-	ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #revertRecord(long,
+	String, ServiceContext)}
 	*/
 	@Deprecated
 	public static void revertRecordVersion(long recordId, String version,
@@ -257,8 +257,8 @@ public class DDLRecordServiceUtil {
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 1.1.0, replaced by {@link #updateRecord(long, boolean,
-	int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #updateRecord(long,
+	boolean, int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
@@ -286,8 +286,8 @@ public class DDLRecordServiceUtil {
 	set the record modified date.
 	* @return the record
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 1.1.0, replaced by {@link #updateRecord(long, boolean,
-	int, DDMFormValues, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #updateRecord(long,
+	boolean, int, DDMFormValues, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(

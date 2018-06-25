@@ -47,7 +47,7 @@ public class TestAuthToken implements AuthToken {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	@Override
@@ -80,7 +80,7 @@ public class TestAuthToken implements AuthToken {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	@Override

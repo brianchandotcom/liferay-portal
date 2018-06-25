@@ -48,7 +48,7 @@ public class JournalFolderAssetRenderer
 	public static final String TYPE = "folder";
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #JournalFolderAssetRenderer(JournalFolder, TrashHelper)}}
 	 */
 	@Deprecated
@@ -79,7 +79,7 @@ public class JournalFolderAssetRenderer
 	}
 
 	/**
-	 * @deprecated As of 1.4.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

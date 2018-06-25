@@ -60,8 +60,8 @@ public interface AnnouncementsDeliveryService extends BaseService {
 		boolean email, boolean sms) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#updateDelivery(long, String, boolean, boolean)}
+	* @deprecated As of Judson, replaced by {@link #updateDelivery(long,
+	String, boolean, boolean)}
 	*/
 	@Deprecated
 	public AnnouncementsDelivery updateDelivery(long userId, String type,

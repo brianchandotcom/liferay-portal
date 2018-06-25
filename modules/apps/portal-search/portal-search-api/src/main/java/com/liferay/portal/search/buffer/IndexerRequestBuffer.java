@@ -64,7 +64,7 @@ public class IndexerRequestBuffer {
 
 	/**
 	 * @param      indexerRequest
-	 * @deprecated As of 1.0.0, replaced by {@link #add(IndexerRequest,
+	 * @deprecated As of Judson, replaced by {@link #add(IndexerRequest,
 	 *             IndexerRequestBufferOverflowHandler, int)}
 	 */
 	@Deprecated

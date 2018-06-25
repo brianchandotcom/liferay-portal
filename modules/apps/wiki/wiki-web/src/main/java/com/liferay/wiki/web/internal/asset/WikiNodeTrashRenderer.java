@@ -36,7 +36,7 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 	public static final String TYPE = "wiki_node";
 
 	/**
-	 * @deprecated As of 1.6.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #WikiNodeTrashRenderer(WikiNode, TrashHelper)}
 	 */
 	@Deprecated

@@ -25,10 +25,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Mate Thurzo
- * @author Adolfo Pérez
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author     Brian Wing Shun Chan
+ * @author     Mate Thurzo
+ * @author     Adolfo Pérez
+ * @deprecated As of Judson, with no direct replacement
  */
 @Component(
 	immediate = true,

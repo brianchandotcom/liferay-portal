@@ -67,7 +67,7 @@ public class DDLConstants {
 	public static final String RESOURCE_NAME = "com.liferay.dynamic.data.lists";
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public static final String SERVICE_NAME = "com.liferay.dynamic.data.lists";

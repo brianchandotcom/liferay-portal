@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author     Dennis Ju
- * @deprecated As of 1.2.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Component(immediate = true, service = VerifyUtil.class)
 @Deprecated

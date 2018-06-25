@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Leonardo Barros
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author     Leonardo Barros
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class ModificationDeniedLayoutTypeAccessPolicyImpl

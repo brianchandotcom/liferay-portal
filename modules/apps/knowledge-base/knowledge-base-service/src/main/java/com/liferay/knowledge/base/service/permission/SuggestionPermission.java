@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
- * @author Adolfo Pérez
- * @deprecated As of 1.3.0, with no direct replacement
+ * @author     Adolfo Pérez
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class SuggestionPermission {

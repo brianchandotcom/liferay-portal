@@ -27,8 +27,8 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.util.Iterator;
 
 /**
- * @author Connor McKay
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author     Connor McKay
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class ResourceBlockFinderImpl

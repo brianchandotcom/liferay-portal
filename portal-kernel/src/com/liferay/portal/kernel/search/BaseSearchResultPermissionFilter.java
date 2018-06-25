@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * @author Tina Tian
- * @deprecated As of 7.0.0, moved to {@link
+ * @author     Tina Tian
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.search.internal.permission.DefaultSearchResultPermissionFilter}
  */
 @Deprecated

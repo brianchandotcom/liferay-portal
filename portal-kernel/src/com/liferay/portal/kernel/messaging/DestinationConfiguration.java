@@ -95,7 +95,7 @@ public class DestinationConfiguration implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public RejectedExecutionHandler getRejectedExecutionHandler() {
@@ -124,7 +124,7 @@ public class DestinationConfiguration implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public void setRejectedExecutionHandler(

@@ -34,7 +34,7 @@ import java.io.Serializable;
  * @see ResourceBlock
  * @see com.liferay.portal.model.impl.ResourceBlockImpl
  * @see com.liferay.portal.model.impl.ResourceBlockModelImpl
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated

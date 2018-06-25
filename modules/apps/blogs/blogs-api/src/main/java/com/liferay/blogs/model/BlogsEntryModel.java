@@ -584,7 +584,7 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>, ShardedModel,
 	 * Returns the trash handler for this blogs entry.
 	 *
 	 * @return the trash handler for this blogs entry
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

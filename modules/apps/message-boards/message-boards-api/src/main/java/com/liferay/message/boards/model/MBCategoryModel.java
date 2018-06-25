@@ -432,7 +432,7 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	 * Returns the trash handler for this message boards category.
 	 *
 	 * @return the trash handler for this message boards category
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

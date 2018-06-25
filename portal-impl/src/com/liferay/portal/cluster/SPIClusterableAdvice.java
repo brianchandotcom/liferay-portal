@@ -31,8 +31,9 @@ import java.util.concurrent.Future;
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.cluster.SPIClusterableAdvice}
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson, moved to {@link
+ *             com.liferay.portal.internal.cluster.SPIClusterableAdvice}
  */
 @Deprecated
 public class SPIClusterableAdvice

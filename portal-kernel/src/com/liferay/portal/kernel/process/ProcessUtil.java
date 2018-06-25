@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 public class ProcessUtil {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             CollectorOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
@@ -43,7 +43,7 @@ public class ProcessUtil {
 		new CollectorOutputProcessor();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             ConsumerOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
@@ -51,14 +51,15 @@ public class ProcessUtil {
 		new ConsumerOutputProcessor();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link EchoOutputProcessor#INSTANCE}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             EchoOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
 	public static final EchoOutputProcessor ECHO_OUTPUT_PROCESSOR =
 		new EchoOutputProcessor();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             LoggingOutputProcessor#INSTANCE}
 	 */
 	@Deprecated
@@ -108,7 +109,7 @@ public class ProcessUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public void destroy() {

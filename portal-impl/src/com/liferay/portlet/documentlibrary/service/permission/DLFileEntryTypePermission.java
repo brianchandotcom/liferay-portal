@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
- * @author Alexander Chow
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author     Alexander Chow
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class DLFileEntryTypePermission {

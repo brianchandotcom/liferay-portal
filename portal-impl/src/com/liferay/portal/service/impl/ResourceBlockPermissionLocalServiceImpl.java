@@ -36,8 +36,8 @@ import java.util.Set;
  * local service.
  * </p>
  *
- * @author Connor McKay
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author     Connor McKay
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class ResourceBlockPermissionLocalServiceImpl
@@ -73,7 +73,7 @@ public class ResourceBlockPermissionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #getAvailableResourceBlockPermissionActionIds(String, long,
 	 *             List)}
 	 */

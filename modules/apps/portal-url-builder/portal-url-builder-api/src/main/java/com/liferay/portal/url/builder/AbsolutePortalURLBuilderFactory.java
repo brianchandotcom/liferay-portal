@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * A service that creates new AbsolutePortalURLBuilder instances.
+ *
  * @author Iván Zaera Avellón
  * @review
  */
@@ -25,7 +26,8 @@ public interface AbsolutePortalURLBuilderFactory {
 
 	/**
 	 * Get a new AbsolutePortalURLBuilder instance tied to the given request.
-	 * @param request the servlet request
+	 *
+	 * @param  request the servlet request
 	 * @return an instance of AbsolutePortalURLBuilder
 	 * @review
 	 */

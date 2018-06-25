@@ -403,7 +403,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #importPortletData(PortletDataContext portletDataContext,
 	 *             javax.portlet.PortletPreferences portletPreferences, Element
 	 *             portletDataElement)}
@@ -919,7 +919,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             deletePortletData(PortletDataContext portletDataContext,
 	 *             javax.portlet.PortletPreferences portletPreferences)}
 	 */
@@ -1329,7 +1329,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 	}
 
 	/**
-	 * @deprecated As of 3.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Reference(unbind = "-")

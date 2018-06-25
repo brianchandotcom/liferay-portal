@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Modified;
 
 /**
- * @author Pei-Jung Lan
- * @deprecated As of 2.5.0, replaced by {@link
- * 		   com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserInformationScreenNavigationEntry}
+ * @author     Pei-Jung Lan
+ * @deprecated As of Judson, replaced by {@link
+ *             com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserInformationScreenNavigationEntry}
  */
 @Deprecated
 public class UserDetailsFormNavigatorEntry extends BaseUserFormNavigatorEntry {

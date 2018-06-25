@@ -42,7 +42,7 @@ import java.util.List;
  * @see TrashEntryServiceUtil
  * @see com.liferay.portlet.trash.service.base.TrashEntryServiceBaseImpl
  * @see com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
            com.liferay.trash.service.impl.TrashEntryServiceImpl}
  * @generated
  */

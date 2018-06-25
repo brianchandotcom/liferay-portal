@@ -114,11 +114,11 @@ public class ModuleNameUtil {
 	 * <code>
 	 * getPackageName("isarray/lib/index") returns "isarray"
 	 * </code>
-	 * </pre>
-	 * </p>
+	 * </pre></p>
 	 *
 	 * @param  moduleName the module's name
-	 * @return the package name or null if the module name is a reserved or local one
+	 * @return the package name or <code>null</code> if the module name is a
+	 *         reserved or local one
 	 * @review
 	 */
 	public static String getPackageName(String moduleName) {
@@ -155,11 +155,11 @@ public class ModuleNameUtil {
 	 * <code>
 	 * getPackagePath("isarray/lib/index") returns "lib/index"
 	 * </code>
-	 * </pre>
-	 * </p>
+	 * </pre></p>
 	 *
 	 * @param  moduleName the module's name
-	 * @return the path portion of a full module name or null in any other case
+	 * @return the path portion of a full module name or <code>null</code> in
+	 *         any other case
 	 */
 	public static String getPackagePath(String moduleName) {
 		if (isLocalModuleName(moduleName)) {

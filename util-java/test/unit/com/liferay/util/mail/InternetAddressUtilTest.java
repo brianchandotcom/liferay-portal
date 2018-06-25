@@ -24,9 +24,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author Miguel Pastor
- * @see    com.liferay.petra.mail.InternetAddressUtilTest
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Miguel Pastor
+ * @see        com.liferay.petra.mail.InternetAddressUtilTest
+ * @deprecated As of Judson, replaced by {@link
  *             com.liferay.petra.mail.InternetAddressUtilTest}
  */
 @Deprecated

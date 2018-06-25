@@ -57,8 +57,7 @@ import java.util.EnumSet;
  * <td>Data Chunk</td>
  * <td>byte[]</td>
  * <td>
- * <pre>${Data Size}</pre>
- * </td> <td>14</td> </tr>
+ * <pre>${Data Size}</pre></td> <td>14</td> </tr>
  *
  * </table>
  * </p>

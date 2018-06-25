@@ -31,15 +31,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Resets the number of failed merge attempts for the page template, which
- * is accessed from the action request's <code>layoutPrototypeId</code>
- * param. Once the counter is reset, the modified page template is merged
- * back into its linked page, which is accessed from the action request's
- * <code>selPlid</code> param.
+ * Resets the number of failed merge attempts for the page template, which is
+ * accessed from the action request's <code>layoutPrototypeId</code> param. Once
+ * the counter is reset, the modified page template is merged back into its
+ * linked page, which is accessed from the action request's <code>selPlid</code>
+ * param.
  *
  * <p>
- * If the number of failed merge attempts is not equal to zero after the
- * merge, an error key is submitted into the {@link SessionErrors}.
+ * If the number of failed merge attempts is not equal to zero after the merge,
+ * an error key is submitted into the {@link SessionErrors}.
  * </p>
  *
  * @author Pavel Savinov

@@ -76,7 +76,7 @@ public class HttpSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of Bunyan
 	 */
 	@Deprecated
 	@Override
@@ -85,7 +85,7 @@ public class HttpSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of Bunyan
 	 */
 	@Deprecated
 	@Override
@@ -94,7 +94,7 @@ public class HttpSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of Bunyan
 	 */
 	@Deprecated
 	@Override
@@ -122,7 +122,7 @@ public class HttpSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of Bunyan
 	 */
 	@Deprecated
 	@Override
@@ -136,7 +136,7 @@ public class HttpSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of Bunyan
 	 */
 	@Deprecated
 	@Override

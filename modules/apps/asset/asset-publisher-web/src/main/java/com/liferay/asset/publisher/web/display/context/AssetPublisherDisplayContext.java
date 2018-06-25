@@ -143,7 +143,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #AssetPublisherDisplayContext(AssetPublisherCustomizer,
 	 *             PortletRequest,PortletResponse, PortletPreferences)}
 	 */
@@ -809,7 +809,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #getScopeAssetPublisherAddItemHolders(int)}
 	 */
 	@Deprecated
@@ -928,7 +928,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public String getSocialBookmarksDisplayPosition() {
@@ -1182,7 +1182,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public boolean isEnableSocialBookmarks() {

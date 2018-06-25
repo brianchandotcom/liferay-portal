@@ -125,7 +125,8 @@ public class AssetCategoryServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, Replaced by {@link #deleteCategories(long[])}
+	* @deprecated As of Wilberforce, Replaced by {@link
+	#deleteCategories(long[])}
 	*/
 	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetCategorySoap[] deleteCategories(
@@ -173,8 +174,8 @@ public class AssetCategoryServiceSoap {
 	}
 
 	/**
-	* Returns a range of assetCategories related to an AssetEntry with the given
-	* "classNameId-classPK".
+	* Returns a range of assetCategories related to an AssetEntry with the
+	* given "classNameId-classPK".
 	*
 	* @param classNameId the className of the asset
 	* @param classPK the classPK of the asset
@@ -283,7 +284,7 @@ public class AssetCategoryServiceSoap {
 	/**
 	* eturns a range of child assetCategories.
 	*
-	* @param parentCategoryId the parent category id
+	* @param parentCategoryId the parent category ID
 	* @param start the lower bound of the range of results
 	* @param end the upper bound of the range of results (not inclusive)
 	* @param obc the comparator
@@ -311,7 +312,7 @@ public class AssetCategoryServiceSoap {
 	/**
 	* Returns the number of child categories
 	*
-	* @param parentCategoryId the parent category id
+	* @param parentCategoryId the parent category ID
 	* @return the number of child categories
 	* @throws PortalException
 	*/

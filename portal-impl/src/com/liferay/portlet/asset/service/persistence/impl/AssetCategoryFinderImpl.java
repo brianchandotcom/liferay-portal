@@ -150,8 +150,8 @@ public class AssetCategoryFinderImpl
 	 * Returns the number of assetCategories related to an AssetEntry with the
 	 * given "classNameId-classPK". This method also checks inline permissions.
 	 *
-	 * @param classNameId the className of the asset
-	 * @param classPK the classPK of the asset
+	 * @param  classNameId the className of the asset
+	 * @param  classPK the classPK of the asset
 	 * @return the number of matching assetCategories
 	 */
 	@Override
@@ -160,13 +160,13 @@ public class AssetCategoryFinderImpl
 	}
 
 	/**
-	 * Returns a range of assetCategories related to an AssetEntry with the given
-	 * "classNameId-classPK". This method also checks inline permissions.
+	 * Returns a range of assetCategories related to an AssetEntry with the
+	 * given "classNameId-classPK". This method also checks inline permissions.
 	 *
-	 * @param classNameId the className of the asset
-	 * @param classPK the classPK of the asset
-	 * @param start the lower bound of the range of results
-	 * @param end the upper bound of the range of results (not inclusive)
+	 * @param  classNameId the className of the asset
+	 * @param  classPK the classPK of the asset
+	 * @param  start the lower bound of the range of results
+	 * @param  end the upper bound of the range of results (not inclusive)
 	 * @return the matching assetCategories
 	 */
 	@Override

@@ -17,8 +17,8 @@ package com.liferay.portal.kernel.executor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson, replaced by {@link
  *             com.liferay.petra.executor.PortalExecutorManager}
  */
 @Deprecated

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 
 /**
  * @author     Raymond Augé
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
  *             com.liferay.portal.search.facet.type.AssetEntriesFacetFactory}
  */
 @Deprecated

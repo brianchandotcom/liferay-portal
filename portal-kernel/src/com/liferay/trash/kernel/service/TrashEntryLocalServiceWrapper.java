@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see TrashEntryLocalService
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
 com.liferay.trash.service.impl.TrashEntryLocalServiceImpl}
  * @generated
  */

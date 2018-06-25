@@ -218,8 +218,8 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
-	long, boolean)}
+	* @deprecated As of Wilberforce, replaced by {@link #getSubfolderIds(List,
+	long, long, boolean)}
 	*/
 	@Deprecated
 	@Override
@@ -317,7 +317,7 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by more general {@link
+	* @deprecated As of Wilberforce, replaced by more general {@link
 	#updateFolder(long, String, String, long, List, int,
 	ServiceContext)}
 	*/

@@ -162,7 +162,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	@Override

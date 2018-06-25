@@ -54,10 +54,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * Implements trash handling for the journal article entity.
  *
- * @author Levente Hudák
- * @author Sergio González
- * @author Zsolt Berentey
- * @deprecated As of 4.0.0, moved to {@link
+ * @author     Levente Hudák
+ * @author     Sergio González
+ * @author     Zsolt Berentey
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.journal.internal.trash.JournalArticleTrashHandler}
  */
 @Deprecated

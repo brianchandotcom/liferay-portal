@@ -246,7 +246,7 @@ public interface ReadingTimeEntryModel extends AttachedModel,
 	 * Returns the trash handler for this reading time entry.
 	 *
 	 * @return the trash handler for this reading time entry
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

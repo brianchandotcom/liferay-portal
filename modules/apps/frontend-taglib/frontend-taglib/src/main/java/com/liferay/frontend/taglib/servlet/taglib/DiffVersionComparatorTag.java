@@ -27,8 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Eudaldo Alonso
- * @deprecated As of 2.3.0, in favor of com.liferay.frontend.taglib.servlet.taglib.soy.DiffVersionComparatorTag
+ * @author     Eudaldo Alonso
+ * @deprecated As of Judson, in favor of
+ *             com.liferay.frontend.taglib.servlet.taglib.soy.DiffVersionComparatorTag
  */
 @Deprecated
 public class DiffVersionComparatorTag extends IncludeTag {

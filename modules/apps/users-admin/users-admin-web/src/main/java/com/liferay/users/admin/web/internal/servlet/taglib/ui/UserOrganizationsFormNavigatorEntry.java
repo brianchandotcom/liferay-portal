@@ -17,9 +17,9 @@ package com.liferay.users.admin.web.internal.servlet.taglib.ui;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 
 /**
- * @author Pei-Jung Lan
- * @deprecated As of 2.5.0, replaced by {@link
- * 		   com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserOrganizationsScreenNavigationEntry}
+ * @author     Pei-Jung Lan
+ * @deprecated As of Judson, replaced by {@link
+ *             com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserOrganizationsScreenNavigationEntry}
  */
 @Deprecated
 public class UserOrganizationsFormNavigatorEntry

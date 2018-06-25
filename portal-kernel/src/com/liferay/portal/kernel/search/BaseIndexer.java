@@ -141,7 +141,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSearchClassNames}
+	 * @deprecated As of Wilberforce, replaced by {@link #getSearchClassNames}
 	 */
 	@Deprecated
 	@Override
@@ -251,7 +251,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getClassName}
+	 * @deprecated As of Wilberforce, replaced by {@link #getClassName}
 	 */
 	@Deprecated
 	@Override
@@ -302,7 +302,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.search.sort.SortFieldBuilder
 	 *             #getSortField}
 	 */
@@ -319,7 +319,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.search.sort.SortFieldBuilder
 	 *             #getSortField}
 	 */
@@ -336,8 +336,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(Document, String,
-	 *             PortletRequest, PortletResponse)}
+	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(Document,
+	 *             String, PortletRequest, PortletResponse)}
 	 */
 	@Deprecated
 	@Override
@@ -441,7 +441,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 * @param      status
 	 * @return
 	 * @throws     Exception
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             RelatedEntryIndexer.isVisibleRelatedEntry(long, int)}
 	 */
 	@Deprecated
@@ -459,7 +459,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #postProcessContextBooleanFilter(BooleanFilter,
 	 *             SearchContext)}
 	 */
@@ -486,7 +486,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
 	 *             SearchContext)}
 	 */
@@ -734,8 +734,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 * @param      document
 	 * @param      className
 	 * @param      classPK
-	 * @deprecated As of 7.0.0, no direct replacement. Logic now encapsulated in
-	 *             {@link com.liferay.portal.search.internal.contributor.
+	 * @deprecated As of Judson, no direct replacement. Logic now encapsulated
+	 *             in {@link com.liferay.portal.search.internal.contributor.
 	 *             document.AssetDocumentContrbutor}
 	 */
 	@Deprecated
@@ -842,7 +842,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	protected void addFacetClause(
@@ -932,8 +932,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	 * @param      document
 	 * @param      field
 	 * @param      assetCategories
-	 * @deprecated As of 7.0.0, no direct replacement. Logic not encapsulated in
-	 *             {@link com.liferay.portal.search.internal.contributor.
+	 * @deprecated As of Judson, no direct replacement. Logic not encapsulated
+	 *             in {@link com.liferay.portal.search.internal.contributor.
 	 *             document.AssetCategoryDocumentContrbutor}
 	 */
 	@Deprecated
@@ -1056,7 +1056,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void addSearchGroupId(
@@ -1246,7 +1246,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	protected void addTrashFields(
@@ -1365,7 +1365,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected abstract Document doGetDocument(T object) throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             com.liferay.portal.search.contributor.sort.
 	 *             SortFieldTranslator}
 	 */
@@ -1380,7 +1380,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, added strictly to support backwards
+	 * @deprecated As of Wilberforce, added strictly to support backwards
 	 *             compatibility of {@link
 	 *             Indexer#postProcessSearchQuery(BooleanQuery, SearchContext)}
 	 */
@@ -1539,7 +1539,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getClassName}
+	 * @deprecated As of Wilberforce, replaced by {@link #getClassName}
 	 */
 	@Deprecated
 	protected String getPortletId(SearchContext searchContext) {

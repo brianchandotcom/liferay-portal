@@ -28,8 +28,9 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import java.util.List;
 
 /**
- * @author Amos Fong
- * @deprecated As of 7.0.0, moved to {@link com.liferay.portal.internal.cluster.LiveUsersClusterEventListenerImpl}
+ * @author     Amos Fong
+ * @deprecated As of Judson, moved to {@link
+ *             com.liferay.portal.internal.cluster.LiveUsersClusterEventListenerImpl}
  */
 @Deprecated
 public class LiveUsersClusterEventListenerImpl implements ClusterEventListener {

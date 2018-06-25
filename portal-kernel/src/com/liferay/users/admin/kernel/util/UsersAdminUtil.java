@@ -52,7 +52,8 @@ import javax.servlet.http.HttpServletRequest;
 public class UsersAdminUtil {
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link UsersAdmin#CUSTOM_QUESTION}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             UsersAdmin#CUSTOM_QUESTION}
 	 */
 	@Deprecated
 	public static final String CUSTOM_QUESTION = "write-my-own-question";

@@ -91,8 +91,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user group to the group.
 	 *
-	 * @param userGroupId the primary key of the user group
 	 * @param groupId the primary key of the group
+	 * @param userGroupId the primary key of the user group
 	 */
 	@Override
 	public void addGroupUserGroup(long groupId, long userGroupId) {
@@ -109,8 +109,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user group to the group.
 	 *
-	 * @param userGroup the user group
 	 * @param groupId the primary key of the group
+	 * @param userGroup the user group
 	 */
 	@Override
 	public void addGroupUserGroup(long groupId, UserGroup userGroup) {
@@ -127,8 +127,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user groups to the group.
 	 *
-	 * @param userGroups the user groups
 	 * @param groupId the primary key of the group
+	 * @param userGroups the user groups
 	 */
 	@Override
 	public void addGroupUserGroups(long groupId, List<UserGroup> userGroups) {
@@ -145,8 +145,8 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Adds the user groups to the group.
 	 *
-	 * @param userGroupIds the primary keys of the user groups
 	 * @param groupId the primary key of the group
+	 * @param userGroupIds the primary keys of the user groups
 	 */
 	@Override
 	public void addGroupUserGroups(long groupId, long[] userGroupIds) {
@@ -175,7 +175,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @param      name the user group's name
 	 * @param      description the user group's description
 	 * @return     the user group
-	 * @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
+	 * @deprecated As of Newton, replaced by {@link #addUserGroup(long, long,
 	 *             String, String, ServiceContext)}
 	 */
 	@Deprecated
@@ -270,7 +270,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param      userGroupId the primary key of the user group
 	 * @param      userId the primary key of the user
-	 * @deprecated As of 6.2.0
+	 * @deprecated As of Paton
 	 */
 	@Deprecated
 	@Override
@@ -301,7 +301,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param      userGroupId the primary key of the user group
 	 * @param      userIds the primary keys of the users
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of Newton
 	 */
 	@Deprecated
 	@Override
@@ -335,7 +335,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param      userGroupIds the primary keys of the user groups
 	 * @param      userId the primary key of the user
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of Newton
 	 */
 	@Deprecated
 	@Override
@@ -960,7 +960,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * @param      name the user group's name
 	 * @param      description the user group's description
 	 * @return     the user group
-	 * @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
+	 * @deprecated As of Newton, replaced by {@link #updateUserGroup(long, long,
 	 *             String, String, ServiceContext)}
 	 */
 	@Deprecated

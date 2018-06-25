@@ -399,7 +399,7 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link BrowserMetadata#isIe()}
+	 * @deprecated As of Judson, replaced by {@link BrowserMetadata#isIe()}
 	 */
 	@Deprecated
 	protected boolean isIe(String userAgent) {

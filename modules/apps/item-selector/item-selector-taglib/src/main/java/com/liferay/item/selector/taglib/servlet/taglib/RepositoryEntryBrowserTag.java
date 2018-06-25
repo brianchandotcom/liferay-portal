@@ -47,7 +47,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		{"icon", "descriptive", "list"};
 
 	/**
-	 * @deprecated As of 1.1.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public void setDesiredItemSelectorReturnTypes(

@@ -57,8 +57,8 @@ public interface LayoutPrototypeService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(Map, Map,
-	boolean, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#addLayoutPrototype(Map, Map, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public LayoutPrototype addLayoutPrototype(Map<Locale, String> nameMap,
@@ -93,8 +93,9 @@ public interface LayoutPrototypeService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
-	Map, Map, boolean, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#updateLayoutPrototype(long, Map, Map, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,

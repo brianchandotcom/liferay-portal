@@ -26,9 +26,9 @@ import java.io.IOException;
 import org.dom4j.DocumentException;
 
 /**
- * @author Leonardo Barros
- * @see    com.liferay.petra.xml.XMLUtil
- * @deprecated As of 7.0.0
+ * @author     Leonardo Barros
+ * @see        com.liferay.petra.xml.XMLUtil
+ * @deprecated As of Judson
  */
 @Deprecated
 public class XMLUtil {

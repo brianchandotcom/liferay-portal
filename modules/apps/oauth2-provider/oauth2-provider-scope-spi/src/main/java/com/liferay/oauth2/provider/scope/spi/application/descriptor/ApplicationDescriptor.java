@@ -30,7 +30,7 @@ public interface ApplicationDescriptor {
 	/**
 	 * Localize an application for a given locale.
 	 *
-	 * @param locale the locale requested for the description.
+	 * @param  locale the locale requested for the description.
 	 * @return a description for the applicationName in the requested locale.
 	 * @review
 	 */

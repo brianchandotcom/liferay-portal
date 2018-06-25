@@ -78,7 +78,8 @@ public interface AbsolutePortalURLBuilder {
 	 * Returns absolute URLs without the CDN part.
 	 *
 	 * @return the same builder
-	 * @see    com.liferay.portal.kernel.util.Portal#getCDNHost(javax.servlet.http.HttpServletRequest)
+	 * @see    com.liferay.portal.kernel.util.Portal#getCDNHost(
+	 *         javax.servlet.http.HttpServletRequest)
 	 */
 	public AbsolutePortalURLBuilder ignoreCDNHost();
 

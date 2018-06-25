@@ -23,7 +23,9 @@ import com.liferay.portal.security.sso.token.security.auth.TokenLocation;
  * @author Michael C. Han
  * @author Mika Koivisto
  */
-@ExtendedObjectClassDefinition(category = "sso")
+@ExtendedObjectClassDefinition(
+	category = "sso", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.portal.security.sso.token.internal.configuration.TokenConfiguration",
 	localization = "content/Language", name = "token-configuration-name"

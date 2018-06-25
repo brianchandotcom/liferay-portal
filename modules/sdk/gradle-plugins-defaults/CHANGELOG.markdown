@@ -3893,7 +3893,7 @@ of a module includes transitive dependencies.
 ## 5.4.52 - 2018-06-21
 
 ### Added
-- [LPS-82568]: Set the `npmRunBuild` task `environment` property to
+- [LPS-82568]: Set the `npmRunBuild` task's `environment` property to
 `LIFERAY_NPM_BUNDLER_NO_TRACKING=1` by default to disable a prompt from
 [`liferay-npm-bundler`](https://github.com/liferay/liferay-npm-build-tools)
 about tracking data.
@@ -3915,6 +3915,7 @@ about tracking data.
 [Liferay Gradle Plugins JSDoc]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-jsdoc
 [Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
+[Liferay Gradle Plugins Patcher]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-patcher
 [Liferay Gradle Plugins Poshi Runner]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-poshi-runner
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter

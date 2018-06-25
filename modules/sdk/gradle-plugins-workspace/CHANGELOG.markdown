@@ -97,7 +97,7 @@ extension object into the public API.
 ### Added
 - [LPS-71724]: Add the ability to download and upgrade the Plugins SDK
 directories by executing the `upgradePluginsSDK` task in the root project.
-- [LPS-71724]: Add [Liferay CDN](https://repository-cdn.liferay.com/nexus/content/groups/public)
+- [LPS-71724]: Add the [Liferay CDN](https://repository-cdn.liferay.com/nexus/content/groups/public)
 as the default repository in the root project. This behavior can be disabled by
 setting the `liferay.workspace.default.repository.enabled` property to `false`
 in `gradle.properties`.

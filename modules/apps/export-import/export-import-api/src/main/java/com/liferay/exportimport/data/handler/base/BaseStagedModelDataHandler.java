@@ -23,6 +23,7 @@ import com.liferay.changeset.service.ChangesetEntryLocalServiceUtil;
 import com.liferay.changeset.util.ChangesetThreadLocal;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -108,7 +109,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			if (changesetCollection != null) {
 				long classNameId = ClassNameLocalServiceUtil.getClassNameId(
-					stagedModel.getModelClassName());
+					ExportImportClassedModelUtil.getClassName(stagedModel));
 
 				ChangesetEntry changesetEntry =
 					ChangesetEntryLocalServiceUtil.fetchChangesetEntry(

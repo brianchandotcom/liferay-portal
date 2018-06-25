@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.internal.exportimport.data.handler;
 
-import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -26,13 +25,11 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -89,31 +86,6 @@ public class FolderStagedModelDataHandler
 
 		if (folder != null) {
 			deleteStagedModel(folder);
-		}
-	}
-
-	@Override
-	public void exportStagedModel(
-			PortletDataContext portletDataContext, Folder folder)
-		throws PortletDataException {
-
-		super.exportStagedModel(portletDataContext, folder);
-
-		if (ExportImportThreadLocal.isStagingInProcess()) {
-			ChangesetCollection changesetCollection =
-				_changesetCollectionLocalService.fetchChangesetCollection(
-					portletDataContext.getScopeGroupId(),
-					StagingConstants.
-						RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
-
-			if (changesetCollection != null) {
-				long classNameId = _classNameLocalService.getClassNameId(
-					DLFolder.class);
-
-				_changesetEntryLocalService.deleteEntry(
-					changesetCollection.getChangesetCollectionId(), classNameId,
-					folder.getFolderId());
-			}
 		}
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.internal.exportimport.data.handler;
 
-import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
 import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.document.library.exportimport.data.handler.DLPluggableContentDataHandler;
@@ -48,7 +47,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
@@ -124,31 +122,6 @@ public class FileEntryStagedModelDataHandler
 
 		if (fileEntry != null) {
 			deleteStagedModel(fileEntry);
-		}
-	}
-
-	@Override
-	public void exportStagedModel(
-			PortletDataContext portletDataContext, FileEntry fileEntry)
-		throws PortletDataException {
-
-		super.exportStagedModel(portletDataContext, fileEntry);
-
-		if (ExportImportThreadLocal.isStagingInProcess()) {
-			ChangesetCollection changesetCollection =
-				_changesetCollectionLocalService.fetchChangesetCollection(
-					portletDataContext.getScopeGroupId(),
-					StagingConstants.
-						RANGE_FROM_LAST_PUBLISH_DATE_CHANGESET_NAME);
-
-			if (changesetCollection != null) {
-				long classNameId = _classNameLocalService.getClassNameId(
-					DLFileEntry.class);
-
-				_changesetEntryLocalService.deleteEntry(
-					changesetCollection.getChangesetCollectionId(), classNameId,
-					fileEntry.getFileEntryId());
-			}
 		}
 	}
 

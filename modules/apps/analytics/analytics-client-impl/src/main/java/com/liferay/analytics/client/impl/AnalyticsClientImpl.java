@@ -61,7 +61,8 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 	}
 
 	private static final String _SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_HOST =
-		System.getProperty("analytics.gateway.host", "ec-dev.liferay.com");
+		System.getProperty(
+			"analytics.gateway.host", "analytics-gw.liferay.com");
 
 	private static final String _SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PATH =
 		System.getProperty(
@@ -69,7 +70,7 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 			"/api/analyticsgateway/send-analytics-events");
 
 	private static final String _SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PORT =
-		System.getProperty("analytics.gateway.port", "8095");
+		System.getProperty("analytics.gateway.port", "80");
 
 	private static final String
 		_SYSTEM_PROPERTY_VALUE_ANALYTICS_GATEWAY_PROTOCOL = System.getProperty(

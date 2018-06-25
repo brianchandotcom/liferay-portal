@@ -130,11 +130,11 @@ EmailAddress emailAddress = commerceOrganizationDetailDisplayContext.getOrganiza
 
 			<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-			<aui:select label="country" name='<%= "addressCountryId" %>' required="true" width="150px" />
+			<aui:select label="country" name="addressCountryId" required="true" width="150px" />
 
 			<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 
-			<aui:select label="region" name='<%= "addressRegionId" %>' width="150px" />
+			<aui:select label="region" name="addressRegionId" width="150px" />
 
 			<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
 

@@ -62,8 +62,11 @@ public class LayoutPageTemplateEntryStagedModelRepository
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			userId, layoutPageTemplateEntry.getGroupId(),
 			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
+			layoutPageTemplateEntry.getClassNameId(),
+			layoutPageTemplateEntry.getClassTypeId(),
 			layoutPageTemplateEntry.getName(),
 			layoutPageTemplateEntry.getType(),
+			layoutPageTemplateEntry.isDefaultTemplate(),
 			layoutPageTemplateEntry.getLayoutPrototypeId(),
 			layoutPageTemplateEntry.getPreviewFileEntryId(),
 			layoutPageTemplateEntry.getStatus(), serviceContext);
@@ -131,6 +134,14 @@ public class LayoutPageTemplateEntryStagedModelRepository
 	}
 
 	@Override
+	public LayoutPageTemplateEntry getStagedModel(long classPK)
+		throws PortalException {
+
+		return _layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+			classPK);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry saveStagedModel(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
@@ -155,6 +166,10 @@ public class LayoutPageTemplateEntryStagedModelRepository
 			layoutPageTemplateEntry.getType());
 		existingLayoutPageTemplateEntry.setPreviewFileEntryId(
 			layoutPageTemplateEntry.getPreviewFileEntryId());
+		existingLayoutPageTemplateEntry.setDefaultTemplate(
+			layoutPageTemplateEntry.isDefaultTemplate());
+		existingLayoutPageTemplateEntry.setLayoutPrototypeId(
+			layoutPageTemplateEntry.getLayoutPrototypeId());
 		existingLayoutPageTemplateEntry.setStatus(
 			layoutPageTemplateEntry.getStatus());
 

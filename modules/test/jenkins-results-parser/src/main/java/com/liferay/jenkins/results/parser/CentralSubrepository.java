@@ -233,7 +233,7 @@ public class CentralSubrepository {
 			"git/refs/heads/", _subrepositoryUpstreamBranchName);
 
 		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
-			_subrepositoryDirectory, _subrepositoryUsername, path);
+			_subrepositoryName, _subrepositoryUsername, path);
 
 		JSONObject branchJSONObject = JenkinsResultsParserUtil.toJSONObject(
 			url, false);

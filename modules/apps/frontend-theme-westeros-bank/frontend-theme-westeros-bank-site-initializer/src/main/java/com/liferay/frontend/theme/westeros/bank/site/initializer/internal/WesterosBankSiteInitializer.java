@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -81,6 +83,7 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext = _createServiceContext(groupId);
 
 			_updateLogo(serviceContext);
+			_updateLookAndFeel(serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -133,9 +136,31 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 			serviceContext.getScopeGroupId(), false, true, bytes);
 	}
 
+	private void _updateLookAndFeel(ServiceContext serviceContext)
+		throws PortalException {
+
+		Theme theme = _themeLocalService.fetchTheme(
+			serviceContext.getCompanyId(), _THEME_ID);
+
+		if (theme == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("No theme found for " + _THEME_ID);
+			}
+
+			return;
+		}
+
+		_layoutSetLocalService.updateLookAndFeel(
+			serviceContext.getScopeGroupId(), false, _THEME_ID,
+			StringPool.BLANK, StringPool.BLANK);
+	}
+
 	private static final String _PATH =
 		"com/liferay/frontend/theme/westeros/bank/site/initializer/internal" +
 			"/dependencies";
+
+	private static final String _THEME_ID =
+		"westerosbank_WAR_westerosbanktheme";
 
 	private static final String _THEME_NAME = "Westeros Bank";
 
@@ -154,6 +179,9 @@ public class WesterosBankSiteInitializer implements SiteInitializer {
 		target = "(osgi.web.symbolicname=com.liferay.frontend.theme.westeros.bank.site.initializer)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private ThemeLocalService _themeLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

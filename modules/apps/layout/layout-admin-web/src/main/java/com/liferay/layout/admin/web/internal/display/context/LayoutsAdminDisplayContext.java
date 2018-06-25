@@ -69,8 +69,6 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
-import com.liferay.staging.StagingGroupHelper;
-import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.Collections;
@@ -429,9 +427,6 @@ public class LayoutsAdminDisplayContext {
 	public List<NavigationItem> getNavigationItems() {
 		Group group = _themeDisplay.getScopeGroup();
 
-		StagingGroupHelper stagingGroupHelper =
-			StagingGroupHelperUtil.getStagingGroupHelper();
-
 		return new NavigationItemList() {
 			{
 				if (!group.isCompany()) {
@@ -446,7 +441,7 @@ public class LayoutsAdminDisplayContext {
 						});
 				}
 
-				if (!stagingGroupHelper.isLocalStagingGroup(group)) {
+				if (!(group.isStaged() && !group.isStagingGroup())) {
 					add(
 						navigationItem -> {
 							navigationItem.setActive(
@@ -458,8 +453,8 @@ public class LayoutsAdminDisplayContext {
 						});
 				}
 
-				if (!group.isCompany() &&
-					!stagingGroupHelper.isLocalStagingGroup(group)) {
+				if (!group.isCompany() && !(group.isStaged() &&
+				 !group.isStagingGroup())) {
 
 					add(
 						navigationItem -> {

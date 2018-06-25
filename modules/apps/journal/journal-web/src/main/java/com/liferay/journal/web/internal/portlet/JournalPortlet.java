@@ -72,6 +72,7 @@ import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.util.JournalPortletUtil;
 import com.liferay.journal.web.util.JournalUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -127,6 +128,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -1504,6 +1506,19 @@ public class JournalPortlet extends MVCPortlet {
 			_assetDisplayPageEntryLocalService.updateAssetDisplayPageEntry(
 				assetDisplayPageEntry.getAssetDisplayPageEntryId(),
 				assetDisplayPageId, displayPageType);
+		}
+
+		if (assetDisplayPageId > 0) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+					assetDisplayPageId);
+
+			if (layoutPageTemplateEntry != null) {
+				layoutPageTemplateEntry.setModifiedDate(new Date());
+
+				_layoutPageTemplateEntryLocalService.
+					updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+			}
 		}
 	}
 

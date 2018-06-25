@@ -80,6 +80,12 @@ public interface LayoutPageTemplateEntryLocalService extends BaseLocalService,
 		LayoutPrototype layoutPrototype) throws PortalException;
 
 	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
+		long groupId, long layoutPageTemplateCollectionId, long classNameId,
+		long classTypeId, String name, int type, boolean defaultTemplate,
+		long layoutPrototypeId, long previewFileEntryId, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(long userId,
 		long groupId, long layoutPageTemplateCollectionId, String name,
 		int type, int status, ServiceContext serviceContext)
 		throws PortalException;

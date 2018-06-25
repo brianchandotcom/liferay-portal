@@ -55,6 +55,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			layoutPageTemplateCollectionPersistence.create(
 				layoutPageTemplateId);
 
+		layoutPageTemplateCollection.setUuid(serviceContext.getUuid());
 		layoutPageTemplateCollection.setGroupId(groupId);
 		layoutPageTemplateCollection.setCompanyId(user.getCompanyId());
 		layoutPageTemplateCollection.setUserId(user.getUserId());

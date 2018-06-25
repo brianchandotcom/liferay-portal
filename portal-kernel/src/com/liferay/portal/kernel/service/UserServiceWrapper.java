@@ -658,6 +658,21 @@ public class UserServiceWrapper implements UserService,
 	}
 
 	/**
+	* Returns the users belonging to the user group with the status.
+	*
+	* @param userGroupId the primary key of the user group
+	* @param start the lower bound of the range of users
+	* @param end the upper bound of the range of users (not inclusive)
+	* @return the matching users
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getUserGroupUsers(
+		long userGroupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userService.getUserGroupUsers(userGroupId, start, end);
+	}
+
+	/**
 	* Returns the primary key of the user with the email address.
 	*
 	* @param companyId the primary key of the user's company
@@ -1120,7 +1135,7 @@ public class UserServiceWrapper implements UserService,
 	* @param userId the primary key of the user
 	* @param status the user's new workflow status
 	* @return the user
-	* @deprecated As of Wilberforce, replaced by {@link #updateStatus(long,
+	* @deprecated As of Judson, As of Wilberforce, replaced by {@link #updateStatus(long,
 	int, ServiceContext)}
 	*/
 	@Deprecated
@@ -1286,7 +1301,7 @@ public class UserServiceWrapper implements UserService,
 	<code>uuid</code> attribute), asset category IDs, asset tag
 	names, and expando bridge attributes for the user.
 	* @return the user
-	* @deprecated As of Wilberforce, replaced by {@link #updateUser(long,
+	* @deprecated As of Judson, As of Wilberforce, replaced by {@link #updateUser(long,
 	String, String, String, boolean, String, String, String,
 	String, long, String, boolean, byte[], String, String,
 	String, String, String, String, String, long, long, boolean,

@@ -62,11 +62,11 @@ List<DDMFormFieldType> ddmFormFieldTypes = cpDefinitionOptionRelDisplayContext.g
 
 			</aui:select>
 
-			<aui:input label="use-in-faceted-navigation" name="facetable" />
+			<aui:input label="use-in-faceted-navigation" name="facetable" type="toggle-switch" />
 
-			<aui:input name="required" />
+			<aui:input name="required" type="toggle-switch" />
 
-			<aui:input name="skuContributor" />
+			<aui:input name="skuContributor" type="toggle-switch" />
 
 			<aui:input name="priority" />
 

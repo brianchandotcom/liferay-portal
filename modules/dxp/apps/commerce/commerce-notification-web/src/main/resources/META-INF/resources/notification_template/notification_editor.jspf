@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:input name="enabled" />
+<aui:input name="enabled" type="toggle-switch" />
 
 <aui:field-wrapper label="subject">
 	<liferay-ui:input-localized

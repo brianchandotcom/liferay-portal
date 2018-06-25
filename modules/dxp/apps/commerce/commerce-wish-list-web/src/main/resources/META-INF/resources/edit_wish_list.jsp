@@ -39,7 +39,7 @@ boolean defaultWishList = BeanParamUtil.getBoolean(commerceWishList, request, "d
 		<aui:fieldset>
 			<aui:input name="name" />
 
-			<aui:input checked="<%= defaultWishList %>" label="default" name="defaultWishList" />
+			<aui:input checked="<%= defaultWishList %>" label="default" name="defaultWishList" type="toggle-switch" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

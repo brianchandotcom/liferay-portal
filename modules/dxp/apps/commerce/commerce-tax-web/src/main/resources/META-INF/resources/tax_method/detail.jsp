@@ -45,9 +45,9 @@ long commerceTaxMethodId = commerceTaxMethod.getCommerceTaxMethodId();
 
 				<aui:input name="description" />
 
-				<aui:input name="percentage" />
+				<aui:input name="percentage" type="toggle-switch" />
 
-				<aui:input name="active" />
+				<aui:input name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

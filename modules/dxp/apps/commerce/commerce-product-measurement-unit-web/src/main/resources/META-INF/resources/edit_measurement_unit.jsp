@@ -75,7 +75,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 				<aui:input name="key" />
 
-				<aui:input name="primary" value="<%= primary %>" />
+				<aui:input name="primary" type="toggle-switch" value="<%= primary %>" />
 
 				<%
 				String taglibLabel = "ratio-to-primary";

@@ -43,7 +43,7 @@ String type = BeanParamUtil.getString(cpRule, request, "type");
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" name="name" value="<%= name %>" />
 
-				<aui:input name="active" />
+				<aui:input name="active" type="toggle-switch" />
 
 				<aui:select name="type" onChange='<%= renderResponse.getNamespace() + "selectType();" %>' showEmptyOption="<%= true %>">
 

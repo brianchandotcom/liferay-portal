@@ -87,7 +87,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 				<aui:input name="priority" />
 
-				<aui:input name="active" />
+				<aui:input name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

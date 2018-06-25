@@ -43,9 +43,9 @@ long commerceCountryId = commerceCountriesDisplayContext.getCommerceCountryId();
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" name="name" />
 
-				<aui:input name="billingAllowed" />
+				<aui:input name="billingAllowed" type="toggle-switch" />
 
-				<aui:input name="shippingAllowed" />
+				<aui:input name="shippingAllowed" type="toggle-switch" />
 
 				<aui:input name="twoLettersISOCode" />
 
@@ -53,11 +53,11 @@ long commerceCountryId = commerceCountriesDisplayContext.getCommerceCountryId();
 
 				<aui:input name="numericISOCode" />
 
-				<aui:input name="subjectToVAT" />
+				<aui:input name="subjectToVAT" type="toggle-switch" />
 
 				<aui:input name="priority" />
 
-				<aui:input name="active" />
+				<aui:input name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset>
 	</aui:fieldset-group>

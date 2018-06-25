@@ -43,7 +43,7 @@ long commerceUserSegmentEntryId = commerceUserSegmentDisplayContext.getCommerceU
 
 				<aui:input name="priority" />
 
-				<aui:input disabled="<%= commerceUserSegmentEntry.isSystem() %>" name="active" />
+				<aui:input disabled="<%= commerceUserSegmentEntry.isSystem() %>" name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

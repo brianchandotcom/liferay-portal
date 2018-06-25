@@ -87,7 +87,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 				</aui:select>
 
-				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="primary" value="<%= primary %>" />
+				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="primary" type="toggle-switch" value="<%= primary %>" />
 
 				<%
 				String taglibLabel = "exchange-rate";
@@ -105,7 +105,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="priority" />
 
-				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="active" />
+				<aui:input bean="<%= commerceCurrency %>" model="<%= CommerceCurrency.class %>" name="active" type="toggle-switch" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

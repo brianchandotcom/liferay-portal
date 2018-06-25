@@ -150,9 +150,9 @@ if ((commerceDiscount != null) && !Objects.equals(commerceDiscount.getLimitation
 
 <aui:input bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="limitationTimes" wrapperCssClass="<%= limitationTimesWrapperCssClass %>" />
 
-<aui:input bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="cumulative" />
+<aui:input bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="cumulative" type="toggle-switch" />
 
-<aui:input bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="active" />
+<aui:input bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="active" type="toggle-switch" />
 
 <aui:script use="aui-toggler">
 	new A.Toggler(

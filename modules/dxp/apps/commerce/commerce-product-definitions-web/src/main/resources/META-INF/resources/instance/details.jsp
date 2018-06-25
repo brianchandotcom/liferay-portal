@@ -68,7 +68,7 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 
 				<aui:input name="manufacturerPartNumber" />
 
-				<aui:input name="purchasable" />
+				<aui:input name="purchasable" type="toggle-switch" />
 			</aui:fieldset>
 
 			<c:if test="<%= !cpDefinition.getIgnoreSKUCombinations() %>">

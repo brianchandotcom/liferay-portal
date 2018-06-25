@@ -204,7 +204,7 @@ public class I18nServlet extends HttpServlet {
 
 			String country = locale.getCountry();
 
-			if (country.length() == 0) {
+			if (country.isEmpty()) {
 				locale = LanguageUtil.getLocale(locale.getLanguage());
 			}
 

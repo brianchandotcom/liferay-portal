@@ -33,9 +33,7 @@
 			<var name="button" value="Save" />
 		</execute>
 
-		<execute function="AssertVisible" locator1="SitePages#LIST_GROUP_ITEM">
-			<var name="key_itemName" value="${pageName}" />
-		</execute>
+		<execute function="WaitForSPARefresh" />
 	</command>
 
 	<command name="_clickAddPage">

@@ -3904,6 +3904,12 @@ about tracking data.
 - [LPS-82815]: Update the [Liferay Gradle Plugins] dependency to version
 3.12.54.
 
+## 5.4.55 - 2018-06-25
+
+### Changed
+- [LPS-82857]: Update the [Liferay Gradle Plugins Change Log Builder] dependency
+to version 1.1.0.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://repository-cdn.liferay.com/nexus/content/groups/public
@@ -4335,6 +4341,7 @@ about tracking data.
 [LPS-82534]: https://issues.liferay.com/browse/LPS-82534
 [LPS-82568]: https://issues.liferay.com/browse/LPS-82568
 [LPS-82815]: https://issues.liferay.com/browse/LPS-82815
+[LPS-82857]: https://issues.liferay.com/browse/LPS-82857
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

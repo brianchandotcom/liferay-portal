@@ -39,10 +39,10 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addTaskBuildChangeLog(project);
+		_addTaskBuildChangeLog(project);
 	}
 
-	protected BuildChangeLogTask addTaskBuildChangeLog(Project project) {
+	private BuildChangeLogTask _addTaskBuildChangeLog(Project project) {
 		final BuildChangeLogTask buildChangeLogTask = GradleUtil.addTask(
 			project, BUILD_CHANGE_LOG_TASK_NAME, BuildChangeLogTask.class);
 
@@ -71,7 +71,7 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
-					configureTaskBuildChangeLogForJavaPlugin(
+					_configureTaskBuildChangeLogForJavaPlugin(
 						buildChangeLogTask);
 				}
 
@@ -80,7 +80,7 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 		return buildChangeLogTask;
 	}
 
-	protected void configureTaskBuildChangeLogForJavaPlugin(
+	private void _configureTaskBuildChangeLogForJavaPlugin(
 		final BuildChangeLogTask buildChangeLogTask) {
 
 		buildChangeLogTask.setChangeLogFile(
@@ -88,7 +88,7 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					File resourcesDir = getResourcesDir(
+					File resourcesDir = _getResourcesDir(
 						buildChangeLogTask.getProject());
 
 					return new File(
@@ -98,14 +98,14 @@ public class ChangeLogBuilderPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected File getResourcesDir(Project project) {
+	private File _getResourcesDir(Project project) {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		return getSrcDir(sourceSet.getResources());
+		return _getSrcDir(sourceSet.getResources());
 	}
 
-	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+	private File _getSrcDir(SourceDirectorySet sourceDirectorySet) {
 		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
 
 		Iterator<File> iterator = srcDirs.iterator();

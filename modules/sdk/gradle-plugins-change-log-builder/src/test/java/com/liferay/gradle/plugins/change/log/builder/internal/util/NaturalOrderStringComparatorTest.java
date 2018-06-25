@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.change.log.builder.util;
+package com.liferay.gradle.plugins.change.log.builder.internal.util;
 
 import java.util.Arrays;
 

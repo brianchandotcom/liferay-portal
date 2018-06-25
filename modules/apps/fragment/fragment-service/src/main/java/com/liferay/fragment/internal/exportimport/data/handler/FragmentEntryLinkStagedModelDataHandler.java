@@ -135,9 +135,9 @@ public class FragmentEntryLinkStagedModelDataHandler
 
 		importedFragmentEntryLink.setGroupId(
 			portletDataContext.getScopeGroupId());
-		importedFragmentEntryLink.setClassPK(referenceClassPK);
 		importedFragmentEntryLink.setOriginalFragmentEntryLinkId(
 			originalFragmentEntryLinkId);
+		importedFragmentEntryLink.setClassPK(referenceClassPK);
 
 		FragmentEntryLink existingFragmentEntryLink =
 			_stagedModelRepository.fetchStagedModelByUuidAndGroupId(

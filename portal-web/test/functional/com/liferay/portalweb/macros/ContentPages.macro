@@ -1,6 +1,8 @@
 <definition>
 	<command name="addPage">
-		<execute macro="LexiconEntry#gotoAdd" />
+		<execute macro="LexiconEntry#gotoAddMenuItem">
+			<var name="menuItem" value="Public Page" />
+		</execute>
 
 		<execute macro="LexiconEntry#gotoEntry">
 			<var name="rowEntry" value="${pageTemplateName}" />
@@ -10,7 +12,11 @@
 			<var name="name" value="${pageName}" />
 		</execute>
 
-		<execute macro="Modal#save" />
+		<execute macro="Button#click">
+			<var name="button" value="Save" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="viewContentPG">

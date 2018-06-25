@@ -187,8 +187,9 @@
 			<var name="portlet" value="Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoHeaderMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Permissions" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

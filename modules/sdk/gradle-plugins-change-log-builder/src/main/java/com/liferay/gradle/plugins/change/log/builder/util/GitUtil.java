@@ -27,6 +27,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevSort;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.AndRevFilter;
 import org.eclipse.jgit.revwalk.filter.CommitTimeRevFilter;
@@ -76,8 +77,7 @@ public class GitUtil {
 			RevCommit revCommit = revWalk.next();
 
 			if (revCommit == null) {
-				throw new GradleException(
-					"Unable to find any commit before " + date);
+				return null;
 			}
 
 			return revCommit.name();
@@ -88,6 +88,20 @@ public class GitUtil {
 		ObjectId objectId = repository.resolve(Constants.HEAD);
 
 		return objectId.name();
+	}
+
+	public static String getHashOldest(Repository repository) throws Exception {
+		try (RevWalk revWalk = new RevWalk(repository)) {
+			revWalk.markStart(
+				revWalk.parseCommit(repository.resolve(Constants.HEAD)));
+
+			revWalk.sort(RevSort.COMMIT_TIME_DESC, true);
+			revWalk.sort(RevSort.REVERSE, true);
+
+			RevCommit revCommit = revWalk.next();
+
+			return revCommit.name();
+		}
 	}
 
 	public static Repository openRepository(File gitDir) throws Exception {

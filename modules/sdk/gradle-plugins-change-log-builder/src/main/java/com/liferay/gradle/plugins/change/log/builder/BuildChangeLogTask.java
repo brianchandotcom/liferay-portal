@@ -262,6 +262,10 @@ public class BuildChangeLogTask extends DefaultTask {
 			calendar.add(Calendar.YEAR, -2);
 
 			rangeStart = GitUtil.getHashBefore(calendar.getTime(), repository);
+
+			if (Validator.isNull(rangeStart)) {
+				return GitUtil.getHashOldest(repository);
+			}
 		}
 
 		return rangeStart + "^";

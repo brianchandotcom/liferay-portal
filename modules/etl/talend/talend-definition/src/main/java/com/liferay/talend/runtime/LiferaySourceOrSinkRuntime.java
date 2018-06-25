@@ -39,6 +39,9 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 	public Schema getInputResourceCollectionSchema(String resourceURL)
 		throws IOException;
 
+	public String getInputResourceCollectionType(String resourceURL)
+		throws IOException;
+
 	public List<NamedThing> getResourceList(String webSiteURL)
 		throws IOException;
 

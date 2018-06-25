@@ -97,7 +97,7 @@ public class TLiferayOutputProperties
 
 	public ValidationResult afterCalculateSchema() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resource.resource.getValue());
+			_log.debug("Resource URL: " + resource.resourceURL.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -259,7 +259,7 @@ public class TLiferayOutputProperties
 
 	public ValidationResult validateOperations() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL: " + resource.resource.getValue());
+			_log.debug("Resource URL: " + resource.resourceURL.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -330,9 +330,9 @@ public class TLiferayOutputProperties
 		}
 
 		@Override
-		public ValidationResult afterResource() throws Exception {
+		public ValidationResult afterResourceURL() throws Exception {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Resource URL: " + resource.getValue());
+				_log.debug("Resource URL: " + resourceURL.getValue());
 			}
 
 			refreshLayout(getForm(Form.MAIN));
@@ -412,7 +412,7 @@ public class TLiferayOutputProperties
 
 		supportedOperations.addAll(
 			liferaySourceOrSinkRuntime.getResourceSupportedOperations(
-				resource.resource.getStringValue()));
+				resource.resourceURL.getStringValue()));
 
 		Supplier<Stream<Operation>> operationStreamSupplier =
 			() -> supportedOperations.stream();

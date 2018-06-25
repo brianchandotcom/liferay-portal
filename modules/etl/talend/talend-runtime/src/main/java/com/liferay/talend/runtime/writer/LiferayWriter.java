@@ -93,7 +93,7 @@ public class LiferayWriter
 		String resourceId = getIndexedRecordId(indexedRecord);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.resource.getValue();
+			_tLiferayOutputProperties.resource.resourceURL.getValue();
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
 
@@ -121,7 +121,7 @@ public class LiferayWriter
 		String resourceId = getIndexedRecordId(indexedRecord);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.resource.getValue();
+			_tLiferayOutputProperties.resource.resourceURL.getValue();
 
 		UriBuilder uriBuilder = UriBuilder.fromPath(resourceURL);
 
@@ -149,7 +149,7 @@ public class LiferayWriter
 		ObjectNode objectNode = _createApioExpectedForm(indexedRecord, true);
 
 		String resourceURL =
-			_tLiferayOutputProperties.resource.resource.getValue();
+			_tLiferayOutputProperties.resource.resourceURL.getValue();
 
 		try {
 			_liferaySink.doApioPostRequest(

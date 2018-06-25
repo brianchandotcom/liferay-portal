@@ -388,6 +388,18 @@ public class LiferaySourceOrSink
 	}
 
 	@Override
+	public String getInputResourceCollectionType(String resourceURL)
+		throws IOException {
+
+		JsonNode jsonNode = doApioGetRequest(resourceURL);
+
+		ApioResourceCollection apioResourceCollection =
+			new ApioResourceCollection(jsonNode);
+
+		return apioResourceCollection.getResourceCollectionType();
+	}
+
+	@Override
 	public List<NamedThing> getResourceList(String webSiteURL)
 		throws IOException {
 

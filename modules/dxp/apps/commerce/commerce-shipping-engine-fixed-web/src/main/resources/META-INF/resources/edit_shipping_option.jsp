@@ -32,31 +32,33 @@ if (commerceShippingFixedOption != null) {
 
 <portlet:actionURL name="editCommerceShippingFixedOption" var="editCommerceShippingFixedOptionActionURL" />
 
-<aui:form action="<%= editCommerceShippingFixedOptionActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceShippingFixedOption();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingFixedOption == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
-	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
+<div class="container-fluid-1280 sheet">
+	<aui:form action="<%= editCommerceShippingFixedOptionActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceShippingFixedOption();" %>'>
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingFixedOption == null) ? Constants.ADD : Constants.UPDATE %>" />
+		<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
+		<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
-	<div class="lfr-form-content sheet">
-		<aui:input autoFocus="<%= true %>" bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="name" />
+		<div class="lfr-form-content">
+			<aui:input autoFocus="<%= true %>" bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="name" />
 
-		<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="description" />
+			<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="description" />
 
-		<c:if test="<%= commerceShippingFixedOptionsDisplayContext.isFixed() %>">
-			<aui:input name="amount" suffix="<%= commerceShippingFixedOptionsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOption == null) ? BigDecimal.ZERO : commerceShippingFixedOptionsDisplayContext.round(commerceShippingFixedOption.getAmount()) %>">
-				<aui:validator name="number" />
-			</aui:input>
-		</c:if>
+			<c:if test="<%= commerceShippingFixedOptionsDisplayContext.isFixed() %>">
+				<aui:input name="amount" suffix="<%= commerceShippingFixedOptionsDisplayContext.getCommerceCurrencyCode() %>" type="text" value="<%= (commerceShippingFixedOption == null) ? BigDecimal.ZERO : commerceShippingFixedOptionsDisplayContext.round(commerceShippingFixedOption.getAmount()) %>">
+					<aui:validator name="number" />
+				</aui:input>
+			</c:if>
 
-		<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="priority" />
-	</div>
+			<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="priority" />
+		</div>
+	</aui:form>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= true %>" type="submit" value="save" />
 
 		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
 	</aui:button-row>
-</aui:form>
+</div>
 
 <aui:script>
 	Liferay.provide(
@@ -65,7 +67,7 @@ if (commerceShippingFixedOption != null) {
 		function() {
 			var A = AUI();
 
-			var url = '<%= editCommerceShippingFixedOptionActionURL.toString() %>';
+			var url = '<%= editCommerceShippingFixedOptionActionURL %>';
 
 			A.io.request(
 				url,

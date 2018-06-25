@@ -165,7 +165,7 @@ boolean hasManageCommerceShippingMethodsPermission = commerceShippingFixedOption
 				dialog: {
 					centered: true,
 					destroyOnClose: true,
-					height: 600,
+					height: 525,
 					modal: true,
 					width: 600
 				},

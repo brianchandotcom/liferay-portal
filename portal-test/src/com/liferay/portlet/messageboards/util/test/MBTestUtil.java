@@ -32,9 +32,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Eudaldo Alonso
- * @author Daniel Kocsis
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Eudaldo Alonso
+ * @author     Daniel Kocsis
+ * @deprecated As of Judson, replaced by {@link
  *             com.liferay.message.boards.test.util.MBTestUtil}
  */
 @Deprecated

@@ -99,7 +99,7 @@ public class SoyPortlet extends MVCPortlet {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0, use {@link SoyPortlet#init(PortletConfig)}}
+	 * @deprecated As of Judson, use {@link SoyPortlet#init(PortletConfig)}}
 	 *             instead
 	 */
 	@Deprecated
@@ -342,7 +342,7 @@ public class SoyPortlet extends MVCPortlet {
 	protected boolean propagateRequestParameters;
 
 	/**
-	 * @deprecated As of 1.0.0, use {@link
+	 * @deprecated As of Judson, use {@link
 	 *             SoyPortlet#getTemplate(PortletRequest)}} instead
 	 */
 	@Deprecated

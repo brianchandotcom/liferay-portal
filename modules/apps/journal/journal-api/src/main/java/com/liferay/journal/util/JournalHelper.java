@@ -43,7 +43,7 @@ public interface JournalHelper {
 	public Layout getArticleLayout(String layoutUuid, long groupId);
 
 	/**
-	 * @deprecated As of 3.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public List<JournalArticle> getArticles(Hits hits) throws PortalException;

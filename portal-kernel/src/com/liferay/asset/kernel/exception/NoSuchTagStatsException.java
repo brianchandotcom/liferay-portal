@@ -17,9 +17,9 @@ package com.liferay.asset.kernel.exception;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *              com.liferay.asset.tag.stats.exception.NoSuchTagStatsException}
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of Judson, replaced by {@link
+ *             com.liferay.asset.tag.stats.exception.NoSuchTagStatsException}
  */
 @Deprecated
 public class NoSuchTagStatsException extends NoSuchModelException {

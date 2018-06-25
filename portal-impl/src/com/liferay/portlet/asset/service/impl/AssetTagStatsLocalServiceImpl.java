@@ -24,8 +24,8 @@ import java.util.List;
  * Provides the local service for accessing, adding, deleting, and updating
  * asset tag statistics.
  *
- * @author Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Jorge Ferrer
+ * @deprecated As of Judson, replaced by {@link
  *             com.liferay.asset.tag.stats.service.impl.AssetTagStatsLocalServiceImpl}
  */
 @Deprecated

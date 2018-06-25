@@ -21,7 +21,7 @@ import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 /**
  * @author     Adolfo Pérez
- * @deprecated As of 7.0.0, moved to {@link
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.asset.web.internal.social.AssetEntrySocialActivityManager}
  */
 @Deprecated

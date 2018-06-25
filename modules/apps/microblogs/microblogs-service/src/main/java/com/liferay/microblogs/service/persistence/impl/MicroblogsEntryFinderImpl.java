@@ -100,7 +100,7 @@ public class MicroblogsEntryFinderImpl
 		MicroblogsEntryFinder.class.getName() + ".findByC_CCNI_CCPK_ATN";
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #countByC_U(long, long)}
+	 * @deprecated As of Judson, replaced by {@link #countByC_U(long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -229,7 +229,7 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #countByC_U_ATN(long, long,
+	 * @deprecated As of Judson, replaced by {@link #countByC_U_ATN(long, long,
 	 *             String)}
 	 */
 	@Deprecated
@@ -275,7 +275,7 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #countByC_CCNI_ATN(long,
+	 * @deprecated As of Judson, replaced by {@link #countByC_CCNI_ATN(long,
 	 *             long, String)}
 	 */
 	@Deprecated
@@ -445,8 +445,8 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #countByC_CCNI_CCPK_ATN(long,
-	 *             long, long, String, boolean)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #countByC_CCNI_CCPK_ATN(long, long, long, String, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -539,7 +539,7 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #findByC_U(long, long, int,
+	 * @deprecated As of Judson, replaced by {@link #findByC_U(long, long, int,
 	 *             int)}
 	 */
 	@Deprecated
@@ -666,7 +666,7 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #findByC_U_ATN(long, long,
+	 * @deprecated As of Judson, replaced by {@link #findByC_U_ATN(long, long,
 	 *             String, int, int)}
 	 */
 	@Deprecated
@@ -705,8 +705,8 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #findByC_CCNI_ATN(long, long,
-	 *             String, int, int)}
+	 * @deprecated As of Judson, replaced by {@link #findByC_CCNI_ATN(long,
+	 *             long, String, int, int)}
 	 */
 	@Deprecated
 	@Override
@@ -842,7 +842,7 @@ public class MicroblogsEntryFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #findByC_CCNI_CCPK_ATN(long,
+	 * @deprecated As of Judson, replaced by {@link #findByC_CCNI_CCPK_ATN(long,
 	 *             long, long, String, boolean, int, int)}
 	 */
 	@Deprecated

@@ -142,7 +142,7 @@ public class UpgradeAsset extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	protected void updateAssetVocabulary(long vocabularyId, String settings)

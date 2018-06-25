@@ -20,9 +20,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * @author Shuyang Zhou
- * @deprecated As of 7.0.0, moved to {@link
- * 		   com.liferay.osgi.util.service.OSGiServiceUtil}
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson, moved to {@link
+ *             com.liferay.osgi.util.service.OSGiServiceUtil}
  */
 @Deprecated
 public class OSGiServiceUtil {

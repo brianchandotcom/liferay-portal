@@ -360,7 +360,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected File doExport(
@@ -371,7 +371,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void exportLayout(
@@ -384,7 +384,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void getLayoutPortlets(
@@ -446,7 +446,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected boolean prepareLayoutStagingHandler(
@@ -457,7 +457,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setBackgroundTaskLocalService(
@@ -465,7 +465,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setExportImportLifecycleManager(
@@ -473,21 +473,21 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setImageLocalService(ImageLocalService imageLocalService) {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setLayoutLocalService(
@@ -495,7 +495,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setLayoutPrototypeLocalService(
@@ -505,7 +505,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setLayoutRevisionLocalService(
@@ -513,7 +513,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setLayoutSetBranchLocalService(
@@ -521,7 +521,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setLayoutSetLocalService(
@@ -529,7 +529,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setLayoutSetPrototypeLocalService(
@@ -537,7 +537,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setPortletExportController(
@@ -545,7 +545,7 @@ public class LayoutExportController implements ExportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected void setUserLocalService(UserLocalService userLocalService) {

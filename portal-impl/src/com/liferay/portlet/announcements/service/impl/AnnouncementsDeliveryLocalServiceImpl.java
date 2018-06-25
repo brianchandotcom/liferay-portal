@@ -159,8 +159,8 @@ public class AnnouncementsDeliveryLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #updateDelivery(long, String, boolean, boolean)}
+	 * @deprecated As of Judson, replaced by {@link #updateDelivery(long,
+	 *             String, boolean, boolean)}
 	 */
 	@Deprecated
 	@Override

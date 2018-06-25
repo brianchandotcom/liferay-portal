@@ -58,8 +58,9 @@ public interface LayoutSetPrototypeService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(Map,
-	Map, boolean, boolean, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#addLayoutSetPrototype(Map, Map, boolean, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public LayoutSetPrototype addLayoutSetPrototype(
@@ -96,7 +97,7 @@ public interface LayoutSetPrototypeService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	#updateLayoutSetPrototype(long, Map, Map, boolean, boolean,
 	ServiceContext)}
 	*/

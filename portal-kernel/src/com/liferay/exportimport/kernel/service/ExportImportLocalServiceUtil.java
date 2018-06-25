@@ -47,7 +47,7 @@ public class ExportImportLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of Judson
 	*/
 	@Deprecated
 	public static java.io.File exportLayoutsAsFile(long userId, long groupId,
@@ -120,7 +120,7 @@ public class ExportImportLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of Judson
 	*/
 	@Deprecated
 	public static void importLayouts(long userId, long groupId,

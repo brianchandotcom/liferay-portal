@@ -311,8 +311,8 @@ public class DLFileEntryServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long,
-	boolean, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#isKeepFileVersionLabel(long, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static boolean isKeepFileVersionLabel(long fileEntryId,

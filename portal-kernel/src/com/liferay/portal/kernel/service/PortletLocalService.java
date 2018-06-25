@@ -90,7 +90,7 @@ public interface PortletLocalService extends BaseLocalService,
 	public void clearCache();
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #clearPortletsMap)}
+	* @deprecated As of Wilberforce, replaced by {@link #clearPortletsMap)}
 	*/
 	@Clusterable
 	@Deprecated
@@ -352,7 +352,8 @@ public interface PortletLocalService extends BaseLocalService,
 	public Map<String, Portlet> loadGetPortletsMap(long companyId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #loadGetPortletsMap(long))}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#loadGetPortletsMap(long))}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

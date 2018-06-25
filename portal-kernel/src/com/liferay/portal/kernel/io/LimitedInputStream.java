@@ -22,7 +22,7 @@ import java.io.InputStream;
  * reading an InputStream infinitely.
  *
  * @author     Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class LimitedInputStream extends InputStream {

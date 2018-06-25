@@ -25,7 +25,7 @@ import java.util.Set;
 public class PortalCacheConfiguration {
 
 	/**
-	 * @deprecated As of 1.0.0, replaced by {@link #PORTAL_CACHE_NAME_DEFAULT}
+	 * @deprecated As of Judson, replaced by {@link #PORTAL_CACHE_NAME_DEFAULT}
 	 */
 	@Deprecated
 	public static final String DEFAULT_PORTAL_CACHE_NAME = "default";
@@ -34,7 +34,7 @@ public class PortalCacheConfiguration {
 		"PORTAL_CACHE_LISTENER_PROPERTIES_KEY_SCOPE";
 
 	/**
-	 * @deprecated As of 1.0.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #PORTAL_CACHE_LISTENER_PROPERTIES_KEY_SCOPE}
 	 */
 	@Deprecated

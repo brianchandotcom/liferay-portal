@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Michael C. Han
- * @deprecated As of 7.0.0, moved to {@link
+ * @author     Michael C. Han
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.search.suggest.BaseQuerySuggester}
  */
 @Deprecated

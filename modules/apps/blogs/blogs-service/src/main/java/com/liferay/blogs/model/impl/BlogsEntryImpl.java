@@ -53,7 +53,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             #getSmallImageURL(ThemeDisplay)}
 	 */
 	@Deprecated
@@ -74,7 +74,7 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 2.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override

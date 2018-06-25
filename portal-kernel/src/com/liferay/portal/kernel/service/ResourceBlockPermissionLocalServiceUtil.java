@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @see ResourceBlockPermissionLocalService
  * @see com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl
  * @see com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated
@@ -201,7 +201,7 @@ public class ResourceBlockPermissionLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	#getAvailableResourceBlockPermissionActionIds(String, long,
 	List)}
 	*/

@@ -53,8 +53,7 @@ import java.io.InputStream;
  * DLStoreUtil.addFile(
  * companyId, repositoryId, dirName + "/" + fileName, file);
  * </code>
- * </pre>
- * </p>
+ * </pre></p>
  *
  * @author Brian Wing Shun Chan
  * @author Alexander Chow

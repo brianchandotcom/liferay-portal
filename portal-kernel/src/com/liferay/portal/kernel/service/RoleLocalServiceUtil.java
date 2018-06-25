@@ -483,7 +483,7 @@ public class RoleLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getResourceBlockRoles(

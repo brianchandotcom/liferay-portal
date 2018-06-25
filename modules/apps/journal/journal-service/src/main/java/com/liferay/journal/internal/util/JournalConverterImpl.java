@@ -219,7 +219,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -230,7 +230,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -256,7 +256,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -454,7 +454,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected Serializable getDocumentLibraryValue(String url) {
@@ -629,7 +629,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected FileEntry getFileEntryByDocumentLibraryURL(String url) {
@@ -637,7 +637,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	protected FileEntry getFileEntryByOldDocumentLibraryURL(String url)

@@ -30,7 +30,7 @@ public class DDMDataProviderContext {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             DDMDataProviderRequest#queryString(Map)}
 	 */
 	@Deprecated
@@ -39,7 +39,7 @@ public class DDMDataProviderContext {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             DDMDataProviderRequest#getParameters()}
 	 */
 	@Deprecated

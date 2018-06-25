@@ -21,7 +21,7 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see SubscriptionLocalService
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
 com.liferay.subscription.service.impl.SubscriptionLocalServiceImpl}
  * @generated
  */

@@ -268,7 +268,7 @@ public class LiferayServletContext implements ServletContext {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	@Override
@@ -282,7 +282,7 @@ public class LiferayServletContext implements ServletContext {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	@Override
@@ -303,7 +303,7 @@ public class LiferayServletContext implements ServletContext {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	@Override
@@ -322,7 +322,7 @@ public class LiferayServletContext implements ServletContext {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	@Override

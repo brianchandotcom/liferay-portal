@@ -331,8 +331,8 @@ public class InvokerFilterHelper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #initFilter(ServletContext,
-	 *             String, FilterConfig)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #initFilter(ServletContext, String, FilterConfig)}
 	 */
 	@Deprecated
 	protected Filter initFilter(

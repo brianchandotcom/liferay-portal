@@ -180,7 +180,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param fileEntryId the primary key of the file entry
 	* @param serviceContext the service context to be applied
 	* @return the file rank
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Judson, replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#addFileRank}
 	*/
 	@Deprecated
@@ -272,7 +272,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* only supported by the Liferay repository.
 	*
 	* @param fileEntryId the primary key of the file entry
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Judson, replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByFileEntryId}
 	*/
 	@Deprecated
@@ -286,7 +286,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* supported by the Liferay repository.
 	*
 	* @param userId the primary key of the user
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Judson, replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#deleteFileRanksByUserId}
 	*/
 	@Deprecated
@@ -392,7 +392,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param repositoryId the primary key of the repository
 	* @param userId the primary key of the user
 	* @return the file ranks from the user
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Judson, replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#getFileRanks}
 	*/
 	@Deprecated
@@ -739,7 +739,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @param fileEntryId the primary key of the file rank's file entry
 	* @param serviceContext the service context to be applied
 	* @return the file rank
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Judson, replaced by {@link
 	com.liferay.document.library.file.rank.service.DLFileRankLocalService#updateFileRank}
 	*/
 	@Deprecated
@@ -788,8 +788,8 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFileShortcuts(long,
-	long)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#updateFileShortcuts(long, long)}
 	*/
 	@Deprecated
 	@Override

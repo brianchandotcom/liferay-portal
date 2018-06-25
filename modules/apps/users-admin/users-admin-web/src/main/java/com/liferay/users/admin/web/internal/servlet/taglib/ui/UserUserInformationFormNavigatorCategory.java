@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import java.util.Locale;
 
 /**
- * @author Sergio González
- * @deprecated As of 2.5.0, with no direct replacement
+ * @author     Sergio González
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class UserUserInformationFormNavigatorCategory

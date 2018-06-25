@@ -30,6 +30,7 @@ public interface ScopeFinder {
 
 	/**
 	 * Returns the list of scopes, internal to the application.
+	 *
 	 * @return a collection of the available scopes.
 	 * @review
 	 */

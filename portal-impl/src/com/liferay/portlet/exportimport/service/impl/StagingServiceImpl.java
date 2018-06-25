@@ -170,7 +170,7 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -237,8 +237,8 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #publishStagingRequest(long,
-	 *             boolean, Map)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #publishStagingRequest(long, boolean, Map)}
 	 */
 	@Deprecated
 	@Override

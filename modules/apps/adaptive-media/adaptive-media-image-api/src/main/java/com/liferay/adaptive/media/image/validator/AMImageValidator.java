@@ -27,8 +27,7 @@ public interface AMImageValidator {
 	 * Returns <code>true</code> if the provided file version is valid for
 	 * Adaptive Media.
 	 *
-	 * @return <code>true</code> if the file version is valid for Adaptive
-	 *         Media
+	 * @return <code>true</code> if the file version is valid for Adaptive Media
 	 */
 	public boolean isValid(FileVersion fileVersion);
 

@@ -69,7 +69,7 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	@Override
@@ -78,7 +78,7 @@ public class TestWorkflowHandler implements WorkflowHandler<Object> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	@Override

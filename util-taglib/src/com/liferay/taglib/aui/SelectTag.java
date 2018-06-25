@@ -39,7 +39,7 @@ import javax.servlet.jsp.tagext.BodyTag;
 public class SelectTag extends BaseSelectTag implements BodyTag {
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -48,7 +48,7 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -59,7 +59,7 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -231,7 +231,7 @@ public class SelectTag extends BaseSelectTag implements BodyTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	protected void updateFormValidators() {

@@ -127,8 +127,8 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #addTempFileEntry(long, long,
-	String, String, InputStream, String)}
+	* @deprecated As of Wilberforce, replaced by {@link #addTempFileEntry(long,
+	long, String, String, InputStream, String)}
 	*/
 	@Deprecated
 	public static void addTempPageAttachment(long groupId, long userId,
@@ -475,7 +475,7 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 2.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	public static java.util.List<com.liferay.wiki.model.WikiPage> getNoAssetPages() {
@@ -816,7 +816,7 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #renamePage(long, long,
+	* @deprecated As of Wilberforce, replaced by {@link #renamePage(long, long,
 	String, String, ServiceContext)}
 	*/
 	@Deprecated
@@ -844,8 +844,8 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #movePageFromTrash(long,
-	long, String, long, String)} *
+	* @deprecated As of Wilberforce, replaced by {@link
+	#movePageFromTrash(long, long, String, long, String)} *
 	*/
 	@Deprecated
 	public static com.liferay.wiki.model.WikiPage movePageFromTrash(
@@ -951,8 +951,8 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link #updateStatus(long, WikiPage,
-	int, ServiceContext, Map)}
+	* @deprecated As of Wilberforce, replaced by {@link #updateStatus(long,
+	WikiPage, int, ServiceContext, Map)}
 	*/
 	@Deprecated
 	public static com.liferay.wiki.model.WikiPage updateStatus(long userId,
@@ -984,7 +984,7 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 1.2.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	WikiPageTitleValidator#validate(String)}
 	*/
 	@Deprecated

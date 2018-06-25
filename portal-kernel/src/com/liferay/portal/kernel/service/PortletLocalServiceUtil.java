@@ -72,7 +72,7 @@ public class PortletLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #clearPortletsMap)}
+	* @deprecated As of Wilberforce, replaced by {@link #clearPortletsMap)}
 	*/
 	@Deprecated
 	public static void clearCompanyPortletsPool() {
@@ -412,7 +412,8 @@ public class PortletLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #loadGetPortletsMap(long))}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#loadGetPortletsMap(long))}
 	*/
 	@Deprecated
 	public static java.util.Map<String, com.liferay.portal.kernel.model.Portlet> loadGetPortletsPool(

@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 7.0.0, moved to {@link
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.kernel.util.Autocomplete}
  */
 @Deprecated

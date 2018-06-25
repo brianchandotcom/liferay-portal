@@ -279,8 +279,8 @@ public class PortletSessionImpl implements LiferayPortletSession {
 		implements Externalizable {
 
 		/**
-		 * The empty constructor is required by {@link Externalizable}. Do not use
-		 * this for any other purpose.
+		 * The empty constructor is required by {@link Externalizable}. Do not
+		 * use this for any other purpose.
 		 */
 		public LazySerializableObjectWrapper() {
 		}

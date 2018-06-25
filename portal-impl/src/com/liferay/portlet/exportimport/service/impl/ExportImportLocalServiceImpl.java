@@ -79,7 +79,7 @@ public class ExportImportLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	public File exportLayoutsAsFile(
@@ -274,7 +274,7 @@ public class ExportImportLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Judson
 	 */
 	@Deprecated
 	public void importLayouts(

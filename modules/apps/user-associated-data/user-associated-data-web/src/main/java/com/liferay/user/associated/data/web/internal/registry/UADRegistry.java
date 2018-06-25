@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
-* @author William Newbury
-*/
+ * @author William Newbury
+ */
 @Component(immediate = true, service = UADRegistry.class)
 public class UADRegistry {
 

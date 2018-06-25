@@ -37,14 +37,15 @@ public abstract class BaseMultiDestinationProxyBean {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link MessageBusUtil#getMessageBus)
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             MessageBusUtil#getMessageBus)
 	 */
 	@Deprecated
 	public void setMessageBus(MessageBus messageBus) {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #setSynchronousMessageSenderMode(
 	 *             SynchronousMessageSender.Mode)}
 	 */

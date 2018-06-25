@@ -240,7 +240,7 @@ public class PortalSecurityManagerImpl
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	@Override

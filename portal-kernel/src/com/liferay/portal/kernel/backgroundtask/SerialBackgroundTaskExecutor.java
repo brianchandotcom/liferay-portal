@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
 
 /**
- * @author Michael C. Han
- * @deprecated As of 7.0.0, moved to {@link
+ * @author     Michael C. Han
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.background.task.internal.SerialBackgroundTaskExecutor}
  */
 @Deprecated

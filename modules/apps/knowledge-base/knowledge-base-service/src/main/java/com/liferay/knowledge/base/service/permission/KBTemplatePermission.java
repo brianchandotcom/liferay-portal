@@ -24,10 +24,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Peter Shin
- * @author Brian Wing Shun Chan
- * @author Roberto Díaz
- * @deprecated As of 1.3.0, with no direct replacement
+ * @author     Peter Shin
+ * @author     Brian Wing Shun Chan
+ * @author     Roberto Díaz
+ * @deprecated As of Judson, with no direct replacement
  */
 @Component(
 	property = "model.class.name=com.liferay.knowledge.base.model.KBTemplate",

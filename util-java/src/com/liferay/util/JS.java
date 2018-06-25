@@ -75,7 +75,7 @@ public class JS {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #encodeURIComponent}
+	 * @deprecated As of Bunyan, replaced by {@link #encodeURIComponent}
 	 */
 	@Deprecated
 	public static String escape(String s) {
@@ -137,7 +137,7 @@ public class JS {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #decodeURIComponent}
+	 * @deprecated As of Bunyan, replaced by {@link #decodeURIComponent}
 	 */
 	@Deprecated
 	public static String unescape(String s) {

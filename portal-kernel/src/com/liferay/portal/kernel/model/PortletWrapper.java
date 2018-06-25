@@ -506,7 +506,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	* Returns the Facebook integration method of the portlet.
 	*
 	* @return the Facebook integration method of the portlet
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -2606,7 +2606,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	*
 	* @param facebookIntegration the Facebook integration method of the
 	portlet
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Override
@@ -3066,13 +3066,8 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @param portletDependencyCssEnabled whether the CSS
-	resource dependencies that are specified in <code>portlet.xml</code>,
-	* @{@link javax.portlet.annotations.Dependency},
-	{@link javax.portlet.HeaderResponse#addDependency(String, String,
-	String)}, or {@link javax.portlet.HeaderResponse#addDependency(
-	String, String, String, String)} are to be referenced in the
-	page's header
+	* @param portletDependencyCssEnabled whether the CSS resource dependencies
+	that are specified in <code>portlet.xml</code>,
 	*/
 	@Override
 	public void setPortletDependencyCssEnabled(
@@ -3087,13 +3082,13 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	* String)}, or {@link javax.portlet.HeaderResponse#addDependency(String,
 	* String, String, String)} are to be referenced in the page's header.
 	*
-	* @param portletDependencyJavaScriptEnabled whether the
-	JavaScript resource dependencies specified in
-	<code>portlet.xml</code>, @{@link javax.portlet.annotations.Dependency},
-	{@link javax.portlet.HeaderResponse#addDependency(String, String,
-	String)}, or {@link javax.portlet.HeaderResponse#addDependency(
-	String, String, String, String)} are to be referenced in the
-	page's header
+	* @param portletDependencyJavaScriptEnabled whether the JavaScript resource
+	dependencies specified in <code>portlet.xml</code>, @{@link
+	javax.portlet.annotations.Dependency}, {@link
+	javax.portlet.HeaderResponse#addDependency(String, String,
+	String)}, or {@link
+	javax.portlet.HeaderResponse#addDependency(String, String, String,
+	String)} are to be referenced in the page's header
 	*/
 	@Override
 	public void setPortletDependencyJavaScriptEnabled(

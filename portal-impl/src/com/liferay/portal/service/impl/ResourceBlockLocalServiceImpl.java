@@ -78,9 +78,9 @@ import javax.sql.DataSource;
  * Provides the local service for accessing, adding, deleting, and updating
  * resource blocks.
  *
- * @author Connor McKay
- * @author Shuyang Zhou
- * @deprecated As of 7.0.0, with no direct replacement
+ * @author     Connor McKay
+ * @author     Shuyang Zhou
+ * @deprecated As of Judson, with no direct replacement
  */
 @Deprecated
 public class ResourceBlockLocalServiceImpl

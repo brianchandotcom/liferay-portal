@@ -108,7 +108,9 @@
 		<check name="JavaConfigurationCategoryCheck" />
 		<check name="JavaConstructorParametersCheck" />
 		<check name="JavaConstructorSuperCallCheck" />
-		<check name="JavaDeprecatedJavadocCheck" />
+		<check name="JavaDeprecatedJavadocCheck">
+			<property name="enabled" value="false" />
+		</check>
 		<check name="JavaDiamondOperatorCheck" />
 		<check name="JavaDeserializationSecurityCheck" />
 		<check name="JavaEmptyLineAfterSuperCallCheck" />

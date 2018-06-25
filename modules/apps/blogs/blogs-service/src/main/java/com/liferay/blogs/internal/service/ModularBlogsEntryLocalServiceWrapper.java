@@ -109,7 +109,7 @@ public class ModularBlogsEntryLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #addEntry(long, String,
+	 * @deprecated As of Judson, replaced by {@link #addEntry(long, String,
 	 *             String, String, String, int, int, int, int, int, boolean,
 	 *             boolean, String[], String, ImageSelector, ImageSelector,
 	 *             ServiceContext)}
@@ -544,7 +544,7 @@ public class ModularBlogsEntryLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -683,7 +683,7 @@ public class ModularBlogsEntryLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #updateEntry(long, long,
+	 * @deprecated As of Judson, replaced by {@link #updateEntry(long, long,
 	 *             String, String, String, String, int, int, int, int, int,
 	 *             boolean, boolean, String[], String, ImageSelector,
 	 *             ImageSelector, ServiceContext)}
@@ -777,7 +777,7 @@ public class ModularBlogsEntryLocalServiceWrapper
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #updateStatus(long, long,
+	 * @deprecated As of Judson, replaced by {@link #updateStatus(long, long,
 	 *             int, ServiceContext, Map)}
 	 */
 	@Deprecated

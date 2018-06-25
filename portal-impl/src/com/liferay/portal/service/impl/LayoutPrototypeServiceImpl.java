@@ -53,8 +53,8 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(Map, Map,
-	 *             boolean, ServiceContext)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #addLayoutPrototype(Map, Map, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -150,8 +150,9 @@ public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
-	 *             Map, Map, boolean, ServiceContext)}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #updateLayoutPrototype(long, Map, Map, boolean,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

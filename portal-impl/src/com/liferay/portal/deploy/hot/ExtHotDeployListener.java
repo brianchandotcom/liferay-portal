@@ -207,7 +207,7 @@ public class ExtHotDeployListener extends BaseHotDeployListener {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	protected void installExt(ServletContext servletContext) throws Exception {

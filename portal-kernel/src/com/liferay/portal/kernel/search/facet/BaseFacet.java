@@ -39,7 +39,8 @@ public abstract class BaseFacet implements Facet {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getFacetFilterBooleanClause}
+	 * @deprecated As of Wilberforce, replaced by {@link
+	 *             #getFacetFilterBooleanClause}
 	 */
 	@Deprecated
 	@Override
@@ -120,7 +121,7 @@ public abstract class BaseFacet implements Facet {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #doGetFacetFilterBooleanClause}
 	 */
 	@Deprecated

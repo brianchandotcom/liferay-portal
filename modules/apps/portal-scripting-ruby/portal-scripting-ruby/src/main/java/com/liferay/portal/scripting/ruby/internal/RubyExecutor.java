@@ -59,9 +59,9 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alberto Montero
- * @author Raymond Augé
- * @deprecated As of 3.0.0, with no direct replacement
+ * @author     Alberto Montero
+ * @author     Raymond Augé
+ * @deprecated As of Judson, with no direct replacement
  */
 @Component(
 	configurationPid = "com.liferay.portal.scripting.ruby.configuration.RubyScriptingConfiguration",

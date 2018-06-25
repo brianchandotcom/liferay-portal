@@ -70,7 +70,7 @@ public class DDMFormFieldEvaluationResult {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	@JSON(name = "nestedFields")
@@ -116,7 +116,7 @@ public class DDMFormFieldEvaluationResult {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
+	 * @deprecated As of Judson, with no direct replacement
 	 */
 	@Deprecated
 	public void setNestedDDMFormFieldEvaluationResults(

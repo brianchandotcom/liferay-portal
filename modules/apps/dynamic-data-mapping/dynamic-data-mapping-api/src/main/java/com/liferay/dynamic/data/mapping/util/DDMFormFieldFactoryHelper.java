@@ -50,8 +50,8 @@ public class DDMFormFieldFactoryHelper {
 	}
 
 	/**
-	 * @deprecated As of 4.1.0, replaced by {@link #DDMFormFieldFactoryHelper(
-	 *             DDMFormFactoryHelper, Method)}
+	 * @deprecated As of Judson, replaced by {@link
+	 *             #DDMFormFieldFactoryHelper(DDMFormFactoryHelper, Method)}
 	 */
 	@Deprecated
 	public DDMFormFieldFactoryHelper(Method method) {
@@ -104,7 +104,7 @@ public class DDMFormFieldFactoryHelper {
 	}
 
 	/**
-	 * @deprecated As of 4.1.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             DDMFormFactoryHelper#collectResourceBundles(Class, List,
 	 *             Locale)}
 	 */
@@ -352,7 +352,7 @@ public class DDMFormFieldFactoryHelper {
 	}
 
 	/**
-	 * @deprecated As of 4.1.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             DDMFormFactoryHelper#getResourceBundle(Locale)}
 	 */
 	@Deprecated
@@ -361,7 +361,7 @@ public class DDMFormFieldFactoryHelper {
 	}
 
 	/**
-	 * @deprecated As of 4.1.0, replaced by {@link
+	 * @deprecated As of Judson, replaced by {@link
 	 *             DDMFormFactoryHelper#getResourceBundleBaseName()}
 	 */
 	@Deprecated

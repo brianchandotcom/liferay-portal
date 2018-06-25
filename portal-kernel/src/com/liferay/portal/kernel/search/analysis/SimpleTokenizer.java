@@ -21,8 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Michael C. Han
- * @deprecated As of 7.0.0, moved to {@link
+ * @author     Michael C. Han
+ * @deprecated As of Judson, moved to {@link
  *             com.liferay.portal.search.analysis.SimpleTokenizer}
  */
 @Deprecated

@@ -432,7 +432,7 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link
+	* @deprecated As of Judson, replaced by {@link
 	#getKBArticleAndAllDescendantKBArticles(long, int,
 	OrderByComparator)}
 	*/
@@ -648,7 +648,7 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #getKBArticles(long, long,
+	* @deprecated As of Judson, replaced by {@link #getKBArticles(long, long,
 	int, int, int, OrderByComparator)}
 	*/
 	@Deprecated
@@ -662,7 +662,7 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 	}
 
 	/**
-	* @deprecated As of 1.1.0, replaced by {@link #getKBArticlesCount(long,
+	* @deprecated As of Judson, replaced by {@link #getKBArticlesCount(long,
 	long, int)}
 	*/
 	@Deprecated

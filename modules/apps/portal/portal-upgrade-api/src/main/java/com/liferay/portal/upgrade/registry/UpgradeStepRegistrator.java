@@ -26,8 +26,8 @@ public interface UpgradeStepRegistrator {
 	public interface Registry {
 
 		/**
-		 * @deprecated As of 2.0.0, replaced by {@link #register(String, String,
-		 * 		   UpgradeStep[])}
+		 * @deprecated As of Judson, replaced by {@link #register(String,
+		 *             String, UpgradeStep[])}
 		 */
 		@Deprecated
 		public void register(

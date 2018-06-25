@@ -17,7 +17,7 @@ package com.liferay.poshi.runner.elements;
 import org.dom4j.Node;
 
 /**
-* @author Michael Hashimoto
+ * @author Michael Hashimoto
  */
 public interface PoshiNode<A extends Node, B extends PoshiNode<A, B>>
 	extends Node {

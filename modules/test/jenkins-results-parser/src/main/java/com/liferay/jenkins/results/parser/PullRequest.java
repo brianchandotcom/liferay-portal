@@ -288,12 +288,18 @@ public class PullRequest {
 
 		String testSuiteLabelPrefix = sb.toString();
 
+		List<String> oldLabelNames = new ArrayList<>();
+
 		for (Label label : getLabels()) {
 			String name = label.getName();
 
 			if (name.startsWith(testSuiteLabelPrefix)) {
-				removeLabel(name);
+				oldLabelNames.add(label.getName());
 			}
+		}
+
+		for (String oldLabelName : oldLabelNames) {
+			removeLabel(oldLabelName);
 		}
 
 		sb.append(" - ");

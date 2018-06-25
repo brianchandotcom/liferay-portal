@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.change.log.builder;
 
-import com.liferay.gradle.plugins.change.log.builder.util.GitUtil;
-import com.liferay.gradle.plugins.change.log.builder.util.NaturalOrderStringComparator;
+import com.liferay.gradle.plugins.change.log.builder.internal.util.GitUtil;
+import com.liferay.gradle.plugins.change.log.builder.internal.util.NaturalOrderStringComparator;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 

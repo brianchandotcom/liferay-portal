@@ -17,6 +17,7 @@ package com.liferay.commerce.internal.test.util;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyServiceUtil;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
@@ -26,9 +27,11 @@ import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
@@ -55,6 +58,18 @@ import java.util.Collections;
  * @author Andrea Di Giorgi
  */
 public class CommerceTestUtil {
+
+	public static CPDefinitionInventory addBackorderCPDefinitionInventory(
+			CPDefinition cpDefinition)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(cpDefinition.getGroupId());
+
+		return CPDefinitionInventoryLocalServiceUtil.addCPDefinitionInventory(
+			cpDefinition.getCPDefinitionId(), "", "", false, false, 0, true, 1,
+			10000, "", 0, serviceContext);
+	}
 
 	public static CommerceOrder addCheckoutDetailsToUserOrder(
 			CommerceOrder commerceOrder, long userId)

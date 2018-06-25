@@ -77,6 +77,23 @@ public class PortletResourceBundle extends ResourceBundle {
 	}
 
 	@Override
+	public boolean containsKey(String key) {
+		if (key == null) {
+			throw new NullPointerException();
+		}
+
+		if (_portletInfos.containsKey(key)) {
+			return true;
+		}
+
+		if (parent != null) {
+			return parent.containsKey(key);
+		}
+
+		return false;
+	}
+
+	@Override
 	public Enumeration<String> getKeys() {
 		if (parent == null) {
 			return Collections.enumeration(_portletInfos.keySet());

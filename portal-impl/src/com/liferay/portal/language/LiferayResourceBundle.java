@@ -62,6 +62,23 @@ public class LiferayResourceBundle extends ResourceBundle {
 	}
 
 	@Override
+	public boolean containsKey(String key) {
+		if (key == null) {
+			throw new NullPointerException();
+		}
+
+		if (_map.containsKey(key)) {
+			return true;
+		}
+
+		if (parent != null) {
+			return parent.containsKey(key);
+		}
+
+		return false;
+	}
+
+	@Override
 	public Enumeration<String> getKeys() {
 		Set<String> keys = _map.keySet();
 

@@ -46,7 +46,8 @@ public abstract class BaseDDMFormMVCResourceCommand
 
 	public String formatDate(Date date, Locale locale, String timezoneId) {
 		DateTimeFormatter dateTimeFormatter =
-			DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT);
+			DateTimeFormatter.ofLocalizedDateTime(
+				FormatStyle.MEDIUM, FormatStyle.SHORT);
 
 		dateTimeFormatter = dateTimeFormatter.withLocale(locale);
 

@@ -10,6 +10,10 @@
 	}
 }
 
+td.lfr-name-column {
+	font-weight: 600;
+}
+
 .ddm-form-builder-buttons .icon-spinner,
 .lfr-ddm-form-pagination-controls .icon-spinner,
 .ddm-form-settings-modal .btn-toolbar-button .icon-spinner {
@@ -308,8 +312,11 @@
 			border-color: #E7E7ED;
 			border-radius: 4px;
 			margin: 0 auto;
-			overflow: hidden;
 			width: auto;
+		}
+
+		.form-builder-content {
+			overflow: hidden;
 		}
 
 		.form-builder-field-list-empty .form-builder-field-list-add-button {

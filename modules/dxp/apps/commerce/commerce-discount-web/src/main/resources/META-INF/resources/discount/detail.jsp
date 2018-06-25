@@ -51,13 +51,13 @@ if ((commerceDiscount != null) && (commerceDiscount.getExpirationDate() != null)
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<div class="lfr-form-content">
-		<c:if test="<%= (commerceDiscount != null) && !commerceDiscount.isNew() %>">
-			<liferay-frontend:info-bar>
-				<aui:workflow-status bean="<%= commerceDiscount %>" id="<%= String.valueOf(commerceDiscountId) %>" markupView="lexicon" model="<%= CommerceDiscount.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceDiscount.getStatus() %>" />
-			</liferay-frontend:info-bar>
-		</c:if>
-
 		<aui:fieldset-group markupView="lexicon">
+			<c:if test="<%= (commerceDiscount != null) && !commerceDiscount.isNew() %>">
+				<liferay-frontend:info-bar>
+					<aui:workflow-status bean="<%= commerceDiscount %>" id="<%= String.valueOf(commerceDiscountId) %>" markupView="lexicon" model="<%= CommerceDiscount.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= commerceDiscount.getStatus() %>" />
+				</liferay-frontend:info-bar>
+			</c:if>
+
 			<aui:fieldset>
 				<aui:input autoFocus="<%= true %>" bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" name="title" />
 
@@ -88,7 +88,7 @@ if ((commerceDiscount != null) && (commerceDiscount.getExpirationDate() != null)
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="schedule">
 				<aui:input bean="<%= commerceDiscount %>" formName="fm" model="<%= CommerceDiscount.class %>" name="displayDate" />
 
-				<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
+				<aui:input bean="<%= commerceDiscount %>" dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" model="<%= CommerceDiscount.class %>" name="expirationDate" />
 			</aui:fieldset>
 
 			<c:if test="<%= commerceDiscountDisplayContext.hasCustomAttributesAvailable() %>">

@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Taxonomy Apio API
-Bundle-SymbolicName: com.liferay.taxonomy.apio.api
-Bundle-Version: 2.0.0
-Export-Package: com.liferay.taxonomy.apio.architect.identifier
+Bundle-Name: Liferay Vocabulary Apio API
+Bundle-SymbolicName: com.liferay.vocabulary.apio.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.vocabulary.apio.architect.identifier

@@ -137,7 +137,7 @@
 		<execute macro="OAuth2#editScopes">
 			<var name="applicationName" value="OAuth Application" />
 			<var name="resourceCheckList" value="everything.write,everything.read.userprofile" />
-			<var name="resourcePanels" value="JSONWS API" />
+			<var name="resourcePanels" value="Portal Services" />
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="OAuth2#ADMIN_TABLE_APP_SCOPES_COUNT" value1="2">
@@ -147,7 +147,7 @@
 		<execute macro="OAuth2#viewScopes">
 			<var name="applicationName" value="OAuth Application" />
 			<var name="resourceCheckedList" value="everything.write,everything.read.userprofile" />
-			<var name="resourcePanels" value="JSONWS API" />
+			<var name="resourcePanels" value="Portal Services" />
 		</execute>
 
 		<execute macro="OAuth2#editScopes">
@@ -165,12 +165,12 @@
 			<var name="applicationName" value="OAuth Application" />
 			<var name="checkedGlobalScope" value="Everything" />
 			<var name="resourceCheckedList" value="example-scope-1,example-scope-2,everything.read,everything.write,everything.read.userprofile" />
-			<var name="resourcePanels" value="JSONWS API,Sample QA app" />
+			<var name="resourcePanels" value="Portal Services,Sample QA app" />
 		</execute>
 
 		<execute macro="OAuth2#editScopes">
 			<var name="applicationName" value="OAuth Application" />
-			<var name="resourcePanels" value="JSONWS API" />
+			<var name="resourcePanels" value="Portal Services" />
 			<var name="uncheckGlobalScope" value="Everything" />
 		</execute>
 
@@ -180,7 +180,7 @@
 
 		<execute macro="OAuth2#viewScopes">
 			<var name="applicationName" value="OAuth Application" />
-			<var name="resourcePanels" value="JSONWS API,Sample QA app" />
+			<var name="resourcePanels" value="Portal Services,Sample QA app" />
 			<var name="resourceUncheckedList" value="example-scope-1,example-scope-2,everything.read,everything.write,everything.read.userprofile" />
 			<var name="uncheckedGlobalScope" value="Everything" />
 		</execute>

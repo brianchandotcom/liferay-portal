@@ -72,7 +72,7 @@ public interface PortletDataContext extends Serializable {
 	public static final String REFERENCE_TYPE_WEAK = "weak";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             BaseStagedModelDataHandler#exportAssetCategories(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -83,7 +83,7 @@ public interface PortletDataContext extends Serializable {
 		String className, long classPK, long[] assetCategoryIds);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             BaseStagedModelDataHandler#exportAssetTags(
 	 *             PortletDataContext, StagedModel)}
 	 */
@@ -103,7 +103,7 @@ public interface PortletDataContext extends Serializable {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             BaseStagedModelDataHandler#exportComments(PortletDataContext,
 	 *             StagedModel)}
 	 */
@@ -111,7 +111,7 @@ public interface PortletDataContext extends Serializable {
 	public void addComments(Class<?> clazz, long classPK);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             BaseStagedModelDataHandler#exportComments(PortletDataContext,
 	 *             StagedModel)}
 	 */
@@ -158,7 +158,7 @@ public interface PortletDataContext extends Serializable {
 	public boolean addPrimaryKey(Class<?> clazz, String primaryKey);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             BaseStagedModelDataHandler#exportRatings(PortletDataContext,
 	 *             StagedModel)}
 	 */
@@ -166,7 +166,7 @@ public interface PortletDataContext extends Serializable {
 	public void addRatingsEntries(Class<?> clazz, long classPK);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             BaseStagedModelDataHandler#exportRatings(PortletDataContext,
 	 *             StagedModel)}
 	 */
@@ -175,7 +175,7 @@ public interface PortletDataContext extends Serializable {
 		String className, long classPK, List<RatingsEntry> ratingsEntries);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public Element addReferenceElement(
@@ -238,13 +238,13 @@ public interface PortletDataContext extends Serializable {
 	public long[] getAssetCategoryIds(Class<?> clazz, Serializable classPK);
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	public Map<String, long[]> getAssetCategoryIdsMap();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public Map<String, String[]> getAssetCategoryUuidsMap();
@@ -252,7 +252,7 @@ public interface PortletDataContext extends Serializable {
 	public Set<Long> getAssetLinkIds();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getAssetLinkIds()}
+	 * @deprecated As of Wilberforce, replaced by {@link #getAssetLinkIds()}
 	 */
 	@Deprecated
 	public Map<String, List<AssetLink>> getAssetLinksMap();
@@ -285,7 +285,7 @@ public interface PortletDataContext extends Serializable {
 	public ClassLoader getClassLoader();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public Map<String, List<MBMessage>> getComments();
@@ -309,7 +309,7 @@ public interface PortletDataContext extends Serializable {
 	public Element getExportDataElement(ClassedModel classedModel);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #getExportDataElement(ClassedModel, String)}
 	 */
 	@Deprecated
@@ -353,7 +353,7 @@ public interface PortletDataContext extends Serializable {
 	public Element getMissingReferencesElement();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #getNewPrimaryKeysMap(String)}
 	 */
 	@Deprecated
@@ -366,7 +366,7 @@ public interface PortletDataContext extends Serializable {
 	public Map<String, Map<?, ?>> getNewPrimaryKeysMaps();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public long getOldPlid();
@@ -382,7 +382,7 @@ public interface PortletDataContext extends Serializable {
 	public Set<String> getPrimaryKeys();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public Map<String, List<RatingsEntry>> getRatingsEntries();
@@ -401,7 +401,7 @@ public interface PortletDataContext extends Serializable {
 		String uuid);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public List<Element> getReferenceDataElements(
@@ -466,7 +466,7 @@ public interface PortletDataContext extends Serializable {
 	public String getRootPortletId();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public Set<String> getScopedPrimaryKeys();
@@ -496,7 +496,7 @@ public interface PortletDataContext extends Serializable {
 	public long getUserPersonalSiteGroupId();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public List<String> getZipEntries();
@@ -512,7 +512,7 @@ public interface PortletDataContext extends Serializable {
 	public String getZipEntryAsString(String path);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public List<String> getZipFolderEntries();
@@ -541,7 +541,7 @@ public interface PortletDataContext extends Serializable {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             BaseStagedModelDataHandler#importComments(PortletDataContext,
 	 *             StagedModel)}
 	 */
@@ -575,7 +575,7 @@ public interface PortletDataContext extends Serializable {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             BaseStagedModelDataHandler#importRatings(PortletDataContext,
 	 *             StagedModel)}
 	 */
@@ -607,7 +607,7 @@ public interface PortletDataContext extends Serializable {
 	public boolean isPathExportedInScope(String path);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public boolean isPathNotExportedInScope(String path);
@@ -661,7 +661,7 @@ public interface PortletDataContext extends Serializable {
 	public void setPlid(long plid);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public void setPortetDataContextListener(

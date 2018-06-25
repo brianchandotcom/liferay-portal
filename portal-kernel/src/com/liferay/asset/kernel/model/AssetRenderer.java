@@ -45,7 +45,7 @@ public interface AssetRenderer<T> extends Renderer {
 	public static final String TEMPLATE_PREVIEW = "preview";
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public String getAddToPagePortletId() throws Exception;
@@ -73,7 +73,7 @@ public interface AssetRenderer<T> extends Renderer {
 	public String getNewName(String oldName, String token);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public String getPreviewPath(
@@ -87,7 +87,7 @@ public interface AssetRenderer<T> extends Renderer {
 	public String getSummary();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(PortletRequest,
+	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(PortletRequest,
 	 *             PortletResponse)}
 	 */
 	@Deprecated
@@ -172,7 +172,7 @@ public interface AssetRenderer<T> extends Renderer {
 	public boolean isRatable();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public void setAddToPagePreferences(

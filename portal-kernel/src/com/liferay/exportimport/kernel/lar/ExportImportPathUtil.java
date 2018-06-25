@@ -50,7 +50,7 @@ public class ExportImportPathUtil {
 	public static final String PATH_PREFIX_GROUP = "group";
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	public static final String PATH_PREFIX_LAYOUT = "layout";
@@ -119,7 +119,7 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getModelPath(StagedModel)}
+	 * @deprecated As of Wilberforce, replaced by {@link #getModelPath(StagedModel)}
 	 */
 	@Deprecated
 	public static String getLayoutPath(
@@ -459,7 +459,7 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #getModelPath(PortletDataContext, String, long)}
 	 */
 	@Deprecated
@@ -478,7 +478,7 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	public static String getSourcePortletPath(

@@ -114,7 +114,7 @@ public interface DDMDisplay {
 		Locale locale);
 
 	/**
-	 * @deprecated As of 3.4.0
+	 * @deprecated As of Wilberforce
 	 */
 	@Deprecated
 	public String getViewTemplatesTitle(

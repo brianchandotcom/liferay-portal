@@ -62,7 +62,7 @@ import javax.portlet.WindowState;
 public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -119,7 +119,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -133,7 +133,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -160,7 +160,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSummary(PortletRequest,
+	 * @deprecated As of Wilberforce, replaced by {@link #getSummary(PortletRequest,
 	 *             PortletResponse)}
 	 */
 	@Deprecated
@@ -368,7 +368,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of Wilberforce, with no direct replacement
 	 */
 	@Deprecated
 	@Override

@@ -46,7 +46,7 @@ public abstract class BaseProxyBean {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setDestinationName)
+	 * @deprecated As of Wilberforce, replaced by {@link #setDestinationName)
 	 */
 	@Deprecated
 	public void setSingleDestinationMessageSender(
@@ -54,7 +54,7 @@ public abstract class BaseProxyBean {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of Wilberforce, replaced by {@link
 	 *             #setSynchronousMessageSenderMode} and {@link
 	 *             #setSynchronousDestinationName}
 	 */

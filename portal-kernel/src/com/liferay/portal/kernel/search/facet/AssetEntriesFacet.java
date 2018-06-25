@@ -196,7 +196,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, added strictly to support backwards
+	 * @deprecated As of Wilberforce, added strictly to support backwards
 	 *             compatibility of {@link
 	 *             Indexer#postProcessContextQuery(BooleanQuery, SearchContext)}
 	 */

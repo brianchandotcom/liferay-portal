@@ -121,7 +121,7 @@ public class SharedSessionWrapper implements HttpSession {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of Paton
 	 */
 	@Deprecated
 	@Override

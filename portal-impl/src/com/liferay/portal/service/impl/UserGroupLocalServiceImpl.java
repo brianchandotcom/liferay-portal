@@ -270,7 +270,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 *
 	 * @param      userGroupId the primary key of the user group
 	 * @param      userId the primary key of the user
-	 * @deprecated As of 6.2.0
+	 * @deprecated As of Paton
 	 */
 	@Deprecated
 	@Override

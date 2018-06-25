@@ -126,11 +126,11 @@ public class LayoutPageTemplateCollectionStagedModelRepository
 	}
 
 	@Override
-	public LayoutPageTemplateCollection getStagedModel(long id)
+	public LayoutPageTemplateCollection getStagedModel(long classPK)
 		throws PortalException {
 
 		return _layoutPageTemplateCollectionLocalService.
-			getLayoutPageTemplateCollection(id);
+			getLayoutPageTemplateCollection(classPK);
 	}
 
 	@Override

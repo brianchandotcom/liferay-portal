@@ -69,7 +69,7 @@ public class PrefsPropsToConfigurationUpgradeHelperImpl
 		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
 		Object defaultConfiguration = ConfigurableUtil.createConfigurable(
-			configurationClass, new HashMapDictionary<>());
+			configurationClass, properties);
 
 		for (KeyValuePair keyValuePair : keyValuePairs) {
 			String valueString = _prefsProps.getString(

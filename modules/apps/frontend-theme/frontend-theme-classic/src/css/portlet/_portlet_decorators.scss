@@ -10,3 +10,22 @@
 		padding: 24px;
 	}
 }
+
+.portlet-borderless, .portlet-barebone {
+	.panel {
+		background-color: transparent;
+
+		&.card {
+			border-color: #CDCED9;
+			box-shadow: none;
+		}
+	}
+
+	.panel-default {
+		border-color: #CDCED9;
+	}
+
+	.widget-mode-detail {
+		background-color: transparent;
+	}
+}

@@ -21,4 +21,6 @@ public interface ApioConstants {
 
 	public static final String QUERY_PARAM_FILTER = "filter";
 
+	public static final String QUERY_PARAM_PER_PAGE = "per_page";
+
 }

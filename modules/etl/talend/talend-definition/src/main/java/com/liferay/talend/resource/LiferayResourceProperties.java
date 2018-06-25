@@ -60,7 +60,7 @@ public class LiferayResourceProperties
 
 	public ValidationResult afterResourceURL() throws Exception {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Resource: " + resourceURL.getValue());
+			_log.debug("Resource URL: " + resourceURL.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -133,12 +133,67 @@ public class LiferayResourceProperties
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
-	public void afterWebSite() {
+	public ValidationResult afterWebSiteURL() {
 		resource.setValue("");
 		resourceURL.setValue("");
 
+		if (_log.isDebugEnabled()) {
+			_log.debug("Website URL: " + webSiteURL.getValue());
+		}
+
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
+
+		validationResultMutable.setStatus(Result.OK);
+
+		try (SandboxedInstance sandboxedInstance =
+				LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition.
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
+
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
+				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+
+			liferaySourceOrSinkRuntime.initialize(
+				null, _getEffectiveConnectionProperties());
+
+			ValidationResult validationResult =
+				liferaySourceOrSinkRuntime.validate(null);
+
+			validationResultMutable.setMessage(validationResult.getMessage());
+			validationResultMutable.setStatus(validationResult.getStatus());
+
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
+				try {
+					webSite.setValue(
+						liferaySourceOrSinkRuntime.getActualWebSiteName(
+							webSiteURL.getValue()));
+				}
+				catch (IOException ioe) {
+					validationResult =
+						ExceptionUtils.exceptionToValidationResult(ioe);
+
+					validationResultMutable.setMessage(
+						validationResult.getMessage());
+					validationResultMutable.setStatus(
+						validationResult.getStatus());
+				}
+			}
+		}
+
+		if (validationResultMutable.getStatus() ==
+				ValidationResult.Result.ERROR) {
+
+			resource.setValue("");
+			resourceURL.setValue("");
+		}
+
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
+
+		return validationResultMutable;
 	}
 
 	public ValidationResult beforeResourceURL() throws Exception {
@@ -168,7 +223,7 @@ public class LiferayResourceProperties
 					if (siteFilter.getValue()) {
 						resourceNames =
 							liferaySourceOrSinkRuntime.getResourceList(
-								webSite.getValue());
+								webSiteURL.getValue());
 					}
 					else {
 						resourceNames =
@@ -193,7 +248,7 @@ public class LiferayResourceProperties
 		}
 	}
 
-	public ValidationResult beforeWebSite() {
+	public ValidationResult beforeWebSiteURL() {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -225,7 +280,7 @@ public class LiferayResourceProperties
 						validationResultMutable.setStatus(Result.ERROR);
 					}
 
-					webSite.setPossibleNamedThingValues(webSites);
+					webSiteURL.setPossibleNamedThingValues(webSites);
 				}
 				catch (Exception e) {
 					return ExceptionUtils.exceptionToValidationResult(e);
@@ -249,6 +304,7 @@ public class LiferayResourceProperties
 
 		if (formName.equals(Form.MAIN) || formName.equals(Form.REFERENCE)) {
 			PropertiesUtils.setHidden(form, webSite, !siteFilter.getValue());
+			PropertiesUtils.setHidden(form, webSiteURL, !siteFilter.getValue());
 		}
 	}
 
@@ -260,79 +316,14 @@ public class LiferayResourceProperties
 	public void setupLayout() {
 		super.setupLayout();
 
-		// Main form
+		// Special property settings
 
-		Form resourceSelectionForm = Form.create(this, Form.MAIN);
+		resourceURL.setRequired();
 
-		resourceSelectionForm.addRow(siteFilter);
+		// Forms
 
-		Widget webSitesWidget = Widget.widget(webSite);
-
-		webSitesWidget.setCallAfter(true);
-		webSitesWidget.setWidgetType(Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
-
-		resourceSelectionForm.addRow(webSitesWidget);
-
-		Widget resourcesWidget = Widget.widget(resourceURL);
-
-		resourcesWidget.setCallAfter(true);
-		resourcesWidget.setWidgetType(Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
-
-		resourceSelectionForm.addRow(resourcesWidget);
-
-		resourceSelectionForm.addColumn(resource);
-
-		resourceSelectionForm.addRow(condition);
-
-		Widget validateConditionWidget = Widget.widget(validateCondition);
-
-		validateConditionWidget.setLongRunning(true);
-		validateConditionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
-
-		resourceSelectionForm.addColumn(validateConditionWidget);
-
-		refreshLayout(resourceSelectionForm);
-
-		// Reference form
-
-		Form referenceForm = Form.create(this, Form.REFERENCE);
-
-		referenceForm.addRow(siteFilter);
-
-		Widget webSitesReferenceWidget = Widget.widget(webSite);
-
-		webSitesReferenceWidget.setCallAfter(true);
-		webSitesReferenceWidget.setLongRunning(true);
-		webSitesReferenceWidget.setWidgetType(
-			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
-
-		referenceForm.addRow(webSitesReferenceWidget);
-
-		Widget resourcesReferenceWidget = Widget.widget(resourceURL);
-
-		resourcesReferenceWidget.setCallAfter(true);
-		resourcesReferenceWidget.setLongRunning(true);
-		resourcesReferenceWidget.setWidgetType(
-			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
-
-		referenceForm.addRow(resourcesReferenceWidget);
-
-		referenceForm.addColumn(resource);
-
-		referenceForm.addRow(condition);
-
-		Widget validateConditionReferenceWidget = Widget.widget(
-			validateCondition);
-
-		validateConditionReferenceWidget.setLongRunning(true);
-		validateConditionReferenceWidget.setWidgetType(
-			Widget.BUTTON_WIDGET_TYPE);
-
-		referenceForm.addColumn(validateConditionReferenceWidget);
-
-		referenceForm.addRow(main.getForm(Form.REFERENCE));
-
-		refreshLayout(referenceForm);
+		_setupMainForm();
+		_setupReferenceForm();
 	}
 
 	@Override
@@ -344,6 +335,7 @@ public class LiferayResourceProperties
 		resourceURL.setValue("");
 		siteFilter.setValue(false);
 		webSite.setValue("");
+		webSiteURL.setValue("");
 	}
 
 	public ValidationResult validateValidateCondition() {
@@ -387,7 +379,8 @@ public class LiferayResourceProperties
 		"siteFilter");
 	public transient PresentationItem validateCondition = new PresentationItem(
 		"validateCondition", "Validate Condition");
-	public StringProperty webSite = PropertyFactory.newString("webSite");
+	public Property<String> webSite = PropertyFactory.newString("webSite");
+	public StringProperty webSiteURL = PropertyFactory.newString("webSiteURL");
 
 	protected static final I18nMessages i18nMessages =
 		GlobalI18N.getI18nMessageProvider().getI18nMessages(
@@ -428,6 +421,100 @@ public class LiferayResourceProperties
 		}
 
 		return liferayConnectionProperties;
+	}
+
+	private void _setupMainForm() {
+		Form resourceSelectionForm = Form.create(this, Form.MAIN);
+
+		resourceSelectionForm.addRow(siteFilter);
+
+		Widget webSiteURLWidget = Widget.widget(webSiteURL);
+
+		webSiteURLWidget.setCallAfter(true);
+		webSiteURLWidget.setWidgetType(Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
+
+		resourceSelectionForm.addRow(webSiteURLWidget);
+
+		Widget webSiteWidget = Widget.widget(webSite);
+
+		webSiteWidget.setReadonly(true);
+
+		resourceSelectionForm.addColumn(webSiteWidget);
+
+		Widget resourceURLWidget = Widget.widget(resourceURL);
+
+		resourceURLWidget.setCallAfter(true);
+		resourceURLWidget.setWidgetType(Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
+
+		resourceSelectionForm.addRow(resourceURLWidget);
+
+		Widget resourceWidget = Widget.widget(resource);
+
+		resourceWidget.setReadonly(true);
+
+		resourceSelectionForm.addColumn(resourceWidget);
+
+		resourceSelectionForm.addRow(condition);
+
+		Widget validateConditionWidget = Widget.widget(validateCondition);
+
+		validateConditionWidget.setLongRunning(true);
+		validateConditionWidget.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
+
+		resourceSelectionForm.addColumn(validateConditionWidget);
+
+		refreshLayout(resourceSelectionForm);
+	}
+
+	private void _setupReferenceForm() {
+		Form referenceForm = Form.create(this, Form.REFERENCE);
+
+		referenceForm.addRow(siteFilter);
+
+		Widget webSiteURLReferenceWidget = Widget.widget(webSiteURL);
+
+		webSiteURLReferenceWidget.setCallAfter(true);
+		webSiteURLReferenceWidget.setLongRunning(true);
+		webSiteURLReferenceWidget.setWidgetType(
+			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
+
+		referenceForm.addRow(webSiteURLReferenceWidget);
+
+		Widget webSiteReferenceWidget = Widget.widget(webSite);
+
+		webSiteReferenceWidget.setReadonly(true);
+
+		referenceForm.addColumn(webSiteReferenceWidget);
+
+		Widget resourceURLReferenceWidget = Widget.widget(resourceURL);
+
+		resourceURLReferenceWidget.setCallAfter(true);
+		resourceURLReferenceWidget.setLongRunning(true);
+		resourceURLReferenceWidget.setWidgetType(
+			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
+
+		referenceForm.addRow(resourceURLReferenceWidget);
+
+		Widget resourceReferenceWidget = Widget.widget(resource);
+
+		resourceReferenceWidget.setReadonly(true);
+
+		referenceForm.addColumn(resourceReferenceWidget);
+
+		referenceForm.addRow(condition);
+
+		Widget validateConditionReferenceWidget = Widget.widget(
+			validateCondition);
+
+		validateConditionReferenceWidget.setLongRunning(true);
+		validateConditionReferenceWidget.setWidgetType(
+			Widget.BUTTON_WIDGET_TYPE);
+
+		referenceForm.addColumn(validateConditionReferenceWidget);
+
+		referenceForm.addRow(main.getForm(Form.REFERENCE));
+
+		refreshLayout(referenceForm);
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

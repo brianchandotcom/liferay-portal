@@ -226,6 +226,14 @@ public class LiferaySourceOrSink
 		return doApioPutRequest(null, resourceURL, apioForm);
 	}
 
+	@Override
+	public String getActualWebSiteName(String webSiteURL) throws IOException {
+		JsonNode webSiteNameJsonNode = doApioGetRequest(
+			webSiteURL).path("name");
+
+		return webSiteNameJsonNode.asText();
+	}
+
 	public Map<String, String> getApioResourceEndpointsMap(
 		RuntimeContainer runtimeContainer) {
 

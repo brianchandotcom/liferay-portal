@@ -27,6 +27,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,6 +35,7 @@ import org.junit.runner.RunWith;
  * @author Carlos Sierra Andrés
  */
 @BndFile("bnd-api.bnd")
+@Ignore
 @RunAsClient
 @RunWith(Arquillian.class)
 public class JaxWsApiRegistrationTest {

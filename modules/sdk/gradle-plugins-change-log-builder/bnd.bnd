@@ -2,3 +2,4 @@ Bundle-Description: The Change Log Builder Gradle plugin lets you generate and m
 Bundle-Name: Liferay Gradle Plugins Change Log Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.change.log.builder
 Bundle-Version: 1.0.5
+Export-Package: com.liferay.gradle.plugins.change.log.builder

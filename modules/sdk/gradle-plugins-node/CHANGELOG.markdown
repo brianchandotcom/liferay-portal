@@ -243,13 +243,13 @@ task's `useNpmCI` property is set to `true`.
 ## 4.3.5 - 2018-06-08
 
 ### Fixed
-- [LPS-82130]: Fix broken `npm` symbolic link.
+- [LPS-82130]: Fix the broken `npm` symbolic link.
 
 ## 4.4.0 - 2018-06-22
 
 ### Added
-- [LPS-82568]: Add property `environment` to all tasks that extend
-`ExecuteNodeTask`. This will provide a way to set environment variables.
+- [LPS-82568]: Add the property `environment` to all tasks that extend
+`ExecuteNodeTask`. This provides a way to set environment variables.
 
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

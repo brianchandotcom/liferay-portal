@@ -116,8 +116,8 @@ public interface BookmarksFolderService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	/**
-	* @deprecated As of 1.0.0, replaced by {@link #getSubfolderIds(List, long,
-	long, boolean)}
+	* @deprecated As of Wilberforce, replaced by {@link #getSubfolderIds(List,
+	long, long, boolean)}
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -153,8 +153,8 @@ public interface BookmarksFolderService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 1.0.0, replaced by {@link #updateFolder(long, long,
-	String, String, ServiceContext)} and {@link
+	* @deprecated As of Wilberforce, replaced by {@link #updateFolder(long,
+	long, String, String, ServiceContext)} and {@link
 	#mergeFolders(long, long)}
 	*/
 	@Deprecated

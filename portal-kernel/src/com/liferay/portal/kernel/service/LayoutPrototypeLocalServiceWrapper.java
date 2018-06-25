@@ -56,8 +56,9 @@ public class LayoutPrototypeLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
-	long, Map, Map, boolean, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#addLayoutPrototype(long, long, Map, Map, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -387,8 +388,9 @@ public class LayoutPrototypeLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
-	Map, Map, boolean, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#updateLayoutPrototype(long, Map, Map, boolean,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override

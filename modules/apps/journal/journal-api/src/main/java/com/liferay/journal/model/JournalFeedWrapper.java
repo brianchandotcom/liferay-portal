@@ -441,7 +441,8 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
-	* @deprecated As of 4.0.0, replaced by {@link #getDDMRendererTemplateKey()}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#getDDMRendererTemplateKey()}
 	*/
 	@Deprecated
 	@Override
@@ -450,7 +451,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
-	* @deprecated As of 4.0.0, replaced by {@link #getDDMStructureKey()}
+	* @deprecated As of Wilberforce, replaced by {@link #getDDMStructureKey()}
 	*/
 	@Deprecated
 	@Override
@@ -479,7 +480,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
-	* @deprecated As of 4.0.0, replaced by {@link #getDDMTemplateKey()}
+	* @deprecated As of Wilberforce, replaced by {@link #getDDMTemplateKey()}
 	*/
 	@Deprecated
 	@Override
@@ -774,7 +775,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
-	* @deprecated As of 4.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	#setDDMRendererTemplateKey(String)}
 	*/
 	@Deprecated
@@ -784,7 +785,8 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
-	* @deprecated As of 4.0.0, replaced by {@link #setDDMStructureKey(String)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#setDDMStructureKey(String)}
 	*/
 	@Deprecated
 	@Override
@@ -813,7 +815,8 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
-	* @deprecated As of 4.0.0, replaced by {@link #setDDMTemplateKey(String)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#setDDMTemplateKey(String)}
 	*/
 	@Deprecated
 	@Override

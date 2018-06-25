@@ -343,7 +343,7 @@ public class ResourcePermissionLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	#getAvailableResourcePermissionActionIds(long, String, int,
 	String, Collection)}
 	*/
@@ -645,8 +645,8 @@ public class ResourcePermissionLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
-	String, String}
+	* @deprecated As of Wilberforce, replaced by {@link #getRoles(long, String,
+	int, String, String}
 	*/
 	@Deprecated
 	public static boolean[] hasResourcePermissions(long companyId, String name,

@@ -56,7 +56,7 @@ public interface ExportImportLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of Judson
 	*/
 	@Deprecated
 	public File exportLayoutsAsFile(long userId, long groupId,
@@ -97,7 +97,7 @@ public interface ExportImportLocalService extends BaseLocalService {
 		InputStream inputStream) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0
+	* @deprecated As of Judson
 	*/
 	@Deprecated
 	public void importLayouts(long userId, long groupId, boolean privateLayout,

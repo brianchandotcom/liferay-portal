@@ -75,7 +75,7 @@ public interface AssetVocabularyService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of Wilberforce, with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -144,7 +144,7 @@ public interface AssetVocabularyService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Wilberforce, replaced by {@link
 	AssetUtil#filterVocabularyIds(PermissionChecker, long[])}
 	*/
 	@Deprecated

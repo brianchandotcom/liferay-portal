@@ -262,7 +262,7 @@ public class ServiceComponentLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of Judson, replaced by {@link
 	#initServiceComponent(ServiceComponentConfiguration,
 	ClassLoader, String, long, long)}
 	*/
@@ -290,7 +290,7 @@ public class ServiceComponentLocalServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #upgradeDB(ClassLoader,
+	* @deprecated As of Judson, replaced by {@link #upgradeDB(ClassLoader,
 	String, long, ServiceComponent, String, String, String)}
 	*/
 	@Deprecated

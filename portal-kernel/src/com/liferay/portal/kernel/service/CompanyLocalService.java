@@ -524,9 +524,9 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param size the company's account size (optionally
 	<code>null</code>)
 	* @return the company with the primary key
-	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
-	String, String, boolean, byte[], String, String, String,
-	String, String, String, String, String, String)}
+	* @deprecated As of Wilberforce, replaced by {@link #updateCompany(long,
+	String, String, String, boolean, byte[], String, String,
+	String, String, String, String, String, String, String)}
 	*/
 	@Deprecated
 	public Company updateCompany(long companyId, String virtualHostname,

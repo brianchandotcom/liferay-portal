@@ -588,8 +588,9 @@ public class JournalArticleServiceUtil {
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the matching web content
-	* @deprecated As of 4.0.0, replaced by {@link #getArticleContent(long,
-	String, double, String, PortletRequestModel, ThemeDisplay)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#getArticleContent(long, String, double, String,
+	PortletRequestModel, ThemeDisplay)}
 	*/
 	@Deprecated
 	public static String getArticleContent(long groupId, String articleId,
@@ -631,8 +632,9 @@ public class JournalArticleServiceUtil {
 	* @param languageId the primary key of the language translation to get
 	* @param themeDisplay the theme display
 	* @return the matching web content
-	* @deprecated As of 4.0.0, replaced by {@link #getArticleContent(long,
-	String, String, PortletRequestModel, ThemeDisplay)}
+	* @deprecated As of Wilberforce, replaced by {@link
+	#getArticleContent(long, String, String, PortletRequestModel,
+	ThemeDisplay)}
 	*/
 	@Deprecated
 	public static String getArticleContent(long groupId, String articleId,
@@ -1201,8 +1203,8 @@ public class JournalArticleServiceUtil {
 	* @param articleId the primary key of the web content article
 	* @param newFolderId the primary key of the web content article's new
 	folder
-	* @deprecated As of 4.0.0, replaced by {@link #moveArticle(long, String,
-	long, ServiceContext)}
+	* @deprecated As of Wilberforce, replaced by {@link #moveArticle(long,
+	String, long, ServiceContext)}
 	*/
 	@Deprecated
 	public static void moveArticle(long groupId, String articleId,
@@ -2096,8 +2098,7 @@ public class JournalArticleServiceUtil {
 	*     &lt;/static-content&gt;
 	* &lt;/root&gt;
 	* </code>
-	* </pre>
-	* </p>
+	* </pre></p>
 	*
 	* @param groupId the primary key of the web content article's group
 	* @param folderId the primary key of the web content article folder

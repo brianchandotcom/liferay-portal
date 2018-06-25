@@ -66,7 +66,7 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 2.2.0, replaced by {@link #addCalendarBooking(long,
+	* @deprecated As of Judson, replaced by {@link #addCalendarBooking(long,
 	long, long[], long, long, Map, Map, String, long, long,
 	boolean, String, long, String, long, String, ServiceContext)}
 	*/
@@ -153,8 +153,9 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 3.0.0, replaced by {@link
-	#deleteCalendarBookingInstance(long, CalendarBooking, int, boolean)}
+	* @deprecated As of Judson, replaced by {@link
+	#deleteCalendarBookingInstance(long, CalendarBooking, int,
+	boolean)}
 	*/
 	@Deprecated
 	@Override
@@ -167,9 +168,9 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 3.0.0, replaced by {@link
-	#deleteCalendarBookingInstance(long, CalendarBooking, int, boolean,
-	boolean)}
+	* @deprecated As of Judson, replaced by {@link
+	#deleteCalendarBookingInstance(long, CalendarBooking, int,
+	boolean, boolean)}
 	*/
 	@Deprecated
 	@Override
@@ -183,8 +184,9 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 3.0.0, replaced by {@link
-	#deleteCalendarBookingInstance(long, CalendarBooking, long, boolean)}
+	* @deprecated As of Judson, replaced by {@link
+	#deleteCalendarBookingInstance(long, CalendarBooking, long,
+	boolean)}
 	*/
 	@Deprecated
 	@Override
@@ -197,9 +199,9 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 3.0.0, replaced by {@link
-	#deleteCalendarBookingInstance(long, CalendarBooking, long, boolean,
-	boolean)}
+	* @deprecated As of Judson, replaced by {@link
+	#deleteCalendarBookingInstance(long, CalendarBooking, long,
+	boolean, boolean)}
 	*/
 	@Deprecated
 	@Override
@@ -253,7 +255,7 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 3.0.0, replaced by {@link
+	* @deprecated As of Judson, replaced by {@link
 	#deleteCalendarBookingInstance(long, long, long, boolean)}
 	*/
 	@Deprecated

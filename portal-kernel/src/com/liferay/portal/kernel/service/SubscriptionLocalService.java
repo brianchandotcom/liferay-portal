@@ -45,7 +45,7 @@ import java.util.List;
  * @see SubscriptionLocalServiceUtil
  * @see com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl
  * @see com.liferay.portal.service.impl.SubscriptionLocalServiceImpl
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
             com.liferay.subscription.service.impl.SubscriptionLocalServiceImpl}
  * @generated
  */

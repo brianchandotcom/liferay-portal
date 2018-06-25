@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.Accessor;
  * @see AssetTagStatsModel
  * @see com.liferay.portlet.asset.model.impl.AssetTagStatsImpl
  * @see com.liferay.portlet.asset.model.impl.AssetTagStatsModelImpl
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
 com.liferay.asset.tag.stats.model.impl.AssetTagStatsImpl}
  * @generated
  */

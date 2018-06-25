@@ -35,7 +35,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @see ResourceBlockPermissionPersistence
  * @see com.liferay.portal.service.persistence.impl.ResourceBlockPermissionPersistenceImpl
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated

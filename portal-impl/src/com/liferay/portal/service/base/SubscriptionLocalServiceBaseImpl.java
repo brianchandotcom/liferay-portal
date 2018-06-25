@@ -58,7 +58,7 @@ import javax.sql.DataSource;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.impl.SubscriptionLocalServiceImpl
  * @see com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of Judson, replaced by {@link
             com.liferay.subscription.service.impl.SubscriptionLocalServiceImpl}
  * @generated
  */

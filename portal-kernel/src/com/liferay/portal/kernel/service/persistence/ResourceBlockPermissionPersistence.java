@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.model.ResourceBlockPermission;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portal.service.persistence.impl.ResourceBlockPermissionPersistenceImpl
  * @see ResourceBlockPermissionUtil
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of Judson, with no direct replacement
  * @generated
  */
 @Deprecated

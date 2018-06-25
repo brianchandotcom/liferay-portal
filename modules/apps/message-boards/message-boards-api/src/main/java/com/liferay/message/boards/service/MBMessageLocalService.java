@@ -467,7 +467,7 @@ public interface MBMessageLocalService extends BaseLocalService,
 		int status);
 
 	/**
-	* @deprecated As of 2.0.0, with no direct replacement
+	* @deprecated As of Judson, with no direct replacement
 	*/
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -603,7 +603,8 @@ public interface MBMessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 2.0.0, replaced by {@link #updateMessage(long, long, String, String, List, double, boolean, ServiceContext)}
+	* @deprecated As of Judson, replaced by {@link #updateMessage(long, long,
+	String, String, List, double, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public MBMessage updateMessage(long userId, long messageId, String subject,

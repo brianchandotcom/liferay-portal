@@ -4663,7 +4663,7 @@ information. Make sure to commit in all build services results.
 		<run-batch-test>
 			<test-action>
 				<if>
-					<istrue value="${liferay.releng.public}" />
+					<available file="modules/util/source-formatter" />
 					<then>
 						<gradle-execute dir="modules/util/source-formatter" task="deploy">
 							<arg value="clean" />

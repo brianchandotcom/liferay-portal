@@ -32,8 +32,7 @@ List<CPCatalogEntry> cpCatalogEntries = cpDataSourceResult.getCPCatalogEntries()
 
 				<liferay-commerce-product:product-list-entry-renderer
 					CPCatalogEntry = "<%= cpCatalogEntry %>"
-
-/>
+				/>
 
 			<%
 			}

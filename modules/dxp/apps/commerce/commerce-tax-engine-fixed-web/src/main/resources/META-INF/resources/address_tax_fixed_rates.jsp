@@ -61,7 +61,7 @@ boolean hasManageCommerceTaxMethodsPermission = commerceTaxFixedRateAddressRelsD
 			>
 				<liferay-frontend:add-menu-item
 					title='<%= LanguageUtil.get(resourceBundle, "add-tax-rate-setting") %>'
-					url="<%= addCommerceTaxFixedRateAddressRelURL.toString() %>"
+					url="<%= addCommerceTaxFixedRateAddressRelURL %>"
 				/>
 			</liferay-frontend:add-menu>
 		</c:if>
